@@ -7195,9 +7195,9 @@
     <None Update="Diagram\src\main\webapp\stencils\office\sites.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Diagram\src\main\webapp\stencils\office\users.xml">
+    <!--<None Update="Diagram\src\main\webapp\stencils\office\users.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </None>-->
     <None Update="Diagram\src\main\webapp\stencils\pid\agitators.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

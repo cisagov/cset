@@ -4912,85 +4912,108 @@ App.prototype.updateButtonContainer = function () {
             this.commentButton = null;
         }
 
-        // Share
-        if (this.getServiceName() == 'draw.io' &&
-            urlParams['embed'] != '1' &&
-            !this.isStandaloneApp()) {
-            if (file != null) {
-                if (this.shareButton == null && Editor.currentTheme != 'atlas') {
-                    this.shareButton = document.createElement('button');
-                    this.shareButton.className = 'geBtn geShareBtn';
-                    this.shareButton.style.display = 'inline-block';
-                    this.shareButton.style.position = 'relative';
-                    this.shareButton.style.backgroundImage = 'none';
-                    this.shareButton.style.padding = '2px 10px 0 10px';
-                    this.shareButton.style.marginTop = '-10px';
-                    this.shareButton.style.cursor = 'pointer';
-                    this.shareButton.style.height = '32px';
-                    this.shareButton.style.minWidth = '0px';
-                    this.shareButton.style.top = '-2px';
-                    this.shareButton.setAttribute('title', mxResources.get('share'));
+        // Don't show the Share button in CSET
+        if (App.CSET) {
+            var btnBackToCSET = document.createElement('div');
+            btnBackToCSET.style.display = 'inline-block';
+            btnBackToCSET.style.position = 'relative';
+            btnBackToCSET.style.backgroundImage = 'none';
+            btnBackToCSET.style.padding = '2px 10px 0 10px';
+            btnBackToCSET.style.marginTop = '-10px';
+            btnBackToCSET.style.cursor = 'pointer';
+            btnBackToCSET.style.height = '32px';
+            btnBackToCSET.style.minWidth = '0px';
+            btnBackToCSET.style.top = '-2px';
+            btnBackToCSET.setAttribute('title', 'return to CSET');
+            btnBackToCSET.innerHTML = '<img src=\'images/return_arrow.svg\' style=\'height: 1rem\'>' + ' Back to CSET';
+            btnBackToCSET.onclick = function () {
+                window.location.href = localStorage.getItem('cset.client') + '/index.html?returnPath=assessment/' + localStorage.getItem('assessmentId') + '/prepare/diagram/info';
+            };
 
-                    var icon = document.createElement('img');
-                    icon.className = 'geInverseAdaptiveAsset';
-                    icon.setAttribute('src', this.shareImage);
-                    icon.setAttribute('align', 'absmiddle');
-                    icon.style.marginRight = '4px';
-                    icon.style.marginTop = '-3px';
-                    this.shareButton.appendChild(icon);
-
-                    if (Editor.currentTheme != 'atlas') {
-                        icon.style.filter = 'invert(100%)';
-                    }
-
-                    mxUtils.write(this.shareButton, mxResources.get('share'));
-
-                    mxEvent.addListener(this.shareButton, 'click', mxUtils.bind(this, function () {
-                        this.actions.get('share').funct();
-                    }));
-
-                    this.buttonContainer.appendChild(this.shareButton);
-                }
-
-                if (this.shareButton != null) {
-                    this.shareButton.style.display = (Editor.currentTheme == 'simple' ||
-                        Editor.currentTheme == 'sketch' || Editor.currentTheme == 'min')
-                        ? 'none' : 'inline-block';
-
-                    // Hides parent element if empty for flex layout gap to work
-                    if (Editor.currentTheme == 'simple' ||
-                        Editor.currentTheme == 'sketch') {
-                        this.shareButton.parentNode.style.display =
-                            (this.shareButton.parentNode.clientWidth == 0)
-                                ? 'none' : '';
-                    }
-                }
-            }
-            else if (this.shareButton != null) {
-                this.shareButton.parentNode.removeChild(this.shareButton);
-                this.shareButton = null;
-            }
-
-            // Fetch notifications
-            if (urlParams['extAuth'] != '1' &&
-                Editor.currentTheme != 'atlas') //Disable notification with external auth (e.g, Teams app)
-            {
-                this.fetchAndShowNotification('online', this.mode);
-            }
+            this.buttonContainer.replaceChildren();
+            this.buttonContainer.appendChild(btnBackToCSET);
         }
         else {
-            if (urlParams['notif'] != null) //Notif for embed mode
-            {
-                this.fetchAndShowNotification(urlParams['notif']);
-            }
+            // Share
+            if (this.getServiceName() == 'draw.io' &&
+                urlParams['embed'] != '1' &&
+                !this.isStandaloneApp()) {
+                if (file != null) {
+                    if (this.shareButton == null && Editor.currentTheme != 'atlas') {
+                        this.shareButton = document.createElement('button');
+                        this.shareButton.className = 'geBtn geShareBtn';
+                        this.shareButton.style.display = 'inline-block';
+                        this.shareButton.style.position = 'relative';
+                        this.shareButton.style.backgroundImage = 'none';
+                        this.shareButton.style.padding = '2px 10px 0 10px';
+                        this.shareButton.style.marginTop = '-10px';
+                        this.shareButton.style.cursor = 'pointer';
+                        this.shareButton.style.height = '32px';
+                        this.shareButton.style.minWidth = '0px';
+                        this.shareButton.style.top = '-2px';
+                        this.shareButton.setAttribute('title', mxResources.get('share'));
 
-            // Hides button container if empty for flex layout gap to work
-            if (this.isStandaloneApp() &&
-                (Editor.currentTheme == 'simple' ||
-                    Editor.currentTheme == 'sketch')) {
-                this.buttonContainer.style.display =
-                    (this.buttonContainer.clientWidth == 0)
-                        ? 'none' : '';
+                        var icon = document.createElement('img');
+                        icon.className = 'geInverseAdaptiveAsset';
+                        icon.setAttribute('src', this.shareImage);
+                        icon.setAttribute('align', 'absmiddle');
+                        icon.style.marginRight = '4px';
+                        icon.style.marginTop = '-3px';
+                        this.shareButton.appendChild(icon);
+
+                        if (Editor.currentTheme != 'atlas') {
+                            icon.style.filter = 'invert(100%)';
+                        }
+
+                        mxUtils.write(this.shareButton, mxResources.get('share'));
+
+                        mxEvent.addListener(this.shareButton, 'click', mxUtils.bind(this, function () {
+                            this.actions.get('share').funct();
+                        }));
+
+                        this.buttonContainer.appendChild(this.shareButton);
+                    }
+
+                    if (this.shareButton != null) {
+                        this.shareButton.style.display = (Editor.currentTheme == 'simple' ||
+                            Editor.currentTheme == 'sketch' || Editor.currentTheme == 'min')
+                            ? 'none' : 'inline-block';
+
+                        // Hides parent element if empty for flex layout gap to work
+                        if (Editor.currentTheme == 'simple' ||
+                            Editor.currentTheme == 'sketch') {
+                            this.shareButton.parentNode.style.display =
+                                (this.shareButton.parentNode.clientWidth == 0)
+                                    ? 'none' : '';
+                        }
+                    }
+                }
+                else if (this.shareButton != null) {
+                    this.shareButton.parentNode.removeChild(this.shareButton);
+                    this.shareButton = null;
+                }
+
+                // Fetch notifications
+                if (urlParams['extAuth'] != '1' &&
+                    Editor.currentTheme != 'atlas') //Disable notification with external auth (e.g, Teams app)
+                {
+                    this.fetchAndShowNotification('online', this.mode);
+                }
+            }
+            else {
+                if (urlParams['notif'] != null) //Notif for embed mode
+                {
+                    this.fetchAndShowNotification(urlParams['notif']);
+                }
+
+                // Hides button container if empty for flex layout gap to work
+                if (this.isStandaloneApp() &&
+                    (Editor.currentTheme == 'simple' ||
+                        Editor.currentTheme == 'sketch')) {
+                    this.buttonContainer.style.display =
+                        (this.buttonContainer.clientWidth == 0)
+                            ? 'none' : '';
+                }
             }
         }
 
@@ -5715,7 +5738,7 @@ App.prototype.convertFile = function (url, filename, mimeType, extension, succes
 App.prototype.updateHeader = function () {
     if (this.menubar != null) {
         var logo = 'url(' + Editor.logoImage + ')';
-        this.appIcon = document.createElement('a');
+        this.appIcon = document.createElement('div');
         this.appIcon.style.display = 'block';
         this.appIcon.style.position = 'absolute';
         this.appIcon.style.width = '32px';
@@ -5730,9 +5753,10 @@ App.prototype.updateHeader = function () {
 
         mxEvent.disableContextMenu(this.appIcon);
 
-        mxEvent.addListener(this.appIcon, 'click', mxUtils.bind(this, function (evt) {
-            this.appIconClicked(evt);
-        }));
+        // CSET disable click
+        //mxEvent.addListener(this.appIcon, 'click', mxUtils.bind(this, function (evt) {
+        //    this.appIconClicked(evt);
+        //}));
 
         var updateBackground = mxUtils.bind(this, function () {
             this.appIcon.style.backgroundColor = (!Editor.isDarkMode()) ? '#f08705' : '';
@@ -5742,52 +5766,15 @@ App.prototype.updateHeader = function () {
         updateBackground();
 
         // CSET - force the CSET logo
-        logo = 'url(\'' + IMAGE_PATH + '/drawlogo48.png\')';
-        // RKW TODO:  This is different from before.  How is this used now (if at all)
+        //logo = 'url(\'' + IMAGE_PATH + '/drawlogo48.png\')';
+        logo = 'url(\'' + IMAGE_PATH + '/cset_lock.svg\')';
+        this.appIcon.style.backgroundColor = 'transparent';
 
-        mxUtils.setPrefixedStyle(this.appIcon.style, 'transition', 'all 125ms linear');
+        this.appIcon.style.backgroundImage = logo;
+        this.menubarContainer.appendChild(this.appIcon);
+ 
 
-        mxEvent.addListener(this.appIcon, 'mouseover', mxUtils.bind(this, function () {
-            var file = this.getCurrentFile();
-
-            if (file != null) {
-                var mode = file.getMode();
-
-                if (mode == App.MODE_GOOGLE) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/google-drive-logo-white.svg)';
-                    this.appIcon.style.backgroundSize = '70% 70%';
-                }
-                else if (mode == App.MODE_DROPBOX) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/dropbox-logo-white.svg)';
-                    this.appIcon.style.backgroundSize = '70% 70%';
-                }
-                else if (mode == App.MODE_ONEDRIVE) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/onedrive-logo-white.svg)';
-                    this.appIcon.style.backgroundSize = '70% 70%';
-                }
-                else if (mode == App.MODE_GITHUB) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/github-logo-white.svg)';
-                    this.appIcon.style.backgroundSize = '70% 70%';
-                }
-                else if (mode == App.MODE_GITLAB) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/gitlab-logo-white.svg)';
-                    this.appIcon.style.backgroundSize = '100% 100%';
-                }
-                else if (mode == App.MODE_TRELLO) {
-                    this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/trello-logo-white-orange.svg)';
-                    this.appIcon.style.backgroundSize = '70% 70%';
-                }
-            }
-        }));
-
-        mxEvent.addListener(this.appIcon, 'mouseout', mxUtils.bind(this, function () {
-            this.appIcon.style.backgroundImage = logo;
-            this.appIcon.style.backgroundSize = '90% 90%';
-        }));
-
-        if (urlParams['embed'] != '1') {
-            this.menubarContainer.appendChild(this.appIcon);
-        }
+        this.menubarContainer.appendChild(this.appIcon);
 
         this.fnameWrapper = document.createElement('div');
         this.fnameWrapper.style.position = 'absolute';

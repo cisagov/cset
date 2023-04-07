@@ -348,6 +348,11 @@ Sidebar.prototype.createMoreShapes = function () {
         mxEvent.consume(evt);
     }));
 
+
+    // CSET does not show the 'more shapes' button
+    return div;
+
+
     div.appendChild(title);
 
     return div;

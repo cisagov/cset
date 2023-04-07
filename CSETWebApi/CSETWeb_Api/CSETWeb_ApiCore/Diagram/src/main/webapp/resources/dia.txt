@@ -605,6 +605,7 @@ print=Print
 printAllPages=Print All Pages
 procEng=Proc. Eng.
 project=Project
+prop=Prop
 priority=Priority
 properties=Properties
 publish=Publish

@@ -4752,6 +4752,7 @@ EditorUi.prototype.createDivs = function()
 	this.menubarContainer.style.top = this.ribbonHeight;
 	this.menubarContainer.style.left = '0px';
 	this.menubarContainer.style.right = '0px';
+	this.menubarContainer.style.backgroundColor = '#000033'; // CSET
 	this.toolbarContainer.style.left = '0px';
 	this.toolbarContainer.style.right = '0px';
 	this.sidebarContainer.style.left = '0px';
@@ -4765,7 +4766,8 @@ EditorUi.prototype.createDivs = function()
 	this.footerContainer.style.zIndex = mxPopupMenu.prototype.zIndex - 3;
 	this.hsplit.style.width = this.splitSize + 'px';
 	this.hsplit.style.zIndex = '1';
-	
+
+
 	if (!this.editor.chromeless)
 	{
 		this.tabContainer = this.createTabContainer();

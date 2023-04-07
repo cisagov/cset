@@ -262,6 +262,8 @@ ChangePage.prototype.execute = function()
  * Specifies the height of the tab container. Default is 36.
  */
 EditorUi.prototype.tabContainerHeight = 36;
+//CSET - suppress the tab container (footer)
+EditorUi.prototype.tabContainerHeight = 0;
 
 /**
  * Returns the index of the selected page.
