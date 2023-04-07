@@ -454,18 +454,16 @@ Format.prototype.immediateRefresh = function () {
         label.style.borderLeftWidth = '1px';
         label.style.cursor = 'pointer';
         label.style.width = ss.cells.length == 0 ? '100%' :
-            (containsLabel ? '50%' : '33.3%');
+            (containsLabel ? '50%' : '25%'); // CSET - make room for 4 labels
         var label2 = label.cloneNode(false);
         var label3 = label2.cloneNode(false);
         var labelProperties = label3.cloneNode(false); // CSET
-        console.log('hey');
-        console.log(labelProperties);
 
 
         // Workaround for ignored background in IE
         label2.style.backgroundColor = Format.inactiveTabBackgroundColor;
         label3.style.backgroundColor = Format.inactiveTabBackgroundColor;
-        labelProperties.backgroundColor = this.inactiveTabBackgroundColor; // CSET
+        labelProperties.backgroundColor = Format.inactiveTabBackgroundColor; // CSET
 
         // Style
         if (containsLabel) {
@@ -493,6 +491,13 @@ Format.prototype.immediateRefresh = function () {
         this.panels.push(new TextFormatPanel(this, ui, textPanel));
         this.container.appendChild(textPanel);
 
+        if (ss.cells.length > 0) {
+            addClickHandler(label2, textPanel, idx + 1);
+        }
+        else {
+            label2.style.display = 'none';
+        }
+
         // Arrange
         mxUtils.write(label3, mxResources.get('arrange'));
         div.appendChild(label3);
@@ -502,27 +507,17 @@ Format.prototype.immediateRefresh = function () {
         this.panels.push(new ArrangePanel(this, ui, arrangePanel));
         this.container.appendChild(arrangePanel);
 
-        // CSET Properties
+        addClickHandler(label3, arrangePanel, idx++, true);
+      
+         
+        // CSET Properties panel
         mxUtils.write(labelProperties, mxResources.get('prop'));
         div.appendChild(labelProperties);
-
-        console.log('x');
-        console.log(div);
 
         var propertiesPanel = div.cloneNode(false);
         propertiesPanel.style.display = 'none';
         this.panels.push(new PropertiesPanel(this, ui, propertiesPanel));
         this.container.appendChild(propertiesPanel);
-
-        if (ss.cells.length > 0) {
-            addClickHandler(label2, textPanel, idx + 1);
-        }
-        else {
-            label2.style.display = 'none';
-        }
-
-        addClickHandler(label3, arrangePanel, idx++, true);
-
 
         addClickHandler(labelProperties, propertiesPanel, idx++); // CSET
     }
