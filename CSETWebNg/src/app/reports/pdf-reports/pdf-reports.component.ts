@@ -31,7 +31,6 @@ import { HttpClient } from '@angular/common/http';
 import html2canvas from 'html2canvas';
 
 
-
 @Component({
     selector: 'app-pdf-reports',
     templateUrl: './pdf-reports.component.html',
@@ -53,6 +52,9 @@ export class PdfReportsComponent implements OnInit {
 
   managementActivitiesData = []; // Section 3.2 Table data
   tableTwoStructure = []; // Section 3.2 pdfmake JSON
+
+  objectiveTitles = []; // Section 4.1 - 4.10 objective titles
+  objectiveData = []; // Section 4.1 - 4.10 table data
 
   selfEvalCirlces: any = null;
   
@@ -82,7 +84,9 @@ export class PdfReportsComponent implements OnInit {
     this.getBase64('assets/images/C2M2/C2M2-Report-Cover-Sheet.png');
     this.getMilAchievementChartData();
     this.getManagementActivitiesData();
+    this.getObjectiveData();
   }
+
 
   getBase64(path: string) {
     // Grab Cover Image Base 64
@@ -99,11 +103,13 @@ export class PdfReportsComponent implements OnInit {
     });
   }
 
+
   getMilAchievementChartData() {
     this.donutData.forEach(domain => {
       this.milAchievementData.push({name: domain.shortTitle, value: domain.milAchieved});
     });
   }
+
 
   getManagementActivitiesData() {
     for (let i = 0; i < this.tableData.managementQuestions.length; i++) {
@@ -115,10 +121,11 @@ export class PdfReportsComponent implements OnInit {
       }
     }
 
-    this.buildTable2Structure();
+    this.buildTableTwoStructure();
   }
 
-  buildTable2Structure() {
+
+  buildTableTwoStructure() {
     for (let k = 0; k < this.managementActivitiesData.length; k++) {
       let fillColor = 'white';
       let textColor = 'black';
@@ -132,14 +139,79 @@ export class PdfReportsComponent implements OnInit {
         fillColor = '#fad980';
       } else if (this.managementActivitiesData[k] === 'NI') {
         fillColor = '#e69f00';
-      } else if (this.managementActivitiesData[k] === 'U') {
+      } else if (this.managementActivitiesData[k] === null || this.managementActivitiesData[k] === 'U') {
         this.managementActivitiesData[k] = 'U';
         fillColor = '#E6E6E6';
       }
 
-      this.tableTwoStructure.push( {text: this.managementActivitiesData[k], alignment: 'center', marginTop: 10, fillColor: fillColor, color: textColor } );
+      this.tableTwoStructure.push( {text: this.managementActivitiesData[k], alignment: 'center', marginTop: 15, fillColor: fillColor, color: textColor } );
+    }
+  }
+
+
+  getObjectiveData() {
+    for (let i = 0; i < this.tableData.domainList.length; i++) {
+      for (let j = 0; j < this.tableData.domainList[i].objectives.length; j++) {
+        this.objectiveTitles.push(this.tableData.domainList[i].objectives[j].title);
+
+        for (let k = 0; k < this.tableData.domainList[i].objectives[j].practices.length; k++) {
+          this.objectiveData.push(this.tableData.domainList[i].objectives[j].practices[k]);
+        }
+      }
+    }
+  }
+
+
+  buildObjectiveTable(domain: string, objective: number) {
+    let body = [];
+
+    let id = domain + "-" + objective;
+    
+    let fillColor = 'white';
+    let textColor = 'black';
+
+    for (let i = 0; i < this.objectiveData.length; i++) {
+      if (this.objectiveData[i].answerText === 'FI') {
+        fillColor = '#005c99';
+        textColor = 'white';
+      } else if (this.objectiveData[i].answerText === 'LI') {
+        fillColor = '#8ba6ca';
+      } else if (this.objectiveData[i].answerText === 'PI') {
+        fillColor = '#fad980';
+      } else if (this.objectiveData[i].answerText === 'NI') {
+        fillColor = '#e69f00';
+      } else if (this.objectiveData[i].answerText == null || this.objectiveData[i].answerText === 'U') {
+        this.objectiveData[i].answerText = 'U';
+        fillColor = '#E6E6E6';
+      }
+
+      if (this.objectiveData[i].title.includes(id)) {
+        // On first pass through, create the table headers
+        if (body.length === 0) {
+          body.push([ {text: 'MIL', alignment: 'center', marginTop: 12}, {text: 'ID', alignment: 'center', marginTop: 12}, {text: 'Practice Statement', alignment: 'center', marginTop: 12}, {text: 'Response', alignment: 'center', marginTop: 12} ]);
+        }
+
+        body.push([ {text: this.objectiveData[i].mil, alignment: 'center', marginTop: 12}, {text: this.objectiveData[i].title, alignment: 'center', marginTop: 12}, {text: this.objectiveData[i].questionText}, {text: this.objectiveData[i].answerText, alignment: 'center', marginTop: 12, fillColor: fillColor, color: textColor} ]);
+      }
     }
 
+    // Build & return the Pdfmake JSON structure
+    let table = {
+      table: {
+        headerRows: 1,
+        heights: 40,
+        body,
+        dontBreakRows: true,
+      },
+      layout: {
+        fillColor: function (rowIndex, node) {
+          return (rowIndex === 0) ? '#f0f0f0' : null;
+        },
+        marginBottom: this.normalSpacing,
+      },
+    }
+    
+    return table;
   }
 
 
@@ -183,7 +255,7 @@ export class PdfReportsComponent implements OnInit {
         { text: '', pageBreak: 'after' },
         
         // Section 1: Introduction
-        { text: '1. Introduction', style: 'header', marginBottom: largeSpacing },
+        { text: '1. Introduction' + 'test', style: 'header', marginBottom: largeSpacing },
         { text: 'The Cybersecurity Capability Maturity Model (C2M2) can help organizations of all sectors, types, and sizes to evaluate and make improvements to their cybersecurity programs and strengthen their operational resilience. This report presents the results of a C2M2 self-evaluation. The results included in this report may be used to measure and improve an existing cybersecurity program. It also may serve as an input for other activities, such as informing cybersecurity risk managers about the controls in place to mitigate cybersecurity risks within an organization.', marginBottom: normalSpacing },
         { text: 'The results presented in this report are based on participant responses describing the degree to which C2M2 practices are implemented. This report may include sensitive information and should be protected accordingly.', marginBottom: extraLargeSpacing },
         { text: 'Assessment Information: ', marginBottom: largeSpacing },
@@ -293,9 +365,6 @@ export class PdfReportsComponent implements OnInit {
         // Section 3.1 MIL Achievement by Domain
         { text: '3.1 MIL Achievement by Domain', style: 'header', marginBottom: extraLargeSpacing },
         { text: 'Figure 2 shows the MIL achieved for each C2M2 domain.', marginBottom: normalSpacing },
-
-
-
         { text: 'Figure 2: MIL Achieved by Domain', style: 'caption', marginBottom: normalSpacing },
         { text: '', pageBreak: 'after' },
         
@@ -303,8 +372,6 @@ export class PdfReportsComponent implements OnInit {
         { text: '3.2 Practice Implementation by Domain', style: 'header', marginBottom: largeSpacing },
         { text: 'Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding MILs receive responses of Fully Implemented or Largely Implemented. A high-level understanding of the organization\'s self-evaluation results can be gained from this figure and may be useful when evaluation areas for future improvement.', marginBottom: normalSpacing },
         { text: 'The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain. Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.', marginBottom: normalSpacing },
-        { text: '', pageBreak: 'after' },
-        { text: 'COOL CHART HERE' },
         { text: 'Figure 3: Summary of Responses Input by MIL and Domain', style: 'caption', marginBottom: normalSpacing },
         { text: '', pageBreak: 'after' },
         
@@ -344,213 +411,213 @@ export class PdfReportsComponent implements OnInit {
         // Section 4.1 Domain: Asset. Change, and Configuration Management (ASSET)
         { text: '4.1 Domain: Asset, Change, and Configuration Management (ASSET)', style: 'header', marginBottom: largeSpacing },
         { text: 'Manage the organization\'s IT and OT assets, including both hardware and software, and information assets commensurate with the risk to critical infrastructure and organizational objectives', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Manage IT and OT Asset Inventory', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[0], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ASSET", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Manage Information Asset Inventory', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[1], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ASSET", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Manage IT and OT Asset Configurations', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[2], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ASSET", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Manage Changes to IT and OT Assets', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[3], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ASSET", 4),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 5: Management Activities for the ASSET domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 5: ' + this.objectiveTitles[4], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ASSET", 5),
         { text: '', pageBreak: 'after' },
         
         // Section 4.2 Domain: Threat and Vulnerability Management (THREAT)
         { text: '4.2 Domain: Threat and Vulnerability Management (THREAT)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, identify, analyze, manage, and respond to cybersecurity threats and vulnerabilities, commensurate with the risk to the organization\'s infrastructure (such as critical, IT, and operational) and organizational objectives.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Reduce Cybersecurity Vulnerabilities', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[5], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THREAT", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Respond to Threats and Share Threat Information', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[6], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THREAT", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Management Activities for the THREAT domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[7], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THREAT", 3),
         { text: '', pageBreak: 'after' },
         
         // Section 4.3 Domain: Risk Management (RISK)
         { text: '4.3 Domain: Risk Management (RISK) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and response to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Establish and Maintain Cyber Risk Management Strategy and Program', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[8], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RISK", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Identify Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[9], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RISK", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Analyze Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[10], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RISK", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Respond to Cyber Risk', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[11], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RISK", 4),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 5: Management Activities for the RISK domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 5: ' + this.objectiveTitles[12], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RISK", 5),
         { text: '', pageBreak: 'after' },
         
         // Section 4.4 Domain: Identity and Access Management (ACCESS) 
         { text: '4.4 Domain: Identity and Access Management (ACCESS)', style: 'header', marginBottom: largeSpacing },
         { text: 'Create and manage identities for the entities that may be granted logical or physical access to the organization\'s assets. Control access to the organization\'s assets, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Establish Identities and Manage Authentication', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[13], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ACCESS", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Control Logical Access', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[14], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ACCESS", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Control Physical Access', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[15], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ACCESS", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Management Activities for the ACCESS domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[16], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ACCESS", 4),
         { text: '', pageBreak: 'after' },
         
         // Section 4.5 Domain: Situational Awareness (SITUATION)
         { text: '4.5 Domain: Situational Awareness (SITUATION)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain activities and technologies to collect, monitor, analyze, alarm, report, and use operational, security, and threat information, including status and summary information from the other model domains, to establish situational awareness for both the organization\'s operational state and cybersecurity state.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Perform Logging', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+
+        { text: 'Objective 1: ' + this.objectiveTitles[17], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("SITUATION", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Perform Monitoring', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[18], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("SITUATION", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Establish and Maintain Situation Awareness', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[19], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("SITUATION", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Management Activities for the SITUATION', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[20], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("SITUATION", 4),
         { text: '', pageBreak: 'after' },
         
         // Section 4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)
         { text: '4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, analyze, mitigate, respond to, and recovery from cybersecurity events and incidents and to sustain operations during cybersecurity incidents, commensurate with the risk to critical and organizational objectives.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Detect Cybersecurity Events', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1:  ' + this.objectiveTitles[21], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RESPONSE", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Analyze Cybersecurity Events and Declare Incidents', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[22], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RESPONSE", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Respond to Cybersecurity Incidents', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[23], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RESPONSE", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Address Cybersecurity in Continuity of Operations', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[24], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RESPONSE", 4),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 5: Management Activities for the RESPONSE domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 5: ' + this.objectiveTitles[25], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("RESPONSE", 5),
         { text: '', pageBreak: 'after' },
         
         // Section 4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)
         { text: '4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain controls to manage the cyber risks arising from suppliers and other third parties, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Identify and Prioritize Third Parties', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+
+        { text: 'Objective 1: ' + this.objectiveTitles[26], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THIRD-PARTIES", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Manage Third-Party Risk', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[27], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THIRD-PARTIES", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Management Activities for the THIRD-PARTIES domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[28], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("THIRD-PARTIES", 3),
         { text: '', pageBreak: 'after' },
         
         // Section 4.8 Domain: Workforce Management (WORKFORCE)
         { text: '4.8 Domain: Workforce Management (WORKFORCE)', style: 'header', marginBottom: largeSpacing },
         { text: '', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Implement Workforce Controls', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[29], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("WORKFORCE", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Increase Cybersecurity Awareness', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2:  ' + this.objectiveTitles[30], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("WORKFORCE", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Assign Cybersecurity Responsibilities', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[31], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("WORKFORCE", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Develop Cybersecurity Workforce', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[32], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("WORKFORCE", 4),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 5: Management Activities for the WORKFORCE domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 5: ' + this.objectiveTitles[33], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("WORKFORCE", 5),
         { text: '', pageBreak: 'after' },
         
         // Section 4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)
         { text: '4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain the structure and behavior of the organization\'s cybersecurity architecture, including controls, processes, technologies, and other elements, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Establish and Maintain Cybersecurity Architecture Strategy and Program', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[34], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: plement Network Protections as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[35], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[36], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 3),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 4: Implement Software Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 4: ' + this.objectiveTitles[37], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 4),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 5: Implement Data Security as an Element of the Cybersecurity Architecture', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 5: ' + this.objectiveTitles[38], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 5),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 6: Management Activities for the ARCHITECTURE domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 6: ' + this.objectiveTitles[39], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("ARCHITECTURE", 6),
         { text: '', pageBreak: 'after' },
         
         // Section 4.10 Domain: Cybersecurity Program Management (PROGRAM)
         { text: '4.10 Domain: Cybersecurity Program Management (PROGRAM) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain an enterprise cybersecurity program that provides governance, strategic planning, and sponsorship for the organization\'s cybersecurity activities in a manner that aligns cybersecurity objectives with both the organization\'s strategic objectives and the risk to critical infrastructure.', marginBottom: normalSpacing },
-        { text: 'CHART AND HEAT MAP STUFF HERE', pageBreak: 'after' },
-        { text: 'Objective 1: Establish Cybersecurity Program Strategy', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        
+        { text: 'Objective 1: ' + this.objectiveTitles[40], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("PROGRAM", 1),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 2: Establish and Maintain Cybersecurity Program', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 2: ' + this.objectiveTitles[41], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("PROGRAM", 2),
         { text: '', pageBreak: 'after' },
         
-        { text: 'Objective 3: Management Activities for the PROGRAM domain', style: 'subHeader', marginBottom: smallSpacing },
-        { text: 'TABLE HERE' },
+        { text: 'Objective 3: ' + this.objectiveTitles[42], style: 'subHeader', marginBottom: smallSpacing },
+        this.buildObjectiveTable("PROGRAM", 3),
         { text: '', pageBreak: 'after' },
         
         // Section 5: Using the Self-Evaluation Results
