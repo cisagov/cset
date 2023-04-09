@@ -51,7 +51,7 @@
         <td style="padding-left: 5px; padding-bottom: 3px;">
           {{ question.questionText }}
         </td>
-        <td style="border: 1px solid rgb(179, 179, 179);" *ngFor="let answer of question.domainAnswers">
+        <td style="border: 1px solid #b3b3b3;" *ngFor="let answer of question.domainAnswers">
             <div style="text-align: center;">
               {{ answer.answer !== null ? answer.answer : 'U' }}
             </div>
