@@ -36,11 +36,12 @@ $black: #000000;
 
 
 // Renewables skin color palette
-$renew-color-1: #0A2439; // #38613B;
-$renew-color-2: #235199; // #3e4444;
+$renew-color-1: #07519e; // #0A2439; // #38613B;
+$renew-color-2: #2ba8e0; // #235199; // #3e4444;
 $renew-color-3: #5c5f62; // #5c6262;
 $renew-color-4: #23273b; // #233b24;
 $renew-color-5: #242429; // #242924;
+$renew-color-1a: #0B3A60;
 
 
 
@@ -147,7 +148,7 @@ $warn-color: #eae894;
 $validation-color: red;
 
 // Oranges
-$local-install-background-color: #ffc107;
+$local-install-background-color: #8dc340; //#ffc107;
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged: #f9ce15;
 
@@ -1246,11 +1247,11 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .current-node>button {
-  border: 1px solid #ffffff;
+  border: 1px solid $primary-color; // #ffffff;
 }
 
 .side-nav-container .btn-home {
-  color: #fff;
+  color: $primary-color; // #fff;
   font-size: 1.3rem;
   margin-left: 20px;
 }
@@ -1550,7 +1551,7 @@ ul.nav-tabs li.active {
 }
 
 ul.nav-tabs li.active button {
-  color: $secondary-color;
+  color: $renew-color-1a; // $secondary-color;
   fill: $secondary-color;
   font-weight: 600;
   font-size: 1.2rem;
