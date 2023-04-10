@@ -173,6 +173,22 @@ Toolbar.prototype.init = function()
 	this.addDropDownArrow(insertMenu, 'geSprite-plus', 38, 48, -4, -3, 36, -8);
 	this.addSeparator();
 	this.addTableDropDown();
+
+
+	// CSET - add network analysis button
+	this.addSeparator();
+	const analyzeKey = 'analyze';
+	debugger;
+	const analyzeElmt = this.addItems(['-', analyzeKey])[1];
+	console.log(analyzeElmt);
+	if (analyzeElmt) {
+		var analyzeAction = this.editorUi.actions.get(analyzeKey);
+		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
+			this.editorUi.toggleAnalyzer({ state: state, elmt: analyzeElmt, action: analyzeAction });
+		});
+	}
+
+	this.addSeparator();
 };
 
 /**
@@ -862,14 +878,20 @@ Toolbar.prototype.addItems = function(keys, c, ignoreDisabled)
 	for (var i = 0; i < keys.length; i++)
 	{
 		var key = keys[i];
+
+		console.log(key);
 		
 		if (key == '-')
 		{
 			items.push(this.addSeparator(c));
+			console.log(1);
+			console.log(items);
 		}
 		else
 		{
 			items.push(this.addItem('geSprite-' + key.toLowerCase(), key, c, ignoreDisabled));
+			console.log(2);
+			console.log(items);
 		}
 	}
 	
