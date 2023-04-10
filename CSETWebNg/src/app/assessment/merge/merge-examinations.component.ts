@@ -127,6 +127,8 @@ export class MergeExaminationsComponent implements OnInit {
         if (response.length > 0) {
           this.mergeConflicts = response;
           this.getAssessmentNames();
+        } else {
+            this.ncuaSvc.getNames().subscribe((result: any) => this.getAssessmentNames(result));
         }
       }
     );
@@ -235,12 +237,16 @@ export class MergeExaminationsComponent implements OnInit {
     }
   }
 
-  getAssessmentNames() {
+  getAssessmentNames(result = '') {
+    if (result === '') {
     let names = [];
-    names.push(this.mergeConflicts[0].assessment_Name1, this.mergeConflicts[0].assessment_Name2, this.mergeConflicts[0].assessment_Name3,
+
+    if (this.mergeConflicts.length > 0) {
+      names.push(this.mergeConflicts[0].assessment_Name1, this.mergeConflicts[0].assessment_Name2, this.mergeConflicts[0].assessment_Name3,
           this.mergeConflicts[0].assessment_Name4, this.mergeConflicts[0].assessment_Name5, this.mergeConflicts[0].assessment_Name6,
           this.mergeConflicts[0].assessment_Name7, this.mergeConflicts[0].assessment_Name8, this.mergeConflicts[0].assessment_Name9,
           this.mergeConflicts[0].assessment_Name10);
+    }
     
     for (let i = 0; i < names.length; i++) {
       this.assessmentNames[i] = names[i];
@@ -251,6 +257,11 @@ export class MergeExaminationsComponent implements OnInit {
         this.getAssessmentContactInitials(name);
       }
     });
+  } else {
+    for (let i = 0; i < result.length; i++) {
+      this.getAssessmentContactInitials(result[i]);
+    }
+  }
   }
 
   getAssessmentContactInitials(assessmentName: string) {
@@ -375,7 +386,6 @@ export class MergeExaminationsComponent implements OnInit {
     .toPromise()
     .then(
       (response: any) => {
-        console.log("We got a response!");
         // Authorize the user to modify the new assessment with a new token
         this.assessSvc.getAssessmentToken(response.id).then(() => {
           

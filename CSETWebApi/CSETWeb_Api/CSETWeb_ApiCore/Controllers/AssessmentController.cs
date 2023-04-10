@@ -333,5 +333,14 @@ namespace CSETWebCore.Api.Controllers
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
 
+        [HttpGet]
+        [Route("api/getMergeNames")]
+        public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 
+                                           [FromQuery] int id4, [FromQuery] int id5, [FromQuery] int id6,
+                                           [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
+        {
+            return Ok(_assessmentBusiness.GetNames(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
+        }
+
     }
 }
