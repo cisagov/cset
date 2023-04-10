@@ -724,20 +724,20 @@ table.td-align-top td {
 
 /* override a few bootstrap classes */
 .form-control {
-  color: $gray-800;
+  color: $gray-800 !important;
 }
 
 .btn-primary {
-  color: $gray-100;
-  background-color: $secondary-color;
-  border-color: $secondary-color;
+  color: $gray-100 !important;
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
   height: fit-content;
 }
 
 .btn-primary:hover {
-  background-color: $primary-color;
-  border-color: $secondary-color;
-  color: $active-text-color;
+  background-color: $primary-color!important;
+  border-color: $secondary-color !important;
+  color: $active-text-color !important;
 }
 
 .btn-outline-primary {
@@ -762,15 +762,15 @@ table.td-align-top td {
 }
 
 .btn-secondary {
-  background-color: $gray-200;
-  color: $gray-900;
+  background-color: $gray-200 !important;
+  color: $gray-900 !important;
   height: fit-content;
 }
 
 .btn-secondary:hover {
-  background-color: $secondary-color;
-  border-color: $secondary-color;
-  color: $white;
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
+  color: $white !important;
   fill: $white;
 }
 

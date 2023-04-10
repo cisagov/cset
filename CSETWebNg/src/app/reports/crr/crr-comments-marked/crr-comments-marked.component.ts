@@ -37,7 +37,6 @@ export class CrrCommentsMarkedComponent implements OnInit {
 
   crrModel: CrrReportModel;
   loading: boolean = false;
-  logoPath: string = '';
   keyToCategory: any;
 
   commentsList = [];
@@ -56,12 +55,6 @@ export class CrrCommentsMarkedComponent implements OnInit {
     this.keyToCategory = this.crrSvc.keyToCategory;
 
     let appCode = this.configSvc.installationMode;
-    if (!appCode || appCode === 'CSET') {
-      this.logoPath = "assets/images/CISA_Logo_1831px.png";
-    }
-    else if (appCode === 'TSA') {
-      this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
-    }
 
     this.crrSvc.getCrrModel().subscribe(
       (r: CrrReportModel) => {

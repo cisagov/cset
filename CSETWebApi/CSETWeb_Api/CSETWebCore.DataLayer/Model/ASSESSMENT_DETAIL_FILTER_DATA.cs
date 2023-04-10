@@ -20,5 +20,8 @@ namespace CSETWebCore.DataLayer.Model
         public string Charter { get; set; }
         [StringLength(100)]
         public string Model { get; set; }
+        [StringLength(100)]
+        public int RegionCode { get; set; }
+        public int CharterType { get; set; }
     }
 }

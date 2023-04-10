@@ -20,6 +20,7 @@ using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
@@ -75,7 +76,8 @@ namespace CSETWebCore.Business.Assessment
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
                 ExecutiveSummary = defaultExecSumm,
-                GalleryItemGuid = galleryGuid
+                GalleryItemGuid = galleryGuid,
+                ISE_StateLed = false,
             };
 
 
@@ -169,6 +171,14 @@ namespace CSETWebCore.Business.Assessment
             List<usp_Assessments_For_UserResult> list = new List<usp_Assessments_For_UserResult>();
             list = _context.usp_AssessmentsForUser(userId).ToList();
 
+            // convert dates from UTC to local 
+            list.ForEach(x =>
+            {
+                x.LastModifiedDate = _utilities.UtcToLocal(x.LastModifiedDate ?? DateTime.UtcNow);
+                x.AssessmentCreatedDate = _utilities.UtcToLocal(x.AssessmentCreatedDate);
+                x.AssessmentDate = _utilities.UtcToLocal(x.AssessmentDate);
+            });
+
             return list;
         }
 
@@ -208,7 +218,7 @@ namespace CSETWebCore.Business.Assessment
                         }
                     }
                 }
-                else 
+                else
                 {
                     aaa.SelectedStandards = "";
                 }
@@ -331,7 +341,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.Id = result.aa.Assessment_Id;
                 assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
-                assessment.AssessmentDate = result.aa.Assessment_Date;
+                assessment.AssessmentDate = _utilities.UtcToLocal(result.aa.Assessment_Date);
                 assessment.FacilityName = result.ii.Facility_Name;
                 assessment.CityOrSiteName = result.ii.City_Or_Site_Name;
                 assessment.StateProvRegion = result.ii.State_Province_Or_Region;
@@ -340,11 +350,13 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
-                assessment.CreatedDate = result.aa.AssessmentCreatedDate; //_utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
-                assessment.LastModifiedDate = result.aa.LastModifiedDate ?? DateTime.Now; //_utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
-                assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate; //_utilities.UtcToLocal(result.aa.AssessmentEffectiveDate);
+                assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
+                assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
+                assessment.AssessmentEffectiveDate = _utilities.UtcToLocal(result.aa.AssessmentEffectiveDate ?? DateTime.UtcNow);
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
+                assessment.ISE_StateLed = result.aa.ISE_StateLed;
+                assessment.RegionCode = result.ii.Region_Code;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -573,6 +585,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
             dbAssessment.CreditUnionName = assessment.CreditUnion;
             dbAssessment.Assets = assessment.Assets.ToString();
+            dbAssessment.ISE_StateLed = assessment.ISE_StateLed;
             dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
 
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
@@ -600,7 +613,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (app_code == "ACET")
             {
-                if (assessment.MaturityModel?.ModelName != "ISE")
+                if (!assessment.AssessmentName.StartsWith("ISE ") && (!assessment.AssessmentName.StartsWith("Merged ")))
                 {
                     var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
                         ? string.Empty
@@ -622,6 +635,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.IsAcetOnly = assessment.IsAcetOnly;
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
+            dbInformation.Region_Code = assessment.RegionCode;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -765,7 +779,8 @@ namespace CSETWebCore.Business.Assessment
 
             var result = query.ToList().FirstOrDefault();
 
-            if (result != null) {
+            if (result != null)
+            {
                 galleryCardDescription = result.Description;
             }
 
@@ -824,5 +839,26 @@ namespace CSETWebCore.Business.Assessment
             public string ShortName { get; set; }
         }
 
+        public IList<string> GetNames(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            var results = _context.INFORMATION.Where(x => myList.Contains(x.Id)).Select(x => x.Assessment_Name).ToList();
+
+
+            return results;
+        }
     }
 }

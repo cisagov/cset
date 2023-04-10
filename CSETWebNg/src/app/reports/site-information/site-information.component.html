@@ -1,0 +1,61 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+
+<table class="table-site-info">
+    <tr>
+        <td>Assessment Name</td>
+        <td>{{response?.information.assessment_Name}}</td>
+    </tr>
+    <tr>
+        <td>Assessment Date</td>
+        <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+    </tr>
+    <tr>
+        <td>Facility Name</td>
+        <td>{{response?.information.facility_Name}}</td>
+    </tr>
+    <tr>
+        <td>City or Site Name</td>
+        <td>{{response?.information.city_Or_Site_Name}}</td>
+    </tr>
+    <tr>
+        <td>State, Province or Region</td>
+        <td>{{response?.information.state_Province_Or_Region}}</td>
+    </tr>
+    <tr>
+        <td>Principal Assessor Name</td>
+        <td>{{response?.information.assessor_Name}}</td>
+    </tr>
+    <tr>
+        <td>Additional Notes and Comments</td>
+        <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
+    </tr>
+    <tr>
+        <td>Contacts</td>
+        <td>
+            <div *ngFor="let c of response?.information.additional_Contacts">
+                {{c}}
+            </div>
+        </td>
+    </tr>
+</table>

@@ -40,6 +40,7 @@ import { MaturityService } from '../../../services/maturity.service';
   // styleUrls: ['./vadr-report.component.scss']
 })
 export class VadrReportComponent implements OnInit {
+  mainResponse: any;
   response: any;
 
   overallScoreDisplay: string;
@@ -113,14 +114,12 @@ export class VadrReportComponent implements OnInit {
     // Standards Summary (pie or stacked bar)
     // get the chart raw data and build objects to populate charts
     this.vadrDataSvc.getVADRDetail().subscribe((r: any) => {
-      this.response = r;
       // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
 
       this.createChart1(r);
 
       this.createTopRankedGoals(r);
-
     },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
@@ -136,7 +135,7 @@ export class VadrReportComponent implements OnInit {
 
     this.vadrDataSvc.getReport('vadrmain').subscribe(
       (r: any) => {
-        this.response = r;
+        this.mainResponse = r;
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
