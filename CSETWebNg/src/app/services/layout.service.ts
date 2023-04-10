@@ -41,17 +41,19 @@ export class LayoutService {
     '/home/login',
     '/home/login-access',
     '/home/reset-pass',
+    '/home/login/eject',
     '/home/privacy-warning'
   ];
 
   routesWithHiddenFooter = [
-    '/home/login', 
+    '/home/login',
     '/home/login-access',
-    '/home/reset-pass'
+    '/home/reset-pass',
+    '/home/login/eject'
   ];
 
   /**
-   * 
+   *
    */
   constructor(
     public boSvc: BreakpointObserver,

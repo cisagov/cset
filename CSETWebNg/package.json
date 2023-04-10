@@ -12,6 +12,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "preinstall": "npx npm-force-resolutions",
     "start:electron": "ng build --configuration production --source-map=false --base-href ./ && electron .",
     "build:electron": "electron-packager . CSET --out=electron-builds --asar --arch=x64 --prune --overwrite --icon=src/favicon_cset.ico --win32metadata.CompanyName=\"CISA\" --ignore=\"(node_modules/.cache*|node_modules/@angular*|node_modules/@angular-devkit*|node_modules/@angular-slider*|.vscode*|.angular*)\"",
     "version:electron": "electron-packager --version"
@@ -90,7 +91,7 @@
     "to": "^0.2.9",
     "tslib": "^2.1.0",
     "typescript-string-operations": "^1.4.1",
-    "universal-analytics": "^0.4.23",
+    "universal-analytics": "^0.5.3",
     "xlsx": "^0.17.5",
     "zone.js": "^0.11.4"
   },
@@ -122,6 +123,13 @@
     "ts-node": "^9.1.1",
     "tslint": "~6.1.0",
     "typescript": "^4.8.2",
-    "webpack": "^5.63.0"
+    "webpack": "^5.63.0",
+    "webpack-dev-server": "^4.13.1"
+  },
+  "resolutions": {
+    "minimist": "1.2.6",
+    "d3-color": "3.1.0",
+    "minimatch": "3.0.8",
+    "xml2js": "0.5.0"
   }
 }
