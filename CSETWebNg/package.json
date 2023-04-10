@@ -129,6 +129,7 @@
   "resolutions": {
     "minimist": "1.2.6",
     "d3-color": "3.1.0",
-    "minimatch": "3.0.8"
+    "minimatch": "3.0.8",
+    "xml2js": "0.5.0"
   }
 }
