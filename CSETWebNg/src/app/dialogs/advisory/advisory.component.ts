@@ -39,11 +39,16 @@ export class AdvisoryComponent {
   orgShortName: string;
   showIntellectualPropertyRightsAssertion = false;
   intellectualPropertyRightsDistributionRequestEntity: string;
+
+
   constructor(
     public configSvc: ConfigService,
     private dialog: MatDialogRef<AdvisoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+
+    console.log(configSvc.installationMode);
+
     switch (configSvc.installationMode) {
       case '':
       case 'CSET':
@@ -53,7 +58,7 @@ export class AdvisoryComponent {
         this.orgShortName = 'CISA';
         this.showIntellectualPropertyRightsAssertion = true;
         this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
-        break;
+        break; 
       case 'ACET':
         this.appLongName = 'Automated Cybersecurity Evaluation Toolbox';
         this.appShortName = 'ACET';
@@ -92,8 +97,6 @@ export class AdvisoryComponent {
         break;
     }
   }
-
-
 
   close() {
     return this.dialog.close();

@@ -37,11 +37,12 @@ $black: #000000;
 
 // Renewables skin color palette
 $renew-color-1: #07519e; // #0A2439; // #38613B;
+$renew-color-1a: #0B3A60;
 $renew-color-2: #2ba8e0; // #235199; // #3e4444;
 $renew-color-3: #5c5f62; // #5c6262;
 $renew-color-4: #23273b; // #233b24;
 $renew-color-5: #242429; // #242924;
-$renew-color-1a: #0B3A60;
+$renew-color-6: #8dc340;
 
 
 
@@ -89,12 +90,13 @@ $primary-900: map-get($primary, 900); // Main Dark Primary
 
 $primary-color: $renew-color-1; // $primary-450;
 $secondary-color: $renew-color-2; // $primary-900;
+$tertiary-color: $renew-color-6;
 
 
 
 
 
-$link-color-dark: #1a53ff; //$primary-350;
+$link-color-dark: $primary-color; //$primary-350;
 $link-color-light: $primary-350;
 
 // Grays
@@ -148,7 +150,7 @@ $warn-color: #eae894;
 $validation-color: red;
 
 // Oranges
-$local-install-background-color: #8dc340; //#ffc107;
+$local-install-background-color: $tertiary-color; //#ffc107;
 $bg-debug-highlight: #fbe1c2;
 $bc-filters-engaged: #f9ce15;
 
@@ -1251,7 +1253,7 @@ ul.mat-tree-node {
 }
 
 .side-nav-container .btn-home {
-  color: $primary-color; // #fff;
+  color: $white;
   font-size: 1.3rem;
   margin-left: 20px;
 }
@@ -1691,7 +1693,7 @@ ul.nav-tabs li.active button .tab-icon {
 .menu-panel [mat-menu-item].mat-mdc-menu-item.disabled-menu-item,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
-  color: $primary-250;
+  color: $primary-150;
   background-color: transparent;
   cursor: not-allowed !important;
 }
@@ -2487,12 +2489,12 @@ mat-sidenav {
 }
 
 .progress-value {
-  stroke: $primary-750;
+  stroke: $primary-color; // $primary-750;
   transition: all;
 }
 
 .progress-complete {
-  fill: $secondary-color;
+  fill: $primary-color;
 }
 
 // Upload Export
