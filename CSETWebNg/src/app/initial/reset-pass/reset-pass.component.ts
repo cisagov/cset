@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -37,10 +37,12 @@ import { ConfigService } from '../../services/config.service';
     styleUrls: ['./reset-pass.component.scss']
 })
 
-export class ResetPassComponent {
+export class ResetPassComponent implements OnInit {
     errorMsg = false;
     warning = '';
     model: any = {};
+
+    showOrigin = true;
 
     questionsLoaded = false;
 
@@ -58,6 +60,16 @@ export class ResetPassComponent {
         public configSvc: ConfigService,
         private emailSvc: EmailService) { }
 
+
+    ngOnInit() {
+        switch (this.configSvc.installationMode) {
+            case 'ACET':
+            case 'RRA':
+            case 'RENEW':
+                this.showOrigin = false;
+                break;
+        }
+    }
 
     showCsetLogo() {
         var i = this.configSvc.installationMode;

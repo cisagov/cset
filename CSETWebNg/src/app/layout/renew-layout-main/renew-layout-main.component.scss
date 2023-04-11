@@ -3944,8 +3944,9 @@ h6.dropdown-header {
 }
 
 .gallery-card:hover {
-  border: 1px solid rgba(54, 113, 144, .40);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(183, 204, 215, .30) 60%, rgba(68, 129, 98, 0.3) 100%) !important;
+  /* #2ba8e0 */
+  border: 1px solid rgba(4, 82, 124, 0.4);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(43, 168, 224, 0.3) 100%) !important;
 }
 
 .gallery-card-footer {
