@@ -45,6 +45,9 @@
             <div *ngIf="configSvc.installationMode === 'TSA'">
                 Enter the email address associated with your CSET TSA account.
             </div>
+            <div *ngIf="configSvc.installationMode === 'RENEW'">
+                Enter the email address associated with your CSET Renewables account.
+            </div>
         </div>
 
         <div class="px-4">
@@ -109,9 +112,10 @@
 
         <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
             <div class="c-gray-600 mb-4">
-                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET' && configSvc.installationMode !=='RRA'">
+                <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
+
                 <div *ngIf="configSvc.installationMode === 'RRA'">
                     Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any
                     files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange
