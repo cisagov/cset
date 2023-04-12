@@ -161,6 +161,13 @@ export class MyAssessmentsComponent implements OnInit {
     }
   }
 
+  showCsetOrigin() : boolean {
+    return this.configSvc.installationMode ==='CSET';
+  }
+
+  showAcetOrigin() : boolean {
+    return this.configSvc.installationMode ==='ACET';
+  }
 
   getAssessments() {
     this.sortedAssessments = null;
