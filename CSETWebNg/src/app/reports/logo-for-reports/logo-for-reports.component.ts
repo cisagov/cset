@@ -30,23 +30,30 @@ import { ConfigService } from '../../services/config.service';
 })
 export class LogoForReportsComponent implements OnInit {
   sourceImage: string;
-  LogoAlt:string;
+  LogoAlt: string;
+  heightStyle = '7rem';
+
   constructor(
     public configSvc: ConfigService
   ) { }
 
   ngOnInit(): void {
-    if (this.configSvc.installationMode=='TSA'){
-      this.sourceImage='assets/images/TSA/tsa_insignia_rgbtransparent.png';
-      this.LogoAlt="TSA Logo";
+    if (this.configSvc.installationMode == 'TSA') {
+      this.sourceImage = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
+      this.LogoAlt = "TSA Logo";
     }
-    else if (this.configSvc.installationMode=='ACET'){
-      this.sourceImage='assets/images/ACET/ACET_shield_only.png';
-      this.LogoAlt="ACET Logo";
+    else if (this.configSvc.installationMode == 'ACET') {
+      this.sourceImage = 'assets/images/ACET/ACET_shield_only.png';
+      this.LogoAlt = "ACET Logo";
+    }
+    else if (this.configSvc.installationMode == 'RENEW') {
+      this.sourceImage = 'assets/images/RENEW/INL_cropped.png';
+      this.LogoAlt = 'Idaho National Laboratory Logo';
+      this.heightStyle = '9rem';
     }
     else {
-      this.sourceImage='assets/images/CISA_Logo_183px.png';
-      this.LogoAlt="CISA Logo";
+      this.sourceImage = 'assets/images/CISA_Logo_183px.png';
+      this.LogoAlt = "CISA Logo";
     }
   }
 
