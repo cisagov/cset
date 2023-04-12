@@ -69,7 +69,7 @@ export class ExecutiveSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Executive Summary - CSET");
+    this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {

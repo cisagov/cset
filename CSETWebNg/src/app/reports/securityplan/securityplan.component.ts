@@ -60,7 +60,7 @@ export class SecurityplanComponent implements OnInit {
    *
    */
   ngOnInit() {
-    this.titleService.setTitle("Site Cybersecurity Plan - CSET");
+    this.titleService.setTitle("Site Cybersecurity Plan - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {

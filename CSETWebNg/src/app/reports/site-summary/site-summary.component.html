@@ -24,8 +24,7 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 SITE SUMMARY REPORT
             </p>
         </div>
@@ -37,13 +36,13 @@
 
         <div class="cover-page-bottom mb-4">
             <app-logo-for-reports></app-logo-for-reports>
-            <app-info-block [response]="response"/>
+            <app-info-block [response]="response" />
         </div>
     </div>
 
 
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <app-report-disclaimer></app-report-disclaimer>
     </div>
 

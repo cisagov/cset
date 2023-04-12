@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { CrrService } from './../../../services/crr.service';
 import { CrrReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
+import { ConfigService } from '../../../services/config.service';
 
 @Component({
   selector: 'app-crr-report',
@@ -36,7 +37,10 @@ export class CrrReportComponent implements OnInit {
   crrModel: CrrReportModel;
   securityLevel: string = '';
 
-  constructor(private crrSvc: CrrService, private titleSvc: Title) { }
+  constructor(
+    private crrSvc: CrrService,
+    private titleSvc: Title,
+    public configSvc: ConfigService) { }
 
   ngOnInit(): void {
 
@@ -46,7 +50,7 @@ export class CrrReportComponent implements OnInit {
       localStorage.removeItem('crrReportConfidentiality');
     }
 
-    this.titleSvc.setTitle('CRR Report - CSET');
+    this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
     this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
 
       data.structure.Model.Domain.forEach(d => {
@@ -64,7 +68,7 @@ export class CrrReportComponent implements OnInit {
       this.crrModel = data
       console.log(this.crrModel);
     },
-    error => console.log('Error loading CRR report: ' + (<Error>error).message)
+      error => console.log('Error loading CRR report: ' + (<Error>error).message)
     );
   }
 
