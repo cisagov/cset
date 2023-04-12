@@ -81,6 +81,7 @@ export class MyAssessmentsComponent implements OnInit {
 
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
+  appTitle: string;
   isTSA:boolean =false;
   isCSET:boolean =false;
   exportExtension: string;
@@ -119,6 +120,7 @@ export class MyAssessmentsComponent implements OnInit {
     this.exportExtension = localStorage.getItem('exportExtension');
     this.importExtensions = localStorage.getItem('importExtensions');
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
+    this.appTitle = this.configSvc.config.behaviors.defaultTitle;
     this.appCode = this.configSvc.config.appCode;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
