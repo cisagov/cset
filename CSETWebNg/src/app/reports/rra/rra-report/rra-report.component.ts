@@ -122,7 +122,7 @@ export class RraReportComponent implements OnInit {
     });
 
 
-    this.titleService.setTitle("Ransomware Readiness Report - CSET");
+    this.titleService.setTitle("Ransomware Readiness Report - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {

@@ -62,7 +62,7 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    this.titleService.setTitle("Compare Report - CSET");
+    this.titleService.setTitle("Compare Report - " + this.configSvc.behaviors.defaultTitle);
     var aggId: number = +localStorage.getItem("aggregationId");
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getAggReport('comparereport', aggId).subscribe(

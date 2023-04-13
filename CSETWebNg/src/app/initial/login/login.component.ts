@@ -34,7 +34,17 @@ export class LoginComponent implements OnInit {
 
   constructor(public configSvc: ConfigService) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+
+    /**
+     * If we are at the login page already and the hasUserAgreedToPrivacy warning session storage flag is false or non-existent,
+     * don't show the privacy warning to force a second login.
+    */
+    let hasUserAgreedToPrivacyWarning: string = sessionStorage.getItem('hasUserAgreedToPrivacyWarning');
+    if (hasUserAgreedToPrivacyWarning === 'false' || hasUserAgreedToPrivacyWarning === null) {
+      sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'true')
+    }
+  }
 
   /**
    * Returns a boolean indicating if the specified skin/installationMode
