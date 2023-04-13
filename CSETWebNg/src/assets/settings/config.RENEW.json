@@ -1,10 +1,11 @@
 {
     "NOTE": "This drives the 'Renewables' skin and behavior",
-    "galleryLayout": "CSET",
+    "galleryLayout": "RENEW",
     "installationMode":"RENEW",
     "helpContactEmail": "cset@inl.gov",
     "behaviors": {
-        "defaultTitle":"CSET-Renewables",
+        "defaultTitle":"CSET Renewables",
+        "showDisclaimer": false,
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,

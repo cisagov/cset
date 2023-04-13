@@ -21,40 +21,39 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { environment } from '../../../environments/environment';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'app-logo-for-reports',
-  templateUrl: './logo-for-reports.component.html'
+  selector: 'app-about-renew',
+  templateUrl: './about-renew.component.html',
+  styleUrls: ['./about-renew.component.scss']
 })
-export class LogoForReportsComponent implements OnInit {
-  sourceImage: string;
-  LogoAlt: string;
-  heightStyle = '7rem';
+export class AboutRenewComponent implements OnInit {
 
-  constructor(
-    public configSvc: ConfigService
-  ) { }
+  constructor(private dialog: MatDialogRef<AboutRenewComponent>,
+    public configSvc: ConfigService,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  ngOnInit(): void {
-    if (this.configSvc.installationMode == 'TSA') {
-      this.sourceImage = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
-      this.LogoAlt = "TSA Logo";
+
+    linkerTime: string = null;
+      /**
+       * 
+       */
+      ngOnInit() {
+        if (this.configSvc.config.debug.showBuildTime ?? false) {
+          this.linkerTime = localStorage.getItem('cset.linkerDate');
+        }
+        
+      }
+    version = environment.visibleVersion;
+    helpContactEmail = this.configSvc.helpContactEmail;
+    helpContactPhone = this.configSvc.helpContactPhone;
+
+    close() {
+      return this.dialog.close();
     }
-    else if (this.configSvc.installationMode == 'ACET') {
-      this.sourceImage = 'assets/images/ACET/ACET_shield_only.png';
-      this.LogoAlt = "ACET Logo";
-    }
-    else if (this.configSvc.installationMode == 'RENEW') {
-      this.sourceImage = 'assets/images/RENEW/INL_cropped.png';
-      this.LogoAlt = 'Idaho National Laboratory Logo';
-      this.heightStyle = '9rem';
-    }
-    else {
-      this.sourceImage = 'assets/images/CISA_Logo_183px.png';
-      this.LogoAlt = "CISA Logo";
-    }
+  
   }
-
-}
