@@ -10,19 +10,19 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.0.0",
-    "@angular/common": "^14.0.0",
-    "@angular/compiler": "^14.0.0",
-    "@angular/core": "^14.0.0",
-    "@angular/forms": "^14.0.0",
-    "@angular/platform-browser": "^14.0.0",
-    "@angular/platform-browser-dynamic": "^14.0.0",
-    "@angular/router": "^14.0.0",
-    "@fortawesome/angular-fontawesome": "^0.11.1",
+    "@angular/animations": "^15.2.7",
+    "@angular/common": "^15.2.7",
+    "@angular/compiler": "^15.2.7",
+    "@angular/core": "^15.2.7",
+    "@angular/forms": "^15.2.7",
+    "@angular/platform-browser": "^15.2.7",
+    "@angular/platform-browser-dynamic": "^15.2.7",
+    "@angular/router": "^15.2.7",
+    "@fortawesome/angular-fontawesome": "^0.12.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "install": "^0.13.0",
-    "ngx-sortablejs": "^11.1.0",
+    "@dustfoundation/ngx-sortablejs": "^15.0.0",
     "npm": "^8.19.1",
     "rxjs": "~7.5.0",
     "sortablejs": "^1.15.0",
@@ -30,9 +30,9 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.1",
-    "@angular/cli": "~14.2.1",
-    "@angular/compiler-cli": "^14.0.0",
+    "@angular-devkit/build-angular": "^15.2.6",
+    "@angular/cli": "~15.2.6",
+    "@angular/compiler-cli": "^15.2.7",
     "@types/jasmine": "~4.0.0",
     "@types/sortablejs": "^1.13.0",
     "jasmine-core": "~4.3.0",
@@ -41,6 +41,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.7.2"
+    "typescript": "~4.9.5"
   }
 }
