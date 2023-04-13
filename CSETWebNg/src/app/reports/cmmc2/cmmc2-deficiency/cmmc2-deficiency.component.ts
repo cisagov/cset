@@ -50,7 +50,7 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC 2.0 Deficiency Report - CSET");
+    this.titleService.setTitle("CMMC 2.0 Deficiency Report - " + this.configSvc.behaviors.defaultTitle);
     let appCode = this.configSvc.installationMode;
 
     this.maturitySvc.getCmmcReportData().subscribe(

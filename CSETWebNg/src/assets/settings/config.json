@@ -32,6 +32,7 @@
     "mobileEnvironment": "",
     "behaviors": {
         "defaultTitle":"CSET",
+        "showDisclaimer": true,
         "showModuleBuilder": true,
         "showModuleImport": true,
         "showModuleContentReport": true,
