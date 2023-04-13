@@ -223,7 +223,7 @@ namespace CSETWebCore.Helpers
                     DisplayNumber = myQ.Question_Title,
                     ParentQuestionId = myQ.Parent_Question_Id,
                     QuestionType = myQ.Mat_Question_Type,
-                    Comment = answer.Comment,
+                    Comment = answer?.Comment ?? "",
                     Options = GetOptions(myQ.Mat_Question_Id)
                 };
 

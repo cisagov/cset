@@ -76,7 +76,7 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Detail Report - CSET");
+    this.titleService.setTitle("Site Detail Report - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {

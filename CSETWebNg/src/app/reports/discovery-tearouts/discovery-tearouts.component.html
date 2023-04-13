@@ -42,7 +42,7 @@
 
 
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <app-report-disclaimer></app-report-disclaimer>
     </div>
 

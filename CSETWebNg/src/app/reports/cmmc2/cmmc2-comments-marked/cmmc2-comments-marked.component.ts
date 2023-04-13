@@ -51,7 +51,7 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC 2.0 Comments and Marked for Review - CSET");
+    this.titleService.setTitle("CMMC 2.0 Comments and Marked for Review - " + this.configSvc.behaviors.defaultTitle);
     let appCode = this.configSvc.installationMode;
 
     this.maturitySvc.getCmmcReportData().subscribe(

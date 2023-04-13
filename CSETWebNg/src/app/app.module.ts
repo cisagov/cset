@@ -553,6 +553,7 @@ import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
+import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 
 
 
@@ -1062,7 +1063,8 @@ import { SiteInformationComponent } from './reports/site-information/site-inform
         CpgDeficiencyComponent,
         C2m2DomainMilBarChartComponent,
         InfoBlockComponent,
-        SiteInformationComponent
+        SiteInformationComponent,
+        AboutRenewComponent
     ],
     providers: [
         ConfigService,
