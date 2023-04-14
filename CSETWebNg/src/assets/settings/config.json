@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": [],
+    "currentConfigChain": ["TSA"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -62,6 +62,7 @@
         "showTrend": true,
         "showCompare": true,
         "showEnableProtectedFeatures": true,
+        "showOnlineFooterDisclaimer": false,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
         "additionalUserGuides": []
