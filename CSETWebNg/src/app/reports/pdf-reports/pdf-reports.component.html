@@ -21,25 +21,3 @@
   SOFTWARE.
 -------------------------->
 <button (click)="generatePdf()">View PDF</button>
-
-<!-- Heat Map Chart -->
-<div style="display: none">
-  
-
-  <div #heatMap *ngFor="let domain of donutData; let i = index" id="heatMap{{i}}">
-    <div *ngFor="let row of domain.heatmapRows;">
-      <table class="heatmap">
-        <tr>
-          <td class="heatmap-mil-column">{{row.title }}</td>
-          <td class="heatmap-answer-column" *ngFor="let practice of row.practices">
-              <div>
-                {{ practice.number }}
-              </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-
-
-</div>

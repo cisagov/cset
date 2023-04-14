@@ -29,6 +29,7 @@ import { ReportService } from '../../services/report.service';
 import { result } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import html2canvas from 'html2canvas';
+import { data } from 'jquery';
 
 
 @Component({
@@ -37,13 +38,11 @@ import html2canvas from 'html2canvas';
     styleUrls: ['../reports.scss']
   })
 
-export class PdfReportsComponent implements OnInit, AfterViewInit {
+export class PdfReportsComponent implements OnInit {
   // Input Data
   @Input() assessmentInfo;
   @Input() donutData;
   @Input() tableData;
-
-  @ViewChild('heatMapOne') heatMap;
 
 
   // PDF images & variables
@@ -107,21 +106,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     this.getMilAchievementChartData();
     this.getManagementActivitiesData();
     this.parseTableData();
-  }
-
-  ngAfterViewInit() {
-    let data0 = document.getElementById('heatMap0').innerHTML;
-    let data1 = document.getElementById('heatMap1').innerHTML;
-    let data2 = document.getElementById('heatMap2').innerHTML;
-    let data3 = document.getElementById('heatMap3').innerHTML;
-    let data4 = document.getElementById('heatMap4').innerHTML;
-    let data5 = document.getElementById('heatMap5').innerHTML;
-    let data6 = document.getElementById('heatMap6').innerHTML;
-    let data7 = document.getElementById('heatMap7').innerHTML;
-    let data8 = document.getElementById('heatMap8').innerHTML;
-    let data9 = document.getElementById('heatMap9').innerHTML;
-
-    this.heatMaps.push(data0, data1, data2, data3, data4, data5, data6, data7, data8, data9);
   }
 
 
@@ -218,6 +202,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     this.orderByMil();
   }
 
+
   orderByMil() {
     this.orderedByMil = [];
     let milOnes = [];
@@ -272,6 +257,65 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   }
 
 
+  buildHeatMaps(domain: string, mil: number) {
+    let chartData = [];
+    let widthArray = [];
+    let boxHeight = 25;
+
+    let body = [];
+    let table = {};
+    
+    let fontColor = 'black';
+    
+    for (let i = 0; i < this.objectiveData.length; i++) {
+      if (this.objectiveData[i].title.split('-')[0] == domain) {
+        if (this.objectiveData[i].mil.split('-')[1] == mil || this.objectiveData[i].mil == mil) {
+          chartData.push(this.objectiveData[i]);
+        }
+      }
+    }
+
+    console.log(chartData);
+
+    for (var i = 0; i < chartData.length; i++) {
+      if (domain == "ARCHITECTURE") { // Domain is the only one too long at width 20.
+        widthArray.push(16);
+      } else {
+        widthArray.push(20);
+      }
+    }
+  
+    for (let i = 0; i < chartData.length; i++) {
+      if (chartData[i].answerText == "FI") {
+        fontColor = 'white';
+      } else {
+        fontColor = 'black';
+      }
+
+      if (domain == "ARCHITECTURE") {
+        body.push({text: chartData[i].title.split('-')[1], fontSize: 10, alignment: 'center', marginTop: 6, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
+      } else if (domain == "THIRD-PARTIES") {
+        body.push({text: chartData[i].title.split('-')[2], fontSize: 12, alignment: 'center', marginTop: 5, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
+      } else {
+        body.push({text: chartData[i].title.split('-')[1], fontSize: 12, alignment: 'center', marginTop: 5, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
+      }   
+    }
+
+    table = {
+      table: {
+        widths: widthArray,
+        heights: boxHeight,
+        body: [
+          body
+        ],
+      },
+      marginBottom: 6
+    }
+  
+    return table;
+  }
+  
+
   buildObjectivesTable(domain: string, objective: number) {
     let body = [];
     let id = domain + "-" + objective;
@@ -281,6 +325,10 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.objectiveData.length; i++) {
       if (this.objectiveData[i].answerText == null || this.objectiveData[i].answerText == undefined) {
         this.objectiveData[i].answerText = 'U';
+      }
+
+      if (this.objectiveData[i].mil.split('-')[1] === undefined) {
+        this.objectiveData[i].mil = "MIL-" + this.objectiveData[i].mil;
       }
 
       fillColor = this.getFillColor(this.objectiveData[i].answerText);
@@ -383,9 +431,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
 
 
   buildImplementedTable(domain: string, mil: string, runCount: number) {
-    console.log(" ");
-    console.log("-- Entering Function with: Domain: " + domain + ", MIL: " + mil + ", runCount: " + runCount + " --");
-    console.log(" ");
     let rowHeights = [];
     let partialCount = 0;
     let data = [];
@@ -440,7 +485,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     if (partialCount > 0 ) {
       for (let i = 0; i < data.length; i++) {
         let span = dataCounts[x][1];
-        console.log(data[i]);
         this.sectionSevenBody.push([ {text: (data[i].mil.split('-')[1] != undefined ? data[i].mil.split('-')[1] : data[i].mil), rowSpan: data.length, alignment: 'center'}, {text: data[i].response, rowSpan: span, alignment: 'center', fillColor: this.getFillColor(data[i].response)}, {text: data[i].id, alignment: 'center'}, {text: data[i].practiceText}, {text: data[i].comment} ]);
         
         if (i >= span - 1) {
@@ -511,10 +555,31 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     return color;
   }
 
-  convertHeatMapsToPdf(input: any) {
-    let heatMapPdf = htmlToPdfmake(input);
-    this.convertedHeatMaps.push(heatMapPdf);
+  
+  getHeatMapColor(answer: string) {
+    switch (answer) {
+      case 'FI':
+        return '#265B94';
+      case 'LI':
+        return '#90A5C7';
+      case 'PI':
+        return '#F5DA8C';
+      case 'NI':
+        return '#DCA237';
+      case 'U':
+      case null:
+        return '#E6E6E6';
+    }
   }
+
+  getHeapMapTextColor(answer: string) {
+    if (answer == "FI") {
+      return 'white';
+    } else {
+      return 'black';
+    }
+  }
+
 
   
   generatePdf() {
@@ -706,12 +771,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         // Section 4 Detailed Self-Evaluation Results
         { text: '4. Detailed Self-Evaluation Results', style: 'header', marginBottom: largeSpacing },
         { text: 'This section provides the level of implementation (i.e., Fully Implemented, Largely Implemented, Partially Implemented, and Not Implemented) input to the self-evaluation tool for each C2M2 practice by domain, objective, and MIL. See Section 2.3 Maturity Indicator Level Scoring for a detailed explanation of the scoring process and Section 5 Using the Model for further detail regarding self-evaluation results.', marginBottom: normalSpacing },
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.1 Domain: Asset. Change, and Configuration Management (ASSET)
         { text: '4.1 Domain: Asset, Change, and Configuration Management (ASSET)', style: 'header', marginBottom: largeSpacing },
         { text: 'Manage the organization\'s IT and OT assets, including both hardware and software, and information assets commensurate with the risk to critical infrastructure and organizational objectives', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[0]),
+        
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ASSET", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ASSET", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ASSET", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[0], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ASSET", 1),
@@ -731,12 +825,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 5: ' + this.objectiveTitles[4], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ASSET", 5),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.2 Domain: Threat and Vulnerability Management (THREAT)
         { text: '4.2 Domain: Threat and Vulnerability Management (THREAT)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, identify, analyze, manage, and respond to cybersecurity threats and vulnerabilities, commensurate with the risk to the organization\'s infrastructure (such as critical, IT, and operational) and organizational objectives.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[1]),
+        
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THREAT", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THREAT", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THREAT", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[5], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("THREAT", 1),
@@ -748,12 +871,42 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 3: ' + this.objectiveTitles[7], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("THREAT", 3),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
+
         // Section 4.3 Domain: Risk Management (RISK)
         { text: '4.3 Domain: Risk Management (RISK) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and response to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[2]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RISK", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RISK", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RISK", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[8], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("RISK", 1),
@@ -773,12 +926,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 5: ' + this.objectiveTitles[12], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("RISK", 5),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.4 Domain: Identity and Access Management (ACCESS) 
         { text: '4.4 Domain: Identity and Access Management (ACCESS)', style: 'header', marginBottom: largeSpacing },
         { text: 'Create and manage identities for the entities that may be granted logical or physical access to the organization\'s assets. Control access to the organization\'s assets, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[3]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ACCESS", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ACCESS", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ACCESS", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[13], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ACCESS", 1),
@@ -794,12 +976,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 4: ' + this.objectiveTitles[16], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ACCESS", 4),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.5 Domain: Situational Awareness (SITUATION)
         { text: '4.5 Domain: Situational Awareness (SITUATION)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain activities and technologies to collect, monitor, analyze, alarm, report, and use operational, security, and threat information, including status and summary information from the other model domains, to establish situational awareness for both the organization\'s operational state and cybersecurity state.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[4]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("SITUATION", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("SITUATION", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("SITUATION", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[17], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("SITUATION", 1),
@@ -815,12 +1026,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 4: ' + this.objectiveTitles[20], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("SITUATION", 4),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)
         { text: '4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, analyze, mitigate, respond to, and recovery from cybersecurity events and incidents and to sustain operations during cybersecurity incidents, commensurate with the risk to critical and organizational objectives.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[5]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RESPONSE", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RESPONSE", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("RESPONSE", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1:  ' + this.objectiveTitles[21], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("RESPONSE", 1),
@@ -840,12 +1080,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 5: ' + this.objectiveTitles[25], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("RESPONSE", 5),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)
         { text: '4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain controls to manage the cyber risks arising from suppliers and other third parties, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[6]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THIRD", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THIRD", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("THIRD", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[26], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("THIRD-PARTIES", 1),
@@ -857,12 +1126,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 3: ' + this.objectiveTitles[28], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("THIRD-PARTIES", 3),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.8 Domain: Workforce Management (WORKFORCE)
         { text: '4.8 Domain: Workforce Management (WORKFORCE)', style: 'header', marginBottom: largeSpacing },
         { text: '', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[7]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("WORKFORCE", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("WORKFORCE", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("WORKFORCE", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[29], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("WORKFORCE", 1),
@@ -882,12 +1180,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 5: ' + this.objectiveTitles[33], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("WORKFORCE", 5),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)
         { text: '4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain the structure and behavior of the organization\'s cybersecurity architecture, including controls, processes, technologies, and other elements, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[8]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ARCHITECTURE", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ARCHITECTURE", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("ARCHITECTURE", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[34], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ARCHITECTURE", 1),
@@ -911,12 +1238,41 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         
         { text: 'Objective 6: ' + this.objectiveTitles[39], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("ARCHITECTURE", 6),
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'landscape' },
         
         // Section 4.10 Domain: Cybersecurity Program Management (PROGRAM)
         { text: '4.10 Domain: Cybersecurity Program Management (PROGRAM) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain an enterprise cybersecurity program that provides governance, strategic planning, and sponsorship for the organization\'s cybersecurity activities in a manner that aligns cybersecurity objectives with both the organization\'s strategic objectives and the risk to critical infrastructure.', marginBottom: normalSpacing },
-        htmlToPdfmake(this.heatMaps[9]),
+
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL1", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("PROGRAM", 1),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL2", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("PROGRAM", 2),
+          ]
+        },
+        { columns: [
+          {
+            width: 'auto',
+            text: "MIL3", fontSize: 12, marginTop: 9, marginRight: 10
+          },
+          
+          this.buildHeatMaps("PROGRAM", 3),
+          ]
+        },
+
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
 
         { text: 'Objective 1: ' + this.objectiveTitles[40], style: 'subHeader', marginBottom: smallSpacing },
         this.buildObjectivesTable("PROGRAM", 1),
