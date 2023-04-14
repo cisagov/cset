@@ -275,8 +275,6 @@ export class PdfReportsComponent implements OnInit {
       }
     }
 
-    console.log(chartData);
-
     for (var i = 0; i < chartData.length; i++) {
       if (domain == "ARCHITECTURE") { // Domain is the only one too long at width 20.
         widthArray.push(16);
@@ -284,6 +282,7 @@ export class PdfReportsComponent implements OnInit {
         widthArray.push(20);
       }
     }
+
   
     for (let i = 0; i < chartData.length; i++) {
       if (chartData[i].answerText == "FI") {
@@ -291,10 +290,11 @@ export class PdfReportsComponent implements OnInit {
       } else {
         fontColor = 'black';
       }
+      
 
       if (domain == "ARCHITECTURE") {
         body.push({text: chartData[i].title.split('-')[1], fontSize: 10, alignment: 'center', marginTop: 6, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
-      } else if (domain == "THIRD-PARTIES") {
+      } else if (domain == "THIRD") {
         body.push({text: chartData[i].title.split('-')[2], fontSize: 12, alignment: 'center', marginTop: 5, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
       } else {
         body.push({text: chartData[i].title.split('-')[1], fontSize: 12, alignment: 'center', marginTop: 5, fillColor: this.getHeatMapColor(chartData[i].answerText), color: fontColor});
@@ -1130,6 +1130,7 @@ export class PdfReportsComponent implements OnInit {
         
         // Section 4.8 Domain: Workforce Management (WORKFORCE)
         { text: '4.8 Domain: Workforce Management (WORKFORCE)', style: 'header', marginBottom: largeSpacing },
+        { text: 'Establish and maintain plans, proceudres, technologies, and controls to create a culture of cybersecurity and to ensure the ongoing suitability and competence of personnel, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
         { text: '', marginBottom: normalSpacing },
 
         { columns: [
