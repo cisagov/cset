@@ -1,3 +1,4 @@
+/// <reference path="editorui.js" />
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
@@ -176,11 +177,8 @@ Toolbar.prototype.init = function()
 
 
 	// CSET - add network analysis button
-	this.addSeparator();
 	const analyzeKey = 'analyze';
-	debugger;
 	const analyzeElmt = this.addItems(['-', analyzeKey])[1];
-	console.log(analyzeElmt);
 	if (analyzeElmt) {
 		var analyzeAction = this.editorUi.actions.get(analyzeKey);
 		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
@@ -878,20 +876,14 @@ Toolbar.prototype.addItems = function(keys, c, ignoreDisabled)
 	for (var i = 0; i < keys.length; i++)
 	{
 		var key = keys[i];
-
-		console.log(key);
 		
 		if (key == '-')
 		{
 			items.push(this.addSeparator(c));
-			console.log(1);
-			console.log(items);
 		}
 		else
 		{
 			items.push(this.addItem('geSprite-' + key.toLowerCase(), key, c, ignoreDisabled));
-			console.log(2);
-			console.log(items);
 		}
 	}
 	

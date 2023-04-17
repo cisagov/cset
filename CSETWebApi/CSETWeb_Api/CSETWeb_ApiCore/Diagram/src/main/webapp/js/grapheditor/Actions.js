@@ -1259,6 +1259,25 @@ Actions.prototype.init = function()
 	action.setSelectedCallback(function() { return ui.editor.autosave; });
 	action.isEnabled = isGraphEnabled;
 	action.visible = false;
+
+
+	// CSET - network analysis
+	action = this.addAction('analyze', function ()
+	{
+		this.analyzeToggled = !this.analyzeToggled;
+		console.log('addAction - analyze - toggled = ' + this.analyzeToggled);
+		if (action.onToggle)
+		{
+			action.onToggle(this.analyzeToggled);
+		}
+	});
+	action.setToggleAction(true);
+	action.setSelectedCallback(function ()
+	{
+		return this.analyzeToggled || false;
+	});
+	action.isEnabled = isGraphEnabled;
+	
 	
 	// Help actions
 	this.addAction('help', function()
