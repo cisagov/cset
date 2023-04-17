@@ -6459,6 +6459,8 @@ EditorUi.prototype.destroy = function()
  * Add network analyzer button. 
  */ 
 EditorUi.prototype.toggleAnalyzer = function (e) {
+	console.log('EditorUi.prototype.toggleAnalyzer');
+
 	if (!e.action.toggleAction) {
 		return;
 	}
@@ -6468,6 +6470,8 @@ EditorUi.prototype.toggleAnalyzer = function (e) {
 	if (e.state) {
 		e.elmt.classList.add(klas);
 	}
+
+	debugger;
 
 	if (this.editor) {
 		this.editor.analyzeDiagram = e.state;
