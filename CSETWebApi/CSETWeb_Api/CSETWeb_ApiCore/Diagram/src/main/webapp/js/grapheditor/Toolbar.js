@@ -182,6 +182,8 @@ Toolbar.prototype.init = function()
 	if (analyzeElmt) {
 		var analyzeAction = this.editorUi.actions.get(analyzeKey);
 		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
+			console.log('huey1');
+			console.log(this.editorUi);
 			this.editorUi.toggleAnalyzer({ state: state, elmt: analyzeElmt, action: analyzeAction });
 		});
 	}
