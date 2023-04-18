@@ -554,6 +554,7 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
+import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 
 
 
@@ -1064,7 +1065,8 @@ import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component
         C2m2DomainMilBarChartComponent,
         InfoBlockComponent,
         SiteInformationComponent,
-        AboutRenewComponent
+        AboutRenewComponent,
+        LogoCyberShieldComponent
     ],
     providers: [
         ConfigService,

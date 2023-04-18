@@ -21,5 +21,6 @@
   SOFTWARE. 
 -------------------------->
 <div class="ml-4">
-  <img [src]="sourceImage" [style.height]="heightStyle" [alt]="LogoAlt">
+  <img [src]="sourceImage" [style.height]="heightStyle" [alt]="LogoAlt" *ngIf="showRaster">
+  <app-logo-cyber-shield height="8rem" *ngIf="showVector"></app-logo-cyber-shield>
 </div>
