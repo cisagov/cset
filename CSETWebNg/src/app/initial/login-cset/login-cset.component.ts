@@ -50,6 +50,7 @@ export class LoginCsetComponent implements OnInit {
   
   loading = false;
   incorrect = false;
+  showPassword = false;
   passwordExpired = false;
 
   private isEjectDialogOpen = false;
@@ -188,5 +189,9 @@ export class LoginCsetComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
