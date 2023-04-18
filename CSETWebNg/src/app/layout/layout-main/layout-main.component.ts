@@ -100,7 +100,7 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  shouldShowOnlineDisclaimer() {
+  shouldShowOnlineFooterDisclaimer() {
     return this.configSvc.config.behaviors.showOnlineFooterDisclaimer;
   }
 
