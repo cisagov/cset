@@ -29,9 +29,12 @@ import { ConfigService } from '../../services/config.service';
   templateUrl: './logo-for-reports.component.html'
 })
 export class LogoForReportsComponent implements OnInit {
-  sourceImage: string;
-  LogoAlt: string;
+  sourceImage = '';
+  LogoAlt = '';
   heightStyle = '7rem';
+
+  showRaster = true;
+  showVector = false;
 
   constructor(
     public configSvc: ConfigService
@@ -47,13 +50,18 @@ export class LogoForReportsComponent implements OnInit {
       this.LogoAlt = "ACET Logo";
     }
     else if (this.configSvc.installationMode == 'RENEW') {
-      this.sourceImage = 'assets/images/RENEW/INL_cropped.png';
-      this.LogoAlt = 'Idaho National Laboratory Logo';
-      this.heightStyle = '9rem';
+      // hide the PNG and show the SVG
+      this.showVector = true;
+      this.showRaster = false;
     }
     else {
       this.sourceImage = 'assets/images/CISA_Logo_183px.png';
       this.LogoAlt = "CISA Logo";
+    }
+
+    if (this.sourceImage.length > 0) {
+      this.showRaster = true;
+      this.showVector = false;
     }
   }
 
