@@ -45,3 +45,19 @@ SOFTWARE.
     background-color: #ffffff;
     color: #005387;
 }
+
+.input-container {
+    position: relative;
+    padding: 0;
+}
+
+.input-icon {
+    color: gray; 
+    position: absolute;
+    width: 20px;
+    background-color: #fff;
+    text-align: center; 
+    top: 15px; 
+    right: 10px;
+    cursor: pointer;
+}
