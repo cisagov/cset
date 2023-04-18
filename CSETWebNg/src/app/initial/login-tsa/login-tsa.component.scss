@@ -60,4 +60,14 @@ SOFTWARE.
     top: 15px; 
     right: 10px;
     cursor: pointer;
+    -moz-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    -webkit-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.input-icon:hover, .input-icon:focus {
+    color: black; 
 }
