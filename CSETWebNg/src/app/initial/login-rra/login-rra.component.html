@@ -61,8 +61,18 @@
         <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
           #email="ngModel" required email focusOnInit="true" />
         <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
-        <input type="password" class="form-control mt-2" name="password" placeholder="Password"
-          [(ngModel)]="model.password" #password="ngModel" required />
+        <div class="input-container">
+          <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
+            placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+          <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password"
+            [matTooltipPosition]="'right'">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Hide password"
+            [matTooltipPosition]="'right'">
+            <i class="fas fa-eye-slash"></i>
+          </div>
+        </div>
         <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
         <div class="mt-2 d-flex justify-content-between flex-00a">
           <div class="d-flex flex-nowrap flex-00a">
