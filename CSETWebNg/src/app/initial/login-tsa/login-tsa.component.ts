@@ -51,6 +51,7 @@ export class LoginTsaComponent implements OnInit {
   model: any = {};
   loading = false;
   incorrect = false;
+  showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -190,5 +191,9 @@ export class LoginTsaComponent implements OnInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
