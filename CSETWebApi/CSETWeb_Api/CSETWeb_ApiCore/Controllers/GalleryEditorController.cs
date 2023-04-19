@@ -16,7 +16,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
-#if DEBUG
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {
@@ -322,5 +321,4 @@ namespace CSETWebCore.Api.Controllers
 
     }
 
-#endif
 }
