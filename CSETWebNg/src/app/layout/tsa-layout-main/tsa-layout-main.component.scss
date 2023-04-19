@@ -634,7 +634,7 @@ table.assessment-summary th {
 
 @media only screen and (max-width: 767px) {
   .navbar-collapse.collapse.show {
-    background-color: #052637;
+    background-color: $primary-color;
     z-index: 10000;
     padding: 10px;
   }
