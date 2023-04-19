@@ -96,6 +96,37 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/assets/getConnectionString")]
+        public string GetConnectionString()
+        {
+            try
+            {
+                Console.WriteLine("Reading the path test");
+                string currDirectory = Directory.GetCurrentDirectory();
+                string appSettingsPath = currDirectory + "\\appsettings.json";
+
+                if (System.IO.File.Exists(appSettingsPath))
+                {
+                    JObject document = JObject.Parse(System.IO.File.ReadAllText(appSettingsPath));
+                    JToken element = document["ConnectionStrings"];
+
+                    string connString = element["CSET_DB"].ToString();
+
+                    return connString;
+                }
+                else
+                {
+                    return "Error: \"appsettings.json\" could not be found";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error: something went wrong with changing the connection string in \"appsettings.json\". " + ex.Message;
+            }
+        }
+
+
         Newtonsoft.Json.Linq.JObject processUpdatedJson(HttpRequest context)
         {
             string webpath = _webHost.ContentRootPath;
