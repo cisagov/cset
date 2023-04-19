@@ -69,14 +69,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        [HttpPost]
-        [Route("api/changeconnectionstring")]
-        public IActionResult ChangeConnectionString([FromBody] string connectionString) 
-        {
-            return Ok(ChangeConnString);
-        }
-
-
         /// <summary>
         /// Creates a new Assessment and populates it with the options defined
         /// for the specified gallery ID.
@@ -161,7 +153,7 @@ namespace CSETWebCore.Api.Controllers
             // Hidden Screens
             if (config.HiddenScreens != null && ss != null)
             {
-                ss.Hidden_Screens = String.Join(",", config.HiddenScreens);
+                ss.Hidden_Screens = string.Join(",", config.HiddenScreens);
             }
 
 
@@ -340,17 +332,6 @@ namespace CSETWebCore.Api.Controllers
                           .ToDateTimeUnspecified();
 
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
-        }
-
-
-        private string ChangeConnString(string connectionString)
-        {
-            if (connectionString != null && connectionString.Trim() != "") 
-            {
-                
-                //return this.http.get("./assets/mydata.json");
-            }
-            return "";
         }
 
         
