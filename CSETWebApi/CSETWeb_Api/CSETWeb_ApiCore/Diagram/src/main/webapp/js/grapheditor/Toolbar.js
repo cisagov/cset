@@ -179,8 +179,12 @@ Toolbar.prototype.init = function()
 	// CSET - add network analysis button
 	const analyzeKey = 'analyze';
 	const analyzeElmt = this.addItems(['-', analyzeKey])[1];
+	console.log('huey2');
+	console.log(analyzeElmt);
 	if (analyzeElmt) {
 		var analyzeAction = this.editorUi.actions.get(analyzeKey);
+		console.log('huey3');
+		console.log(analyzeAction);
 		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
 			console.log('huey1');
 			console.log(this.editorUi);

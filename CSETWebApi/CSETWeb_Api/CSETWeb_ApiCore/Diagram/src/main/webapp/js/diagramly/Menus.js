@@ -135,12 +135,17 @@
                 editorUi.sidebar.hideTooltip();
 
 
-                if (App.CSET) {
-                    editorUi.hideDialog();
-                }
-                else {
-                    if (cancel && editorUi.getCurrentFile() == null) {
+                if (!App.CSET) {
+                    if (cancel && !editorUi.getCurrentFile()) {
                         editorUi.showSplash();
+                    }
+                } else {
+                    editorUi.hideDialog();
+                    if (!cancel) {
+                        const file = editorUi.getCurrentFile();
+                        if (file) {
+                            file.save();
+                        }
                     }
                 }
             });
@@ -717,6 +722,11 @@
                 graph.pasteStyle(currentStyle, graph.getSelectionCells())
             }
         }, null, null, Editor.ctrlKey + '+Shift+V');
+
+        // CSET
+        if (App.CSET) {
+            editorUi.actions.get('new').label = mxResources.get('fromTemplate');
+        }
 
         editorUi.actions.put('exportSvg', new Action(mxResources.get('formatSvg') + '...', function () {
             editorUi.showExportDialog(mxResources.get('formatSvg'), true, mxResources.get('export'),
@@ -4081,10 +4091,10 @@
                     this.addMenuItems(menu, ['new'], parent);
                 }
 
-                this.addSubmenu('openFrom', menu, parent);
+                // this.addSubmenu('openFrom', menu, parent); // CSET 
 
                 if (isLocalStorage) {
-                    this.addSubmenu('openRecent', menu, parent);
+                    // this.addSubmenu('openRecent', menu, parent);  // CSET
                 }
 
                 if (file != null && file.constructor == DriveFile) {
@@ -4138,7 +4148,7 @@
                 menu.addSeparator(parent);
                 this.addSubmenu('importFrom', menu, parent);
                 this.addSubmenu('exportAs', menu, parent);
-                menu.addSeparator(parent);
+                /*menu.addSeparator(parent);
                 this.addSubmenu('embed', menu, parent);
                 this.addSubmenu('publish', menu, parent);
                 menu.addSeparator(parent);
@@ -4159,6 +4169,7 @@
                         this.addMenuItems(menu, ['-', 'properties']);
                     }
                 }
+                */    // CSET
 
                 this.addMenuItems(menu, ['-', 'pageSetup'], parent);
 

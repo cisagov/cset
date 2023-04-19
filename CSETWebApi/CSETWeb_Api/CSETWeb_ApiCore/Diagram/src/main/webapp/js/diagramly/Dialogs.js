@@ -4365,7 +4365,19 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		if (editorUi.dialog.container.firstChild == outer &&
 			e.keyCode == 13)
 		{
-			create();
+			// CSET 
+			//create();
+			if (selected.template) {
+				createButton.setAttribute('disabled', 'disabled');
+				create({
+					iscset: selected.template.iscset,
+					xml: selected.template.xml,
+					libs: selected.template.libs,
+					extUrl: selected.template.exturl,
+					infoObj: selected.template.infoobj
+				});
+				createButton.removeAttribute('disabled');
+			}
 		}
 	});
 	
