@@ -22,7 +22,7 @@
 -------------------------->
 <div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
   <div class="p-0 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
-    
+
     <!-- CSET Logo and Name -->
     <div *ngIf="!configSvc.isRunningAnonymous" class="m-4 d-flex justify-content-start flex-00a">
       <app-logo-cset logoHeight="50"></app-logo-cset>
@@ -120,6 +120,14 @@
       </p>
 
       <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
+
+      <div *ngIf="configSvc.config.isRunningAnonymous" class="d-flex flex-column align-items-center mt-2">
+        <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability Disclosure Program</a>
+        <div class="row">
+          <a class="mr-2" href="https://inl.gov/privacy-and-accessibility" rel="noopener noreferrer" target="_blank">Privacy/Accessibility</a>
+          <a class="btn-link-dark" (click)="showDisclaimer()">Disclaimer</a>
+        </div>
+      </div>
 
       <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
         Internet Explorer has been detected as your current browser.

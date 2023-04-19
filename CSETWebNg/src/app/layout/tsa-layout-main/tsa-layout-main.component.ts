@@ -96,8 +96,8 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-    shouldShowOnlineFooterDisclaimer() {
-    return this.configSvc.config.behaviors.showOnlineFooterDisclaimer;
+  shouldShowOnlineFooterDisclaimer() {
+    return this.configSvc.isRunningAnonymous;
   }
 
   showDisclaimer() {
