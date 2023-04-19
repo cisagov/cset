@@ -3,6 +3,7 @@ import { ListTest } from './list-items/listtest.model';
 import { GalleryEditorService } from './services/gallery-editor.service';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faArrows } from '@fortawesome/free-solid-svg-icons';
+import { ConfigService } from './services/config.service';
 
 
 @Component({
@@ -22,12 +23,14 @@ export class AppComponent implements OnInit{
   layouts: any;
 
   constructor(public gallerySvc: GalleryEditorService,
-    library: FaIconLibrary,
+    public library: FaIconLibrary,
+    public configSvc: ConfigService
     ) {
     library.addIcons(faArrows, faArrows);
   }
 
   ngOnInit(): void {
+    console.log(this.configSvc.config)
     this.gallerySvc.getGalleryLayouts().subscribe(
       (data:any)=>{
         this.layouts = data;
