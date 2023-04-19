@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div id="white-panel" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-00a">
+    <div class="p-0 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
         <div *ngIf="showCsetLogo()" class="m-4 d-flex justify-content-start flex-00a">
@@ -47,6 +47,9 @@
             </div>
             <div *ngIf="configSvc.installationMode === 'RENEW'">
                 Enter the email address associated with your CSET Renewables account.
+            </div>
+            <div *ngIf="configSvc.installationMode === 'CF'">
+              Enter the email address associated with your Cyber Florida CSET account.
             </div>
         </div>
 
@@ -127,7 +130,7 @@
                 </div>
             </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-            <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgb.jpg"
+            <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgbtransparent.png"
                 alt="TSA seal" style="width: 175px">
         </div>
 

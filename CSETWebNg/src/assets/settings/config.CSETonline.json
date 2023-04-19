@@ -28,8 +28,7 @@
         "showPrivacyWarning": true,
         "showTrend": false,
         "showCompare": false,
-        "showEnableProtectedFeatures": false,
-        "showOnlineFooterDisclaimer": true
+        "showEnableProtectedFeatures": false
     }
 }
 
