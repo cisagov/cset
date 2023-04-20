@@ -457,6 +457,10 @@ label[required]::after {
   color: $gray-50;
 }
 
+.footer-section-2 a:hover {
+  text-decoration: underline !important;
+}
+
 .footer .card .card-header h5 {
   display: flex;
   justify-content: center;
