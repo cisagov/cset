@@ -23,9 +23,9 @@
 <div class="report-body mb-5">
 
     <app-cover-sheet-a [title]="'CYBERSECURITY PERFORMANCE GOALS (CPG)'" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"></app-cover-sheet-a>
+        [assessmentDate]="assessmentDate" [assessorName]="assessorName" [facilityName]="facilityName"></app-cover-sheet-a>
 
-    <div class="page-break">
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
         <app-report-disclaimer></app-report-disclaimer>
     </div>
 

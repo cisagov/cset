@@ -8,6 +8,8 @@
         public const string assessments = "assessmentsforuser";
         public const string export = "assessment/export";
         public const string import = "assessment/import";
-        public const string connString = "assets/changeConnectionString";
+        public const string changeConnString = "assets/changeConnectionString";
+        public const string getConnString = "assets/getConnectionString";
+
     }
 }

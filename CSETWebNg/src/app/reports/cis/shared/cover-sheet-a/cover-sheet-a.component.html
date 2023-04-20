@@ -22,8 +22,7 @@
 -------------------------->
 <div class="flex-container">
     <div class="column mt-3">
-        <p
-            class="report-title">
+        <p class="report-title">
             {{title}}
         </p>
     </div>
@@ -34,15 +33,7 @@
     </div>
 
     <div class="cover-page-bottom">
-        <app-logo-for-reports></app-logo-for-reports>
-        <div style="flex-direction: column; line-height: 150%; padding-right: 5rem">
-            <div>{{assessmentName}}</div>
-            <div>
-                {{assessmentDate | date:'dd-MMM-yyyy'}}
-            </div>
-            <div>
-                {{assessorName}}
-            </div>
-        </div>
+        <app-logo-for-reports></app-logo-for-reports>        
+        <app-info-block [response]="infoParent"></app-info-block>
     </div>
 </div>

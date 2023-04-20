@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div id="white-panel" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-00a">
+    <div class="p-0 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
         <div *ngIf="showCsetLogo()" class="m-4 d-flex justify-content-start flex-00a">
@@ -43,7 +43,13 @@
                 Enter the email address associated with your ACET account.
             </div>
             <div *ngIf="configSvc.installationMode === 'TSA'">
-                Enter the email address associated with your TSA account.
+                Enter the email address associated with your CSET TSA account.
+            </div>
+            <div *ngIf="configSvc.installationMode === 'RENEW'">
+                Enter the email address associated with your CSET Renewables account.
+            </div>
+            <div *ngIf="configSvc.installationMode === 'CF'">
+              Enter the email address associated with your Cyber Florida CSET account.
             </div>
         </div>
 
@@ -109,9 +115,10 @@
 
         <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-00a">
             <div class="c-gray-600 mb-4">
-                <app-cset-origin *ngIf="configSvc.installationMode !=='ACET' && configSvc.installationMode !=='RRA'">
+                <app-cset-origin *ngIf="showOrigin">
                 </app-cset-origin>
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
+
                 <div *ngIf="configSvc.installationMode === 'RRA'">
                     Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any
                     files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange
@@ -123,7 +130,7 @@
                 </div>
             </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-            <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgb.jpg"
+            <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgbtransparent.png"
                 alt="TSA seal" style="width: 175px">
         </div>
 

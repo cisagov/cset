@@ -69,7 +69,7 @@ export class ExecutiveCMMC2Component implements OnInit, AfterViewInit {
    *
    */
   ngOnInit() {
-    this.titleService.setTitle("Executive Summary - CSET");
+    this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.targetLevel = 0;
     this.reportSvc.getReport('executivematurity').subscribe(

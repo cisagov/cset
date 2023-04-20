@@ -49,11 +49,7 @@ export class BuilderBreadcrumbsComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     // Because this component is only used in the Module Builder, set the browser title here.
-    if (this.configSvc.installationMode === 'ACET') {
-      this.titleSvc.setTitle('Module Builder - ACET');
-    } else {
-      this.titleSvc.setTitle('Module Builder - CSET');
-    }
+    this.titleSvc.setTitle('Module Builder - ' + this.configSvc.behaviors.defaultTitle);
 
     if (!this.setBuilderSvc.navXml) {
       // read XML and populate my local document

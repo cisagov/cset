@@ -32,6 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
 import { SetBuilderService } from '../../services/set-builder.service';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -93,5 +94,9 @@ export class RenewLayoutMainComponent implements OnInit, AfterViewInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }

@@ -42,7 +42,7 @@ export class MvraReportComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("MVRA Report - CSET");
+    this.titleService.setTitle("MVRA Report - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {
