@@ -102,6 +102,8 @@ export class RraReportComponent implements OnInit {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;
 
+      console.log(this.response);
+
       // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
 
@@ -120,7 +122,7 @@ export class RraReportComponent implements OnInit {
     });
 
 
-    this.titleService.setTitle("Ransomware Readiness Report - CSET");
+    this.titleService.setTitle("Ransomware Readiness Report - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {

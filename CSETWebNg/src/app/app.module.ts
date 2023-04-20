@@ -551,6 +551,10 @@ import { C2m2ObjectiveTableComponent } from './reports/c2m2/c2m2-objective-table
 import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
 import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
+import { InfoBlockComponent } from './reports/info-block/info-block.component';
+import { SiteInformationComponent } from './reports/site-information/site-information.component';
+import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
+import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 
 
 
@@ -1058,7 +1062,11 @@ import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficie
         C2m2ObjectiveTableComponent,
         CpgDomainSummaryTableComponent,
         CpgDeficiencyComponent,
-        C2m2DomainMilBarChartComponent
+        C2m2DomainMilBarChartComponent,
+        InfoBlockComponent,
+        SiteInformationComponent,
+        AboutRenewComponent,
+        LogoCyberShieldComponent
     ],
     providers: [
         ConfigService,

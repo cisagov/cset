@@ -65,7 +65,6 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                Console.WriteLine("Reading the path test");
                 string currDirectory = Directory.GetCurrentDirectory();
                 string appSettingsPath = currDirectory+ "\\appsettings.json";
 
@@ -80,8 +79,6 @@ namespace CSETWebCore.Api.Controllers
 
                     System.IO.File.WriteAllText(appSettingsPath, document.ToString());
                     
-
-                    Console.WriteLine($"{document}");
                     return previousConnString;
                 }
                 else
@@ -102,7 +99,6 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                Console.WriteLine("Reading the path test");
                 string currDirectory = Directory.GetCurrentDirectory();
                 string appSettingsPath = currDirectory + "\\appsettings.json";
 
@@ -111,9 +107,7 @@ namespace CSETWebCore.Api.Controllers
                     JObject document = JObject.Parse(System.IO.File.ReadAllText(appSettingsPath));
                     JToken element = document["ConnectionStrings"];
 
-                    string connString = element["CSET_DB"].ToString();
-
-                    return connString;
+                    return element["CSET_DB"].ToString();
                 }
                 else
                 {
@@ -122,7 +116,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception ex)
             {
-                return "Error: something went wrong with changing the connection string in \"appsettings.json\". " + ex.Message;
+                return "Error: something went wrong with getting the connection string in \"appsettings.json\". " + ex.Message;
             }
         }
 

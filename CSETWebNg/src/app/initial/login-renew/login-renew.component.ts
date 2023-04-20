@@ -51,6 +51,7 @@ export class LoginRenewComponent implements OnInit {
   
   loading = false;
   incorrect = false;
+  showPassword = false;
   passwordExpired = false;
 
   private isEjectDialogOpen = false;
@@ -185,5 +186,9 @@ export class LoginRenewComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

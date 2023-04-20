@@ -40,14 +40,8 @@
           </div>
         </div>
         <div class="row justify-content-between">
-          <div class="col text-left">
-            <img [src]="logoPath" style="height: 7rem;">
-          </div>
-          <div class="col text-right" style="margin-left: 0">
-            <div>{{ crrModel?.reportData.information.assessment_Name }}</div>
-            <div>{{ crrModel?.reportData.information.assessment_Date | date:'dd-MMM-yyyy' }}</div>
-            <div>{{ crrModel?.reportData.information.assessor_Name }}</div>
-          </div>
+          <app-logo-for-reports />
+          <app-info-block [response]="crrModel?.reportData"></app-info-block>
         </div>
 
         <div class="page-break"></div>

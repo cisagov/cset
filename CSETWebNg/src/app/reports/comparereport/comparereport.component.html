@@ -37,10 +37,7 @@
     </div>
 
     <div class="cover-page-bottom">
-      <div>
-        <img style="height: 7rem" alt="CISA Logo" src="assets/images/CISA_Logo_183px.png">
-      </div>
-
+      <app-logo-for-reports />
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div> {{response?.information.assessment_Name}} </div>
         <div> {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}} </div>
@@ -49,7 +46,7 @@
     </div>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
     <app-report-disclaimer></app-report-disclaimer>
   </div>
 
