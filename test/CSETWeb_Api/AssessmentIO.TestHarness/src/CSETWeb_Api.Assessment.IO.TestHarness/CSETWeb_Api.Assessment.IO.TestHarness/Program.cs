@@ -9,21 +9,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
-using Serilog.Core;
 using System.Data.SqlClient;
-using System.Xml;
 using System.Data;
-using static System.Net.Mime.MediaTypeNames;
 using System.Net.Http.Json;
 using System.Diagnostics;
 using System.Text;
 using Microsoft.Build.Execution;
-using Microsoft.Build.Evaluation;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWeb_Api.AssessmentIO.TestHarness
 {
@@ -118,7 +112,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 string apiUrl = config["apiUrl"];
 
                 string originalMdfPath = "C:\\Users\\" + username + "\\" + originalDbName + ".mdf";
-                string originalLdfPath = "C:\\Users\\" + username + "\\" + originalDbName + "_0.ldf";
+                string originalLdfPath = "C:\\Users\\" + username + "\\" + originalDbName + "_log.ldf";
 
                 string copyMdfPath = "C:\\Users\\" + username + "\\" + copyDbName + ".mdf";
                 string copyLdfPath = "C:\\Users\\" + username + "\\" + copyDbName + "_log.ldf";
@@ -138,7 +132,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                         // command to count how much to walk the seed back
                         // and to get the last entered identity in the ASSESSMENTS table
                         string dropTableCmd =
-                            "DROP DATABASE IF EXISTS TSAWebCopy;";
+                            $"DROP DATABASE IF EXISTS {copyDbName};";
 
                         SqlCommand sqlCommandDropTable = new SqlCommand(dropTableCmd, sqlConnectionDropTable);
                         IAsyncResult resultDropTable = sqlCommandDropTable.BeginExecuteReader();
@@ -201,7 +195,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity in the ASSESSMENTS table
                 string getRowCountAssessmentCmd =
-                    "select count(*), MAX(Assessment_Id) from [TSAWeb].[dbo].[ASSESSMENTS];";
+                    $"select count(*), MAX(Assessment_Id) from [{originalDbName}].[dbo].[ASSESSMENTS];";
 
                 SqlCommand sqlCommand = new SqlCommand(getRowCountAssessmentCmd, sqlConnection);
                 IAsyncResult result = sqlCommand.BeginExecuteReader();
@@ -226,7 +220,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity in the ASSESSMENT_CONTACTS table
                 string getRowCountContactCmd =
-                    "select count(*), MAX(Assessment_Contact_Id) from [TSAWeb].[dbo].[ASSESSMENT_CONTACTS];";
+                    $"select count(*), MAX(Assessment_Contact_Id) from [{originalDbName}].[dbo].[ASSESSMENT_CONTACTS];";
 
                 sqlCommand = new SqlCommand(getRowCountContactCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -251,7 +245,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity for the ANSWER table
                 string getRowCountAnswerCmd =
-                    "select count(*), MAX(Answer_Id) from [TSAWeb].[dbo].[ANSWER];";
+                    $"select count(*), MAX(Answer_Id) from [{originalDbName}].[dbo].[ANSWER];";
 
                 sqlCommand = new SqlCommand(getRowCountAnswerCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -276,7 +270,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity for the FINDING table
                 string getIdentitytAnswerCmd =
-                "select count(*), MAX(Finding_Id) from [TSAWeb].[dbo].[FINDING];";
+                    $"select count(*), MAX(Finding_Id) from [{originalDbName}].[dbo].[FINDING];";
 
                 sqlCommand = new SqlCommand(getIdentitytAnswerCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -301,7 +295,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity for the DOCUMENT_FILE table
                 string getIdentitytDocumentCmd =
-                "select count(*), MAX(Document_Id) from [TSAWeb].[dbo].[DOCUMENT_FILE];";
+                    $"select count(*), MAX(Document_Id) from [{originalDbName}].[dbo].[DOCUMENT_FILE];";
 
                 sqlCommand = new SqlCommand(getIdentitytDocumentCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -326,7 +320,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity for the DOCUMENT_FILE table
                 string getIdentitytDiagramCmd =
-                "select count(*), MAX(Container_Id) from [TSAWeb].[dbo].[DIAGRAM_CONTAINER];";
+                    $"select count(*), MAX(Container_Id) from [{originalDbName}].[dbo].[DIAGRAM_CONTAINER];";
 
                 sqlCommand = new SqlCommand(getIdentitytDiagramCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -351,7 +345,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 // command to count how much to walk the seed back
                 // and to get the last entered identity for the DOCUMENT_FILE table
                 string getIdentitytIRPCmd =
-                "select count(*), MAX(Answer_Id) from [TSAWeb].[dbo].[ASSESSMENT_IRP];";
+                    $"select count(*), MAX(Answer_Id) from [{originalDbName}].[dbo].[ASSESSMENT_IRP];";
 
                 sqlCommand = new SqlCommand(getIdentitytIRPCmd, sqlConnection);
                 result = sqlCommand.BeginExecuteReader();
@@ -417,51 +411,23 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
                 sqlConnection.Close();
 
-                //Console.WriteLine("Start the CSET API. Then press the 'Enter' key.");
-                //var input2 = Console.ReadLine();
-                var processCmd = new Process();
-                processCmd.StartInfo.FileName = "CMD.exe";
-                processCmd.StartInfo.Arguments = "/K \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\" C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWeb_Api.sln /target:CSETWeb_ApiCore.csproj /property:Configuration=Release";
-                processCmd.StartInfo.UseShellExecute = true;
-                processCmd.StartInfo.CreateNoWindow = false;
-                //processCmd.Start("CMD.exe", "MSBuild C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWeb_Api.sln /target:CSETWebCore.Api:Rebuild /property:Configuration=Release");
-                Console.WriteLine("Building...");
+                var csetWebApiProjPath = config["pathToCsetWebApiCsprojFile"];
+                Console.WriteLine("Building CSETWebApi project at the following path: " + csetWebApiProjPath);
 
-                processCmd.Start();
-                //processCmd.WaitForExit();
+                // Build the main CSETWeb API project
+                Microsoft.Build.Evaluation.Project p = new Microsoft.Build.Evaluation.Project(csetWebApiProjPath, null, "15.0");
+                p.SetGlobalProperty("Configuration", "Debug");
+                bool buildSuccess = p.Build();
 
-                /*
-                string csetProjectPath = $@"C:\Users\{username}\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\CSETWebCore.Api.csproj";
-
-                var globalProperty = new Dictionary<string, string> { { "Configuration", "Debug" }, { "Platform", "Any CPU" } };
-                var buildParameters = new BuildParameters(new ProjectCollection()) { };
-                var buildRequest = new BuildRequestData(csetProjectPath, globalProperty, "Current", new[] { "Build" }, null);
-                BuildResult buildResult = BuildManager.DefaultBuildManager.Build(buildParameters, buildRequest);
-
-                //BuildManager.DefaultBuildManager.EndBuild();
-                //buildResult.
-                if (buildResult.OverallResult == BuildResultCode.Success)
+                if (buildSuccess) 
                 {
-
+                    Console.WriteLine("Build successful. Running the project...");
+                    Process startApi = new Process();
+                    startApi.StartInfo.FileName = Path.GetDirectoryName(csetWebApiProjPath) + @"bin\debug\net7.0\CSETWebCore.Api.exe";
+                    startApi.StartInfo.UseShellExecute = true;
+                    startApi.Start();
                 }
-                //while (buildResult.OverallResult != BuildResultCode.Success)
-                //{
-                //    BuildManager.DefaultBuildManager.BuildRequest(buildRequest)
-                //}
-                */
-                Process startApi = new Process();
-                startApi.StartInfo.FileName = $@"C:\Users\{username}\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\bin\Debug\net7.0\CSETWebCore.Api.exe";
-                //startApi.StartInfo.Arguments = exeparams;
-                startApi.StartInfo.UseShellExecute = true;
-                startApi.Start();
                 
-
-                //startApi.WaitForExit();
-                //stat = startApi.ExitCode;
-                //if (stat != 0)
-                //{
-                //    throw new Functions.log("Error");
-                //}
 
                 Console.WriteLine("Logging in...");
                 Log.Logger.Information("Start of the login process...");
