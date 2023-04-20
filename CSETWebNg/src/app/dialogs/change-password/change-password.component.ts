@@ -106,7 +106,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   checkPassword(event) {
-    this.message = null;
     var temp: ChangePassword = {
       newPassword: event ?? '',
       currentPassword: this.cpwd.currentPassword,
