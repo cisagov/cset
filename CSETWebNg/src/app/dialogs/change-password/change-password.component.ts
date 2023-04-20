@@ -83,6 +83,10 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onPasswordChangeClick(fReg: NgForm): void {
+    if (this.cpwd.newPassword !== this.cpwd.confirmPassword) {
+      return;
+    }
+
     this.auth.changePassword(this.cpwd).subscribe(
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
@@ -102,6 +106,7 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   checkPassword(event) {
+    this.message = null;
     var temp: ChangePassword = {
       newPassword: event ?? '',
       currentPassword: this.cpwd.currentPassword,
