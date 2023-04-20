@@ -62,17 +62,27 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 {
                     var input = Console.ReadLine().Split(" ");
 
-                    exportDirectory = input[0];
-                    logDirectory = input[1];
-                    originalDbName = input[2];
-                    copyDbName = input[3];
-
-                    if (string.IsNullOrEmpty(exportDirectory) || string.IsNullOrEmpty(logDirectory) || string.IsNullOrEmpty(originalDbName) || string.IsNullOrEmpty(copyDbName))
+                    if (input.Length == 4)
                     {
-                        Console.WriteLine("One or more input fields are missing.");
+                        exportDirectory = input[0];
+                        logDirectory = input[1];
+                        originalDbName = input[2];
+                        copyDbName = input[3];
+
+                        if (string.IsNullOrEmpty(exportDirectory) || string.IsNullOrEmpty(logDirectory) || string.IsNullOrEmpty(originalDbName) || string.IsNullOrEmpty(copyDbName))
+                        {
+                            Console.WriteLine("One or more input fields are missing. Please enter all fields separated by spaces:");
+                            Log.Logger.Warning("One or more input fields are missing.");
+                            Log.Logger.Warning($"exportDirectory='{exportDirectory}', logDirectory='{logDirectory}', originalDbName='{originalDbName}', copyDbName='{copyDbName}'.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("One or more input fields are missing. Please enter all fields separated by spaces:");
                         Log.Logger.Warning("One or more input fields are missing.");
                         Log.Logger.Warning($"exportDirectory='{exportDirectory}', logDirectory='{logDirectory}', originalDbName='{originalDbName}', copyDbName='{copyDbName}'.");
                     }
+
                 }
 
                 string username = Environment.UserName;
@@ -417,8 +427,9 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
                 sqlConnection.Close();
 
-                //Console.WriteLine("Start the CSET API. Then press the 'Enter' key.");
-                //var input2 = Console.ReadLine();
+                Console.WriteLine("Start the CSET API. Then press the 'Enter' key.");
+                var input2 = Console.ReadLine();
+                /*
                 var processCmd = new Process();
                 processCmd.StartInfo.FileName = "CMD.exe";
                 processCmd.StartInfo.Arguments = "/K \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\MSBuild\\Current\\Bin\\MSBuild.exe\" C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWeb_Api.sln /target:CSETWeb_ApiCore.csproj /property:Configuration=Release";
@@ -429,7 +440,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
 
                 processCmd.Start();
                 //processCmd.WaitForExit();
-
+                */
                 /*
                 string csetProjectPath = $@"C:\Users\{username}\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\CSETWebCore.Api.csproj";
 
@@ -449,11 +460,11 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 //    BuildManager.DefaultBuildManager.BuildRequest(buildRequest)
                 //}
                 */
-                Process startApi = new Process();
-                startApi.StartInfo.FileName = $@"C:\Users\{username}\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\bin\Debug\net7.0\CSETWebCore.Api.exe";
-                //startApi.StartInfo.Arguments = exeparams;
-                startApi.StartInfo.UseShellExecute = true;
-                startApi.Start();
+                //Process startApi = new Process();
+                //startApi.StartInfo.FileName = $@"C:\Users\{username}\cset\CSETWebApi\CSETWeb_Api\CSETWeb_ApiCore\bin\Debug\net7.0\CSETWebCore.Api.exe";
+                ////startApi.StartInfo.Arguments = exeparams;
+                //startApi.StartInfo.UseShellExecute = true;
+                //startApi.Start();
                 
 
                 //startApi.WaitForExit();
@@ -485,19 +496,6 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
                 Task<string> task = Task.Run(() => ChangeConnString(copyConnString));
                 task.Wait();
                 originalConnString = task.Result.Replace("\"", "").Replace("\\\\", "\\"); //returns what the current connection string is
-
-                //Task<string> taskCheck = Task.Run(() => GetConnString());
-                //taskCheck.Wait();
-                //string currentConnString = taskCheck.Result.Replace("\"", "").Replace("\\\\", "\\"); //returns what the current connection string is
-
-                //if (copyConnString != currentConnString)
-                //{
-                //    Console.WriteLine("Error: Connection string change didn't go through.\n");
-                //} 
-                //else
-                //{
-                //    Console.WriteLine("Success: Connection string successfully changed.\n");
-                //}
 
                 /** 
                     * sleep is so the appsettings.json can register the connection string change,
@@ -722,17 +720,7 @@ namespace CSETWeb_Api.AssessmentIO.TestHarness
         static void Import(string token, string importdir, List<KeyValuePair<string, byte[]>> files)
         {
             string apiUrl = config["apiUrl"];
-            if (Directory.Exists(importdir))
-            {
-                files.Clear();
-                foreach (var filepath in Directory.GetFiles(importdir, "*.csetw", SearchOption.AllDirectories))
-                {
-                    var buffer = File.ReadAllBytes(filepath);
-                    files.Add(new KeyValuePair<string, byte[]>(Path.GetFileName(filepath), buffer));
-                }
-
-            }
-            else
+            if (!Directory.Exists(importdir))
             {
                 Console.WriteLine("The import directory \"" + importdir + "\" could not be found.");
                 Environment.Exit(-4);
