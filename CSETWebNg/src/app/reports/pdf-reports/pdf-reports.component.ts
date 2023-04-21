@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { pdfMake } from 'pdfmake/build/pdfmake';
 import { pdfFonts } from 'pdfmake/build/vfs_fonts';
 import { htmlToPdfmake } from 'html-to-pdfmake';
@@ -30,38 +30,58 @@ import { result } from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import html2canvas from 'html2canvas';
 import { data } from 'jquery';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 @Component({
     selector: 'app-pdf-reports',
     templateUrl: './pdf-reports.component.html',
-    styleUrls: ['../reports.scss']
+    styleUrls: ['./pdf-reports.component.scss']
   })
 
-export class PdfReportsComponent implements OnInit {
+export class PdfReportsComponent implements OnInit, AfterViewInit {
   // Input Data
   @Input() assessmentInfo;
   @Input() donutData;
   @Input() tableData;
 
-
-  // PDF images & variables
+  @ViewChild('figureTwo', {static: false}) figureTwo: ElementRef;
+  @ViewChildren('pieChart') pieChartsFromTemplate: QueryList<ElementRef>;
+  
   pdfDocument: any = null;
+  loading = true;
 
-  coverImage: any = null; // Front C2M2 cover
-  reportGeneratedDate: Date; // Section 1 assessment information
+  // Intro + Section 1
+  coverImage: any = null;
+  reportGeneratedDate: Date;
 
-  milAchievementData: any[] = []; // Section 3.1 data
+  // Section 3
+  milAchievementData: any[] = [];
+  managementActivitiesData = [];
+  tableTwoStructure = [];
+  figureTwoColorScheme = { domain: ['#0A5278'] };
+  figureTwoData: any[] = [];
+  figureTwoChart: any = null;
 
-  managementActivitiesData = []; // Section 3.2 Table data
-  tableTwoStructure = []; // Section 3.2 pdfmake JSON
+  // Section 4
+  objectiveTitles = [];
+  objectiveData = [];
 
-  objectiveTitles = []; // Section 4.1 - 4.10 objective titles
-  objectiveData = []; // Section 4.1 - 4.10 table data
+  pieCharts = [];
+  donutChartData = [];
+  totalQuestionCounts = [];
+  donutChartHTML = [];
+  runningCount = 0;
+
+  donutColorScheme = { domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#E6E6E6'] };
+  //totalQuestionsCount = this.testData.map(x => x.value).reduce((a, b) => a + b);
+  
   heatMaps = [];
   convertedHeatMaps = [];
 
-  commentMap = new Map(); // Section 6 table data
+  // Section 6
+  commentMap = new Map();
   commentData: {
     id: string,
     mil: string,
@@ -70,7 +90,7 @@ export class PdfReportsComponent implements OnInit {
     comment: string
   } [] = [];
 
-  // Section 7 data + arrays for sorting data
+  // Section 7 
   partiallyCompleteData: {
     mil: string,
     response: string,
@@ -83,15 +103,12 @@ export class PdfReportsComponent implements OnInit {
   orderedByDomain = [];
   sectionSevenBody = [];
 
-  // Style Variables
+
+  // Pdf Style Variables
   normalSpacing = 12;
   smallSpacing = 6;
   largeSpacing = 24;
   extraLargeSpacing = 36;
-
-  milAchievementColorScheme = {
-    domain: ['#0A5278']
-  };
 
 
   constructor(
@@ -103,9 +120,86 @@ export class PdfReportsComponent implements OnInit {
   ngOnInit(): void {
     this.reportGeneratedDate = new Date();
     this.getCoverSheetBase64('assets/images/C2M2/C2M2-Report-Cover-Sheet.png');
+    this.getFigureTwoData();
     this.getMilAchievementChartData();
     this.getManagementActivitiesData();
+    this.getDonutChartData();
     this.parseTableData();
+  }
+
+  ngAfterViewInit() {
+    this.pieCharts = this.pieChartsFromTemplate.toArray();
+
+    for (let i = 0; i < this.pieCharts.length; i++) {
+      this.drawOnPieChart(i);
+    }
+  }
+
+  // This places the answer counts inside the pie chart itself
+  private drawOnPieChart(num: number) {
+    // get the ngx chart element
+    let node = this.pieCharts[num].chartElement.nativeElement;
+    let svg;
+
+    // set the margins of the pie chart to be a bit more compact
+    this.pieCharts[num].margins = [10, 10, 10, 10];
+    for (let i = 0; i < 5; i++) {
+      if (i === 3) {
+        // this is the pie chart svg
+        svg = node.childNodes[0];
+      }
+      // at the end of this loop, the node should contain all slices in its children node
+      node = node.childNodes[0];
+    }
+    // get all the slices
+    const slices: HTMLCollection = node.children;
+    let minX = 0;
+    let maxX = 0;
+
+    for (let i = 0; i < slices.length; i++) {
+      const bbox = (<any>slices.item(i)).getBBox();
+      minX = Math.round((bbox.x < minX ? bbox.x : minX) * 10) / 10;
+      maxX = Math.round((bbox.x + bbox.width > maxX ? bbox.x + bbox.width : maxX) * 10) / 10;
+    }
+
+    let data = this.donutChartData[num];
+
+    for (let i = 0; i < slices.length; i++) {
+      const value = data[i].value;
+      let color = 'black';
+      // sets white text only for the FI slice
+      if (data[i].name == "Fully Implemented") {
+        color = 'white';
+      }
+      
+      let startingValue = 0;
+      for (let j = 0; j < i; j++) {
+        startingValue += (data[j].value / this.totalQuestionCounts[num] * 100);
+      }
+      const text = this.generateText(value, maxX - minX, startingValue, color, num);
+      
+      svg.append(text);
+    }
+  }
+
+  private generateText(value: number, diagonal: number, startingValue: number, color: string, num: number) {
+    // create text element
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+
+    const r = Math.round(diagonal / 2.3);
+    // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
+    const angle = ((startingValue * 2 + (value / this.totalQuestionCounts[num] * 100)) / 100 - 0.5) * Math.PI;
+    const x = r * Math.cos(angle);
+    const y = r * Math.sin(angle) + 5;
+
+    text.setAttribute('x', '' + x);
+    text.setAttribute('y', '' + y);
+    text.setAttribute('fill', color);
+    text.textContent = value != 0 ? value.toString() : '';
+    text.setAttribute('style', 'font-size: 12px')
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('pointer-events', 'none');
+    return text;
   }
 
 
@@ -120,6 +214,23 @@ export class PdfReportsComponent implements OnInit {
       reader.onerror = (event: any) => {
         console.log("File could not be read: " + event.target.error.code);
       };
+    });
+  }
+
+
+  xAxisTickFormatting(label) {
+    return `MIL${label}`
+  }
+
+
+  getFigureTwoData() {
+    this.donutData.forEach(domain => {
+      this.figureTwoData.push(
+        {
+          name: domain.shortTitle,
+          value: domain.milAchieved
+        }
+      );
     });
   }
 
@@ -142,6 +253,28 @@ export class PdfReportsComponent implements OnInit {
     }
 
     this.buildManagementTable();
+  }
+
+
+  getDonutChartData() {
+    for (let i = 0; i < this.donutData.length; i++) {
+      for (let j = 0; j < this.donutData[i].objectives.length; j++) {
+        let objective = this.donutData[i].objectives[j];
+
+        this.donutChartData.push(
+        [
+          { name: "Fully Implemented", value: objective.fi },
+          { name: "Largely Implemented", value: objective.li },
+          { name: "Partially Implemented", value: objective.pi },
+          { name: "Not Implemented", value: objective.ni },
+          { name: "Unanswered", value: objective.u },
+        ]);
+
+        let total = (objective.fi + objective.li + objective.pi + objective.ni + objective.u);
+        this.totalQuestionCounts.push(total);
+      }
+    }
+    this.loading = false;
   }
 
 
@@ -522,6 +655,114 @@ export class PdfReportsComponent implements OnInit {
   }
 
 
+  buildDonutChart(num: number, objectives: any, position: number) {
+    let htmlToPdfmake = require('html-to-pdfmake');
+    let htmlMakeObjects = [];
+    let donutChartArray = [];
+    let innerNumValues = [];
+    let innerNumArray = [];
+    let donutNames = [];
+    let tableWidth = [];
+
+    let timesRun = 0;
+    for (let i = this.runningCount; timesRun < num; i++) {
+      htmlMakeObjects.push( htmlToPdfmake(this.donutChartHTML[i]) );
+      innerNumValues.push(this.totalQuestionCounts[i]);
+      innerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 12px;">' + this.totalQuestionCounts[i]  + '</text></svg>');
+      timesRun++;
+    }
+
+    // Grab the raw svg of each ngx chart so we can move it around the page
+    for (let i = 0; i < htmlMakeObjects.length; i++) {
+      let donutSvg = htmlMakeObjects[i][0].stack[0].stack[0].stack[0].svg;
+      let donutMargins = [];
+      let numberMargins = [];
+
+      if (objectives.length == 6) {
+        donutMargins = [11, 0, 0, 0];
+        numberMargins = [-62, 54, 0, 0];
+        if (innerNumValues[i] > 9) {
+          numberMargins = [-65, 54, 0, 0];
+        }
+      } else if (objectives.length == 5) {
+        donutMargins = [22, 0, 0, 0];
+        numberMargins = [-76, 54, 0, 0];
+        if (innerNumValues[i] > 9) {
+          numberMargins = [-79, 54, 0, 0];
+        }
+      } else if (objectives.length == 4) {
+        donutMargins = [40, 0, 0, 0];
+        numberMargins = [-96, 54, 0, 0];
+        if (innerNumValues[i] > 9) {
+          numberMargins = [-99, 54, 0, 0];
+        }
+      } else if (objectives.length == 3) {
+        donutMargins = [72, 0, 0, 0];
+        numberMargins = [-127, 54, 0, 0];
+        if (innerNumValues[i] > 9) {
+          numberMargins = [-130, 54, 0, 0];
+        }
+      }
+
+      donutChartArray.push( {svg: donutSvg, margin: donutMargins}, {svg: innerNumArray[i], margin: numberMargins} );
+    }
+
+    for (let i = 0; i < num; i++) {
+      donutNames.push( {text: objectives[i].title, alignment: 'center'}, {text: ''} );
+      tableWidth.push('*');
+      tableWidth.push(0);
+    }
+
+    let tableLegend = {
+      layout: 'noBorders',    
+      table: {
+        widths: [15, 134, 10, 140, 10, 130],
+        heights: 10,
+        body:[
+          [{text: '', fillColor: '#265B94'}, 'Fully Implemented (FI)', {text: '', fillColor: '#F5DABC'}, 'Partially Implemented (PI)', {text: '', fillColor: '#E6E6E6'}, 'Unanswered (U)'],
+          ['', '', '', '', '', ''],
+          [{text: '', fillColor: '#90A5C7'}, 'Largely Implemented (LI)', {text: '', fillColor: '#DCA237'}, 'Not Implemented (NI)', '', ''], 
+        ],
+      },
+    }
+
+    let donutSection = {
+      table: {
+        widths: tableWidth,
+        body: [
+          donutChartArray,
+          donutNames,
+        ],
+      },
+      layout: 'noBorders',
+    }
+
+    let table = {
+      layout: {
+          hLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.body.length) ? 0.5 : 0;
+          },
+          vLineWidth: function (i, node) {
+              return (i === 0 || i === node.table.widths.length) ? 0.5 : 0;
+          },
+      },
+      table: {
+          width: [15, 134, 10, 140, 10, 130],
+          heights: 10,
+          body: [
+              [tableLegend],
+              [{text: '', marginBottom: 15}],
+              [donutSection],
+          ],
+      },
+      marginBottom: 20,
+  }
+
+    this.runningCount += num;
+    return table;
+  }
+
+
   // Used by the comment table to change "FI" into Fully Implemented (FI)"
   formatResponse(text: string) {
     if (text === 'FI') {
@@ -580,9 +821,20 @@ export class PdfReportsComponent implements OnInit {
     }
   }
 
+  startPdf(download) {
+    setTimeout(() => {
+      this.figureTwoChart = document.getElementById('figureTwo').innerHTML;
+
+      for (let i = 0; i < this.donutChartData.length; i++) {
+        this.donutChartHTML.push(document.getElementById('donutChart' + i).innerHTML);
+      }
+
+      this.generatePdf(download);
+    }, 1500);
+  }
 
   
-  generatePdf() {
+  generatePdf(download) {
     let normalSpacing = 12;
     let smallSpacing = 6;
     let largeSpacing = 24;
@@ -730,6 +982,7 @@ export class PdfReportsComponent implements OnInit {
         // Section 3.1 MIL Achievement by Domain
         { text: '3.1 MIL Achievement by Domain', style: 'header', marginBottom: extraLargeSpacing },
         { text: 'Figure 2 shows the MIL achieved for each C2M2 domain.', marginBottom: normalSpacing },
+        htmlToPdfmake(this.figureTwoChart),
         { text: 'Figure 2: MIL Achieved by Domain', style: 'caption', marginBottom: normalSpacing },
         { text: '', pageBreak: 'after' },
         
@@ -775,8 +1028,10 @@ export class PdfReportsComponent implements OnInit {
         
         // Section 4.1 Domain: Asset. Change, and Configuration Management (ASSET)
         { text: '4.1 Domain: Asset, Change, and Configuration Management (ASSET)', style: 'header', marginBottom: largeSpacing },
-        { text: 'Manage the organization\'s IT and OT assets, including both hardware and software, and information assets commensurate with the risk to critical infrastructure and organizational objectives', marginBottom: normalSpacing },
+        { text: 'Manage the organization\'s IT and OT assets, including both hardware and software, and information assets commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
         
+        this.buildDonutChart(5, this.donutData[0].objectives, 0),
+       
         { columns: [
           {
             width: 'auto',
@@ -831,6 +1086,8 @@ export class PdfReportsComponent implements OnInit {
         { text: '4.2 Domain: Threat and Vulnerability Management (THREAT)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, identify, analyze, manage, and respond to cybersecurity threats and vulnerabilities, commensurate with the risk to the organization\'s infrastructure (such as critical, IT, and operational) and organizational objectives.', marginBottom: normalSpacing },
         
+        this.buildDonutChart(3, this.donutData[1].objectives, 1),
+
         { columns: [
           {
             width: 'auto',
@@ -877,6 +1134,8 @@ export class PdfReportsComponent implements OnInit {
         // Section 4.3 Domain: Risk Management (RISK)
         { text: '4.3 Domain: Risk Management (RISK) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and response to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders.', marginBottom: normalSpacing },
+
+        this.buildDonutChart(5, this.donutData[2].objectives, 2),
 
         { columns: [
           {
@@ -932,6 +1191,8 @@ export class PdfReportsComponent implements OnInit {
         { text: '4.4 Domain: Identity and Access Management (ACCESS)', style: 'header', marginBottom: largeSpacing },
         { text: 'Create and manage identities for the entities that may be granted logical or physical access to the organization\'s assets. Control access to the organization\'s assets, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
 
+        this.buildDonutChart(4, this.donutData[3].objectives, 3),
+
         { columns: [
           {
             width: 'auto',
@@ -982,6 +1243,8 @@ export class PdfReportsComponent implements OnInit {
         { text: '4.5 Domain: Situational Awareness (SITUATION)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain activities and technologies to collect, monitor, analyze, alarm, report, and use operational, security, and threat information, including status and summary information from the other model domains, to establish situational awareness for both the organization\'s operational state and cybersecurity state.', marginBottom: normalSpacing },
 
+        this.buildDonutChart(4, this.donutData[4].objectives, 4),
+
         { columns: [
           {
             width: 'auto',
@@ -1031,6 +1294,8 @@ export class PdfReportsComponent implements OnInit {
         // Section 4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)
         { text: '4.6 Domain: Event and Incident Response, Continuity of Operations (RESPONSE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, procedures, and technologies to detect, analyze, mitigate, respond to, and recovery from cybersecurity events and incidents and to sustain operations during cybersecurity incidents, commensurate with the risk to critical and organizational objectives.', marginBottom: normalSpacing },
+
+        this.buildDonutChart(5, this.donutData[5].objectives, 5),
 
         { columns: [
           {
@@ -1086,6 +1351,8 @@ export class PdfReportsComponent implements OnInit {
         { text: '4.7 Domain: Third-Party Risk Management (THIRD-PARTIES)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain controls to manage the cyber risks arising from suppliers and other third parties, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
 
+        this.buildDonutChart(3, this.donutData[6].objectives, 6),
+
         { columns: [
           {
             width: 'auto',
@@ -1132,6 +1399,8 @@ export class PdfReportsComponent implements OnInit {
         { text: '4.8 Domain: Workforce Management (WORKFORCE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain plans, proceudres, technologies, and controls to create a culture of cybersecurity and to ensure the ongoing suitability and competence of personnel, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
         { text: '', marginBottom: normalSpacing },
+
+        this.buildDonutChart(5, this.donutData[7].objectives, 7),
 
         { columns: [
           {
@@ -1186,6 +1455,8 @@ export class PdfReportsComponent implements OnInit {
         // Section 4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)
         { text: '4.9 Domain: Cybersecurity Architecture (ARCHITECTURE)', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain the structure and behavior of the organization\'s cybersecurity architecture, including controls, processes, technologies, and other elements, commensurate with the risk to critical infrastructure and organizational objectives.', marginBottom: normalSpacing },
+
+        this.buildDonutChart(6, this.donutData[8].objectives, 8),
 
         { columns: [
           {
@@ -1244,6 +1515,8 @@ export class PdfReportsComponent implements OnInit {
         // Section 4.10 Domain: Cybersecurity Program Management (PROGRAM)
         { text: '4.10 Domain: Cybersecurity Program Management (PROGRAM) ', style: 'header', marginBottom: largeSpacing },
         { text: 'Establish and maintain an enterprise cybersecurity program that provides governance, strategic planning, and sponsorship for the organization\'s cybersecurity activities in a manner that aligns cybersecurity objectives with both the organization\'s strategic objectives and the risk to critical infrastructure.', marginBottom: normalSpacing },
+
+        this.buildDonutChart(3, this.donutData[9].objectives, 9),
 
         { columns: [
           {
@@ -1400,6 +1673,11 @@ export class PdfReportsComponent implements OnInit {
     }
   };
 
+  if (download) {
+    pdfMake.createPdf(this.pdfDocument).download();
+  } else {
     pdfMake.createPdf(this.pdfDocument).open();
+  }
+
   }
 }
