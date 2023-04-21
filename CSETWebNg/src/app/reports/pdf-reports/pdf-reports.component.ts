@@ -26,12 +26,7 @@ import { pdfMake } from 'pdfmake/build/pdfmake';
 import { pdfFonts } from 'pdfmake/build/vfs_fonts';
 import { htmlToPdfmake } from 'html-to-pdfmake';
 import { ReportService } from '../../services/report.service';
-import { result } from 'lodash';
 import { HttpClient } from '@angular/common/http';
-import html2canvas from 'html2canvas';
-import { data } from 'jquery';
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 
 @Component({
