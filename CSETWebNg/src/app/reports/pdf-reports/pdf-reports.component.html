@@ -47,6 +47,7 @@
   </ngx-charts-bar-horizontal>
 </div>
 
+<div style="visibility: hidden">
 <div *ngFor="let objective of donutChartData; let i = index;">
   <div id="{{'donutChart' + i}}">
     <ngx-charts-pie-chart #pieChart
@@ -70,6 +71,7 @@
       </svg>
     </ng-container>
   </div>
+</div>
 </div>
 
 
