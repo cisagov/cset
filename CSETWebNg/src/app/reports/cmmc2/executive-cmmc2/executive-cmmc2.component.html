@@ -24,8 +24,7 @@
 
   <div class="flex-container">
     <div class="column mt-3">
-      <p
-        class="report-title">
+      <p class="report-title">
         EXECUTIVE SUMMARY <span class="text-nowrap">CMMC 2.0</span>
       </p>
     </div>
@@ -36,20 +35,12 @@
     </div>
 
     <div class="cover-page-bottom">
-      <app-logo-for-reports></app-logo-for-reports>
-      <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
-        <div>{{responseGeneral?.information.assessment_Name}}</div>
-        <div>
-          {{responseGeneral?.information.assessment_Date | date:'dd-MMM-yyyy'}}
-        </div>
-        <div>
-          {{responseGeneral?.information.assessor_Name}}
-        </div>
-      </div>
+      <app-logo-for-reports />
+      <app-info-block [response]="responseGeneral" />
     </div>
   </div>
 
-  <div class="page-break">
+  <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
     <app-report-disclaimer></app-report-disclaimer>
   </div>
 
@@ -57,7 +48,8 @@
     <app-report-advisory></app-report-advisory>
   </div>
 
-  <div class="page-break" *ngIf="responseGeneral?.information.assessment_Description || responseGeneral?.information?.Executive_Summary">
+  <div class="page-break"
+    *ngIf="responseGeneral?.information.assessment_Description || responseGeneral?.information?.Executive_Summary">
     <h1 class="pageHeader" *ngIf="responseGeneral?.information.assessment_Description">High-Level Assessment Description
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(responseGeneral?.information.Assessment_Description)">

@@ -40,7 +40,6 @@ export class CmmcDeficiencyComponent implements OnInit {
 
   model: any;
   loading: boolean = false;
-  logoPath: string = '';
   keyToCategory: any;
 
   deficienciesList = [];
@@ -55,15 +54,8 @@ export class CmmcDeficiencyComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC Deficiency Report - CSET");
+    this.titleService.setTitle("CMMC Deficiency Report - " + this.configSvc.behaviors.defaultTitle);
     let appCode = this.configSvc.installationMode;
-
-    if (!appCode || appCode === 'CSET') {
-      this.logoPath = "assets/images/CISA_Logo_1831px.png";
-    }
-    else if (appCode === 'TSA') {
-      this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
-    }
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {

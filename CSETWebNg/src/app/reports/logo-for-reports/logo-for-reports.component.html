@@ -20,6 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div>
-  <img [src]="sourceImage" style="height: 7rem" [alt]="LogoAlt">
+<div class="ml-4">
+  <img [src]="sourceImage" [style.height]="heightStyle" [alt]="LogoAlt" *ngIf="showRaster">
+  <app-logo-cyber-shield height="8rem" *ngIf="showVector"></app-logo-cyber-shield>
 </div>

@@ -34,6 +34,7 @@ export class EjectionComponent implements OnInit {
   constructor(private dialog: MatDialogRef<EjectionComponent>) { }
 
   ngOnInit() {
+    sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'true');
   }
 
   close() {

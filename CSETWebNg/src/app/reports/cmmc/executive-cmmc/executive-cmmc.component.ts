@@ -87,7 +87,7 @@ export class ExecutiveCMMCComponent implements OnInit, AfterViewChecked {
     });
 
 
-    this.titleService.setTitle("Executive Summary - CSET");
+    this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('executivematurity').subscribe((r: any) => {
       this.response = r;

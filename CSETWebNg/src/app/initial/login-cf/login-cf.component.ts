@@ -54,6 +54,7 @@ export class LoginCfComponent implements OnInit {
   loading = false;
   incorrect = false;
   passwordExpired = false;
+  showPassword = false;
 
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
@@ -187,5 +188,9 @@ export class LoginCfComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
