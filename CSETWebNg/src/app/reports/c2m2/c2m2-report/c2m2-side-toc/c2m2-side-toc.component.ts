@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
 
-
 @Component({
   selector: 'app-c2m2-side-toc',
   templateUrl: './c2m2-side-toc.component.html',
@@ -41,7 +40,6 @@ export class C2m2SideTocComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
-   console.log(this.domainData);
   }
 
   scrollToElement(element) {
