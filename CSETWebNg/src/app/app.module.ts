@@ -1064,7 +1064,7 @@ import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-
         CpgDomainSummaryTableComponent,
         CpgDeficiencyComponent,
         C2m2DomainMilBarChartComponent,
-        PdfReportsComponent
+        PdfReportsComponent,
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
