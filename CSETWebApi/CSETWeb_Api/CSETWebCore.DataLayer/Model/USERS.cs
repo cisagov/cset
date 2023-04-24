@@ -19,6 +19,7 @@ namespace CSETWebCore.DataLayer.Model
             ASSESSMENTS = new HashSet<ASSESSMENTS>();
             ASSESSMENT_CONTACTS = new HashSet<ASSESSMENT_CONTACTS>();
             PASSWORD_HISTORY = new HashSet<PASSWORD_HISTORY>();
+            TEMP_PASSWORDS = new HashSet<TEMP_PASSWORDS>();
             USER_EMAIL_HISTORY = new HashSet<USER_EMAIL_HISTORY>();
         }
 
@@ -40,7 +41,8 @@ namespace CSETWebCore.DataLayer.Model
         public string LastName { get; set; }
         public Guid? Id { get; set; }
         public int EmailSentCount { get; set; }
-        public bool IsActive { get; set; }
+        [Required]
+        public bool? IsActive { get; set; }
 
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }
@@ -50,6 +52,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
+        [InverseProperty("User")]
+        public virtual ICollection<TEMP_PASSWORDS> TEMP_PASSWORDS { get; set; }
         [InverseProperty("User")]
         public virtual ICollection<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
     }

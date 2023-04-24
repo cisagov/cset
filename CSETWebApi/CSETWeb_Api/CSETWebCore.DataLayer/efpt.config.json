@@ -615,6 +615,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Nlogs]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PARAMETER_ASSESSMENT]",
          "ObjectType": 0
       },
@@ -824,6 +828,10 @@
       },
       {
          "Name": "[dbo].[SYMBOL_GROUPS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TEMP_PASSWORDS]",
          "ObjectType": 0
       },
       {

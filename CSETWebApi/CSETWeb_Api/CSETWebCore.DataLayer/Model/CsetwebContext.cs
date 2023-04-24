@@ -181,6 +181,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<NIST_SAL_INFO_TYPES_DEFAULTS> NIST_SAL_INFO_TYPES_DEFAULTS { get; set; }
         public virtual DbSet<NIST_SAL_QUESTIONS> NIST_SAL_QUESTIONS { get; set; }
         public virtual DbSet<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
+        public virtual DbSet<Nlogs> Nlogs { get; set; }
         public virtual DbSet<PARAMETERS> PARAMETERS { get; set; }
         public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
@@ -234,6 +235,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
+        public virtual DbSet<TEMP_PASSWORDS> TEMP_PASSWORDS { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -342,13 +344,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
 
                 entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
 
@@ -437,6 +439,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.ISE_StateLed).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
 
@@ -2457,6 +2461,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_NIST_SAL_QUESTIONS");
             });
 
+            modelBuilder.Entity<Nlogs>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+            });
+
             modelBuilder.Entity<PARAMETERS>(entity =>
             {
                 entity.HasKey(e => e.Parameter_ID)
@@ -3281,6 +3290,16 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
             });
 
+            modelBuilder.Entity<TEMP_PASSWORDS>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.GeneratedDate });
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TEMP_PASSWORDS)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_TEMP_PASSWORDS_TEMP_PASSWORDS");
+            });
+
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
             {
                 entity.HasKey(e => e.Universal_Area_Name)
@@ -3360,6 +3379,8 @@ namespace CSETWebCore.DataLayer.Model
                     .HasName("PK_USERS_1");
 
                 entity.HasComment("A collection of USERS records");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
             });
