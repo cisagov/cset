@@ -25,6 +25,11 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool ValidatePassword(string password, string hash, string salt)
         {
+            if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(hash) || string.IsNullOrWhiteSpace(salt)) 
+            {
+                return false;
+            }
+
             var hashArray = Convert.FromBase64String(hash); 
             var saltArray = Convert.FromBase64String(salt);
 
