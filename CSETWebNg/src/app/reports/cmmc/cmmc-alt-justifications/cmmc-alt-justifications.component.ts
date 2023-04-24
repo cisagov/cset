@@ -36,7 +36,6 @@ export class CmmcAltJustificationsComponent implements OnInit {
 
   model: any;
   loading: boolean = false;
-  logoPath: string = '';
   keyToCategory: any;
 
   altJustList = [];
@@ -51,15 +50,8 @@ export class CmmcAltJustificationsComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC Alternate Justifications - CSET");
+    this.titleService.setTitle("CMMC Alternate Justifications - " + this.configSvc.behaviors.defaultTitle);
     let appCode = this.configSvc.installationMode;
-
-    if (!appCode || appCode === 'CSET') {
-      this.logoPath = "assets/images/CISA_Logo_1831px.png";
-    }
-    else if (appCode === 'TSA') {
-      this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
-    }
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {

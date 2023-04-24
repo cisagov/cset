@@ -100,6 +100,10 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
+  isRunningAnonymous() {
+    return this.configSvc.isRunningAnonymous;
+  }
+
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent);
   }

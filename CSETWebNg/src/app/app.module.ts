@@ -495,12 +495,14 @@ import { IseExaminerComponent } from './reports/ise-examiner/ise-examiner.compon
 import { IseDataComponent } from './reports/ise-data/ise-data.component';
 import { OptionBlockComponent } from './assessment/questions/maturity-questions/option-block/option-block.component';
 import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
+import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { DemographicsExtendedComponent } from './assessment/prepare/assessment-info/demographics-extended/demographics-extended.component';
 import { DemographicExtendedService } from './services/demographic-extended.service';
 import { SectorHelpComponent } from './dialogs/sector-help/sector-help.component';
 import { AnalyticsCompareComponent } from './assessment/results/analytics-compare/analytics-compare.component';
 import { AssessmentDetailCfComponent } from './assessment/prepare/assessment-info/assessment-detail-cf/assessment-detail-cf.component';
 import { LoginCfComponent } from './initial/login-cf/login-cf.component';
+import { LoginRenewComponent } from './initial/login-renew/login-renew.component';
 import { MvraGapsComponent } from './assessment/results/mat-mvra/mvra-gaps/mvra-gaps.component';
 import { MvraSummaryComponent } from './assessment/results/mat-mvra/mvra-summary/mvra-summary.component';
 import { MvraAnswerFunctionsComponent } from './assessment/results/mat-mvra/mvra-answer-functions/mvra-answer-functions.component';
@@ -550,6 +552,10 @@ import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-dom
 import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
 import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component';
+import { InfoBlockComponent } from './reports/info-block/info-block.component';
+import { SiteInformationComponent } from './reports/site-information/site-information.component';
+import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
+import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 
 
 
@@ -1001,12 +1007,14 @@ import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component
         SearchPageComponent,
         LogoTsaComponent,
         CfLayoutMainComponent,
+        RenewLayoutMainComponent,
         OptionBlockComponent,
         DemographicsExtendedComponent,
         SectorHelpComponent,
         AnalyticsCompareComponent,
         AssessmentDetailCfComponent,
         LoginCfComponent,
+        LoginRenewComponent,
         MvraGapsComponent,
         MvraSummaryComponent,
         MvraAnswerFunctionsComponent,
@@ -1057,6 +1065,10 @@ import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component
         CpgDeficiencyComponent,
         C2m2DomainMilBarChartComponent,
         PdfReportsComponent
+        InfoBlockComponent,
+        SiteInformationComponent,
+        AboutRenewComponent,
+        LogoCyberShieldComponent
     ],
     providers: [
         ConfigService,

@@ -32,6 +32,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 import { LayoutService } from '../../services/layout.service';
+import { JwtParser } from '../../helpers/jwt-parser';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -50,6 +52,7 @@ export class LoginTsaComponent implements OnInit {
   model: any = {};
   loading = false;
   incorrect = false;
+  showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -80,22 +83,44 @@ export class LoginTsaComponent implements OnInit {
       this.continueStandAlone();
     } else {
       // reset login status
-      //this.authenticationService.logout();
       // default the page as 'login'
       this.mode = 'LOGIN';
-      if (this.route.snapshot.params['eject']) {
-        localStorage.clear();
-        if (!this.isEjectDialogOpen) {
-          this.isEjectDialogOpen = true;
-          this.dialog
-            .open(EjectionComponent)
-            .afterClosed()
-            .subscribe(() => (this.isEjectDialogOpen = false));
-        }
+      this.checkForEjection(this.route.snapshot.queryParams['token']);
+      // Clear token query param to make the url look nicer.
+      if (this.route.snapshot.queryParams['token']) {
+        this.router.navigate([], { queryParams: {} });
       }
     }
     if (this.route.snapshot.params['id']) {
       this.assessmentId = +this.route.snapshot.params['id'];
+    }
+  }
+
+    /**
+   *
+   */
+  checkForEjection(token: string) {
+    if (this.route.snapshot.params['eject']) {
+
+      let minutesSinceExpiration = 0;
+
+      if (token) {
+        const jwt = new JwtParser();
+        const parsedToken = jwt.decodeToken(token);
+        const expTimeUnix = parsedToken.exp;
+        const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
+        // divide by 60 to convert seconds to minutes
+        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
+      }
+
+      // Only show eject dialog if token has been expired for less than an hour.
+      if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
+        this.isEjectDialogOpen = true;
+        this.dialog
+          .open(EjectionComponent)
+          .afterClosed()
+          .subscribe(() => (this.isEjectDialogOpen = false));
+      }
     }
   }
 
@@ -167,5 +192,13 @@ export class LoginTsaComponent implements OnInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }
