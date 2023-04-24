@@ -27,13 +27,13 @@
 </div>
 
 <div *ngIf="!loading">
-  <h1 class="pagebreak-before">6. Self-Evaluation Notes</h1>
+  <h1>6. Self-Evaluation Notes</h1>
   <p>
     This section lists all practices for which notes were captured during the self-evaluation, regardless of implementation
     status. Reviewing the notes may provide the rationale for the selection of an implementation response during the
     completion of the self-evaluation. The tables in this section are ordered by model practice identifier.
   </p>
-<!--
+
   <div *ngFor="let domain of domainTitles; let i = index;">
     <h1 style="color: #265B94;">
       Domain: {{ domainTitles[i] }} ({{ domainCategories[i] }})
@@ -49,7 +49,7 @@
       </tr>-->
 
       <!-- If we have comments -->
-      <!--<ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
+      <ng-container *ngIf="checkForComments(domainCategories[i]); else noComments">
         <ng-container *ngFor="let row of commentTableData">
           <ng-container *ngIf="checkCategory(row.id, domainCategories[i])">
             <tr>
@@ -65,10 +65,10 @@
             </tr>
           </ng-container>
         </ng-container>
-      </ng-container>-->
+      </ng-container>
     
       <!-- If we don't have comments -->
-      <!--<ng-template #noComments>
+      <ng-template #noComments>
         <tr><br></tr>
         <tr>
           <br>
@@ -79,5 +79,5 @@
       </ng-template>
 
     </table>
-  </div>-->
+  </div>
 </div>
