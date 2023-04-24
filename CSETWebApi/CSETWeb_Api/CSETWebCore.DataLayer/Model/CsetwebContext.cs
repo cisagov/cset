@@ -3380,8 +3380,6 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.HasComment("A collection of USERS records");
 
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
             });
 
