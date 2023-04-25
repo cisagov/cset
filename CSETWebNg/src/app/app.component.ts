@@ -177,7 +177,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      maxWidth: '300px',
       data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();

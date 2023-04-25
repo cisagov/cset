@@ -46,6 +46,7 @@ import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 
 @Component({
@@ -305,7 +306,7 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   editParameters() {
     if (this.dialog.openDialogs[0]) {
@@ -325,7 +326,7 @@ export class TopMenusComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent);
     this.dialogRef.afterClosed().subscribe(enableFeatureButtonClick => {
-      
+
       if (enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
@@ -435,16 +436,40 @@ export class TopMenusComponent implements OnInit {
       );
   }
 
-  resetPassword() {
-    if (this.dialog.openDialogs[0]) {
-      return;
+  checkPasswordReset() {
+    this.auth.passwordStatus()
+      .subscribe((passwordResetRequired: boolean) => {
+        if (passwordResetRequired) {
+          this.resetPassword(true);
+        }
+      });
+  }
+
+  resetPassword(showWarning: boolean) {
+    if (localStorage.getItem("returnPath")) {
+      if (!Number(localStorage.getItem("redirectid"))) {
+        this.hasPath(localStorage.getItem("returnPath"));
+      }
     }
-    this.dialogRef = this.dialog.open(ChangePasswordComponent, {
-      width: '300px',
-      maxWidth: '300px',
-      data: { primaryEmail: this.auth.email() }
-    });
-    this.dialogRef.afterClosed().subscribe();
+    this.dialog
+      .open(ChangePasswordComponent, {
+        width: "300px",
+        data: { primaryEmail: this.auth.email(), warning: showWarning }
+      })
+      .afterClosed()
+      .subscribe((passwordChangeSuccess) => {
+        if (passwordChangeSuccess) {
+          this.dialog.open(AlertComponent, { 
+            data: { 
+              messageText: 'Your password has been changed successfully.',
+              title: 'Password Changed',
+              iconClass: 'cset-icons-check-circle'
+            }
+          });
+        } else {
+          this.checkPasswordReset();
+        }
+      });
   }
 
   inAssessment() {
