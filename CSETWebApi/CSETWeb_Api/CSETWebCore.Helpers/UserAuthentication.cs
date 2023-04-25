@@ -98,10 +98,14 @@ namespace CSETWebCore.Helpers
             {
                 // We never require a password reset if the user is able to login with their official password that is stored in the USERS table
                 loginUser.PasswordResetRequired = false;
-                UserAccountSecurityManager accountSecurityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
 
-                // Remove temp passwords from history after a successful login with an official password
-                accountSecurityManager.CleanUpPasswordHistory(loginUser.UserId, true);
+                if (tempPasswords.Count > 0) 
+                {
+                    UserAccountSecurityManager accountSecurityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
+
+                    // Remove any existing temp passwords from history after a successful login with an official password
+                    accountSecurityManager.CleanUpPasswordHistory(loginUser.UserId, true);
+                }
             }
 
 
