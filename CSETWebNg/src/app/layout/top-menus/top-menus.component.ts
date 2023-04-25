@@ -305,7 +305,7 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   editParameters() {
     if (this.dialog.openDialogs[0]) {
@@ -325,7 +325,7 @@ export class TopMenusComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent);
     this.dialogRef.afterClosed().subscribe(enableFeatureButtonClick => {
-      
+
       if (enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
@@ -441,7 +441,6 @@ export class TopMenusComponent implements OnInit {
     }
     this.dialogRef = this.dialog.open(ChangePasswordComponent, {
       width: '300px',
-      maxWidth: '300px',
       data: { primaryEmail: this.auth.email() }
     });
     this.dialogRef.afterClosed().subscribe();
