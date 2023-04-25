@@ -46,6 +46,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   
   pdfDocument: any = null;
   loading = true;
+  disabled = false;
 
   // Intro + Section 1
   coverImage: any = null;
@@ -817,15 +818,21 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   }
 
   startPdf(download) {
+    this.disabled = true;
     setTimeout(() => {
       this.figureTwoChart = document.getElementById('figureTwo').innerHTML;
 
-      for (let i = 0; i < this.donutChartData.length; i++) {
-        this.donutChartHTML.push(document.getElementById('donutChart' + i).innerHTML);
+      if (this.donutChartHTML.length === 0) {
+        for (let i = 0; i < this.donutChartData.length; i++) {
+          this.donutChartHTML.push(document.getElementById('donutChart' + i).innerHTML);
+        }
+      } else {
+        this.runningCount = 0;
       }
 
       this.generatePdf(download);
-    }, 1500);
+      this.disabled = false;
+    }, 2000);
   }
 
   
@@ -854,6 +861,9 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     
 
     this.pdfDocument = {
+      info: {
+        title: 'C2M2 Report',
+      },
       content: [
         // Cover Image
         htmlToPdfmake(this.coverImage),
@@ -1669,7 +1679,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   };
 
   if (download) {
-    pdfMake.createPdf(this.pdfDocument).download();
+    pdfMake.createPdf(this.pdfDocument).download("C2M2 Report.pdf");
   } else {
     pdfMake.createPdf(this.pdfDocument).open();
   }

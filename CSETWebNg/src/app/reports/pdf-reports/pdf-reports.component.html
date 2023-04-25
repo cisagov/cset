@@ -21,11 +21,11 @@
   SOFTWARE.
 -------------------------->
 <div *ngIf="!loading">
-<button (click)="startPdf(false)">View PDF</button>
+<button (click)="startPdf(false)" [disabled]="disabled">View PDF</button>
 <br><br>
-<button (click)="startPdf(true)">Download PDF</button>
+<button (click)="startPdf(true)" [disabled]="disabled">Download PDF</button>
 
-
+<div style="overflow: hidden; z-index: -100; position: fixed;">
 <div style="margin-left: 30px; visibility: hidden" id="figureTwo" #figureTwo>
   <ngx-charts-bar-horizontal
     [view]="[400, 500]"
@@ -47,7 +47,7 @@
   </ngx-charts-bar-horizontal>
 </div>
 
-<div style="visibility: hidden">
+<div style="visibility: hidden;">
 <div *ngFor="let objective of donutChartData; let i = index;">
   <div id="{{'donutChart' + i}}">
     <ngx-charts-pie-chart #pieChart
@@ -73,6 +73,6 @@
   </div>
 </div>
 </div>
-
+</div>
 
 </div> <!-- End of !loading div -->
