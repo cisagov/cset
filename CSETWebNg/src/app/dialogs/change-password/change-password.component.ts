@@ -91,7 +91,7 @@ export class ChangePasswordComponent implements OnInit {
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
         if (this.passwordResponse.isValid) {
-          this.dialogRef.close();
+          this.dialogRef.close(true);
         } else {
           this.warning = true;
           this.message = this.passwordResponse.message;
