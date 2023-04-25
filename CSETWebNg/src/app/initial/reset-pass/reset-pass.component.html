@@ -96,7 +96,7 @@
                         </td>
                     </tr>
                 </table>
-                <button type="submit" tabindex="0" [disabled]="loading" class="btn btn-primary">Reset Password</button>
+                <button type="submit" tabindex="0" [disabled]="loading || emailSent" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
 
