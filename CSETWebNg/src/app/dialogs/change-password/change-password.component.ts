@@ -90,13 +90,13 @@ export class ChangePasswordComponent implements OnInit {
     this.auth.changePassword(this.cpwd).subscribe(
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
-        if (this.passwordResponse.isValid) {          
+        if (this.passwordResponse.isValid) {
           this.dialogRef.close();
+        } else {
+          this.warning = true;
+          this.message = this.passwordResponse.message;
+          this.ref.detectChanges();
         }
-
-        this.warning = true;
-        this.message = this.passwordResponse.message;
-        this.ref.detectChanges();
       },
       error => {
         this.warning = true;
