@@ -91,12 +91,12 @@
                         <td>
                             <input required tabindex="0" type="text" class="form-control" id="questionAnswer"
                                 name="questionAnswer" #answer="ngModel" [(ngModel)]="securityAnswer">
-                            <div *ngIf="f.submitted && !answer.valid" class="alert alert-danger">answer is required
+                            <div *ngIf="f.submitted && !answer.valid" class="alert alert-danger mt-1">answer is required
                             </div>
                         </td>
                     </tr>
                 </table>
-                <button type="submit" tabindex="0" [disabled]="loading" class="btn btn-primary">Reset Password</button>
+                <button type="submit" tabindex="0" [disabled]="loading || emailSent" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
 

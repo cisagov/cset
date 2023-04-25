@@ -768,9 +768,9 @@ table.td-align-top td {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 1;
-  background-color: $gray-500;
-  color: $gray-300;
-  border-color: $gray-500;
+  background-color: $gray-500 !important;
+  color: $gray-300 !important;
+  border-color: $gray-500 !important;
 }
 
 .btn-secondary {
