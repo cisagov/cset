@@ -235,7 +235,6 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
-        public virtual DbSet<TEMP_PASSWORDS> TEMP_PASSWORDS { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -3288,16 +3287,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Symbol_Group_Name).HasComment("The Symbol Group Name is used to");
 
                 entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
-            });
-
-            modelBuilder.Entity<TEMP_PASSWORDS>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.GeneratedDate });
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TEMP_PASSWORDS)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_TEMP_PASSWORDS_TEMP_PASSWORDS");
             });
 
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>

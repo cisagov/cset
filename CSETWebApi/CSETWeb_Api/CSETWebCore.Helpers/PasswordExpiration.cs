@@ -36,8 +36,8 @@ namespace CSETWebCore.Helpers
                 return true;
             }
 
-            var temp = context.TEMP_PASSWORDS.Where(x => x.UserId == userId && x.Password == passwordHash).FirstOrDefault();
-            if (temp.GeneratedDate.AddDays(_tempPassExpiryTermDays) < DateTime.UtcNow) 
+            // If the passed is a temp, also check if it is expired
+            if (hist.Is_Temp && hist.Created.AddDays(_tempPassExpiryTermDays) < DateTime.UtcNow) 
             {
                 // temp pass expired
                 return true;
