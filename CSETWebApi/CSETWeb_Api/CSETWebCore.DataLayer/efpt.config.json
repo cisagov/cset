@@ -831,10 +831,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[TEMP_PASSWORDS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[UNIVERSAL_AREA]",
          "ObjectType": 0
       },

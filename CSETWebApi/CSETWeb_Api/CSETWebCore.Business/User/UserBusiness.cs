@@ -93,23 +93,14 @@ namespace CSETWebCore.Business.User
 
             new PasswordHash().HashPassword(password, out string hash, out string salt);
 
-            TEMP_PASSWORDS tempPassword = new TEMP_PASSWORDS() 
-            { 
-                UserId = u.UserId, 
-                GeneratedDate = DateTime.UtcNow,
-                Password = hash,
-                Salt = salt
-            };
-            _context.TEMP_PASSWORDS.Add(tempPassword);
-
             // log the temp password to history
             var history = new PASSWORD_HISTORY()
             {
-                Created = tempPassword.GeneratedDate,
+                Created = DateTime.UtcNow,
                 UserId = u.UserId,
                 Is_Temp = true,
-                Password = tempPassword.Password,
-                Salt = tempPassword.Salt
+                Password = hash,
+                Salt = salt
             };
             _context.PASSWORD_HISTORY.Add(history);
 

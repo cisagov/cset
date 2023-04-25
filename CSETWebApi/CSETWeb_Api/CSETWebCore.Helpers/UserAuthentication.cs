@@ -69,7 +69,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            List<TEMP_PASSWORDS> tempPasswords = _context.TEMP_PASSWORDS.Where(temp => temp.UserId == loginUser.UserId).ToList();
+            List<PASSWORD_HISTORY> tempPasswords = _context.PASSWORD_HISTORY.Where(password => password.UserId == loginUser.UserId && password.Is_Temp).ToList();
 
             // Validate the supplied password against the hashed password and its salt
             bool passwordIsValid = _password.ValidatePassword(login.Password, loginUser.Password, loginUser.Salt);
@@ -78,7 +78,7 @@ namespace CSETWebCore.Helpers
             // Validate against the user's temp passwords as well in case they forgot password and need to reset it
             if (!passwordIsValid)
             {
-                foreach (TEMP_PASSWORDS tempPassword in tempPasswords)
+                foreach (PASSWORD_HISTORY tempPassword in tempPasswords)
                 {
                     if (_password.ValidatePassword(login.Password, tempPassword.Password, tempPassword.Salt))
                     {
@@ -98,6 +98,10 @@ namespace CSETWebCore.Helpers
             {
                 // We never require a password reset if the user is able to login with their official password that is stored in the USERS table
                 loginUser.PasswordResetRequired = false;
+                UserAccountSecurityManager accountSecurityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
+
+                // Remove temp passwords from history after a successful login with an official password
+                accountSecurityManager.CleanUpPasswordHistory(loginUser.UserId, true);
             }
 
 
