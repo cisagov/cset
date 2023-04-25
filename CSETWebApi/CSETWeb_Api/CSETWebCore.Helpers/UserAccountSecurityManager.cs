@@ -198,10 +198,11 @@ namespace CSETWebCore.Helpers
 
                 new PasswordHash().HashPassword(password, out string hash, out string salt);
 
+                var currentDateTime = DateTime.UtcNow;
                 TEMP_PASSWORDS tempPassword = new TEMP_PASSWORDS()
                 {
                     UserId = user.UserId,
-                    GeneratedDate = DateTime.UtcNow,
+                    GeneratedDate = currentDateTime,
                     Password = hash,
                     Salt = salt
                 };
@@ -211,7 +212,7 @@ namespace CSETWebCore.Helpers
                 // log the temp password to history
                 var history = new PASSWORD_HISTORY()
                 {
-                    Created = DateTime.UtcNow,
+                    Created = currentDateTime,
                     UserId = user.UserId,
                     Is_Temp = true,
                     Password = hash,
