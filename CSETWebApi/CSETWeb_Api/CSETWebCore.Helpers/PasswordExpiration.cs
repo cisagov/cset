@@ -16,7 +16,7 @@ namespace CSETWebCore.Helpers
     public class PasswordExpiration
     {
         private int _expiryTermDays = 180;
-
+        private int _tempPassExpiryTermDays = 1;
 
         /// <summary>
         /// Checks the password's age.
@@ -33,6 +33,13 @@ namespace CSETWebCore.Helpers
             if (hist.Created.AddDays(_expiryTermDays) < DateTime.UtcNow)
             {
                 // the password is old
+                return true;
+            }
+
+            var temp = context.TEMP_PASSWORDS.Where(x => x.UserId == userId && x.Password == passwordHash).FirstOrDefault();
+            if (temp.GeneratedDate.AddDays(_tempPassExpiryTermDays) < DateTime.UtcNow) 
+            {
+                // temp pass expired
                 return true;
             }
 
