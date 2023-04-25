@@ -125,13 +125,6 @@ namespace CSETWebCore.Helpers
                 return resp;
             }
 
-            if (tempPasswords.Count > 0)
-            {
-                // Delete all temp passwords if user is able to login
-                UserAccountSecurityManager securityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                securityManager.CleanUpPasswordHistory(loginUser.UserId, true);
-            }
-
             // Generate a token for this user and add to the response
             string token = _transactionSecurity.GenerateToken(loginUser.UserId, null, login.TzOffset, -1, null, null, login.Scope);
             resp.Token = token;
