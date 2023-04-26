@@ -44,6 +44,11 @@ export class DiagramComponentsComponent implements OnInit {
   criticality: any;
 
   /**
+   * A flattened list of all the component symbols CSET supports
+   */
+  symbols: any[];
+
+  /**
    *
    */
   constructor(
@@ -55,6 +60,7 @@ export class DiagramComponentsComponent implements OnInit {
    */
   ngOnInit() {
     this.getComponents();
+    this.getSymbols();
   }
 
   /**
@@ -67,8 +73,36 @@ export class DiagramComponentsComponent implements OnInit {
     });
   }
 
-  sortData(sort: Sort) {
+  /**
+   * Gets the full list of symbols so that we 
+   * can build SELECT controls for Asset Type.
+   */
+  getSymbols() {
+    this.diagramSvc.getSymbols().subscribe((g: any) => {
+      this.symbols = [];
+      g.forEach(gg => {
+        gg.symbols.forEach(s => {
+          this.symbols.push(s);
+        });
+      });
 
+      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    });
+  }
+
+  /**
+   * 
+   */
+  changeAssetType(evt: any, guid: string) {
+    let componentGuid = guid;
+    let newType = evt.target.value;
+    this.diagramSvc.updateAssetType(componentGuid, newType).subscribe();
+  }
+
+  /**
+   * 
+   */
+  sortData(sort: Sort) {
     if (!sort.active || sort.direction === "") {
       return;
     }

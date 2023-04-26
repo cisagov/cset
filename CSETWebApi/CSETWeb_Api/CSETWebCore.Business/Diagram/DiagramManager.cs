@@ -4,24 +4,20 @@
 // 
 // 
 ////////////////////////////////
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
-using DocumentFormat.OpenXml.Bibliography;
+using System.Xml;
+using System.Xml.Serialization;
 using static CSETWebCore.Model.Diagram.CommonSecurityAdvisoryFrameworkObject;
+
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -784,6 +780,54 @@ namespace CSETWebCore.Business.Diagram
                 }
             }
         }
+
+
+        /// <summary>
+        /// Sets the type of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="type"></param>
+        public void UpdateComponentType(int assessmentId, string guid, string type)
+        {
+            var componentGuid = Guid.Parse(guid);
+            var adc = _context.ASSESSMENT_DIAGRAM_COMPONENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.Component_Guid == componentGuid);
+            var symbol = _context.COMPONENT_SYMBOLS.FirstOrDefault(x => x.Abbreviation == type);
+
+            if (adc == null || symbol?.Component_Symbol_Id == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            // change the symbol that the component is associated with
+            adc.Component_Symbol_Id = symbol.Component_Symbol_Id;
+
+
+            // Update the image in the diagram markup for the component
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
+            if (mxCell == null)
+            {
+                return;
+            }
+
+            // change the image path and size in the cell style
+            var newStyle = this.SetImage(symbol.Component_Symbol_Id, mxCell.Attributes["style"].InnerText);
+            mxCell.SetAttribute("style", newStyle);
+
+            var geometry = (XmlElement)mxCell.SelectSingleNode("mxGeometry");
+            geometry.SetAttribute("width", symbol.Width.ToString());
+            geometry.SetAttribute("height", symbol.Height.ToString());
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+
+            _context.SaveChanges();
+        }
+
 
         public string SetImage(int Component_Symbol_Id, string style)
         {

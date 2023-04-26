@@ -3642,31 +3642,34 @@
 
                 menu.addSeparator(parent);
 
-                if (typeof (MathJax) !== 'undefined') {
-                    var item = this.addMenuItem(menu, 'mathematicalTypesetting', parent);
+                // CSET
+                //if (typeof (MathJax) !== 'undefined') {
+                //    var item = this.addMenuItem(menu, 'mathematicalTypesetting', parent);
 
-                    if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
-                        this.addLinkToItem(item, 'https://www.diagrams.net/doc/faq/math-typesetting');
-                    }
-                }
+                //    if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
+                //        this.addLinkToItem(item, 'https://www.diagrams.net/doc/faq/math-typesetting');
+                //    }
+                //}
 
-                if (EditorUi.isElectronApp) {
-                    this.addMenuItems(menu, ['spellCheck', 'autoBkp', 'drafts', '-'], parent);
-                }
+                // CSET
+                //if (EditorUi.isElectronApp) {
+                //    this.addMenuItems(menu, ['spellCheck', 'autoBkp', 'drafts', '-'], parent);
+                //}
 
-                this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-'], parent);
+                // this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-'], parent); // CSET
 
-                if (urlParams['embed'] != '1') {
-                    var file = editorUi.getCurrentFile();
+                // CSET
+                //if (urlParams['embed'] != '1') {
+                //    var file = editorUi.getCurrentFile();
 
-                    if (file != null && file.isRealtimeEnabled() && file.isRealtimeSupported()) {
-                        this.addMenuItems(menu, ['showRemoteCursors', 'shareCursor'], parent);
-                    }
+                //    if (file != null && file.isRealtimeEnabled() && file.isRealtimeSupported()) {
+                //        this.addMenuItems(menu, ['showRemoteCursors', 'shareCursor'], parent);
+                //    }
 
-                    this.addMenuItems(menu, ['autosave'], parent);
-                }
+                //    this.addMenuItems(menu, ['autosave'], parent);
+                //}
 
-                menu.addSeparator(parent);
+                //menu.addSeparator(parent);
 
                 if (!editorUi.isOfflineApp() && isLocalStorage) {
                     this.addMenuItem(menu, 'plugins', parent);
@@ -3678,10 +3681,10 @@
                     this.addMenuItems(menu, ['diagramLanguage']);
                 }
 
-                menu.addSeparator(parent);
+                menu.addSeparator(parent); 
 
                 if (urlParams['embed'] != '1' && (isLocalStorage || mxClient.IS_CHROMEAPP)) {
-                    this.addMenuItems(menu, ['showStartScreen'], parent);
+                    // this.addMenuItems(menu, ['showStartScreen'], parent); // CSET 
                 }
 
                 this.addMenuItems(menu, ['configuration'], parent);
