@@ -31,6 +31,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class C2m2SideTocComponent implements OnInit {
 
   @Input() domainData;
+  @Input() assessmentInfo;
+  @Input() donutData;
+  @Input() tableData;
   loading: boolean = true;
 
   constructor() { }

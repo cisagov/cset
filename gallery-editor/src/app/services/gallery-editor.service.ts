@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { GalleryItem, ListTest, MoveItem, UpdateItem } from '../list-items/listtest.model';
+import { ConfigService } from './config.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -37,21 +38,21 @@ export class GalleryEditorService {
 
   updatePositionOfItem(moveItem: MoveItem) {
     moveItem.Layout_Name = this.layoutName;
-    return  this.http.post("http://localhost:5000/api/galleryEdit/updatePosition",  moveItem,headers);
+    return  this.http.post(this.configSvc.config.apiUrl + "api/galleryEdit/updatePosition",  moveItem,headers);
   }
   updateGalleryGroupName(group_Id: number, value: string) {
     let newUpdateItem = new UpdateItem();
     newUpdateItem.Group_Id = group_Id;
     newUpdateItem.IsGroup = true;
     newUpdateItem.Value = value;
-    return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
+    return  this.http.post(this.configSvc.config.apiUrl + "api/galleryEdit/updateName", newUpdateItem, headers);
   }
   updateGalleryItemName(item_Guid: string, value: string) {
     let newUpdateItem = new UpdateItem();
     newUpdateItem.IsGroup = false;
     newUpdateItem.Gallery_Item_Guid = item_Guid;
     newUpdateItem.Value = value;
-    return  this.http.post("http://localhost:5000/api/galleryEdit/updateName", newUpdateItem, headers);
+    return  this.http.post(this.configSvc.config.apiUrl + "api/galleryEdit/updateName", newUpdateItem, headers);
   }
   updateGalleryItem(Gallery_Item_Guid: string, Icon_File_Name_Small: string, Icon_File_Name_Large: string, Configuration_Setup: string, Description: string, Title: string, Is_Visible: boolean) {
     let newUpdateItem = new GalleryItem();
@@ -64,10 +65,11 @@ export class GalleryEditorService {
     newUpdateItem.title = Title;
     newUpdateItem.is_Visible = Is_Visible;
    
-    return  this.http.post("http://localhost:5000/api/galleryEdit/updateItem",  newUpdateItem, headers);
+    return  this.http.post(this.configSvc.config.apiUrl + "api/galleryEdit/updateItem",  newUpdateItem, headers);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient
+    , private configSvc: ConfigService) { }
   
   renameKey ( obj: any, oldKey:string, newKey:string ) {
     obj[newKey] = obj[oldKey];
@@ -89,7 +91,7 @@ export class GalleryEditorService {
    * Retrieves the list of frameworks.
    */
   getGalleryItems() {
-    return  this.http.get("http://localhost:5000/api/gallery/getboard",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/getboard",  {
       params: {
         Layout_Name: this.layoutName
       }
@@ -97,12 +99,12 @@ export class GalleryEditorService {
   }
 
   getGalleryLayouts() {
-    return  this.http.get("http://localhost:5000/api/gallery/getlayouts");
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/getlayouts");
   }
 
   cloneGalleryItem(item: any, newId: boolean) {
     console.log('made it inside api call, guid:' + item.gallery_Item_Guid)
-    return  this.http.get("http://localhost:5000/api/gallery/cloneItem",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/cloneItem",  {
       params: {
         Item_To_Clone: item.gallery_Item_Guid,
         Group_Id: item.parent_Id,
@@ -113,7 +115,7 @@ export class GalleryEditorService {
 
   cloneGalleryGroup(group: any) {
     console.log(group);
-    return  this.http.get("http://localhost:5000/api/gallery/cloneGroup",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/cloneGroup",  {
       params: {
         Group_Id: group.group_Id, 
         layout_Name: this.layoutName
@@ -122,7 +124,7 @@ export class GalleryEditorService {
   }
 
   addGalleryItem(description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string, parent_Id:number, columnId: number) {    
-    return  this.http.get("http://localhost:5000/api/gallery/addItem",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/addItem",  {
       params: {
         newDescription: description,
         newTitle: title,
@@ -136,7 +138,7 @@ export class GalleryEditorService {
   }
 
   addGalleryGroup(group: string, description: string, title: string, iconSmall: string, iconLarge: string, configSetup: string, columnId: number) {
-    return this.http.get("http://localhost:5000/api/gallery/addGroup",  {
+    return this.http.get(this.configSvc.config.apiUrl + "api/gallery/addGroup",  {
       params: {
         group: group,
         layout: this.layoutName,
@@ -152,7 +154,7 @@ export class GalleryEditorService {
 
   deleteGalleryItem(item: any) {
     console.log(item)
-    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryItem",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/deleteGalleryItem",  {
       params: {
         galleryItemGuid: item.gallery_Item_Guid,
         group_id: item.parent_Id
@@ -161,7 +163,7 @@ export class GalleryEditorService {
   }
 
   deleteGalleryGroup(item: any) {
-    return  this.http.get("http://localhost:5000/api/gallery/deleteGalleryGroup",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/deleteGalleryGroup",  {
       params: {
         id: item.group_Id,
         layout: this.layoutName
@@ -173,7 +175,7 @@ export class GalleryEditorService {
     this.unusedItemList = unusedList;
   }
   getGalleryUnsedItems() {
-    return  this.http.get("http://localhost:5000/api/gallery/getUnused",  {
+    return  this.http.get(this.configSvc.config.apiUrl + "api/gallery/getUnused",  {
       params: {
         Layout_Name: this.layoutName
       }

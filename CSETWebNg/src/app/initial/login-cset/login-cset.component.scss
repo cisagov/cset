@@ -21,7 +21,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-a:focus{
-    text-decoration: underline;
-  }
+.input-container {
+    position: relative;
+    padding: 0;
+}
+
+.input-icon {
+    color: gray; 
+    position: absolute;
+    width: 20px;
+    background-color: #fff;
+    text-align: center; 
+    top: 15px; 
+    right: 10px;
+    cursor: pointer;
+    -moz-transition: all .15s ease-in;
+    -o-transition: all .15s ease-in;
+    -webkit-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.input-icon:hover, .input-icon:focus {
+    color: black; 
+}
 

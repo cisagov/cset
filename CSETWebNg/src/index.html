@@ -25,64 +25,99 @@
 
 <head>
     <meta charset="utf-8">
-    <script type="text/javascript" src="/assets/settings/configScript.js"></script>
-    <script type="text/javascript" src="assets/settings/configScript.js"></script>
     <script>
-        // Function to check if CSET is being run from within Electron Wrapper
+        function isElectron() {
+            // Renderer process
+            if (typeof window !== 'undefined' && typeof window.process === 'object' && window.process.type === 'renderer') {
+                return true;
+            }
 
+            // Main process
+            if (typeof process !== 'undefined' && typeof process.versions === 'object' && !!process.versions.electron) {
+                return true;
+            }
 
-        localStorage.setItem('isRunningInElectron', isElectron().toString());
+            // Detect the user agent when the 'nodeIntegration' option is set to true
+            if (typeof navigator === 'object' && typeof navigator.userAgent === 'string' && navigator.userAgent.indexOf('Electron') >= 0) {
+                return true;
+            }
 
-        sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'false');
+            return false;
+        }
 
+        var head = document.getElementsByTagName('head')[0];
+        var scriptEl = document.createElement("script");
+
+        scriptEl.type = "text/javascript";
+
+        if (isElectron()) {
+            scriptEl.src = "assets/settings/configScript.js";
+        }
+        else {
+            scriptEl.src = "/assets/settings/configScript.js";
+        }
+
+        // This global variable will be set here and referenced in the Angular configService
         var csetGlobalConfig = null;
-        var installationMode = '';
-        // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
-        // since the root is assumed to be the local drive
-        var configPath = localStorage.getItem('isRunningInElectron') == 'true' ? 'assets/settings/config.json' : '/assets/settings/config.json';
 
-        // read angular config file to know how to display splash screen
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", configPath, false);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200 || xhr.status == 0) {
-                    csetGlobalConfig = JSON.parse(xhr.responseText);
-                    getConfigs(csetGlobalConfig,csetGlobalConfig.currentConfigChain).then(()=>{
-                    installationMode = csetGlobalConfig.installationMode || 'CSET';
-                    localStorage.setItem('installationMode', installationMode.toUpperCase());
-                    switchConfigsForMode(installationMode);
-                    });
+        scriptEl.addEventListener("load", () => {
+            localStorage.setItem('isRunningInElectron', isElectron().toString());
+            sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'false');
+
+            var installationMode = '';
+            // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
+            // since the root is assumed to be the local drive
+            var configPath = isElectron() ? 'assets/settings/config.json' : '/assets/settings/config.json';
+
+            // read angular config file to know how to display splash screen
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", configPath, false);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 || xhr.status == 0) {
+                        csetGlobalConfig = JSON.parse(xhr.responseText);
+                        getConfigs(csetGlobalConfig,csetGlobalConfig.currentConfigChain).then(()=>{
+                        installationMode = csetGlobalConfig.installationMode || 'CSET';
+                        localStorage.setItem('installationMode', installationMode.toUpperCase());
+                        switchConfigsForMode(installationMode);
+                        });
+                    }
                 }
             }
-        }
-        xhr.send(null);
+            xhr.send(null);
 
 
-        var xhttp = new XMLHttpRequest();
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, "\\$&");
-            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, " "));
-        }
+            var xhttp = new XMLHttpRequest();
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
 
-        if (typeof (Storage) !== "undefined") {
-            var redirectid = getParameterByName("assessment_id");
-            var returnPath = getParameterByName("returnPath");
-            var apiUrl = getParameterByName("apiUrl");
-            if (redirectid != null)
-                localStorage.setItem("redirectid", redirectid);
-            if (returnPath != null)
-                localStorage.setItem("returnPath", returnPath);
-            if (apiUrl != null)
-                localStorage.setItem("apiUrl", apiUrl);
-        } else {
-            // Sorry! No Web Storage support..
-        }
+            if (typeof (Storage) !== "undefined") {
+                var redirectid = getParameterByName("assessment_id");
+                var returnPath = getParameterByName("returnPath");
+                var apiUrl = getParameterByName("apiUrl");
+                if (redirectid != null)
+                    localStorage.setItem("redirectid", redirectid);
+                if (returnPath != null)
+                    localStorage.setItem("returnPath", returnPath);
+                if (apiUrl != null)
+                    localStorage.setItem("apiUrl", apiUrl);
+            } else {
+                // Sorry! No Web Storage support..
+            }
+        });
+
+        scriptEl.addEventListener("error", (ev) => {
+            console.log("Error loading configScript", ev);
+        });
+
+        head.appendChild(scriptEl);
     </script>
 
     <title>CSET</title>

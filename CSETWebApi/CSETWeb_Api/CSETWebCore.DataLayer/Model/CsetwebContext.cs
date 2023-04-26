@@ -181,6 +181,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<NIST_SAL_INFO_TYPES_DEFAULTS> NIST_SAL_INFO_TYPES_DEFAULTS { get; set; }
         public virtual DbSet<NIST_SAL_QUESTIONS> NIST_SAL_QUESTIONS { get; set; }
         public virtual DbSet<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
+        public virtual DbSet<Nlogs> Nlogs { get; set; }
         public virtual DbSet<PARAMETERS> PARAMETERS { get; set; }
         public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
         public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
@@ -342,13 +343,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
 
                 entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
 
@@ -437,6 +438,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.ISE_StateLed).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
 
@@ -2455,6 +2458,11 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_NIST_SAL_QUESTIONS");
+            });
+
+            modelBuilder.Entity<Nlogs>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<PARAMETERS>(entity =>
