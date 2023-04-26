@@ -1076,6 +1076,10 @@ table.td-align-top td {
   border: 1px solid $gray-100;
 }
 
+.mat-mdc-tab-label-container {
+  margin-bottom: 1rem;
+}
+
 ul.mat-tree-node {
   display: block;
 }
