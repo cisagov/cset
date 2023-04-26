@@ -270,7 +270,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         this.totalQuestionCounts.push(total);
       }
     }
-    this.loading = false;
   }
 
 
@@ -339,8 +338,6 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     let milThrees = [];
 
     for (let i = 0; i < this.partiallyCompleteData.length; i++) {
-      let data = this.partiallyCompleteData[i];
-
 
       if (this.partiallyCompleteData[i].mil == "1" || this.partiallyCompleteData[i].mil == "MIL-1") {
         milOnes.push(this.partiallyCompleteData[i]);
@@ -383,6 +380,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
       }
     }
 
+    this.loading = false;
   }
 
 
@@ -572,55 +570,69 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     // Track how many partially implemented items we have in our request domain + mil level.
     for (let i = 0; i < this.orderedByDomain.length; i++) {
       let id = (this.orderedByDomain[i].id.split('-')[0] != "THIRD" ? this.orderedByDomain[i].id.split('-')[0] : "THIRD-PARTIES");
-      let level = (this.orderedByDomain[i].mil);
 
-      if (id == domain && (level == mil || "MIL-" + level == mil)) {
+      if (id == domain && (this.orderedByDomain[i].mil == mil || "MIL-" + this.orderedByDomain[i].mil == mil)) {
         partialCount++;
         data.push(this.orderedByDomain[i]);
       }
     }
 
     // Check how long our rowspans should be (combine duplicate responses into 1 large row)
-    let num = 1;
+    let arrPI = [];
+    let arrNI = [];
+    let arrU = [];
+    let piCount = 0;
+    let niCount = 0;
+    let uCount = 0;
 
     for (let i = 0; i < data.length; i++) {
-      if (data[i+1] != undefined) {
-        if (data[i].response == data[i+1].response) {
-          num++;
+      if (data[i].response == "Partially Implemented (PI)") {
+        arrPI.push(data[i]);
+        piCount++;
+      }
 
-          if (num == data.length) { // If every answer inside that domain mil is the same
-            dataCounts.push( [data[i].response, num] );
-            num = 1;
-          }
+      if (data[i].response == "Not Implemented (NI)") {
+        arrNI.push(data[i]);
+        niCount++;
+      }
 
-        } else if (data[i].response != data[i+1].response) {
-          dataCounts.push( [data[i].response, num] );
-          num = 1;
-        }
-      } else if (data[i+1] == undefined) {
-        if (data[i] != undefined) {
-          dataCounts.push( [data[i].response, num] );
-        }
+      if (data[i].response == "Unanswered (U)") {
+        arrU.push(data[i]);
+        uCount++;
       }
     }
 
-    let x = 0;
-   
+    data = [...arrPI, ...arrNI, ...arrU];    
+
+    
     // On first pass through, create the table headers
     if (this.sectionSevenBody.length === 0 && runCount == 0) {
       this.sectionSevenBody.push([ {text: 'MIL', alignment: 'center', marginTop: 2}, {text: 'Response', alignment: 'center', marginTop: 2}, {text: 'ID', alignment: 'center', marginTop: 2}, {text: 'Practice', alignment: 'center', marginTop: 2}, {text: 'Self-Evaluation Notes', alignment: 'center', marginTop: 2, noWrap: true} ]);
     }
 
+    // Now, if we have any PI/NI/U statements, add them to the table body
     if (partialCount > 0 ) {
+      let span = 1;
+
       for (let i = 0; i < data.length; i++) {
-        let span = dataCounts[x][1];
-        this.sectionSevenBody.push([ {text: (data[i].mil.split('-')[1] != undefined ? data[i].mil.split('-')[1] : data[i].mil), rowSpan: data.length, alignment: 'center'}, {text: data[i].response, rowSpan: span, alignment: 'center', fillColor: this.getFillColor(data[i].response)}, {text: data[i].id, alignment: 'center'}, {text: data[i].practiceText}, {text: data[i].comment} ]);
-        
-        if (i >= span - 1) {
-          x++;
+        if (data[i].response == "Partially Implemented (PI)") {
+          span = piCount;
+        } else if (data[i].response == "Not Implemented (NI)") {
+          span = niCount;
+        } else if (data[i].response == "Unanswered (U)") {
+          span = uCount;
         }
+
+        this.sectionSevenBody.push([ 
+          {text: (data[i].mil.split('-')[1] != undefined ? data[i].mil.split('-')[1] : data[i].mil), rowSpan: data.length, alignment: 'center'}, 
+          {text: data[i].response, rowSpan: span, alignment: 'center', fillColor: this.getFillColor(data[i].response)}, 
+          {text: data[i].id, alignment: 'center'}, {text: data[i].practiceText}, {text: data[i].comment} 
+        ]);
+        
       }
-    } else {
+    } 
+    // If we don't have any PI/NI/U statements, add the default
+    else {
       rowHeights = [20, 60];
 
       if (runCount == 2 && this.sectionSevenBody.length == 1) {
@@ -832,7 +844,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
 
       this.generatePdf(download);
       this.disabled = false;
-    }, 2000);
+    }, 1500);
   }
 
   
