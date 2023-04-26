@@ -33,6 +33,7 @@ import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 import { LayoutService } from '../../services/layout.service';
 import { JwtParser } from '../../helpers/jwt-parser';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class LoginTsaComponent implements OnInit {
   model: any = {};
   loading = false;
   incorrect = false;
+  showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -190,5 +192,13 @@ export class LoginTsaComponent implements OnInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }

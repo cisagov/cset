@@ -25,7 +25,8 @@
 
     <!-- CSET Logo and Name -->
     <div class="m-4 d-flex justify-content-start flex-00a">
-      <app-logo-cset logoHeight="50"></app-logo-cset>
+      <app-logo-cset logoHeight="50"></app-logo-cset> <span class="c-primary ml-3"
+        style="padding-top: .3rem; font-size: 40px;">Renewables</span>
     </div>
 
     <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white mb-lg-4">
@@ -68,7 +69,7 @@
       <div class="m-4 d-flex flex-column flex-lg-row justify-content-center flex-00a"
         *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
         <div class="float-left ml-3">
-          <img class="mr-4" src="./assets/images/RENEW/inl_cyber_shield.png" width="auto" height="240rem"
+          <img class="mr-4" src="./assets/images/RENEW/inl_cyber_shield.png" width="auto" height="400px"
             alt="INL Cyber SHIELD">
         </div>
         <div>
@@ -85,8 +86,18 @@
               #email="ngModel" required email focusOnInit="true" />
             <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required
             </div>
-            <input type="password" class="form-control mt-2" name="password" placeholder="Password"
-              [(ngModel)]="model.password" #password="ngModel" required />
+            <div class="input-container">
+              <input [type]="showPassword ? 'text' : 'password'" class="form-control mt-2" name="password"
+                placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+              <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                matTooltip="Show password" [matTooltipPosition]="'right'">
+                <i class="fas fa-eye"></i>
+              </div>
+              <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                matTooltip="Hide password" [matTooltipPosition]="'right'">
+                <i class="fas fa-eye-slash"></i>
+              </div>
+            </div>
             <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required
             </div>
             <div class="mt-2 d-flex justify-content-between flex-00a">
@@ -105,10 +116,10 @@
           </form>
         </div>
       </div>
-      <p class="c-gray-600 w-70" style="max-width:900px" *ngIf="mode === 'LOGIN'">
+      <div class="c-gray-600 mt-4 px-5 mx-auto" style="max-width:900px" *ngIf="mode === 'LOGIN'">
         The Cyber SHIELD initiative leverages multiple robust tools that have been developed under DHS programs.
         These tools are tuned for use with renewable assets and accommodate any level of cyber maturity.
-      </p>
+      </div>
     </div>
 
     <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">

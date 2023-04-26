@@ -199,7 +199,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         };
                         var xDocDiagram = new XmlDocument();
                         xDocDiagram.LoadXml(assessment.Diagram_Markup);
-                        diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq);
+                        diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq, false);
                     }
 
 

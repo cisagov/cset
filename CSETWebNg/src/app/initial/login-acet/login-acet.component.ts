@@ -47,6 +47,7 @@ export class LoginAcetComponent implements OnInit {
   model: any = {};
   loading = false;
   incorrect = false;
+  showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -150,5 +151,9 @@ export class LoginAcetComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
