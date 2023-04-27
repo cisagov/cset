@@ -54,6 +54,7 @@
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
               "src/favicon_cf.ico",
+              "src/favicon_renew.ico",
               "src/uploadAssessment.html",
               "src/sass",
               "src/web.config"
@@ -192,6 +193,7 @@
               "src/favicon_acet.ico",
               "src/favicon_tsa.ico",
               "src/favicon_cf.ico",
+              "src/favicon_renew.ico",
               {
                 "glob": "**/*.js",
                 "input": "./node_modules/@ngstack/code-editor/workers",
