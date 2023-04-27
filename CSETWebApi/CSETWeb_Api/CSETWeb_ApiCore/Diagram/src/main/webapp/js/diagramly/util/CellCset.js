@@ -75,7 +75,9 @@ mxCell.prototype.isParentMSC = function ()
  */
 mxCell.prototype.isBlueConnector = function ()
 {
-    return this.getStyleValue('image').indexOf('connector.svg') >= 0;
+    var imagePath = this.getStyleValue('image');
+    if (imagePath == null) { return false; }
+    return imagePath.indexOf('connector.svg') >= 0;
 }
 
 

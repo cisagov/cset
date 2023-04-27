@@ -38,7 +38,7 @@
     <!-- <th mat-sort-header="visible">Visible</th> -->
 
     <tr *ngFor="let component of diagramComponentList;">
-      <td>{{component.label}}</td>
+      <td [innerHTML]="component.label"></td>
       <td>
         <select class="form-control" (change)="changeAssetType($event, component.componentGuid)" [compGuid]="component.componentGuid">
           <option *ngFor="let o of this.symbols" [value]="o.abbreviation" [selected]="component.assetType == o.symbol_Name">

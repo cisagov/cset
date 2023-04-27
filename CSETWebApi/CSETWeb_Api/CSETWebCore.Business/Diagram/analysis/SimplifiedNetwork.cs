@@ -240,7 +240,7 @@ namespace CSETWebCore.Business.BusinessManagers.Diagram.analysis
                 }
                 //find each node
                 //add them to each other          
-                if (xNode.HasAttribute("source") && xNode.HasAttribute("target"))
+                if (xNode.HasAttribute("source") && xNode.HasAttribute("target") && xNode.HasAttribute("id"))
                 {
                     NetworkComponent start = findNode(node.Attributes["source"].Value);
                     NetworkComponent target = findNode(node.Attributes["target"].Value);
