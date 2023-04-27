@@ -34,6 +34,10 @@ switch(installationMode) {
     clientCode = 'CF';
     appCode = 'CSET-CF';
     break;
+  case 'RENEW':
+    clientCode = 'DOE';
+    appCode = 'CSET Renewables';
+    break;
   default:
     clientCode = 'DHS';
     appCode = 'CSET';
