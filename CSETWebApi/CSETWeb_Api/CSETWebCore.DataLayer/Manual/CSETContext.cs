@@ -146,6 +146,9 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Reference_Text).IsUnicode(false);
             });
 
+            modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>()
+                .ToTable(tb => tb.HasTrigger("DummyTrigger"));
+
 
             //modelBuilder.Query<VIEW_QUESTIONS_STATUS>().ToView("VIEW_QUESTIONS_STATUS").Property(v => v.Answer_Id).HasColumnName("Answer_Id");
             //modelBuilder.Query<vQUESTION_HEADINGS>().ToView("vQUESTION_HEADINGS").Property(v => v.Heading_Pair_Id).HasColumnName("Heading_Pair_Id");
