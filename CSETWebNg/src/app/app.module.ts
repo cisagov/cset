@@ -556,6 +556,8 @@ import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
+import { ExportPasswordComponent } from './dialogs/assessment-encryption/export-password/export-password.component';
+import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
 
 
 
@@ -1068,7 +1070,9 @@ import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
-        LogoCyberShieldComponent
+        LogoCyberShieldComponent,
+        ExportPasswordComponent,
+        ImportPasswordComponent
     ],
     providers: [
         ConfigService,

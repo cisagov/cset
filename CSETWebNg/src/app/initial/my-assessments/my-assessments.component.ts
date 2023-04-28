@@ -44,6 +44,8 @@ import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
+import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
+import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
 import * as moment from "moment";
 import { forEach } from "lodash";
 
@@ -289,18 +291,32 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   clickDownloadLink(ment_id: number) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-      const url =
-        this.fileSvc.exportUrl + "?token=" + response.token;
+    let password = null;
 
-      //if electron
-      window.location.href = url;
+    let dialogRef = this.dialog.open(ExportPasswordComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined && result.length > 0) {
+        password = result;
+        console.log("password entered: " + result);
+      } else {
+        console.log("password was blank.");
+      }
 
-      //if browser
-      //window.open(url, "_blank");
-    });
-  }
+       // get short-term JWT from API
+       this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+        const url = this.fileSvc.exportUrl + "?token=" + response.token;
+        console.log("Url:");
+        console.log(url);
+        
+        //if electron
+        window.location.href = url;
+
+        //if browser
+        //window.open(url, "_blank");
+      });
+  });
+  
+}
 
   /**
    *
