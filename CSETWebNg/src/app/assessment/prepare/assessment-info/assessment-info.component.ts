@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
+import { MatDialogRef , MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-assessment-info',
@@ -36,6 +37,7 @@ import { NCUAService } from '../../../services/ncua.service';
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentInfoComponent implements OnInit {
+
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,

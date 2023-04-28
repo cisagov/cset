@@ -626,7 +626,7 @@ table.assessment-summary th {
 
 @media only screen and (max-width: 767px) {
   .navbar-collapse.collapse.show {
-    background-color: #052637;
+    background-color: $primary-color;
     z-index: 10000;
     padding: 10px;
   }
@@ -756,9 +756,9 @@ table.td-align-top td {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 1;
-  background-color: $gray-500;
-  color: $gray-300;
-  border-color: $gray-500;
+  background-color: $gray-500 !important;
+  color: $gray-300 !important;
+  border-color: $gray-500 !important;
 }
 
 .btn-secondary {
@@ -2740,11 +2740,9 @@ mat-sidenav {
 }
 
 .mat-mdc-dialog-container {
-  background-color: $gray-50;
   display: flex !important;
   flex: 1 1 auto;
   padding: 0 !important;
-  overflow: hidden !important;
   max-width: 100% !important;
   border-radius: 0.25em;
 }

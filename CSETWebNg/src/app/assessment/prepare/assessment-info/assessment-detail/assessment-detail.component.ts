@@ -28,6 +28,8 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
+import { AwwaStandardComponent } from '../../standards/awwa-standard/awwa-standard.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -40,6 +42,9 @@ export class AssessmentDetailComponent implements OnInit {
 
   assessment: AssessmentDetail = {};
 
+  dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
+  isAwwa = false;
+
   /**
    *
    */
@@ -47,7 +52,8 @@ export class AssessmentDetailComponent implements OnInit {
     private assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -64,7 +70,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.assessment = this.assessSvc.assessment;
 
     // a few things for a brand new assessment
-    if (this.assessSvc.isBrandNew) {      
+    if (this.assessSvc.isBrandNew) {
       // RRA install presets the maturity model
       if (this.configSvc.installationMode === 'RRA') {
         this.assessSvc.setRraDefaults();
@@ -77,7 +83,9 @@ export class AssessmentDetailComponent implements OnInit {
     const assessDate: Date = new Date(this.assessment.assessmentDate);
     if (assessDate.getFullYear() <= 1900) {
       this.assessment.assessmentDate = null;
-    }    
+    }
+
+    this.isAwwa = this.assessment.standards.includes('AWWA');
   }
 
   /**
@@ -93,7 +101,7 @@ export class AssessmentDetailComponent implements OnInit {
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
-  showAssessmentNameDisclaimer(){
+  showAssessmentNameDisclaimer() {
     return this.configSvc.behaviors.showNameDisclaimer;
   }
 
@@ -107,5 +115,24 @@ export class AssessmentDetailComponent implements OnInit {
 
   showStateName() {
     return this.configSvc.behaviors.showStateName;
+  }
+
+  /**
+   * Show the AWWA tool import dialog
+   */
+  showAwwaDialog() {
+    let msg = '';
+    this.dialogRefAwwa = this.dialog.open(AwwaStandardComponent, { data: { messageText: msg } });
+
+    let rval = false;
+
+    this.dialogRefAwwa.afterClosed().subscribe(result => {
+      if (result) {
+        rval = true;
+      } else {
+        rval = false;
+      }
+      this.dialogRefAwwa = null;
+    });
   }
 }

@@ -25,10 +25,10 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angula
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { PasswordStatusResponse } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { ConfigService } from '../../services/config.service';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 
 @Component({
@@ -102,18 +102,16 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   /**
    *
    */
-   checkPasswordReset() {
+  checkPasswordReset() {
     if (this.authSvc.isLocal) {
       this.continueStandAlone();
       return;
     }
 
     this.authSvc.passwordStatus()
-      .subscribe((result: PasswordStatusResponse) => {
-        if (result) {
-          if (!result.resetRequired) {
-            this.openPasswordDialog(true);
-          }
+      .subscribe((passwordResetRequired: boolean) => {
+        if (passwordResetRequired) {
+          this.openPasswordDialog(true);
         }
       });
   }
@@ -130,8 +128,18 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
         data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()
-      .subscribe(() => {
-        this.checkPasswordReset();
+      .subscribe((passwordChangeSuccess) => {
+        if (passwordChangeSuccess) {
+          this.dialog.open(AlertComponent, { 
+            data: { 
+              messageText: 'Your password has been changed successfully.',
+              title: 'Password Changed',
+              iconClass: 'cset-icons-check-circle'
+            }
+          });
+        } else {
+          this.checkPasswordReset();
+        }
       });
   }
 

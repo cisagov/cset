@@ -86,7 +86,7 @@ namespace CSETWebCore.Api.Controllers
                         req.DiagramXml = "<mxGraphModel grid=\"1\" gridSize=\"10\"><root><mxCell id=\"0\"><mxCell id=\"1\" parent=\"0\" /></mxCell></root></mxGraphModel>";
                     }
                     xDoc.LoadXml(req.DiagramXml);
-                    _diagram.SaveDiagram((int)assessmentId, xDoc, req);
+                    _diagram.SaveDiagram((int)assessmentId, xDoc, req, true);
                 }
                 catch (Exception exc)
                 {

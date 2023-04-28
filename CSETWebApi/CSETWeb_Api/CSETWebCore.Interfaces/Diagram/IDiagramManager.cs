@@ -16,7 +16,7 @@ namespace CSETWebCore.Interfaces
 {
     public interface IDiagramManager
     {
-        void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req);
+        void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req, bool refreshQuestions);
         DiagramResponse GetDiagram(int assessmentID);
         bool HasDiagram(int assessmentID);
         string GetDiagramImage(int assessmentID, string http);
