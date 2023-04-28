@@ -1,4 +1,4 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
@@ -84,7 +84,7 @@ namespace CSETWebCore.Business.Diagram
                     {
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
-                    differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                    differenceManager.BuildDiagramDictionaries(xDoc, oldDoc);
                     differenceManager.SaveDifferences(assessmentID, refreshQuestions);
 
                 }

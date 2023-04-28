@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Diagram
         /// add records to the table for the new components
         /// deleted records for the removed components
         /// </summary>
-        public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
+        public void BuildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
             newDiagram.OldParentIds = GetParentIdsDictionary(oldDiagramDocument.SelectNodes("/mxGraphModel/root/object"));
 
