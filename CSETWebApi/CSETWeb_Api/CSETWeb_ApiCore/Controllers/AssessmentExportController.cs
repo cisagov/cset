@@ -36,7 +36,12 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/assessment/export")]
         public IActionResult ExportAssessment(string token)
-        {
+        { /* Add password to rest API. Update each call in the UI and provide this password
+           * Add dialog to prompt user for password. Add checkbox to disable this prompt (persist in PARAMETERS table)
+           * 
+           * 
+           */
+
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
 
@@ -57,7 +62,7 @@ namespace CSETWebCore.Api.Controllers
 
             // export the assessment
             var export = new AssessmentExportManager(_context);
-            var result = export.ArchiveStream(assessmentId);
+            var result = export.ArchiveStream(assessmentId); // Add password here
 
             return File(result, "application/octet-stream", filename);
         }
