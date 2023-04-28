@@ -95,6 +95,8 @@ export class MyAssessmentsComponent implements OnInit {
 
   exportAllInProgress: boolean = false;
 
+  preventEncrypt: boolean = true;
+
   timer = ms => new Promise(res => setTimeout(res, ms));
 
   constructor(
@@ -292,31 +294,47 @@ export class MyAssessmentsComponent implements OnInit {
 
   clickDownloadLink(ment_id: number) {
     let password = null;
+    console.log("this.preventEncrypt: " + this.preventEncrypt);
 
-    let dialogRef = this.dialog.open(ExportPasswordComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined && result.length > 0) {
-        password = result;
-        console.log("password entered: " + result);
-      } else {
-        console.log("password was blank.");
-      }
+    if (!this.preventEncrypt) {
+      let dialogRef = this.dialog.open(ExportPasswordComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined && result.length > 0) {
+          password = result;
+          console.log("password entered: " + result);
+        } else {
+          console.log("password was blank.");
+        }
+      
+        // get short-term JWT from API
+        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+          const url = this.fileSvc.exportUrl + "?token=" + response.token;
+          console.log("Url:");
+          console.log(url);
+        
+          //if electron
+          window.location.href = url;
 
-       // get short-term JWT from API
-       this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+          //if browser
+          //window.open(url, "_blank");
+        });
+      });
+    } else {
+      // get short-term JWT from API
+      this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
         const url = this.fileSvc.exportUrl + "?token=" + response.token;
         console.log("Url:");
         console.log(url);
-        
+      
         //if electron
         window.location.href = url;
 
         //if browser
         //window.open(url, "_blank");
       });
-  });
+    }
   
-}
+  }
 
   /**
    *
