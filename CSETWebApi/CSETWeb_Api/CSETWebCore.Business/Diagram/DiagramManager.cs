@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="assessmentID"></param>
         /// <param name="diagramXML"></param>
-        public void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req)
+        public void SaveDiagram(int assessmentID, XmlDocument xDoc, DiagramRequest req, bool refreshQuestions = true)
         {
             int lastUsedComponentNumber = req.LastUsedComponentNumber;
             string diagramImage = req.DiagramSvg;
@@ -85,7 +85,7 @@ namespace CSETWebCore.Business.Diagram
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
                     differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
-                    differenceManager.SaveDifferences(assessmentID);
+                    differenceManager.SaveDifferences(assessmentID, refreshQuestions);
 
                 }
                 catch (Exception exc)

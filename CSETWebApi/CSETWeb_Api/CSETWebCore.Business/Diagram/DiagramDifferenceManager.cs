@@ -65,7 +65,7 @@ namespace CSETWebCore.Business.Diagram
         }
 
 
-        public void SaveDifferences(int assessment_id)
+        public void SaveDifferences(int assessment_id, bool refreshQuestions)
         {
             ///when saving if the parent object is a layer then there is not default zone
             ///if the parent object is zone then all objects in that zone inherit the layer of the zone            
@@ -240,7 +240,11 @@ namespace CSETWebCore.Business.Diagram
             }
             context.SaveChanges();
             layers.UpdateAllLayersAndZones();
-            context.FillNetworkDiagramQuestions(assessment_id);
+
+            if (refreshQuestions)
+            {
+                context.FillNetworkDiagramQuestions(assessment_id);
+            }
         }
 
 

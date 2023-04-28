@@ -33,6 +33,7 @@ import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 import { LayoutService } from '../../services/layout.service';
 import { JwtParser } from '../../helpers/jwt-parser';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -195,5 +196,9 @@ export class LoginTsaComponent implements OnInit {
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }
