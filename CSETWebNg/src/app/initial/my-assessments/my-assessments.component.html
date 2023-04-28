@@ -88,6 +88,8 @@
                     </div>
 
                     <mat-checkbox color="primary" [(ngModel)]="preventEncrypt"
+                        (change)="updateEncryptPreference()"
+                        [disabled]="disabledEncrypt"
                         matTooltip="Stops the 'enter password' screen from appearing on export"
                         style="margin-left: auto; margin-right: 0; border: 1px solid gray">
                         <label style="margin-top: 15px; padding-right: 10px;">Prevent Encrypt</label>

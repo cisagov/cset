@@ -96,6 +96,7 @@ export class MyAssessmentsComponent implements OnInit {
   exportAllInProgress: boolean = false;
 
   preventEncrypt: boolean = true;
+  disabledEncrypt: boolean = false;
 
   timer = ms => new Promise(res => setTimeout(res, ms));
 
@@ -294,7 +295,6 @@ export class MyAssessmentsComponent implements OnInit {
 
   clickDownloadLink(ment_id: number) {
     let password = null;
-    console.log("this.preventEncrypt: " + this.preventEncrypt);
 
     if (!this.preventEncrypt) {
       let dialogRef = this.dialog.open(ExportPasswordComponent);
@@ -402,5 +402,11 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.exportAllInProgress = false;
+  }
+
+  updateEncryptPreference() {
+    this.disabledEncrypt = true;
+    console.log("Sending Status to the API.");
+    this.disabledEncrypt = false;
   }
 }
