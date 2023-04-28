@@ -708,7 +708,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         donutMargins = [72, 0, 0, 0];
         numberMargins = [-127, 54, 0, 0];
         if (innerNumValues[i] > 9) {
-          numberMargins = [-130, 54, 0, 0];
+          numberMargins = [-131, 54, 0, 0];
         }
       }
 
