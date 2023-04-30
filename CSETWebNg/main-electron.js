@@ -34,6 +34,10 @@ switch(installationMode) {
     clientCode = 'CF';
     appCode = 'CSET-CF';
     break;
+  case 'RENEW':
+    clientCode = 'DOE';
+    appCode = 'CSET Renewables';
+    break;
   default:
     clientCode = 'DHS';
     appCode = 'CSET';
@@ -197,7 +201,7 @@ function createWindow() {
     rootDir = path.dirname(app.getPath('exe'));
   }
 
-  log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
+  log.info('Root Directory of ' + appCode + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
 
@@ -374,7 +378,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(installationMode.toUpperCase() + ' has been shut down')
+    log.info(appCode + ' has been shut down')
     app.quit();
   }
 });
