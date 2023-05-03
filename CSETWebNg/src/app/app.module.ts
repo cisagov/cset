@@ -556,6 +556,7 @@ import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
+import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
 
 
 
@@ -1068,7 +1069,8 @@ import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
-        LogoCyberShieldComponent
+        LogoCyberShieldComponent,
+        HydroDeficiencyComponent
     ],
     providers: [
         ConfigService,
