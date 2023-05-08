@@ -51,7 +51,7 @@ build_electron() {
 	
 	package="CSET"
 	
-	mkdir -p ../dist/electron && cp -r electron-builds/${package}-win32-x64/. ../dist/electron
+	mkdir -p ../dist/electron && cp -r "electron-builds/${package}-win32-x64/." ../dist/electron
 	
 	echo 'Electron package complete'
 }
