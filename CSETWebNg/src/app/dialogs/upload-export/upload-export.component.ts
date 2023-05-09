@@ -25,8 +25,9 @@ import { ImportAssessmentService } from './../../services/import-assessment.serv
 import { FileUploadClientService } from '../../services/file-client.service';
 import { DiagramService } from './../../services/diagram.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ImportPasswordComponent } from '../assessment-encryption/import-password/import-password.component';
 
 @Component({
   selector: 'app-upload-export',
@@ -48,7 +49,11 @@ export class UploadExportComponent implements OnInit {
   uploadSuccessful = false;
   statusText = "";
 
+  passwordRequired = false;
+  password = "";
+
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
+    public newDialog: MatDialog,
     private importSvc: ImportAssessmentService,
     private fileSvc: FileUploadClientService,
     private diagramSvc: DiagramService,
@@ -67,6 +72,8 @@ export class UploadExportComponent implements OnInit {
           this.files.add(files[key]);
         }
       }
+      console.log("this.files");
+      console.log(this.files);
       this.progressDialog();
     }
   }
@@ -110,7 +117,7 @@ export class UploadExportComponent implements OnInit {
     if (this.data.isCsafUpload) {
       this.progress = this.fileSvc.uploadCsafFiles(this.files);
     } else {
-      this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
+      this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad, this.password);
     }
 
     // convert the progress map into an array
@@ -139,7 +146,7 @@ export class UploadExportComponent implements OnInit {
 
     // When all progress-observables are completed...
     let count = 0
-    allProgressObservables.forEach(element => {
+    allProgressObservables.forEach((element, i) => {
       element.subscribe(
         succ => {
           // console.log(succ)
@@ -149,10 +156,22 @@ export class UploadExportComponent implements OnInit {
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
+
+            if (fail.message == "File requires a password") {
+              this.passwordRequired = true;
+            }
           }
         },
         comp => {
           count += 1
+          let myArray = [];
+          for (const [key, value] of this.files.entries()) {
+            myArray.push(key);
+          }
+          let fileToRemove = myArray[i];
+          console.log(fileToRemove);
+          this.files.delete(fileToRemove);
+
           if(count >= allProgressObservables.length){
             if (this.data.isCsafUpload) {
               this.canBeClosed = true;
@@ -177,4 +196,17 @@ export class UploadExportComponent implements OnInit {
     //   this.dialog.close();
     // });
   }
+
+  enterPassword() {
+    let passwordDialog = this.newDialog.open(ImportPasswordComponent);
+    passwordDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.password = result;
+        this.progressDialog();
+      }
+
+    });
+
+  }
+
 }
