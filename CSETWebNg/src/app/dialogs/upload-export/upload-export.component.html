@@ -45,6 +45,7 @@
       <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
               [disabled]="canBeClosed">Cancel</button>
       <button class="btn btn-primary" *ngIf="canBeClosed" (click)="closeDialog()">Close</button>
+      <button class="btn btn-primary" *ngIf="passwordRequired" (click)="enterPassword()">Enter Password</button>
     </mat-dialog-actions>
   </div>
 </div>

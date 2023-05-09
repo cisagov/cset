@@ -146,6 +146,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
   }  
 
   /**
@@ -301,16 +302,17 @@ export class MyAssessmentsComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result !== undefined && result.length > 0) {
           password = result;
-          console.log("password entered: " + result);
-        } else {
-          console.log("password was blank.");
         }
       
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          const url = this.fileSvc.exportUrl + "?token=" + response.token;
-          console.log("Url:");
-          console.log(url);
+          let url = "";
+          if (password != null) {
+            console.log(password);
+            url = this.fileSvc.exportUrl + "?token=" + response.token + "&password=" + password;
+          } else {
+            url = this.fileSvc.exportUrl + "?token=" + response.token;
+          }
         
           //if electron
           window.location.href = url;
@@ -320,12 +322,9 @@ export class MyAssessmentsComponent implements OnInit {
         });
       });
     } else {
-      // get short-term JWT from API
       this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
         const url = this.fileSvc.exportUrl + "?token=" + response.token;
-        console.log("Url:");
-        console.log(url);
-      
+
         //if electron
         window.location.href = url;
 
@@ -406,7 +405,7 @@ export class MyAssessmentsComponent implements OnInit {
 
   updateEncryptPreference() {
     this.disabledEncrypt = true;
-    console.log("Sending Status to the API.");
+    this.assessSvc.persistEncryptPreference(this.preventEncrypt);
     this.disabledEncrypt = false;
   }
 }

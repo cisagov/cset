@@ -291,14 +291,17 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        public Stream ArchiveStream(int assessmentId)
+        public Stream ArchiveStream(int assessmentId, string password)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
 
             using (var archive = new ZipFile())
             {
-                archive.Password = "test";
+                if (password != null && password != "")
+                {
+                    archive.Password = password;
+                }
 
                 foreach (var standard in model.jAVAILABLE_STANDARDS)
                 {
