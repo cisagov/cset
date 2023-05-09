@@ -51,6 +51,7 @@ export class UploadExportComponent implements OnInit {
 
   passwordRequired = false;
   password = "";
+  uploadedAssessments = [];
 
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
     public newDialog: MatDialog,
@@ -72,8 +73,11 @@ export class UploadExportComponent implements OnInit {
           this.files.add(files[key]);
         }
       }
-      console.log("this.files");
-      console.log(this.files);
+
+      for (const [key, value] of this.files.entries()) {
+        this.uploadedAssessments.push(key);
+      }
+
       this.progressDialog();
     }
   }
@@ -164,15 +168,13 @@ export class UploadExportComponent implements OnInit {
         },
         comp => {
           count += 1
-          let myArray = [];
-          for (const [key, value] of this.files.entries()) {
-            myArray.push(key);
-          }
-          let fileToRemove = myArray[i];
-          console.log(fileToRemove);
+
+          // Remove the files that were uploaded successfully so they don't get reuploaded multiple times
+          // while we work through each of the assessments that need a password entered.
+          let fileToRemove = this.uploadedAssessments[i];       
           this.files.delete(fileToRemove);
 
-          if(count >= allProgressObservables.length){
+          if (count >= allProgressObservables.length){
             if (this.data.isCsafUpload) {
               this.canBeClosed = true;
               this.dialog.disableClose = false;
@@ -198,13 +200,14 @@ export class UploadExportComponent implements OnInit {
   }
 
   enterPassword() {
+    // Retry the upload process with the password. Will be called repeatedly for each assessment that 
+    // needs a different password.
     let passwordDialog = this.newDialog.open(ImportPasswordComponent);
     passwordDialog.afterClosed().subscribe(result => {
       if (result) {
         this.password = result;
         this.progressDialog();
       }
-
     });
 
   }
