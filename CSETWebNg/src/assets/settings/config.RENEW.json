@@ -5,7 +5,6 @@
     "helpContactEmail": "cset@inl.gov",
     "behaviors": {
         "defaultTitle":"CSET Renewables",
-        "splashPageHTML": "dist/assets/splashRENEW.html",
         "showDisclaimer": false,
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
@@ -13,7 +12,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showAnalyticsColumnOnLanding": true,
-        "splashPageHTML": "",
+        "splashPageHTML": "dist/assets/splashRENEW.html",
         "showFacilityName": true,
         "showCityName": true,
         "showStateName": true,
