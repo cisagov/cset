@@ -9921,6 +9921,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
 
     // no cell without a style needs to be considered for any of the logic below
     if (!cell.style) {
+        console.log('no style, bailing');
         return;
     }
 
@@ -9973,6 +9974,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
     cell.autoNameComponent();
 
 
+
     // If the object being added is a multi-service component,
     // swap out the symbol with a container.
     var filename = cell.getStyleValue('image');
@@ -9981,6 +9983,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
         cell.setStyle('swimlane;msc=1;html=1;align=center;shadow=0;dashed=0;spacingTop=3;fillColor=#073b6b;fontColor=#FFFFFF;swimlaneFillColor=#ffffff');
         cell.geometry.width = 230;
         cell.geometry.height = 140;
+    }
+
+    // see what we get that has no filename
+    if (!filename) {
+        console.log('no image style');
+        cell.setStyle('image;image=img/cset/unknown.svg');
     }
 }
 
