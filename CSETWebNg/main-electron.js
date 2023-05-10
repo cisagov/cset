@@ -17,7 +17,7 @@ let config = require('./dist/assets/settings/config.json');
 config.currentConfigChain.forEach(configProfile => {
   const subConfig = require(`./dist/assets/settings/config.${configProfile}.json`);
   config = { ...config, ...subConfig };
-})
+});
 
 const installationMode = config.installationMode;
 
@@ -380,7 +380,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(appCode + ' has been shut down')
+    log.info(appCode + ' has been shut down');
     app.quit();
   }
 });
