@@ -359,7 +359,7 @@ namespace CSETWebCore.Business.Diagram
                         var addLayerVisible = (mxGraphModelRootObject)item;
                         string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent ?? "0";
                         var layerVisibility = layers.GetLastLayer(parentId);
-                        if (layerVisibility != null) 
+                        if (layerVisibility != null)
                         {
                             addLayerVisible.visible = layerVisibility.visible ?? "true";
                             addLayerVisible.layerName = layerVisibility.layerName ?? string.Empty;
@@ -398,8 +398,8 @@ namespace CSETWebCore.Business.Diagram
                     {
                         var addLayerVisible = (mxGraphModelRootMxCell)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
-                        if (layerVisibility != null) 
-                        { 
+                        if (layerVisibility != null)
+                        {
                             addLayerVisible.visible = layerVisibility.visible;
                             addLayerVisible.layerName = layerVisibility.layerName;
                             vertices.Add(addLayerVisible);
@@ -433,7 +433,7 @@ namespace CSETWebCore.Business.Diagram
                     {
                         var addLayerVisible = (mxGraphModelRootObject)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
-                        if (layerVisibility != null) 
+                        if (layerVisibility != null)
                         {
                             addLayerVisible.visible = layerVisibility.visible;
                             addLayerVisible.layerName = layerVisibility.layerName;
@@ -877,7 +877,7 @@ namespace CSETWebCore.Business.Diagram
         /// Gets all of the vendors from the uploaded CSAF_FILE records in the DB.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors() 
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors()
         {
             List<CSAF_FILE> csafList = _context.CSAF_FILE.ToList();
             List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
@@ -899,7 +899,7 @@ namespace CSETWebCore.Business.Diagram
                 {
                     csafObj.Product_Tree.Branches[0].Branches = new List<Branch>();
                 }
-                    
+
                 foreach (var branch in csafObj.Product_Tree.Branches[0].Branches)
                 {
                     // Add newly found products, else add new vulnerabilites to existing product
@@ -944,7 +944,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vendor"></param>
         /// <returns>The newly added / edited vendor</returns>
-        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor) 
+        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor)
         {
             var currentVendors = GetCsafVendors();
 
@@ -1006,7 +1006,7 @@ namespace CSETWebCore.Business.Diagram
             }
         }
 
-        public void DeleteCsafVendor(string vendorName) 
+        public void DeleteCsafVendor(string vendorName)
         {
             var allCsafs = _context.CSAF_FILE.ToList();
             var csafFilesToRemove = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
@@ -1017,13 +1017,13 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
         }
 
-        public void DeleteCsafProduct(string vendorName, string productName) 
+        public void DeleteCsafProduct(string vendorName, string productName)
         {
             var allCsafs = _context.CSAF_FILE.ToList();
             var csafFilesWithTargetVendor = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
                     .Product_Tree.Branches[0].Name == vendorName);
 
-            foreach (CSAF_FILE csafFile in csafFilesWithTargetVendor) 
+            foreach (CSAF_FILE csafFile in csafFilesWithTargetVendor)
             {
                 CommonSecurityAdvisoryFrameworkObject csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csafFile.Data));
                 csafObj.Product_Tree.Branches[0].Branches.RemoveAll(branch => branch.Name == productName);

@@ -17,7 +17,7 @@ namespace CSETWebCore.Model.Diagram
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("mxCell", typeof(mxGraphModelRootMxCell))]
-        [System.Xml.Serialization.XmlElementAttribute("object", typeof(mxGraphModelRootObject))]
+        [System.Xml.Serialization.XmlElementAttribute("UserObject", typeof(mxGraphModelRootObject))]
         public object[] Items
         {
             get

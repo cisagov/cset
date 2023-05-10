@@ -6,7 +6,7 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-    if (typeof this.value != "object")
+    if (typeof this.value != 'UserObject')
     {
         return null;
     }
@@ -27,17 +27,17 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
 
-    if (!!this.value && typeof this.value == "object")
+    if (!!this.value && typeof this.value == 'UserObject')
     {
         obj = this.value;
     }
     else
     {
-        // The cell is just an mxCell.  Wrap it in an object and set the attribute on the wrapper.
+        // The cell is just an mxCell.  Wrap it in a UserObject and set the attribute on the wrapper.
         try
         {
             var doc = mxUtils.createXmlDocument();
-            obj = doc.createElement('object');
+            obj = doc.createElement('UserObject');
             this.value = obj;
         }
         catch (e)
