@@ -309,13 +309,17 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             // Now to remove the Gallery Item and card. This gets the guid for the item / card
             var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(setName)).FirstOrDefault();
-            var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
 
-            // This removes any cards with the same Gallery_Item_Guid from view, but the GALLERY_ITEM still exists
-            // because the Assessment still exists, and the Assessment's guid can't be left hanging
-            _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
+            if (cardInfo != null)
+            { 
+                var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
+
+                // This removes any cards with the same Gallery_Item_Guid from view, but the GALLERY_ITEM still exists
+                // because the Assessment still exists, and the Assessment's guid can't be left hanging
+                _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
+            }
+
             _context.SaveChanges();            
-
             return resp;
         }
 

@@ -84,10 +84,10 @@ namespace CSETWebCore.Business.ModuleIO
 
             _context.SaveChanges();
 
-            // Add custom gallery card for newly cloned set
+            // Add custom gallery card for newly imported set
             string configSetup = "{Sets:[\"" + set.Set_Name + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
 
-            var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals(category.Set_Category_Name)).FirstOrDefault();
+            var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
             int colIndex = 0;
             if (custom != null)
             {
@@ -99,7 +99,14 @@ namespace CSETWebCore.Business.ModuleIO
                 }
             }
 
-            _galleryEditor.AddGalleryItem("", "", set.Standard_ToolTip, set.Full_Name, configSetup, custom.Group_Id, colIndex);
+            string description = category.Set_Category_Name;
+
+            if (!string.IsNullOrWhiteSpace(set.Standard_ToolTip)) 
+            {
+                description += " - " + set.Standard_ToolTip; 
+            }
+
+            _galleryEditor.AddGalleryItem("", "", description, set.Full_Name, configSetup, custom.Group_Id, colIndex);
 
             try
             {
