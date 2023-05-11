@@ -307,16 +307,14 @@ namespace CSETWebCore.Business.ModuleBuilder
             // This should cascade delete everything else (except the Gallery card stuff)
             _context.SETS.Remove(dbSet);
 
-            // Now to remove the Gallery Item and card. This gets the guid for the item / card
+            // Now to remove the Gallery Item and card. This gets the guid for the item / card.
+            // Currently any custom SET will have a one-to-one relationship with a GALLERY_ITEM, so we can look for it
+            // in the cards' config setup.
             var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains(setName)).FirstOrDefault();
 
             if (cardInfo != null)
-            { 
-                var cardDetailsRange = _context.GALLERY_GROUP_DETAILS.Where(x => x.Gallery_Item_Guid.Equals(cardInfo.Gallery_Item_Guid));
-
-                // This removes any cards with the same Gallery_Item_Guid from view, but the GALLERY_ITEM still exists
-                // because the Assessment still exists, and the Assessment's guid can't be left hanging
-                _context.GALLERY_GROUP_DETAILS.RemoveRange(cardDetailsRange);
+            {
+                _context.GALLERY_ITEM.Remove(cardInfo);
             }
 
             _context.SaveChanges();            
