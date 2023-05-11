@@ -310,7 +310,7 @@ namespace CSETWebCore.Business.ModuleBuilder
             // Now to remove the Gallery Item and card. This gets the guid for the item / card.
             // Currently any custom SET will have a one-to-one relationship with a GALLERY_ITEM, so we can look for it
             // in the cards' config setup.
-            var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains($@"[""{setName}""]")).FirstOrDefault();
+            var cardInfo = _context.GALLERY_ITEM.Where(x => x.Configuration_Setup.Contains($"[\"{setName}\"]")).FirstOrDefault();
 
             if (cardInfo != null)
             {
