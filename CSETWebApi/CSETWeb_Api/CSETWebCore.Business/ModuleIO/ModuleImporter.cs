@@ -99,14 +99,17 @@ namespace CSETWebCore.Business.ModuleIO
                 }
             }
 
-            string description = category.Set_Category_Name;
-
-            if (!string.IsNullOrWhiteSpace(set.Standard_ToolTip)) 
+            if (!string.IsNullOrWhiteSpace(set.Standard_ToolTip))
             {
-                description += " - " + set.Standard_ToolTip; 
+                set.Standard_ToolTip = $"{category.Set_Category_Name} - {set.Standard_ToolTip}";
+            }
+            else 
+            {
+                set.Standard_ToolTip = $"{category.Set_Category_Name}";
             }
 
-            _galleryEditor.AddGalleryItem("", "", description, set.Full_Name, configSetup, custom.Group_Id, colIndex);
+
+            _galleryEditor.AddGalleryItem("", "", set.Standard_ToolTip, set.Full_Name, configSetup, custom.Group_Id, colIndex);
 
             try
             {
