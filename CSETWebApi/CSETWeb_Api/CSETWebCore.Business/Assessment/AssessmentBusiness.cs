@@ -786,8 +786,14 @@ namespace CSETWebCore.Business.Assessment
 
             if (assessment.UseMaturity)
             {
+                if (assessment.MaturityModel == null) 
+                {
+                    // Try to get the maturity model if it's null for some reason
+                    assessment.MaturityModel = _maturityBusiness.GetMaturityModel(assessment.Id);
+                }
+
                 // Use shorter names on assessments with multiple types.
-                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
+                assessment.TypeTitle += ", " + assessment.MaturityModel?.ModelTitle;
                 assessment.TypeDescription = galleryCardDescription;
             }
 

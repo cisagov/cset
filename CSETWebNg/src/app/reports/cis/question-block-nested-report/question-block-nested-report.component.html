@@ -24,7 +24,7 @@
     <div class="mb-2">
         <div class="mb-2">
             <span style="white-space: normal;">
-                <span [innerHTML]="q.questionText | safe: 'html'"></span>
+                <span class="nested-question-text" [innerHTML]="q.questionText | safe: 'html'"></span>
             </span>
 
             <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>

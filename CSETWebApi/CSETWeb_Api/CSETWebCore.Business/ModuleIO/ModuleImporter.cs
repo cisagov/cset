@@ -11,7 +11,7 @@ using CSETWebCore.DataLayer.Model;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
-
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Business.ModuleIO
 {
@@ -22,15 +22,16 @@ namespace CSETWebCore.Business.ModuleIO
     public class ModuleImporter
     {
         private readonly CSETContext _context;
-
+        private readonly IGalleryEditor _galleryEditor;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ModuleImporter(CSETContext context)
+        public ModuleImporter(CSETContext context, IGalleryEditor galleryEditor)
         {
             _context = context;
+            _galleryEditor = galleryEditor;
         }
 
 
@@ -80,8 +81,35 @@ namespace CSETWebCore.Business.ModuleIO
             set.Standard_ToolTip = externalStandard.summary;
 
             _context.SETS.Add(set);
+
             _context.SaveChanges();
 
+            // Add custom gallery card for newly imported set
+            string configSetup = "{Sets:[\"" + set.Set_Name + "\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}";
+
+            var custom = _context.GALLERY_GROUP.Where(x => x.Group_Title.Equals("Custom")).FirstOrDefault();
+            int colIndex = 0;
+            if (custom != null)
+            {
+                var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
+
+                if (colIndexList != null)
+                {
+                    colIndex = colIndexList.Count;
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(set.Standard_ToolTip))
+            {
+                set.Standard_ToolTip = $"{category.Set_Category_Name} - {set.Standard_ToolTip}";
+            }
+            else 
+            {
+                set.Standard_ToolTip = $"{category.Set_Category_Name}";
+            }
+
+
+            _galleryEditor.AddGalleryItem("", "", set.Standard_ToolTip, set.Full_Name, configSetup, custom.Group_Id, colIndex);
 
             try
             {
