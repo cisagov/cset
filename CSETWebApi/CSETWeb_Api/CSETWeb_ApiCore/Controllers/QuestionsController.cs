@@ -633,5 +633,29 @@ namespace CSETWebCore.Api.Controllers
 
             return rm.SaveAnswerParameter(token.RequirementId, token.Id, token.AnswerId, token.Substitution);
         }
+
+
+        /// <summary>
+        /// Persists an answer-level ("in-line", "local") Parameter change.
+        /// </summary>
+        [HttpGet]
+        [Route("api/SubGroupingQuestionCount")]
+        public List<int> SubGroupingQuestionCount([FromQuery] string[] subGroups, [FromQuery] int modelId)
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
+
+            List<int> counts = new List<int>();
+
+            subGroups = subGroups[0].Split(',');
+
+            foreach (string subGroup in subGroups)
+            {
+                counts.Add(qb.QuestionCountInSubGroup(subGroup, modelId));
+            }
+
+            return counts;
+        }
     }
 }

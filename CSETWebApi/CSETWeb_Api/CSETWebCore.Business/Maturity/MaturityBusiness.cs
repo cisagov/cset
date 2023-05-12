@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
+using CSETWebCore.Model.Hydro;
 using J2N;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -2459,6 +2460,34 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
+        }
+
+
+        public List<HydroDonutData> GetHydroDonutData()
+        {
+            var result = from question in _context.MATURITY_QUESTIONS
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
+                         join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id
+                         select new { question, action, answerOption };
+
+            List<HydroDonutData> response = new List<HydroDonutData>();
+
+            foreach (var item in result.Distinct().ToList())
+            {
+                HydroDonutData data = new HydroDonutData()
+                {
+                    Actions = item.action,
+                    //Answer = item.answer,
+                    AnswerOption = item.answerOption,
+                    Question = item.question
+                };
+
+                response.Add(data);
+            }
+
+            return response;
         }
     }
 }

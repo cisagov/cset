@@ -526,5 +526,11 @@ namespace CSETWebCore.Business.Question
                 _questionRequirement.StoreAnswer(ans);
             }
         }
+
+
+        public int QuestionCountInSubGroup(string subGroup, int modelId)
+        {
+            return _context.MATURITY_QUESTIONS.Where(x => x.Sub_Category == subGroup && x.Maturity_Model_Id == modelId).Count();
+        }
     }
 }
