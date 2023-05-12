@@ -15,6 +15,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Model.AssessmentIO;
+using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -23,10 +24,12 @@ namespace CSETWebCore.Api.Controllers
     public class SetsController : ControllerBase
     {
         private CSETContext _context;
+        private readonly IGalleryEditor _galleryEditor;
 
-        public SetsController(CSETContext context)
+        public SetsController(CSETContext context, IGalleryEditor galleryEditor)
         {
             _context = context;
+            _galleryEditor = galleryEditor;
         }
 
         [HttpGet]
@@ -54,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     try
                     {
-                        var mp = new ModuleImporter(_context);
+                        var mp = new ModuleImporter(_context, _galleryEditor);
                         mp.ProcessStandard(externalStandard);
                     }
                     catch (Exception exc)
