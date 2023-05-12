@@ -40,9 +40,8 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   @Input() assessmentInfo;
   @Input() donutData;
   @Input() tableData;
-
-  @ViewChild('figureTwo', {static: false}) figureTwo: ElementRef;
-  @ViewChildren('pieChart') pieChartsFromTemplate: QueryList<ElementRef>;
+  @ViewChildren('overallMilPieChart') overallPieChartsFromTemplate: QueryList<ElementRef>;
+  @ViewChildren('individualMilPieChart') breakdownPieChartsFromTemplate: QueryList<ElementRef>;
   
   pdfDocument: any = null;
   loading = true;
@@ -60,18 +59,24 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   figureTwoData: any[] = [];
   figureTwoChart: any = null;
 
+  overallMilPieCharts = [];
+  overallMilData = [];
+  overallMilHTML = [];
+  overallMilQuestionCounts = [];
+  overallMilChartHTML = [];
+
+
   // Section 4
   objectiveTitles = [];
   objectiveData = [];
 
-  pieCharts = [];
-  donutChartData = [];
-  totalQuestionCounts = [];
-  donutChartHTML = [];
+  breakdownMilPieCharts = []; //pieCharts = [];
+  breakdownMilData = []; //donutChartData = [];
+  breakdownMilQuestionCounts = []; //totalQuestionsCount
+  breakdownMilChartHTML = []; //donutChartHTML = [];
   runningCount = 0;
 
   donutColorScheme = { domain: ['#265B94', '#90A5C7', '#F5DA8C', '#DCA237', '#E6E6E6'] };
-  //totalQuestionsCount = this.testData.map(x => x.value).reduce((a, b) => a + b);
   
   heatMaps = [];
   convertedHeatMaps = [];
@@ -119,26 +124,37 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     this.getFigureTwoData();
     this.getMilAchievementChartData();
     this.getManagementActivitiesData();
-    this.getDonutChartData();
+    this.getMilChartsData();
     this.parseTableData();
   }
 
   ngAfterViewInit() {
-    this.pieCharts = this.pieChartsFromTemplate.toArray();
+    this.overallMilPieCharts = this.overallPieChartsFromTemplate.toArray();
+    this.breakdownMilPieCharts = this.breakdownPieChartsFromTemplate.toArray();
 
-    for (let i = 0; i < this.pieCharts.length; i++) {
-      this.drawOnPieChart(i);
+    for (let i = 0; i < this.overallMilPieCharts.length; i++) {
+      this.drawOnPieChart(i, 'overall');
     }
+
+    for (let i = 0; i < this.breakdownMilPieCharts.length; i++) {
+      this.drawOnPieChart(i, 'breakdown');
+    }
+
   }
 
   // This places the answer counts inside the pie chart itself
-  private drawOnPieChart(num: number) {
+  private drawOnPieChart(num: number, category: string) {
     // get the ngx chart element
-    let node = this.pieCharts[num].chartElement.nativeElement;
     let svg;
-
-    // set the margins of the pie chart to be a bit more compact
-    this.pieCharts[num].margins = [10, 10, 10, 10];
+    let node;
+    if (category == 'overall') {
+      node = this.overallMilPieCharts[num].chartElement.nativeElement;
+      this.overallMilPieCharts[num].margins = [10, 10, 10, 10];
+    } else {
+      node = this.breakdownMilPieCharts[num].chartElement.nativeElement;
+      this.breakdownMilPieCharts[num].margins = [10, 10, 10, 10];
+    }
+  
     for (let i = 0; i < 5; i++) {
       if (i === 3) {
         // this is the pie chart svg
@@ -158,7 +174,12 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
       maxX = Math.round((bbox.x + bbox.width > maxX ? bbox.x + bbox.width : maxX) * 10) / 10;
     }
 
-    let data = this.donutChartData[num];
+    let data = null;
+    if (category == 'overall') {
+      data = this.overallMilData[num];
+    } else {
+      data = this.breakdownMilData[num];
+    }
 
     for (let i = 0; i < slices.length; i++) {
       const value = data[i].value;
@@ -170,21 +191,37 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
       
       let startingValue = 0;
       for (let j = 0; j < i; j++) {
-        startingValue += (data[j].value / this.totalQuestionCounts[num] * 100);
+        if (category == 'overall') {
+          startingValue += (data[j].value / this.overallMilQuestionCounts[num] * 100);
+        } else {
+          startingValue += (data[j].value / this.breakdownMilQuestionCounts[num] * 100);
+        }
       }
-      const text = this.generateText(value, maxX - minX, startingValue, color, num);
+      const text = this.generateText(value, maxX - minX, startingValue, color, num, category);
       
       svg.append(text);
     }
   }
 
-  private generateText(value: number, diagonal: number, startingValue: number, color: string, num: number) {
+  private generateText(value: number, diagonal: number, startingValue: number, color: string, num: number, category: string) {
     // create text element
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
 
-    const r = Math.round(diagonal / 2.3);
+    let r;
+    if (category == 'overall') {
+      r = Math.round(diagonal / 2.0);
+    } else {
+      r = Math.round(diagonal / 2.3);
+    }
+
     // angle = summed angle of previous slices + half of current slice - 90 degrees (starting at the top of the circle)
-    const angle = ((startingValue * 2 + (value / this.totalQuestionCounts[num] * 100)) / 100 - 0.5) * Math.PI;
+    let angle = null;
+    if (category == 'overall') {
+      angle = ((startingValue * 2 + (value / this.overallMilQuestionCounts[num] * 100)) / 100 - 0.5) * Math.PI;
+    } else {
+      angle = ((startingValue * 2 + (value / this.breakdownMilQuestionCounts[num] * 100)) / 100 - 0.5) * Math.PI;
+    }
+
     const x = r * Math.cos(angle);
     const y = r * Math.sin(angle) + 5;
 
@@ -192,7 +229,11 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     text.setAttribute('y', '' + y);
     text.setAttribute('fill', color);
     text.textContent = value != 0 ? value.toString() : '';
-    text.setAttribute('style', 'font-size: 12px')
+    if (category == 'overall') {
+      text.setAttribute('style', 'font-size: 10px')
+    } else {
+      text.setAttribute('style', 'font-size: 12px')
+    }
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('pointer-events', 'none');
     return text;
@@ -252,12 +293,31 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
   }
 
 
-  getDonutChartData() {
+  getMilChartsData() {
     for (let i = 0; i < this.donutData.length; i++) {
+
+      // Get overall MIL data
+      for (let j = 0; j < this.donutData[i].domainMilRollup.length; j++) {
+        let overallMil = this.donutData[i].domainMilRollup[j];
+
+        this.overallMilData.push(
+          [
+            { name: "Fully Implemented", value: overallMil.fi },
+            { name: "Largely Implemented", value: overallMil.li },
+            { name: "Partially Implemented", value: overallMil.pi },
+            { name: "Not Implemented", value: overallMil.ni },
+            { name: "Unanswered", value: overallMil.u },
+          ]);
+
+          let total = (overallMil.fi + overallMil.li + overallMil.pi + overallMil.ni + overallMil.u);
+          this.overallMilQuestionCounts.push(total);
+      }
+      
+      // Also get the individual MIL breakdown
       for (let j = 0; j < this.donutData[i].objectives.length; j++) {
         let objective = this.donutData[i].objectives[j];
 
-        this.donutChartData.push(
+        this.breakdownMilData.push(
         [
           { name: "Fully Implemented", value: objective.fi },
           { name: "Largely Implemented", value: objective.li },
@@ -267,7 +327,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         ]);
 
         let total = (objective.fi + objective.li + objective.pi + objective.ni + objective.u);
-        this.totalQuestionCounts.push(total);
+        this.breakdownMilQuestionCounts.push(total);
       }
     }
   }
@@ -381,6 +441,146 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     }
 
     this.loading = false;
+  }
+
+  buildGiantDonutChart() {
+    let htmlToPdfmake = require('html-to-pdfmake');
+
+    let milOneHtmlMakeObjects = [];
+    let milTwoHtmlMakeObjects = [];
+    let milThreeHtmlMakeObjects = [];
+
+    let milOneInnerNumArray = [];
+    let milTwoInnerNumArray = [];
+    let milThreeInnerNumArray = [];
+
+    let milOneDonutRow = [];
+    let milTwoDonutRow = [];
+    let milThreeDonutRow = [];
+
+    let num = 0;
+    
+    // Get all the numbers inside each donut circle
+    for (let i = 0; i < this.overallMilChartHTML.length; i++) {
+      if (num === 0) {
+        milOneHtmlMakeObjects.push( htmlToPdfmake(this.overallMilChartHTML[i]) );
+        milOneInnerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 10px;">' + this.overallMilQuestionCounts[i]  + '</text></svg>');
+      } else if (num === 1) {
+        milTwoHtmlMakeObjects.push( htmlToPdfmake(this.overallMilChartHTML[i]) );
+        milTwoInnerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 10px;">' + this.overallMilQuestionCounts[i]  + '</text></svg>');
+      } else if (num === 2) {
+        milThreeHtmlMakeObjects.push( htmlToPdfmake(this.overallMilChartHTML[i]) );
+        milThreeInnerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 10px;">' + this.overallMilQuestionCounts[i]  + '</text></svg>');
+      }
+
+      if (num === 2) {
+        num = 0;
+      } else {
+        num++;
+      }
+    }
+
+    // Grab the raw svg of each ngx chart so we can move it around the page, broken up into the 3 MIL categories
+    let milOneInnerNumbers = [];
+    let milTwoInnerNumbers = [];
+    let milThreeInnerNumbers = [];
+
+    let milOneInnerNumMargins = [[32, -78, 0, 0], [36, -78, 0, 0], [36, -78, 0, 0], [36, -78, 0, 0], [36, -78, 0, 0], [36, -78, 0, 0], [36, -78, 0, 0], [41, -78, 0, 0], [36, -78, 0, 0], [42, -78, 0, 0]];
+    let milTwoInnerNumMargins = [[30, -151, 0, 0], [33, -151, 0, 0], [34, -151, 0, 0], [34, -151, 0, 0], [34, -151, 0, 0], [34, -151, 0, 0], [34, -151, 0, 0], [38, -151, 0, 0], [33, -151, 0, 0], [39, -151, 0, 0]];
+    let milThreeInnerNumMargins = [[30, -224, 0, 0], [34, -224, 0, 0], [34, -224, 0, 0], [34, -224, 0, 0], [34, -224, 0, 0], [34, -224, 0, 0], [34, -224, 0, 0], [38, -224, 0, 0], [33, -224, 0, 0], [39, -224, 0, 0]];
+    
+    for (let i = 0; i < milOneHtmlMakeObjects.length; i++) {
+      let donutSvg = milOneHtmlMakeObjects[i][0].stack[0].stack[0].stack[0].svg;
+      let donutMargins = [-7, 0, 0, 0];
+
+      if (i === 0) {
+        milOneDonutRow.push({text: 'MIL1', alignment: 'center', margin: [0, 28, 0, 0]});
+        milOneInnerNumbers.push('');
+      }
+
+      milOneDonutRow.push( {svg: donutSvg, margin: donutMargins});
+      milOneInnerNumbers.push({svg: milOneInnerNumArray[i], margin: milOneInnerNumMargins[i]});
+    }
+
+    for (let i = 0; i < milTwoHtmlMakeObjects.length; i++) {
+      let donutSvg = milTwoHtmlMakeObjects[i][0].stack[0].stack[0].stack[0].svg;
+      let donutMargins = [-7, 0, 0, 0];
+
+      if (i === 0) {
+        milTwoDonutRow.push({text: 'MIL2', alignment: 'center', margin: [0, 28, 0, 0]});
+        milTwoInnerNumbers.push('');
+      }
+
+      milTwoDonutRow.push( {svg: donutSvg, margin: donutMargins});
+      milTwoInnerNumbers.push({svg: milTwoInnerNumArray[i], margin: milTwoInnerNumMargins[i]});
+    }
+
+    for (let i = 0; i < milThreeHtmlMakeObjects.length; i++) {
+      let donutSvg = milThreeHtmlMakeObjects[i][0].stack[0].stack[0].stack[0].svg;
+      let donutMargins = [-7, 0, 0, 0];
+
+      if (i === 0) {
+        milThreeDonutRow.push({text: 'MIL3', alignment: 'center', margin: [0, 28, 0, 0]});
+        milThreeInnerNumbers.push('');
+      }
+
+      milThreeDonutRow.push( {svg: donutSvg, margin: donutMargins});
+      milThreeInnerNumbers.push({svg: milThreeInnerNumArray[i], margin: milThreeInnerNumMargins[i]});
+    }
+
+    // Build the table header, and the bottom "mil achieved" row
+    let tableHeaderRow = [];
+    let milAchievedRow = [];
+    let achievedMargin = [0, 4, 0, 0];
+    tableHeaderRow.push( {text: '', border: [false, false, false, false]}, {text: 'ASSET', fontSize: 10, alignment: 'center'}, {text: 'THREAT', fontSize: 10, alignment: 'center'}, {text: 'RISK', fontSize: 10, alignment: 'center'}, {text: 'ACCESS', fontSize: 10, alignment: 'center'}, {text: 'SITUATION', fontSize: 10, alignment: 'center'}, {text: 'RESPONSE', fontSize: 10, alignment: 'center'}, {text: 'THIRD-PARTIES', fontSize: 10, alignment: 'center'}, {text: 'WORKFORCE', fontSize: 10, alignment: 'center'}, {text: 'ARCHITECTURE', fontSize: 10, alignment: 'center'}, {text: 'PROGRAM', fontSize: 10, alignment: 'center'} );
+    milAchievedRow.push({text: 'MIL ACHIEVED', fontSize: 10, alignment: 'center'},  {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin}, {text: 10, alignment: 'center', margin: achievedMargin} );
+
+    // Table contents
+    let donutSection = {
+      table: {
+        widths: [48, 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+        body: [tableHeaderRow, milThreeDonutRow, milTwoDonutRow, milOneDonutRow, milAchievedRow],
+      },
+      layout: {
+				hLineColor: function (i, node) {
+					return 'gray';
+				},
+				vLineColor: function (i, node) {
+					return 'gray';
+				},
+      },
+    }
+
+    let innerNumbers = {
+      table: {
+        widths: [48, 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+        body: [milThreeInnerNumbers, milTwoInnerNumbers, milOneInnerNumbers],
+      },
+      layout: 'noBorders'
+    }
+
+    // A seperate table for the table key
+    let tableLegend = {
+      layout: 'noBorders',    
+      table: {
+        widths: [38, 10, 122, 10, 136, 10, 142, 10, 118, 10, 139],
+        body:[
+          [{text: ''}, {text: '', fillColor: '#265B94'}, 'Fully Implemented (FI)', {text: '', fillColor: '#90A5C7'}, 'Largely Implemented (LI)', {text: '', fillColor: '#F5DABC'}, 'Partially Implemented (PI)', {text: '', fillColor: '#DCA237'}, 'Not Implemented (NI)', {text: '', fillColor: '#E6E6E6'}, 'Unanswered (U)'],
+        ],
+      },
+    }
+
+    // This pdfmake table object is modified to fit into the column pdfmake object. Don't "fix" it.
+    let table = {
+          body: [
+              [donutSection],
+              [innerNumbers],
+              [{text: '', marginBottom: 15}],
+              [tableLegend],
+          ],
+    }
+
+    return table;
   }
 
 
@@ -674,9 +874,9 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
 
     let timesRun = 0;
     for (let i = this.runningCount; timesRun < num; i++) {
-      htmlMakeObjects.push( htmlToPdfmake(this.donutChartHTML[i]) );
-      innerNumValues.push(this.totalQuestionCounts[i]);
-      innerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 12px;">' + this.totalQuestionCounts[i]  + '</text></svg>');
+      htmlMakeObjects.push( htmlToPdfmake(this.breakdownMilChartHTML[i]) );
+      innerNumValues.push(this.breakdownMilQuestionCounts[i]);
+      innerNumArray.push('<svg width="30" height="30" viewBox="0 0 30 30" overflow="visible"><text x="0" y="0" style="font-size: 12px;">' + this.breakdownMilQuestionCounts[i]  + '</text></svg>');
       timesRun++;
     }
 
@@ -708,7 +908,7 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         donutMargins = [72, 0, 0, 0];
         numberMargins = [-127, 54, 0, 0];
         if (innerNumValues[i] > 9) {
-          numberMargins = [-130, 54, 0, 0];
+          numberMargins = [-131, 54, 0, 0];
         }
       }
 
@@ -829,14 +1029,21 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   startPdf(download) {
     this.disabled = true;
     setTimeout(() => {
       this.figureTwoChart = document.getElementById('figureTwo').innerHTML;
+      
+      if (this.overallMilChartHTML.length === 0) {
+        for (let i = 0; i < this.overallMilData.length; i++) {
+          this.overallMilChartHTML.push(document.getElementById('overallMilDonut' + i).innerHTML);
+        }
+      }
 
-      if (this.donutChartHTML.length === 0) {
-        for (let i = 0; i < this.donutChartData.length; i++) {
-          this.donutChartHTML.push(document.getElementById('donutChart' + i).innerHTML);
+      if (this.breakdownMilChartHTML.length === 0) {
+        for (let i = 0; i < this.breakdownMilData.length; i++) {
+          this.breakdownMilChartHTML.push(document.getElementById('donutChart' + i).innerHTML);
         }
       } else {
         this.runningCount = 0;
@@ -1006,9 +1213,20 @@ export class PdfReportsComponent implements OnInit, AfterViewInit {
         // Section 3.2 Practice Implementation by Domain
         { text: '3.2 Practice Implementation by Domain', style: 'header', marginBottom: largeSpacing },
         { text: 'Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding MILs receive responses of Fully Implemented or Largely Implemented. A high-level understanding of the organization\'s self evaluation results can be gained from this figure and may be useful when evaluating areas for future improvement.', marginBottom: normalSpacing },
-        { text: 'The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain. Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.', marginBottom: normalSpacing },
+        { text: 'The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain. Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.', marginBottom: normalSpacing, pageBreak: 'after', pageOrientation: 'landscape' },
+        { columns: [
+          {
+            margin: [-23, 0, 0, 0],
+            width: 'auto',
+            table: this.buildGiantDonutChart(),
+            layout: 'noBorders',
+          },
+          { width: '*', text: '' },
+          ]
+        },
+        { text: '', marginBottom: largeSpacing },       
         { text: 'Figure 3: Summary of Responses Input by MIL and Domain', style: 'caption', marginBottom: normalSpacing },
-        { text: '', pageBreak: 'after' },
+        { text: '', pageBreak: 'after', pageOrientation: 'portrait' },
         
         // Section 3.3 Implementation of Management Activities across Domains
         { text: '3.3 Implementation of Management Activities across Domains', style: 'header', marginBottom: largeSpacing },

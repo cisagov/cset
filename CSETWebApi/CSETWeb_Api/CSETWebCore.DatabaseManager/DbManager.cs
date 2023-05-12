@@ -432,6 +432,10 @@ namespace CSETWebCore.DatabaseManager
                 {
                     return ApplicationCode + "Web";
                 }
+                else if (ApplicationCode.Equals("CSET Renewables")) 
+                {
+                    return "RENEWWeb";
+                }
                 else
                 {
                     return ClientCode + "Web";
