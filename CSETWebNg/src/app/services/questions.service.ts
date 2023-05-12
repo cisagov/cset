@@ -246,6 +246,16 @@ export class QuestionsService {
   }
 
   /**
+   * Stores an answer-specific (in-line) parameter value override.
+   * @param answerParm
+   */
+  getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
+    console.log(subGroups)
+    return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
+      subGroups + '&modelId=' + modelId, headers);
+  }
+
+  /**
    *
    */
   getOverrideQuestions(questionId, Component_Symbol_Id) {
