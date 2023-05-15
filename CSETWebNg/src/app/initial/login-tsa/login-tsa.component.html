@@ -114,10 +114,38 @@
               </div>
             </div>
           </form>
+          <div [class.bgc-validation]="isRunningInElectron && mode === 'LOGIN'" class="text-center">
+            <div *ngIf="mode === 'LOCAL'">
+              <p class="c-white">CSET TSA is running locally. No login is required.</p>
+              <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
+                <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2 justify-content-center">
+                  <button type="submit" [disabled]="loading" class="btn btn-secondary btn-lg">Continue</button>
+                  <div class="spinner-container" *ngIf="loading">
+                    <div style="max-width: 30px; max-height: 30px;"></div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <!-- If we reach the login page while running in electron, we can assume there was an error getting
+            the standalone status from the API; prompt for exiting the application -->
+            <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="text-center">
+              <p class="c-white p-2">An error was encountered while running CSET TSA.</p>
+              <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+                <div class="d-flex flex-nowrap justify-content-center">
+                  <button type="submit" class="btn btn-secondary btn-lg">Exit</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
       <div *ngIf="mode !== 'SIGNUP'" class="d-xl-none">
-        <a class="btn btn-primary mt-3" data-toggle="collapse" href="#loginCollapse">Login</a>
+        <a class="btn btn-primary mt-3" data-toggle="collapse" href="#loginCollapse">
+          <ng-container *ngIf="mode === 'LOGIN' && !isRunningInElectron">Login</ng-container>
+          <ng-container *ngIf="mode === 'LOGIN' && isRunningInElectron">Exit</ng-container>
+          <ng-container *ngIf="mode === 'LOCAL'">Continue</ng-container>
+        </a>
         <div class="collapse" id="loginCollapse">
           <div class="card card-body" style="width: 240px;">
             <div class="bgc-tsa-primary p-3">
@@ -154,11 +182,32 @@
                     </div>
                   </div>
                 </div>
+                <a class="btn-link-light" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
+                  Password</a><br>
+                <a class="btn-link-light" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">New
+                  User</a>
               </form>
-              <a class="btn-link-light" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
-                Password</a><br>
-              <a class="btn-link-light" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">New
-                User</a>
+              <div [class.bgc-validation]="isRunningInElectron && mode === 'LOGIN'" class="text-center">
+                <div *ngIf="mode === 'LOCAL'">
+                  <p class="c-white">CSET TSA is running locally. No login is required.</p>
+                  <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
+                    <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2 justify-content-center">
+                      <button type="submit" [disabled]="loading" class="btn btn-secondary btn-lg">Continue</button>
+                      <div class="spinner-container" *ngIf="loading">
+                        <div style="max-width: 30px; max-height: 30px;"></div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+                  <p class="c-white p-2">An error was encountered while running CSET TSA.</p>
+                  <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3 " novalidate>
+                    <div class="d-flex flex-nowrap justify-content-center">
+                      <button type="submit" class="btn btn-secondary btn-lg">Exit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
             <div class="text-center">
               <img src="assets/images/TSA/tsa_insignia_rgbtransparent.png" class="mt-5" style="width: 175px;">
@@ -170,20 +219,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div *ngIf="mode === 'LOGIN' && isRunningInElectron" class="mr-4 ml-4 p-3 c-white bgc-validation">
-        An error was encountered while running CSET-TSA.
-      </div>
-
-      <!-- If we reach the login page while running in electron, we can assume there was an error getting
-            the standalone status from the API; prompt for exiting the application -->
-      <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-        <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
-          <div class="d-flex flex-nowrap">
-            <button type="submit" class="btn btn-primary btn-lg">Exit</button>
-          </div>
-        </form>
       </div>
 
       <div class="text-center d-none d-xl-block">
@@ -200,38 +235,4 @@
 
     </div>
   </div>
-
-
-  <!-- Footer -->
-  <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters"
-    *ngIf="layoutSvc.isFooterShown(this.router.url)">
-    <ngb-panel id="footerPanel">
-      <ng-template ngbPanelTitle>
-        <button id="footerExpanderButton" class="cset-footer-expand-button"
-          [ngClass]="{'cset-icons-chevron-down flex-11a': isFooterOpen(), 'cset-icons-chevron-up flex-00a': !isFooterOpen()}"></button>
-      </ng-template>
-      <ng-template ngbPanelContent>
-        <div class="footer-section-2 p-2">
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
-            <span class="mr-2 ml-2">|</span>
-            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
-            <span class="mr-2 ml-2">|</span>
-            <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
-            <span class="mr-2 ml-2">|</span>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.us-cert.gov/accessibility/">Accessibility</a>
-          </div>
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a> is
-            <span style="padding: 2px">part of the</span>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland
-              Security</a>
-          </div>
-        </div>
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
 </div>
