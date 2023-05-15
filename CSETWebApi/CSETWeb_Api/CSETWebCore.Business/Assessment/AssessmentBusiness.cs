@@ -177,6 +177,14 @@ namespace CSETWebCore.Business.Assessment
                 x.LastModifiedDate = _utilities.UtcToLocal(x.LastModifiedDate ?? DateTime.UtcNow);
                 x.AssessmentCreatedDate = _utilities.UtcToLocal(x.AssessmentCreatedDate);
                 x.AssessmentDate = _utilities.UtcToLocal(x.AssessmentDate);
+
+                var query = from u in _context.USERS
+                            where u.UserId == x.UserId
+                            select u;
+                var result = query.ToList().FirstOrDefault();
+
+                x.firstName = result.FirstName;
+                x.lastName = result.LastName;
             });
 
             return list;
