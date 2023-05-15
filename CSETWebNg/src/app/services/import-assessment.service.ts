@@ -103,7 +103,7 @@ export class ImportAssessmentService {
               message: "Invalid password.",
             };
             progress.error(errObj);
-          } else if (event.status != 200 && event.status != 423 && event.status != 406) {
+          } else if (event.status != 200 && event.status != 406 && event.status != 423) {
             let errObj = {
               message: "File Import Failed",
             };
