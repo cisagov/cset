@@ -37,8 +37,13 @@ export class ImportPasswordComponent {
 
   dialogTitle: string = "Unlock Assessment";
   password = "";
+  showPassword = false;
 
   confirm(): void {
     this.dialogRef.close(this.password);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }
