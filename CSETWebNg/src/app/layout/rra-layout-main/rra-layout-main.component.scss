@@ -1536,14 +1536,12 @@ ul.mat-tree-node {
 }
 
 .rl .close-button-position-bandaid {
-  position: relative;
-  top: 2px;
-  right: 150px;
+  position: absolute;
+  right: 140px;
+  padding: 0;
   z-index: 100;
-}
-
-.rl .close-button-margin-bandaid {
-  margin-right: -30px;
+  background-color: white;
+  height: 25px;
 }
 
 // Resource Library
