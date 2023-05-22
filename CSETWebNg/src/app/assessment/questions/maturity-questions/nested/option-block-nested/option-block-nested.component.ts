@@ -30,6 +30,7 @@ import { ConfigService } from '../../../../../services/config.service';
 import { LayoutService } from '../../../../../services/layout.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
+import { HydroService } from '../../../../../services/hydro.service';
 
 @Component({
   selector: 'app-option-block-nested',
@@ -55,6 +56,7 @@ export class OptionBlockNestedComponent implements OnInit {
   constructor(
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    public hydroSvc: HydroService,
     private utilSvc: Utilities,
     private configSvc: ConfigService,
     private route: ActivatedRoute,
@@ -69,13 +71,16 @@ export class OptionBlockNestedComponent implements OnInit {
   ngOnInit(): void {
     this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
-    this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
+    if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName)) {
+      this.optRadio = this.opts?.filter(x => x.optionType == 'radio' && x.optionText != 'None');
+    } else {
+      this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
+    }
     this.optCheckbox = this.opts?.filter(x => x.optionType == 'checkbox');
     this.optOther = this.opts?.filter(x => x.optionType != 'radio' && x.optionType != 'checkbox');
 
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
-
     // Show integrity check warnings on page load.
     this.performIntegrityCheck();
   }
@@ -93,17 +98,43 @@ export class OptionBlockNestedComponent implements OnInit {
    *
    */
   changeRadio(o: Option, event): void {
-    o.selected = event.target.checked;
+    console.log('clicked')
+    let tempOptRadio = this.optRadio.filter(r => r.optionId != o.optionId);
+
+    var siblingOptions;
+
     var answers = [];
 
+    if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName) && o.selected == true) {
+      o.selected = false;
+      console.log(o.selected)
+      
+      answers.push(this.makeAnswer(o));
+
+      siblingOptions = this.q.options;
+      siblingOptions.forEach(option => {
+        option.selected = false;
+      });
+    }
+    else {
+      o.selected = event.target.checked;
+
+      answers.push(this.makeAnswer(o));
+
+      siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+      siblingOptions.forEach(option => {
+        option.selected = false;
+      });
+    }
+
     // add this option to the request
-    answers.push(this.makeAnswer(o));
+    // answers.push(this.makeAnswer(o));
 
     // get the descendants for my peer radios to clean them up
-    var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
-    siblingOptions.forEach(option => {
-      option.selected = false;
-    });
+    // var siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
+    // siblingOptions.forEach(option => {
+    //   option.selected = false;
+    // });
 
     const descendants = this.getDescendants(siblingOptions);
 
@@ -299,5 +330,58 @@ export class OptionBlockNestedComponent implements OnInit {
     });
 
     this.q.failedIntegrityCheckOptions = failedIntegrityCheckOptions;
+  }
+
+  /**
+   * 
+   * @param o 
+   */
+  toggleRadio(o: Option): void {
+
+    o.selected = !o.selected;
+    //o.selected = event.target.checked;
+
+    var answers = [];
+
+    // add this option to the request
+    answers.push(this.makeAnswer(o));
+
+    // get the descendants for my peer radios to clean them up
+    var siblingOptions = this.q.options;
+    siblingOptions.forEach(option => {
+      option.selected = false;
+    });
+
+    const descendants = this.getDescendants(siblingOptions);
+
+    descendants.forEach(desc => {
+      for (let key in desc) {
+        //options are where the radio & checkboxes live within the "desc" data structure
+        if (key === "options" && desc[key] != null && desc[key].length > 0) {
+          var lengthOfOptions = desc[key].length;
+          for (var i = 0; i <= lengthOfOptions; i++) {
+            if (desc[key]["" + i + ""] != undefined) {
+              desc[key]["" + i + ""].selected = false;
+            }
+          }
+        }
+
+        if (key === "answerText" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "answerMemo" && desc[key] != null) {
+          desc[key] = '';
+        }
+
+        if (key === "freeResponseAnswer" && desc[key] != null) {
+          desc[key] = '';
+        }
+      }
+      const ans = this.makeAnswer(desc);
+      answers.push(ans);
+    });
+
+    this.storeAnswers(answers, this.sectionId);
   }
 }
