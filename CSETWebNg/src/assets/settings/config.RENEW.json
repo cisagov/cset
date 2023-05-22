@@ -12,7 +12,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showAnalyticsColumnOnLanding": true,
-        "splashPageHTML": "",
+        "splashPageHTML": "dist/assets/splashRENEW.html",
         "showFacilityName": true,
         "showCityName": true,
         "showStateName": true,

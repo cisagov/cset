@@ -196,7 +196,7 @@ namespace CSETWebCore.Business.Maturity
                     var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                        QuestionText = myQ.Question_Text,
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -256,7 +256,7 @@ namespace CSETWebCore.Business.Maturity
                 var question = new Model.Cis.Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
-                    QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                    QuestionText = myQ.Question_Text,
                     ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                     Sequence = myQ.Sequence,
                     MaturityLevel = myQ.Maturity_Level.Level,
@@ -353,7 +353,7 @@ namespace CSETWebCore.Business.Maturity
                     var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                        QuestionText = myQ.Question_Text,
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
                         MaturityLevel = myQ.Maturity_Level.Level,
