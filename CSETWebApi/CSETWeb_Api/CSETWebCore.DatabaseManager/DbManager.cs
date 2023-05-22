@@ -38,6 +38,12 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
+
+                //determine what state we are in.
+                //then based on that state execute the appropriate upgrade logic
+
+
+
                 if (IsLocalDB2019Installed())
                 {
                     InitialDbInfo localDb2019Info = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
