@@ -69,7 +69,7 @@
             </svg>
         </button>
 
-      <button id="btn_CMNT_{{ myQuestion.questionId }}" *ngIf="!this.assessSvc.isISE()" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
+      <button *ngIf="!this.assessSvc.isISE() && displayIcon('CMNT')" id="btn_CMNT_{{ myQuestion.questionId }}" class="extras-button cursor-pointer" [class.active]="mode == 'CMNT'" (click)="toggleExtras('CMNT')"
           [matTooltip]="has('CMNT')==='inline' ? 'Comments with content':'Comment'" matTooltipPosition="above">
           <svg viewBox="0 0 32 32"
               style="height: 31px; width: 32px; margin: auto; margin-top: 5px; margin-left: -2px;">
@@ -203,7 +203,7 @@
                 <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
                     <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
                 </div>
-                
+
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
                     <span class="reqlabel">Maturity Level: </span>{{tab?.levelName}}
                 </div>
@@ -316,7 +316,7 @@
                     </tr>
                     <tr *ngFor="let reference of tab?.sourceDocumentsList">
                         <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
-                            <a href="{{documentUrl(reference, reference.section_Ref)}}" 
+                            <a href="{{documentUrl(reference, reference.section_Ref)}}"
                             rel="noopener noreferrer" target="_blank">{{reference.title}}</a>
                         </td>
                         <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
@@ -327,7 +327,7 @@
                     </tr>
                     <tr *ngFor="let reference of tab?.additionalDocumentsList">
                         <td class="align-top">
-                            <a href="{{documentUrl(reference, reference.section_Ref)}}" 
+                            <a href="{{documentUrl(reference, reference.section_Ref)}}"
                             rel="noopener noreferrer" target="_blank">{{reference.title}}</a></td>
                         <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
                     </tr>
