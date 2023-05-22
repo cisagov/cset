@@ -43,6 +43,8 @@ namespace CSETWebCore.Helpers
             _transactionSecurity = transactionSecurity;
             _userBusiness = userBusiness;
             _localInstallationHelper = localInstallationHelper;
+            _notificationBusiness = notificationBusiness;
+            _configuration = configuration;
             _context = context;
         }
 
