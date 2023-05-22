@@ -32,6 +32,21 @@ namespace CSETWebCore.Model.Hydro
         //public ANSWER Answer { get; set; }
     }
 
+    public class HydroGroupingInfo 
+    {
+        public List<QuestionWithAnswers> QuestionsWithAnswers { get; set; }
+        public int GroupingId { get; set; }
+        public int TotalSubGroupings { get; set; }
+        public int ParentGroupingId { get; set; }
+
+    }
+
+    public class QuestionWithAnswers
+    {
+        public MATURITY_QUESTIONS Question { get; set; }
+        public List<ANSWER> Answers { get; set; }
+    }
+
     public class CisQuestions
     {
         public int AssessmentId { get; set; }

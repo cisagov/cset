@@ -255,7 +255,7 @@
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
 
         <!-- Results - HYDRO -->
-        <node displaytext="Deficiencies" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
+        <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
 
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />

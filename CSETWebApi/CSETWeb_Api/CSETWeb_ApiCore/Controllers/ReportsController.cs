@@ -360,7 +360,7 @@ namespace CSETWebCore.Api.Controllers
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            return Ok(mm.GetHydroDonutData());
+            return Ok(mm.GetHydroDonutData(assessmentId));
         }
 
 
