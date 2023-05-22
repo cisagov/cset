@@ -42,6 +42,7 @@ namespace CSETWebCore.DatabaseManager.Tests
         private TokenManager tokenManager;
         private LocalInstallationHelper localHelper;
         private PasswordHash passwordHash;
+        private IConfiguration config;
 
         [TestInitialize()]
         public void Initialize()
@@ -61,6 +62,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             tokenManager = provider.GetRequiredService<TokenManager>();
             localHelper = provider.GetRequiredService<LocalInstallationHelper>();
             passwordHash = provider.GetRequiredService<PasswordHash>();
+            config = configuration;
            
         }
 
@@ -82,7 +84,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             string clientCode = "DHS";
             string appCode = "CSET";
 
-            UserAuthentication userAuth = new UserAuthentication(passwordHash, null, localHelper, tokenManager, context);
+            UserAuthentication userAuth = new UserAuthentication(passwordHash, null, localHelper, tokenManager, null, config, context);
             Login login = new Login { Email = null, Password = null, TzOffset = "300", Scope = "CSET" };
 
             string loginToken = userAuth.AuthenticateStandalone(login, tokenManager).Token;

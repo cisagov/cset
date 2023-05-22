@@ -68,9 +68,9 @@
     <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
       Above Target Level</div>
 
-    
+
     <p class="mb-4" *ngIf="!!groupings">
-    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, 'N')}}' response
+    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N')}}' response
     </p>
 
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
@@ -81,7 +81,7 @@
         <li><Strong style="color:#b17300; font-size: large;">Scoped</Strong> - An organization has identified the full set of required activities required to meet the stated outcome of a goal.</li>
         <li><Strong style="color:#990000; font-size: large;">Not</Strong> Implemented - An organization has no immediate plans to implement the recommended actions for a goal.</li>
       </ul>
-    </div>    
+    </div>
 
     <div *ngIf="!groupings" class="w-100">
       <div class="spinner-container" style="margin: 2em auto">
