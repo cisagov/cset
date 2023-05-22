@@ -58,42 +58,54 @@ namespace CSETWebCore.DatabaseManager
                 // 
                 //then based on that state execute the appropriate upgrade logic
 
-                if (IsLocalDB2019Installed())
+                if (IsLocalDB2022Installed())
                 {
-                    InitialDbInfo localDb2019Info = new InitialDbInfo(CurrentMasterConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2012Info = new InitialDbInfo(OldMasterConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2022Info = new InitialDbInfo(localdb2022_ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2019Info = new InitialDbInfo(localdb2019_ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2012Info = new InitialDbInfo(localdb2012_ConnectionString, DatabaseCode);
+
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                     string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
                     string destLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
-                    if (!localDb2019Info.Exists)
+                    // If no db's exist, we can do a clean install
+                    if (!localDb2022Info.Exists && !localDb2019Info.Exists && !localDb2012Info.Exists)
                     {
-                        _logger.Info($"No previous {ApplicationCode} database found on LocalDB 2019 default instance...");
-
-                        // Create the new version folder in local app data folder
-                        Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
-                        // ResolveLocalDBVersion();
-
-                        // No previous version of application found on LocalDB 2012
-                        // NCUA wants to ignore older versions that use LocalDB 2012
-                        if (ClientCode.Equals("NCUA") || !localDb2012Info.Exists)
-                        {
-                            CleanInstallNoUpgrades(destDBFile, destLogFile);
-                        }
-                        // Another version of application prior to 11.0.0.0 installed, copying and upgrading Database
-                        else
-                        {
-                            UpgradeLocalDb2012To2019(destDBFile, destLogFile, localDb2012Info);
-                        }
+                        // TODO:
+                        // Create a custom localdb instance for 2022
+                        CleanInstallNoUpgrades(destDBFile, destLogFile, localDb2022Info);
+                        return;
                     }
-                    else if (localDb2019Info.Exists && localDb2019Info.GetInstalledDBVersion() < NewVersion)
+
+                    // If localdb2022 exists (our latest), check the CSET version and upgrade if needed
+                    if (localDb2022Info.Exists)
                     {
-                        UpgradeLocaldb2019(destDBFile, destLogFile, localDb2019Info);
+                        if (localDb2022Info.GetInstalledDBVersion() < NewVersion)
+                        {
+                            UpgradeLocaldb2022(destDBFile, destLogFile, localDb2022Info);
+                        }
+
+                        return;
+                    }
+
+                    if (localDb2019Info.Exists)
+                    {
+                        _logger.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database files and attempting upgrade... ");
+                        UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2019Info);
+                        return;
+                    }
+
+                    if (localDb2012Info.Exists)
+                    {
+                        _logger.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
+                        UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2012Info);
+                        return;
                     }
                 }
+                
                 else
                 {
-                    throw new DatabaseSetupException($"SQL Server LocalDB 2019 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
+                    throw new DatabaseSetupException($"SQL Server LocalDB 2022 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
                 }
             }
             catch (DatabaseSetupException e)
@@ -109,6 +121,7 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
+        /*
         /// <summary>
         /// Executes series of commands (stop, delete, and start) using sqllocaldb command line utility to resolve engine versioning bug.
         /// </summary>
@@ -118,90 +131,92 @@ namespace CSETWebCore.DatabaseManager
             var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
             process.WaitForExit(10000); // wait up to 10 seconds 
         }
+        */
 
         /// <summary>
         /// Perform a clean attach of master versioned database.
         /// </summary>
         /// <param name="destDBFile"></param>
         /// <param name="destLogFile"></param>
-        private void CleanInstallNoUpgrades(string destDBFile, string destLogFile)
+        private void CleanInstallNoUpgrades(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
         {
-            _logger.Info($"No previous {ApplicationCode} database found on LocalDB 2012 and 2019 default instances...");
+            _logger.Info($"No previous {ApplicationCode} database found on LocalDB 2012 or 2019 default instances...");
             _logger.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
 
-            AttachCleanDatabase(destDBFile, destLogFile);
+            AttachCleanDatabase(destDBFile, destLogFile, localDb2022Info);
 
             // Verify that the database exists now
-            VerifyApplicationDatabaseFunctioning();
+            VerifyApplicationDatabaseFunctioning(localDb2022Info);
         }
 
 
         /// <summary>
-        /// Perform upgrade on a copy of existing application db found on localDb 2019.
+        /// Perform upgrade on a copy of existing application db found on localDb 2022.
         /// </summary>
         /// <param name="destDBFile"></param>
         /// <param name="destLogFile"></param>
-        /// <param name="localDb2019Info"></param>
-        private void UpgradeLocaldb2019(string destDBFile, string destLogFile, InitialDbInfo localDb2019Info)
+        /// <param name="localDb2022Info"></param>
+        private void UpgradeLocaldb2022(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
         {
-            _logger.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database file and attempting upgrade...");
+            _logger.Info($"{ApplicationCode} {localDb2022Info.GetInstalledDBVersion()} database detected on LocalDB 2022 default instance. Copying database file and attempting upgrade...");
 
             // Create the new version folder in local app data folder
             Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
-            CopyDBWithinServer(localDb2019Info);
+            CopyDBWithinServer(localDb2022Info);
 
             try
             {
-                upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
+                upgrader.UpgradeOnly(NewVersion, localDb2022Info.ConnectionString);
             }
             catch (DatabaseUpgradeException e)
             {
                 _logger.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
-                ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
-                AttachCleanDatabase(destDBFile, destLogFile);
+                ForceCloseAndDetach(localDb2022Info.MasterConnectionString, DatabaseCode);
+                AttachCleanDatabase(destDBFile, destLogFile, localDb2022Info);
             }
 
             // Verify that the database has been copied over and exists now
-            VerifyApplicationDatabaseFunctioning();
+            VerifyApplicationDatabaseFunctioning(localDb2022Info);
         }
 
+
+
         /// <summary>
-        /// Most complex case; make a copy of localDb 2012 db, attach copy to localDb2019 instance, and attempt upgrade.
+        /// Take the source (our current db version) and upgrade it to the target (our latest db version)
         /// </summary>
         /// <param name="destDBFile"></param>
         /// <param name="destLogFile"></param>
-        /// <param name="localDb2012Info"></param>
-        private void UpgradeLocalDb2012To2019(string destDBFile, string destLogFile, InitialDbInfo localDb2012Info)
+        /// <param name="targetLocalDbInfo">The new info that we want to upgrade to</param>
+        /// <param name="sourceLocalDbInfo">The old info that we're upgrading away from</param>
+        private void UpgradeOldLocalDb(string destDBFile, string destLogFile, InitialDbInfo targetLocalDbInfo, InitialDbInfo sourceLocalDbInfo)
         {
-            _logger.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
-
             KillProcess();
-            CopyDBAcrossServers(localDb2012Info);
+            CopyDBAcrossServers(targetLocalDbInfo, sourceLocalDbInfo);
 
             try
             {
-                upgrader.UpgradeOnly(NewVersion, CurrentDatabaseConnectionString);
+                upgrader.UpgradeOnly(NewVersion, targetLocalDbInfo.ConnectionString);
             }
             catch (DatabaseUpgradeException e)
             {
                 _logger.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
-                ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
-                AttachCleanDatabase(destDBFile, destLogFile);
+                ForceCloseAndDetach(sourceLocalDbInfo.MasterConnectionString, DatabaseCode);
+                AttachCleanDatabase(destDBFile, destLogFile, targetLocalDbInfo);
             }
 
             // Verify that the database has been copied over and exists now
-            VerifyApplicationDatabaseFunctioning();
+            VerifyApplicationDatabaseFunctioning(targetLocalDbInfo);
         }
 
         /// <summary>
         /// Wrapper for DatabaseExists function to include logging.
         /// </summary>
-        private void VerifyApplicationDatabaseFunctioning()
+        private void VerifyApplicationDatabaseFunctioning(InitialDbInfo targetLocalDbInfo)
         {
-            using (SqlConnection conn = new SqlConnection(CurrentMasterConnectionString))
+            using (SqlConnection conn = new SqlConnection(targetLocalDbInfo.MasterConnectionString))
             {
                 if (DatabaseExists(conn))
                 {
@@ -219,12 +234,12 @@ namespace CSETWebCore.DatabaseManager
         /// Copies database mdf and ldf files from older sql server version, places them in user local app data folder,
         /// and attaches them in the newer version of sql server.
         /// </summary>
-        public void CopyDBAcrossServers(InitialDbInfo localDb2012Info)
+        public void CopyDBAcrossServers(InitialDbInfo targetLocalDbInfo, InitialDbInfo sourceLocalDbInfo)
         {
             try
             {
                 //force close on the source database and detach source db                
-                ForceCloseAndDetach(OldMasterConnectionString, DatabaseCode);
+                ForceCloseAndDetach(sourceLocalDbInfo.ConnectionString, DatabaseCode);
 
                 // Creating new paths for mdf and ldf files
                 string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -232,16 +247,16 @@ namespace CSETWebCore.DatabaseManager
                 string newLDF = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
                 //copy the files over
-                DoTheCopy(localDb2012Info.MDF, newMDF);
-                DoTheCopy(localDb2012Info.LDF, newLDF);
+                DoTheCopy(sourceLocalDbInfo.MDF, newMDF);
+                DoTheCopy(sourceLocalDbInfo.LDF, newLDF);
 
                 //create and attach new 
-                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentMasterConnectionString);
+                ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", targetLocalDbInfo.MasterConnectionString);
             }
             finally
             {
                 //reattach the original
-                ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + localDb2012Info.MDF + "', @FILENAME2 = '" + localDb2012Info.LDF + "'", OldMasterConnectionString);
+                ExecuteNonQuery("EXEC sp_attach_db  @dbname = N'" + DatabaseCode + "', @FILENAME1 = '" + sourceLocalDbInfo.MDF + "', @FILENAME2 = '" + sourceLocalDbInfo.LDF + "'", sourceLocalDbInfo.MasterConnectionString);
             }
 
         }
@@ -271,7 +286,7 @@ namespace CSETWebCore.DatabaseManager
         public void CopyDBWithinServer(InitialDbInfo dbInfo)
         {
             //force close on the source database and detach source db                
-            ForceCloseAndDetach(CurrentMasterConnectionString, DatabaseCode);
+            ForceCloseAndDetach(dbInfo.MasterConnectionString, DatabaseCode);
 
             // Creating new paths for mdf and ldf files
             string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -283,7 +298,7 @@ namespace CSETWebCore.DatabaseManager
             DoTheCopy(dbInfo.LDF, newLDF);
 
             //create and attach new 
-            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", CurrentMasterConnectionString);
+            ExecuteNonQuery("CREATE DATABASE " + DatabaseCode + "  ON(FILENAME = '" + newMDF + "'), (FILENAME = '" + newLDF + "') FOR ATTACH;", dbInfo.MasterConnectionString);
         }
 
         /// <summary>
@@ -305,11 +320,11 @@ namespace CSETWebCore.DatabaseManager
 
         /// <summary>
         /// Copies clean database files from installation source to desired location and attaches
-        /// to sql server designated in CurrentMasterConnectionString.
+        /// to sql server designated in localdb2019_ConnectionString.
         /// </summary>
         /// <param name="destDBFile">The location of the mdf file used for the attach</param>
         /// <param name="destLogFile">The location of the ldf file used for the attach</param>
-        private void AttachCleanDatabase(string destDBFile, string destLogFile)
+        private void AttachCleanDatabase(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
         {
             CopyDBFromInstallationSource(destDBFile, destLogFile);
             ExecuteNonQuery(
@@ -319,10 +334,10 @@ namespace CSETWebCore.DatabaseManager
                     "CREATE DATABASE " + DatabaseCode +
                     " ON(FILENAME = '" + destDBFile + "'),  " +
                     " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-                CurrentMasterConnectionString);
+                localDb2022Info.MasterConnectionString);
         }
 
-        public void AttachTest(string dbname, string destDBFile, string destLogFile)
+        public void AttachTest(string dbname, string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
         {
             ExecuteNonQuery(
               "IF NOT EXISTS(SELECT name \n" +
@@ -331,7 +346,7 @@ namespace CSETWebCore.DatabaseManager
                   "CREATE DATABASE " + dbname +
                   " ON(FILENAME = '" + destDBFile + "'),  " +
                   " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-              CurrentMasterConnectionString);
+              localDb2022Info.MasterConnectionString);
         }
 
         private static string EscapeString(string value)
@@ -403,18 +418,18 @@ namespace CSETWebCore.DatabaseManager
 
 
         /// <summary>
-        /// Checks registry for localdb 2019 (only works for Windows).
+        /// Checks registry for localdb 2022 (only works for Windows).
         /// </summary>
         /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-        private bool IsLocalDB2019Installed()
+        private bool IsLocalDB2022Installed()
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
             {
 
                 var programName = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + item).GetValue("DisplayName");
 
-                if (Equals(programName, "Microsoft SQL Server 2019 LocalDB "))
+                if (Equals(programName, "Microsoft SQL Server 2022 LocalDB "))
                 {
                     return true;
                 }
@@ -442,8 +457,6 @@ namespace CSETWebCore.DatabaseManager
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
-        public static string CurrentMasterConnectionString { get; } = @"data source=(LocalDB)\MSSQLLocalDB;Database=Master;integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;";
-        public static string OldMasterConnectionString { get; } = @"data source=(LocalDB)\v11.0;Database=Master;integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;";
         public string DatabaseCode
         {
             get
@@ -462,14 +475,24 @@ namespace CSETWebCore.DatabaseManager
                 }
             }
         }
-        public string CurrentDatabaseConnectionString
+        public string localdb2022_ConnectionString
         {
-            get { return @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=25;MultipleActiveResultSets=True;"; }
+            // "INL2022" is a custom name, so we need to build it "custom". Use Nouget package instead of plain cmd line
+            get { return @"data source=(LocalDB)\INL2022;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;"; }
         }
-        public string OldDatabaseConnectionString
+        
+        public string localdb2019_ConnectionString
         {
-            get { return @"data source=(localdb)\v11.0;initial catalog=" + DatabaseCode + ";Integrated Security = SSPI;connect timeout=25;MultipleActiveResultSets=True"; }
+            // this is fine because "MSSQLLocalDB" is the default value
+            get { return @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;"; }
         }
+
+        public string localdb2012_ConnectionString
+        {
+            get { return @"data source=(LocalDB)\v11.0;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
+        }
+        
+
         public string DatabaseFileName
         {
             get { return DatabaseCode + ".mdf"; }

@@ -70,8 +70,8 @@ namespace CSETWebCore.DatabaseManager.Tests
             string appCode = "Test";
             DbManager manager = new DbManager(new Version("12.0.1.9"), clientCode, appCode);
             
-            manager.ForceCloseAndDetach(DbManager.CurrentMasterConnectionString, "TestWeb");
-            manager.AttachTest("TestWeb", testdb, testlog);
+            //manager.ForceCloseAndDetach(DbManager.localdb2019_ConnectionString, "TestWeb");
+            //manager.AttachTest("TestWeb", testdb, testlog);
             VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
             manager.SetupDb();
 
