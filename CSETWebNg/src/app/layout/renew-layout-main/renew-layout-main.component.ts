@@ -96,6 +96,10 @@ export class RenewLayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
+    isRunningAnonymous() {
+    return this.configSvc.isRunningAnonymous;
+  }
+
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent);
   }
