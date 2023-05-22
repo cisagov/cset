@@ -46,7 +46,7 @@
 
 
         <!-- The scenario that will normally show -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA)" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
@@ -151,6 +151,24 @@
                 <node id="maturity-questions-2386" displaytext="Communications" path="assessment/{:id}/maturity-questions/2386" />
                 <node id="maturity-questions-2387" displaytext="Realignment 800-160" path="assessment/{:id}/maturity-questions/2387" />
             </node>
+        </node>
+
+        <!-- SD questions displayed in tree structure -->
+        <node displaytext="SD Questions" condition="MATURITY:SD">
+            <node id="maturity-questions-nested-12001" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/12001" />
+            <node id="maturity-questions-nested-12002" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/12002" />
+            <node id="maturity-questions-nested-12003" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/12003" />
+            <node id="maturity-questions-nested-12004" displaytext="Zone Boundaries – Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/12004" />
+            <node id="maturity-questions-nested-12005" displaytext="Zone Boundaries – Secure/Defend (ZD)" path="assessment/{:id}/maturity-questions-nested/12005" />
+            <node id="maturity-questions-nested-12006" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/12006" />
+            <node id="maturity-questions-nested-12007" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/12007" />
+            <node id="maturity-questions-nested-12008" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/12008" />
+            <node id="maturity-questions-nested-12009" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/12009" />
+            <node id="maturity-questions-nested-12010" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/12010" />
+            <node id="maturity-questions-nested-12011" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/12011" />
+            <node id="maturity-questions-nested-12012" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/12012" />
+            <node id="maturity-questions-nested-12013" displaytext="Logging Policies (LP)" path="assessment/{:id}/maturity-questions-nested/12013" />
+            <node id="maturity-questions-nested-12014" displaytext="Patching (PA)" path="assessment/{:id}/maturity-questions-nested/12014" />
         </node>
 
 

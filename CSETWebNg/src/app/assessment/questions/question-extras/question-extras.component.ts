@@ -679,6 +679,10 @@ export class QuestionExtrasComponent implements OnInit {
       return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
+    if (mode == 'CMNT') {
+      return this.configSvc.behaviors.showComments;
+    }
+
     return true;
   }
 
@@ -738,8 +742,8 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Adding this back in for now (I need the old table format)
-   * @param document 
-   * @returns 
+   * @param document
+   * @returns
    */
   documentUrl(document: CustomDocument) {
     var link = '';
@@ -752,7 +756,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   areNoReferenceDocumentsAvailable() {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)

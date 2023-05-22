@@ -8,16 +8,18 @@ const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 const gotTheLock = app.requestSingleInstanceLock();
 
-const masterConfig = require('./dist/assets/settings/config.json');
+let config = require('./dist/assets/settings/config.json');
 
-// We can only use one value in the config chain in this script until we figure out an equivalent to fetch for electron
-let installationMode = masterConfig.currentConfigChain[0] || 'CSET';
+/**
+ * Load each config in the currentConfigChain and merge with previous configs.
+ * In the case of a key collisions, the right-most (last) object's value wins out.
+*/
+config.currentConfigChain.forEach(configProfile => {
+  const subConfig = require(`./dist/assets/settings/config.${configProfile}.json`);
+  config = { ...config, ...subConfig };
+});
 
-const subConfig = require(`./dist/assets/settings/config.${installationMode}.json`);
-
-// config is the union of the masterConfig and subconfig file based on installationMode for now
-// Any properties in subconfig will overwrite those in masterConfig
-const config = {...masterConfig, ...subConfig};
+const installationMode = config.installationMode;
 
 let clientCode;
 let appCode;
@@ -33,6 +35,10 @@ switch(installationMode) {
   case 'CF':
     clientCode = 'CF';
     appCode = 'CSET-CF';
+    break;
+  case 'RENEW':
+    clientCode = 'DOE';
+    appCode = 'CSET Renewables';
     break;
   default:
     clientCode = 'DHS';
@@ -197,7 +203,7 @@ function createWindow() {
     rootDir = path.dirname(app.getPath('exe'));
   }
 
-  log.info('Root Directory of ' + installationMode.toUpperCase() + ' Electron app: ' + rootDir);
+  log.info('Root Directory of ' + appCode + ' Electron app: ' + rootDir);
 
   if (app.isPackaged) {
 
@@ -374,7 +380,7 @@ app.on('ready', () => {
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    log.info(installationMode.toUpperCase() + ' has been shut down')
+    log.info(appCode + ' has been shut down');
     app.quit();
   }
 });
