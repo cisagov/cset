@@ -558,6 +558,8 @@ import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
 import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
 import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
+import { HydroBarChartComponent } from './assessment/results/hydro/hydro-bar-chart/hydro-bar-chart.component';
+import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
 
 
 
@@ -1072,7 +1074,9 @@ import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydr
         AboutRenewComponent,
         LogoCyberShieldComponent,
         HydroDeficiencyComponent,
-        HydroDonutComponent
+        HydroDonutComponent,
+        HydroBarChartComponent,
+        HydroReportComponent,
     ],
     providers: [
         ConfigService,

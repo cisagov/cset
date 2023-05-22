@@ -26,6 +26,7 @@ using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Hydro;
 using J2N;
 using Microsoft.AspNetCore.Http.Features;
+using System.ComponentModel;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -2463,13 +2464,13 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        public List<HydroDonutData> GetHydroDonutData()
+        public List<HydroDonutData> GetHydroDonutData(int assessmentId)
         {
             var result = from question in _context.MATURITY_QUESTIONS
                          join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
                          join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
-                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id && answer.Assessment_Id == assessmentId
                          select new { question, action, answerOption };
 
             List<HydroDonutData> response = new List<HydroDonutData>();

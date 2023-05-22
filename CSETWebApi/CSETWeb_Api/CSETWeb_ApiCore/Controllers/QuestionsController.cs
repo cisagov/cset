@@ -636,7 +636,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Persists an answer-level ("in-line", "local") Parameter change.
+        /// 
         /// </summary>
         [HttpGet]
         [Route("api/SubGroupingQuestionCount")]
@@ -656,6 +656,21 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return counts;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [HttpGet]
+        [Route("api/AllSubGroupingQuestionCount")]
+        public IActionResult AllSubGroupingQuestionCount([FromQuery] int modelId, [FromQuery] int groupLevel)
+        {
+            int assessmentId = _token.AssessmentForUser();
+
+            var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
+
+            return Ok(qb.AllQuestionsInSubGroup(modelId, groupLevel, assessmentId));
         }
     }
 }
