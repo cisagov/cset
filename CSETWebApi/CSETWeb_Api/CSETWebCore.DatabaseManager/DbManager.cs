@@ -21,6 +21,21 @@ namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
+
+        /* TODO:
+         * Look to see if LocalDb2022 is installed.
+         * If it's not, throw an error
+         *
+         * Check if INL2023 instance is there, if not, create it. If it is, you're done.
+         * Then, check for 2019. If there is, stop 2019, copy the db and attach the copy to the new INL2023 instance
+         * Then check for 2012.
+         * If nothing is installed
+         *
+         * Check if 2019/2012 is installed and if it is, get user acknowledgement that it's okay. Save user answer so it doesn't reappear
+         * this message needs to show up and be acknowledge regardless of the upgrade status
+         * 
+         */
+
         private static readonly NLog.Logger _logger = LogManager.GetLogger("DBManager");
         private readonly VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
 
@@ -40,9 +55,8 @@ namespace CSETWebCore.DatabaseManager
             {
 
                 //determine what state we are in.
+                // 
                 //then based on that state execute the appropriate upgrade logic
-
-
 
                 if (IsLocalDB2019Installed())
                 {
