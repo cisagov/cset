@@ -199,6 +199,7 @@ import { CpgPracticesComponent } from './assessment/results/cpg/cpg-practices/cp
 import { LoginAccessKeyComponent } from './initial/login-access-key/login-access-key.component';
 import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
+import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -510,6 +511,7 @@ const appRoutes: Routes = [
       { path: 'commentsmfr', component: CommentsMfrComponent },
       { path: 'module-content', component: ModuleContentComponent },
       { path: 'c2m2Report', component: C2m2ReportComponent },
+      { path: 'hydroReport', component: HydroReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
