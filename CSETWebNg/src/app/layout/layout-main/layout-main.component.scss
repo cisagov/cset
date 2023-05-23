@@ -1717,14 +1717,13 @@ ul.mat-tree-node {
 }
 
 .rl .close-button-position-bandaid {
-  position: relative;
-  top: 2px;
-  right: 150px;
+  position: absolute;
+  right: 140px;
+  padding: 0;
   z-index: 100;
-}
-
-.rl .close-button-margin-bandaid {
-  margin-right: -30px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
 }
 
 // Resource Library
@@ -2856,6 +2855,19 @@ table.assessment-documents th {
   font-weight: bold;
   font-size: 1.1rem;
   color: $primary-900;
+}
+
+/// nested formatting
+.nested-question-text {
+  margin-bottom: 1rem;
+}
+
+.nested-option-block {
+  margin-bottom: .7rem !important;
+}
+
+.nested-option p {
+  margin-bottom: .5rem;
 }
 
 .alert-danger {
