@@ -154,18 +154,15 @@ export class MyAssessmentsComponent implements OnInit {
    */
   showColumn(column: string) {
     if (column == 'primary-assessor') {
-
       // hide the column for anonymous - there is no primary assessor user
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-
-      return !this.ncuaSvc.switchStatus;      
-    }
-
-    if (column == 'analytics') {
-      var show = this.configSvc.behaviors?.showAnalyticsColumnOnLanding ?? false;
-      return show;
+      // NCUA didn't want the primary assessor column
+      if (this.ncuaSvc.switchStatus) {
+        return false;
+      }
+      return true;
     }
   }
 

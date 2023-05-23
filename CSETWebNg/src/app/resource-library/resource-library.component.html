@@ -111,7 +111,7 @@
         </span>
   ​
         <div class="ml-4 mr-4 ">
-          <form class="d-flex justify-content-stretch align-items-center flex-11a" [ngClass]="{'close-button-margin-bandaid':searchTerm}">
+          <form class="d-flex justify-content-stretch align-items-center flex-11a">
             <input type="text" class="form-control" placeholder="Search the Resource Library" name="searchTerm" id="searchTerm"
               [(ngModel)]="searchTerm">
   ​
@@ -121,8 +121,8 @@
               <span>Search</span>
             </button>
   ​
-            <button class="btn bgc-trans m-0 ml-1 p-0 close-button-position-bandaid"  *ngIf="searchTerm"
-              matSuffix mat-icon-button aria-label="Clear" (click)="searchTerm=''">
+            <button class="btn close-button-position-bandaid" mat-icon-button *ngIf="searchTerm"
+              aria-label="Clear" (click)="searchTerm=''">
               <mat-icon>close</mat-icon>
             </button>
           </form>
