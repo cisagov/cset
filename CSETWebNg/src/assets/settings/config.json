@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["TSA"],
+    "currentConfigChain": ["TSA","TSAonline"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -19,14 +19,12 @@
     "helpContactPhone": "",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
-
     "debug": {
         "showBuildTime": false,
         "showQuestionAndRequirementIDs": false,
         "canDeleteCustomModules": true,
         "showExportAllButton": false
     },
-
     "galleryLayout": "CSET",
     "installationMode": "CSET",
     "mobileEnvironment": "",
@@ -61,6 +59,7 @@
         "showPrivacyWarning": false,
         "showTrend": true,
         "showCompare": true,
+        "showComments": true,
         "showEnableProtectedFeatures": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,

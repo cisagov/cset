@@ -452,6 +452,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.GalleryItemGu)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.GalleryItemGuid)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
             });
 
@@ -1658,7 +1659,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.Gallery_Item_Gu)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Guid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
 
                 entity.HasOne(d => d.Group)
