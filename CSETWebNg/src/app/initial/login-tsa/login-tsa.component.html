@@ -87,18 +87,22 @@
             </label>
             <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
               #email="ngModel" required email focusOnInit="true" tabindex="0" />
-            <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+            <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required
+            </div>
             <div class="input-container">
-              <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password" placeholder="Password"
-                [(ngModel)]="model.password" #password="ngModel" required />
-              <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password" [matTooltipPosition]="'right'">
+              <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
+                placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+              <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                matTooltip="Show password" [matTooltipPosition]="'right'">
                 <i class="fas fa-eye"></i>
               </div>
-              <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Hide password" [matTooltipPosition]="'right'">
+              <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                matTooltip="Hide password" [matTooltipPosition]="'right'">
                 <i class="fas fa-eye-slash"></i>
               </div>
             </div>
-            <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+            <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required
+            </div>
             <div class="mt-2 d-flex justify-content-between flex-00a">
               <div class="d-flex flex-nowrap flex-00a mt-3">
                 <button type="submit" [disabled]="loading" class="btn btn-secondary" tabindex="0">Login</button>
@@ -160,20 +164,22 @@
                 </label>
                 <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
                   #email="ngModel" required email focusOnInit="true" tabindex="0" />
-                <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+                <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is
+                  required</div>
                 <div class="input-container">
-                  <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password" placeholder="Password"
-                    [(ngModel)]="model.password" #password="ngModel" required />
-                  <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password"
-                    [matTooltipPosition]="'right'">
+                  <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2"
+                    name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+                  <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                    matTooltip="Show password" [matTooltipPosition]="'right'">
                     <i class="fas fa-eye"></i>
                   </div>
-                  <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Hide password"
-                    [matTooltipPosition]="'right'">
+                  <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+                    matTooltip="Hide password" [matTooltipPosition]="'right'">
                     <i class="fas fa-eye-slash"></i>
                   </div>
                 </div>
-                <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
+                <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required
+                </div>
                 <div class="mt-2 d-flex justify-content-between flex-00a">
                   <div class="d-flex flex-nowrap flex-00a mt-3">
                     <button type="submit" [disabled]="loading" class="btn btn-secondary" tabindex="0">Login</button>
@@ -212,9 +218,9 @@
             <div class="text-center">
               <img src="assets/images/TSA/tsa_insignia_rgbtransparent.png" class="mt-5" style="width: 175px;">
               <div *ngIf="configSvc.config.isRunningAnonymous" class="d-flex flex-column align-items-center mt-2">
-                <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability Disclosure Program</a>
-                <a class="mr-2" href="assets/legalese/privacy.html" rel="noopener noreferrer" target="_blank">INL Privacy/Accessibility</a>
-                <a class="btn-link-dark" (click)="showDisclaimer()">Disclaimer</a>
+                <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer"
+                  target="_blank">Vulnerability Disclosure Program</a>
+                <a class="btn-link-dark" (click)="showDisclaimer()">INL Privacy Notice</a>
               </div>
             </div>
           </div>
@@ -225,10 +231,10 @@
         <img src="assets/images/TSA/tsa_insignia_rgbtransparent.png" class="mt-5" style="width: 175px;">
 
         <div *ngIf="configSvc.config.isRunningAnonymous" class="d-flex flex-column align-items-center mt-2">
-          <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability Disclosure Program</a>
+          <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer"
+            target="_blank">Vulnerability Disclosure Program</a>
           <div class="row">
-            <a class="mr-2" href="assets/legalese/privacy.html" rel="noopener noreferrer" target="_blank">INL Privacy/Accessibility</a>
-            <a class="btn-link-dark" (click)="showDisclaimer()">Disclaimer</a>
+            <a class="btn-link-dark" (click)="showDisclaimer()">INL Privacy Notice</a>
           </div>
         </div>
       </div>

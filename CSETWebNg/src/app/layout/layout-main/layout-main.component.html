@@ -30,7 +30,7 @@
 
       <!-- Navbar -->
       <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
-        *ngIf="layoutSvc.isNavHeaderShown(this.router.url)"  >
+        *ngIf="layoutSvc.isNavHeaderShown(this.router.url)">
         <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
         <span
@@ -72,13 +72,10 @@
             <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
               <ng-container *ngIf="isRunningAnonymous()">
                 <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  (click)="showDisclaimer()">Disclaimer</a>
+                  (click)="showDisclaimer()">INL Privacy Notice</a>
                 <span class="mr-2 ml-2">|</span>
                 <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href="assets/legalese/privacy.html/">INL Privacy/Accessiblity</a>
-                <span class="mr-2 ml-2">|</span>
-                <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                  href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
+                  href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
                 <span class="mr-2 ml-2">|</span>
               </ng-container>
               <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
