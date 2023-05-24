@@ -16,6 +16,7 @@ using CSETWebCore.DataLayer.Model;
 using System.Security.Cryptography;
 using System.Diagnostics;
 using NLog;
+using MartinCostello.SqlLocalDb;
 
 namespace CSETWebCore.DatabaseManager
 {
@@ -53,13 +54,21 @@ namespace CSETWebCore.DatabaseManager
         {
             try
             {
-
                 //determine what state we are in.
                 // 
                 //then based on that state execute the appropriate upgrade logic
 
                 if (IsLocalDB2022Installed())
                 {
+                    using var localDB = new SqlLocalDbApi();
+                    ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance("INLLocalDb2022");
+                    ISqlLocalDbInstanceManager manager = instance.Manage();
+
+                    if (!instance.IsRunning)
+                    {
+                        manager.Start();
+                    }
+
                     InitialDbInfo localDb2022Info = new InitialDbInfo(localdb2022_ConnectionString, DatabaseCode);
                     InitialDbInfo localDb2019Info = new InitialDbInfo(localdb2019_ConnectionString, DatabaseCode);
                     InitialDbInfo localDb2012Info = new InitialDbInfo(localdb2012_ConnectionString, DatabaseCode);
@@ -71,7 +80,6 @@ namespace CSETWebCore.DatabaseManager
                     // If no db's exist, we can do a clean install
                     if (!localDb2022Info.Exists && !localDb2019Info.Exists && !localDb2012Info.Exists)
                     {
-                        // TODO:
                         // Create a custom localdb instance for 2022
                         CleanInstallNoUpgrades(destDBFile, destLogFile, localDb2022Info);
                         return;
