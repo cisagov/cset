@@ -32,7 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 import { AssessmentService } from '../../services/assessment.service';
 import { ChangePasswordComponent } from '../../dialogs/change-password/change-password.component';
-import { PasswordStatusResponse } from '../../models/reset-pass.model';
+import { AlertComponent } from '../../dialogs/alert/alert.component';
 
 @Component({
   selector: 'app-login-access-key',
@@ -151,11 +151,9 @@ export class LoginAccessKeyComponent implements OnInit {
    */
   checkPasswordReset() {
     this.authSvc.passwordStatus()
-      .subscribe((result: PasswordStatusResponse) => {
-        if (result) {
-          if (!result.resetRequired) {
-            this.openPasswordDialog(true);
-          }
+      .subscribe((passwordResetRequired: boolean) => {
+        if (passwordResetRequired) {
+          this.openPasswordDialog(true);
         }
       });
   }
@@ -172,8 +170,18 @@ export class LoginAccessKeyComponent implements OnInit {
         data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()
-      .subscribe(() => {
-        this.checkPasswordReset();
+        .subscribe((passwordChangeSuccess) => {
+        if (passwordChangeSuccess) {
+          this.dialog.open(AlertComponent, { 
+            data: { 
+              messageText: 'Your password has been changed successfully.',
+              title: 'Password Changed',
+              iconClass: 'cset-icons-check-circle'
+            }
+          });
+        } else {
+          this.checkPasswordReset();
+        }
       });
   }
 

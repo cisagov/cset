@@ -197,8 +197,6 @@ namespace CSETWebCore.Helpers
 #endif
 
                 new PasswordHash().HashPassword(password, out string hash, out string salt);
-                user.Password = hash;
-                user.Salt = salt;
 
 
                 // log the temp password to history
@@ -237,13 +235,13 @@ namespace CSETWebCore.Helpers
         /// Keeps the last 24 password history records and deletes the rest.
         /// </summary>
         /// <param name="userId"></param>
-        private void CleanUpPasswordHistory(int userId, bool deleteTemps)
+        public void CleanUpPasswordHistory(int userId, bool deleteTemps)
         {
             // delete temps
             if (deleteTemps)
             {
-                var temps = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId && x.Is_Temp).ToList();
-                _context.PASSWORD_HISTORY.RemoveRange(temps);
+                var tempsHistory = _context.PASSWORD_HISTORY.Where(x => x.UserId == userId && x.Is_Temp).ToList();
+                _context.PASSWORD_HISTORY.RemoveRange(tempsHistory);
             }
 
 

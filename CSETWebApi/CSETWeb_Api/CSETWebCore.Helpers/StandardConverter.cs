@@ -160,7 +160,7 @@ namespace CSETWebCore.Helpers
             externalStandard.shortName = standard.Short_Name;
             externalStandard.name = standard.Full_Name;
             externalStandard.summary = standard.Standard_ToolTip;
-            externalStandard.category = standard.Set_Category.Set_Category_Name;
+            externalStandard.category = standard.Set_Category?.Set_Category_Name ?? "";
 
             var requirements = new List<ExternalRequirement>();
             //Caching for performance

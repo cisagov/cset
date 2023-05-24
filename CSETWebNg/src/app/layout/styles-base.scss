@@ -657,9 +657,9 @@ table.td-align-top td {
   cursor: not-allowed;
   box-shadow: none;
   opacity: 1;
-  background-color: $gray-500;
-  color: $gray-300;
-  border-color: $gray-500;
+  background-color: $gray-500 !important;
+  color: $gray-300 !important;
+  border-color: $gray-500 !important;
 }
 
 .btn-secondary {
@@ -1544,14 +1544,13 @@ ul.mat-tree-node {
 }
 
 .rl .close-button-position-bandaid {
-  position: relative;
-  top: 2px;
-  right: 150px;
+  position: absolute;
+  right: 140px;
+  padding: 0;
   z-index: 100;
-}
-
-.rl .close-button-margin-bandaid {
-  margin-right: -30px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
 }
 
 // Resource Library

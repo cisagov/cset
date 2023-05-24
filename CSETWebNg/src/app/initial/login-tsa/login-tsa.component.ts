@@ -183,6 +183,10 @@ export class LoginTsaComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+    refreshWindow() {
+    window.location.reload();
+  }
+
   exit() {
     window.close();
   }
@@ -199,6 +203,6 @@ export class LoginTsaComponent implements OnInit {
   }
 
   showDisclaimer() {
-    this.dialog.open(OnlineDisclaimerComponent);
+    this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
 }

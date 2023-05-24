@@ -25,8 +25,9 @@ import { ImportAssessmentService } from './../../services/import-assessment.serv
 import { FileUploadClientService } from '../../services/file-client.service';
 import { DiagramService } from './../../services/diagram.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ImportPasswordComponent } from '../assessment-encryption/import-password/import-password.component';
 
 @Component({
   selector: 'app-upload-export',
@@ -48,7 +49,14 @@ export class UploadExportComponent implements OnInit {
   uploadSuccessful = false;
   statusText = "";
 
+  passwordRequired = false;
+  password = "";
+  uploadedAssessments = [];
+
+  xCount = 0; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
+
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
+    public newDialog: MatDialog,
     private importSvc: ImportAssessmentService,
     private fileSvc: FileUploadClientService,
     private diagramSvc: DiagramService,
@@ -67,6 +75,11 @@ export class UploadExportComponent implements OnInit {
           this.files.add(files[key]);
         }
       }
+
+      for (const [key, value] of this.files.entries()) {
+        this.uploadedAssessments.push(key);
+      }
+
       this.progressDialog();
     }
   }
@@ -110,7 +123,7 @@ export class UploadExportComponent implements OnInit {
     if (this.data.isCsafUpload) {
       this.progress = this.fileSvc.uploadCsafFiles(this.files);
     } else {
-      this.progress = this.importSvc.upload(this.files, this.data.isNormalLoad);
+      this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad, this.password);
     }
 
     // convert the progress map into an array
@@ -139,7 +152,7 @@ export class UploadExportComponent implements OnInit {
 
     // When all progress-observables are completed...
     let count = 0
-    allProgressObservables.forEach(element => {
+    allProgressObservables.forEach((element, i) => {
       element.subscribe(
         succ => {
           // console.log(succ)
@@ -149,11 +162,21 @@ export class UploadExportComponent implements OnInit {
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
+
+            if (fail.message == "File requires a password") {
+              this.passwordRequired = true;
+            }
           }
         },
         comp => {
           count += 1
-          if(count >= allProgressObservables.length){
+
+          // Remove the files that were uploaded successfully so they don't get reuploaded multiple times
+          // while we work through each of the assessments that need a password entered.
+          let fileToRemove = this.uploadedAssessments[i];       
+          this.files.delete(fileToRemove);
+
+          if (count >= allProgressObservables.length){
             if (this.data.isCsafUpload) {
               this.canBeClosed = true;
               this.dialog.disableClose = false;
@@ -177,4 +200,21 @@ export class UploadExportComponent implements OnInit {
     //   this.dialog.close();
     // });
   }
+
+  enterPassword() {
+    // Retry the upload process with the password. Will be called repeatedly for each assessment that 
+    // needs a different password.
+    this.xCount++; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
+    let passwordDialog = this.newDialog.open(ImportPasswordComponent, {
+      disableClose: true
+    });
+    passwordDialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.password = result;
+        this.progressDialog();
+      }
+    });
+
+  }
+
 }

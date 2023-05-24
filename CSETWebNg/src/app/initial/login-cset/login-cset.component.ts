@@ -196,6 +196,6 @@ export class LoginCsetComponent implements OnInit {
   }
 
   showDisclaimer() {
-    this.dialog.open(OnlineDisclaimerComponent);
+    this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
 }

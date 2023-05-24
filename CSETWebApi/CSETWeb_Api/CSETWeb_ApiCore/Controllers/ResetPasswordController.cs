@@ -149,6 +149,7 @@ namespace CSETWebCore.Api.Controllers
                     !respComplex.PasswordContainsSpecial || !respComplex.PasswordNotReused)
                 {
                     respComplex.IsValid = false;
+                    respComplex.Message = "New password does not satisfy all password policy requirements.";
                     return Ok(respComplex);
                 }
 
