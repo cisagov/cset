@@ -22,13 +22,15 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ImportPasswordComponent } from '../dialogs/assessment-encryption/import-password/import-password.component';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
-  params: new HttpParams()
+  params: new HttpParams(),
 };
 
 @Injectable({
@@ -39,33 +41,38 @@ export class ImportAssessmentService {
   apiAssessmentImport = this.configSvc.apiUrl + 'assessment/import';
   apiLegacyAssessmentImport = this.configSvc.apiUrl + 'assessment/legacy/import';
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(
+    private http: HttpClient, 
+    private configSvc: ConfigService) {
   }
 
-  public upload(files: Set<File>, isNormalLoad: boolean): { [key: string]: Observable<number> } {
-
+  public upload(files: Set<File>, isNormalLoad: boolean, password): { [key: string]: Observable<number> } {
     // this will be the our resulting map
     const status = {};
 
     files.forEach(file => {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
-      formData.append('file', file, file.name);
+      formData.append('file', file, file.name, );
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
       let req = null;
-      const tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
+      let tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
       tmpheader.append('Authorization', localStorage.getItem('userToken'));
+      tmpheader = tmpheader.append('pwd', password);
+      
       if (isNormalLoad) {
         req = new HttpRequest('POST', this.apiAssessmentImport, formData,
           { headers: tmpheader,
             reportProgress: true }
-        );
+        )
+
       } else {
         req = new HttpRequest('POST', this.apiLegacyAssessmentImport, formData,
           { headers: tmpheader,
-            reportProgress: true },
+            reportProgress: true,
+          }
         );
       }
 
@@ -86,9 +93,19 @@ export class ImportAssessmentService {
           // pass the percentage into the progress-stream
           progress.next(percentDone);
         } else if (event instanceof HttpResponseBase) {
-          if (event.status != 200) { //MAYBE: Make this >= 400
+          if (event.status == 423) {
             let errObj = {
-              message: "File Import Failed", //TODO: get error message from backend / more detail         
+              message: "File requires a password",
+            };
+            progress.error(errObj);
+          } else if (event.status == 406) {
+            let errObj = {
+              message: "Invalid password.",
+            };
+            progress.error(errObj);
+          } else if (event.status != 200 && event.status != 406 && event.status != 423) {
+            let errObj = {
+              message: "File Import Failed",
             };
             progress.error(errObj);
           }
@@ -96,9 +113,9 @@ export class ImportAssessmentService {
           // The upload is complete
           else progress.complete();   
         }
-      });
 
-    });
+      },);
+    })
 
     // return the map of progress.observables
     return status;
