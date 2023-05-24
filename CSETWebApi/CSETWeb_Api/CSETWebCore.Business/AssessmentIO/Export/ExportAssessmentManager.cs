@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,6 +18,7 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Helpers;
+using Ionic.Zip;
 
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
@@ -291,13 +291,18 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        public Stream ArchiveStream(int assessmentId)
+        public Stream ArchiveStream(int assessmentId, string password)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
 
-            using (var archive = new ZipArchive(archiveStream, ZipArchiveMode.Create, true))
+            using (var archive = new ZipFile())
             {
+                if (password != null && password != "")
+                {
+                    archive.Password = password;
+                }
+
                 foreach (var standard in model.jAVAILABLE_STANDARDS)
                 {
                     if (!standard.Selected)
@@ -315,9 +320,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
 
                     var qq = from nq in _context.NEW_QUESTION
-                            join nqs in _context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id                        
-                            where nqs.Set_Name == standard.Set_Name
-                            select nq;
+                             join nqs in _context.NEW_QUESTION_SETS on nq.Question_Id equals nqs.Question_Id
+                             where nqs.Set_Name == standard.Set_Name
+                             select nq;
 
                     var questions = qq.ToList();
                     set.NEW_QUESTION = new List<NEW_QUESTION>(questions);
@@ -332,17 +337,16 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     set.NEW_REQUIREMENT = new List<NEW_REQUIREMENT>(rq.ToList());
 
 
-                    
+
                     var extStandard = StandardConverter.ToExternalStandard(set, _context);
                     var setname = Regex.Replace(extStandard.shortName, @"\W", "_");
 
                     // Export Set
-                    var standardEntry = archive.CreateEntry($"{setname}.json");
+                    //var standardEntry = archive.CreateEntry($"{setname}.json");
                     var jsonStandard = JsonConvert.SerializeObject(extStandard, Formatting.Indented);
-                    using (var writer = new StreamWriter(standardEntry.Open()))
-                    {
-                        writer.Write(jsonStandard);
-                    }
+
+                    ZipEntry standardEntry = archive.AddEntry($"{setname}.json", jsonStandard);
+
 
                     //Set the GUID at time of export so we are sure it's right!!!
                     model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(set.NEW_REQUIREMENT, s => s.Question_Or_Requirement_Id, s => s.Requirement_Id, (t, s) =>
@@ -375,12 +379,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                             continue;
 
                         var doc = genFile.ToExternalDocument();
-                        var docEntry = archive.CreateEntry($"{doc.ShortName}.json");
                         var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
-                        using (var writer = new StreamWriter(docEntry.Open()))
-                        {
-                            writer.Write(jsonDoc);
-                        }
+
+                        ZipEntry docEntry = archive.AddEntry($"{doc.ShortName}.json", jsonDoc);
+
                         model.CustomStandardDocs.Add(file.fileName);
                     }
                 }
@@ -388,12 +390,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                var modelEntry = archive.CreateEntry("model.json");
-                using (var writer = new StreamWriter(modelEntry.Open()))
-                {
-                    writer.Write(json);
-                }
+                ZipEntry jsonEntry = archive.AddEntry("model.json", json);
+                
+                archive.Save(archiveStream);
             }
+
 
             archiveStream.Seek(0, SeekOrigin.Begin);
             return archiveStream;

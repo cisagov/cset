@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -12,12 +13,14 @@ using System.Security.Principal;
 using System.Text.RegularExpressions;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Authentication;
 using CSETWebCore.Model.Contact;
 using CSETWebCore.Model.User;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWebCore.Helpers
 {
@@ -27,15 +30,21 @@ namespace CSETWebCore.Helpers
         private readonly IUserBusiness _userBusiness;
         private readonly ILocalInstallationHelper _localInstallationHelper;
         private readonly ITokenManager _transactionSecurity;
+        private readonly INotificationBusiness _notificationBusiness;
+        private readonly IConfiguration _configuration;
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness,
-            ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity, CSETContext context)
+            ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity, 
+            INotificationBusiness notificationBusiness, IConfiguration configuration,
+            CSETContext context)
         {
             _password = password;
             _transactionSecurity = transactionSecurity;
             _userBusiness = userBusiness;
             _localInstallationHelper = localInstallationHelper;
+            _notificationBusiness = notificationBusiness;
+            _configuration = configuration;
             _context = context;
         }
 
@@ -62,13 +71,43 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
+            List<PASSWORD_HISTORY> tempPasswords = _context.PASSWORD_HISTORY.Where(password => password.UserId == loginUser.UserId && password.Is_Temp).ToList();
 
             // Validate the supplied password against the hashed password and its salt
             bool passwordIsValid = _password.ValidatePassword(login.Password, loginUser.Password, loginUser.Salt);
 
+            string tempPasswordUsed = null;
+            // Validate against the user's temp passwords as well in case they forgot password and need to reset it
             if (!passwordIsValid)
             {
-                return null;
+                foreach (PASSWORD_HISTORY tempPassword in tempPasswords)
+                {
+                    if (_password.ValidatePassword(login.Password, tempPassword.Password, tempPassword.Salt))
+                    {
+                        passwordIsValid = true;
+                        tempPasswordUsed = tempPassword.Password;
+                        break;
+                    }
+                }
+
+                // Could not successfully authenticate with any temp password or actual password
+                if (!passwordIsValid)
+                {
+                    return null;
+                }
+            }
+            else 
+            {
+                // We never require a password reset if the user is able to login with their official password that is stored in the USERS table
+                loginUser.PasswordResetRequired = false;
+
+                if (tempPasswords.Count > 0) 
+                {
+                    UserAccountSecurityManager accountSecurityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
+
+                    // Remove any existing temp passwords from history after a successful login with an official password
+                    accountSecurityManager.CleanUpPasswordHistory(loginUser.UserId, true);
+                }
             }
 
 
@@ -88,13 +127,13 @@ namespace CSETWebCore.Helpers
 
 
             // The password is valid, but is it expired?
-            var isExpired = new PasswordExpiration().IsExpired(_context, loginUser.UserId, loginUser.Password);
+            string passwordHashUsed = tempPasswordUsed == null ? loginUser.Password : tempPasswordUsed;
+            var isExpired = new PasswordExpiration().IsExpired(_context, loginUser.UserId, passwordHashUsed);
             if (isExpired)
             {
                 resp.IsPasswordExpired = true;
                 return resp;
             }
-
 
             // Generate a token for this user and add to the response
             string token = _transactionSecurity.GenerateToken(loginUser.UserId, null, login.TzOffset, -1, null, null, login.Scope);

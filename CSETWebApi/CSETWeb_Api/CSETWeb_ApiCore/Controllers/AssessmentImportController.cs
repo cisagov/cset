@@ -16,6 +16,7 @@ using Microsoft.Net.Http.Headers;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Ionic.Zip;
 using System.Collections.Generic;
 using System.Net.Http;
 
@@ -116,7 +117,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/assessment/import")]
-        public async Task<IActionResult> ImportAssessment()
+        public async Task<IActionResult> ImportAssessment([FromHeader] string pwd)
         {
             // should be multipart
             if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
@@ -145,14 +146,24 @@ namespace CSETWebCore.Api.Controllers
 
 
                     var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
-                    await manager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context);
+                    await manager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
                 }
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
+                {
+                    return StatusCode(423, "Bad Password Exception");
+                }
+                else if (e.Message == "The password did not match.")
+                {
+                    return StatusCode(406, "Invalid Password");
+                }
+                else
+                {
+                    return BadRequest(e);
+                }
             }
-
 
             var response = new {
                 Message = "Assessment was successfully imported"

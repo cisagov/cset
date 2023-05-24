@@ -37,7 +37,8 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-maturity-questions-nested',
-  templateUrl: './maturity-questions-nested.component.html'
+  templateUrl: './maturity-questions-nested.component.html',
+  styleUrls: ['./maturity-questions-nested.component.scss']
 })
 export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
 
