@@ -15,9 +15,13 @@ namespace CSETWebCore.DatabaseManager
 {
     public class InitialDbInfo
     {
+        /// <summary>
+        /// Provides information about the existence of a database on a given sql connection
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="databaseCode"></param>
         public InitialDbInfo(string connectionString, string databaseCode)
         {
-            //@"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;";
             MasterConnectionString = Regex.Replace(connectionString, "initial catalog=.*;", "initial catalog=Master");
             ConnectionString = connectionString;
             DatabaseCode = databaseCode;
@@ -121,12 +125,6 @@ namespace CSETWebCore.DatabaseManager
 
             var version = new Version(versionTable.Rows[0]["Cset_Version"].ToString());
             return version;
-        }
-
-        public static DirectoryInfo GetExecutingDirectory()
-        {
-            string path = Assembly.GetAssembly(typeof(DbManager)).Location;
-            return new FileInfo(path).Directory;
         }
 
         public string MDF { get; }

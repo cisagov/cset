@@ -9,11 +9,7 @@ using System.IO;
 using Microsoft.Win32;
 using Microsoft.Data.SqlClient;
 using UpgradeLibrary.Upgrade;
-using System.Linq;
 using System.Reflection;
-using System.Xml;
-using CSETWebCore.DataLayer.Model;
-using System.Security.Cryptography;
 using System.Diagnostics;
 using NLog;
 using MartinCostello.SqlLocalDb;
@@ -23,21 +19,7 @@ namespace CSETWebCore.DatabaseManager
     public class DbManager
     {
 
-        /* TODO:
-         * Look to see if LocalDb2022 is installed.
-         * If it's not, throw an error
-         *
-         * Check if INL2023 instance is there, if not, create it. If it is, you're done.
-         * Then, check for 2019. If there is, stop 2019, copy the db and attach the copy to the new INL2023 instance
-         * Then check for 2012.
-         * If nothing is installed
-         *
-         * Check if 2019/2012 is installed and if it is, get user acknowledgement that it's okay. Save user answer so it doesn't reappear
-         * this message needs to show up and be acknowledge regardless of the upgrade status
-         * 
-         */
-
-        private static readonly NLog.Logger _logger = LogManager.GetLogger("DBManager");
+        private static readonly Logger _logger = LogManager.GetLogger("DBManager");
         private readonly VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
 
         public DbManager(Version version, string clientCode, string applicationCode)
@@ -47,31 +29,52 @@ namespace CSETWebCore.DatabaseManager
             ApplicationCode = applicationCode;
         }
 
-        /// <summary>
-        /// Attempts to attach fresh database after local install, or upgrade from previous version of application if already installed.
-        /// </summary>
+        /* 
+        * DBManager logic flow:
+        * 
+        * This method is called every time the compiled production web api code is executed.
+        * 
+        * Look to see if LocalDb2022 is installed.
+        * If it's not, throw an error
+        *
+        * Check if INLLocalDb2022 instance is there, if not, create it. If it is, check for the existence of the application database.
+        * If the database exists, check the CSET_VERSION table to see if it is up to date with the latest deployed assembly version.
+        * If it is outdated, upgrade it. If not, we are done.
+        * If there is no application database, attach the template database for fresh new install.
+        * 
+        * Then, check for a LocalDb2019 default instance and database. If exists, stop 2019, copy the db and attach the copy to the new INL2023 instance and attempt upgrade.
+        * 
+        * Then check for LocalDb2012 default instance and database. If exists, stop 2012, copy the db and attach the copy to the new INL2023 instance and attempt upgrade.
+        *
+        * Check if 2019/2012 is installed and if it is, get user acknowledgement that it's okay. Save user answer so it doesn't reappear
+        * this message needs to show up and be acknowledge regardless of the upgrade status.
+        * 
+        */
         public void SetupDb()
         {
             try
             {
                 //determine what state we are in.
-                // 
                 //then based on that state execute the appropriate upgrade logic
 
                 if (IsLocalDB2022Installed())
                 {
-                    using var localDB = new SqlLocalDbApi();
-                    ISqlLocalDbInstanceInfo instance = localDB.GetOrCreateInstance("INLLocalDb2022");
-                    ISqlLocalDbInstanceManager manager = instance.Manage();
-
-                    if (!instance.IsRunning)
+                    using (SqlLocalDbApi localDb = new SqlLocalDbApi()) 
                     {
-                        manager.Start();
-                    }
 
-                    InitialDbInfo localDb2022Info = new InitialDbInfo(localdb2022_ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2019Info = new InitialDbInfo(localdb2019_ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2012Info = new InitialDbInfo(localdb2012_ConnectionString, DatabaseCode);
+                        // Create and start our custom localdb instance
+                        ISqlLocalDbInstanceInfo instance = localDb.GetOrCreateInstance(LocalDbCustomInstanceName);
+                        ISqlLocalDbInstanceManager manager = instance.Manage();
+
+                        if (!instance.IsRunning)
+                        {
+                            manager.Start();
+                        }
+                    } 
+
+                    InitialDbInfo localDb2022Info = new InitialDbInfo(LocalDb2022ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
 
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                     string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
@@ -110,7 +113,6 @@ namespace CSETWebCore.DatabaseManager
                         return;
                     }
                 }
-                
                 else
                 {
                     throw new DatabaseSetupException($"SQL Server LocalDB 2022 installation not found... {ApplicationCode} {NewVersion} database setup aborted");
@@ -129,17 +131,6 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        /*
-        /// <summary>
-        /// Executes series of commands (stop, delete, and start) using sqllocaldb command line utility to resolve engine versioning bug.
-        /// </summary>
-        private void ResolveLocalDBVersion()
-        {
-            _logger.Info("Deleting and recreating localDB MSSQLLocalDB default instance..");
-            var process = System.Diagnostics.Process.Start("CMD.exe", "/C sqllocaldb stop mssqllocaldb && sqllocaldb delete mssqllocaldb && sqllocaldb start mssqllocaldb");
-            process.WaitForExit(10000); // wait up to 10 seconds 
-        }
-        */
 
         /// <summary>
         /// Perform a clean attach of master versioned database.
@@ -188,7 +179,6 @@ namespace CSETWebCore.DatabaseManager
             // Verify that the database has been copied over and exists now
             VerifyApplicationDatabaseFunctioning(localDb2022Info);
         }
-
 
 
         /// <summary>
@@ -317,7 +307,7 @@ namespace CSETWebCore.DatabaseManager
         public void CopyDBFromInstallationSource(string destDBFile, string destLogFile)
         {
             string websitedataDir = "Data";
-            string sourceDirPath = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName);
+            string sourceDirPath = Path.Combine(GetExecutingDirectory().FullName);
             string sourcePath = Path.Combine(sourceDirPath, websitedataDir, DatabaseFileName);
             string sourceLogPath = Path.Combine(sourceDirPath, websitedataDir, DatabaseLogFileName);
 
@@ -343,18 +333,6 @@ namespace CSETWebCore.DatabaseManager
                     " ON(FILENAME = '" + destDBFile + "'),  " +
                     " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
                 localDb2022Info.MasterConnectionString);
-        }
-
-        public void AttachTest(string dbname, string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
-        {
-            ExecuteNonQuery(
-              "IF NOT EXISTS(SELECT name \n" +
-              "FROM master..sysdatabases \n" +
-              "where name ='" + dbname + "') \n" +
-                  "CREATE DATABASE " + dbname +
-                  " ON(FILENAME = '" + destDBFile + "'),  " +
-                  " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-              localDb2022Info.MasterConnectionString);
         }
 
         private static string EscapeString(string value)
@@ -462,6 +440,13 @@ namespace CSETWebCore.DatabaseManager
                 _logger.Error(sqle.Message);
             }
         }
+
+        public static DirectoryInfo GetExecutingDirectory()
+        {
+            string path = Assembly.GetAssembly(typeof(DbManager)).Location;
+            return new FileInfo(path).Directory;
+        }
+
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
@@ -483,24 +468,27 @@ namespace CSETWebCore.DatabaseManager
                 }
             }
         }
-        public string localdb2022_ConnectionString
+
+        public string LocalDbCustomInstanceName { get; set; } = "INLLocalDb2022";
+
+        public string LocalDb2022ConnectionString
         {
-            // "INL2022" is a custom name, so we need to build it "custom". Use Nouget package instead of plain cmd line
-            get { return @"data source=(LocalDB)\INL2022;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;"; }
+            // "INLLocalDb2022" is our custom localdb 2022 instance name, so we need to build it "custom".
+            get { return @$"data source=(LocalDB)\{LocalDbCustomInstanceName};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
         }
         
-        public string localdb2019_ConnectionString
+        public string LocalDb2019ConnectionString
         {
-            // this is fine because "MSSQLLocalDB" is the default value
-            get { return @"data source=(LocalDB)\MSSQLLocalDB;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=20;MultipleActiveResultSets=True;"; }
+            // "MSSQLLocalDB" is the default instance name for localdb2019
+            get { return @$"data source=(LocalDB)\MSSQLLocalDB;initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
 
-        public string localdb2012_ConnectionString
+        public string LocalDb2012ConnectionString
         {
-            get { return @"data source=(LocalDB)\v11.0;initial catalog=" + DatabaseCode + ";integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
+            // "v11.0" is the default instance name for localdb2012
+            get { return @$"data source=(LocalDB)\v11.0;initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
         
-
         public string DatabaseFileName
         {
             get { return DatabaseCode + ".mdf"; }

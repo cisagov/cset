@@ -17,8 +17,6 @@ namespace CSETWebCore.DatabaseManager
     /// from 2019 to 2022
     /// From 2012 to 2022
     /// 
-    /// 
-    /// 
     /// </summary>
 
 
