@@ -30,7 +30,8 @@
 
     <div *ngIf="configSvc.isRunningAnonymous" class="ml-4 my-4 d-flex align-items-end flex-00a flex-nowrap">
       <app-logo-cset logoHeight="50"></app-logo-cset>
-      <span class="align-bottom ml-3 font-italic" style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
+      <span class="align-bottom ml-3 font-italic"
+        style="font-size: 37px; line-height: normal; margin-bottom: -.5rem; color: #666">Online</span>
     </div>
 
     <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white">
@@ -104,7 +105,8 @@
           </div>
           <div class="d-flex flex-column flex-00a">
             <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset Password</a>
-            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register New User Account</a>
+            <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">Register
+              New User Account</a>
           </div>
         </div>
       </form>
@@ -122,10 +124,10 @@
       <img class="mt-4" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
 
       <div *ngIf="configSvc.config.isRunningAnonymous" class="d-flex flex-column align-items-center mt-2">
-        <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability Disclosure Program</a>
+        <a href="https://doe.responsibledisclosure.com/hc/en-us" rel="noopener noreferrer" target="_blank">Vulnerability
+          Disclosure Program</a>
         <div class="row">
-          <a class="mr-2" href="https://inl.gov/privacy-and-accessibility" rel="noopener noreferrer" target="_blank">INL Privacy/Accessibility</a>
-          <a class="btn-link-dark" (click)="showDisclaimer()">Disclaimer</a>
+          <a class="btn-link-dark" (click)="showDisclaimer()">INL Privacy & Accessibility</a>
         </div>
       </div>
 
