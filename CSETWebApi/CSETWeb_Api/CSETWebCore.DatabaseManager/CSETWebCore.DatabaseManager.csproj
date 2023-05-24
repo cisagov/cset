@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSETWebCore.Constants\CSETWebCore.Constants.csproj" />
     <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.UpgradeLibrary\CSETWebCore.UpgradeLibrary.csproj" />
   </ItemGroup>
