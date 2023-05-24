@@ -13,12 +13,12 @@ using System.Reflection;
 using System.Diagnostics;
 using NLog;
 using MartinCostello.SqlLocalDb;
+using static CSETWebCore.Constants.Constants;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class DbManager
     {
-
         private static readonly Logger _logger = LogManager.GetLogger("DBManager");
         private readonly VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
 
@@ -64,7 +64,7 @@ namespace CSETWebCore.DatabaseManager
                     {
 
                         // Create and start our custom localdb instance
-                        ISqlLocalDbInstanceInfo instance = localDb.GetOrCreateInstance(LocalDbCustomInstanceName);
+                        ISqlLocalDbInstanceInfo instance = localDb.GetOrCreateInstance(LOCALDB_2022_CUSTOM_INSTANCE_NAME);
                         ISqlLocalDbInstanceManager manager = instance.Manage();
 
                         if (!instance.IsRunning)
@@ -470,33 +470,31 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        public string LocalDbCustomInstanceName { get; set; } = "INLLocalDb2022";
-
         public string LocalDb2022ConnectionString
         {
             // "INLLocalDb2022" is our custom localdb 2022 instance name, so we need to build it "custom".
-            get { return @$"data source=(LocalDB)\{LocalDbCustomInstanceName};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
+            get { return @$"data source=(LocalDB)\{LOCALDB_2022_CUSTOM_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
         }
         
         public string LocalDb2019ConnectionString
         {
             // "MSSQLLocalDB" is the default instance name for localdb2019
-            get { return @$"data source=(LocalDB)\MSSQLLocalDB;initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
+            get { return @$"data source=(LocalDB)\{LOCALDB_2019_DEFAULT_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
 
         public string LocalDb2012ConnectionString
         {
             // "v11.0" is the default instance name for localdb2012
-            get { return @$"data source=(LocalDB)\v11.0;initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
+            get { return @$"data source=(LocalDB)\{LOCALDB_2012_DEFAULT_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
         
         public string DatabaseFileName
         {
-            get { return DatabaseCode + ".mdf"; }
+            get { return $"{DatabaseCode}.{DB_EXTENSION}"; }
         }
         public string DatabaseLogFileName
         {
-            get { return DatabaseCode + "_log.ldf"; }
+            get { return $"{DatabaseCode}_log.{DB_LOG_EXTENSION}"; }
         }
     }
 }
