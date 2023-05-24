@@ -109,6 +109,13 @@ export class ReportService {
     }
 
     /**
+     *
+     */
+    getHydroDonutData(): any {
+        return this.http.get(this.configSvc.apiUrl + 'reports/getHydroDonutData');
+    }
+
+    /**
      * Calls the API to get the structure of a SET.
      */
     getModuleContent(setName: string): any {
