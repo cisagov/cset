@@ -20,5 +20,6 @@ namespace CSETWebCore.Business.Question
         QuestionDetails GetDetails(int questionId, string questionType);
         QuestionResponse BuildResponse();
         void StoreSubcategoryAnswers(SubCategoryAnswers subCatAnswerBlock);
+        int QuestionCountInSubGroup(string subGroup, int modelId);
     }
 }
