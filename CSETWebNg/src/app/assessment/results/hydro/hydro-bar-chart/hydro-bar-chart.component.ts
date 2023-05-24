@@ -20,8 +20,6 @@ export class HydroBarChartComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log(this.barData)
-
     for (let i = 0; i < this.barData.length; i++) {
       let currSubCatWeightArray = this.barData[i];
 
@@ -48,6 +46,5 @@ export class HydroBarChartComponent implements OnInit {
       };
       this.data.push(currSubCatDataList);
     }
-    console.log(this.data)
   }
 }
