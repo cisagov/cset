@@ -1045,13 +1045,21 @@ namespace CSETWebCore.Business.Maturity
                         ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+
+                        Scope = myQ.Scope,
+                        RecommendedAction = myQ.Recommend_Action,
+                        RiskAddressed = myQ.Risk_Addressed,
+                        Services = myQ.Services,
+
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer,
+
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
+
                         Is_Maturity = true,
                         MaturityModelId = sg.Maturity_Model_Id,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -1059,6 +1067,15 @@ namespace CSETWebCore.Business.Maturity
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
+
+
+                    // Include CSF mappings - TODO
+                    qa.CsfMappings.Add("XXX.XX.X");
+                    qa.CsfMappings.Add("YYY.YY.Y");
+
+                    // Include any TTPs
+                    qa.TTP = GetTTPReferenceList(qa.QuestionId);
+
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
                     {
@@ -2323,6 +2340,25 @@ namespace CSETWebCore.Business.Maturity
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
+        }
+
+
+        public List<TTPReference> GetTTPReferenceList(int questionId)
+        {
+            var xx = _context.TTP_MAT_QUESTION
+                .Include(x => x.TTP_CodeNavigation).Where(x => x.Mat_Question_Id == questionId).ToList();
+
+            var resp = new List<TTPReference>();
+            foreach (var y in xx)
+            {
+                resp.Add(new TTPReference() { 
+                    Code = y.TTP_Code,
+                    Description = y.TTP_CodeNavigation.Description,
+                    ReferenceUrl = y.TTP_CodeNavigation.URL
+                });
+            }
+
+            return resp;
         }
 
 
