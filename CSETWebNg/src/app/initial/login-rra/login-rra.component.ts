@@ -47,6 +47,7 @@ export class LoginRraComponent implements OnInit {
   model: any = {};
   loading = false;
   incorrect = false;
+  showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
@@ -139,5 +140,9 @@ export class LoginRraComponent implements OnInit {
 
   continueStandAlone() {
     this.router.navigate(['/home']);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

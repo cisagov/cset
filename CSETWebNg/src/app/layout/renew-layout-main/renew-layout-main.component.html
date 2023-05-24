@@ -38,7 +38,7 @@
           (click)="this.router.url!='/resource-library' && goHome()">
           <!-- CSET Lock Logo -->
           <div class="d-flex justify-content-start align-items-end flex-00a">
-            <app-logo-cset mode="white" /> <span class="mx-2 text-white" style="line-height: normal; margin-bottom: -.2rem">- INL Cyber SHIELD</span>
+            <app-logo-cset mode="white" /> <span class="mx-2 text-white" style="line-height: normal; margin-bottom: -.3rem">Renewables</span>
           </div>
     </span>
     <!-- Navbar Toggler Button -->
@@ -71,17 +71,21 @@
         <div class="footer-section-2 p-2">
           <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
             <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
-            <span class="mr-2 ml-2">|</span>
+                (click)="showDisclaimer()">Disclaimer</a>
+              <span class="mr-2 ml-2">|</span>
+              <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href="https://inl.gov/privacy-and-accessibility/">Privacy/Accessiblity</a>
+              <span class="mr-2 ml-2">|</span>
+            <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerablity Disclosure Program</a>
+              <span class="mr-2 ml-2">|</span>
             <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-              href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
-            <span class="mr-2 ml-2">|</span>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov/accessibility">Accessibility</a>
+            href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
+          <span class="mr-2 ml-2">|</span>
+            <a class="mr-2" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+              href="https://www.cisa.gov/topics/industrial-control-systems">FAQ</a>                                    
           </div>
-          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-            <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
-            <span style="padding: 2px">is part of the</span>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
+          <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">            
           </div>
         </div>
       </ng-template>

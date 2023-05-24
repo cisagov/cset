@@ -21,11 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, NgZone, OnChanges, OnInit, SimpleChange, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Inject, NgZone, OnChanges, OnInit, SimpleChange, ViewChild, ɵclearResolutionOfComponentResourcesQueue } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { delay } from 'lodash';
 import { environment } from '../../../environments/environment';
 import { ChangePassword } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -44,6 +43,7 @@ export class ChangePasswordComponent implements OnInit {
   warning = false;
   cpwd: ChangePassword = {};
   forceChangePassword = false;
+  showPassword = false;
 
   private _passwordContainsNumbers: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public passwordContainsNumbers: Observable<boolean> = this._passwordContainsNumbers.asObservable();
@@ -129,5 +129,9 @@ export class ChangePasswordComponent implements OnInit {
     if (this.warning && this.message === this.msgChangeTempPw) {
       this.auth.logout();
     }
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

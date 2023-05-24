@@ -73,7 +73,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
       });
     });
 
-    this.titleService.setTitle("Site Summary - CSET");
+    this.titleService.setTitle("Site Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('sitesummarycmmc').subscribe((r: any) => {
         this.response = r;

@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -32,6 +31,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
 import { EmailService } from '../../services/email.service';
 import { JwtParser } from '../../helpers/jwt-parser';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 @Component({
   selector: 'app-login-cset',
@@ -47,9 +47,10 @@ export class LoginCsetComponent implements OnInit {
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
-  
+
   loading = false;
   incorrect = false;
+  showPassword = false;
   passwordExpired = false;
 
   private isEjectDialogOpen = false;
@@ -188,5 +189,13 @@ export class LoginCsetComponent implements OnInit {
 
   exit() {
     window.close();
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }
