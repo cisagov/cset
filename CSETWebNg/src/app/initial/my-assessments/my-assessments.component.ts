@@ -305,7 +305,6 @@ export class MyAssessmentsComponent implements OnInit {
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
           let url = "";
           if (password != null) {
-            console.log(password);
             url = this.fileSvc.exportUrl + "?token=" + response.token + "&password=" + password;
           } else {
             url = this.fileSvc.exportUrl + "?token=" + response.token;
