@@ -32,7 +32,8 @@ namespace CSETWebCore.DatabaseManager
         /* 
         * DBManager logic flow:
         * 
-        * This method is called every time the compiled production web api code is executed.
+        * This method provides the core functionality for the database setup workflow.
+        * It is called every time the compiled production web api code is executed.
         * 
         * Look to see if LocalDb2022 is installed.
         * If it's not, throw an error
