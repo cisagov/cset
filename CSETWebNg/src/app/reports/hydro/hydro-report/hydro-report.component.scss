@@ -1,0 +1,54 @@
+.report-body {
+    position: relative;
+    left: 8rem;
+  }
+  .c2m2-report-background {
+    background-color: rgb(247, 247, 247);
+    height: 100%;
+    width: 100%;
+  }
+  @media only screen and (max-width: 900px) {
+    .side-toc {
+        display: none;
+    }
+  }
+  
+  .side-toc {
+    background-color: #f0f0f0;
+    box-sizing: border-box;
+    border-right: solid 1px #262626;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    height: 100vh;
+    padding: 0.75rem;
+    overflow-y: auto;
+    width: 20vw;
+    min-width: 250px;
+    max-width: 400px;
+    z-index: 100;
+  }
+  
+  .side-toc a {
+    word-break: break-word;
+    text-decoration: none;
+    color: rgb(71, 73, 76);
+  }
+  
+  .side-toc div {
+    margin: 10px;
+  }
+  
+  .side-toc ul {
+    margin-left: -15px;
+    margin-bottom: 0 !important;
+  }
+  
+  .side-toc li {
+    padding: 0.25rem 0;
+  }
+  
+  .side-toc li:last-child {
+    padding-bottom: 0;
+  }

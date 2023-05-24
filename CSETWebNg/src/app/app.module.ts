@@ -556,6 +556,18 @@ import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
+import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
+import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
+import { HydroBarChartComponent } from './assessment/results/hydro/hydro-bar-chart/hydro-bar-chart.component';
+import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
+import { HydroSideTocComponent } from './reports/hydro/hydro-report/hydro-side-toc/hydro-side-toc.component';
+import { HydroAcronymsComponent } from './reports/hydro/hydro-report/hydro-acronyms/hydro-acronyms.component';
+import { HydroExecutiveSummaryComponent } from './reports/hydro/hydro-report/hydro-executive-summary/hydro-executive-summary.component';
+import { HydroImportanceOfCybersecurityComponent } from './reports/hydro/hydro-report/hydro-importance-of-cybersecurity/hydro-importance-of-cybersecurity.component';
+import { HydroResultsSummaryComponent } from './reports/hydro/hydro-report/hydro-results-summary/hydro-results-summary.component';
+import { HydroConsequencesComponent } from './reports/hydro/hydro-report/hydro-consequences/hydro-consequences.component';
+import { HydroImpactCategoryComponent } from './reports/hydro/hydro-report/hydro-impact-category/hydro-impact-category.component';
+import { HydroFeasibilityComponent } from './reports/hydro/hydro-report/hydro-feasibility/hydro-feasibility.component';
 
 
 
@@ -1068,7 +1080,19 @@ import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
-        LogoCyberShieldComponent
+        LogoCyberShieldComponent,
+        HydroDeficiencyComponent,
+        HydroDonutComponent,
+        HydroBarChartComponent,
+        HydroReportComponent,
+        HydroSideTocComponent,
+        HydroAcronymsComponent,
+        HydroExecutiveSummaryComponent,
+        HydroImportanceOfCybersecurityComponent,
+        HydroResultsSummaryComponent,
+        HydroConsequencesComponent,
+        HydroImpactCategoryComponent,
+        HydroFeasibilityComponent,
     ],
     providers: [
         ConfigService,
