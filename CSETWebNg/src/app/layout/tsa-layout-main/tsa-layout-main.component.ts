@@ -32,6 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
 import { SetBuilderService } from './../../services/set-builder.service';
+import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 
 
 @Component({
@@ -93,5 +94,13 @@ export class TsaLayoutMainComponent implements OnInit, AfterViewInit {
       return this.accordion.isExpanded('footerPanel');
     }
     return false;
+  }
+
+  shouldShowOnlineFooterDisclaimer() {
+    return this.configSvc.isRunningAnonymous;
+  }
+
+  showDisclaimer() {
+    this.dialog.open(OnlineDisclaimerComponent);
   }
 }

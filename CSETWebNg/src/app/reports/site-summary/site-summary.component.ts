@@ -82,7 +82,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Summary Report - CSET");
+    this.titleService.setTitle("Site Summary Report - " + this.configSvc.behaviors.defaultTitle);
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {

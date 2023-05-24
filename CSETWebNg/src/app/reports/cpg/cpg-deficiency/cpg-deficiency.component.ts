@@ -49,6 +49,7 @@ export class CpgDeficiencyComponent implements OnInit {
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
+  facilityName: string;
 
   info: any;
   def: any;
@@ -70,7 +71,7 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPG Deficiencies - CSET");
+    this.titleSvc.setTitle("CPG Deficiencies - " + this.configSvc.behaviors.defaultTitle);
 
     this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
       this.info = resp.information;
@@ -79,6 +80,7 @@ export class CpgDeficiencyComponent implements OnInit {
       this.assessmentName = this.info.assessment_Name;
       this.assessmentDate = this.info.assessment_Date;
       this.assessorName = this.info.assessor_Name;
+      this.facilityName = this.info.facility_Name;
 
       this.loading = true;
     })

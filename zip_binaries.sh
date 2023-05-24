@@ -2,7 +2,7 @@
 ##################################################################
 ## This script builds the front and backend of CSET,            ##
 ## then zips them up with SQL Server Express 2019,              ##
-## .NET 6 hosting bundle, database files, and web.config files. ##
+## .NET 7 hosting bundle, database files, and web.config files. ##
 ## Provide the script with the correct _versionNum on cmd line. ##
 ##################################################################
 

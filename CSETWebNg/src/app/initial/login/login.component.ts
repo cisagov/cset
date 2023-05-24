@@ -22,15 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ConfigService } from '../../services/config.service';
-import { Title } from '@angular/platform-browser';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { AuthenticationService } from '../../services/authentication.service';
-import { JwtParser } from '../../helpers/jwt-parser';
-import { MatDialog } from '@angular/material/dialog';
-import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 
 @Component({
   selector: 'app-login',
@@ -40,82 +32,25 @@ import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
 })
 export class LoginComponent implements OnInit {
 
-  skin: string;
-
-  private isEjectDialogOpen = false;
-  browserIsIE: boolean = false;
-  isRunningInElectron: boolean;
-  assessmentId: number;
-
-
-  constructor(
-    public configSvc: ConfigService,
-    private titleSvc: Title,
-    public authSvc: AuthenticationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private dialog: MatDialog
-  ) {
-  }
-
+  constructor(public configSvc: ConfigService) {}
 
   ngOnInit(): void {
-    this.skin = this.configSvc.installationMode;
-    this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
 
-    this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
-    this.isRunningInElectron = this.configSvc.isRunningInElectron;
-
-    this.checkForEjection(this.route.snapshot.queryParams['token']);
-
-    // Clear token query param to make the url look nicer.
-    if (this.route.snapshot.queryParams['token']) {
-      this.router.navigate([], { queryParams: {} });
-    }
-
-    if (this.route.snapshot.params['id']) {
-      this.assessmentId = +this.route.snapshot.params['id'];
+    /**
+     * If we are at the login page already and the hasUserAgreedToPrivacy warning session storage flag is false or non-existent,
+     * don't show the privacy warning to force a second login.
+    */
+    let hasUserAgreedToPrivacyWarning: string = sessionStorage.getItem('hasUserAgreedToPrivacyWarning');
+    if (hasUserAgreedToPrivacyWarning === 'false' || hasUserAgreedToPrivacyWarning === null) {
+      sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'true')
     }
   }
-
 
   /**
    * Returns a boolean indicating if the specified skin/installationMode
-   * is active. 
+   * is active.
    */
   show(skin: string) {
     return (this.configSvc.installationMode ?? 'CSET') === skin;
-  }
-
-  continueStandAlone() {
-    // this.router.navigate(['/home']);
-  }
-
-  /**
-   *
-   */
-  checkForEjection(token: string) {
-    if (this.route.snapshot.params['eject']) {
-
-      let minutesSinceExpiration = 0;
-
-      if (token) {
-        const jwt = new JwtParser();
-        const parsedToken = jwt.decodeToken(token);
-        const expTimeUnix = parsedToken.exp;
-        const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
-        // divide by 60 to convert seconds to minutes
-        minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
-      }
-
-      // Only show eject dialog if token has been expired for less than an hour.
-      if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
-        this.isEjectDialogOpen = true;
-        this.dialog
-          .open(EjectionComponent)
-          .afterClosed()
-          .subscribe(() => (this.isEjectDialogOpen = false));
-      }
-    }
   }
 }

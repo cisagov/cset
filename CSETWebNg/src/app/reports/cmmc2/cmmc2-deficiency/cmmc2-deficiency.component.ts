@@ -36,7 +36,6 @@ export class Cmmc2DeficiencyComponent implements OnInit {
 
   model: any;
   loading: boolean = false;
-  logoPath: string = '';
   keyToCategory: any;
 
   deficienciesList = [];
@@ -51,15 +50,8 @@ export class Cmmc2DeficiencyComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
-    this.titleService.setTitle("CMMC 2.0 Deficiency Report - CSET");
+    this.titleService.setTitle("CMMC 2.0 Deficiency Report - " + this.configSvc.behaviors.defaultTitle);
     let appCode = this.configSvc.installationMode;
-
-    if (!appCode || appCode === 'CSET') {
-      this.logoPath = "assets/images/CISA_Logo_1831px.png";
-    }
-    else if (appCode === 'TSA') {
-      this.logoPath = "assets/images/TSA/tsa_insignia_rgbtransparent.png";
-    }
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {
@@ -68,7 +60,6 @@ export class Cmmc2DeficiencyComponent implements OnInit {
         // Build up deficiencies list
         this.model.reportData.deficienciesList.forEach(matAns => {
           const domain = matAns.mat.question_Title.split('.')[0];
-          console.log(domain);
           const dElement = this.deficienciesList.find(e => e.cat === this.keyToCategory[domain]);
           if (!dElement) {
             this.deficienciesList.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
