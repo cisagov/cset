@@ -43,6 +43,10 @@ export class ImportPasswordComponent {
     this.dialogRef.close(this.password);
   }
 
+  cancel(): void {
+    this.dialogRef.close();
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
