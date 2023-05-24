@@ -551,10 +551,25 @@ import { C2m2ObjectiveTableComponent } from './reports/c2m2/c2m2-objective-table
 import { CpgDomainSummaryTableComponent } from './assessment/results/cpg/cpg-domain-summary-table/cpg-domain-summary-table.component';
 import { C2m2DomainMilBarChartComponent } from './reports/c2m2/c2m2-report/c2m2-summary-results/c2m2-domain-mil-bar-chart/c2m2-domain-mil-bar-chart.component';
 import { CpgDeficiencyComponent } from './reports/cpg/cpg-deficiency/cpg-deficiency.component';
+import { PdfReportsComponent } from './reports/pdf-reports/pdf-reports.component';
 import { InfoBlockComponent } from './reports/info-block/info-block.component';
 import { SiteInformationComponent } from './reports/site-information/site-information.component';
 import { AboutRenewComponent } from './dialogs/about-renew/about-renew.component';
 import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-cyber-shield.component';
+import { ExportPasswordComponent } from './dialogs/assessment-encryption/export-password/export-password.component';
+import { ImportPasswordComponent } from './dialogs/assessment-encryption/import-password/import-password.component';
+import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
+import { HydroDonutComponent } from './assessment/results/hydro/hydro-donut/hydro-donut.component';
+import { HydroBarChartComponent } from './assessment/results/hydro/hydro-bar-chart/hydro-bar-chart.component';
+import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
+import { HydroSideTocComponent } from './reports/hydro/hydro-report/hydro-side-toc/hydro-side-toc.component';
+import { HydroAcronymsComponent } from './reports/hydro/hydro-report/hydro-acronyms/hydro-acronyms.component';
+import { HydroExecutiveSummaryComponent } from './reports/hydro/hydro-report/hydro-executive-summary/hydro-executive-summary.component';
+import { HydroImportanceOfCybersecurityComponent } from './reports/hydro/hydro-report/hydro-importance-of-cybersecurity/hydro-importance-of-cybersecurity.component';
+import { HydroResultsSummaryComponent } from './reports/hydro/hydro-report/hydro-results-summary/hydro-results-summary.component';
+import { HydroConsequencesComponent } from './reports/hydro/hydro-report/hydro-consequences/hydro-consequences.component';
+import { HydroImpactCategoryComponent } from './reports/hydro/hydro-report/hydro-impact-category/hydro-impact-category.component';
+import { HydroFeasibilityComponent } from './reports/hydro/hydro-report/hydro-feasibility/hydro-feasibility.component';
 
 
 
@@ -1063,10 +1078,25 @@ import { LogoCyberShieldComponent } from './layout/logos/logo-cyber-shield/logo-
         CpgDomainSummaryTableComponent,
         CpgDeficiencyComponent,
         C2m2DomainMilBarChartComponent,
+        PdfReportsComponent,
         InfoBlockComponent,
         SiteInformationComponent,
         AboutRenewComponent,
-        LogoCyberShieldComponent
+        LogoCyberShieldComponent,
+        ExportPasswordComponent,
+        ImportPasswordComponent,
+        HydroDeficiencyComponent,
+        HydroDonutComponent,
+        HydroBarChartComponent,
+        HydroReportComponent,
+        HydroSideTocComponent,
+        HydroAcronymsComponent,
+        HydroExecutiveSummaryComponent,
+        HydroImportanceOfCybersecurityComponent,
+        HydroResultsSummaryComponent,
+        HydroConsequencesComponent,
+        HydroImpactCategoryComponent,
+        HydroFeasibilityComponent,
     ],
     providers: [
         ConfigService,

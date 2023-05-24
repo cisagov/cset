@@ -615,6 +615,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Nlogs]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[PARAMETER_ASSESSMENT]",
          "ObjectType": 0
       },
@@ -1344,8 +1348,10 @@
       }
    ],
    "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
+   "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
@@ -1353,9 +1359,7 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": true,
-   "UseNoConstructor": false,
    "UseNoDefaultConstructor": false,
-   "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,

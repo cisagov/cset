@@ -196,7 +196,7 @@ namespace CSETWebCore.Business.Maturity
                     var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                        QuestionText = myQ.Question_Text,
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -256,7 +256,7 @@ namespace CSETWebCore.Business.Maturity
                 var question = new Model.Cis.Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
-                    QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                    QuestionText = myQ.Question_Text,
                     ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                     Sequence = myQ.Sequence,
                     MaturityLevel = myQ.Maturity_Level.Level,
@@ -320,7 +320,8 @@ namespace CSETWebCore.Business.Maturity
                     Sequence = o.Answer_Sequence,
                     HasAnswerText = o.Has_Answer_Text,
                     Weight = o.Weight,
-                    IsNone = o.Is_None
+                    IsNone = o.Is_None,
+                    ThreatType = o.ThreatType
                 };
 
                 var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id
@@ -353,7 +354,7 @@ namespace CSETWebCore.Business.Maturity
                     var question = new Model.Cis.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
+                        QuestionText = myQ.Question_Text,
                         ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
                         Sequence = myQ.Sequence,
                         MaturityLevel = myQ.Maturity_Level.Level,

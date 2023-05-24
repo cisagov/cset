@@ -83,16 +83,20 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onPasswordChangeClick(fReg: NgForm): void {
+    if (this.cpwd.newPassword !== this.cpwd.confirmPassword) {
+      return;
+    }
+
     this.auth.changePassword(this.cpwd).subscribe(
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
-        if (this.passwordResponse.isValid) {          
-          this.dialogRef.close();
+        if (this.passwordResponse.isValid) {
+          this.dialogRef.close(true);
+        } else {
+          this.warning = true;
+          this.message = this.passwordResponse.message;
+          this.ref.detectChanges();
         }
-
-        this.warning = true;
-        this.message = this.passwordResponse.message;
-        this.ref.detectChanges();
       },
       error => {
         this.warning = true;

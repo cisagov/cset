@@ -100,11 +100,11 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     return false;
   }
 
-  shouldShowOnlineFooterDisclaimer() {
+  isRunningAnonymous() {
     return this.configSvc.isRunningAnonymous;
   }
 
   showDisclaimer() {
-    this.dialog.open(OnlineDisclaimerComponent);
+    this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
 }
