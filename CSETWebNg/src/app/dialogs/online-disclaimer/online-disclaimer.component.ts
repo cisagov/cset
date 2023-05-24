@@ -30,7 +30,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class OnlineDisclaimerComponent {
 
-  constructor(private dialog: MatDialogRef<OnlineDisclaimerComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private dialog: MatDialogRef<OnlineDisclaimerComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.data = data;
+  }
 
   close() {
     this.dialog.close();
