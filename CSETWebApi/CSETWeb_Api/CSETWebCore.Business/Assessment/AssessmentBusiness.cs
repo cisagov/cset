@@ -177,6 +177,14 @@ namespace CSETWebCore.Business.Assessment
                 x.LastModifiedDate = _utilities.UtcToLocal(x.LastModifiedDate ?? DateTime.UtcNow);
                 x.AssessmentCreatedDate = _utilities.UtcToLocal(x.AssessmentCreatedDate);
                 x.AssessmentDate = _utilities.UtcToLocal(x.AssessmentDate);
+
+                var query = from u in _context.USERS
+                            where u.UserId == x.UserId
+                            select u;
+                var result = query.ToList().FirstOrDefault();
+
+                x.firstName = result.FirstName;
+                x.lastName = result.LastName;
             });
 
             return list;
@@ -786,8 +794,14 @@ namespace CSETWebCore.Business.Assessment
 
             if (assessment.UseMaturity)
             {
+                if (assessment.MaturityModel == null) 
+                {
+                    // Try to get the maturity model if it's null for some reason
+                    assessment.MaturityModel = _maturityBusiness.GetMaturityModel(assessment.Id);
+                }
+
                 // Use shorter names on assessments with multiple types.
-                assessment.TypeTitle += ", " + assessment.MaturityModel.ModelTitle;
+                assessment.TypeTitle += ", " + assessment.MaturityModel?.ModelTitle;
                 assessment.TypeDescription = galleryCardDescription;
             }
 

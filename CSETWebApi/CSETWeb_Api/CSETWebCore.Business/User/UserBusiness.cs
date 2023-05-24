@@ -50,19 +50,12 @@ namespace CSETWebCore.Business.User
             }
 
 
-            string password = CreateTempPassword();
-
-            new PasswordHash().HashPassword(password, out string hash, out string salt);
-
-
             // create new records for USER and USER_DETAIL_INFORMATION
             var u = new USERS()
             {
                 PrimaryEmail = userDetail.Email,
                 FirstName = userDetail.FirstName,
                 LastName = userDetail.LastName,
-                Password = hash,
-                Salt = salt,
                 IsSuperUser = false,
                 PasswordResetRequired = true,
                 IsActive = true
@@ -96,6 +89,9 @@ namespace CSETWebCore.Business.User
                 tmpContext.USERS.Remove(u);
             }
 
+            string password = CreateTempPassword();
+
+            new PasswordHash().HashPassword(password, out string hash, out string salt);
 
             // log the temp password to history
             var history = new PASSWORD_HISTORY()
@@ -107,7 +103,6 @@ namespace CSETWebCore.Business.User
                 Salt = salt
             };
             _context.PASSWORD_HISTORY.Add(history);
-
 
             UserCreateResponse resp = new UserCreateResponse
             {

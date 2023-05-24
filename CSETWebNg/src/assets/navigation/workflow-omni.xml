@@ -46,7 +46,7 @@
 
 
         <!-- The scenario that will normally show -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA)" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD,HYDRO)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
@@ -105,6 +105,34 @@
             </node>
         </node>
 
+        <!-- HYDRO questions displayed in tree structure -->
+        <node displaytext="Hydropower Questions" condition="MATURITY:HYDRO">
+            <node id="maturity-questions-nested-2577" displaytext="Management">
+                <node id="maturity-questions-nested-2578" path="assessment/{:id}/maturity-questions-nested/2578" displaytext="1. Leadership and Personnel" />
+                <node id="maturity-questions-nested-2579" path="assessment/{:id}/maturity-questions-nested/2579" displaytext="2. Training" />
+                <node id="maturity-questions-nested-2580" path="assessment/{:id}/maturity-questions-nested/2580" displaytext="3. Risk Management " />
+                <node id="maturity-questions-nested-2581" path="assessment/{:id}/maturity-questions-nested/2581" displaytext="4. Asset Management" />
+            </node>
+            <node id="maturity-questions-nested-2582" displaytext="Site and Service Control Security">
+                <node id="maturity-questions-nested-2583" path="assessment/{:id}/maturity-questions-nested/2583" displaytext="1. Physical Protection" />
+                <node id="maturity-questions-nested-2584" path="assessment/{:id}/maturity-questions-nested/2584" displaytext="2. Access Control" />
+                <node id="maturity-questions-nested-2585" path="assessment/{:id}/maturity-questions-nested/2585" displaytext="3. Information Protection" />
+            </node>
+            <node id="maturity-questions-nested-2586" displaytext="Critical Operations">
+                <node id="maturity-questions-nested-2587" path="assessment/{:id}/maturity-questions-nested/2587" displaytext="1. Plant Auxillary System" />
+                <node id="maturity-questions-nested-2588" path="assessment/{:id}/maturity-questions-nested/2588" displaytext="2. Maintenance" />
+                <node id="maturity-questions-nested-2589" path="assessment/{:id}/maturity-questions-nested/2589" displaytext="3. Generic Control Catalog" />
+                <node id="maturity-questions-nested-2590" path="assessment/{:id}/maturity-questions-nested/2590" displaytext="4. Plant Operational System" />
+                <node id="maturity-questions-nested-2591" path="assessment/{:id}/maturity-questions-nested/2591" displaytext="5. Safety" />
+            </node>
+            <node id="maturity-questions-nested-2592" displaytext="Dependencies">
+                <node id="maturity-questions-nested-2593" path="assessment/{:id}/maturity-questions-nested/2593" displaytext="1. Dependencies" />
+                <node id="maturity-questions-nested-2594" path="assessment/{:id}/maturity-questions-nested/2594" displaytext="2. Grid Operations" />
+                <node id="maturity-questions-nested-2595" path="assessment/{:id}/maturity-questions-nested/2595" displaytext="3. Plant Operational System" />
+                <node id="maturity-questions-nested-2596" path="assessment/{:id}/maturity-questions-nested/2596" displaytext="4. Endpoint and Data Security" />
+            </node>
+        </node>
+
         <!-- MVRA questions displayed in tree structure -->
         <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
             <node id="maturity-questions-2338" displaytext="Anticipate">
@@ -151,6 +179,24 @@
                 <node id="maturity-questions-2386" displaytext="Communications" path="assessment/{:id}/maturity-questions/2386" />
                 <node id="maturity-questions-2387" displaytext="Realignment 800-160" path="assessment/{:id}/maturity-questions/2387" />
             </node>
+        </node>
+
+        <!-- SD questions displayed in tree structure -->
+        <node displaytext="SD Questions" condition="MATURITY:SD">
+            <node id="maturity-questions-nested-12001" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/12001" />
+            <node id="maturity-questions-nested-12002" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/12002" />
+            <node id="maturity-questions-nested-12003" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/12003" />
+            <node id="maturity-questions-nested-12004" displaytext="Zone Boundaries – Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/12004" />
+            <node id="maturity-questions-nested-12005" displaytext="Zone Boundaries – Secure/Defend (ZD)" path="assessment/{:id}/maturity-questions-nested/12005" />
+            <node id="maturity-questions-nested-12006" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/12006" />
+            <node id="maturity-questions-nested-12007" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/12007" />
+            <node id="maturity-questions-nested-12008" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/12008" />
+            <node id="maturity-questions-nested-12009" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/12009" />
+            <node id="maturity-questions-nested-12010" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/12010" />
+            <node id="maturity-questions-nested-12011" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/12011" />
+            <node id="maturity-questions-nested-12012" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/12012" />
+            <node id="maturity-questions-nested-12013" displaytext="Logging Policies (LP)" path="assessment/{:id}/maturity-questions-nested/12013" />
+            <node id="maturity-questions-nested-12014" displaytext="Patching (PA)" path="assessment/{:id}/maturity-questions-nested/12014" />
         </node>
 
 
@@ -225,6 +271,9 @@
         <!-- Results - CIS -->
         <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:CIS" />
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
+
+        <!-- Results - HYDRO -->
+        <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
 
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />

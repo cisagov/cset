@@ -28,7 +28,7 @@ export interface SecurityQuestion {
     questionAnswer?: SecurityQuestionAnswer;
 }
 
-export interface SecurityQuestionAnswer {  
+export interface SecurityQuestionAnswer {
     questionText?: string;
     answerText?: string;
     primaryEmail?: string;
@@ -41,10 +41,4 @@ export interface ChangePassword {
     primaryEmail?: string;
     confirmPassword?: string;
     appCode?: string;
-  }
-
-  export interface PasswordStatusResponse {
-    primaryEmail: string;
-    userId: number;
-    resetRequired: boolean;
   }

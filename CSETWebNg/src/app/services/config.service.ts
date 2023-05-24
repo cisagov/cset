@@ -31,16 +31,17 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
-  
+
   helpContactEmail: string;
   helpContactPhone: string;
-  
+
   isRunningInElectron: boolean;
   isRunningAnonymous = false;
 
   configUrl: string;
   assetsUrl: string;
   settingsUrl: string;
+  publicDomainName: string;
   config: any;
 
   behaviors: any;
@@ -87,10 +88,11 @@ export class ConfigService {
   }
 
   /**
-   * 
+   *
    */
   setConfigPropertiesForLocalService(config: any) {
     this.isRunningAnonymous = config.isRunningAnonymous;
+    this.publicDomainName = config.publicDomainName;
     this.assetsUrl = "assets/";
     this.installationMode = config.installationMode;
     let apiPort = config.api.port != "" ? ":" + config.api.port : "";
@@ -141,7 +143,7 @@ export class ConfigService {
     this.salLabels["H"] = "High";
     this.salLabels["VH"] = "Very High";
   }
-  
+
   /**
    * A convenience method so that consumers can quickly know whether
    * CSET is currently running as a mobile app or not.

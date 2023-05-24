@@ -344,5 +344,32 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_assessmentBusiness.GetNames(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
 
+        [HttpGet]
+        [Route("api/getPreventEncrypt")]
+        public IActionResult GetPreventEncryptStatus()
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var query = from u in _context.USERS
+                        where u.UserId == userId
+                        select u.PreventEncrypt;
+
+            var result = query.ToList().FirstOrDefault();
+            
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("api/savePreventEncrypt")]
+        public IActionResult SavePreventEncryptStatus([FromBody] bool status)
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+
+            user.PreventEncrypt = status;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
     }
 }
