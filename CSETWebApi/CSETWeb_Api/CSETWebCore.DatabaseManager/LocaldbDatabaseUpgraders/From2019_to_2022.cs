@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.DatabaseManager.upgraders
+namespace CSETWebCore.DatabaseManager.LocalDbDatabaseUpgraders
 {
-    internal class From2012_to_2022 : IUpgradeDatabaseEngine
+    internal class From2019_to_2022 : IUpgradeDatabaseEngine
     {
         public void Execute(string from, string to)
         {
