@@ -124,7 +124,6 @@ export class UploadExportComponent implements OnInit {
       this.progress = this.fileSvc.uploadCsafFiles(this.files);
     } else {
       this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad, this.password);
-      console.log(this.progress);
     }
 
     // convert the progress map into an array
