@@ -491,12 +491,12 @@ namespace CSETWebCore.DatabaseManager
         
         public string DatabaseFileName
         {
-            get { return $"{DatabaseCode}.{DB_EXTENSION}"; }
+            get { return $"{DatabaseCode}{DB_EXTENSION}"; }
         }
 
         public string DatabaseLogFileName
         {
-            get { return $"{DatabaseCode}_log.{DB_LOG_EXTENSION}"; }
+            get { return $"{DatabaseCode}_log{DB_LOG_EXTENSION}"; }
         }
     }
 }
