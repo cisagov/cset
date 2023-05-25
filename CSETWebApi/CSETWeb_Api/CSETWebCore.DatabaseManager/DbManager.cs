@@ -138,15 +138,15 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="destDBFile"></param>
         /// <param name="destLogFile"></param>
-        private void CleanInstallNoUpgrades(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
+        private void CleanInstallNoUpgrades(string destDBFile, string destLogFile, InitialDbInfo localDbInfo)
         {
             _logger.Info($"No previous {ApplicationCode} database found on LocalDB 2012 or 2019 default instances...");
             _logger.Info($"Attaching new {ApplicationCode} {NewVersion} database from installation source...");
 
-            AttachCleanDatabase(destDBFile, destLogFile, localDb2022Info);
+            AttachCleanDatabase(destDBFile, destLogFile, localDbInfo);
 
             // Verify that the database exists now
-            VerifyApplicationDatabaseFunctioning(localDb2022Info);
+            VerifyApplicationDatabaseFunctioning(localDbInfo);
         }
 
 
@@ -155,30 +155,30 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <param name="destDBFile"></param>
         /// <param name="destLogFile"></param>
-        /// <param name="localDb2022Info"></param>
-        private void UpgradeLocaldb2022(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
+        /// <param name="localDbInfo"></param>
+        private void UpgradeLocaldb2022(string destDBFile, string destLogFile, InitialDbInfo localDbInfo)
         {
-            _logger.Info($"{ApplicationCode} {localDb2022Info.GetInstalledDBVersion()} database detected on LocalDB 2022 default instance. Copying database file and attempting upgrade...");
+            _logger.Info($"{ApplicationCode} {localDbInfo.GetInstalledDBVersion()} database detected on LocalDB 2022 default instance. Copying database file and attempting upgrade...");
 
             // Create the new version folder in local app data folder
             Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
-            CopyDBWithinServer(localDb2022Info);
+            CopyDBWithinServer(localDbInfo);
 
             try
             {
-                upgrader.UpgradeOnly(NewVersion, localDb2022Info.ConnectionString);
+                upgrader.UpgradeOnly(NewVersion, localDbInfo.ConnectionString);
             }
             catch (DatabaseUpgradeException e)
             {
                 _logger.Error(e.Message);
                 // Attach clean database here if something goes wrong with database upgrade
-                ForceCloseAndDetach(localDb2022Info.MasterConnectionString, DatabaseCode);
-                AttachCleanDatabase(destDBFile, destLogFile, localDb2022Info);
+                ForceCloseAndDetach(localDbInfo.MasterConnectionString, DatabaseCode);
+                AttachCleanDatabase(destDBFile, destLogFile, localDbInfo);
             }
 
             // Verify that the database has been copied over and exists now
-            VerifyApplicationDatabaseFunctioning(localDb2022Info);
+            VerifyApplicationDatabaseFunctioning(localDbInfo);
         }
 
 
@@ -319,11 +319,12 @@ namespace CSETWebCore.DatabaseManager
 
         /// <summary>
         /// Copies clean database files from installation source to desired location and attaches
-        /// to sql server designated in localdb2019_ConnectionString.
+        /// to sql server designated by the InitialDbInfo object passed in.
         /// </summary>
         /// <param name="destDBFile">The location of the mdf file used for the attach</param>
         /// <param name="destLogFile">The location of the ldf file used for the attach</param>
-        private void AttachCleanDatabase(string destDBFile, string destLogFile, InitialDbInfo localDb2022Info)
+        /// <param name="localDbInfo">initialDbInfo object containing connection information about the</param>
+        private void AttachCleanDatabase(string destDBFile, string destLogFile, InitialDbInfo localDbInfo)
         {
             CopyDBFromInstallationSource(destDBFile, destLogFile);
             ExecuteNonQuery(
@@ -333,7 +334,7 @@ namespace CSETWebCore.DatabaseManager
                     "CREATE DATABASE " + DatabaseCode +
                     " ON(FILENAME = '" + destDBFile + "'),  " +
                     " (FILENAME = '" + destLogFile + "') FOR ATTACH; ",
-                localDb2022Info.MasterConnectionString);
+                localDbInfo.MasterConnectionString);
         }
 
         private static string EscapeString(string value)
@@ -492,6 +493,7 @@ namespace CSETWebCore.DatabaseManager
         {
             get { return $"{DatabaseCode}.{DB_EXTENSION}"; }
         }
+
         public string DatabaseLogFileName
         {
             get { return $"{DatabaseCode}_log.{DB_LOG_EXTENSION}"; }
