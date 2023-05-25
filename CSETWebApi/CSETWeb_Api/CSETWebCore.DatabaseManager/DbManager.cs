@@ -81,6 +81,9 @@ namespace CSETWebCore.DatabaseManager
                     string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
                     string destLogFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseLogFileName);
 
+                    // Create the new version folder in local app data folder. If it already exists, this call will do nothing and be harmless
+                    Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
+
                     // If no db's exist, we can do a clean install
                     if (!localDb2022Info.Exists && !localDb2019Info.Exists && !localDb2012Info.Exists)
                     {
