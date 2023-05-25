@@ -7,9 +7,9 @@
 using System;
 using System.Data;
 using System.IO;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.Data.SqlClient;
+using static CSETWebCore.Constants.Constants;
 
 namespace CSETWebCore.DatabaseManager
 {
@@ -70,7 +70,7 @@ namespace CSETWebCore.DatabaseManager
             {
                 // We are only concerned here if SQL LocalDb 2022 (uses localdb2022_ConnectionString) is not accessible
                 // (2012 & 2019 might not be installed, and that's ok--just assume the db does not exist)
-                if (connectionString.Contains("INL2022"))
+                if (connectionString.Contains(LOCALDB_2022_CUSTOM_INSTANCE_NAME))
                 {
                     throw;
                 }

@@ -41,7 +41,7 @@ namespace CSETWebCore.DatabaseManager
         * Check if INLLocalDb2022 instance is there, if not, create it. If it is, check for the existence of the application database.
         * If the database exists, check the CSET_VERSION table to see if it is up to date with the latest deployed assembly version.
         * If it is outdated, upgrade it. If not, we are done.
-        * If there is no application database, attach the template database for fresh new install.
+        * If there is no application database and neither a 2012 or a 2019 instance exists, attach the template database for fresh new install.
         * 
         * Then, check for a LocalDb2019 default instance and database. If exists, stop 2019, copy the db and attach the copy to the new INL2023 instance and attempt upgrade.
         * 
