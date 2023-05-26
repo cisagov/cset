@@ -389,12 +389,12 @@ function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   let args = ['--urls', config.api.protocol + '://' + config.api.url + ':' + port]
-  child(exe, args, options, (error, stdout) => {
+  child(exe, args, options, (error) => {
     if (error) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
       log.error(error);
       if (error.stack.includes('DatabaseManager.DatabaseSetupException')) {
-        dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + stdout);
+        dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + error.message);
       }
     }
   });
