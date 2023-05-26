@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MartinCostello.SqlLocalDb" Version="3.2.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CSETWebCore.Constants\CSETWebCore.Constants.csproj" />
     <ProjectReference Include="..\CSETWebCore.DataLayer\CSETWebCore.DataLayer.csproj" />
     <ProjectReference Include="..\CSETWebCore.UpgradeLibrary\CSETWebCore.UpgradeLibrary.csproj" />
   </ItemGroup>
