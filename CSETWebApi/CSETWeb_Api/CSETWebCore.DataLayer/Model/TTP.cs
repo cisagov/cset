@@ -18,7 +18,7 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         [StringLength(100)]
         public string TTP_Code { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         public string Description { get; set; }
         [StringLength(100)]
         public string URL { get; set; }

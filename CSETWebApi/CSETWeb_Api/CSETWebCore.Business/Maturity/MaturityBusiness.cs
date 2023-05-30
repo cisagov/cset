@@ -1069,9 +1069,8 @@ namespace CSETWebCore.Business.Maturity
                     };
 
 
-                    // Include CSF mappings - TODO
-                    qa.CsfMappings.Add("XXX.XX.X");
-                    qa.CsfMappings.Add("YYY.YY.Y");
+                    // Include CSF mappings
+                    qa.CsfMappings = GetCsfMappings(qa.QuestionId, "Maturity");
 
                     // Include any TTPs
                     qa.TTP = GetTTPReferenceList(qa.QuestionId);
@@ -2343,6 +2342,11 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         public List<TTPReference> GetTTPReferenceList(int questionId)
         {
             var xx = _context.TTP_MAT_QUESTION
@@ -2356,6 +2360,27 @@ namespace CSETWebCore.Business.Maturity
                     Description = y.TTP_CodeNavigation.Description,
                     ReferenceUrl = y.TTP_CodeNavigation.URL
                 });
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Returns a list of CSF references that are mapped to the question
+        /// defined by the question ID and the question type (Maturity or Standard).
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="questionType"></param>
+        /// <returns></returns>
+        public List<string> GetCsfMappings(int questionId, string questionType)
+        {
+            var xx = _context.CSF_MAPPING.Where(x => x.Question_Id == questionId && x.Question_Type == questionType).ToList();
+
+            var resp = new List<string>();
+            foreach (var y in xx)
+            {
+                resp.Add(y.CSF_Code);
             }
 
             return resp;
