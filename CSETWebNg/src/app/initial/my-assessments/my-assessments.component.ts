@@ -44,6 +44,8 @@ import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
+import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
+import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
 import * as moment from "moment";
 import { forEach } from "lodash";
 
@@ -93,6 +95,9 @@ export class MyAssessmentsComponent implements OnInit {
 
   exportAllInProgress: boolean = false;
 
+  preventEncrypt: boolean = true;
+  disabledEncrypt: boolean = false;
+
   timer = ms => new Promise(res => setTimeout(res, ms));
 
   constructor(
@@ -141,6 +146,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+    this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
   }  
 
   /**
@@ -286,17 +292,43 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   clickDownloadLink(ment_id: number) {
-    // get short-term JWT from API
-    this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-      const url =
-        this.fileSvc.exportUrl + "?token=" + response.token;
+    let password = null;
 
-      //if electron
-      window.location.href = url;
+    if (!this.preventEncrypt) {
+      let dialogRef = this.dialog.open(ExportPasswordComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined && result.length > 0) {
+          password = result;
+        }
+      
+        // get short-term JWT from API
+        this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+          let url = "";
+          if (password != null) {
+            url = this.fileSvc.exportUrl + "?token=" + response.token + "&password=" + password;
+          } else {
+            url = this.fileSvc.exportUrl + "?token=" + response.token;
+          }
+        
+          //if electron
+          window.location.href = url;
 
-      //if browser
-      //window.open(url, "_blank");
-    });
+          //if browser
+          //window.open(url, "_blank");
+        });
+      });
+    } else {
+      this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
+        const url = this.fileSvc.exportUrl + "?token=" + response.token;
+
+        //if electron
+        window.location.href = url;
+
+        //if browser
+        //window.open(url, "_blank");
+      });
+    }
+  
   }
 
   /**
@@ -365,5 +397,11 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.exportAllInProgress = false;
+  }
+
+  updateEncryptPreference() {
+    this.disabledEncrypt = true;
+    this.assessSvc.persistEncryptPreference(this.preventEncrypt);
+    this.disabledEncrypt = false;
   }
 }

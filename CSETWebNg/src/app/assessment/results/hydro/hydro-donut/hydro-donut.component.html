@@ -1,0 +1,21 @@
+<!-- <div>
+  {{totalQuestions}}
+</div>
+<div>
+  {{weightData[0]}},{{weightData[1]}},{{weightData[2]}},{{weightData[3]}}
+</div> -->
+<div style="position: relative; padding: 0px;">
+    <ngx-charts-pie-chart #pieChart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="data"
+    [gradient]="false"
+    [doughnut]="true"
+    [labels]="false"
+    [animations]="false"
+    [arcWidth]="0.45">
+    </ngx-charts-pie-chart>
+    <svg width="60" height="30" viewBox="0 0 40 40" style="position: absolute; top: 60px" [style.left]="100 - weightData[3] > 10 ? '52px' : '58px'">
+      <text x="-12" y="26" style="font-size: 24px;">{{ roundWhole(100 - weightData[3]) }}%</text>
+    </svg>
+  </div>

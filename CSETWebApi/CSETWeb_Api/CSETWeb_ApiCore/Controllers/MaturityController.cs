@@ -23,6 +23,8 @@ using System.Xml.XPath;
 using Newtonsoft.Json;
 using CSETWebCore.Api.Interfaces;
 using NLog;
+using CSETWebCore.Model.Cis;
+using J2N.Numerics;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -263,6 +265,31 @@ namespace CSETWebCore.Api.Controllers
 
             var biz = new CisStructure(assessmentId, sectionId, _context);
             return Ok(biz.MyModel);
+        }
+
+
+        /// <summary>
+        /// Returns the questions in a HYDRO section.
+        /// </summary>
+        /// <param name="subCatIds"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/hydro/getBulkSubCatIds")]
+        public IActionResult GetBulkSubCatIds([FromQuery] string[] subCatIds)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            List<CisQuestions> bizList = new List<CisQuestions>();
+
+            subCatIds = subCatIds[0].Split(',');
+
+            foreach (string id in subCatIds)
+            {
+                var biz = new CisStructure(assessmentId, int.Parse(id), _context);
+                bizList.Add(biz.MyModel);
+            }
+
+            return Ok(bizList);
         }
 
 

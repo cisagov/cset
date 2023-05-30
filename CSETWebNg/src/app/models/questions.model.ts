@@ -156,6 +156,7 @@ export interface Question {
     markForReview: boolean;
     reviewed: boolean;
     maturityLevel: number;
+    maturityLevelName: string;
     is_Component: boolean;
     componentGuid: string;
     is_Requirement: boolean;

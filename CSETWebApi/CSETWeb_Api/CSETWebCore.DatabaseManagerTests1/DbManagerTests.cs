@@ -57,8 +57,8 @@ namespace CSETWebCore.DatabaseManager.Tests
         {
             //create a copy of the CSET 9.0 database as CSETWeb
             //detach the csetweb database what evers it 
-            string testdb = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName, "data", "TestWeb.mdf");
-            string testlog = Path.Combine(InitialDbInfo.GetExecutingDirectory().FullName, "data", "TestWeb_log.ldf");
+            string testdb = Path.Combine(DbManager.GetExecutingDirectory().FullName, "data", "TestWeb.mdf");
+            string testlog = Path.Combine(DbManager.GetExecutingDirectory().FullName, "data", "TestWeb_log.ldf");
             File.Copy("data\\CSETWeb90.mdf", Path.Combine("data", testdb),true);
             File.Copy("data\\CSETWeb90_log.ldf", Path.Combine("data", testlog),true);
 
@@ -70,8 +70,8 @@ namespace CSETWebCore.DatabaseManager.Tests
             string appCode = "Test";
             DbManager manager = new DbManager(new Version("12.0.1.9"), clientCode, appCode);
             
-            manager.ForceCloseAndDetach(DbManager.CurrentMasterConnectionString, "TestWeb");
-            manager.AttachTest("TestWeb", testdb, testlog);
+            //manager.ForceCloseAndDetach(DbManager.localdb2019_ConnectionString, "TestWeb");
+            //manager.AttachTest("TestWeb", testdb, testlog);
             VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
             manager.SetupDb();
 

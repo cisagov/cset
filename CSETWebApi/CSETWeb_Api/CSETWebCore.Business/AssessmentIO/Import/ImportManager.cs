@@ -17,13 +17,13 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using Ionic.Zip;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -52,14 +52,26 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context)
+        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "")
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
             {
-                ZipArchive zip = new ZipArchive(fs);
-                StreamReader r = new StreamReader(zip.GetEntry("model.json").Open());
-                string jsonObject = r.ReadToEnd();
+                MemoryStream ms = new MemoryStream();
+                ZipFile zip = ZipFile.Read(fs);
+                ZipEntry e = zip["model.json"];
+
+                if (password == "" || password == null)
+                {
+                    e.Extract(ms);
+                } else
+                {
+                    e.ExtractWithPassword(ms, password);
+                }
+                
+                ms.Position = 0;
+                StreamReader sr = new StreamReader(ms);
+                string jsonObject = sr.ReadToEnd();
 
                 // Apply any data updates to older versions
                 ImportUpgradeManager upgrader = new ImportUpgradeManager();
@@ -75,7 +87,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
                         if (genFile == null)
                         {
-                            StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
+                            //StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
+                            StreamReader docReader = new StreamReader(ms);
                             var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
                             genFile = ReferenceConverter.ToGenFile(docModel);
                             var extension = Path.GetExtension(genFile.File_Name).Substring(1);
@@ -102,7 +115,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     {
                         var sets = context.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
                         SETS set = null;
-                        StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
+                        //StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
+                        StreamReader setReader = new StreamReader(ms);
                         var setJson = setReader.ReadToEnd();
                         var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
                         var originalSetName = setModel.shortName;
@@ -212,10 +226,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
                     //IMPORT
-                    ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
+                    //ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
+                    ZipEntry importLegacyDiagram = zip["Diagram.csetd"];
                     if (importLegacyDiagram != null)
                     {
-                        StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
+                        //StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
+                        StreamReader ldr = new StreamReader(ms);
                         string oldXml = ldr.ReadToEnd();
                         DiagramManager dm = new DiagramManager(context);
                         dm.ImportOldCSETDFile(oldXml, newAssessmentId);
@@ -236,7 +252,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// </summary>
         /// <param name="entry"></param>
         /// <param name="doc"></param>
-        private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
+        /*private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
         {
             var stream = entry.Open();
 
@@ -266,7 +282,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             doc.ContentType = contentType;
             doc.Name = entry.Name;
             doc.Data = bytes;
-        }
+        }*/
 
 
         /// <summary>
