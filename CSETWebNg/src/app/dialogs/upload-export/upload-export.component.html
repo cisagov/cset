@@ -25,16 +25,17 @@
   <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">CSET File Import</div>
   <h4 style="position: sticky; top: 0; padding-top: 15px; padding-left: 15px;" class="mb-2 c-primary">Uploading Files</h4>
   <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-00a">
+    
     <div class="pr-3">
-      
       <mat-list class="pt-0">
         <mat-list-item class="p-0" *ngFor="let file of files">
           <label mat-line class="fs-base-5">{{file.name}}</label>
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
-          <i *ngIf="progress[file.name].progress.source.hasError" class="fa-solid fa-xmark ml-1" style="color: red"></i>
+          <i *ngIf="progress[file.name].progress.source.hasError && xCount == 0" class="fa-solid fa-xmark ml-1" style="color: red"></i>
         </mat-list-item>
       </mat-list>
     </div>
+
   </mat-dialog-content>
   <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
     <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
@@ -44,7 +45,8 @@
       <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
       <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
               [disabled]="canBeClosed">Cancel</button>
-      <button class="btn btn-primary" *ngIf="canBeClosed" (click)="closeDialog()">Close</button>
+      <button class="btn btn-secondary" *ngIf="canBeClosed" (click)="closeDialog()">Cancel</button>
+      <button class="btn btn-primary" *ngIf="passwordRequired" (click)="enterPassword()">Enter Password</button>
     </mat-dialog-actions>
   </div>
 </div>

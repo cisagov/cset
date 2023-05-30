@@ -101,6 +101,6 @@ export class RenewLayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   showDisclaimer() {
-    this.dialog.open(OnlineDisclaimerComponent);
+    this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
 }

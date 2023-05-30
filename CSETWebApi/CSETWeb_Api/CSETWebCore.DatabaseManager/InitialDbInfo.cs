@@ -7,21 +7,29 @@
 using System;
 using System.Data;
 using System.IO;
-using System.Reflection;
+using System.Text.RegularExpressions;
 using Microsoft.Data.SqlClient;
+using static CSETWebCore.Constants.Constants;
 
 namespace CSETWebCore.DatabaseManager
 {
     public class InitialDbInfo
     {
+        /// <summary>
+        /// Provides information about the existence of a database on a given sql connection
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="databaseCode"></param>
         public InitialDbInfo(string connectionString, string databaseCode)
         {
+            MasterConnectionString = Regex.Replace(connectionString, "initial catalog=.*;", "initial catalog=Master");
             ConnectionString = connectionString;
             DatabaseCode = databaseCode;
             Exists = true;
+
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(MasterConnectionString))
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
@@ -60,9 +68,9 @@ namespace CSETWebCore.DatabaseManager
             }
             catch (SqlException)
             {
-                // We are only concerned here if SQL LocalDb 2019 (uses CurrentMasterConnectionString) is not accessible
-                // (2012 might not be installed, and that's ok--just assume the db does not exist)
-                if (connectionString.Equals(DbManager.CurrentMasterConnectionString))
+                // We are only concerned here if SQL LocalDb 2022 (uses localdb2022_ConnectionString) is not accessible
+                // (2012 & 2019 might not be installed, and that's ok--just assume the db does not exist)
+                if (connectionString.Contains(LOCALDB_2022_CUSTOM_INSTANCE_NAME))
                 {
                     throw;
                 }
@@ -119,14 +127,9 @@ namespace CSETWebCore.DatabaseManager
             return version;
         }
 
-        public static DirectoryInfo GetExecutingDirectory()
-        {
-            string path = Assembly.GetAssembly(typeof(DbManager)).Location;
-            return new FileInfo(path).Directory;
-        }
-
         public string MDF { get; }
         public string LDF { get; }    
+        public string MasterConnectionString { get; }
         public string ConnectionString { get; }
         public string DatabaseCode { get; }
         public bool Exists { get; }
