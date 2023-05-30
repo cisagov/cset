@@ -88,6 +88,35 @@ namespace CSETWebCore.Model.Question
         /// </summary>
         public List<QuestionProp> Props { get; set; } = new List<QuestionProp>();
 
+        /// <summary>
+        /// Lists mapped CSF IDs.
+        /// </summary>
+        public List<string> CsfMappings { get; set; } = new List<string>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Scope { get; set; }
+
+        /// <summary>
+        /// A list of related TTPs with a URL to the MITRE documentation.
+        /// </summary>
+        public List<TTPReference> TTP { get; set; }
+
+        /// <summary>
+        /// Usually displayed in the same section as TTPs.
+        /// </summary>
+        public string RiskAddressed { get; set; }
+
+        /// <summary>
+        /// Indicates a recommended action for the practice
+        /// </summary>
+        public string RecommendedAction { get; set; }
+
+        /// <summary>
+        /// Indicates free services or references.  Created for CPG support.
+        /// </summary>
+        public string Services { get; set; }
 
         public bool Is_Maturity { get; set; }
         public bool Is_Component { get; set; }
