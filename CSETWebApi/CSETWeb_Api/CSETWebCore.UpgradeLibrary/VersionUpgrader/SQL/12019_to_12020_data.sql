@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/30/2023 3:48:55 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/31/2023 1:36:41 PM
 
 */
 		
@@ -27,6 +27,10 @@ BEGIN TRANSACTION
 
 PRINT(N'Disable DML triggers on [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] DISABLE TRIGGER [trg_update_maturity_groupings]
+
+PRINT(N'Drop constraints from [dbo].[TTP_MAT_QUESTION]')
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] NOCHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] NOCHECK CONSTRAINT [FK_TTP_MAT_QUESTION_TTP]
 
 PRINT(N'Drop constraints from [dbo].[MATURITY_QUESTIONS]')
 ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
@@ -75,10 +79,6 @@ ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS
 PRINT(N'Drop constraint FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS from [dbo].[MATURITY_DOMAIN_REMARKS]')
 ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] NOCHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
 
-PRINT(N'Drop constraints from [dbo].[GEN_FILE_LIB_PATH_CORL]')
-ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
-ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
-
 PRINT(N'Drop constraints from [dbo].[NEW_REQUIREMENT]')
 ALTER TABLE [dbo].[NEW_REQUIREMENT] NOCHECK CONSTRAINT [FK_NEW_REQUIREMENT_NCSF_Category]
 ALTER TABLE [dbo].[NEW_REQUIREMENT] NOCHECK CONSTRAINT [FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING]
@@ -121,27 +121,9 @@ ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] NOCHECK CONSTRAINT [FK__AVAILABLE_
 PRINT(N'Drop constraint FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS from [dbo].[MODES_SETS_MATURITY_MODELS]')
 ALTER TABLE [dbo].[MODES_SETS_MATURITY_MODELS] NOCHECK CONSTRAINT [FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS]
 
-PRINT(N'Drop constraints from [dbo].[GEN_FILE]')
-ALTER TABLE [dbo].[GEN_FILE] NOCHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
-ALTER TABLE [dbo].[GEN_FILE] NOCHECK CONSTRAINT [FK_GEN_FILE_FILE_TYPE]
-
-PRINT(N'Drop constraint FILE_KEYWORDS_GEN_FILE_FK from [dbo].[FILE_KEYWORDS]')
-ALTER TABLE [dbo].[FILE_KEYWORDS] NOCHECK CONSTRAINT [FILE_KEYWORDS_GEN_FILE_FK]
-
-PRINT(N'Drop constraint FK_MATURITY_REFERENCES_GEN_FILE from [dbo].[MATURITY_REFERENCES]')
-ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
-
-PRINT(N'Drop constraint FK_MATURITY_SOURCE_FILES_GEN_FILE from [dbo].[MATURITY_SOURCE_FILES]')
-ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] NOCHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_GEN_FILE]
-
-PRINT(N'Drop constraint FK_REQUIREMENT_REFERENCES_GEN_FILE from [dbo].[REQUIREMENT_REFERENCES]')
-ALTER TABLE [dbo].[REQUIREMENT_REFERENCES] NOCHECK CONSTRAINT [FK_REQUIREMENT_REFERENCES_GEN_FILE]
-
-PRINT(N'Drop constraint FK_REQUIREMENT_SOURCE_FILES_GEN_FILE from [dbo].[REQUIREMENT_SOURCE_FILES]')
-ALTER TABLE [dbo].[REQUIREMENT_SOURCE_FILES] NOCHECK CONSTRAINT [FK_REQUIREMENT_SOURCE_FILES_GEN_FILE]
-
-PRINT(N'Drop constraint FK_SET_FILES_GEN_FILE from [dbo].[SET_FILES]')
-ALTER TABLE [dbo].[SET_FILES] NOCHECK CONSTRAINT [FK_SET_FILES_GEN_FILE]
+PRINT(N'Drop constraints from [dbo].[GEN_FILE_LIB_PATH_CORL]')
+ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
+ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
 
 PRINT(N'Delete rows from [dbo].[ISE_ACTIONS]')
 DELETE FROM [dbo].[ISE_ACTIONS] WHERE [Action_Item_Id] = 1 AND [Mat_Question_Id] = 7569
@@ -547,6 +529,11 @@ DELETE FROM [dbo].[ISE_ACTIONS] WHERE [Action_Item_Id] = 400 AND [Mat_Question_I
 DELETE FROM [dbo].[ISE_ACTIONS] WHERE [Action_Item_Id] = 401 AND [Mat_Question_Id] = 8001
 PRINT(N'Operation applied to 401 rows out of 401')
 
+PRINT(N'Update rows in [dbo].[MATURITY_QUESTIONS]')
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Scope]=N'IT and OT assets', [Recommend_Action]=N'Maintain a regularly updated inventory of all organizational assets with an IP address (including IPv6), including OT. This inventory is updated on a recurring basis, no less than monthly for both IT and OT.', [Services]=N'<a href="https://www.cisa.gov/cyber-hygiene-services" target="_blank">Cyber Hygiene Services</a>, or email <a href="mailto:vulnerability@cisa.DHS.gov">vulnerability@cisa.DHS.gov</a>,&#160;<a href="https://www.cisa.gov/publication/stuff-off-search" target="_blank">&#34;Stuff Off Search&#34; Guide</a>.' WHERE [Mat_Question_Id] = 9889
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Scope]=N'N/A', [Recommend_Action]=N'A named role/position/title is identified as responsible and accountable for planning, resourcing, and execution of cybersecurity activities. This role may undertake activities such as managing cybersecurity operations at the senior level, requesting and securing budget resources, or leading strategy development to inform future positioning.', [Risk_Addressed]=N'Lack of sufficient cybersecurity accountability, investment, or effectiveness.' WHERE [Mat_Question_Id] = 9896
+PRINT(N'Operation applied to 2 rows out of 2')
+
 PRINT(N'Update rows in [dbo].[NEW_REQUIREMENT]')
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'For the local site establish and maintain an Asset Inventory of all technology assets (IT and OT assets) including: (a) enterprise; (b) operational technology; (c) assets with the potentital to store or process data; and (d) any other technology / cyber assets used to operate, manage, protect or secure all entity owned assets and perimeters. Include classification designations to effectively distinguish critical and high-risk assets. Should ensure review/integration of assets connected physically, virtually, remotely and within the cloud environement (even where not owned by the asset owner as specific remediation measures may be needed to ensure strong security). Ensure continuous update controls including periodic reviews of the inventory and inventory cross-check and update requirements within any change management processes.  Refer to 2.1 below and consider integrating approach/controls. ' WHERE [Requirement_Id] = 31346
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Utilize a technology asset discovery tool and/or process to identify and monitor for assets on and within your network. This includes enterprise IT and OT; networks, perimeters and access points; internal networks and assets; and remote assets. This may be a combination of a tool and physical walk-down or other processes as well.  Incorporate OT asset management information from engineering/operational tools in addition to automated scans.' WHERE [Requirement_Id] = 31348
@@ -676,19 +663,19 @@ UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'Establish and maintain a
 ' WHERE [Requirement_Id] = 31644
 PRINT(N'Operation applied to 36 rows out of 36')
 
-PRINT(N'Add row to [dbo].[GEN_FILE]')
-SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
-INSERT INTO [dbo].[GEN_FILE] ([Gen_File_Id], [File_Type_Id], [File_Name], [Title], [Name], [File_Size], [Doc_Num], [Comments], [Description], [Short_Name], [Publish_Date], [Doc_Version], [Summary], [Source_Type], [Data], [Is_Uploaded]) VALUES (6116, 31, N'OT Monitoring Tools_ The Ultimate Guide for Conducting Multi-Vendor Proof of Concepts_v1.1.docx.pdf', N'OT Monitoring Tools: The Ultimate Guide for Conducting Multi-Vendor Proof of Concepts', N'OT Monitoring Tools: The Ultimate Guide for Conducting Multi-Vendor Proof of Concepts', 576, N'NONE', NULL, N'The purpose of this guide is to help organizations understand the current market offerings in OT monitoring as well as to provide a structured approach for conducting proof of
-concepts.', N'OT Monitoring', NULL, NULL, NULL, NULL, NULL, 1)
-SET IDENTITY_INSERT [dbo].[GEN_FILE] OFF
+PRINT(N'Add row to [dbo].[GEN_FILE_LIB_PATH_CORL]')
+INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (6116, 421)
 
 PRINT(N'Add row to [dbo].[MATURITY_MODELS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_MODELS] ON
 INSERT INTO [dbo].[MATURITY_MODELS] ([Maturity_Model_Id], [Model_Name], [Answer_Options], [Questions_Alias], [Analytics_Rollup_Level], [Model_Title]) VALUES (13, N'HYDRO', N'Y,N', N'Questions', 2, N'Hydropower Valuation Assessment')
 SET IDENTITY_INSERT [dbo].[MATURITY_MODELS] OFF
 
-PRINT(N'Add row to [dbo].[GEN_FILE_LIB_PATH_CORL]')
-INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES (6116, 421)
+PRINT(N'Add rows to [dbo].[TTP]')
+INSERT INTO [dbo].[TTP] ([TTP_Code], [URL], [Description]) VALUES (N'T0819', N'https://attack.mitre.org/techniques/T0819/', N'Exploit Public-Facing Application (T0819, ICS T0819)')
+INSERT INTO [dbo].[TTP] ([TTP_Code], [URL], [Description]) VALUES (N'T0883', N'https://attack.mitre.org/techniques/T0883/', N'Internet Accessible Device (ICS T0883)')
+INSERT INTO [dbo].[TTP] ([TTP_Code], [URL], [Description]) VALUES (N'T1200', N'https://attack.mitre.org/techniques/T1200/', N'Hardware Additions (T1200)')
+PRINT(N'Operation applied to 3 rows out of 3')
 
 PRINT(N'Add rows to [dbo].[MATURITY_GROUPINGS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_GROUPINGS] ON
@@ -2329,6 +2316,16 @@ INSERT INTO [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id], [Question_Title], [Qu
 SET IDENTITY_INSERT [dbo].[MATURITY_QUESTIONS] OFF
 PRINT(N'Operation applied to 231 rows out of 231')
 
+PRINT(N'Add rows to [dbo].[TTP_MAT_QUESTION]')
+INSERT INTO [dbo].[TTP_MAT_QUESTION] ([TTP_Code], [Mat_Question_Id]) VALUES (N'T0819', 9889)
+INSERT INTO [dbo].[TTP_MAT_QUESTION] ([TTP_Code], [Mat_Question_Id]) VALUES (N'T0883', 9889)
+INSERT INTO [dbo].[TTP_MAT_QUESTION] ([TTP_Code], [Mat_Question_Id]) VALUES (N'T1200', 9889)
+PRINT(N'Operation applied to 3 rows out of 3')
+
+PRINT(N'Add constraints to [dbo].[TTP_MAT_QUESTION]')
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_TTP_MAT_QUESTION_TTP]
+
 PRINT(N'Add constraints to [dbo].[MATURITY_QUESTIONS]')
 ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
 ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
@@ -2358,10 +2355,6 @@ PRINT(N'Add constraints to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
 ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
 
-PRINT(N'Add constraints to [dbo].[GEN_FILE_LIB_PATH_CORL]')
-ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
-ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
-
 PRINT(N'Add constraints to [dbo].[NEW_REQUIREMENT]')
 ALTER TABLE [dbo].[NEW_REQUIREMENT] CHECK CONSTRAINT [FK_NEW_REQUIREMENT_NCSF_Category]
 ALTER TABLE [dbo].[NEW_REQUIREMENT] WITH CHECK CHECK CONSTRAINT [FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING]
@@ -2380,15 +2373,9 @@ ALTER TABLE [dbo].[ANALYTICS_MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK
 ALTER TABLE [dbo].[AVAILABLE_MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK__AVAILABLE__model__6F6A7CB2]
 ALTER TABLE [dbo].[MODES_SETS_MATURITY_MODELS] WITH CHECK CHECK CONSTRAINT [FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS]
 
-PRINT(N'Add constraints to [dbo].[GEN_FILE]')
-ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
-ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_TYPE]
-ALTER TABLE [dbo].[FILE_KEYWORDS] CHECK CONSTRAINT [FILE_KEYWORDS_GEN_FILE_FK]
-ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_GEN_FILE]
-ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] CHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_GEN_FILE]
-ALTER TABLE [dbo].[REQUIREMENT_REFERENCES] CHECK CONSTRAINT [FK_REQUIREMENT_REFERENCES_GEN_FILE]
-ALTER TABLE [dbo].[REQUIREMENT_SOURCE_FILES] CHECK CONSTRAINT [FK_REQUIREMENT_SOURCE_FILES_GEN_FILE]
-ALTER TABLE [dbo].[SET_FILES] WITH CHECK CHECK CONSTRAINT [FK_SET_FILES_GEN_FILE]
+PRINT(N'Add constraints to [dbo].[GEN_FILE_LIB_PATH_CORL]')
+ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
+ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
 
 PRINT(N'Add DML triggers to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] ENABLE TRIGGER [trg_update_maturity_groupings]

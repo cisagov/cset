@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/30/2023 3:41:12 PM
+Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/31/2023 1:08:01 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -82,6 +82,45 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 ALTER TABLE [dbo].[USERS] ADD
 [PreventEncrypt] [bit] NOT NULL CONSTRAINT [DF_USERS_PreventEncryption] DEFAULT ((1))
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[TTP_MAT_QUESTION]'
+GO
+CREATE TABLE [dbo].[TTP_MAT_QUESTION]
+(
+[TTP_Code] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Mat_Question_Id] [int] NOT NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_TTP_MAT_QUESTION] on [dbo].[TTP_MAT_QUESTION]'
+GO
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] ADD CONSTRAINT [PK_TTP_MAT_QUESTION] PRIMARY KEY CLUSTERED ([TTP_Code], [Mat_Question_Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating index [IX_TTP_MAT_QUESTION] on [dbo].[TTP_MAT_QUESTION]'
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_TTP_MAT_QUESTION] ON [dbo].[TTP_MAT_QUESTION] ([TTP_Code], [Mat_Question_Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating [dbo].[TTP]'
+GO
+CREATE TABLE [dbo].[TTP]
+(
+[TTP_Code] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[URL] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+[Description] [nvarchar] (100) COLLATE SQL_Latin1_General_CP1_CI_AS NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_TTP] on [dbo].[TTP]'
+GO
+ALTER TABLE [dbo].[TTP] ADD CONSTRAINT [PK_TTP] PRIMARY KEY CLUSTERED ([TTP_Code])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -599,11 +638,36 @@ END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
+PRINT N'Creating [dbo].[CSF_MAPPING]'
+GO
+CREATE TABLE [dbo].[CSF_MAPPING]
+(
+[CSF_Code] [nvarchar] (10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Question_Type] [nvarchar] (10) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+[Question_Id] [int] NOT NULL
+)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Creating primary key [PK_CSF_MAPPING] on [dbo].[CSF_MAPPING]'
+GO
+ALTER TABLE [dbo].[CSF_MAPPING] ADD CONSTRAINT [PK_CSF_MAPPING] PRIMARY KEY CLUSTERED ([CSF_Code], [Question_Type], [Question_Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 PRINT N'Adding foreign keys to [dbo].[ISE_ACTIONS]'
 GO
 ALTER TABLE [dbo].[ISE_ACTIONS] ADD CONSTRAINT [FK__ISE_ACTIO__Mat_Q__7F2CAE86] FOREIGN KEY ([Mat_Question_Id]) REFERENCES [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id])
 GO
 ALTER TABLE [dbo].[ISE_ACTIONS] ADD CONSTRAINT [FK_MATURITY_QUESTIONS_MAT_QUESTION_ID] FOREIGN KEY ([Mat_Question_Id]) REFERENCES [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[TTP_MAT_QUESTION]'
+GO
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] ADD CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS] FOREIGN KEY ([Mat_Question_Id]) REFERENCES [dbo].[MATURITY_QUESTIONS] ([Mat_Question_Id])
+GO
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] ADD CONSTRAINT [FK_TTP_MAT_QUESTION_TTP] FOREIGN KEY ([TTP_Code]) REFERENCES [dbo].[TTP] ([TTP_Code])
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
