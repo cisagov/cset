@@ -47,20 +47,29 @@ namespace CSETWebCore.Model.Hydro
         public List<ANSWER> Answers { get; set; }
     }
 
-    public class CisQuestions
+    public class HydroResults
     {
-        public int AssessmentId { get; set; }
+        public List<HYDRO_DATA> HydroData { get; set; }
+        public HydroImpacts impactTotals { get; set; }
+        public HydroFeasibilities feasibilityTotals { get; set; }
+        public int parentSequence { get; set; }
+        public int parentGroupId { get; set; }
 
-        public int ModelId { get; set; }
+    }
 
-        public List<Grouping> Groupings { get; set; } = new List<Grouping> { };
+    public class HydroImpacts
+    {
+        public int Economic { get; set; }
+        public int Environmental { get; set; }
+        public int Operational { get; set; }
+        public int Safety { get; set; }
+    }
 
-        public Score GroupingScore { get; set; }
-
-
-        public int? BaselineAssessmentId { get; set; }
-        public string BaselineAssessmentName { get; set; }
-        public Score BaselineGroupingScore { get; set; }
+    public class HydroFeasibilities
+    {
+        public int Hard { get; set; }
+        public int Medium { get; set; }
+        public int Easy { get; set; }
     }
 
     public class Grouping
