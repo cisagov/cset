@@ -293,6 +293,16 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        [HttpGet]
+        [Route("api/maturity/hydro/getResultsData")]
+        public IActionResult GetResultsData()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
+        }
+
+
         /// <summary>
         /// Returns a single grouping's worth of questions.  This is done by 
         /// instantiating a CisStructure for the grouping and then converting

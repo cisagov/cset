@@ -274,6 +274,8 @@
 
         <!-- Results - HYDRO -->
         <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
+        <node displaytext="Feasibility" id="hydro-feasibility" path="assessment/{:id}/results/hydro-feasibility" condition="MATURITY:HYDRO" />
+        <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" condition="MATURITY:HYDRO" />
 
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />

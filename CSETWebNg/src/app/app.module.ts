@@ -569,7 +569,10 @@ import { HydroImportanceOfCybersecurityComponent } from './reports/hydro/hydro-r
 import { HydroResultsSummaryComponent } from './reports/hydro/hydro-report/hydro-results-summary/hydro-results-summary.component';
 import { HydroConsequencesComponent } from './reports/hydro/hydro-report/hydro-consequences/hydro-consequences.component';
 import { HydroImpactCategoryComponent } from './reports/hydro/hydro-report/hydro-impact-category/hydro-impact-category.component';
-import { HydroFeasibilityComponent } from './reports/hydro/hydro-report/hydro-feasibility/hydro-feasibility.component';
+import { HydroFeasibilityReportComponent } from './reports/hydro/hydro-report/hydro-report-feasibility/hydro-report-feasibility.component';
+import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-vertical/hydro-bar-vertical.component';
+import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
+import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 
 
 
@@ -1096,6 +1099,9 @@ import { HydroFeasibilityComponent } from './reports/hydro/hydro-report/hydro-fe
         HydroResultsSummaryComponent,
         HydroConsequencesComponent,
         HydroImpactCategoryComponent,
+        HydroFeasibilityReportComponent,
+        HydroBarVerticalComponent,
+        HydroImpactComponent,
         HydroFeasibilityComponent,
     ],
     providers: [
