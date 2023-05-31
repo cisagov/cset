@@ -42,7 +42,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
-            <span class="nav-tab-text ml-2">Prepare</span>
+            <span class="nav-tab-text ml-2" i18n="nav tab|prepare">Prepare</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
@@ -50,7 +50,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
-            <span class="nav-tab-text ml-2">Assessment</span>
+            <span class="nav-tab-text ml-2" i18n="nav tab|assessment">Assessment</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
@@ -58,7 +58,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results"></span>
-            <span class="nav-tab-text ml-2">Results</span>
+            <span class="nav-tab-text ml-2" i18n="nav tab|results">Results</span>
           </button>
         </li>
       </ul>

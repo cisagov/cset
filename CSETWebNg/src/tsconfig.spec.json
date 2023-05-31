@@ -5,7 +5,8 @@
     "baseUrl": "./",
     "types": [
       "jasmine",
-      "node"
+      "node",
+      "@angular/localize"
     ]
   },
   "files": [
