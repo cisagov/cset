@@ -80,6 +80,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
         public virtual DbSet<CSAF_FILE> CSAF_FILE { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
+        public virtual DbSet<CSF_MAPPING> CSF_MAPPING { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
@@ -235,6 +236,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
+        public virtual DbSet<TTP> TTP { get; set; }
+        public virtual DbSet<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -452,7 +455,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.GalleryItemGu)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.GalleryItemGuid)
-                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
             });
 
@@ -1027,6 +1029,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Cset_Version1).HasComment("The Cset Version is used to");
 
                 entity.Property(e => e.Version_Id).HasComment("The Version Id is used to");
+            });
+
+            modelBuilder.Entity<CSF_MAPPING>(entity =>
+            {
+                entity.HasKey(e => new { e.CSF_Code, e.Question_Type, e.Question_Id });
             });
 
             modelBuilder.Entity<CUSTOM_BASE_STANDARDS>(entity =>
@@ -1659,6 +1666,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.Gallery_Item_Gu)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Guid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
 
                 entity.HasOne(d => d.Group)
@@ -3289,6 +3297,23 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
             });
 
+            modelBuilder.Entity<TTP_MAT_QUESTION>(entity =>
+            {
+                entity.HasKey(e => new { e.TTP_Code, e.Mat_Question_Id });
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.TTP_MAT_QUESTION)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS");
+
+                entity.HasOne(d => d.TTP_CodeNavigation)
+                    .WithMany(p => p.TTP_MAT_QUESTION)
+                    .HasForeignKey(d => d.TTP_Code)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TTP_MAT_QUESTION_TTP");
+            });
+
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
             {
                 entity.HasKey(e => e.Universal_Area_Name)
@@ -3368,6 +3393,8 @@ namespace CSETWebCore.DataLayer.Model
                     .HasName("PK_USERS_1");
 
                 entity.HasComment("A collection of USERS records");
+
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
             });

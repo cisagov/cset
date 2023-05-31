@@ -40,6 +40,7 @@ namespace CSETWebCore.DataLayer.Model
         public string LastName { get; set; }
         public Guid? Id { get; set; }
         public int EmailSentCount { get; set; }
+        [Required]
         public bool IsActive { get; set; }
         public bool PreventEncrypt { get; set; }
 

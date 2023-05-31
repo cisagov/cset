@@ -215,6 +215,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CSF_MAPPING]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CUSTOM_BASE_STANDARDS]",
          "ObjectType": 0
       },
@@ -831,6 +835,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[TTP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TTP_MAT_QUESTION]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UNIVERSAL_AREA]",
          "ObjectType": 0
       },
@@ -1351,7 +1363,6 @@
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
-   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,

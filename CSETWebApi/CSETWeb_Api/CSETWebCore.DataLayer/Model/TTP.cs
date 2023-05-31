@@ -8,19 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class ASSESSMENT_DETAIL_FILTER_DATA
+    public partial class TTP
     {
+        public TTP()
+        {
+            TTP_MAT_QUESTION = new HashSet<TTP_MAT_QUESTION>();
+        }
+
         [Key]
-        public int Detail_Id { get; set; }
-        public string Name { get; set; }
-        public string CityOrSite { get; set; }
         [StringLength(100)]
-        public string State { get; set; }
+        public string TTP_Code { get; set; }
         [StringLength(100)]
-        public string Charter { get; set; }
+        public string Description { get; set; }
         [StringLength(100)]
-        public string Model { get; set; }
-        public int? RegionCode { get; set; }
-        public int? CharterType { get; set; }
+        public string URL { get; set; }
+
+        [InverseProperty("TTP_CodeNavigation")]
+        public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
     }
 }
