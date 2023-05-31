@@ -21,6 +21,7 @@ namespace CSETWebCore.DataLayer.Model
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_REFERENCE_TEXT = new HashSet<MATURITY_REFERENCE_TEXT>();
             MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
+            TTP_MAT_QUESTION = new HashSet<TTP_MAT_QUESTION>();
         }
 
         [Key]
@@ -49,6 +50,11 @@ namespace CSETWebCore.DataLayer.Model
         public string Mat_Question_Type { get; set; }
         public int? Parent_Option_Id { get; set; }
         public string Supplemental_Fact { get; set; }
+        [StringLength(250)]
+        public string Scope { get; set; }
+        public string Recommend_Action { get; set; }
+        public string Risk_Addressed { get; set; }
+        public string Services { get; set; }
 
         [ForeignKey("Grouping_Id")]
         [InverseProperty("MATURITY_QUESTIONS")]
@@ -82,5 +88,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
     }
 }
