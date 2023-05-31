@@ -22,8 +22,8 @@
 -------------------------->
 
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
-  <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">Demographics</h3>
+  <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3" i18n>Assessment Configuration</h3>
+  <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3" i18n>Demographics</h3>
 
   <app-assessment-detail *ngIf="configSvc.installationMode != 'CF' && !this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
   <app-assessment-detail-ncua *ngIf="configSvc.installationMode != 'CF' && this.ncuaSvc.switchStatus" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail-ncua>

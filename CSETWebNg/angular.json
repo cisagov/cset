@@ -7,10 +7,20 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "uk": {
+            "translation": "src/locale/messages.uk.xlf"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "localize": true,
+            "i18nMissingTranslation": "error",
             "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
@@ -80,6 +90,9 @@
             ]
           },
           "configurations": {
+            "uk": {
+              "localize": ["uk"]
+            },
             "development": {
               "optimization": false,
               "sourceMap": true,
@@ -152,6 +165,9 @@
             "browserTarget": "csetweb-ng:build"
           },
           "configurations": {
+            "uk": {
+              "browserTarget": "csetweb-ng:build:development,uk"
+            },
             "production": {
               "browserTarget": "csetweb-ng:build:production"
             },
@@ -164,7 +180,9 @@
         "extract-i18n": {
           "builder": "@angular-builders/custom-webpack:extract-i18n",
           "options": {
-            "browserTarget": "csetweb-ng:build"
+            "browserTarget": "csetweb-ng:build",
+            "format": "xlf",
+            "outputPath": "src/locale"
           }
         },
         "test": {
