@@ -30,9 +30,9 @@ namespace CSETWebCore.DataLayer.Model
         [Key]
         public int Maturity_Model_Id { get; set; }
         [StringLength(50)]
-        public string Questions_Alias { get; set; }
-        [StringLength(50)]
         public string Answer_Options { get; set; }
+        [StringLength(50)]
+        public string Questions_Alias { get; set; }
         /// <summary>
         /// This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model
         /// </summary>

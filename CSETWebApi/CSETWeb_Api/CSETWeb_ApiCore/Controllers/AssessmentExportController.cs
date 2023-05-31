@@ -35,8 +35,8 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/assessment/export")]
-        public IActionResult ExportAssessment(string token)
-        {
+        public IActionResult ExportAssessment([FromQuery] string token, [FromQuery] string password = "")
+        { 
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
 
@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
 
             // export the assessment
             var export = new AssessmentExportManager(_context);
-            var result = export.ArchiveStream(assessmentId);
+            var result = export.ArchiveStream(assessmentId, password);
 
             return File(result, "application/octet-stream", filename);
         }

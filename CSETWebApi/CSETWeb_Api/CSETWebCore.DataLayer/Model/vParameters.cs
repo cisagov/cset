@@ -13,12 +13,10 @@ namespace CSETWebCore.DataLayer.Model
     {
         public int Parameter_ID { get; set; }
         [Required]
-        [StringLength(350)]
-        [Unicode(false)]
+        [StringLength(500)]
         public string Parameter_Name { get; set; }
         [Required]
         [StringLength(2000)]
-        [Unicode(false)]
         public string Default_Value { get; set; }
         public int? Assessment_ID { get; set; }
     }

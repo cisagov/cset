@@ -23,8 +23,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
+using CSETWebCore.Model.Hydro;
 using J2N;
 using Microsoft.AspNetCore.Http.Features;
+using System.ComponentModel;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -1045,13 +1047,21 @@ namespace CSETWebCore.Business.Maturity
                         ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+
+                        Scope = myQ.Scope,
+                        RecommendedAction = myQ.Recommend_Action,
+                        RiskAddressed = myQ.Risk_Addressed,
+                        Services = myQ.Services,
+
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer,
+
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
+
                         Is_Maturity = true,
                         MaturityModelId = sg.Maturity_Model_Id,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -1059,6 +1069,14 @@ namespace CSETWebCore.Business.Maturity
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
+
+
+                    // Include CSF mappings
+                    qa.CsfMappings = GetCsfMappings(qa.QuestionId, "Maturity");
+
+                    // Include any TTPs
+                    qa.TTP = GetTTPReferenceList(qa.QuestionId);
+
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
                     {
@@ -2327,6 +2345,51 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        public List<TTPReference> GetTTPReferenceList(int questionId)
+        {
+            var xx = _context.TTP_MAT_QUESTION
+                .Include(x => x.TTP_CodeNavigation).Where(x => x.Mat_Question_Id == questionId).ToList();
+
+            var resp = new List<TTPReference>();
+            foreach (var y in xx)
+            {
+                resp.Add(new TTPReference() { 
+                    Code = y.TTP_Code,
+                    Description = y.TTP_CodeNavigation.Description,
+                    ReferenceUrl = y.TTP_CodeNavigation.URL
+                });
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Returns a list of CSF references that are mapped to the question
+        /// defined by the question ID and the question type (Maturity or Standard).
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="questionType"></param>
+        /// <returns></returns>
+        public List<string> GetCsfMappings(int questionId, string questionType)
+        {
+            var xx = _context.CSF_MAPPING.Where(x => x.Question_Id == questionId && x.Question_Type == questionType).ToList();
+
+            var resp = new List<string>();
+            foreach (var y in xx)
+            {
+                resp.Add(y.CSF_Code);
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
         /// Returns the maturity grouping/question structure
         /// for an assessment as JSON.
         /// </summary>
@@ -2459,6 +2522,34 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
+        }
+
+
+        public List<HydroDonutData> GetHydroDonutData(int assessmentId)
+        {
+            var result = from question in _context.MATURITY_QUESTIONS
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
+                         join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id && answer.Assessment_Id == assessmentId
+                         select new { question, action, answerOption };
+
+            List<HydroDonutData> response = new List<HydroDonutData>();
+
+            foreach (var item in result.Distinct().ToList())
+            {
+                HydroDonutData data = new HydroDonutData()
+                {
+                    Actions = item.action,
+                    //Answer = item.answer,
+                    AnswerOption = item.answerOption,
+                    Question = item.question
+                };
+
+                response.Add(data);
+            }
+
+            return response;
         }
     }
 }

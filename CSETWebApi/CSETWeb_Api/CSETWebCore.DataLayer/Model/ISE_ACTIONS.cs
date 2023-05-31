@@ -26,6 +26,8 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(100)]
         public string Regulatory_Citation { get; set; }
         public int? Parent_Id { get; set; }
+        public int? Severity { get; set; }
+        public int? Mat_Option_Id { get; set; }
 
         [ForeignKey("Mat_Question_Id")]
         [InverseProperty("ISE_ACTIONS")]
