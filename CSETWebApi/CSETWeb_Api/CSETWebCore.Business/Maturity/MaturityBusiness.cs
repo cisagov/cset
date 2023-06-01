@@ -2551,5 +2551,130 @@ namespace CSETWebCore.Business.Maturity
 
             return response;
         }
+
+
+        public List<HydroResults> GetResultsData(int assessmentId)
+        {
+            var response = from answer in _context.ANSWER
+                          join data in _context.HYDRO_DATA on answer.Mat_Option_Id equals data.Mat_Option_Id
+                          join question in _context.MATURITY_QUESTIONS 
+                                on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
+                          join grouping in _context.MATURITY_GROUPINGS 
+                                on question.Grouping_Id equals grouping.Grouping_Id
+                          join parentGrouping in _context.MATURITY_GROUPINGS
+                                on grouping.Parent_Id equals parentGrouping.Grouping_Id
+                          where answer.Assessment_Id == assessmentId && answer.Answer_Text == "S"
+                          select new { answer, data, question, grouping, parentGrouping };
+
+            List<HydroResults> resultsList = new List<HydroResults>();
+            List<HYDRO_DATA> groupItems = new List<HYDRO_DATA>();
+            int currParentSequence = 0;
+            int currParentId = 0;
+            int currQuestionId = 0;
+            bool notFirst = false;
+            bool impactLimitNotReached = true;
+            bool feasibilityLimitNotReached = true;
+
+            HydroImpacts impactTotals = new HydroImpacts();
+            HydroFeasibilities feasibilityTotals = new HydroFeasibilities();
+
+            foreach (var item in response)
+            {
+                if (currParentId != item.parentGrouping.Grouping_Id && notFirst)
+                {
+                    HydroResults results = new HydroResults()
+                    {
+                        HydroData = groupItems,
+                        impactTotals = impactTotals,
+                        feasibilityTotals = feasibilityTotals,
+                        parentGroupId = currParentId,
+                        parentSequence = currParentSequence
+                    };
+                    resultsList.Add(results);
+                    
+                    groupItems = new List<HYDRO_DATA>(); // clear the groupItems list
+                    impactTotals = new HydroImpacts();
+                    feasibilityTotals = new HydroFeasibilities();
+                }
+
+                if (currQuestionId != item.question.Mat_Question_Id)
+                {
+                    impactLimitNotReached = true;
+                    feasibilityLimitNotReached = true;
+                }
+
+                var impactStrings = item.data.Impact.Split(',');
+
+                if (impactLimitNotReached && (impactStrings.Length != 1 || !string.IsNullOrEmpty(impactStrings[0])))
+                {
+                    foreach (string impact in impactStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
+                    {
+                        if (impact.Equals("1"))
+                        {
+                            impactTotals.Economic++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("2"))
+                        {
+                            impactTotals.Environmental++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("3"))
+                        {
+                            impactTotals.Operational++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("4"))
+                        {
+                            impactTotals.Safety++;
+                            impactLimitNotReached = false;
+                        }
+                    }
+                }
+
+                var feasibilityStrings = item.data.Feasibility.Split(',');
+
+                if (feasibilityLimitNotReached && (feasibilityStrings.Length != 1 || !string.IsNullOrEmpty(feasibilityStrings[0])))
+                {
+                    foreach (string feas in feasibilityStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
+                    {
+                        if (feas.Equals("1"))
+                        {
+                            feasibilityTotals.Easy++;
+                            feasibilityLimitNotReached = false;
+                        }
+                        else if (feas.Equals("2"))
+                        {
+                            feasibilityTotals.Medium++;
+                            feasibilityLimitNotReached = false;
+                        }
+                        else if (feas.Equals("3"))
+                        {
+                            feasibilityTotals.Hard++;
+                            feasibilityLimitNotReached = false;
+                        }
+                    }
+                }
+
+                currParentId = item.parentGrouping.Grouping_Id; // update the current ID and name
+                currParentSequence = item.parentGrouping.Sequence;
+                currQuestionId = item.question.Mat_Question_Id;
+
+                groupItems.Add(item.data);
+                notFirst = true;
+            }
+
+            HydroResults lastResults = new HydroResults()
+            {
+                HydroData = groupItems,
+                impactTotals = impactTotals,
+                feasibilityTotals = feasibilityTotals,
+                parentGroupId = currParentId,
+                parentSequence = currParentSequence
+            };
+            resultsList.Add(lastResults);
+
+            return resultsList;
+        }
     }
 }

@@ -10,41 +10,72 @@ export class HydroBarChartComponent implements OnInit {
   @ViewChild('barChart') barChart;
   @Input() barData: any;
   @Input() subCatNames: any;
+  @Input() colorScheme: any;
+  @Input() view: any;
 
   data: any[] = [];
-  view: any[] = [600, 150];
   dataList: any[];
 
-  colorScheme = {
-    domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
-  };
+  xAxis: boolean = false;
+  dataLabel: boolean = false;
+  //yAxis: boolean = false;
+
+  // colorScheme = {
+  //   domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
+  // };
 
   ngOnInit() {
     for (let i = 0; i < this.barData.length; i++) {
       let currSubCatWeightArray = this.barData[i];
 
-      let currSubCatDataList = {
-        "name": this.subCatNames[i],
-        "series": [
-          {
-            "name": "High Impact",
-            "value": currSubCatWeightArray[0]
-          },
-          {
-            "name": "Medium Impact",
-            "value": currSubCatWeightArray[1]
-          },
-          {
-            "name": "Low Impact",
-            "value": currSubCatWeightArray[2]
-          },
-          {
-            "name": "UnImplemented",
-            "value": currSubCatWeightArray[3]
-          }
-        ]
-      };
-      this.data.push(currSubCatDataList);
+      if (currSubCatWeightArray.length > 3) {
+        //this.yAxis = true;
+        this.dataLabel = true;
+        let currSubCatDataList = {
+          "name": this.subCatNames[i],
+          "series": [
+            {
+              "name": "High Impact",
+              "value": currSubCatWeightArray[0]
+            },
+            {
+              "name": "Medium Impact",
+              "value": currSubCatWeightArray[1]
+            },
+            {
+              "name": "Low Impact",
+              "value": currSubCatWeightArray[2]
+            },
+            {
+              "name": "UnImplemented",
+              "value": currSubCatWeightArray[3]
+            }
+          ]
+        };
+        this.data.push(currSubCatDataList);
+      }
+
+      else {
+        this.xAxis = true;
+        let currSubCatDataList = {
+          "name": this.subCatNames[i],
+          "series": [
+            {
+              "name": "Easy",
+              "value": currSubCatWeightArray[0]
+            },
+            {
+              "name": "Medium",
+              "value": currSubCatWeightArray[1]
+            },
+            {
+              "name": "Hard",
+              "value": currSubCatWeightArray[2]
+            }
+          ]
+        };
+        this.data.push(currSubCatDataList);
+      }
     }
   }
 }

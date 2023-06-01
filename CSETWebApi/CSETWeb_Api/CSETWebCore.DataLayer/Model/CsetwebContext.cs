@@ -140,6 +140,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
         public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
+        public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
