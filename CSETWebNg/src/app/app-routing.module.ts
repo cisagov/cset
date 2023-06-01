@@ -202,6 +202,7 @@ import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-defic
 import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
+import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -455,6 +456,7 @@ const appRoutes: Routes = [
               { path: 'hydro-deficiency', component: HydroDeficiencyComponent },
               { path: 'hydro-impact', component: HydroImpactComponent },
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
+              { path: 'hydro-actions', component: HydroActionsComponent },
             ]
           },
 
