@@ -30,6 +30,11 @@
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
       <div class="mb-3">
         <h3>Assessment Scores</h3>
+        <p>
+          Your current percentage implemented based on questions answered, weighted by Impact.
+        </p>
+        <br>
+
         <div class="d-inline-flex">
           <div class="d-inline-flex" style="padding-left: 8px;">
             <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
@@ -50,8 +55,8 @@
             </div>
           </div>
         </div>
-        <div>
-          <div *ngFor="let id of catIds; let i = index" class="d-inline-flex" style="justify-items: space-evenly; ">
+        <div style="justify-items: space-evenly;">
+          <div *ngFor="let id of catIds; let i = index" class="d-inline-flex">
             <div>
               <app-hydro-donut [totalData]="catCountMap.get(catIds[i])" [weightData]="domainWeightTotals[i]"></app-hydro-donut>
               <div class="d-inline-flex" style="margin-left: 10px; margin-right: 10px; width: 130px; justify-content: center;">
@@ -65,20 +70,21 @@
           </div>
         </div>
         <div *ngIf="catExpandedMap.get(catNames[0])" style="width: fit-content">
-          <app-hydro-bar-chart [barData]="subCatWeightsByCat[0]" [subCatNames]="subCatNamesByCat[0]"></app-hydro-bar-chart>
+          <app-hydro-bar-chart [barData]="subCatWeightsByCat[0]" [subCatNames]="subCatNamesByCat[0]" [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
         </div>
         <div *ngIf="catExpandedMap.get(catNames[1])">
-          <app-hydro-bar-chart [barData]="subCatWeightsByCat[1]" [subCatNames]="subCatNamesByCat[1]"></app-hydro-bar-chart>
+          <app-hydro-bar-chart [barData]="subCatWeightsByCat[1]" [subCatNames]="subCatNamesByCat[1]" [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
         </div>
         <div *ngIf="catExpandedMap.get(catNames[2])">
-          <app-hydro-bar-chart [barData]="subCatWeightsByCat[2]" [subCatNames]="subCatNamesByCat[2]"></app-hydro-bar-chart>
+          <app-hydro-bar-chart [barData]="subCatWeightsByCat[2]" [subCatNames]="subCatNamesByCat[2]" [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
         </div>
         <div *ngIf="catExpandedMap.get(catNames[3])">
-          <app-hydro-bar-chart [barData]="subCatWeightsByCat[3]" [subCatNames]="subCatNamesByCat[3]"></app-hydro-bar-chart>
+          <app-hydro-bar-chart [barData]="subCatWeightsByCat[3]" [subCatNames]="subCatNamesByCat[3]" [colorScheme]="assessScoresColors" [view]="assessView"></app-hydro-bar-chart>
         </div>
+
       </div>
      
-      <!-- <app-nav-back-next [page]="'ranked-deficiency'"></app-nav-back-next> -->
+      <app-nav-back-next [page]="'hydro-deficiency'"></app-nav-back-next>
       
     </div>
   </div>

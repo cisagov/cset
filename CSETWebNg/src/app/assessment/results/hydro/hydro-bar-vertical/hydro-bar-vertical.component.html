@@ -1,15 +1,15 @@
 <div style="position: relative; padding: 0px;">
-    <ngx-charts-bar-horizontal-stacked #barChart
+    <ngx-charts-bar-vertical-stacked #barChart
     [view]="view"
     [scheme]="colorScheme"
     [results]="data"
     [gradient]="false"
-    [xAxis]="xAxis"
+    [xAxis]="true"
     [yAxis]="true"
     [legend]="false"
     [showXAxisLabel]="true"
     [showYAxisLabel]="true"    
     [roundDomains]="true"
-    [showDataLabel]="dataLabel">
-    </ngx-charts-bar-horizontal-stacked>
+    [showDataLabel]="false">
+    </ngx-charts-bar-vertical-stacked>
 </div>
