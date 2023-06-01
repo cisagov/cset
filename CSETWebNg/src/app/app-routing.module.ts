@@ -200,6 +200,9 @@ import { LoginAccessKeyComponent } from './initial/login-access-key/login-access
 import { C2m2ReportComponent } from './reports/c2m2/c2m2-report/c2m2-report.component';
 import { HydroDeficiencyComponent } from './assessment/results/hydro/hydro-deficiency/hydro-deficiency.component';
 import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.component';
+import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
+import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
+import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -451,6 +454,9 @@ const appRoutes: Routes = [
               { path: 'section-scoring', component: SectionScoringComponent },
               { path: '', component: DashboardComponent },
               { path: 'hydro-deficiency', component: HydroDeficiencyComponent },
+              { path: 'hydro-impact', component: HydroImpactComponent },
+              { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
+              { path: 'hydro-actions', component: HydroActionsComponent },
             ]
           },
 
