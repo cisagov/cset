@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 
 namespace UpgradeLibrary.Upgrade
 {
-    public class ConvertSqlDatabase : IConvertSqlDatabase
+    public abstract class ConvertSqlDatabase : IConvertSqlDatabase
     {
         /// <summary>
         /// This version should be overridden in the constructor of all derived classes.
