@@ -573,6 +573,7 @@ import { HydroFeasibilityReportComponent } from './reports/hydro/hydro-report/hy
 import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-vertical/hydro-bar-vertical.component';
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
+import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
 
 
 
@@ -1103,6 +1104,7 @@ import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feas
         HydroBarVerticalComponent,
         HydroImpactComponent,
         HydroFeasibilityComponent,
+        HydroActionsComponent,
     ],
     providers: [
         ConfigService,
