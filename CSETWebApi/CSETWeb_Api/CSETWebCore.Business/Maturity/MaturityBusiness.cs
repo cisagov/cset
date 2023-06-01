@@ -1047,13 +1047,21 @@ namespace CSETWebCore.Business.Maturity
                         ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+
+                        Scope = myQ.Scope,
+                        RecommendedAction = myQ.Recommend_Action,
+                        RiskAddressed = myQ.Risk_Addressed,
+                        Services = myQ.Services,
+
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer,
+
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
+
                         Is_Maturity = true,
                         MaturityModelId = sg.Maturity_Model_Id,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -1061,6 +1069,14 @@ namespace CSETWebCore.Business.Maturity
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
+
+
+                    // Include CSF mappings
+                    qa.CsfMappings = GetCsfMappings(qa.QuestionId, "Maturity");
+
+                    // Include any TTPs
+                    qa.TTP = GetTTPReferenceList(qa.QuestionId);
+
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
                     {
@@ -2325,6 +2341,51 @@ namespace CSETWebCore.Business.Maturity
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
+        public List<TTPReference> GetTTPReferenceList(int questionId)
+        {
+            var xx = _context.TTP_MAT_QUESTION
+                .Include(x => x.TTP_CodeNavigation).Where(x => x.Mat_Question_Id == questionId).ToList();
+
+            var resp = new List<TTPReference>();
+            foreach (var y in xx)
+            {
+                resp.Add(new TTPReference() { 
+                    Code = y.TTP_Code,
+                    Description = y.TTP_CodeNavigation.Description,
+                    ReferenceUrl = y.TTP_CodeNavigation.URL
+                });
+            }
+
+            return resp;
+        }
+
+
+        /// <summary>
+        /// Returns a list of CSF references that are mapped to the question
+        /// defined by the question ID and the question type (Maturity or Standard).
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <param name="questionType"></param>
+        /// <returns></returns>
+        public List<string> GetCsfMappings(int questionId, string questionType)
+        {
+            var xx = _context.CSF_MAPPING.Where(x => x.Question_Id == questionId && x.Question_Type == questionType).ToList();
+
+            var resp = new List<string>();
+            foreach (var y in xx)
+            {
+                resp.Add(y.CSF_Code);
+            }
+
+            return resp;
         }
 
 
