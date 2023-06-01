@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-(localdb)\INLLocalDb2022.CSETWeb12021   -  This database will be modified
+(localdb)\INLLocalDb2022.CSETWeb12020   -  This database will be modified
 
 to synchronize it with:
 
