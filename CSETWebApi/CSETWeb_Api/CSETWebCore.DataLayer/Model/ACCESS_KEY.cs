@@ -19,6 +19,8 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(20)]
         public string AccessKey { get; set; }
         public DateTime GeneratedDate { get; set; }
+        [Required]
+        public bool? PreventEncrypt { get; set; }
 
         [InverseProperty("AccessKeyNavigation")]
         public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }

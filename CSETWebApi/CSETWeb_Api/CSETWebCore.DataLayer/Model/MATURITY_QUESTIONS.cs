@@ -15,6 +15,8 @@ namespace CSETWebCore.DataLayer.Model
     {
         public MATURITY_QUESTIONS()
         {
+            HYDRO_DATA = new HashSet<HYDRO_DATA>();
+            ISE_ACTIONS = new HashSet<ISE_ACTIONS>();
             InverseParent_Question = new HashSet<MATURITY_QUESTIONS>();
             MATURITY_ANSWER_OPTIONS = new HashSet<MATURITY_ANSWER_OPTIONS>();
             MATURITY_QUESTION_PROPS = new HashSet<MATURITY_QUESTION_PROPS>();
@@ -75,7 +77,9 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("InverseParent_Question")]
         public virtual MATURITY_QUESTIONS Parent_Question { get; set; }
         [InverseProperty("Mat_Question")]
-        public virtual ISE_ACTIONS ISE_ACTIONS { get; set; }
+        public virtual ICollection<HYDRO_DATA> HYDRO_DATA { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<ISE_ACTIONS> ISE_ACTIONS { get; set; }
         [InverseProperty("Parent_Question")]
         public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; }
         [InverseProperty("Mat_Question")]
