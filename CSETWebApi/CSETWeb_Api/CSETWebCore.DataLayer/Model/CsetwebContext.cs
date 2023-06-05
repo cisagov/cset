@@ -256,6 +256,11 @@ namespace CSETWebCore.DataLayer.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACCESS_KEY>(entity =>
+            {
+                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+            });
+
             modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
             {
                 entity.HasKey(e => new { e.AccessKey, e.Assessment_Id });
@@ -456,6 +461,7 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.GalleryItemGu)
                     .WithMany(p => p.ASSESSMENTS)
                     .HasForeignKey(d => d.GalleryItemGuid)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
             });
 
@@ -1667,7 +1673,6 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasOne(d => d.Gallery_Item_Gu)
                     .WithMany(p => p.GALLERY_GROUP_DETAILS)
                     .HasForeignKey(d => d.Gallery_Item_Guid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
 
                 entity.HasOne(d => d.Group)
@@ -1852,6 +1857,30 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of GLOSSARY records");
             });
 
+            modelBuilder.Entity<HYDRO_DATA>(entity =>
+            {
+                entity.HasKey(e => e.Mat_Option_Id)
+                    .IsClustered(false);
+
+                entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
+                    .IsUnique()
+                    .IsClustered();
+
+                entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Mat_Option)
+                    .WithOne(p => p.HYDRO_DATA)
+                    .HasForeignKey<HYDRO_DATA>(d => d.Mat_Option_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.HYDRO_DATA)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
+            });
+
             modelBuilder.Entity<IMPORTANCE>(entity =>
             {
                 entity.HasKey(e => e.Importance_Id)
@@ -1935,18 +1964,17 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS>(entity =>
             {
-                entity.HasKey(e => e.Mat_Question_Id)
-                    .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
+                entity.HasKey(e => new { e.Action_Item_Id, e.Mat_Question_Id });
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Mat_Question_Id).ValueGeneratedNever();
+                entity.Property(e => e.Action_Item_Id).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.Mat_Question)
-                    .WithOne(p => p.ISE_ACTIONS)
-                    .HasForeignKey<ISE_ACTIONS>(d => d.Mat_Question_Id)
+                    .WithMany(p => p.ISE_ACTIONS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
+                    .HasConstraintName("FK__ISE_ACTIO__Mat_Q__7F2CAE86");
             });
 
             modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
@@ -1957,11 +1985,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.ISE_ACTIONS_FINDINGS)
                     .HasForeignKey(d => d.Finding_Id)
                     .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ISE_ACTIONS");
             });
 
             modelBuilder.Entity<JWT>(entity =>
@@ -3398,6 +3421,8 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
