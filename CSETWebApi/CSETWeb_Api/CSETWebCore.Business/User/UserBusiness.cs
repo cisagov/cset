@@ -215,7 +215,7 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = result.PasswordResetRequired ?? true,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
-                IsActive = result.IsActive
+                IsActive = result.IsActive ?? true
             };
 
             return u;

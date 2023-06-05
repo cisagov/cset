@@ -9,8 +9,6 @@ using System.IO;
 using System.Xml;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CSETWebCore.Interfaces
 {

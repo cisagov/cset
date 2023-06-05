@@ -66,7 +66,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            if (!loginUser.IsActive)
+            if (!loginUser.IsActive.GetValueOrDefault(true))
             {
                 return null;
             }
