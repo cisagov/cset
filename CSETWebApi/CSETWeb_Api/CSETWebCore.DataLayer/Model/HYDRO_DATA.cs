@@ -8,25 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    /// <summary>
-    /// HYDRO specific fields for most of the results page
-    /// </summary>
     public partial class HYDRO_DATA
     {
-        public HYDRO_DATA()
-        {
-        }
-
         [Key]
-        [ForeignKey("Mat_Option_Id")]
         public int Mat_Option_Id { get; set; }
-        [ForeignKey("Mat_Question_Id")]
         public int Mat_Question_Id { get; set; }
+        [StringLength(50)]
         public string Feasibility { get; set; }
+        public int? Feasibility_Limit { get; set; }
         [StringLength(50)]
-        public int Feasibility_Limit { get; set; }
         public string Impact { get; set; }
-        [StringLength(50)]
-        public int Impact_Limit { get; set; }
+        public int? Impact_Limit { get; set; }
+
+        [ForeignKey("Mat_Option_Id")]
+        [InverseProperty("HYDRO_DATA")]
+        public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
+        [ForeignKey("Mat_Question_Id")]
+        [InverseProperty("HYDRO_DATA")]
+        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
     }
 }
