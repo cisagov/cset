@@ -10,11 +10,15 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+//using System.Xml.Linq;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using CSETWebCore.Model.Maturity.CPG;
+using NSoup.Parse;
+
+
 
 namespace CSETWebCore.Helpers
 {
@@ -30,7 +34,9 @@ namespace CSETWebCore.Helpers
 
         public int AssessmentId { get; set; }
 
-        private XDocument xDoc { get; set; }
+        public ContentModel Top { get; set; }
+
+        private AdditionalSupplemental _addlSuppl { get; set; }
 
         /// <summary>
         /// The consumer can optionally suppress 
@@ -51,6 +57,8 @@ namespace CSETWebCore.Helpers
             this._context = context;
             this._includeText = includeText;
 
+            this._addlSuppl = new AdditionalSupplemental(context);
+
             LoadStructure();
         }
 
@@ -61,7 +69,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private void LoadStructure()
         {
-            xDoc = new XDocument(new XElement("Model"));
+            Top = new ContentModel();
 
 
             // determine the assessment's maturity model
@@ -77,9 +85,9 @@ namespace CSETWebCore.Helpers
                 return;
             }
 
-            xDoc.Root.SetAttributeValue("assessmentid", this.AssessmentId);
-            xDoc.Root.SetAttributeValue("model", mm.Model_Name);
-            xDoc.Root.SetAttributeValue("modelid", model.model_id);
+            Top.AssessmentId = this.AssessmentId;
+            Top.ModelName = mm.Model_Name;
+            Top.ModelId = model.model_id;
 
 
             // Get all maturity questions for the model regardless of level.
@@ -118,18 +126,19 @@ namespace CSETWebCore.Helpers
                 .Where(x => x.Assessment_Id == this.AssessmentId).ToList();
 
 
-            GetSubgroups(xDoc.Root, null, allGroupings, questions, answers.ToList(), allRemarks);
+            GetSubgroups(Top.Domains, null, allGroupings, questions, answers.ToList(), allRemarks);
         }
 
 
         /// <summary>
         /// Recursive method for traversing the structure.
         /// </summary>
-        private void GetSubgroups(XElement xE, int? parentID,
+        private void GetSubgroups(List<Model.Maturity.CPG.Domain> domainList,
+            int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
-           List<MATURITY_QUESTIONS> questions,
-           List<FullAnswer> answers,
-           List<MATURITY_DOMAIN_REMARKS> remarks)
+            List<MATURITY_QUESTIONS> questions,
+            List<FullAnswer> answers,
+            List<MATURITY_DOMAIN_REMARKS> remarks)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
@@ -142,21 +151,21 @@ namespace CSETWebCore.Helpers
             {
                 var nodeName = System.Text.RegularExpressions
                     .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
-                var xGrouping = new XElement(nodeName);
-                xE.Add(xGrouping);
-                xGrouping.SetAttributeValue("abbreviation", sg.Abbreviation);
+                var grouping = new Model.Maturity.CPG.Domain();
+                domainList.Add(grouping);
+                grouping.Abbreviation = sg.Abbreviation;
 
                 if (_includeText)
                 {
-                    xGrouping.SetAttributeValue("description", sg.Description);
+                    grouping.Description = sg.Description;
                 }
-                xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
-                xGrouping.SetAttributeValue("title", sg.Title);
-                xGrouping.SetAttributeValue("titlePrefix", sg.Title_Prefix);
+                grouping.GroupingId = sg.Grouping_Id;
+                grouping.Title = sg.Title;
+                grouping.TitlePrefix = sg.Title_Prefix;
 
                 var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
-                xGrouping.SetAttributeValue("remarks", remark != null ? remark.DomainRemarks : "");
-                
+                grouping.Remarks = remark?.DomainRemarks ?? "";
+
 
 
                 // are there any questions that belong to this grouping?
@@ -168,81 +177,66 @@ namespace CSETWebCore.Helpers
                 {
                     FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == myQ.Mat_Question_Id).FirstOrDefault();
 
-                    var xQuestion = new XElement("Question");
-                    xQuestion.SetAttributeValue("questionid", myQ.Mat_Question_Id.ToString());
-                    xQuestion.SetAttributeValue("parentquestionid", myQ.Parent_Question_Id.ToString());
-                    xQuestion.SetAttributeValue("sequence", myQ.Sequence.ToString());
-                    xQuestion.SetAttributeValue("displaynumber", myQ.Question_Title);
-                    xQuestion.SetAttributeValue("answer", answer?.a.Answer_Text ?? "");
-                    xQuestion.SetAttributeValue("comment", answer?.a.Comment ?? "");
-                    xQuestion.SetAttributeValue("isparentquestion", B2S(parentQuestionIDs.Contains(myQ.Mat_Question_Id)));
+                    var question = new Model.Maturity.CPG.Question();
+                    question.QuestionId = myQ.Mat_Question_Id;
+                    question.ParentQuestionId  = myQ.Parent_Question_Id;
+                    question.Sequence  = myQ.Sequence;
+                    question.DisplayNumber = myQ.Question_Title;
+                    question.Answer = answer?.a.Answer_Text ?? "";
+                    question.Comment = answer?.a.Comment ?? "";
+                    question.IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id);
+
 
                     if (_includeText)
                     {
-                        xQuestion.SetAttributeValue("questiontext", myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "));
+                        question.QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> ");
 
-                        xQuestion.SetAttributeValue("supplemental", myQ.Supplemental_Info);
 
-                        xQuestion.SetAttributeValue("referencetext",
-                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
+                        // Currently in CPG the "practice" text is embedded in the full question text HTML.
+                        // We need to pull it out for the report.
+                        var p = Parser.Parse(question.QuestionText, ".");
+                        var cpgPractice = p.Select(".cpg-practice");
+                        question.Practice = cpgPractice.FirstOrDefault()?.Html();
+
+
+                        question.Supplemental  = myQ.Supplemental_Info;
+                        
+                        question.Scope = myQ.Scope;
+                        question.RecommendedAction = myQ.Recommend_Action;
+                        question.Services = myQ.Services;
+                        question.RiskAddressed = myQ.Risk_Addressed;
+
+                        // Include CSF mappings
+                        var csfList = _addlSuppl.GetCsfMappings(myQ.Mat_Question_Id, "Maturity");
+                        foreach (var csf in csfList)
+                        {
+                            question.CSF.Add(csf);
+                        }
+
+                        // Include any TTPs
+                        var ttpList = _addlSuppl.GetTTPReferenceList(myQ.Mat_Question_Id);
+                        foreach (var ttp in ttpList)
+                        {
+                            question.TTP.Add(ttp.Description);
+                        }
+
+
+                        question.ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text;
                     }
 
-                    foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
-                    {
-                        var xProp = new XElement("Prop");
-                        xProp.SetAttributeValue("name", prop.PropertyName);
-                        xProp.SetAttributeValue("value", prop.PropertyValue);
-                        xQuestion.Add(xProp);
-                    }
 
-                    xGrouping.Add(xQuestion);
+                    question.Cost = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COST")?.PropertyValue;
+                    question.Impact = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "IMPACT")?.PropertyValue;
+                    question.Complexity = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COMPLEXITY")?.PropertyValue;
+
+                    grouping.Questions.Add(question);
                 }
 
 
                 // Recurse down to build subgroupings
-                GetSubgroups(xGrouping, sg.Grouping_Id, allGroupings, questions, answers, remarks);
+                GetSubgroups(grouping.Groupings, sg.Grouping_Id, allGroupings, questions, answers, remarks);
             }
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public XDocument ToXDocument()
-        {
-            return this.xDoc;
-        }
-
-
-        /// <summary>
-        /// Returns the assessment's maturity question structure as XML.
-        /// </summary>
-        /// <returns></returns>
-        public string ToXml()
-        {
-            return this.xDoc.ToString();
-        }
-
-
-        /// <summary>
-        /// Returns the assessment's maturity question structure as JSON.
-        /// </summary>
-        /// <returns></returns>
-        public string ToJson()
-        {
-            return CustomJsonWriter.Serialize(this.xDoc.Root);
-        }
-
-
-        /// <summary>
-        /// Bool-to-string
-        /// </summary>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static string B2S(bool b)
-        {
-            return b ? "true" : "false";
-        }
     }
 }
