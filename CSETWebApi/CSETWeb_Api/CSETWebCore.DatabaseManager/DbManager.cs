@@ -224,11 +224,35 @@ namespace CSETWebCore.DatabaseManager
                 if (DatabaseExists(conn))
                 {
                     _logger.Info($"Copied {ApplicationCode} database is functioning.");
+                    DisplayOldLocalDbInstalledNotification(targetLocalDbInfo);
                 }
                 else
                 {
                     DatabaseSetupException dbSetupException = new DatabaseSetupException($"{ApplicationCode} database is not functioning. No {DatabaseCode} database found after setup.");
                     throw dbSetupException;
+                }
+            }
+        }
+
+        private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo) 
+        {
+            if (LocalDb2019Installed || LocalDb2012Installed) 
+            {
+                var result = ExecuteScalarQuery("SELECT [Property_Value] FROM [GLOBAL_PROPERTIES] WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
+                
+                if (result != null && ((string)result).ToLower().Equals("false")) 
+                {
+                    string oldLocalDbInstalledMessage = $"{(LocalDb2012Installed && LocalDb2019Installed ? "Old versions" : "An old version")} of SQL Server LocalDB " +
+                        $"{(LocalDb2012Installed && LocalDb2019Installed ? "are" : "is")} still installed. {ApplicationCode} uses the latest version of LocalDB (2022); however, " +
+                        $"{ApplicationCode} does not uninstall previous versions automatically. " +
+                        "If you would like to remove an old version of LocalDB, you will have to do so manually: \r\n \r\n" +
+                        $"{(LocalDb2019Installed ? LOCALDB_2019_REGISTRY_DISPLAY_NAME + "\r\n" : "")}" +
+                        $"{(LocalDb2012Installed ? LOCALDB_2012_REGISTRY_DISPLAY_NAME : "")}";
+
+                    _logger.Info(oldLocalDbInstalledMessage);
+                    Console.WriteLine(oldLocalDbInstalledMessage);
+
+                    ExecuteNonQuery("UPDATE [GLOBAL_PROPERTIES] SET [Property_Value] = 'True' WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
                 }
             }
         }
@@ -453,6 +477,31 @@ namespace CSETWebCore.DatabaseManager
             catch (SqlException sqle)
             {
                 _logger.Error(sqle.Message);
+            }
+        }
+
+        /// <summary>
+        /// Executes the query and returns the first column of the first row in the result set returned by the query.
+        /// </summary>
+        /// <param name="sql">the sql query to execute</param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        private object ExecuteScalarQuery(string sql, string connectionString)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = sql;
+                    return cmd.ExecuteScalar();
+                }
+            }
+            catch (SqlException sqle)
+            {
+                _logger.Error(sqle.Message);
+                return null;
             }
         }
 
