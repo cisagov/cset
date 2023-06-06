@@ -57,7 +57,7 @@ namespace CSETWebCore.Business.Aggregation
 
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-                var ms = new Helpers.MaturityStructure(assessmentId, _context, false);
+                var ms = new Helpers.MaturityStructureAsXml(assessmentId, _context, false);
                 var mx = ms.ToXDocument();
 
                 // ignore assessment if it doesn't have a maturity model
