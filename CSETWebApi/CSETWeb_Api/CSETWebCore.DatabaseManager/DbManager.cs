@@ -20,13 +20,14 @@ namespace CSETWebCore.DatabaseManager
     public class DbManager
     {
         private static readonly Logger _logger = LogManager.GetLogger("DBManager");
-        private readonly VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
+        private readonly VersionUpgrader _upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
 
         public DbManager(Version version, string clientCode, string applicationCode)
         {
             NewVersion = version;
             ClientCode = clientCode;
             ApplicationCode = applicationCode;
+            SetInstalledLocalDbVersions();
         }
 
         /* 
@@ -58,7 +59,7 @@ namespace CSETWebCore.DatabaseManager
                 //determine what state we are in.
                 //then based on that state execute the appropriate upgrade logic
 
-                if (IsLocalDB2022Installed())
+                if (LocalDb2022Installed)
                 {
                     using (SqlLocalDbApi localDb = new SqlLocalDbApi()) 
                     {
@@ -170,7 +171,7 @@ namespace CSETWebCore.DatabaseManager
 
             try
             {
-                upgrader.UpgradeOnly(NewVersion, localDbInfo.ConnectionString);
+                _upgrader.UpgradeOnly(NewVersion, localDbInfo.ConnectionString);
             }
             catch (DatabaseUpgradeException e)
             {
@@ -199,7 +200,7 @@ namespace CSETWebCore.DatabaseManager
 
             try
             {
-                upgrader.UpgradeOnly(NewVersion, targetLocalDbInfo.ConnectionString);
+                _upgrader.UpgradeOnly(NewVersion, targetLocalDbInfo.ConnectionString);
             }
             catch (DatabaseUpgradeException e)
             {
@@ -413,19 +414,28 @@ namespace CSETWebCore.DatabaseManager
         /// </summary>
         /// <returns>true if localdb key is found in HKEY_LOCAL_MACHINE registry.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-        private bool IsLocalDB2022Installed()
+        private void SetInstalledLocalDbVersions()
         {
             foreach (var item in Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall").GetSubKeyNames())
             {
 
                 var programName = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\" + item).GetValue("DisplayName");
 
-                if (Equals(programName, "Microsoft SQL Server 2022 LocalDB "))
+                if (Equals(programName, LOCALDB_2022_REGISTRY_DISPLAY_NAME))
                 {
-                    return true;
+                    LocalDb2022Installed = true;
+                }
+
+                if (Equals(programName, LOCALDB_2019_REGISTRY_DISPLAY_NAME))
+                {
+                    LocalDb2019Installed = true;
+                }
+
+                if (Equals(programName, LOCALDB_2012_REGISTRY_DISPLAY_NAME))
+                {
+                    LocalDb2012Installed = true;
                 }
             }
-            return false;
         }
 
         private void ExecuteNonQuery(string sql, string connectionString)
@@ -455,6 +465,7 @@ namespace CSETWebCore.DatabaseManager
         public Version NewVersion { get; }
         public string ClientCode { get; }
         public string ApplicationCode { get; }
+
         public string DatabaseCode
         {
             get
@@ -474,6 +485,9 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
+        public bool LocalDb2022Installed { get; private set; } = false;
+        public bool LocalDb2019Installed { get; private set; } = false;
+        public bool LocalDb2012Installed { get; private set; } = false;
         public string LocalDb2022ConnectionString
         {
             // "INLLocalDb2022" is our custom localdb 2022 instance name, so we need to build it "custom".
