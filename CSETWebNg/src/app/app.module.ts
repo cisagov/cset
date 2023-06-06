@@ -574,6 +574,7 @@ import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { HydroActionItemComponent } from './assessment/results/hydro/hydro-actions/hydro-action-item/hydro-action-item.component';
 
 
 
@@ -1105,6 +1106,7 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         HydroImpactComponent,
         HydroFeasibilityComponent,
         HydroActionsComponent,
+        HydroActionItemComponent,
     ],
     providers: [
         ConfigService,

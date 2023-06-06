@@ -32,6 +32,19 @@ namespace CSETWebCore.Model.Hydro
         //public ANSWER Answer { get; set; }
     }
 
+    public class HydroActionsByDomain
+    {
+        public string DomainName { get; set; }
+        public int DomainSequence { get; set; }
+        public List<HydroActionQuestion> ActionsQuestions { get; set; }
+    }
+
+    public class HydroActionQuestion
+    {
+        public MATURITY_QUESTIONS Question { get; set; }
+        public ISE_ACTIONS Action { get; set; } //ended here. make a method to tie actions with questions for results page
+    }
+
     public class HydroGroupingInfo 
     {
         public List<QuestionWithAnswers> QuestionsWithAnswers { get; set; }
