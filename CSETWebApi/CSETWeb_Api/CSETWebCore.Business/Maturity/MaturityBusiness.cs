@@ -38,6 +38,8 @@ namespace CSETWebCore.Business.Maturity
 
         private int _maturityModelId;
 
+        private AdditionalSupplemental _addlSuppl;
+
         public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
@@ -45,6 +47,8 @@ namespace CSETWebCore.Business.Maturity
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+
+            this._addlSuppl = new AdditionalSupplemental(context);
         }
 
 
@@ -279,7 +283,7 @@ namespace CSETWebCore.Business.Maturity
             var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
 
 
             int calculatedScore = 110;
@@ -391,7 +395,7 @@ namespace CSETWebCore.Business.Maturity
             var response = new List<DomainAnswers>();
 
 
-            var structure = new MaturityStructure(assessmentId, _context, false);
+            var structure = new MaturityStructureAsXml(assessmentId, _context, false);
 
 
             // In this model sructure, the Goal element represents domains
@@ -1072,10 +1076,10 @@ namespace CSETWebCore.Business.Maturity
 
 
                     // Include CSF mappings
-                    qa.CsfMappings = GetCsfMappings(qa.QuestionId, "Maturity");
+                    qa.CsfMappings = _addlSuppl.GetCsfMappings(qa.QuestionId, "Maturity");
 
                     // Include any TTPs
-                    qa.TTP = GetTTPReferenceList(qa.QuestionId);
+                    qa.TTP = _addlSuppl.GetTTPReferenceList(qa.QuestionId);
 
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
@@ -2341,63 +2345,31 @@ namespace CSETWebCore.Business.Maturity
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
-        }
+        }       
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="questionId"></param>
+        /// <param name="assessmentId"></param>
+        /// <param name="includeSupplemental"></param>
         /// <returns></returns>
-        public List<TTPReference> GetTTPReferenceList(int questionId)
+        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental)
         {
-            var xx = _context.TTP_MAT_QUESTION
-                .Include(x => x.TTP_CodeNavigation).Where(x => x.Mat_Question_Id == questionId).ToList();
-
-            var resp = new List<TTPReference>();
-            foreach (var y in xx)
-            {
-                resp.Add(new TTPReference() { 
-                    Code = y.TTP_Code,
-                    Description = y.TTP_CodeNavigation.Description,
-                    ReferenceUrl = y.TTP_CodeNavigation.URL
-                });
-            }
-
-            return resp;
-        }
-
-
-        /// <summary>
-        /// Returns a list of CSF references that are mapped to the question
-        /// defined by the question ID and the question type (Maturity or Standard).
-        /// </summary>
-        /// <param name="questionId"></param>
-        /// <param name="questionType"></param>
-        /// <returns></returns>
-        public List<string> GetCsfMappings(int questionId, string questionType)
-        {
-            var xx = _context.CSF_MAPPING.Where(x => x.Question_Id == questionId && x.Question_Type == questionType).ToList();
-
-            var resp = new List<string>();
-            foreach (var y in xx)
-            {
-                resp.Add(y.CSF_Code);
-            }
-
-            return resp;
+            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental);
+            return ss.Top;
         }
 
 
         /// <summary>
         /// Returns the maturity grouping/question structure
-        /// for an assessment as JSON.
+        /// for an assessment as JSON.     
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental)
+        public XDocument GetMaturityStructureAsXml(int assessmentId, bool includeSupplemental)
         {
-            var x = new MaturityStructure(assessmentId, _context, includeSupplemental);
+            var x = new MaturityStructureAsXml(assessmentId, _context, includeSupplemental);
             return x.ToXDocument();
         }
 

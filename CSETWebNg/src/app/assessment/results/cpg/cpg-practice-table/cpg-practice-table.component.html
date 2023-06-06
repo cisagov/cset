@@ -20,33 +20,36 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *ngFor="let d of model?.Domain">
+<div *ngFor="let d of model?.domains">
     <div class="cpg-domain-bar page-break" 
-        [style.color]="textColor(d.groupingid)"
-        [style.background-color]="backgroundColor(d.groupingid)">
+        [style.color]="textColor(d.groupingId)"
+        [style.background-color]="backgroundColor(d.groupingId)">
         {{d.title}}
     </div>
 
-    <table *ngFor="let q of d.Question" class="cpg-table">
+    <table *ngFor="let q of d.questions" class="cpg-table">
         <tr>
-            <th style="width: 45%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
+            <th style="width: 45%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row">
                         <div class="mr-2 font-weight-bold">
-                            {{q.displaynumber}}
+                            {{q.displayNumber}}
                         </div>
                         <div class="font-weight-normal">
                             <span [innerHTML]="q.practice"></span>
                         </div>
                     </div>
-                    <div class="text-right ml-4 font-weight-normal" [innerHTML]="q.csf">
+                    <div class="text-right ml-4 font-weight-normal">
+                        <span *ngFor="let c of q.csf; let l = last" class="text-nowrap">
+                            {{c}}{{ l ? '' : ', '}}
+                        </span>
                     </div>
                 </div>
             </th>
-            <th style="width: 25%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
+            <th style="width: 25%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
                 CURRENT ASSESSMENT
             </th>
-            <th style="width: 30%" [style.color]="textColor(d.groupingid)" [style.background-color]="backgroundColor(d.groupingid)">
+            <th style="width: 30%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
                 NOTES
             </th>
         </tr>
@@ -55,10 +58,23 @@
                 <app-cpg-cost-impact-complexity 
                     [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">                    
                 </app-cpg-cost-impact-complexity>
-                <div class="sub-header-1">TTP or Risk Addressed</div>
-                <p [innerHTML]="q.ttp"></p>
-                <div class="sub-header-1">Recommended Action</div>
-                <p [innerHTML]="q.recommended"></p>
+
+                <div class="mb-3">
+                    <div class="sub-header-1">TTP or Risk Addressed</div>
+                    <ul *ngIf="q.ttp.length > 0">
+                        <li *ngFor="let t of q.ttp">
+                            {{t}}
+                        </li>
+                    </ul>
+                    
+                    <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="sub-header-1">Recommended Action</div>
+                    <p [innerHTML]="q.recommendedAction"></p>
+                </div>
             </td>
             <td>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
