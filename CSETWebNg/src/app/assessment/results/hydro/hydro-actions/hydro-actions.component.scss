@@ -1,0 +1,21 @@
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+    border-top-right-radius: 8px; 
+    border-bottom-right-radius: 8px; 
+    border-bottom-left-radius: 8px;
+}
+.header-button {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+    width: 935px;
+    text-align: start;
+}
+.tab {
+    background-color: #C4C8CE; 
+    color:#555E77; 
+    height:28px; 
+    border-top-left-radius: 8px; 
+    border-bottom-left-radius: 8px; 
+    width:28px; 
+    text-align: center;
+    padding-top: 3.5px;
+}
