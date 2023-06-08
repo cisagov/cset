@@ -54,7 +54,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
 
             var json = Helpers.CustomJsonWriter.Serialize(x.Root);
             return Ok(json);

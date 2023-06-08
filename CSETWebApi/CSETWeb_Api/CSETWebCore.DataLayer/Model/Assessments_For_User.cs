@@ -18,7 +18,6 @@ namespace CSETWebCore.DataLayer.Model
         public DateTime AssessmentDate { get; set; }
         public DateTime AssessmentCreatedDate { get; set; }
         [StringLength(301)]
-        [Unicode(false)]
         public string CreatorName { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public bool MarkedForReview { get; set; }

@@ -202,7 +202,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
 
 
             var j = "";
@@ -290,6 +290,16 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok(bizList);
+        }
+
+
+        [HttpGet]
+        [Route("api/maturity/hydro/getResultsData")]
+        public IActionResult GetResultsData()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
         }
 
 

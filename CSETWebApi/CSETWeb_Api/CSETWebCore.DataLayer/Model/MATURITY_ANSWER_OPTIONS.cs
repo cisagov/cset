@@ -45,6 +45,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("MATURITY_ANSWER_OPTIONS")]
         public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
         [InverseProperty("Mat_Option")]
+        public virtual HYDRO_DATA HYDRO_DATA { get; set; }
+        [InverseProperty("Mat_Option")]
         public virtual ICollection<ANSWER> ANSWER { get; set; }
         [InverseProperty("Mat_Option_Id_1Navigation")]
         public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation { get; set; }

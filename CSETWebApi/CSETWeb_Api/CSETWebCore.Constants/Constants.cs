@@ -62,6 +62,12 @@ namespace CSETWebCore.Constants
         public const string DB_EXTENSION = ".mdf";
         public const string DB_LOG_EXTENSION = ".ldf";
         public static string DB_BAK_EXTENSION = ".bak";
+        public const string LOCALDB_2022_CUSTOM_INSTANCE_NAME = "INLLocalDb2022";
+        public const string LOCALDB_2019_DEFAULT_INSTANCE_NAME = "MSSQLLocalDB";
+        public const string LOCALDB_2012_DEFAULT_INSTANCE_NAME = "v11.0";
+        public const string LOCALDB_2022_REGISTRY_DISPLAY_NAME = "Microsoft SQL Server 2022 LocalDB ";
+        public const string LOCALDB_2019_REGISTRY_DISPLAY_NAME = "Microsoft SQL Server 2019 LocalDB ";
+        public const string LOCALDB_2012_REGISTRY_DISPLAY_NAME = "Microsoft SQL Server 2012 Express LocalDB ";
         public const String CSET_FONTFAMILY = "Segoe UI"; //"/CSET_Main;multiServiceComponent/Fonts/#Arial"
         public const String OLD_ASSESSMENT_FILENAME = "assessment.xml";
         public const String AGGREGATION_FILE_NAME = "CSET_AggregationFile.mdf";

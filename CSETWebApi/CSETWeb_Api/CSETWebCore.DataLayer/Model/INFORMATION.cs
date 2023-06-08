@@ -91,6 +91,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Origin { get; set; }
         [StringLength(20)]
         public string Postal_Code { get; set; }
+        public int? Region_Code { get; set; }
 
         [ForeignKey("Id")]
         [InverseProperty("INFORMATION")]
@@ -98,6 +99,5 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("eMass_Document_Id")]
         [InverseProperty("INFORMATION")]
         public virtual DOCUMENT_FILE eMass_Document { get; set; }
-        public int? Region_Code { get; set; }
     }
 }

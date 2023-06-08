@@ -15,12 +15,15 @@ namespace CSETWebCore.DataLayer.Model
     {
         public MATURITY_QUESTIONS()
         {
+            HYDRO_DATA = new HashSet<HYDRO_DATA>();
+            ISE_ACTIONS = new HashSet<ISE_ACTIONS>();
             InverseParent_Question = new HashSet<MATURITY_QUESTIONS>();
             MATURITY_ANSWER_OPTIONS = new HashSet<MATURITY_ANSWER_OPTIONS>();
             MATURITY_QUESTION_PROPS = new HashSet<MATURITY_QUESTION_PROPS>();
             MATURITY_REFERENCES = new HashSet<MATURITY_REFERENCES>();
             MATURITY_REFERENCE_TEXT = new HashSet<MATURITY_REFERENCE_TEXT>();
             MATURITY_SOURCE_FILES = new HashSet<MATURITY_SOURCE_FILES>();
+            TTP_MAT_QUESTION = new HashSet<TTP_MAT_QUESTION>();
         }
 
         [Key]
@@ -49,6 +52,11 @@ namespace CSETWebCore.DataLayer.Model
         public string Mat_Question_Type { get; set; }
         public int? Parent_Option_Id { get; set; }
         public string Supplemental_Fact { get; set; }
+        [StringLength(250)]
+        public string Scope { get; set; }
+        public string Recommend_Action { get; set; }
+        public string Risk_Addressed { get; set; }
+        public string Services { get; set; }
 
         [ForeignKey("Grouping_Id")]
         [InverseProperty("MATURITY_QUESTIONS")]
@@ -69,7 +77,9 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("InverseParent_Question")]
         public virtual MATURITY_QUESTIONS Parent_Question { get; set; }
         [InverseProperty("Mat_Question")]
-        public virtual ISE_ACTIONS ISE_ACTIONS { get; set; }
+        public virtual ICollection<HYDRO_DATA> HYDRO_DATA { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<ISE_ACTIONS> ISE_ACTIONS { get; set; }
         [InverseProperty("Parent_Question")]
         public virtual ICollection<MATURITY_QUESTIONS> InverseParent_Question { get; set; }
         [InverseProperty("Mat_Question")]
@@ -82,5 +92,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+        [InverseProperty("Mat_Question")]
+        public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
     }
 }
