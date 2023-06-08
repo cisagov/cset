@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { CisService } from '../../../../../services/cis.service';
 import { HydroService } from '../../../../../services/hydro.service';
@@ -11,7 +11,7 @@ import { ReportService } from '../../../../../services/report.service';
   templateUrl: './hydro-progress-totals.component.html',
   styleUrls: ['./hydro-progress-totals.component.scss', '../hydro-actions.component.scss']
 })
-export class HydroProgressTotalsComponent implements OnInit {
+export class HydroProgressTotalsComponent {
   @Input() totals: any;
   @Input() progressArray: any;
 
@@ -29,10 +29,5 @@ export class HydroProgressTotalsComponent implements OnInit {
     public cisSvc: CisService,
     public hydroSvc: HydroService
   ) {}
-
-  ngOnInit () {
-    console.log(this.totals)
-    console.log(this.progressArray)
-  }
 
 }
