@@ -1,20 +1,66 @@
+<!---------------------- 
+
+   Copyright 2023 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
 <h1>Feasibility</h1>
-<div class="d-flex">
-    <div class="d-inline-flex" style="width: 50%">
-        <p>
-            Feasibility is defined as how much resources will it take 
-            to implement a particular control. It is broken down into 
-            three different tiers: Easy, Medium, and Hard. Easy means 
-            that the control will require no existing process, and cost 
-            little to no money to implement. Medium means that a control 
-            will require multiple inputs from multiple personnel and may 
-            cost a significant amount. High means that a control will require 
-            a significant lift requiring multiple inputs from personnel 
-            and require a significant cost. {{facilityName}} can see how their 
-            facility breaks down in terms of how difficult controls will be to implement. 
-        </p>
+<div *ngIf="loading">
+    <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
-    <div class="d-inline-flex" style="width: 50%; justify-content: center;">
-        <!-- ( chart goes here ) -->
+</div>
+
+<div *ngIf="!loading" class="d-flex flex-column justify-content-start flex-11a">
+    <div class="d-flex">
+        <div class="d-inline-flex" style="width: 40%">
+            <p>
+                Feasibility is defined as how much resources will it take 
+                to implement a particular control. It is broken down into 
+                three different tiers: Easy, Medium, and Hard. Easy means 
+                that the control will require no existing process, and cost 
+                little to no money to implement. Medium means that a control 
+                will require multiple inputs from multiple personnel and may 
+                cost a significant amount. High means that a control will require 
+                a significant lift requiring multiple inputs from personnel 
+                and require a significant cost. {{facilityName}} can see how their 
+                facility breaks down in terms of how difficult controls will be to implement. 
+            </p>
+        </div>
+        <div class="d-inline-flex" style="width: 60%; align-items: center;">
+            <div style="width: fit-content">
+                <div class="d-inline-flex" style="padding-left: 8px;">
+                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                        <span class="color-block" style="background: rgb(180, 237, 210);"></span>
+                        <span class="color-word">Easy</span>
+                    </div>
+                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                        <span class="color-block" style="background: rgb(127, 182, 133);"></span>
+                        <span class="color-word">Medium</span>
+                    </div>
+                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                        <span class="color-block" style="background: rgb(66, 106, 90);"></span>
+                        <span class="color-word">Hard</span>
+                    </div>
+                </div>
+                <app-hydro-bar-chart [barData]="feasibilityData" [subCatNames]="domainGroupNames" [colorScheme]="feasibilityColors" [view]="feasView"></app-hydro-bar-chart>
+            </div> 
+        </div>
     </div>
 </div>
