@@ -4,7 +4,7 @@ import { AssessmentService } from '../../../../services/assessment.service';
 import { QuestionsService } from '../../../../services/questions.service';
 import { CisService } from '../../../../services/cis.service';
 import { HydroService } from '../../../../services/hydro.service';
-import { round } from 'lodash';
+import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
   selector: 'app-hydro-deficiency',
@@ -34,14 +34,23 @@ export class HydroDeficiencyComponent implements OnInit {
   weightData: any[] =[];
   loading: boolean = true;
 
+
   // magic numbers to transform the subCategory weights to the category donut
   highImpactMagic: number = 0.21724524076;
   mediumImpactMagic: number = 0.33333333333;
+
+  assessScoresColors = {
+    domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
+  };
+  assessView: any[] = [800, 150];
+
+  domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
 
   constructor(
     public reportSvc: ReportService,
     public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
+    public maturitySvc: MaturityService,
     public cisSvc: CisService,
     public hydroSvc: HydroService
   ) {}
@@ -195,6 +204,8 @@ export class HydroDeficiencyComponent implements OnInit {
         });
       }
     );
+
+    
     
   }
 

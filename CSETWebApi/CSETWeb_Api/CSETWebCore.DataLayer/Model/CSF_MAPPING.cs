@@ -8,19 +8,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class STATE_REGION
+    public partial class CSF_MAPPING
     {
         [Key]
-        [StringLength(2)]
-        [Unicode(false)]
-        public string State { get; set; }
+        [StringLength(10)]
+        public string CSF_Code { get; set; }
         [Key]
-        [StringLength(5)]
-        [Unicode(false)]
-        public string RegionCode { get; set; }
-        [Required]
-        [StringLength(50)]
-        [Unicode(false)]
-        public string RegionName { get; set; }
+        [StringLength(10)]
+        public string Question_Type { get; set; }
+        [Key]
+        public int Question_Id { get; set; }
     }
 }

@@ -347,4 +347,8 @@ export class MaturityService {
   getMvraScoring(){
     return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
   }
+
+  getHydroResults() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getResultsData');
+  }
 }
