@@ -414,6 +414,14 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
     }
 
+    public class jHYDRO_DATA_ACTIONS
+    {
+        public Int32 Answer_Id { get; set; }
+        public Int32 Progress_Id { get; set; }
+        public String Comment { get; set; }
+
+    }
+
     public class jANSWER
     {
         [Required]

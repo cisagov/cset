@@ -2557,15 +2557,17 @@ namespace CSETWebCore.Business.Maturity
 
         public List<HydroActionsByDomain> GetHydroActions(int assessmentId)
         {
+
             var result = from subGrouping in _context.MATURITY_GROUPINGS
-                           join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
-                           join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                           join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
-                           join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
-                           where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" 
-                                && answer.Mat_Option_Id == action.Mat_Option_Id 
-                                && answer.Assessment_Id == assessmentId
-                           select new { subGrouping, domain, question, action , answer };
+                         join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
+                         join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
+                         // join dataActions in _context.HYDRO_DATA_ACTIONS on answer.Answer_Id equals dataActions.Answer_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
+                              && answer.Mat_Option_Id == action.Mat_Option_Id
+                              && answer.Assessment_Id == assessmentId
+                         select new { subGrouping, domain, question, action, answer };//, dataActions };
 
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
@@ -2588,11 +2590,28 @@ namespace CSETWebCore.Business.Maturity
                     actionQuestions = new List<HydroActionQuestion>();
                 }
 
+
+                if (_context.HYDRO_DATA_ACTIONS.Find(item.answer.Answer_Id) == null)
+                {
+                    _context.HYDRO_DATA_ACTIONS.Add(
+                        new HYDRO_DATA_ACTIONS()
+                        {
+                            Answer_Id = item.answer.Answer_Id,
+                            Progress_Id = 1,
+                            Comment = null
+                        }
+                    );
+                    _context.SaveChanges();
+                }
+
+                HYDRO_DATA_ACTIONS actionData = _context.HYDRO_DATA_ACTIONS.Where(x => x.Answer_Id == item.answer.Answer_Id).FirstOrDefault();
+
                 actionQuestions.Add(
                     new HydroActionQuestion()
                     {
                         Action = item.action,
-                        Question = item.question
+                        Question = item.question,
+                        ActionData = actionData
                     }
                 );
             }
@@ -2734,6 +2753,11 @@ namespace CSETWebCore.Business.Maturity
             resultsList.Add(lastResults);
 
             return resultsList;
+        }
+
+        public List<HYDRO_PROGRESS> GetHydroProgress()
+        {
+            return _context.HYDRO_PROGRESS.ToList();
         }
     }
 }

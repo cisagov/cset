@@ -3,10 +3,12 @@
     border-top-right-radius: 8px; 
     border-bottom-right-radius: 8px; 
     border-bottom-left-radius: 8px;
+    justify-content: center;
 }
 .header-button {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
-    width: 935px;
+    width: 100%;
+    // width: 935px;
     text-align: start;
 }
 .tab {
@@ -18,4 +20,37 @@
     width:28px; 
     text-align: center;
     padding-top: 3.5px;
+}
+.progress-btn {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+    height: 38px;
+    border: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    color: white;
+    font-weight: 500;
+    font-size: 0.9rem;
+    width: 15%;
+}
+.not-started {
+    background: linear-gradient(0deg, rgb(102, 130, 158), rgb(132, 162, 193));
+}
+.in-progress {
+    background: linear-gradient(0deg, rgb(93, 142, 220), rgb(145, 183, 243));
+}
+.in-review {
+    background: linear-gradient(0deg, rgb(8, 152, 92), rgb(145, 183, 243));
+}
+.complete {
+    background: linear-gradient(0deg, rgb(8, 152, 92), rgb(31, 204, 133));
+}
+.not-started-percent {
+    color: rgb(208, 212, 218);
+}
+.complete-percent {
+    color: rgb(31, 204, 133);
 }
