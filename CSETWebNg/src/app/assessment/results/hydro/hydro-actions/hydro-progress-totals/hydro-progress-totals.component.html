@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="d-flex" style="font-size: 0.85rem; color:white; margin:2px">
-    <div class="d-flex" [ngClass]="totals[0] == 0 ? classEmptyArray[0] : classArray[0]">
+    <div class="d-flex" [ngClass]="totals[0] == 0 ? classEmptyArray[0] : classArray[0]" style="margin:2px">
         <div style="padding-left: 8px;">
             {{totals[0]}}
         </div>
@@ -29,7 +29,7 @@
             {{progressArray[0].progress_Text}}
         </span>
     </div>
-    <div class="d-flex" [ngClass]="totals[1] == 0 ? classEmptyArray[1] : classArray[1]">
+    <div class="d-flex" [ngClass]="totals[1] == 0 ? classEmptyArray[1] : classArray[1]" style="margin:2px">
         <div style="padding-left: 8px;">
             {{totals[1]}}
         </div>
@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="d-flex" style="font-size: 0.85rem; color:white; margin:2px">
-    <div [ngClass]="totals[2] == 0 ? classEmptyArray[2] : classArray[2]">
+    <div [ngClass]="totals[2] == 0 ? classEmptyArray[2] : classArray[2]" style="margin:2px">
         <div style="padding-left: 8px;">
             {{totals[2]}}
         </div>
@@ -47,7 +47,7 @@
             {{progressArray[2].progress_Text}}
         </div>
     </div>
-    <div [ngClass]="totals[3] == 0 ? classEmptyArray[3] : classArray[3]">
+    <div [ngClass]="totals[3] == 0 ? classEmptyArray[3] : classArray[3]" style="margin:2px">
         <div style="padding-left: 8px;">
             {{totals[3]}}
         </div>
