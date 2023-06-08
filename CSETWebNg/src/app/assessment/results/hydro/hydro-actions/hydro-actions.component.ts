@@ -15,12 +15,15 @@ export class HydroActionsComponent implements OnInit {
 
   actionItemData: any[] = [];
   unsortedActionItemData: any[] = [];
+  progressTotalsMap: Map<String, number[]> = new Map<String, number[]>();
 
   loading: boolean = true;
 
   domainExpandMap: Map<String, boolean> = new Map<String, boolean>();
+  progressLevels: any[] = [];
 
   domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
+  percentStyleArray: string[] =['not-started-percent', 'complete-percent'];
 
   constructor(
     public reportSvc: ReportService,
@@ -32,20 +35,41 @@ export class HydroActionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.hydroSvc.getProgressText().subscribe(
+      (r: any) => {
+        console.log(r)
+        this.progressLevels = r;
+      }
+    )
+
     this.reportSvc.getHydroActionItems().subscribe(
       (r: any) => {
         let initialActionItemData = r;
+        console.log(initialActionItemData)
 
         for (let i = 0; i < initialActionItemData.length; i++) {
           let seq = initialActionItemData[i].domainSequence;
           let newSeq = i;
 
           if (newSeq+1 == seq) {
+            let currProgressTotals = [0,0,0,0];
+
+            if (this.progressTotalsMap.has(initialActionItemData[i].domainName)) {
+              currProgressTotals = this.progressTotalsMap.get(initialActionItemData[i].domainName);
+            }
+           
+            for (let item of initialActionItemData[i].actionsQuestions) {
+              currProgressTotals[item.actionData.progress_Id - 1]++;
+            }
+            this.progressTotalsMap.set(initialActionItemData[i].domainName, currProgressTotals);
+            
             this.actionItemData.push(initialActionItemData[i]);
           } 
 
           else {
             while (newSeq < seq && newSeq < this.domainGroupNames.length) {
+              this.progressTotalsMap.set(initialActionItemData[newSeq].domainName, [0,0,0,0]);
+
               this.actionItemData.push({
                 'actionsQuestions': [],
                 'domainName': this.domainGroupNames[newSeq],
@@ -61,10 +85,13 @@ export class HydroActionsComponent implements OnInit {
             'domainName': this.domainGroupNames[this.actionItemData.length],
             'domainSequence': this.actionItemData.length + 1
           });
+
+          this.progressTotalsMap.set(this.domainGroupNames[this.actionItemData.length-1], [0,0,0,0]);
         }
 
         this.sortBySeverity();
         this.loading = false;
+        console.log(this.progressTotalsMap)
         console.log(this.actionItemData)
       }
     )
@@ -83,7 +110,7 @@ export class HydroActionsComponent implements OnInit {
       this.domainExpandMap.set(catName, !currValue);
     }
 
-    this.scrollToElement('domain-' + catName);
+    // this.scrollToElement('domain-' + catName);
   }
 
   impactTranslator(impact: number) {
@@ -104,8 +131,15 @@ export class HydroActionsComponent implements OnInit {
     }
   }
 
-  scrollToElement(element) {
-    (document.getElementById(element) as HTMLElement).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+  getCompletionPercent(domainName: string) {
+    let totals = this.progressTotalsMap.get(domainName);
+    
+    let totalActionItems = totals[0] + totals[1] + totals[2] + totals[3];
+
+    if(totalActionItems == 0) {
+      return 0;
+    }
+    return ((totals[3] / totalActionItems) * 100).toFixed(0);
   }
 
 }

@@ -14,4 +14,34 @@
     <div style="padding:16px; padding-top: 8px;">
         {{text}}
     </div>
+    <div style="padding:16px; padding-top: 8px;">
+        <input #commentBox class="form-control" type="text" placeholder="Write a new comment..." style="width:100%" 
+            (change)="saveChanges(commentBox.value)" value="{{comment}}">
+    </div>
+
+    <div class="d-flex" style="padding:16px; padding-top: 8px;">
+        <button [class]="classArray[progressId-1]" (click)="toggleProgressSelector()">
+            <div style="align-items: center;">
+                {{progressText}}
+            </div>
+        </button>
+        <div *ngIf="showProgressButtons" style="padding:16px; padding-top: 8px;" class="d-flex">
+            <div *ngFor="let progress of progressArray" style="background-color:#f5f5f5; width:100%">
+                <div *ngIf="progress.progress_Id != progressId" class="d-inline-flex">
+                    <button [class]="classArray[progress.progress_Id-1]" (click)="selectNewProgress(progress, commentBox.value)" style="width:122px; margin:4px">
+                        {{progress.progress_Text}}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div *ngIf="showProgressButtons" style="padding:16px; padding-top: 8px;">
+        <div *ngFor="let progress of progressArray" style="background-color:#f5f5f5; padding: 8px; width:18%" class="d-flex">
+            <div *ngIf="progress.progress_Id != progressId">
+                <button [class]="classArray[progress.progress_Id-1]" (click)="selectNewProgress(progress, commentBox.value)" style="width:100%">
+                    {{progress.progress_Text}}
+                </button>
+            </div>
+        </div>
+    </div> -->
 </div>
