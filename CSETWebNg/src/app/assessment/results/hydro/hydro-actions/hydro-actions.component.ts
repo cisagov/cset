@@ -37,7 +37,6 @@ export class HydroActionsComponent implements OnInit {
   ngOnInit() {
     this.hydroSvc.getProgressText().subscribe(
       (r: any) => {
-        console.log(r)
         this.progressLevels = r;
       }
     )
@@ -45,7 +44,6 @@ export class HydroActionsComponent implements OnInit {
     this.reportSvc.getHydroActionItems().subscribe(
       (r: any) => {
         let initialActionItemData = r;
-        console.log(initialActionItemData)
 
         for (let i = 0; i < initialActionItemData.length; i++) {
           let seq = initialActionItemData[i].domainSequence;
@@ -91,8 +89,6 @@ export class HydroActionsComponent implements OnInit {
 
         this.sortBySeverity();
         this.loading = false;
-        console.log(this.progressTotalsMap)
-        console.log(this.actionItemData)
       }
     )
     
@@ -109,8 +105,6 @@ export class HydroActionsComponent implements OnInit {
     if (this.domainExpandMap.has(catName)) {
       this.domainExpandMap.set(catName, !currValue);
     }
-
-    // this.scrollToElement('domain-' + catName);
   }
 
   impactTranslator(impact: number) {
@@ -127,7 +121,7 @@ export class HydroActionsComponent implements OnInit {
 
   sortBySeverity() {
     for (let domain of this.actionItemData) {
-      domain.actionsQuestions.sort((a, b) => (a.action.severity < b.action.severity ? -1 : 1))      
+      domain.actionsQuestions.sort((a, b) => (a.action.severity < b.action.severity ? -1 : 1));      
     }
   }
 

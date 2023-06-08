@@ -18,18 +18,12 @@ export class HydroBarChartComponent implements OnInit {
 
   xAxis: boolean = false;
   dataLabel: boolean = false;
-  //yAxis: boolean = false;
-
-  // colorScheme = {
-  //   domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
-  // };
 
   ngOnInit() {
     for (let i = 0; i < this.barData.length; i++) {
       let currSubCatWeightArray = this.barData[i];
 
       if (currSubCatWeightArray.length > 3) {
-        //this.yAxis = true;
         this.dataLabel = true;
         let currSubCatDataList = {
           "name": this.subCatNames[i],

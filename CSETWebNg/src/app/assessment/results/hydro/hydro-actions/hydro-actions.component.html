@@ -35,26 +35,24 @@
             </p>
             <br>
             <div *ngFor="let domain of actionItemData">
-                <!-- <div class="d-flex"> -->
-                    <button class="btn header-button" (click)="toggleCategory(domain.domainName)" [id]="'domain-'+domain.domainName">
-                        <div class="d-flex">
-                            <div style="width:55%; align-items: center;">
-                                <h4>{{domain.domainName}}</h4>
-                            </div>
-                            <div style="justify-content: center; width:30%;">
-                                <app-hydro-progress-totals [totals]="progressTotalsMap.get(domain.domainName)" 
-                                [progressArray]="progressLevels"></app-hydro-progress-totals>
-                            </div>
-                            <div [ngClass]="getCompletionPercent(domain.domainName) > 0 ? percentStyleArray[1] : percentStyleArray[0]" 
-                                style="width:15%; font-size: 20px; text-align: center;">
-                                {{getCompletionPercent(domain.domainName)}}%
-                            </div>
-                            <i class="cset-icons-chevron-down q-expand" style="margin-left:auto; align-items: center;" 
-                                [class.expand-flip]="domainExpandMap.get(domain.domainName)"></i>
+                <button class="btn header-button" (click)="toggleCategory(domain.domainName)" [id]="'domain-'+domain.domainName">
+                    <div class="d-flex">
+                        <div style="width:55%; align-items: center;">
+                            <h4>{{domain.domainName}}</h4>
                         </div>
-                        
-                    </button>
-                <!-- </div> -->
+                        <div style="justify-content: center; width:30%;">
+                            <app-hydro-progress-totals [totals]="progressTotalsMap.get(domain.domainName)" 
+                            [progressArray]="progressLevels"></app-hydro-progress-totals>
+                        </div>
+                        <div [ngClass]="getCompletionPercent(domain.domainName) > 0 ? percentStyleArray[1] : percentStyleArray[0]" 
+                            style="width:15%; font-size: 20px; text-align: center;">
+                            {{getCompletionPercent(domain.domainName)}}%
+                        </div>
+                        <i class="cset-icons-chevron-down q-expand" style="margin-left:auto; align-items: center;" 
+                            [class.expand-flip]="domainExpandMap.get(domain.domainName)"></i>
+                    </div>
+                    
+                </button>
                 
                 <br>
                 <div *ngIf="domainExpandMap.get(domain.domainName)">
