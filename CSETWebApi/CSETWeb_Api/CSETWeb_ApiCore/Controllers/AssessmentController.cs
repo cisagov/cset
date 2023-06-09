@@ -347,9 +347,21 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetPreventEncryptStatus()
         {
             var userId = _tokenManager.GetCurrentUserId();
-            var query = from u in _context.USERS
+            var ak = _tokenManager.GetAccessKey();
+
+            IQueryable<bool?> query = null;
+            if (userId != null) 
+            {
+                query = from u in _context.USERS
                         where u.UserId == userId
                         select u.PreventEncrypt;
+            }
+            else if (ak != null) 
+            {
+                query = from a in _context.ACCESS_KEY
+                        where a.AccessKey == ak
+                        select a.PreventEncrypt;
+            }
 
             var result = query.ToList().FirstOrDefault();
             
@@ -361,10 +373,22 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SavePreventEncryptStatus([FromBody] bool status)
         {
             var userId = _tokenManager.GetCurrentUserId();
-            var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+            var ak = _tokenManager.GetAccessKey();
 
-            user.PreventEncrypt = status;
-            _context.SaveChanges();
+            if (userId != null)
+            {
+                var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+
+                user.PreventEncrypt = status;
+                _context.SaveChanges();
+            }
+            else if (ak != null) 
+            {
+                var accessKey = _context.ACCESS_KEY.Where(x => x.AccessKey == ak).FirstOrDefault();
+
+                accessKey.PreventEncrypt = status;
+                _context.SaveChanges();
+            }
 
             return Ok();
         }
