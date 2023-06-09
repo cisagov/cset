@@ -574,8 +574,8 @@ import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
-import { ReportCardSdResultsComponent } from './assessment/results/sd/report-card-sd-results/report-card-sd-results.component';
-import { ReportCardSdComponent } from './reports/sd/report-card-sd/report-card-sd.component';
+import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
+import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
 
 
@@ -1107,8 +1107,8 @@ import { ReportCardSdComponent } from './reports/sd/report-card-sd/report-card-s
         HydroImpactComponent,
         HydroFeasibilityComponent,
         HydroActionsComponent,
-        ReportCardSdComponent,
-        ReportCardSdResultsComponent,
+        SdAnswerSummaryReportComponent,
+        SdAnswerSummaryComponent,
     ],
     providers: [
         ConfigService,
