@@ -574,6 +574,8 @@ import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
+import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
 
 
@@ -1105,6 +1107,8 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         HydroImpactComponent,
         HydroFeasibilityComponent,
         HydroActionsComponent,
+        SdAnswerSummaryReportComponent,
+        SdAnswerSummaryComponent,
     ],
     providers: [
         ConfigService,
