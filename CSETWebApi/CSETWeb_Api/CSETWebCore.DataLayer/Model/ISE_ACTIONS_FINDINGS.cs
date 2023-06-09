@@ -21,8 +21,5 @@ namespace CSETWebCore.DataLayer.Model
         [ForeignKey("Finding_Id")]
         [InverseProperty("ISE_ACTIONS_FINDINGS")]
         public virtual FINDING Finding { get; set; }
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("ISE_ACTIONS_FINDINGS")]
-        public virtual ISE_ACTIONS Mat_Question { get; set; }
     }
 }
