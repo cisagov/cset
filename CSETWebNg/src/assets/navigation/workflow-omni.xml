@@ -288,7 +288,7 @@
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
 
         <!-- Results - SD -->
-        <node displaytext="SD Pipeline Answer Summary" id="report-card-sd-results" path="assessment/{:id}/results/report-card-sd-results" condition="MATURITY:SD" />
+        <node displaytext="SD Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">
