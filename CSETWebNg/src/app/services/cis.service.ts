@@ -59,7 +59,7 @@ export class CisService {
    *
    */
   getCisSection(sectionId: Number) {
-    return this.http.get(this.configSvc.apiUrl + 'maturity/cis/questions?sectionId=' + sectionId);
+    return this.http.get(this.configSvc.apiUrl + 'maturity/nested/questions?sectionId=' + sectionId);
   }
 
   getIntegrityCheckOptions() {
