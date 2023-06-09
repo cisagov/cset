@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 
-namespace CSETWebCore.Model.Cis
+namespace CSETWebCore.Model.Nested
 {
 
     public class ModelStructure
@@ -23,7 +23,7 @@ namespace CSETWebCore.Model.Cis
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
     }
 
-    public class CisQuestions
+    public class NestedQuestions
     {
         public int AssessmentId { get; set; }
 

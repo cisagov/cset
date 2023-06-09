@@ -203,6 +203,9 @@ import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { ReportCardSdResultsComponent } from './assessment/results/sd/report-card-sd-results/report-card-sd-results.component';
+import { ReportCardSdComponent } from './reports/sd/report-card-sd/report-card-sd.component';
+
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -457,6 +460,7 @@ const appRoutes: Routes = [
               { path: 'hydro-impact', component: HydroImpactComponent },
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
               { path: 'hydro-actions', component: HydroActionsComponent },
+              { path: 'report-card-sd-results', component: ReportCardSdResultsComponent },
             ]
           },
 
@@ -518,6 +522,7 @@ const appRoutes: Routes = [
       { path: 'module-content', component: ModuleContentComponent },
       { path: 'c2m2Report', component: C2m2ReportComponent },
       { path: 'hydroReport', component: HydroReportComponent },
+      { path: 'sdReport', component: ReportCardSdComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }

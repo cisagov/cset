@@ -428,6 +428,21 @@
         </div>
       </div>
 
+
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD') && !isMobile"        
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Pipeline Security Directive (SD)
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('sdReport')" class="btn btn-link btn-link-dark text-left">
+            Answer Summary
+          </button>
+        </div>
+
+      </div>
+
       <div class="mt-5">
         <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
           class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
