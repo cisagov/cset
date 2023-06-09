@@ -181,7 +181,7 @@
             </node>
         </node>
 
-        <!-- SD questions displayed in tree structure -->
+        <!-- SD question domains displayed in tree structure -->
         <node displaytext="SD Questions" condition="MATURITY:SD">
             <node id="maturity-questions-nested-12001" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/12001" />
             <node id="maturity-questions-nested-12002" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/12002" />
@@ -287,6 +287,8 @@
         <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:CPG" />
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
 
+        <!-- Results - SD -->
+        <node displaytext="SD Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">

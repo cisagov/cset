@@ -783,7 +783,7 @@ namespace CSETWebCore.Business.Maturity
             return levelScore;
         }
 
-        private LevelScore GetLevelScoreQuestions(Model.Cis.Grouping group, string level)
+        private LevelScore GetLevelScoreQuestions(Model.Nested.Grouping group, string level)
         {
             LevelScore levelScore = new LevelScore();
             levelScore.Level = level;
@@ -852,7 +852,7 @@ namespace CSETWebCore.Business.Maturity
                     List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                     ConsolidateAnswers(answers, out ANSWER answer);
 
-                    var question = new Model.Cis.Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
@@ -2411,19 +2411,19 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// Converts a CisQuestions structure to a MaturityResponse structure.
+        /// Converts a NestedQuestions structure to a MaturityResponse structure.
         /// </summary>
-        /// <param name="cisStructure"></param>
+        /// <param name="structure"></param>
         /// <returns></returns>
-        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
+        public MaturityResponse ConvertToMaturityResponse(Model.Nested.NestedQuestions structure)
         {
-            this._maturityModelId = cisStructure.ModelId;
+            this._maturityModelId = structure.ModelId;
 
             var resp = new MaturityResponse();
 
             resp.MaturityTargetLevel = 100;
 
-            foreach (var g in cisStructure.Groupings)
+            foreach (var g in structure.Groupings)
             {
                 resp.Groupings = MapGroupings(g);
             }
@@ -2435,7 +2435,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// 
         /// </summary>
-        private List<MaturityGrouping> MapGroupings(Model.Cis.Grouping g)
+        private List<MaturityGrouping> MapGroupings(Model.Nested.Grouping g)
         {
             var list = new List<MaturityGrouping>();
 
@@ -2464,7 +2464,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// 
         /// </summary>
-        private List<QuestionAnswer> MapQuestions(Model.Cis.Grouping g)
+        private List<QuestionAnswer> MapQuestions(Model.Nested.Grouping g)
         {
             var questionAnswer = new List<QuestionAnswer>();
 

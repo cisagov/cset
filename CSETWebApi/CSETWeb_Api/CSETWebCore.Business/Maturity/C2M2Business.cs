@@ -8,7 +8,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Model;
 using CSETWebCore.Model.C2M2.Charts;
 using CSETWebCore.Model.C2M2.Tables;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -156,7 +156,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
-        private HeatmapPractice CreatePractice(Model.Cis.Question q)
+        private HeatmapPractice CreatePractice(Model.Nested.Question q)
         {
             var shortNumber = q.DisplayNumber.Contains('-') ? q.DisplayNumber.Split('-').Last() : q.DisplayNumber;
             return new HeatmapPractice()
