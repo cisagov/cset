@@ -1,0 +1,141 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column mt-3">
+            <p
+                class="report-title">
+                ACTION ITEMS
+            </p>
+            <p
+                class="report-title">
+                REPORT
+            </p>
+        </div>
+        <div class="column">
+            <!-- <p style="text-align: center">
+                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
+            </p> -->
+            <div class="cover-page-bottom mb-4">
+                <div>
+                    <img src="assets/images/RENEW/SHIELD_LOGO.svg" alt="renew" style="height: 185px"/>
+                </div>
+                <div style="
+                                    text-align: right;
+                                    font-weight: normal;
+                                    font-size: 18px;
+                                    flex-direction: column;
+                                    line-height: 150%;
+                                    padding-right: 2em;
+                                ">
+
+                    <div class="title-page-name">{{this.demographics?.assessment_Name}}</div>
+                    <div class="title-page-content">{{this.demographics?.assessment_Date  |
+                        date:'dd-MMM-yyyy'}}
+                    </div>
+                    <div class="title-page-content">{{this.demographics?.assessor_Name}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="this.loadingCounter < 0; else mainContent" class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+
+        <ng-template #mainContent>
+            <!-- <div class="page-break"> -->
+                <div class="ml-3 mr-3 form">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Demographics</div>
+                        </div>
+                    </div>
+
+                    <table class="table-site-info">
+                        <tr>
+                            <td>Assessment Name:</td>
+                            <td>{{this.demographics?.assessment_Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Assessment Date:</td>
+                            <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        </tr>
+                        <tr>
+                            <td>City or Site Name:</td>
+                            <td>{{this.demographics?.city_Or_Site_Name}}</td>
+                        </tr>
+                        <tr>
+                            <td>State, Province or Region:</td>
+                            <td>{{this.demographics?.state_Province_Or_Region}}</td>
+                        </tr>
+                        <tr>
+                            <td>Facility Name:</td>
+                            <td>{{this.demographics?.facility_Name}}</td>
+                        </tr>
+                    </table>
+                </div>
+            <!-- </div> -->
+
+            <div class="page-break">
+                <br>
+                <div class="ml-3 mr-3">
+                    <div class="d-flex flex-row" style="justify-content: space-between">
+                        <div style="align-self: flex-end;">
+                            <div class="h2 report-text-blue">Action Items</div>
+                        </div>
+                    </div>
+                    <table class="table-responsive td-align-top td-padding-half-rem">
+                        <tr class="report-text-blue">
+                            <td style="width: 15%;">Impact</td>
+                            <!-- <td style="width: 15%">Question</td> -->
+                            <td style="width: 60%">Action</td>
+                            <td style="width: 25%">Comment</td>
+                            <!-- <td>Domain</td>
+                            <td>Sub-Domain</td> -->
+                        </tr>
+                        <ng-container *ngFor="let progressArray of actionItems">
+                            <tr>
+                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]">
+                                    {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
+                                </td>
+                            </tr>
+                            <ng-container *ngFor="let item of progressArray">
+                                <tr>
+                                    <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{ hydroSvc.impactTranslator(item.action.severity) }}</td>
+                                    <!-- <td class="cell">{{ item.question.question_Title }}</td> -->
+                                    <td class="cell" [innerHTML]="item.action.action_Items"></td>
+                                    <td class="pr-3 cell">{{ item.actionData.comment }}</td>
+                                    <!-- <td class="pr-3">{{ item.question.category }}</td>
+                                    <td class="pr-3">{{ item.question.sub_Category }}</td> -->
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </table>
+
+                </div>
+            </div>
+
+        </ng-template>
+    </div>
+</div>
