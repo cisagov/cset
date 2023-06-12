@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
 using Newtonsoft.Json.Linq;
+using DocumentFormat.OpenXml.InkML;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -56,6 +57,69 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest("assets/config.json file not found");
             }
         }
+
+
+        [HttpPost]
+        [Route("api/assets/changeConnectionString")]
+        public string ChangeConnectionString([FromBody] string connString)
+        {
+            try
+            {
+                string currDirectory = Directory.GetCurrentDirectory();
+                string appSettingsPath = currDirectory+ "\\appsettings.json";
+
+                if (System.IO.File.Exists(appSettingsPath))
+                {
+                    JObject document = JObject.Parse(System.IO.File.ReadAllText(appSettingsPath));
+                    JToken element = document["ConnectionStrings"];
+
+                    string previousConnString = element["CSET_DB"].ToString();
+                    element["CSET_DB"] = connString;
+                    document["ConnectionStrings"].Replace(element);
+
+                    System.IO.File.WriteAllText(appSettingsPath, document.ToString());
+                    
+                    return previousConnString;
+                }
+                else
+                {
+                    return "Error: \"appsettings.json\" could not be found";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error: something went wrong with changing the connection string in \"appsettings.json\". "+ex.Message;
+            }
+        }
+
+
+        [HttpGet]
+        [Route("api/assets/getConnectionString")]
+        public string GetConnectionString()
+        {
+            try
+            {
+                string currDirectory = Directory.GetCurrentDirectory();
+                string appSettingsPath = currDirectory + "\\appsettings.json";
+
+                if (System.IO.File.Exists(appSettingsPath))
+                {
+                    JObject document = JObject.Parse(System.IO.File.ReadAllText(appSettingsPath));
+                    JToken element = document["ConnectionStrings"];
+
+                    return element["CSET_DB"].ToString();
+                }
+                else
+                {
+                    return "Error: \"appsettings.json\" could not be found";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "Error: something went wrong with getting the connection string in \"appsettings.json\". " + ex.Message;
+            }
+        }
+
 
         Newtonsoft.Json.Linq.JObject processUpdatedJson(HttpRequest context)
         {
