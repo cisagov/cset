@@ -18,11 +18,13 @@ namespace CSETWebCore.DataLayer.Model
         }
 
         [Key]
-        [ForeignKey("Answer_Id")]
         public int Answer_Id { get; set; }
         [ForeignKey("Progress_Id")]
         public int Progress_Id { get; set; }
         [StringLength(2000)]
         public string? Comment { get; set; }
+        [ForeignKey("Answer_Id")]
+        [InverseProperty("HYDRO_DATA_ACTIONS")]
+        public virtual ANSWER Answer { get; set; }
     }
 }

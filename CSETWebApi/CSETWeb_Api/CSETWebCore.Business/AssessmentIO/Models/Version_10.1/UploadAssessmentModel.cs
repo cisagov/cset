@@ -35,6 +35,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         
         public List<jFINDING> jFINDING { get; set; }
         public List<jISE_ACTIONS_FINDINGS> jISE_ACTIONS_FINDINGS { get; set; }
+        public List<jHYDRO_DATA_ACTIONS> jHYDRO_DATA_ACTIONS { get; set; }
         public List<jANSWER> jANSWER { get; set; }
         public List<jNIST_SAL_INFO_TYPES> jNIST_SAL_INFO_TYPES { get; set; }
         public List<jDOCUMENT_ANSWERS> jDOCUMENT_ANSWERS { get; set; }
@@ -87,6 +88,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
             this.jFINANCIAL_ASSESSMENT_VALUES = new List<jFINANCIAL_ASSESSMENT_VALUES>();
             this.jFINDING = new List<jFINDING>();
             this.jISE_ACTIONS_FINDINGS = new List<jISE_ACTIONS_FINDINGS>();
+            this.jHYDRO_DATA_ACTIONS = new List<jHYDRO_DATA_ACTIONS>();
             this.jFINDING_CONTACT = new List<jFINDING_CONTACT>();
             this.jFRAMEWORK_TIER_TYPE_ANSWER = new List<jFRAMEWORK_TIER_TYPE_ANSWER>();
             this.jGENERAL_SAL = new List<jGENERAL_SAL>();
