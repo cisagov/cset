@@ -19,7 +19,7 @@ export class HydroActionItemComponent implements OnInit {
   @Input() progressId: any;
   @Input() progressArray: any;
   @Input() comment: string;
-  @Input() answerId: number;
+  @Input() answer: any;
 
   classArray: string[] = ['progress-btn not-started', 'progress-btn in-progress', 'progress-btn in-review', 'progress-btn complete'];
   showProgressButtons: boolean = false;
@@ -51,7 +51,7 @@ export class HydroActionItemComponent implements OnInit {
   }
 
   saveChanges(comment: string) {
-    this.hydroSvc.saveHydroComment(this.answerId, this.progressId, comment).subscribe();
+    this.hydroSvc.saveHydroComment(this.answer, this.answer.answer_Id, this.progressId, comment).subscribe();
   }
 
 }

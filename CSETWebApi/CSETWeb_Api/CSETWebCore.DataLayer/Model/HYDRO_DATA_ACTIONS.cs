@@ -13,11 +13,9 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public partial class HYDRO_DATA_ACTIONS
     {
-        public HYDRO_DATA_ACTIONS()
-        {
-        }
 
         [Key]
+        [ForeignKey("Answer_Id")]
         public int Answer_Id { get; set; }
         [ForeignKey("Progress_Id")]
         public int Progress_Id { get; set; }
