@@ -20,7 +20,7 @@ export class HydroImpactComponent implements OnInit {
   };
 
   domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
-
+  view: any[] = [800, 300];
   loading: boolean = true;
 
   constructor(

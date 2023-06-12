@@ -29,4 +29,25 @@ export class HydroService {
     }
     return false;
   }
+
+  saveHydroComment(answerId: number, progressId: number, comment: string) {
+    let hpc = new HydroProgressComment();
+    hpc.Answer_Id = answerId;
+    hpc.Progress_Id = progressId;
+    hpc.Comment = comment;
+
+    console.log(hpc)
+    
+    return this.http.post(this.configSvc.apiUrl + 'saveHydroComment', hpc, headers);
+  }
+
+  getProgressText() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getProgressText', headers);
+  }
+}
+
+export class HydroProgressComment {
+  Answer_Id: number;
+  Progress_Id: number;
+  Comment: string;
 }

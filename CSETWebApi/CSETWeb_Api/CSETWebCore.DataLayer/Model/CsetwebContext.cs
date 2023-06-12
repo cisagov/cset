@@ -141,6 +141,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
         public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
         public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
+        public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
+        public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }

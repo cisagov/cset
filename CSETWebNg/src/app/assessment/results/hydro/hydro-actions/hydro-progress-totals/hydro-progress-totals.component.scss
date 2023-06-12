@@ -1,0 +1,36 @@
+.progress-box {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+    height: 23px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    font-weight: 500;
+    background: white;
+    width: 50%;
+}
+// .not-started {
+//     background: linear-gradient(0deg, rgb(102, 130, 158), rgb(132, 162, 193));
+// }
+.not-started-empty {
+    border: 1px solid rgb(132, 162, 193);
+    color: rgb(132, 162, 193);
+}
+.in-progress-empty {
+    border: 1px solid rgb(145, 183, 243);
+    color: rgb(145, 183, 243);
+}
+.in-review-empty {
+    border: 1px solid rgb(145, 183, 243);
+    color: rgb(145, 183, 243);
+}
+.complete-empty {
+    border: 1px solid rgb(31, 204, 133);
+    color: rgb(31, 204, 133);
+}
+.progress-text {
+    padding-left: 8px; 
+    padding-right: 8px; 
+    overflow: hidden;
+}
