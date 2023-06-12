@@ -1831,6 +1831,25 @@ div.spinner-size-50 {
 
 
 
+/// nested formatting ///////////////////////////////////
+.nested-question-title {
+  font-weight: bold;
+}
+
+.nested-question-text, .nested-question-text p {
+  margin-bottom: 1rem;
+}
+
+.nested-option-block, .nested-option-block p {
+  margin-bottom: 1rem !important;
+}
+
+.nested-option-block-report {
+  margin-bottom: 1rem;
+}
+
+
+
 
 /////////////////////////////////////////////////////////////////
 :host {

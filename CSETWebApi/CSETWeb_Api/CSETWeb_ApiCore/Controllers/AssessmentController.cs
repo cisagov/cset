@@ -21,6 +21,7 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
@@ -152,7 +153,7 @@ namespace CSETWebCore.Api.Controllers
             // Hidden Screens
             if (config.HiddenScreens != null && ss != null)
             {
-                ss.Hidden_Screens = String.Join(",", config.HiddenScreens);
+                ss.Hidden_Screens = string.Join(",", config.HiddenScreens);
             }
 
 
@@ -333,6 +334,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
 
+        
         [HttpGet]
         [Route("api/getMergeNames")]
         public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 

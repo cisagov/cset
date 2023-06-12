@@ -23,11 +23,12 @@
 <div *ngFor="let q of questionList" class="mb-3">
     <div class="mb-2">
         <div class="mb-2">
-            <span style="white-space: normal;">
+            <div class="nested-question-title">{{q.displayNumber}}</div>
+            <div style="white-space: normal;">
                 <span class="nested-question-text" [innerHTML]="q.questionText | safe: 'html'"></span>
-            </span>
+            </div>
 
-            <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
+            <div *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</div>
 
             <div *ngIf="q.questionType == 'memo'">
                 <div class="form-control w-100 h-5" [innerHTML]="q.answerMemo"></div>
