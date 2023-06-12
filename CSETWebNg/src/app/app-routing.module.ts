@@ -203,6 +203,7 @@ import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -518,6 +519,7 @@ const appRoutes: Routes = [
       { path: 'module-content', component: ModuleContentComponent },
       { path: 'c2m2Report', component: C2m2ReportComponent },
       { path: 'hydroReport', component: HydroReportComponent },
+      { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }

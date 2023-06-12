@@ -41,7 +41,7 @@ export class HydroActionsComponent implements OnInit {
       }
     )
 
-    this.reportSvc.getHydroActionItems().subscribe(
+    this.hydroSvc.getHydroActionItems().subscribe(
       (r: any) => {
         let initialActionItemData = r;
 
@@ -104,18 +104,6 @@ export class HydroActionsComponent implements OnInit {
     }
     if (this.domainExpandMap.has(catName)) {
       this.domainExpandMap.set(catName, !currValue);
-    }
-  }
-
-  impactTranslator(impact: number) {
-    if (impact == 1) {
-      return 'High';
-    }
-    if (impact == 2) {
-      return 'Medium';
-    }
-    if (impact == 3) {
-      return 'Low';
     }
   }
 
