@@ -2543,6 +2543,11 @@ namespace CSETWebCore.Business.Maturity
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
+            if (result.ToList().Count == 0)
+            {
+                return actionsByDomains;
+            }
+
             var currDomain = result.ToList().FirstOrDefault().domain;
 
             foreach (var item in result.Distinct().ToList())
@@ -2567,6 +2572,7 @@ namespace CSETWebCore.Business.Maturity
                     _context.HYDRO_DATA_ACTIONS.Add(
                         new HYDRO_DATA_ACTIONS()
                         {
+                            Answer = item.answer,
                             Answer_Id = item.answer.Answer_Id,
                             Progress_Id = 1,
                             Comment = ""
