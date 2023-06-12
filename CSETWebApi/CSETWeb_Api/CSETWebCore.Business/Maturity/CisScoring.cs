@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// The structured model for a section/category in CIS.
         /// </summary>
-        public CisQuestions QuestionsModel;
+        public NestedQuestions QuestionsModel;
 
         private List<FlatQuestion> allWeights = new List<FlatQuestion>();
 
@@ -30,7 +30,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public CisScoring(int assessmentId, int sectionId, CSETContext context)
         {
-            var section = new CisStructure(assessmentId, sectionId, context);
+            var section = new NestedStructure(assessmentId, sectionId, context);
             QuestionsModel = section.MyModel;
         }
 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Business.Maturity
         /// Calculates CIS scoring.
         /// </summary>
         /// <param name="model"></param>
-        public CisScoring(CisQuestions model)
+        public CisScoring(NestedQuestions model)
         {
             QuestionsModel = model;
         }
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public Score CalculateGroupingScore()
         {
-            if (QuestionsModel.Groupings.FirstOrDefault().Questions != null)
+            if (QuestionsModel.Groupings.FirstOrDefault()?.Questions != null)
             {
                 FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
 
@@ -138,7 +138,7 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <param name="questions"></param>
-        private void FlattenQuestions(List<Model.Cis.Question> questions)
+        private void FlattenQuestions(List<Model.Nested.Question> questions)
         {
             foreach (var q in questions)
             {
