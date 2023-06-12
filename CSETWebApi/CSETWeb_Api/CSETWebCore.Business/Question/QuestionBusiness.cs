@@ -581,5 +581,35 @@ namespace CSETWebCore.Business.Question
 
             return info;
         }
+
+
+        public int SaveHydroComment(int answerId, int progressId, string comment)
+        {
+            
+
+            try
+            {
+                _context.HYDRO_DATA_ACTIONS.Update(new HYDRO_DATA_ACTIONS()
+                {
+                    Answer_Id = answerId,
+                    Progress_Id = progressId,
+                    Comment = comment
+                });
+            } 
+            catch (Exception ex)
+            {
+                HYDRO_DATA_ACTIONS hda = new HYDRO_DATA_ACTIONS()
+                {
+                    Answer_Id = answerId,
+                    Progress_Id = progressId,
+                    Comment = comment
+                };
+                _context.HYDRO_DATA_ACTIONS.Add(hda);
+            }
+
+            _context.SaveChanges();
+
+            return answerId;
+        }
     }
 }

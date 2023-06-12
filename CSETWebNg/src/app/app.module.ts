@@ -574,6 +574,8 @@ import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { HydroActionItemComponent } from './assessment/results/hydro/hydro-actions/hydro-action-item/hydro-action-item.component';
+import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-actions/hydro-progress-totals/hydro-progress-totals.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
@@ -1107,6 +1109,8 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         HydroImpactComponent,
         HydroFeasibilityComponent,
         HydroActionsComponent,
+        HydroActionItemComponent,
+        HydroProgressTotalsComponent,
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
     ],

@@ -116,6 +116,13 @@ export class ReportService {
     }
 
     /**
+     *
+     */
+    getHydroActionItems(): any {
+        return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
+    }
+
+    /**
      * Calls the API to get the structure of a SET.
      */
     getModuleContent(setName: string): any {

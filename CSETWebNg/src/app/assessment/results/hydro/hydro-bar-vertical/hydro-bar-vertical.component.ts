@@ -10,9 +10,9 @@ export class HydroBarVerticalComponent implements OnInit {
   @Input() barData: any;
   @Input() subCatNames: any;
   @Input() colorScheme: any;
+  @Input() view: any;
 
   data: any[] = [];
-  view: any[] = [800, 300];
   dataList: any[];
 
   // colorScheme = {
