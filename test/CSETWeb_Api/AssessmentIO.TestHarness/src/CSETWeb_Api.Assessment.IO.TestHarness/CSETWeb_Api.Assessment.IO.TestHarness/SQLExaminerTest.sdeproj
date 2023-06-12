@@ -1,0 +1,2272 @@
+﻿<SqlDataExaminer version="21">
+  <Sources>
+    <Source id="1">
+      <EngineType>MsSqlServer</EngineType>
+      <StorageType>LiveDb</StorageType>
+      <ServerName>(localdb)\mssqllocaldb</ServerName>
+      <Database>TSAWeb</Database>
+      <WinAuth>True</WinAuth>
+    </Source>
+    <Source id="2">
+      <EngineType>MsSqlServer</EngineType>
+      <StorageType>LiveDb</StorageType>
+      <ServerName>(localdb)\mssqllocaldb</ServerName>
+      <Database>TSAWebCopy</Database>
+      <WinAuth>True</WinAuth>
+    </Source>
+  </Sources>
+  <Items>
+    <Item name="dbo.ACCESS_KEY" type="table" extracted="True">
+      <Columns>
+        <Column name="AccessKey" key="true" />
+        <Column name="GeneratedDate" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ACCESS_KEY_ASSESSMENT" type="table" extracted="True">
+      <Columns>
+        <Column name="AccessKey" key="true" />
+        <Column name="Assessment_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ADDRESS" type="table" extracted="True">
+      <Columns>
+        <Column name="AddressType" key="true" />
+        <Column name="Id" key="true" />
+        <Column name="PrimaryEmail" />
+        <Column name="City" />
+        <Column name="Country" />
+        <Column name="Line1" />
+        <Column name="Line2" />
+        <Column name="State" />
+        <Column name="Zip" />
+      </Columns>
+    </Item>
+    <Item name="dbo.AGGREGATION_ASSESSMENT" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Aggregation_Id" key="true" />
+        <Column name="Sequence" />
+        <Column name="Alias" />
+      </Columns>
+    </Item>
+    <Item name="dbo.AGGREGATION_INFORMATION" type="table" extracted="True">
+      <Columns>
+        <Column name="AggregationID" key="true" />
+        <Column name="Aggregation_Date" />
+        <Column name="Aggregation_Mode" />
+        <Column name="Aggregation_Name" />
+        <Column name="Facility_Name" />
+        <Column name="State_Province_Or_Region" />
+        <Column name="Assessor_Name" />
+        <Column name="Assessor_Email" />
+        <Column name="Assessor_Phone" />
+        <Column name="Assessment_Description" />
+        <Column name="Additional_Notes_And_Comments" />
+        <Column name="Executive_Summary" />
+        <Column name="Enterprise_Evaluation_Summary" />
+      </Columns>
+    </Item>
+    <Item name="dbo.AGGREGATION_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Aggregation_Mode" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Analytics_Answers" type="view">
+      <Columns>
+        <Column name="Assessment_Id" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Type" />
+        <Column name="Answer_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANALYTICS_MATURITY_GROUPINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Model_Id" key="true" />
+        <Column name="Maturity_Question_Id" key="true" />
+        <Column name="Question_Group" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER" type="table" extracted="True">
+      <Columns>
+        <Column name="Answer_Id" key="true" />
+        <Column name="Assessment_Id" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+        <Column name="Question_Type" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Is_Maturity" />
+        <Column name="Free_Response_Answer" />
+        <Column name="Mat_Option_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER_CLONE" type="table" extracted="True">
+      <Columns>
+        <Column name="Profile_Id" key="true" />
+        <Column name="Question_Or_Requirement_Id" key="true" />
+        <Column name="Question_Type" key="true" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Is_Maturity" />
+        <Column name="Free_Response_Answer" />
+        <Column name="Mat_Option_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Components" type="view">
+      <Columns>
+        <Column name="Answer_Id" />
+        <Column name="Assessment_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Is_Requirement" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+        <Column name="QuestionText" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Components_Default" type="view">
+      <Columns>
+        <Column name="UniqueKey" />
+        <Column name="Assessment_Id" />
+        <Column name="Answer_Id" />
+        <Column name="Question_Id" />
+        <Column name="Answer_Text" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Question_Number" />
+        <Column name="QuestionText" />
+        <Column name="Question_Group_Heading" />
+        <Column name="GroupHeadingId" />
+        <Column name="Universal_Sub_Category" />
+        <Column name="SubCategoryId" />
+        <Column name="FeedBack" />
+        <Column name="Is_Component" />
+        <Column name="Component_Guid" />
+        <Column name="SAL" />
+        <Column name="Mark_For_Review" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Framework" />
+        <Column name="heading_pair_id" />
+        <Column name="Sub_Heading_Question_Description" />
+        <Column name="Simple_Question" />
+        <Column name="Reviewed" />
+        <Column name="label" />
+        <Column name="ComponentName" />
+        <Column name="Symbol_Name" />
+        <Column name="Component_Symbol_id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Components_Exploded" type="view">
+      <Columns>
+        <Column name="UniqueKey" />
+        <Column name="Assessment_Id" />
+        <Column name="Answer_Id" />
+        <Column name="Question_Id" />
+        <Column name="Answer_Text" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="FeedBack" />
+        <Column name="Question_Number" />
+        <Column name="QuestionText" />
+        <Column name="ComponentName" />
+        <Column name="Symbol_Name" />
+        <Column name="Question_Group_Heading" />
+        <Column name="GroupHeadingId" />
+        <Column name="Universal_Sub_Category" />
+        <Column name="SubCategoryId" />
+        <Column name="Is_Component" />
+        <Column name="Component_Guid" />
+        <Column name="Layer_Id" />
+        <Column name="LayerName" />
+        <Column name="Container_Id" />
+        <Column name="ZoneName" />
+        <Column name="SAL" />
+        <Column name="Mark_For_Review" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Framework" />
+        <Column name="Reviewed" />
+        <Column name="Simple_Question" />
+        <Column name="Sub_Heading_Question_Description" />
+        <Column name="heading_pair_id" />
+        <Column name="label" />
+        <Column name="Component_Symbol_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Components_InScope" type="view">
+      <Columns>
+        <Column name="Assessment_Id" />
+        <Column name="Answer_Id" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Answer_Text" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Question_Number" />
+        <Column name="QuestionText" />
+        <Column name="ComponentName" />
+        <Column name="Component_Symbol_Id" />
+        <Column name="Layer_Id" />
+        <Column name="LayerName" />
+        <Column name="Container_Id" />
+        <Column name="ZoneName" />
+        <Column name="SAL" />
+        <Column name="Is_Component" />
+        <Column name="Component_Guid" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+        <Column name="Reviewed" />
+        <Column name="Mark_For_Review" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Framework" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Components_Overrides" type="view">
+      <Columns>
+        <Column name="UniqueKey" />
+        <Column name="Assessment_Id" />
+        <Column name="Answer_Id" />
+        <Column name="Question_Id" />
+        <Column name="Answer_Text" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Question_Number" />
+        <Column name="QuestionText" />
+        <Column name="ComponentName" />
+        <Column name="Symbol_Name" />
+        <Column name="Question_Group_Heading" />
+        <Column name="GroupHeadingId" />
+        <Column name="Universal_Sub_Category" />
+        <Column name="SubCategoryId" />
+        <Column name="Is_Component" />
+        <Column name="Component_Guid" />
+        <Column name="Layer_Id" />
+        <Column name="LayerName" />
+        <Column name="Container_Id" />
+        <Column name="ZoneName" />
+        <Column name="SAL" />
+        <Column name="Mark_For_Review" />
+        <Column name="Is_Requirement" />
+        <Column name="Is_Framework" />
+        <Column name="Reviewed" />
+        <Column name="Simple_Question" />
+        <Column name="Sub_Heading_Question_Description" />
+        <Column name="heading_pair_id" />
+        <Column name="label" />
+        <Column name="Component_Symbol_Id" />
+        <Column name="FeedBack" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER_LOOKUP" type="table" extracted="True">
+      <Columns>
+        <Column name="Answer_Text" key="true" />
+        <Column name="Answer_Full_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Maturity" type="view">
+      <Columns>
+        <Column name="Answer_Id" />
+        <Column name="Assessment_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Is_Requirement" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Is_Maturity" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+        <Column name="Maturity_Level_Id" />
+        <Column name="Question_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER_ORDER" type="table" extracted="True">
+      <Columns>
+        <Column name="Answer_Text" key="true" />
+        <Column name="answer_order" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER_PROFILE" type="table" extracted="True">
+      <Columns>
+        <Column name="Profile_Id" key="true" />
+        <Column name="Asessment_Id" />
+        <Column name="ProfileName" />
+        <Column name="Profile_Date" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ANSWER_QUESTION_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Type" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Questions" type="view">
+      <Columns>
+        <Column name="Answer_Id" />
+        <Column name="Assessment_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Is_Requirement" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="FeedBack" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Questions_No_Components" type="view">
+      <Columns>
+        <Column name="Answer_Id" />
+        <Column name="Assessment_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Is_Requirement" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Requirements" type="view">
+      <Columns>
+        <Column name="Answer_Id" />
+        <Column name="Assessment_Id" />
+        <Column name="Mark_For_Review" />
+        <Column name="Comment" />
+        <Column name="Alternate_Justification" />
+        <Column name="Is_Requirement" />
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="Question_Number" />
+        <Column name="Answer_Text" />
+        <Column name="Component_Guid" />
+        <Column name="Is_Component" />
+        <Column name="Is_Framework" />
+        <Column name="Custom_Question_Guid" />
+        <Column name="Old_Answer_Id" />
+        <Column name="Reviewed" />
+        <Column name="FeedBack" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Answer_Standards_InScope" type="view">
+      <Columns>
+        <Column name="mode" />
+        <Column name="assessment_id" />
+        <Column name="answer_id" />
+        <Column name="is_requirement" />
+        <Column name="question_or_requirement_id" />
+        <Column name="mark_for_review" />
+        <Column name="comment" />
+        <Column name="alternate_justification" />
+        <Column name="question_number" />
+        <Column name="answer_text" />
+        <Column name="component_guid" />
+        <Column name="is_component" />
+        <Column name="custom_question_guid" />
+        <Column name="is_framework" />
+        <Column name="old_answer_id" />
+        <Column name="reviewed" />
+        <Column name="FeedBack" />
+        <Column name="Question_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.APP_CODE" type="table" extracted="True">
+      <Columns>
+        <Column name="AppCode" key="true" />
+        <Column name="Description" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_CONTACTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Contact_Id" key="true" />
+        <Column name="Assessment_Id" />
+        <Column name="PrimaryEmail" />
+        <Column name="FirstName" />
+        <Column name="LastName" />
+        <Column name="Invited" />
+        <Column name="AssessmentRoleId" />
+        <Column name="UserId" />
+        <Column name="Title" />
+        <Column name="Phone" />
+        <Column name="Is_Primary_POC" />
+        <Column name="Site_Name" />
+        <Column name="Organization_Name" />
+        <Column name="Cell_Phone" />
+        <Column name="Reports_To" />
+        <Column name="Emergency_Communications_Protocol" />
+        <Column name="Is_Site_Participant" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_DETAIL_FILTER_DATA" type="table" extracted="True">
+      <Columns>
+        <Column name="Detail_Id" key="true" />
+        <Column name="Name" />
+        <Column name="CityOrSite" />
+        <Column name="State" />
+        <Column name="Charter" />
+        <Column name="Model" />
+        <Column name="RegionCode" />
+        <Column name="CharterType" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_DIAGRAM_COMPONENTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Component_Guid" key="true" />
+        <Column name="Component_Symbol_Id" />
+        <Column name="label" />
+        <Column name="DrawIO_id" />
+        <Column name="Zone_Id" />
+        <Column name="Layer_Id" />
+        <Column name="Parent_DrawIO_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_IRP" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="IRP_Id" key="true" />
+        <Column name="Answer_Id" />
+        <Column name="Response" />
+        <Column name="Comment" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_IRP_HEADER" type="table" extracted="True">
+      <Columns>
+        <Column name="ASSESSMENT_ID" key="true" />
+        <Column name="IRP_HEADER_ID" key="true" />
+        <Column name="HEADER_RISK_LEVEL_ID" />
+        <Column name="RISK_LEVEL" />
+        <Column name="COMMENT" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_ROLES" type="table" extracted="True">
+      <Columns>
+        <Column name="AssessmentRoleId" key="true" />
+        <Column name="AssessmentRole" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENT_SELECTED_LEVELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Level_Name" key="true" />
+        <Column name="Standard_Specific_Sal_Level" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="AssessmentCreatorId" />
+        <Column name="Alias" />
+        <Column name="Assessment_GUID" />
+        <Column name="Assessment_Date" />
+        <Column name="CreditUnionName" />
+        <Column name="Charter" />
+        <Column name="Assets" />
+        <Column name="IRPTotalOverride" />
+        <Column name="IRPTotalOverrideReason" />
+        <Column name="MatDetail_targetBandOnly" />
+        <Column name="Diagram_Markup" />
+        <Column name="LastUsedComponentNumber" />
+        <Column name="Diagram_Image" />
+        <Column name="AnalyzeDiagram" />
+        <Column name="UseDiagram" />
+        <Column name="UseStandard" />
+        <Column name="UseMaturity" />
+        <Column name="GalleryItemGuid" />
+        <Column name="ISE_StateLed" />
+        <Column name="AssessmentCreatedDate" extracted="false" />
+        <Column name="LastModifiedDate" extracted="false" />
+        <Column name="AssessmentEffectiveDate" extracted="false" />
+      </Columns>
+    </Item>
+    <Item name="dbo.Assessments_For_User" type="view">
+      <Columns>
+        <Column name="AssessmentId" />
+        <Column name="AssessmentName" />
+        <Column name="AssessmentDate" />
+        <Column name="AssessmentCreatedDate" />
+        <Column name="CreatorName" />
+        <Column name="LastModifiedDate" />
+        <Column name="MarkedForReview" />
+        <Column name="UserId" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ASSESSMENTS_REQUIRED_DOCUMENTATION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Documentation_Id" key="true" />
+        <Column name="Answer" />
+        <Column name="Comment" />
+      </Columns>
+    </Item>
+    <Item name="dbo.AVAILABLE_MATURITY_MODELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="model_id" key="true" />
+        <Column name="Selected" />
+      </Columns>
+    </Item>
+    <Item name="dbo.AVAILABLE_STANDARDS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Set_Name" key="true" />
+        <Column name="Selected" />
+        <Column name="Suppress_Mode" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CATALOG_RECOMMENDATIONS_DATA" type="table" extracted="True">
+      <Columns>
+        <Column name="Data_Id" key="true" />
+        <Column name="Req_Oracle_Id" />
+        <Column name="Parent_Heading_Id" />
+        <Column name="Heading" />
+        <Column name="Heading_Html" />
+        <Column name="Section_Long_Number" />
+        <Column name="Section_Short_Number" />
+        <Column name="Topic_Name" />
+        <Column name="Section_Short_Name" />
+        <Column name="Requirement_Text" />
+        <Column name="Supplemental_Guidance" />
+        <Column name="Supplemental_Guidance_Html" />
+        <Column name="Requirement" />
+        <Column name="Requirement_Html" />
+        <Column name="Enhancement" />
+        <Column name="Enhancement_Html" />
+        <Column name="Flow_Document" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CATALOG_RECOMMENDATIONS_HEADINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Heading_Num" />
+        <Column name="Heading_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_BUDGET_BASES" type="table" extracted="True">
+      <Columns>
+        <Column name="Budget_Basis" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_CUSTOMER_COUNTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Customer_Count" key="true" />
+        <Column name="Sequence" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_DEFINING_SYSTEMS" type="table" extracted="True">
+      <Columns>
+        <Column name="Defining_System_Id" key="true" />
+        <Column name="Defining_System" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_ORGANIZATION_DEMOGRAPHICS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Motivation_CRR" />
+        <Column name="Motivation_CRR_Description" />
+        <Column name="Motivation_RRAP" />
+        <Column name="Motivation_RRAP_Description" />
+        <Column name="Motivation_Organization_Request" />
+        <Column name="Motivation_Organization_Request_Description" />
+        <Column name="Motivation_Law_Enforcement_Request" />
+        <Column name="Motivation_Law_Enforcement_Description" />
+        <Column name="Motivation_Direct_Threats" />
+        <Column name="Motivation_Direct_Threats_Description" />
+        <Column name="Motivation_Special_Event" />
+        <Column name="Motivation_Special_Event_Description" />
+        <Column name="Motivation_Other" />
+        <Column name="Motivation_Other_Description" />
+        <Column name="Parent_Organization" />
+        <Column name="Organization_Name" />
+        <Column name="Site_Name" />
+        <Column name="Street_Address" />
+        <Column name="Visit_Date" />
+        <Column name="Completed_For_SLTT" />
+        <Column name="Completed_For_Federal" />
+        <Column name="Completed_For_National_Special_Event" />
+        <Column name="CIKR_Sector" />
+        <Column name="Sub_Sector" />
+        <Column name="IT_ICS_Staff_Count" />
+        <Column name="Cybersecurity_IT_ICS_Staff_Count" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_SERVICE_COMPOSITION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Networks_Description" />
+        <Column name="Services_Description" />
+        <Column name="Applications_Description" />
+        <Column name="Connections_Description" />
+        <Column name="Personnel_Description" />
+        <Column name="Other_Defining_System_Description" />
+        <Column name="Primary_Defining_System" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Defining_System_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_SERVICE_DEMOGRAPHICS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Critical_Service_Name" />
+        <Column name="Critical_Service_Description" />
+        <Column name="IT_ICS_Name" />
+        <Column name="Multi_Site" />
+        <Column name="Multi_Site_Description" />
+        <Column name="Budget_Basis" />
+        <Column name="Authorized_Organizational_User_Count" />
+        <Column name="Authorized_Non_Organizational_User_Count" />
+        <Column name="Customers_Count" />
+        <Column name="IT_ICS_Staff_Count" />
+        <Column name="Cybersecurity_IT_ICS_Staff_Count" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_STAFF_COUNTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Staff_Count" key="true" />
+        <Column name="Sequence" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CIS_CSI_USER_COUNTS" type="table" extracted="True">
+      <Columns>
+        <Column name="User_Count" key="true" />
+        <Column name="Sequence" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CNSS_CIA_JUSTIFICATIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="CIA_Type" key="true" />
+        <Column name="DropDownValueLevel" />
+        <Column name="Justification" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CNSS_CIA_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="CIA_Type" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COMPONENT_FAMILY" type="table" extracted="True">
+      <Columns>
+        <Column name="Component_Family_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COMPONENT_NAMES_LEGACY" type="table" extracted="True">
+      <Columns>
+        <Column name="Old_Symbol_Name" key="true" />
+        <Column name="Component_Symbol_id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COMPONENT_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Id" key="true" />
+        <Column name="Component_Symbol_Id" key="true" />
+        <Column name="Weight" />
+        <Column name="Rank" />
+        <Column name="Seq" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COMPONENT_SYMBOLS" type="table" extracted="True">
+      <Columns>
+        <Column name="Component_Symbol_Id" key="true" />
+        <Column name="File_Name" />
+        <Column name="Component_Family_Name" />
+        <Column name="Symbol_Group_Id" />
+        <Column name="Abbreviation" />
+        <Column name="IsService" />
+        <Column name="Symbol_Name" />
+        <Column name="Width" />
+        <Column name="Height" />
+        <Column name="Search_Tags" />
+        <Column name="Description" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COMPONENT_SYMBOLS_GM_TO_CSET" type="table" extracted="True">
+      <Columns>
+        <Column name="GM_FingerType" key="true" />
+        <Column name="Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CONFIDENTIAL_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="ConfidentialTypeId" key="true" />
+        <Column name="ConfidentialTypeKey" />
+        <Column name="ConfidentialTypeOrder" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COUNTIES" type="table" extracted="True">
+      <Columns>
+        <Column name="County_FIPS" key="true" />
+        <Column name="CountyName" />
+        <Column name="State" />
+        <Column name="RegionCode" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COUNTRIES" type="table" extracted="True">
+      <Columns>
+        <Column name="COUNTRIES_ID" key="true" />
+        <Column name="ISO_code" />
+        <Column name="Display_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COUNTY_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="County_FIPS" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.COUNTY_METRO_AREA" type="table" extracted="True">
+      <Columns>
+        <Column name="County_FIPS" key="true" />
+        <Column name="Metro_FIPS" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CSAF_FILE" type="table" extracted="True">
+      <Columns>
+        <Column name="File_Name" key="true" />
+        <Column name="Data" />
+        <Column name="File_Size" />
+        <Column name="Upload_Date" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CSET_VERSION" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Version_Id" />
+        <Column name="Cset_Version" />
+        <Column name="Build_Number" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CUSTOM_BASE_STANDARDS" type="table" extracted="True">
+      <Columns>
+        <Column name="Custom_Questionaire_Name" key="true" />
+        <Column name="Base_Standard" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CUSTOM_QUESTIONAIRE_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Custom_Questionaire_Name" key="true" />
+        <Column name="Question_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CUSTOM_QUESTIONAIRES" type="table" extracted="True">
+      <Columns>
+        <Column name="Custom_Questionaire_Name" key="true" />
+        <Column name="Description" />
+        <Column name="Set_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.CUSTOM_STANDARD_BASE_STANDARD" type="table" extracted="True">
+      <Columns>
+        <Column name="Custom_Standard_Base_Standard_Id" key="true" />
+        <Column name="Custom_Questionaire_Name" />
+        <Column name="Base_Standard" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DEMOGRAPHIC_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Employees" />
+        <Column name="CustomersSupported" />
+        <Column name="GeographicScope" />
+        <Column name="CIOExists" />
+        <Column name="CISOExists" />
+        <Column name="CyberTrainingProgramExists" />
+        <Column name="SectorId" />
+        <Column name="SubSectorId" />
+        <Column name="cyberRiskService" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DEMOGRAPHICS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="SectorId" />
+        <Column name="IndustryId" />
+        <Column name="Size" />
+        <Column name="AssetValue" />
+        <Column name="NeedsPrivacy" />
+        <Column name="NeedsSupplyChain" />
+        <Column name="NeedsICS" />
+        <Column name="OrganizationName" />
+        <Column name="Agency" />
+        <Column name="OrganizationType" />
+        <Column name="Facilitator" />
+        <Column name="PointOfContact" />
+        <Column name="IsScoped" />
+        <Column name="CriticalService" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DEMOGRAPHICS_ASSET_VALUES" type="table" extracted="True">
+      <Columns>
+        <Column name="AssetValue" key="true" />
+        <Column name="DemographicsAssetId" />
+        <Column name="ValueOrder" />
+        <Column name="AppCode" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DEMOGRAPHICS_ORGANIZATION_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="OrganizationTypeId" key="true" />
+        <Column name="OrganizationType" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DEMOGRAPHICS_SIZE" type="table" extracted="True">
+      <Columns>
+        <Column name="Size" key="true" />
+        <Column name="DemographicId" />
+        <Column name="Description" />
+        <Column name="ValueOrder" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DIAGRAM_CONTAINER" type="table" extracted="True">
+      <Columns>
+        <Column name="Container_Id" key="true" />
+        <Column name="ContainerType" />
+        <Column name="Name" />
+        <Column name="Visible" />
+        <Column name="DrawIO_id" />
+        <Column name="Assessment_Id" />
+        <Column name="Universal_Sal_Level" />
+        <Column name="Parent_Id" />
+        <Column name="Parent_Draw_IO_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DIAGRAM_CONTAINER_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="ContainerType" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DIAGRAM_OBJECT_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Object_Type" key="true" />
+        <Column name="Object_Type_Order" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DIAGRAM_TEMPLATES" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Template_Name" />
+        <Column name="File_Name" />
+        <Column name="Is_Read_Only" />
+        <Column name="Is_Visible" />
+        <Column name="Diagram_Markup" />
+        <Column name="Image_Source" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DIAGRAM_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Specific_Type" key="true" />
+        <Column name="Diagram_Type_XML" />
+        <Column name="Object_Type" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DOCUMENT_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Document_Id" key="true" />
+        <Column name="Answer_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.DOCUMENT_FILE" type="table" extracted="True">
+      <Columns>
+        <Column name="Document_Id" key="true" />
+        <Column name="Assessment_Id" />
+        <Column name="Path" />
+        <Column name="Title" />
+        <Column name="FileMd5" />
+        <Column name="ContentType" />
+        <Column name="CreatedTimestamp" />
+        <Column name="UpdatedTimestamp" />
+        <Column name="Name" />
+        <Column name="Data" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ExcelExport" type="view">
+      <Columns>
+        <Column name="Assessment_Name" />
+        <Column name="Facility_Name" />
+        <Column name="City_Or_Site_Name" />
+        <Column name="State_Province_Or_Region" />
+        <Column name="Executive_Summary" />
+        <Column name="Assessment_Id" />
+        <Column name="AssessmentCreatedDate" />
+        <Column name="AssessmentCreatorId" />
+        <Column name="LastModifiedDate" />
+        <Column name="Alias" />
+        <Column name="Assessment_GUID" />
+        <Column name="Assessment_Date" />
+        <Column name="CreditUnionName" />
+        <Column name="Charter" />
+        <Column name="Assets" />
+        <Column name="Assessment_Description" />
+        <Column name="PrimaryEmail" />
+        <Column name="UserId" />
+        <Column name="PasswordResetRequired" />
+        <Column name="FirstName" />
+        <Column name="LastName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.EXT_SECTOR" type="table" extracted="True">
+      <Columns>
+        <Column name="SectorId" key="true" />
+        <Column name="SectorName" />
+        <Column name="SectorHelp" />
+      </Columns>
+    </Item>
+    <Item name="dbo.EXT_SUB_SECTOR" type="table" extracted="True">
+      <Columns>
+        <Column name="SubSectorId" key="true" />
+        <Column name="SectorId" />
+        <Column name="SubSectorName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.EXTRA_ACET_MAPPING" type="table" extracted="True">
+      <Columns>
+        <Column name="Set_Name" key="true" />
+        <Column name="Question_Id" key="true" />
+        <Column name="New_Question_Set_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FILE_KEYWORDS" type="table" extracted="True">
+      <Columns>
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Keyword" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FILE_REF_KEYS" type="table" extracted="True">
+      <Columns>
+        <Column name="Doc_Num" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FILE_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="File_Type_Id" key="true" />
+        <Column name="File_Type" />
+        <Column name="Mime_Type" />
+        <Column name="Description" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_ASSESSMENT_FACTORS" type="table" extracted="True">
+      <Columns>
+        <Column name="AssessmentFactorId" key="true" />
+        <Column name="AssessmentFactor" />
+        <Column name="AssessmentFactorWeight" />
+        <Column name="Acronym" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_ASSESSMENT_VALUES" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="AttributeName" key="true" />
+        <Column name="AttributeValue" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_ATTRIBUTES" type="table" extracted="True">
+      <Columns>
+        <Column name="AttributeName" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_COMPONENTS" type="table" extracted="True">
+      <Columns>
+        <Column name="FinComponentId" key="true" />
+        <Column name="FinComponent" />
+        <Column name="Acronym" />
+        <Column name="Number" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_DETAILS" type="table" extracted="True">
+      <Columns>
+        <Column name="StmtNumber" key="true" />
+        <Column name="Label" />
+        <Column name="FinancialGroupId" />
+        <Column name="Binary Criteria ID" />
+        <Column name="Maturity Target" />
+        <Column name="CSC Organizational (17-20)" />
+        <Column name="CSC Foundational  (7-16)" />
+        <Column name="CSC Basic (1-6)" />
+        <Column name="CSC Mapping" />
+        <Column name="NCUA R&amp;R 748 Mapping" />
+        <Column name="NCUA R&amp;R 749 Mapping" />
+        <Column name="FFIEC Booklets Mapping" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_DOMAIN_FILTERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="DomainId" key="true" />
+        <Column name="B" />
+        <Column name="E" />
+        <Column name="Int" />
+        <Column name="A" />
+        <Column name="Inn" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_DOMAIN_FILTERS_V2" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="DomainId" key="true" />
+        <Column name="Financial_Level_Id" key="true" />
+        <Column name="IsOn" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_DOMAINS" type="table" extracted="True">
+      <Columns>
+        <Column name="DomainId" key="true" />
+        <Column name="Domain" />
+        <Column name="Acronym" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_FFIEC_MAPPINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="StmtNumber" key="true" />
+        <Column name="FFIECBookletsMapping" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_GROUPS" type="table" extracted="True">
+      <Columns>
+        <Column name="FinancialGroupId" key="true" />
+        <Column name="DomainId" />
+        <Column name="AssessmentFactorId" />
+        <Column name="FinComponentId" />
+        <Column name="Financial_Level_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_HOURS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Component" key="true" />
+        <Column name="ReviewType" key="true" />
+        <Column name="Hours" />
+        <Column name="OtherSpecifyValue" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_HOURS_COMPONENT" type="table" extracted="True">
+      <Columns>
+        <Column name="Component" key="true" />
+        <Column name="DomainId" />
+        <Column name="PresentationOrder" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_MATURITY" type="table" extracted="True">
+      <Columns>
+        <Column name="Financial_Level_Id" key="true" />
+        <Column name="MaturityLevel" />
+        <Column name="Acronym" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="StmtNumber" key="true" />
+        <Column name="Question_Id" key="true" />
+        <Column name="Maturity_Question_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_REQUIREMENTS" type="table" extracted="True">
+      <Columns>
+        <Column name="StmtNumber" key="true" />
+        <Column name="Requirement_Id" key="true" />
+        <Column name="maturity_question_id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_REVIEWTYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="ReviewType" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINANCIAL_TIERS" type="table" extracted="True">
+      <Columns>
+        <Column name="StmtNumber" key="true" />
+        <Column name="Label" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINDING" type="table" extracted="True">
+      <Columns>
+        <Column name="Finding_Id" key="true" />
+        <Column name="Answer_Id" />
+        <Column name="Summary" />
+        <Column name="Issue" />
+        <Column name="Impact" />
+        <Column name="Recommendations" />
+        <Column name="Vulnerabilities" />
+        <Column name="Resolution_Date" />
+        <Column name="Importance_Id" />
+        <Column name="Title" />
+        <Column name="Type" />
+        <Column name="Description" />
+        <Column name="Auto_Generated" />
+        <Column name="Citations" />
+        <Column name="Risk_Area" />
+        <Column name="Sub_Risk" />
+        <Column name="ActionItems" />
+        <Column name="Supp_Guidance" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FINDING_CONTACT" type="table" extracted="True">
+      <Columns>
+        <Column name="Finding_Id" key="true" />
+        <Column name="Assessment_Contact_Id" key="true" />
+        <Column name="IgnoreThis" />
+        <Column name="Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FRAMEWORK_TIER_DEFINITIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Tier" key="true" />
+        <Column name="TierType" key="true" />
+        <Column name="TierQuestion" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FRAMEWORK_TIER_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="TierType" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FRAMEWORK_TIER_TYPE_ANSWER" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="TierType" key="true" />
+        <Column name="Tier" />
+      </Columns>
+    </Item>
+    <Item name="dbo.FRAMEWORK_TIERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Tier" key="true" />
+        <Column name="FullName" />
+        <Column name="TierOrder" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GALLERY_GROUP" type="table" extracted="True">
+      <Columns>
+        <Column name="Group_Id" key="true" />
+        <Column name="Group_Title" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GALLERY_GROUP_DETAILS" type="table" extracted="True">
+      <Columns>
+        <Column name="Group_Detail_Id" key="true" />
+        <Column name="Group_Id" />
+        <Column name="Column_Index" />
+        <Column name="Click_Count" />
+        <Column name="Gallery_Item_Guid" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GALLERY_ITEM" type="table" extracted="True">
+      <Columns>
+        <Column name="Gallery_Item_Guid" key="true" />
+        <Column name="Icon_File_Name_Small" />
+        <Column name="Icon_File_Name_Large" />
+        <Column name="Configuration_Setup" />
+        <Column name="Description" />
+        <Column name="Configuration_Setup_Client" />
+        <Column name="Title" />
+        <Column name="Is_Visible" />
+        <Column name="CreationDate" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GALLERY_LAYOUT" type="table" extracted="True">
+      <Columns>
+        <Column name="Layout_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GALLERY_ROWS" type="table" extracted="True">
+      <Columns>
+        <Column name="Layout_Name" key="true" />
+        <Column name="Row_Index" key="true" />
+        <Column name="Group_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GEN_FILE" type="table" extracted="True">
+      <Columns>
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="File_Type_Id" />
+        <Column name="File_Name" />
+        <Column name="Title" />
+        <Column name="Name" />
+        <Column name="File_Size" />
+        <Column name="Doc_Num" />
+        <Column name="Comments" />
+        <Column name="Description" />
+        <Column name="Short_Name" />
+        <Column name="Publish_Date" />
+        <Column name="Doc_Version" />
+        <Column name="Summary" />
+        <Column name="Source_Type" />
+        <Column name="Data" />
+        <Column name="Is_Uploaded" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GEN_FILE_LIB_PATH_CORL" type="table" extracted="True">
+      <Columns>
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Lib_Path_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GEN_SAL_NAMES" type="table" extracted="True">
+      <Columns>
+        <Column name="Sal_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GEN_SAL_WEIGHTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Sal_Name" key="true" />
+        <Column name="Slider_Value" key="true" />
+        <Column name="Sal_Weight_Id" />
+        <Column name="Weight" />
+        <Column name="Display" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GENERAL_SAL" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Sal_Name" key="true" />
+        <Column name="Slider_Value" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GENERAL_SAL_DESCRIPTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Sal_Name" key="true" />
+        <Column name="Sal_Description" />
+        <Column name="Sal_Order" />
+        <Column name="min" />
+        <Column name="max" />
+        <Column name="step" />
+        <Column name="prefix" />
+        <Column name="postfix" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GLOBAL_PROPERTIES" type="table" extracted="True">
+      <Columns>
+        <Column name="Property" key="true" />
+        <Column name="Property_Value" />
+      </Columns>
+    </Item>
+    <Item name="dbo.GLOSSARY" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Model_Id" key="true" />
+        <Column name="Term" key="true" />
+        <Column name="Definition" />
+      </Columns>
+    </Item>
+    <Item name="dbo.IMPORTANCE" type="table" extracted="True">
+      <Columns>
+        <Column name="Importance_Id" key="true" />
+        <Column name="Value" />
+      </Columns>
+    </Item>
+    <Item name="dbo.INFORMATION" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Assessment_Name" />
+        <Column name="Facility_Name" />
+        <Column name="City_Or_Site_Name" />
+        <Column name="State_Province_Or_Region" />
+        <Column name="Assessor_Name" />
+        <Column name="Assessor_Email" />
+        <Column name="Assessor_Phone" />
+        <Column name="Assessment_Description" />
+        <Column name="Additional_Notes_And_Comments" />
+        <Column name="Additional_Contacts" />
+        <Column name="Executive_Summary" />
+        <Column name="Enterprise_Evaluation_Summary" />
+        <Column name="Real_Property_Unique_Id" />
+        <Column name="eMass_Document_Id" />
+        <Column name="IsAcetOnly" />
+        <Column name="Workflow" />
+        <Column name="Baseline_Assessment_Id" />
+        <Column name="Origin" />
+        <Column name="Postal_Code" />
+        <Column name="Region_Code" />
+      </Columns>
+    </Item>
+    <Item name="dbo.INSTALLATION" type="table" extracted="True">
+      <Columns>
+        <Column name="Installation_ID" key="true" />
+        <Column name="JWT_Secret" />
+        <Column name="Generated_UTC" />
+      </Columns>
+    </Item>
+    <Item name="dbo.IRP" type="table" extracted="True">
+      <Columns>
+        <Column name="IRP_ID" key="true" />
+        <Column name="Item_Number" />
+        <Column name="Risk_1_Description" />
+        <Column name="Risk_2_Description" />
+        <Column name="Risk_3_Description" />
+        <Column name="Risk_4_Description" />
+        <Column name="Risk_5_Description" />
+        <Column name="Validation_Approach" />
+        <Column name="Header_Id" />
+        <Column name="Description" />
+        <Column name="DescriptionComment" />
+        <Column name="Risk_Type" />
+      </Columns>
+    </Item>
+    <Item name="dbo.IRP_HEADER" type="table" extracted="True">
+      <Columns>
+        <Column name="IRP_Header_Id" key="true" />
+        <Column name="Header" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ISE_ACTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Description" />
+        <Column name="Action_Items" />
+        <Column name="Regulatory_Citation" />
+        <Column name="Parent_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.ISE_ACTIONS_FINDINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Finding_Id" key="true" />
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Action_Items_Override" />
+      </Columns>
+    </Item>
+    <Item name="dbo.JWT" type="table" extracted="True">
+      <Columns>
+        <Column name="Secret" key="true" />
+        <Column name="Generated" />
+      </Columns>
+    </Item>
+    <Item name="dbo.LEVEL_BACKUP_ACET" type="table" extracted="True">
+      <Columns>
+        <Column name="requirement_id" key="true" />
+        <Column name="Standard_Level" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.LEVEL_BACKUP_ACET_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="New_Question_Set_Id" key="true" />
+        <Column name="universal_sal_level" key="true" />
+        <Column name="question_id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.LEVEL_NAMES" type="table" extracted="True">
+      <Columns>
+        <Column name="Level_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_ANSWER_OPTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Option_Id" key="true" />
+        <Column name="Option_Text" />
+        <Column name="Mat_Question_Id" />
+        <Column name="Answer_Sequence" />
+        <Column name="ElementId" />
+        <Column name="Weight" />
+        <Column name="Mat_Option_Type" />
+        <Column name="Parent_Option_Id" />
+        <Column name="Has_Answer_Text" />
+        <Column name="Formula" />
+        <Column name="Threshold" />
+        <Column name="RiFormula" />
+        <Column name="ThreatType" />
+        <Column name="Is_None" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Option_Id_1" key="true" />
+        <Column name="Mat_Option_Id_2" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_DOMAIN_REMARKS" type="table" extracted="True">
+      <Columns>
+        <Column name="Grouping_ID" key="true" />
+        <Column name="Assessment_Id" key="true" />
+        <Column name="DomainRemarks" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_EXTRA" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Question_Id" key="true" />
+        <Column name="NIST171_Title" />
+        <Column name="Question_text" />
+        <Column name="SPRSValue" />
+        <Column name="Comment for Guidance Field" />
+        <Column name="CMMC1_Title" />
+        <Column name="CMMC2_Title" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_GROUPING_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Type_Id" key="true" />
+        <Column name="Grouping_Type_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_GROUPINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Grouping_Id" key="true" />
+        <Column name="Title" />
+        <Column name="Description" />
+        <Column name="Maturity_Model_Id" />
+        <Column name="Sequence" />
+        <Column name="Parent_Id" />
+        <Column name="Group_Level" />
+        <Column name="Type_Id" />
+        <Column name="Title_Id" />
+        <Column name="Abbreviation" />
+        <Column name="Title_Prefix" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_LEVELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Level_Id" key="true" />
+        <Column name="Level" />
+        <Column name="Level_Name" />
+        <Column name="Maturity_Model_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_MODELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Model_Id" key="true" />
+        <Column name="Model_Name" />
+        <Column name="Questions_Alias" />
+        <Column name="Answer_Options" />
+        <Column name="Analytics_Rollup_Level" />
+        <Column name="Model_Title" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_POSSIBLE_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Maturity_Model_Id" key="true" />
+        <Column name="Maturity_Answer" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_QUESTION_PROPS" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="PropertyName" key="true" />
+        <Column name="PropertyValue" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_QUESTION_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Type" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Question_Title" />
+        <Column name="Question_Text" />
+        <Column name="Supplemental_Info" />
+        <Column name="Category" />
+        <Column name="Sub_Category" />
+        <Column name="Maturity_Level_Id" />
+        <Column name="Sequence" />
+        <Column name="Text_Hash" />
+        <Column name="Maturity_Model_Id" />
+        <Column name="Parent_Question_Id" />
+        <Column name="Ranking" />
+        <Column name="Grouping_Id" />
+        <Column name="Examination_Approach" />
+        <Column name="Short_Name" />
+        <Column name="Mat_Question_Type" />
+        <Column name="Parent_Option_Id" />
+        <Column name="Supplemental_Fact" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_REFERENCE_TEXT" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Sequence" key="true" />
+        <Column name="Reference_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_REFERENCES" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Section_Ref" key="true" />
+        <Column name="Page_Number" />
+        <Column name="Destination_String" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MATURITY_SOURCE_FILES" type="table" extracted="True">
+      <Columns>
+        <Column name="Mat_Question_Id" key="true" />
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Section_Ref" key="true" />
+        <Column name="Page_Number" />
+        <Column name="Destination_String" />
+      </Columns>
+    </Item>
+    <Item name="dbo.METRO_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Metro_FIPS" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.METRO_AREA" type="table" extracted="True">
+      <Columns>
+        <Column name="Metro_FIPS" key="true" />
+        <Column name="MetropolitanAreaName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.MODES_SETS_MATURITY_MODELS" type="table" extracted="True">
+      <Columns>
+        <Column name="App_Code_Id" key="true" />
+        <Column name="AppCode" />
+        <Column name="Set_Name" />
+        <Column name="Model_Name" />
+        <Column name="Is_Included" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NAVIGATION_STATE" type="table" extracted="True">
+      <Columns>
+        <Column name="Name" key="true" />
+        <Column name="IsActive" />
+        <Column name="IsError" />
+        <Column name="IsVisited" />
+        <Column name="IsAvailable" />
+        <Column name="PercentCompletion" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NCSF_CATEGORY" type="table" extracted="True">
+      <Columns>
+        <Column name="NCSF_Cat_Id" key="true" />
+        <Column name="NCSF_Function_Id" />
+        <Column name="NCSF_Category_Id" />
+        <Column name="NCSF_Category_Name" />
+        <Column name="NCSF_Category_Description" />
+        <Column name="Question_Group_Heading_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NCSF_FUNCTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="NCSF_Function_ID" key="true" />
+        <Column name="NCSF_Function_Name" />
+        <Column name="NCSF_Function_Order" />
+        <Column name="NCSF_ID" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NERC_RISK_RANKING" type="table" extracted="True">
+      <Columns>
+        <Column name="Compliance_Risk_Rank" key="true" />
+        <Column name="Question_id" />
+        <Column name="Requirement_Id" />
+        <Column name="Violation_Risk_Factor" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NETWORK_WARNINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Id" key="true" />
+        <Column name="WarningText" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NEW_QUESTION" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Id" key="true" />
+        <Column name="Std_Ref" />
+        <Column name="Std_Ref_Number" />
+        <Column name="Simple_Question" />
+        <Column name="Universal_Sal_Level" />
+        <Column name="Weight" />
+        <Column name="Question_Group_Id" />
+        <Column name="Question_Group_Number" />
+        <Column name="Original_Set_Name" />
+        <Column name="Question_Hash" />
+        <Column name="Ranking" />
+        <Column name="Heading_Pair_Id" />
+        <Column name="Std_Ref_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NEW_QUESTION_LEVELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Universal_Sal_Level" key="true" />
+        <Column name="New_Question_Set_Id" key="true" />
+        <Column name="IgnoreMe" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NEW_QUESTION_SETS" type="table" extracted="True">
+      <Columns>
+        <Column name="New_Question_Set_Id" key="true" />
+        <Column name="Set_Name" />
+        <Column name="Question_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NEW_REQUIREMENT" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Requirement_Title" />
+        <Column name="Requirement_Text" />
+        <Column name="Supplemental_Info" />
+        <Column name="Standard_Category" />
+        <Column name="Standard_Sub_Category" />
+        <Column name="Weight" />
+        <Column name="Implementation_Recommendations" />
+        <Column name="Original_Set_Name" />
+        <Column name="Text_Hash" />
+        <Column name="NCSF_Cat_Id" />
+        <Column name="NCSF_Number" />
+        <Column name="Supp_Hash" />
+        <Column name="Ranking" />
+        <Column name="Question_Group_Heading_Id" />
+        <Column name="ExaminationApproach" />
+        <Column name="Old_Id_For_Copy" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NIST_SAL_INFO_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Type_Value" key="true" />
+        <Column name="Selected" />
+        <Column name="Confidentiality_Value" />
+        <Column name="Confidentiality_Special_Factor" />
+        <Column name="Integrity_Value" />
+        <Column name="Integrity_Special_Factor" />
+        <Column name="Availability_Value" />
+        <Column name="Availability_Special_Factor" />
+        <Column name="Area" />
+        <Column name="NIST_Number" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NIST_SAL_INFO_TYPES_DEFAULTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Type_Value" key="true" />
+        <Column name="Confidentiality_Value" />
+        <Column name="Confidentiality_Special_Factor" />
+        <Column name="Integrity_Value" />
+        <Column name="Integrity_Special_Factor" />
+        <Column name="Availability_Value" />
+        <Column name="Availability_Special_Factor" />
+        <Column name="Area" />
+        <Column name="NIST_Number" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NIST_SAL_QUESTION_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Question_Id" key="true" />
+        <Column name="Question_Answer" />
+      </Columns>
+    </Item>
+    <Item name="dbo.NIST_SAL_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Id" key="true" />
+        <Column name="Question_Number" />
+        <Column name="Question_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PARAMETER_ASSESSMENT" type="table" extracted="True">
+      <Columns>
+        <Column name="Parameter_ID" key="true" />
+        <Column name="Assessment_ID" key="true" />
+        <Column name="Parameter_Value_Assessment" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PARAMETER_REQUIREMENTS" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Parameter_Id" key="true" />
+        <Column name="ID" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PARAMETER_VALUES" type="table" extracted="True">
+      <Columns>
+        <Column name="Answer_Id" key="true" />
+        <Column name="Parameter_Id" key="true" />
+        <Column name="Parameter_Value" />
+        <Column name="Parameter_Is_Default" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PARAMETERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Parameter_ID" key="true" />
+        <Column name="Parameter_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PASSWORD_HISTORY" type="table" extracted="True">
+      <Columns>
+        <Column name="UserId" key="true" />
+        <Column name="Created" key="true" />
+        <Column name="Password" />
+        <Column name="Salt" />
+        <Column name="Is_Temp" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PROCUREMENT_DEPENDENCY" type="table" extracted="True">
+      <Columns>
+        <Column name="Procurement_Id" key="true" />
+        <Column name="Dependencies_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PROCUREMENT_LANGUAGE_DATA" type="table" extracted="True">
+      <Columns>
+        <Column name="Procurement_Id" key="true" />
+        <Column name="Parent_Heading_Id" />
+        <Column name="Section_Number" />
+        <Column name="Topic_Name" />
+        <Column name="Heading" />
+        <Column name="Basis" />
+        <Column name="Language_Guidance" />
+        <Column name="Procurement_Language" />
+        <Column name="Fatmeasures" />
+        <Column name="Satmeasures" />
+        <Column name="Maintenance_Guidance" />
+        <Column name="References_Doc" />
+        <Column name="Flow_Document" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PROCUREMENT_LANGUAGE_HEADINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Heading_Num" />
+        <Column name="Heading_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.PROCUREMENT_REFERENCES" type="table" extracted="True">
+      <Columns>
+        <Column name="Procurement_Id" key="true" />
+        <Column name="Reference_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.QUESTION_GROUP_HEADING" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Group_Heading" key="true" />
+        <Column name="Std_Ref" />
+        <Column name="Universal_Weight" />
+        <Column name="Question_Group_Heading_Id" />
+        <Column name="Is_Custom" />
+      </Columns>
+    </Item>
+    <Item name="dbo.QUESTION_GROUP_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Group_Id" key="true" />
+        <Column name="Group_Name" />
+        <Column name="Scoring_Group" />
+        <Column name="Scoring_Type" />
+        <Column name="Group_Header" />
+      </Columns>
+    </Item>
+    <Item name="dbo.RapidAssessmentControls" type="table" extracted="True">
+      <Columns>
+        <Column name="order" key="true" />
+        <Column name="value" />
+      </Columns>
+    </Item>
+    <Item name="dbo.RECENT_FILES" type="table" extracted="True">
+      <Columns>
+        <Column name="RecentFileId" key="true" />
+        <Column name="AssessmentName" />
+        <Column name="Filename" />
+        <Column name="FilePath" />
+        <Column name="LastOpenedTime" />
+      </Columns>
+    </Item>
+    <Item name="dbo.RECOMMENDATIONS_REFERENCES" type="table" extracted="True">
+      <Columns>
+        <Column name="Data_Id" key="true" />
+        <Column name="Reference_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REF_LIBRARY_PATH" type="table" extracted="True">
+      <Columns>
+        <Column name="Lib_Path_Id" key="true" />
+        <Column name="Parent_Path_Id" />
+        <Column name="Path_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REFERENCE_DOCS" type="table" extracted="True">
+      <Columns>
+        <Column name="Reference_Doc_Id" key="true" />
+        <Column name="Doc_Name" />
+        <Column name="Doc_Link" />
+        <Column name="Doc_Short" />
+        <Column name="Date_Updated" />
+        <Column name="Date_Last_Checked" />
+        <Column name="Doc_Url" />
+        <Column name="Doc_Notes" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REFERENCES_DATA" type="table" extracted="True">
+      <Columns>
+        <Column name="Reference_Id" key="true" />
+        <Column name="Reference_Doc_Id" />
+        <Column name="Reference_Sections" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REGION_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="State" key="true" />
+        <Column name="RegionCode" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REPORT_DETAIL_SECTION_SELECTION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Report_Section_Id" key="true" />
+        <Column name="Report_Section_Order" />
+        <Column name="Is_Selected" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REPORT_DETAIL_SECTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Report_Section_Id" key="true" />
+        <Column name="Display_Name" />
+        <Column name="Display_Order" />
+        <Column name="Report_Order" />
+        <Column name="Tool_Tip" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REPORT_OPTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Report_Option_Id" key="true" />
+        <Column name="Display_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REPORT_OPTIONS_SELECTION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Report_Option_Id" key="true" />
+        <Column name="Is_Selected" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REPORT_STANDARDS_SELECTION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assesment_Id" key="true" />
+        <Column name="Report_Set_Entity_Name" key="true" />
+        <Column name="Report_Section_Order" />
+        <Column name="Is_Selected" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIRED_DOCUMENTATION" type="table" extracted="True">
+      <Columns>
+        <Column name="Documentation_Id" key="true" />
+        <Column name="Number" />
+        <Column name="Document_Description" />
+        <Column name="RDH_Id" />
+        <Column name="Document_Order" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIRED_DOCUMENTATION_HEADERS" type="table" extracted="True">
+      <Columns>
+        <Column name="RDH_Id" key="true" />
+        <Column name="Requirement_Documentation_Header" />
+        <Column name="Header_Order" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_LEVEL_TYPE" type="table" extracted="True">
+      <Columns>
+        <Column name="Level_Type" key="true" />
+        <Column name="Level_Type_Full_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_LEVELS" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Standard_Level" key="true" />
+        <Column name="Level_Type" key="true" />
+        <Column name="Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Id" key="true" />
+        <Column name="Requirement_Id" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_QUESTIONS_SETS" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Id" key="true" />
+        <Column name="Set_Name" key="true" />
+        <Column name="Requirement_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_REFERENCE_TEXT" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Sequence" key="true" />
+        <Column name="Reference_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_REFERENCES" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Section_Ref" key="true" />
+        <Column name="Page_Number" />
+        <Column name="Destination_String" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_SETS" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Set_Name" key="true" />
+        <Column name="Requirement_Sequence" />
+      </Columns>
+    </Item>
+    <Item name="dbo.REQUIREMENT_SOURCE_FILES" type="table" extracted="True">
+      <Columns>
+        <Column name="Requirement_Id" key="true" />
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Section_Ref" key="true" />
+        <Column name="Page_Number" />
+        <Column name="Destination_String" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SAL_DETERMINATION_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Sal_Determination_Type" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SECTOR" type="table" extracted="True">
+      <Columns>
+        <Column name="SectorId" key="true" />
+        <Column name="SectorName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SECTOR_INDUSTRY" type="table" extracted="True">
+      <Columns>
+        <Column name="SectorId" key="true" />
+        <Column name="IndustryId" key="true" />
+        <Column name="IndustryName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SECTOR_STANDARD_RECOMMENDATIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="Sector_Id" key="true" />
+        <Column name="Industry_Id" key="true" />
+        <Column name="Organization_Size" key="true" />
+        <Column name="Asset_Value" key="true" />
+        <Column name="Set_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SECURITY_QUESTION" type="table" extracted="True">
+      <Columns>
+        <Column name="SecurityQuestionId" key="true" />
+        <Column name="SecurityQuestion" />
+        <Column name="IsCustomQuestion" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SET_FILES" type="table" extracted="True">
+      <Columns>
+        <Column name="SetName" key="true" />
+        <Column name="Gen_File_Id" key="true" />
+        <Column name="Comment" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SETS" type="table" extracted="True">
+      <Columns>
+        <Column name="Set_Name" key="true" />
+        <Column name="Full_Name" />
+        <Column name="Short_Name" />
+        <Column name="Is_Displayed" />
+        <Column name="Is_Pass_Fail" />
+        <Column name="Old_Std_Name" />
+        <Column name="Set_Category_Id" />
+        <Column name="Order_In_Category" />
+        <Column name="Report_Order_Section_Number" />
+        <Column name="Aggregation_Standard_Number" />
+        <Column name="Is_Question" />
+        <Column name="Is_Requirement" />
+        <Column name="Order_Framework_Standards" />
+        <Column name="Standard_ToolTip" />
+        <Column name="Is_Deprecated" />
+        <Column name="Upgrade_Set_Name" />
+        <Column name="Is_Custom" />
+        <Column name="Date" />
+        <Column name="IsEncryptedModule" />
+        <Column name="IsEncryptedModuleOpen" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SETS_CATEGORY" type="table" extracted="True">
+      <Columns>
+        <Column name="Set_Category_Id" key="true" />
+        <Column name="Set_Category_Name" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SHAPE_TYPES" type="table" extracted="True">
+      <Columns>
+        <Column name="Diagram_Type_XML" key="true" />
+        <Column name="Telerik_Shape_Type" />
+        <Column name="Visio_Shape_Type" />
+        <Column name="IsDefault" />
+        <Column name="DisplayName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SP80053_FAMILY_ABBREVIATIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="ID" key="true" />
+        <Column name="Standard_Category" />
+        <Column name="Standard_Order" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_CATEGORY" type="table" extracted="True">
+      <Columns>
+        <Column name="Standard_Category" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_CATEGORY_SEQUENCE" type="table" extracted="True">
+      <Columns>
+        <Column name="Standard_Category" key="true" />
+        <Column name="Set_Name" key="true" />
+        <Column name="Standard_Category_Sequence" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_SELECTION" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessment_Id" key="true" />
+        <Column name="Application_Mode" />
+        <Column name="Selected_Sal_Level" />
+        <Column name="Last_Sal_Determination_Type" />
+        <Column name="Sort_Set_Name" />
+        <Column name="Is_Advanced" />
+        <Column name="Only_Mode" />
+        <Column name="Hidden_Screens" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_SOURCE_FILE" type="table" extracted="True">
+      <Columns>
+        <Column name="Set_Name" key="true" />
+        <Column name="Doc_Num" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_SPECIFIC_LEVEL" type="table" extracted="True">
+      <Columns>
+        <Column name="Standard_Level" key="true" />
+        <Column name="Level_Order" />
+        <Column name="Full_Name" />
+        <Column name="Standard" />
+        <Column name="Display_Name" />
+        <Column name="Display_Order" />
+        <Column name="Is_Default_Value" />
+        <Column name="Is_Mapping_Link" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STANDARD_TO_UNIVERSAL_MAP" type="table" extracted="True">
+      <Columns>
+        <Column name="Universal_Sal_Level" key="true" />
+        <Column name="Standard_Level" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STATE_REGION" type="table" extracted="True">
+      <Columns>
+        <Column name="State" key="true" />
+        <Column name="RegionCode" key="true" />
+        <Column name="RegionName" />
+      </Columns>
+    </Item>
+    <Item name="dbo.STATES_AND_PROVINCES" type="table" extracted="True">
+      <Columns>
+        <Column name="STATES_AND_PROVINCES_ID" key="true" />
+        <Column name="ISO_code" />
+        <Column name="Display_Name" />
+        <Column name="Country_Code" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SUB_CATEGORY_ANSWERS" type="table" extracted="True">
+      <Columns>
+        <Column name="Assessement_Id" key="true" />
+        <Column name="Heading_Pair_Id" key="true" />
+        <Column name="Component_Guid" key="true" />
+        <Column name="Is_Component" key="true" />
+        <Column name="Is_Override" />
+        <Column name="Answer_Text" />
+      </Columns>
+    </Item>
+    <Item name="dbo.SYMBOL_GROUPS" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="Symbol_Group_Name" />
+        <Column name="Symbol_Group_Title" />
+      </Columns>
+    </Item>
+    <Item name="dbo.UNIVERSAL_AREA" type="table" extracted="True">
+      <Columns>
+        <Column name="Universal_Area_Name" key="true" />
+        <Column name="Area_Weight" />
+        <Column name="Comments" />
+        <Column name="Universal_Area_Number" />
+      </Columns>
+    </Item>
+    <Item name="dbo.UNIVERSAL_SAL_LEVEL" type="table" extracted="True">
+      <Columns>
+        <Column name="Universal_Sal_Level" key="true" />
+        <Column name="Sal_Level_Order" />
+        <Column name="Full_Name_Sal" />
+      </Columns>
+    </Item>
+    <Item name="dbo.UNIVERSAL_SUB_CATEGORIES" type="table" extracted="True">
+      <Columns>
+        <Column name="Universal_Sub_Category" key="true" />
+        <Column name="Universal_Sub_Category_Id" />
+        <Column name="Is_Custom" />
+      </Columns>
+    </Item>
+    <Item name="dbo.UNIVERSAL_SUB_CATEGORY_HEADINGS" type="table" extracted="True">
+      <Columns>
+        <Column name="Question_Group_Heading_Id" key="true" />
+        <Column name="Universal_Sub_Category_Id" key="true" />
+        <Column name="Set_Name" key="true" />
+        <Column name="Sub_Heading_Question_Description" />
+        <Column name="Display_Radio_Buttons" />
+        <Column name="Heading_Pair_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.USER_DETAIL_INFORMATION" type="table" extracted="True">
+      <Columns>
+        <Column name="Id" key="true" />
+        <Column name="CellPhone" />
+        <Column name="FirstName" />
+        <Column name="LastName" />
+        <Column name="HomePhone" />
+        <Column name="OfficePhone" />
+        <Column name="ImagePath" />
+        <Column name="JobTitle" />
+        <Column name="Organization" />
+        <Column name="PrimaryEmail" />
+        <Column name="SecondaryEmail" />
+      </Columns>
+    </Item>
+    <Item name="dbo.USER_EMAIL_HISTORY" type="table" extracted="True">
+      <Columns>
+        <Column name="UserId" key="true" />
+        <Column name="EmailSentDate" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.USER_SECURITY_QUESTIONS" type="table" extracted="True">
+      <Columns>
+        <Column name="UserId" key="true" />
+        <Column name="SecurityQuestion1" />
+        <Column name="SecurityAnswer1" />
+        <Column name="SecurityQuestion2" />
+        <Column name="SecurityAnswer2" />
+      </Columns>
+    </Item>
+    <Item name="dbo.USERS" type="table" extracted="True">
+      <Columns>
+        <Column name="UserId" key="true" />
+        <Column name="PrimaryEmail" />
+        <Column name="Password" />
+        <Column name="Salt" />
+        <Column name="IsSuperUser" />
+        <Column name="PasswordResetRequired" />
+        <Column name="FirstName" />
+        <Column name="LastName" />
+        <Column name="Id" />
+        <Column name="EmailSentCount" />
+        <Column name="IsActive" />
+      </Columns>
+    </Item>
+    <Item name="dbo.vFinancialGroups" type="view">
+      <Columns>
+        <Column name="FinancialGroupId" />
+        <Column name="Domain" />
+        <Column name="MaturityLevel" />
+        <Column name="AssessmentFactor" />
+        <Column name="FinComponent" />
+      </Columns>
+    </Item>
+    <Item name="dbo.VIEW_QUESTIONS_STATUS" type="view">
+      <Columns>
+        <Column name="Question_Or_Requirement_Id" />
+        <Column name="HasComment" />
+        <Column name="MarkForReview" />
+        <Column name="HasDocument" />
+        <Column name="docnum" />
+        <Column name="HasDiscovery" />
+        <Column name="findingnum" />
+        <Column name="Assessment_Id" />
+        <Column name="Answer_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.VISIO_MAPPING" type="table" extracted="True">
+      <Columns>
+        <Column name="Specific_Type" key="true" />
+        <Column name="Stencil_Name" key="true" />
+      </Columns>
+    </Item>
+    <Item name="dbo.vParameters" type="view">
+      <Columns>
+        <Column name="Parameter_ID" />
+        <Column name="Parameter_Name" />
+        <Column name="Default_Value" />
+        <Column name="Assessment_ID" />
+      </Columns>
+    </Item>
+    <Item name="dbo.vQUESTION_HEADINGS" type="view">
+      <Columns>
+        <Column name="Heading_Pair_Id" />
+        <Column name="Question_Group_Heading" />
+        <Column name="Universal_Sub_Category" />
+        <Column name="Sub_Heading_Question_Description" />
+        <Column name="Universal_Sub_Category_Id" />
+      </Columns>
+    </Item>
+    <Item name="dbo.WEIGHT" type="table" extracted="True">
+      <Columns>
+        <Column name="Weight" key="true" />
+        <Column name="Question_Normalized_Weight" />
+        <Column name="Requirement_Normalized_Weight" />
+        <Column name="Category_Normalized_Weight" />
+      </Columns>
+    </Item>
+  </Items>
+  <SchemaMapping>
+    <SMItem schema1="guest" schema2="guest" />
+    <SMItem schema1="dbo" schema2="dbo" />
+    <SMItem schema1="sys" schema2="sys" />
+    <SMItem schema1="INFORMATION_SCHEMA" schema2="INFORMATION_SCHEMA" />
+  </SchemaMapping>
+  <ProjectSettings>
+    <AllSettings>
+      <ComparisonCaseSensitive>1</ComparisonCaseSensitive>
+      <RowMatchingMode>Compatibility</RowMatchingMode>
+      <CompareTrimmedStrings>False</CompareTrimmedStrings>
+      <EmptyEqualsNull>False</EmptyEqualsNull>
+      <RoundFloatTypes>7</RoundFloatTypes>
+      <AutoSelectKeyColumns>0</AutoSelectKeyColumns>
+      <IgnoreRowGUIDCol>False</IgnoreRowGUIDCol>
+      <PerformanceOptions>
+        <PerformanceOption name="Auto" value="True" />
+      </PerformanceOptions>
+    </AllSettings>
+  </ProjectSettings>
+</SqlDataExaminer>

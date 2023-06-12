@@ -204,6 +204,9 @@ import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hy
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
 import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
+import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
+import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
+
 
 const installationMode = localStorage.getItem('installationMode');
 
@@ -458,6 +461,7 @@ const appRoutes: Routes = [
               { path: 'hydro-impact', component: HydroImpactComponent },
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
               { path: 'hydro-actions', component: HydroActionsComponent },
+              { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
             ]
           },
 
@@ -520,6 +524,7 @@ const appRoutes: Routes = [
       { path: 'c2m2Report', component: C2m2ReportComponent },
       { path: 'hydroReport', component: HydroReportComponent },
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
+      { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
