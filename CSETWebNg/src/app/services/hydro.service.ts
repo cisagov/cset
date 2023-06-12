@@ -42,14 +42,13 @@ export class HydroService {
     }
   }
 
-  saveHydroComment(answerId: number, progressId: number, comment: string) {
+  saveHydroComment(answer: any, answerId: number, progressId: number, comment: string) {
     let hpc = new HydroProgressComment();
+    hpc.Answer = answer;
     hpc.Answer_Id = answerId;
     hpc.Progress_Id = progressId;
     hpc.Comment = comment;
 
-    console.log(hpc)
-    
     return this.http.post(this.configSvc.apiUrl + 'saveHydroComment', hpc, headers);
   }
 
@@ -67,6 +66,7 @@ export class HydroService {
 }
 
 export class HydroProgressComment {
+  Answer: any;
   Answer_Id: number;
   Progress_Id: number;
   Comment: string;
