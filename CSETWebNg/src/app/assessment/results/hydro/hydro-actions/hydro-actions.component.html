@@ -63,7 +63,7 @@
                                 {{i+1}}
                             </div>
                             <app-hydro-action-item class="shadow" style="width:850px; background-color: white;" 
-                                [subCatName]="item.question.sub_Category" [impact]="impactTranslator(item.action.severity)" 
+                                [subCatName]="item.question.sub_Category" [impact]="hydroSvc.impactTranslator(item.action.severity)" 
                                 [text]="item.action.action_Items" [progressId]="item.actionData.progress_Id"
                                 [progressArray]="progressLevels" 
                                 [comment]="item.actionData.comment" [answerId]="item.actionData.answer_Id">
