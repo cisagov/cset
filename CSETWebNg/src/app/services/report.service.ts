@@ -107,6 +107,13 @@ export class ReportService {
         this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }
+    
+    /**
+     *
+     */
+    getHydroActionItemsReport() {
+        return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItemsReport', headers);
+    }
 
     /**
      * Calls the API to get the structure of a SET.

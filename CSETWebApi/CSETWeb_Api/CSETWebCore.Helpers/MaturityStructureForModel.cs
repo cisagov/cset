@@ -8,7 +8,7 @@ using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Helpers

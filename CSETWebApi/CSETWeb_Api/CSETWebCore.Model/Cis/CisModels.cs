@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 
-namespace CSETWebCore.Model.Cis
+namespace CSETWebCore.Model.Nested
 {
 
     public class ModelStructure
@@ -23,7 +23,7 @@ namespace CSETWebCore.Model.Cis
         public List<Grouping> Groupings { get; set; } = new List<Grouping>();
     }
 
-    public class CisQuestions
+    public class NestedQuestions
     {
         public int AssessmentId { get; set; }
 
@@ -101,6 +101,7 @@ namespace CSETWebCore.Model.Cis
         public int Sequence { get; set; }
 
         public decimal? Weight { get; set; }
+        public int? ThreatType { get; set; }
 
         /// <summary>
         /// Identifies an option that should not be selected
@@ -164,6 +165,12 @@ namespace CSETWebCore.Model.Cis
         public int High { get; set; }
         public int Median { get; set; }
         public int Low { get; set; }
+        public double? GroupingScoreDouble { get; set; }
+        public double? HighDouble { get; set; }
+        public double? MediumDouble { get; set; }
+        public double? LowDouble { get; set; }
+
+
     }
 
 
@@ -187,6 +194,7 @@ namespace CSETWebCore.Model.Cis
         public decimal? Weight { get; set; }
         public bool Selected { get; set; }
         public string Type { get; set; }
+        public int? ThreatType { get; set; }
     }
 
     public class GroupedQuestions

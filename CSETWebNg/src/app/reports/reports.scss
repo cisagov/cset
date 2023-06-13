@@ -1824,9 +1824,28 @@ div.spinner-size-50 {
 
 
 ///   CPG Styles ////////////////////////////////////////////////
-.cpg-header {
+.sub-header-1 {
   font-weight: bold;
   font-size: 1.05rem;
+}
+
+
+
+/// nested formatting ///////////////////////////////////
+.nested-question-title {
+  font-weight: bold;
+}
+
+.nested-question-text, .nested-question-text p {
+  margin-bottom: 1rem;
+}
+
+.nested-option-block, .nested-option-block p {
+  margin-bottom: 1rem !important;
+}
+
+.nested-option-block-report {
+  margin-bottom: 1rem;
 }
 
 

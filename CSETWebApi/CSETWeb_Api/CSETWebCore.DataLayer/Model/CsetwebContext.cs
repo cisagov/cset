@@ -80,6 +80,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
         public virtual DbSet<CSAF_FILE> CSAF_FILE { get; set; }
         public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
+        public virtual DbSet<CSF_MAPPING> CSF_MAPPING { get; set; }
         public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
         public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
@@ -139,6 +140,9 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
         public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
+        public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
+        public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
+        public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
@@ -235,6 +239,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
         public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
         public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
+        public virtual DbSet<TTP> TTP { get; set; }
+        public virtual DbSet<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
         public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
         public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
         public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
@@ -252,6 +258,11 @@ namespace CSETWebCore.DataLayer.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ACCESS_KEY>(entity =>
+            {
+                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+            });
+
             modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
             {
                 entity.HasKey(e => new { e.AccessKey, e.Assessment_Id });
@@ -1027,6 +1038,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Cset_Version1).HasComment("The Cset Version is used to");
 
                 entity.Property(e => e.Version_Id).HasComment("The Version Id is used to");
+            });
+
+            modelBuilder.Entity<CSF_MAPPING>(entity =>
+            {
+                entity.HasKey(e => new { e.CSF_Code, e.Question_Type, e.Question_Id });
             });
 
             modelBuilder.Entity<CUSTOM_BASE_STANDARDS>(entity =>
@@ -1843,6 +1859,30 @@ namespace CSETWebCore.DataLayer.Model
                 entity.HasComment("A collection of GLOSSARY records");
             });
 
+            modelBuilder.Entity<HYDRO_DATA>(entity =>
+            {
+                entity.HasKey(e => e.Mat_Option_Id)
+                    .IsClustered(false);
+
+                entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
+                    .IsUnique()
+                    .IsClustered();
+
+                entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Mat_Option)
+                    .WithOne(p => p.HYDRO_DATA)
+                    .HasForeignKey<HYDRO_DATA>(d => d.Mat_Option_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.HYDRO_DATA)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
+            });
+
             modelBuilder.Entity<IMPORTANCE>(entity =>
             {
                 entity.HasKey(e => e.Importance_Id)
@@ -1926,18 +1966,17 @@ namespace CSETWebCore.DataLayer.Model
 
             modelBuilder.Entity<ISE_ACTIONS>(entity =>
             {
-                entity.HasKey(e => e.Mat_Question_Id)
-                    .HasName("PK__ISE_ACTI__B0B2E4E66B6807D2");
+                entity.HasKey(e => new { e.Action_Item_Id, e.Mat_Question_Id });
 
                 entity.HasComment("ISE specific fields for issues");
 
-                entity.Property(e => e.Mat_Question_Id).ValueGeneratedNever();
+                entity.Property(e => e.Action_Item_Id).ValueGeneratedOnAdd();
 
                 entity.HasOne(d => d.Mat_Question)
-                    .WithOne(p => p.ISE_ACTIONS)
-                    .HasForeignKey<ISE_ACTIONS>(d => d.Mat_Question_Id)
+                    .WithMany(p => p.ISE_ACTIONS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
+                    .HasConstraintName("FK__ISE_ACTIO__Mat_Q__7F2CAE86");
             });
 
             modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
@@ -1948,11 +1987,6 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.ISE_ACTIONS_FINDINGS)
                     .HasForeignKey(d => d.Finding_Id)
                     .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_ISE_ACTIONS");
             });
 
             modelBuilder.Entity<JWT>(entity =>
@@ -3289,6 +3323,23 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
             });
 
+            modelBuilder.Entity<TTP_MAT_QUESTION>(entity =>
+            {
+                entity.HasKey(e => new { e.TTP_Code, e.Mat_Question_Id });
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.TTP_MAT_QUESTION)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS");
+
+                entity.HasOne(d => d.TTP_CodeNavigation)
+                    .WithMany(p => p.TTP_MAT_QUESTION)
+                    .HasForeignKey(d => d.TTP_Code)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TTP_MAT_QUESTION_TTP");
+            });
+
             modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
             {
                 entity.HasKey(e => e.Universal_Area_Name)
@@ -3369,7 +3420,11 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.HasComment("A collection of USERS records");
 
+                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
             });
 
             modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>

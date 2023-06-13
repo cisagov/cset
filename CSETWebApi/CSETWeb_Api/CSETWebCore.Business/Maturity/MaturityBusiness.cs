@@ -23,8 +23,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
+using CSETWebCore.Model.Hydro;
 using J2N;
 using Microsoft.AspNetCore.Http.Features;
+using System.ComponentModel;
+using CSETWebCore.Business.Aggregation;
+using static Lucene.Net.Util.Fst.Util;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -36,6 +40,8 @@ namespace CSETWebCore.Business.Maturity
 
         private int _maturityModelId;
 
+        private AdditionalSupplemental _addlSuppl;
+
         public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
 
         public MaturityBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness)
@@ -43,6 +49,8 @@ namespace CSETWebCore.Business.Maturity
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
+
+            this._addlSuppl = new AdditionalSupplemental(context);
         }
 
 
@@ -277,7 +285,7 @@ namespace CSETWebCore.Business.Maturity
             var maturityExtra = _context.MATURITY_EXTRA.ToList();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
 
 
             int calculatedScore = 110;
@@ -389,7 +397,7 @@ namespace CSETWebCore.Business.Maturity
             var response = new List<DomainAnswers>();
 
 
-            var structure = new MaturityStructure(assessmentId, _context, false);
+            var structure = new MaturityStructureAsXml(assessmentId, _context, false);
 
 
             // In this model sructure, the Goal element represents domains
@@ -777,7 +785,7 @@ namespace CSETWebCore.Business.Maturity
             return levelScore;
         }
 
-        private LevelScore GetLevelScoreQuestions(Model.Cis.Grouping group, string level)
+        private LevelScore GetLevelScoreQuestions(Model.Nested.Grouping group, string level)
         {
             LevelScore levelScore = new LevelScore();
             levelScore.Level = level;
@@ -846,7 +854,7 @@ namespace CSETWebCore.Business.Maturity
                     List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                     ConsolidateAnswers(answers, out ANSWER answer);
 
-                    var question = new Model.Cis.Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
@@ -1045,13 +1053,21 @@ namespace CSETWebCore.Business.Maturity
                         ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
                         QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+
+                        Scope = myQ.Scope,
+                        RecommendedAction = myQ.Recommend_Action,
+                        RiskAddressed = myQ.Risk_Addressed,
+                        Services = myQ.Services,
+
                         Answer = answer?.a.Answer_Text,
                         AltAnswerText = answer?.a.Alternate_Justification,
                         FreeResponseAnswer = answer?.a.Free_Response_Answer,
+
                         Comment = answer?.a.Comment,
                         Feedback = answer?.a.FeedBack,
                         MarkForReview = answer?.a.Mark_For_Review ?? false,
                         Reviewed = answer?.a.Reviewed ?? false,
+
                         Is_Maturity = true,
                         MaturityModelId = sg.Maturity_Model_Id,
                         MaturityLevel = myQ.Maturity_Level.Level,
@@ -1059,6 +1075,14 @@ namespace CSETWebCore.Business.Maturity
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
                         SetName = string.Empty
                     };
+
+
+                    // Include CSF mappings
+                    qa.CsfMappings = _addlSuppl.GetCsfMappings(qa.QuestionId, "Maturity");
+
+                    // Include any TTPs
+                    qa.TTP = _addlSuppl.GetTTPReferenceList(qa.QuestionId);
+
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)
                     {
@@ -2323,18 +2347,31 @@ namespace CSETWebCore.Business.Maturity
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
+        }       
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <param name="includeSupplemental"></param>
+        /// <returns></returns>
+        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental)
+        {
+            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental);
+            return ss.Top;
         }
 
 
         /// <summary>
         /// Returns the maturity grouping/question structure
-        /// for an assessment as JSON.
+        /// for an assessment as JSON.     
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public XDocument GetMaturityStructure(int assessmentId, bool includeSupplemental)
+        public XDocument GetMaturityStructureAsXml(int assessmentId, bool includeSupplemental)
         {
-            var x = new MaturityStructure(assessmentId, _context, includeSupplemental);
+            var x = new MaturityStructureAsXml(assessmentId, _context, includeSupplemental);
             return x.ToXDocument();
         }
 
@@ -2376,19 +2413,19 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
-        /// Converts a CisQuestions structure to a MaturityResponse structure.
+        /// Converts a NestedQuestions structure to a MaturityResponse structure.
         /// </summary>
-        /// <param name="cisStructure"></param>
+        /// <param name="structure"></param>
         /// <returns></returns>
-        public MaturityResponse ConvertToMaturityResponse(Model.Cis.CisQuestions cisStructure)
+        public MaturityResponse ConvertToMaturityResponse(Model.Nested.NestedQuestions structure)
         {
-            this._maturityModelId = cisStructure.ModelId;
+            this._maturityModelId = structure.ModelId;
 
             var resp = new MaturityResponse();
 
             resp.MaturityTargetLevel = 100;
 
-            foreach (var g in cisStructure.Groupings)
+            foreach (var g in structure.Groupings)
             {
                 resp.Groupings = MapGroupings(g);
             }
@@ -2400,7 +2437,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// 
         /// </summary>
-        private List<MaturityGrouping> MapGroupings(Model.Cis.Grouping g)
+        private List<MaturityGrouping> MapGroupings(Model.Nested.Grouping g)
         {
             var list = new List<MaturityGrouping>();
 
@@ -2429,7 +2466,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// 
         /// </summary>
-        private List<QuestionAnswer> MapQuestions(Model.Cis.Grouping g)
+        private List<QuestionAnswer> MapQuestions(Model.Nested.Grouping g)
         {
             var questionAnswer = new List<QuestionAnswer>();
 
@@ -2459,6 +2496,293 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
+        }
+
+
+        public List<HydroDonutData> GetHydroDonutData(int assessmentId)
+        {
+            var result = from question in _context.MATURITY_QUESTIONS
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
+                         join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id && answer.Assessment_Id == assessmentId
+                         select new { question, action, answerOption };
+
+            List<HydroDonutData> response = new List<HydroDonutData>();
+
+            foreach (var item in result.Distinct().ToList())
+            {
+                HydroDonutData data = new HydroDonutData()
+                {
+                    Actions = item.action,
+                    //Answer = item.answer,
+                    AnswerOption = item.answerOption,
+                    Question = item.question
+                };
+
+                response.Add(data);
+            }
+
+            return response;
+        }
+
+
+        public List<HydroActionsByDomain> GetHydroActions(int assessmentId)
+        {
+
+            var result = from subGrouping in _context.MATURITY_GROUPINGS
+                         join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
+                         join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
+                              && answer.Mat_Option_Id == action.Mat_Option_Id
+                              && answer.Assessment_Id == assessmentId
+                         select new { subGrouping, domain, question, action, answer };
+
+            List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
+            List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
+
+            if (result.ToList().Count == 0)
+            {
+                return actionsByDomains;
+            }
+
+            var currDomain = result.ToList().FirstOrDefault().domain;
+
+            foreach (var item in result.Distinct().ToList())
+            {
+                if (item.domain != currDomain)
+                {
+                    HydroActionsByDomain domainData = new HydroActionsByDomain()
+                    {
+                        DomainName = currDomain.Title,
+                        DomainSequence = currDomain.Sequence,
+                        ActionsQuestions = actionQuestions
+                    };
+
+                    actionsByDomains.Add(domainData);
+                    currDomain = item.domain;
+                    actionQuestions = new List<HydroActionQuestion>();
+                }
+
+
+                if (_context.HYDRO_DATA_ACTIONS.Find(item.answer.Answer_Id) == null)
+                {
+                    _context.HYDRO_DATA_ACTIONS.Add(
+                        new HYDRO_DATA_ACTIONS()
+                        {
+                            Answer = item.answer,
+                            Answer_Id = item.answer.Answer_Id,
+                            Progress_Id = 1,
+                            Comment = ""
+                        }
+                    );
+                    _context.SaveChanges();
+                }
+
+                HYDRO_DATA_ACTIONS actionData = _context.HYDRO_DATA_ACTIONS.Where(x => x.Answer_Id == item.answer.Answer_Id).FirstOrDefault();
+
+                actionQuestions.Add(
+                    new HydroActionQuestion()
+                    {
+                        Action = item.action,
+                        Question = item.question,
+                        ActionData = actionData
+                    }
+                );
+            }
+
+
+
+            actionsByDomains.Add(
+                new HydroActionsByDomain()
+                {
+                    DomainName = currDomain.Title,
+                    DomainSequence = currDomain.Sequence,
+                    ActionsQuestions = actionQuestions
+                }
+            );
+
+            return actionsByDomains;
+        }
+
+
+        public List<HydroActionQuestion> GetHydroActionsReport(int assessmentId)
+        {
+
+            var result = from subGrouping in _context.MATURITY_GROUPINGS
+                         join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
+                         join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
+                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
+                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
+                              && answer.Mat_Option_Id == action.Mat_Option_Id
+                              && answer.Assessment_Id == assessmentId
+                         select new { subGrouping, domain, question, action, answer };
+
+            List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
+
+            var currDomain = result.ToList().FirstOrDefault().domain;
+
+            foreach (var item in result.Distinct().ToList())
+            {
+                if (_context.HYDRO_DATA_ACTIONS.Find(item.answer.Answer_Id) == null)
+                {
+                    _context.HYDRO_DATA_ACTIONS.Add(
+                        new HYDRO_DATA_ACTIONS()
+                        {
+                            Answer_Id = item.answer.Answer_Id,
+                            Progress_Id = 1,
+                            Comment = ""
+                        }
+                    );
+                    _context.SaveChanges();
+                }
+
+                HYDRO_DATA_ACTIONS actionData = _context.HYDRO_DATA_ACTIONS.Where(x => x.Answer_Id == item.answer.Answer_Id).FirstOrDefault();
+
+                actionQuestions.Add(
+                    new HydroActionQuestion()
+                    {
+                        Action = item.action,
+                        Question = item.question,
+                        ActionData = actionData
+                    }
+                );
+            };
+
+            return actionQuestions;
+        }
+
+
+        public List<HydroResults> GetResultsData(int assessmentId)
+        {
+            var response = from answer in _context.ANSWER
+                          join data in _context.HYDRO_DATA on answer.Mat_Option_Id equals data.Mat_Option_Id
+                          join question in _context.MATURITY_QUESTIONS 
+                                on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
+                          join grouping in _context.MATURITY_GROUPINGS 
+                                on question.Grouping_Id equals grouping.Grouping_Id
+                          join parentGrouping in _context.MATURITY_GROUPINGS
+                                on grouping.Parent_Id equals parentGrouping.Grouping_Id
+                          where answer.Assessment_Id == assessmentId && answer.Answer_Text == "S"
+                          select new { answer, data, question, grouping, parentGrouping };
+
+            List<HydroResults> resultsList = new List<HydroResults>();
+            List<HYDRO_DATA> groupItems = new List<HYDRO_DATA>();
+            int currParentSequence = 0;
+            int currParentId = 0;
+            int currQuestionId = 0;
+            bool notFirst = false;
+            bool impactLimitNotReached = true;
+            bool feasibilityLimitNotReached = true;
+
+            HydroImpacts impactTotals = new HydroImpacts();
+            HydroFeasibilities feasibilityTotals = new HydroFeasibilities();
+
+            foreach (var item in response)
+            {
+                if (currParentId != item.parentGrouping.Grouping_Id && notFirst)
+                {
+                    HydroResults results = new HydroResults()
+                    {
+                        HydroData = groupItems,
+                        impactTotals = impactTotals,
+                        feasibilityTotals = feasibilityTotals,
+                        parentGroupId = currParentId,
+                        parentSequence = currParentSequence
+                    };
+                    resultsList.Add(results);
+                    
+                    groupItems = new List<HYDRO_DATA>(); // clear the groupItems list
+                    impactTotals = new HydroImpacts();
+                    feasibilityTotals = new HydroFeasibilities();
+                }
+
+                if (currQuestionId != item.question.Mat_Question_Id)
+                {
+                    impactLimitNotReached = true;
+                    feasibilityLimitNotReached = true;
+                }
+
+                var impactStrings = item.data.Impact.Split(',');
+
+                if (impactLimitNotReached && (impactStrings.Length != 1 || !string.IsNullOrEmpty(impactStrings[0])))
+                {
+                    foreach (string impact in impactStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
+                    {
+                        if (impact.Equals("1"))
+                        {
+                            impactTotals.Economic++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("2"))
+                        {
+                            impactTotals.Environmental++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("3"))
+                        {
+                            impactTotals.Operational++;
+                            impactLimitNotReached = false;
+                        }
+                        else if (impact.Equals("4"))
+                        {
+                            impactTotals.Safety++;
+                            impactLimitNotReached = false;
+                        }
+                    }
+                }
+
+                var feasibilityStrings = item.data.Feasibility.Split(',');
+
+                if (feasibilityLimitNotReached && (feasibilityStrings.Length != 1 || !string.IsNullOrEmpty(feasibilityStrings[0])))
+                {
+                    foreach (string feas in feasibilityStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
+                    {
+                        if (feas.Equals("1"))
+                        {
+                            feasibilityTotals.Easy++;
+                            feasibilityLimitNotReached = false;
+                        }
+                        else if (feas.Equals("2"))
+                        {
+                            feasibilityTotals.Medium++;
+                            feasibilityLimitNotReached = false;
+                        }
+                        else if (feas.Equals("3"))
+                        {
+                            feasibilityTotals.Hard++;
+                            feasibilityLimitNotReached = false;
+                        }
+                    }
+                }
+
+                currParentId = item.parentGrouping.Grouping_Id; // update the current ID and name
+                currParentSequence = item.parentGrouping.Sequence;
+                currQuestionId = item.question.Mat_Question_Id;
+
+                groupItems.Add(item.data);
+                notFirst = true;
+            }
+
+            HydroResults lastResults = new HydroResults()
+            {
+                HydroData = groupItems,
+                impactTotals = impactTotals,
+                feasibilityTotals = feasibilityTotals,
+                parentGroupId = currParentId,
+                parentSequence = currParentSequence
+            };
+            resultsList.Add(lastResults);
+
+            return resultsList;
+        }
+
+        public List<HYDRO_PROGRESS> GetHydroProgress()
+        {
+            return _context.HYDRO_PROGRESS.ToList();
         }
     }
 }

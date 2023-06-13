@@ -417,6 +417,38 @@
         </div>
       </div>
 
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('HYDRO') && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>Hydropower Cybersecurity Valuation Framework (HYDRO)</h4>
+
+        <!-- below is commented out until the VaR scores are collected/calculated -->
+        <!-- <div>
+          <button tabindex="0" (click)="clickReportLink('hydroReport')" class="btn btn-link btn-link-dark text-left">
+            HYDRO Report
+          </button>
+        </div> -->
+        <div>
+          <button tabindex="0" (click)="clickReportLink('hydroActionItemsReport')" class="btn btn-link btn-link-dark text-left">
+            Action Items Report
+          </button>
+        </div>
+      </div>
+
+
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02C') && !isMobile"        
+        class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>
+          Pipeline Security Directive (SD02C)
+        </h4>
+
+        <div>
+          <button tabindex="0" (click)="clickReportLink('sd-answer-summary')" class="btn btn-link btn-link-dark text-left">
+            Answer Summary
+          </button>
+        </div>
+
+      </div>
+
       <div class="mt-5">
         <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
           class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"

@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class STATE_REGION
+    /// <summary>
+    /// HYDRO specific fields for most of the results page
+    /// </summary>
+    public partial class HYDRO_PROGRESS
     {
+        public HYDRO_PROGRESS()
+        {
+        }
+
         [Key]
-        [StringLength(2)]
-        [Unicode(false)]
-        public string State { get; set; }
-        [Key]
-        [StringLength(5)]
-        [Unicode(false)]
-        public string RegionCode { get; set; }
-        [Required]
+        [ForeignKey("Progress_Id")]
+        public int Progress_Id { get; set; }
         [StringLength(50)]
-        [Unicode(false)]
-        public string RegionName { get; set; }
+        public string Progress_Text { get; set; }
     }
 }

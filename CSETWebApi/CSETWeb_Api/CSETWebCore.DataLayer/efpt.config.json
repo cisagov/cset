@@ -215,6 +215,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[CSF_MAPPING]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[CUSTOM_BASE_STANDARDS]",
          "ObjectType": 0
       },
@@ -831,6 +835,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[TTP]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TTP_MAT_QUESTION]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UNIVERSAL_AREA]",
          "ObjectType": 0
       },
@@ -1348,6 +1360,7 @@
       }
    ],
    "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
+   "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
    "UseDbContextSplitting": false,
@@ -1357,9 +1370,7 @@
    "UseInflector": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": true,
-   "UseNoConstructor": false,
    "UseNoDefaultConstructor": false,
-   "UseNoNavigations": false,
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,

@@ -23,6 +23,8 @@ using System.Xml.XPath;
 using Newtonsoft.Json;
 using CSETWebCore.Api.Interfaces;
 using NLog;
+using CSETWebCore.Model.Nested;
+using J2N.Numerics;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -200,7 +202,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructureAsXml(assessmentId, true);
 
 
             var j = "";
@@ -256,13 +258,58 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="sectionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/maturity/cis/questions")]
-        public IActionResult GetCisGroupingAndQuestions([FromQuery] int sectionId)
+        [Route("api/maturity/nested/questions")]
+        public IActionResult GetNestedGroupingAndQuestions([FromQuery] int sectionId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            var biz = new CisStructure(assessmentId, sectionId, _context);
+            var biz = new NestedStructure(assessmentId, sectionId, _context);
             return Ok(biz.MyModel);
+        }
+
+
+        /// <summary>
+        /// Returns the questions in a HYDRO section.
+        /// </summary>
+        /// <param name="subCatIds"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/hydro/getBulkSubCatIds")]
+        public IActionResult GetBulkSubCatIds([FromQuery] string[] subCatIds)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            List<NestedQuestions> bizList = new List<NestedQuestions>();
+
+            subCatIds = subCatIds[0].Split(',');
+
+            foreach (string id in subCatIds)
+            {
+                var biz = new NestedStructure(assessmentId, int.Parse(id), _context);
+                bizList.Add(biz.MyModel);
+            }
+
+            return Ok(bizList);
+        }
+
+
+        [HttpGet]
+        [Route("api/maturity/hydro/getResultsData")]
+        public IActionResult GetResultsData()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
+        }
+
+
+        [HttpGet]
+        [Route("api/maturity/hydro/getProgressText")]
+        public IActionResult getProgressText()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
         }
 
 
@@ -288,7 +335,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             // get grouping CisStructure
-            var biz = new CisStructure(assessmentId, groupingId, _context);
+            var biz = new NestedStructure(assessmentId, groupingId, _context);
             var resp1 = biz.MyModel;
 
             // convert it to a MaturityResponse
@@ -377,7 +424,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/maturity/cis/importsurvey")]
-        public IActionResult ImportSurvey([FromBody] Model.Cis.CisImportRequest request)
+        public IActionResult ImportSurvey([FromBody] Model.Nested.CisImportRequest request)
         {
             var assessmentId = _tokenManager.AssessmentForUser();
 
