@@ -574,4 +574,21 @@ export class AssessmentService {
 
     return false;
   }
+
+  /**
+  * Saves the user's "Prevent Encrypt" toggle option to the database.
+  * @param status 
+  */
+  persistEncryptPreference(preventEncrypt: boolean) {
+    let status = preventEncrypt;
+    return this.http.post(this.apiUrl + 'savePreventEncrypt', status, headers).subscribe();
+
+  }
+
+  /**
+  * Gets the user's "Prevent Encrypt" toggle option from the database. 
+  */
+  getEncryptPreference() {
+    return this.http.get(this.apiUrl + 'getPreventEncrypt');
+  }
 }

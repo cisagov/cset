@@ -1,6 +1,7 @@
 {
     "isRunningAnonymous": true,
     "galleryLayout": "TSA",
+    "publicDomainName": "cset-tsa.inl.gov",
     "behaviors": {
         "defaultTitle":"CSET TSA-Online",
         "showModuleBuilder": false,
@@ -28,6 +29,7 @@
         "showPrivacyWarning": true,
         "showTrend": false,
         "showCompare": false,
-        "showEnableProtectedFeatures": false
+        "showEnableProtectedFeatures": false,
+        "showComments": false
     }
 }

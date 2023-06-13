@@ -10,6 +10,7 @@ using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
+using CSETWebCore.Model.Hydro;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
 using System;
@@ -525,6 +526,91 @@ namespace CSETWebCore.Business.Question
                 }
                 _questionRequirement.StoreAnswer(ans);
             }
+        }
+
+
+        public int QuestionCountInSubGroup(string subGroup, int modelId)
+        {
+            return _context.MATURITY_QUESTIONS.Where(x => x.Sub_Category == subGroup && x.Maturity_Model_Id == modelId).Count();
+        }
+
+        public List<HydroGroupingInfo> AllQuestionsInSubGroup(int modelId, int groupLevel, int assessmentId)
+        {
+            List<int> groupingIdList = _context.MATURITY_GROUPINGS.Where(g => g.Maturity_Model_Id == modelId && g.Group_Level == groupLevel).Select(x => x.Grouping_Id).ToList();
+            List<int> parentGroupingIdList = _context.MATURITY_GROUPINGS.Where(g => g.Maturity_Model_Id == modelId && g.Group_Level == groupLevel).Select(x => (int)x.Parent_Id).ToList();
+            List<int> distinctParentGroupingIdList = parentGroupingIdList.Distinct().ToList();
+
+            var ansResults = from q in _context.MATURITY_QUESTIONS.Where(g => g.Maturity_Model_Id == modelId && groupingIdList.Contains((int)g.Grouping_Id))
+                                  join a in _context.ANSWER on q.Mat_Question_Id equals a.Question_Or_Requirement_Id
+                                  where a.Assessment_Id == assessmentId
+                             select new { a };
+
+            List < MATURITY_QUESTIONS > questionList = _context.MATURITY_QUESTIONS.Where(g => g.Maturity_Model_Id == modelId && groupingIdList.Contains((int)g.Grouping_Id)).ToList();
+
+            List<HydroGroupingInfo> info = new List<HydroGroupingInfo>();
+
+            for (int i = 0; i < groupingIdList.Count; i++) 
+            {
+                List<MATURITY_QUESTIONS> questionsInGroup = questionList.FindAll(q => q.Grouping_Id == groupingIdList[i]);
+
+                List<QuestionWithAnswers> questionWithAnswers = new List<QuestionWithAnswers>();
+
+                foreach(MATURITY_QUESTIONS question in questionsInGroup)
+                {
+                    QuestionWithAnswers questionAnswers = new QuestionWithAnswers();
+                    List<ANSWER> answerListPerQuestion = _context.ANSWER.Where(a => a.Question_Or_Requirement_Id == question.Mat_Question_Id && a.Answer_Text == "S" && a.Assessment_Id == assessmentId).ToList();
+                    List<MATURITY_ANSWER_OPTIONS> answerOptions = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Question_Id == question.Mat_Question_Id).ToList();
+
+                    questionAnswers.Question = question;
+                    questionAnswers.Question.MATURITY_ANSWER_OPTIONS = answerOptions;
+                    questionAnswers.Answers = answerListPerQuestion;
+
+                    questionWithAnswers.Add(questionAnswers);
+                }
+
+                int totalSubGroupingsInParent = _context.MATURITY_GROUPINGS.Where(g => g.Parent_Id == parentGroupingIdList[i]).Count();
+
+                info.Add(new HydroGroupingInfo()
+                {
+                    TotalSubGroupings = totalSubGroupingsInParent,
+                    ParentGroupingId = parentGroupingIdList[i],
+                    GroupingId = groupingIdList[i],
+                    QuestionsWithAnswers = questionWithAnswers
+                });
+            }
+
+            return info;
+        }
+
+
+        public int SaveHydroComment(ANSWER answer, int answerId, int progressId, string comment)
+        {
+
+            try
+            {
+                _context.HYDRO_DATA_ACTIONS.Update(new HYDRO_DATA_ACTIONS()
+                {
+                    Answer = answer,
+                    Answer_Id = answerId,
+                    Progress_Id = progressId,
+                    Comment = comment
+                });
+            } 
+            catch (Exception ex)
+            {
+                HYDRO_DATA_ACTIONS hda = new HYDRO_DATA_ACTIONS()
+                {
+                    Answer = answer,
+                    Answer_Id = answerId,
+                    Progress_Id = progressId,
+                    Comment = comment
+                };
+                _context.HYDRO_DATA_ACTIONS.Add(hda);
+            }
+
+            _context.SaveChanges();
+
+            return answerId;
         }
     }
 }

@@ -21,6 +21,7 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 
 namespace CSETWebCore.Api.Controllers
@@ -152,7 +153,7 @@ namespace CSETWebCore.Api.Controllers
             // Hidden Screens
             if (config.HiddenScreens != null && ss != null)
             {
-                ss.Hidden_Screens = String.Join(",", config.HiddenScreens);
+                ss.Hidden_Screens = string.Join(",", config.HiddenScreens);
             }
 
 
@@ -333,6 +334,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
 
+        
         [HttpGet]
         [Route("api/getMergeNames")]
         public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 
@@ -340,6 +342,57 @@ namespace CSETWebCore.Api.Controllers
                                            [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
         {
             return Ok(_assessmentBusiness.GetNames(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
+        }
+
+        [HttpGet]
+        [Route("api/getPreventEncrypt")]
+        public IActionResult GetPreventEncryptStatus()
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
+
+            IQueryable<bool?> query = null;
+            if (userId != null) 
+            {
+                query = from u in _context.USERS
+                        where u.UserId == userId
+                        select u.PreventEncrypt;
+            }
+            else if (ak != null) 
+            {
+                query = from a in _context.ACCESS_KEY
+                        where a.AccessKey == ak
+                        select a.PreventEncrypt;
+            }
+
+            var result = query.ToList().FirstOrDefault();
+            
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("api/savePreventEncrypt")]
+        public IActionResult SavePreventEncryptStatus([FromBody] bool status)
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
+
+            if (userId != null)
+            {
+                var user = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault();
+
+                user.PreventEncrypt = status;
+                _context.SaveChanges();
+            }
+            else if (ak != null) 
+            {
+                var accessKey = _context.ACCESS_KEY.Where(x => x.AccessKey == ak).FirstOrDefault();
+
+                accessKey.PreventEncrypt = status;
+                _context.SaveChanges();
+            }
+
+            return Ok();
         }
 
     }

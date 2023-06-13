@@ -40,7 +40,10 @@ namespace CSETWebCore.DataLayer.Model
         public string LastName { get; set; }
         public Guid? Id { get; set; }
         public int EmailSentCount { get; set; }
-        public bool IsActive { get; set; }
+        [Required]
+        public bool? IsActive { get; set; }
+        [Required]
+        public bool? PreventEncrypt { get; set; }
 
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }

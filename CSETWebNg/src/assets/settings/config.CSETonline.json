@@ -1,6 +1,7 @@
 {
     "isRunningAnonymous": true,
     "galleryLayout": "ONLINE",
+    "publicDomainName": "cset.inl.gov",
     "behaviors": {
         "defaultTitle":"CSET-Online",
         "showModuleBuilder": false,
@@ -28,7 +29,8 @@
         "showPrivacyWarning": true,
         "showTrend": false,
         "showCompare": false,
-        "showEnableProtectedFeatures": false
+        "showEnableProtectedFeatures": false,
+        "showComments": false
     }
 }
 

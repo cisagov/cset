@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Maturity
         /// <summary>
         /// The structured model for a section/category in CIS.
         /// </summary>
-        public CisQuestions QuestionsModel;
+        public NestedQuestions QuestionsModel;
 
         private List<FlatQuestion> allWeights = new List<FlatQuestion>();
 
@@ -30,7 +30,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         public CisScoring(int assessmentId, int sectionId, CSETContext context)
         {
-            var section = new CisStructure(assessmentId, sectionId, context);
+            var section = new NestedStructure(assessmentId, sectionId, context);
             QuestionsModel = section.MyModel;
         }
 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Business.Maturity
         /// Calculates CIS scoring.
         /// </summary>
         /// <param name="model"></param>
-        public CisScoring(CisQuestions model)
+        public CisScoring(NestedQuestions model)
         {
             QuestionsModel = model;
         }
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Maturity
         /// <returns></returns>
         public Score CalculateGroupingScore()
         {
-            if (QuestionsModel.Groupings.FirstOrDefault().Questions != null)
+            if (QuestionsModel.Groupings.FirstOrDefault()?.Questions != null)
             {
                 FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
 
@@ -80,6 +80,46 @@ namespace CSETWebCore.Business.Maturity
                                             };
                     var sumTotalWeights = (decimal)totalGroupWeights.Sum(x => x?.Weight);
                     decimal total = sumAllWeights != 0 ? sumTotalWeights / sumAllWeights : 0;
+
+                    /// special case for HYDRO, where the scores need to be grouped by impact severity and have a double for the score
+                    if (QuestionsModel.ModelId == 13)
+                    {
+                        var totalGroupHighThreatWeight = from g in grouped
+                                                select new RollupOptions()
+                                                {
+                                                    Type = g.OptionQuestions.FirstOrDefault().Type,
+                                                    Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                                        ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 3).Sum(x => x.Weight)
+                                                        : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 3)?.Weight
+                                                };
+                        var totalGroupMediumThreatWeight = from g in grouped
+                                                select new RollupOptions()
+                                                {
+                                                    Type = g.OptionQuestions.FirstOrDefault().Type,
+                                                    Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                                        ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 2).Sum(x => x.Weight)
+                                                        : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 2)?.Weight
+                                                };
+                        var totalGroupLowThreatWeight = from g in grouped
+                                                select new RollupOptions()
+                                                {
+                                                    Type = g.OptionQuestions.FirstOrDefault().Type,
+                                                    Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                                        ? g.OptionQuestions.Where(s => s.Selected && s.ThreatType == 1).Sum(x => x.Weight)
+                                                        : g.OptionQuestions.FirstOrDefault(s => s.Selected && s.ThreatType == 1)?.Weight
+                                                };
+                        var sumTotalHighThreatWeight = (double)totalGroupHighThreatWeight.Sum(x => x?.Weight);
+                        var sumTotalMediumThreatWeight = (double)totalGroupMediumThreatWeight.Sum(x => x?.Weight);
+                        var sumTotalLowThreatWeight = (double)totalGroupLowThreatWeight.Sum(x => x?.Weight);
+
+                        return new Score
+                        {
+                            GroupingScoreDouble = (double)Math.Round(total * 100, 2, MidpointRounding.AwayFromZero),
+                            LowDouble = sumTotalLowThreatWeight,
+                            MediumDouble = sumTotalMediumThreatWeight,
+                            HighDouble = sumTotalHighThreatWeight
+                        };
+                    }
                     return new Score
                     {
                         GroupingScore = (int)Math.Round(total * 100, MidpointRounding.AwayFromZero),
@@ -98,7 +138,7 @@ namespace CSETWebCore.Business.Maturity
         /// 
         /// </summary>
         /// <param name="questions"></param>
-        private void FlattenQuestions(List<Model.Cis.Question> questions)
+        private void FlattenQuestions(List<Model.Nested.Question> questions)
         {
             foreach (var q in questions)
             {
@@ -107,7 +147,8 @@ namespace CSETWebCore.Business.Maturity
                     QuestionText = q.QuestionText,
                     Weight = x.Weight,
                     Selected = x.Selected,
-                    Type = x.OptionType
+                    Type = x.OptionType,
+                    ThreatType = x.ThreatType
 
                 }).ToList());
                 foreach (var o in q.Options)

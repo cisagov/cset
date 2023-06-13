@@ -1730,14 +1730,13 @@ ul.mat-tree-node {
 }
 
 .rl .close-button-position-bandaid {
-  position: relative;
-  top: 2px;
-  right: 150px;
+  position: absolute;
+  right: 140px;
+  padding: 0;
   z-index: 100;
-}
-
-.rl .close-button-margin-bandaid {
-  margin-right: -30px;
+  background-color: white;
+  height: 30px;
+  width: 30px;
 }
 
 // Resource Library
@@ -2866,24 +2865,32 @@ table.assessment-documents th {
   border-radius: 0.25rem;
 }
 
-.cpg-header {
+.sub-header-1 {
   font-weight: bold;
   font-size: 1.1rem;
   color: $primary-900;
 }
 
+
 /// nested formatting
-.nested-question-text {
+.nested-question-title {
+  font-weight: bold;
+}
+
+.nested-question-text, .nested-question-text p {
   margin-bottom: 1rem;
 }
 
-.nested-option-block {
-  margin-bottom: .7rem !important;
+.nested-option-block, .nested-option-block p {
+  margin-bottom: 1rem !important;
 }
 
-.nested-option p {
-  margin-bottom: .5rem;
+.nested-option-block-report {
+  margin-bottom: 1rem;
 }
+
+
+
 
 .alert-danger {
   border-radius: 0.4rem;

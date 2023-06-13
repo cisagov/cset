@@ -11,13 +11,17 @@ using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Business.Maturity
 {
-    public class CisStructure
+    /// <summary>
+    /// Originally called CisStructure, it is in the process of being made 
+    /// more generic to handle other "nested" modules like SD.
+    /// </summary>
+    public class NestedStructure
     {
         private readonly CSETContext _context;
 
@@ -37,9 +41,9 @@ namespace CSETWebCore.Business.Maturity
 
 
 
-        private CisQuestions _myModel = null;
+        private NestedQuestions _myModel = null;
 
-        public CisQuestions MyModel { get => _myModel; }
+        public NestedQuestions MyModel { get => _myModel; }
 
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         /// <param name="sectionId"></param>
         /// <param name="context"></param>
-        public CisStructure(int assessmentId, int sectionId, CSETContext context)
+        public NestedStructure(int assessmentId, int sectionId, CSETContext context)
         {
             this._context = context;
             this._assessmentId = assessmentId;
@@ -103,7 +107,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private void LoadStructure(int? sectionId)
         {
-            _myModel = new CisQuestions
+            _myModel = new NestedQuestions
             {
                 AssessmentId = this._assessmentId,
                 ModelId = this._maturityModelId
@@ -173,9 +177,9 @@ namespace CSETWebCore.Business.Maturity
                 };
 
 
-                if (oParent is CisQuestions)
+                if (oParent is NestedQuestions)
                 {
-                    ((CisQuestions)oParent).Groupings.Add(grouping);
+                    ((NestedQuestions)oParent).Groupings.Add(grouping);
                 }
 
                 if (oParent is Grouping)
@@ -193,7 +197,7 @@ namespace CSETWebCore.Business.Maturity
                     List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                     ConsolidateAnswers(answers, out ANSWER answer);
 
-                    var question = new Model.Cis.Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         QuestionText = myQ.Question_Text,
@@ -242,9 +246,9 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="allQuestions"></param>
         /// <param name="parentId"></param>
         /// <returns></returns>
-        private List<Model.Cis.Question> GetFollowupQuestions(int parentId)
+        private List<Model.Nested.Question> GetFollowupQuestions(int parentId)
         {
-            var qList = new List<Model.Cis.Question>();
+            var qList = new List<Model.Nested.Question>();
 
             var myQuestions = allQuestions.Where(x => x.Parent_Question_Id == parentId && x.Parent_Option_Id == null).ToList();
 
@@ -253,7 +257,7 @@ namespace CSETWebCore.Business.Maturity
                 List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                 ConsolidateAnswers(answers, out ANSWER answer);
 
-                var question = new Model.Cis.Question()
+                var question = new Model.Nested.Question()
                 {
                     QuestionId = myQ.Mat_Question_Id,
                     QuestionText = myQ.Question_Text,
@@ -320,7 +324,8 @@ namespace CSETWebCore.Business.Maturity
                     Sequence = o.Answer_Sequence,
                     HasAnswerText = o.Has_Answer_Text,
                     Weight = o.Weight,
-                    IsNone = o.Is_None
+                    IsNone = o.Is_None,
+                    ThreatType = o.ThreatType
                 };
 
                 var ans = allAnswers.Where(x => x.Question_Or_Requirement_Id == o.Mat_Question_Id
@@ -350,7 +355,7 @@ namespace CSETWebCore.Business.Maturity
                     List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
                     ConsolidateAnswers(answers, out ANSWER answer);
 
-                    var question = new Model.Cis.Question()
+                    var question = new Model.Nested.Question()
                     {
                         QuestionId = myQ.Mat_Question_Id,
                         QuestionText = myQ.Question_Text,
