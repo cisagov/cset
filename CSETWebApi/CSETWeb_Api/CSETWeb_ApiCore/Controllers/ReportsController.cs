@@ -381,6 +381,23 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/getHydroActionItemsReport")]
+        public IActionResult GetHydroActionItemsReport()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+
+            return Ok(mm.GetHydroActionsReport(assessmentId));
+        }
+
+
         //--------------------------------
         // MVRA Controllers
         //--------------------------------

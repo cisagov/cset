@@ -30,6 +30,18 @@ export class HydroService {
     return false;
   }
 
+  impactTranslator(impact: number) {
+    if (impact == 1) {
+      return 'High';
+    }
+    if (impact == 2) {
+      return 'Medium';
+    }
+    if (impact == 3) {
+      return 'Low';
+    }
+  }
+
   saveHydroComment(answerId: number, progressId: number, comment: string) {
     let hpc = new HydroProgressComment();
     hpc.Answer_Id = answerId;
@@ -43,6 +55,14 @@ export class HydroService {
 
   getProgressText() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getProgressText', headers);
+  }
+
+  getHydroDonutData(): any {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getHydroDonutData');
+  }
+
+  getHydroActionItems(): any {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
   }
 }
 
