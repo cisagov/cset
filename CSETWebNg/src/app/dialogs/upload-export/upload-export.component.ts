@@ -52,6 +52,7 @@ export class UploadExportComponent implements OnInit {
   passwordRequired = false;
   password = "";
   uploadedAssessments = [];
+  successfulAssessmentIndexes = [];
 
   xCount = 0; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
 
@@ -173,7 +174,8 @@ export class UploadExportComponent implements OnInit {
 
           // Remove the files that were uploaded successfully so they don't get reuploaded multiple times
           // while we work through each of the assessments that need a password entered.
-          let fileToRemove = this.uploadedAssessments[i];       
+          let fileToRemove = this.uploadedAssessments[i];
+          this.successfulAssessmentIndexes.push(i);
           this.files.delete(fileToRemove);
 
           if (count >= allProgressObservables.length){
@@ -202,6 +204,14 @@ export class UploadExportComponent implements OnInit {
   }
 
   enterPassword() {
+    // We deleted the uploaded assessments from the Set<File> earlier, but now
+    // we need to remove it from the uploadedAssessments to keep them in sync.
+    for (let i = 0; i < this.successfulAssessmentIndexes.length; i++) {
+      this.uploadedAssessments.splice(this.successfulAssessmentIndexes[i], 1, undefined); // Keep undefined so we have correct index
+    }
+    this.uploadedAssessments = this.uploadedAssessments.filter(item => item !== undefined) // Now we can remove undefined
+    this.successfulAssessmentIndexes = [];
+
     // Retry the upload process with the password. Will be called repeatedly for each assessment that 
     // needs a different password.
     this.xCount++; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
