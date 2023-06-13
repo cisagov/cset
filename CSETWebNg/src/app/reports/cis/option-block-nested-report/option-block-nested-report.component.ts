@@ -64,5 +64,4 @@ export class OptionBlockNestedReportComponent implements OnInit {
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
   }
-
 }

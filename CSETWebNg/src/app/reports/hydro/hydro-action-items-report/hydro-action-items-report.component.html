@@ -34,9 +34,6 @@
             </p>
         </div>
         <div class="column">
-            <!-- <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg">
-            </p> -->
             <div class="cover-page-bottom mb-4">
                 <div>
                     <img src="assets/images/RENEW/SHIELD_LOGO.svg" alt="renew" style="height: 185px"/>
@@ -64,38 +61,36 @@
         </div>
 
         <ng-template #mainContent>
-            <!-- <div class="page-break"> -->
-                <div class="ml-3 mr-3 form">
-                    <div class="d-flex flex-row" style="justify-content: space-between">
-                        <div style="align-self: flex-end;">
-                            <div class="h2 report-text-blue">Demographics</div>
-                        </div>
+            <div class="ml-3 mr-3 form">
+                <div class="d-flex flex-row" style="justify-content: space-between">
+                    <div style="align-self: flex-end;">
+                        <div class="h2 report-text-blue">Demographics</div>
                     </div>
-
-                    <table class="table-site-info">
-                        <tr>
-                            <td>Assessment Name:</td>
-                            <td>{{this.demographics?.assessment_Name}}</td>
-                        </tr>
-                        <tr>
-                            <td>Assessment Date:</td>
-                            <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
-                        </tr>
-                        <tr>
-                            <td>City or Site Name:</td>
-                            <td>{{this.demographics?.city_Or_Site_Name}}</td>
-                        </tr>
-                        <tr>
-                            <td>State, Province or Region:</td>
-                            <td>{{this.demographics?.state_Province_Or_Region}}</td>
-                        </tr>
-                        <tr>
-                            <td>Facility Name:</td>
-                            <td>{{this.demographics?.facility_Name}}</td>
-                        </tr>
-                    </table>
                 </div>
-            <!-- </div> -->
+
+                <table class="table-site-info">
+                    <tr>
+                        <td>Assessment Name:</td>
+                        <td>{{this.demographics?.assessment_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Assessment Date:</td>
+                        <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                    </tr>
+                    <tr>
+                        <td>City or Site Name:</td>
+                        <td>{{this.demographics?.city_Or_Site_Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>State, Province or Region:</td>
+                        <td>{{this.demographics?.state_Province_Or_Region}}</td>
+                    </tr>
+                    <tr>
+                        <td>Facility Name:</td>
+                        <td>{{this.demographics?.facility_Name}}</td>
+                    </tr>
+                </table>
+            </div>
 
             <div class="page-break">
                 <br>
@@ -108,11 +103,8 @@
                     <table class="table-responsive td-align-top td-padding-half-rem">
                         <tr class="report-text-blue">
                             <td style="width: 15%;">Impact</td>
-                            <!-- <td style="width: 15%">Question</td> -->
                             <td style="width: 60%">Action</td>
                             <td style="width: 25%">Comment</td>
-                            <!-- <td>Domain</td>
-                            <td>Sub-Domain</td> -->
                         </tr>
                         <ng-container *ngFor="let progressArray of actionItems">
                             <tr>
@@ -123,11 +115,8 @@
                             <ng-container *ngFor="let item of progressArray">
                                 <tr>
                                     <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{ hydroSvc.impactTranslator(item.action.severity) }}</td>
-                                    <!-- <td class="cell">{{ item.question.question_Title }}</td> -->
                                     <td class="cell" [innerHTML]="item.action.action_Items"></td>
                                     <td class="pr-3 cell">{{ item.actionData.comment }}</td>
-                                    <!-- <td class="pr-3">{{ item.question.category }}</td>
-                                    <td class="pr-3">{{ item.question.sub_Category }}</td> -->
                                 </tr>
                             </ng-container>
                         </ng-container>
