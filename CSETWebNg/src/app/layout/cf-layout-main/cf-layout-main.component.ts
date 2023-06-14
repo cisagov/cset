@@ -34,7 +34,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'app-cf-layout-main',
+  selector: 'cf-layout-main',
   templateUrl: './cf-layout-main.component.html',
   styleUrls: ['./cf-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
@@ -61,12 +61,12 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
     public router: Router
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     if (this.configSvc.installationMode === 'RRA') {
-      
+
     }
   }
-  
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.isFooterOpen();
