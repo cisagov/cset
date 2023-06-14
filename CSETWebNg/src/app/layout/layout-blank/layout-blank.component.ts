@@ -21,15 +21,21 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'layout-blank',
-    templateUrl: './layout-blank.component.html',
-    styleUrls: ['./layout-blank.component.scss'], 
-    preserveWhitespaces: true
+    templateUrl: './layout-blank.component.html'
 })
 
-export class LayoutBlankComponent{
+export class LayoutBlankComponent implements OnInit {
+  installationMode: string;
+
+  constructor(private configSvc: ConfigService) {}
+
+  ngOnInit() {
+    this.installationMode = this.configSvc.installationMode;
+  }
 
 }
