@@ -26,6 +26,7 @@ import { Injectable, Inject, APP_INITIALIZER } from "@angular/core";
 import { DOCUMENT } from '@angular/common';
 import { concat } from "rxjs";
 import { tap } from "rxjs/operators";
+import { merge } from 'lodash';
 
 @Injectable()
 export class ConfigService {
@@ -88,7 +89,7 @@ export class ConfigService {
 
         return concat(...configPaths.map(path => this.http.get(path)))
           .pipe(tap(subConfig => {
-            this.config = { ...this.config, ...subConfig };
+            merge(this.config, subConfig);
           })).toPromise().then(() => {
             this.setConfigPropertiesForLocalService();
             this.switchConfigsForMode(this.config.installationMode || 'CSET');
