@@ -129,6 +129,7 @@ namespace CSETWebCore.Api.Controllers
             var currentUserId = _tokenManager.GetCurrentUserId();
             var accessKey = _tokenManager.GetAccessKey();
 
+            ZipEntry hint = null;
             try
             {
                 var formFiles = HttpContext.Request.Form.Files;
@@ -144,6 +145,21 @@ namespace CSETWebCore.Api.Controllers
                     file.CopyTo(target);
                     var bytes = target.ToArray();
 
+                    // Get the password hint, if there is one.
+                    using (Stream fs = new MemoryStream(bytes))
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        ZipFile zip = ZipFile.Read(fs);
+
+                        foreach (ZipEntry entry in zip)
+                        {
+                            if (entry.FileName.Contains(".hint"))
+                            {
+                                hint = entry;
+                            }
+                        }
+                    }
+
 
                     var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
                     await manager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
@@ -151,13 +167,17 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception e)
             {
+                var returnMessage = "";
+
                 if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
                 {
-                    return StatusCode(423, "Bad Password Exception");
+                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.FileName;                    
+                    return StatusCode(423, returnMessage);
                 }
                 else if (e.Message == "The password did not match.")
                 {
-                    return StatusCode(406, "Invalid Password");
+                    returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.FileName;
+                    return StatusCode(406, returnMessage);
                 }
                 else
                 {

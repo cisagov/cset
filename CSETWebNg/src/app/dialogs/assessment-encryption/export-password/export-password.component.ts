@@ -37,11 +37,25 @@ export class ExportPasswordComponent {
   }
 
   dialogTitle: string = "Encrypt Assessment";
-  password = "";
 
+  encryptionData = {
+    password: "",
+    hint: "",
+  };
+
+  password = "";
+  passwordHint = "";
+  showPassword = false;
 
   confirm(): void {
-    this.dialogRef.close(this.password);
+    this.encryptionData.password = this.password;
+    this.encryptionData.hint = this.passwordHint;
+
+    this.dialogRef.close(this.encryptionData);
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
 }
