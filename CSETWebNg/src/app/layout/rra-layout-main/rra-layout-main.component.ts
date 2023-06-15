@@ -40,7 +40,7 @@ import { LayoutService } from '../../services/layout.service';
   styleUrls: ['./rra-layout-main.component.scss', '../styles-rra.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class RraLayoutMainComponent implements OnInit, AfterViewInit {
 
