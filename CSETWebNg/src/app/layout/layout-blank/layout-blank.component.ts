@@ -21,24 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { ConfigService } from '../../services/config.service';
+import { Component } from '@angular/core';
 
 @Component({
-    selector: 'layout-blank',
-    templateUrl: './layout-blank.component.html',
-    encapsulation: ViewEncapsulation.None,
-    // tslint:disable-next-line:use-host-property-decorator
-    host: { class: 'h-100' }
+  selector: 'layout-blank',
+  templateUrl: './layout-blank.component.html'
 })
-
-export class LayoutBlankComponent implements OnInit {
-  installationMode: string;
-
-  constructor(private configSvc: ConfigService) {}
-
-  ngOnInit() {
-    this.installationMode = this.configSvc.installationMode;
-  }
+export class LayoutBlankComponent {
 
 }
