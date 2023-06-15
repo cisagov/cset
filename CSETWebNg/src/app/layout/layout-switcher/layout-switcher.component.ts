@@ -21,12 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
-  selector: 'layout-blank',
-  templateUrl: './layout-blank.component.html'
+    selector: 'layout-switcher',
+    templateUrl: './layout-switcher.component.html',
+    encapsulation: ViewEncapsulation.None,
+    // tslint:disable-next-line:use-host-property-decorator
+    host: { class: 'h-100' }
 })
-export class LayoutBlankComponent {
+
+export class LayoutSwitcherComponent implements OnInit {
+  installationMode: string;
+
+  constructor(private configSvc: ConfigService) {}
+
+  ngOnInit() {
+    this.installationMode = this.configSvc.installationMode;
+  }
 
 }
