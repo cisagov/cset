@@ -18,7 +18,7 @@ export class HydroActionItemsReportComponent implements OnInit {
   progressInfo: any[] = [];
   loadingCounter: number = 0;
 
-  classArray: string[] = ['subheader not-started', 'subheader in-progress', 'subheader in-review', 'subheader complete'];
+  classArray: string[] = ['subheader btn-danger', 'subheader btn-primary', 'subheader btn-in-review', 'subheader btn-success'];
 
   constructor(
     public reportSvc: ReportService,
@@ -33,7 +33,6 @@ export class HydroActionItemsReportComponent implements OnInit {
     this.reportSvc.getAssessmentInfoForReport().subscribe(
       (info: any) => {
         this.demographics = info;
-        console.log(this.demographics)
   
         this.loadingCounter ++;
       },
@@ -73,8 +72,6 @@ export class HydroActionItemsReportComponent implements OnInit {
           this.actionItems = r;
         }
         
-
-        console.log(this.actionItems)
         this.loadingCounter ++;
       }
     )
