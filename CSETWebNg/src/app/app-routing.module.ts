@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigService } from './services/config.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
@@ -84,6 +83,7 @@ import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-ana
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 //import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -207,14 +207,14 @@ const appRoutes: Routes = [
   // reports routing
   {
     path: 'report-test',
-    component: LayoutBlankComponent,
+    component: LayoutSwitcherComponent,
     children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: LayoutBlankComponent,
+    component: LayoutSwitcherComponent,
     children: [
       { path: 'privacy-warning', component: PrivacyWarningComponent },
       { path: 'privacy-warning-reject', component: PrivacyWarningRejectComponent },
@@ -236,7 +236,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: LayoutBlankComponent,
+    component: LayoutSwitcherComponent,
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
