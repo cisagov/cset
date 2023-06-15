@@ -20,4 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<router-outlet></router-outlet>
+
+<!-- Display the correct layout corresponding to the current installation mode -->
+<layout-main *ngIf="installationMode == 'CSET'"></layout-main>
+
+<acet-layout-main *ngIf="installationMode == 'ACET'"></acet-layout-main>
+
+<tsa-layout-main *ngIf="installationMode == 'TSA'"></tsa-layout-main>
+
+<rra-layout-main *ngIf="installationMode == 'RRA'"></rra-layout-main>
+
+<cf-layout-main *ngIf="installationMode == 'CF'"></cf-layout-main>
+
+<renew-layout-main *ngIf="installationMode == 'RENEW'"></renew-layout-main>
+
+
+
+
