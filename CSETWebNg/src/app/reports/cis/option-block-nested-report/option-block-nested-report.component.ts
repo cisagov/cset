@@ -29,7 +29,8 @@ import { Utilities } from '../../../services/utilities.service';
 
 @Component({
   selector: 'app-option-block-nested-report',
-  templateUrl: './option-block-nested-report.component.html'
+  templateUrl: './option-block-nested-report.component.html',
+  styleUrls: ['../../reports.scss']
 })
 export class OptionBlockNestedReportComponent implements OnInit {
 
