@@ -20,3 +20,13 @@
 .complete {
     background: linear-gradient(0deg, rgb(8, 152, 92), rgb(31, 204, 133));
 }
+.btn-alt:hover {
+    border-color: #b17300;
+    background-color: #b17300;
+    color: white;
+}
+.btn-in-review {
+    border-color: #c67300;
+    background-color: #c67e00;
+    color: white;
+}
