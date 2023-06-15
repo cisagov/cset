@@ -1,5 +1,5 @@
 .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+    // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
     border-top-right-radius: 8px; 
     border-bottom-right-radius: 8px; 
     border-bottom-left-radius: 8px;
@@ -22,16 +22,15 @@
     padding-top: 3.5px;
 }
 .progress-btn {
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+    // box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
     height: 38px;
-    border: hidden;
+    // border: hidden;
     border-radius: 8px;
     display: flex;
     justify-content:center;
     align-items: center;
     transition: all 0.5s ease 0s;
     overflow: hidden;
-    color: white;
     font-weight: 500;
     font-size: 0.9rem;
     width: 15%;
