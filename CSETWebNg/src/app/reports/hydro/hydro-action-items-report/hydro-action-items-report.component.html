@@ -108,7 +108,7 @@
                         </tr>
                         <ng-container *ngFor="let progressArray of actionItems">
                             <tr>
-                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]">
+                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]" style="pointer-events: none;">
                                     {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
                                 </td>
                             </tr>
@@ -116,7 +116,7 @@
                                 <tr>
                                     <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{ hydroSvc.impactTranslator(item.action.severity) }}</td>
                                     <td class="cell" [innerHTML]="item.action.action_Items"></td>
-                                    <td class="pr-3 cell">{{ item.actionData.comment }}</td>
+                                    <td class="cell" [innerHTML]="item.actionData.comment"></td>
                                 </tr>
                             </ng-container>
                         </ng-container>
