@@ -19,7 +19,6 @@ export class HydroActionItemsReportComponent implements OnInit {
   loadingCounter: number = 0;
 
   classArray: string[] = ['subheader btn-danger', 'subheader btn-primary', 'subheader btn-in-review', 'subheader btn-success'];
-  // classArray: string[] = ['subheader not-started', 'subheader in-progress', 'subheader in-review', 'subheader complete'];
 
   constructor(
     public reportSvc: ReportService,
