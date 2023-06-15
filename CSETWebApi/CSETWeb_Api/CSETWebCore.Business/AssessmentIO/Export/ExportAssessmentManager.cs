@@ -297,7 +297,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        public Stream ArchiveStream(int assessmentId, string password)
+        public Stream ArchiveStream(int assessmentId, string password, string passwordHint)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
@@ -397,7 +397,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 ZipEntry jsonEntry = archive.AddEntry("model.json", json);
-                
+                ZipEntry hint = archive.AddEntry($"{passwordHint}.hint", passwordHint);
                 archive.Save(archiveStream);
             }
 
