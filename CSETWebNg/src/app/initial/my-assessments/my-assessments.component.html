@@ -204,9 +204,8 @@
                         (assessment.workflow=='BASE'||assessment.workflow=='CSET'||assessment.workflow==null) ? 'CSET' :
                         'TSA' }}</td>
                     <td>{{assessment.type}}</td>
-                    <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
-                    <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) |
-                        date:'medium'}}</td>
+                    <td *ngIf="!this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) | date:'dd-MMM-yyyy'}}</td>
+                    <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) | date:'medium'}}</td>
                     <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">
                         <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                     </td>
