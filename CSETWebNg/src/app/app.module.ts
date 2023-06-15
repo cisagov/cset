@@ -785,7 +785,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent,
         ExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
