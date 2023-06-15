@@ -40,7 +40,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
   styleUrls: ['./acet-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
