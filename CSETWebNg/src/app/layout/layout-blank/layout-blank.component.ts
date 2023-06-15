@@ -21,12 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
     selector: 'layout-blank',
-    templateUrl: './layout-blank.component.html'
+    templateUrl: './layout-blank.component.html',
+    encapsulation: ViewEncapsulation.None,
+    // tslint:disable-next-line:use-host-property-decorator
+    host: { class: 'h-100' }
 })
 
 export class LayoutBlankComponent implements OnInit {
