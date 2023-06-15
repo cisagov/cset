@@ -249,6 +249,7 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -576,6 +577,7 @@ import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feas
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
 import { HydroActionItemComponent } from './assessment/results/hydro/hydro-actions/hydro-action-item/hydro-action-item.component';
 import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-actions/hydro-progress-totals/hydro-progress-totals.component';
+import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
@@ -784,7 +786,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent,
         ExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
@@ -801,6 +802,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ComponentOverrideComponent,
         ExcelExportComponent,
         LayoutBlankComponent,
+        LayoutSwitcherComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
@@ -1111,6 +1113,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         HydroActionsComponent,
         HydroActionItemComponent,
         HydroProgressTotalsComponent,
+        HydroActionItemsReportComponent,
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
     ],

@@ -13,17 +13,16 @@ import { ReportService } from '../../../../../services/report.service';
 })
 export class HydroActionItemComponent implements OnInit {
 
-  @Input() subCatName: any;
-  @Input() impact: any;
-  @Input() text: any;
-  @Input() progressId: any;
+  @Input() item: any;
   @Input() progressArray: any;
-  @Input() comment: string;
-  @Input() answerId: number;
 
-  classArray: string[] = ['progress-btn not-started', 'progress-btn in-progress', 'progress-btn in-review', 'progress-btn complete'];
+  classArray: string[] = ['progress-btn btn-danger', 'progress-btn btn-primary', 'progress-btn btn-alt', 'progress-btn btn-success'];
+
   showProgressButtons: boolean = false;
   progressText: string = '';
+  progressId: number = 0;
+  answer: any;
+  comment: string = '';
 
   constructor(
     public reportSvc: ReportService,
@@ -35,7 +34,10 @@ export class HydroActionItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.progressId = this.item.actionData.progress_Id;
     this.progressText = this.progressArray[this.progressId - 1].progress_Text;
+    this.answer = this.item.actionData.answer;
+    this.comment = this.item.actionData.comment;
   }
 
   toggleProgressSelector() {
@@ -51,7 +53,7 @@ export class HydroActionItemComponent implements OnInit {
   }
 
   saveChanges(comment: string) {
-    this.hydroSvc.saveHydroComment(this.answerId, this.progressId, comment).subscribe();
+    this.hydroSvc.saveHydroComment(this.answer, this.answer.answer_Id, this.progressId, comment).subscribe();
   }
 
 }
