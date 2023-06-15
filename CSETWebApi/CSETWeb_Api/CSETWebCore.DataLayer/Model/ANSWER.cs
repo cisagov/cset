@@ -19,6 +19,7 @@ namespace CSETWebCore.DataLayer.Model
         {
             DOCUMENT_ANSWERS = new HashSet<DOCUMENT_ANSWERS>();
             FINDING = new HashSet<FINDING>();
+            HYDRO_DATA_ACTIONS = new HashSet<HYDRO_DATA_ACTIONS>();
             PARAMETER_VALUES = new HashSet<PARAMETER_VALUES>();
         }
 
@@ -88,6 +89,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<FINDING> FINDING { get; set; }
+        [InverseProperty("Answer")]
+        public virtual ICollection<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
     }

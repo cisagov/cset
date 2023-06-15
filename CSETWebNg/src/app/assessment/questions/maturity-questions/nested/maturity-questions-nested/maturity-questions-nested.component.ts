@@ -35,6 +35,7 @@ import { Chart } from 'chart.js';
 import { CisService } from '../../../../../services/cis.service';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { HydroService } from '../../../../../services/hydro.service';
 @Component({
   selector: 'app-maturity-questions-nested',
   templateUrl: './maturity-questions-nested.component.html',
@@ -62,6 +63,7 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
+    public hydroSvc: HydroService,
     public questionsSvc: QuestionsService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,

@@ -59,7 +59,9 @@
 
         <app-option-block-nested-report [q]="q" [opts]="q.options"></app-option-block-nested-report>
 
-        <app-question-block-nested-report #questionBlock [questions]="q.followups"></app-question-block-nested-report>
+        <div *ngIf="q.followups?.length > 0" class="pl-4 pt-4">
+            <app-question-block-nested-report #questionBlock [questions]="q.followups"></app-question-block-nested-report>
+        </div>
     </div>
 
 </div>

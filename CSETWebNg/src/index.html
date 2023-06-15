@@ -45,85 +45,37 @@
             return false;
         }
 
-        var head = document.getElementsByTagName('head')[0];
-        var scriptEl = document.createElement("script");
+        localStorage.setItem('isRunningInElectron', isElectron().toString());
+        sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'false');
 
-        scriptEl.type = "text/javascript";
-
-        if (isElectron()) {
-            scriptEl.src = "assets/settings/configScript.js";
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
         }
-        else {
-            scriptEl.src = "/assets/settings/configScript.js";
+        if (typeof (Storage) !== "undefined") {
+            var redirectid = getParameterByName("assessment_id");
+            var returnPath = getParameterByName("returnPath");
+            var apiUrl = getParameterByName("apiUrl");
+            if (redirectid != null)
+                localStorage.setItem("redirectid", redirectid);
+            if (returnPath != null)
+                localStorage.setItem("returnPath", returnPath);
+            if (apiUrl != null)
+                localStorage.setItem("apiUrl", apiUrl);
+        } else {
+            // Sorry! No Web Storage support..
         }
-
-        // This global variable will be set here and referenced in the Angular configService
-        var csetGlobalConfig = null;
-
-        scriptEl.addEventListener("load", () => {
-            localStorage.setItem('isRunningInElectron', isElectron().toString());
-            sessionStorage.setItem('hasUserAgreedToPrivacyWarning', 'false');
-
-            var installationMode = '';
-            // assets folder has to be relative path if run within Electron; Absolute paths do not function properly on file protocol
-            // since the root is assumed to be the local drive
-            var configPath = isElectron() ? 'assets/settings/config.json' : '/assets/settings/config.json';
-
-            // read angular config file to know how to display splash screen
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", configPath, false);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200 || xhr.status == 0) {
-                        csetGlobalConfig = JSON.parse(xhr.responseText);
-                        getConfigs(csetGlobalConfig,csetGlobalConfig.currentConfigChain).then(()=>{
-                        installationMode = csetGlobalConfig.installationMode || 'CSET';
-                        localStorage.setItem('installationMode', installationMode.toUpperCase());
-                        switchConfigsForMode(installationMode);
-                        });
-                    }
-                }
-            }
-            xhr.send(null);
-
-
-            var xhttp = new XMLHttpRequest();
-            function getParameterByName(name, url) {
-                if (!url) url = window.location.href;
-                name = name.replace(/[\[\]]/g, "\\$&");
-                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-                    results = regex.exec(url);
-                if (!results) return null;
-                if (!results[2]) return '';
-                return decodeURIComponent(results[2].replace(/\+/g, " "));
-            }
-
-            if (typeof (Storage) !== "undefined") {
-                var redirectid = getParameterByName("assessment_id");
-                var returnPath = getParameterByName("returnPath");
-                var apiUrl = getParameterByName("apiUrl");
-                if (redirectid != null)
-                    localStorage.setItem("redirectid", redirectid);
-                if (returnPath != null)
-                    localStorage.setItem("returnPath", returnPath);
-                if (apiUrl != null)
-                    localStorage.setItem("apiUrl", apiUrl);
-            } else {
-                // Sorry! No Web Storage support..
-            }
-        });
-
-        scriptEl.addEventListener("error", (ev) => {
-            console.log("Error loading configScript", ev);
-        });
-
-        head.appendChild(scriptEl);
     </script>
 
-    <title>CSET</title>
+    <title></title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="favicon_cset.ico?app=cset">
+    <link rel="icon" href="">
     <!-- polyfill(s) for older browsers -->
     <script src="assets/shim.min.js"></script>
     <!-- <script src="http://localhost:44363/js/chart.js"></script> -->

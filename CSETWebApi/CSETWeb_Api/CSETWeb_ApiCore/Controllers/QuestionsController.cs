@@ -685,7 +685,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
             
-            return Ok(qb.SaveHydroComment(hda.Answer_Id, hda.Progress_Id, hda.Comment));
+            return Ok(qb.SaveHydroComment(hda.Answer, hda.Answer_Id, hda.Progress_Id, hda.Comment));
         }
     }
 }

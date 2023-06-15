@@ -17,13 +17,10 @@ export class HydroActionsComponent implements OnInit {
   unsortedActionItemData: any[] = [];
   progressTotalsMap: Map<String, number[]> = new Map<String, number[]>();
 
-  loading: boolean = true;
+  loadingCounter: number = 0;
 
   domainExpandMap: Map<String, boolean> = new Map<String, boolean>();
   progressLevels: any[] = [];
-
-  domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
-  percentStyleArray: string[] =['not-started-percent', 'complete-percent'];
 
   constructor(
     public reportSvc: ReportService,
@@ -35,105 +32,75 @@ export class HydroActionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.hydroSvc.getProgressText().subscribe(
-      (r: any) => {
-        this.progressLevels = r;
+
+    this.reportSvc.getHydroActionItemsReport().subscribe(
+      (r: any) => {    
+        if (r.length > 0) {
+          let sortedArray = this.sortActionItems(r);
+
+          let progressArray = [];
+          let currProgressId = sortedArray[0].actionData.progress_Id;
+
+          this.hydroSvc.getProgressText().subscribe(
+            (p: any) => {
+              this.progressLevels = p;
+              for (let item of sortedArray) {
+                if (currProgressId != item.actionData.progress_Id) {
+                  this.actionItemData.push(progressArray);
+                  currProgressId = item.actionData.progress_Id;
+                  progressArray = [];
+                }
+
+                progressArray.push(item);
+              }
+
+              this.actionItemData.push(progressArray);
+              this.loadingCounter ++;
+            }
+          );
+        } 
+        else {
+          this.actionItemData = r;
+        }
+        
+        this.loadingCounter ++;
       }
     )
+  }
 
-    this.reportSvc.getHydroActionItems().subscribe(
-      (r: any) => {
-        let initialActionItemData = r;
-
-        for (let i = 0; i < initialActionItemData.length; i++) {
-          let seq = initialActionItemData[i].domainSequence;
-          let newSeq = i;
-
-          if (newSeq+1 == seq) {
-            let currProgressTotals = [0,0,0,0];
-
-            if (this.progressTotalsMap.has(initialActionItemData[i].domainName)) {
-              currProgressTotals = this.progressTotalsMap.get(initialActionItemData[i].domainName);
-            }
-           
-            for (let item of initialActionItemData[i].actionsQuestions) {
-              currProgressTotals[item.actionData.progress_Id - 1]++;
-            }
-            this.progressTotalsMap.set(initialActionItemData[i].domainName, currProgressTotals);
-            
-            this.actionItemData.push(initialActionItemData[i]);
-          } 
-
-          else {
-            while (newSeq < seq && newSeq < this.domainGroupNames.length) {
-              this.progressTotalsMap.set(initialActionItemData[newSeq].domainName, [0,0,0,0]);
-
-              this.actionItemData.push({
-                'actionsQuestions': [],
-                'domainName': this.domainGroupNames[newSeq],
-                'domainSequence': ++newSeq
-              });
-            }
-          }
-        }
-
-        while (this.actionItemData.length < this.domainGroupNames.length) {
-          this.actionItemData.push({
-            'actionsQuestions': [],
-            'domainName': this.domainGroupNames[this.actionItemData.length],
-            'domainSequence': this.actionItemData.length + 1
-          });
-
-          this.progressTotalsMap.set(this.domainGroupNames[this.actionItemData.length-1], [0,0,0,0]);
-        }
-
-        this.sortBySeverity();
-        this.loading = false;
+  sortActionItems(arrayToSort: any[]) {
+    arrayToSort.sort((a, b) => {
+      if (a.actionData.progress_Id > b.actionData.progress_Id) { //a's progress_Id is larger than b's
+        return 1;
       }
-    )
-    
-  }
+      if (a.actionData.progress_Id < b.actionData.progress_Id) { //a's progress_Id is smaller than b's
+        return -1;
+      }
 
-  toggleCategory(catName: string) {
-    let currValue = false;
-    if (this.domainExpandMap.has(catName)) {
-      currValue = this.domainExpandMap.get(catName);
-    }
-    for (let i = 0; i < this.domainGroupNames.length; i++) {
-      this.domainExpandMap.set(this.domainGroupNames[i], false);
-    }
-    if (this.domainExpandMap.has(catName)) {
-      this.domainExpandMap.set(catName, !currValue);
-    }
-  }
+      //if it makes it here, both progress_Ids are the same. Order by Impact severity from here on out (1.High, 2.Medium, 3.Low)
+      if (a.action.severity > b.action.severity) {
+        return 1;
+      }
+      if (a.action.severity < b.action.severity) {
+        return -1;
+      }
 
-  impactTranslator(impact: number) {
-    if (impact == 1) {
-      return 'High';
-    }
-    if (impact == 2) {
-      return 'Medium';
-    }
-    if (impact == 3) {
-      return 'Low';
-    }
+      return 0;
+    });
+
+    return arrayToSort;
   }
 
   sortBySeverity() {
     for (let domain of this.actionItemData) {
-      domain.actionsQuestions.sort((a, b) => (a.action.severity < b.action.severity ? -1 : 1));      
+      domain.actionsQuestions.sort((a, b) => (
+        a.action.severity < b.action.severity ? -1 : 1
+        ));      
     }
   }
 
-  getCompletionPercent(domainName: string) {
-    let totals = this.progressTotalsMap.get(domainName);
-    
-    let totalActionItems = totals[0] + totals[1] + totals[2] + totals[3];
-
-    if(totalActionItems == 0) {
-      return 0;
-    }
-    return ((totals[3] / totalActionItems) * 100).toFixed(0);
+  saveChanges(answer: any, progressId: number, comment: string) {
+    this.hydroSvc.saveHydroComment(answer, answer.answer_Id, progressId, comment).subscribe();
   }
 
 }

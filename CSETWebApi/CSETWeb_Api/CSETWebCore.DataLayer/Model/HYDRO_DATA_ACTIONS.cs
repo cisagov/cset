@@ -13,9 +13,6 @@ namespace CSETWebCore.DataLayer.Model
     /// </summary>
     public partial class HYDRO_DATA_ACTIONS
     {
-        public HYDRO_DATA_ACTIONS()
-        {
-        }
 
         [Key]
         [ForeignKey("Answer_Id")]
@@ -24,5 +21,8 @@ namespace CSETWebCore.DataLayer.Model
         public int Progress_Id { get; set; }
         [StringLength(2000)]
         public string? Comment { get; set; }
+        [ForeignKey("Answer_Id")]
+        [InverseProperty("HYDRO_DATA_ACTIONS")]
+        public virtual ANSWER Answer { get; set; }
     }
 }

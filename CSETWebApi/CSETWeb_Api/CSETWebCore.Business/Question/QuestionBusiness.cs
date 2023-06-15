@@ -583,14 +583,14 @@ namespace CSETWebCore.Business.Question
         }
 
 
-        public int SaveHydroComment(int answerId, int progressId, string comment)
+        public int SaveHydroComment(ANSWER answer, int answerId, int progressId, string comment)
         {
-            
 
             try
             {
                 _context.HYDRO_DATA_ACTIONS.Update(new HYDRO_DATA_ACTIONS()
                 {
+                    Answer = answer,
                     Answer_Id = answerId,
                     Progress_Id = progressId,
                     Comment = comment
@@ -600,6 +600,7 @@ namespace CSETWebCore.Business.Question
             {
                 HYDRO_DATA_ACTIONS hda = new HYDRO_DATA_ACTIONS()
                 {
+                    Answer = answer,
                     Answer_Id = answerId,
                     Progress_Id = progressId,
                     Comment = comment

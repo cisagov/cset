@@ -34,7 +34,11 @@
       <Rule action="ignore"></Rule>
     </Column>
   </Table>
-  
+  <Table name="HYDRO_DATA_ACTIONS">
+    <Column name="Answer_Id">
+      <Rule action="useMap" sourcetable="ANSWER" />
+    </Column>
+  </Table>
   <Table name="STANDARD_SELECTION" />
   <Table name="ASSESSMENT_SELECTED_LEVELS" />
   <Table name="AVAILABLE_STANDARDS" />

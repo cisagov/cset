@@ -42,7 +42,7 @@ import { LayoutService } from '../../services/layout.service';
   styleUrls: ['./layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' },
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })
 export class LayoutMainComponent implements OnInit, AfterViewInit {

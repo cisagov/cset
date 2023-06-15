@@ -58,7 +58,7 @@ export class HydroDeficiencyComponent implements OnInit {
   ngOnInit() {
     let masterSubCatArray: string[] = [];
 
-    this.reportSvc.getHydroDonutData().subscribe(
+    this.hydroSvc.getHydroDonutData().subscribe(
       (r: any) => {
         this.allDonutData = r;
 
