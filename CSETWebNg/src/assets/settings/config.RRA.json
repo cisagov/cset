@@ -1,3 +1,6 @@
 {
-  "installationMode": "RRA"
+  "installationMode": "RRA",
+  "behaviors": {
+    "showFeedback": false
+  }
 }

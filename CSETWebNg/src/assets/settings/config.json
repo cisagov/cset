@@ -60,6 +60,7 @@
         "showTrend": true,
         "showCompare": true,
         "showComments": true,
+        "showFeedback": true,
         "showEnableProtectedFeatures": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
