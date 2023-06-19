@@ -4213,17 +4213,33 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 	if (!compact)
 	{
-		outer.appendChild(searchBox);
+		//outer.appendChild(searchBox);
 		outer.appendChild(list);
 		outer.appendChild(div);
-		var indexLoaded = false;
-		var realUrl = templateFile;
+		const loadCsetTemplates = async () => {
+			const category = 'CSET';
+			categories[category] = categories[category] || [];
+
+			const csetTemplates = await CsetUtils.getCsetTemplates();
+			for (const tmplt of csetTemplates) {
+				categories[category].push({
+					iscset: true,
+					xml: tmplt.markup,
+					title: tmplt.name.trim(),
+					tooltip: tmplt.name.trim(),
+					select: csetTemplates[0] === tmplt,
+					imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
+				});
+			}
+			addTemplates(categories[category]);
+			spinner.stop();
+			initUi();
+		};
+
+		spinner.spin(div);
+		loadCsetTemplates();
 		
-		if (/^https?:\/\//.test(realUrl) && !editorUi.editor.isCorsEnabledForUrl(realUrl))
-		{
-			realUrl = PROXY_URL + '?url=' + encodeURIComponent(realUrl);
-		}
-		
+		/*
 		function loadDrawioTemplates()
 		{
 			mxUtils.get(realUrl, function(req)
@@ -4334,8 +4350,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				}
 			});
 		};
-		
-		spinner.spin(div);
+		*/
+		//spinner.spin(div);
 		
 		if (customTempCallback != null)
 		{
@@ -4346,14 +4362,14 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				//Custom templates doesn't change after being loaded, so cache them here. Also, only count is overridden
 				origCustomCatCount = count;
 
-				loadDrawioTemplates();
+				loadCsetTemplates();
 			},
 			
-			loadDrawioTemplates); //In case of an error, just load draw.io templates only
+			loadCsetTemplates); //In case of an error, just load draw.io templates only
 		}
 		else
 		{
-			loadDrawioTemplates();
+			loadCsetTemplates();
 		}
 		
 		//draw.io templates doesn't change after being loaded, so cache them here
