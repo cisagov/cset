@@ -146,7 +146,7 @@ export class PageVisibilityService {
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
       }
 
-      if (c.startsWith('SHOW-FEEDBACK')) {
+      if (c == ('SHOW-FEEDBACK')) {
         show = show && this.configSvc.behaviors.showFeedback;
       }
 
