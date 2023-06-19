@@ -202,19 +202,6 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   *
-   */
-  showFeedbackIcon(): boolean {
-    if (this.configSvc.installationMode === 'ACET') {
-      return false;
-    }
-    if (this.configSvc.installationMode === 'RRA') {
-      return false;
-    }
-    return true;
-  }
-
-  /**
   *
   * @param e
   */
@@ -682,6 +669,10 @@ export class QuestionExtrasComponent implements OnInit {
 
     if (mode == 'CMNT') {
       return this.configSvc.behaviors.showComments;
+    }
+
+    if (mode == 'FDBK') {
+      return this.configSvc.behaviors.showFeedback;
     }
 
     return true;
