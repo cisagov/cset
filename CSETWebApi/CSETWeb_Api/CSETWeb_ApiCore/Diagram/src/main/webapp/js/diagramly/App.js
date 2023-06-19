@@ -6258,7 +6258,7 @@ App.prototype.toggleUserPanel = function () {
                     tr.setAttribute('title', 'User ID: ' + user.id);
 
                     var td = document.createElement('td');
-                    td.setAttribute('valig', 'middle');
+                    td.setAttribute('valign', 'middle');
                     td.style.height = '59px';
                     td.style.width = '66px';
 
