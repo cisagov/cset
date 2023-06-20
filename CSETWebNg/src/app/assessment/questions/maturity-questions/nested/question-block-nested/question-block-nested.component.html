@@ -47,7 +47,7 @@
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
         <div *ngIf="q.questionType == 'memo'">
-            <textarea autosize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
+            <textarea appAutoSize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
                 (change)="changeMemo(q, $event)"></textarea>
         </div>
 
