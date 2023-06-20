@@ -287,7 +287,7 @@
         </ng-template>
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div class="form-group">
-                <textarea autosize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
+                <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>

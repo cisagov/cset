@@ -37,7 +37,7 @@ export class AutoSizeDirective implements OnInit {
     }
 
     ngOnInit(): void {
-        setTimeout(() => this.adjust(), 200);
+        setTimeout(() => this.adjust());
     }
 
     adjust(): void {

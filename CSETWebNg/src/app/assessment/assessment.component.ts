@@ -48,7 +48,7 @@ import { NavigationService } from '../services/navigation/navigation.service';
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AssessmentComponent implements OnInit, AfterContentChecked {
+export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
 
@@ -100,9 +100,9 @@ export class AssessmentComponent implements OnInit, AfterContentChecked {
     this.evaluateWindowSize();
   }
 
-  ngAfterContentChecked() {
-    this.cd.detectChanges();
-  }
+  // ngAfterContentChecked() {
+  //   this.cd.detectChanges();
+  // }
 
   setTab(tab) {
     this.assessSvc.currentTab = tab;
@@ -143,7 +143,7 @@ export class AssessmentComponent implements OnInit, AfterContentChecked {
 
   /**
    * Called when the user clicks an item
-   * in the nav.  
+   * in the nav.
    */
   selectNavItem(target: string) {
     if (!this.lockNav) {
