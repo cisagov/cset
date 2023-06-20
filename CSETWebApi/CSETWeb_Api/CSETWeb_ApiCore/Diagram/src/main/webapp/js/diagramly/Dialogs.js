@@ -2949,7 +2949,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				var btn = addButton(tmp.title, null,tmp.title, tmp.tooltip ? tmp.tooltip : tmp.title, null, null,tmp.imgUrl);
+				var btn = addButton(tmp.title, null, tmp.title, tmp.tooltip ? tmp.tooltip : tmp.title, tmp.select);
 				//var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
 				//	tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
 				
@@ -4232,6 +4232,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 						title: tmplt.name.trim(),
 						tooltip: tmplt.name.trim(),
 						select: csetTemplates[0] === tmplt,
+						//imgUrl: `'data: image/png;base64,${tmplt.imageSource}'`
 						imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
 					});
 				}
