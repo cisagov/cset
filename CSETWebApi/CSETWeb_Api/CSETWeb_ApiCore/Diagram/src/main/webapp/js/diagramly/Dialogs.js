@@ -2944,18 +2944,19 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		
 		var first = true;
 		
-		//TODO support paging of external templates
 		if (templates != null)
 		{
-			while (i0 < templates.length && (first || mxUtils.mod(i0, 30) != 0))
+			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
+				var btn = addButton(tmp.title, null,tmp.title, tmp.tooltip ? tmp.tooltip : tmp.title, null, null,tmp.imgUrl);
+				//var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
+				//	tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
 				
 				if (first)
 				{
-					btn.click();
+					//initUi();
+					//btn.click();
 				}
 				
 				first = false;
@@ -3850,8 +3851,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	var currentEntry = null, lastEntry = null;
 
 	// Adds local basic templates
-	categories['basic'] = [{title: 'blankDiagram', select: true}];
-	var templates = categories['basic'];
+	//categories['basic'] = [{title: 'blankDiagram', select: true}];
+	var templates = [];
 
 	if (urlParams['test'] == '1' && editorUi.getServiceName() == 'draw.io')
 	{
@@ -4216,28 +4217,46 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		//outer.appendChild(searchBox);
 		outer.appendChild(list);
 		outer.appendChild(div);
+
 		const loadCsetTemplates = async () => {
 			const category = 'CSET';
 			categories[category] = categories[category] || [];
 
-			const csetTemplates = await CsetUtils.getCsetTemplates();
-			for (const tmplt of csetTemplates) {
-				categories[category].push({
-					iscset: true,
-					xml: tmplt.markup,
-					title: tmplt.name.trim(),
-					tooltip: tmplt.name.trim(),
-					select: csetTemplates[0] === tmplt,
-					imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
-				});
+			if (categories[category] == null || categories[category].length == 0)
+			{
+				const csetTemplates = await CsetUtils.getCsetTemplates();
+				for (const tmplt of csetTemplates) {
+					categories[category].push({
+						iscset: true,
+						xml: tmplt.markup,
+						title: tmplt.name.trim(),
+						tooltip: tmplt.name.trim(),
+						select: csetTemplates[0] === tmplt,
+						imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
+					});
+				}
+				addTemplates(categories[category]);
 			}
-			addTemplates(categories[category]);
+			else
+			{
+				//for (const tmplt of csetTemplates) {
+				//	categories[category].push({
+				//		iscset: true,
+				//		xml: tmplt.markup,
+				//		title: tmplt.name.trim(),
+				//		tooltip: tmplt.name.trim(),
+				//		select: csetTemplates[0] === tmplt,
+				//		imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
+				//	});
+				//}
+				//addTemplates(categories[category]);
+			}
 			spinner.stop();
 			initUi();
 		};
 
 		spinner.spin(div);
-		loadCsetTemplates();
+		//loadCsetTemplates();
 		
 		/*
 		function loadDrawioTemplates()
@@ -4363,9 +4382,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				origCustomCatCount = count;
 
 				loadCsetTemplates();
-			},
-			
-			loadCsetTemplates); //In case of an error, just load draw.io templates only
+			}); //In case of an error, just load draw.io templates only
 		}
 		else
 		{
