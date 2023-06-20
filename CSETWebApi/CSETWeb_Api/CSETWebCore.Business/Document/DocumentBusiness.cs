@@ -181,6 +181,8 @@ namespace CSETWebCore.Business.Document
                         Name = file.FileName,
                         FileMd5 = file.FileHash,
                         ContentType = file.ContentType,
+                        CreatedTimestamp = DateTime.Now,
+                        UpdatedTimestamp = DateTime.Now,
                         Data = file.FileBytes
                     };
 
