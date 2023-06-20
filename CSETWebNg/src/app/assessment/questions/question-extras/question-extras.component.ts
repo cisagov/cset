@@ -45,7 +45,6 @@ import { LayoutService } from '../../../services/layout.service';
   selector: 'app-question-extras',
   templateUrl: './question-extras.component.html',
   styleUrls: ['./question-extras.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   // tslint:disable-next-line:use-host-property-decorator
   host: { class: 'd-flex flex-column flex-11a' }
