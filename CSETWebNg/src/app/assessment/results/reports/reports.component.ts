@@ -100,6 +100,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         } else {
             this.isMobile = false;
         }
+        this.assessSvc.currentTab = 'results';
     }
 
 
@@ -117,7 +118,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.exportExtension = localStorage.getItem('exportExtension');
 
-        this.assessSvc.currentTab = 'results';
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
         });
@@ -165,7 +165,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Decides whether the Observation Tear-Out Sheets 
+     * Decides whether the Observation Tear-Out Sheets
      * link should be shown.
      */
     showObservationTearouts() {
@@ -236,7 +236,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Gets all ISE Findings/Issues, 
+     * Gets all ISE Findings/Issues,
      * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
      */
     getAssessmentFindings() {
@@ -245,7 +245,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           (r: any) => {
             this.findings = r;
             let title = '';
-            
+
             for (let i = 0; i < this.findings?.length; i++) {
                 // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
                 if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
@@ -261,7 +261,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.ncuaSvc.unassignedIssues = true;
             }
 
-    
+
           },
           error => console.log('Findings Error: ' + (<Error>error).message)
         );
@@ -289,7 +289,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     clickExport() {
         // get short-term JWT from API

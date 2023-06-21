@@ -11,6 +11,7 @@ using System.Linq;
 using CSETWebCore.Interfaces.Document;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CSETWebCore.Business.Document
 {
@@ -93,6 +94,7 @@ namespace CSETWebCore.Business.Document
             }
 
             doc.Title = title;
+            doc.UpdatedTimestamp = DateTime.Now;
 
             _context.DOCUMENT_FILE.Update(doc);
             _context.SaveChanges();

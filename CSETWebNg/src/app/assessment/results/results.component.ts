@@ -38,7 +38,7 @@ export class ResultsComponent implements OnInit {
   @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
   /**
-   * 
+   *
    */
   constructor(
     private assessSvc: AssessmentService,
@@ -63,11 +63,11 @@ export class ResultsComponent implements OnInit {
         }
       }
     });
+    this.assessSvc.currentTab = 'results';
   }
 
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'results';
   }
 
   /**
