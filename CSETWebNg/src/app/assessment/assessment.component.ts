@@ -28,11 +28,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  HostListener,
-  AfterContentInit,
-  OnChanges,
-  ChangeDetectorRef,
-  AfterContentChecked
+  HostListener
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -84,12 +80,11 @@ export class AssessmentComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private cd: ChangeDetectorRef,
     public layoutSvc: LayoutService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
-    this.assessSvc.currentTab = 'prepare';
+    this.setTab('prepare');
     this.navSvc.activeResultsView = null;
     if (localStorage.getItem('tree')) {
       this.navSvc.buildTree();
