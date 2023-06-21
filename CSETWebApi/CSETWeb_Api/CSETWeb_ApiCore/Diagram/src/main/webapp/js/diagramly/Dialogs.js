@@ -2949,7 +2949,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				var btn = addButton(tmp.title, null, tmp.title, tmp.tooltip ? tmp.tooltip : tmp.title, tmp.select);
+				var btn = addButton();
 				//var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
 				//	tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
 				
@@ -4408,6 +4408,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 					xml: selected.template.xml,
 					libs: selected.template.libs,
 					extUrl: selected.template.exturl,
+					imgUrl: selected.template.imgUrl,
 					infoObj: selected.template.infoobj
 				});
 				createButton.removeAttribute('disabled');
