@@ -39,6 +39,7 @@ import { AssessmentService } from '../../services/assessment.service';
 })
 export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
+  currentTab: string;
   isSearch: boolean= false;
   searchString:string="";
   @ViewChild('tabs') tabsElementRef: ElementRef;
@@ -47,8 +48,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     public authSvc: AuthenticationService,
-    public dialog: MatDialog,
-    private assessSvc: AssessmentService
+    public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -75,11 +75,11 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   }
 
   setTab(tab) {
-    this.assessSvc.currentTab = tab;
+    this.currentTab = tab;
   }
 
   checkActive(tab) {
-    return this.assessSvc.currentTab === tab;
+    return this.currentTab === tab;
   }
 
   changeToSearch(val){
