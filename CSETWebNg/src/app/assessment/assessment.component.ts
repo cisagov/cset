@@ -95,10 +95,6 @@ export class AssessmentComponent implements OnInit {
     this.evaluateWindowSize();
   }
 
-  // ngAfterContentChecked() {
-  //   this.cd.detectChanges();
-  // }
-
   setTab(tab) {
     this.assessSvc.currentTab = tab;
   }
