@@ -577,7 +577,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadQuestionExtra(extra: string) {
-    if ((!!this.mode || this.mode === '' ) && extra != 'CMNT') {
+    if ((!!this.mode || this.mode === '') || (this.assessSvc.usesMaturityModel('HYDRO') && extra != 'CMNT') ) {
       return;
     }
 
