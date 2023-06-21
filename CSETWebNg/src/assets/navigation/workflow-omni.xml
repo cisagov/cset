@@ -46,7 +46,7 @@
 
 
         <!-- The scenario that will normally show -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD,HYDRO)" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD02C,HYDRO)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
@@ -181,22 +181,22 @@
             </node>
         </node>
 
-        <!-- SD questions displayed in tree structure -->
-        <node displaytext="SD Questions" condition="MATURITY:SD">
-            <node id="maturity-questions-nested-12001" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/12001" />
-            <node id="maturity-questions-nested-12002" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/12002" />
-            <node id="maturity-questions-nested-12003" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/12003" />
-            <node id="maturity-questions-nested-12004" displaytext="Zone Boundaries – Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/12004" />
-            <node id="maturity-questions-nested-12005" displaytext="Zone Boundaries – Secure/Defend (ZD)" path="assessment/{:id}/maturity-questions-nested/12005" />
-            <node id="maturity-questions-nested-12006" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/12006" />
-            <node id="maturity-questions-nested-12007" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/12007" />
-            <node id="maturity-questions-nested-12008" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/12008" />
-            <node id="maturity-questions-nested-12009" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/12009" />
-            <node id="maturity-questions-nested-12010" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/12010" />
-            <node id="maturity-questions-nested-12011" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/12011" />
-            <node id="maturity-questions-nested-12012" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/12012" />
-            <node id="maturity-questions-nested-12013" displaytext="Logging Policies (LP)" path="assessment/{:id}/maturity-questions-nested/12013" />
-            <node id="maturity-questions-nested-12014" displaytext="Patching (PA)" path="assessment/{:id}/maturity-questions-nested/12014" />
+        <!-- SD02C question domains displayed in tree structure -->
+        <node displaytext="SD02C Questions" condition="MATURITY:SD02C">
+            <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
+            <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
+            <node id="maturity-questions-nested-2603" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/2603" />
+            <node id="maturity-questions-nested-2604" displaytext="Zone Boundaries – Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/2604" />
+            <node id="maturity-questions-nested-2605" displaytext="Zone Boundaries – Secure/Defend (ZD)" path="assessment/{:id}/maturity-questions-nested/2605" />
+            <node id="maturity-questions-nested-2606" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/2606" />
+            <node id="maturity-questions-nested-2607" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/2607" />
+            <node id="maturity-questions-nested-2608" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/2608" />
+            <node id="maturity-questions-nested-2609" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/2609" />
+            <node id="maturity-questions-nested-2610" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/2610" />
+            <node id="maturity-questions-nested-2611" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/2611" />
+            <node id="maturity-questions-nested-2612" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/2612" />
+            <node id="maturity-questions-nested-2613" displaytext="Logging Policies (LP)" path="assessment/{:id}/maturity-questions-nested/2613" />
+            <node id="maturity-questions-nested-2614" displaytext="Patching (PA)" path="assessment/{:id}/maturity-questions-nested/2614" />
         </node>
 
 
@@ -276,8 +276,7 @@
         <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
         <node displaytext="Feasibility" id="hydro-feasibility" path="assessment/{:id}/results/hydro-feasibility" condition="MATURITY:HYDRO" />
         <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" condition="MATURITY:HYDRO" />
-        <!-- commented out for now for the new build, will be in the next build -->
-        <!-- <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" condition="MATURITY:HYDRO" /> -->
+        <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" condition="MATURITY:HYDRO" />
 
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />
@@ -287,6 +286,8 @@
         <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:CPG" />
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
 
+        <!-- Results - SD02C -->
+        <node displaytext="SD02C Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD02C" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">
@@ -304,7 +305,7 @@
 
         <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" condition="ORIGIN:CF" /-->
 
-        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:CSET" />
+        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" condition="INSTALL-MODE:CSET SHOW-FEEDBACK" />
 
         <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
 

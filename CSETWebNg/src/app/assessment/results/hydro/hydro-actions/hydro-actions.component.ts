@@ -13,38 +13,14 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class HydroActionsComponent implements OnInit {
 
-  allDonutData: any;
-  catMap: Map<string, Map<string, any[]>> = new Map<string, Map<string, any[]>>();
-  masterArray: any[] = [];
-  catArray: any[] = [];
+  actionItemData: any[] = [];
+  unsortedActionItemData: any[] = [];
+  progressTotalsMap: Map<String, number[]> = new Map<String, number[]>();
 
-  subCatMap: Map<string, any[]> = new Map<string, any[]>();
-  subCatCountMap: Map<string, number> = new Map<string, number>();
-  subCatWeightsByCat: any[] = [];
-  subCatNamesByCat: any[] = [];
+  loadingCounter: number = 0;
 
-  catCountMap: Map<number, number[]> = new Map<number, number[]>();
-  catExpandedMap: Map<string, boolean> = new Map<string, boolean>();
-  catIds: number[] = [];
-  catNames: string[] = [];
-
-  donutData: any[] = [];
-  domainWeightData: any[] = [];
-  domainWeightTotals: any[] = []
-  weightData: any[] =[];
-  loading: boolean = true;
-
-
-  // magic numbers to transform the subCategory weights to the category donut
-  highImpactMagic: number = 0.21724524076;
-  mediumImpactMagic: number = 0.33333333333;
-
-  assessScoresColors = {
-    domain: ['#426A5A', '#7FB685', '#B4EDD2', '#D95D1E']
-  };
-  assessView: any[] = [800, 150];
-
-  domainGroupNames: string[] = ['Management', 'Site and Service Control Security', 'Critical Operations', 'Dependencies'];
+  domainExpandMap: Map<String, boolean> = new Map<String, boolean>();
+  progressLevels: any[] = [];
 
   constructor(
     public reportSvc: ReportService,
@@ -56,85 +32,75 @@ export class HydroActionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let masterSubCatArray: string[] = [];
 
-    this.reportSvc.getHydroDonutData().subscribe(
-      (r: any) => {
-        this.allDonutData = r;
+    this.reportSvc.getHydroActionItemsReport().subscribe(
+      (r: any) => {    
+        if (r.length > 0) {
+          let sortedArray = this.sortActionItems(r);
 
-        let prevCat = "";
-        let prevSubCat = "";
-        let subCatArray = [];
-        let subCatIds = [];
+          let progressArray = [];
+          let currProgressId = sortedArray[0].actionData.progress_Id;
 
-        for (let i = 0; i < this.allDonutData.length; i++) {
-          let currItem = this.allDonutData[i];
+          this.hydroSvc.getProgressText().subscribe(
+            (p: any) => {
+              this.progressLevels = p;
+              for (let item of sortedArray) {
+                if (currProgressId != item.actionData.progress_Id) {
+                  this.actionItemData.push(progressArray);
+                  currProgressId = item.actionData.progress_Id;
+                  progressArray = [];
+                }
 
-          if (currItem.question.sub_Category != prevSubCat) { //checks if the subCat needs to updated
-            if (prevSubCat != "") {
-              this.subCatMap.set(prevSubCat, subCatArray); //sets the previously filled 
-              this.catArray.push(subCatArray);
-            }
-
-            prevSubCat = currItem.question.sub_Category;
-            masterSubCatArray.push(prevSubCat);
-            subCatIds.push(currItem.question.grouping_Id.toString());
-            subCatArray = [];
-
-            if (currItem.question.category != prevCat) { //checks if the cat needs to updated
-              if (prevCat != "") {
-                this.catMap.set(prevCat, this.subCatMap);
-                this.masterArray.push(this.catArray);
+                progressArray.push(item);
               }
 
-              prevCat = currItem.question.category;
+              this.actionItemData.push(progressArray);
+              this.loadingCounter ++;
             }
-          }
-
-          subCatArray.push(currItem);
+          );
+        } 
+        else {
+          this.actionItemData = r;
         }
-
-        this.subCatMap.set(prevSubCat, subCatArray);
-        this.catArray.push(subCatArray);
-        this.catMap.set(prevCat, this.subCatMap);
-        this.masterArray.push(this.catArray);
-
-        this.loading = false;
+        
+        this.loadingCounter ++;
       }
-    );
+    )
   }
 
-  toggleCategory(catName: string) {
-    let currValue = false;
-    if (this.catExpandedMap.has(catName)) {
-      currValue = this.catExpandedMap.get(catName);
-    }
-    for (let i = 0; i < this.catNames.length; i++) {
-      this.catExpandedMap.set(this.catNames[i], false);
-    }
-    if (this.catExpandedMap.has(catName)) {
-      this.catExpandedMap.set(catName, !currValue);
+  sortActionItems(arrayToSort: any[]) {
+    arrayToSort.sort((a, b) => {
+      if (a.actionData.progress_Id > b.actionData.progress_Id) { //a's progress_Id is larger than b's
+        return 1;
+      }
+      if (a.actionData.progress_Id < b.actionData.progress_Id) { //a's progress_Id is smaller than b's
+        return -1;
+      }
+
+      //if it makes it here, both progress_Ids are the same. Order by Impact severity from here on out (1.High, 2.Medium, 3.Low)
+      if (a.action.severity > b.action.severity) {
+        return 1;
+      }
+      if (a.action.severity < b.action.severity) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    return arrayToSort;
+  }
+
+  sortBySeverity() {
+    for (let domain of this.actionItemData) {
+      domain.actionsQuestions.sort((a, b) => (
+        a.action.severity < b.action.severity ? -1 : 1
+        ));      
     }
   }
 
-  roundAndAdjust(weight: number, subGroupingsInDomain: number, magic: number) {
-    
-    if (magic != 0) {
-      weight *= magic;
-      return weight/1 + Math.round(weight)%1*0.01;
-    }
-
-    return weight/subGroupingsInDomain + Math.round(weight)%subGroupingsInDomain*0.01;
-  }
-
-  roundAndCheckForEdgeCase(weight: number) {
-    let roundedValue = weight/1 + Math.round(weight%1*0.01);
-
-    if (roundedValue == 99.99 || roundedValue > 100) {
-      return 100;
-    }
-
-    return roundedValue;
+  saveChanges(answer: any, progressId: number, comment: string) {
+    this.hydroSvc.saveHydroComment(answer, answer.answer_Id, progressId, comment).subscribe();
   }
 
 }

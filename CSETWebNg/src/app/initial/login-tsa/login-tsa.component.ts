@@ -34,6 +34,7 @@ import { EmailService } from '../../services/email.service';
 import { LayoutService } from '../../services/layout.service';
 import { JwtParser } from '../../helpers/jwt-parser';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 
 @Component({
@@ -55,6 +56,7 @@ export class LoginTsaComponent implements OnInit {
   showPassword = false;
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
+  showLoginBox: boolean = true;
 
   @ViewChild('acc') accordion: NgbAccordion;
 
@@ -69,8 +71,18 @@ export class LoginTsaComponent implements OnInit {
     private authSvc: AuthenticationService,
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.breakpointObserver.observe([
+      "(max-width: 1340px)"]).subscribe((result: BreakpointState) => {
+        if (result.matches) {
+          this.showLoginBox = false;
+        } else {
+          this.showLoginBox = true;
+        }
+      })
+   }
 
   /**
    *

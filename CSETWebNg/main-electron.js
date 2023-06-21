@@ -7,6 +7,7 @@ const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 const gotTheLock = app.requestSingleInstanceLock();
+const merge = require('lodash').merge;
 
 let config = require('./dist/assets/settings/config.json');
 
@@ -16,7 +17,7 @@ let config = require('./dist/assets/settings/config.json');
 */
 config.currentConfigChain.forEach(configProfile => {
   const subConfig = require(`./dist/assets/settings/config.${configProfile}.json`);
-  config = { ...config, ...subConfig };
+  merge(config, subConfig);
 });
 
 const installationMode = config.installationMode;
@@ -236,6 +237,7 @@ function createWindow() {
       });
     });
   } else {
+    // launchAPI(rootDir + '/../CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/bin/debug/net7.0', 'CSETWebCore.Api.exe', config.api.port, mainWindow);
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, 'dist/index.html'),
@@ -389,13 +391,25 @@ function launchAPI(exeDir, fileName, port, window) {
   let exe = exeDir + '/' + fileName;
   let options = {cwd:exeDir};
   let args = ['--urls', config.api.protocol + '://' + config.api.url + ':' + port]
-  child(exe, args, options, (error) => {
+  let apiProcess = child(exe, args, options, (error) => {
     if (error) {
       window.loadFile(path.join(__dirname, '/dist/assets/app-startup-error.html'));
       log.error(error);
       if (error.stack.includes('DatabaseManager.DatabaseSetupException')) {
         dialog.showErrorBox(`${appCode} Database Setup Error`, `There was a problem initializing the SQL LocalDB ${appCode} database. Please restart your system and try again.\n\n` + error.message);
       }
+    }
+  });
+
+  apiProcess.stdout.on('data', (data) => {
+    if (data.includes('uninstall previous versions')) {
+      const options = {
+        type: 'info',
+        title: 'Notice',
+        message: data,
+      }
+
+      dialog.showMessageBox(options);
     }
   });
 }

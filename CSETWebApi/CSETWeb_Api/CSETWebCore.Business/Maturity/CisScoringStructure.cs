@@ -6,7 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Aggregation;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +28,8 @@ namespace CSETWebCore.Business.Maturity
         private List<MATURITY_GROUPINGS> _allGroupings;
 
 
-        private CisQuestions _myModel = null;
-        public CisQuestions MyModel { get => _myModel; }
+        private NestedQuestions _myModel = null;
+        public NestedQuestions MyModel { get => _myModel; }
 
 
         private const string _currentBarColor = "#007BFF";
@@ -72,7 +72,7 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         private void LoadStructure()
         {
-            _myModel = new CisQuestions
+            _myModel = new NestedQuestions
             {
                 AssessmentId = this._assessmentId,
                 ModelId = this._maturityModelId
@@ -115,9 +115,9 @@ namespace CSETWebCore.Business.Maturity
                 };
 
 
-                if (oParent is CisQuestions)
+                if (oParent is NestedQuestions)
                 {
-                    ((CisQuestions)oParent).Groupings.Add(grouping);
+                    ((NestedQuestions)oParent).Groupings.Add(grouping);
                 }
 
                 if (oParent is Grouping)

@@ -292,22 +292,20 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   clickDownloadLink(ment_id: number) {
-    let password = null;
-
     if (!this.preventEncrypt) {
       let dialogRef = this.dialog.open(ExportPasswordComponent);
       dialogRef.afterClosed().subscribe(result => {
-        if (result !== undefined && result.length > 0) {
-          password = result;
-        }
       
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-          let url = "";
-          if (password != null) {
-            url = this.fileSvc.exportUrl + "?token=" + response.token + "&password=" + password;
-          } else {
-            url = this.fileSvc.exportUrl + "?token=" + response.token;
+          let url = this.fileSvc.exportUrl + "?token=" + response.token;
+          
+          if (result.password != null && result.password != "") {
+            url = url + "&password=" + result.password;
+          }
+
+          if (result.hint != null && result.hint != "") {
+            url = url + "&passwordHint=" + result.hint;
           }
         
           //if electron

@@ -41,6 +41,8 @@ export class ImportAssessmentService {
   apiAssessmentImport = this.configSvc.apiUrl + 'assessment/import';
   apiLegacyAssessmentImport = this.configSvc.apiUrl + 'assessment/legacy/import';
 
+  hintMap = new Map();
+
   constructor(
     private http: HttpClient, 
     private configSvc: ConfigService) {
@@ -83,6 +85,10 @@ export class ImportAssessmentService {
         progress: progress.asObservable()
       };
 
+      // Make sure our assessment hints are empty ahead of time
+
+      this.hintMap.clear();
+
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress) {
@@ -114,11 +120,30 @@ export class ImportAssessmentService {
           else progress.complete();   
         }
 
-      },);
+      },
+      (error) => {
+        this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
+      }
+      );
     })
 
     // return the map of progress.observables
     return status;
+  }
+
+  /**
+   * Parses the error string to display only the "hint" that a user might need
+   */
+  extractAssessmentHint(message: string) {
+    let hint = "";
+
+    // We could use regex here, but this works.
+    let firstSplit = message.split("- ");
+    let firstString = firstSplit[1];
+    let secondSplit = firstString.split(".hint");
+    hint = secondSplit[0];
+
+    return hint;
   }
 
   /**

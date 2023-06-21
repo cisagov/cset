@@ -7,7 +7,7 @@
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Cis;
+using CSETWebCore.Model.Nested;
 using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Enum;
 using System;
@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.Maturity
         private readonly int _cisModelId = 8;
 
 
-        public CisQuestions QuestionsModel;
+        public NestedQuestions QuestionsModel;
 
 
         /// <summary>

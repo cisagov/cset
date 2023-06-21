@@ -58,7 +58,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
 
   scoreObject: any;
   sectionScore: Number;
-  
+
   loaded = false;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -86,11 +86,11 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         });
     }
     localStorage.setItem("questionSet", "Maturity");
+    this.assessSvc.currentTab = 'questions';
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.loadQuestions();
-    this.assessSvc.currentTab = 'questions';
   }
 
   /**
@@ -119,11 +119,11 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
-        
+
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
         this.groupings = response.groupings;
-        
+
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
@@ -165,7 +165,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
       }
     }
   }
-  
+
   /**
      * Controls the mass expansion/collapse of all subcategories on the screen.
      * @param mode
@@ -187,7 +187,7 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {
@@ -214,5 +214,5 @@ export class MaturityQuestionsIseComponent implements OnInit, AfterViewInit {
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
   }
-  
+
 }

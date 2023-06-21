@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigService } from './services/config.service';
 import { AssessmentComponent } from './assessment/assessment.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
@@ -84,13 +83,8 @@ import { TrendAnalyticsComponent } from './aggregation/trend-analytics/trend-ana
 import { CompareAnalyticsComponent } from './aggregation/compare-analytics/compare-analytics.component';
 //import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
-import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
-import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
-import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
-import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
-import { CfLayoutMainComponent } from './layout/cf-layout-main/cf-layout-main.component';
-import { RenewLayoutMainComponent } from './layout/renew-layout-main/renew-layout-main.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
@@ -203,32 +197,9 @@ import { HydroReportComponent } from './reports/hydro/hydro-report/hydro-report.
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
-
-const installationMode = localStorage.getItem('installationMode');
-
-// Select the appropriate home commponent for the configured installation mode for this app instance
-var homeComponentForCurrentInstallationMode: any;
-
-switch (installationMode) {
-  case 'ACET':
-    homeComponentForCurrentInstallationMode = AcetLayoutMainComponent;
-    break;
-  case 'TSA':
-    homeComponentForCurrentInstallationMode = TsaLayoutMainComponent;
-    break;
-  case 'RRA':
-    homeComponentForCurrentInstallationMode = RraLayoutMainComponent;
-    break;
-  case 'CF':
-    homeComponentForCurrentInstallationMode = CfLayoutMainComponent;
-    break;
-  case 'RENEW':
-    homeComponentForCurrentInstallationMode = RenewLayoutMainComponent;
-    break;
-  default:
-    homeComponentForCurrentInstallationMode = LayoutMainComponent;
-    break;
-}
+import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
+import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
+import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
 
 const appRoutes: Routes = [
@@ -236,14 +207,14 @@ const appRoutes: Routes = [
   // reports routing
   {
     path: 'report-test',
-    component: homeComponentForCurrentInstallationMode,
+    component: LayoutSwitcherComponent,
     children: [
       { path: '', component: ReportTestComponent }
     ]
   },
   {
     path: 'home',
-    component: homeComponentForCurrentInstallationMode,
+    component: LayoutSwitcherComponent,
     children: [
       { path: 'privacy-warning', component: PrivacyWarningComponent },
       { path: 'privacy-warning-reject', component: PrivacyWarningRejectComponent },
@@ -265,7 +236,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    component: homeComponentForCurrentInstallationMode,
+    component: LayoutSwitcherComponent,
     children: [
       { path: 'compare', component: AggregationHomeComponent },
       { path: 'merge', component: MergeComponent },
@@ -457,6 +428,7 @@ const appRoutes: Routes = [
               { path: 'hydro-impact', component: HydroImpactComponent },
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
               { path: 'hydro-actions', component: HydroActionsComponent },
+              { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
             ]
           },
 
@@ -518,6 +490,8 @@ const appRoutes: Routes = [
       { path: 'module-content', component: ModuleContentComponent },
       { path: 'c2m2Report', component: C2m2ReportComponent },
       { path: 'hydroReport', component: HydroReportComponent },
+      { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
+      { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
