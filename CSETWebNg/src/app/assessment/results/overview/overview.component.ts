@@ -42,10 +42,9 @@ export class OverviewComponent implements OnInit {
     public navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) { this.assessSvc.currentTab = 'results'; }
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'results';
     this.assessSvc.getAssessmentDetail().subscribe((detail: any) => {
       this.o = detail;
       this.updateAssessmentDetails();
