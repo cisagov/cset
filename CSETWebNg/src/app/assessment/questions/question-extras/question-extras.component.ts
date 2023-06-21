@@ -577,7 +577,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadQuestionExtra(extra: string) {
-    if (!!this.mode || this.mode === '') {
+    if ((!!this.mode || this.mode === '') || (this.assessSvc.usesMaturityModel('HYDRO') && extra != 'CMNT') ) {
       return;
     }
 
@@ -587,7 +587,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   autoLoadComments() {
-    return this.usesRAC();
+    return this.usesRAC() || this.assessSvc.usesMaturityModel('HYDRO');
   }
 
   /**
@@ -639,6 +639,22 @@ export class QuestionExtrasComponent implements OnInit {
         return false;
       }
       if (mode == 'REVIEWED') {
+        return false;
+      }
+      if (mode == 'DISC') {
+        return false;
+      }
+      if (mode == 'REFS') {
+        return false;
+      }
+    }
+
+    // Renewables HYDRO
+    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('HYDRO')) {
+      if (mode == 'DETAIL') {
+        return false;
+      }
+      if (mode == 'SUPP') {
         return false;
       }
       if (mode == 'DISC') {
