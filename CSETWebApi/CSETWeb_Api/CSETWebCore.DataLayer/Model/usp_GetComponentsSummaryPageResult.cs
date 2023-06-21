@@ -10,6 +10,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Answer_Text { get; set; }
         public string Answer_Full_Name { get; set; }
         public int vcount { get; set; }
+        [Column(TypeName = "decimal(18,1)")]
         public decimal value { get; set; }
     }
 }
