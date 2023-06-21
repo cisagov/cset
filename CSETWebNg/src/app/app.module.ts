@@ -94,13 +94,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
-import {AutosizeModule} from 'ngx-autosize';
-
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -249,6 +246,7 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -574,6 +572,11 @@ import { HydroBarVerticalComponent } from './assessment/results/hydro/hydro-bar-
 import { HydroImpactComponent } from './assessment/results/hydro/hydro-impact/hydro-impact.component';
 import { HydroFeasibilityComponent } from './assessment/results/hydro/hydro-feasibility/hydro-feasibility.component';
 import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/hydro-actions.component';
+import { HydroActionItemComponent } from './assessment/results/hydro/hydro-actions/hydro-action-item/hydro-action-item.component';
+import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-actions/hydro-progress-totals/hydro-progress-totals.component';
+import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
+import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
+import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 
 
 
@@ -631,7 +634,6 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         OverlayModule,
         PortalModule,
         ScrollingModule,
-        AutosizeModule,
         // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
@@ -661,7 +663,6 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
-        TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -780,7 +781,6 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent,
         ExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
@@ -797,6 +797,7 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         ComponentOverrideComponent,
         ExcelExportComponent,
         LayoutBlankComponent,
+        LayoutSwitcherComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
@@ -1105,6 +1106,11 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
         HydroImpactComponent,
         HydroFeasibilityComponent,
         HydroActionsComponent,
+        HydroActionItemComponent,
+        HydroProgressTotalsComponent,
+        HydroActionItemsReportComponent,
+        SdAnswerSummaryReportComponent,
+        SdAnswerSummaryComponent,
     ],
     providers: [
         ConfigService,

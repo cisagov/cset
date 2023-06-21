@@ -141,6 +141,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
         public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
         public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
+        public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
+        public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
@@ -1270,9 +1272,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
 
+                entity.Property(e => e.CreatedTimestamp).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Path).HasComment("The Path is used to");
 
                 entity.Property(e => e.Title).HasComment("The Title is used to");
+
+                entity.Property(e => e.UpdatedTimestamp).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Assessment)
                     .WithMany(p => p.DOCUMENT_FILE)
@@ -1879,6 +1885,33 @@ namespace CSETWebCore.DataLayer.Model
                     .HasForeignKey(d => d.Mat_Question_Id)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
+            });
+
+            modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Answer_Id)
+                    .HasName("PK__HYDRO_DA__36918F3818A6E56C");
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Answer)
+                    .WithOne(p => p.HYDRO_DATA_ACTIONS)
+                    .HasForeignKey<HYDRO_DATA_ACTIONS>(d => d.Answer_Id)
+                    .HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
+
+                entity.HasOne(d => d.Progress)
+                    .WithMany(p => p.HYDRO_DATA_ACTIONS)
+                    .HasForeignKey(d => d.Progress_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
+            });
+
+            modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
+            {
+                entity.HasKey(e => e.Progress_Id)
+                    .HasName("PK__HYDRO_PR__D558797A8254CF40");
+
+                entity.Property(e => e.Progress_Id).ValueGeneratedNever();
             });
 
             modelBuilder.Entity<IMPORTANCE>(entity =>

@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="ml-4" *ngFor="let o of optRadio">
+<div class="ml-4 nested-option-block-report" *ngFor="let o of optRadio">
     <div class="d-flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
@@ -52,7 +52,7 @@
 
 
 
-<div class="ml-4" *ngFor="let o of optCheckbox">
+<div class="ml-4 nested-option-block-report" *ngFor="let o of optCheckbox">
     <div class="d-flex flex-row" style="break-inside: avoid">
         <i *ngIf="o.selected" class="far fa-lg fa-check-square"></i>
         <i *ngIf="!o.selected" class="far fa-lg fa-square"></i>
@@ -82,8 +82,8 @@
 
 
 
-<div *ngFor="let o of optOther" class="ml-4 break-inside-avoid">
-    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1 mb-1" maxlength="100"
+<div *ngFor="let o of optOther" class="ml-4 break-inside-avoid nested-option-block-report">
+    <input type="text" *ngIf="o.optionType == 'text-first'" class="form-control mr-1"
         style="width: 6rem; display: inline" [value]="o.answerText" (change)="changeText(o, $event)">
 
     <span [innerHTML]="o.optionText"></span>

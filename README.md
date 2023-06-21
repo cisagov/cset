@@ -36,7 +36,7 @@ Idaho National Laboratory, P.O. Box 1625, MS 3870, Idaho Falls, ID 83415
 
 Includes software licensed under LGPL
 
-LGPL dependencies are required to build CSET. You will be required to aquire them via nuGet in order to build this software. They are not distributed with this source.
+LGPL dependencies are required to build CSET. You will be required to acquire them via nuGet in order to build this software. They are not distributed with this source.
 
 ## System Requirements
 
@@ -48,7 +48,8 @@ It is recommended that users meet the minimum system hardware and software requi
 • 6 GB free disk space
 • 4 GB of RAM
 • Microsoft Windows 10 or higher
-• Microsoft .NET Core 7.0 Runtime (included in CSET installation)
+• Microsoft .NET 7 Runtime (included in CSET installation)
+• Microsoft ASP.NET Core 7 Runtime (included in CSET installation)
 • SQL Server 2019 Express LocalDB (included in CSET installation)
 
 System Requirements Enterprise Installation
@@ -59,7 +60,8 @@ It is recommended that users meet the minimum system hardware and software requi
 • 8 GB free disk space
 • 4 GB of RAM
 • Microsoft Windows Server 2016 Edition or higher recommended
-• Microsoft .NET Core 7.0 Runtime
+• Microsoft .NET 7 Runtime
+• Microsoft ASP.NET Core 7 Runtime
 • SQL Server 2019 or higher recommended
 • Internet Information Server (IIS) or Kestrel
 

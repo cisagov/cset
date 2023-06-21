@@ -43,7 +43,7 @@
             </svg>
         </button>
 
-        <button id="btn_SUPP_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
+        <button *ngIf="displayIcon('SUPP')" id="btn_SUPP_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
             <svg *ngIf="whichSupplementalIcon() == 'I'" viewBox="0 0 30 30"
@@ -113,7 +113,7 @@
             </svg>
         </button>
 
-        <button *ngIf="showFeedbackIcon()" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'"
+        <button *ngIf="displayIcon('FDBK')" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'"
             (click)="toggleExtras('FDBK')" [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'"
             matTooltipPosition="above">
             <svg style="height: 31px; width: 31px; margin: auto; margin-left: -3px; margin-top: -1px;"
@@ -190,7 +190,7 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="!!extras && !!tab && mode == 'SUPP'" class="supplemental">
+            <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
@@ -230,7 +230,7 @@
             <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
             </div>
-            <div *ngIf=" !!extras && mode == 'SUPP'" class="supplemental">
+            <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
@@ -287,7 +287,7 @@
         </ng-template>
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div class="form-group">
-                <textarea autosize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
+                <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
                     style="min-height: 72px; width: 100%" class="form-control"></textarea>
             </div>
         </div>

@@ -85,6 +85,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("ANSWER")]
         public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
         [InverseProperty("Answer")]
+        public virtual HYDRO_DATA_ACTIONS HYDRO_DATA_ACTIONS { get; set; }
+        [InverseProperty("Answer")]
         public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
         [InverseProperty("Answer")]
         public virtual ICollection<FINDING> FINDING { get; set; }

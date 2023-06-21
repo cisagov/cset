@@ -1,0 +1,23 @@
+.shadow {
+    border-top-right-radius: 8px; 
+    border-bottom-right-radius: 8px; 
+    border-bottom-left-radius: 8px;
+    justify-content: center;
+}
+.header-button {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+    width: 100%;
+    text-align: start;
+}
+.progress-btn {
+    height: 38px;
+    border-radius: 8px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    font-weight: 500;
+    font-size: 0.9rem;
+    width: 15%;
+}

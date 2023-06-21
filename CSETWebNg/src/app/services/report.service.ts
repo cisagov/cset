@@ -107,12 +107,12 @@ export class ReportService {
         this.http.get(this.configSvc.apiUrl + 'diagram/getimage').subscribe((val) => console.log(val));
         return this.http.get(this.configSvc.apiUrl + 'diagram/getimage');
     }
-
+    
     /**
      *
      */
-    getHydroDonutData(): any {
-        return this.http.get(this.configSvc.apiUrl + 'reports/getHydroDonutData');
+    getHydroActionItemsReport() {
+        return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItemsReport', headers);
     }
 
     /**

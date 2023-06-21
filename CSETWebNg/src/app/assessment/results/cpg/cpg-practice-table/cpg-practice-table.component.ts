@@ -48,24 +48,15 @@ export class CpgPracticeTableComponent implements OnInit {
    */
   ngOnInit(): void {
     this.model = this.cpgSvc.getStructure().subscribe((resp: any) => {
-      this.model = resp.Model;
-
-      // domain groups with a single question need to have that question 
-      // converted to an array.
-      this.model.Domain.forEach(d => {
-        if (!(d.Question instanceof Array)) {
-          const questions = [].concat(d.Question);
-          d.Question = JSON.parse(JSON.stringify(questions));
-        }
-      });
+      this.model = resp;
     });
   }
 
   /**
    * White text for all except DETECT (yellow)
    */
-  textColor(groupId): string {
-    if (groupId == '202') {
+  textColor(groupId: number): string {
+    if (groupId == 202) {
       return '#000';
     }
     return '#fff';
@@ -75,21 +66,21 @@ export class CpgPracticeTableComponent implements OnInit {
    * Returns the color for the CSF function of the group.
    * This is specific to CPG grouping IDs.
    */
-  backgroundColor(groupId: string): string {
+  backgroundColor(groupId: number): string {
     switch (groupId) {
-      case '200':
+      case 200:
         // identify
         return this.colorSvc.nistCsfFuncColor('ID');
-      case '201':
+      case 201:
         // protect
         return this.colorSvc.nistCsfFuncColor('PR');
-      case '202':
+      case 202:
         // detect
         return this.colorSvc.nistCsfFuncColor('DE');
-      case '203':
+      case 203:
         // respond
         return this.colorSvc.nistCsfFuncColor('RS');
-      case '204':
+      case 204:
         // recover
         return this.colorSvc.nistCsfFuncColor('RC');
       default:

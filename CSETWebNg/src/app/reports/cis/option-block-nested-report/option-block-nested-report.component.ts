@@ -29,7 +29,8 @@ import { Utilities } from '../../../services/utilities.service';
 
 @Component({
   selector: 'app-option-block-nested-report',
-  templateUrl: './option-block-nested-report.component.html'
+  templateUrl: './option-block-nested-report.component.html',
+  styleUrls: ['../../reports.scss']
 })
 export class OptionBlockNestedReportComponent implements OnInit {
 
@@ -64,5 +65,4 @@ export class OptionBlockNestedReportComponent implements OnInit {
     // create a random 'name' that can be used to group the radios in this block
     this.optionGroupName = this.utilSvc.makeId(8);
   }
-
 }

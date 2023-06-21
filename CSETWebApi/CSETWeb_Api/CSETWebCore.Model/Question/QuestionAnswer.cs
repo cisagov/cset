@@ -80,7 +80,7 @@ namespace CSETWebCore.Model.Question
         /// Selectable options that belong to the question.  
         /// This is the first cut at including
         /// </summary>
-        public List<Cis.Option> Options { get; set; } = new List<Cis.Option>();
+        public List<Nested.Option> Options { get; set; } = new List<Nested.Option>();
 
 
         /// <summary>

@@ -131,6 +131,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public bool UseDiagram { get; set; }
         public bool UseStandard { get; set; }
         public bool UseMaturity { get; set; }
+        public Guid GalleryItemGuid { get; set; }
         public Boolean ISE_StateLed { get; set; }
     }
 
@@ -199,6 +200,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         [Required]
         public Boolean Is_Advanced { get; set; }
+
+        [MaxLength(100)]
+        public String? Hidden_Screens { get; set;}
 
     }
 
@@ -414,6 +418,14 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
     }
 
+    public class jHYDRO_DATA_ACTIONS
+    {
+        public Int32 Answer_Id { get; set; }
+        public Int32 Progress_Id { get; set; }
+        public String Comment { get; set; }
+
+    }
+
     public class jANSWER
     {
         [Required]
@@ -620,6 +632,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Nullable<Int32> Baseline_Assessment_Id { get; set; }
 
         public int? Region_Code { get; set; }
+
+        public bool? IsAcetOnly { get; set; }
 
 
     }
