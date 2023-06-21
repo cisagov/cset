@@ -1295,7 +1295,9 @@ namespace CSETWebCore.Business.Reports
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
             info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
-            info.Assessment_Effective_Date = DateTime.Parse(assessment.AssessmentEffectiveDate.ToString()).ToShortDateString().ToString();
+
+            DateTime assessmentEffectiveDate;
+            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
             info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToShortDateString() + ' ' + assessment.AssessmentCreatedDate.ToLongTimeString();
 
             // Primary Assessor
