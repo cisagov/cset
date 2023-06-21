@@ -102,6 +102,7 @@ export class QuestionsComponent implements AfterViewChecked {
         }
       );
     localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R' ? "Requirement" : "Question");
+    this.assessSvc.currentTab = 'questions';
   }
 
   updateComponentsOverride() {
@@ -223,7 +224,6 @@ export class QuestionsComponent implements AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    this.assessSvc.currentTab = 'questions';
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(

@@ -52,13 +52,13 @@ export class PrepareComponent implements OnInit {
           this.assessSvc.assessment = data;
         });
     }
+    this.assessSvc.currentTab = 'prepare';
   }
 
   /**
    * If the nav tree is not yet populated, build it.
    */
   ngOnInit() {
-    this.assessSvc.currentTab = 'prepare';
     if (this.navTreeSvc.tocControl.dataNodes == null) {
       setTimeout(() => {
         this.navSvc.buildTree();
