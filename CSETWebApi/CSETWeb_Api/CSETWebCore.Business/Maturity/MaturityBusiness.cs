@@ -20,15 +20,10 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Hydro;
-using J2N;
-using Microsoft.AspNetCore.Http.Features;
-using System.ComponentModel;
-using CSETWebCore.Business.Aggregation;
-using static Lucene.Net.Util.Fst.Util;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -2543,7 +2538,7 @@ namespace CSETWebCore.Business.Maturity
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
-            if (result.ToList().Count == 0)
+            if (result.IsNullOrEmpty())
             {
                 return actionsByDomains;
             }
@@ -2623,7 +2618,12 @@ namespace CSETWebCore.Business.Maturity
 
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
-            var currDomain = result.ToList().FirstOrDefault().domain;
+            if (result.IsNullOrEmpty())
+            {
+                return actionQuestions;
+            }
+
+            var currDomain = result.ToList().FirstOrDefault()?.domain;
 
             foreach (var item in result.Distinct().ToList())
             {
