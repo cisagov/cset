@@ -43,7 +43,7 @@
             </svg>
         </button>
 
-        <button id="btn_SUPP_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
+        <button *ngIf="displayIcon('SUPP')" id="btn_SUPP_{{ myQuestion.questionId }}" class="extras-button cursor-pointer"
             [class.active]="mode == 'SUPP'" (click)="toggleExtras('SUPP')" matTooltip="Supplemental Guidance"
             matTooltipPosition="above">
             <svg *ngIf="whichSupplementalIcon() == 'I'" viewBox="0 0 30 30"
@@ -190,7 +190,7 @@
                     </tr>
                 </table>
             </div>
-            <div *ngIf="!!extras && !!tab && mode == 'SUPP'" class="supplemental">
+            <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
@@ -230,7 +230,7 @@
             <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
             </div>
-            <div *ngIf=" !!extras && mode == 'SUPP'" class="supplemental">
+            <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
                 </div>
