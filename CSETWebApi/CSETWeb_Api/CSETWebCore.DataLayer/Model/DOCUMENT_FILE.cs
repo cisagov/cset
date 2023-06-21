@@ -37,9 +37,9 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(200)]
         public string ContentType { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? CreatedTimestamp { get; set; }
+        public DateTime CreatedTimestamp { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime? UpdatedTimestamp { get; set; }
+        public DateTime UpdatedTimestamp { get; set; }
         [StringLength(500)]
         public string Name { get; set; }
         public byte[] Data { get; set; }
