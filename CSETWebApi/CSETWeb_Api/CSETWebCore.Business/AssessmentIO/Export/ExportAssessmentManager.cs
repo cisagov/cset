@@ -126,10 +126,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
 
-                foreach (var h in item.HYDRO_DATA_ACTIONS)
-                {
-                    model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(h));
-                }
+                
+                model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(item.HYDRO_DATA_ACTIONS));
+                
                 foreach (var f in item.FINDING)
                 {
                     model.jFINDING.Add(TinyMapper.Map<FINDING,jFINDING>(f));
