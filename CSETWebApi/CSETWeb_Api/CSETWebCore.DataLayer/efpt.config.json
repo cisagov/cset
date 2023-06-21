@@ -451,6 +451,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HYDRO_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HYDRO_DATA_ACTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HYDRO_PROGRESS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[IMPORTANCE]",
          "ObjectType": 0
       },
@@ -1363,6 +1375,7 @@
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
