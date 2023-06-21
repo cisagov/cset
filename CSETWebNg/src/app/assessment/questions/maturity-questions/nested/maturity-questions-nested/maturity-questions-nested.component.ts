@@ -79,14 +79,13 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
         this.loadQuestions();
       }
     });
+    this.assessSvc.currentTab = 'questions';
   }
 
   /**
    *
    */
   ngOnInit(): void {
-    this.assessSvc.currentTab = 'questions';
-
     this.modelName = this.assessSvc.assessment.maturityModel.modelName;
 
     // Initialize integrity check options for CIS assessment
