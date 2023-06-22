@@ -94,13 +94,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
-import {AutosizeModule} from 'ngx-autosize';
+// import {AutosizeModule} from 'ngx-autosize';
 
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+// import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -636,7 +636,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         OverlayModule,
         PortalModule,
         ScrollingModule,
-        AutosizeModule,
+        // AutosizeModule,
         // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
@@ -666,7 +666,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
-        TextareaAutosizeModule,
+        // TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
