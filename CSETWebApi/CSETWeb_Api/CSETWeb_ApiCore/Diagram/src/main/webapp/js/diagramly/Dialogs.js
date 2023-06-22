@@ -2949,9 +2949,10 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				var btn = addButton();
-				//var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-				//	tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
+				console.log(tmp)
+				//var btn = addButton();
+				var btn = addButton(tmp.xml, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
+					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
 				
 				if (first)
 				{
@@ -3564,13 +3565,15 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs)
 	{
+		var xmlStuff = url; //really it's 'xml'
+
 		var elt = document.createElement('div');
 		elt.className = 'geTemplate geAdaptiveAsset';
 		elt.style.position = 'relative';
 		elt.style.height = w + 'px';
 		elt.style.width = h + 'px';
 		elt.style.border = '1px solid transparent';
-		var xmlData = null, realUrl = url;
+		var xmlData = url, realUrl = url;
 		
 		if (title != null)
 		{
@@ -3670,15 +3673,19 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			
 			img.onerror = function()
 			{
-				if (this.src != fallbackImgUrl)
-				{
-					this.src = fallbackImgUrl;
-				}
-				else
-				{
-					this.src = Editor.errorImage;
-					this.onerror = null;
-				}
+				console.log('Image error: ');
+				console.log(imgUrl);
+				// if anything is replaced in imgUrl, do the below code. If not, skip the below code
+
+				//if (this.src != fallbackImgUrl)
+				//{
+				//	this.src = fallbackImgUrl;
+				//}
+				//else
+				//{
+				//	this.src = Editor.errorImage;
+				//	this.onerror = null;
+				//}
 			};
 			
 			mxEvent.addGestureListeners(elt, mxUtils.bind(this, function(evt)
@@ -3688,6 +3695,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			
 			mxEvent.addListener(elt, 'dblclick', function(evt)
 			{
+				console.log('before create call')
 				create();
 				mxEvent.consume(evt);
 			});
@@ -4233,7 +4241,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 						tooltip: tmplt.name.trim(),
 						select: csetTemplates[0] === tmplt,
 						//imgUrl: `'data: image/png;base64,${tmplt.imageSource}'`
-						imgUrl: tmplt.imageSource && `'data: image/png;base64,${tmplt.imageSource}'`
+						imgUrl: tmplt.imageSource && `data: image/png;base64,${tmplt.imageSource}`
 					});
 				}
 				addTemplates(categories[category]);

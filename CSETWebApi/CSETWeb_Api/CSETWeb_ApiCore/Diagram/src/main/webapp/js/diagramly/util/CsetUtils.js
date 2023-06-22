@@ -650,6 +650,7 @@ CsetUtils.getCsetTemplates = async function () {
 
             switch (e.status) {
                 case 200:
+                    console.log(e);
                     templates = JSON.parse(e.responseText);
                     break;
                 case 401:
