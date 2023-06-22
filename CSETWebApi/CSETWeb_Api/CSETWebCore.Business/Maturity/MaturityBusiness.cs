@@ -29,6 +29,7 @@ using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel;
 using CSETWebCore.Business.Aggregation;
 using static Lucene.Net.Util.Fst.Util;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -2543,7 +2544,7 @@ namespace CSETWebCore.Business.Maturity
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
 
-            if (result.ToList().Count == 0)
+            if (result.IsNullOrEmpty())
             {
                 return actionsByDomains;
             }
@@ -2622,6 +2623,11 @@ namespace CSETWebCore.Business.Maturity
                          select new { subGrouping, domain, question, action, answer };
 
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
+
+            if (result.IsNullOrEmpty())
+            {
+                return actionQuestions;
+            }
 
             var currDomain = result.ToList().FirstOrDefault().domain;
 
