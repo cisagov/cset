@@ -1,5 +1,6 @@
 -- Drops all Windows user accounts from the current database
 -- that belong to the INEL-NT domain.
+UPDATE GLOBAL_PROPERTIES SET Property_Value = 'False' WHERE Property = 'AgreedToLocalDbNotification'
 
 DECLARE @getname CURSOR
 DECLARE @name nvarchar(100)
