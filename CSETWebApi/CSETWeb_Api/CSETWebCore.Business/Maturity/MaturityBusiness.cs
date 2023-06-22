@@ -20,7 +20,6 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
 using CSETWebCore.Model.Hydro;
@@ -2629,7 +2628,7 @@ namespace CSETWebCore.Business.Maturity
                 return actionQuestions;
             }
 
-            var currDomain = result.ToList().FirstOrDefault().domain;
+            var currDomain = result.ToList().FirstOrDefault()?.domain;
 
             foreach (var item in result.Distinct().ToList())
             {
