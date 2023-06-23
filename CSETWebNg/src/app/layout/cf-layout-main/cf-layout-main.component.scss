@@ -2744,6 +2744,10 @@ mat-sidenav {
   letter-spacing: normal !important;
 }
 
+.mdc-dialog__surface {
+  overflow-y: hidden !important;
+}
+
 table.assessment-documents {
   width: 500px;
   max-height: 500px;
