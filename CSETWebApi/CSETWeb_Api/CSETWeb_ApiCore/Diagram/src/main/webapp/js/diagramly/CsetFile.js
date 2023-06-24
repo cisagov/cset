@@ -94,11 +94,17 @@ CSETFile.prototype.isEmpty = function () {
 }
 
 CSETFile.prototype.setFileData = function (data, success, error) {
+    console.log('we in boys v2')
+    console.log(data)
     try {
         if (data && data !== this.getData()) {
+            console.log('we in boys v3')
+
             this.setData(data);
             this.ui.setFileData(data);
             this.shadowData = mxUtils.getXml(this.ui.getXmlFileData());
+            console.log('shadow data:')
+            console.log(this.shadowData)
             this.shadowPages = null;
             this.setModified(true);
         }

@@ -2932,6 +2932,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 	var hasTabs = false;
 	var i0 = 0;
+	var templateXmlMarkup = '';
 	
 	// Dynamic loading
 	function addTemplates(smallSize)
@@ -2949,10 +2950,12 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				console.log(tmp)
+				//templateXmlMarkup = tmp.xml;
+				console.log('template in addTemplate');
+				console.log(tmp);
 				//var btn = addButton();
-				var btn = addButton(tmp.xml, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
-					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs);
+				var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
+					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs, tmp.xml);
 				
 				if (first)
 				{
@@ -3029,7 +3032,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 					if (url != null)
 					{
-						selectElement(elt, null, null, url, infoObj, clibs);
+						selectElement(elt, xml, null, url, infoObj, clibs);
 					}
 				}, true, false);
 		}
@@ -3411,7 +3414,42 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	function create()
 	{
-		if (templateExtUrl && openExtDocCallback != null)
+		console.log('templateFile in create(xml)');
+		console.log(templateFile);
+
+		var i = 0;
+		var xml = '';
+		var iscset = false;
+		while (i < templates.length)
+		{
+			tmp = templates[i];
+			console.log(tmp)
+			if (tmp.select)
+			{
+				xml = tmp.xml;
+				//iscset = tmp.iscset;
+			}
+			i++;
+		}
+		console.log('before csetfile stuff')
+		//if (xml != null && iscset) {
+		if (xml != null) {
+			const csetfile = editorUi.getCurrentFile();
+			console.log('we in boys')
+			//if (csetfile) {
+				console.log(xml)
+
+				csetfile.setFileData(xml, () => {
+					console.log('before editorUi call')
+
+					editorUi.hideDialog();
+					console.log('after editorUi call')
+
+				});
+			//}
+		}
+		//
+		else if (templateExtUrl && openExtDocCallback != null)
 		{
 			if (!showName)
 			{
@@ -3432,6 +3470,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		else
 		{
 			var title = nameInput.value;
+			console.log('title in create(xml)');
+			console.log(title);
 				
 			if (title != null && title.length > 0)
 			{
@@ -3543,12 +3583,45 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 
 	function selectElement(elt, xml, libs, extUrl, infoObj, clibs, realUrl)
 	{
+		console.log('template button clicked:')
+		console.log('elt:')
+		console.log(elt)
+		console.log('xml:')
+		console.log(xml)
+		console.log('libs:')
+		console.log(libs)
+		console.log('extUrl:')
+		console.log(extUrl)
+		console.log('infoObj:')
+		console.log(infoObj)
+		console.log('clibs:')
+		console.log(clibs)
+		console.log('realUrl:')
+		console.log(realUrl)
+
 		if (selectedElt != null)
 		{
 			selectedElt.style.backgroundColor = 'transparent';
 			selectedElt.style.border = '1px solid transparent';
 		}
-		
+
+		var counter = 0;
+		while (counter < templates.length)
+		{
+			var tmp = templates[counter];
+			if (elt.hasAttribute('title') && elt.getAttribute('title') == tmp.title)
+			{
+				tmp.select = true;
+			}
+			else
+			{
+				tmp.select = false;
+			}
+
+			templates[counter] = tmp;
+			counter++;
+		}
+
 		createButton.removeAttribute('disabled');
 		
 		templateXml = xml;
@@ -3563,17 +3636,17 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		selectedElt.style.border = rightHighlightBorder;
 	};
 	
-	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs)
+	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs, xml)
 	{
-		var xmlStuff = url; //really it's 'xml'
-
+		//console.log('xml in addButton');
+		//console.log(xml);
 		var elt = document.createElement('div');
 		elt.className = 'geTemplate geAdaptiveAsset';
 		elt.style.position = 'relative';
 		elt.style.height = w + 'px';
 		elt.style.width = h + 'px';
 		elt.style.border = '1px solid transparent';
-		var xmlData = url, realUrl = url;
+		var xmlData = xml, realUrl = url;
 		
 		if (title != null)
 		{
@@ -3690,12 +3763,12 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			
 			mxEvent.addGestureListeners(elt, mxUtils.bind(this, function(evt)
 			{
-				selectElement(elt, null, null, url, infoObj, clibs);
+				selectElement(elt, xml, null, url, infoObj, clibs);
 			}), null, null);
 			
 			mxEvent.addListener(elt, 'dblclick', function(evt)
 			{
-				console.log('before create call')
+				console.log('before create call');
 				create();
 				mxEvent.consume(evt);
 			});
@@ -4410,6 +4483,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			// CSET 
 			//create();
 			if (selected.template) {
+				console.log('selected:');
+				console.log(selected.template);
 				createButton.setAttribute('disabled', 'disabled');
 				create({
 					iscset: selected.template.iscset,
@@ -4653,6 +4728,7 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 			{
 				if (!mxEvent.isPopupTrigger(evt))
 				{
+					console.log('making new tab:');
 					create('_blank');
 				}
 			});
@@ -5008,6 +5084,7 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 	{
 		var openBtn = mxUtils.button(mxResources.get('openInNewWindow'), function()
 		{
+			console.log('create new tab 2');
 			create('_blank');
 		});
 		
@@ -10976,7 +11053,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 	
 	function createPreview(diagram, elt, img, evt)
 	{
-		var xmlData = null;
+		var xmlData = xml;
 		
 		function loadXmlData(url, callback)
 		{
@@ -10992,7 +11069,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 				{
 					realUrl = TEMPLATE_PATH + '/' + realUrl;
 				}
-				
+
 				mxUtils.get(realUrl, mxUtils.bind(this, function(req)
 				{
 					if (req.getStatus() >= 200 && req.getStatus() <= 299)
@@ -11144,6 +11221,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 		if (currentItemInfo != null)
 		{
 			var itemInfo = currentItemInfo;
+
 			//disable create button
 			currentItemInfo = null;
 
@@ -11386,6 +11464,7 @@ var TemplatesDialog = function(editorUi, callback, cancelCallback,
 					
 					mxEvent.addListener(prevImg, 'click', function(evt)
 					{
+						console.log('diagram2')
 						createPreview(diagram2, row2, prevImg2, evt);
 					});
 				})(diagrams[i], row, prevImg);

@@ -2758,7 +2758,6 @@
                 nextChild = elts[elts.length - 1].nextSibling;
             }
         }
-
         nextChild = (nextChild != null) ? nextChild : c.firstChild.nextSibling.nextSibling;
 
         var content = c.lastChild;
@@ -3249,7 +3248,6 @@
                     this.openLink(EditorUi.scratchpadHelpLink);
                     mxEvent.consume(evt);
                 }));
-
                 buttons.insertBefore(link, buttons.firstChild);
             }
         }
@@ -8671,7 +8669,6 @@
 
                     if (!this.isShowCellEditItems()) {
                         var item = this.addMenuItem(menu, 'delete');
-
                         if (item != null && item.firstChild != null &&
                             item.firstChild.nextSibling != null) {
                             item.firstChild.nextSibling.style.color = 'red';
@@ -9843,6 +9840,7 @@
 
         var statusChanged = mxUtils.bind(this, function () {
             if (Editor.currentTheme == 'sketch') {
+
                 var elt = (this.statusContainer.firstChild != null &&
                     typeof this.statusContainer.firstChild.getAttribute === 'function') ?
                     this.statusContainer.firstChild : null;
