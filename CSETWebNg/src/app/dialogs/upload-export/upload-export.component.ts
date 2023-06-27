@@ -32,7 +32,7 @@ import { ImportPasswordComponent } from '../assessment-encryption/import-passwor
 @Component({
   selector: 'app-upload-export',
   templateUrl: './upload-export.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class UploadExportComponent implements OnInit {

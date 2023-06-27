@@ -33,7 +33,7 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
 @Component({
   selector: 'app-sal-nist',
   templateUrl: './sal-nist.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class SalNistComponent implements OnInit {

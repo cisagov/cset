@@ -41,7 +41,7 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
   templateUrl: './renew-layout-main.component.html',
   styleUrls: ['./renew-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class RenewLayoutMainComponent implements OnInit, AfterViewInit {

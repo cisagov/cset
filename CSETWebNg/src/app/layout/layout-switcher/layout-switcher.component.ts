@@ -28,7 +28,7 @@ import { ConfigService } from '../../services/config.service';
     selector: 'layout-switcher',
     templateUrl: './layout-switcher.component.html',
     encapsulation: ViewEncapsulation.None,
-    // tslint:disable-next-line:use-host-property-decorator
+    // eslint-disable-next-line
     host: { class: 'h-100' }
 })
 

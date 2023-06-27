@@ -71,7 +71,7 @@ interface UserAssessment {
 @Component({
   selector: "app-my-assessments",
   templateUrl: "my-assessments.component.html",
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class MyAssessmentsComponent implements OnInit {

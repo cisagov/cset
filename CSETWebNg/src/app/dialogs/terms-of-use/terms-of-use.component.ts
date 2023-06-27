@@ -30,7 +30,7 @@ import { LicenseComponent } from '../license/license.component';
 @Component({
   selector: 'app-terms-of-use',
   templateUrl: './terms-of-use.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class TermsOfUseComponent {
