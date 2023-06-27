@@ -1,4 +1,7 @@
 {
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
   "root": true,
   "ignorePatterns": [
     "projects/**/*"
@@ -45,7 +48,25 @@
         "no-var": 1,
         "prefer-rest-params": 1,
         "no-extra-boolean-cast": 1,
-        "no-empty-function": 1
+        "no-empty-function": 0,
+        "no-unsafe-optional-chaining": 1,
+        "no-prototype-builtins": 1,
+        "no-irregular-whitespace": 1,
+        "no-unexpected-multiline": 1,
+        "@typescript-eslint/no-this-alias": 1,
+        "@typescript-eslint/no-explicit-any": 1,
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/ban-types": 1,
+        "@typescript-eslint/no-extra-semi": 1,
+        "@typescript-eslint/no-array-constructor": 1,
+        "@typescript-eslint/no-empty-function": 1,
+        "@typescript-eslint/ban-ts-comment": 1,
+        "@typescript-eslint/no-var-requires": 1,
+        "@typescript-eslint/prefer-as-const": 1,
+        "@angular-eslint/no-empty-lifecycle-method": 1,
+        "@angular-eslint/no-input-rename": 1,
+        "@angular-eslint/component-class-suffix": 1,
+        "@angular-eslint/no-host-metadata-property": 1
       }
     },
     {
@@ -55,7 +76,9 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "@angular-eslint/template/eqeqeq": 1
+      }
     }
   ]
 }
