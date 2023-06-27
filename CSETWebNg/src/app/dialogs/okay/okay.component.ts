@@ -27,7 +27,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-okay',
   templateUrl: './okay.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class OkayComponent implements OnInit {

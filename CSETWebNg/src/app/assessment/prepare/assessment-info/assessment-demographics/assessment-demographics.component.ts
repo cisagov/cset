@@ -55,7 +55,7 @@ interface AssessmentSize {
 @Component({
     selector: 'app-assessment-demographics',
     templateUrl: './assessment-demographics.component.html',
-    // tslint:disable-next-line:use-host-property-decorator
+    // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDemographicsComponent implements OnInit {

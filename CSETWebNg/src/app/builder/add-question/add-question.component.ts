@@ -28,7 +28,7 @@ import { CategoryEntry, Question } from '../../models/set-builder.model';
 @Component({
   selector: 'app-add-question',
   templateUrl: './add-question.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AddQuestionComponent implements OnInit {

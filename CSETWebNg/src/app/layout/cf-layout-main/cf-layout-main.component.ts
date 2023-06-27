@@ -38,7 +38,7 @@ import { LayoutService } from '../../services/layout.service';
   templateUrl: './cf-layout-main.component.html',
   styleUrls: ['./cf-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 })
 export class CfLayoutMainComponent implements OnInit, AfterViewInit {

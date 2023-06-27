@@ -29,7 +29,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class AnalysisComponent implements OnInit {

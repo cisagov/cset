@@ -27,7 +27,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-confirm',
   templateUrl: './confirm.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class ConfirmComponent implements OnInit {

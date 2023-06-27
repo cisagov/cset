@@ -31,7 +31,7 @@ import { ColorService } from '../../../services/color.service';
 @Component({
   selector: 'app-compare-individual',
   templateUrl: './compare-individual.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CompareIndividualComponent implements OnInit {

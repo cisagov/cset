@@ -25,7 +25,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
-    // tslint:disable-next-line:directive-selector
+    // eslint-disable-next-line @angular-eslint/directive-selector
     selector: '[digitsOnly]'
 })
 export class DigitsOnlyDirective {

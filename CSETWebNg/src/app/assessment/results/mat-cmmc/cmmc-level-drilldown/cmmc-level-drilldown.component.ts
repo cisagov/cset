@@ -35,7 +35,7 @@ import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
   selector: 'app-cmmc-level-drilldown',
   templateUrl: './cmmc-level-drilldown.component.html',
   styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CmmcLevelDrilldownComponent implements OnInit {

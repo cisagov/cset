@@ -30,7 +30,7 @@ import { MaturityService } from '../../../../services/maturity.service';
   selector: 'app-rra-level-results',
   templateUrl: './rra-level-results.component.html',
   styleUrls: ['rra-level-results.component.scss'],
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
 })
 export class RraLevelResultsComponent implements OnInit {
