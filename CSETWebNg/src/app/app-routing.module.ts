@@ -41,7 +41,7 @@ import { ComponentsSummaryComponent } from './assessment/results/analysis/compon
 import { ComponentsTypesComponent } from './assessment/results/analysis/components-types/components-types.component';
 import { ComponentsWarningsComponent } from './assessment/results/analysis/components-warnings/components-warnings.component';
 import { DashboardComponent } from './assessment/results/analysis/dashboard/dashboard.component';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { FeedbackComponent } from './assessment/results/feedback/feedback.component';
 import { RankedQuestionsComponent } from './assessment/results/analysis/ranked-questions/ranked-questions.component';
 import { StandardsRankedComponent } from './assessment/results/analysis/standards-ranked/standards-ranked.component';

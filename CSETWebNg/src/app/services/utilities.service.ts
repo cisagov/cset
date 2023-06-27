@@ -642,7 +642,7 @@ export class Utilities {
         if (Array.isArray(value)) {
 			isArray = true;
 		}
-				
+
         if(isArray){
             return typeof value[index] === 'undefined' ? defaultValue : value[index];
         }

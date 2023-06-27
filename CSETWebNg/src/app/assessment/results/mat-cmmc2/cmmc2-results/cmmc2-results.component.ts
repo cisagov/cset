@@ -30,7 +30,7 @@ import { ChartService } from '../../../../services/chart.service';
 @Component({
   selector: 'app-cmmc2-results',
   templateUrl: './cmmc2-results.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class Cmmc2ResultsComponent implements OnInit, AfterContentInit {

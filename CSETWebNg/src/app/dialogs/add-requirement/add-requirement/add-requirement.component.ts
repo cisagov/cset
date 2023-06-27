@@ -29,7 +29,7 @@ import { SetBuilderService } from '../../../services/set-builder.service';
 @Component({
   selector: 'app-add-requirement',
   templateUrl: './add-requirement.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AddRequirementComponent implements OnInit {

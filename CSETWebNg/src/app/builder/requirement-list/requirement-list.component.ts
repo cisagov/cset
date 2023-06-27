@@ -33,7 +33,7 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
 @Component({
   selector: 'app-requirement-list',
   templateUrl: './requirement-list.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class RequirementListComponent implements OnInit {

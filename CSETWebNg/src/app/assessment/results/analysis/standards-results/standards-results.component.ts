@@ -33,7 +33,7 @@ import { LayoutService } from '../../../../services/layout.service';
 @Component({
   selector: 'app-standards-results',
   templateUrl: './standards-results.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsResultsComponent implements OnInit {

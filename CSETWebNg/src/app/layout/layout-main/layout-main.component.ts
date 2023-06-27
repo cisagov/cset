@@ -41,7 +41,7 @@ import { LayoutService } from '../../services/layout.service';
   templateUrl: './layout-main.component.html',
   styleUrls: ['./layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })

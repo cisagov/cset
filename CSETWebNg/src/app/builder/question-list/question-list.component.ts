@@ -31,7 +31,7 @@ import { Question, BasicResponse } from '../../models/set-builder.model';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class QuestionListComponent implements OnInit {

@@ -32,7 +32,7 @@ import { EmailService } from '../../services/email.service';
 @Component({
   selector: 'app-email',
   templateUrl: './email.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class EmailComponent implements OnInit {

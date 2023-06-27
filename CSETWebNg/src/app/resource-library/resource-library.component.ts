@@ -56,7 +56,7 @@ interface LibrarySearchResponse {
 @Component({
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class ResourceLibraryComponent implements OnInit {

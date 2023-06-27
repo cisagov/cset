@@ -30,7 +30,7 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {

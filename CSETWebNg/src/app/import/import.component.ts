@@ -47,7 +47,7 @@ export class ImportFormData {
 @Component({
   selector: 'app-import',
   templateUrl: './import.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-11a w-100' }
 })
 export class ImportComponent implements OnInit, OnDestroy {
@@ -78,7 +78,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     language: 'json',
     uri: 'main.json',
     value:
-      // tslint:disable-next-line:max-line-length
+      // eslint-disable-next-line max-len
       '{ \r\n\t"name": "",\r\n\t"shortName": "",\r\n\t"category": "",\r\n\t"summary": "",\r\n\t"requirements":[\r\n\t\t{\r\n\t\t\t"identifier": "",\r\n\t\t\t"text": "",\r\n\t\t\t"heading": "",\r\n\t\t\t"subheading": "",\r\n\t\t\t"weight": 0\r\n\t\t}\r\n\t]\r\n}',
     schemas: []
   };
@@ -86,7 +86,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public xmlCodeModel: CodeModel = {
     language: 'xml',
     uri: 'main.json',
-    // tslint:disable-next-line:max-line-length
+    // eslint-disable-next-line max-len
     value: '<?xml version="1.0" encoding="utf-8"?>\r\n<Standard>\r\n\t<Category></Category>\r\n\t<Name></Name>\r\n\t<Requirements>\r\n\t\t<Requirement>\r\n\t\t\t<Heading></Heading>\r\n\t\t\t<Identifier></Identifier>\r\n\t\t\t<SecurityAssuranceLevels></SecurityAssuranceLevels>\r\n\t\t\t<Subheading></Subheading>\r\n\t\t\t<Text></Text>\r\n\t\t\t<Weight></Weight>\r\n\t\t</Requirement>\r\n\t</Requirements>\r\n\t<ShortName></ShortName>\r\n\t<Summary></Summary>\r\n</Standard>',
     schemas: []
   };

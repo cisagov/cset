@@ -30,7 +30,7 @@ import { QuestionsService } from '../../services/questions.service';
 @Component({
   selector: 'component-override',
   templateUrl: './component-override.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   styleUrls: ['./component-override.component.scss']
 })
