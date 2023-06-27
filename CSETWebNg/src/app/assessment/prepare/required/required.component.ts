@@ -32,7 +32,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
     selector: 'app-required',
     templateUrl: './required.component.html',
-    // tslint:disable-next-line:use-host-property-decorator
+    // eslint-disable-next-line
     // host: { class: 'd-flex flex-column flex-11a' }
     styleUrls: ['./required.component.scss'],
 })

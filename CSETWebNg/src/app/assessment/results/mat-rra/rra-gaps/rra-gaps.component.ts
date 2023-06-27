@@ -31,7 +31,7 @@ import * as $ from 'jquery';
 @Component({
   selector: 'app-rra-gaps',
   templateUrl: './rra-gaps.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   styleUrls: ['./rra-gaps.component.scss'],
   host: { class: 'd-flex flex-column flex-11a' }
 })

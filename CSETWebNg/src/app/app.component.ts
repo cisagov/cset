@@ -52,7 +52,7 @@ declare var $: any;
   selector: 'app-root',
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class AppComponent implements OnInit, AfterViewInit {

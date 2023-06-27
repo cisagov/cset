@@ -32,7 +32,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 @Component({
   selector: 'app-standards-ranked',
   templateUrl: './standards-ranked.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsRankedComponent implements OnInit {

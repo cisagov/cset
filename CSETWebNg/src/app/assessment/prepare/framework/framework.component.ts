@@ -31,7 +31,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
   selector: 'app-framework',
   templateUrl: './framework.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class FrameworkComponent implements OnInit {

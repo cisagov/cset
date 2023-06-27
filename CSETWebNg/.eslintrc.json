@@ -14,7 +14,39 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "rules": {}
+      "rules": {
+        "curly": 1,
+        "indent": [
+          1,
+          2
+        ],
+        "member-access": 0,
+        "no-bitwise": 1,
+        "no-console": 1,
+        "no-debugger": 1,
+        "no-empty": 1,
+        "no-eval": 1,
+        "no-inferrable-types": [
+          0,
+          "ignore-params"
+        ],
+        "no-string-literal": 0,
+        "object-literal-sort-keys": 0,
+        "prefer-const": 1,
+        "quotemark": [
+          0,
+          "single"
+        ],
+        "radix": 1,
+        "variable-name": 0,
+        "no-useless-escape": 1,
+        "no-useless-backreference": 1,
+        "no-array-constructor": 1,
+        "no-var": 1,
+        "prefer-rest-params": 1,
+        "no-extra-boolean-cast": 1,
+        "no-empty-function": 1
+      }
     },
     {
       "files": [

@@ -33,7 +33,7 @@ import  Chart  from 'chart.js/auto';
 @Component({
   selector: 'app-trend-analytics',
   templateUrl: './trend-analytics.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class TrendAnalyticsComponent implements OnInit {

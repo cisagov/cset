@@ -31,7 +31,7 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class EditUserComponent implements OnInit {

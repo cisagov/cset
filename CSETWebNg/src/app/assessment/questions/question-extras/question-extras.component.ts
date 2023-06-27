@@ -25,7 +25,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, View
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
@@ -46,7 +46,7 @@ import { LayoutService } from '../../../services/layout.service';
   templateUrl: './question-extras.component.html',
   styleUrls: ['./question-extras.component.css'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionExtrasComponent implements OnInit {
