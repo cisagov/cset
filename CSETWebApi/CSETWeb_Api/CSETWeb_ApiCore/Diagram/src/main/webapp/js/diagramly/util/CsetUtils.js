@@ -187,7 +187,6 @@ CsetUtils.LoadFileFromCSET = async function (app) {
         app.createFile(app.defaultFilename, null, null, App.MODE_CSET, null, null, null, null);
     }
     file = app.getCurrentFile();
-
     const resp = await makeRequest({
         method: 'GET',
         url: localStorage.getItem('cset.host') + 'diagram/get',
@@ -650,7 +649,6 @@ CsetUtils.getCsetTemplates = async function () {
 
             switch (e.status) {
                 case 200:
-                    console.log(e);
                     templates = JSON.parse(e.responseText);
                     break;
                 case 401:
