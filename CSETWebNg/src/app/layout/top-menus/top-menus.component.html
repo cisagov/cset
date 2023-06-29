@@ -49,7 +49,7 @@
                 <span>Assessment Documents</span>
             </button>
             <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showMenuItem('parameter editor')"
-                [ngClass]="{'disabled-menu-item' : !inAssessment()}" 
+                [ngClass]="{'disabled-menu-item' : !inAssessment()}"
                 (click)="editParameters()">
                 <span class="cset-icons-puzzle fs-base mr-2 align-middle"></span>
                 <span>Parameter Editor</span>
@@ -87,7 +87,7 @@
 
 
     <div *ngIf="showResourceLibraryLink()">
-        <a mat-button class="navbar-menu-header" 
+        <a mat-button class="navbar-menu-header ws-no-wrap"
             href="index.html?returnPath=resource-library" target="csetResourceLibrary">
             <span class="cset-icons-library fs-base-4 mr-2 align-middle"></span>
             <span>Resource Library</span>
@@ -154,7 +154,7 @@
                 <span class="cset-icons-book-open fs-base mr-2 align-middle"></span>
                 <span>TSA</span>
             </a>
-            
+
 
             <hr class="menu-divider" />
 
@@ -257,7 +257,7 @@
             <span class="cset-icons-profile fs-base-4 mr-2 align-middle"></span>
             <span class="ws-no-wrap" *ngIf="auth.email() && auth.userToken()">
                 <span>{{auth.firstName()}} {{auth.lastName()}}</span>
-            </span>            
+            </span>
         </button>
 
         <mat-menu #usermenu="matMenu" class="menu-panel">
@@ -282,12 +282,13 @@
 
     <!-- ANONYMOUS 'USER' MENU -->
     <div *ngIf="showAnonymousMenu()">
-        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger"
+        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger" style="width: 150px;"
             (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
-            *ngIf="auth.userToken()">
+            *ngIf="auth.userToken()" (mouseenter)="showFullAccessKey = true" (mouseleave)="showFullAccessKey = false">
             <span class="cset-icons-profile fs-base-4 mr-2 align-middle"></span>
             <span class="ws-no-wrap" *ngIf="auth.accessKey()">
-                <span>{{auth.accessKey()}}</span>
+                <span *ngIf="showFullAccessKey || userTrigger.menuOpen">{{auth.accessKey()}}</span>
+                <span *ngIf="!showFullAccessKey && !userTrigger.menuOpen">{{hideAccessKey(auth.accessKey())}}</span>
             </span>
         </button>
 
