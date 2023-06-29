@@ -282,7 +282,7 @@
 
     <!-- ANONYMOUS 'USER' MENU -->
     <div *ngIf="showAnonymousMenu()">
-        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger"
+        <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger" style="width: 150px;"
             (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
             *ngIf="auth.userToken()" (mouseenter)="showFullAccessKey = true" (mouseleave)="showFullAccessKey = false">
             <span class="cset-icons-profile fs-base-4 mr-2 align-middle"></span>
