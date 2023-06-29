@@ -284,7 +284,7 @@
     <div *ngIf="showAnonymousMenu()">
         <button mat-button [matMenuTriggerFor]="usermenu" #userTrigger="matMenuTrigger"
             (keyup.arrowdown)="userTrigger.openMenu()" class="dropdown-toggle navbar-menu-header"
-            *ngIf="auth.userToken()" (mouseover)="showFullAccessKey = true" (mouseout)="showFullAccessKey = false">
+            *ngIf="auth.userToken()" (mouseenter)="showFullAccessKey = true" (mouseleave)="showFullAccessKey = false">
             <span class="cset-icons-profile fs-base-4 mr-2 align-middle"></span>
             <span class="ws-no-wrap" *ngIf="auth.accessKey()">
                 <span *ngIf="showFullAccessKey || userTrigger.menuOpen">{{auth.accessKey()}}</span>
