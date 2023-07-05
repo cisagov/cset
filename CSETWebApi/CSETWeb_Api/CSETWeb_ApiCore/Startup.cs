@@ -72,6 +72,9 @@ using CSETWebCore.Business.Analytics;
 using System.Text.Json;
 using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Merit;
+using System.Collections.Generic;
+using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 
 namespace CSETWeb_ApiCore
 {
@@ -174,6 +177,30 @@ namespace CSETWeb_ApiCore
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CSETWeb_ApiCore", Version = "v1" });
                 c.ResolveConflictingActions(apiDescription => apiDescription.First());
+
+                // Include 'SecurityScheme' to use JWT Authentication
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                c.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
             });
         }
 
