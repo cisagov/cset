@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
@@ -40,7 +40,6 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
   styleUrls: ['./login-access-key.component.scss']
 })
 export class LoginAccessKeyComponent implements OnInit {
-
   skin: string = 'CSET';
 
   isRunningInElectron: boolean;
@@ -54,8 +53,6 @@ export class LoginAccessKeyComponent implements OnInit {
   private isEjectDialogOpen = false;
   browserIsIE: boolean = false;
 
-
-
   // ===========================
 
   loginAccessKey = '';
@@ -68,9 +65,6 @@ export class LoginAccessKeyComponent implements OnInit {
 
   title1: object[] = [];
   title2: object[] = [];
-
-
-
 
   /**
    *
@@ -100,7 +94,6 @@ export class LoginAccessKeyComponent implements OnInit {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
     this.isRunningInElectron = this.configSvc.isRunningInElectron;
 
-
     // default the page as 'login'
     this.checkForEjection(this.route.snapshot.queryParams['token']);
 
@@ -123,14 +116,13 @@ export class LoginAccessKeyComponent implements OnInit {
    */
   checkForEjection(token: string) {
     if (this.route.snapshot.params['eject']) {
-
       let minutesSinceExpiration = 0;
 
       if (token) {
         const jwt = new JwtParser();
         const parsedToken = jwt.decodeToken(token);
         const expTimeUnix = parsedToken.exp;
-        const nowUtcUnix = Math.floor((new Date()).getTime() / 1000)
+        const nowUtcUnix = Math.floor(new Date().getTime() / 1000);
         // divide by 60 to convert seconds to minutes
         minutesSinceExpiration = (nowUtcUnix - expTimeUnix) / 60;
       }
@@ -150,7 +142,8 @@ export class LoginAccessKeyComponent implements OnInit {
    *
    */
   checkPasswordReset() {
-    this.authSvc.passwordStatus()
+    this.authSvc
+      .passwordStatus()
       .subscribe((passwordResetRequired: boolean) => {
         if (passwordResetRequired) {
           this.openPasswordDialog(true);
@@ -159,21 +152,21 @@ export class LoginAccessKeyComponent implements OnInit {
   }
 
   openPasswordDialog(showWarning: boolean) {
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
+    if (localStorage.getItem('returnPath')) {
+      if (!Number(localStorage.getItem('redirectid'))) {
+        this.hasPath(localStorage.getItem('returnPath'));
       }
     }
     this.dialog
       .open(ChangePasswordComponent, {
-        width: "300px",
+        width: '300px',
         data: { primaryEmail: this.authSvc.email(), warning: showWarning }
       })
       .afterClosed()
-        .subscribe((passwordChangeSuccess) => {
+      .subscribe((passwordChangeSuccess) => {
         if (passwordChangeSuccess) {
-          this.dialog.open(AlertComponent, { 
-            data: { 
+          this.dialog.open(AlertComponent, {
+            data: {
               messageText: 'Your password has been changed successfully.',
               title: 'Password Changed',
               iconClass: 'cset-icons-check-circle'
@@ -187,8 +180,8 @@ export class LoginAccessKeyComponent implements OnInit {
 
   hasPath(rpath: string) {
     if (rpath != null) {
-      localStorage.removeItem("returnPath");
-      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+      localStorage.removeItem('returnPath');
+      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
     }
   }
 
@@ -197,15 +190,17 @@ export class LoginAccessKeyComponent implements OnInit {
    * If valid, route them to the landing page.
    */
   login() {
-    this.authSvc.loginWithAccessKey(this.loginAccessKey).subscribe((resp) => {
-      localStorage.setItem('accessKey', this.loginAccessKey);
-      this.router.navigate(['/home', 'landing-page-tabs']);
-    },
-      error => {
+    this.authSvc.loginWithAccessKey(this.loginAccessKey).subscribe(
+      (resp) => {
+        localStorage.setItem('accessKey', this.loginAccessKey);
+        this.router.navigate(['/home', 'landing-page-tabs']);
+      },
+      (error) => {
         this.loginAccessKeyFailed = true;
         localStorage.removeItem('accessKey');
         console.log(error);
-      });
+      }
+    );
   }
 
   /**
