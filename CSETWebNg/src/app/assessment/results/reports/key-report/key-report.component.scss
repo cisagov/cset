@@ -17,6 +17,10 @@
   .my-table td {
     border: 1px solid black;
     padding: 8px;
-    width: 20%; /* Divide the width equally among 5 columns (5 columns x 20% = 100%) */
+    width: 20%; 
     height: 50px; 
+  }
+  .label {
+    min-width: 160px !important;
+    display: inline-block !important
   }
