@@ -289,7 +289,7 @@ namespace CSETWebCore.Business.Diagram
 
                 string myxpath1 = "/mxGraphModel/root/object/mxCell[(@parent=\"" + id + "\")]/.."
                     + " | "
-                    + "/mxGraphModel/root/UserObject/mxCell[(@parent=\\\"\" + id + \"\\\")]/..";
+                    + "/mxGraphModel/root/UserObject/mxCell[(@parent=\"" + id + "\")]/..";
                 XmlNodeList objectNodes1 = xDoc.SelectNodes(myxpath1);
                 //string myxpath2 = "/mxGraphModel/root/UserObject/mxCell[(@parent=\"" + id + "\")]/..";
                 //XmlNodeList objectNodes2 = xDoc.SelectNodes(myxpath2);
