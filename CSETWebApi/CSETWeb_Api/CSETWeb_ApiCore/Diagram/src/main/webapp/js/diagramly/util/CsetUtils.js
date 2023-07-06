@@ -269,8 +269,8 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
             analysisReq.DiagramXml = testForBase64(sXML);
         }
     }
-
-    CsetUtils.clearWarningsFromDiagram(editor.graph);
+    // add this back in after testing
+    //CsetUtils.clearWarningsFromDiagram(editor.graph);
     await CsetUtils.analyzeDiagram(analysisReq, editor);
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
@@ -310,6 +310,7 @@ function testForBase64(strValue){
  */
 CsetUtils.analyzeDiagram = async function (req, editor) {
     try {
+        req.AnalyzeDiagram = true;
         const response = await makeRequest({
             method: 'POST',
             overrideMimeType: 'application/json',
