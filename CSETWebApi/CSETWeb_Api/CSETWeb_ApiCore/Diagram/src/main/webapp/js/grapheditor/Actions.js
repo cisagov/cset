@@ -1265,11 +1265,35 @@ Actions.prototype.init = function()
 	action = this.addAction('analyze', function ()
 	{
 		this.analyzeToggled = !this.analyzeToggled;
-		console.log('addAction - analyze - toggled = ' + this.analyzeToggled);
+		editor.analyzeDiagram = !editor.analyzeDiagram;
 		if (action.onToggle)
 		{
 			action.onToggle(this.analyzeToggled);
 		}
+		if (!editor.analyzeDiagram) {
+			CsetUtils.clearWarningsFromDiagram(graph);
+		}
+		else
+		{
+			const analysisReq = {
+				DiagramXml: '',
+				AnalyzeDiagram: editor.analyzeDiagram
+			};
+
+			const xmlserializer = new XMLSerializer();
+
+			const model = editor.graph.getModel();
+			if (model) {
+				const enc = new mxCodec();
+				const node = enc.encode(model);
+				const sXML = xmlserializer.serializeToString(node);
+				if (sXML !== EditorUi.prototype.emptyDiagramXml) {
+					analysisReq.DiagramXml = testForBase64(sXML);
+				}
+			}
+			CsetUtils.analyzeDiagram(analysisReq, editor);
+		}
+
 	});
 	action.setToggleAction(true);
 	action.setSelectedCallback(function ()
