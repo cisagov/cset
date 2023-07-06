@@ -9984,9 +9984,9 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
         cell.geometry.width = 230;
         cell.geometry.height = 140;
     }
-
+    
     // see what we get that has no filename
-    if (!filename) {
+    if (!filename && cell.getStyleValue('zone') == null) {
         console.log('no image style');
         cell.setStyle('image;image=img/cset/unknown.svg');
     }
