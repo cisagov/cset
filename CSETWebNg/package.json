@@ -100,7 +100,7 @@
     "@angular-eslint/builder": "15.2.1",
     "@angular-eslint/eslint-plugin": "15.2.1",
     "@angular-eslint/eslint-plugin-template": "15.2.1",
-    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/schematics": "^15.2.1",
     "@angular-eslint/template-parser": "15.2.1",
     "@angular/compiler-cli": "^15.2.3",
     "@angular/language-service": "^15.2.3",

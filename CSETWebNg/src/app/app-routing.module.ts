@@ -200,7 +200,7 @@ import { HydroActionsComponent } from './assessment/results/hydro/hydro-actions/
 import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
-
+import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 
 const appRoutes: Routes = [
 
@@ -492,6 +492,7 @@ const appRoutes: Routes = [
       { path: 'hydroReport', component: HydroReportComponent },
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
+      { path: 'key-report', component: KeyReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
