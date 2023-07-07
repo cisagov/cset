@@ -27,7 +27,7 @@ Install-WindowsFeature -Name Web-Server -IncludeManagementTools
 Start-Process rewrite_amd64_en-US.msi -Wait
 
 # Install dotnet 6 hosting bundle 
-Start-Process dotnet-hosting-7.0.1-win.exe -Wait
+Start-Process dotnet-hosting-7.0.5-win.exe -Wait
 
 # Update enviornment path to ensure sqlcmd works after installing SQL server
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine")
@@ -75,7 +75,7 @@ While ($sqlConnectionSucceeded -ne $true) {
 $serverescaped = $server.replace("\", "\\")
 
 # Making sure connection string and ports are correct in config files
-(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\mssqllocaldb", ($serverescaped + ";Trust Server Certificate=True")) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
+(Get-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -Raw).replace("(localdb)\\INLLocalDb2022", ($serverescaped + ";Trust Server Certificate=True")) | Set-Content C:\inetpub\wwwroot\CSETAPI\appsettings.json -NoNewLine
 (Get-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -Raw).replace('"port": "5000"', '"port": "5001"') | Set-Content C:\inetpub\wwwroot\CSETUI\assets\settings\config.json -NoNewLine
 
 sqlcmd -E -S $server -d "MASTER" -Q "CREATE DATABASE CSETWeb ON (FILENAME = 'C:\CSETDatabase\CSETWeb.mdf'), (FILENAME = 'C:\CSETDatabase\CSETWeb_log.ldf') FOR ATTACH;"
