@@ -8,9 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    /// <summary>
-    /// HYDRO specific fields for Action Items results page
-    /// </summary>
     public partial class HYDRO_DATA_ACTIONS
     {
         [Key]
