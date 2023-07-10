@@ -39,7 +39,12 @@ namespace CSETWebCore.DataLayer.Model
         public int Analytics_Rollup_Level { get; set; }
         [StringLength(200)]
         public string Model_Title { get; set; }
+        [StringLength(50)]
+        public string Maturity_Level_Usage_Type { get; set; }
 
+        [ForeignKey("Maturity_Level_Usage_Type")]
+        [InverseProperty("MATURITY_MODELS")]
+        public virtual MATURITY_LEVEL_USAGE_TYPES Maturity_Level_Usage_TypeNavigation { get; set; }
         [InverseProperty("Maturity_Model")]
         public virtual ICollection<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
         [InverseProperty("model")]

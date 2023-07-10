@@ -146,6 +146,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
+        public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
@@ -161,6 +162,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
         public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
+        public virtual DbSet<MATURITY_LEVEL_USAGE_TYPES> MATURITY_LEVEL_USAGE_TYPES { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
         public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
@@ -2143,6 +2145,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Analytics_Rollup_Level)
                     .HasDefaultValueSql("((1))")
                     .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+
+                entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation)
+                    .WithMany(p => p.MATURITY_MODELS)
+                    .HasForeignKey(d => d.Maturity_Level_Usage_Type)
+                    .HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
             });
 
             modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>

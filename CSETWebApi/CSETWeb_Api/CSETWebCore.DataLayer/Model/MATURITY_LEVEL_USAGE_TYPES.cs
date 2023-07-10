@@ -8,21 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    public partial class HYDRO_PROGRESS
+    public partial class MATURITY_LEVEL_USAGE_TYPES
     {
-        public HYDRO_PROGRESS()
+        public MATURITY_LEVEL_USAGE_TYPES()
         {
-            HYDRO_DATA_ACTIONS = new HashSet<HYDRO_DATA_ACTIONS>();
+            MATURITY_MODELS = new HashSet<MATURITY_MODELS>();
         }
 
         [Key]
-        public int Progress_Id { get; set; }
-        [Required]
         [StringLength(50)]
-        [Unicode(false)]
-        public string Progress_Text { get; set; }
+        public string Maturity_Level_Usage_Type { get; set; }
 
-        [InverseProperty("Progress")]
-        public virtual ICollection<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
+        [InverseProperty("Maturity_Level_Usage_TypeNavigation")]
+        public virtual ICollection<MATURITY_MODELS> MATURITY_MODELS { get; set; }
     }
 }
