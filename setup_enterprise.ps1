@@ -17,8 +17,8 @@ function Test-SqlConnection {
     }
 }
 
-# Install SQL Server Express 2019
-Start-Process SQL2019-SSEI-Expr.exe -Wait
+# Install SQL Server Express 2022
+Start-Process SQL2022-SSEI-Expr.exe -Wait
 
 # Install Web Server (IIS)
 Install-WindowsFeature -Name Web-Server -IncludeManagementTools
