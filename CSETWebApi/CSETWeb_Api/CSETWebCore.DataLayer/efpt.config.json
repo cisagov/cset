@@ -475,6 +475,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[INTERNATIONALIZATION_VALUES]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[IRP]",
          "ObjectType": 0
       },
@@ -528,6 +532,10 @@
       },
       {
          "Name": "[dbo].[MATURITY_GROUPINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MATURITY_LEVEL_USAGE_TYPES]",
          "ObjectType": 0
       },
       {
