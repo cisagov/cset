@@ -1,0 +1,84 @@
+{
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "curly": 1,
+        "indent": [
+          1,
+          2
+        ],
+        "member-access": 0,
+        "no-bitwise": 1,
+        "no-console": 1,
+        "no-debugger": 1,
+        "no-empty": 1,
+        "no-eval": 1,
+        "no-inferrable-types": [
+          0,
+          "ignore-params"
+        ],
+        "no-string-literal": 0,
+        "object-literal-sort-keys": 0,
+        "prefer-const": 1,
+        "quotemark": [
+          0,
+          "single"
+        ],
+        "radix": 1,
+        "variable-name": 0,
+        "no-useless-escape": 1,
+        "no-useless-backreference": 1,
+        "no-array-constructor": 1,
+        "no-var": 1,
+        "prefer-rest-params": 1,
+        "no-extra-boolean-cast": 1,
+        "no-empty-function": 0,
+        "no-unsafe-optional-chaining": 1,
+        "no-prototype-builtins": 1,
+        "no-irregular-whitespace": 1,
+        "no-unexpected-multiline": 1,
+        "@typescript-eslint/no-this-alias": 1,
+        "@typescript-eslint/no-explicit-any": 1,
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/ban-types": 1,
+        "@typescript-eslint/no-extra-semi": 1,
+        "@typescript-eslint/no-array-constructor": 1,
+        "@typescript-eslint/no-empty-function": 1,
+        "@typescript-eslint/ban-ts-comment": 1,
+        "@typescript-eslint/no-var-requires": 1,
+        "@typescript-eslint/prefer-as-const": 1,
+        "@angular-eslint/no-empty-lifecycle-method": 1,
+        "@angular-eslint/no-input-rename": 1,
+        "@angular-eslint/component-class-suffix": 1,
+        "@angular-eslint/no-host-metadata-property": 1
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/template/eqeqeq": 1
+      }
+    }
+  ]
+}

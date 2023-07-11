@@ -28,7 +28,7 @@ import { NCUAService } from '../../services/ncua.service';
 @Component({
   selector: 'app-global-configuration',
   templateUrl: './global-configuration.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 

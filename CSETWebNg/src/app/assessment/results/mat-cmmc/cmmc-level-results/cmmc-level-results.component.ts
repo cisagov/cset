@@ -30,7 +30,7 @@ import { MaturityService } from '../../../../../app/services/maturity.service';
   selector: 'app-cmmc-level-results',
   templateUrl: './cmmc-level-results.component.html',
   styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
 })
 export class CmmcLevelResultsComponent implements OnInit {

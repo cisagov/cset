@@ -28,7 +28,7 @@ import { ConfigService } from '../../services/config.service';
 @Component({
   selector: 'excel-export',
   templateUrl: './excel-export.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ExcelExportComponent {

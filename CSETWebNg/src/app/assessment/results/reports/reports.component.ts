@@ -41,7 +41,7 @@ import { FindingsService } from '../../../services/findings.service';
 @Component({
     selector: 'app-reports',
     templateUrl: './reports.component.html',
-    // tslint:disable-next-line:use-host-property-decorator
+    // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ReportsComponent implements OnInit, AfterViewInit {

@@ -109,6 +109,11 @@
                             <td style="width: 60%">Action</td>
                             <td style="width: 25%">Comment</td>
                         </tr>
+                        <ng-container *ngIf="actionItems.length == 0">
+                            <tr>
+                                <td colspan="3" style="text-align: center;">No Action Items to report.</td>
+                            </tr>
+                        </ng-container>
                         <ng-container *ngFor="let progressArray of actionItems">
                             <tr>
                                 <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]" style="pointer-events: none;">

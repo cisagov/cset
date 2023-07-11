@@ -60,7 +60,8 @@ export class HydroActionsComponent implements OnInit {
           );
         } 
         else {
-          this.actionItemData = r;
+          this.actionItemData = [];
+          this.loadingCounter ++;
         }
         
         this.loadingCounter ++;

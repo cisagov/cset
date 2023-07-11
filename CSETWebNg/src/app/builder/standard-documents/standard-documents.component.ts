@@ -30,7 +30,7 @@ import { ReferenceDoc } from '../../models/set-builder.model';
 @Component({
   selector: 'app-standard-documents',
   templateUrl: './standard-documents.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class StandardDocumentsComponent implements OnInit {

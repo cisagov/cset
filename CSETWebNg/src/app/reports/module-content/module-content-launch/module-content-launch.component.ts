@@ -28,7 +28,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 @Component({
   selector: 'app-module-content-launch',
   templateUrl: './module-content-launch.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ModuleContentLaunchComponent implements OnInit {

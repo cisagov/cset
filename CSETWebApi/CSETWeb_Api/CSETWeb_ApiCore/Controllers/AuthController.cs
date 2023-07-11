@@ -168,6 +168,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(resp);
         }
 
+        [CsetAuthorize]
         [HttpGet]
         [Route("api/auth/accesskey")]
         /// <summary>

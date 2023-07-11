@@ -35,7 +35,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   styleUrls: ['./feedback.component.css']
 })

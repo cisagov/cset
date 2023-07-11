@@ -31,7 +31,7 @@ import { NavTreeService } from "../../services/navigation/nav-tree.service";
 @Component({
   selector: "app-prepare",
   templateUrl: "./prepare.component.html",
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrepareComponent implements OnInit {

@@ -34,6 +34,9 @@
                 Distribution of action items by implementation status.
             </p>
             <br>
+            <div *ngIf="actionItemData.length == 0" style="text-align: center;">
+                No Action Items to report.
+            </div>
             <div *ngFor="let progressLevel of actionItemData">
                 <div>
                     <h4>{{progressLevels[progressLevel[0].actionData.progress_Id - 1].progress_Text}}</h4>

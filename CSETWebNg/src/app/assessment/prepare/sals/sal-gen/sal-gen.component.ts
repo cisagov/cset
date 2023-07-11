@@ -32,7 +32,7 @@ import { SalService } from '../../../../services/sal.service';
 @Component({
   selector: 'app-sal-gen',
   templateUrl: './sal-gen.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class SalGenComponent implements OnInit {

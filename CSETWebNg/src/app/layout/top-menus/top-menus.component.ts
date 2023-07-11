@@ -58,6 +58,7 @@ export class TopMenusComponent implements OnInit {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
+  showFullAccessKey = false;
 
   @Input()
   skin: string;
@@ -236,7 +237,7 @@ export class TopMenusComponent implements OnInit {
       }
     }
 
-    var show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
+    const show = this.configSvc.config.behaviors?.showAssessmentDocuments ?? true;
     return show;
   }
 
@@ -459,8 +460,8 @@ export class TopMenusComponent implements OnInit {
       .afterClosed()
       .subscribe((passwordChangeSuccess) => {
         if (passwordChangeSuccess) {
-          this.dialog.open(AlertComponent, { 
-            data: { 
+          this.dialog.open(AlertComponent, {
+            data: {
               messageText: 'Your password has been changed successfully.',
               title: 'Password Changed',
               iconClass: 'cset-icons-check-circle'
@@ -470,6 +471,20 @@ export class TopMenusComponent implements OnInit {
           this.checkPasswordReset();
         }
       });
+  }
+
+  /**
+   * Returns a string with only the last 4 characters showing of a given access key.
+   */
+  hideAccessKey(accessKey: string) {
+    if (!accessKey) {
+      return null;
+    }
+
+    const hiddenChars  = '●'.repeat(accessKey.substring(0, accessKey.length - 4).length);
+    const lastFourChars = accessKey.substring(accessKey.length - 4);
+
+    return hiddenChars + lastFourChars;
   }
 
   inAssessment() {
