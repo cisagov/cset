@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
@@ -63,7 +63,7 @@ export class QuestionsService {
 
 
   /**
-   * 
+   *
    */
   constructor(
     private http: HttpClient,
@@ -149,7 +149,7 @@ export class QuestionsService {
     if (modelId == 11) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -246,7 +246,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
     console.log(subGroups)
@@ -255,10 +255,10 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
-    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId + 
+    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
     '&groupLevel=' + groupLevel, headers);
   }
 
@@ -330,7 +330,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   buildNavTargetID(target: any): string {
     if (!target) {

@@ -33,7 +33,7 @@ import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 

@@ -33,7 +33,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   styleUrls: ['./change-password.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

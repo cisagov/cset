@@ -28,6 +28,7 @@ using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
+    [CsetAuthorize]
     [ApiController]
     public class QuestionsController : ControllerBase
     {

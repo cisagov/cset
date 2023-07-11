@@ -50,7 +50,7 @@ It is recommended that users meet the minimum system hardware and software requi
 • Microsoft Windows 10 or higher
 • Microsoft .NET 7 Runtime (included in CSET installation)
 • Microsoft ASP.NET Core 7 Runtime (included in CSET installation)
-• SQL Server 2019 Express LocalDB (included in CSET installation)
+• Microsoft SQL Server 2022 LocalDB (included in CSET installation)
 
 System Requirements Enterprise Installation
 
@@ -62,10 +62,10 @@ It is recommended that users meet the minimum system hardware and software requi
 • Microsoft Windows Server 2016 Edition or higher recommended
 • Microsoft .NET 7 Runtime
 • Microsoft ASP.NET Core 7 Runtime
-• SQL Server 2019 or higher recommended
+• Microsoft SQL Server 2022 or higher recommended
 • Internet Information Server (IIS) or Kestrel
 
-Other Items of Note: 
+Other Items of Note:
 • For all platforms, it is recommended the user upgrade to the latest Windows Service Pack and install critical updates available from the Windows Update web site to ensure the best compatibility and security.
 
 ## Using the CSET Stand-alone Installer
@@ -92,13 +92,13 @@ After the extraction is finished, a CSET Setup dialog will open (Fig.3). Select 
 
 **Figure 3. CSET Setup**
 
-CSET will begin to install. If the user doesn&#39;t have SQL Server 2019 LocalDB, CSET will install it. The SQL Server 2019 LocalDB Setup dialog will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot;, and then select &quot;Install&quot;.
+CSET will begin to install. If the user doesn&#39;t have SQL Server 2022 LocalDB, CSET will install it. The SQL Server 2022 LocalDB Setup dialog will open (Fig.4). Click the check box to confirm that you &quot;…accept the terms in the License Agreement&quot;, select &quot;Next&quot;, and then select &quot;Install&quot;.
 
-![LocalDB 2019 setup dialog][fig4]
+![LocalDB 2022 setup dialog][fig4]
  
-**Figure 4. LocalDB 2019 Setup**
+**Figure 4. LocalDB 2022 Setup**
 
-LocalDB 2019 will install. Select &quot;Finish&quot; when it completes.
+LocalDB 2022 will install. Select &quot;Finish&quot; when it completes.
 
 CSET will also install the .NET 7 and ASP.NET Core 7 runtimes in the background if they are not already installed.
 
@@ -181,7 +181,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 4. To run the setup script in the enterprise binaries directory, type ```.\setup_enterprise``` and hit the enter key.
 
-5. The script will open the installation wizards for SQL Server Express 2019 and the .NET 7 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
+5. The script will open the installation wizards for SQL Server Express 2022 and the .NET 7 Hosting Bundle. The script will not proceed to each subsequent installation step until each installation wizard window is closed. It will also install IIS and IIS Manager in the background.
 
 ![](img/figES2.PNG) 
 <br/>
@@ -210,7 +210,7 @@ The enterprise installation can be automated through the use of a provided Power
 ### Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequsites 2-4.
 
-2.	We will be using Microsoft SQL Server 2019 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
+2.	We will be using Microsoft SQL Server 2022 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
   
 3.	CSET® requires your server to have the URL Rewrite Module installed as well. Again, this can be downloaded [directly from Microsoft](https://www.iis.net/downloads/microsoft/url-rewrite) (Note that this module cannot be installed until IIS has been installed first. The process for installing IIS is explained in the next section).
   
@@ -307,7 +307,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   ![](img/figE13.PNG)
 
-  * You’ll know you’ve completed this step successfully when you can see the “CSETWeb” object appear under the Databased section in the Object explorer.
+  * You’ll know you’ve completed this step successfully when you can see the “CSETWeb” object appear under the Databases section in the Object explorer.
 
   ![](img/figE14.PNG)
 
@@ -441,7 +441,7 @@ This documentation is provided to assist users in installing and running CSET lo
 2. Node.js which can be downloaded and installed [here at the node website.](https://nodejs.org/en/download/)
 3. Angular 2 for CSETWebApi. You can find local installation [here at the angular website and along with docs.](https://angular.io/guide/setup-local)
 4. Git tools for Windows.
-5. Visual Studio 2019 (Community Edition is fine) which can be [downloaded here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16)
+5. Visual Studio 2022 (Community Edition is fine) which can be [downloaded here](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16)
 6. VS Code which can be [downloaded here.](https://code.visualstudio.com/docs/?dv=win)
 
 Note: VSCode and Visual studio are two diffent IDE's VS Code is used for Front end UI (CSETWebNg) while Visual Studio is used for the backend (CSETWebAPI)

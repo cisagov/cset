@@ -31,7 +31,7 @@ import { LayoutService } from '../../../services/layout.service';
 @Component({
   selector: 'app-sals',
   templateUrl: './sals.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
 })
 export class SalsComponent implements OnInit {
 

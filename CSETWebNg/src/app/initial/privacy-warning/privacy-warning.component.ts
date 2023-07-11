@@ -29,7 +29,7 @@ import { LayoutService } from '../../services/layout.service';
 @Component({
   selector: 'app-privacy-warning',
   templateUrl: './privacy-warning.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrivacyWarningComponent implements OnInit {

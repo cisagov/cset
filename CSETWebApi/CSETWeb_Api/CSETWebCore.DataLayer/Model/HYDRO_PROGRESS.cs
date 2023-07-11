@@ -8,9 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    /// <summary>
-    /// HYDRO specific fields for most of the results page
-    /// </summary>
     public partial class HYDRO_PROGRESS
     {
         public HYDRO_PROGRESS()

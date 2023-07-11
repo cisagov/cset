@@ -34,6 +34,7 @@ namespace CSETWebCore.Business.Authorization
 
             if (authHeader.Count == 0)
             {
+                context.Result = new UnauthorizedResult();
                 return;
             }
 
@@ -46,14 +47,10 @@ namespace CSETWebCore.Business.Authorization
             {
                 tokenString = authHeaderValue[0];
             }
-
-            if (!string.IsNullOrEmpty(tokenString))
+   
+            if (string.IsNullOrEmpty(tokenString) || !token.IsTokenValid(tokenString))
             {
-                
-                if (!token.IsTokenValid(tokenString))
-                {
-                    context.Result = new UnauthorizedResult();
-                }
+                context.Result = new UnauthorizedResult();
             }
         }
     }
