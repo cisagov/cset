@@ -195,6 +195,8 @@ var mxLog = {
         get: function (a) {
             if (null != a) {
                 if (null == a[mxObjectIdentity.FIELD_NAME])
+                    //if ("UserObject" === typeof a) {
+                   
                     if ("object" === typeof a) {
                         var b = mxUtils.getFunctionName(a.constructor);
                         a[mxObjectIdentity.FIELD_NAME] = b + "#" + mxObjectIdentity.counter++
@@ -204,6 +206,7 @@ var mxLog = {
             return null
         },
         clear: function (a) {
+            //"UserObject" !== typeof a && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
             "object" !== typeof a && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
         }
     };
@@ -560,6 +563,7 @@ var mxEffects = {
         },
         remove: function (a, b) {
             var c = null;
+            //if ("UserObject" == typeof b)
             if ("object" == typeof b)
                 for (var d = mxUtils.indexOf(b, a); 0 <= d;) b.splice(d, 1), c = a, d = mxUtils.indexOf(b, a);
             for (var e in b) b[e] == a && (delete b[e], c = a);
@@ -878,7 +882,8 @@ var mxEffects = {
                 if (a.constructor === Element) d = a.cloneNode(null != c ? !c : !1);
                 else {
                     d = new a.constructor;
-                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "object" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
+                    //for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "object" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
+                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "UserObject" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
                 } return d
         },
         equalPoints: function (a, b) {
@@ -920,6 +925,7 @@ var mxEffects = {
                 if (null == a[c]) b += c + " = [null]\n";
                 else if ("function" == typeof a[c]) b += c + " => [Function]\n";
                 else if ("object" == typeof a[c]) {
+                //else if ("UserObject" == typeof a[c]) {
                     var d = mxUtils.getFunctionName(a[c].constructor);
                     b += c + " => [" + d + "]\n"
                 } else b += c + " = " + a[c] + "\n"
@@ -9948,8 +9954,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
 
     // assign a component GUID to components (not zones)
     if (cell.getCsetAttribute('ComponentGuid') == null && cell.getStyleValue('zone') != '1') {
+        //console.log('about to get Guid in cellAddedCset')
         var nextGuid = guidService.getInstance().getNextGuid();
+        //console.log('next guid:')
         cell.setCsetAttribute('ComponentGuid', nextGuid);
+        //console.log(cell)
+
     }
 
     // default a value for Criticality
@@ -9986,7 +9996,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
     }
     
     // see what we get that has no filename
-    if (!filename && cell.getStyleValue('zone') == null) {
+    if (!filename && cell.getStyleValue('zone') != '1') {
         console.log('no image style');
         cell.setStyle('image;image=img/cset/unknown.svg');
     }
@@ -10004,7 +10014,6 @@ mxGraphModel.prototype.cellAdded = function (a) {
             }
         }
         mxUtils.isNumeric(a.getId()) && (this.nextId = Math.max(this.nextId, a.getId()));
-
         mxGraphModel.cellAddedCSET(this, a);
 
         b = this.getChildCount(a);
@@ -20633,17 +20642,25 @@ mxCodec.prototype.reference = function (a) {
     return null
 };
 mxCodec.prototype.encode = function (a) {
+    console.log('in encode:')
+    console.log(a)
     var b = null;
     if (null != a && null != a.constructor) {
         var c = mxCodecRegistry.getCodec(a.constructor);
         null != c ? b = c.encode(this, a) : mxUtils.isNode(a) ? b = mxUtils.importNode(this.document, a, !0) : mxLog.warn("mxCodec.encode: No codec for " + mxUtils.getFunctionName(a.constructor))
     }
+    console.log('after encode')
+    console.log(b)
     return b
+
+    return a
 };
 mxCodec.prototype.decode = function (a, b) {
     this.updateElements();
     var c = null;
     null != a && a.nodeType == mxConstants.NODETYPE_ELEMENT && (c = this.getConstructor(a.nodeName), c = mxCodecRegistry.getCodec(c), null != c ? c = c.decode(this, a, b) : (c = a.cloneNode(!0), c.removeAttribute("as")));
+    console.log('after decode:')
+    console.log(c)
     return c
 };
 mxCodec.prototype.getConstructor = function (a) {
@@ -20763,7 +20780,8 @@ mxObjectCodec.prototype.encodeValue = function (a, b, c, d, e) {
     }
 };
 mxObjectCodec.prototype.writeAttribute = function (a, b, c, d, e) {
-    "object" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
+    //"object" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
+    "UserObject" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
 };
 mxObjectCodec.prototype.writePrimitiveAttribute = function (a, b, c, d, e) {
     d = this.convertAttributeToXml(a, b, c, d, e);
@@ -21047,7 +21065,8 @@ mxCodecRegistry.register(function () {
                     null != p && (n.setAttribute("x", Math.round(p.x)), n.setAttribute("y", Math.round(p.y)), n.setAttribute("width", Math.round(p.width)), n.setAttribute("height", Math.round(p.height)));
                     n.setAttribute("scale", c.scale)
                 } else if (null != f && null != l) {
-                    for (p in f.style) g = f.style[p], "function" == typeof g && "object" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "object" !=
+                    for (p in f.style) g = f.style[p], "function" == typeof g && "UserObject" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "UserObject" !=
+                    //for (p in f.style) g = f.style[p], "function" == typeof g && "object" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "object" !=
                         typeof g && n.setAttribute(p, g);
                     g = f.absolutePoints;
                     if (null != g && 0 < g.length) {
@@ -21093,7 +21112,8 @@ var mxStylesheetCodec = mxCodecRegistry.register(function () {
     a.getStringValue =
         function (b, c) {
             b = typeof c;
-            "function" == b ? c = mxStyleRegistry.getName(c) : "object" == b && (c = null);
+            //"function" == b ? c = mxStyleRegistry.getName(c) : "object" == b && (c = null);
+            "function" == b ? c = mxStyleRegistry.getName(c) : "UserObject" == b && (c = null);
             return c
         };
     a.decode = function (b, c, d) {
@@ -21101,6 +21121,8 @@ var mxStylesheetCodec = mxCodecRegistry.register(function () {
         var e = c.getAttribute("id");
         null != e && (b.objects[e] = d);
         for (c = c.firstChild; null != c;) {
+            console.log('c in decode:')
+            console.log(c)
             if (!this.processInclude(b, c, d) && "add" == c.nodeName && (e = c.getAttribute("as"), null != e)) {
                 var f = c.getAttribute("extend"),
                     g = null != f ? mxUtils.clone(d.styles[f]) : null;

@@ -6,7 +6,11 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-    if (typeof this.value != 'UserObject')
+
+    console.log('wrapper object (trying to find '+name+'):')
+    console.log(this.value)
+    if (typeof this.value != 'UserObject')// | typeof this.value != 'object')
+    //if (typeof this.value != 'object')
     {
         return null;
     }
@@ -26,8 +30,9 @@ mxCell.prototype.getCsetAttribute = function (name)
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
-
+    console.log('in setCsetAttribute:')
     if (!!this.value && typeof this.value == 'UserObject')
+    //if (!!this.value && typeof this.value == 'object')
     {
         obj = this.value;
     }
@@ -38,7 +43,7 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
         {
             var doc = mxUtils.createXmlDocument();
             obj = doc.createElement('UserObject');
-            this.value = obj;
+            //obj = doc.createElement('object');
         }
         catch (e)
         {
@@ -53,6 +58,8 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
     {
         obj.setAttribute('internalLabel', attributeValue || '');
     }
+
+    //this.value = obj;
 }
 
 

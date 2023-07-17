@@ -3786,7 +3786,9 @@ Graph.prototype.updatePlaceholders = function()
  */
 Graph.prototype.isReplacePlaceholders = function(cell)
 {
-	return cell.value != null && typeof(cell.value) == 'object' &&
+	//return cell.value != null && typeof(cell.value) == 'object' &&
+	//	cell.value.getAttribute('placeholders') == '1';
+	return cell.value != null && typeof (cell.value) == 'UserObject' &&
 		cell.value.getAttribute('placeholders') == '1';
 };
 
@@ -4220,7 +4222,8 @@ Graph.prototype.replacePlaceholders = function(cell, str, vars, translate)
 						
 						while (tmp == null && current != null)
 						{
-							if (current.value != null && typeof(current.value) == 'object')
+							if (current.value != null && typeof (current.value) == 'UserObject')
+							//if (current.value != null && typeof (current.value) == 'object')
 							{
 								if (Graph.translateDiagram && Graph.diagramLanguage != null)
 								{
@@ -4640,6 +4643,7 @@ Graph.prototype.connectVertex = function(source, direction, length, evt, forceCl
 	
 	var execute = mxUtils.bind(this, function(targetCell)
 	{
+		console.log('update graph (in graph)')
 		if (createTarget == null || targetCell != null || (target == null && cloneSource))
 		{
 			this.model.beginUpdate();
@@ -4658,7 +4662,7 @@ Graph.prototype.connectVertex = function(source, direction, length, evt, forceCl
 					}
 					
 					var geo = this.getCellGeometry(realTarget);
-	
+					console.log('geo in execute')
 					if (geo != null)
 					{
 						if (targetCell != null && urlParams['sketch'] == '1')
@@ -4806,11 +4810,10 @@ Graph.prototype.getIndexableText = function(cells)
 Graph.prototype.convertValueToString = function(cell)
 {
 	var value = this.model.getValue(cell);
-	
+	//if (value != null && typeof (value) == 'UserObject')
 	if (value != null && typeof(value) == 'object')
 	{
 		var result = null;
-		
 		if (this.isReplacePlaceholders(cell) && cell.getAttribute('placeholder') != null)
 		{
 			var name = cell.getAttribute('placeholder');
@@ -4818,6 +4821,7 @@ Graph.prototype.convertValueToString = function(cell)
 					
 			while (result == null && current != null)
 			{
+				//if (current.value != null && typeof (current.value) == 'UserObject')
 				if (current.value != null && typeof(current.value) == 'object')
 				{
 					result = (current.hasAttribute(name)) ? ((current.getAttribute(name) != null) ?
@@ -4844,7 +4848,6 @@ Graph.prototype.convertValueToString = function(cell)
 
 		return result || '';
 	}
-	
 	return mxGraph.prototype.convertValueToString.apply(this, arguments);
 };
 
@@ -4866,6 +4869,7 @@ Graph.prototype.getLinksForState = function(state)
  */
 Graph.prototype.getLinkForCell = function(cell)
 {
+	//if (cell.value != null && typeof (cell.value) == 'UserObject')
 	if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		var link = cell.value.getAttribute('link');
@@ -4888,6 +4892,7 @@ Graph.prototype.getLinkForCell = function(cell)
  */
 Graph.prototype.getLinkTargetForCell = function(cell)
 {
+	//if (cell.value != null && typeof (cell.value) == 'UserObject')
 	if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		return cell.value.getAttribute('linkTarget');
@@ -9353,9 +9358,12 @@ if (typeof mxVertexHandler !== 'undefined')
 			}
 			
 			graphProcessChange.apply(this, arguments);
-			
+			console.log('change:')
+			console.log(change)
 			if (change instanceof mxValueChange && change.cell != null &&
-				change.cell.value != null && typeof(change.cell.value) == 'object')
+				change.cell.value != null && typeof (change.cell.value) == 'UserObject')
+			//if (change instanceof mxValueChange && change.cell != null &&
+			//	change.cell.value != null && typeof (change.cell.value) == 'object')
 			{
 				this.invalidateDescendantsWithPlaceholders(change.cell);
 			}
@@ -9467,6 +9475,7 @@ if (typeof mxVertexHandler !== 'undefined')
 			this.model.beginUpdate();
 			try
 			{			
+				//if (cell.value != null && typeof cell.value == 'UserObject')
 				if (cell.value != null && typeof cell.value == 'object')
 				{
 					if (this.isReplacePlaceholders(cell) &&
@@ -9478,8 +9487,10 @@ if (typeof mxVertexHandler !== 'undefined')
 								
 						while (current != null)
 						{
+							//if (current == this.model.getRoot() || (current.value != null &&
+							//	typeof (current.value) == 'UserObject' && current.hasAttribute(name)))
 							if (current == this.model.getRoot() || (current.value != null &&
-								typeof(current.value) == 'object' && current.hasAttribute(name)))
+								typeof (current.value) == 'object' && current.hasAttribute(name)))
 							{
 								this.setAttributeForCell(current, name, value);
 								
@@ -9623,8 +9634,10 @@ if (typeof mxVertexHandler !== 'undefined')
 		 */
 		Graph.prototype.getAttributeForCell = function(cell, attributeName, defaultValue)
 		{
-			var value = (cell.value != null && typeof cell.value === 'object') ?
+			var value = (cell.value != null && typeof cell.value === 'UserObject') ?
 				cell.value.getAttribute(attributeName) : null;
+			//var value = (cell.value != null && typeof cell.value === 'object') ?
+			//	cell.value.getAttribute(attributeName) : null;
 			
 			return (value != null) ? value : defaultValue;
 		};
@@ -9635,8 +9648,9 @@ if (typeof mxVertexHandler !== 'undefined')
 		Graph.prototype.setAttributeForCell = function(cell, attributeName, attributeValue)
 		{
 			var value = null;
-			
-			if (cell.value != null && typeof(cell.value) == 'object')
+
+			if (cell.value != null && typeof (cell.value) == 'UserObject')
+			//if (cell.value != null && typeof(cell.value) == 'object')
 			{
 				value = cell.value.cloneNode(true);
 			}
@@ -9645,6 +9659,8 @@ if (typeof mxVertexHandler !== 'undefined')
 				var doc = mxUtils.createXmlDocument();
 				
 				value = doc.createElement('UserObject');
+				//value = doc.createElement('object');
+
 				value.setAttribute('label', cell.value || '');
 			}
 			

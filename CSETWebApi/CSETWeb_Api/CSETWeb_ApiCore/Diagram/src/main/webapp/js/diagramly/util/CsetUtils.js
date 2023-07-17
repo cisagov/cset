@@ -264,15 +264,22 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     if (model) {
         const enc = new mxCodec();
         const node = enc.encode(model);
-        const sXML =  xmlserializer.serializeToString(node);
+        console.log('node')
+        console.log(node)
+        const sXML = xmlserializer.serializeToString(node);
+        console.log('------ sXML ------')
+        console.log(sXML)
         if (sXML !== EditorUi.prototype.emptyDiagramXml) {
             analysisReq.DiagramXml = testForBase64(sXML);
         }
     }
-    // add this back in after testing
-    //CsetUtils.clearWarningsFromDiagram(editor.graph);
+    console.log('model inside PersistGraphToCset')
+    console.log(model)
+    CsetUtils.clearWarningsFromDiagram(editor.graph);
     await CsetUtils.analyzeDiagram(analysisReq, editor);
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
+    console.log('model at the bottom of PersistGraphToCset')
+    console.log(model)
 }
 
 /**
@@ -293,6 +300,11 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
 
     //may need to add this in to the save
     //editor.menubarContainer;
+    console.log('PersistDataToCset editor, xml, revision:')
+    console.log(editor)
+
+    console.log(xml)
+    console.log(revision)
 
     await CsetUtils.saveDiagram(req);
 }
@@ -467,9 +479,11 @@ CsetUtils.handleZoneChanges = function (edit) {
     changes.forEach(change => {
         if (change instanceof mxValueChange && change.cell.isZone()) {
             const c = change.cell;
-
+            console.log('cell in handleZoneChanges:')
+            console.log(change)
             // if they just changed the label, update the internal label
             if (change.value.attributes.label.value !== change.previous.attributes.label.value) {
+                console.log('changes in zone')
                 c.setAttribute('internalLabel', change.value.attributes.label.value);
             }
 
