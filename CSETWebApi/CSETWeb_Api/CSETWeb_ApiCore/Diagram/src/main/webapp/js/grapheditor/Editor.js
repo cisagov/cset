@@ -54,11 +54,20 @@ Editor = function (chromeless, themes, model, graph, editable) {
         }
 
         if (haschanges) {
+            console.log('in has changes, "this" before:')
+            console.log(this)
             CsetUtils.adjustConnectability(edit);
             CsetUtils.edgesToTop(this.graph, edit);
             CsetUtils.handleZoneChanges(edit);
+            console.log('after a lot of stuff but before refresh')
+
+            console.log(this)
             this.graph.refresh();
+            console.log('after refresh: ---------------------')
+            console.log(this)
             CsetUtils.PersistGraphToCSET(this);
+            console.log('after persistGraphToCset')
+            console.log(this)
         }
     };
 

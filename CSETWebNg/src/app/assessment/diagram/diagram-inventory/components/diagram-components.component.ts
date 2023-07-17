@@ -69,6 +69,7 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
+      console.log(this.diagramComponentList)
       this.componentsChange.emit(this.diagramComponentList);
     });
   }

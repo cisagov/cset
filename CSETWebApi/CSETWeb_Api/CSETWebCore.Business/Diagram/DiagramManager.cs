@@ -8,6 +8,7 @@ using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
+using Namotion.Reflection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,10 @@ namespace CSETWebCore.Business.Diagram
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/object").Count;
+            if (objectCount == 0)
+            {
+                objectCount = xDoc.SelectNodes("//root/UserObject").Count;
+            }
             if (cellCount == 2 && objectCount == 0)
             {
                 // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
@@ -63,6 +68,11 @@ namespace CSETWebCore.Business.Diagram
                 {
                     HashSet<string> validGuid = new HashSet<string>();
                     XmlNodeList cells = xDoc.SelectNodes("//root/object[@ComponentGuid]");
+                    if (cells.Count == 0)
+                    {
+                        cells = xDoc.SelectNodes("//root/UserObject[@ComponentGuid]");
+                    }
+
                     foreach (XmlElement c in cells)
                     {
                         validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
@@ -348,16 +358,44 @@ namespace CSETWebCore.Business.Diagram
                 var diagramXml = (mxGraphModel)deserializer.Deserialize((stream));
 
                 mxGraphModelRootObject o = new mxGraphModelRootObject();
+                //mxGraphModelRootMxCell cell = new mxGraphModelRootMxCell();
+
                 Type objectType = typeof(mxGraphModelRootObject);
+                //Type objectType = typeof(mxGraphModelRootMxCell);
 
                 LayerManager layers = new LayerManager(_context, assessment_id);
                 foreach (var item in diagramXml.root.Items)
                 {
                     if (item.GetType() == objectType)
                     {
+                        /*
+                        var currentCell = (mxGraphModelRootMxCell)item;
+                        //if (currentCell.mxGeometry == null)
+                        //{
+                            //var addLayerVisible = (mxGraphModelRootMxCell)item;
 
+                            string parentId = !string.IsNullOrEmpty(currentCell.parent) ? currentCell.parent : o.parent ?? "0";
+                            //string parentId = !string.IsNullOrEmpty(addLayerVisible.parent) ? addLayerVisible.parent : addLayerVisible.parent ?? "0";
+
+                            var layerVisibility = layers.GetLastLayer(parentId);
+                            var addLayerVisible = o;
+
+                            if (layerVisibility != null)
+                            {
+                                addLayerVisible.visible = layerVisibility.visible ?? "true";
+                                addLayerVisible.layerName = layerVisibility.layerName ?? string.Empty;
+                                addLayerVisible.id = currentCell.id ?? "0";
+                                vertices.Add(addLayerVisible);
+                            }
+                        //}
+                        */
+                        
                         var addLayerVisible = (mxGraphModelRootObject)item;
+                        //var addLayerVisible = (mxGraphModelRootMxCell)item;
+
                         string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent ?? "0";
+                        //string parentId = !string.IsNullOrEmpty(addLayerVisible.parent) ? addLayerVisible.parent : addLayerVisible.parent ?? "0";
+
                         var layerVisibility = layers.GetLastLayer(parentId);
                         if (layerVisibility != null)
                         {
@@ -366,6 +404,7 @@ namespace CSETWebCore.Business.Diagram
 
                             vertices.Add(addLayerVisible);
                         }
+                        
                     }
 
                 }
@@ -809,7 +848,9 @@ namespace CSETWebCore.Business.Diagram
 
             var xDiagram = new XmlDocument();
             xDiagram.LoadXml(assessment.Diagram_Markup);
-            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']/mxCell");
+
+            //var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
             if (mxCell == null)
             {
                 return;

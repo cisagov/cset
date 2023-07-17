@@ -29,6 +29,7 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Vendor } from '../../../models/diagram-vulnerabilities.model';
+import { AssessmentService } from '../../../services/assessment.service';
 
 @Component({
   selector: 'app-diagram-inventory',
@@ -44,18 +45,26 @@ export class DiagramInventoryComponent implements OnInit {
    */
   constructor(public diagramSvc: DiagramService,
      private dialog: MatDialog,
+     private assessSvc: AssessmentService,
      private configSvc: ConfigService
     ) { }
 
   /**
    *
    */
-  ngOnInit() { }
+  ngOnInit() { 
+    // if (this.assessSvc.hasDiagram()) {
+    //  this.componentsExist = true;
+    // }
+    // console.log('components exits='+this.componentsExist)
+  }
 
   /**
    *
    */
   onChange(list: any) {
+    console.log('list:')
+    console.log(list)
     this.componentsExist = list.length > 0;
   }
 
