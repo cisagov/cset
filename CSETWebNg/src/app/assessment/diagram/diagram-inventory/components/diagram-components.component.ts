@@ -25,6 +25,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
+import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diagram-components',
@@ -52,7 +54,8 @@ export class DiagramComponentsComponent implements OnInit {
    *
    */
   constructor(
-    public diagramSvc: DiagramService
+    public diagramSvc: DiagramService,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -94,10 +97,34 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    * 
    */
-  changeAssetType(evt: any, guid: string) {
+  changeAssetType(evt: any, guid: string, label: string, assetType: string) {
     let componentGuid = guid;
     let newType = evt.target.value;
-    this.diagramSvc.updateAssetType(componentGuid, newType).subscribe();
+    let newLabel = assetType;
+
+    let i = 1;
+    while(this.diagramComponentList.includes(newLabel)) {
+      if (newLabel.includes('-')) {
+        newLabel.slice(0, newLabel.indexOf('-'))
+      }
+
+      newLabel += '-' + i;
+      i++;
+    }
+    
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Would you like to change the label of the component '" + label + "' to '" +
+      newLabel +
+      "'?";
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        newLabel = "";
+      }
+
+      this.diagramSvc.updateAssetType(componentGuid, newType, newLabel).subscribe();
+    });
+
   }
 
   /**

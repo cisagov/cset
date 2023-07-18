@@ -423,7 +423,7 @@ namespace CSETWebCore.Api.Controllers
         [CsetAuthorize]
         [HttpPost]
         [Route("api/diagram/assetType")]
-        public IActionResult UpdateComponentType([FromQuery] string guid, [FromQuery] string type)
+        public IActionResult UpdateComponentType([FromQuery] string guid, [FromQuery] string type, [FromQuery] string label)
         {
             int assessmentId = _token.AssessmentForUser();
             _diagram.UpdateComponentType(assessmentId, guid, type);
