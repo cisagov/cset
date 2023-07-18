@@ -147,7 +147,6 @@ export class MyAssessmentsComponent implements OnInit {
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
-    console.log(this.preventEncrypt)
   }  
 
   /**
