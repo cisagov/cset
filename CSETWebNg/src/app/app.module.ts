@@ -577,6 +577,7 @@ import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-a
 import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
+import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 
 
 
@@ -1111,6 +1112,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         HydroActionItemsReportComponent,
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
+        KeyReportComponent,
     ],
     providers: [
         ConfigService,
