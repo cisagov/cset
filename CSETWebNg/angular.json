@@ -82,7 +82,7 @@
           "configurations": {
             "development": {
               "optimization": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": true,
@@ -232,6 +232,8 @@
     "analytics": false,
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "cache": {
+      "enabled": false
   }
 }
