@@ -103,7 +103,7 @@ export class DiagramService {
   /**
    * 
    */
-  updateAssetType(guid: string, componentType: string) {
-    return this.http.post(this.apiUrl + 'assetType?guid=' + guid + '&type=' + componentType, '');
+  updateAssetType(guid: string, componentType: string, label: string) {
+    return this.http.post(this.apiUrl + 'assetType?guid=' + guid + '&type=' + componentType + '&label=' + label, '');
   }
 }
