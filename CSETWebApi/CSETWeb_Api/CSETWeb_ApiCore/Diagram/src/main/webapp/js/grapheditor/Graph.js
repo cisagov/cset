@@ -4643,7 +4643,6 @@ Graph.prototype.connectVertex = function(source, direction, length, evt, forceCl
 	
 	var execute = mxUtils.bind(this, function(targetCell)
 	{
-		console.log('update graph (in graph)')
 		if (createTarget == null || targetCell != null || (target == null && cloneSource))
 		{
 			this.model.beginUpdate();
@@ -4662,7 +4661,6 @@ Graph.prototype.connectVertex = function(source, direction, length, evt, forceCl
 					}
 					
 					var geo = this.getCellGeometry(realTarget);
-					console.log('geo in execute')
 					if (geo != null)
 					{
 						if (targetCell != null && urlParams['sketch'] == '1')
@@ -9358,8 +9356,6 @@ if (typeof mxVertexHandler !== 'undefined')
 			}
 			
 			graphProcessChange.apply(this, arguments);
-			console.log('change:')
-			console.log(change)
 			if (change instanceof mxValueChange && change.cell != null &&
 				change.cell.value != null && typeof (change.cell.value) == 'UserObject')
 			//if (change instanceof mxValueChange && change.cell != null &&

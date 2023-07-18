@@ -195,6 +195,7 @@ var mxLog = {
         get: function (a) {
             if (null != a) {
                 if (null == a[mxObjectIdentity.FIELD_NAME])
+                //using UserObject makes the page not load
                     //if ("UserObject" === typeof a) {
                    
                     if ("object" === typeof a) {
@@ -9954,12 +9955,8 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
 
     // assign a component GUID to components (not zones)
     if (cell.getCsetAttribute('ComponentGuid') == null && cell.getStyleValue('zone') != '1') {
-        //console.log('about to get Guid in cellAddedCset')
         var nextGuid = guidService.getInstance().getNextGuid();
-        //console.log('next guid:')
         cell.setCsetAttribute('ComponentGuid', nextGuid);
-        //console.log(cell)
-
     }
 
     // default a value for Criticality
@@ -20642,25 +20639,19 @@ mxCodec.prototype.reference = function (a) {
     return null
 };
 mxCodec.prototype.encode = function (a) {
-    console.log('in encode:')
-    console.log(a)
+
     var b = null;
     if (null != a && null != a.constructor) {
         var c = mxCodecRegistry.getCodec(a.constructor);
         null != c ? b = c.encode(this, a) : mxUtils.isNode(a) ? b = mxUtils.importNode(this.document, a, !0) : mxLog.warn("mxCodec.encode: No codec for " + mxUtils.getFunctionName(a.constructor))
     }
-    console.log('after encode')
-    console.log(b)
     return b
-
-    return a
 };
 mxCodec.prototype.decode = function (a, b) {
     this.updateElements();
     var c = null;
     null != a && a.nodeType == mxConstants.NODETYPE_ELEMENT && (c = this.getConstructor(a.nodeName), c = mxCodecRegistry.getCodec(c), null != c ? c = c.decode(this, a, b) : (c = a.cloneNode(!0), c.removeAttribute("as")));
-    console.log('after decode:')
-    console.log(c)
+
     return c
 };
 mxCodec.prototype.getConstructor = function (a) {
@@ -20780,8 +20771,7 @@ mxObjectCodec.prototype.encodeValue = function (a, b, c, d, e) {
     }
 };
 mxObjectCodec.prototype.writeAttribute = function (a, b, c, d, e) {
-    //"object" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
-    "UserObject" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
+    "object" != typeof d ? this.writePrimitiveAttribute(a, b, c, d, e) : this.writeComplexAttribute(a, b, c, d, e)
 };
 mxObjectCodec.prototype.writePrimitiveAttribute = function (a, b, c, d, e) {
     d = this.convertAttributeToXml(a, b, c, d, e);
@@ -21121,8 +21111,6 @@ var mxStylesheetCodec = mxCodecRegistry.register(function () {
         var e = c.getAttribute("id");
         null != e && (b.objects[e] = d);
         for (c = c.firstChild; null != c;) {
-            console.log('c in decode:')
-            console.log(c)
             if (!this.processInclude(b, c, d) && "add" == c.nodeName && (e = c.getAttribute("as"), null != e)) {
                 var f = c.getAttribute("extend"),
                     g = null != f ? mxUtils.clone(d.styles[f]) : null;

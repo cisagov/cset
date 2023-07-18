@@ -3662,8 +3662,6 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 				{
 					//Create a diagram with the image to use the same code
 					//Note: Without compression it doesn't work for some reason. Find out why later
-					
-					// --- below is commented to remove 'as geometry' to force mxGeometry to not collapse into an attribute of mxCell
 					var xml = '<mxfile><diagram id="d" name="n">' + Graph.compress('<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/>' +
 						'<mxCell id="2" value="" style="shape=image;image=' + extImg.src + ';imageAspect=1;" parent="1" vertex="1"><mxGeometry width="' +
 						extImg.naturalWidth + '" height="' + extImg.naturalHeight + '" as="geometry" /></mxCell></root></mxGraphModel>') + '</diagram></mxfile>';
@@ -9242,8 +9240,6 @@ var CropImageDialog = function(editorUi, image, clipPath, fn)
 
 var EditGeometryDialog = function(editorUi, vertices) 
 {
-	console.log('editGeometry')
-	console.log(vertices)
 	var graph = editorUi.editor.graph;
 	var geo = (vertices.length == 1) ? graph.getCellGeometry(vertices[0]) : null;
 	var div = document.createElement('div');

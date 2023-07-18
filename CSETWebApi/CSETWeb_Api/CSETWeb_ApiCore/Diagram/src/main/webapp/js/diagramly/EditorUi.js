@@ -2058,8 +2058,7 @@
     EditorUi.prototype.updateDiagram = function (xml) {
         var doc = null;
         var ui = this;
-        console.log('updating diagram:')
-console.log(xml)
+
         function createOverlay(desc) {
             var overlay = new mxCellOverlay(desc.image || graph.warningImage,
                 desc.tooltip, desc.align, desc.valign, desc.offset);
@@ -2158,8 +2157,7 @@ console.log(xml)
                                 // Replaces the geometry
                                 try {
                                     var geo = node.getAttribute('geometry');
-                                    console.log('replacing the geometry:')
-                                    console.log(geo)
+
                                     if (geo != null) {
                                         geo = JSON.parse(geo);
                                         var curr = graph.getCellGeometry(cell);
@@ -2191,8 +2189,6 @@ console.log(xml)
                                             graph.model.setGeometry(cell, curr);
                                         }
                                     }
-                                    console.log('after geometry replace')
-                                    console.log(graph.getCellGeometry(cell))
                                 }
                                 catch (e) {
                                     if (window.console != null) {
@@ -2599,13 +2595,11 @@ console.log(xml)
      */
     EditorUi.prototype.hashValue = function (obj, replacer, details) {
         var hash = 0;
-        console.log('obj in hashValue:')
-        console.log(obj)
         // Checks for XML nodes
-        if (obj != null && typeof obj === 'UserObject' && typeof obj.nodeType === 'number' &&
-            typeof obj.nodeName === 'string' && typeof obj.getAttribute === 'function') {
-        //if (obj != null && typeof obj === 'object' && typeof obj.nodeType === 'number' &&
+        //if (obj != null && typeof obj === 'UserObject' && typeof obj.nodeType === 'number' &&
         //    typeof obj.nodeName === 'string' && typeof obj.getAttribute === 'function') {
+        if (obj != null && typeof obj === 'object' && typeof obj.nodeType === 'number' &&
+            typeof obj.nodeName === 'string' && typeof obj.getAttribute === 'function') {
             if (obj.nodeName != null) {
                 hash = hash ^ this.hashValue(obj.nodeName, replacer, details);
             }
@@ -13984,7 +13978,7 @@ console.log(xml)
                     this.handleError(e);
                 }));
             }
-            else if (data != null && typeof data === 'UserObject' && data.format != null && (data.data != null || data.url != null)) {
+            else if (data != null && (typeof data === 'UserObject' || typeof data === 'object') && data.format != null && (data.data != null || data.url != null)) {
             //else if (data != null && typeof data === 'object' && data.format != null && (data.data != null || data.url != null)) {
                 this.loadDescriptor(data, mxUtils.bind(this, function (e) {
                     doLoad(getData(), evt);
@@ -14554,7 +14548,7 @@ console.log(xml)
                         if (cell.vertex) {
                             var originX = (parent != null) ? 0 : x0;
                             var originY = (parent != null) ? 0 : y0;
-                            console.log('im here')
+
                             if (left != null && cell.getAttribute(left) != null) {
                                 cell.geometry.x = originX + parseFloat(cell.getAttribute(left));
                             }
