@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -11,6 +11,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import htmlToPdfmake from 'html-to-pdfmake';
 import { DemographicService } from '../../../../services/demographic.service';
 import { Console } from 'console';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-key-report',
@@ -20,26 +21,29 @@ import { Console } from 'console';
 export class KeyReportComponent {
   assessment: AssessmentDetail = {};
   demographicData: Demographic = {};
+  contactCount: number;
 
   @ViewChild('pdfTable') pdfTable: ElementRef;
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
-    private demoSvc: DemographicService
-   
+    private demoSvc: DemographicService,
+    private route: ActivatedRoute
    
   ) { }
 
   ngOnInit(): void {
+    this.contactCount = +this.route.snapshot.paramMap.get('numberOfContacts');
+    console.log(this.contactCount)
     if (this.assessSvc.id()) {
       this.assessSvc.loadAssessment(this.assessSvc.id())
       this.assessment = this.assessSvc.assessment;
-    
+      console.log( this.assessment)
       this.demoSvc.getDemographic().subscribe(
         (data: Demographic) => {
             this.demographicData = data;
-         
+           console.log( this.demographicData )
           })
     }
    
@@ -58,27 +62,276 @@ generatePdf() {
   const isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA","TSAonline"]);
 // Get the 'Assessment Name', 'Assessment Date' and 'Facility Name' based on the 'currentConfigChain'
 const assessmentName = isConfigChainEqual 
-  ? "__________________________________"
+  ? "_________________________"
   : this.assessment.assessmentName;
 
 const assessmentDate = isConfigChainEqual
-  ? "__________________________________"
+  ? "_________________________"
   : this.assessment.assessmentDate.split("T")[0];
 
 const facilityName = isConfigChainEqual || this.assessment.facilityName == null
-  ? "__________________________________"
+  ? "_________________________"
   : this.assessment.facilityName;
   const documentDefinition = {
       content: [
         { text: `Anonymous Key Sheet for: ${authKey}`, style: 'header4', margin: [0, 0, 0, 20] },
-            { text: 'Please provide this sheet for your TSA contact. So that your assessment can be associated with your organization', style: 'subheader' },
-            { text: `KEY : ${authKey}`, style: 'key' ,margin: [0, 10, 10, 0]},
-            { text: `Assessment Name : ${assessmentName}`, style: 'labelKey', margin: [0, 10, 10, 0]  },
-            { text: `Assessment Date : ${assessmentDate}`, style: 'label', margin: [0, 10, 10, 0]  },
-            { text: `Organization Name : ${assessmentDate}`, style: 'label', margin: [0, 10, 10, 0]  },
-            { text: `Facility Name : ${facilityName}`, style: 'label', margin: [0, 10, 10, 0]  },
-            { text: 'City or Site Name: __________________________________', style: 'label', margin: [0, 10, 10, 0]  },
-            { text: 'State/Province/Region : __________________________________', style: 'label', margin: [0, 10, 10, 0]  },
+            { text: 'Please print out, complete, and provide this form to your TSA contact.', style: 'subheader' },
+            { text: `KEY : ${authKey}`, style: 'key' ,margin: [0, 10, 10, 10]},
+            {
+              columns: [
+                { 
+                    width: '22%',
+                    text: `Assessment Name :`, 
+                    style: 'labelKey', 
+                    margin: [0, 0, 0, 0]
+                },
+                {
+                    width: '30%',
+                    text: `${assessmentName}`, 
+                    style: 'label', 
+                    margin: [0, 0, 0, 0]
+                },
+                { 
+                    width: '22%',
+                    text: `Assessment Date :`, 
+                    style: 'labelKey', 
+                    margin: [0, 0, 0, 0]
+                },
+                {
+                    width: '30%',
+                    text: `${assessmentDate}`, 
+                    style: 'label', 
+                    margin: [0, 0, 0, 0]
+                }
+            ]
+          },
+          { text: `Assessment Owner : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+          {
+            columns: [
+              { 
+                  width: '20%',
+                  text: `First Name :`, 
+                  style: 'labelKey', 
+                  margin: [0, 10, 10,  5]
+              },
+              {
+                  width: '30%',
+                  text: `_________________________`, 
+                  style: 'label', 
+                  margin: [0, 10, 10,  0]
+              },
+              { 
+                  width: '20%',
+                  text: `Last Name :`, 
+                  style: 'labelKey', 
+                  margin: [0, 10, 10,  5]
+              },
+              {
+                  width: '30%',
+                  text: `_________________________`, 
+                  style: 'label', 
+                  margin: [0, 10, 10, 0]
+              }
+          ]
+         },
+         {
+          columns: [
+            { 
+                width: '18%',
+                text: `Title/Role :`, 
+                style: 'labelKey', 
+                margin: [0, 10, 10,  5]
+            },
+            {
+                width: '30%',
+                text: `_________________________`, 
+                style: 'label', 
+                margin: [0, 10, 10,  0]
+            },
+            { 
+                width: '18%',
+                text: `Email :`, 
+                style: 'labelKey', 
+                margin: [0, 10, 10, 5]
+            },
+            {
+                width: '30%',
+                text: `_________________________`, 
+                style: 'label', 
+                margin: [0, 10, 10, 0]
+            }
+        ]
+       },
+       {
+        columns: [
+          { 
+              width: '18%',
+              text: `Cell Phone :`, 
+              style: 'labelKey', 
+              margin: [0, 10, 10, 5]
+          },
+          {
+              width: '30%',
+              text: `_________________________`, 
+              style: 'label', 
+              margin: [0,10, 10, 0]
+          },
+          { 
+              width: '18%',
+              text: `Office Phone :`, 
+              style: 'labelKey', 
+              margin: [0, 10, 10, 5]
+          },
+          {
+              width: '30%',
+              text: `_________________________`, 
+              style: 'label', 
+              margin: [0, 10, 10, 0]
+          }
+      ]
+     },
+    {
+      columns: [
+        {
+          width: '50%',
+          margin: [0, 10, 10, 0],
+          text: [
+            {
+              text: '[ ] ',
+              fontSize: 10,
+              margin: [20, 20, 20, 20]
+            },
+            'Primary Point of Contact',
+          ]
+        },
+        {
+          width: '50%',
+          margin: [0, 10, 10, 0],
+          text: [
+            {
+              text: '[ ] ',
+              fontSize: 10,
+              margin: [20, 20, 20, 20]
+            },
+            'Participated in Site Visit',
+          ]
+        }
+      ]
+    },
+    {
+      columns: [
+        { 
+            width: '24%',
+            text: `Organization Name :`, 
+            style: 'labelKey', 
+            margin: [0, 10, 10, 0]
+        },
+        {
+            width: '30%',
+            text: `__________________`, 
+            style: 'label', 
+            margin: [10, 10, 10, 10]
+        },
+        { 
+            width: '22%',
+            text: `Facility Name :`, 
+            style: 'labelKey', 
+            margin: [0, 10, 10, 0]
+        },
+        {
+            width: '30%',
+            text: `_____________________`, 
+            style: 'label', 
+            margin: [0, 10, 10, 0]
+        }
+    ]
+  },
+  {
+    columns: [
+      { 
+          width: '22%',
+          text: `City or Site Name :`, 
+          style: 'labelKey', 
+          margin: [0, 10, 10, 0]
+      },
+      {
+          width: '30%',
+          text: `__________________`, 
+          style: 'label', 
+          margin: [0,10, 10, 0]
+      },
+      { 
+          width: '28%',
+          text: `State/Province/Region :`, 
+          style: 'labelKey', 
+          margin: [0, 10, 10, 0]
+      },
+      {
+          width: '32%',
+          text: `___________________`, 
+          style: 'label', 
+          margin: [0, 10, 10, 0]
+      }
+  ]
+},
+{
+  columns: [
+    { 
+        width: '22%',
+        text: `Sector :`, 
+        style: 'labelKey', 
+        margin: [0, 10, 0, 0]
+    },
+    {
+        width: '30%',
+        text: `__________________`, 
+        style: 'label', 
+        margin: [0,10, 10, 0]
+    },
+    { 
+        width: '22%',
+        text: `Industry :`, 
+        style: 'labelKey', 
+        margin: [0,10, 10, 0]
+    },
+    {
+        width: '30%',
+        text: `_____________________`, 
+        style: 'label', 
+        margin: [0,10, 10, 0]
+    }
+]
+},
+{ text: `Organization Type : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+{ text: `Roles :`, style: 'label', margin: [0, 10, 2, 10]  },
+{
+  columns: [
+    {
+      width: '50%',
+      margin: [0, 10, 10, 0],
+      text: [
+        {
+          text: '[ ] ',
+          fontSize: 10,
+          margin: [20, 20, 20, 20]
+        },
+        'User',
+      ]
+    },
+    {
+      width: '50%',
+      margin: [0, 10, 10, 0],
+      text: [
+        {
+          text: '[ ] ',
+          fontSize: 10,
+          margin: [20, 20, 20, 20]
+        },
+        'Administrator',
+      ]
+    }
+  ]
+},
           {
               style: 'tableExample',
               table: {
