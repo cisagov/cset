@@ -192,7 +192,7 @@
             </div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
                 </div>
             </div>
         </div>
@@ -222,21 +222,21 @@
                 </div>
 
                 <div>
-                    <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak"
+                    <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak | safe: 'html'"
                         class="related-question-1"></div>
                 </div>
             </div>
 
             <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
-                class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
+                class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak | safe: 'html'">
             </div>
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
                 </div>
                 <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
                 <div
-                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
                 </div>
 
                 <!-- "pieces" -->
