@@ -68,7 +68,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     isCyberFlorida: boolean = false;
 
     findings: any = null;
-
+    numberOfContacts: number = 1;
     /**
      *
      */
