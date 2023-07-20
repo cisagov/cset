@@ -1082,30 +1082,14 @@ namespace CSETWebCore.Business.Question
                     var supplemental = ProfileQuestionData?.SupplementalInfo ??
                         (standardRequirement ??
                         Question?.NEW_REQUIREMENTs(_context)?.FirstOrDefault() ??
-                        NEW_REQUIREMENT)?.Supplemental_Info.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
+                        NEW_REQUIREMENT)?.Supplemental_Info;
                     if (String.IsNullOrEmpty(supplemental))
                     {
                         shortSupplemental = "";
                     }
                     else
                     {
-                        string text = supplemental;
-                        //TODO this needs to be replaced with the html render instead of supplemental
-                        //if(supplemental.IsFlowDocAlready())
-                        //{
-                        //    var flowDoc = (FlowDocument)XamlReader.Parse(supplemental);
-                        //    text = "";
-                        //    foreach(var block in flowDoc.Blocks)
-                        //    {
-                        //        text += new TextRange(block.ContentStart, block.ContentEnd).Text;
-                        //        text += Environment.NewLine;
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    text = supplemental;
-                        //}
-                        shortSupplemental = text;
+                        shortSupplemental = supplemental;
                     }
                 }
                 return shortSupplemental;
