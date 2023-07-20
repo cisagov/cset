@@ -403,7 +403,7 @@ namespace CSETWebCore.Business.Question
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.Question_Id,
-                    QuestionText = FormatLineBreaks(dbQ.Simple_Question),
+                    QuestionText = dbQ.Simple_Question,
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
                     AltAnswerText = dbQ.Alternate_Justification,
@@ -481,7 +481,7 @@ namespace CSETWebCore.Business.Question
                 {
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.Question_Id,
-                    QuestionText = FormatLineBreaks(dbQ.Simple_Question),
+                    QuestionText = dbQ.Simple_Question,
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
                     AltAnswerText = dbQ.Alternate_Justification,
@@ -533,16 +533,6 @@ namespace CSETWebCore.Business.Question
             return "Question";
         }
 
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public string FormatLineBreaks(string s)
-        {
-            return s.Replace("\r\n", "<br/>").Replace("\r", "<br/>").Replace("\n", "<br/>");
-        }
 
         /// <summary>
         /// Returns the number of questions that are relevant for the selected standards 
