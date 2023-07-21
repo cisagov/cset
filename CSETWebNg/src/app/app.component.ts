@@ -48,7 +48,6 @@ import { LocalStoreManager } from './services/storage.service';
 declare var $: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'app-root',
   templateUrl: './app.component.html',
   encapsulation: ViewEncapsulation.None,
