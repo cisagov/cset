@@ -79,6 +79,9 @@ namespace CSETWebCore.Model.Nested
         public List<CustomDocument> SourceDocuments { get; set; }
         public List<CustomDocument> AdditionalDocuments { get; set; }
 
+        public List<string> CSF { get; set; } = new List<string>();
+        public List<TTPReference> TTP { get; set; } = new List<TTPReference>();
+
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }
         public List<Option> Options { get; set; } = new List<Option>();
