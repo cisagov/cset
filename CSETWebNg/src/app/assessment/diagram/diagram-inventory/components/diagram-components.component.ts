@@ -72,7 +72,6 @@ export class DiagramComponentsComponent implements OnInit {
   getComponents() {
     this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
       this.diagramComponentList = x;
-      console.log(this.diagramComponentList)
       this.componentsChange.emit(this.diagramComponentList);
     });
   }
@@ -97,19 +96,26 @@ export class DiagramComponentsComponent implements OnInit {
   /**
    * 
    */
-  changeAssetType(evt: any, guid: string, label: string, assetType: string) {
+  changeAssetType(evt: any, guid: string, label: string) {
     let componentGuid = guid;
     let newType = evt.target.value;
-    let newLabel = assetType;
+    let newLabel = newType;
 
-    let i = 1;
-    while(this.diagramComponentList.includes(newLabel)) {
-      if (newLabel.includes('-')) {
-        newLabel.slice(0, newLabel.indexOf('-'))
+    let suffix = 0; // tracking the new number after the hyphen (CLK-1, CON-13, etc.)
+    let similarCompLabels = this.diagramComponentList.filter(c => c.label.substring(0, newLabel.length) == newLabel);
+    for (let i = 0; i < similarCompLabels.length; i++) {
+      let compLabel = similarCompLabels[i].label;
+
+      if (compLabel == newLabel) {
+        suffix = 1;
       }
+      else if (compLabel.charAt(newLabel.length) == '-' && +compLabel.substring(newLabel.length + 1) >= suffix) {
+        suffix = (+compLabel.substring(newLabel.length + 1)) + 1; //gets the number after the hyphen, then increments
+      }
+    }
 
-      newLabel += '-' + i;
-      i++;
+    if (suffix > 0) {
+      newLabel += '-' + suffix; // if suffix gets updated, add a hyphen before the suffix and append both
     }
     
     const dialogRef = this.dialog.open(ConfirmComponent);
@@ -118,11 +124,22 @@ export class DiagramComponentsComponent implements OnInit {
       newLabel +
       "'?";
     dialogRef.afterClosed().subscribe(result => {
-      if (!result) {
-        newLabel = "";
+      if (result) {
+        for (let i = 0; i < this.diagramComponentList.length; i++) {
+          if (this.diagramComponentList[i].componentGuid == guid) {
+            this.diagramComponentList[i].label = newLabel;
+          }
+        }
+      } else {
+        newLabel = ""; // if false, clear out newLabel
       }
 
-      this.diagramSvc.updateAssetType(componentGuid, newType, newLabel).subscribe();
+      this.diagramSvc.updateAssetType(componentGuid, newType, newLabel).subscribe(
+        (r: any) =>
+          {
+            this.getComponents();
+          }
+      );
     });
 
   }

@@ -928,15 +928,20 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 		this.connectionHandler.createTargetVertex = function(evt, source)
 		{
 			source = this.graph.getCompositeParent(source);
-			
+			console.log("source in createTargetVertex:")
+			console.log(source)
 			return mxConnectionHandler.prototype.createTargetVertex.apply(this, arguments);
 		};
 
 		// Applies newEdgeStyle
 		this.connectionHandler.insertEdge = function(parent, id, value, source, target, style)
 		{
+			console.log('in insertEdge')
+			console.log('value:')
+			console.log(value)
 			var edge = mxConnectionHandler.prototype.insertEdge.apply(this, arguments);
-
+			console.log('edge:')
+			console.log(edge)
 			if (source != null)
 			{
 				this.graph.applyNewEdgeStyle(source, [edge]);
@@ -2457,6 +2462,8 @@ Graph.prototype.init = function(container)
 	Graph.prototype.applyNewEdgeStyle = function(source, edges, dir)
 	{
 		var style = this.getCellStyle(source);
+		console.log('style in newEdgeStyle:')
+console.log(style)
 		var temp = style['newEdgeStyle'];
 		
 		if (temp != null)
@@ -3788,7 +3795,7 @@ Graph.prototype.isReplacePlaceholders = function(cell)
 {
 	//return cell.value != null && typeof(cell.value) == 'object' &&
 	//	cell.value.getAttribute('placeholders') == '1';
-	return cell.value != null && typeof (cell.value) == 'UserObject' &&
+	return cell.value != null && (typeof (cell.value) == 'UserObject' || typeof (cell.value) == 'object') &&
 		cell.value.getAttribute('placeholders') == '1';
 };
 
@@ -3861,6 +3868,7 @@ Graph.prototype.isSplitTarget = function(target, cells, evt)
  */
 Graph.prototype.getLabel = function(cell)
 {
+	console.log(cell)
 	var result = mxGraph.prototype.getLabel.apply(this, arguments);
 	
 	if (result != null && this.isReplacePlaceholders(cell) && cell.getAttribute('placeholder') == null)
@@ -4222,7 +4230,7 @@ Graph.prototype.replacePlaceholders = function(cell, str, vars, translate)
 						
 						while (tmp == null && current != null)
 						{
-							if (current.value != null && typeof (current.value) == 'UserObject')
+							if (current.value != null && (typeof (current.value) == 'UserObject' || typeof (current.value) == 'object'))
 							//if (current.value != null && typeof (current.value) == 'object')
 							{
 								if (Graph.translateDiagram && Graph.diagramLanguage != null)
@@ -4867,8 +4875,8 @@ Graph.prototype.getLinksForState = function(state)
  */
 Graph.prototype.getLinkForCell = function(cell)
 {
-	//if (cell.value != null && typeof (cell.value) == 'UserObject')
-	if (cell.value != null && typeof(cell.value) == 'object')
+	if (cell.value != null && typeof (cell.value) == 'UserObject')
+	//if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		var link = cell.value.getAttribute('link');
 		
@@ -4890,8 +4898,8 @@ Graph.prototype.getLinkForCell = function(cell)
  */
 Graph.prototype.getLinkTargetForCell = function(cell)
 {
-	//if (cell.value != null && typeof (cell.value) == 'UserObject')
-	if (cell.value != null && typeof(cell.value) == 'object')
+	if (cell.value != null && typeof (cell.value) == 'UserObject')
+	//if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		return cell.value.getAttribute('linkTarget');
 	}
@@ -9471,8 +9479,8 @@ if (typeof mxVertexHandler !== 'undefined')
 			this.model.beginUpdate();
 			try
 			{			
-				//if (cell.value != null && typeof cell.value == 'UserObject')
-				if (cell.value != null && typeof cell.value == 'object')
+				if (cell.value != null && (typeof cell.value == 'UserObject' || typeof cell.value == 'object'))
+				//if (cell.value != null && typeof cell.value == 'object')
 				{
 					if (this.isReplacePlaceholders(cell) &&
 						cell.getAttribute('placeholder') != null)
@@ -9483,10 +9491,10 @@ if (typeof mxVertexHandler !== 'undefined')
 								
 						while (current != null)
 						{
-							//if (current == this.model.getRoot() || (current.value != null &&
-							//	typeof (current.value) == 'UserObject' && current.hasAttribute(name)))
 							if (current == this.model.getRoot() || (current.value != null &&
-								typeof (current.value) == 'object' && current.hasAttribute(name)))
+								(typeof (current.value) == 'UserObject' || typeof (current.value) == 'object') && current.hasAttribute(name)))
+							//if (current == this.model.getRoot() || (current.value != null &&
+							//	typeof (current.value) == 'object' && current.hasAttribute(name)))
 							{
 								this.setAttributeForCell(current, name, value);
 								

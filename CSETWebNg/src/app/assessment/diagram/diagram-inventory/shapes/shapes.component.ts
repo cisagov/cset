@@ -34,18 +34,66 @@ import { Comparer } from '../../../../helpers/comparer';
 })
 export class ShapesComponent implements OnInit {
   shapes = [];
-  displayedColumns = ['label', 'color', 'layer', 'visible']
+
+  /**
+  * A flattened list of all the component symbols CSET supports
+  */
+  symbols: any[];
+  displayedColumns = ['label', 'color', 'layer', 'visible'];
+  newComponent: any = {'componentGuid':'', 'assetType':''};
   comparer: Comparer = new Comparer();
+
+
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
     this.getShapes();
+    this.getSymbols();
   }
 
   getShapes() {
     this.diagramSvc.getDiagramShapes().subscribe((x: any) => {
       this.shapes = x;
     });
+  }
+
+  /**
+   * Gets the full list of symbols so that we 
+   * can build SELECT controls for Asset Type.
+   */
+  getSymbols() {
+    this.diagramSvc.getSymbols().subscribe((g: any) => {
+      this.symbols = [];
+      this.symbols.push( // inserts a default blank object in the beginning 
+        {
+          'abbreviation': null, 
+          'componentFamilyName': null,
+          'component_Symbol_Id': null,
+          'fileName': '',
+          'height': 0,
+          'search_Tags': null,
+          'symbol_Name': '',
+          'width': 0
+      });
+
+      g.forEach(gg => {
+        gg.symbols.forEach(s => {            
+          this.symbols.push(s);
+        });
+      });
+
+      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    });
+  }
+
+  changeShapeToComponent(event: any, id: string, label: string) {
+    this.diagramSvc.changeShapeToComponent(event.target.value, id, label).subscribe(
+      (r: any) =>
+        {
+          this.getShapes();
+        }
+    );
+
   }
 
   sortData(sort: Sort) {
@@ -67,5 +115,17 @@ export class ShapesComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  parseShapeType(shape: any) {
+    if (shape.value != null && shape.value != '') {
+      return shape.value; // if a name is already assigned, use it
+    }
+
+    let style = shape.style;
+    let startOfShape = style.indexOf('=') + 1; // first index of the shape type
+    let endOfShape = style.indexOf(';');
+
+    return style.substring(startOfShape, endOfShape); // e.g. 'shape=ellipse;' grabs 'ellipse'
   }
 }

@@ -9897,6 +9897,8 @@ mxGraphModel.prototype.add = function (a, b, c) {
     if (b != a && null != a && null != b) {
         null == c && (c = this.getChildCount(a));
         var d = a != this.getParent(b);
+        console.log("in add, b:")
+        console.log(b)
         this.execute(new mxChildChange(this, a, b, c));
         this.maintainEdgeParent && d && this.updateEdgeParents(b)
     }
@@ -10421,6 +10423,10 @@ mxRootChange.prototype.execute = function () {
 };
 
 function mxChildChange(a, b, c, d) {
+    console.log("this.child 0:")
+    console.log(this.child)
+    console.log("c in mxChildChange:")
+    console.log(c)
     this.model = a;
     this.previous = this.parent = b;
     this.child = c;
@@ -10428,10 +10434,18 @@ function mxChildChange(a, b, c, d) {
 }
 mxChildChange.prototype.execute = function () {
     if (null != this.child) {
+        console.log("this.child:")
+        console.log(this.child)
         var a = this.model.getParent(this.child),
             b = null != a ? a.getIndex(this.child) : 0;
+        console.log('before connect, a before parentForCellChanged:')
+        console.log(a)
         null == this.previous && this.connect(this.child, !1);
         a = this.model.parentForCellChanged(this.child, this.previous, this.previousIndex);
+        console.log('before connect, a:')
+        console.log(a)
+        console.log("this.child 2:")
+        console.log(this.child)
         null != this.previous && this.connect(this.child, !0);
         this.parent = this.previous;
         this.previous = a;
@@ -10440,13 +10454,22 @@ mxChildChange.prototype.execute = function () {
     }
 };
 mxChildChange.prototype.connect = function (a, b) {
+    console.log('a:')
+    console.log(a)
+    console.log('b:')
+    console.log(b)
     b = null != b ? b : !0;
     var c = a.getTerminal(!0),
         d = a.getTerminal(!1);
+    console.log('c:')
+    console.log(c)
+    console.log('d:')
+    console.log(d)
     null != c && (b ? this.model.terminalForCellChanged(a, c, !0) : this.model.terminalForCellChanged(a, null, !0));
     null != d && (b ? this.model.terminalForCellChanged(a, d, !1) : this.model.terminalForCellChanged(a, null, !1));
     a.setTerminal(c, !0);
     a.setTerminal(d, !1);
+    a.set
     c = this.model.getChildCount(a);
     for (d = 0; d < c; d++) this.connect(this.model.getChildAt(a, d), b)
 };
@@ -13739,6 +13762,8 @@ mxGraph.prototype.updateSelection = function () {
     this.removeSelectionCells(b)
 };
 mxGraph.prototype.processChange = function (a) {
+    console.log("in process change:")
+    console.log(a)
     if (a instanceof mxRootChange) this.clearSelection(), this.setDefaultParent(null), this.removeStateForCell(a.previous), this.resetViewOnRootChange && (this.view.scale = 1, this.view.translate.x = 0, this.view.translate.y = 0), this.fireEvent(new mxEventObject(mxEvent.ROOT));
     else if (a instanceof mxChildChange) {
         var b = this.model.getParent(a.child);
@@ -18300,6 +18325,8 @@ mxConnectionHandler.prototype.connect = function (a, b, c, d) {
             g = null;
         e.beginUpdate();
         try {
+            console.log('in connect a:')
+            console.log(a)
             if (null != a && null == b && !this.graph.isIgnoreTerminalEvent(c) && this.isCreateTarget(c) && (b = this.createTargetVertex(c, a), null != b)) {
                 d = this.graph.getDropTarget([b], c, d);
                 f = !0;

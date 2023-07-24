@@ -8,6 +8,7 @@ using CSETWebCore.Business.Diagram.layers;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Namotion.Reflection;
 using Newtonsoft.Json;
 using System;
@@ -48,10 +49,10 @@ namespace CSETWebCore.Business.Diagram
             // let's detect an empty graph and not save it.
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
-            var objectCount = xDoc.SelectNodes("//root/object").Count;
+            var objectCount = xDoc.SelectNodes("//root/UserObject").Count;
             if (objectCount == 0)
             {
-                objectCount = xDoc.SelectNodes("//root/UserObject").Count;
+                objectCount = xDoc.SelectNodes("//root/object").Count;
             }
             if (cellCount == 2 && objectCount == 0)
             {
@@ -867,6 +868,126 @@ namespace CSETWebCore.Business.Diagram
             assessment.Diagram_Markup = xDiagram.OuterXml;
 
             _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Sets the type of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="type"></param>
+        public void ChangeShapeToComponent(int assessmentId, string type, string id, string label)
+        {
+            var componentGuid = Guid.NewGuid();
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var symbol = _context.COMPONENT_SYMBOLS.FirstOrDefault(x => x.Abbreviation == type);
+            var symbolStyle = "whiteSpace=wrap;html=1;image;image=img/cset/" + symbol.File_Name + ";labelBackgroundColor=none;";
+
+            if (symbol?.Component_Symbol_Id == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+
+            // gets the mxCell of the shape
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//mxCell[@id='{id}']");
+            if (mxCell == null)
+            {
+                return;
+            }
+
+            // gets the parent node of te shape (zone or layer)
+            var parent = mxCell.GetAttribute("parent");
+
+            // creates a UserObject to be the new CSET component
+            var userObject = xDiagram.CreateElement("UserObject");
+            userObject.SetAttribute("label", symbol.Symbol_Name);
+            userObject.SetAttribute("ComponentGuid", componentGuid.ToString());
+            userObject.SetAttribute("HasUniqueQuestions", "");
+            userObject.SetAttribute("IPAddress", "");
+            userObject.SetAttribute("Description", "");
+            userObject.SetAttribute("Criticality", "");
+            userObject.SetAttribute("HostName", "");
+            userObject.SetAttribute("parent", parent);
+            userObject.SetAttribute("id", id);
+
+            // taking out the unecessary attributes from the mxCell (already assigned to the soon-to-be parent userObject)
+            mxCell.RemoveAttribute("value");
+            mxCell.RemoveAttribute("id");
+            mxCell.SetAttribute("style", symbolStyle);
+
+            // puts the mxCell and the cell's mxGeometry into the UserObject
+            userObject.PrependChild(mxCell);
+
+            var zoneId = _context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId && x.DrawIO_id == parent).Select(x => x.Container_Id).FirstOrDefault();
+            var layerId = _context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId && x.Parent_Id == 0).Select(x => x.Container_Id).FirstOrDefault();
+
+            // build and put the new CSET component into the database
+            ASSESSMENT_DIAGRAM_COMPONENTS adc = new ASSESSMENT_DIAGRAM_COMPONENTS();
+            adc.Assessment_Id = assessmentId;
+            adc.Component_Guid = componentGuid;
+            adc.Component_Symbol_Id = symbol.Component_Symbol_Id;
+            adc.DrawIO_id = id;
+            adc.label = label;
+            adc.Zone_Id = zoneId == 0 ? null : zoneId;
+            adc.Layer_Id = layerId;
+
+            _context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
+            _context.SaveChanges();
+
+            // puts the UserObject right after its parent (to keep them together for readability)
+            var parentNode = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@id='{parent}']");
+
+            var root = (XmlElement)xDiagram.SelectSingleNode($"//root");
+            root.InsertAfter(userObject, parentNode);
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Sets the label of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="label"></param>
+        public void UpdateComponentLabel(int assessmentId, string guid, string label)
+        {
+            var componentGuid = Guid.Parse(guid);
+            var adc = _context.ASSESSMENT_DIAGRAM_COMPONENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.Component_Guid == componentGuid);
+
+            if (adc == null || label == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            // change the label of the component
+            adc.label = label;
+
+            // Update the label in the diagram markup for the component
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+            var userObject = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']");
+            userObject.Attributes["label"].Value = label;
+
+            if (userObject == null)
+            {
+                return;
+            }
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+
+            _context.SaveChanges();
+            return;
         }
 
 

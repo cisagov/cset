@@ -188,6 +188,16 @@ Toolbar.prototype.init = function()
 		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
 			console.log('huey1');
 			console.log(this.editorUi);
+
+			const klas = 'geSprite-analyze-selected';
+			analyzeElmt.classList.remove(klas);
+			if (state) {
+				console.log(state)
+				analyzeElmt.classList.add(klas);
+			}
+			console.log(analyzeElmt)
+
+
 			this.editorUi.toggleAnalyzer({ state: state, elmt: analyzeElmt, action: analyzeAction });
 		});
 	}
