@@ -36,7 +36,6 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
 
 
 @Component({
-  moduleId: module.id,
   selector: 'tsa-layout-main',
   templateUrl: './tsa-layout-main.component.html',
   styleUrls: ['./tsa-layout-main.component.scss'],
