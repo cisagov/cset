@@ -72,6 +72,302 @@ const assessmentDate = isConfigChainEqual
 const facilityName = isConfigChainEqual || this.assessment.facilityName == null
   ? "_________________________"
   : this.assessment.facilityName;
+
+ 
+  let content = [];
+  for(let i = 0; i < this.contactCount; i++) {
+    let pageContent=[
+      { text: `Anonymous Key Sheet for: ${authKey}`, style: 'header4', margin: [0, 0, 0, 20] },
+      { text: 'Please print out, complete, and provide this form to your TSA contact.', style: 'subheader' },
+      { text: `KEY : ${authKey}`, style: 'key' ,margin: [0, 10, 10, 10]},
+      {
+        columns: [
+          { 
+              width: '16%',
+              text: `Assessment Name :`, 
+              style: 'labelKey', 
+              margin: [0, 0, 0, 0]
+          },
+          {
+              width: '30%',
+              text: `${assessmentName}`, 
+              style: 'label', 
+              margin: [0, 0, 0, 0]
+          },
+          { 
+              width: '16%',
+              text: `Assessment Date :`, 
+              style: 'labelKey', 
+              margin: [0, 0, 0, 0]
+          },
+          {
+              width: '30%',
+              text: `${assessmentDate}`, 
+              style: 'label', 
+              margin: [0, 0, 0, 0]
+          }
+      ]
+    },
+    { text: `Assessment Owner :    _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+    {
+      columns: [
+        { 
+            width: '16%',
+            text: `First Name :`, 
+            style: 'labelKey', 
+            margin: [0, 10, 10,  5]
+        },
+        {
+            width: '30%',
+            text: `_________________________`, 
+            style: 'label', 
+            margin: [0, 10, 10,  0]
+        },
+        { 
+            width: '16%',
+            text: `Last Name :`, 
+            style: 'labelKey', 
+            margin: [0, 10, 10,  5]
+        },
+        {
+            width: '30%',
+            text: `_________________________`, 
+            style: 'label', 
+            margin: [0, 10, 10, 0]
+        }
+    ]
+   },
+   {
+    columns: [
+      { 
+          width: '16%',
+          text: `Title/Role :`, 
+          style: 'labelKey', 
+          margin: [0, 10, 10,  5]
+      },
+      {
+          width: '30%',
+          text: `_________________________`, 
+          style: 'label', 
+          margin: [0, 10, 10,  0]
+      },
+      { 
+          width: '16%',
+          text: `Email :`, 
+          style: 'labelKey', 
+          margin: [0, 10, 10, 5]
+      },
+      {
+          width: '30%',
+          text: `_________________________`, 
+          style: 'label', 
+          margin: [0, 10, 10, 0]
+      }
+  ]
+ },
+ {
+  columns: [
+    { 
+        width: '16%',
+        text: `Cell Phone :`, 
+        style: 'labelKey', 
+        margin: [0, 10, 10, 5]
+    },
+    {
+        width: '30%',
+        text: `_________________________`, 
+        style: 'label', 
+        margin: [0,10, 10, 0]
+    },
+    { 
+        width: '16%',
+        text: `Office Phone :`, 
+        style: 'labelKey', 
+        margin: [0, 10, 10, 5]
+    },
+    {
+        width: '30%',
+        text: `_________________________`, 
+        style: 'label', 
+        margin: [0, 10, 10, 0]
+    }
+]
+},
+{
+columns: [
+  {
+    width: '50%',
+    margin: [0, 10, 10, 0],
+    text: [
+      {
+        text: '[ ] ',
+        fontSize: 10,
+        margin: [20, 20, 20, 20]
+      },
+      'Primary Point of Contact',
+    ]
+  },
+  {
+    width: '50%',
+    margin: [0, 10, 10, 0],
+    text: [
+      {
+        text: '[ ] ',
+        fontSize: 10,
+        margin: [20, 20, 20, 20]
+      },
+      'Participated in Site Visit',
+    ]
+  }
+]
+},
+{
+columns: [
+  { 
+      width: '16%',
+      text: `Organization Name :`, 
+      style: 'labelKey', 
+      margin: [0, 10, 10, 0]
+  },
+  {
+      width: '30%',
+      text: `_________________________`, 
+      style: 'label', 
+      margin: [10, 10, 10, 10]
+  },
+  { 
+      width: '16%',
+      text: `Facility Name :`, 
+      style: 'labelKey', 
+      margin: [0, 10, 10, 0]
+  },
+  {
+      width: '30%',
+      text: `_________________________`, 
+      style: 'label', 
+      margin: [0, 10, 10, 0]
+  }
+]
+},
+{
+columns: [
+{ 
+    width: '16%',
+    text: `City or Site Name :`, 
+    style: 'labelKey', 
+    margin: [0, 10, 10, 0]
+},
+{
+    width: '30%',
+    text: `_________________________`, 
+    style: 'label', 
+    margin: [0,10, 10, 0]
+},
+{ 
+    width: '16%',
+    text: `State/Province/Region :`, 
+    style: 'labelKey', 
+    margin: [0, 10, 10, 0]
+},
+{
+    width: '32%',
+    text: `_________________________`, 
+    style: 'label', 
+    margin: [0, 10, 10, 0]
+}
+]
+},
+{
+columns: [
+{ 
+  width: '16%',
+  text: `Sector :`, 
+  style: 'labelKey', 
+  margin: [0, 10, 0, 0]
+},
+{
+  width: '30%',
+  text: `_________________________`, 
+  style: 'label', 
+  margin: [0,10, 10, 0]
+},
+{ 
+  width: '16%',
+  text: `Industry :`, 
+  style: 'labelKey', 
+  margin: [0,10, 10, 0]
+},
+{
+  width: '30%',
+  text: `_________________________`, 
+  style: 'label', 
+  margin: [0,10, 10, 0]
+}
+]
+},
+{ text: `Organization Type : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+{ text: `Roles :`, style: 'label', margin: [0, 10, 2, 10]  },
+{
+columns: [
+{
+width: '50%',
+margin: [0, 10, 10, 0],
+text: [
+  {
+    text: '[ ] ',
+    fontSize: 10,
+    margin: [20, 20, 20, 20]
+  },
+  'User',
+]
+},
+{
+width: '50%',
+margin: [0, 10, 10, 0],
+text: [
+  {
+    text: '[ ] ',
+    fontSize: 10,
+    margin: [20, 20, 20, 20]
+  },
+  'Administrator',
+]
+}
+]
+},
+    // {
+    //     style: 'tableExample',
+    //     table: {
+    //         widths: ['*', '*', '*', '*', '*'],
+    //         body: [
+    //             ['First Name', 'Last Name', 'Title', 'Organization', 'Cell Phone'],
+    //             [' ', ' ', ' ', ' ', ' '],
+    //             [' ', ' ', ' ', ' ', ' '],
+    //             [' ', ' ', ' ', ' ', ' '],
+    //             [' ', ' ', ' ', ' ', ' ']
+    //         ]
+    //     },
+    //     layout: {
+    //         hLineWidth: function(i, node) {
+    //             return (i === 0 || i === node.table.body.length) ? 1 : 1;
+    //         },
+    //         vLineWidth: function(i, node) {
+    //             return (i === 0 || i === node.table.widths.length) ? 1 : 1;
+    //         },
+    //         hLineColor: function(i, node) {
+    //             return (i === 0 || i === node.table.body.length) ? 'black' : 'black';
+    //         },
+    //         vLineColor: function(i, node) {
+    //             return (i === 0 || i === node.table.widths.length) ? 'black' : 'black';
+    //         }
+    //     },
+    //     margin: [0, 20, 0, 0] ,
+      
+    // },
+    { text: '', pageBreak: i !== this.contactCount - 1 ? 'after' : undefined }
+    ]
+    content = content.concat(pageContent);
+  }
   const documentDefinition = {
       content: [
         { text: `Anonymous Key Sheet for: ${authKey}`, style: 'header4', margin: [0, 0, 0, 20] },
@@ -80,116 +376,144 @@ const facilityName = isConfigChainEqual || this.assessment.facilityName == null
             {
               columns: [
                 { 
-                    width: '22%',
-                    text: `Assessment Name :`, 
+                    width: '50%',
+                    text: `Assessment Name :______________________________`, 
                     style: 'labelKey', 
                     margin: [0, 0, 0, 0]
                 },
-                {
-                    width: '30%',
-                    text: `${assessmentName}`, 
-                    style: 'label', 
-                    margin: [0, 0, 0, 0]
-                },
+                // {
+                //     width: '30%',
+                //     text: `${assessmentName}`, 
+                //     style: 'label', 
+                //     margin: [0, 0, 0, 0]
+                // },
                 { 
-                    width: '22%',
-                    text: `Assessment Date :`, 
+                    width: '50%',
+                    text: `Assessment Date :______________________________`, 
                     style: 'labelKey', 
                     margin: [0, 0, 0, 0]
                 },
-                {
-                    width: '30%',
-                    text: `${assessmentDate}`, 
-                    style: 'label', 
-                    margin: [0, 0, 0, 0]
-                }
+                // {
+                //     width: '30%',
+                //     text: `${assessmentDate}`, 
+                //     style: 'label', 
+                //     margin: [0, 0, 0, 0]
+                // }
             ]
           },
-          { text: `Assessment Owner : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
           {
             columns: [
               { 
-                  width: '20%',
-                  text: `First Name :`, 
+                  width: '50%',
+                  text: `Sector :______________________________`, 
                   style: 'labelKey', 
-                  margin: [0, 10, 10,  5]
+                  margin: [0, 10, 0, 0]
               },
-              {
-                  width: '30%',
-                  text: `_________________________`, 
-                  style: 'label', 
-                  margin: [0, 10, 10,  0]
-              },
+              // {
+              //     width: '30%',
+              //     text: `__________________`, 
+              //     style: 'label', 
+              //     margin: [0,10, 10, 0]
+              // },
               { 
-                  width: '20%',
-                  text: `Last Name :`, 
+                  width: '50%',
+                  text: `Industry :______________________________`, 
                   style: 'labelKey', 
-                  margin: [0, 10, 10,  5]
+                  margin: [0,10, 10, 0]
               },
-              {
-                  width: '30%',
-                  text: `_________________________`, 
-                  style: 'label', 
-                  margin: [0, 10, 10, 0]
-              }
+              // {
+              //     width: '30%',
+              //     text: `_____________________`, 
+              //     style: 'label', 
+              //     margin: [0,10, 10, 0]
+              // }
           ]
-         },
-         {
-          columns: [
-            { 
-                width: '18%',
-                text: `Title/Role :`, 
-                style: 'labelKey', 
-                margin: [0, 10, 10,  5]
-            },
-            {
-                width: '30%',
-                text: `_________________________`, 
-                style: 'label', 
-                margin: [0, 10, 10,  0]
-            },
-            { 
-                width: '18%',
-                text: `Email :`, 
-                style: 'labelKey', 
-                margin: [0, 10, 10, 5]
-            },
-            {
-                width: '30%',
-                text: `_________________________`, 
-                style: 'label', 
-                margin: [0, 10, 10, 0]
-            }
-        ]
-       },
-       {
-        columns: [
-          { 
-              width: '18%',
-              text: `Cell Phone :`, 
-              style: 'labelKey', 
-              margin: [0, 10, 10, 5]
           },
-          {
-              width: '30%',
-              text: `_________________________`, 
-              style: 'label', 
-              margin: [0,10, 10, 0]
-          },
-          { 
-              width: '18%',
-              text: `Office Phone :`, 
-              style: 'labelKey', 
-              margin: [0, 10, 10, 5]
-          },
-          {
-              width: '30%',
-              text: `_________________________`, 
-              style: 'label', 
-              margin: [0, 10, 10, 0]
-          }
-      ]
-     },
+          { text: `Assessment Owner :`, style: 'label', margin: [0, 10, 10, 10]  },
+        //   {
+        //     columns: [
+        //       { 
+        //           width: '20%',
+        //           text: `First Name :`, 
+        //           style: 'labelKey', 
+        //           margin: [0, 10, 10,  5]
+        //       },
+        //       {
+        //           width: '30%',
+        //           text: `_________________________`, 
+        //           style: 'label', 
+        //           margin: [0, 10, 10,  0]
+        //       },
+        //       { 
+        //           width: '20%',
+        //           text: `Last Name :`, 
+        //           style: 'labelKey', 
+        //           margin: [0, 10, 10,  5]
+        //       },
+        //       {
+        //           width: '30%',
+        //           text: `_________________________`, 
+        //           style: 'label', 
+        //           margin: [0, 10, 10, 0]
+        //       }
+        //   ]
+        //  },
+    //      {
+    //       columns: [
+    //         { 
+    //             width: '18%',
+    //             text: `Title/Role :`, 
+    //             style: 'labelKey', 
+    //             margin: [0, 10, 10,  5]
+    //         },
+    //         {
+    //             width: '30%',
+    //             text: `_________________________`, 
+    //             style: 'label', 
+    //             margin: [0, 10, 10,  0]
+    //         },
+    //         { 
+    //             width: '18%',
+    //             text: `Email :`, 
+    //             style: 'labelKey', 
+    //             margin: [0, 10, 10, 5]
+    //         },
+    //         {
+    //             width: '30%',
+    //             text: `_________________________`, 
+    //             style: 'label', 
+    //             margin: [0, 10, 10, 0]
+    //         }
+    //     ]
+    //    },
+    //    {
+    //     columns: [
+    //       { 
+    //           width: '18%',
+    //           text: `Cell Phone :`, 
+    //           style: 'labelKey', 
+    //           margin: [0, 10, 10, 5]
+    //       },
+    //       {
+    //           width: '30%',
+    //           text: `_________________________`, 
+    //           style: 'label', 
+    //           margin: [0,10, 10, 0]
+    //       },
+    //       { 
+    //           width: '18%',
+    //           text: `Office Phone :`, 
+    //           style: 'labelKey', 
+    //           margin: [0, 10, 10, 5]
+    //       },
+    //       {
+    //           width: '30%',
+    //           text: `_________________________`, 
+    //           style: 'label', 
+    //           margin: [0, 10, 10, 0]
+    //       }
+    //   ]
+    //  },
     {
       columns: [
         {
@@ -218,92 +542,65 @@ const facilityName = isConfigChainEqual || this.assessment.facilityName == null
         }
       ]
     },
-    {
-      columns: [
-        { 
-            width: '24%',
-            text: `Organization Name :`, 
-            style: 'labelKey', 
-            margin: [0, 10, 10, 0]
-        },
-        {
-            width: '30%',
-            text: `__________________`, 
-            style: 'label', 
-            margin: [10, 10, 10, 10]
-        },
-        { 
-            width: '22%',
-            text: `Facility Name :`, 
-            style: 'labelKey', 
-            margin: [0, 10, 10, 0]
-        },
-        {
-            width: '30%',
-            text: `_____________________`, 
-            style: 'label', 
-            margin: [0, 10, 10, 0]
-        }
-    ]
-  },
-  {
-    columns: [
-      { 
-          width: '22%',
-          text: `City or Site Name :`, 
-          style: 'labelKey', 
-          margin: [0, 10, 10, 0]
-      },
-      {
-          width: '30%',
-          text: `__________________`, 
-          style: 'label', 
-          margin: [0,10, 10, 0]
-      },
-      { 
-          width: '28%',
-          text: `State/Province/Region :`, 
-          style: 'labelKey', 
-          margin: [0, 10, 10, 0]
-      },
-      {
-          width: '32%',
-          text: `___________________`, 
-          style: 'label', 
-          margin: [0, 10, 10, 0]
-      }
-  ]
-},
-{
-  columns: [
-    { 
-        width: '22%',
-        text: `Sector :`, 
-        style: 'labelKey', 
-        margin: [0, 10, 0, 0]
-    },
-    {
-        width: '30%',
-        text: `__________________`, 
-        style: 'label', 
-        margin: [0,10, 10, 0]
-    },
-    { 
-        width: '22%',
-        text: `Industry :`, 
-        style: 'labelKey', 
-        margin: [0,10, 10, 0]
-    },
-    {
-        width: '30%',
-        text: `_____________________`, 
-        style: 'label', 
-        margin: [0,10, 10, 0]
-    }
-]
-},
-{ text: `Organization Type : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
-{ text: `Roles :`, style: 'label', margin: [0, 10, 2, 10]  },
+  //   {
+  //     columns: [
+  //       { 
+  //           width: '24%',
+  //           text: `Organization Name :`, 
+  //           style: 'labelKey', 
+  //           margin: [0, 10, 10, 0]
+  //       },
+  //       {
+  //           width: '30%',
+  //           text: `__________________`, 
+  //           style: 'label', 
+  //           margin: [10, 10, 10, 10]
+  //       },
+  //       { 
+  //           width: '22%',
+  //           text: `Facility Name :`, 
+  //           style: 'labelKey', 
+  //           margin: [0, 10, 10, 0]
+  //       },
+  //       {
+  //           width: '30%',
+  //           text: `_____________________`, 
+  //           style: 'label', 
+  //           margin: [0, 10, 10, 0]
+  //       }
+  //   ]
+  // },
+//   {
+//     columns: [
+//       { 
+//           width: '22%',
+//           text: `City or Site Name :`, 
+//           style: 'labelKey', 
+//           margin: [0, 10, 10, 0]
+//       },
+//       {
+//           width: '30%',
+//           text: `__________________`, 
+//           style: 'label', 
+//           margin: [0,10, 10, 0]
+//       },
+//       { 
+//           width: '28%',
+//           text: `State/Province/Region :`, 
+//           style: 'labelKey', 
+//           margin: [0, 10, 10, 0]
+//       },
+//       {
+//           width: '32%',
+//           text: `___________________`, 
+//           style: 'label', 
+//           margin: [0, 10, 10, 0]
+//       }
+//   ]
+// },
+
+// { text: `Organization Type : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+{ text: `Roles :`, style: 'label', margin: [0, 20, 0, 0]  },
 {
   columns: [
     {
@@ -335,15 +632,18 @@ const facilityName = isConfigChainEqual || this.assessment.facilityName == null
           {
               style: 'tableExample',
               table: {
-                  widths: ['*', '*', '*', '*', '*'],
-                  body: [
-                      ['First Name', 'Last Name', 'Title', 'Organization', 'Cell Phone'],
-                      [' ', ' ', ' ', ' ', ' '],
-                      [' ', ' ', ' ', ' ', ' '],
-                      [' ', ' ', ' ', ' ', ' '],
-                      [' ', ' ', ' ', ' ', ' ']
-                  ]
-              },
+                widths: ['*', '*', '*', '*', '*', '*', '*', '*','*', '*'],
+                body: [
+                    ['First Name', 'Last Name', 'Title/Role', 'Organization Name', 'Cell Phone','Office Phone','Organization Type', 'Facility Name','City','State'],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+                    [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+                ]
+            },
               layout: {
                   hLineWidth: function(i, node) {
                       return (i === 0 || i === node.table.body.length) ? 1 : 1;
@@ -362,13 +662,16 @@ const facilityName = isConfigChainEqual || this.assessment.facilityName == null
             
           },
       ],
+      // content: content,      
       styles: {
         header4: {
             fontSize: 16,
             bold: true
         },
       
-    }
+    },
+    pageSize: 'A4',
+    pageOrientation: 'landscape',
   };
   let url = '/index.html?returnPath=report/key-report' ;
   localStorage.setItem('REPORT-KEY-REPORT' , print.toString());
