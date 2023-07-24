@@ -449,12 +449,14 @@
 
       </div>
       <div> 
-        <!-- <a routerLink="/report/key-report">Anonymous Key Report</a> -->
-        <select [(ngModel)]="numberOfContacts">
+       <div *ngIf="isConfigChainEqual">
+        <!-- <select [(ngModel)]="numberOfContacts">
           <option *ngFor="let number of [1, 2, 3, 4, 5]" [value]="number">{{number}}</option>
         </select>
+         -->
+        <a [routerLink]="['/report/key-report', 1]">Anonymous Key Report</a>
+       </div>
         
-        <a [routerLink]="['/report/key-report', numberOfContacts]">Anonymous Key Report</a>
         
       <div class="mt-5">
         <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
