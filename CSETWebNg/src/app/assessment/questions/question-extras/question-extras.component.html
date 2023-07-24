@@ -192,7 +192,7 @@
             </div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
                 </div>
             </div>
         </div>
@@ -222,33 +222,24 @@
                 </div>
 
                 <div>
-                    <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak"
+                    <div *ngFor="let relatedQ of tab?.questionsList" [innerHTML]="relatedQ.questionText | linebreak | safe: 'html'"
                         class="related-question-1"></div>
                 </div>
             </div>
 
             <div *ngIf=" !!extras && !!tab && mode == 'DETAIL' && checkForApproach(tab?.requirementsData?.examinationApproach)"
-                class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak">
+                class="supplemental" [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak | safe: 'html'">
             </div>
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
                 <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | safe) : '(no supplemental guidance available)'">
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
                 </div>
                 <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
                 <div
-                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | safe) : ''">
+                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
                 </div>
 
-                <!-- "pieces" -->
-
-                <div *ngIf="!!myQuestion.csfMappings?.length > 0" class="mb-3">
-                    <div class="sub-header-1">CSF Reference</div>
-                    <div>
-                        <span *ngFor="let c of myQuestion.csfMappings; let i = index">
-                            {{c}}{{i === myQuestion.csfMappings.length - 1 ? '' : ', '}}
-                        </span>
-                    </div>
-                </div>
+                <!-- "pieces" -->                
 
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
                     <div class="sub-header-1">Scope</div>
@@ -264,17 +255,7 @@
                     <div>
                         {{myQuestion.recommendedAction}}
                     </div>
-                </div>
-
-                <div *ngIf="!!myQuestion.ttp?.length > 0 || !!myQuestion.riskAddressed" class="mb-3">
-                    <div class="sub-header-1">TTP or Risk Addressed</div>
-                    <div>
-                        {{myQuestion.riskAddressed}}
-                    </div>
-                    <ul>
-                        <li *ngFor="let t of myQuestion.ttp"><a href="{{t.referenceUrl}}" target="_blank">{{t.description}}</a></li>
-                    </ul>
-                </div>
+                </div>            
 
                 <div *ngIf="!!myQuestion.services" class="mb-3">
                     <div class="sub-header-1">
@@ -386,7 +367,7 @@
                 </table>
             </div>
             <div *ngIf="!assessSvc.isISE()">
-                <app-references-display [tab]="tab"></app-references-display>
+                <app-references-display [tab]="tab" [q]="myQuestion"></app-references-display>
             </div>
         </div>
 

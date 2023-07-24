@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Nested;
+using CSETWebCore.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Model.Assessment;
 
@@ -46,6 +47,9 @@ namespace CSETWebCore.Business.Maturity
         public NestedQuestions MyModel { get => _myModel; }
 
 
+        private AdditionalSupplemental _addSup;
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -56,6 +60,8 @@ namespace CSETWebCore.Business.Maturity
         {
             this._context = context;
             this._assessmentId = assessmentId;
+
+            this._addSup = new AdditionalSupplemental(context);
             
 
             // Get the baseline assessment if one is assigned
@@ -219,6 +225,9 @@ namespace CSETWebCore.Business.Maturity
                         DocumentIds = GetDocumentIds(answer?.Answer_Id)
                     };
 
+                    question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
+                    question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
+
 
                     // Include the corresponding baseline selection if it exists
                     var baselineAnswer = baselineAllAnswers
@@ -278,6 +287,9 @@ namespace CSETWebCore.Business.Maturity
                     MarkForReview = answer?.Mark_For_Review ?? false,
                     DocumentIds = GetDocumentIds(answer?.Answer_Id)
                 };
+
+                question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
+                question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
 
 
                 // Include the corresponding baseline selection if it exists
@@ -377,6 +389,9 @@ namespace CSETWebCore.Business.Maturity
                         MarkForReview = answer?.Mark_For_Review ?? false,
                         DocumentIds = GetDocumentIds(answer?.Answer_Id)
                     };
+
+                    question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
+                    question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
 
 
                     // Include the corresponding baseline selection if it exists
