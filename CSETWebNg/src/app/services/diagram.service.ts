@@ -106,4 +106,10 @@ export class DiagramService {
   updateAssetType(guid: string, componentType: string, label: string) {
     return this.http.post(this.apiUrl + 'assetType?guid=' + guid + '&type=' + componentType + '&label=' + label, '');
   }
+  /**
+   * 
+   */
+  changeShapeToComponent(componentType: string, id: string, label: string) {
+    return this.http.post(this.apiUrl + 'changeShapeToComponent?type=' + componentType + '&id=' + id + '&label=' + label, '');
+  }
 }

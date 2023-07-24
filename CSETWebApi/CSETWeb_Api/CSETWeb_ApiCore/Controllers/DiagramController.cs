@@ -33,6 +33,8 @@ using CSETWebCore.Model.Document;
 using DocumentFormat.OpenXml.Office2021.DocumentTasks;
 using System.ComponentModel.Design;
 using System.Numerics;
+using Microsoft.IdentityModel.Tokens;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -426,7 +428,29 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult UpdateComponentType([FromQuery] string guid, [FromQuery] string type, [FromQuery] string label)
         {
             int assessmentId = _token.AssessmentForUser();
+            
             _diagram.UpdateComponentType(assessmentId, guid, type);
+
+            if (!label.IsNullOrEmpty())
+            {
+                _diagram.UpdateComponentLabel(assessmentId, guid, label);
+            }
+
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Changes the component type for a single component.
+        /// Normally called from the inventory when resolving unknowns.
+        /// </summary>
+        [CsetAuthorize]
+        [HttpPost]
+        [Route("api/diagram/changeShapeToComponent")]
+        public IActionResult ChangeShapeToComponent([FromQuery] string type, [FromQuery] string id, [FromQuery] string label)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            _diagram.ChangeShapeToComponent(assessmentId, type, id, label);
 
             return Ok();
         }

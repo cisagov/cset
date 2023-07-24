@@ -224,6 +224,7 @@ CsetUtils.LoadFileFromCSET = async function (app) {
         for (var element of app.toolbar.container.childNodes) {
             if (element.title == 'Analyze Network Diagram') {
                 element.click();
+                console.log('in analysis toggle')
                 break;
             }
         }
@@ -238,6 +239,8 @@ CsetUtils.LoadFileFromCSET = async function (app) {
 CsetUtils.edgesToTop = function (graph, edit) {
     const model = graph.getModel();
     const changes = edit && edit.changes || [];
+    console.log("changes in edgesToTop:")
+    console.log(changes)
     for (const change of changes) {
         if (change instanceof mxChildChange && model.isVertex(change.child)) {
             const edges = CsetUtils.getAllChildEdges(change.child);
@@ -264,22 +267,16 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     if (model) {
         const enc = new mxCodec();
         const node = enc.encode(model);
-        console.log('node')
-        console.log(node)
         const sXML = xmlserializer.serializeToString(node);
-        console.log('------ sXML ------')
-        console.log(sXML)
+
         if (sXML !== EditorUi.prototype.emptyDiagramXml) {
             analysisReq.DiagramXml = testForBase64(sXML);
         }
     }
-    console.log('model inside PersistGraphToCset')
-    console.log(model)
+
     CsetUtils.clearWarningsFromDiagram(editor.graph);
     await CsetUtils.analyzeDiagram(analysisReq, editor);
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
-    console.log('model at the bottom of PersistGraphToCset')
-    console.log(model)
 }
 
 /**
