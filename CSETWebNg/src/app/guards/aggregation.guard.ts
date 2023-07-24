@@ -22,14 +22,14 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JwtParser } from '../helpers/jwt-parser';
 import { AuthenticationService } from '../services/authentication.service';
 import { AggregationService } from '../services/aggregation.service';
 
 @Injectable()
-export class AggregationGuard implements CanActivate, CanActivateChild {
+export class AggregationGuard  {
   private parser = new JwtParser();
 
   constructor(

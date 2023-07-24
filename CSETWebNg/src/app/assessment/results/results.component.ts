@@ -46,7 +46,7 @@ export class ResultsComponent implements OnInit {
     private router: Router
   ) {
     // Store the active results view based on the new navigation target
-    this.router.events.subscribe((event: RouterEvent) => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const tree: UrlTree = this.router.parseUrl(event.urlAfterRedirects);
         const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];

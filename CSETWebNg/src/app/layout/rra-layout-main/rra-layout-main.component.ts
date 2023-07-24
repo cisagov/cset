@@ -34,7 +34,6 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'rra-layout-main',
   templateUrl: './rra-layout-main.component.html',
   styleUrls: ['./rra-layout-main.component.scss', '../styles-rra.scss'],
