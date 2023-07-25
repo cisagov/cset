@@ -195,7 +195,7 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@ngstack/code-editor';
+import { CodeEditorModule } from '@goecmarc/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
