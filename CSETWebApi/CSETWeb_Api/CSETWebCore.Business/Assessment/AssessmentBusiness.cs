@@ -841,7 +841,7 @@ namespace CSETWebCore.Business.Assessment
             List<SetInfo> processedSets = new List<SetInfo>();
             foreach (string setName in setNames)
             {
-                var set = allSets.Find(set => set.Set_Name == setName);
+                var set = allSets.Find(set => string.Equals(set.Set_Name, setName, StringComparison.CurrentCultureIgnoreCase));
                 processedSets.Add(new SetInfo { FullName = set.Full_Name, ShortName = set.Short_Name });
             }
             return processedSets;
