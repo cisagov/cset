@@ -23,9 +23,26 @@
 ////////////////////////////////
 import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'linebreak'})
+/**
+ * Converts linefeed characters to HTML '<br />' tags
+ */
+@Pipe({ name: 'linebreak' })
 export class LinebreakPipe implements PipeTransform {
-transform(text: string): string {
+   transform(text: string): string {
+      // if we detect HTML already in the string, do nothing
+      if (this.hasHtml(text)) {
+         return text;
+      }
+
       return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+   }
+
+   /**
+    * Very basic HTML detector.  
+    */
+   hasHtml(s: string): boolean {
+      const pattern = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+      var p = new RegExp(pattern);
+      return p.test(s);
    }
 }

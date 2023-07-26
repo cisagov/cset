@@ -21,11 +21,11 @@
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": "false",
-      "applicationUrl": "http://localhost:5000"
+      "dotnetRunMessages": "false"
     }
   }
 }

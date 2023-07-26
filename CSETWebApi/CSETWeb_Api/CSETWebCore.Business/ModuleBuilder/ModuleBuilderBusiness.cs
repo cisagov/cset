@@ -924,7 +924,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     QuestionDetail candidate = new QuestionDetail
                     {
                         QuestionID = hit.q.Question_Id,
-                        QuestionText = _question.FormatLineBreaks(hit.q.Simple_Question),
+                        QuestionText = hit.q.Simple_Question,
                         QuestionGroupHeading = hit.qgh.Question_Group_Heading1,
                         Subcategory = hit.subcat.Universal_Sub_Category,
                     };
@@ -991,7 +991,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                         candidateQuestions.Add(new QuestionDetail
                         {
                             QuestionID = hit.q.Question_Id,
-                            QuestionText = _question.FormatLineBreaks(hit.q.Simple_Question),
+                            QuestionText = hit.q.Simple_Question,
                             QuestionGroupHeading = hit.cat.Question_Group_Heading1,
                             Subcategory = hit.subcat.Universal_Sub_Category
                         });

@@ -34,7 +34,6 @@ import { SetBuilderService } from './../../services/set-builder.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'acet-layout-main',
   templateUrl: './acet-layout-main.component.html',
   styleUrls: ['./acet-layout-main.component.scss'],

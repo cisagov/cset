@@ -803,98 +803,6 @@ namespace CSETWebCore.Business.Maturity
 
             return levelScore;
         }
-        /*
-         private void GetSubgroups(object oParent, int? parentId, int? filterId = null)
-        {
-            var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentId).OrderBy(x => x.Sequence).ToList();
-
-            if (filterId != null)
-            {
-                mySubgroups = allGroupings.Where(x => x.Grouping_Id == filterId).ToList();
-            }
-
-            if (mySubgroups.Count == 0)
-            {
-                return;
-            }
-
-            foreach (var sg in mySubgroups)
-            {
-                var nodeName = System.Text.RegularExpressions
-                    .Regex.Replace(sg.Type.Grouping_Type_Name, " ", "_");
-
-                var grouping = new Grouping()
-                {
-                    GroupType = nodeName,
-                    Abbreviation = sg.Abbreviation,
-                    GroupingId = sg.Grouping_Id,
-                    Prefix = sg.Title_Prefix,
-                    Title = sg.Title,
-                    Description = sg.Description
-                };
-
-
-                if (oParent is CisQuestions)
-                {
-                    ((CisQuestions)oParent).Groupings.Add(grouping);
-                }
-
-                if (oParent is Grouping)
-                {
-                    ((Grouping)oParent).Groupings.Add(grouping);
-                }
-
-
-                // are there any questions that belong to this grouping?
-                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id
-                    && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
-
-                foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
-                {
-                    List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
-                    ConsolidateAnswers(answers, out ANSWER answer);
-
-                    var question = new Model.Nested.Question()
-                    {
-                        QuestionId = myQ.Mat_Question_Id,
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/> "),
-                        ReferenceText = myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text,
-                        Sequence = myQ.Sequence,
-                        MaturityLevel = myQ.Maturity_Level.Level,
-                        MaturityLevelName = myQ.Maturity_Level.Level_Name,
-                        DisplayNumber = myQ.Question_Title,
-                        ParentQuestionId = myQ.Parent_Question_Id,
-                        QuestionType = myQ.Mat_Question_Type,
-                        AnswerText = answer?.Answer_Text,
-                        AnswerMemo = answer?.Free_Response_Answer,
-                        //Options = GetOptions(myQ.Mat_Question_Id),
-                        //Followups = GetFollowupQuestions(myQ.Mat_Question_Id),
-                        Comment = answer?.Comment,
-                        Feedback = answer?.FeedBack,
-                        MarkForReview = answer?.Mark_For_Review ?? false,
-                        //DocumentIds = GetDocumentIds(answer?.Answer_Id)
-                    };
-
-
-                    // Include the corresponding baseline selection if it exists
-                    var baselineAnswer = baselineAllAnswers
-                        .Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id)
-                        .FirstOrDefault();
-                    if (baselineAnswer != null)
-                    {
-                        question.BaselineAnswerText = baselineAnswer.Answer_Text;
-                        question.BaselineAnswerMemo = baselineAnswer.Free_Response_Answer;
-                    }
-
-
-                    grouping.Questions.Add(question);
-                }
-
-                // Recurse down to build subgroupings
-                GetSubgroups(grouping, sg.Grouping_Id);
-            }
-        }*/
-
 
 
         /// <summary>
@@ -1052,7 +960,7 @@ namespace CSETWebCore.Business.Maturity
                         Sequence = myQ.Sequence,
                         ShortName = myQ.Short_Name,
                         QuestionType = "Maturity",
-                        QuestionText = myQ.Question_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
+                        QuestionText = myQ.Question_Text,
 
                         Scope = myQ.Scope,
                         RecommendedAction = myQ.Recommend_Action,
