@@ -1,6 +1,6 @@
 {
     "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["TSA", "TSAonline"],
+    "currentConfigChain": ["CSET"],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -66,6 +66,78 @@
         "showVulnerabilitiesDiagramInventoryTab": false,
         "additionalUserGuides": []
     },
+    "moduleBehaviors": [
+        {
+            "moduleName": "EDM",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "CRR",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "IMR",
+            "showMaturityLevelBadge": false,
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "RRA",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "CIS",
+            "questionIcons": {
+                "showDetails": false,
+                "showObservations": false,
+                "showReferences": false,
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "CPG",
+            "showMaturityLevelBadge": false,
+            "questionIcons": {
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "C2M2",
+            "questionIcons": {
+                "showReviewed": false
+            }
+        },
+        {
+            "moduleName": "ISE",
+            "questionIcons": {
+                "showObservations": false
+            }
+        },
+        {
+            "moduleName": "HYDRO",
+            "questionIcons": {
+                "showDetails": false,
+                "showGuidance": false,
+                "showObservations": false,
+                "showReferences": false
+            }
+        }
+    ],
     "answersDefault": [
         {
             "code": "U",
