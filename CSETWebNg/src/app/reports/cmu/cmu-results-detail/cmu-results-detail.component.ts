@@ -21,19 +21,20 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { QuestionsService } from './../../../../services/questions.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { Question } from '../../../../models/questions.model';
-import { ConfigService } from '../../../../services/config.service';
-import { MaturityService } from '../../../../services/maturity.service';
-import { ReportService } from '../../../../services/report.service';
+import { Question } from '../../../models/questions.model';
+import { QuestionsService } from '../../../services/questions.service';
+import { ConfigService } from '../../../services/config.service';
+import { MaturityService } from '../../../services/maturity.service';
+import { ReportService } from '../../../services/report.service';
 
 @Component({
-  selector: 'app-crr-results-detail',
-  templateUrl: './crr-results-detail.component.html',
-  styleUrls: ['../../../../reports/reports.scss']
+  selector: 'app-cmu-results-detail',
+  templateUrl: './cmu-results-detail.component.html',
+  styleUrls: ['./cmu-results-detail.component.scss', '../../reports.scss']
 })
-export class CrrResultsDetailComponent implements OnInit {
+export class CmuResultsDetailComponent {
+
 
   @Input()
   domain: any;
