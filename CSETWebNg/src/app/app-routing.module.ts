@@ -201,6 +201,7 @@ import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-it
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
+import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
 
 const appRoutes: Routes = [
 
@@ -477,6 +478,7 @@ const appRoutes: Routes = [
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
+      { path: 'imrreport', component: ImrReportComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'vadrOpenEndedReport', component: OpenEndedQuestionsComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
