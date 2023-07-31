@@ -72,6 +72,11 @@ export class QuestionFilterService {
    */
   public maturityModelId: number;
 
+  /**
+   * Consuming pages can set a model name
+   */
+  public maturityModelName: string;
+
 
   /**
    * Constructor

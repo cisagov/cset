@@ -607,8 +607,8 @@ export class QuestionExtrasComponent implements OnInit {
    * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName)
-
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
+  
     if (mode == 'DETAIL') {
       return behavior?.questionIcons?.showDetails ?? true;
     }
@@ -653,7 +653,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   whichSupplementalIcon() {
-    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName);
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
     if (!!behavior && behavior.questionIcons.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
     } else {

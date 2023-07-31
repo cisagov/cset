@@ -90,6 +90,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   autoGenerateInProgress: boolean = false;
   maturityModelId: number;
+  maturityModelName: string;
   
 
   /**
@@ -119,6 +120,7 @@ export class QuestionBlockIseComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
+      this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
 
       this.iseExamLevel = this.ncuaSvc.getExamLevel();
 
@@ -197,8 +199,8 @@ export class QuestionBlockIseComponent implements OnInit {
     return "break-all";
   }
 
-  displayTooltip(maturityModelId: number, option: string) {
-    let toolTip = this.questionsSvc.answerDisplayLabel(maturityModelId, option);
+  displayTooltip(maturityModelName: string, option: string) {
+    let toolTip = this.questionsSvc.answerDisplayLabel(maturityModelName, option);
     if (toolTip === 'Yes' || toolTip === 'No') {
       toolTip = "";
     }
