@@ -578,6 +578,10 @@ import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-it
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
+import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
+import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
+import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
+import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
 
 
 
@@ -1017,6 +1021,8 @@ import { KeyReportComponent } from './assessment/results/reports/key-report/key-
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
+        CmuPerformanceSummaryComponent,
+        ImrReportComponent,
         ReferencesBlockComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
@@ -1113,6 +1119,8 @@ import { KeyReportComponent } from './assessment/results/reports/key-report/key-
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
         KeyReportComponent,
+        CmuGoalPerfStackedBarComponent,
+        CmuResultsDetailComponent,
     ],
     providers: [
         ConfigService,

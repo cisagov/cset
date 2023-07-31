@@ -28,7 +28,7 @@
     <tr *ngFor="let cq of data">
         <td class="tint2" style="width: 20%" [innerHTML]="cq.componentName">    </td>
         <td [innerHTML]="cq.question"></td>
-        <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel(0, cq.answer)}}</td>
+        <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel('', cq.answer)}}</td>
     </tr>
 </table>
 
