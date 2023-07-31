@@ -61,6 +61,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   showQuestionIds = false;
 
   maturityModelId: number;
+  maturityModelName: string;
 
 
   /**
@@ -86,6 +87,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
+      this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
     }
 
     this.refreshReviewIndicator();
@@ -138,11 +140,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (!!behavior) {
       return behavior.showMaturityLevelBadge ?? true;
     }
-
-    // // CPG (11) does not have levels - don't show the indicator
-    // if ([11].indexOf(q.maturityModelId) >= 0) {
-    //   return false;
-    // }
 
     return true;
   }
