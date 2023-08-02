@@ -89,3 +89,11 @@ export interface CrrReportChart {
   values: number[];
 }
 
+
+/**
+ * Intended to be a generic model that
+ * supports the CMU models: EDM, CRR and IMR
+ */
+export interface CmuReport {
+  domains: CrrMaturityDomainModel[];
+}

@@ -36,7 +36,6 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'layout-main',
   templateUrl: './layout-main.component.html',
   styleUrls: ['./layout-main.component.scss'],

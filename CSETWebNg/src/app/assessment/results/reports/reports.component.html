@@ -37,7 +37,8 @@
     <p *ngIf="isCyberFlorida" style="margin-top: 20px;">
       We appreciate your participation in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
       cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
-      through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources
+      through this effort will be essential to helping Florida’s elected leaders determine how best to allocate
+      resources
       and enact appropriate legislation to create a more secure Sunshine State!
 
     </p>
@@ -131,7 +132,7 @@
 
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('EDM') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>External Dependencies Management</h4>
+      <h4>CISA External Dependencies Management</h4>
       <div>
         <button tabindex="0" (click)="clickReportLink('edm')" class="btn btn-link btn-link-dark text-left">
           EDM Report
@@ -155,7 +156,7 @@
 
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CRR') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Cyber Resilience Review</h4>
+      <h4>CISA Cyber Resilience Review</h4>
 
       <div class="d-flex flex-row" style="align-items: end">
         <div class="mr-3 mb-3">
@@ -183,9 +184,31 @@
       </button>
     </div>
 
+    <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('IMR') && !isMobile"
+      class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>CISA Incident Management Review</h4>
+
+      <div class="d-flex flex-row" style="align-items: end">
+        <div class="mr-3 mb-3">
+          <button tabindex="0" (click)="clickReportLink('imrreport')" class="btn btn-link btn-link-dark">
+            IMR Report
+          </button>
+        </div>
+        <div class="form-group">
+          <label class="mb-1" for="securityId">Confidentiality</label>
+          <select class="form-control" [(ngModel)]="securitySelected" id="securityId" name="securityId" tabindex="0"
+            (change)="onSelectSecurity($event.target.value)">
+            <option *ngFor="let s of securityIdentifier" [value]="s.confidentialTypeKey">
+              {{ s.confidentialTypeKey }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('RRA') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Ransomware Readiness Assessment</h4>
+      <h4>CISA Ransomware Readiness Assessment</h4>
       <div>
         <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark text-left">
           RRA Report
@@ -260,13 +283,16 @@
         ng-star-inserted
       ">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-        <span *ngIf="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues"
+          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           "Submit" button and some reports are disabled until all statements have been answered.
         </span>
-        <span *ngIf="(disableIseReportLinks && assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="(disableIseReportLinks && assessSvc.assessment.isE_StateLed) && !ncuaSvc.unassignedIssues"
+          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           There are unanswered statements. Some domains will be incomplete.
         </span>
-        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+        <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues"
+          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
           <br><br>"Submit" button and some reports are disabled until all Issues have an Issue Type assigned.<br><br>
           <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
             Please assign an "Issue Type" to the following issue which was generated:
@@ -278,9 +304,11 @@
             {{ title }}
           </span><br>
         </span>
-        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
+        <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues"
+          class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br>
           <span *ngIf="!assessSvc.assessment.isE_StateLed">
-            "Submit" button and some reports are disabled until all statements have been answered and all Issues have an Issue Type assigned.<br><br>
+            "Submit" button and some reports are disabled until all statements have been answered and all Issues have an
+            Issue Type assigned.<br><br>
           </span>
           <span *ngIf="assessSvc.assessment.isE_StateLed">
             There are unanswered statements. Some domains will be incomplete.
@@ -322,7 +350,7 @@
 
     <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CIS') && !isMobile"
       class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Cyber Infrastructure Survey (CIS)</h4>
+      <h4>CISA Cyber Infrastructure Survey (CIS)</h4>
 
       <div>
         <button tabindex="0" (click)="clickReportLink('cisSurveyReport')" class="btn btn-link btn-link-dark text-left">
@@ -376,7 +404,7 @@
       <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('MVRA') && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>
-          Minimum Viable Resilience Assessment (MVRA) - DRAFT
+          CISA Minimum Viable Resilience Assessment (MVRA) - DRAFT
         </h4>
 
         <div>
@@ -389,7 +417,7 @@
       <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('CPG') && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>
-          Cybersecurity Performance Goals (CPG)
+          CISA Cybersecurity Performance Goals (CPG)
         </h4>
 
         <div>
@@ -428,21 +456,23 @@
           </button>
         </div> -->
         <div>
-          <button tabindex="0" (click)="clickReportLink('hydroActionItemsReport')" class="btn btn-link btn-link-dark text-left">
+          <button tabindex="0" (click)="clickReportLink('hydroActionItemsReport')"
+            class="btn btn-link btn-link-dark text-left">
             Action Items Report
           </button>
         </div>
       </div>
 
 
-      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02C') && !isMobile"        
+      <div *ngIf="!!assessSvc.assessment && assessSvc.usesMaturityModel('SD02C') && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>
           Pipeline Security Directive (SD02C)
         </h4>
 
         <div>
-          <button tabindex="0" (click)="clickReportLink('sd-answer-summary')" class="btn btn-link btn-link-dark text-left">
+          <button tabindex="0" (click)="clickReportLink('sd-answer-summary')"
+            class="btn btn-link btn-link-dark text-left">
             Answer Summary
           </button>
         </div>
@@ -463,15 +493,26 @@
           <span>Export</span>
         </button>
       </div>
+        <div class="mt-5">
+          <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
+            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+            (click)="clickExport()"
+            matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span>Export</span>
+          </button>
+        </div>
 
-    <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
-      [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+        <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+          [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 
 
-    <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
-      <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')" tabindex="0">Back</button>
-      <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
-        [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
-    </div>
+        <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+          <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')"
+            tabindex="0">Back</button>
+          <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)"
+            tabindex="0"
+            [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) || this.ncuaSvc.unassignedIssues || this.ncuaSvc.submitInProgress">Submit</button>
+        </div>
 
-  </div>
+      </div>
