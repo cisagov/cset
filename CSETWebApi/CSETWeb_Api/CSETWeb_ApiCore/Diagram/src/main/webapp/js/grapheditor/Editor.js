@@ -59,9 +59,9 @@ Editor = function (chromeless, themes, model, graph, editable) {
             CsetUtils.adjustConnectability(edit);
             CsetUtils.edgesToTop(this.graph, edit);
             CsetUtils.handleZoneChanges(edit);
-            console.log('after a lot of stuff but before refresh')
+            //console.log('after a lot of stuff but before refresh')
 
-            console.log(this)
+            //console.log(this)
             this.graph.refresh();
             console.log('after refresh: ---------------------')
             console.log(this)
