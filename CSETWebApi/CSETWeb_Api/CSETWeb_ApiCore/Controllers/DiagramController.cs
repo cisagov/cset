@@ -452,7 +452,7 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _diagram.ChangeShapeToComponent(assessmentId, type, id, label);
 
-            return Ok();
+            return Ok(GetComponents());
         }
 
 

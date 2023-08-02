@@ -39,6 +39,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 export class DiagramInventoryComponent implements OnInit {
 
   componentsExist: boolean = true;
+  compListUpdateFromShapesTab: any = [];
 
   /**
    *
@@ -64,6 +65,15 @@ export class DiagramInventoryComponent implements OnInit {
    */
   onChange(list: any) {
     this.componentsExist = list.length > 0;
+  }
+
+  /**
+   *
+   */
+  onShapeChange(list: any) {
+    this.componentsExist = list.length > 0;
+
+    this.compListUpdateFromShapesTab = list;
   }
 
   /**

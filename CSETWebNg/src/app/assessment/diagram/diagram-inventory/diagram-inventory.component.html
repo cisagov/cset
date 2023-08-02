@@ -44,13 +44,13 @@
             <app-diagram-vulnerabilities (componentsChange)="onChange($event)"></app-diagram-vulnerabilities>
           </mat-tab>
           <mat-tab label="Components">
-            <app-diagram-components (componentsChange)="onChange($event)"></app-diagram-components>
+            <app-diagram-components (componentsChange)="onChange($event)" [diagramComponentList]="compListUpdateFromShapesTab"></app-diagram-components>
           </mat-tab>
           <mat-tab label="Zones">
             <zones></zones>
           </mat-tab>
           <mat-tab label="Shapes">
-            <shapes></shapes>
+            <shapes (componentsChange)="onShapeChange($event)"></shapes>
           </mat-tab>
           <mat-tab label="Text"><diagram-text></diagram-text></mat-tab>
           <mat-tab label="Links">
