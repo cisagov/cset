@@ -198,7 +198,7 @@ var mxLog = {
                 //using UserObject makes the page not load
                     //if ("UserObject" === typeof a) {
                    
-                    if ("object" === typeof a) {
+                    if ("object" === typeof a || "UserObject" === typeof a) {
                         var b = mxUtils.getFunctionName(a.constructor);
                         a[mxObjectIdentity.FIELD_NAME] = b + "#" + mxObjectIdentity.counter++
                     } else "function" === typeof a && (a[mxObjectIdentity.FIELD_NAME] = "Function#" + mxObjectIdentity.counter++);
@@ -208,7 +208,7 @@ var mxLog = {
         },
         clear: function (a) {
             //"UserObject" !== typeof a && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
-            "object" !== typeof a && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
+            ("object" !== typeof a || "UserObject" !== typeof a) && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
         }
     };
 
@@ -564,8 +564,8 @@ var mxEffects = {
         },
         remove: function (a, b) {
             var c = null;
-            //if ("UserObject" == typeof b)
-            if ("object" == typeof b)
+            if ("UserObject" == typeof b || "object" == typeof b)
+            //if ("object" == typeof b)
                 for (var d = mxUtils.indexOf(b, a); 0 <= d;) b.splice(d, 1), c = a, d = mxUtils.indexOf(b, a);
             for (var e in b) b[e] == a && (delete b[e], c = a);
             return c
@@ -884,7 +884,7 @@ var mxEffects = {
                 else {
                     d = new a.constructor;
                     //for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "object" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
-                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "UserObject" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
+                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || ("UserObject" != typeof a[e] || "object" != typeof a[e]) ? a[e] : mxUtils.clone(a[e]))
                 } return d
         },
         equalPoints: function (a, b) {
@@ -925,8 +925,8 @@ var mxEffects = {
             for (c in a) try {
                 if (null == a[c]) b += c + " = [null]\n";
                 else if ("function" == typeof a[c]) b += c + " => [Function]\n";
-                else if ("object" == typeof a[c]) {
-                //else if ("UserObject" == typeof a[c]) {
+                //else if ("object" == typeof a[c]) {
+                else if ("UserObject" == typeof a[c]) {
                     var d = mxUtils.getFunctionName(a[c].constructor);
                     b += c + " => [" + d + "]\n"
                 } else b += c + " = " + a[c] + "\n"
@@ -9897,8 +9897,12 @@ mxGraphModel.prototype.add = function (a, b, c) {
     if (b != a && null != a && null != b) {
         null == c && (c = this.getChildCount(a));
         var d = a != this.getParent(b);
-        console.log("in add, b:")
+        console.log('in add, a:')
+        console.log(a)
+        console.log('in add, b:')
         console.log(b)
+        console.log('in add, c:')
+        console.log(c)
         this.execute(new mxChildChange(this, a, b, c));
         this.maintainEdgeParent && d && this.updateEdgeParents(b)
     }
@@ -10240,6 +10244,11 @@ mxGraphModel.prototype.getGeometry = function (a) {
     return null != a ? a.getGeometry() : null
 };
 mxGraphModel.prototype.setGeometry = function (a, b) {
+    console.log('in setGeometry:')
+    console.log('a:')
+    console.log(a)
+    console.log('b:')
+    console.log(b)
     b != this.getGeometry(a) && this.execute(new mxGeometryChange(this, a, b));
     return b
 };
@@ -21082,9 +21091,9 @@ mxCodecRegistry.register(function () {
                     null != p && (n.setAttribute("x", Math.round(p.x)), n.setAttribute("y", Math.round(p.y)), n.setAttribute("width", Math.round(p.width)), n.setAttribute("height", Math.round(p.height)));
                     n.setAttribute("scale", c.scale)
                 } else if (null != f && null != l) {
-                    for (p in f.style) g = f.style[p], "function" == typeof g && "UserObject" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "UserObject" !=
+                    for (p in f.style) g = f.style[p], "function" == typeof g && ("UserObject" == typeof g || "object" == typeof g) && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && ("UserObject" !=
                     //for (p in f.style) g = f.style[p], "function" == typeof g && "object" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "object" !=
-                        typeof g && n.setAttribute(p, g);
+                        typeof g || "object" == typeof g) && n.setAttribute(p, g);
                     g = f.absolutePoints;
                     if (null != g && 0 < g.length) {
                         l = Math.round(g[0].x) + "," + Math.round(g[0].y);
@@ -21130,7 +21139,7 @@ var mxStylesheetCodec = mxCodecRegistry.register(function () {
         function (b, c) {
             b = typeof c;
             //"function" == b ? c = mxStyleRegistry.getName(c) : "object" == b && (c = null);
-            "function" == b ? c = mxStyleRegistry.getName(c) : "UserObject" == b && (c = null);
+            "function" == b ? c = mxStyleRegistry.getName(c) : ("UserObject" == b || "object" == b) && (c = null);
             return c
         };
     a.decode = function (b, c, d) {

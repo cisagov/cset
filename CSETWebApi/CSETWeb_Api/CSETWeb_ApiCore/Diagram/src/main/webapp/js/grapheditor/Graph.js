@@ -928,20 +928,14 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 		this.connectionHandler.createTargetVertex = function(evt, source)
 		{
 			source = this.graph.getCompositeParent(source);
-			console.log("source in createTargetVertex:")
-			console.log(source)
+
 			return mxConnectionHandler.prototype.createTargetVertex.apply(this, arguments);
 		};
 
 		// Applies newEdgeStyle
 		this.connectionHandler.insertEdge = function(parent, id, value, source, target, style)
 		{
-			console.log('in insertEdge')
-			console.log('value:')
-			console.log(value)
 			var edge = mxConnectionHandler.prototype.insertEdge.apply(this, arguments);
-			console.log('edge:')
-			console.log(edge)
 			if (source != null)
 			{
 				this.graph.applyNewEdgeStyle(source, [edge]);
@@ -2462,8 +2456,7 @@ Graph.prototype.init = function(container)
 	Graph.prototype.applyNewEdgeStyle = function(source, edges, dir)
 	{
 		var style = this.getCellStyle(source);
-		console.log('style in newEdgeStyle:')
-console.log(style)
+
 		var temp = style['newEdgeStyle'];
 		
 		if (temp != null)
@@ -3868,7 +3861,6 @@ Graph.prototype.isSplitTarget = function(target, cells, evt)
  */
 Graph.prototype.getLabel = function(cell)
 {
-	console.log(cell)
 	var result = mxGraph.prototype.getLabel.apply(this, arguments);
 	
 	if (result != null && this.isReplacePlaceholders(cell) && cell.getAttribute('placeholder') == null)
@@ -4816,7 +4808,6 @@ Graph.prototype.getIndexableText = function(cells)
 Graph.prototype.convertValueToString = function(cell)
 {
 	var value = this.model.getValue(cell);
-	//if (value != null && typeof (value) == 'UserObject')
 	if (value != null && typeof(value) == 'object')
 	{
 		var result = null;
@@ -4827,7 +4818,6 @@ Graph.prototype.convertValueToString = function(cell)
 					
 			while (result == null && current != null)
 			{
-				//if (current.value != null && typeof (current.value) == 'UserObject')
 				if (current.value != null && typeof(current.value) == 'object')
 				{
 					result = (current.hasAttribute(name)) ? ((current.getAttribute(name) != null) ?
@@ -5783,9 +5773,9 @@ HoverIcons.prototype.init = function()
 	    		this.reset();
 	    	}
 	    	else if (!this.graph.isMouseDown && !mxEvent.isTouchEvent(evt))
-	    	{
+			{
 	    		this.update(this.getState(me.getState()),
-	    			me.getGraphX(), me.getGraphY());
+					me.getGraphX(), me.getGraphY());
 	    	}
 	    	
 	    	if (this.graph.connectionHandler != null &&
@@ -5795,22 +5785,21 @@ HoverIcons.prototype.init = function()
 	    	}
 	    }),
 	    mouseUp: mxUtils.bind(this, function(sender, me)
-	    {
+		{
 	    	var evt = me.getEvent();
 	    	var pt = mxUtils.convertPoint(this.graph.container,
 				mxEvent.getClientX(evt), mxEvent.getClientY(evt))
-	    	
 	    	if (this.isResetEvent(evt))
-	    	{
+			{
 	    		this.reset();
 	    	}
 	    	else if (this.isActive() && !connectionHandlerActive &&
 	    		this.mouseDownPoint != null)
-	    	{
+			{
     			this.click(this.currentState, this.getDirection(), me);
 	    	}
 	    	else if (this.isActive())
-	    	{
+			{
 	    		// Selects target vertex after drag and clone if not only new edge was inserted
 	    		if (this.graph.getSelectionCount() != 1 || !this.graph.model.isEdge(
 	    			this.graph.getSelectionCell()))
@@ -5825,13 +5814,13 @@ HoverIcons.prototype.init = function()
 	    	}
 	    	else if (mxEvent.isTouchEvent(evt) || (this.bbox != null &&
 	    		mxUtils.contains(this.bbox, me.getGraphX(), me.getGraphY())))
-	    	{
+			{
 	    		// Shows existing hover icons if inside bounding box
 	    		this.setDisplay('');
 	    		this.repaint();
 	    	}
 	    	else if (!mxEvent.isTouchEvent(evt))
-	    	{
+			{
 	    		this.reset();
 	    	}
 	    	
@@ -5893,7 +5882,7 @@ HoverIcons.prototype.createArrow = function(img, tooltip, direction)
 	    	if (this.activeArrow != null && this.activeArrow != arrow)
 	    	{
 	    		mxUtils.setOpacity(this.activeArrow, this.inactiveOpacity);
-	    	}
+			}
 
 			this.graph.connectionHandler.constraintHandler.reset();
 			mxUtils.setOpacity(arrow, 100);
@@ -6117,7 +6106,7 @@ HoverIcons.prototype.repaint = function()
 	{
 		// Checks if cell was deleted
 		this.currentState = this.getState(this.currentState);
-		
+
 		// Cell was deleted	
 		if (this.currentState != null &&
 			this.graph.model.isVertex(this.currentState.cell) &&
@@ -6225,7 +6214,8 @@ HoverIcons.prototype.repaint = function()
 				}
 
 				var currentGeo = this.graph.getCellGeometry(this.currentState.cell);
-				
+				console.log('currentGeo:')
+				console.log(currentGeo)
 				var checkCollision = mxUtils.bind(this, function(cell, arrow)
 				{
 					var geo = this.graph.model.isVertex(cell) && this.graph.getCellGeometry(cell);
@@ -6402,10 +6392,12 @@ HoverIcons.prototype.update = function(state, x, y)
 					if (!this.isActive() && !this.graph.isMouseDown &&
 						!this.graph.panningHandler.isActive())
 					{
+						console.log('in update -------')
 						this.prev = state;
 						this.update(state, x, y);
 					}
 				}), this.updateDelay + 10);
+				console.log('after update -------')
 			}
 		}
 		else if (this.startTime != null)
@@ -6428,12 +6420,15 @@ HoverIcons.prototype.update = function(state, x, y)
 				if (state != null && this.graph.isEnabled())
 				{
 					this.removeNodes();
+
 					this.setCurrentState(state);
 					this.repaint();
-					
+					console.log('after repaint')
 					// Resets connection points on other focused cells
 					if (this.graph.connectionHandler.constraintHandler.currentFocus != state)
 					{
+						console.log('in reset -------')
+
 						this.graph.connectionHandler.constraintHandler.reset();
 					}
 				}
@@ -7994,7 +7989,7 @@ mxStencilRegistry.parseStencilSet = function(root, postStencilLoad, install)
 					{
 						var w = shape.getAttribute('w');
 						var h = shape.getAttribute('h');
-						
+
 						w = (w == null) ? 80 : parseInt(w, 10);
 						h = (h == null) ? 80 : parseInt(h, 10);
 	
