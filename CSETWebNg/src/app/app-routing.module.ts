@@ -494,7 +494,7 @@ const appRoutes: Routes = [
       { path: 'hydroReport', component: HydroReportComponent },
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
-      { path: 'key-report/:numberOfContacts', component: KeyReportComponent },
+      { path: 'key-report', component: KeyReportComponent },
     ]
   },
   { path: '**', redirectTo: 'home' }
