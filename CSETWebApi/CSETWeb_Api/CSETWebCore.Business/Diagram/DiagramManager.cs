@@ -872,10 +872,10 @@ namespace CSETWebCore.Business.Diagram
 
 
         /// <summary>
-        /// Sets the type of a component in the diagram XML 
-        /// and in the assessment's component inventory.
+        /// Changes a shape into a CSET component.
         /// </summary>
-        /// <param name="guid"></param>
+        /// <param name="label"></param>
+        /// <param name="id"></param>
         /// <param name="type"></param>
         public void ChangeShapeToComponent(int assessmentId, string type, string id, string label)
         {
@@ -883,6 +883,8 @@ namespace CSETWebCore.Business.Diagram
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
             var symbol = _context.COMPONENT_SYMBOLS.FirstOrDefault(x => x.Abbreviation == type);
+
+            // Sorry about the hardcoded styling, but this is the same for every cset component I found, so it *should* be ok
             var symbolStyle = "whiteSpace=wrap;html=1;image;image=img/cset/" + symbol.File_Name + ";labelBackgroundColor=none;";
 
             if (symbol?.Component_Symbol_Id == null)
@@ -906,7 +908,7 @@ namespace CSETWebCore.Business.Diagram
 
             // creates a UserObject to be the new CSET component
             var userObject = xDiagram.CreateElement("UserObject");
-            userObject.SetAttribute("label", symbol.Symbol_Name);
+            userObject.SetAttribute("label", label);
             userObject.SetAttribute("ComponentGuid", componentGuid.ToString());
             userObject.SetAttribute("HasUniqueQuestions", "");
             userObject.SetAttribute("IPAddress", "");

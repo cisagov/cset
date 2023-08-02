@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
@@ -35,10 +35,14 @@ import { Comparer } from '../../../../helpers/comparer';
 export class ShapesComponent implements OnInit {
   shapes = [];
 
+  @Output()
+  componentsChange = new EventEmitter<any>();
+
   /**
   * A flattened list of all the component symbols CSET supports
   */
   symbols: any[];
+  diagramComponentList: any[] = []
   displayedColumns = ['label', 'color', 'layer', 'visible'];
   newComponent: any = {'componentGuid':'', 'assetType':''};
   comparer: Comparer = new Comparer();
@@ -53,9 +57,23 @@ export class ShapesComponent implements OnInit {
 
   getShapes() {
     this.diagramSvc.getDiagramShapes().subscribe((x: any) => {
-      this.shapes = x;
+      if (this.shapes.length > x.length) { // if a shape was removed (i.e. changed to a component)
+        this.componentsChange.emit(this.getComponents());
+      }
+
+      this.shapes = x;      
     });
   }
+
+  /**
+   *
+   */
+  getComponents() {
+    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
+      this.diagramComponentList = x;
+    });
+  }
+
 
   /**
    * Gets the full list of symbols so that we 
@@ -86,12 +104,21 @@ export class ShapesComponent implements OnInit {
     });
   }
 
-  changeShapeToComponent(event: any, id: string, label: string) {
-    this.diagramSvc.changeShapeToComponent(event.target.value, id, label).subscribe(
-      (r: any) =>
-        {
-          this.getShapes();
-        }
+  changeShapeToComponent(event: any, id: string) {
+    let type = event.target.value;
+
+    this.diagramSvc.getDiagramComponents().subscribe(
+      (x: any) => {
+        let label = this.diagramSvc.applyComponentSuffix(type, x);
+
+        this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
+          (compList: any) =>
+            {
+              this.getShapes();
+              this.componentsChange.emit(compList);
+            }
+        );      
+      }
     );
 
   }

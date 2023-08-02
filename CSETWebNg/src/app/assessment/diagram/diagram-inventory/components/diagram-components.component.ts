@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
@@ -35,10 +35,12 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dial
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  diagramComponentList: any[] = [];
+  //diagramComponentList: any[] = [];
 
   @Output()
   componentsChange = new EventEmitter<any>();
+
+  @Input() diagramComponentList;
 
   comparer: Comparer = new Comparer();
   assetTypes: any;
@@ -99,24 +101,8 @@ export class DiagramComponentsComponent implements OnInit {
   changeAssetType(evt: any, guid: string, label: string) {
     let componentGuid = guid;
     let newType = evt.target.value;
-    let newLabel = newType;
 
-    let suffix = 0; // tracking the new number after the hyphen (CLK-1, CON-13, etc.)
-    let similarCompLabels = this.diagramComponentList.filter(c => c.label.substring(0, newLabel.length) == newLabel);
-    for (let i = 0; i < similarCompLabels.length; i++) {
-      let compLabel = similarCompLabels[i].label;
-
-      if (compLabel == newLabel) {
-        suffix = 1;
-      }
-      else if (compLabel.charAt(newLabel.length) == '-' && +compLabel.substring(newLabel.length + 1) >= suffix) {
-        suffix = (+compLabel.substring(newLabel.length + 1)) + 1; //gets the number after the hyphen, then increments
-      }
-    }
-
-    if (suffix > 0) {
-      newLabel += '-' + suffix; // if suffix gets updated, add a hyphen before the suffix and append both
-    }
+    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramComponentList);
     
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
