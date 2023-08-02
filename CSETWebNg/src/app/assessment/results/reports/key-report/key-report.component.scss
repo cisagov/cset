@@ -24,3 +24,13 @@
     min-width: 160px !important;
     display: inline-block !important
   }
+  .link {
+    color: #1a53ff;; 
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    color:  #0056b3;
+    text-decoration:underline;
+}
