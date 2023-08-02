@@ -153,7 +153,7 @@ namespace CSETWebCore.Business.Question
             if (requirement != null)
             {
                 tabData.Set_Name = set.Set_Name;
-                tabData.Text = FormatRequirementText(requirement.Requirement_Text);
+                tabData.Text = requirement.Requirement_Text;
                 tabData.RequirementID = requirement.Requirement_Id;
                 if (!IsComponent)
                     RequirementFrameworkTitle = requirement.Requirement_Title;
@@ -223,7 +223,7 @@ namespace CSETWebCore.Business.Question
 
             RequirementTabData tabData = new RequirementTabData();
             tabData.RequirementID = requirement.Requirement_Id;
-            tabData.Text = FormatRequirementText(requirement.Requirement_Text);
+            tabData.Text = requirement.Requirement_Text;
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
@@ -368,7 +368,7 @@ namespace CSETWebCore.Business.Question
                 var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == frameworkData.RequirementID).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
-                    Text = FormatRequirementText(t.Requirement_Text),
+                    Text = t.Requirement_Text,
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info),
                     Questions = t.NEW_QUESTIONs(_context).Select(s => new RelatedQuestion
                     {
@@ -447,7 +447,7 @@ namespace CSETWebCore.Business.Question
                 var requirement = _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == reqid).Select(t => new
                 {
                     Question_or_Requirement_Id = t.Requirement_Id,
-                    Text = FormatRequirementText(t.Requirement_Text),
+                    Text = t.Requirement_Text,
                     SupplementalInfo = FormatSupplementalInfo(t.Supplemental_Info)
                 }).FirstOrDefault();
                 if (requirement != null)
@@ -575,7 +575,6 @@ namespace CSETWebCore.Business.Question
         /// Formats a SupplementalInfo for browser display as follows:
         ///  - if null, returns null.
         ///  - if it is a XAML FlowDocument, it is converted to HTML.
-        ///  - any CRLF linefeed characters in the string are converted to <br /> tags.
         /// </summary>
         /// <param name="supp"></param>
         /// <returns></returns>
@@ -592,27 +591,7 @@ namespace CSETWebCore.Business.Question
                 return html.Replace("margin:0 0 0 0;", "").Replace("padding:0 0 0 0;", "");
             }
 
-            // Convert any linefeed characters to HTML line break tags
-            const string pattern = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
-            Regex reg = new Regex(pattern);
-            var matches = reg.Matches(supp);
-            if (matches.Count > 0)
-            {
-                return supp;
-            }
-
-            return supp.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
-        }
-
-
-        /// <summary>
-        /// Converts text for browser HTML display.
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private string FormatRequirementText(string text)
-        {
-            return text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>");
+            return supp;
         }
     }
 }

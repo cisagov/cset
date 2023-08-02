@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
+import { Color, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { RraDataService } from '../../../../services/rra-data.service';
 
 @Component({
@@ -45,7 +45,10 @@ export class RraSummaryComponent implements OnInit {
   legendPosition: string = 'below';
   arcWidth = .5;
   legend: string[] = [];
-  colorScheme = {
+  colorScheme: Color = {
+    name: 'rraSummaryColors',
+    selectable: true,
+    group: ScaleType.Ordinal,
     domain: ['#28A745', '#DC3545', '#c3c3c3']
   };
 
@@ -98,6 +101,6 @@ export class RraSummaryComponent implements OnInit {
 
   buildLegend() {
     this.legend = this.single.map((d: any) => Math.round(d.value) + "% " + d.name)
-    this.legendColors = new ColorHelper(this.colorScheme, "ordinal", this.single.map((d: any) => d.name), this.colorScheme);
+    this.legendColors = new ColorHelper(this.colorScheme, ScaleType.Ordinal, this.single.map((d: any) => d.name), this.colorScheme);
   }
 }

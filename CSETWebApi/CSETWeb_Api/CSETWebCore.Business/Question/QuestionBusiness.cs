@@ -366,7 +366,7 @@ namespace CSETWebCore.Business.Question
                     DisplayNumber = (++displayNumber).ToString(),
                     QuestionId = dbQ.QuestionId,
                     QuestionType = dbQ.QuestionType,
-                    QuestionText = _questionRequirement.FormatLineBreaks(dbQ.SimpleQuestion),
+                    QuestionText = dbQ.SimpleQuestion,
                     Answer = answer?.a?.Answer_Text,
                     Answer_Id = answer?.a?.Answer_Id,
                     AltAnswerText = answer?.a?.Alternate_Justification,

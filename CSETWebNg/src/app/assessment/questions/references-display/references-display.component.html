@@ -24,10 +24,31 @@
     (no reference documents available)
 </div>
 
+<div *ngIf="question?.csfMappings?.length > 0" class="mb-4">
+    <div class="sub-header-1">NIST Cybsersecurity Framework (CSF) Reference</div>
+    <div>
+        <span *ngFor="let c of question.csfMappings; let i = index">
+            {{c}}{{i === question.csfMappings.length - 1 ? '' : ', '}}
+        </span>
+    </div>
+</div>
+
+<div *ngIf="question?.ttp?.length > 0 || !!question?.riskAddressed" class="mb-4">
+    <div class="sub-header-1">TTP or Risk Addressed</div>
+    <div>
+        {{question.riskAddressed}}
+    </div>
+    <ul>
+        <li *ngFor="let t of question.ttp"><a href="{{t.referenceUrl}}" target="_blank">{{t.description}}</a></li>
+    </ul>
+</div>
+
+
 <div *ngFor="let reftext of tab?.referenceTextList" [innerHTML]="reftext" class="mb-4">
 </div>
 
-<h6 *ngIf="sourceDocuments.length > 0" class="font-weight-bold">Source Documents</h6>
+
+<div *ngIf="sourceDocuments.length > 0" class="sub-header-1">Source Documents</div>
 <div *ngFor="let doc of sourceDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}: 
     <ng-container *ngFor="let b of doc.bookmarks; let l = last">
@@ -36,7 +57,8 @@
     </ng-container>
 </div>
 
-<h6 *ngIf="additionalDocuments.length > 0" class="font-weight-bold">Additional Documents</h6>
+
+<div *ngIf="additionalDocuments.length > 0" class="sub-header-1">Additional Documents</div>
 <div *ngFor="let doc of additionalDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}:
     <ng-container *ngFor="let b of doc.bookmarks; let l = last">

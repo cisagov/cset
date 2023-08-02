@@ -22,13 +22,13 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { JwtParser } from '../helpers/jwt-parser';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard  {
   private parser = new JwtParser();
   private holdItForAMoment = localStorage.getItem('isAPI_together_With_Web');
 

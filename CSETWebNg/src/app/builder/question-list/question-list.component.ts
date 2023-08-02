@@ -67,16 +67,6 @@ export class QuestionListComponent implements OnInit {
   }
 
   /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    if (!text) {
-      return '';
-    }
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  }
-
-  /**
    *
    */
   startQuestionEdit(q: Question) {

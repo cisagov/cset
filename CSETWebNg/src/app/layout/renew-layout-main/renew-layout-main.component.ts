@@ -36,7 +36,6 @@ import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/onlin
 
 
 @Component({
-  moduleId: module.id,
   selector: 'renew-layout-main',
   templateUrl: './renew-layout-main.component.html',
   styleUrls: ['./renew-layout-main.component.scss'],

@@ -1,6 +1,8 @@
 {
-    "NOTENODE":"Casing on config chain matters",
-    "currentConfigChain": ["TSA", "TSAonline"],
+    "NOTENODE": "Casing on config chain matters",
+    "currentConfigChain": [
+        "CSET"
+    ],
     "appCode": "CSET",
     "isRunningAnonymous": false,
     "app": {
@@ -29,7 +31,7 @@
     "installationMode": "TSA",
     "mobileEnvironment": "",
     "behaviors": {
-        "defaultTitle":"CSET",
+        "defaultTitle": "CSET",
         "showDisclaimer": true,
         "showModuleBuilder": true,
         "showModuleImport": true,
@@ -37,7 +39,7 @@
         "showAssessmentDocuments": true,
         "showObservations": true,
         "showFacilitatorDropDown": true,
-        "showNameDisclaimer":false,
+        "showNameDisclaimer": false,
         "showAggregation": true,
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
@@ -66,7 +68,7 @@
         "showVulnerabilitiesDiagramInventoryTab": false,
         "additionalUserGuides": []
     },
-    "answersDefault": [
+    "answerOptionsDefault": [
         {
             "code": "U",
             "answerLabel": "Unanswered"
@@ -108,111 +110,196 @@
             "answerLabel": "No with Issue(s)"
         }
     ],
-    "answersMVRA": [
+    "moduleBehaviors": [
         {
-            "code": "Y",
-            "buttonLabel": "Fully",
-            "buttonCss": "btn-yes",
-            "answerLabel": "Fully Implemented"
+            "moduleName": "EDM",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
         },
         {
-            "code": "N",
-            "buttonLabel": "Not",
-            "buttonCss": "btn-no",
-            "answerLabel": "Not Implemented"
+            "moduleName": "CRR",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
         },
         {
-            "code": "A",
-            "buttonLabel": "Partial",
-            "buttonCss": "btn-alt",
-            "answerLabel": "Partially Implemented"
-        }
-    ],
-    "answersACET": [
-        {
-            "code": "A",
-            "buttonLabel": "Yes(C)",
-            "buttonCss": "btn-alt",
-            "answerLabel": "Yes Compensating Control",
-            "note": "This will only apply in the ACET skin.  See QuestionsService"
-        }
-    ],
-    "answersISE": [
-        {
-            "code": "Y",
-            "buttonLabel": "Yes",
-            "buttonCss": "btn-yes",
-            "answerLabel": ""
+            "moduleName": "IMR",
+            "showMaturityLevelBadge": false,
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
         },
         {
-            "code": "N",
-            "buttonLabel": "No",
-            "buttonCss": "btn-no",
-            "answerLabel": ""
+            "moduleName": "RRA",
+            "questionIcons": {
+                "showDetails": false,
+                "guidanceIcon": "G",
+                "showReviewed": false
+            }
         },
         {
-            "code": "U",
-            "buttonLabel": "Unanswered"
-        }
-    ],
-    "answersCPG": [
-        {
-            "code": "Y",
-            "buttonLabel": "Imp",
-            "buttonCss": "btn-yes",
-            "answerLabel": "Implemented",
-            "buttonTooltip": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome."
+            "moduleName": "CIS",
+            "questionIcons": {
+                "showDetails": false,
+                "showObservations": false,
+                "showReferences": false,
+                "showReviewed": false
+            }
         },
         {
-            "code": "I",
-            "buttonLabel": "Prog",
-            "buttonCss": "btn-na",
-            "answerLabel": "In Progress",
-            "buttonTooltip": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome."
+            "moduleName": "SD02C",
+            "questionIcons": {
+                "showDetails": false
+            }
         },
         {
-            "code": "S",
-            "buttonLabel": "Scoped",
-            "buttonCss": "btn-alt",
-            "answerLabel": "Scoped",
-            "buttonTooltip": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal."
+            "moduleName": "CPG",
+            "showMaturityLevelBadge": false,
+            "questionIcons": {
+                "showDetails": false,
+                "showReviewed": false
+            },
+            "answerOptions": [
+                {
+                    "code": "Y",
+                    "buttonLabel": "Imp",
+                    "buttonCss": "btn-yes",
+                    "answerLabel": "Implemented",
+                    "buttonTooltip": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome."
+                },
+                {
+                    "code": "I",
+                    "buttonLabel": "Prog",
+                    "buttonCss": "btn-na",
+                    "answerLabel": "In Progress",
+                    "buttonTooltip": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome."
+                },
+                {
+                    "code": "S",
+                    "buttonLabel": "Scoped",
+                    "buttonCss": "btn-alt",
+                    "answerLabel": "Scoped",
+                    "buttonTooltip": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal."
+                },
+                {
+                    "code": "N",
+                    "buttonLabel": "Not",
+                    "buttonCss": "btn-no",
+                    "answerLabel": "Not Implemented",
+                    "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
+                }
+            ]
         },
         {
-            "code": "N",
-            "buttonLabel": "Not",
-            "buttonCss": "btn-no",
-            "answerLabel": "Not Implemented",
-            "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
-        }
-    ],
-    "answersC2M2": [
-        {
-            "code": "FI",
-            "buttonLabel": "FI",
-            "buttonCss": "btn-c2m2-fi",
-            "answerLabel": "Fully Implemented (FI)",
-            "buttonTooltip": "Fully Implemented - Complete"
+            "moduleName": "C2M2",
+            "questionIcons": {
+                "showReviewed": false
+            },
+            "answerOptions": [
+                {
+                    "code": "FI",
+                    "buttonLabel": "FI",
+                    "buttonCss": "btn-c2m2-fi",
+                    "answerLabel": "Fully Implemented (FI)",
+                    "buttonTooltip": "Fully Implemented - Complete"
+                },
+                {
+                    "code": "LI",
+                    "buttonLabel": "LI",
+                    "buttonCss": "btn-c2m2-li",
+                    "answerLabel": "Largely Implemented (LI)",
+                    "buttonTooltip": "Largely Implemented - Complete, but with a recognized opportunity for improvement"
+                },
+                {
+                    "code": "PI",
+                    "buttonLabel": "PI",
+                    "buttonCss": "btn-c2m2-pi",
+                    "answerLabel": "Partially Implemented (PI)",
+                    "buttonTooltip": "Partially Implemented - Incomplete; there are multiple opportunities for improvement"
+                },
+                {
+                    "code": "NI",
+                    "buttonLabel": "NI",
+                    "buttonCss": "btn-c2m2-ni",
+                    "answerLabel": "Not Implemented (NI)",
+                    "buttonTooltip": "Not Implemented - Absent; the practice is not performed by the organization"
+                }
+            ]
         },
         {
-            "code": "LI",
-            "buttonLabel": "LI",
-            "buttonCss": "btn-c2m2-li",
-            "answerLabel": "Largely Implemented (LI)",
-            "buttonTooltip": "Largely Implemented - Complete, but with a recognized opportunity for improvement"
+            "moduleName": "ACET",
+            "answerOptions": [
+                {
+                    "code": "A",
+                    "buttonLabel": "Yes(C)",
+                    "buttonCss": "btn-alt",
+                    "answerLabel": "Yes Compensating Control",
+                    "note": "This will only apply in the ACET skin.  See QuestionsService"
+                }
+            ]
         },
         {
-            "code": "PI",
-            "buttonLabel": "PI",
-            "buttonCss": "btn-c2m2-pi",
-            "answerLabel": "Partially Implemented (PI)",
-            "buttonTooltip": "Partially Implemented - Incomplete; there are multiple opportunities for improvement"
+            "moduleName": "ISE",
+            "questionIcons": {
+                "showObservations": false
+            },
+            "answerOptions": [
+                {
+                    "code": "Y",
+                    "buttonLabel": "Yes",
+                    "buttonCss": "btn-yes",
+                    "answerLabel": ""
+                },
+                {
+                    "code": "N",
+                    "buttonLabel": "No",
+                    "buttonCss": "btn-no",
+                    "answerLabel": ""
+                },
+                {
+                    "code": "U",
+                    "buttonLabel": "Unanswered"
+                }
+            ]
         },
         {
-            "code": "NI",
-            "buttonLabel": "NI",
-            "buttonCss": "btn-c2m2-ni",
-            "answerLabel": "Not Implemented (NI)",
-            "buttonTooltip": "Not Implemented - Absent; the practice is not performed by the organization"
+            "moduleName": "HYDRO",
+            "questionIcons": {
+                "showDetails": false,
+                "showGuidance": false,
+                "showObservations": false,
+                "showReferences": false
+            }
+        },
+        {
+            "moduleName": "MVRA",
+            "answerOptions": [
+                {
+                    "code": "Y",
+                    "buttonLabel": "Fully",
+                    "buttonCss": "btn-yes",
+                    "answerLabel": "Fully Implemented"
+                },
+                {
+                    "code": "N",
+                    "buttonLabel": "Not",
+                    "buttonCss": "btn-no",
+                    "answerLabel": "Not Implemented"
+                },
+                {
+                    "code": "A",
+                    "buttonLabel": "Partial",
+                    "buttonCss": "btn-alt",
+                    "answerLabel": "Partially Implemented"
+                }
+            ]
         }
     ]
 }
