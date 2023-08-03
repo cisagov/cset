@@ -198,7 +198,7 @@ var mxLog = {
                 //using UserObject makes the page not load
                     //if ("UserObject" === typeof a) {
                    
-                    if ("object" === typeof a || "UserObject" === typeof a) {
+                    if ("object" === typeof a) {
                         var b = mxUtils.getFunctionName(a.constructor);
                         a[mxObjectIdentity.FIELD_NAME] = b + "#" + mxObjectIdentity.counter++
                     } else "function" === typeof a && (a[mxObjectIdentity.FIELD_NAME] = "Function#" + mxObjectIdentity.counter++);
@@ -208,7 +208,7 @@ var mxLog = {
         },
         clear: function (a) {
             //"UserObject" !== typeof a && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
-            ("object" !== typeof a || "UserObject" !== typeof a) && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
+            ("object" !== typeof a) && "function" !== typeof a || delete a[mxObjectIdentity.FIELD_NAME]
         }
     };
 
@@ -884,7 +884,7 @@ var mxEffects = {
                 else {
                     d = new a.constructor;
                     //for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || "object" != typeof a[e] ? a[e] : mxUtils.clone(a[e]))
-                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || ("UserObject" != typeof a[e] || "object" != typeof a[e]) ? a[e] : mxUtils.clone(a[e]))
+                    for (var e in a) e != mxObjectIdentity.FIELD_NAME && (null == b || 0 > mxUtils.indexOf(b, e)) && (d[e] = c || ("object" != typeof a[e]) ? a[e] : mxUtils.clone(a[e]))
                 } return d
         },
         equalPoints: function (a, b) {
@@ -9897,12 +9897,7 @@ mxGraphModel.prototype.add = function (a, b, c) {
     if (b != a && null != a && null != b) {
         null == c && (c = this.getChildCount(a));
         var d = a != this.getParent(b);
-        console.log('in add, a:')
-        console.log(a)
-        console.log('in add, b:')
-        console.log(b)
-        console.log('in add, c:')
-        console.log(c)
+
         this.execute(new mxChildChange(this, a, b, c));
         this.maintainEdgeParent && d && this.updateEdgeParents(b)
     }
@@ -10244,11 +10239,6 @@ mxGraphModel.prototype.getGeometry = function (a) {
     return null != a ? a.getGeometry() : null
 };
 mxGraphModel.prototype.setGeometry = function (a, b) {
-    console.log('in setGeometry:')
-    console.log('a:')
-    console.log(a)
-    console.log('b:')
-    console.log(b)
     b != this.getGeometry(a) && this.execute(new mxGeometryChange(this, a, b));
     return b
 };
@@ -10432,10 +10422,6 @@ mxRootChange.prototype.execute = function () {
 };
 
 function mxChildChange(a, b, c, d) {
-    console.log("this.child 0:")
-    console.log(this.child)
-    console.log("c in mxChildChange:")
-    console.log(c)
     this.model = a;
     this.previous = this.parent = b;
     this.child = c;
@@ -10443,18 +10429,10 @@ function mxChildChange(a, b, c, d) {
 }
 mxChildChange.prototype.execute = function () {
     if (null != this.child) {
-        console.log("this.child:")
-        console.log(this.child)
         var a = this.model.getParent(this.child),
             b = null != a ? a.getIndex(this.child) : 0;
-        console.log('before connect, a before parentForCellChanged:')
-        console.log(a)
         null == this.previous && this.connect(this.child, !1);
         a = this.model.parentForCellChanged(this.child, this.previous, this.previousIndex);
-        console.log('before connect, a:')
-        console.log(a)
-        console.log("this.child 2:")
-        console.log(this.child)
         null != this.previous && this.connect(this.child, !0);
         this.parent = this.previous;
         this.previous = a;
@@ -10463,17 +10441,9 @@ mxChildChange.prototype.execute = function () {
     }
 };
 mxChildChange.prototype.connect = function (a, b) {
-    console.log('a:')
-    console.log(a)
-    console.log('b:')
-    console.log(b)
     b = null != b ? b : !0;
     var c = a.getTerminal(!0),
         d = a.getTerminal(!1);
-    console.log('c:')
-    console.log(c)
-    console.log('d:')
-    console.log(d)
     null != c && (b ? this.model.terminalForCellChanged(a, c, !0) : this.model.terminalForCellChanged(a, null, !0));
     null != d && (b ? this.model.terminalForCellChanged(a, d, !1) : this.model.terminalForCellChanged(a, null, !1));
     a.setTerminal(c, !0);
@@ -21093,7 +21063,7 @@ mxCodecRegistry.register(function () {
                 } else if (null != f && null != l) {
                     for (p in f.style) g = f.style[p], "function" == typeof g && ("UserObject" == typeof g || "object" == typeof g) && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && ("UserObject" !=
                     //for (p in f.style) g = f.style[p], "function" == typeof g && "object" == typeof g && (g = mxStyleRegistry.getName(g)), null != g && "function" != typeof g && "object" !=
-                        typeof g || "object" == typeof g) && n.setAttribute(p, g);
+                        typeof g && "object" != typeof g) && n.setAttribute(p, g);
                     g = f.absolutePoints;
                     if (null != g && 0 < g.length) {
                         l = Math.round(g[0].x) + "," + Math.round(g[0].y);
