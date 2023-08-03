@@ -157,6 +157,8 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
+import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
@@ -319,6 +321,8 @@ const appRoutes: Routes = [
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'info-tsa', component: AssessmentInfoTsaComponent },
               { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
+              { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
+              { path: 'info-config-iod', component: AssessmentConfigIodComponent },
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
