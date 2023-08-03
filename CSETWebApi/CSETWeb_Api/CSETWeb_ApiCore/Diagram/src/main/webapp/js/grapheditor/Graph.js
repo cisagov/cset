@@ -4865,7 +4865,7 @@ Graph.prototype.getLinksForState = function(state)
  */
 Graph.prototype.getLinkForCell = function(cell)
 {
-	if (cell.value != null && typeof (cell.value) == 'UserObject')
+	if (cell.value != null && (typeof (cell.value) == 'UserObject' || typeof (cell.value) == 'object'))
 	//if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		var link = cell.value.getAttribute('link');
@@ -4888,7 +4888,7 @@ Graph.prototype.getLinkForCell = function(cell)
  */
 Graph.prototype.getLinkTargetForCell = function(cell)
 {
-	if (cell.value != null && typeof (cell.value) == 'UserObject')
+	if (cell.value != null && (typeof (cell.value) == 'UserObject' || typeof (cell.value) == 'object'))
 	//if (cell.value != null && typeof(cell.value) == 'object')
 	{
 		return cell.value.getAttribute('linkTarget');
@@ -6213,15 +6213,7 @@ HoverIcons.prototype.repaint = function()
 					bottom = null;
 				}
 				var currentGeo = this.graph.getCellGeometry(this.currentState.cell);
-				//currentGeo.watch("x", function (oldVal, newVal) {
-				//	console.trace();
-				//	console.log('currentGeo:')
-				//	console.log(currentGeo)
-				//});
-				console.log('currentState:')
-				console.log(this.currentState)
-				console.log('currentGeo:')
-				console.log(currentGeo)
+
 				var checkCollision = mxUtils.bind(this, function(cell, arrow)
 				{
 					var geo = this.graph.model.isVertex(cell) && this.graph.getCellGeometry(cell);
@@ -6398,12 +6390,10 @@ HoverIcons.prototype.update = function(state, x, y)
 					if (!this.isActive() && !this.graph.isMouseDown &&
 						!this.graph.panningHandler.isActive())
 					{
-						console.log('in update -------')
 						this.prev = state;
 						this.update(state, x, y);
 					}
 				}), this.updateDelay + 10);
-				console.log('after update -------')
 			}
 		}
 		else if (this.startTime != null)
@@ -6429,12 +6419,9 @@ HoverIcons.prototype.update = function(state, x, y)
 
 					this.setCurrentState(state);
 					this.repaint();
-					console.log('after repaint')
 					// Resets connection points on other focused cells
 					if (this.graph.connectionHandler.constraintHandler.currentFocus != state)
 					{
-						console.log('in reset -------')
-
 						this.graph.connectionHandler.constraintHandler.reset();
 					}
 				}
@@ -9366,7 +9353,7 @@ if (typeof mxVertexHandler !== 'undefined')
 			
 			graphProcessChange.apply(this, arguments);
 			if (change instanceof mxValueChange && change.cell != null &&
-				change.cell.value != null && typeof (change.cell.value) == 'UserObject')
+				change.cell.value != null && (typeof (change.cell.value) == 'UserObject' || typeof (change.cell.value) == 'object'))
 			//if (change instanceof mxValueChange && change.cell != null &&
 			//	change.cell.value != null && typeof (change.cell.value) == 'object')
 			{
@@ -9639,7 +9626,7 @@ if (typeof mxVertexHandler !== 'undefined')
 		 */
 		Graph.prototype.getAttributeForCell = function(cell, attributeName, defaultValue)
 		{
-			var value = (cell.value != null && typeof cell.value === 'UserObject') ?
+			var value = (cell.value != null && (typeof cell.value === 'UserObject' || typeof cell.value === 'object')) ?
 				cell.value.getAttribute(attributeName) : null;
 			//var value = (cell.value != null && typeof cell.value === 'object') ?
 			//	cell.value.getAttribute(attributeName) : null;
