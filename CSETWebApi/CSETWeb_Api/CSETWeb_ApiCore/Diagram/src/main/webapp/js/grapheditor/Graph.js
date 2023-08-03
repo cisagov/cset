@@ -6212,8 +6212,14 @@ HoverIcons.prototype.repaint = function()
 					top = null;
 					bottom = null;
 				}
-
 				var currentGeo = this.graph.getCellGeometry(this.currentState.cell);
+				//currentGeo.watch("x", function (oldVal, newVal) {
+				//	console.trace();
+				//	console.log('currentGeo:')
+				//	console.log(currentGeo)
+				//});
+				console.log('currentState:')
+				console.log(this.currentState)
 				console.log('currentGeo:')
 				console.log(currentGeo)
 				var checkCollision = mxUtils.bind(this, function(cell, arrow)
