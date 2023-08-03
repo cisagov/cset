@@ -59,6 +59,7 @@ export class NavigationService {
 
   currentPage = '';
 
+  destinationId = '';
 
 
   @Output()
@@ -243,6 +244,14 @@ export class NavigationService {
   }
 
   /**
+   * Routes to the first available node in the workflow
+   */
+  navFirst() {
+    debugger;
+    const startPage = this.workflow.firstElementChild;
+  }
+
+  /**
    * Routes to the path configured for the specified pageId.
    * @param value
    */
@@ -273,6 +282,7 @@ export class NavigationService {
    */
   routeToTarget(target: HTMLElement) {
     this.navTreeSvc.setCurrentPage(target.id);
+    this.destinationId = target.id;
 
     // determine the route path
     const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());

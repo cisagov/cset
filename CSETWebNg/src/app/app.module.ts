@@ -252,6 +252,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -582,6 +583,9 @@ import { ImrReportComponent } from './reports/imr/imr-report/imr-report.componen
 import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
 import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
+import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
+import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
+import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
 
 
 
@@ -943,6 +947,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         RraLayoutMainComponent,
         AboutRraComponent,
         LogoRraComponent,
+        IodLayoutComponent,
         LogoCsetComponent,
         TopMenusComponent,
         LogoForReportsComponent,
@@ -1121,6 +1126,9 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         KeyReportComponent,
         CmuGoalPerfStackedBarComponent,
         CmuResultsDetailComponent,
+        AssessmentConfigIodComponent,
+        AssessmentDemogIodComponent,
+        DemographicsIodComponent,
     ],
     providers: [
         ConfigService,

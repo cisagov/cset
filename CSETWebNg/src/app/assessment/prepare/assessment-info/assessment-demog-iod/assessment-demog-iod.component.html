@@ -20,10 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<h3 class="mb-3">Critical Service Information</h3>
+<div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
+    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+        <h3 class="mb-3">Organization Demographics</h3>
 
-<app-csi-service-demographics></app-csi-service-demographics>
+        <app-demographics-iod></app-demographics-iod>
 
-<app-csi-service-composition></app-csi-service-composition>
 
-<app-nav-back-next [page]="aliasId"></app-nav-back-next>
+       
+
+        <app-nav-back-next [page]="'info-demog-iod'"></app-nav-back-next>
+
+    </div>
+</div>

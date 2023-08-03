@@ -31,6 +31,7 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
+import { NavigationService } from './navigation/navigation.service';
 
 
 export interface Role {
@@ -419,8 +420,21 @@ export class AssessmentService {
           const returnPath = '/assessment/' + id + '/' + rpath;
           this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
         } else {
+          // TODO:  open the assessment on the first page of the workflow
+          // the hard part is, this service doesn't know what 
+          // navigationservice knows, and we can't inject it without
+          // a circular dependency.
+
+          
+          //this.navSvc.navFirst();
+
+
+
+          // TODO:  delete this stuff
           if (this.assessment.workflow == 'TSA') {
             this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
+          } else if (this.assessment.workflow == 'IOD') {
+            this.router.navigate(['/assessment', id, 'prepare', 'info-demog-iod']);
           } else {
             this.router.navigate(['/assessment', id]);
           }

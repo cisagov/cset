@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-csi',
@@ -30,9 +31,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CsiComponent implements OnInit {
 
-  constructor() { }
+  /**
+   * The 'id' that this page is using to distinguish
+   * itself from other instances in the workflow.
+   */
+  aliasId: string;
+
+  constructor(
+    public navSvc: NavigationService
+  ) { }
 
   ngOnInit(): void {
+    this.aliasId = this.navSvc.destinationId;
   }
 
 }
