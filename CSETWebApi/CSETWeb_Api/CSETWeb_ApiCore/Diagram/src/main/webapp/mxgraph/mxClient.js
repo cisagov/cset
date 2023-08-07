@@ -9905,12 +9905,19 @@ mxGraphModel.prototype.add = function (a, b, c) {
 };
 
 mxGraphModel.prototype.cellClonedCSET = function (graph, cell) {
+    console.log('outside cellClonedCSET, cell:')
+    console.log(cell)
+    console.log(cell.getStyle())
+    
     // assign a new component GUID to the clone and its children
     if (cell.getCsetAttribute('ComponentGuid') != null) {
         var nextGuid = guidService.getInstance().getNextGuid();
         cell.setCsetAttribute('ComponentGuid', nextGuid);
+        console.log('in cellClonedCSET')
         if (cell.children) {
             cell.children.forEach(c => {
+                console.log('--- c ---')
+                console.log(c)
                 this.cellClonedCSET(graph, c);   
             });
         }
@@ -9922,6 +9929,10 @@ mxGraphModel.prototype.cellClonedCSET = function (graph, cell) {
  * CSET - things to do when new objects are added to the graph
  */
 mxGraphModel.cellAddedCSET = function (graph, cell) {
+    console.log('-- cellAddedCSET --')
+    console.log('cell')
+    console.log(cell)
+
     // get out if the new added cell is part of the sidebar.  Sidebar graph doesn't appear to have a prefix attribute.
     if (!graph.prefix) {
         return;
@@ -10385,6 +10396,8 @@ mxGraphModel.prototype.cloneCells = function (a, b, c, d) {
     for (f = 0; f < e.length; f++) null != e[f] && this.restoreClone(e[f], a[f], c);
 
     e.forEach(clone => {
+        console.log('clone:')
+        console.log(clone)
         this.cellClonedCSET(this, clone);
     });
 
@@ -11552,6 +11565,8 @@ mxGraphSelectionModel.prototype.getFirstSelectableCell = function (a) {
 };
 mxGraphSelectionModel.prototype.addCell = function (a) {
     null != a && this.addCells([a])
+    console.log('in addCell:')
+    console.log(a)
 };
 mxGraphSelectionModel.prototype.addCells = function (a) {
     if (null != a) {
@@ -14423,6 +14438,12 @@ mxGraph.prototype.cellsAdded = function (a, b, c, d, e, f, g, k) {
                         }
                     }
                     b == p && c + l > this.model.getChildCount(b) && c--;
+                    console.log('b ---')
+                    console.log(b)
+                    console.log('a[l]')
+                    console.log(a[l])
+                    console.log('c+l')
+                    console.log(c+l)
                     this.model.add(b, a[l], c + l);
                     this.autoSizeCellsOnAdd && this.autoSizeCell(a[l], !0);
                     (null == k || k) && this.isExtendParentsOnAdd(a[l]) && this.isExtendParent(a[l]) && this.extendParent(a[l]);
@@ -14777,14 +14798,35 @@ mxGraph.prototype.extendParent = function (a) {
     }
 };
 mxGraph.prototype.importCells = function (a, b, c, d, e, f) {
+    console.log('correct import!')
     return this.moveCells(a, b, c, !0, d, e, f)
 };
 mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
     b = null != b ? b : 0;
     c = null != c ? c : 0;
     d = null != d ? d : !1;
+
+    console.log('a:')
+    console.log(a)
+    console.log('b:')
+    console.log(b)
+    console.log('c:')
+    console.log(c)
+    console.log('d:')
+    console.log(d)
+    console.log('e:')
+    console.log(e)
+    console.log('f:')
+    console.log(f)
+    console.log('g:')
+    console.log(g)
     if (null != a && (0 != b || 0 != c || d || null != e)) {
+
+        
+
         var k = a = this.model.getTopmostCells(a);
+        console.log('k')
+        console.log(k)
         this.model.beginUpdate();
         try {
             for (var l = new mxDictionary, m = 0; m < a.length; m++) l.put(a[m], !0);
@@ -14799,6 +14841,8 @@ mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
             for (m = 0; m < a.length; m++) {
                 var q = this.getCellGeometry(a[m]),
                     r = this.model.getParent(a[m]);
+                console.log('getCellGeo:')
+                    console.log(q)
                 null != q && q.relative && this.model.isEdge(r) &&
                     (n(this.model.getTerminal(r, !0)) || n(this.model.getTerminal(r, !1))) || p.push(a[m])
             }
@@ -14810,6 +14854,17 @@ mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
             this.setAllowNegativeCoordinates(t);
             if (null != e) {
                 var u = this.model.getChildCount(e);
+                console.log('cellsAdded here')
+
+                console.log('a')
+                console.log(a)
+                console.log('e')
+
+                console.log(e)
+                console.log('u')
+
+                console.log(u)
+
                 this.cellsAdded(a, e, u, null, null,
                     !0);
                 if (d)
@@ -14820,6 +14875,8 @@ mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
             this.model.endUpdate()
         }
     }
+    console.log('returning a:')
+    console.log(a)
     return a
 };
 mxGraph.prototype.cellsMoved = function (a, b, c, d, e, f) {
@@ -16898,6 +16955,8 @@ mxSwimlaneManager.prototype.isCellHorizontal = function (a) {
     return this.graph.isSwimlane(a) ? (a = this.graph.getCellStyle(a), 1 == mxUtils.getValue(a, mxConstants.STYLE_HORIZONTAL, 1)) : !this.isHorizontal()
 };
 mxSwimlaneManager.prototype.cellsAdded = function (a) {
+    console.log('in cellsAdded:')
+    console.log(a)
     if (null != a) {
         var b = this.getGraph().getModel();
         b.beginUpdate();
