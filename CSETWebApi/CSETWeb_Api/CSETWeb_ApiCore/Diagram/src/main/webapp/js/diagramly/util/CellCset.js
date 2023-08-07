@@ -31,6 +31,8 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
     console.log('in setCsetAttribute:')
+    console.log(attributeName)
+    console.log(attributeValue)
     if (!!this.value && typeof this.value == 'UserObject')
     //if (!!this.value && typeof this.value == 'object')
     {
@@ -52,7 +54,8 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
     }
 
     obj.setAttribute(attributeName, attributeValue);
-
+    console.log('obj:')
+    console.log(obj)
     // set an internal label as well.  Something to concatenate with the SAL for the display label.
     if (attributeName === 'label')
     {
