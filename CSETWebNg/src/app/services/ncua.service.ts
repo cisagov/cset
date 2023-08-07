@@ -486,7 +486,9 @@ let headers = {
                                               "response": this.answerTextToNumber(question.answerText)});
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
-                  if (findings[m]?.question?.mat_Question_Id == question.matQuestionId) {
+                  if (findings[m]?.question?.mat_Question_Id == question.matQuestionId
+                    && this.translateExamLevel(findings[m]?.question?.maturity_Level_Id) == this.examLevel.substring(0, 4)
+                    ) {
                     switch (findings[m]?.finding?.type) {
                       case "DOR":
                         childResponses.issues.dors++;
