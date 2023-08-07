@@ -1,0 +1,25 @@
+---
+version: "3.8"
+
+services:
+  sqlserver:
+    container_name: cset-mssql
+    hostname: mssql
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Password123
+    # These ports are exposed on the host; 'hostport:containerport'.
+    # You could connect to this server from outside with the *host's*
+    # DNS name or IP address and port 27017 (the left-hand side of the
+    # colon).
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./backups:/var/backups
+
+volumes:
+  mssql_data:
+

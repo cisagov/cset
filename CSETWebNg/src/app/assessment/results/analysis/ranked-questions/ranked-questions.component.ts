@@ -32,7 +32,7 @@ import { QuestionsService } from '../../../../services/questions.service';
 @Component({
   selector: 'app-ranked-questions',
   templateUrl: './ranked-questions.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class RankedQuestionsComponent implements OnInit {
@@ -68,10 +68,10 @@ export class RankedQuestionsComponent implements OnInit {
       row.rank = i++;
       switch (row.answerText) {
         case 'U':
-          row.displayAnswer = this.questionsSvc.answerDisplayLabel(0, 'U');
+          row.displayAnswer = this.questionsSvc.answerDisplayLabel('', 'U');
           break;
         case 'N':
-          row.displayAnswer = this.questionsSvc.answerDisplayLabel(0, 'N');
+          row.displayAnswer = this.questionsSvc.answerDisplayLabel('', 'N');
           break;
       }
     }

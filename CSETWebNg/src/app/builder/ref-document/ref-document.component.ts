@@ -29,7 +29,7 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-ref-document',
   templateUrl: './ref-document.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class RefDocumentComponent implements OnInit {

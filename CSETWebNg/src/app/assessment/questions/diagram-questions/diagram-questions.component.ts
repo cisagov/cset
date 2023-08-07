@@ -63,10 +63,10 @@ export class DiagramQuestionsComponent implements OnInit {
         });
     }
     localStorage.setItem("questionSet", "Component");
+    this.assessSvc.currentTab = 'questions';
   }
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'questions';
     this.loadQuestions();
   }
 

@@ -18,18 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <WrapperTool>tlbimp</WrapperTool>
-      <VersionMinor>9</VersionMinor>
-      <VersionMajor>1</VersionMajor>
-      <Guid>00020813-0000-0000-c000-000000000046</Guid>
-      <Lcid>0</Lcid>
-      <Isolated>false</Isolated>
-      <EmbedInteropTypes>true</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
@@ -54,6 +42,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Microsoft.Office.Interop.Excel" Version="15.0.4795.1001" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.0" />
   </ItemGroup>
 

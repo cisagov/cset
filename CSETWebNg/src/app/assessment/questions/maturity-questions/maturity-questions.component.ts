@@ -99,11 +99,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
 
     localStorage.setItem("questionSet", "Maturity");
+    this.assessSvc.currentTab = 'questions';
   }
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'questions';
-
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
@@ -155,6 +154,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
+        this.filterSvc.maturityModelName = response.modelName;
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
@@ -183,11 +183,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     if (isNaN(groupingId)) {
       return;
     }
-    
+
     this.completionSvc.reset();
 
     this.maturitySvc.getGroupingQuestions(groupingId).subscribe((response: MaturityQuestionResponse) => {
-     
+
       this.modelId = response.modelId;
       this.modelName = response.modelName;
       this.questionsAlias = response.questionsAlias;
@@ -239,7 +239,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   showFilterDialog() {
     // show the 'above target level' filter option for CMMC
@@ -271,8 +271,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   areGroupingsVisible() {
     return this.groupings.some(g => g.visible);

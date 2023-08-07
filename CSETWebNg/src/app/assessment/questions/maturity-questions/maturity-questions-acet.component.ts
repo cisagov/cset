@@ -73,10 +73,10 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         });
     }
     localStorage.setItem("questionSet", "Maturity");
+    this.assessSvc.currentTab = 'questions';
   }
 
-  ngOnInit() {    
-    this.assessSvc.currentTab = 'questions';
+  ngOnInit() {
     this.loadQuestions();
   }
 
@@ -97,7 +97,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   /**
    * Retrieves the complete list of questions
    */
-  loadQuestions() {    
+  loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
@@ -152,7 +152,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * 
+   *
    */
   showFilterDialog() {
     this.filterDialogRef = this.dialog.open(QuestionFiltersComponent, {

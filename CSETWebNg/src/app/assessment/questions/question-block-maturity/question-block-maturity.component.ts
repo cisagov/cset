@@ -61,6 +61,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
   showQuestionIds = false;
 
   maturityModelId: number;
+  maturityModelName: string;
 
 
   /**
@@ -86,6 +87,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
+      this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
     }
 
     this.refreshReviewIndicator();
@@ -131,13 +133,12 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   /**
    * Determines if the level indicator should show or be
-   * hidden.  Someday this behavior might be stored
-   * in the database as some model-specific behavior.
+   * hidden.  Use config moduleBehavior to define this.
    */
   showLevelIndicator(q): boolean {
-    // CPG (11) does not have levels - don't show the indicator
-    if ([11].indexOf(q.maturityModelId) >= 0) {
-      return false;
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName)
+    if (!!behavior) {
+      return behavior.showMaturityLevelBadge ?? true;
     }
 
     return true;

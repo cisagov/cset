@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { group } from 'console';
 import { ConfigService } from '../../../services/config.service';
 
 /**
@@ -38,6 +37,9 @@ export class ReferencesDisplayComponent implements OnInit {
   @Input()
   tab: any;
 
+  @Input('q')
+  question: any;
+
   sourceDocuments: any[] = [];
 
   additionalDocuments: any[] = [];
@@ -52,11 +54,7 @@ export class ReferencesDisplayComponent implements OnInit {
   /**
    * 
    */
-  ngOnInit(): void {
-    if (!this.tab) {
-      return;
-    }
-
+  ngOnInit(): void {    
     // group section_Refs (bookmarks) with their documents
     this.sourceDocuments = this.groupDocumentBookmarks(this.tab.sourceDocumentsList);
     this.additionalDocuments = this.groupDocumentBookmarks(this.tab.additionalDocumentsList);
@@ -123,5 +121,8 @@ export class ReferencesDisplayComponent implements OnInit {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
       && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
       && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+      && (!this.question?.csfMappings || this.question.csfMappings.length == 0)
+      && (!this.question?.ttp || this.question.ttp.length == 0)
+      && (!this.question?.riskAddressed)
   }
 }

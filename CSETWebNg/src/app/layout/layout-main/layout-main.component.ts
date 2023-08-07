@@ -36,13 +36,12 @@ import { LayoutService } from '../../services/layout.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'layout-main',
   templateUrl: './layout-main.component.html',
   styleUrls: ['./layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' },
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })
 export class LayoutMainComponent implements OnInit, AfterViewInit {

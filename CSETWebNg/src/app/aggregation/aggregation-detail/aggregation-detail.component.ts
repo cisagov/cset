@@ -28,12 +28,12 @@ import { AggregationService } from '../../services/aggregation.service';
 @Component({
   selector: 'app-aggregation-detail',
   templateUrl: './aggregation-detail.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AggregationDetailComponent implements OnInit {
 
-  public aggregationName: string;
+  aggregationName: string;
 
   /**
    * Constructor

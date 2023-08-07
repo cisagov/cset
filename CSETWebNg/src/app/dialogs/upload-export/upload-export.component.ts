@@ -32,7 +32,7 @@ import { ImportPasswordComponent } from '../assessment-encryption/import-passwor
 @Component({
   selector: 'app-upload-export',
   templateUrl: './upload-export.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class UploadExportComponent implements OnInit {
@@ -163,8 +163,7 @@ export class UploadExportComponent implements OnInit {
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
-
-            if (fail.message == "File requires a password") {
+            if (fail.message.includes("File requires a password")) {
               this.passwordRequired = true;
             }
           }
@@ -224,7 +223,17 @@ export class UploadExportComponent implements OnInit {
         this.progressDialog();
       }
     });
+  }
 
+  getAssessmentHint(fileName: string) {
+    let hintMap = this.importSvc.hintMap;
+
+    let hint = hintMap.get(fileName);
+    if (hint != undefined) {
+      return hint;
+    } else {
+      return "";
+    }
   }
 
 }

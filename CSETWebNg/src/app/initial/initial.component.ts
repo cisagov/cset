@@ -26,7 +26,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-initial',
   templateUrl: './initial.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a w-100'}
 })
 export class InitialComponent implements OnInit {

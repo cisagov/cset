@@ -146,7 +146,9 @@ export class PageVisibilityService {
         show = show && this.assessSvc.assessment.maturityModel.maturityTargetLevel > Number.parseInt(target);
       }
 
-
+      if (c == ('SHOW-FEEDBACK')) {
+        show = show && this.configSvc.behaviors.showFeedback;
+      }
 
       if (c == 'SHOW-EXEC-SUMMARY') {
         show = show && this.showExecSummaryPage();
@@ -283,4 +285,4 @@ export class PageVisibilityService {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
   }
-} 
+}

@@ -31,7 +31,7 @@ import { QuestionsService } from '../../services/questions.service';
 @Component({
   selector: 'app-question-filters',
   templateUrl: './question-filters.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionFiltersComponent implements OnInit {
@@ -90,12 +90,12 @@ export class QuestionFiltersComponent implements OnInit {
       if(this.assessSvc.isISE()) {
         this.answerOptions.push({ 
           value: o, 
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelId, o) 
+          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o) 
         });
       } else {
         this.answerOptions.push({ 
           value: o, 
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelId, o) 
+          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o) 
         });
       }
     });

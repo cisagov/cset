@@ -21,17 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-grouping-block-nested-report',
-  templateUrl: './grouping-block-nested-report.component.html'
+  templateUrl: './grouping-block-nested-report.component.html',
+  styleUrls: ['../../reports.scss']
 })
 export class GroupingBlockNestedReportComponent implements OnInit {
 
   @Input('grouping') grouping: any;
 
   title: string;
+  description: string;
 
   /**
    * 
@@ -43,6 +45,8 @@ export class GroupingBlockNestedReportComponent implements OnInit {
    */
   ngOnInit(): void {
     this.title = this.grouping.title;
+    this.description = this.grouping.description;
+
     if (!!this.grouping.prefix) {
       this.title = this.grouping.prefix + '. ' + this.grouping.title;
     }

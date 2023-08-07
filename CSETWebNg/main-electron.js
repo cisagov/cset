@@ -7,6 +7,7 @@ const log = require('electron-log');
 const tcpPortUsed = require('tcp-port-used');
 const findTextPrompt = require('./src/custom-modules/electron-prompt/lib/index');
 const gotTheLock = app.requestSingleInstanceLock();
+const merge = require('lodash').merge;
 
 let config = require('./dist/assets/settings/config.json');
 
@@ -16,7 +17,7 @@ let config = require('./dist/assets/settings/config.json');
 */
 config.currentConfigChain.forEach(configProfile => {
   const subConfig = require(`./dist/assets/settings/config.${configProfile}.json`);
-  config = { ...config, ...subConfig };
+  merge(config, subConfig);
 });
 
 const installationMode = config.installationMode;

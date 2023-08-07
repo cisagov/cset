@@ -34,13 +34,12 @@ import { SetBuilderService } from './../../services/set-builder.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'acet-layout-main',
   templateUrl: './acet-layout-main.component.html',
   styleUrls: ['./acet-layout-main.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
-  host: { class: 'd-flex flex-column flex-11a w-100' }
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
 export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;

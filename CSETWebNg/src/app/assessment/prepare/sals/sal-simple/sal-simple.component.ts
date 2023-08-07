@@ -29,7 +29,7 @@ import { SalService } from '../../../../services/sal.service';
 @Component({
   selector: 'app-sal-simple',
   templateUrl: './sal-simple.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 

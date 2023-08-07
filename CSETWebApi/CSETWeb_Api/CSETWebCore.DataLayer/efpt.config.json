@@ -451,6 +451,18 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[HYDRO_DATA]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HYDRO_DATA_ACTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HYDRO_PROGRESS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[IMPORTANCE]",
          "ObjectType": 0
       },
@@ -460,6 +472,10 @@
       },
       {
          "Name": "[dbo].[INSTALLATION]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[INTERNATIONALIZATION_VALUES]",
          "ObjectType": 0
       },
       {
@@ -516,6 +532,10 @@
       },
       {
          "Name": "[dbo].[MATURITY_GROUPINGS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MATURITY_LEVEL_USAGE_TYPES]",
          "ObjectType": 0
       },
       {
@@ -1363,6 +1383,7 @@
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,

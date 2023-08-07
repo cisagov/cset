@@ -27,8 +27,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
-import { ConfigService } from '../../services/config.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
+import { AssessmentService } from '../../services/assessment.service';
 
 
 @Component({
@@ -48,8 +48,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     public authSvc: AuthenticationService,
-    public dialog: MatDialog,
-    private configSvc: ConfigService
+    public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
@@ -66,7 +65,6 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Only implementing sticky tabs on main CSET installation mode for now.
     const tabsEl = this.tabsElementRef.nativeElement;
     tabsEl.classList.add('sticky-tabs');
     if (this.authSvc.isLocal) {
@@ -83,6 +81,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   checkActive(tab) {
     return this.currentTab === tab;
   }
+
   changeToSearch(val){
     this.isSearch = true;
     this.searchString = val;
@@ -130,8 +129,8 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .subscribe((passwordChangeSuccess) => {
         if (passwordChangeSuccess) {
-          this.dialog.open(AlertComponent, { 
-            data: { 
+          this.dialog.open(AlertComponent, {
+            data: {
               messageText: 'Your password has been changed successfully.',
               title: 'Password Changed',
               iconClass: 'cset-icons-check-circle'

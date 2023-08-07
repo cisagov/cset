@@ -31,7 +31,7 @@ import { NavTreeService } from "../../services/navigation/nav-tree.service";
 @Component({
   selector: "app-prepare",
   templateUrl: "./prepare.component.html",
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class PrepareComponent implements OnInit {
@@ -52,13 +52,13 @@ export class PrepareComponent implements OnInit {
           this.assessSvc.assessment = data;
         });
     }
+    this.assessSvc.currentTab = 'prepare';
   }
 
   /**
    * If the nav tree is not yet populated, build it.
    */
   ngOnInit() {
-    this.assessSvc.currentTab = 'prepare';
     if (this.navTreeSvc.tocControl.dataNodes == null) {
       setTimeout(() => {
         this.navSvc.buildTree();

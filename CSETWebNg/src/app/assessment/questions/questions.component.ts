@@ -36,7 +36,7 @@ import { ɵNullViewportScroller } from '@angular/common';
 @Component({
   selector: 'app-questions',
   templateUrl: './questions.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionsComponent implements AfterViewChecked {
@@ -102,6 +102,7 @@ export class QuestionsComponent implements AfterViewChecked {
         }
       );
     localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R' ? "Requirement" : "Question");
+    this.assessSvc.currentTab = 'questions';
   }
 
   updateComponentsOverride() {
@@ -223,7 +224,6 @@ export class QuestionsComponent implements AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
-    this.assessSvc.currentTab = 'questions';
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(

@@ -37,11 +37,9 @@ export class PlaceholderQuestionsComponent implements OnInit {
     private navSvc: NavigationService,
     private assessSvc: AssessmentService,
     public configSvc: ConfigService
-  ) { }
+  ) { this.assessSvc.currentTab = 'questions'; }
 
-  ngOnInit(): void {
-    this.assessSvc.currentTab = 'questions';
-  }
+  ngOnInit(): void {  }
 
   /**
    * Navigate the user to the Assessment Config page

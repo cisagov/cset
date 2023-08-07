@@ -21,14 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { CisService } from '../../../services/cis.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({
   selector: 'app-question-block-nested-report',
-  templateUrl: './question-block-nested-report.component.html'
+  templateUrl: './question-block-nested-report.component.html',
+  styleUrls: ['../../reports.scss']
 })
 export class QuestionBlockNestedReportComponent implements OnInit {
 

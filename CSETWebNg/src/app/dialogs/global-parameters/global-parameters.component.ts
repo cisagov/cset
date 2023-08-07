@@ -29,7 +29,7 @@ import { DefaultParameter } from '../../models/questions.model';
 @Component({
   selector: 'app-global-parameters',
   templateUrl: './global-parameters.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class GlobalParametersComponent implements OnInit {

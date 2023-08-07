@@ -146,6 +146,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
         public virtual DbSet<INFORMATION> INFORMATION { get; set; }
         public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
+        public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
         public virtual DbSet<IRP> IRP { get; set; }
         public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
         public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
@@ -161,6 +162,7 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
         public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
         public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
+        public virtual DbSet<MATURITY_LEVEL_USAGE_TYPES> MATURITY_LEVEL_USAGE_TYPES { get; set; }
         public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
         public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
         public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
@@ -1272,9 +1274,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
 
+                entity.Property(e => e.CreatedTimestamp).HasDefaultValueSql("(getdate())");
+
                 entity.Property(e => e.Path).HasComment("The Path is used to");
 
                 entity.Property(e => e.Title).HasComment("The Title is used to");
+
+                entity.Property(e => e.UpdatedTimestamp).HasDefaultValueSql("(getdate())");
 
                 entity.HasOne(d => d.Assessment)
                     .WithMany(p => p.DOCUMENT_FILE)
@@ -1883,6 +1889,33 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
             });
 
+            modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Answer_Id)
+                    .HasName("PK__HYDRO_DA__36918F3818A6E56C");
+
+                entity.Property(e => e.Answer_Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Answer)
+                    .WithOne(p => p.HYDRO_DATA_ACTIONS)
+                    .HasForeignKey<HYDRO_DATA_ACTIONS>(d => d.Answer_Id)
+                    .HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
+
+                entity.HasOne(d => d.Progress)
+                    .WithMany(p => p.HYDRO_DATA_ACTIONS)
+                    .HasForeignKey(d => d.Progress_Id)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
+            });
+
+            modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
+            {
+                entity.HasKey(e => e.Progress_Id)
+                    .HasName("PK__HYDRO_PR__D558797A8254CF40");
+
+                entity.Property(e => e.Progress_Id).ValueGeneratedNever();
+            });
+
             modelBuilder.Entity<IMPORTANCE>(entity =>
             {
                 entity.HasKey(e => e.Importance_Id)
@@ -2112,6 +2145,11 @@ namespace CSETWebCore.DataLayer.Model
                 entity.Property(e => e.Analytics_Rollup_Level)
                     .HasDefaultValueSql("((1))")
                     .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+
+                entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation)
+                    .WithMany(p => p.MATURITY_MODELS)
+                    .HasForeignKey(d => d.Maturity_Level_Usage_Type)
+                    .HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
             });
 
             modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>

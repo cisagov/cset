@@ -24,7 +24,7 @@
 import { map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ComponentFactoryResolver, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -34,7 +34,6 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { environment } from '../../environments/environment';
-import { parse } from 'querystring';
 
 export interface LoginResponse {
     token: string;
@@ -335,7 +334,7 @@ export class AuthenticationService {
     }
 
     /**
-     * 
+     *
      */
     loginWithAccessKey(loginKey) {
         const req = JSON.stringify(
@@ -357,7 +356,7 @@ export class AuthenticationService {
     }
 
     /**
-     * 
+     *
      */
     generateAccessKey() {
         return this.http.get(this.configSvc.apiUrl + 'auth/accesskey', { responseType: 'text' });

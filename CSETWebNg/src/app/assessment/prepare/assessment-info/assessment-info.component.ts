@@ -33,7 +33,7 @@ import { MatDialogRef , MatDialogModule} from '@angular/material/dialog';
 @Component({
   selector: 'app-assessment-info',
   templateUrl: './assessment-info.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentInfoComponent implements OnInit {

@@ -29,7 +29,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
 @Component({
   selector: 'app-analysis',
   templateUrl: './analysis.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class AnalysisComponent implements OnInit {
@@ -38,10 +38,9 @@ export class AnalysisComponent implements OnInit {
     private navSvc: NavigationService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) { this.assessSvc.currentTab = 'results'; }
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'results';
     this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
       this.router.navigate([value], { relativeTo: this.route.parent });
     });
