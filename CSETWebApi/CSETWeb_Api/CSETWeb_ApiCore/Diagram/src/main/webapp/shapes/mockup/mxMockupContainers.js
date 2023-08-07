@@ -1219,7 +1219,7 @@ mxShapeMockupHorTabBar.prototype.cst = {
  * 
  * Paints the vertex shape.
  */
-//to-do tab widths are fixed, so tab text length is a bit of an issue. Cannot be fixed while we use labels for tab names
+//TODO tab widths are fixed, so tab text length is a bit of an issue. Cannot be fixed while we use labels for tab names
 mxShapeMockupHorTabBar.prototype.paintVertexShape = function(c, x, y, w, h)
 {
 	var fontSize = mxUtils.getValue(this.style, mxShapeMockupHorTabBar.prototype.cst.TEXT_SIZE, '17').toString();
@@ -1461,7 +1461,7 @@ mxCellRenderer.registerShape(mxShapeMockupHorTabBar.prototype.cst.SHAPE_HOR_TAB_
 /**
  * Extends mxShape.
  */
-//to-do tab widths are fixed, so tab text length is a bit of an issue. Cannot be fixed while we use labels for tab names
+//TODO tab widths are fixed, so tab text length is a bit of an issue. Cannot be fixed while we use labels for tab names
 function mxShapeMockupVerTabBar(bounds, fill, stroke, strokewidth)
 {
 	mxShape.call(this);

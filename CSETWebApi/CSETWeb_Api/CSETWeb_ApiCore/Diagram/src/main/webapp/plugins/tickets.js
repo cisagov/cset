@@ -10,7 +10,7 @@
  * 
  * Use an additional "open" variable in the config JSON to open a file after parsing as follows:
  * 
- * ...#C%7B"ticketsConfig"%3A %7B"deskApiKey"%3A"YOUR_API_KEY"%2C"deskDomain"%3A"YOUR_DOMAIN"%7D%2C"open"%3A"ID_WITH_PREFIX"%7D
+ * ...#_TICKETS%7B"ticketsConfig"%3A %7B"deskApiKey"%3A"YOUR_API_KEY"%2C"deskDomain"%3A"YOUR_DOMAIN"%7D%2C"open"%3A"ID_WITH_PREFIX"%7D
  * 
  * Required JSON parameters:
  * - deskApiKey=api_key (see user profile)
@@ -60,7 +60,7 @@ Draw.loadPlugin(function(ui)
 		
 		for (var key in deskStatus)
 		{
-			div.innerHTML = '';
+			div.innerText = '';
 			mxUtils.write(div, deskStatus[key]);
 			deskStatusWidth[key] = div.clientWidth + 4;
 		}
@@ -68,21 +68,21 @@ Draw.loadPlugin(function(ui)
 		document.body.removeChild(div);
 	};
 	
-	if (window.location.hash != null && window.location.hash.substring(0, 2) == '#C')
+	if (window.location.hash != null && window.location.hash.substring(0, 9) == '#_TICKETS')
 	{
 		try
 		{
 			var temp = JSON.parse(decodeURIComponent(
-				window.location.hash.substring(2)));
+				window.location.hash.substring(9)));
 			
 			if (temp != null && temp.ticketsConfig != null)
 			{
 				config = temp.ticketsConfig;
 				configure();
 				ui.fileLoaded(new LocalFile(ui, ui.emptyDiagramXml, this.defaultFilename, true));
-				ui.editor.setStatus('Drag tickets from <a href="' + deskDomain +
+				ui.editor.setStatus('Drag tickets from <a href="' + mxUtils.htmlEntities(deskDomain) +
 					'/a/tickets/filters/all_tickets" target="_blank">' +
-					deskDomain + '</a>');
+					mxUtils.htmlEntities(deskDomain) + '</a>');
 			}
 		}
 		catch (e)

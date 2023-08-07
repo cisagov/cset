@@ -51,9 +51,14 @@ namespace CSETWebCore.Business.Diagram
         /// add records to the table for the new components
         /// deleted records for the removed components
         /// </summary>
-        public void buildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
+        public void BuildDiagramDictionaries(XmlDocument newDiagramDocument, XmlDocument oldDiagramDocument)
         {
-            newDiagram.OldParentIds = GetParentIdsDictionary(oldDiagramDocument.SelectNodes("/mxGraphModel/root/object"));
+            var nodeList1 = oldDiagramDocument.SelectNodes("/mxGraphModel/root/object | /mxGraphModel/root/UserObject");
+            var nodeList2 = oldDiagramDocument.SelectNodes("/mxGraphModel/root/UserObject");
+
+            //var nodeList = (XmlNodeList)nodeList1.Cast<XmlNode>().Concat<XmlNode>(nodeList2.Cast<XmlNode>());
+
+            newDiagram.OldParentIds = GetParentIdsDictionary(nodeList1);
 
             newDiagram.Parentage = BuildParentage(newDiagramDocument);
 
@@ -281,9 +286,18 @@ namespace CSETWebCore.Business.Diagram
                     SAL = zone.Attributes["SAL"].Value,
                     ComponentName = zone.Attributes["label"].Value
                 });
-                string myxpath = "/mxGraphModel/root/object/mxCell[(@parent=\"" + id + "\")]/..";
-                XmlNodeList objectNodes = xDoc.SelectNodes(myxpath);
-                Dictionary<Guid, NetworkComponent> zoneComponents = ProcessNodes(objectNodes);
+
+                string myxpath1 = "/mxGraphModel/root/object/mxCell[(@parent=\"" + id + "\")]/.."
+                    + " | "
+                    + "/mxGraphModel/root/UserObject/mxCell[(@parent=\"" + id + "\")]/..";
+                XmlNodeList objectNodes1 = xDoc.SelectNodes(myxpath1);
+                //string myxpath2 = "/mxGraphModel/root/UserObject/mxCell[(@parent=\"" + id + "\")]/..";
+                //XmlNodeList objectNodes2 = xDoc.SelectNodes(myxpath2);
+
+                //var objectNodes = objectNodes1.Cast<XmlNode>().Concat<XmlNode>(objectNodes2.Cast<XmlNode>());
+
+                Dictionary<Guid, NetworkComponent> zoneComponents = ProcessNodes((XmlNodeList)objectNodes1);
+
                 foreach (NetworkComponent c in zoneComponents.Values)
                     diagram.Zones[id].ContainingComponents.Add(c);
             }
@@ -434,8 +448,12 @@ namespace CSETWebCore.Business.Diagram
 
         private Dictionary<Guid, NetworkComponent> ProcessDiagram(XmlDocument doc)
         {
-            XmlNodeList cells = doc.SelectNodes("/mxGraphModel/root/object[not(mxCell[@parent=0])]");
-            return ProcessNodes(cells);
+            XmlNodeList cells1 = doc.SelectNodes("/mxGraphModel/root/object[not(mxCell[@parent=0])] | /mxGraphModel/root/UserObject[not(mxCell[@parent=0])]");
+            //XmlNodeList cells2 = doc.SelectNodes("/mxGraphModel/root/UserObject[not(mxCell[@parent=0])]");
+
+            //var cells = (XmlNodeList)cells1.Cast<XmlNode>().Concat<XmlNode>(cells1.Cast<XmlNode>());
+
+            return ProcessNodes(cells1);
         }
 
 

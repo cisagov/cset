@@ -37,6 +37,9 @@ namespace CSETWebCore.Interfaces
         void SaveZone(mxGraphModelRootObject vertice, int assessmentId);
         void SaveShape(mxGraphModelRootMxCell vertice, int assessmentId);
         void SaveDiagramXml(int assessmentId, mxGraphModel diagramXml);
+        void UpdateComponentType(int assessmentId, string guid, string type);
+        void UpdateComponentLabel(int assessmentId, string guid, string label);
+        void ChangeShapeToComponent(int assessmentId, string type, string id, string label);
         string SetImage(int Component_Symbol_Id, string style);
         IEnumerable<DiagramTemplate> GetDiagramTemplates();
         IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors();

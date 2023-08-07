@@ -1,27 +1,25 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
 // 
 ////////////////////////////////
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Hosting;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Namotion.Reflection;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
-using DocumentFormat.OpenXml.Bibliography;
+using System.Xml;
+using System.Xml.Serialization;
 using static CSETWebCore.Model.Diagram.CommonSecurityAdvisoryFrameworkObject;
+
 
 namespace CSETWebCore.Business.Diagram
 {
@@ -51,7 +49,11 @@ namespace CSETWebCore.Business.Diagram
             // let's detect an empty graph and not save it.
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
-            var objectCount = xDoc.SelectNodes("//root/object").Count;
+            var objectCount = xDoc.SelectNodes("//root/UserObject").Count;
+            if (objectCount == 0)
+            {
+                objectCount = xDoc.SelectNodes("//root/object").Count;
+            }
             if (cellCount == 2 && objectCount == 0)
             {
                 // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
@@ -67,6 +69,11 @@ namespace CSETWebCore.Business.Diagram
                 {
                     HashSet<string> validGuid = new HashSet<string>();
                     XmlNodeList cells = xDoc.SelectNodes("//root/object[@ComponentGuid]");
+                    if (cells.Count == 0)
+                    {
+                        cells = xDoc.SelectNodes("//root/UserObject[@ComponentGuid]");
+                    }
+
                     foreach (XmlElement c in cells)
                     {
                         validGuid.Add(c.Attributes["ComponentGuid"].InnerText);
@@ -88,7 +95,7 @@ namespace CSETWebCore.Business.Diagram
                     {
                         oldDoc.LoadXml(assessmentRecord.Diagram_Markup);
                     }
-                    differenceManager.buildDiagramDictionaries(xDoc, oldDoc);
+                    differenceManager.BuildDiagramDictionaries(xDoc, oldDoc);
                     differenceManager.SaveDifferences(assessmentID, refreshQuestions);
 
                 }
@@ -352,24 +359,53 @@ namespace CSETWebCore.Business.Diagram
                 var diagramXml = (mxGraphModel)deserializer.Deserialize((stream));
 
                 mxGraphModelRootObject o = new mxGraphModelRootObject();
+                //mxGraphModelRootMxCell cell = new mxGraphModelRootMxCell();
+
                 Type objectType = typeof(mxGraphModelRootObject);
+                //Type objectType = typeof(mxGraphModelRootMxCell);
 
                 LayerManager layers = new LayerManager(_context, assessment_id);
                 foreach (var item in diagramXml.root.Items)
                 {
                     if (item.GetType() == objectType)
                     {
+                        /*
+                        var currentCell = (mxGraphModelRootMxCell)item;
+                        //if (currentCell.mxGeometry == null)
+                        //{
+                            //var addLayerVisible = (mxGraphModelRootMxCell)item;
 
+                            string parentId = !string.IsNullOrEmpty(currentCell.parent) ? currentCell.parent : o.parent ?? "0";
+                            //string parentId = !string.IsNullOrEmpty(addLayerVisible.parent) ? addLayerVisible.parent : addLayerVisible.parent ?? "0";
+
+                            var layerVisibility = layers.GetLastLayer(parentId);
+                            var addLayerVisible = o;
+
+                            if (layerVisibility != null)
+                            {
+                                addLayerVisible.visible = layerVisibility.visible ?? "true";
+                                addLayerVisible.layerName = layerVisibility.layerName ?? string.Empty;
+                                addLayerVisible.id = currentCell.id ?? "0";
+                                vertices.Add(addLayerVisible);
+                            }
+                        //}
+                        */
+                        
                         var addLayerVisible = (mxGraphModelRootObject)item;
+                        //var addLayerVisible = (mxGraphModelRootMxCell)item;
+
                         string parentId = !string.IsNullOrEmpty(addLayerVisible.mxCell.parent) ? addLayerVisible.mxCell.parent : addLayerVisible.parent ?? "0";
+                        //string parentId = !string.IsNullOrEmpty(addLayerVisible.parent) ? addLayerVisible.parent : addLayerVisible.parent ?? "0";
+
                         var layerVisibility = layers.GetLastLayer(parentId);
-                        if (layerVisibility != null) 
+                        if (layerVisibility != null)
                         {
                             addLayerVisible.visible = layerVisibility.visible ?? "true";
                             addLayerVisible.layerName = layerVisibility.layerName ?? string.Empty;
 
                             vertices.Add(addLayerVisible);
                         }
+                        
                     }
 
                 }
@@ -402,8 +438,8 @@ namespace CSETWebCore.Business.Diagram
                     {
                         var addLayerVisible = (mxGraphModelRootMxCell)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
-                        if (layerVisibility != null) 
-                        { 
+                        if (layerVisibility != null)
+                        {
                             addLayerVisible.visible = layerVisibility.visible;
                             addLayerVisible.layerName = layerVisibility.layerName;
                             vertices.Add(addLayerVisible);
@@ -437,7 +473,7 @@ namespace CSETWebCore.Business.Diagram
                     {
                         var addLayerVisible = (mxGraphModelRootObject)item;
                         var layerVisibility = getLayerVisibility(addLayerVisible.parent, assessment_id);
-                        if (layerVisibility != null) 
+                        if (layerVisibility != null)
                         {
                             addLayerVisible.visible = layerVisibility.visible;
                             addLayerVisible.layerName = layerVisibility.layerName;
@@ -785,6 +821,178 @@ namespace CSETWebCore.Business.Diagram
             }
         }
 
+
+        /// <summary>
+        /// Sets the type of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="type"></param>
+        public void UpdateComponentType(int assessmentId, string guid, string type)
+        {
+            var componentGuid = Guid.Parse(guid);
+            var adc = _context.ASSESSMENT_DIAGRAM_COMPONENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.Component_Guid == componentGuid);
+            var symbol = _context.COMPONENT_SYMBOLS.FirstOrDefault(x => x.Abbreviation == type);
+
+            if (adc == null || symbol?.Component_Symbol_Id == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            // change the symbol that the component is associated with
+            adc.Component_Symbol_Id = symbol.Component_Symbol_Id;
+
+
+            // Update the image in the diagram markup for the component
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']/mxCell");
+
+            //var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//object[@ComponentGuid='{componentGuid}']/mxCell");
+            if (mxCell == null)
+            {
+                return;
+            }
+
+            // change the image path and size in the cell style
+            var newStyle = this.SetImage(symbol.Component_Symbol_Id, mxCell.Attributes["style"].InnerText);
+            mxCell.SetAttribute("style", newStyle);
+
+            var geometry = (XmlElement)mxCell.SelectSingleNode("mxGeometry");
+            geometry.SetAttribute("width", symbol.Width.ToString());
+            geometry.SetAttribute("height", symbol.Height.ToString());
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Changes a shape into a CSET component.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        public void ChangeShapeToComponent(int assessmentId, string type, string id, string label)
+        {
+            var componentGuid = Guid.NewGuid();
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var symbol = _context.COMPONENT_SYMBOLS.FirstOrDefault(x => x.Abbreviation == type);
+
+            // Sorry about the hardcoded styling, but this is the same for every cset component I found, so it *should* be ok
+            var symbolStyle = "whiteSpace=wrap;html=1;image;image=img/cset/" + symbol.File_Name + ";labelBackgroundColor=none;";
+
+            if (symbol?.Component_Symbol_Id == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+
+            // gets the mxCell of the shape
+            var mxCell = (XmlElement)xDiagram.SelectSingleNode($"//mxCell[@id='{id}']");
+            if (mxCell == null)
+            {
+                return;
+            }
+
+            // gets the parent node of te shape (zone or layer)
+            var parent = mxCell.GetAttribute("parent");
+
+            // creates a UserObject to be the new CSET component
+            var userObject = xDiagram.CreateElement("UserObject");
+            userObject.SetAttribute("label", label);
+            userObject.SetAttribute("ComponentGuid", componentGuid.ToString());
+            userObject.SetAttribute("HasUniqueQuestions", "");
+            userObject.SetAttribute("IPAddress", "");
+            userObject.SetAttribute("Description", "");
+            userObject.SetAttribute("Criticality", "");
+            userObject.SetAttribute("HostName", "");
+            userObject.SetAttribute("parent", parent);
+            userObject.SetAttribute("id", id);
+
+            // taking out the unecessary attributes from the mxCell (already assigned to the soon-to-be parent userObject)
+            mxCell.RemoveAttribute("value");
+            mxCell.RemoveAttribute("id");
+            mxCell.SetAttribute("style", symbolStyle);
+
+            // puts the mxCell and the cell's mxGeometry into the UserObject
+            userObject.PrependChild(mxCell);
+
+            var zoneId = _context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId && x.DrawIO_id == parent).Select(x => x.Container_Id).FirstOrDefault();
+            var layerId = _context.DIAGRAM_CONTAINER.Where(x => x.Assessment_Id == assessmentId && x.Parent_Id == 0).Select(x => x.Container_Id).FirstOrDefault();
+
+            // build and put the new CSET component into the database
+            ASSESSMENT_DIAGRAM_COMPONENTS adc = new ASSESSMENT_DIAGRAM_COMPONENTS();
+            adc.Assessment_Id = assessmentId;
+            adc.Component_Guid = componentGuid;
+            adc.Component_Symbol_Id = symbol.Component_Symbol_Id;
+            adc.DrawIO_id = id;
+            adc.label = label;
+            adc.Zone_Id = zoneId == 0 ? null : zoneId;
+            adc.Layer_Id = layerId;
+
+            _context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
+            _context.SaveChanges();
+
+            // puts the UserObject right after its parent (to keep them together for readability)
+            var parentNode = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@id='{parent}']");
+
+            var root = (XmlElement)xDiagram.SelectSingleNode($"//root");
+            root.InsertAfter(userObject, parentNode);
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Sets the label of a component in the diagram XML 
+        /// and in the assessment's component inventory.
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="label"></param>
+        public void UpdateComponentLabel(int assessmentId, string guid, string label)
+        {
+            var componentGuid = Guid.Parse(guid);
+            var adc = _context.ASSESSMENT_DIAGRAM_COMPONENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId && x.Component_Guid == componentGuid);
+
+            if (adc == null || label == null)
+            {
+                // I was fed something I can't update; do nothing
+                return;
+            }
+
+            // change the label of the component
+            adc.label = label;
+
+            // Update the label in the diagram markup for the component
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            var xDiagram = new XmlDocument();
+            xDiagram.LoadXml(assessment.Diagram_Markup);
+            var userObject = (XmlElement)xDiagram.SelectSingleNode($"//UserObject[@ComponentGuid='{componentGuid}']");
+            userObject.Attributes["label"].Value = label;
+
+            if (userObject == null)
+            {
+                return;
+            }
+
+            assessment.Diagram_Markup = xDiagram.OuterXml;
+
+            _context.SaveChanges();
+            return;
+        }
+
+
         public string SetImage(int Component_Symbol_Id, string style)
         {
             var symbols = this.GetAllComponentSymbols();
@@ -833,7 +1041,7 @@ namespace CSETWebCore.Business.Diagram
         /// Gets all of the vendors from the uploaded CSAF_FILE records in the DB.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors() 
+        public IEnumerable<CommonSecurityAdvisoryFrameworkVendor> GetCsafVendors()
         {
             List<CSAF_FILE> csafList = _context.CSAF_FILE.ToList();
             List<CommonSecurityAdvisoryFrameworkVendor> vendors = new List<CommonSecurityAdvisoryFrameworkVendor>();
@@ -855,7 +1063,7 @@ namespace CSETWebCore.Business.Diagram
                 {
                     csafObj.Product_Tree.Branches[0].Branches = new List<Branch>();
                 }
-                    
+
                 foreach (var branch in csafObj.Product_Tree.Branches[0].Branches)
                 {
                     // Add newly found products, else add new vulnerabilites to existing product
@@ -900,7 +1108,7 @@ namespace CSETWebCore.Business.Diagram
         /// </summary>
         /// <param name="vendor"></param>
         /// <returns>The newly added / edited vendor</returns>
-        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor) 
+        public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor)
         {
             var currentVendors = GetCsafVendors();
 
@@ -962,7 +1170,7 @@ namespace CSETWebCore.Business.Diagram
             }
         }
 
-        public void DeleteCsafVendor(string vendorName) 
+        public void DeleteCsafVendor(string vendorName)
         {
             var allCsafs = _context.CSAF_FILE.ToList();
             var csafFilesToRemove = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
@@ -973,13 +1181,13 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
         }
 
-        public void DeleteCsafProduct(string vendorName, string productName) 
+        public void DeleteCsafProduct(string vendorName, string productName)
         {
             var allCsafs = _context.CSAF_FILE.ToList();
             var csafFilesWithTargetVendor = allCsafs.Where(csaf => JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csaf.Data))
                     .Product_Tree.Branches[0].Name == vendorName);
 
-            foreach (CSAF_FILE csafFile in csafFilesWithTargetVendor) 
+            foreach (CSAF_FILE csafFile in csafFilesWithTargetVendor)
             {
                 CommonSecurityAdvisoryFrameworkObject csafObj = JsonConvert.DeserializeObject<CommonSecurityAdvisoryFrameworkObject>(Encoding.UTF8.GetString(csafFile.Data));
                 csafObj.Product_Tree.Branches[0].Branches.RemoveAll(branch => branch.Name == productName);
