@@ -31,7 +31,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 @Component({
   selector: 'app-assessment-documents',
   templateUrl: './assessment-documents.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: {class: 'd-flex flex-column flex-11a'}
 })
 export class AssessmentDocumentsComponent implements OnInit {

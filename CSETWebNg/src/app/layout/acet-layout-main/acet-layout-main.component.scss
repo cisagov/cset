@@ -2289,12 +2289,12 @@ tooltip.glossary-definition.tooltip-left::after {
 
 .extras-button.active {
   background-color: $gray-50;
-  border: 1px solid $primary-450;
+  border: 3px solid $primary-450;
 }
 
 .extras-button:focus {
   background-color: $gray-50;
-  border: 1px solid $primary-450;
+  border: 3px solid $primary-450;
 }
 
 .extras-button.empty {
@@ -2749,6 +2749,10 @@ mat-sidenav {
 .mat-mdc-dialog-container .mdc-dialog__content {
   color: black !important;
   letter-spacing: normal !important;
+}
+
+.mdc-dialog__surface {
+  overflow-y: hidden !important;
 }
 
 table.assessment-documents {

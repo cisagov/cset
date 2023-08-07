@@ -30,6 +30,7 @@
         "showTrend": false,
         "showCompare": false,
         "showEnableProtectedFeatures": false,
-        "showComments": false
+        "showComments": false,
+        "showFeedback": false
     }
 }

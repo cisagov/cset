@@ -30,7 +30,7 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ResultsComponent implements OnInit {
@@ -38,7 +38,7 @@ export class ResultsComponent implements OnInit {
   @ViewChild('topScrollAnchor') topScroll: ElementRef;
 
   /**
-   * 
+   *
    */
   constructor(
     private assessSvc: AssessmentService,
@@ -46,7 +46,7 @@ export class ResultsComponent implements OnInit {
     private router: Router
   ) {
     // Store the active results view based on the new navigation target
-    this.router.events.subscribe((event: RouterEvent) => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         const tree: UrlTree = this.router.parseUrl(event.urlAfterRedirects);
         const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
@@ -63,11 +63,11 @@ export class ResultsComponent implements OnInit {
         }
       }
     });
+    this.assessSvc.currentTab = 'results';
   }
 
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'results';
   }
 
   /**

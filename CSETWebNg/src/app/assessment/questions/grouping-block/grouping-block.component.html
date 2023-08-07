@@ -24,9 +24,9 @@
     <div class="domain-group-heading">
         {{grouping.title}}
     </div>
-    <div *ngIf="grouping.description?.length > 0" class="mb-3" [innerHTML]="grouping.description">
+    <div *ngIf="grouping.description?.length > 0" class="mb-4" [innerHTML]="grouping.description">
     </div>
-   
+
 </ng-container>
 
 
@@ -75,7 +75,7 @@
             class="mt-4">
             <h5 for="DomainRemarks">Remarks - {{grouping.title}}</h5>
             <textarea [(ngModel)]="grouping.domainRemark" id="DomainRemarks" name="DomainRemarks" class="form-control"
-                autosize (blur)="submitTextComment(grouping)">
+                appAutoSize (blur)="submitTextComment(grouping)">
             </textarea>
         </div>
 

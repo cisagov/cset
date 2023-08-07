@@ -25,7 +25,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, View
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
@@ -46,7 +46,7 @@ import { LayoutService } from '../../../services/layout.service';
   templateUrl: './question-extras.component.html',
   styleUrls: ['./question-extras.component.css'],
   encapsulation: ViewEncapsulation.None,
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class QuestionExtrasComponent implements OnInit {
@@ -84,7 +84,7 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
     public layoutSvc: LayoutService
-    ) {
+  ) {
   }
 
 
@@ -197,19 +197,6 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showDocumentsIcon(): boolean {
 
-    return true;
-  }
-
-  /**
-   *
-   */
-  showFeedbackIcon(): boolean {
-    if (this.configSvc.installationMode === 'ACET') {
-      return false;
-    }
-    if (this.configSvc.installationMode === 'RRA') {
-      return false;
-    }
     return true;
   }
 
@@ -358,11 +345,11 @@ export class QuestionExtrasComponent implements OnInit {
     };
 
     this.dialog.open(FindingsComponent, {
-        data: find,
-        disableClose: true,
-        width: this.layoutSvc.hp ? '90%' : '600px',
-        maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-      })
+      data: find,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '600px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+    })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
@@ -391,8 +378,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     if (findingToDelete.summary === null) {
       msg = "Are you sure you want to delete this "
-      + this.observationOrIssue().toLowerCase()
-      + "?";
+        + this.observationOrIssue().toLowerCase()
+        + "?";
     }
 
 
@@ -504,7 +491,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
 
-          this.questionsSvc.broadcastExtras(this.extras);
+        this.questionsSvc.broadcastExtras(this.extras);
       }
     });
   }
@@ -590,7 +577,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadQuestionExtra(extra: string) {
-    if (!!this.mode || this.mode === '') {
+    if ((!!this.mode || this.mode === '') && (!this.assessSvc.usesMaturityModel('HYDRO') && extra != 'CMNT')) {
       return;
     }
 
@@ -600,7 +587,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   autoLoadComments() {
-    return this.usesRAC();
+    return this.usesRAC() || this.assessSvc.usesMaturityModel('HYDRO');
   }
 
   /**
@@ -617,70 +604,44 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Encapsulates logic that determines whether an icon should be displayed.
-   * It can grow as new behaviors are required.
+   * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
-
-    // DETAIL & REVIEWED
-    if (this.myQuestion.is_Maturity
-      && (this.assessSvc.usesMaturityModel('EDM')
-        || this.assessSvc.usesMaturityModel('CRR')
-        || this.assessSvc.usesMaturityModel('CPG')
-        || this.assessSvc.usesMaturityModel('C2M2')
-        || this.assessSvc.isISE())) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
+  
+    if (mode == 'DETAIL') {
+      return behavior?.questionIcons?.showDetails ?? true;
     }
 
-    // RRA
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
+    if (mode == 'SUPP') {
+      return behavior?.questionIcons?.showGuidance ?? true;
     }
 
-    // CISA CIS
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
-      if (mode == 'DISC') {
-        return false;
-      }
-      if (mode == 'REFS') {
-        return false;
-      }
+    if (mode == 'REFS') {
+      return behavior?.questionIcons?.showReferences ?? true;
     }
 
-    // ISE model always hides Observations
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
-      if (mode == 'DISC') {
-        return false;
-      }
-    }
-
-    // OBSERVATIONS
     if (mode == 'DISC') {
-      return this.configSvc.behaviors.showObservations;
+      return behavior?.questionIcons?.showObservations ?? true;
     }
 
-    // DOCUMENTS
+    if (mode == 'REVIEWED') {
+      return behavior?.questionIcons?.showReviewed ?? true;
+    }
+
+
+    // TODO:  define module-specific behaviors for these
+
     if (mode == 'DOCS') {
       return this.configSvc.behaviors.showAssessmentDocuments;
     }
 
     if (mode == 'CMNT') {
       return this.configSvc.behaviors.showComments;
+    }
+
+    if (mode == 'FDBK') {
+      return this.configSvc.behaviors.showFeedback;
     }
 
     return true;
@@ -692,25 +653,18 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   whichSupplementalIcon() {
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    if (!!behavior && behavior.questionIcons.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
+    } else {
+      return "I";
     }
-
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
-      return "G";
-    }
-
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR')) {
-      return "G";
-    }
-
-    return "I";
   }
 
   /**
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
-   observationOrIssue () {
+  observationOrIssue() {
     if (this.assessSvc.isISE()) {
       return 'Issue';
     }
@@ -724,7 +678,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   documentLabel(defaultLabel: string) {
     if (this.assessSvc.isISE()) {
-      if(defaultLabel === 'Source Documents') {
+      if (defaultLabel === 'Source Documents') {
         return 'Resources';
       } else if (defaultLabel === 'Additional Documents') {
         return 'References';

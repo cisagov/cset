@@ -39,7 +39,7 @@
         </svg>
     </div>
     <div *ngIf="!!supplementalInfo && supplementalInfo.length > 0"
-        [innerHTML]="supplementalInfo"></div>
+        [innerHTML]="supplementalInfo | linebreak | safe: 'html'"></div>
 
     <div *ngIf="!supplementalInfo || supplementalInfo.length === 0"
         style="font-style: italic">

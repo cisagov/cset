@@ -41,7 +41,7 @@ import { FindingsService } from '../../../services/findings.service';
 @Component({
     selector: 'app-reports',
     templateUrl: './reports.component.html',
-    // tslint:disable-next-line:use-host-property-decorator
+    // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
@@ -68,7 +68,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     isCyberFlorida: boolean = false;
 
     findings: any = null;
-
+    numberOfContacts: number = 1;
+    isConfigChainEqual:boolean=false;
     /**
      *
      */
@@ -100,9 +101,24 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         } else {
             this.isMobile = false;
         }
+        this.assessSvc.currentTab = 'results';
+        this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA","TSAonline"]);
     }
 
-
+    arraysEqual(a, b) {
+        if (a === b) return true;
+        if (a == null || b == null) return false;
+        if (a.length !== b.length) return false;
+      
+        // If you don't care about the order of the elements inside
+        // the array, you should sort both arrays here.
+      
+        for (let i = 0; i < a.length; ++i) {
+          if (a[i] !== b[i]) return false;
+        }
+        return true;
+      }
+      
 
     openSnackBar() {
         this._snackBar.openFromComponent(PrintSnackComponent, {
@@ -117,7 +133,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.exportExtension = localStorage.getItem('exportExtension');
 
-        this.assessSvc.currentTab = 'results';
         this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
             this.router.navigate([value], { relativeTo: this.route.parent });
         });
@@ -165,7 +180,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Decides whether the Observation Tear-Out Sheets 
+     * Decides whether the Observation Tear-Out Sheets
      * link should be shown.
      */
     showObservationTearouts() {
@@ -192,7 +207,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (reportType === 'crrreport') {
             localStorage.setItem('crrReportConfidentiality', this.securitySelected);
         }
-
         window.open(url, "_blank");
     }
 
@@ -236,7 +250,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * Gets all ISE Findings/Issues, 
+     * Gets all ISE Findings/Issues,
      * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
      */
     getAssessmentFindings() {
@@ -245,7 +259,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           (r: any) => {
             this.findings = r;
             let title = '';
-            
+
             for (let i = 0; i < this.findings?.length; i++) {
                 // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
                 if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
@@ -261,7 +275,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
                 this.ncuaSvc.unassignedIssues = true;
             }
 
-    
+
           },
           error => console.log('Findings Error: ' + (<Error>error).message)
         );
@@ -289,7 +303,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     /**
-     * 
+     *
      */
     clickExport() {
         // get short-term JWT from API

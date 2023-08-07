@@ -21,28 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { LabelType } from '@angular-slider/ngx-slider';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
 import { ChartService } from '../../../../services/chart.service';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { Utilities } from '../../../../services/utilities.service';
 
 @Component({
   selector: 'app-standards-summary',
   templateUrl: './standards-summary.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   chart: any;
   dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[];
-  // tslint:disable-next-line:max-line-length
+  // eslint-disable-next-line max-len
   dataSets: { dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[], label: string, Colors: string[], backgroundColor: string[] }[];
   initialized = false;
 

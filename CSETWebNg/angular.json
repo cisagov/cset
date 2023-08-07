@@ -41,7 +41,7 @@
             "assets": [
               {
                 "glob": "**/*.js",
-                "input": "./node_modules/@ngstack/code-editor/workers",
+                "input": "./node_modules/@goecmarc/code-editor/workers",
                 "output": "./assets/workers"
               },
               {
@@ -82,7 +82,7 @@
           "configurations": {
             "development": {
               "optimization": false,
-              "sourceMap": true,
+              "sourceMap": false,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": true,
@@ -196,7 +196,7 @@
               "src/favicon_renew.ico",
               {
                 "glob": "**/*.js",
-                "input": "./node_modules/@ngstack/code-editor/workers",
+                "input": "./node_modules/@goecmarc/code-editor/workers",
                 "output": "./assets/workers"
               },
               {
@@ -204,6 +204,15 @@
                 "input": "./node_modules/monaco-editor/min",
                 "output": "./assets/monaco"
               }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         }
@@ -220,6 +229,11 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
+    "cache": {
+      "enabled": false
   }
 }

@@ -94,13 +94,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
-// import {AutosizeModule} from 'ngx-autosize';
-
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { NgxSliderModule } from 'ngx-slider-v2';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HotkeyModule } from 'angular2-hotkeys';
-// import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -108,7 +105,7 @@ import { AssessmentComponent } from './assessment/assessment.component';
 import { StatusCreateComponent } from './assessment/documents/status-create/status-create.component';
 import { AssessmentContactsComponent } from './assessment/prepare/assessment-info/assessment-contacts/assessment-contacts.component';
 import { ContactItemComponent } from './assessment/prepare/assessment-info/assessment-contacts/contact-item/contact-item.component';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { AssessmentDemographicsComponent } from './assessment/prepare/assessment-info/assessment-demographics/assessment-demographics.component';
 import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/assessment-detail/assessment-detail.component';
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
@@ -198,7 +195,7 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@ngstack/code-editor';
+import { CodeEditorModule } from '@goecmarc/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -249,6 +246,7 @@ import { CompareBestworstComponent } from './aggregation/compare-analytics/compa
 import { SelectAssessmentsComponent } from './dialogs/select-assessments/select-assessments.component';
 import { ChartService } from './services/chart.service';
 import { ChartColors } from './services/chart.service';
+import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { LayoutMainComponent } from './layout/layout-main/layout-main.component';
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
@@ -313,7 +311,7 @@ import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-com
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
 import { MaturityQuestionsIseComponent } from './assessment/questions/maturity-questions/maturity-questions-ise.component';
 import { EdmComponent } from './reports/edm/edm.component';
-import { TooltipModule } from 'ng2-tooltip-directive-ngfix';
+import { TooltipModule } from '@cloudfactorydk/ng2-tooltip-directive';
 import { QuestionTextComponent } from './assessment/questions/question-text/question-text.component';
 import { AcetFilteringService } from './services/filtering/maturity-filtering/acet-filtering.service';
 import { CmmcFilteringService } from './services/filtering/maturity-filtering/cmmc-filtering.service';
@@ -579,6 +577,11 @@ import { HydroProgressTotalsComponent } from './assessment/results/hydro/hydro-a
 import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-items-report/hydro-action-items-report.component';
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
+import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
+import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
+import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
+import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
+import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
 
 
 
@@ -785,7 +788,6 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ShapesComponent,
         TextComponent,
         ZonesComponent,
-        ComponentOverrideComponent,
         ExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
@@ -802,6 +804,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         ComponentOverrideComponent,
         ExcelExportComponent,
         LayoutBlankComponent,
+        LayoutSwitcherComponent,
         LayoutMainComponent,
         AcetLayoutMainComponent,
         ReportTestComponent,
@@ -1020,6 +1023,8 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
+        CmuPerformanceSummaryComponent,
+        ImrReportComponent,
         ReferencesBlockComponent,
         NewAssessmentDialogComponent,
         CrrMainTocComponent,
@@ -1115,6 +1120,9 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
         HydroActionItemsReportComponent,
         SdAnswerSummaryReportComponent,
         SdAnswerSummaryComponent,
+        KeyReportComponent,
+        CmuGoalPerfStackedBarComponent,
+        CmuResultsDetailComponent,
     ],
     providers: [
         ConfigService,

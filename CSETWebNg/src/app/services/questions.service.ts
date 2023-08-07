@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-// tslint:disable-next-line:max-line-length
+// eslint-disable-next-line max-len
 import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
@@ -63,7 +63,7 @@ export class QuestionsService {
 
 
   /**
-   * 
+   *
    */
   constructor(
     private http: HttpClient,
@@ -149,7 +149,7 @@ export class QuestionsService {
     if (modelId == 11) {
       return true;
     }
-    
+
     return false;
   }
 
@@ -246,19 +246,18 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   getSubGroupingQuestionCount(subGroups: string[], modelId: number) {
-    console.log(subGroups)
     return this.http.get(this.configSvc.apiUrl + 'SubGroupingQuestionCount?subGroups=' +
       subGroups + '&modelId=' + modelId, headers);
   }
 
   /**
-   * 
+   *
    */
   getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
-    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId + 
+    return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
     '&groupLevel=' + groupLevel, headers);
   }
 
@@ -330,7 +329,7 @@ export class QuestionsService {
   }
 
   /**
-   * 
+   *
    */
   buildNavTargetID(target: any): string {
     if (!target) {
@@ -387,23 +386,23 @@ export class QuestionsService {
   /**
    * Finds the button definition and return its CSS
    */
-  answerOptionCss(modelId: Number, answerCode: string) {
-    return this.findAnsDefinition(modelId, answerCode).buttonCss;
+  answerOptionCss(modelName: string, answerCode: string) {
+    return this.findAnsDefinition(modelName, answerCode).buttonCss;
   }
 
   /**
    * Finds the button definition and returns its label
    */
-  answerButtonLabel(modelId: Number, answerCode: string): string {
-    return this.findAnsDefinition(modelId, answerCode).buttonLabel;
+  answerButtonLabel(modelName: string, answerCode: string): string {
+    return this.findAnsDefinition(modelName, answerCode).buttonLabel;
   }
 
   /**
    * Finds the button definition and returns its tooltip, if defined.
    * If a tooltip is not defined, the button label is returned.
    */
-  answerButtonTooltip(modelId: Number, answerCode: string): string {
-    var t = this.findAnsDefinition(modelId, answerCode);
+  answerButtonTooltip(modelName: string, answerCode: string): string {
+    var t = this.findAnsDefinition(modelName, answerCode);
       if (!!t.buttonTooltip) {
         return t.buttonTooltip;
       }
@@ -413,10 +412,10 @@ export class QuestionsService {
   /**
    * Finds the button definition and returns its full label (tooltip)
    */
-  answerDisplayLabel(modelId: Number, answerCode: string) {
-    const def = this.findAnsDefinition(modelId, answerCode);
+  answerDisplayLabel(modelName: string, answerCode: string) {
+    const def = this.findAnsDefinition(modelName, answerCode);
     if (!def) {
-      console.log('cannot find definition for model: ' + modelId + ', answerCode: ' + answerCode);
+      console.log('cannot find definition for model: ' + modelName + ', answerCode: ' + answerCode);
       return "?";
     }
     return def.answerLabel;
@@ -426,7 +425,7 @@ export class QuestionsService {
    * Finds the answer in the default object or the model-specific object.
    * Standards questions screen pass '0' for the modelId.
    */
-  findAnsDefinition(modelId: Number, answerCode: string) {
+  findAnsDefinition(modelName: string, answerCode: string) {
     // assume unanswered if null or undefined
     if (!answerCode) {
       answerCode = 'U';
@@ -434,19 +433,22 @@ export class QuestionsService {
 
     // first look for a skin-specific label set
     let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
-      && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
+      && x.moduleName == modelName)?.answers.find(y => y.code == answerCode);
     if (ans) {
       return ans;
     }
 
     // next, look for a model-specific label set with no skin defined
-    ans = this.answerButtonDefs.find(x => !x.skin && x.modelId == modelId)?.answers.find(y => y.code == answerCode);
-    if (ans) {
-      return ans;
+    let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
+    if (!!model) {
+      ans = model.answerOptions?.find(o => o.code == answerCode);
+      if (ans) {
+        return ans;
+      }
     }
 
-    // fallback to default definition set
-    ans = this.answerButtonDefs[0].answers.find(x => x.code == answerCode);
+    // fallback to default options
+    ans = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);    
     if (ans) {
       return ans;
     }

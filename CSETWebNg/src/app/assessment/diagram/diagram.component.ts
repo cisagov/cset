@@ -47,16 +47,16 @@ export class DiagramComponent implements OnInit {
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService
-    ) { }
+    ) { this.assessSvc.currentTab = 'prepare'; }
 
     /**
-     * 
+     *
      */
     ngOnInit() {
         // if we are hitting this page without knowing anything
         // about the assessment, we probably just got back from
         // the diagram app.
-        if (!this.assessSvc.assessment) {           
+        if (!this.assessSvc.assessment) {
             this.assessSvc.getAssessmentDetail().subscribe(
                 (data: AssessmentDetail) => {
                     this.assessSvc.assessment = data;

@@ -1,0 +1,36 @@
+.my-table {
+    border-collapse: collapse;
+  }
+  
+  .my-table th,
+  .my-table td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+  .my-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%; /* Adjust the width of the table as needed */
+  }
+  
+  .my-table th,
+  .my-table td {
+    border: 1px solid black;
+    padding: 8px;
+    width: 20%; 
+    height: 50px; 
+  }
+  .label {
+    min-width: 160px !important;
+    display: inline-block !important
+  }
+  .link {
+    color: #1a53ff;; 
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.link:hover {
+    color:  #0056b3;
+    text-decoration:underline;
+}

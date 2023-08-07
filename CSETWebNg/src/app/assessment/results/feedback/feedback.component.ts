@@ -35,7 +35,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
   styleUrls: ['./feedback.component.css']
 })
@@ -57,10 +57,9 @@ export class FeedbackComponent implements OnInit {
     private analysisSvc: AnalysisService,
     public navSvc: NavigationService,
     private configSvc: ConfigService
-  ) { }
+  ) { this.assessSvc.currentTab = 'results'; }
 
   ngOnInit() {
-    this.assessSvc.currentTab = 'results';
     this.docUrl = this.configSvc.docUrl;
     this.analysisSvc.getFeedback().subscribe(x => this.setupTable(x));
 
@@ -69,7 +68,7 @@ export class FeedbackComponent implements OnInit {
     });
   }
 
-  
+
 
   copyText(div: HTMLDivElement) {
     if (window.getSelection) {

@@ -33,7 +33,7 @@ import { LayoutService } from '../../../../services/layout.service';
   selector: 'app-cmmc-gaps',
   templateUrl: './cmmc-gaps.component.html',  
   styleUrls: ['../../../../../sass/cmmc-results.scss'],
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class CmmcGapsComponent implements OnInit {

@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div *ngIf="this.loadingCounter < 0; else mainContent" class="spinner-container" style="margin: 2em auto">
+        <div *ngIf="this.loadingCounter < 2; else mainContent" class="spinner-container" style="margin: 2em auto">
             <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
 
@@ -100,15 +100,23 @@
                             <div class="h2 report-text-blue">Action Items</div>
                         </div>
                     </div>
+                    Distribution of action items by implementation status.
+                    <br>
+                    <br>
                     <table class="table-responsive td-align-top td-padding-half-rem">
                         <tr class="report-text-blue">
                             <td style="width: 15%;">Impact</td>
                             <td style="width: 60%">Action</td>
                             <td style="width: 25%">Comment</td>
                         </tr>
+                        <ng-container *ngIf="actionItems.length == 0">
+                            <tr>
+                                <td colspan="3" style="text-align: center;">No Action Items to report.</td>
+                            </tr>
+                        </ng-container>
                         <ng-container *ngFor="let progressArray of actionItems">
                             <tr>
-                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]">
+                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]" style="pointer-events: none;">
                                     {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
                                 </td>
                             </tr>
@@ -116,7 +124,7 @@
                                 <tr>
                                     <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{ hydroSvc.impactTranslator(item.action.severity) }}</td>
                                     <td class="cell" [innerHTML]="item.action.action_Items"></td>
-                                    <td class="pr-3 cell">{{ item.actionData.comment }}</td>
+                                    <td class="cell" [innerHTML]="item.actionData.comment"></td>
                                 </tr>
                             </ng-container>
                         </ng-container>

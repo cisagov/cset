@@ -32,7 +32,7 @@ import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.co
 @Component({
   selector: 'app-set-detail',
   templateUrl: './set-detail.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class CustomSetComponent implements OnInit {

@@ -126,10 +126,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
 
-                foreach (var h in item.HYDRO_DATA_ACTIONS)
-                {
-                    model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(h));
-                }
+                
+                model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(item.HYDRO_DATA_ACTIONS));
+                
                 foreach (var f in item.FINDING)
                 {
                     model.jFINDING.Add(TinyMapper.Map<FINDING,jFINDING>(f));
@@ -297,7 +296,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        public Stream ArchiveStream(int assessmentId, string password)
+        public Stream ArchiveStream(int assessmentId, string password, string passwordHint)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
@@ -397,7 +396,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
                 ZipEntry jsonEntry = archive.AddEntry("model.json", json);
-                
+                ZipEntry hint = archive.AddEntry($"{passwordHint}.hint", passwordHint);
                 archive.Save(archiveStream);
             }
 

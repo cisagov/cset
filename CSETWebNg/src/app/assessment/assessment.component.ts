@@ -28,11 +28,7 @@ import {
   OnInit,
   Output,
   ViewChild,
-  HostListener,
-  AfterContentInit,
-  OnChanges,
-  ChangeDetectorRef,
-  AfterContentChecked
+  HostListener
 } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -45,10 +41,10 @@ import { NavigationService } from '../services/navigation/navigation.service';
   selector: 'app-assessment',
   styleUrls: ['./assessment.component.scss'],
   templateUrl: './assessment.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
-export class AssessmentComponent implements OnInit, AfterContentChecked {
+export class AssessmentComponent implements OnInit {
   innerWidth: number;
   innerHeight: number;
 
@@ -84,12 +80,11 @@ export class AssessmentComponent implements OnInit, AfterContentChecked {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    private cd: ChangeDetectorRef,
     public layoutSvc: LayoutService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
-    this.assessSvc.currentTab = 'prepare';
+    this.setTab('prepare');
     this.navSvc.activeResultsView = null;
     if (localStorage.getItem('tree')) {
       this.navSvc.buildTree();
@@ -98,10 +93,6 @@ export class AssessmentComponent implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
     this.evaluateWindowSize();
-  }
-
-  ngAfterContentChecked() {
-    this.cd.detectChanges();
   }
 
   setTab(tab) {
@@ -143,7 +134,7 @@ export class AssessmentComponent implements OnInit, AfterContentChecked {
 
   /**
    * Called when the user clicks an item
-   * in the nav.  
+   * in the nav.
    */
   selectNavItem(target: string) {
     if (!this.lockNav) {

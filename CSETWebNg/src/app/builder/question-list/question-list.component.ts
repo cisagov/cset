@@ -31,7 +31,7 @@ import { Question, BasicResponse } from '../../models/set-builder.model';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
-  // tslint:disable-next-line:use-host-property-decorator
+  // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
 export class QuestionListComponent implements OnInit {
@@ -64,16 +64,6 @@ export class QuestionListComponent implements OnInit {
       this.questionResponse = data;
       this.initialized = true;
     });
-  }
-
-  /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    if (!text) {
-      return '';
-    }
-    return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
   }
 
   /**

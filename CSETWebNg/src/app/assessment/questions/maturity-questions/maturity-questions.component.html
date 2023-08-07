@@ -70,7 +70,7 @@
 
 
     <p class="mb-4" *ngIf="!!groupings">
-    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelId, this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N')}}' response
+    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel(modelName, this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N')}}' response
     </p>
 
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">

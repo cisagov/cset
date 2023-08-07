@@ -1,24 +1,24 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2023 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
 <div class="question-group mb-3">
     <!-- Hides the ISE CORE+ only sub cats unless they need to be shown -->
@@ -51,7 +51,7 @@
                     <span [class.display-hidden]="!myGrouping.hasReviewItems"
                       class="d-flex justify-content-center align-items-center flex-00a"
                       matTooltip="One or more controls in this category requires further review.">
-                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>                    
+                        <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                     </span>
                 </div>
 
@@ -87,42 +87,42 @@
                                     {{ q.displayNumber }}
                                 </div>
                             </ng-template>
-                            <div style="width: 100%;">                        
+                            <div style="width: 100%;">
                                 <div *ngIf="!!q.shortName" class="mb-1 font-italic font-weight-bold" style="color: #666; font-size: .8rem; white-space: normal;">
                                     {{ q.shortName }}
                                 </div>
-    
+
                                 <div *ngIf="q.parentQuestionId === null; else childQuestion" style="font-size: 1.25rem;">
                                     <app-question-text [questionText]="q.questionText"></app-question-text>
                                 </div>
                                 <ng-template #childQuestion>
                                     <app-question-text [questionText]="q.questionText"></app-question-text>
                                 </ng-template>
-    
+
                                 <span *ngIf="showQuestionIds" class="debug-highlight">{{ q.questionId }}</span>
                             </div>
                         </div>
-        
+
                         <!-- build the list of answer options -->
                         <div *ngIf="q.parentQuestionId !== null">
                             <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                                 <label *ngFor="let option of answerOptions">
                                     <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label"
-                                      [class]="questionsSvc.answerOptionCss(maturityModelId, option)" [class.answer-selected]="q.answer === option"
+                                      [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
                                       [matTooltip]="this.displayTooltip(maturityModelId, option)" [disabled]="option === 'N' && autoGenerateInProgress">
                                         <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
                                           (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                                            {{ questionsSvc.answerButtonLabel(maturityModelId, option) }}
+                                            {{ questionsSvc.answerButtonLabel(maturityModelName, option) }}
                                     </label>
                                 </label>
-        
+
                                 <!-- Comment bubble button -->
                                 <label class="btn form-check-label btn-iss" [matTooltip]="hasComment(q) ? 'Notes with content':'Notes'" matTooltipPosition="below"
                                   [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
                                     <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
                                     <span class="cset-icons-comment fs-base"></span>
                                 </label>
-        
+
                                 <!-- Mark For Review Flag  -->
                                 <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
                                   matTooltip="This control requires further review.">
@@ -133,26 +133,26 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div *ngIf="q.extrasExpanded">
                         <div class="form-group">
-                            <textarea autosize [(ngModel)]="q.comment" (change)="storeComment(q)" 
+                            <textarea appAutoSize [(ngModel)]="q.comment" (change)="storeComment(q)"
                               style="min-height: 120px; width: 100%" class="form-control" [placeholder]="altTextPlaceholder"></textarea>
                         </div>
                     </div>
 
                     <hr>
-        
+
                     <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
                     <!-- <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
                       class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                       (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
                     </button> -->
-    
-                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q" 
+
+                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
                       class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                     </app-question-extras>
-        
+
                 </div>
                 <div *ngIf="last">
                     <div>
@@ -166,7 +166,7 @@
                             {{ this.getIssuesButtonText() }}
                         </button>
                     </div>
-        
+
                     <div *ngIf="showIssues === true" style="margin: 0.75em">
                         <table class="table" *ngIf="extras?.findings.length > 0">
                             <tr>
@@ -201,7 +201,7 @@
                                 </td>
                             </tr>
                         </table>
-                        
+
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
                     <textarea id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 40px; max-height: summaryBoxMax + 'px'" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"

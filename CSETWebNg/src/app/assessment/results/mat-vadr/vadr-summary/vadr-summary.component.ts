@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
+import { ScaleType, Color, ColorHelper } from '@swimlane/ngx-charts';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
@@ -45,7 +45,10 @@ export class VadrSummaryComponent implements OnInit {
   legendPosition: string = 'below';
   arcWidth = .5;
   legend: string[] = [];
-  colorScheme = {
+  colorScheme: Color = {
+    name: 'vadrSummaryColors',
+    selectable: true,
+    group: ScaleType.Ordinal,
     domain: ['#28A745', '#DC3545', '#FFC107', '#c3c3c3']
   };
 
@@ -99,6 +102,6 @@ export class VadrSummaryComponent implements OnInit {
 
   buildLegend() {
     this.legend = this.single.map((d: any) => Math.round(d.value) + "% " + d.name)
-    this.legendColors = new ColorHelper(this.colorScheme, "ordinal", this.single.map((d: any) => d.name), this.colorScheme);
+    this.legendColors = new ColorHelper(this.colorScheme, ScaleType.Ordinal, this.single.map((d: any) => d.name), this.colorScheme);
   }
 }

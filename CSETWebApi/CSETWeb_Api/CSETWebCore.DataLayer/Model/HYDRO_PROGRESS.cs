@@ -8,19 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model
 {
-    /// <summary>
-    /// HYDRO specific fields for most of the results page
-    /// </summary>
     public partial class HYDRO_PROGRESS
     {
         public HYDRO_PROGRESS()
         {
+            HYDRO_DATA_ACTIONS = new HashSet<HYDRO_DATA_ACTIONS>();
         }
 
         [Key]
-        [ForeignKey("Progress_Id")]
         public int Progress_Id { get; set; }
+        [Required]
         [StringLength(50)]
+        [Unicode(false)]
         public string Progress_Text { get; set; }
+
+        [InverseProperty("Progress")]
+        public virtual ICollection<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
     }
 }

@@ -46,8 +46,8 @@
             [matTooltip]="getIntegrityCheckErrors(q.failedIntegrityCheckOptions)"></span>
         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
-        <div *ngIf="q.questionType == 'memo'">
-            <textarea autosize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
+        <div *ngIf="q.questionType == 'memo'" class="mb-3">
+            <textarea appAutoSize rows="3" class="form-control w-100" [value]="q.answerMemo" maxlength="4000"
                 (change)="changeMemo(q, $event)"></textarea>
         </div>
 
@@ -70,7 +70,9 @@
 
         <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
 
-        <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
+        <div *ngIf="q.followups?.length > 0" class="pl-5 pt-5">
+            <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>
+        </div>
     </div>
 
 </div>
