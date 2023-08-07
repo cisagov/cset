@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
-        /// Gets the extended demographics for the assessment.
+        /// Gets the extended demographic answers for the assessment.
         /// </summary>
         /// <returns></returns>
         [HttpGet]

@@ -11,7 +11,7 @@ export class DemographicsIodComponent {
   employeeNumsBizUnit: any[];
   orgTypes: any[];
 
-  demographicData: any;
+  demographicData: any = {};
 
 
   changeValue(evt: any) {
@@ -19,7 +19,7 @@ export class DemographicsIodComponent {
   }
 
   changeOrgType(evt: any) {
-    
+
   }
 
   changeOrgName(evt: any) {
