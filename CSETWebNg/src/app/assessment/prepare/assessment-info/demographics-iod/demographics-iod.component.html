@@ -28,7 +28,7 @@
             (change)="changeValue($event)">
             <option selected disabled>Not Selected</option>
             <option *ngFor="let en of employeeNumsOrg" [value]="en.displayValue"
-                [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option>
+                [selected]="asset.demographicsAssetId === demographicData?.assetValue">{{en.displayValue}}</option>
         </select>
     </div>
 
@@ -42,7 +42,7 @@
             (change)="changeValue($event)">
             <option selected disabled>Not Selected</option>
             <option *ngFor="let en of employeeNumsBizUnit" [value]="en.displayValue"
-                [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option>
+                [selected]="asset.demographicsAssetId === demographicData?.assetValue">{{en.displayValue}}</option>
         </select>
     </div>
 
