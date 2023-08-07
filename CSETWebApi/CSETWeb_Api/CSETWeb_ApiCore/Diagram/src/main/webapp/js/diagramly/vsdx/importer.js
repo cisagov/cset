@@ -15,7 +15,7 @@ var com;
              * @class
              */
             var mxVsdxCodec = (function () {
-                function mxVsdxCodec() {
+                function mxVsdxCodec(editorUi) {
                     this.RESPONSE_END = "</mxfile>";
                     this.RESPONSE_DIAGRAM_START = "";
                     this.RESPONSE_DIAGRAM_END = "</diagram>";
@@ -38,12 +38,14 @@ var com;
                      */
                     this.parentsMap = ({});
                     
-                    this.layersMap = ({});
+                    this.layerNames = [];
                     /**
                      * Set to true if you want to display spline debug data
                      */
                     this.debugPaths = false;
                     this.vsdxModel = null;
+                    this.editorUi = editorUi;
+					this.shapeIndexShift = 0;
                 }
                 mxVsdxCodec.vsdxPlaceholder_$LI$ = function ()
                 {
@@ -58,24 +60,26 @@ var com;
                 
                 mxVsdxCodec.parsererrorNS_$LI$ = function ()
                 {
-            		if (mxVsdxCodec.parsererrorNS == null)
-            		{
-            			mxVsdxCodec.parsererrorNS = "";
-            			
-            			if (window.DOMParser) 
-            			{
-	            			var parser = new DOMParser();
-	            			
-	            			try
-	            			{
-	            				mxVsdxCodec.parsererrorNS = parser.parseFromString('<', 'text/xml').getElementsByTagName("parsererror")[0].namespaceURI;
-	            			}
-	            			catch(e)
-	            			{
-	            				//ignore! IE11 throw an exception on XML syntax error
-	            			}
-            			}
-        			}
+					mxVsdxCodec.parsererrorNS = mxConstants.NS_XHTML;
+	
+//            		if (mxVsdxCodec.parsererrorNS == null)
+//            		{
+//            			mxVsdxCodec.parsererrorNS = "";
+//            			
+//            			if (window.DOMParser) 
+//            			{
+//	            			var parser = new DOMParser();
+//	            			
+//	            			try
+//	            			{
+//	            				mxVsdxCodec.parsererrorNS = parser.parseFromString('<', 'text/xml').getElementsByTagName("parsererror")[0].namespaceURI;
+//	            			}
+//	            			catch(e)
+//	            			{
+//	            				//ignore! IE11 throw an exception on XML syntax error
+//	            			}
+//            			}
+//        			}
 
             		return mxVsdxCodec.parsererrorNS;
                 };
@@ -102,7 +106,7 @@ var com;
                 	}
                 };
                 
-                //to-do Optimize this function
+                //TODO Optimize this function
                 mxVsdxCodec.decodeUTF16LE = function ( binaryStr ) 
                 {
                     var cp = "";
@@ -150,6 +154,13 @@ var com;
                     }
                 };
                 
+                mxVsdxCodec.incorrectXMLReqExp = [
+                	{
+                		regExp: /\&(?!amp;|lt;|gt;|quot;|#)/g,
+                		repl: '&amp;'
+                	}
+                ];
+                
                 /**
                  * Parses the input VSDX format and uses the information to populate
                  * the specified graph.
@@ -162,7 +173,7 @@ var com;
                  * @param {string} charset
                  * @return {string}
                  */
-                //FIXME to-do add charset support
+                //FIXME TODO add charset support
                 mxVsdxCodec.prototype.decodeVsdx = function (file, callback, charset, onerror) {
                     var _this = this;
                     var docData = ({});
@@ -189,34 +200,60 @@ var com;
 	                    {
 	                        var array122 = (function (m) { if (m.entries == null)
 	                            m.entries = []; return m.entries; })(pages);
-	                        var _loop_1 = function (index121) {
+	                        var _loop_1 = function (index121, remaining) {
 	                            var entry = array122[index121];
 	                            {
 	                                var page_1 = entry.getValue();
-	                                if (!page_1.isBackground()) {
+	                                //As per many requests, include all pages in the output
+	                                //if (!page_1.isBackground()) 
+	                                {
 	                                    var graph_1 = this_1.createMxGraph();
 	                                    graph_1.getModel().beginUpdate();
-	                                    this_1.importPage(page_1, graph_1, graph_1.getDefaultParent());
+	                                    this_1.importPage(page_1, graph_1, graph_1.getDefaultParent(), true);
 	                                    this_1.scaleGraph(graph_1, page_1.getPageScale() / page_1.getDrawingScale());
 	                                    graph_1.getModel().endUpdate();
-	                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_DIAGRAM_START); })(xmlBuilder);
-	                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.processPage(graph_1, page_1)); })(xmlBuilder);
-	                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_DIAGRAM_END); })(xmlBuilder);
+
+	                                    this_1.postImportPage(page_1, graph_1, function()
+	                                    {
+	                                    	this_1.sanitiseGraph(graph_1);
+		                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_DIAGRAM_START); })(xmlBuilder);
+		                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.processPage(graph_1, page_1)); })(xmlBuilder);
+		                                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_DIAGRAM_END); })(xmlBuilder);
+		                                    
+		                                    if (index121 < array122.length - 1)
+		                                	{
+		    	                            	_loop_1(index121 + 1, remaining);
+		                                	}
+		    	                            else
+		                                	{
+		    	                            	remaining();
+		                                	}
+	                                    });
 	                                }
 	                            }
 	                        };
 	                        var this_1 = _this;
-	                        for (var index121 = 0; index121 < array122.length; index121++) {
-	                            _loop_1(index121);
+	                        
+	                        if (array122.length > 0)
+                        	{
+	                        	_loop_1(0, remaining);
+                        	}
+	                        else
+	                        {
+	                        	remaining();
 	                        }
 	                    }
-	                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_END); })(xmlBuilder);
-	                    var dateAfter = new Date();
-                       	//console.log("File processed in " + (dateAfter - dateBefore) + "ms");
-	                    //console.log(xmlBuilder.str);
-	                    if (callback) 
+	                    
+	                    function remaining()
 	                    {
-                     		callback(xmlBuilder.str);
+		                    /* append */ (function (sb) { return sb.str = sb.str.concat(_this.RESPONSE_END); })(xmlBuilder);
+		                    var dateAfter = new Date();
+	                       	//console.log("File processed in " + (dateAfter - dateBefore) + "ms");
+		                    //console.log(xmlBuilder.str);
+		                    if (callback) 
+		                    {
+	                     		callback(xmlBuilder.str);
+		                    }
 	                    }
                     };
 
@@ -240,7 +277,7 @@ var com;
 		                    		
 		                    		if (onerror != null) 
 		                    		{
-		                    			onerror();
+		                    			onerror(e);
 		                    		}
 		                    		else
 		                    		{
@@ -271,14 +308,14 @@ var com;
 	        					var filename = zipEntry.name;
 	                        	var name = filename.toLowerCase();
 	        					var nameLen = name.length;
-	                            if (name.indexOf('.xml') == nameLen - 4 || name.indexOf('.xml.rels') == nameLen - 9) //xml files
+	                            if (name.indexOf('.xml') == nameLen - 4 || name.indexOf('.rels') == nameLen - 5) //xml files
 	                            {
 	                            	filesCount++;
 	        	                    zipEntry.async("string").then(function (str) 
 	        	                  	{
         	                    		if (!(str.length === 0)) {
 	        	    						//UTF-8 BOM causes exception while parsing, so remove it
-	        	    						//to-do is the text encoding will be correct or string must be re-read as UTF-8?
+	        	    						//TODO is the text encoding will be correct or string must be re-read as UTF-8?
 	                                        if (str.charCodeAt(0) == 65279)
                                         	{
 	                                            str = str.substring(1);
@@ -292,7 +329,19 @@ var com;
                                         		{
 	                                        		doc = mxVsdxCodec.parseXml(mxVsdxCodec.decodeUTF16LE(str));
                                         		}
-	                                        	//to-do add any other non-standard encoding that may be needed 
+	                                        	else
+                                        		{
+	                                        		for (var r = 0; r < mxVsdxCodec.incorrectXMLReqExp.length; r++)
+                                        			{
+	                                        			if (mxVsdxCodec.incorrectXMLReqExp[r].regExp.test(str))
+                                        				{
+	                                        				str = str.replace(mxVsdxCodec.incorrectXMLReqExp[r].regExp, mxVsdxCodec.incorrectXMLReqExp[r].repl);
+                                        				}
+                                        			}
+	                                        		
+	                                        		doc = mxVsdxCodec.parseXml(str);
+                                        		}
+	                                        	//TODO add any other non-standard encoding that may be needed 
 	                                        }
 	                                        
 	                                        if (doc != null)
@@ -325,10 +374,13 @@ var com;
 	                            				//send to emf conversion service
 	                        					var formData = new FormData();
 	                        					formData.append('img', emfBlob, name);
-
+	                        					formData.append('inputformat', 'emf');
+	                        					formData.append('outputformat', 'png');
+	                        					
 	                        					var xhr = new XMLHttpRequest();
 	                        					xhr.open('POST', EMF_CONVERT_URL);
 	                        					xhr.responseType = 'blob';
+	                        					_this.editorUi.addRemoteServiceSecurityCheck(xhr);
 	                        					
 	                        					xhr.onreadystatechange = mxUtils.bind(this, function()
 	                        					{
@@ -340,8 +392,10 @@ var com;
 	                        								{
 	                        									var reader = new FileReader();
 	                        									reader.readAsDataURL(xhr.response); 
-	                        									reader.onloadend = function() {
-	                        									    mediaData[filename] = reader.result.substr(22); //data:image/png;base64, is 23 character
+	                        									reader.onloadend = function() 
+	                        									{
+	                        										var dataPos = reader.result.indexOf(',') + 1;
+	                        									    mediaData[filename] = reader.result.substr(dataPos);
 		                        									emfDone();
 	                        									}
 	                        								}
@@ -452,9 +506,10 @@ var com;
                     var output = "";
                     if (page != null) {
                         //var pageName_1 = org.apache.commons.lang3.StringEscapeUtils.escapeXml11(page.getPageName());
-                    	//to-do FIXME htmlEntities is not exactly as escapeXml11 but close
-                        var pageName_1 = mxUtils.htmlEntities(page.getPageName());
-                        output += '<diagram name="' + pageName_1 + '" id="' + pageName_1 + '">';
+                    	//TODO FIXME htmlEntities is not exactly as escapeXml11 but close
+                        var pageName_1 = mxUtils.htmlEntities(page.getPageName()) + (page.isBackground()? ' (Background)' : '');
+                        var pageNameU = mxUtils.htmlEntities(page.getPageNameU());
+                        output += '<diagram name="' + pageName_1 + '" id="' + pageNameU.replace(/\s/g, '_') + '">';
                     }
                     
                     output += Graph.compress(modelString);
@@ -556,6 +611,27 @@ var com;
                     }
                     ;
                 };
+
+                mxVsdxCodec.prototype.layerIndexToNames = function (indexes)
+                {
+                    var names = [];
+                    
+                    if (indexes)
+                    {
+                        for (var i = 0; i < indexes.length; i++)
+                        {
+                            var layer = parseInt(indexes[i]);
+
+                            if (layer < this.layerNames.length)
+                            {
+                                names.push(this.layerNames[layer]);
+                            }
+                        }
+                    }
+
+                    return names.length > 0? names : [mxResources.get('background')]; // Add all non-layer members to Background tag
+                };
+
                 /**
                  * Imports a page of the document with the actual pageHeight.<br/>
                  * In .vdx, the Y-coordinate grows upward from the bottom of the page.<br/>
@@ -566,7 +642,7 @@ var com;
                  * @param {*} parent The parent of the elements to be imported.
                  * @return {number}
                  */
-                mxVsdxCodec.prototype.importPage = function (page, graph, parent) 
+                mxVsdxCodec.prototype.importPage = function (page, graph, parent, noSanitize) 
                 {
                 	//BackPages can include another backPage, so it is recursive
                 	var backPage = page.getBackPage();
@@ -579,47 +655,55 @@ var com;
                         this.importPage(backPage, graph, graph.getDefaultParent());
                     }
                 	
-                	//to-do KNOWN ISSUE: VSDX layers are virtual grouping where parts of a group can be members of a layers while the remaining group members belong to another layer
+                	//TODO KNOWN ISSUE: VSDX layers are virtual grouping where parts of a group can be members of a layers while the remaining group members belong to another layer
                 	//					This cannot be done in draw.io currently
                 	//					Also, layers should NOT affect cells order. So, as a best effort solution, layers should be orders such that the cells order is maintained
                 	
                 	//add page layers
                 	var layers = page.getLayers();
-                	this.layersMap[0] = graph.getDefaultParent();
-                	
-                	if (layers.length > 1)
-            		{
-                		for (var k = 1; k < layers.length; k++)
-	            		{
-                			var layer = layers[k];
-                			var layerCell = new mxCell();		
-                			layerCell.setVisible(layer.Visible == 1);
-
-                			if (layer.Lock == 1)
-                			{
-                				layerCell.setStyle("locked=1;");
-                			}
-                			
-                			//to-do handlle color and other properties
-                			layerCell.setValue(layer.Name);
-                			
-                			this.layersMap[k] = layerCell;
-                    		graph.addCell(layerCell, graph.model.root, k);
-	            		}
-            		}
-                	//add shapes
                     var shapes = page.getShapes();
+                    var hiddenTags = [];
+					
+                    for (var k = 0; k < layers.length; k++)
+                    {
+                        var layer = layers[k];
+                        // Tags cannot have spaces
+                        var layerName = layer.Name.replace(/\s/g, '_');
+                        this.layerNames.push(layerName);
+
+                        if (layer.Visible == 0)
+                        {
+                            hiddenTags.push(layerName);
+                        }
+
+                        // Lock is not supported for tags
+                        if (layer.Lock == 1)
+                        {
+                            //layerCell.setStyle("locked=1;");
+                        }
+                    }
+
+                	//add shapes
                     var entries = (function (a) { var i = 0; return { next: function () { return i < a.length ? a[i++] : null; }, hasNext: function () { return i < a.length; } }; })(/* entrySet */ (function (m) { if (m.entries == null)
                         m.entries = []; return m.entries; })(shapes));
                     var pageHeight = page.getPageDimensions().y;
                     var pageId = page.getId();
-                    while ((entries.hasNext())) {
+
+                    while ((entries.hasNext())) 
+                    {
                         var entry = entries.next();
                         var shape = entry.getValue();
-                        var p = this.layersMap[shape.layerMember];
-                        this.addShape(graph, shape, p? p : parent, pageId, pageHeight);
-                    }
-                    ;
+                        var newCell = this.addShape(graph, shape, parent, pageId, pageHeight);
+                        // Map layers to draw.io tags which allows muliple layers(tags) per cell
+                        var layers = this.layerIndexToNames(shape.layerMember);
+
+                        // Edges are not available here yet
+                        if (newCell != null && layers != null)
+                        {
+                            graph.addTagsForCells([newCell], layers);
+                        }
+                    };
+
                     var connects = page.getConnects();
                     var entries2 = (function (a) { var i = 0; return { next: function () { return i < a.length ? a[i++] : null; }, hasNext: function () { return i < a.length; } }; })(/* entrySet */ (function (m) { if (m.entries == null)
                         m.entries = []; return m.entries; })(connects));
@@ -640,17 +724,169 @@ var com;
                     while ((it.hasNext())) {
                         var edgeShapeEntry = it.next();
                         if (edgeShapeEntry.getKey().getPageNumber() === pageId) {
-                            this.addUnconnectedEdge(graph, /* get */ (function (m, k) { if (m.entries == null)
+                            var edge = this.addUnconnectedEdge(graph, /* get */ (function (m, k) { if (m.entries == null)
                                 m.entries = []; for (var i = 0; i < m.entries.length; i++)
                                 if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
                                     return m.entries[i].value;
                                 } return null; })(this.parentsMap, edgeShapeEntry.getKey()), edgeShapeEntry.getValue(), pageHeight);
+                            
+                            var layers = this.layerIndexToNames(edgeShapeEntry.getValue().layerMember);
+                            
+                            if (layers != null)
+                            {
+                                graph.addTagsForCells([edge], layers);
+                            }
                         }
+                    };
+
+                    // Now after all used tags are found, add remaining ones and set visibility
+                    if (this.layerNames.length > 0)
+                    {
+                        var tags = graph.getAllTags();
+                        var emptyTags = false;
+	
+                        for (var i = 0; i < this.layerNames.length; i++)
+                        {
+                            if (mxUtils.indexOf(tags, this.layerNames[i]) < 0)
+                            {
+                                emptyTags = true;
+                                break;
+                            }
+                        }
+
+                        // Cannot add tags without cells. Add a dummy cell
+                        if (emptyTags)
+                        {
+                            var dummyCell = graph.insertVertex(parent, null, null, 0, 0, 0, 0);
+                            graph.addTagsForCells([dummyCell], this.layerNames);
+                            dummyCell.setVisible(false);
+                        }
+                        
+                        graph.setHiddenTags(hiddenTags);
                     }
-                    ;
-                    this.sanitiseGraph(graph);
+
+                    if (!noSanitize)
+                    {
+                        this.sanitiseGraph(graph);
+                    }
+
                     return pageHeight;
                 };
+                
+                /**
+                 * This function is for doing any async processing needed after importing a page
+                 */
+                mxVsdxCodec.prototype.postImportPage = function(page, graph, callback)
+                {
+                	try
+                	{
+                		var me = this;
+                		var toCropImgs = [];
+	                	
+                        function checkShapes(shapes)
+                        {
+                            if (shapes != null)
+                            {
+                                shapes = shapes.entries || [];
+
+                                for (var i = 0; i < shapes.length; i++)
+                                {
+                                    var shape = shapes[i].value || {};
+                                    
+                                    if (shape.toBeCroppedImg)
+                                    {
+                                        toCropImgs.push(shape);
+                                    }
+
+                                    checkShapes(shape.getChildShapes());
+                                }
+                            }
+                        }
+
+                        checkShapes(page.getShapes());
+
+	                	if (toCropImgs.length > 0)
+                		{
+	                		function cropImage(index, callback)
+	                		{
+	                			function next()
+	                			{
+	                				if (index < toCropImgs.length - 1)
+	                				{
+		                				cropImage(index + 1, callback);
+	                				}
+		                			else
+	                				{
+		                				callback();
+	                				}
+	                			};
+	                			
+	                			var shape = toCropImgs[index];
+	                			var imgInfo = shape.toBeCroppedImg;
+	                			
+	                			var cell = (function (m, k) { if (m.entries == null)
+	                                m.entries = []; for (var i = 0; i < m.entries.length; i++)
+	                                if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
+	                                    return m.entries[i].value;
+	                                } return null; })(me.vertexMap, new com.mxgraph.io.vsdx.ShapePageId(page.Id, shape.Id));
+	                            
+	                			var img = new Image();
+	                			
+	                			img.onload = function()
+	                			{
+	                				var data = imgInfo.iData;
+                                    var type = imgInfo.iType;
+                                    
+	                				try
+		                			{
+                                        //TODO There is still some minor inaccuracy in width/height
+                                        var scaleX = img.width / imgInfo.imgWidth;
+                                        var scaleY = img.height / imgInfo.imgHeight;
+		                				var offsetX = (-imgInfo.imgOffsetX) * scaleX;
+		                				var offsetY = (imgInfo.imgHeight - imgInfo.height + imgInfo.imgOffsetY) * scaleY;
+		                			    var c = document.createElement("canvas");
+		                			    c.width = imgInfo.width * scaleX;
+		                              	c.height = imgInfo.height * scaleY;
+                                        var ctx = c.getContext("2d");
+                                        ctx.fillStyle = "#FFFFFF";
+                                        ctx.fillRect(0, 0, c.width, c.height);
+                                        ctx.drawImage(img, offsetX, offsetY, c.width, c.height, 0, 0, c.width, c.height);
+		                            	var jpgData = c.toDataURL("image/jpeg");
+	                                    data = jpgData.substr(23); //23 is the length of "data:image/jpeg;base64,"
+                                        type = 'jpg';
+		                			}
+	                				catch(e) 
+	                				{
+	                					console.log(e);
+	                				}
+	                				
+	                				cell.style += ';image=data:image/' + type + ',' + data;
+	                			    next();
+	                			};
+	                			
+	                			img.src = 'data:image/' + imgInfo.iType + ';base64,' + imgInfo.iData;
+
+	                			img.onerror = function()
+	                			{
+	                				cell.style += ';image=data:image/' + imgInfo.iType + ',' + imgInfo.iData;
+	                				next();
+	                			}
+	                		};
+	                		
+	                		cropImage(0, callback);
+                		}
+	                	else
+                		{
+	                		callback();
+	                	}
+                	}
+                	catch(e)
+                	{
+                        console.log(e);
+                        callback();
+                	}
+                };
+                
                 /**
                  * Adds a vertex to the graph if 'shape' is a vertex or add the shape to edgeShapeMap if it is an edge.
                  * This method doesn't import sub-shapes of 'shape'.
@@ -705,9 +941,24 @@ var com;
                             }
                             else if (lnkObj.pageLink)
                         	{
-                            	graph.setLinkForCell(v1, 'data:page/id,' + lnkObj.pageLink);
+                            	graph.setLinkForCell(v1, 'data:page/id,' + lnkObj.pageLink.replace(/\s/g, '_'));
                         	}
                             
+							// Add Shape properties
+							var props = shape.getProperties();
+							
+							for (var i = 0; i < props.length; i++)
+							{
+								try
+								{
+									graph.setAttributeForCell(v1, props[i].key, props[i].val);	
+								}
+								catch(e)
+								{
+									console.log('Attribute: "', props[i].key, '" with value "', props[i].val, '" not allowed in HTML');
+								}
+							}
+							
                             return v1;
                         }
                         else {
@@ -766,6 +1017,7 @@ var com;
                         var textLabel = shape.getTextLabel();
                         group = graph.insertVertex(parent, null, textLabel, Math.floor(Math.round(o.x * 100) / 100), Math.floor(Math.round(o.y * 100) / 100), Math.floor(Math.round(d.x * 100) / 100), Math.floor(Math.round(d.y * 100) / 100), style);
                     }
+                    var potH = group.geometry.height;
                     var entries = (function (a) { var i = 0; return { next: function () { return i < a.length ? a[i++] : null; }, hasNext: function () { return i < a.length; } }; })(/* entrySet */ (function (m) { if (m.entries == null)
                         m.entries = []; return m.entries; })(children));
                     while ((entries.hasNext())) {
@@ -792,11 +1044,17 @@ var com;
                             } })(type, com.mxgraph.io.vsdx.mxVsdxConstants.FOREIGN))) {
                                 if (subShape.isVertex()) {
                                     subShape.propagateRotation(shape.getRotation());
+                                    var tmpV;
                                     if (subShape.isGroup()) {
-                                        this.addGroup(graph, subShape, group, pageId, d.y);
+                                        tmpV = this.addGroup(graph, subShape, group, pageId, d.y);
                                     }
                                     else {
-                                        this.addVertex(graph, subShape, group, pageId, d.y);
+                                        tmpV = this.addVertex(graph, subShape, group, pageId, d.y);
+                                    }
+
+                                    if (tmpV && tmpV.geometry)
+                                    {
+                                        potH = Math.max(tmpV.geometry.height, potH);
                                     }
                                 }
                             }
@@ -830,6 +1088,19 @@ var com;
                         }
                     }
                     ;
+                    if (group.children && group.geometry.height == 0 && potH > 0) 
+                    {
+                        group.geometry.height = potH;
+
+                        for (var i = 0; i < group.children.length; i++)
+                        {
+                            var child = group.children[i];
+                            if (child.geometry)
+                            {
+                                child.geometry.y += potH;
+                            }
+                        }
+                    }
                     if (subLabel) {
                         shape.createLabelSubShape(graph, group);
                     }
@@ -938,7 +1209,35 @@ var com;
                     return new mxPoint(x, y);
                 }
                 
-
+				mxVsdxCodec.prototype.processEdgeGeo = function (edgeShape, edge) 
+				{
+					//Detect Line jumps (best effots)
+					try
+					{
+						var rows = edgeShape.geomList.geomList[0].rows;
+						
+						for (var i = 0; i < rows.length; i++)
+						{
+							if (rows[i] instanceof com.mxgraph.io.vsdx.geometry.ArcTo)
+							{
+								edge.style += 'jumpStyle=arc;';
+								break;
+							}
+						}
+						
+						//Handle NURBS
+						for (var i = 0; i < rows.length; i++)
+						{
+							if (rows[i] instanceof com.mxgraph.io.vsdx.geometry.NURBSTo)
+							{
+								//TODO HAndle NURBS points (convert to curved edge with these points)
+								//var str = rows[i].handle({}, edgeShape);
+							}
+						}
+					}
+					catch(e){} //Ignore
+				};
+				
                 /**
                  * Adds a connected edge to the graph.
                  * These edged are the referenced in one Connect element at least.
@@ -984,7 +1283,8 @@ var com;
                         } return null; })(this.vertexMap, new com.mxgraph.io.vsdx.ShapePageId(pageId, sourceSheet)) : null;
                     
                     var removeFirstPt = true;
-                    if (source == null) 
+					//Treat source with zero height/width as null since constraint calc will be invalid
+                    if (source == null || source.geometry.width == 0 || source.geometry.height == 0) 
                     {
                         source = graph.insertVertex(parent, null, null, Math.floor(Math.round(beginXY.x * 100) / 100), Math.floor(Math.round(beginXY.y * 100) / 100), 0, 0);
                     }
@@ -998,7 +1298,7 @@ var com;
                                         / srcGeo.width,
                                 (absBeginXY.y + beginXY.y - absOriginFrom.y)
                                         / srcGeo.height);
-                        //to-do fromConstraint rotation support
+                        //TODO fromConstraint rotation support
             		}
                     else
                 	{
@@ -1014,7 +1314,8 @@ var com;
                         } return null; })(this.vertexMap, new com.mxgraph.io.vsdx.ShapePageId(pageId, toSheet)) : null;
                     
                     var removeLastPt = true;
-                    if (target == null) 
+					//Treat target with zero height/width as null since constraint calc will be invalid
+                    if (target == null || target.geometry.width == 0 || target.geometry.height == 0) 
                     {
                         target = graph.insertVertex(parent, null, null, Math.floor(Math.round(endXY.x * 100) / 100), Math.floor(Math.round(endXY.y * 100) / 100), 0, 0);
                     }
@@ -1028,7 +1329,7 @@ var com;
                                         / trgGeo.width,
                                 (absEndXY.y + endXY.y - absOriginTo.y)
                                         / trgGeo.height);
-                        //to-do toConstraint rotation support
+                        //TODO toConstraint rotation support
             		}
                     else 
                     {
@@ -1121,6 +1422,16 @@ var com;
                         var pointList = edgeShape.getControlPoints(parentHeight);
                         edgeGeometry.points = (pointList);
                     }
+
+					this.processEdgeGeo(edgeShape, edge) ;
+
+                    var layers = this.layerIndexToNames(edgeShape.layerMember);
+                            
+                    if (layers != null)
+                    {
+                        graph.addTagsForCells([edge], layers);
+                    }
+
                     return edgeId;
                 };
                 /**
@@ -1151,7 +1462,7 @@ var com;
                         }
                         else {
                             edge = graph.createEdge(parent, null, null, null, null, com.mxgraph.io.vsdx.mxVsdxUtils.getStyleString(styleMap, "="));
-                            edge = graph.addEdge(edge, parent, null, null, edgeShape.getShapeIndex());
+                            edge = graph.addEdge(edge, parent, null, null, edgeShape.getShapeIndex() + this.shapeIndexShift++);
                         }
                         var label = edgeShape.createLabelSubShape(graph, edge);
                         if (label != null) {
@@ -1169,7 +1480,7 @@ var com;
                         }
                         else {
                             edge = graph.createEdge(parent, null, edgeShape.getTextLabel(), null, null, com.mxgraph.io.vsdx.mxVsdxUtils.getStyleString(styleMap, "="));
-                            edge = graph.addEdge(edge, parent, null, null, edgeShape.getShapeIndex());
+                            edge = graph.addEdge(edge, parent, null, null, edgeShape.getShapeIndex() + this.shapeIndexShift++);
                         }
                         var lblOffset = edgeShape.getLblEdgeOffset(graph.getView(), points);
                         edge.getGeometry().offset = (lblOffset);
@@ -1192,6 +1503,9 @@ var com;
                         var pointList = edgeShape.getControlPoints(parentHeight);
                         edgeGeometry.points = (pointList);
                     }
+
+					this.processEdgeGeo(edgeShape, edge) ;
+
                     return edge;
                 };
                 mxVsdxCodec.prototype.rotateChildEdge = function (model, parent, beginXY, endXY, points) {
@@ -1233,7 +1547,7 @@ var com;
                         var child = model.getChildAt(cell, i);
                         var remove = this.sanitiseCell(graph, child);
                         if (remove) {
-                            /* add */ (removeList.push(child) > 0);
+                            /* add */ (removeList.push(child));
                         }
                     }
                     ;
@@ -1243,6 +1557,27 @@ var com;
                             model.remove(removeChild);
                         }
                     }
+                    
+                    //Check for -ve width/height cells and correct it
+                    var geo = cell.geometry;
+                    
+                    if (geo != null)
+                	{
+                    	if (geo.height < 0)
+                		{
+                    		geo.height = Math.abs(geo.height);
+                    		geo.y -= geo.height;
+                    		cell.style += ';flipV=1;';
+                		}
+
+                    	if (geo.width < 0)
+                		{
+                    		geo.width = Math.abs(geo.width);
+                    		geo.x -= geo.width;
+                    		cell.style += ';flipH=1;';
+                		}
+                	}
+                    
                     if (childCount > 0) {
                         childCount = model.getChildCount(cell);
                     }
@@ -1269,12 +1604,13 @@ var com;
         (function (io) {
             var mxVssxCodec = (function (_super) {
                 __extends(mxVssxCodec, _super);
-                function mxVssxCodec() {
+                function mxVssxCodec(editorUi) {
                     var _this = _super.call(this) || this;
                     _this.RESPONSE_END = "";
                     _this.RESPONSE_DIAGRAM_START = "";
                     _this.RESPONSE_DIAGRAM_END = "";
                     _this.RESPONSE_HEADER = "";
+                    _this.editorUi = editorUi;
                     return _this;
                 }
                 mxVssxCodec.prototype.decodeVssx = function (file, callback, charset, onerror) {
@@ -1296,8 +1632,6 @@ var com;
                                     var master = array129[index128];
                                     {
                                         var shapeGraph = this_1.createMxGraph();
-                                        var shapeElem = master.getMasterShape().getShape();
-                                        var shape = new com.mxgraph.io.vsdx.VsdxShape(page, shapeElem, !page.isEdge(shapeElem), masterShapes, null, this_1.vsdxModel);
                                         
                                         var scale = 1;
                                         
@@ -1320,34 +1654,46 @@ var com;
                                         	 
                                         	 scale = pScaleV / dScaleV;
                                     	}
+
+                                        var hasCells = false;
                                         
-                                        var cell = null;
-                                        if (shape.isVertex()) {
-                                            /* clear */ this_1.edgeShapeMap.entries = [];
-                                            /* clear */ this_1.parentsMap.entries = [];
-                                            cell = this_1.addShape(shapeGraph, shape, shapeGraph.getDefaultParent(), 0, 1169);
-                                            {
-                                                var array131 = (function (m) { if (m.entries == null)
-                                                    m.entries = []; return m.entries; })(this_1.edgeShapeMap);
-                                                for (var index130 = 0; index130 < array131.length; index130++) {
-                                                    var edgeEntry = array131[index130];
-                                                    {
-                                                        var parent_1 = (function (m, k) { if (m.entries == null)
-                                                            m.entries = []; for (var i = 0; i < m.entries.length; i++)
-                                                            if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
-                                                                return m.entries[i].value;
-                                                            } return null; })(this_1.parentsMap, edgeEntry.getKey());
-                                                        this_1.addUnconnectedEdge(shapeGraph, parent_1, edgeEntry.getValue(), 1169);
-                                                    }
-                                                }
-                                            }
+                                        for (var chI = 0; master.firstLevelShapes != null && chI < master.firstLevelShapes.length; chI++)
+                                        {
+	                                        var shapeElem = master.firstLevelShapes[chI].getShape();
+	                                        var shape = new com.mxgraph.io.vsdx.VsdxShape(page, shapeElem, !page.isEdge(shapeElem), masterShapes, null, this_1.vsdxModel);
+	
+	                                        var cell = null;
+	                                        if (shape.isVertex()) {
+	                                            /* clear */ this_1.edgeShapeMap.entries = [];
+	                                            /* clear */ this_1.parentsMap.entries = [];
+	                                            cell = this_1.addShape(shapeGraph, shape, shapeGraph.getDefaultParent(), 0, 1169);
+	                                            {
+	                                                var array131 = (function (m) { if (m.entries == null)
+	                                                    m.entries = []; return m.entries; })(this_1.edgeShapeMap);
+	                                                for (var index130 = 0; index130 < array131.length; index130++) {
+	                                                    var edgeEntry = array131[index130];
+	                                                    {
+	                                                        var parent_1 = (function (m, k) { if (m.entries == null)
+	                                                            m.entries = []; for (var i = 0; i < m.entries.length; i++)
+	                                                            if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
+	                                                                return m.entries[i].value;
+	                                                            } return null; })(this_1.parentsMap, edgeEntry.getKey());
+	                                                        this_1.addUnconnectedEdge(shapeGraph, parent_1, edgeEntry.getValue(), 1169);
+	                                                    }
+	                                                }
+	                                            }
+	                                        }
+	                                        else {
+	                                            cell = this_1.addUnconnectedEdge(shapeGraph, null, shape, 1169);
+	                                        }
+	                                        
+	                                        hasCells |= (cell != null);
                                         }
-                                        else {
-                                            cell = this_1.addUnconnectedEdge(shapeGraph, null, shape, 1169);
-                                        }
-                                        if (cell != null) {
+                                        
+                                        if (hasCells) 
+                                        {
                                         	this_1.scaleGraph(shapeGraph, scale);
-                                            var geo_1 = this_1.normalizeGeo(cell);
+                                        	var size = this_1.normalizeGraph(shapeGraph);
                                             this_1.sanitiseGraph(shapeGraph);
                                             if (shapeGraph.getModel().getChildCount(shapeGraph.getDefaultParent()) === 0)
                                                 return "continue";
@@ -1356,16 +1702,16 @@ var com;
                                             var shapeXML_1 = _super.prototype.processPage.call(this_1, shapeGraph, null);
                                             /* append */ (function (sb) { return sb.str = sb.str.concat(shapeXML_1); })(shapes_1);
                                             /* append */ (function (sb) { return sb.str = sb.str.concat("\",\"w\":"); })(shapes_1);
-                                            /* append */ (function (sb) { return sb.str = sb.str.concat(geo_1.width); })(shapes_1);
+                                            /* append */ (function (sb) { return sb.str = sb.str.concat(size.width); })(shapes_1);
                                             /* append */ (function (sb) { return sb.str = sb.str.concat(",\"h\":"); })(shapes_1);
-                                            /* append */ (function (sb) { return sb.str = sb.str.concat(geo_1.height); })(shapes_1);
+                                            /* append */ (function (sb) { return sb.str = sb.str.concat(size.height); })(shapes_1);
                                             /* append */ (function (sb) { return sb.str = sb.str.concat(",\"title\":"); })(shapes_1);
                                             var shapeName_1 = master.getName();
                                             if (shapeName_1 == null)
                                         	{
                                             	shapeName_1 = "";
                                         	}
-                                            shapeName_1 = JSON.stringify(mxUtils.htmlEntities(shapeName_1));
+                                            shapeName_1 = mxUtils.htmlEntities(JSON.stringify(shapeName_1));
                                             /* append */ (function (sb) { return sb.str = sb.str.concat(shapeName_1); })(shapes_1);
                                             /* append */ (function (sb) { return sb.str = sb.str.concat("}"); })(shapes_1);
                                             comma_1 = ",";
@@ -1421,6 +1767,86 @@ var com;
                     }
                     return geo;
                 };
+                
+                mxVssxCodec.prototype.normalizeGraph = function (graph) 
+                {
+                	//Find minX/Y, maxX/Y
+                	var minX, minY, maxX, maxY;
+
+                	function getDimMinMax(pt)
+                	{
+                		if (pt != null)
+                		{
+                			if (minX == null)
+	            			{
+	                			minX = pt.x; minY = pt.y; maxX = pt.x + (pt.width || 0); maxY = pt.y + (pt.height || 0);
+	            			}
+	                		else
+                			{
+	                			minX = Math.min(pt.x, minX);
+	                			minY = Math.min(pt.y, minY);
+	                			maxX = Math.max(pt.x + (pt.width || 0), maxX);
+	                			maxY = Math.max(pt.y + (pt.height || 0), maxY);
+                			}
+                		}
+                	};
+                	
+                	for (var id in graph.model.cells)
+            		{
+                		var cell = graph.model.cells[id];
+                		var geo = cell.geometry;
+                		
+                		if (geo != null && cell.parent.id == 1)
+                		{
+                			if (cell.vertex)
+                			{
+                				getDimMinMax(geo);
+                			}
+                			else
+            				{
+                				getDimMinMax(geo.sourcePoint);
+							    getDimMinMax(geo.targetPoint);
+							    var points = geo.points;
+							    
+							    for (var i = 0; points != null && i < points.length; i++) 
+								{
+							        getDimMinMax(points[i]);   
+							    }
+            				}
+                		}
+            		}
+                	
+                	//Remove minX, minY from all geo and fix edges also
+                	var srcP = {x: minX, y: minY};
+                	
+                	for (var id in graph.model.cells)
+            		{
+                		var cell = graph.model.cells[id];
+                		var geo = cell.geometry;
+                		
+                		if (geo != null && cell.parent.id == 1)
+                		{
+	                		geo.x -= minX;
+	                		geo.y -= minY;
+                	
+	                		if (cell.isEdge())
+	            			{
+		                        this.transPoint(geo.sourcePoint, srcP);
+	                			this.transPoint(geo.targetPoint, srcP);
+		                        this.transPoint(geo.offset, srcP);
+		                        var points = geo.points;
+		                        
+	                            for (var i = 0; points != null && i < points.length; i++) 
+	                            {
+	                                this.transPoint(points[i], srcP);
+	                            }
+	            			}
+                		}
+            		}
+
+                	return {width: maxX - minX, height: maxY - minY}
+                };
+                
                 mxVssxCodec.prototype.transPoint = function (p, srcP) {
                     if (p != null) {
                         p.x = (p.x - srcP.x);
@@ -2200,7 +2626,7 @@ var com;
                         if (this.rows == null) {
                             this.rows = ([]);
                             for (var i = 0; i < rowElems.length; i++) {
-                                /* add */ (this.rows.push(null) > 0);
+                                /* add */ (this.rows.push(null));
                             }
                             ;
                         }
@@ -2260,7 +2686,7 @@ var com;
                             {
                                 var row = com.mxgraph.io.vsdx.geometry.RowFactory.getRowObj(rowElem, this.rows);
                                 if (row.getIndex() > rowsLen) {
-                                    /* add */ (this.rows.push(row) > 0);
+                                    /* add */ (this.rows.push(row));
                                     sortNeeded = true;
                                 }
                                 else {
@@ -2312,7 +2738,12 @@ var com;
                         var _loop_1 = function (index124) {
                             var row = this_1.rows[index124];
                             {
-                                /* append */ (function (sb) { return sb.str = sb.str.concat(row.handle(p, shape)); })(geomElemParsed);
+                                /* append */ 
+                            	(function (sb) 
+                                {
+                            		//Some files has null rows
+                                	return sb.str = sb.str.concat(row != null? row.handle(p, shape) : ''); 
+                                })(geomElemParsed);
                             }
                         };
                         var this_1 = this;
@@ -2337,7 +2768,11 @@ var com;
                          * @return {number}
                          */
                         mxVsdxGeometry$0.prototype.compare = function (r1, r2) {
-                            return r1.getIndex() - r2.getIndex();
+                        	//Some files has null rows
+                        	var r1i = r1 != null? r1.getIndex() : 0;
+                        	var r2i = r2 != null? r2.getIndex() : 0;
+                        	
+                            return r1i - r2i;
                         };
                         return mxVsdxGeometry$0;
                     }());
@@ -2371,7 +2806,7 @@ var com;
                             /* set */ (this.geomList[geo.getIndex()] = geo);
                         }
                         else {
-                            /* add */ (this.geomList.push(geo) > 0);
+                            /* add */ (this.geomList.push(geo));
                             this.sortNeeded = true;
                         }
                     };
@@ -2445,7 +2880,7 @@ var com;
                     mxVsdxGeometryList.prototype.getRoutingPoints = function (parentHeight, startPoint, rotation) {
                         this.sort();
                         var points = ([]);
-                        /* add */ (points.push(startPoint.clone()) > 0);
+                        /* add */ (points.push(startPoint.clone()));
                         var offsetX = 0;
                         var offsetY = 0;
                         for (var index128 = 0; index128 < this.geomList.length; index128++) {
@@ -2477,7 +2912,7 @@ var com;
                                                 y = Math.round(y * 100.0) / 100.0;
                                                 p.x = (x);
                                                 p.y = (y);
-                                                /* add */ (points.push(p) > 0);
+                                                /* add */ (points.push(p));
                                             }
                                         }
                                     }
@@ -2500,6 +2935,17 @@ var com;
                             this.closePath(parsedGeom, lastGeoStyle);
                         }
                         /* append */ (function (sb) { return sb.str = sb.str.concat("</foreground></shape>"); })(parsedGeom);
+						
+						//If the geomertry has no move, it will cause errors in SVG. So, ignore this shape 
+						//A path with no move in the beginning is invalid
+						//https://www.w3.org/TR/SVG11/paths.html#PathDataMovetoCommands
+						//https://stackoverflow.com/questions/56275231/do-all-svg-paths-have-to-start-with-a-move
+						//TODO Find a faster technique, then enable this
+						/*if (parsedGeom.str.indexOf('<move') < 0)
+						{
+							return '';
+						}*/
+						
                         return parsedGeom.str;
                     };
                     /*private*/ mxVsdxGeometryList.prototype.processGeo = function (shape, p, parsedGeom, lastGeoStyle, withFill) {
@@ -2682,7 +3128,13 @@ var com;
                      * @param {*} shapeElem
                      * @param {com.mxgraph.io.vsdx.mxVsdxModel} model
                      */
-                    mxVsdxMaster.prototype.processMasterShape = function (shapeElem, model) {
+                    mxVsdxMaster.prototype.processMasterShape = function (shapeElem, model, internal) 
+                    {
+                    	if (!internal) 
+                		{
+                    		this.firstLevelShapes = [];
+                		}
+                    	
                         var shapeChild = shapeElem.firstChild;
                         while ((shapeChild != null)) {
                             if ((shapeChild != null && (shapeChild.nodeType == 1)) && (function (o1, o2) { if (o1 && o1.equals) {
@@ -2704,13 +3156,36 @@ var com;
                                         var masterShape = new com.mxgraph.io.vsdx.Shape(shape, model);
                                         this.masterShape = (this.masterShape == null) ? masterShape : this.masterShape;
                                         /* put */ (this.childShapes[shapeId] = masterShape);
-                                        this.processMasterShape(shape, model);
+                                        
+                                        if (!internal) 
+                                		{
+                                    		this.firstLevelShapes.push(masterShape);
+                                		}
+                                        
+                                        this.processMasterShape(shape, model, true);
                                     }
                                     shapesChild = shapesChild.nextSibling;
                                 }
                                 ;
-                                break;
                             }
+                            else if (shapeChild != null && shapeChild.nodeType == 1 && shapeChild.nodeName == "Connects") 
+                            {
+                            	this.connects = {};
+                                var connectsChild = shapeChild.firstChild;
+                                
+                                while (connectsChild != null) 
+                                {
+                                    if (connectsChild != null && connectsChild.nodeType == 1 && connectsChild.nodeName == "Connect") 
+                                    {
+                                        var connectElem = connectsChild;
+                                        var connect = new com.mxgraph.io.vsdx.mxVsdxConnect(connectElem);
+                                        this.connects[connect.getFromSheet()] = connect;
+                                    }
+                                    
+                                    connectsChild = connectsChild.nextSibling;
+                                }
+                            }
+                            
                             shapeChild = shapeChild.nextSibling;
                         }
                         ;
@@ -3029,6 +3504,17 @@ var com;
                     mxVsdxModel.prototype.getThemes = function () {
                         return this.themes;
                     };
+                    
+                    mxVsdxModel.prototype.getDefaultTheme = function () 
+                    {
+                        if (this.defaultTheme == null && this.themes.entries != null && this.themes.entries.length > 0)
+                        {
+                            this.defaultTheme = this.themes.entries[0].getValue();
+                        }
+
+                        return this.defaultTheme;
+                    };
+                    
                     mxVsdxModel.prototype.getRelationship = function (rid, path) {
                         var relsDoc = (function (m, k) { return m[k] ? m[k] : null; })(this.xmlDocs, path);
                         if (relsDoc == null || rid == null || (rid.length === 0)) {
@@ -3115,6 +3601,7 @@ var com;
                         this.model = null;
                         this.shapes = ({});
                         this.connects = ({});
+                        this.connectsMap = {};
                         this.cellElements = ({});
                         this.model = model;
                         this.pageElement = pageElem;
@@ -3132,6 +3619,8 @@ var com;
                         }
                         this.Id = parseFloat(pageElem.getAttribute(com.mxgraph.io.vsdx.mxVsdxConstants.ID));
                         this.pageName = pageElem.getAttribute(com.mxgraph.io.vsdx.mxVsdxConstants.NAME) || "";
+						this.pageNameU = pageElem.getAttribute(com.mxgraph.io.vsdx.mxVsdxConstants.NAME_U) || this.pageName;
+
                         var pageSheets = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectChildNamedElements(pageElem, "PageSheet");
                         if (pageSheets.length > 0) {
                             var pageSheet = pageSheets[0];
@@ -3178,27 +3667,12 @@ var com;
                      */
                     mxVsdxPage.prototype.parseNodes = function (pageElem, model, pageName) {
                         var pageChild = pageElem.firstChild;
+                        // Parse connects first as it is needed in shapes types
                         while ((pageChild != null)) {
                             if (pageChild != null && (pageChild.nodeType == 1)) {
                                 var pageChildElem = pageChild;
                                 var childName = pageChildElem.nodeName;
                                 if ((function (o1, o2) { if (o1 && o1.equals) {
-                                    return o1.equals(o2);
-                                }
-                                else {
-                                    return o1 === o2;
-                                } })(childName, "Rel")) {
-                                    this.resolveRel(pageChildElem, model, pageName);
-                                }
-                                else if ((function (o1, o2) { if (o1 && o1.equals) {
-                                    return o1.equals(o2);
-                                }
-                                else {
-                                    return o1 === o2;
-                                } })(childName, "Shapes")) {
-                                    this.shapes = this.parseShapes(pageChildElem, null, false);
-                                }
-                                else if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
                                 }
                                 else {
@@ -3211,6 +3685,7 @@ var com;
                                             var connectElem = connectNode;
                                             var connect = new com.mxgraph.io.vsdx.mxVsdxConnect(connectElem);
                                             var fromSheet = connect.getFromSheet();
+                                            this.connectsMap[fromSheet] = true;
                                             var previousConnect = (fromSheet != null && fromSheet > -1) ? (function (m, k) { if (m.entries == null)
                                                 m.entries = []; for (var i = 0; i < m.entries.length; i++)
                                                 if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
@@ -3231,6 +3706,32 @@ var com;
                                         connectNode = connectNode.nextSibling;
                                     }
                                     ;
+                                }
+                            }
+                            pageChild = pageChild.nextSibling;
+                        }
+                        ;
+
+                        pageChild = pageElem.firstChild;
+                        while ((pageChild != null)) {
+                            if (pageChild != null && (pageChild.nodeType == 1)) {
+                                var pageChildElem = pageChild;
+                                var childName = pageChildElem.nodeName;
+                                if ((function (o1, o2) { if (o1 && o1.equals) {
+                                    return o1.equals(o2);
+                                }
+                                else {
+                                    return o1 === o2;
+                                } })(childName, "Rel")) {
+                                    this.resolveRel(pageChildElem, model, pageName);
+                                }
+                                else if ((function (o1, o2) { if (o1 && o1.equals) {
+                                    return o1.equals(o2);
+                                }
+                                else {
+                                    return o1 === o2;
+                                } })(childName, "Shapes")) {
+                                    this.shapes = this.parseShapes(pageChildElem, null, false);
                                 }
                                 else if ((function (o1, o2) { if (o1 && o1.equals) {
                                     return o1.equals(o2);
@@ -3310,7 +3811,9 @@ var com;
                                     else {
                                         return o1 === o2;
                                     } })(masterId, "")) {
-                                        elem = masterTmp.getSubShape(masterId).getShape();
+                                    	var subShape = masterTmp.getSubShape(masterId)
+                                    	//Some files has non-existing master sub-shapes
+                                        elem = subShape != null? subShape.getShape() : elem;
                                     }
                                     isEdge = this.isEdge(elem);
                                 }
@@ -3441,6 +3944,9 @@ var com;
                     };
                     mxVsdxPage.prototype.getPageName = function () {
                         return this.pageName;
+                    };
+                    mxVsdxPage.prototype.getPageNameU = function () {
+                        return this.pageNameU;
                     };
                     mxVsdxPage.prototype.getShapes = function () {
                         return this.shapes;
@@ -3745,7 +4251,7 @@ var com;
                             ;
                         }
                         catch (e) {
-                            console.error(e.message, e);
+                           // console.error(e.message, e);
                         }
                         ;
                         this.isProcessed = true;
@@ -3777,7 +4283,7 @@ var com;
                                                         for (var index136 = 0; index136 < fillStyleElems.length; index136++) {
                                                             var fillStyle = fillStyleElems[index136];
                                                             {
-                                                                /* add */ (this.connFillStyles.push(com.mxgraph.io.vsdx.theme.FillStyleFactory.getFillStyle(fillStyle)) > 0);
+                                                                /* add */ (this.connFillStyles.push(com.mxgraph.io.vsdx.theme.FillStyleFactory.getFillStyle(fillStyle)));
                                                             }
                                                         }
                                                         break;
@@ -3786,7 +4292,7 @@ var com;
                                                         for (var index137 = 0; index137 < lineStyleElems.length; index137++) {
                                                             var lineStyle = lineStyleElems[index137];
                                                             {
-                                                                /* add */ (this.connLineStyles.push(new com.mxgraph.io.vsdx.theme.LineStyle(lineStyle)) > 0);
+                                                                /* add */ (this.connLineStyles.push(new com.mxgraph.io.vsdx.theme.LineStyle(lineStyle)));
                                                             }
                                                         }
                                                         break;
@@ -3806,7 +4312,7 @@ var com;
                                                         for (var index139 = 0; index139 < connStylesElems.length; index139++) {
                                                             var connStyle = connStylesElems[index139];
                                                             {
-                                                                /* add */ (this.connLineStylesExt.push(new com.mxgraph.io.vsdx.theme.LineStyleExt(connStyle)) > 0);
+                                                                /* add */ (this.connLineStylesExt.push(new com.mxgraph.io.vsdx.theme.LineStyleExt(connStyle)));
                                                             }
                                                         }
                                                         break;
@@ -3815,7 +4321,7 @@ var com;
                                                         for (var index140 = 0; index140 < schemeStyleElems.length; index140++) {
                                                             var schemeStyle = schemeStyleElems[index140];
                                                             {
-                                                                /* add */ (this.lineStylesExt.push(new com.mxgraph.io.vsdx.theme.LineStyleExt(schemeStyle)) > 0);
+                                                                /* add */ (this.lineStylesExt.push(new com.mxgraph.io.vsdx.theme.LineStyleExt(schemeStyle)));
                                                             }
                                                         }
                                                         break;
@@ -3872,10 +4378,10 @@ var com;
                         for (var index144 = 0; index144 < fontProps.length; index144++) {
                             var fontProp = fontProps[index144];
                             {
-                                /* add */ (fontStyles.push(com.mxgraph.io.vsdx.mxVsdxUtils.getIntAttr$org_w3c_dom_Element$java_lang_String(fontProp, "style")) > 0);
+                                /* add */ (fontStyles.push(com.mxgraph.io.vsdx.mxVsdxUtils.getIntAttr$org_w3c_dom_Element$java_lang_String(fontProp, "style")));
                                 var color = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectFirstChildElement(fontProp);
                                 if (color != null)
-                                    (fontColors.push(com.mxgraph.io.vsdx.theme.OoxmlColorFactory.getOoxmlColor(com.mxgraph.io.vsdx.mxVsdxUtils.getDirectFirstChildElement(color))) > 0);
+                                    (fontColors.push(com.mxgraph.io.vsdx.theme.OoxmlColorFactory.getOoxmlColor(com.mxgraph.io.vsdx.mxVsdxUtils.getDirectFirstChildElement(color))));
                             }
                         }
                     };
@@ -3891,7 +4397,7 @@ var com;
                                         for (var index146 = 0; index146 < fillStyleElems.length; index146++) {
                                             var fillStyle = fillStyleElems[index146];
                                             {
-                                                /* add */ (this.fillStyles.push(com.mxgraph.io.vsdx.theme.FillStyleFactory.getFillStyle(fillStyle)) > 0);
+                                                /* add */ (this.fillStyles.push(com.mxgraph.io.vsdx.theme.FillStyleFactory.getFillStyle(fillStyle)));
                                             }
                                         }
                                         break;
@@ -3900,7 +4406,7 @@ var com;
                                         for (var index147 = 0; index147 < lineStyleElems.length; index147++) {
                                             var lineStyle = lineStyleElems[index147];
                                             {
-                                                /* add */ (this.lineStyles.push(new com.mxgraph.io.vsdx.theme.LineStyle(lineStyle)) > 0);
+                                                /* add */ (this.lineStyles.push(new com.mxgraph.io.vsdx.theme.LineStyle(lineStyle)));
                                             }
                                         }
                                         break;
@@ -4095,7 +4601,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if (retColor != null && (styleVariation & 8) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -4194,7 +4700,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if ((styleVariation & 4) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -4347,7 +4853,7 @@ var com;
                         }
                         var styleVariation = quickStyleVals.getQuickStyleVariation();
                         
-                        //to-do This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
+                        //TODO This is the best efforts of interpreting the documentation and also this article https://visualsignals.typepad.co.uk/vislog/2013/05/visio-2013-themes-in-the-shapesheet-part-2.html
                         if ((styleVariation & 2) > 0) 
                         {
                         	var bkgHSLClr = this.getStyleColor(8).toHsl();
@@ -4478,7 +4984,7 @@ var com;
                             else {
                                 return o1 === o2;
                             } })(name, child.nodeName)) {
-                                /* add */ (result.push(child) > 0);
+                                /* add */ (result.push(child));
                             }
                         }
                         ;
@@ -4493,7 +4999,7 @@ var com;
                         var result = ([]);
                         for (var child = parent.firstChild; child != null; child = child.nextSibling) {
                             if (child != null && (child.nodeType == 1)) {
-                                /* add */ (result.push(child) > 0);
+                                /* add */ (result.push(child));
                             }
                         }
                         ;
@@ -4574,7 +5080,7 @@ var com;
                                     style = style + key + asig;
                                 }
                                 catch (e) {
-                                	console.error("mxVsdxUtils.getStyleString," + e + ",style.length=" + style.length + ",key.length=" + key.length + ",asig.length=" + asig.length);
+                                	//console.error("mxVsdxUtils.getStyleString," + e + ",style.length=" + style.length + ",key.length=" + key.length + ",asig.length=" + asig.length);
                                 }
                                 ;
                             }
@@ -4589,8 +5095,8 @@ var com;
                      * @param {string} tag Name of the tag.
                      * @return {string} &lt tag &gt text &lt /tag &gt
                      */
-                    mxVsdxUtils.surroundByTags = function (text, tag) {
-                        return "<" + tag + ">" + text + "</" + tag + ">";
+                    mxVsdxUtils.surroundByTags = function (text, tag, style) {
+                        return "<" + tag + (style? ' style="' + style + '"' : '') + ">" + text + "</" + tag + ">";
                     };
                     /**
                      * Converts the ampersand, quote, prime, less-than and greater-than
@@ -4679,20 +5185,19 @@ var com;
                         return styleMap;
                     };
                     mxVsdxUtils.isInsideTriangle = function (x, y, ax, ay, bx, by, cx, cy) {
-                        bx = bx - ax;
-                        by = by - ay;
-                        cx = cx - ax;
-                        cy = cy - ay;
-                        ax = 0;
-                        ay = 0;
-                        var d = bx * cy - cx * by;
-                        var wa = (x * (by - cy) + y * (cx - bx) + bx * cy - cx * by) / d;
-                        var wb = (x * cy - y * cx) / d;
-                        var wc = (y * bx - x * by) / d;
-                        if (wa > 0 && wa < 1 && wb > 0 && wb < 1 && wc > 0 && wc < 1) {
-                            return true;
-                        }
-                        return false;
+						function sign (p1x, p1y, p2x, p2y, p3x, p3y)
+						{
+						    return (p1x - p3x) * (p2y - p3y) - (p2x - p3x) * (p1y - p3y);
+						}
+
+					    var d1 = sign(x, y, ax, ay, bx, by);
+					    var d2 = sign(x, y, bx, by, cx, cy);
+					    var d3 = sign(x, y, cx, cy, ax, ay);
+					
+					    var has_neg = (d1 < 0) || (d2 < 0) || (d3 < 0);
+					    var has_pos = (d1 > 0) || (d2 > 0) || (d3 > 0);
+					
+					    return !(has_neg && has_pos);
                     };
                     return mxVsdxUtils;
                 }());
@@ -4726,17 +5231,17 @@ var com;
                         this.fields = null;
                         this.paraIndex = null;
                         this.values = ([]);
-                        /* add */ (this.values.push(val) > 0);
+                        /* add */ (this.values.push(val));
                         this.charIndices = ([]);
-                        /* add */ (this.charIndices.push(ch) > 0);
+                        /* add */ (this.charIndices.push(ch));
                         this.fields = ([]);
-                        /* add */ (this.fields.push(field) > 0);
+                        /* add */ (this.fields.push(field));
                         this.paraIndex = pg;
                     }
                     Paragraph.prototype.addText = function (val, ch, field) {
-                        /* add */ (this.values.push(val) > 0);
-                        /* add */ (this.charIndices.push(ch) > 0);
-                        /* add */ (this.fields.push(field) > 0);
+                        /* add */ (this.values.push(val));
+                        /* add */ (this.charIndices.push(ch));
+                        /* add */ (this.fields.push(field));
                     };
                     Paragraph.prototype.getParagraphIndex = function () {
                         return this.paraIndex;
@@ -5368,37 +5873,37 @@ var com;
                                                             break;
                                                         case "sysDot":
                                                         case "dot":
-                                                            /* add */ (_this.lineDashPattern.push(1.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(1.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
                                                             break;
                                                         case "sysDash":
                                                         case "dash":
                                                             break;
                                                         case "lgDash":
-                                                            /* add */ (_this.lineDashPattern.push(12.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(12.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
                                                             break;
                                                         case "sysDashDot":
                                                         case "dashDot":
-                                                            /* add */ (_this.lineDashPattern.push(8.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(1.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(8.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
+                                                            /* add */ (_this.lineDashPattern.push(1.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
                                                             break;
                                                         case "lgDashDot":
-                                                            /* add */ (_this.lineDashPattern.push(12.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(1.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(12.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
+                                                            /* add */ (_this.lineDashPattern.push(1.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
                                                             break;
                                                         case "sysDashDotDot":
                                                         case "lgDashDotDot":
-                                                            /* add */ (_this.lineDashPattern.push(12.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(1.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(1.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(4.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(12.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
+                                                            /* add */ (_this.lineDashPattern.push(1.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
+                                                            /* add */ (_this.lineDashPattern.push(1.0));
+                                                            /* add */ (_this.lineDashPattern.push(4.0));
                                                             break;
                                                     }
                                                     break;
@@ -5410,8 +5915,8 @@ var com;
                                                         {
                                                             var dashLen = com.mxgraph.io.vsdx.mxVsdxUtils.getIntAttr$org_w3c_dom_Element$java_lang_String(dsElem, "d");
                                                             var spaceLen = com.mxgraph.io.vsdx.mxVsdxUtils.getIntAttr$org_w3c_dom_Element$java_lang_String(dsElem, "sp");
-                                                            /* add */ (_this.lineDashPattern.push(dashLen / 10000.0) > 0);
-                                                            /* add */ (_this.lineDashPattern.push(spaceLen / 10000.0) > 0);
+                                                            /* add */ (_this.lineDashPattern.push(dashLen / 10000.0));
+                                                            /* add */ (_this.lineDashPattern.push(spaceLen / 10000.0));
                                                         }
                                                     }
                                                     break;
@@ -6376,7 +6881,8 @@ var com;
                                 var sweep = (x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1);
                                 var sf = (sweep > 0) ? "0" : "1";
                                 var laf = "0";
-                                if (com.mxgraph.io.vsdx.mxVsdxUtils.isInsideTriangle(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y) && this.isReflexAngle(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y)) {
+                                if (com.mxgraph.io.vsdx.mxVsdxUtils.isInsideTriangle(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y)) // && this.isReflexAngle(p0x, p0y, p1x, p1y, p2x, p2y, p3x, p3y)) { //Inside triangle works alone in all test cases so far 
+								{
                                     laf = "1";
                                 }
                                 shape.setLastX(x);
@@ -6630,13 +7136,13 @@ var com;
                                         var nut = ([]);
                                         var nurbsize = nurbs.getSize();
                                         for (var i = 0; i < nurbsize - 1; i = i + 3) {
-                                            /* add */ (cp1.push(new mxPoint(nurbs.getX(i), nurbs.getY(i))) > 0);
-                                            /* add */ (cp2.push(new mxPoint(nurbs.getX(i + 1), nurbs.getY(i + 1))) > 0);
+                                            /* add */ (cp1.push(new mxPoint(nurbs.getX(i), nurbs.getY(i))));
+                                            /* add */ (cp2.push(new mxPoint(nurbs.getX(i + 1), nurbs.getY(i + 1))));
                                             if (i < nurbsize - 2) {
-                                                /* add */ (nut.push(new mxPoint(nurbs.getX(i + 2), nurbs.getY(i + 2))) > 0);
+                                                /* add */ (nut.push(new mxPoint(nurbs.getX(i + 2), nurbs.getY(i + 2))));
                                             }
                                             else {
-                                                /* add */ (nut.push(new mxPoint(x, y)) > 0);
+                                                /* add */ (nut.push(new mxPoint(x, y)));
                                             }
                                         }
                                         ;
@@ -6673,13 +7179,13 @@ var com;
                                 var n = s.split(/\s*,\s*/).slice(0);
                                 for (var i = 0; i < n.length; i++) {
                                     if ((i > 3) && (i % 4 === 0)) {
-                                        /* add */ (this.nurbsValues.push(/* parseDouble */ parseFloat(/* get */ n[i]) * 100.0) > 0);
+                                        /* add */ (this.nurbsValues.push(/* parseDouble */ parseFloat(/* get */ n[i]) * 100.0));
                                     }
                                     else if ((i > 3) && (i % 4 === 1)) {
-                                        /* add */ (this.nurbsValues.push(100 - parseFloat(/* get */ n[i]) * 100.0) > 0);
+                                        /* add */ (this.nurbsValues.push(100 - parseFloat(/* get */ n[i]) * 100.0));
                                     }
                                     else {
-                                        /* add */ (this.nurbsValues.push(/* parseDouble */ parseFloat(/* get */ n[i])) > 0);
+                                        /* add */ (this.nurbsValues.push(/* parseDouble */ parseFloat(/* get */ n[i])));
                                     }
                                 }
                                 ;
@@ -7355,7 +7861,7 @@ var com;
                                     return Math.round(parsedValue * 100.0) / 100.0;
                                 }
                                 catch (e) {
-                                    console.error(e.message, e);
+                                    //console.error(e.message, e);
                                 }
                                 ;
                             }
@@ -7371,7 +7877,7 @@ var com;
                                     return this.getScreenNumericalValue$double(parsedValue);
                                 }
                                 catch (e) {
-                                    console.error(e.message, e);
+                                    //console.error(e.message, e);
                                 }
                                 ;
                             }
@@ -8033,141 +8539,141 @@ var com;
                         Style.lineDashPatterns = ([]); return Style.lineDashPatterns; };
                     ;
                     Style.__static_initializer_1 = function () {
-                        /* add */ (Style.lineDashPatterns_$LI$().push([]) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push([]) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push([]) > 0);
+                        /* add */ (Style.lineDashPatterns_$LI$().push([]));
+                        /* add */ (Style.lineDashPatterns_$LI$().push([]));
+                        /* add */ (Style.lineDashPatterns_$LI$().push([]));
                         var lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (lineDashPattern.push(Style.SHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DOT) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.LONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DOT));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.XLONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.XLONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.XLONG_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (lineDashPattern.push(Style.DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.LONG_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.XLONG_DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (lineDashPattern.push(Style.DASH));
+                        /* add */ (lineDashPattern.push(Style.LONG_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                         lineDashPattern = ([]);
-                        /* add */ (lineDashPattern.push(Style.XSHORT_DASH) > 0);
-                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE) > 0);
-                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern) > 0);
+                        /* add */ (lineDashPattern.push(Style.XSHORT_DASH));
+                        /* add */ (lineDashPattern.push(Style.SHORT_SPACE));
+                        /* add */ (Style.lineDashPatterns_$LI$().push(lineDashPattern));
                     };
                     Style.getLineDashPattern = function (pattern) {
                         if (pattern >= 0 && pattern <= 23)
@@ -8555,10 +9061,72 @@ var com;
                         }
                         else {
                             return o1 === o2;
-                        } })(childName, "ForeignData")) {
+                        } })(childName, "ForeignData")) 
+                        {
+                        	function getForeignRel(elem, filename)
+                        	{
+                        		var fdChild = elem.firstChild;
+                                
+                                while (fdChild != null) 
+                                {
+                                    if (fdChild.nodeType == 1) 
+                                    {
+                                        var fdElem = fdChild;
+                                        var grandchildName = fdElem.nodeName;
+                                        
+                                        if (grandchildName.toLowerCase() == "rel") 
+                                        {
+                                            var rid = fdElem.getAttribute("r:id");
+                                            
+                                            if (rid != null && !(rid.length === 0)) 
+                                            {
+                                                var index = filename.lastIndexOf('/');
+                                                var pre = "";
+                                                var post = "";
+                                                
+                                                try 
+                                                {
+                                                    pre = filename.substring(0, index);
+                                                    post = filename.substring(index, filename.length);
+                                                }
+                                                catch (e) 
+                                                {
+                                                    return;
+                                                }
+                                                
+                                                var relElem = model.getRelationship(rid, pre + "/_rels" + post + ".rels");
+                                                
+                                                if (relElem != null) 
+                                                {
+                                                    var target = relElem.getAttribute("Target") || "";
+                                                    var type = relElem.getAttribute("Type");
+                                                    index = target.lastIndexOf('/');
+                                                    
+                                                    try 
+                                                    {
+                                                        target = target.substring(index + 1, target.length);
+                                                    }
+                                                    catch (e) 
+                                                    {
+                                                        return;
+                                                    }
+                                                    
+                                                    return {type: type, target: target};
+                                                }
+                                                
+                                                return;
+                                            }
+                                        }
+                                    }
+                                    fdChild = fdChild.nextSibling;
+                                }
+                            }
+                            
                             var filename = elem.ownerDocument.vsdxFileName; //was getDocumentURI()
                             var iType = elem.getAttribute("ForeignType");
                             var compression = elem.getAttribute("CompressionType") || "";
+                            var typeTarget = null;
+
                             if ((function (o1, o2) { if (o1 && o1.equals) {
                                 return o1.equals(o2);
                             }
@@ -8588,70 +9156,66 @@ var com;
                             } })(iType, "EnhMetaFile")) {
                                 compression = "png"; //we convert emf files to png
                             }
+                            else if (iType == "Object") //This is a very basic support for embedded visio objects by looking for associated image
+                            {
+                                typeTarget = getForeignRel(elem, filename);
+
+                                if (typeTarget.type.indexOf('/oleObject') > 0)
+                                {
+                                    var relElem = model.getRelationship("rId1", "visio/embeddings/_rels/" + typeTarget.target + ".rels");
+                                    
+                                    if (relElem != null) 
+                                    {
+                                        var target = relElem.getAttribute("Target");
+                                        var type = relElem.getAttribute("Type");
+                                        
+                                        try 
+                                        {
+                                            var index = target.lastIndexOf('/');
+                                            target = target.substring(index + 1, target.length);
+                                        }
+                                        catch (e) 
+                                        {
+                                            return;
+                                        }
+                                        
+                                        compression = "png";
+                                        typeTarget = {type: type, target: target};
+                                    }
+                                    else
+                                    {
+                                        return;
+                                    }
+                                }
+                            }
                             else {
                                 return;
                             }
-                            var fdChild = elem.firstChild;
-                            if (fdChild != null) {
-                                if (fdChild != null && (fdChild.nodeType == 1)) {
-                                    var fdElem = fdChild;
-                                    var grandchildName = fdElem.nodeName;
-                                    if ((function (o1, o2) { if (o1 && o1.equals) {
-                                        return o1.equals(o2);
-                                    }
-                                    else {
-                                        return o1 === o2;
-                                    } })(grandchildName.toLowerCase(), "rel")) {
-                                        var rid = fdElem.getAttribute("r:id");
-                                        if (rid != null && !(rid.length === 0)) {
-                                            var index = filename.lastIndexOf('/');
-                                            var pre = "";
-                                            var post = "";
-                                            try {
-                                                pre = filename.substring(0, index);
-                                                post = filename.substring(index, filename.length);
-                                            }
-                                            catch (e) {
-                                                return;
-                                            }
-                                            ;
-                                            var relElem = model.getRelationship(rid, pre + "/_rels" + post + ".rels");
-                                            if (relElem != null) {
-                                                var target = relElem.getAttribute("Target") || "";
-                                                var type = relElem.getAttribute("Type");
-                                                index = target.lastIndexOf('/');
-                                                try {
-                                                    target = target.substring(index + 1, target.length);
-                                                }
-                                                catch (e) {
-                                                    return;
-                                                }
-                                                ;
-                                                if (type != null && (function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(type, "image")) {
-                                                    this.imageData = ({});
-                                                    var iData = model.getMedia(com.mxgraph.io.mxVsdxCodec.vsdxPlaceholder + "/media/" + target);
-                                                    if (!iData)
-                                                	{
-                                                    	/* put */ (this.imageData["iData"] = Shape.ERROR_IMAGE);
-                                                    	/* put */ (this.imageData["iType"] = 'svg+xml');
-                                                	}
-                                                    else
-                                                	{
-	                                                    /* put */ (this.imageData["iData"] = iData);
-	                                                    if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(target.toLowerCase(), ".bmp")) {
-	                                                        compression = "jpg";
-	                                                    }
-	                                                    /* put */ (this.imageData["iType"] = compression);
-                                                	}
-                                                }
-                                            }
-                                            else {
-                                            }
-                                            return;
-                                        }
-                                    }
+
+                            if (typeTarget == null)
+                            {
+                                typeTarget = getForeignRel(elem, filename);
+                            }
+
+                            var type = typeTarget.type, target = typeTarget.target;
+
+                            if (type != null && (function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(type, "image")) 
+                            {
+                                this.imageData = ({});
+                                var iData = model.getMedia(com.mxgraph.io.mxVsdxCodec.vsdxPlaceholder + "/media/" + target);
+                                if (!iData)
+                                {
+                                    /* put */ (this.imageData["iData"] = Shape.ERROR_IMAGE);
+                                    /* put */ (this.imageData["iType"] = 'svg+xml');
                                 }
-                                fdChild = fdChild.nextSibling;
+                                else
+                                {
+                                    /* put */ (this.imageData["iData"] = iData);
+                                    if ((function (str, searchString) { var pos = str.length - searchString.length; var lastIndex = str.indexOf(searchString, pos); return lastIndex !== -1 && lastIndex === pos; })(target.toLowerCase(), ".bmp")) {
+                                        compression = "jpg";
+                                    }
+                                    /* put */ (this.imageData["iType"] = compression);
+                                }
                             }
                         }
                         else if ((function (o1, o2) { if (o1 && o1.equals) {
@@ -8678,7 +9242,7 @@ var com;
                             if (this.geom == null) {
                                 this.geom = ([]);
                             }
-                            /* add */ (this.geom.push(elem) > 0);
+                            /* add */ (this.geom.push(elem));
                         }
                         else if ((function (o1, o2) { if (o1 && o1.equals) {
                             return o1.equals(o2);
@@ -8731,18 +9295,49 @@ var com;
                                                 }
                                             }
                                         }
-                                        if (!(value.length === 0)) {
+                                        if (format == 'esc(0)')
+                                        {
+                                            this.fields[ix] = value;
+                                        }
+                                        else if (!(value.length === 0)) {
                                             try {
-                                                if ((function (str, searchString, position) {
-                                                    if (position === void 0) { position = 0; }
-                                                    return str.substr(position, searchString.length) === searchString;
-                                                })(format, "{{")) {
+                                            	//Date can be in string date format or a number
+                                            	var date = isNaN(value)? new Date(value) : new Date(Shape.VSDX_START_TIME + Math.floor((parseFloat(value) * 24 * 60 * 60 * 1000)));
+
+												if (format == 'c')
+												{
+													if (date.getHours() + date.getMinutes() + date.getSeconds() + date.getMilliseconds() == 0)
+													{
+														format = 'm/d/yyyy';
+													}
+													else
+													{
+														format = 'm/d/yyyy h:MM:ss tt';															
+													}
+												}
+												else if (format == 'ddddd')
+												{
+													format = 'm/d/yyyy';
+												}
+												else if (format == 'dddddd')
+												{
+													format = 'dddd, mmmm dd, yyyy';
+												}
+												else if (format == 'C')
+												{
+													format = 'dddd, mmmm dd, yyyy h:MM:ss tt';
+												}
+												else if (format == 'T')
+												{
+													format = 'h:MM:ss tt';
+												}
+												else
+												{
                                                 	//Our date format function swaps M/m meaning
-                                                	format = format.replace(/m/g, '@').replace(/M/g, 'm').replace(/@/g, 'M');
-                                                	//Date can be in string date format or a number
-                                                	var date = isNaN(value)? new Date(value) : new Date(Shape.VSDX_START_TIME + Math.floor((parseFloat(value) * 24 * 60 * 60 * 1000)));
-                                                	value = Graph.prototype.formatDate(date, /* replaceAll */ format.replace(new RegExp("\\{|\\}", 'g'), ""));
+                                                	format = format.replace(/am\/pm/g, 'tt').replace(/m/g, '@').replace(/M/g, 'm').replace(/@/g, 'M');
                                                 }
+
+                                               	value = Graph.prototype.formatDate(date, /* replaceAll */ 'UTC:' + format.replace(new RegExp("\\{|\\}", 'g'), ""));
                                             }
                                             catch (e) {
                                             }
@@ -8786,6 +9381,19 @@ var com;
                      * @return {number} Numerical value of the width element.
                      */
                     Shape.prototype.getWidth = function () {
+                        if (this.width < 1 && this.childShapes != null)
+                        {
+                            try
+                            {
+                                for (var i = 0; i < this.childShapes.entries.length; i++)
+                                {
+                                    var c = this.childShapes.entries[i].value;
+                                    this.width = Math.max(c.width, this.width);
+                                }
+                            }
+                            catch(e){}
+                        }
+
                         return this.width === 0 && this.height > 0 ? 1 : this.width;
                     };
                     /**
@@ -8793,6 +9401,19 @@ var com;
                      * @return {number} Numerical value of the height element.
                      */
                     Shape.prototype.getHeight = function () {
+                        if (this.height < 1 && this.childShapes != null)
+                        {
+                            try
+                            {
+                                for (var i = 0; i < this.childShapes.entries.length; i++)
+                                {
+                                    var c = this.childShapes.entries[i].value;
+                                    this.height = Math.max(c.height, this.height);
+                                }
+                            }
+                            catch(e){}
+                        }
+
                         return this.height === 0 && this.width > 0 ? 1 : this.height;
                     };
                     /**
@@ -9180,7 +9801,7 @@ var com;
                     Shape.prototype.getTextSize = function (index) {
                         var sizeElem = this.getCellElement$java_lang_String$java_lang_String$java_lang_String(com.mxgraph.io.vsdx.mxVsdxConstants.SIZE, index, com.mxgraph.io.vsdx.mxVsdxConstants.CHARACTER);
                         var size = this.getScreenNumericalValue$org_w3c_dom_Element$double(sizeElem, 12);
-                        return ('' + (Math.floor(Math.round(size * 100) / 100)));
+                        return ('' + (Math.round(size * 100) / 100));
                     };
                     /**
                      * Returns the vertical align of the label.<br/>
@@ -9231,9 +9852,55 @@ var com;
                     Shape.prototype.setLastKnot = function (lastKnot) {
                         this.lastKnot = lastKnot;
                     };
+
+                    Shape.prototype.getConnections = function () 
+                    {
+						var connections = [];
+
+                    	if (this.sections && this.sections['Connection'])
+                    	{
+                            var h = this.getHeight(), w = this.getWidth();
+	                    	var rows = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectChildNamedElements(this.sections['Connection'].elem, "Row");
+
+	                    	for (var i = 0; i < rows.length; i++)
+	                    	{
+								var cells = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectChildElements(rows[i]);
+                                var x, y;
+
+                        		for (var j = 0; j < cells.length; j++)
+                    			{
+                            		var cell = cells[j];
+									var cn = cell.getAttribute("N");
+                                    var val = this.getScreenNumericalValue$org_w3c_dom_Element$double(cell, 0);
+                        			
+                        			if (cn == 'X')
+                        			{
+                            			x = mxUtils.format(val / w);
+                        			}
+                                    else if (cn == 'Y')
+                                    {
+                                        y = mxUtils.format(1 - val / h);
+                                    }
+                        		}
+
+                                if (x != null && y != null)
+                                {
+                                    connections.push({x: x, y: y});
+                                }
+		                    }
+                    	}
+
+                        if (connections.length == 0 && this.master && this.master.masterShape)
+                        {
+                            connections = this.master.masterShape.getConnections();
+                        }
+
+						return connections;
+                    };
+
                     return Shape;
                 }(com.mxgraph.io.vsdx.Style));
-                Shape.VSDX_START_TIME = -2209168800000;
+                Shape.VSDX_START_TIME = new Date('1899-12-30T00:00:00Z').getTime();
                 vsdx.Shape = Shape;
                 Shape["__class"] = "com.mxgraph.io.vsdx.Shape";
             })(vsdx = io.vsdx || (io.vsdx = {}));
@@ -9334,6 +10001,9 @@ var com;
                             if (m.entries[i].key.equals != null && m.entries[i].key.equals(k) || m.entries[i].key === k) {
                                 return m.entries[i].value;
                             } return null; })(model.getThemes(), themeIndex);
+                        if (theme == null) {
+                            theme = model.getDefaultTheme();
+                        }
                         var variant = page.getCellIntValue("VariationColorIndex", 0);
                         _this.setThemeAndVariant(theme, variant);
                         {
@@ -9362,9 +10032,18 @@ var com;
                         else {
                             _this.processGeomList(null);
                         }
-                        _this.vertex = vertex || (_this.childShapes != null && !(function (m) { if (m.entries == null)
-                            m.entries = []; return m.entries.length == 0; })(_this.childShapes)) || (_this.geomList != null && (!_this.geomList.isNoFill()  || _this.geomList.getGeoCount() > 1));
+
+                        // TODO It's hard to detect edges that should be treated like vertexes whhen they are groups and have child shapes.
+                        // TODO Check this again if more complains are received or if we can have an edge group
+                        _this.vertex = vertex || (!page.connectsMap[_this.Id] && (_this.childShapes != null && !(function (m) { if (m.entries == null)
+                            m.entries = []; return m.entries.length == 0; })(_this.childShapes)) || (_this.geomList != null && (!_this.geomList.isNoFill()  || _this.geomList.getGeoCount() > 1)));
                         _this.layerMember = _this.getValue(_this.getCellElement$java_lang_String("LayerMember"));
+                        
+                        if (_this.layerMember)
+                    	{
+                        	 _this.layerMember =  _this.layerMember.split(';');
+                    	}
+                        
                         return _this;
                     }
                     VsdxShape.__static_initialize = function () { if (!VsdxShape.__static_initialized) {
@@ -9892,7 +10571,7 @@ var com;
 
                                     if (ulMode)
                                 	{
-                                    	//to-do closing li is wrongly placed after font (and other tags (e.g, b, i))
+                                    	//TODO closing li is wrongly placed after font (and other tags (e.g, b, i))
                                     	ret += '</li></ul>';
                                 	}
                                     
@@ -9946,14 +10625,13 @@ var com;
                         
                         if (ulMode)
                     	{
-                        	//to-do closing li is wrongly placed after font (and other tags (e.g, b, i))
+                        	//TODO closing li is wrongly placed after font (and other tags (e.g, b, i))
                         	ret += '</li></ul>';
                     	}
                         
                         var end = first ? "" : "</p>";
                         ret += end;
-                        com.mxgraph.io.vsdx.mxVsdxUtils.surroundByTags(ret, "div");
-                        return ret;
+                        return com.mxgraph.io.vsdx.mxVsdxUtils.surroundByTags(ret, "div", "font-size: 1px");
                     };
                     
                     /**
@@ -10264,6 +10942,39 @@ var com;
 
                     	return {extLink: extLink, pageLink: pageLink};
                     };
+
+                    VsdxShape.prototype.getProperties = function () 
+                    {
+						var props = [];
+
+                    	if (this.sections && this.sections['Property'])
+                    	{
+	                    	var rows = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectChildNamedElements(this.sections['Property'].elem, "Row");
+
+	                    	for (var i = 0; i < rows.length; i++)
+	                    	{
+			                    var row = rows[i];
+                            	var n = row.getAttribute("N");
+                            	
+								var cells = com.mxgraph.io.vsdx.mxVsdxUtils.getDirectChildElements(row);
+
+                        		for (var j = 0; j < cells.length; j++)
+                    			{
+                            		var cell = cells[j];
+									var cn = cell.getAttribute("N");
+                        			 
+                        			if (cn == 'Value')
+                        			{
+                            			props.push({key: n, val: cell.getAttribute("V")});
+                            			break;
+                        			}
+                        		}
+		                    }
+                    	}
+
+						return props;
+                    };
+
                     /**
                      * Analyzes the shape and returns a string with the style.
                      * @return {*} style read from the shape.
@@ -10401,6 +11112,26 @@ var com;
                         } })("1", flibY)) {
                             /* put */ (this.styleMap[mxConstants.STYLE_FLIPV] = "1");
                         }
+
+                        //Connection points
+                        try
+                        {
+                            var connections = this.getConnections();
+                            var cPoints = [];
+
+                            for (var i = 0; i < connections.length; i++)
+                            {
+                                //TODO Does vsdx connections points needs dx/dy?
+                                cPoints.push('[' + connections[i].x + ',' + connections[i].y + ',0]');
+                            }
+
+                            this.styleMap['points'] = '[' + cPoints.join(',') + ']';
+                        }
+                        catch(e)
+                        {
+                            console.log(e);
+                        }
+
                         this.resolveCommonStyles();
                         return this.styleMap;
                     };
@@ -10915,7 +11646,32 @@ var com;
                                     /* put */ (result["aspect"] = "fixed");
                                     var iType = (function (m, k) { return m[k] ? m[k] : null; })(imageData, "iType");
                                     var iData = (function (m, k) { return m[k] ? m[k] : null; })(imageData, "iData");
-                                    /* put */ (result["image"] = "data:image/" + iType + "," + iData);
+                                    
+                                    var imgOffsetX = parseFloat(this.getValue(this.getCellElement$java_lang_String('ImgOffsetX'), "0"));
+                                    var imgOffsetY = parseFloat(this.getValue(this.getCellElement$java_lang_String('ImgOffsetY'), "0"));
+                                    var imgWidth = parseFloat(this.getValue(this.getCellElement$java_lang_String('ImgWidth'), "0"));
+                                    var imgHeight = parseFloat(this.getValue(this.getCellElement$java_lang_String('ImgHeight'), "0"));
+                                    var width = parseFloat(this.getValue(this.getCellElement$java_lang_String('Width'), "0"));
+                                    var height = parseFloat(this.getValue(this.getCellElement$java_lang_String('Height'), "0"));
+                                    
+                                    if (imgOffsetX != 0 || imgOffsetY != 0)
+                                	{
+                                    	this.toBeCroppedImg = {
+                                			imgOffsetX: imgOffsetX, 
+                                			imgOffsetY: imgOffsetY, 
+                                			imgWidth: imgWidth, 
+                                			imgHeight: imgHeight,
+                                			width: width,
+                                			height: height,
+                                			iType: iType,
+                            				iData: iData
+                                    	};
+                                	}
+                                    else
+                                    {
+                                    	/* put */ (result["image"] = "data:image/" + iType + "," + iData);
+                                    }
+                                    
                                     return result;
                                 }
                                 var parsedGeom = this.parseGeom();
@@ -10933,7 +11689,7 @@ var com;
                                 /* put */ (result[mxConstants.STYLE_SHAPE] = "stencil(" + enc + ")");
                             }
                             catch (e) {
-                                console.error(e.message, e);
+                                //console.error(e.message, e);
                             }
                             ;
                         }
@@ -11263,7 +12019,7 @@ var com;
                                         finalX = startXY.x + widthFixed * rawX;
                                         currPoint.x = (Math.floor(Math.round(finalX * 100) / 100));
                                         currPoint.y = (Math.floor(Math.round((startXY.y - heightFixed * rawY) * 100) / 100));
-                                        /* add */ (pointList.push(currPoint) > 0);
+                                        /* add */ (pointList.push(currPoint));
                                     }
                                     ;
                                     return pointList;
@@ -11386,7 +12142,12 @@ var com;
                         else {
                             return o1 === o2;
                         } })(lbkgnd, "")) {
-                            /* put */ (this.styleMap[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = lbkgnd);
+                        	var isFullyTransparent = this.getValue(this.getCellElement$java_lang_String('TextBkgndTrans'), '0') == '1';
+                        	
+                        	if (!isFullyTransparent)
+                        	{
+                        		/* put */ (this.styleMap[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = lbkgnd);
+                        	}
                         }
                         /* put */ (this.styleMap[mxConstants.STYLE_ROUNDED] = this.getRounding() > 0 ? com.mxgraph.io.vsdx.mxVsdxConstants.TRUE : com.mxgraph.io.vsdx.mxVsdxConstants.FALSE);
                         return this.styleMap;
@@ -11489,7 +12250,7 @@ var com;
                             
                             if (this.isVerticalLabel())
                         	{
-                            	txtAngleV += Math.PI + 0.01; //to-do Added 0.01 since we don't override the parent rotation if labRot is zero. Why?
+                            	txtAngleV += Math.PI + 0.01; //TODO Added 0.01 since we don't override the parent rotation if labRot is zero. Why?
                             	styleMap['horizontal'] = '0';
                         	}
                             
@@ -11563,7 +12324,7 @@ var com;
                  * Number of d.p. to round non-integers to
                  */
                 VsdxShape.maxDp = 2;
-                //to-do FIXME In online, matching fails which gives better results! 
+                //TODO FIXME In online, matching fails which gives better results! 
                 VsdxShape.USE_SHAPE_MATCH = false;
                 VsdxShape.stencilTemplate = "<shape h=\"htemplate\" w=\"wtemplate\" aspect=\"variable\" strokewidth=\"inherit\"><connections></connections><background></background><foreground></foreground></shape>";
                 vsdx.VsdxShape = VsdxShape;
@@ -12060,14 +12821,16 @@ com.mxgraph.io.vsdx.mxPropertiesManager.__static_initialize();
 com.mxgraph.io.mxVsdxCodec.vsdxPlaceholder_$LI$();
 com.mxgraph.io.mxVsdxCodec.parsererrorNS_$LI$();
 
-EditorUi.prototype.doImportVisio = function(file, done, onerror)
+EditorUi.prototype.doImportVisio = function(file, done, onerror, filename)
 {
-	if (file.name != null && /(\.vs(x|sx?))($|\?)/i.test(file.name))
+	filename = filename || file.name;
+	
+	if (filename != null && /(\.vs(x|sx?))($|\?)/i.test(filename))
 	{
-		new com.mxgraph.io.mxVssxCodec().decodeVssx(file, done, null, onerror);
+		new com.mxgraph.io.mxVssxCodec(this).decodeVssx(file, done, null, onerror);
 	}
 	else
 	{
-		new com.mxgraph.io.mxVsdxCodec().decodeVsdx(file, done, null, onerror);
+		new com.mxgraph.io.mxVsdxCodec(this).decodeVsdx(file, done, null, onerror);
 	}
 };

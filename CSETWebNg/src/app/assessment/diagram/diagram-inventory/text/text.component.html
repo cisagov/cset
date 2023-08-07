@@ -32,5 +32,9 @@
               [checked]="text.visible" [disabled]="true" >
          </td>
     </tr>
+
+    <tr *ngIf="texts.length == 0">
+      <td colspan="3" style="text-align: center;">There are no text objects in this Network Diagram.</td>
+    </tr>
 </table>
 

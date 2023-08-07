@@ -40,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Diagram\" />
     <Folder Include="Documents\cdDocs_CRR\" />
   </ItemGroup>
 
@@ -379,9 +378,9 @@
     <None Update="Diagram\src\main\webapp\images\all-diagrams.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Diagram\src\main\webapp\images\android-chrome-192x192.png">
+    <!--<None Update="Diagram\src\main\webapp\images\android-chrome-192x192.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </None>-->
     <None Update="Diagram\src\main\webapp\images\android-chrome-512x512.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -7195,9 +7194,9 @@
     <None Update="Diagram\src\main\webapp\stencils\office\sites.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Diagram\src\main\webapp\stencils\office\users.xml">
+    <!--<None Update="Diagram\src\main\webapp\stencils\office\users.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </None>-->
     <None Update="Diagram\src\main\webapp\stencils\pid\agitators.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

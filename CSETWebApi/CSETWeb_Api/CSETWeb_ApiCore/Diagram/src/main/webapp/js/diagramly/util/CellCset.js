@@ -6,7 +6,11 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-    if (typeof this.value != "object")
+
+    console.log('wrapper object (trying to find '+name+'):')
+    console.log(this.value)
+    if (typeof this.value != 'UserObject')// | typeof this.value != 'object')
+    //if (typeof this.value != 'object')
     {
         return null;
     }
@@ -26,19 +30,22 @@ mxCell.prototype.getCsetAttribute = function (name)
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
-
-    if (!!this.value && typeof this.value == "object")
+    console.log('in setCsetAttribute:')
+    console.log(attributeName)
+    console.log(attributeValue)
+    if (!!this.value && typeof this.value == 'UserObject')
+    //if (!!this.value && typeof this.value == 'object')
     {
         obj = this.value;
     }
     else
     {
-        // The cell is just an mxCell.  Wrap it in an object and set the attribute on the wrapper.
+        // The cell is just an mxCell.  Wrap it in a UserObject and set the attribute on the wrapper.
         try
         {
             var doc = mxUtils.createXmlDocument();
-            obj = doc.createElement('object');
-            this.value = obj;
+            obj = doc.createElement('UserObject');
+            //obj = doc.createElement('object');
         }
         catch (e)
         {
@@ -47,12 +54,15 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
     }
 
     obj.setAttribute(attributeName, attributeValue);
-
+    console.log('obj:')
+    console.log(obj)
     // set an internal label as well.  Something to concatenate with the SAL for the display label.
     if (attributeName === 'label')
     {
         obj.setAttribute('internalLabel', attributeValue || '');
     }
+
+    //this.value = obj;
 }
 
 
@@ -75,7 +85,9 @@ mxCell.prototype.isParentMSC = function ()
  */
 mxCell.prototype.isBlueConnector = function ()
 {
-    return this.getStyleValue('image').indexOf('connector.svg') >= 0;
+    var imagePath = this.getStyleValue('image');
+    if (imagePath == null) { return false; }
+    return imagePath.indexOf('connector.svg') >= 0;
 }
 
 
