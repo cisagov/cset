@@ -60,6 +60,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_demographic.SaveDemographics(demographics));
         }
 
+
         /// <summary>
         /// Get organization types
         /// </summary>
@@ -71,43 +72,54 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_assessment.GetOrganizationTypes());
         }
 
+
         // GET: api/SECTORs
         [HttpGet]
         [Route("api/Demographics/Sectors")]
         public async Task<IActionResult> GetSECTORs()
         {
-            List<SECTOR> list = await _context.SECTOR.ToListAsync<SECTOR>();
-            var tmplist = list.OrderBy(s => s.SectorName).ToList();
+            var list = await _context.SECTOR.ToListAsync<SECTOR>();
 
-            var otherItem = list.Find(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
-            if (otherItem != null)
+
+            // Remove NIPP entries from list until we switch over to NIPP exclusively.
+            // At that time, just NOT the predicate below to get the NIPP values.
+            list.RemoveAll(x => x.Is_NIPP);
+
+
+            var otherItems = list.Where(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase)).ToList();
+            foreach (var o in otherItems)
             {
-                list.Remove(otherItem);
-                list.Add(otherItem);
+                list.Remove(o);
+                list.Add(o);
             }
 
             return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
+
 
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry")]
         // GET: api/SECTOR_INDUSTRY
         public IActionResult GetSECTOR_INDUSTRY()
         {
-            return Ok(_context.SECTOR_INDUSTRY);
+            var list = _context.SECTOR_INDUSTRY;
+            return Ok(list);
         }
+
 
         // GET: api/SECTOR_INDUSTRY/5
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry/{id}")]
         public async Task<IActionResult> GetSECTOR_INDUSTRY(int id)
         {
-            List<SECTOR_INDUSTRY> list = await _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id).OrderBy(a => a.IndustryName).ToListAsync<SECTOR_INDUSTRY>();
-            var otherItem = list.Find(x => x.IndustryName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase));
-            if (otherItem != null)
+            var list = await _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id)
+                .OrderBy(a => a.IndustryName).ToListAsync<SECTOR_INDUSTRY>();
+
+            var otherItems = list.Where(x => x.Is_Other).ToList();
+            foreach (var o in otherItems)
             {
-                list.Remove(otherItem);
-                list.Add(otherItem);
+                list.Remove(o);
+                list.Add(o);
             }
 
             return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
