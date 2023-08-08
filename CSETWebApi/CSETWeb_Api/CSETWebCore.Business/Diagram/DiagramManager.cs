@@ -50,10 +50,7 @@ namespace CSETWebCore.Business.Diagram
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/UserObject").Count;
-            if (objectCount == 0)
-            {
-                objectCount = xDoc.SelectNodes("//root/object").Count;
-            }
+            
             if (cellCount == 2 && objectCount == 0)
             {
                 // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
@@ -68,11 +65,7 @@ namespace CSETWebCore.Business.Diagram
                 try
                 {
                     HashSet<string> validGuid = new HashSet<string>();
-                    XmlNodeList cells = xDoc.SelectNodes("//root/object[@ComponentGuid]");
-                    if (cells.Count == 0)
-                    {
-                        cells = xDoc.SelectNodes("//root/UserObject[@ComponentGuid]");
-                    }
+                    XmlNodeList cells = xDoc.SelectNodes("//root/UserObject[@ComponentGuid]");
 
                     foreach (XmlElement c in cells)
                     {
@@ -334,9 +327,20 @@ namespace CSETWebCore.Business.Diagram
         public StringReader GetDiagramXml(int assessmentId)
         {
             var diagram = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId)?.Diagram_Markup;
-
+            
             if (diagram != null)
             {
+                // updates the previous version's 'object' to 'UserObject' if needed (Draw.IO v21.0.2 uses 'UserObject' instead)
+                // I know this is a potentially dangerous replacement, so look here if things break
+                if (diagram.Contains("<object ") && diagram.Contains("</object>"))
+                {
+                    diagram = diagram.Replace("<object ", "<UserObject ");
+                    diagram = diagram.Replace("</object>", "</UserObject>");
+
+                    _context.ASSESSMENTS.Where(a => a.Assessment_Id == assessmentId).FirstOrDefault().Diagram_Markup = diagram;
+                    _context.SaveChanges();
+                }
+
                 var stream = new StringReader(diagram);
                 return stream;
             }
@@ -407,7 +411,6 @@ namespace CSETWebCore.Business.Diagram
                         }
                         
                     }
-
                 }
             }
 
