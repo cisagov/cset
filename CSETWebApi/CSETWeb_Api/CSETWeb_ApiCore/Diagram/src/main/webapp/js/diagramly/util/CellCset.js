@@ -6,9 +6,6 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-
-    console.log('wrapper object (trying to find '+name+'):')
-    console.log(this.value)
     // 'object' is for old diagrams that haven't been updated yet
     if (typeof this.value != 'UserObject' && typeof this.value != 'object')
     {
@@ -30,20 +27,12 @@ mxCell.prototype.getCsetAttribute = function (name)
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
-    console.log('in setCsetAttribute:')
-    console.log(attributeName)
-    console.log(attributeValue)
-    console.log('this')
-    console.log(this.value.tagName)
-    console.log(this)
     if (!!this.value && (typeof this.value == 'UserObject' || this.value.tagName == 'UserObject'))
     //if (!!this.value && typeof this.value == 'object')
     {
         obj = this.value;
 
         obj.setAttribute(attributeName, attributeValue);
-        console.log('obj:')
-        console.log(obj)
         // set an internal label as well.  Something to concatenate with the SAL for the display label.
         if (attributeName === 'label') {
 
@@ -60,11 +49,8 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
         {
             var doc = mxUtils.createXmlDocument();
             obj = doc.createElement('UserObject');
-            console.log("created a new UserObject:")
-            console.log(obj)
             obj.setAttribute(attributeName, attributeValue);
-            console.log('obj:')
-            console.log(obj)
+            
             // set an internal label as well.  Something to concatenate with the SAL for the display label.
             if (attributeName === 'label') {
                 obj.setAttribute('internalLabel', attributeValue || '');
@@ -263,16 +249,12 @@ mxCell.prototype.autoNameComponent = function ()
     {
         return;
     }
-    console.log('in autoName, this:')
-    console.log(this)
     // ignore items already labeled
     if (!!this.getCsetAttribute('label'))
     {
-        console.log('label already has value, bailing')
         return;
     }
     if (!!this.getAttribute('label')) {
-        console.log('label already has value, bailing')
         return;
     }
 
@@ -288,9 +270,6 @@ mxCell.prototype.autoNameComponent = function ()
     }
     else
     {
-        console.log('this.childen in autoname:')
-        console.log(this)
-        console.log(this.children)
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
         if (!compMap)
@@ -307,18 +286,12 @@ mxCell.prototype.autoNameComponent = function ()
                 {
                     prefix = s.abbreviation;
                     found = true;
-                    console.log('prefix')
-                    console.log(prefix)
                 }
             }
         }
     }
 
-    console.log('before autoname set label:')
-    console.log(this)
     this.setCsetAttribute('label', prefix + '-' + num);
-    console.log('after autoname set label:')
-    console.log(this)
 }
 
 

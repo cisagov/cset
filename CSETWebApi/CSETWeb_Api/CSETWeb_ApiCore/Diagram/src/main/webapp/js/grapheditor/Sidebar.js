@@ -2213,7 +2213,6 @@ Sidebar.prototype.createDropHandler = function (cells, allowSplit, allowCellsIns
                             select = clones;
                         }
                         else if (cells.length > 0) {
-                            console.log('importing cells?')
                             select = graph.importCells(cells, x, y, target);
 
                             if (graph.model.isVertex(sourceCell) && select.length == 1 &&
