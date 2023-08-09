@@ -161,9 +161,9 @@ export class MyAssessmentsComponent implements OnInit {
       // NCUA didn't want the primary assessor column
       if (this.ncuaSvc.switchStatus) {
         return false;
-      }
-      return true;
+      }      
     }
+    return true;
   }
 
   showCsetOrigin() : boolean {
