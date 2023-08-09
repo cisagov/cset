@@ -9908,10 +9908,12 @@ mxGraphModel.prototype.cellClonedCSET = function (graph, cell) {
     console.log('outside cellClonedCSET, cell:')
     console.log(cell)
     console.log(cell.getStyle())
-    
+    console.log('parent:')
+    console.log(this.getParent(cell))
     // assign a new component GUID to the clone and its children
     if (cell.getCsetAttribute('ComponentGuid') != null) {
         var nextGuid = guidService.getInstance().getNextGuid();
+        
         cell.setCsetAttribute('ComponentGuid', nextGuid);
         console.log('in cellClonedCSET')
         if (cell.children) {
@@ -9932,9 +9934,12 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
     console.log('-- cellAddedCSET --')
     console.log('cell')
     console.log(cell)
+    console.log('graph:')
+    console.log(graph)
 
     // get out if the new added cell is part of the sidebar.  Sidebar graph doesn't appear to have a prefix attribute.
     if (!graph.prefix) {
+        console.log('sidebar, bailing')
         return;
     }
 
@@ -9967,8 +9972,17 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
 
     // assign a component GUID to components (not zones)
     if (cell.getCsetAttribute('ComponentGuid') == null && cell.getStyleValue('zone') != '1') {
+        console.log('before nextGuid:')
         var nextGuid = guidService.getInstance().getNextGuid();
+        if (cell.getStyleValue('aspect') == 'fixed') {
+            console.log('in aspect:')
+            console.log(this)
+        }
+        console.log('nextGuid:')
+        console.log(nextGuid)
         cell.setCsetAttribute('ComponentGuid', nextGuid);
+        console.log('after setCsetAttribute, cell:')
+        console.log(cell)
     }
 
     // default a value for Criticality
@@ -9978,6 +9992,7 @@ mxGraphModel.cellAddedCSET = function (graph, cell) {
 
     // give zones a couple of zone-specific attributes if needed
     if (cell.getStyleValue('zone') == '1') {
+        console.log('in zone stuff')
         cell.setCsetAttribute('zone', '1');
 
         if (!cell.getCsetAttribute('ZoneType')) {
@@ -14799,6 +14814,7 @@ mxGraph.prototype.extendParent = function (a) {
 };
 mxGraph.prototype.importCells = function (a, b, c, d, e, f) {
     console.log('correct import!')
+
     return this.moveCells(a, b, c, !0, d, e, f)
 };
 mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
@@ -14821,9 +14837,6 @@ mxGraph.prototype.moveCells = function (a, b, c, d, e, f, g) {
     console.log('g:')
     console.log(g)
     if (null != a && (0 != b || 0 != c || d || null != e)) {
-
-        
-
         var k = a = this.model.getTopmostCells(a);
         console.log('k')
         console.log(k)

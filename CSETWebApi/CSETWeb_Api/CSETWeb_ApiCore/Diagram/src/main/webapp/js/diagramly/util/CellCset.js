@@ -9,8 +9,8 @@ mxCell.prototype.getCsetAttribute = function (name)
 
     console.log('wrapper object (trying to find '+name+'):')
     console.log(this.value)
-    if (typeof this.value != 'UserObject')// | typeof this.value != 'object')
-    //if (typeof this.value != 'object')
+    // 'object' is for old diagrams that haven't been updated yet
+    if (typeof this.value != 'UserObject' && typeof this.value != 'object')
     {
         return null;
     }
@@ -33,10 +33,25 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
     console.log('in setCsetAttribute:')
     console.log(attributeName)
     console.log(attributeValue)
-    if (!!this.value && typeof this.value == 'UserObject')
+    console.log('this')
+    console.log(this.value.tagName)
+    console.log(this)
+    if (!!this.value && (typeof this.value == 'UserObject' || this.value.tagName == 'UserObject'))
     //if (!!this.value && typeof this.value == 'object')
     {
         obj = this.value;
+
+        obj.setAttribute(attributeName, attributeValue);
+        console.log('obj:')
+        console.log(obj)
+        // set an internal label as well.  Something to concatenate with the SAL for the display label.
+        if (attributeName === 'label') {
+
+            obj.setAttribute('internalLabel', attributeValue || '');
+        }
+        //if (!this.value || typeof this.value != 'UserObject' && obj.style) {
+        //    this.value = obj;
+        //}
     }
     else
     {
@@ -45,6 +60,22 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
         {
             var doc = mxUtils.createXmlDocument();
             obj = doc.createElement('UserObject');
+            console.log("created a new UserObject:")
+            console.log(obj)
+            obj.setAttribute(attributeName, attributeValue);
+            console.log('obj:')
+            console.log(obj)
+            // set an internal label as well.  Something to concatenate with the SAL for the display label.
+            if (attributeName === 'label') {
+                obj.setAttribute('internalLabel', attributeValue || '');
+            }
+
+            // 'object' is for old diagrams that haven't been updated yet
+            if (!this.value || (typeof this.value != 'UserObject' &&  typeof this.value != 'object') && (obj.style || this.value.style)) {
+                this.value = obj;
+            }
+
+
             //obj = doc.createElement('object');
         }
         catch (e)
@@ -53,6 +84,7 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
         }
     }
 
+    /*
     obj.setAttribute(attributeName, attributeValue);
     console.log('obj:')
     console.log(obj)
@@ -61,7 +93,11 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
     {
         obj.setAttribute('internalLabel', attributeValue || '');
     }
-
+    if (!this.value || typeof this.value != 'UserObject' && obj.style)
+    {
+        this.value = obj;
+    }
+    */
     //this.value = obj;
 }
 
@@ -227,10 +263,16 @@ mxCell.prototype.autoNameComponent = function ()
     {
         return;
     }
-
+    console.log('in autoName, this:')
+    console.log(this)
     // ignore items already labeled
     if (!!this.getCsetAttribute('label'))
     {
+        console.log('label already has value, bailing')
+        return;
+    }
+    if (!!this.getAttribute('label')) {
+        console.log('label already has value, bailing')
         return;
     }
 
@@ -246,6 +288,9 @@ mxCell.prototype.autoNameComponent = function ()
     }
     else
     {
+        console.log('this.childen in autoname:')
+        console.log(this)
+        console.log(this.children)
         var prefix = "COMP";
         var compMap = Editor.componentSymbols;
         if (!compMap)
@@ -262,12 +307,18 @@ mxCell.prototype.autoNameComponent = function ()
                 {
                     prefix = s.abbreviation;
                     found = true;
+                    console.log('prefix')
+                    console.log(prefix)
                 }
             }
         }
     }
 
+    console.log('before autoname set label:')
+    console.log(this)
     this.setCsetAttribute('label', prefix + '-' + num);
+    console.log('after autoname set label:')
+    console.log(this)
 }
 
 
