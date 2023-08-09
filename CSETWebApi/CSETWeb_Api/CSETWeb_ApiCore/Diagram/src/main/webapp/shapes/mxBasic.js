@@ -137,8 +137,6 @@ mxShapeBasicRectCallout.prototype.getLabelMargins = function()
 
 mxCellRenderer.registerShape(mxShapeBasicRectCallout.prototype.cst.RECT_CALLOUT, mxShapeBasicRectCallout);
 
-mxShapeBasicRectCallout.prototype.constraints = null;
-
 Graph.handleFactory[mxShapeBasicRectCallout.prototype.cst.RECT_CALLOUT] = function(state)
 {
 	var handles = [Graph.createHandle(state, ['dx', 'dy'], function(bounds)
@@ -2431,9 +2429,10 @@ mxShapeBasicPie.prototype.cst = {PIE : 'mxgraph.basic.pie'};
 mxShapeBasicPie.prototype.paintVertexShape = function(c, x, y, w, h)
 {
 	c.translate(x, y);
-
-	var startAngle = 2 * Math.PI * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'startAngle', this.startAngle))));
-	var endAngle = 2 * Math.PI * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'endAngle', this.endAngle))));
+	var startAngleSource = Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'startAngle', this.startAngle))));
+	var endAngleSource = Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'endAngle', this.endAngle))));
+	var startAngle = 2 * Math.PI * startAngleSource;
+	var endAngle = 2 * Math.PI * endAngleSource;
 	var rx = w * 0.5;
 	var ry = h * 0.5;
 	
@@ -2451,15 +2450,36 @@ mxShapeBasicPie.prototype.paintVertexShape = function(c, x, y, w, h)
 		
 	var bigArc = 0;
 	
-	if (angDiff > Math.PI)
+	if (angDiff >= Math.PI)
 	{
 		bigArc = 1;
 	}
 		
 	c.begin();
-	c.moveTo(rx, ry);
-	c.lineTo(startX, startY);
-	c.arcTo(rx, ry, 0, bigArc, 1, endX, endY);
+	var startAngleDiff = startAngleSource % 1;
+	var endAngleDiff = endAngleSource % 1;
+	
+	if (startAngleDiff == 0 && endAngleDiff == 0.5)
+	{
+		c.moveTo(rx, ry);
+		c.lineTo(startX, startY);
+		c.arcTo(rx, ry, 0, 0, 1, w, h * 0.5);
+		c.arcTo(rx, ry, 0, 0, 1, w * 0.5, h);
+	}
+	else if (startAngleDiff == 0.5 && endAngleDiff == 0)
+	{
+		c.moveTo(rx, ry);
+		c.lineTo(startX, startY);
+		c.arcTo(rx, ry, 0, 0, 1, 0, h * 0.5);
+		c.arcTo(rx, ry, 0, 0, 1, w * 0.5, 0);
+	}
+	else
+	{
+		c.moveTo(rx, ry);
+		c.lineTo(startX, startY);
+		c.arcTo(rx, ry, 0, bigArc, 1, endX, endY);
+	}
+	
 	c.close();
 	c.fillAndStroke();
 };
@@ -2554,8 +2574,10 @@ mxShapeBasicArc.prototype.paintVertexShape = function(c, x, y, w, h)
 {
 	c.translate(x, y);
 
-	var startAngle = 2 * Math.PI * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'startAngle', this.startAngle))));
-	var endAngle = 2 * Math.PI * Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'endAngle', this.endAngle))));
+	var startAngleSource = Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'startAngle', this.startAngle))));
+	var endAngleSource = Math.max(0, Math.min(1, parseFloat(mxUtils.getValue(this.style, 'endAngle', this.endAngle))));
+	var startAngle = 2 * Math.PI * startAngleSource;
+	var endAngle = 2 * Math.PI * endAngleSource;
 	var rx = w * 0.5;
 	var ry = h * 0.5;
 	
@@ -2579,8 +2601,28 @@ mxShapeBasicArc.prototype.paintVertexShape = function(c, x, y, w, h)
 	}
 		
 	c.begin();
-	c.moveTo(startX, startY);
-	c.arcTo(rx, ry, 0, bigArc, 1, endX, endY);
+	
+	var startAngleDiff = startAngleSource % 1;
+	var endAngleDiff = endAngleSource % 1;
+	
+	if (startAngleDiff == 0 && endAngleDiff == 0.5)
+	{
+		c.moveTo(startX, startY);
+		c.arcTo(rx, ry, 0, 0, 1, w, h * 0.5);
+		c.arcTo(rx, ry, 0, 0, 1, w * 0.5, h);
+	}
+	else if (startAngleDiff == 0.5 && endAngleDiff == 0)
+	{
+		c.moveTo(startX, startY);
+		c.arcTo(rx, ry, 0, 0, 1, 0, h * 0.5);
+		c.arcTo(rx, ry, 0, 0, 1, w * 0.5, 0);
+	}
+	else
+	{
+		c.moveTo(startX, startY);
+		c.arcTo(rx, ry, 0, bigArc, 1, endX, endY);
+	}
+
 	c.stroke();
 };
 
@@ -3086,99 +3128,151 @@ mxShapeBasicThreeCornerRoundRect.prototype.getConstraints = function(style, w, h
 }
 
 //**********************************************************************************************************************************************************
-//Rectangle v2
+//Polygon
 //**********************************************************************************************************************************************************
 /**
 * Extends mxShape.
 */
-function mxShapeBasicRect2(bounds, fill, stroke, strokewidth)
+function mxShapeBasicPolygon(bounds, fill, stroke, strokewidth)
 {
 	mxShape.call(this);
 	this.bounds = bounds;
 	this.fill = fill;
 	this.stroke = stroke;
 	this.strokewidth = (strokewidth != null) ? strokewidth : 1;
-	this.rectStyle = 'square';
-	this.size = 10;
-	this.absoluteCornerSize = true;
-	this.indent = 2;
-	this.rectOutline = 'single';
+	this.dx = 0.5;
+	this.dy = 0.5;
 };
 
 /**
 * Extends mxShape.
 */
-mxUtils.extend(mxShapeBasicRect2, mxActor);
+mxUtils.extend(mxShapeBasicPolygon, mxActor);
 
-mxShapeBasicRect2.prototype.cst = {RECT2 : 'mxgraph.basic.rect'};
+mxShapeBasicPolygon.prototype.customProperties = [
+	{name: 'polyline', dispName: 'Polyline', type: 'bool', defVal:false},
+];
 
-mxShapeBasicRect2.prototype.customProperties = [
-	{name: 'rectStyle', dispName: 'Style', type: 'enum', defVal:'square',
+mxShapeBasicPolygon.prototype.cst = {POLYGON : 'mxgraph.basic.polygon'};
+
+/**
+* Function: paintVertexShape
+* 
+* Paints the vertex shape.
+*/
+mxShapeBasicPolygon.prototype.paintVertexShape = function(c, x, y, w, h)
+{
+    try
+    {
+        c.translate(x, y);
+        var coords = JSON.parse(mxUtils.getValue(this.state.style, 'polyCoords', '[]'));
+    	var polyline = mxUtils.getValue(this.style, 'polyline', false);
+     
+        if (coords.length > 0)
+        {
+            c.begin();
+            c.moveTo(coords[0][0] * w, coords[0][1] * h);
+           
+            for (var i = 1; i < coords.length; i++)
+            {
+                c.lineTo(coords[i][0] * w, coords[i][1] * h);
+            }
+       
+            if (polyline == false)
+            {
+                c.close();
+            }
+            
+            c.end();
+            c.fillAndStroke();
+        }
+    }
+    catch (e)
+    {
+        // ignore
+    }
+};
+ 
+mxCellRenderer.registerShape(mxShapeBasicPolygon.prototype.cst.POLYGON, mxShapeBasicPolygon);
+
+mxShapeBasicPolygon.prototype.constraints = null;
+ 
+Graph.handleFactory[mxShapeBasicPolygon.prototype.cst.POLYGON] = function(state)
+{
+    var handles = [];
+ 
+    try
+    {
+        var c = JSON.parse(mxUtils.getValue(state.style, 'polyCoords', '[]'));
+               
+        for (var i = 0; i < c.length; i++)
+        {
+            (function(index)
+            {
+                handles.push(Graph.createHandle(state, ['polyCoords'], function(bounds)
+                {
+                    return new mxPoint(bounds.x + c[index][0] * bounds.width, bounds.y + c[index][1] * bounds.height);
+                }, function(bounds, pt)
+                {
+                    var x = Math.round(100 * Math.max(0, Math.min(1, (pt.x - bounds.x) / bounds.width))) / 100;
+                    var y = Math.round(100 * Math.max(0, Math.min(1, (pt.y - bounds.y) / bounds.height))) / 100;
+                   
+                    c[index] = [x, y];
+                    state.style['polyCoords'] = JSON.stringify(c);
+                   
+                }, false));
+            })(i);
+        }
+    }
+    catch (e)
+    {
+        // ignore
+    }
+   
+    return handles;
+};
+
+//**********************************************************************************************************************************************************
+//Rectangle with pattern fill
+//**********************************************************************************************************************************************************
+/**
+* Extends mxShape.
+*/
+function mxShapeBasicPatternFillRect(bounds, fill, stroke, strokewidth)
+{
+	mxShape.call(this);
+	this.bounds = bounds;
+	this.fill = fill;
+	this.stroke = stroke;
+	this.strokewidth = (strokewidth != null) ? strokewidth : 1;
+	this.dx = 0.5;
+};
+
+/**
+* Extends mxShape.
+*/
+mxUtils.extend(mxShapeBasicPatternFillRect, mxActor);
+
+mxShapeBasicPatternFillRect.prototype.cst = {PATTERN_FILL_RECT : 'mxgraph.basic.patternFillRect'};
+
+mxShapeBasicPatternFillRect.prototype.customProperties = [
+	{name: 'step', dispName: 'Fill Step', type: 'float', min:0, defVal:5},
+	{name: 'fillStyle', dispName: 'Fill Style', type: 'enum', defVal:'none',
 		enumList:[
-			{val:'square', dispName:'Square'},
-			{val:'rounded', dispName:'Round'},
-			{val:'snip', dispName:'Snip'},
-			{val:'invRound', dispName:'Inv. Round'},
-			{val:'fold', dispName:'Fold'}
-		]},
-	{name: 'size', dispName: 'Corner Size', type: 'float', defVal:10},
-	{name: 'absoluteCornerSize', dispName: 'Abs. Corner Size', type: 'bool', defVal:true},
-	{name: 'indent', dispName:'Indent', type:'float', defVal:2},
-	{name: 'rectOutline', dispName: 'Outline', type: 'enum', defVal:'single',
-		enumList:[
-			{val:'single', dispName:'Single'},
-			{val:'double', dispName:'Double'},
-			{val:'frame', dispName:'Frame'}
-		]},
-	{name: 'fillColor2', dispName:'Inside Fill Color', type:'color', defVal:'none'},
-	{name: 'gradientColor2', dispName:'Inside Gradient Color', type:'color', defVal:'none'},
-	{name: 'gradientDirection2', dispName: 'Inside Gradient Direction', type: 'enum', defVal:'south',
-		enumList:[
-			{val:'south', dispName:'South'},
-			{val:'west', dispName:'West'},
-			{val:'north', dispName:'North'},
-			{val:'east', dispName:'East'}
+			{val: 'none', dispName: 'None'},
+			{val: 'diag', dispName: 'Diagonal'},
+			{val: 'diagRev', dispName: 'Diagonal Reverse'},
+			{val: 'vert', dispName: 'Vertical'},
+			{val: 'hor', dispName: 'Horizontal'},
+			{val: 'grid', dispName: 'Grid'},
+			{val: 'diagGrid', dispName: 'Diagonal Grid'}
 	]},
-	{name: 'top', dispName:'Top Line', type:'bool', defVal:true},
-	{name: 'right', dispName:'Right', type:'bool', defVal:true},
-	{name: 'bottom', dispName:'Bottom Line', type:'bool', defVal:true},
-	{name: 'left', dispName:'Left ', type:'bool', defVal:true},
-	{name: 'topLeftStyle', dispName: 'Top Left Style', type: 'enum', defVal:'default',
-	enumList:[
-		{val:'default', dispName:'Default'},
-		{val:'square', dispName:'Square'},
-		{val:'rounded', dispName:'Round'},
-		{val:'snip', dispName:'Snip'},
-		{val:'invRound', dispName:'Inv. Round'},
-		{val:'fold', dispName:'Fold'}
-	]},
-	{name: 'topRightStyle', dispName: 'Top Right Style', type: 'enum', defVal:'default',
-		enumList:[
-			{val:'default', dispName:'Default'},
-			{val:'square', dispName:'Square'},
-			{val:'rounded', dispName:'Round'},
-			{val:'snip', dispName:'Snip'},
-			{val:'invRound', dispName:'Inv. Round'},
-			{val:'fold', dispName:'Fold'}
-	]},
-	{name: 'bottomRightStyle', dispName: 'Bottom Right Style', type: 'enum', defVal:'default',
-		enumList:[
-			{val:'default', dispName:'Default'},
-			{val:'square', dispName:'Square'},
-			{val:'rounded', dispName:'Round'},
-			{val:'snip', dispName:'Snip'},
-			{val:'invRound', dispName:'Inv. Round'},
-			{val:'fold', dispName:'Fold'}
-	]},
-	{name: 'bottomLeftStyle', dispName: 'Bottom Left Style', type: 'enum', defVal:'default',
-		enumList:[
-			{val:'default', dispName:'Default'},
-			{val:'square', dispName:'Square'},
-			{val:'rounded', dispName:'Round'},
-			{val:'snip', dispName:'Snip'},
-			{val:'invRound', dispName:'Inv. Round'},
-			{val:'fold', dispName:'Fold'}
-	]},
+	{name: 'fillStrokeWidth', dispName: 'Fill Stroke Width', type: 'float', min:0, defVal:1},
+	{name: 'fillStrokeColor', dispName: 'Fill Stroke Color', type: 'color', defVal:'#cccccc'},
+	{name: 'top', dispName: 'Top Line', type: 'bool', defVal:true},
+	{name: 'right', dispName: 'Right Line', type: 'bool', defVal:true},
+	{name: 'bottom', dispName: 'Bottom Line', type: 'bool', defVal:true},
+	{name: 'left', dispName: 'Left Line', type: 'bool', defVal:true}
 ];
 
 /**
@@ -3186,1415 +3280,221 @@ mxShapeBasicRect2.prototype.customProperties = [
 * 
 * Paints the vertex shape.
 */
-mxShapeBasicRect2.prototype.paintVertexShape = function(c, x, y, w, h)
+mxShapeBasicPatternFillRect.prototype.paintVertexShape = function(c, x, y, w, h)
 {
 	c.translate(x, y);
+	
+	var strokeColor = mxUtils.getValue(this.style, 'strokeColor', '#000000');
+	var strokeWidth = mxUtils.getValue(this.style, 'strokeWidth', '1');
+	
+	c.rect(0, 0, w, h);
+	c.fill();
 
-	var rectStyle = mxUtils.getValue(this.style, 'rectStyle', this.rectStyle);
-	var absoluteCornerSize = mxUtils.getValue(this.style, 'absoluteCornerSize', this.absoluteCornerSize);
+	var fillStrokeColor = mxUtils.getValue(this.style, 'fillStrokeColor', '#cccccc');
+	var fillStrokeWidth = parseFloat(mxUtils.getValue(this.style, 'fillStrokeWidth', 1));
 	
-	var size = Math.max(0, Math.min(w, parseFloat(mxUtils.getValue(this.style, 'size', this.size))));
-	var relSize = Math.max(0, Math.min(50, size));
+	c.setStrokeColor(fillStrokeColor);
+	c.setStrokeWidth(fillStrokeWidth);
 	
-	size = Math.min(h * 0.5, w * 0.5, size);
-	
-	if (!absoluteCornerSize)
+	var step = parseFloat(mxUtils.getValue(this.style, 'step', 5));
+	var fillStyle = mxUtils.getValue(this.style, 'fillStyle', 'none');
+
+	if (fillStyle == 'diag' || fillStyle == 'diagGrid')
 	{
-		size = relSize * Math.min(w, h) / 100;
-	}
-	
-	var rectOutline = mxUtils.getValue(this.style, 'rectOutline', this.rectOutline);
-	var indent = Math.max(0, Math.min(w, parseFloat(mxUtils.getValue(this.style, 'indent', this.indent))));
-	var relIndent = Math.max(0, Math.min(50, indent));
-		
-	size = Math.min(size, Math.min(w, h) * 0.5);
-	
-	if (!absoluteCornerSize)
-	{
-		indent = Math.min(relIndent * Math.min(w, h) / 100);
-	}
-
-//	indent = Math.min(indent, 2 * size, Math.min(w, h) - size);
-	indent = Math.min(indent, Math.min(w, h) * 0.5 - size);
-	
-	var top = mxUtils.getValue(this.style, 'top', true);
-	var right = mxUtils.getValue(this.style, 'right', true);
-	var bottom = mxUtils.getValue(this.style, 'bottom', true);
-	var left = mxUtils.getValue(this.style, 'left', true);
-
-	var topLeftStyle = mxUtils.getValue(this.style, 'topLeftStyle', 'default');
-	var topRightStyle = mxUtils.getValue(this.style, 'topRightStyle', 'default');
-	var bottomRightStyle = mxUtils.getValue(this.style, 'bottomRightStyle', 'default');
-	var bottomLeftStyle = mxUtils.getValue(this.style, 'bottomLeftStyle', 'default');
-	var fillColor = mxUtils.getValue(this.style, 'fillColor', 'none');
-	var fillColor2 = mxUtils.getValue(this.style, 'fillColor2', 'none');
-	var gradientColor2 = mxUtils.getValue(this.style, 'gradientColor2', 'none');
-	var gdir2 = mxUtils.getValue(this.style, 'gradientDirection2', 'south');
-	var opacity = mxUtils.getValue(this.style, 'opacity', '100');
-	
-	if ((top || right || bottom || left) && rectOutline != 'frame')
-	{
-		
-		//outline fill
-		c.begin();
-		if (!top)
-		{
-			c.moveTo(0,0);
-		}
-		else
-		{
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-		}
-		
-		if (top)
-		{
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-		}
-
-		mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-		
-		if (right)
-		{
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-		}
-
-		mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-		
-		if (bottom)
-		{
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-		}
-		
-		mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-		
-		if (left)
-		{
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-		}
-
-		mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-		c.close();
-		c.fill();
-
-		c.setShadow(false);
-
-		//inner fill
-		var fillColor2 = mxUtils.getValue(this.style, 'fillColor2', 'none');
-		c.setFillColor(fillColor2);
-		var op1 = opacity;
-		var op2 = opacity;
-		
-		if (fillColor2 == 'none')
-		{
-			op1 = 0;
-		}
-		
-		if (gradientColor2 == 'none')
-		{
-			op2 = 0;
-		}
-		
-		
-		c.setGradient(fillColor2, gradientColor2, 0, 0, w, h, gdir2, op1, op2);
+		step = step * 1.41;
+		var i = 0;
 		
 		c.begin();
-
-		if (!top)
-		{
-			c.moveTo(indent,0);
-		}
-		else
-		{
-			mxShapeBasicRect2.prototype.moveNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-		}
-
-		mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
 		
-		if (left && bottom)
+		while (i < (h + w))
 		{
-			mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
+			var cx = 0;
+			var cy = 0;
+			
+			if (i <= h)
+			{
+				c.moveTo(0, i);
+				
+				if(i <= w)
+				{
+					c.lineTo(i, 0);
+				}
+				else
+				{
+					c.lineTo(w, i - w);
+				}
+			}
+			else
+			{
+				c.moveTo(i - h, h);
+				
+				if(i <= w)
+				{
+					c.lineTo(i, 0);
+				}
+				else
+				{
+					c.lineTo(w, i - w);
+				}
+			}
+			
+			i = i + step;
 		}
-
-		mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
 		
-		if (bottom && right)
+		c.stroke();
+	}
+	else if (fillStyle == 'vert' || fillStyle == 'grid')
+	{
+		c.begin();
+		var i = 0;
+		
+		while (i <= w)
 		{
-			mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
+			var cx = 0;
+			var cy = 0;
+			
+			c.moveTo(i, 0);
+			c.lineTo(i, h);
+			
+			i = i + step;
 		}
 		
-		mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
+		c.stroke();
+	}
+	
+	if (fillStyle == 'diagRev' || fillStyle == 'diagGrid')
+	{
+		if (fillStyle == 'diagRev')
+		{
+			step = step * 1.41;
+		}
+
+		var i = 0;
 		
-		if (right && top)
-		{
-			mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-		}
-
-		mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
+		c.begin();
 		
-		if (top && left)
+		while (i < (h + w))
 		{
-			mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
+			var cx = 0;
+			var cy = 0;
+			
+			if (i <= h)
+			{
+				c.moveTo(w, i);
+				
+				if(i <= w)
+				{
+					c.lineTo(w - i, 0);
+				}
+				else
+				{
+					c.lineTo(w - w, i - w);
+				}
+			}
+			else
+			{
+				c.moveTo(w - i + h, h);
+				
+				if(i <= w)
+				{
+					c.lineTo(w - i, 0);
+				}
+				else
+				{
+					c.lineTo(0, i - w);
+				}
+			}
+			
+			i = i + step;
 		}
-
-		c.fill();
-
-		if (fillColor == 'none')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.paintFolds(c, x, y, w, h, rectStyle, topLeftStyle, topRightStyle, bottomRightStyle, bottomLeftStyle, size, top, right, bottom, left);
-			c.stroke();
-		}
-	}
-
-	//draw all the combinations
-	if (!top && !right && !bottom && left)
-	{
 		
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, topLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, topLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.lineNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			c.close();
-			c.fillAndStroke();
-		}
+		c.stroke();
 	}
-	else if (!top && !right && bottom && !left)
+	else if (fillStyle == 'hor' || fillStyle == 'grid')
 	{
-		if (rectOutline != 'frame')
+		c.begin();
+		var i = 0;
+		
+		while (i <= h)
 		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			}
+			var cx = 0;
+			var cy = 0;
 			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.lineSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (!top && !right && bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-				mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			}
+			c.moveTo(0, i);
+			c.lineTo(w, i);
 			
-			c.stroke();
+			i = i + step;
 		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.lineNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (!top && right && !bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.lineSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (!top && right && !bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, topLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			}
-			
-			c.stroke();
-			
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, topLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.lineNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			c.close();
-			c.fillAndStroke();
-			
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.lineSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (!top && right && bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-				mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.lineSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (!top && right && bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-				mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-				mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.lineNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && !right && !bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.lineNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && !right && !bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-				mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.lineNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && !right && bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			}
-			
-			c.stroke();
-	
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.lineNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			c.close();
-			c.fillAndStroke();
-	
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.lineSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && !right && bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-				mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-				mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.lineNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && right && !bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-				mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.lineSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && right && !bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-				mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-				mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.lineSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && right && bottom && !left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-	
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-				mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-				mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.lineSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			c.close();
-			c.fillAndStroke();
-		}
-	}
-	else if (top && right && bottom && left)
-	{
-		if (rectOutline != 'frame')
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			c.close();
-			
-			if (rectOutline == 'double')
-			{
-				mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-				mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-				mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-				mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-				mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-				mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-				mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-				c.close();
-			}
-			
-			c.stroke();
-		}
-		else
-		{
-			c.begin();
-			mxShapeBasicRect2.prototype.moveNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintNW(c, x, y, w, h, rectStyle, topLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintTop(c, x, y, w, h, rectStyle, topRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintNE(c, x, y, w, h, rectStyle, topRightStyle, size, top);
-			mxShapeBasicRect2.prototype.paintRight(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintSE(c, x, y, w, h, rectStyle, bottomRightStyle, size, right);
-			mxShapeBasicRect2.prototype.paintBottom(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left);
-			mxShapeBasicRect2.prototype.paintSW(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom);
-			mxShapeBasicRect2.prototype.paintLeft(c, x, y, w, h, rectStyle, topLeftStyle, size, top);
-			c.close();
-			mxShapeBasicRect2.prototype.moveSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left);
-			mxShapeBasicRect2.prototype.paintSWInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom);
-			mxShapeBasicRect2.prototype.paintBottomInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom);
-			mxShapeBasicRect2.prototype.paintSEInner(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintRightInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right);
-			mxShapeBasicRect2.prototype.paintNEInner(c, x, y, w, h, rectStyle, topRightStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintTopInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top);
-			mxShapeBasicRect2.prototype.paintNWInner(c, x, y, w, h, rectStyle, topLeftStyle, size, indent);
-			mxShapeBasicRect2.prototype.paintLeftInner(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left);
-			c.close();
-			c.fillAndStroke();
-		}
+		
+		c.stroke();
 	}
 
+	c.setStrokeColor(strokeColor);
+	c.setStrokeWidth(strokeWidth);
+	
 	c.begin();
-	mxShapeBasicRect2.prototype.paintFolds(c, x, y, w, h, rectStyle, topLeftStyle, topRightStyle, bottomRightStyle, bottomLeftStyle, size, top, right, bottom, left);
-	c.stroke();
-};
-
-mxShapeBasicRect2.prototype.moveNW = function(c, x, y, w, h, rectStyle, topLeftStyle, size, left)
-{
-	if((topLeftStyle == 'square' || (topLeftStyle == 'default' && rectStyle == 'square' )) || !left)
+	c.moveTo(0, 0);
+	
+	if (mxUtils.getValue(this.style, 'top', '1') == '1')
 	{
-		c.moveTo(0, 0);
+		c.lineTo(w, 0);
 	}
 	else
-	{
-		c.moveTo(0, size);
-	}
-};
-
-mxShapeBasicRect2.prototype.moveNE = function(c, x, y, w, h, rectStyle, topRightStyle, size, top)
-{
-	if((topRightStyle == 'square' || (topRightStyle == 'default' && rectStyle == 'square' )) || !top)
 	{
 		c.moveTo(w, 0);
 	}
-	else
+	
+	if (mxUtils.getValue(this.style, 'right', '1') == '1')
 	{
-		c.moveTo(w - size, 0);
+		c.lineTo(w, h);
 	}
-};
-
-mxShapeBasicRect2.prototype.moveSE = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, right)
-{
-	if((bottomRightStyle == 'square' || (bottomRightStyle == 'default' && rectStyle == 'square' )) || !right)
+	else
 	{
 		c.moveTo(w, h);
 	}
-	else
+	
+	if (mxUtils.getValue(this.style, 'bottom', '1') == '1')
 	{
-		c.moveTo(w, h - size);
+		c.lineTo(0, h);
 	}
-};
-
-mxShapeBasicRect2.prototype.moveSW = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom)
-{
-	if((bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' )) || !bottom)
+	else
 	{
 		c.moveTo(0, h);
 	}
-	else
-	{
-		c.moveTo(size, h);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintNW = function(c, x, y, w, h, rectStyle, topLeftStyle, size, left)
-{
-	if (!left)
-	{
-		c.lineTo(0, 0);
-	}
-	else if((topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topLeftStyle == 'invRound' || (topLeftStyle == 'default' && rectStyle == 'invRound' )) )
-	{
-		var inv = 0;
-		
-		if (topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' ))
-		{
-			inv = 1;
-		}
-		
-		c.arcTo(size, size, 0, 0, inv, size, 0);
-	}
-	else if((topLeftStyle == 'snip' || (topLeftStyle == 'default' && rectStyle == 'snip' )) ||
-			(topLeftStyle == 'fold' || (topLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(size, 0);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintTop = function(c, x, y, w, h, rectStyle, topRightStyle, size, right)
-{
-	if((topRightStyle == 'square' || (topRightStyle == 'default' && rectStyle == 'square' )) || !right)
-	{
-		c.lineTo(w, 0);
-	}
-	else
-	{
-		c.lineTo(w - size, 0);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintNE = function(c, x, y, w, h, rectStyle, topRightStyle, size, top)
-{
-	if (!top)
-	{
-		c.lineTo(w, 0);
-	}
-	else if((topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topRightStyle == 'invRound' || (topRightStyle == 'default' && rectStyle == 'invRound' )) )
-	{
-		var inv = 0;
-		
-		if (topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' ))
-		{
-			inv = 1;
-		}
-		
-		c.arcTo(size, size, 0, 0, inv, w, size);
-	}
-	else if((topRightStyle == 'snip' || (topRightStyle == 'default' && rectStyle == 'snip' )) ||
-			(topRightStyle == 'fold' || (topRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(w, size);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintRight = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, bottom)
-{
-	if((bottomRightStyle == 'square' || (bottomRightStyle == 'default' && rectStyle == 'square' )) || !bottom)
-	{
-		c.lineTo(w, h);
-	}
-	else
-	{
-		c.lineTo(w, h - size);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintLeft = function(c, x, y, w, h, rectStyle, topLeftStyle, size, top)
-{
-	if((topLeftStyle == 'square' || (topLeftStyle == 'default' && rectStyle == 'square' )) || !top)
-	{
-		c.lineTo(0, 0);
-	}
-	else
-	{
-		c.lineTo(0, size);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintSE = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, right)
-{
-	if (!right)
-	{
-		c.lineTo(w, h);
-	}
-	else if((bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomRightStyle == 'invRound' || (bottomRightStyle == 'default' && rectStyle == 'invRound' )) )
-	{
-		var inv = 0;
-		
-		if (bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' ))
-		{
-			inv = 1;
-		}
-		
-		c.arcTo(size, size, 0, 0, inv, w - size, h);
-	}
-	else if((bottomRightStyle == 'snip' || (bottomRightStyle == 'default' && rectStyle == 'snip' )) ||
-			(bottomRightStyle == 'fold' || (bottomRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(w - size, h);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintBottom = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, left)
-{
-	if((bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' )) || !left)
-	{
-		c.lineTo(0, h);
-	}
-	else
-	{
-		c.lineTo(size, h);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintSW = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, bottom)
-{
-	if (!bottom)
-	{
-		c.lineTo(0, h);
-	}
-	else if((bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomLeftStyle == 'invRound' || (bottomLeftStyle == 'default' && rectStyle == 'invRound' )) )
-	{
-		var inv = 0;
-		
-		if (bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' ))
-		{
-			inv = 1;
-		}
-		
-		c.arcTo(size, size, 0, 0, inv, 0, h - size);
-	}
-	else if((bottomLeftStyle == 'snip' || (bottomLeftStyle == 'default' && rectStyle == 'snip' )) ||
-			(bottomLeftStyle == 'fold' || (bottomLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(0, h - size);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintNWInner = function(c, x, y, w, h, rectStyle, topLeftStyle, size, indent)
-{
-	if(topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' ))
-	{
-		c.arcTo(size - indent * 0.5, size - indent * 0.5, 0, 0, 0, indent, indent * 0.5 + size);
-	}
-	else if(topLeftStyle == 'invRound' || (topLeftStyle == 'default' && rectStyle == 'invRound' ))
-	{
-		c.arcTo(size + indent, size + indent, 0, 0, 1, indent, indent + size);
-	}
-	else if(topLeftStyle == 'snip' || (topLeftStyle == 'default' && rectStyle == 'snip' ))
-	{
-		c.lineTo(indent, indent * 0.5 + size);
-	}
-	else if(topLeftStyle == 'fold' || (topLeftStyle == 'default' && rectStyle == 'fold' ))
-	{
-		c.lineTo(indent + size, indent + size);
-		c.lineTo(indent, indent + size);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintTopInner = function(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, left, top)
-{
-	if (!left && !top)
-	{
-		c.lineTo(0, 0);
-	}
-	else if (!left && top)
-	{
-		c.lineTo(0, indent);
-	}
-	else if (left && !top)
-	{
-		c.lineTo(indent, 0);
-	}
-	else if (!left)
-	{
-		c.lineTo(0, indent);
-	}
-	else if(topLeftStyle == 'square' || (topLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(indent, indent);
-	}
-	else if((topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topLeftStyle == 'snip' || (topLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(size + indent * 0.5, indent);
-	}
-	else
-	{
-		c.lineTo(size + indent, indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintNEInner = function(c, x, y, w, h, rectStyle, topRightStyle, size, indent)
-{
-	if(topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' ))
-	{
-		c.arcTo(size - indent * 0.5, size - indent * 0.5, 0, 0, 0, w - size - indent * 0.5, indent);
-	}
-	else if(topRightStyle == 'invRound' || (topRightStyle == 'default' && rectStyle == 'invRound' ))
-	{
-		c.arcTo(size + indent, size + indent, 0, 0, 1, w - size - indent, indent);
-	}
-	else if(topRightStyle == 'snip' || (topRightStyle == 'default' && rectStyle == 'snip' ))
-	{
-		c.lineTo(w - size - indent * 0.5, indent);
-	}
-	else if(topRightStyle == 'fold' || (topRightStyle == 'default' && rectStyle == 'fold' ))
-	{
-		c.lineTo(w - size - indent, size + indent);
-		c.lineTo(w - size - indent, indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintRightInner = function(c, x, y, w, h, rectStyle, topRightStyle, size, indent, top, right)
-{
-	if (!top && !right)
-	{
-		c.lineTo(w, 0);
-	}
-	else if (!top && right)
-	{
-		c.lineTo(w - indent, 0);
-	}
-	else if (top && !right)
-	{
-		c.lineTo(w, indent);
-	}
-	else if (!top)
-	{
-		c.lineTo(w - indent, 0);
-	}
-	else if(topRightStyle == 'square' || (topRightStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(w - indent, indent);
-	}
-	else if((topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topRightStyle == 'snip' || (topRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(w - indent, size + indent * 0.5);
-	}
-	else
-	{
-		c.lineTo(w - indent, size + indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintLeftInner = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom, left)
-{
-	if (!bottom && !left)
-	{
-		c.lineTo(0, h);
-	}
-	else if (!bottom && left)
-	{
-		c.lineTo(indent, h);
-	}
-	else if (bottom && !left)
-	{
-		c.lineTo(0, h - indent);
-	}
-	else if (!bottom)
-	{
-		c.lineTo(indent, h);
-	}
-	else if(bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(indent, h - indent);
-	}
-	else if((bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomLeftStyle == 'snip' || (bottomLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(indent, h - size - indent * 0.5);
-	}
-	else
-	{
-		c.lineTo(indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintSEInner = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent)
-{
-	if(bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' ))
-	{
-		c.arcTo(size - indent * 0.5, size - indent * 0.5, 0, 0, 0, w - indent, h - size - indent * 0.5);
-	}
-	else if(bottomRightStyle == 'invRound' || (bottomRightStyle == 'default' && rectStyle == 'invRound' ))
-	{
-		c.arcTo(size + indent, size + indent, 0, 0, 1, w - indent, h - size - indent);
-	}
-	else if(bottomRightStyle == 'snip' || (bottomRightStyle == 'default' && rectStyle == 'snip' ))
-	{
-		c.lineTo(w - indent, h - size - indent * 0.5);
-	}
-	else if(bottomRightStyle == 'fold' || (bottomRightStyle == 'default' && rectStyle == 'fold' ))
-	{
-		c.lineTo(w - size - indent, h - size - indent);
-		c.lineTo(w - indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintBottomInner = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, right, bottom)
-{
-	if (!right && !bottom)
-	{
-		c.lineTo(w, h);
-	}
-	else if (!right && bottom)
-	{
-		c.lineTo(w, h - indent);
-	}
-	else if (right && !bottom)
-	{
-		c.lineTo(w - indent, h);
-	}
-	else if((bottomRightStyle == 'square' || (bottomRightStyle == 'default' && rectStyle == 'square' )) || !right)
-	{
-		c.lineTo(w - indent, h - indent);
-	}
-	else if((bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomRightStyle == 'snip' || (bottomRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(w - size - indent * 0.5, h - indent);
-	}
-	else
-	{
-		c.lineTo(w - size - indent, h - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintSWInner = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, bottom)
-{
-	if (!bottom)
-	{
-		c.lineTo(indent, h);
-	}
-	else if(bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(indent, h - indent);
-	}
-	else if(bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' ))
-	{
-		c.arcTo(size - indent * 0.5, size - indent * 0.5, 0, 0, 0, size + indent * 0.5, h - indent);
-	}
-	else if(bottomLeftStyle == 'invRound' || (bottomLeftStyle == 'default' && rectStyle == 'invRound' ))
-	{
-		c.arcTo(size + indent, size + indent, 0, 0, 1, size + indent, h - indent);
-	}
-	else if(bottomLeftStyle == 'snip' || (bottomLeftStyle == 'default' && rectStyle == 'snip' ))
-	{
-		c.lineTo(size + indent * 0.5, h - indent);
-	}
-	else if(bottomLeftStyle == 'fold' || (bottomLeftStyle == 'default' && rectStyle == 'fold' ))
-	{
-		c.lineTo(indent + size, h - size - indent);
-		c.lineTo(indent + size, h - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.moveSWInner = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left)
-{
-	if (!left)
-	{
-		c.moveTo(0, h - indent);
-	}
-	else if(bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.moveTo(indent, h - indent);
-	}
-	else if((bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomLeftStyle == 'snip' || (bottomLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.moveTo(indent, h - size - indent * 0.5);
-	}
-	else if((bottomLeftStyle == 'invRound' || (bottomLeftStyle == 'default' && rectStyle == 'invRound' )) ||
-			(bottomLeftStyle == 'fold' || (bottomLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.moveTo(indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.lineSWInner = function(c, x, y, w, h, rectStyle, bottomLeftStyle, size, indent, left)
-{
-	if (!left)
-	{
-		c.lineTo(0, h - indent);
-	}
-	else if(bottomLeftStyle == 'square' || (bottomLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(indent, h - indent);
-	}
-	else if((bottomLeftStyle == 'rounded' || (bottomLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomLeftStyle == 'snip' || (bottomLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(indent, h - size - indent * 0.5);
-	}
-	else if((bottomLeftStyle == 'invRound' || (bottomLeftStyle == 'default' && rectStyle == 'invRound' )) ||
-			(bottomLeftStyle == 'fold' || (bottomLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-			c.lineTo(indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.moveSEInner = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom)
-{
-	if (!bottom)
-	{
-		c.moveTo(w - indent, h);
-	}
-	else if(bottomRightStyle == 'square' || (bottomRightStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.moveTo(w - indent, h - indent);
-	}
-	else if((bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomRightStyle == 'snip' || (bottomRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.moveTo(w - indent, h - size - indent * 0.5);
-	}
-	else if((bottomRightStyle == 'invRound' || (bottomRightStyle == 'default' && rectStyle == 'invRound' )) ||
-			(bottomRightStyle == 'fold' || (bottomRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.moveTo(w - indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.lineSEInner = function(c, x, y, w, h, rectStyle, bottomRightStyle, size, indent, bottom)
-{
-	if (!bottom)
-	{
-		c.lineTo(w - indent, h);
-	}
-	else if(bottomRightStyle == 'square' || (bottomRightStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(w - indent, h - indent);
-	}
-	else if((bottomRightStyle == 'rounded' || (bottomRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(bottomRightStyle == 'snip' || (bottomRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(w - indent, h - size - indent * 0.5);
-	}
-	else if((bottomRightStyle == 'invRound' || (bottomRightStyle == 'default' && rectStyle == 'invRound' )) ||
-			(bottomRightStyle == 'fold' || (bottomRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(w - indent, h - size - indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.moveNEInner = function(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right)
-{
-	if (!right)
-	{
-		c.moveTo(w, indent);
-	}
-	else if((topRightStyle == 'square' || (topRightStyle == 'default' && rectStyle == 'square' )) || right)
-	{
-		c.moveTo(w - indent, indent);
-	}
-	else if((topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topRightStyle == 'snip' || (topRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.moveTo(w - indent, size + indent * 0.5);
-	}
-	else if((topRightStyle == 'invRound' || (topRightStyle == 'default' && rectStyle == 'invRound' )) ||
-			(topRightStyle == 'fold' || (topRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.moveTo(w - indent, size + indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.lineNEInner = function(c, x, y, w, h, rectStyle, topRightStyle, size, indent, right)
-{
-	if (!right)
-	{
-		c.lineTo(w, indent);
-	}
-	else if((topRightStyle == 'square' || (topRightStyle == 'default' && rectStyle == 'square' )) || right)
-	{
-		c.lineTo(w - indent, indent);
-	}
-	else if((topRightStyle == 'rounded' || (topRightStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topRightStyle == 'snip' || (topRightStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(w - indent, size + indent * 0.5);
-	}
-	else if((topRightStyle == 'invRound' || (topRightStyle == 'default' && rectStyle == 'invRound' )) ||
-			(topRightStyle == 'fold' || (topRightStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(w - indent, size + indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.moveNWInner = function(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left)
-{
-	if (!top && !left)
-	{
-		c.moveTo(0, 0);
-	}
-	else if (!top && left)
-	{
-		c.moveTo(indent, 0);
-	}
-	else if (top && !left)
-	{
-		c.moveTo(0, indent);
-	}
-	else if(topLeftStyle == 'square' || (topLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.moveTo(indent, indent);
-	}
-	else if((topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topLeftStyle == 'snip' || (topLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.moveTo(indent, size + indent * 0.5);
-	}
-	else if((topLeftStyle == 'invRound' || (topLeftStyle == 'default' && rectStyle == 'invRound' )) ||
-			(topLeftStyle == 'fold' || (topLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.moveTo(indent, size + indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.lineNWInner = function(c, x, y, w, h, rectStyle, topLeftStyle, size, indent, top, left)
-{
-	if (!top && !left)
-	{
-		c.lineTo(0, 0);
-	}
-	else if (!top && left)
-	{
-		c.lineTo(indent, 0);
-	}
-	else if (top && !left)
-	{
-		c.lineTo(0, indent);
-	}
-	else if(topLeftStyle == 'square' || (topLeftStyle == 'default' && rectStyle == 'square' ))
-	{
-		c.lineTo(indent, indent);
-	}
-	else if((topLeftStyle == 'rounded' || (topLeftStyle == 'default' && rectStyle == 'rounded' )) ||
-			(topLeftStyle == 'snip' || (topLeftStyle == 'default' && rectStyle == 'snip' )))
-	{
-		c.lineTo(indent, size + indent * 0.5);
-	}
-	else if((topLeftStyle == 'invRound' || (topLeftStyle == 'default' && rectStyle == 'invRound' )) ||
-			(topLeftStyle == 'fold' || (topLeftStyle == 'default' && rectStyle == 'fold' )))
-	{
-		c.lineTo(indent, size + indent);
-	}
-};
-
-mxShapeBasicRect2.prototype.paintFolds = function(c, x, y, w, h, rectStyle, topLeftStyle, topRightStyle, bottomRightStyle, bottomLeftStyle, size, top, right, bottom, left)
-{
-	if (rectStyle == 'fold' || topLeftStyle == 'fold' || topRightStyle == 'fold' || bottomRightStyle == 'fold' || bottomLeftStyle == 'fold')
-	{
-		if ((topLeftStyle == 'fold' || (topLeftStyle == 'default' && rectStyle == 'fold' )) && (top && left))
-		{
-			c.moveTo(0, size);
-			c.lineTo(size, size);
-			c.lineTo(size, 0);
-		}
-		
-		if ((topRightStyle == 'fold' || (topRightStyle == 'default' && rectStyle == 'fold' )) && (top && right))
-		{
-			c.moveTo(w - size, 0);
-			c.lineTo(w - size, size);
-			c.lineTo(w, size);
-		}
-		
-		if ((bottomRightStyle == 'fold' || (bottomRightStyle == 'default' && rectStyle == 'fold' )) && (bottom && right))
-		{
-			c.moveTo(w - size, h);
-			c.lineTo(w - size, h - size);
-			c.lineTo(w, h - size);
-		}
-		
-		if ((bottomLeftStyle == 'fold' || (bottomLeftStyle == 'default' && rectStyle == 'fold' )) && (bottom && left))
-		{
-			c.moveTo(0, h - size);
-			c.lineTo(size, h - size);
-			c.lineTo(size, h);
-		}
-	}
-};
-
-mxCellRenderer.registerShape(mxShapeBasicRect2.prototype.cst.RECT2, mxShapeBasicRect2);
-
-mxShapeBasicRect2.prototype.constraints = null;
-
-Graph.handleFactory[mxShapeBasicRect2.prototype.cst.DIAG_ROUND_RECT] = function(state)
-{
-	var handles = [Graph.createHandle(state, ['size'], function(bounds)
-	{
-		var size = Math.max(0, Math.min(bounds.width / 2, bounds.height / 2, parseFloat(mxUtils.getValue(this.state.style, 'size', this.size))));
-
-		return new mxPoint(bounds.x + size, bounds.y + size);
-	}, function(bounds, pt)
-	{
-		this.state.style['size'] = Math.round(100 * Math.max(0, Math.min(bounds.height / 2, bounds.width / 2, pt.x - bounds.x))) / 100;
-	})];
-			
-	var handle2 = Graph.createHandle(state, ['indent'], function(bounds)
-	{
-		var dx2 = Math.max(0, Math.min(100, parseFloat(mxUtils.getValue(this.state.style, 'indent', this.dx2))));
-
-		return new mxPoint(bounds.x + bounds.width * 0.75, bounds.y + dx2 * bounds.height / 200);
-	}, function(bounds, pt)
-	{
-		this.state.style['indent'] = Math.round(100 * Math.max(0, Math.min(100, 200 * (pt.y - bounds.y) / bounds.height))) / 100;
-	});
 	
-	handles.push(handle2);
-	
-	return handles;
+	if (mxUtils.getValue(this.style, 'left', '1') == '1')
+	{
+		c.lineTo(0, 0);
+	}
+				
+	c.end();
+	c.stroke();
 };
+
+mxCellRenderer.registerShape(mxShapeBasicPatternFillRect.prototype.cst.PATTERN_FILL_RECT, mxShapeBasicPatternFillRect);
+
+mxShapeBasicPatternFillRect.prototype.getConstraints = function(style, w, h)
+{
+	var constr = [];
+
+	constr.push(new mxConnectionConstraint(new mxPoint(0, 0), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.25, 0), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.5, 0), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.75, 0), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(1, 0), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(1, 0.25), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(1, 0.5), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(1, 0.75), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(1, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.75, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.75, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.5, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0.25, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0, 1), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0, 0.75), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0, 0.5), false));
+	constr.push(new mxConnectionConstraint(new mxPoint(0, 0.25), false));
+
+	return (constr);
+}
+

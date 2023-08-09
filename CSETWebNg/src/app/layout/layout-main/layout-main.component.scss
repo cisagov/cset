@@ -1224,6 +1224,20 @@ table.td-align-top td {
   line-height: 1.5em !important;
 }
 
+.mat-mdc-tab {
+  color: green !important;
+}
+
+.mat-mdc-tab-label-container {
+  margin-bottom: 1rem;
+  font-size: 1rem !important;
+  letter-spacing: normal !important;
+}
+
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label, .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+  color: $primary-color;
+}
+
 ul.mat-tree-node {
   display: block;
 }

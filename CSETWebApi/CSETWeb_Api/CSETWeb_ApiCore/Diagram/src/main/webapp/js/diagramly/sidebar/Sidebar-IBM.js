@@ -3,23 +3,40 @@
 	Sidebar.prototype.addIBMPalette = function()
 	{
 		var d = 60;
-		var dt = 'ibm';
+		var dt = 'ibm ';
 		var sb = this;
 		var s = 'aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;fontColor=#4277BB;labelBackgroundColor=#ffffff;fontSize=12;spacingTop=3;image;image=img/lib/ibm/';
 		
 		// Adds IBM shapes
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmAnalytics');
 		this.addIBMAnalyticsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmApplications');
 		this.addIBMApplicationsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmBlockchain');
 		this.addIBMBlockchainPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmData');
 		this.addIBMDataPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmDevOps');
 		this.addIBMDevOpsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmInfrastructure');
 		this.addIBMInfrastructurePalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmManagement');
 		this.addIBMManagementPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmMiscellaneous');
 		this.addIBMMiscPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmSecurity');
 		this.addIBMSecurityPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmSocial');
 		this.addIBMSocialPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmUsers');
 		this.addIBMUsersPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmVPC');
 		this.addIBMVPCPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmBoxes');
+		this.addIBMBoxesPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary('ibm', 'ibmConnectors');
+		this.addIBMConnectorsPalette(d, dt, sb, s);
+		this.setCurrentSearchEntryLibrary();
 	};
 
 	Sidebar.prototype.addIBMAnalyticsPalette = function(d, dt, sb, s)
@@ -109,7 +126,7 @@
 	Sidebar.prototype.addIBMBlockchainPalette = function(d, dt, sb, s)
 	{
 		s += 'blockchain/';
-		var gn = 'blockchain ';
+		var gn = 'blockchain';
 		
 		var fns = [
 			 this.createVertexTemplateEntry(s + 'blockchain.svg;',
@@ -137,7 +154,7 @@
 			 this.createVertexTemplateEntry(s + 'identity_access_manager.svg;',
 					 d, d, '', 'Identity & Access Manager', false, null, this.getTagsForStencil(gn, 'identity access manager', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'key_management.svg;',
-					 d * 0.38, d * 0.38, '', 'Key Management', false, null, this.getTagsForStencil(gn, 'key management', dt).join(' ')),
+					 d, d, '', 'Key Management', false, null, this.getTagsForStencil(gn, 'key management', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'ledger.svg;',
 					 d, d, '', 'Ledger', false, null, this.getTagsForStencil(gn, 'ledger', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'membership.svg;',
@@ -378,7 +395,7 @@
 			 this.createVertexTemplateEntry(s + 'retrieve_rank.svg;',
 					 d, d, '', 'Retrieve Rank', false, null, this.getTagsForStencil(gn, 'retrieve rank', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'scalable.svg;',
-					 d * 0.25, d * 0.25, '', 'Scalable', false, null, this.getTagsForStencil(gn, 'scalable', dt).join(' ')),
+					 d, d, '', 'Scalable', false, null, this.getTagsForStencil(gn, 'scalable', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'text_to_speech.svg;',
 					 d, d, '', 'Text to Speech', false, null, this.getTagsForStencil(gn, 'text to speech', dt).join(' '))
 		];
@@ -499,99 +516,56 @@
 		var gn = 'vpc virtual private cloud ';
 		
 		var fns = [
-			 this.createVertexTemplateEntry(s + 'ACLrules.svg;',
-					 d, d, '', 'ACL Rules', false, null, this.getTagsForStencil(gn, 'acl rules', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'BareMEtalServer.svg;',
-					 d, d, '', 'Bare Metal Server', false, null, this.getTagsForStencil(gn, 'bare metal server', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'BlockStorage.svg;',
-					 d, d, '', 'Block Storage', false, null, this.getTagsForStencil(gn, 'block storage', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Bridge.svg;',
-					 d, d, '', 'Bridge', false, null, this.getTagsForStencil(gn, 'bridge', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'DirectLink.svg;',
-					 d, d, '', 'Direct Link', false, null, this.getTagsForStencil(gn, 'direct link', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Enterprise.svg;',
-					 d, d, '', 'Enterprise', false, null, this.getTagsForStencil(gn, 'enterprise', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Firewall.svg;',
-					 d, d, '', 'Firewall', false, null, this.getTagsForStencil(gn, 'firewall', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'FloatingIP.svg;',
-					 d, d, '', 'Floating IP', false, null, this.getTagsForStencil(gn, 'floating ip internet protocol', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'GatewayAppliance.svg;',
-					 d, d, '', 'Gateway Appliance', false, null, this.getTagsForStencil(gn, 'gateway appliance', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Image.svg;',
-					 d, d, '', 'Image', false, null, this.getTagsForStencil(gn, 'image', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'Instance.svg;',
 					 d, d, '', 'Instance', false, null, this.getTagsForStencil(gn, 'instance', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Internet.svg;',
-					 d, d, '', 'Internet', false, null, this.getTagsForStencil(gn, 'internet', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'InternetServices.svg;',
-					 d, d, '', 'Internet Services', false, null, this.getTagsForStencil(gn, 'internet services', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Key.svg;',
-					 d, d, '', 'Key', false, null, this.getTagsForStencil(gn, 'key', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'LoadBalancer.svg;',
 					 d, d, '', 'Load Balancer', false, null, this.getTagsForStencil(gn, 'load balancer', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'Marketplace.svg;',
-					 d, d, '', 'Marketplace', false, null, this.getTagsForStencil(gn, 'marketplace', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'BlockStorage.svg;',
+					 d, d, '', 'Block Storage', false, null, this.getTagsForStencil(gn, 'block storage', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'FloatingIP.svg;',
+					 d, d, '', 'Floating IP', false, null, this.getTagsForStencil(gn, 'floating ip internet protocol', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'PublicGateway.svg;',
 					 d, d, '', 'Public Gateway', false, null, this.getTagsForStencil(gn, 'public gateway', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'ObjectStorage.svg;',
+					 d, d, '', 'Object Storage', false, null, this.getTagsForStencil(gn, 'object storage', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'VPNConnection.svg;',
+					 d, d, '', 'VPN Connection', false, null, this.getTagsForStencil(gn, 'connection', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'VPNGateway.svg;',
+					 d, d, '', 'VPN Gateway', false, null, this.getTagsForStencil(gn, 'gateway', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'DirectLink.svg;',
+					 d, d, '', 'Direct Link', false, null, this.getTagsForStencil(gn, 'direct link', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'InternetServices2.svg;',
+					 d, d, '', 'Internet Services', false, null, this.getTagsForStencil(gn, 'internet services', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'LoadBalancerPool.svg;',
+					 d, d, '', 'Load Balancer Pool', false, null, this.getTagsForStencil(gn, 'load balancer pool', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'LoadBalancerListener.svg;',
+					 d, d, '', 'Load Balancer Listener', false, null, this.getTagsForStencil(gn, 'load balancer listener', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'Rules.svg;',
+					 d, d, '', 'Rules', false, null, this.getTagsForStencil(gn, 'load balancer listener', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'ImageService.svg;',
+					 d, d, '', 'Image Service', false, null, this.getTagsForStencil(gn, 'image service', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'Key.svg;',
+					 d, d, '', 'Key', false, null, this.getTagsForStencil(gn, 'key', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'VPNPolicy.svg;',
+					 d, d, '', 'VPN Policy', false, null, this.getTagsForStencil(gn, 'policy', dt).join(' ')),
 			 this.createVertexTemplateEntry(s + 'Router.svg;',
 					 d, d, '', 'Router', false, null, this.getTagsForStencil(gn, 'router', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'SecurityGroupRules.svg;',
-					 d, d, '', 'Security Group Rules', false, null, this.getTagsForStencil(gn, 'security group rules', dt).join(' ')),
-			 this.createVertexTemplateEntry(s + 'VPN.svg;',
-					 d, d, '', 'VPN', false, null, this.getTagsForStencil(gn, 'vpn virtual private network', dt).join(' ')),
-			 this.createVertexTemplateEntry('swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;dashed=0;strokeWidth=2;',
-					 200, 200, 'CLOUD UNIVERSE', 'Cloud Universe', true, null, this.getTagsForStencil(gn, '', dt).join(' ')),
-  		 	 this.createEdgeTemplateEntry('edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=none;endFill=0;rounded=0;strokeColor=#EEBC25;strokeWidth=2;', 
-  		 			 d, d, '', 'Data Connector', null, dt + 'data connector'),
-  		 	 this.createEdgeTemplateEntry('edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;strokeColor=#0076BE;strokeWidth=2;', 
-  		 			 d, d, '', 'Directional Private Connector', null, dt + 'directional private connector'),
-  		 	 this.createEdgeTemplateEntry('edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;strokeColor=#FD0000;strokeWidth=2;', 
-  		 			 d, d, '', 'Directional Public Connector', null, dt + 'directional public connector'),
-			 this.addEntry(dt + 'ibm cloud', function()
-			 {
-				var bg1 = new mxCell('IBM CLOUD', new mxGeometry(0, 11, 200, 200), 'swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;spacingTop=5;dashed=0;strokeWidth=2;');
-				bg1.vertex = true;
-				var bg2 = new mxCell('', new mxGeometry(20, -11, 30, 22), s + 'IBMCloud.svg;part=1;');
-				bg2.vertex = true;
-			    bg1.insert(bg2);
-			    
-			   	return sb.createVertexTemplateFromCells([bg1], 200, 211, 'IBM Cloud');
-			 }),
-			 this.createVertexTemplateEntry('swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;dashed=0;strokeWidth=2;',
-					 200, 200, 'OTHER NETWORK', 'Cloud Universe', true, null, this.getTagsForStencil(gn, '', dt).join(' ')),
-  		 	 this.createEdgeTemplateEntry('edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;strokeColor=#0076BE;strokeWidth=2;startArrow=classicThin;startFill=1;', 
-  		 			 d, d, '', 'Private Connector', null, dt + 'directional private connector'),
-  		 	 this.createEdgeTemplateEntry('edgeStyle=orthogonalEdgeStyle;fontSize=12;html=1;endArrow=classicThin;endFill=1;rounded=0;strokeColor=#FD0000;strokeWidth=2;startArrow=classicThin;startFill=1;', 
-  		 			 d, d, '', 'Public Connector', null, dt + 'directional private connector'),
-			 this.createVertexTemplateEntry('swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;dashed=1;strokeWidth=2;',
-					 200, 200, 'REGION', 'Region', true, null, this.getTagsForStencil(gn, '', dt).join(' ')),
-			 this.createVertexTemplateEntry(
-					 'rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=20;strokeColor=#FD0000;fillColor=none;fontColor=#417CB9;verticalAlign=top;align=center;spacingLeft=5;dashed=1;dashPattern=5 2;labelPosition=center;verticalLabelPosition=bottom;strokeWidth=2;',
-					 200, 200, 'SECURITY GROUP', 'Security Group', true, null, this.getTagsForStencil(gn, '', dt).join(' ')),
-			 this.createVertexTemplateEntry('swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;dashed=0;strokeWidth=2;',
-					 200, 200, 'SERVICES', 'Services', true, null, this.getTagsForStencil(gn, '', dt).join(' ')),
-			 this.addEntry(dt + 'subnet', function()
-			 {
-				var bg1 = new mxCell('SUBNET', new mxGeometry(0, 11, 200, 200), 'swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#FD0000;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;spacingTop=8;dashed=0;strokeWidth=2;');
-				bg1.vertex = true;
-				var bg2 = new mxCell('', new mxGeometry(20, -11, 19, 26), s + 'Subnet.svg;part=1;');
-				bg2.vertex = true;
-				bg1.insert(bg2);
-			    
-			   	return sb.createVertexTemplateFromCells([bg1], 200, 211, 'Subnet');
-			 }),
-			 this.addEntry(dt + 'virtual private cloud', function()
-			 {
-				var bg1 = new mxCell('VIRTUAL PRIVATE CLOUD', new mxGeometry(0, 11, 200, 200), 'swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;spacingTop=5;dashed=0;strokeWidth=2;');
-				bg1.vertex = true;
-				var bg2 = new mxCell('', new mxGeometry(20, -11, 30, 22), s + 'VirtualPrivateCloud.svg;part=1;');
-				bg2.vertex = true;
-			    bg1.insert(bg2);
-			    
-			   	return sb.createVertexTemplateFromCells([bg1], 200, 211, 'Virtual Private Cloud');
-			 }),
-			 this.createVertexTemplateEntry('swimlane;fontStyle=0;horizontal=1;collapsible=0;startSize=28;swimlaneLine=0;swimlaneFillColor=none;fillColor=none;rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=12;strokeColor=#417CB9;fillColor=none;fontColor=#417CB9;verticalAlign=top;align=left;spacingLeft=5;dashed=1;strokeWidth=2;',
-					 200, 200, 'ZONE', 'Zone', true, null, this.getTagsForStencil(gn, '', dt).join(' '))
+			 this.createVertexTemplateEntry(s + 'Bridge.svg;',
+					 d, d, '', 'Bridge', false, null, this.getTagsForStencil(gn, 'bridge', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'CloudServices.svg;',
+					 d, d, '', 'Cloud Services', false, null, this.getTagsForStencil(gn, 'cloud services', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'Internet.svg;',
+					 d, d, '', 'Internet', false, null, this.getTagsForStencil(gn, 'internet', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'Enterprise.svg;',
+					 d, d, '', 'Data Center', false, null, this.getTagsForStencil(gn, 'dat acenter', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'Enterprise2.svg;',
+					 d, d * 0.8, '', 'Enterprise', false, null, this.getTagsForStencil(gn, 'enterprise', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'PowerInstance.svg;',
+					 d, d, '', 'Power Instance', false, null, this.getTagsForStencil(gn, 'power instance', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'TransitGateway.svg;',
+					 d, d, '', 'Transit Gateway', false, null, this.getTagsForStencil(gn, 'transit gateway', dt).join(' ')),
+			 this.createVertexTemplateEntry(s + 'BareMetalServer.svg;',
+					 d, d, '', 'Bare Metal Server', false, null, this.getTagsForStencil(gn, 'bare metal server', dt).join(' '))
 		];
 			   	
    		this.addPalette('ibmVPC', 'IBM / VPC', false, mxUtils.bind(this, function(content)
@@ -603,4 +577,90 @@
 		}));
 	};
 	
+	Sidebar.prototype.addIBMBoxesPalette = function(d, dt, sb, s)
+	{
+		s += 'boxes/';
+		var gn = 'boxes box ';
+		
+		var fns = [
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=cloud;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=3;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'IBM Cloud', 'IBM Cloud', true, null, this.getTagsForStencil(gn, 'ibm cloud', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=vpc;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=2;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'VPC', 'VPC', true, null, this.getTagsForStencil(gn, 'vpc virtual private cloud', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=region;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#919191;strokeWidth=2;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Region', 'Region', true, null, this.getTagsForStencil(gn, 'region', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=zone;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=#E0E0E0;rounded=0;whiteSpace=wrap;html=1;strokeColor=#919191;strokeWidth=1;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Zone', 'Zone', true, null, this.getTagsForStencil(gn, 'zone', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=subnet;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=#E6F0E2;rounded=0;whiteSpace=wrap;html=1;strokeColor=#00882B;strokeWidth=1;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Subnet:ACL', 'Subnet:ACL', true, null, this.getTagsForStencil(gn, 'subnet acl', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'fontStyle=0;verticalAlign=top;align=center;spacingTop=-2;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#FF0000;strokeWidth=2;dashed=1;container=1;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Security Group', 'Security Group', true, null, this.getTagsForStencil(gn, 'security group', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'fontStyle=0;verticalAlign=top;align=center;spacingTop=-2;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#00882B;strokeWidth=2;dashed=1;container=1;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Instance Group', 'Instance Group', true, null, this.getTagsForStencil(gn, 'instance group', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'fontStyle=0;verticalAlign=top;align=center;spacingTop=-2;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#919191;strokeWidth=2;dashed=1;container=1;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Resource Group', 'Resource Group', true, null, this.getTagsForStencil(gn, 'resource group', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=public;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=3;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Public Network', 'Public Network', true, null, this.getTagsForStencil(gn, 'public network', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=enterprise;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=3;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Enterprise Network', 'Enterprise Network', true, null, this.getTagsForStencil(gn, 'enterprise network', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'shape=mxgraph.ibm.box;prType=classic;fontStyle=0;verticalAlign=top;align=left;spacingLeft=32;spacingTop=4;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=2;dashed=0;container=1;spacing=-4;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Classic Infrastructure', 'Classic Infrastructure', true, null, this.getTagsForStencil(gn, 'classic infrastructure', dt).join(' ')),
+			 this.createVertexTemplateEntry(
+					 'fontStyle=0;verticalAlign=top;align=center;spacingTop=-2;fillColor=none;rounded=0;whiteSpace=wrap;html=1;strokeColor=#4376BB;strokeWidth=1;dashed=0;container=1;collapsible=0;expand=0;recursiveResize=0;',
+					 200, 200, 'Cloud Services', 'Cloud Services', true, null, this.getTagsForStencil(gn, 'cloud services', dt).join(' '))
+		];
+			   	
+   		this.addPalette('ibmBoxes', 'IBM / Boxes', false, mxUtils.bind(this, function(content)
+	    {
+			for (var i = 0; i < fns.length; i++)
+			{
+				content.appendChild(fns[i](content));
+			}
+		}));
+	};
+	
+	Sidebar.prototype.addIBMConnectorsPalette = function(d, dt, sb, s)
+	{
+		var gn = 'connectors ';
+		
+		var fns = [
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;endArrow=none;endFill=0;', 
+					 d, d, '', 'Connector', null, dt + 'connector'),
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;', 
+					 d, d, '', 'Connector (Single Arrow)', null, dt + 'connector single arrow'),
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;startArrow=classic;startFill=1;startSize=6;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;', 
+					 d, d, '', 'Connector (Double Arrow)', null, dt + 'connector double arrow'),
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;endArrow=none;endFill=0;jettySize=auto;orthogonalLoop=1;strokeWidth=1;dashed=1;fontSize=14;', 
+					 d, d, '', 'Dashed Connector', null, dt + 'dashed connector'),
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;startArrow=none;startFill=0;startSize=6;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;dashed=1;fontSize=14;', 
+					 d, d, '', 'Dashed Connector (Single Arrow)', null, dt + 'dashed connector single arrow'),
+		 	 this.createEdgeTemplateEntry('html=1;labelBackgroundColor=#ffffff;startArrow=classic;startFill=1;startSize=6;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;dashed=1;fontSize=14;', 
+					 d, d, '', 'Dashed Connector (Double Arrow)', null, dt + 'dashed connector double arrow'),
+		 	 this.createEdgeTemplateEntry('edgeStyle=elbowEdgeStyle;rounded=0;elbow=vertical;html=1;labelBackgroundColor=#ffffff;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;endArrow=none;endFill=0;', 
+					 d, d, '', 'Elbow Connector', null, dt + 'elbow connector'),
+		 	 this.createEdgeTemplateEntry('edgeStyle=elbowEdgeStyle;rounded=0;elbow=vertical;html=1;labelBackgroundColor=#ffffff;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;', 
+					 d, d, '', 'Elbow Connector (Single Arrow)', null, dt + 'elbow connector single arrow'),
+		 	 this.createEdgeTemplateEntry('edgeStyle=elbowEdgeStyle;rounded=0;elbow=vertical;html=1;labelBackgroundColor=#ffffff;startArrow=classic;startFill=1;startSize=6;endArrow=classic;endFill=1;endSize=6;jettySize=auto;orthogonalLoop=1;strokeWidth=1;fontSize=14;', 
+		 			 d, d, '', 'Elbow Connector (Double Arrow)', null, dt + 'elbow connector double arrow')
+		];
+			   	
+   		this.addPalette('ibmConnectors', 'IBM / Connectors', false, mxUtils.bind(this, function(content)
+	    {
+			for (var i = 0; i < fns.length; i++)
+			{
+				content.appendChild(fns[i](content));
+			}
+		}));
+	};
 })();

@@ -13,6 +13,7 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { Console } from 'console';
 import { ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-key-report',
   templateUrl: './key-report.component.html',
@@ -34,30 +35,28 @@ export class KeyReportComponent {
   ) { }
 
   ngOnInit(): void {
-    this.contactCount = +this.route.snapshot.paramMap.get('numberOfContacts');
-    console.log(this.contactCount)
-    if (this.assessSvc.id()) {
-      this.assessSvc.loadAssessment(this.assessSvc.id())
-      this.assessment = this.assessSvc.assessment;
-      console.log( this.assessment)
-      this.demoSvc.getDemographic().subscribe(
-        (data: Demographic) => {
-            this.demographicData = data;
-           console.log( this.demographicData )
-          })
-    }
-   
-    this.generatePdf()
+    // this.contactCount = +this.route.snapshot.paramMap.get('numberOfContacts');
+    // if (this.assessSvc.id()) {
+    //   this.assessSvc.loadAssessment(this.assessSvc.id())
+    //   this.assessment = this.assessSvc.assessment;
+    //   this.demoSvc.getDemographic().subscribe(
+    //     (data: Demographic) => {
+    //         this.demographicData = data;
+    //       })
+    // }
+    // this.assessSvc.setKeyReportComponent(this);
+    this.contactCount=1
+    // this.generatePdf()
   }
-  ngAfterViewInit(): void {
-    this.generatePdf();  // Now it should not throw error
-  }
+  // ngAfterViewInit(): void {
+  //   this.generatePdf();  // Now it should not throw error
+  // }
 
 generatePdf() {
   let pdfMake = require('pdfmake/build/pdfmake.js');
   let pdfFonts = require('pdfmake/build/vfs_fonts.js');
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-  const authKey = this.auth.accessKey(); // Update this line as per your need
+  const authKey = this.auth.accessKey(); 
   
   const isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA","TSAonline"]);
 // Get the 'Assessment Name', 'Assessment Date' and 'Facility Name' based on the 'currentConfigChain'
@@ -335,35 +334,6 @@ text: [
 }
 ]
 },
-    // {
-    //     style: 'tableExample',
-    //     table: {
-    //         widths: ['*', '*', '*', '*', '*'],
-    //         body: [
-    //             ['First Name', 'Last Name', 'Title', 'Organization', 'Cell Phone'],
-    //             [' ', ' ', ' ', ' ', ' '],
-    //             [' ', ' ', ' ', ' ', ' '],
-    //             [' ', ' ', ' ', ' ', ' '],
-    //             [' ', ' ', ' ', ' ', ' ']
-    //         ]
-    //     },
-    //     layout: {
-    //         hLineWidth: function(i, node) {
-    //             return (i === 0 || i === node.table.body.length) ? 1 : 1;
-    //         },
-    //         vLineWidth: function(i, node) {
-    //             return (i === 0 || i === node.table.widths.length) ? 1 : 1;
-    //         },
-    //         hLineColor: function(i, node) {
-    //             return (i === 0 || i === node.table.body.length) ? 'black' : 'black';
-    //         },
-    //         vLineColor: function(i, node) {
-    //             return (i === 0 || i === node.table.widths.length) ? 'black' : 'black';
-    //         }
-    //     },
-    //     margin: [0, 20, 0, 0] ,
-      
-    // },
     { text: '', pageBreak: i !== this.contactCount - 1 ? 'after' : undefined }
     ]
     content = content.concat(pageContent);
@@ -430,90 +400,7 @@ text: [
           ]
           },
           { text: `Assessment Owner :`, style: 'label', margin: [0, 10, 10, 10]  },
-        //   {
-        //     columns: [
-        //       { 
-        //           width: '20%',
-        //           text: `First Name :`, 
-        //           style: 'labelKey', 
-        //           margin: [0, 10, 10,  5]
-        //       },
-        //       {
-        //           width: '30%',
-        //           text: `_________________________`, 
-        //           style: 'label', 
-        //           margin: [0, 10, 10,  0]
-        //       },
-        //       { 
-        //           width: '20%',
-        //           text: `Last Name :`, 
-        //           style: 'labelKey', 
-        //           margin: [0, 10, 10,  5]
-        //       },
-        //       {
-        //           width: '30%',
-        //           text: `_________________________`, 
-        //           style: 'label', 
-        //           margin: [0, 10, 10, 0]
-        //       }
-        //   ]
-        //  },
-    //      {
-    //       columns: [
-    //         { 
-    //             width: '18%',
-    //             text: `Title/Role :`, 
-    //             style: 'labelKey', 
-    //             margin: [0, 10, 10,  5]
-    //         },
-    //         {
-    //             width: '30%',
-    //             text: `_________________________`, 
-    //             style: 'label', 
-    //             margin: [0, 10, 10,  0]
-    //         },
-    //         { 
-    //             width: '18%',
-    //             text: `Email :`, 
-    //             style: 'labelKey', 
-    //             margin: [0, 10, 10, 5]
-    //         },
-    //         {
-    //             width: '30%',
-    //             text: `_________________________`, 
-    //             style: 'label', 
-    //             margin: [0, 10, 10, 0]
-    //         }
-    //     ]
-    //    },
-    //    {
-    //     columns: [
-    //       { 
-    //           width: '18%',
-    //           text: `Cell Phone :`, 
-    //           style: 'labelKey', 
-    //           margin: [0, 10, 10, 5]
-    //       },
-    //       {
-    //           width: '30%',
-    //           text: `_________________________`, 
-    //           style: 'label', 
-    //           margin: [0,10, 10, 0]
-    //       },
-    //       { 
-    //           width: '18%',
-    //           text: `Office Phone :`, 
-    //           style: 'labelKey', 
-    //           margin: [0, 10, 10, 5]
-    //       },
-    //       {
-    //           width: '30%',
-    //           text: `_________________________`, 
-    //           style: 'label', 
-    //           margin: [0, 10, 10, 0]
-    //       }
-    //   ]
-    //  },
+    
     {
       columns: [
         {
@@ -542,64 +429,7 @@ text: [
         }
       ]
     },
-  //   {
-  //     columns: [
-  //       { 
-  //           width: '24%',
-  //           text: `Organization Name :`, 
-  //           style: 'labelKey', 
-  //           margin: [0, 10, 10, 0]
-  //       },
-  //       {
-  //           width: '30%',
-  //           text: `__________________`, 
-  //           style: 'label', 
-  //           margin: [10, 10, 10, 10]
-  //       },
-  //       { 
-  //           width: '22%',
-  //           text: `Facility Name :`, 
-  //           style: 'labelKey', 
-  //           margin: [0, 10, 10, 0]
-  //       },
-  //       {
-  //           width: '30%',
-  //           text: `_____________________`, 
-  //           style: 'label', 
-  //           margin: [0, 10, 10, 0]
-  //       }
-  //   ]
-  // },
-//   {
-//     columns: [
-//       { 
-//           width: '22%',
-//           text: `City or Site Name :`, 
-//           style: 'labelKey', 
-//           margin: [0, 10, 10, 0]
-//       },
-//       {
-//           width: '30%',
-//           text: `__________________`, 
-//           style: 'label', 
-//           margin: [0,10, 10, 0]
-//       },
-//       { 
-//           width: '28%',
-//           text: `State/Province/Region :`, 
-//           style: 'labelKey', 
-//           margin: [0, 10, 10, 0]
-//       },
-//       {
-//           width: '32%',
-//           text: `___________________`, 
-//           style: 'label', 
-//           margin: [0, 10, 10, 0]
-//       }
-//   ]
-// },
-
-// { text: `Organization Type : _________________________`, style: 'label', margin: [0, 10, 10, 10]  },
+ 
 { text: `Roles :`, style: 'label', margin: [0, 20, 0, 0]  },
 {
   columns: [
@@ -673,8 +503,8 @@ text: [
     pageSize: 'A4',
     pageOrientation: 'landscape',
   };
-  let url = '/index.html?returnPath=report/key-report' ;
-  localStorage.setItem('REPORT-KEY-REPORT' , print.toString());
+  // let url = '/index.html?returnPath=report/key-report' ;
+  // localStorage.setItem('REPORT-KEY-REPORT' , print.toString());
   pdfMake.createPdf(documentDefinition).open(); 
 }
 // Helper function to check if two arrays are equal
