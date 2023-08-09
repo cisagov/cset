@@ -130,6 +130,7 @@
         {
             "moduleName": "IMR",
             "showMaturityLevelBadge": false,
+            "showCriticalServiceDemog": false,
             "questionIcons": {
                 "showDetails": false,
                 "guidanceIcon": "G",

@@ -90,10 +90,18 @@ export class CmuResultsDetailComponent {
    * @param q
    */
   getQuestionNumber(q: any): string {
-    const dot = q.questiontext.trim().indexOf('.');
+    let dot = q.questiontext.trim().indexOf('.');
     if (dot < 0) {
+      // try the displaytext 
+      dot = q.displaynumber?.lastIndexOf('.');
+
+      if (dot >= 0) {        
+        return q.displaynumber.trim().substring(dot + 1);
+      }
+      
       return "Q";
     }
+
     return "Q" + q.questiontext.trim().substring(0, dot);
   }
 
