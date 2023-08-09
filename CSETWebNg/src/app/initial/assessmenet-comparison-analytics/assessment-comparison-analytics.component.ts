@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from "@angular/core";
 import { DemographicService } from "../../services/demographic.service";
-import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
+import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
 import { TsaService } from "../../services/tsa.service";
 import { AssessmentService } from "../../services/assessment.service";
 import {
@@ -61,12 +61,12 @@ interface StandardsNames {
 }
 
 @Component({
-  selector: "app-tsa-analytics",
-  templateUrl: "./tsa-analytics.component.html",
-  styleUrls: ["./tsa-analytics.component.scss"],
+  selector: "app-assessment-comparison-analytics",
+  templateUrl: "./assessment-comparison-analytics.component.html",
+  styleUrls: ["./assessment-comparison-analytics.component.scss"],
   host: { class: "d-flex flex-column flex-11a" },
 })
-export class TsaAnalyticsComponent implements OnInit {
+export class AssessmentComparisonAnalyticsComponent implements OnInit {
   assessment: AssessmentDetail = {};
   selectedSector = "All Sectors";
   currentAssessmentId = "";
@@ -100,11 +100,10 @@ export class TsaAnalyticsComponent implements OnInit {
   chartDataArray: any[];
   can_id: Chart<"bar" | "scatter", number, string>;
   constructor(
-    public tsaanalyticSvc: TsaAnalyticsService,
+    public analyticsSvc: AssessCompareAnalyticsService,
     public tsaSvc: TsaService,
     private demoSvc: DemographicService,
     private assessSvc: AssessmentService,
-    private tsaAnalyticSvc: TsaAnalyticsService,
     public analysisSvc: ReportAnalysisService
   ) { }
 
@@ -120,8 +119,8 @@ export class TsaAnalyticsComponent implements OnInit {
           this.isMaturity = true;
           this.maturityModelName = this.assessment.maturityModel.modelName;
           this.maturityModelId = this.assessment.maturityModel.modelId;
-          this.tsaAnalyticSvc
-            .MaturityDashboardByCategory(this.assessment.maturityModel.modelId)
+          this.analyticsSvc
+            .maturityDashboardByCategory(this.assessment.maturityModel.modelId)
             .subscribe((x) => {
               this.setupChartMaturity(x);
 
@@ -129,13 +128,13 @@ export class TsaAnalyticsComponent implements OnInit {
         }
         if (this.assessment.useStandard && this.assessment.standards.length > 0) {
           this.isStandard = true;
-          this.tsaAnalyticSvc.getStandardList().subscribe((x) => {
+          this.analyticsSvc.getStandardList().subscribe((x) => {
             x.forEach((element) => {
               this.standards.push(element);
             });
 
           });
-          this.tsaAnalyticSvc
+          this.analyticsSvc
             .getSectorIndustryStandardsTSA(
               this.sectorId,
               this.sectorindustryId
@@ -315,8 +314,8 @@ export class TsaAnalyticsComponent implements OnInit {
     this.updateDemographics();
     // update maturity graph
     if (this.assessment.useMaturity) {
-      this.tsaAnalyticSvc
-        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+      this.analyticsSvc
+        .maturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
         .subscribe((x) => {
           this.setupChartMaturity(x);
 
@@ -324,7 +323,7 @@ export class TsaAnalyticsComponent implements OnInit {
     }
     // Update standard graph
     if (this.assessment.useStandard && this.assessment.standards.length > 0) {
-      this.tsaAnalyticSvc
+      this.analyticsSvc
         .getSectorIndustryStandardsTSA(
           this.sectorId,
           this.sectorindustryId)
@@ -393,8 +392,8 @@ export class TsaAnalyticsComponent implements OnInit {
     }
     // update maturity graph
     if (this.assessment.useMaturity) {
-      this.tsaAnalyticSvc
-        .MaturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
+      this.analyticsSvc
+        .maturityDashboardByCategory(this.assessment.maturityModel.modelId, this.sectorId, this.sectorindustryId)
         .subscribe((x) => {
           this.setupChartMaturity(x);
 
@@ -402,7 +401,7 @@ export class TsaAnalyticsComponent implements OnInit {
     }
     // Update standard graph
     if (this.assessment.useStandard && this.assessment.standards.length > 0) {
-      this.tsaAnalyticSvc
+      this.analyticsSvc
         .getSectorIndustryStandardsTSA(
           this.sectorId,
           this.sectorindustryId)
