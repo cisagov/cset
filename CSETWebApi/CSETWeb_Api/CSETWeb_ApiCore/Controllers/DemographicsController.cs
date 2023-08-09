@@ -78,12 +78,22 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/Demographics/Sectors")]
         public async Task<IActionResult> GetSECTORs()
         {
+            string scope = _token.Payload("scope");
+
             var list = await _context.SECTOR.ToListAsync<SECTOR>();
 
 
-            // Remove NIPP entries from list until we switch over to NIPP exclusively.
-            // At that time, just NOT the predicate below to get the NIPP values.
-            list.RemoveAll(x => x.Is_NIPP);
+            // For now, based on the scope/skin, show either the
+            // classic CISA sectors or the NIPP sectors (for IOD).
+            // If NIPP becomes the preferred for all, code will
+            // be added to convert CISA to NIPP on the fly.
+            if (scope == "IOD")
+            {
+                list.RemoveAll(x => !x.Is_NIPP);
+            } else
+            {
+                list.RemoveAll(x => x.Is_NIPP);
+            }
 
 
             var otherItems = list.Where(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase)).ToList();
