@@ -176,6 +176,9 @@ export class AuthenticationService {
             case 'CF':
                 scope = 'CF';
                 break;
+            case 'IOD':
+                scope = 'IOD';
+                break;
             default:
                 scope = environment.appCode
         }
