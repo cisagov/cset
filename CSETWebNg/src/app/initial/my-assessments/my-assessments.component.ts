@@ -39,7 +39,7 @@ import { NavigationService } from "../../services/navigation/navigation.service"
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
 import { concatMap, delay, map } from "rxjs/operators";
-import { TsaAnalyticsService } from "../../services/tsa-analytics.service";
+import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
@@ -84,8 +84,8 @@ export class MyAssessmentsComponent implements OnInit {
   // contains CSET or ACET; used for tooltips, etc
   appCode: string;
   appTitle: string;
-  isTSA:boolean =false;
-  isCSET:boolean =false;
+  isTSA: boolean = false;
+  isCSET: boolean = false;
   exportExtension: string;
   importExtensions: string;
 
@@ -113,7 +113,7 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     private reportSvc: ReportService,
-    private tsaanalyticSvc :TsaAnalyticsService,
+    private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService
   ) { }
@@ -132,10 +132,10 @@ export class MyAssessmentsComponent implements OnInit {
         this.ncuaSvc.reset();
         break;
       case 'TSA':
-        this.isTSA=true;
+        this.isTSA = true;
         break;
       default:
-        this.isCSET=true;
+        this.isCSET = true;
     }
 
     if (localStorage.getItem("returnPath")) {
@@ -147,7 +147,7 @@ export class MyAssessmentsComponent implements OnInit {
 
     this.ncuaSvc.assessmentsToMerge = [];
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
-  }  
+  }
 
   /**
    * Determines if a particular column should be included in the display.
@@ -164,14 +164,16 @@ export class MyAssessmentsComponent implements OnInit {
       }
       return true;
     }
+    
+    return true;
   }
 
-  showCsetOrigin() : boolean {
-    return this.configSvc.installationMode ==='CSET';
+  showCsetOrigin(): boolean {
+    return this.configSvc.installationMode === 'CSET';
   }
 
-  showAcetOrigin() : boolean {
-    return this.configSvc.installationMode ==='ACET';
+  showAcetOrigin(): boolean {
+    return this.configSvc.installationMode === 'ACET';
   }
 
   getAssessments() {
@@ -191,10 +193,10 @@ export class MyAssessmentsComponent implements OnInit {
           map((assessments: UserAssessment[]) => {
             assessments.forEach((item, index, arr) => {
               let type = '';
-              if(item.useDiagram) type += ', Diagram';
-              if(item.useMaturity) type += ', ' + item.selectedMaturityModel;
-              if(item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
-              if(type.length > 0) type = type.substring(2);
+              if (item.useDiagram) type += ', Diagram';
+              if (item.useMaturity) type += ', ' + item.selectedMaturityModel;
+              if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
+              if (type.length > 0) type = type.substring(2);
               item.type = type;
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
@@ -205,16 +207,16 @@ export class MyAssessmentsComponent implements OnInit {
             });
             this.sortedAssessments = assessments;
           },
-          error => {
-            console.log(
-              "Unable to get Assessments for " +
-              this.authSvc.email() +
-              ": " +
-              (<Error>error).message
-            );
-          }
-        )
-    ))).subscribe();
+            error => {
+              console.log(
+                "Unable to get Assessments for " +
+                this.authSvc.email() +
+                ": " +
+                (<Error>error).message
+              );
+            }
+          )
+        ))).subscribe();
   }
 
   hasPath(rpath: string) {
@@ -295,11 +297,11 @@ export class MyAssessmentsComponent implements OnInit {
     if (!this.preventEncrypt) {
       let dialogRef = this.dialog.open(ExportPasswordComponent);
       dialogRef.afterClosed().subscribe(result => {
-      
+
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
           let url = this.fileSvc.exportUrl + "?token=" + response.token;
-          
+
           if (result.password != null && result.password != "") {
             url = url + "&password=" + result.password;
           }
@@ -307,7 +309,7 @@ export class MyAssessmentsComponent implements OnInit {
           if (result.hint != null && result.hint != "") {
             url = url + "&passwordHint=" + result.hint;
           }
-        
+
           //if electron
           window.location.href = url;
 
@@ -326,7 +328,7 @@ export class MyAssessmentsComponent implements OnInit {
         //window.open(url, "_blank");
       });
     }
-  
+
   }
 
   /**
@@ -387,7 +389,7 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
 
-  async exportAllLoop () { // allows for multiple api calls
+  async exportAllLoop() { // allows for multiple api calls
     for (let i = 0; i < this.sortedAssessments.length; i++) {
       let a = document.getElementById('assess-' + i + '-export');
       a.click();
