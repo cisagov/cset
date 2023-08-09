@@ -20,21 +20,47 @@ EditorUi.DIFF_UPDATE = 'u';
 /**
  * Shared codec.
  */
-EditorUi.prototype.codec = new mxCodec();
+EditorUi.transientViewStateProperties =['defaultParent', 'currentRoot', 'scrollLeft',
+	'scrollTop', 'scale', 'translate', 'lastPasteXml', 'pasteCounter'];
 
 /**
  * Contains all view state properties that should not be ignored in diff sync.
  */
 EditorUi.prototype.viewStateProperties = {background: true, backgroundImage: true, shadowVisible: true,
-	foldingEnabled: true, pageScale: true, mathEnabled: true, pageFormat: true};
+	foldingEnabled: true, pageScale: true, mathEnabled: true, pageFormat: true, extFonts: true};
 
 /**
  * Contains all known cell properties that should be ignored for a generic cell diff.
  */
 EditorUi.prototype.cellProperties = {id: true, value: true, xmlValue: true, vertex: true, edge: true,
 	visible: true, collapsed: true, connectable: true, parent: true, children: true, previous: true,
-	source: true, target: true, edges: true, geometry: true, style: true,
+	source: true, target: true, edges: true, geometry: true, style: true, overlays: true,
 	mxObjectId: true, mxTransient: true};
+
+/**
+ * Shared codec.
+ */
+EditorUi.prototype.codec = new mxCodec();
+
+/**
+ * Applies the given patches to the given pages.
+ */
+EditorUi.prototype.applyPatches = function(pages, patches, markPages, resolver, updateEdgeParents)
+{
+	if (patches != null)
+	{
+		for (var i = 0; i < patches.length; i++)
+		{
+			if (patches[i] != null)
+			{
+				pages = this.patchPages(pages, patches[i],
+					markPages, resolver, updateEdgeParents);
+			}
+		}
+	}
+
+	return pages;
+};
 
 /**
  * Removes all labels, user objects and styles from the given node in-place.
@@ -180,14 +206,10 @@ EditorUi.prototype.patchPages = function(pages, diff, markPages, resolver, updat
 		}
 		else
 		{
-			// Updates root if page already in UI
-			page.root = newPage.root;
-
-			if (this.currentPage == page)
-			{
-				this.editor.graph.model.setRoot(page.root);
-			}
-			else if (markPages)
+			this.patchPage(page, this.diffPages([page], [newPage]),
+				resolverLookup[page.getId()], updateEdgeParents);
+			
+			if (markPages)
 			{
 				page.needsUpdate = true;
 			}
@@ -227,14 +249,26 @@ EditorUi.prototype.patchViewState = function(page, diff)
 
 		for (var key in diff)
 		{
-			page.viewState[key] = JSON.parse(diff[key]);
+			try
+			{
+				this.patchViewStateProperty(page, diff, key);
+			}
+			catch(e) {} //Ignore TODO Is this correct, we encountered an undefined value for a key (extFonts)
 		}
 		
 		if (page == this.currentPage)
 		{
-			this.editor.graph.setViewState(page.viewState);
+			this.editor.graph.setViewState(page.viewState, true);
 		}
 	}
+};
+
+/**
+ * Removes all labels, user objects and styles from the given node in-place.
+ */
+EditorUi.prototype.patchViewStateProperty = function(page, diff, key)
+{
+	page.viewState[key] = JSON.parse(diff[key]);
 };
 
 /**
@@ -621,13 +655,62 @@ EditorUi.prototype.patchCell = function(model, cell, diff, resolve)
 };
 
 /**
- * Gets a file node that is comparable with a remote file node
- * so that using isEqualNode returns true if the files can be
- * considered equal.
+ * Returns the pages for the given XML string.
+ */
+EditorUi.prototype.getXmlForPages = function(pages)
+{
+	var node = this.getNodeForPages(pages);
+	var result = null;
+
+	if (node != null)
+	{
+		result = mxUtils.getXml(node);
+	}
+
+	return result;
+};
+
+/**
+ * Returns the pages for the given XML string.
+ */
+EditorUi.prototype.getNodeForPages = function(pages)
+{
+	var result = null;
+
+	if (this.fileNode != null && pages != null)
+	{
+		result = this.fileNode.cloneNode(false);
+
+		for (var i = 0; i < pages.length; i++)
+		{
+			var enc = new mxCodec(mxUtils.createXmlDocument());
+			var temp = enc.encode(new mxGraphModel(pages[i].root));
+			this.editor.graph.saveViewState(pages[i].viewState, temp);
+			var node = pages[i].node.cloneNode(false);
+			node.appendChild(temp);
+			result.appendChild(node);
+		}
+	}
+
+	return result;
+};
+
+/**
+ * Returns the pages for the given XML string.
+ */
+EditorUi.prototype.getPagesForXml = function(data)
+{
+	var doc = mxUtils.parseXml(data);
+
+	return this.getPagesForNode(doc.documentElement);
+};
+
+/**
+ * Returns the pages for the given node.
  */
 EditorUi.prototype.getPagesForNode = function(node, nodeName)
 {
-	var tmp = this.editor.extractGraphModel(node, true);
+	var tmp = this.editor.extractGraphModel(node, true, true);
 	
 	if (tmp != null)
 	{
@@ -642,16 +725,15 @@ EditorUi.prototype.getPagesForNode = function(node, nodeName)
 		for (var i = 0; i < diagrams.length; i++)
 		{
 			var page = new DiagramPage(diagrams[i]);
-			this.updatePageRoot(page);
+			this.updatePageRoot(page, true);
 			pages.push(page);
 		}
 	}
 	else if (node.nodeName == 'mxGraphModel')
 	{
-		var graph = this.editor.graph;
 		var page = new DiagramPage(node.ownerDocument.createElement('diagram'));
 		page.setName(mxResources.get('pageWithNumber', [1]));
-		mxUtils.setTextContent(page.node, Graph.compressNode(node));
+		mxUtils.setTextContent(page.node, Graph.compressNode(node, true));
 		pages.push(page);
 	}
 	
@@ -663,94 +745,96 @@ EditorUi.prototype.getPagesForNode = function(node, nodeName)
  */
 EditorUi.prototype.diffPages = function(oldPages, newPages)
 {
-	var graph = this.editor.graph;
 	var inserted = [];
 	var removed = [];
 	var result = {};
 	var lookup = {};
 	var diff = {};
 	var prev = null;
-	
-	for (var i = 0; i < newPages.length; i++)
-	{
-		lookup[newPages[i].getId()] = {page: newPages[i], prev: prev};
-		prev = newPages[i];
-	}
 
-	prev = null;
-	
-	for (var i = 0; i < oldPages.length; i++)
+	if (oldPages != null && newPages != null)
 	{
-		var id = oldPages[i].getId();
-		var newPage = lookup[id];
+		for (var i = 0; i < newPages.length; i++)
+		{
+			lookup[newPages[i].getId()] = {page: newPages[i], prev: prev};
+			prev = newPages[i];
+		}
+
+		prev = null;
 		
-		if (newPage == null)
+		for (var i = 0; i < oldPages.length; i++)
 		{
-			removed.push(id);
-		}
-		else
-		{
-			var temp = this.diffPage(oldPages[i], newPage.page);
-			var pageDiff = {};
+			var id = oldPages[i].getId();
+			var newPage = lookup[id];
 			
-			if (Object.keys(temp).length > 0)
+			if (newPage == null)
 			{
-				pageDiff.cells = temp;
+				removed.push(id);
 			}
-			
-			var view = this.diffViewState(oldPages[i], newPage.page);
-			
-			if (Object.keys(view).length > 0)
+			else
 			{
-				pageDiff.view = view;
-			}
-			
-			if (((newPage.prev != null) ? prev == null : prev != null) ||
-				(prev != null && newPage.prev != null &&
-				prev.getId() != newPage.prev.getId()))
-			{
-				pageDiff.previous = (newPage.prev != null) ? newPage.prev.getId() : '';
-			}
-			
-			// FIXME: Check why names can be null in newer files
-			// ignore in hash and do not diff null names for now
-			if (newPage.page.getName() != null &&
-				oldPages[i].getName() != newPage.page.getName())
-			{
-				pageDiff.name = newPage.page.getName();
-			}
-			
-			if (Object.keys(pageDiff).length > 0)
-			{
-				diff[id] = pageDiff;
-			}
-		}
+				var temp = this.diffPage(oldPages[i], newPage.page);
+				var pageDiff = {};
 
-		delete lookup[oldPages[i].getId()];
-		prev = oldPages[i];
-	}
-	
-	for (var id in lookup)
-	{
-		var newPage = lookup[id];
-		inserted.push({data: mxUtils.getXml(newPage.page.node),
-			previous: (newPage.prev != null) ?
-			newPage.prev.getId() : ''});
-	}
-	
-	if (Object.keys(diff).length > 0)
-	{
-		result[EditorUi.DIFF_UPDATE] = diff;
-	}
-	
-	if (removed.length > 0)
-	{
-		result[EditorUi.DIFF_REMOVE] = removed;
-	}
-	
-	if (inserted.length > 0)
-	{
-		result[EditorUi.DIFF_INSERT] = inserted;
+				if (!mxUtils.isEmptyObject(temp))
+				{
+					pageDiff.cells = temp;
+				}
+				
+				var view = this.diffViewState(oldPages[i], newPage.page);
+				
+				if (!mxUtils.isEmptyObject(view))
+				{
+					pageDiff.view = view;
+				}
+				
+				if (((newPage.prev != null) ? prev == null : prev != null) ||
+					(prev != null && newPage.prev != null &&
+					prev.getId() != newPage.prev.getId()))
+				{
+					pageDiff.previous = (newPage.prev != null) ? newPage.prev.getId() : '';
+				}
+				
+				// FIXME: Check why names can be null in newer files
+				// ignore in hash and do not diff null names for now
+				if (newPage.page.getName() != null &&
+					oldPages[i].getName() != newPage.page.getName())
+				{
+					pageDiff.name = newPage.page.getName();
+				}
+				
+				if (!mxUtils.isEmptyObject(pageDiff))
+				{
+					diff[id] = pageDiff;
+				}
+			}
+
+			delete lookup[oldPages[i].getId()];
+			prev = oldPages[i];
+		}
+		
+		for (var id in lookup)
+		{
+			var newPage = lookup[id];
+			inserted.push({data: mxUtils.getXml(newPage.page.node),
+				previous: (newPage.prev != null) ?
+				newPage.prev.getId() : ''});
+		}
+		
+		if (!mxUtils.isEmptyObject(diff))
+		{
+			result[EditorUi.DIFF_UPDATE] = diff;
+		}
+		
+		if (removed.length > 0)
+		{
+			result[EditorUi.DIFF_REMOVE] = removed;
+		}
+		
+		if (inserted.length > 0)
+		{
+			result[EditorUi.DIFF_INSERT] = inserted;
+		}
 	}
 
 	return result;
@@ -802,7 +886,7 @@ EditorUi.prototype.diffCellRecursive = function(cell, prev, lookup, diff, remove
 			temp.previous = (newCell.prev != null) ? newCell.prev.getId() : '';
 		}
 		
-		if (Object.keys(temp).length > 0)
+		if (!mxUtils.isEmptyObject(temp))
 		{
 			diff[cell.getId()] = temp;
 		}
@@ -842,7 +926,7 @@ EditorUi.prototype.diffPage = function(oldPage, newPage)
 		inserted.push(this.getJsonForCell(newCell.cell, newCell.prev));
 	}
 
-	if (Object.keys(diff).length > 0)
+	if (!mxUtils.isEmptyObject(diff))
 	{
 		result[EditorUi.DIFF_UPDATE] = diff;
 	}
@@ -878,18 +962,46 @@ EditorUi.prototype.diffViewState = function(oldPage, newPage)
 	{
 		for (var key in this.viewStateProperties)
 		{
-			// LATER: Check if normalization is needed for
-			// object attribute order to compare JSON
-			var old = JSON.stringify(source[key]);
-			var now = JSON.stringify(target[key]);
-			
-			if (old != now)
-			{
-				result[key] = now;
-			}
+			this.diffViewStateProperty(source, target, key, result);
 		}
 	}
 	
+	return result;
+};
+
+/**
+ * Removes all labels, user objects and styles from the given node in-place.
+ */
+EditorUi.prototype.diffViewStateProperty = function(source, target, key, result)
+{
+	// LATER: Check if normalization is needed for
+	// object attribute order to compare JSON
+	var old = JSON.stringify(this.getViewStateProperty(source, key));
+	var now = JSON.stringify(this.getViewStateProperty(target, key));
+	
+	if (old != now)
+	{
+		result[key] = now;
+	}
+};
+
+/**
+ * Ignores image data for background pages and normalizes extFonts.
+ */
+EditorUi.prototype.getViewStateProperty = function(viewState, key)
+{
+	var result = viewState[key];
+
+	if (key == 'backgroundImage' && result != null &&
+		result.originalSrc != null)
+	{
+		delete result.src;
+	}
+	else if (key == 'extFonts' && result == null)
+	{
+		result = [];
+	}
+
 	return result;
 };
 

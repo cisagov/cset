@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
@@ -34,18 +34,93 @@ import { Comparer } from '../../../../helpers/comparer';
 })
 export class ShapesComponent implements OnInit {
   shapes = [];
-  displayedColumns = ['label', 'color', 'layer', 'visible']
+
+  @Output()
+  componentsChange = new EventEmitter<any>();
+
+  /**
+  * A flattened list of all the component symbols CSET supports
+  */
+  symbols: any[];
+  diagramComponentList: any[] = []
+  displayedColumns = ['label', 'color', 'layer', 'visible'];
+  newComponent: any = {'componentGuid':'', 'assetType':''};
   comparer: Comparer = new Comparer();
+
+
   constructor(public diagramSvc: DiagramService) { }
 
   ngOnInit() {
     this.getShapes();
+    this.getSymbols();
   }
 
   getShapes() {
     this.diagramSvc.getDiagramShapes().subscribe((x: any) => {
-      this.shapes = x;
+      if (this.shapes.length > x.length) { // if a shape was removed (i.e. changed to a component)
+        this.componentsChange.emit(this.getComponents());
+      }
+
+      this.shapes = x;      
     });
+  }
+
+  /**
+   *
+   */
+  getComponents() {
+    this.diagramSvc.getDiagramComponents().subscribe((x: any) => {
+      this.diagramComponentList = x;
+    });
+  }
+
+
+  /**
+   * Gets the full list of symbols so that we 
+   * can build SELECT controls for Asset Type.
+   */
+  getSymbols() {
+    this.diagramSvc.getSymbols().subscribe((g: any) => {
+      this.symbols = [];
+      this.symbols.push( // inserts a default blank object in the beginning 
+        {
+          'abbreviation': null, 
+          'componentFamilyName': null,
+          'component_Symbol_Id': null,
+          'fileName': '',
+          'height': 0,
+          'search_Tags': null,
+          'symbol_Name': '',
+          'width': 0
+      });
+
+      g.forEach(gg => {
+        gg.symbols.forEach(s => {            
+          this.symbols.push(s);
+        });
+      });
+
+      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    });
+  }
+
+  changeShapeToComponent(event: any, id: string) {
+    let type = event.target.value;
+
+    this.diagramSvc.getDiagramComponents().subscribe(
+      (x: any) => {
+        let label = this.diagramSvc.applyComponentSuffix(type, x);
+
+        this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
+          (compList: any) =>
+            {
+              this.getShapes();
+              this.componentsChange.emit(compList);
+            }
+        );      
+      }
+    );
+
   }
 
   sortData(sort: Sort) {
@@ -67,5 +142,17 @@ export class ShapesComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  parseShapeType(shape: any) {
+    if (shape.value != null && shape.value != '') {
+      return shape.value; // if a name is already assigned, use it
+    }
+
+    let style = shape.style;
+    let startOfShape = style.indexOf('=') + 1; // first index of the shape type
+    let endOfShape = style.indexOf(';');
+
+    return style.substring(startOfShape, endOfShape); // e.g. 'shape=ellipse;' grabs 'ellipse'
   }
 }

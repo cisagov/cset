@@ -1,27 +1,20 @@
-.geToolbarContainer .geButton, .geToolbarContainer .geLabel {
-	border:1px solid rgb(204, 204, 204) !important;
-	border-bottom-color: rgb(179, 179, 179) !important;
-	-webkit-box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 2px 0px;
-	-moz-box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 2px 0px;
-	box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 2px 0px;
+html body .geToolbarContainer .geButton, html body .geToolbarContainer .geLabel {
 	padding:3px 5px 5px 5px;
 	position: relative;
 	text-align: center;
 	vertical-align: middle;
 	border-radius:3px;
-	background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(242, 242, 242) 100%);
 }
-body .geBigButton {
-	background-color:#0052cc;
-	background-image:none;
+html body .geMenubarContainer .geBigButton {
+	margin-top: 4px;
 }
-body .geBigButton:hover {
-	background-color:#0065ff;
-	background-image: none;
+html body .geBigStandardButton:active, .geSidebarContainer .geTitle:active {
+	background-color: #DEEBFF;
+	color: #0052CC;
 }
-body .geBigButton:active {
-	background-color:#0747a6;
-	background-image:none;
+body .geToolbarContainer .geButton:active, body .geToolbarContainer .geLabel:active {
+	background-color: #DEEBFF;
+	color: #0052CC;
 }
 body > .geToolbarContainer .geLabel, body > .geToolbarContainer .geButton {
 	-webkit-box-shadow: none !important;
@@ -63,7 +56,6 @@ html body .geStatus .geStatusAlert {
 	-webkit-box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
 	-moz-box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
 	box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
-	margin-top:-5px;
 }
 html body .geStatus .geStatusAlert:hover {
     background-color: #2d6ca2;
@@ -80,7 +72,6 @@ html body .geStatus .geStatusMessage {
 	-webkit-box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
 	-moz-box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
 	box-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px 1px 1px 0px;
-	margin-top:-5px;
 }
 html body .geStatus .geStatusMessage:hover {
     background-color: #2d6ca2;
@@ -129,17 +120,6 @@ body > .geToolbarContainer .geButton {
 	margin:0px -1px 0px 0px !important;
 	height:20px;
 }
-.geToolbarContainer .geButton:hover, .geToolbarContainer .geLabel:hover {
-	background-image: linear-gradient(rgb(255, 255, 255) 0px, rgb(247, 247, 247) 100%) !important;
-	border:1px solid rgb(153, 153, 153) !important;
-	z-index:2;
-}
-.geToolbarContainer .geButton:active, .geToolbarContainer .geLabel:active {
-	background-image: none !important;
-	background-color: rgb(242, 242, 242) !important;
-	border:1px solid rgb(153, 153, 153) !important;
-	z-index:2;
-}
 html body .geSidebarTooltip, .geSidebarTooltipImage {
 	z-index:2;
 }
@@ -153,12 +133,8 @@ html body .geMenubarContainer * {
 html body .geMenubarContainer .geStatus {
 	color: rgb(179, 179, 179);
 }
-html body .geMenubarContainer .geBigButton {
-	margin-top: 4px;
-	padding: 7px;
-}
-.geMenubarContainer .geItem:hover {
-	background-color: rgba(9, 30, 66, 0.48);
+.geMenubarContainer .geItem:hover:not(.geStatus) {
+	background-color: rgba(9, 30, 66, 0.48) !important;
 }
 html body .geToolbarContainer .geLabel {
 	margin:0px;
@@ -178,7 +154,6 @@ html body .geMenubarContainer {
 	background-color: #0049B0;
 	color: #ffffff;
 	font-size: 14px;
-	padding-top:6px;
 }
 html body .geMenubar > .geItem {
 	padding-left:14px;
@@ -210,6 +185,9 @@ html body .geMenubarContainer .mxDisabled {
 	opacity: 1;
 	color: rgb(179, 179, 179);
 }
+html .geButtonContainer {
+	padding-right:10px;
+}
 .geDialogTitle {
 	box-sizing:border-box;
 	white-space:nowrap;
@@ -227,4 +205,11 @@ html body .geMenubarContainer .mxDisabled {
 	box-sizing:border-box;
 	border-top:1px solid #e5e5e5;
 	color:darkGray;
+}
+html .geNotification-bell {
+  opacity: 1;
+}
+html .geNotification-bell * {
+  background-color: #DEEBFF;
+  box-shadow: 0px 0px 10px #DEEBFF;
 }

@@ -39,4 +39,8 @@
               [checked]="link.visible" [disabled]="true" >
          </td>
     </tr>
+
+    <tr *ngIf="links.length == 0">
+      <td colspan="6" style="text-align: center;">There are no links in this Network Diagram.</td>
+    </tr>
 </table>

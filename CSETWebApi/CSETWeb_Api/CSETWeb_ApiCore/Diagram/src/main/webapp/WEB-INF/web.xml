@@ -8,30 +8,6 @@
   </welcome-file-list>
   <servlet>
     <description/>
-    <display-name>SaveServlet</display-name>
-    <servlet-name>SaveServlet</servlet-name>
-    <servlet-class>com.mxgraph.online.SaveServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SaveServlet</servlet-name>
-    <url-pattern>/SaveServlet</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>SaveServlet</servlet-name>
-    <url-pattern>/save</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description/>
-    <display-name>OpenServlet</display-name>
-    <servlet-name>OpenServlet</servlet-name>
-    <servlet-class>com.mxgraph.online.OpenServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>OpenServlet</servlet-name>
-    <url-pattern>/open</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description/>
     <display-name>ProxyServlet</display-name>
     <servlet-name>ProxyServlet</servlet-name>
     <servlet-class>com.mxgraph.online.ProxyServlet</servlet-class>
@@ -62,16 +38,6 @@
   </servlet-mapping>
   <servlet>
     <description/>
-    <display-name>GoogleGadgetServlet</display-name>
-    <servlet-name>GoogleGadgetServlet</servlet-name>
-    <servlet-class>com.mxgraph.online.GoogleGadgetServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GoogleGadgetServlet</servlet-name>
-    <url-pattern>/gadget.xml</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description/>
     <display-name>ImgurRedirect</display-name>
     <servlet-name>ImgurRedirect</servlet-name>
     <servlet-class>com.mxgraph.online.ImgurRedirectServlet</servlet-class>
@@ -82,23 +48,13 @@
   </servlet-mapping>
   <servlet>
     <description/>
-    <display-name>GitHubServlet</display-name>
-    <servlet-name>GitHubServlet</servlet-name>
-    <servlet-class>com.mxgraph.online.GitHubServlet</servlet-class>
+    <display-name>GitHubAuthServlet</display-name>
+    <servlet-name>GitHubAuthServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.GitHubAuthServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>GitHubServlet</servlet-name>
-    <url-pattern>/github</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description/>
-    <display-name>AppShortcutServlet</display-name>
-    <servlet-name>AppShortcutServlet</servlet-name>
-    <servlet-class>com.mxgraph.online.AppShortcutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AppShortcutServlet</servlet-name>
-    <url-pattern>/app</url-pattern>
+    <servlet-name>GitHubAuthServlet</servlet-name>
+    <url-pattern>/github2</url-pattern>
   </servlet-mapping>
   <servlet>
     <display-name>LogServlet</display-name>
@@ -119,6 +75,60 @@
     <servlet-name>MSGraphAuthServlet</servlet-name>
     <url-pattern>/microsoft</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description/>
+    <display-name>GoogleAuthServlet</display-name>
+    <servlet-name>GoogleAuthServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.GoogleAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GoogleAuthServlet</servlet-name>
+    <url-pattern>/google</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description/>
+    <display-name>ConverterServlet</display-name>
+    <servlet-name>ConverterServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.ConverterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConverterServlet</servlet-name>
+    <url-pattern>/convert</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description/>
+    <display-name>ExportProxyServlet</display-name>
+    <servlet-name>ExportProxyServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.ExportProxyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExportProxyServlet</servlet-name>
+    <url-pattern>/export</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportProxyServlet</servlet-name>
+    <url-pattern>/service/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description/>
+    <display-name>GitlabAuthServlet</display-name>
+    <servlet-name>GitlabAuthServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.GitlabAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GitlabAuthServlet</servlet-name>
+    <url-pattern>/gitlab</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description/>
+    <display-name>DropboxAuthServlet</display-name>
+    <servlet-name>DropboxAuthServlet</servlet-name>
+    <servlet-class>com.mxgraph.online.DropboxAuthServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DropboxAuthServlet</servlet-name>
+    <url-pattern>/dropbox</url-pattern>
+  </servlet-mapping>
   <mime-mapping>
     <extension>css</extension>
     <mime-type>text/css</mime-type>
@@ -126,5 +136,9 @@
   <mime-mapping>
     <extension>manifest</extension>
     <mime-type>text/cache-manifest</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>mjs</extension>
+    <mime-type>text/javascript</mime-type>
   </mime-mapping>
 </web-app>

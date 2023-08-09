@@ -32,7 +32,8 @@ Draw.loadPlugin(function(ui)
 		var container = document.createElement('div');
 		container.style.position = 'absolute';
 		container.style.display = 'block';
-		container.style.background = '#ffffff';
+		container.style.background = (Editor.isDarkMode()) ?
+			Editor.darkColor : '#ffffff';
 		container.style.width = '100%';
 		container.style.height = '100%';
 		container.style.left = '0px';
@@ -289,7 +290,7 @@ Draw.loadPlugin(function(ui)
 		// Gets the edges from the source cell and adds the targets
 		function rootChanged(graph, cell)
 		{
-			// to-do: Keep existing cells, probably best via XML to redirect IDs
+			// TODO: Keep existing cells, probably best via XML to redirect IDs
 			var realCell = cell.referenceCell || cell;
 			var sourceCell = sourceGraph.model.getCell(realCell.sourceCellId);
 			var edges = sourceGraph.getEdges(sourceCell, null, true, true, false, true);
