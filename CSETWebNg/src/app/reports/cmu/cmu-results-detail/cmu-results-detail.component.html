@@ -56,7 +56,7 @@
         <td>{{getQuestionNumber(q)}}</td>
         <td [innerHTML]="q.referencetext | safe">
         </td>
-        <td></td>
+        <td [class]="answerCellClass(q?.answer)"></td>
     </tr>
 </table>
 

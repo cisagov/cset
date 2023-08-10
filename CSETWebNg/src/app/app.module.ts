@@ -586,6 +586,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
+import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 
 
 
@@ -1131,6 +1132,7 @@ import { DemographicsIodComponent } from './assessment/prepare/assessment-info/d
         AssessmentConfigIodComponent,
         AssessmentDemogIodComponent,
         DemographicsIodComponent,
+        TutorialImrComponent,
     ],
     providers: [
         ConfigService,

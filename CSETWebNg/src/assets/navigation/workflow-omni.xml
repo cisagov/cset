@@ -9,6 +9,7 @@
         <node displaytext="CMMC Tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" condition="MATURITY:CMMC2" />
         <node displaytext="EDM Tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" condition="MATURITY:EDM" />
         <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:CRR" />
+        <node displaytext="IMR Tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" condition="MATURITY:IMR" />
         <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA ORIGIN-NOT:CF" />
 
 
