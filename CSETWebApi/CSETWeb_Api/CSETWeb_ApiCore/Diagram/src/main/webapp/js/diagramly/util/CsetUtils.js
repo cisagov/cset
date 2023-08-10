@@ -224,7 +224,6 @@ CsetUtils.LoadFileFromCSET = async function (app) {
         for (var element of app.toolbar.container.childNodes) {
             if (element.title == 'Analyze Network Diagram') {
                 element.click();
-                console.log('in analysis toggle')
                 break;
             }
         }
@@ -239,8 +238,6 @@ CsetUtils.LoadFileFromCSET = async function (app) {
 CsetUtils.edgesToTop = function (graph, edit) {
     const model = graph.getModel();
     const changes = edit && edit.changes || [];
-    console.log("changes in edgesToTop:")
-    console.log(changes)
     for (const change of changes) {
         if (change instanceof mxChildChange && model.isVertex(change.child)) {
             const edges = CsetUtils.getAllChildEdges(change.child);
@@ -297,12 +294,6 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
 
     //may need to add this in to the save
     //editor.menubarContainer;
-    console.log('PersistDataToCset editor, xml, revision:')
-    console.log(editor)
-
-    console.log(xml)
-    console.log(revision)
-
     await CsetUtils.saveDiagram(req);
 }
 
@@ -476,11 +467,8 @@ CsetUtils.handleZoneChanges = function (edit) {
     changes.forEach(change => {
         if (change instanceof mxValueChange && change.cell.isZone()) {
             const c = change.cell;
-            console.log('cell in handleZoneChanges:')
-            console.log(change)
             // if they just changed the label, update the internal label
             if (change.value.attributes.label.value !== change.previous.attributes.label.value) {
-                console.log('changes in zone')
                 c.setAttribute('internalLabel', change.value.attributes.label.value);
             }
 

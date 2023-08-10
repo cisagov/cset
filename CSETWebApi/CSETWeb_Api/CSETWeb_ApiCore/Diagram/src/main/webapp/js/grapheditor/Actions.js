@@ -1266,8 +1266,6 @@ Actions.prototype.init = function()
 	{
 		this.analyzeToggled = !this.analyzeToggled;
 		editor.analyzeDiagram = !editor.analyzeDiagram;
-		console.log('action:')
-		console.log(action)
 		if (action.onToggle)
 		{
 			action.onToggle(this.analyzeToggled);
