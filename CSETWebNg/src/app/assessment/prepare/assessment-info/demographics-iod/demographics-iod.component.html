@@ -22,153 +22,250 @@
 -------------------------->
 <form>
 
-    <div class="form-group">
-        <label for="assetValue">Number of employees in the organization?</label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <option *ngFor="let en of employeeNumsOrg" [value]="en.displayValue"
-                [selected]="asset.demographicsAssetId === demographicData?.assetValue">{{en.displayValue}}</option>
-        </select>
-    </div>
-
-
-    <div class="form-group">
-        <label for="assetValue">Number of employees in the business unit?
-            Please select N/A if the business unit and the overall
-            organization are the same.
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <option *ngFor="let en of employeeNumsBizUnit" [value]="en.displayValue"
-                [selected]="asset.demographicsAssetId === demographicData?.assetValue">{{en.displayValue}}</option>
-        </select>
-    </div>
-
-
-    <div class="form-group">
-        <label for="assetValue">What is the total annual revenue for your
-            organization?
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label for="assetValue">Does your organization use a body of practice, industry
-            standard, or similar resource to support or inform its
-            cybersecurity efforts?
-            If Yes, please select the two most important resources
-            or bodies of practice used. If the name of the resource
-            is not listed please enter it directly into each box as
-            applicable.
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
-        </select>
-
-        a. Most important:
-        b. Second most important:
-    </div>
-
-
-
-
-    <div class="form-group">
-        <label for="assetValue">8. Is your organization required to comply with mandatory,
-            cybersecurity-related regulation?
-            If Yes, please select the two primary regulation types. If known,
-            please enter the name of each regulation in the spaces
-            provided.
-            a. Regulation Type 1:
-            Federal regulation, not industry specific (HIPAA, FTC, DFARS)
-            Federal regulation, industry specific (NERC-CIP)
-            Federal civilian agency oversight (FISMA)
-            State regulation, not industry specific (breach notification)
-            State regulation, industry specific
-            State civilian agency oversight
-            Regulation 1:
-            b. Regulation Type 2:
-            Federal regulation, not industry specific (HIPAA, FTC, DFARS)
-            Federal regulation, industry specific (NERC-CIP)
-            Federal civilian agency oversight (FISMA)
-            State regulation, not industry specific (breach notification)
-            State regulation, industry specific
-            State civilian agency oversight
-            Regulation 2:
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
-        </select>
-    </div>
-
-
-
-    <div class="form-group">
-        <label for="assetValue">
-            9. Please indicate the group(s) that your organization shares with or
-            obtains cybersecurity-related information from.
-            Check all that apply.
-            ISAC and/or Coordinating Council
-            FBI - InfraGard
-            Cybersecurity suppliers/consultants
-            Department of Homeland Security
-            State or local government group
-            Industry peers (informal exchanges)
-            NCFTA
-            If other, please list:
-            Commas should be used to separate more than one entry.
-            Yes No
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
-        </select>
-    </div>
-
-
-    <div class="form-group">
-        <label for="assetValue">
-            10. Please select the two most significant barriers or
-            concerns limiting your organization's participation in
-            cybersecurity information sharing groups or initiatives.
-            If the name of the barrier is not listed please enter it
-            directly into each box as applicable.
-            a. Most significant:
-            b. Second most significant:
-        </label>
-        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
-            (change)="changeValue($event)">
-            <option selected disabled>Not Selected</option>
-            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
-        </select>
-    </div>
-
-
-    <div class="form-group">
+    <div class="form-group mb-5">
         <label for="orgType">Organization Type</label>
         <select class="form-control" id="orgType" tabindex="0" name="orgType" (blur)="changeOrgType($event)"
             [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
-            <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+            <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.id">{{t.value}}</option>
         </select>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mb-5">
         <label for="edmOrganizationName">Name of Organization</label>
         <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"
             name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName"
             #edmOrganizationName="ngModel" placeholder="Name of Organization" (blur)="changeOrgName($event)">
     </div>
+
+    <!-- #1 -->
+    <div class="form-group mb-5">
+        <label for="assetValue" *ngIf="demographicData.organizationType == 1">
+            Number of employees in the organization?
+        </label>
+        <label for="assetValue" *ngIf="demographicData.organizationType != 1">
+            Number of employees in the government agency?
+        </label>
+        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
+            (change)="changeValue($event)">
+            <option selected disabled>Not Selected</option>
+            <option *ngFor="let i of demographicData.numberEmployeeRangeTotal" [value]="i.id"
+                [selected]="i.Id === demographicData?.numberEmployeesTotal">{{i.value}}</option>
+        </select>
+    </div>
+
+    <!-- #2 -->
+    <div class="form-group mb-5">
+        <ng-container *ngIf="demographicData.organizationType == 1">
+            <label for="assetValue">
+                Number of employees in the business unit?
+            </label>
+            <div class="font-italic my-2">
+                Please select N/A if the business unit and the overall
+                organization are the same.
+            </div>
+        </ng-container>
+        <ng-container *ngIf="demographicData.organizationType != 1">
+            <label for="assetValue">
+                Number of employees in the department?
+            </label>
+            <div class="font-italic my-2">
+                Please select N/A if the department and the overall
+                organization are the same.
+            </div>
+        </ng-container>
+        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
+            (change)="changeValue($event)">
+            <option selected disabled>Not Selected</option>
+            <option *ngFor="let i of demographicData.numberEmployeeRangeUnit" [value]="i.id"
+                [selected]="i.id === demographicData.numberEmployeesUnit">{{i.value}}</option>
+        </select>
+    </div>
+
+
+    <!-- #3 -->
+    <div class="form-group mb-5">
+        <ng-container *ngIf="demographicData.organizationType == 1">
+            <label for="totalAnnualRevenue">
+                What is the total annual revenue for your organization?
+            </label>
+        </ng-container>
+        <ng-container *ngIf="demographicData.organizationType != 1">
+            <label for="totalAnnualRevenue">
+                What is the total annual funding for your governmental organization or agency?
+            </label>
+        </ng-container>
+        <select class="form-control" id="totalAnnualRevenue" tabindex="0" name="totalAnnualRevenue"
+            (change)="changeValue($event)">
+            <option selected disabled>Not Selected</option>
+            <option *ngFor="let i of demographicData.revenueAmounts" [value]="i.id" 
+                [selected]="i.Id === demographicData.annualRevenue">{{i.value}}</option>
+        </select>
+    </div>
+
+    <!-- #4 -->
+    <!-- #5 -->
+    <!-- #6 -->
+
+    <!-- #7 -->
+    <div class="form-group mb-5">
+        <label for="assetValue" class="col-8">Does your organization use a body of practice, industry
+            standard, or similar resource to support or inform its
+            cybersecurity efforts?
+        </label>
+
+        <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.usesStandard"
+                (click)="demographicData.usesStandard = true">
+                <input class="form-check-input" name="CFYes" id="CFYes" type="radio" autocomplete="off" tabindex="0"
+                    [checked]="demographicData.usesStandard"> Yes
+            </label>
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.usesStandard"
+                (click)="demographicData.usesStandard = false">
+                <input class="form-check-input" name="CFNo" id="CFNo" type="radio" autocomplete="off" tabindex="0"
+                    [checked]="!demographicData.usesStandard"> No
+            </label>
+        </div>
+
+
+        <div *ngIf="demographicData.usesStandard ?? false" class="ml-5">
+            <div class="font-italic my-2">
+                Please select the two most important resources
+                or bodies of practice used. If the name of the resource
+                is not listed please enter it directly into each box as
+                applicable.
+            </div>
+
+            <div>
+                Most important
+                <select class="form-control"></select>
+            </div>
+            <div>
+                Second most important
+                <select class="form-control"></select>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- #8 -->
+    <div class="form-group mb-5">
+        <label class="col-8" for="assetValue">Is your organization required to comply with mandatory,
+            cybersecurity-related regulation?
+        </label>
+
+        <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.requiredToComply"
+                (click)="demographicData.requiredToComply = true">
+                <input class="form-check-input" name="CFYes" id="CFYes" type="radio" autocomplete="off" tabindex="0"
+                    [checked]="demographicData.requiredToComply"> Yes
+            </label>
+            <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.requiredToComply"
+                (click)="demographicData.requiredToComply = false">
+                <input class="form-check-input" name="CFNo" id="CFNo" type="radio" autocomplete="off" tabindex="0"
+                    [checked]="!demographicData.requiredToComply"> No
+            </label>
+        </div>
+
+
+        <div *ngIf="demographicData.requiredToComply" class="ml-5">
+
+
+            <p>Please select the two primary regulation types. If known,
+                please enter the name of each regulation in the spaces
+                provided.</p>
+
+            <div class="mb-4">
+                <div class="mb-3">
+                    <div>Regulation Type 1:</div>
+                    <ng-container *ngFor="let reg of demographicData.regulationTypes">
+                        <input class="radio-custom" name="CFMaybe" id="CFMaybe" type="radio" autocomplete="off"
+                            tabindex="2" (click)="setRegType('M')" [checked]="demographicData.cyberRiskService == 'M'">
+                        <label class="radio-custom-label" for="CFMaybe">{{ reg.value }}</label>
+                    </ng-container>
+                </div>
+
+                Regulation 1: <input class="form-control" type="text">
+            </div>
+
+            <div class="mb-4">
+                <div>
+                    Regulation Type 2:
+                </div>
+                <div class="mb-3">
+                    <ng-container *ngFor="let reg of demographicData.regulationTypes">
+                        <input class="radio-custom" name="CFMaybe" id="CFMaybe" type="radio" autocomplete="off"
+                            tabindex="2" (click)="setRegType('M')" [checked]="demographicData.cyberRiskService == 'M'">
+                        <label class="radio-custom-label" for="CFMaybe">{{ reg.value }}</label>
+                    </ng-container>
+                </div>
+
+                Regulation 2: <input class="form-control" type="text">
+            </div>
+        </div>
+
+        <select class="form-control" id="numberEmployees" tabindex="0" name="numberEmployees"
+            (change)="changeValue($event)">
+            <option selected disabled>Not Selected</option>
+            <!-- <option *ngFor="let opt of annualRevenueOptions" [value]="en.displayValue" [selected]="asset.demographicsAssetId === demographicData.assetValue">{{en.displayValue}}</option> -->
+        </select>
+    </div>
+
+
+    <!-- #9 -->
+    <div class="form-group mb-5">
+        <label for="assetValue">
+            Please indicate the group(s) that your organization shares with or
+            obtains cybersecurity-related information from.
+        </label>
+        <div class="ml-5">
+            <div class="font-italic my-2">
+                Check all that apply.
+            </div>
+            <div class="mb-3">
+
+                <ng-container *ngFor="let org of demographicData.shareOrgs">
+                    <input type="checkbox" tabindex="0" id="{{org.id}}" name="{{org.id}}"
+                        class="checkbox-custom mt-1" (change)="changeShareOrg(org, $event)" [(ngModel)]="org.selected">
+                    <label for="{{org.id}}" class="checkbox-custom-label">
+                        {{org.value}}
+                    </label>
+                </ng-container>
+            </div>
+
+            If other, please list:
+            <input type="text" class="form-control">
+            <p class="font-italic">
+                Commas should be used to separate more than one entry.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- #10 -->
+    <div class="form-group">
+        <label for="assetValue">
+            Please select the two most significant barriers or
+            concerns limiting your organization's participation in
+            cybersecurity information sharing groups or initiatives.
+        </label>
+        <div class="ml-5">
+            <div class="font-italic my-2">
+                If the name of the barrier is not listed please enter it
+                directly into each box as applicable.
+            </div>
+            Most significant:
+            <select class="form-control mb-2"></select>
+            Second most significant:
+            <select class="form-control mb-2"></select>
+        </div>
+
+    </div>
+
+
+
 
     <div class="form-group">
         <label for="edmAgency">Business Unit</label>

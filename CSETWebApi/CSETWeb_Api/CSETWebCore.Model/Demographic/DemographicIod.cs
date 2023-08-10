@@ -10,14 +10,20 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Model.Demographic
 {
+    /// <summary>
+    /// The demographic data collected by IOD CSAs.  
+    /// </summary>
     public class DemographicIod
     {
         public int AssessmentId { get; set; }
 
         public string OrganizationType { get; set; }
-        public string NumberEmployees { get; set; }
-        public string AnnualRevenue { get; set; }
+        
+        public string NumberEmployeesTotal { get; set; }
+        public string NumberEmployeesUnit { get; set; }
 
+
+        public string AnnualRevenue { get; set; }
         public string CriticalServiceRevenuePercent { get; set; }
 
         public string NumberPeopleServedByCritSvc { get; set; }
@@ -62,5 +68,39 @@ namespace CSETWebCore.Model.Demographic
 
         public string Barrier1 { get; set; }
         public string Barrier2 { get; set; }
+
+
+        // ================================================================
+        //  Following are the collections to support dropdown lists,
+        //  checkbox and radio button lists
+        // ================================================================
+        
+
+        public List<ListItem> ListOrgTypes { get; set; }
+
+        public List<ListItem> NumberEmployeeRangeTotal { get; set; }
+
+        public List<ListItem> NumberEmployeeRangeUnit { get; set; }
+
+        public List<ListItem> RevenueAmounts { get; set; }
+
+        public List<ListItem> RevenuePercentages { get; set; }
+
+        /// <summary>
+        /// The number of people served annually by the critical service
+        /// </summary>
+        public List<ListItem> NumberPeopleServed { get; set; }
+
+        /// <summary>
+        /// Used for question 6
+        /// </summary>
+        public List<ListItem> CriticalInfrastructureSectors { get; set; }
+
+        public List<ListItem> RegulationTypes { get; set; }
+
+        /// <summary>
+        /// Organizations with whom you share cyber data
+        /// </summary>
+        public List<ListItem> ShareOrgs { get; set; } = new List<ListItem>();
     }
 }
