@@ -15,6 +15,7 @@
 		var am7 = 'html=1;outlineConnect=0;whiteSpace=wrap;fillColor=#ffe0e0;shape=mxgraph.archimate.';
 		var gn = 'mxgraph.archimate';
 		var dt = 'archimate ';
+		this.setCurrentSearchEntryLibrary('archimate');
 		
 		this.addPaletteFunctions('archimate', mxResources.get('archiMate21'), false,
 		[
@@ -117,7 +118,7 @@
 					w, h, '', 'Triggering', null, this.getTagsForStencil(gn, '', dt + 'triggering').join(' ')),
 			this.createVertexTemplateEntry('swimlane;html=1;fillColor=#ffffff;whiteSpace=wrap', 
 					w, h, '', 'Grouping', null, this.getTagsForStencil(gn, '', dt + 'grouping').join(' ')),
-			this.createVertexTemplateEntry('ellipse;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;fillColor=#000000', 
+			this.createVertexTemplateEntry('ellipse;html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;fillColor=strokeColor', 
 					10, 10, '', 'Junction', null, this.getTagsForStencil(gn, '', dt + 'junction').join(' ')),
 			this.createEdgeTemplateEntry('endArrow=block;html=1;endFill=0;edgeStyle=elbowEdgeStyle;elbow=vertical',
 					w, h, '', 'Specialization', null, this.getTagsForStencil(gn, '', dt + 'specialization').join(' ')),
@@ -146,6 +147,7 @@
 			this.createVertexTemplateEntry(am3 + 'gap', 
 					w, h, '', 'Gap', null, null, this.getTagsForStencil(gn, '', dt + 'gap').join(' '))
 		]);
+		
+		this.setCurrentSearchEntryLibrary();
 	};
-	
 })();

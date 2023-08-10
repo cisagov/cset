@@ -21,10 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
+import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diagram-components',
@@ -33,10 +35,12 @@ import { Comparer } from '../../../../helpers/comparer';
 })
 export class DiagramComponentsComponent implements OnInit {
 
-  diagramComponentList: any[] = [];
+  //diagramComponentList: any[] = [];
 
   @Output()
   componentsChange = new EventEmitter<any>();
+
+  @Input() diagramComponentList;
 
   comparer: Comparer = new Comparer();
   assetTypes: any;
@@ -44,10 +48,16 @@ export class DiagramComponentsComponent implements OnInit {
   criticality: any;
 
   /**
+   * A flattened list of all the component symbols CSET supports
+   */
+  symbols: any[];
+
+  /**
    *
    */
   constructor(
-    public diagramSvc: DiagramService
+    public diagramSvc: DiagramService,
+    public dialog: MatDialog
   ) { }
 
   /**
@@ -55,6 +65,7 @@ export class DiagramComponentsComponent implements OnInit {
    */
   ngOnInit() {
     this.getComponents();
+    this.getSymbols();
   }
 
   /**
@@ -67,8 +78,62 @@ export class DiagramComponentsComponent implements OnInit {
     });
   }
 
-  sortData(sort: Sort) {
+  /**
+   * Gets the full list of symbols so that we 
+   * can build SELECT controls for Asset Type.
+   */
+  getSymbols() {
+    this.diagramSvc.getSymbols().subscribe((g: any) => {
+      this.symbols = [];
+      g.forEach(gg => {
+        gg.symbols.forEach(s => {
+          this.symbols.push(s);
+        });
+      });
 
+      this.symbols.sort((a, b) => a.symbol_Name.localeCompare(b.symbol_Name));
+    });
+  }
+
+  /**
+   * 
+   */
+  changeAssetType(evt: any, guid: string, label: string) {
+    let componentGuid = guid;
+    let newType = evt.target.value;
+
+    let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramComponentList);
+    
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Would you like to change the label of the component '" + label + "' to '" +
+      newLabel +
+      "'?";
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        for (let i = 0; i < this.diagramComponentList.length; i++) {
+          if (this.diagramComponentList[i].componentGuid == guid) {
+            this.diagramComponentList[i].label = newLabel;
+          }
+        }
+      } else {
+        newLabel = ""; // if false, clear out newLabel
+      }
+
+      this.diagramSvc.updateAssetType(componentGuid, newType, newLabel).subscribe(
+        (r: any) =>
+          {
+            this.getComponents();
+          }
+      );
+    });
+
+  }
+
+  /**
+   * 
+   */
+  sortData(sort: Sort) {
     if (!sort.active || sort.direction === "") {
       return;
     }

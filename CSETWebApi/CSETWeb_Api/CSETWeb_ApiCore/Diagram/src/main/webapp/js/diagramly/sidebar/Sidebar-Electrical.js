@@ -3,10 +3,10 @@
 	// Adds electrical stencils
 	Sidebar.prototype.addElectricalPalette = function()
 	{
-		var s = mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;strokeWidth=1;' + mxConstants.STYLE_SHAPE;
+		var s = mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=bottom;shadow=0;dashed=0;align=center;html=1;' + mxConstants.STYLE_VERTICAL_ALIGN + '=top;' + mxConstants.STYLE_SHAPE;
 		var mea = s + '=mxgraph.electrical.abstract.';
 		var mec = 'pointerEvents=1;' + s + '=mxgraph.electrical.capacitors.';
-		var med = 'pointerEvents=1;fillColor=#000000;' + s + '=mxgraph.electrical.diodes.';
+		var med = 'pointerEvents=1;fillColor=strokeColor;' + s + '=mxgraph.electrical.diodes.';
 		var mei = 'pointerEvents=1;' + s + '=mxgraph.electrical.inductors.';
 		var mem = 'pointerEvents=1;' + s + '=mxgraph.electrical.miscellaneous.';
 		var meem = 'pointerEvents=1;' + s + '=mxgraph.electrical.electro-mechanical.';
@@ -64,38 +64,45 @@
 		var gnmetr = 'mxgraph.electrical.transmission';
 		var dtmetr = 'electrical transmission paths bus buses';
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\LogicGates');
+		
 		this.addPaletteFunctions('electrical\LogicGates', 'Electrical / Logic Gates', false,
 		[
 			this.createVertexTemplateEntry(mel + 'logic_gate;operation=and;', 100, 60, '', 'AND', null, null, this.getTagsForStencil(gnmel, 'and', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'buffer2;', 100, 60, '', 'Buffer', null, null, this.getTagsForStencil(gnmel, 'buffer', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'd_type_flip-flop;', 100, 80, '', 'D Type Flip-Flop', null, null, this.getTagsForStencil(gnmel, 'd_type_flip-flop', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'd_type_flip-flop_with_clear;', 100, 90, '', 'D Type Flip-Flop With Clear', null, null, this.getTagsForStencil(gnmel, 'd_type_flip-flop_with_clear', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'd_type_flip-flop_with_clear_2;', 100, 90, '', 'D Type Flip-Flop With Clear', null, null, this.getTagsForStencil(gnmel, 'd_type_flip-flop_with_clear', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'd_type_rs_flip-flop;', 100, 100, '', 'D Type RS Flip-Flop', null, null, this.getTagsForStencil(gnmel, 'd_type_rs_flip-flop', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'buffer2;negating=1;', 100, 60, '', 'Inverter', null, null, this.getTagsForStencil(gnmel, 'inverter', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'inverting_contact;', 5, 5, '', 'Inverting Contact', null, null, this.getTagsForStencil(gnmel, 'inverting_contact', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'inverter_2', 100, 60, '', 'Inverter', null, null, this.getTagsForStencil(gnmel, 'inverter', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'inverting_contact;', 10, 10, '', 'Inverting Contact', null, null, this.getTagsForStencil(gnmel, 'inverting_contact', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'jk_flip-flop;', 100, 80, '', 'JK Flip-Flop', null, null, this.getTagsForStencil(gnmel, 'jk_flip-flop', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'jk_flip-flop_with_clear;', 100, 90, '', 'JK Flip-Flop With Clear', null, null, this.getTagsForStencil(gnmel, 'jk_flip-flop_with_clear', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'jk_flip-flop_with_clear_2;', 100, 90, '', 'JK Flip-Flop With Clear', null, null, this.getTagsForStencil(gnmel, 'jk_flip-flop_with_clear', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'jk_flip-flop_with_sr;', 100, 100, '', 'JK Flip-Flop With SR', null, null, this.getTagsForStencil(gnmel, 'jk_flip-flop_with_sr', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'logic_gate;operation=and;negating=1;', 100, 60, '', 'NAND', null, null, this.getTagsForStencil(gnmel, 'nand not and', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'logic_gate;operation=and;negating=1;negSize=0.15;', 100, 60, '', 'NAND', null, null, this.getTagsForStencil(gnmel, 'nand not and', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'logic_gate;operation=or;', 100, 60, '', 'OR', null, null, this.getTagsForStencil(gnmel, 'or', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'logic_gate;operation=or;negating=1;', 100, 60, '', 'NOR', null, null, this.getTagsForStencil(gnmel, 'nor', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'logic_gate;operation=or;negating=1;negSize=0.15;', 100, 60, '', 'NOR', null, null, this.getTagsForStencil(gnmel, 'nor', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'rs_latch;', 100, 80, '', 'RS Latch', null, null, this.getTagsForStencil(gnmel, 'rs_latch', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'synchronous_rs_latch;', 100, 80, '', 'RS Latch (Synchronous)', null, null, this.getTagsForStencil(gnmel, 'synchronous_rs_latch', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'schmitt_trigger;', 100, 60, '', 'Schmitt Trigger', null, null, this.getTagsForStencil(gnmel, 'schmitt_trigger', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 't_type_flip-flop;', 100, 80, '', 'T Type Flip-Flop', null, null, this.getTagsForStencil(gnmel, 't_type_flip-flop', dtmel).join(' ')),
 			this.createVertexTemplateEntry(mel + 'logic_gate;operation=xor;', 100, 60, '', 'XOR', null, null, this.getTagsForStencil(gnmel, 'xor', dtmel).join(' ')),
-			this.createVertexTemplateEntry(mel + 'logic_gate;operation=xor;negating=1;', 100, 60, '', 'XNOR', null, null, this.getTagsForStencil(gnmel, 'xnor', dtmel).join(' ')),
+			this.createVertexTemplateEntry(mel + 'logic_gate;operation=xor;negating=1;negSize=0.15;', 100, 60, '', 'XNOR', null, null, this.getTagsForStencil(gnmel, 'xnor', dtmel).join(' ')),
 			this.createVertexTemplateEntry(meiecl + 'and;', 60, 80, '', 'AND (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'and', dtmeiecl).join(' ')),
-			this.createVertexTemplateEntry(meiecl + 'nand;', 66, 80, '', 'NAND (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'nand', dtmeiecl).join(' ')),
+			this.createVertexTemplateEntry(meiecl + 'nand_2;', 66, 80, '', 'NAND (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'nand', dtmeiecl).join(' ')),
 			this.createVertexTemplateEntry(meiecl + 'or;', 60, 80, '', 'OR (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'or', dtmeiecl).join(' ')),
-			this.createVertexTemplateEntry(meiecl + 'nor;', 66, 80, '', 'NOR (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'nor', dtmeiecl).join(' ')),
-			this.createVertexTemplateEntry(meiecl + 'not;', 66, 80, '', 'NOT (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'xor', dtmeiecl).join(' ')),
+			this.createVertexTemplateEntry(meiecl + 'nor_2;', 66, 80, '', 'NOR (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'nor', dtmeiecl).join(' ')),
+			this.createVertexTemplateEntry(meiecl + 'not_2;', 66, 80, '', 'NOT (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'xor', dtmeiecl).join(' ')),
 			this.createVertexTemplateEntry(meiecl + 'xor;', 60, 80, '', 'XOR (IEC)', null, null, this.getTagsForStencil(gnmeiecl, 'xor', dtmeiecl).join(' ')),
-			this.createVertexTemplateEntry('shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;strokeWidth=1;shape=mxgraph.electrical.logic_gates.dual_inline_ic;', 
+			this.createVertexTemplateEntry(
+					'shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.electrical.logic_gates.dual_inline_ic;labelNames=a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t;whiteSpace=wrap;', 
 					100, 200, 'IC', 'Dual In-Line IC', null, null, this.getTagsForStencil(gnmel, 'dual inline in line ic integrated circuit', dtmel).join(' ')),
-			this.createVertexTemplateEntry('shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;strokeWidth=1;shape=mxgraph.electrical.logic_gates.qfp_ic;', 
+			this.createVertexTemplateEntry(
+					'shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.electrical.logic_gates.qfp_ic;whiteSpace=wrap;' + 
+					'labelNames=a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,a1,b1,c1,d1,e1,f1,g1,h1,i1,j1,k1,l1,m1,n1;', 
 					200, 200, 'IC', 'Quad Flat Package IC', null, null, this.getTagsForStencil(gnmel, 'quad flat package qfp ic integrated circuit', dtmel).join(' '))
 		]);
+
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Resistors');
 
 		this.addPaletteFunctions('electrical\Resistors', 'Electrical / Resistors', false,
 		[
@@ -143,6 +150,8 @@
 					100, 40, '', 'Photoconductive Transducer (Symmetrical)', null, null, this.getTagsForStencil(gnmere, 'symmetrical_photoconductive_transducer', dtmere).join(' '))
 		]);
 		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Capacitors');
+		
 		this.addPaletteFunctions('electrical\Capacitors', 'Electrical / Capacitors', false,
 		[
 			this.createVertexTemplateEntry(mec + 'capacitor_1;', 
@@ -179,6 +188,8 @@
 					100, 130, '', 'Multiple Electrolytic Capacitor (Common Positive)', null, null, this.getTagsForStencil(gnmec, 'multiple_electrolytic_capacitor_comm_pos', dtmec).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Inductors');
+
 		this.addPaletteFunctions('electrical\Inductors', 'Electrical / Inductors', false,
 		[
 			this.createVertexTemplateEntry(mei + 'inductor_3;', 
@@ -207,7 +218,7 @@
 					100, 42, '', 'Inductor', null, null, this.getTagsForStencil(gnmei, 'inductor', dtmei).join(' ')),
 			this.createVertexTemplateEntry(mei + 'choke;', 
 					100, 200, '', 'Choke', null, null, this.getTagsForStencil(gnmei, 'choke', dtmei).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=top;shadow=0;dashed=0;align=center;fillColor=#000000;strokeColor=#000000;html=1;verticalAlign=bottom;strokeWidth=1;shape=mxgraph.electrical.inductors.variometer;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=top;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=bottom;strokeWidth=1;shape=mxgraph.electrical.inductors.variometer;', 
 					150, 88, '', 'Variometer', null, null, this.getTagsForStencil(gnmei, 'variometer', dtmei).join(' ')),
 			this.createVertexTemplateEntry(mei + 'coaxial_choke;', 
 					300, 50, '', 'Coaxial Choke', null, null, this.getTagsForStencil(gnmei, 'coaxial choke', dtmei).join(' ')),
@@ -219,7 +230,7 @@
 					92, 40, '', 'Potential Transformer', null, null, this.getTagsForStencil(gnmei, 'potential transformer', dtmei).join(' ')),
 			this.createVertexTemplateEntry(mei + 'pot_trans_3_windings;', 
 					67, 96, '', 'Pot. Trans. 3 Windings', null, null, this.getTagsForStencil(gnmei, 'potential transformer 3 three windings', dtmei).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;strokeColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.signal_sources.current_source;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.signal_sources.current_source;', 
 					40, 60, '', 'Transformer', null, null, this.getTagsForStencil(gnmei, '', dtmei).join(' ')),
 			this.createVertexTemplateEntry(mei + 'adjustable_transformer;', 
 					46, 60, '', 'Adjustable Transformer', null, null, this.getTagsForStencil(gnmei, 'adjustable_transformer', dtmei).join(' ')),
@@ -243,100 +254,174 @@
 					80, 20, '', 'Linear Coupler', null, null, this.getTagsForStencil(gnmei, 'linear coupler', dtmei).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\SwitchesRelays');
+
 		this.addPaletteFunctions('electrical\SwitchesRelays', 'Electrical / Switches and Relays', false,
 		[
-			this.createVertexTemplateEntry(meem + '2-way_switch;', 
-					75, 26, '', 'SPDT', null, null, this.getTagsForStencil(gnmeem, '2-way switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'push_switch_nc;', 
-					75, 10, '', 'Pushbutton NC', null, null, this.getTagsForStencil(gnmeem, 'push switch nc', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'push_switch_no;', 
-					75, 19, '', 'Pushbutton NO', null, null, this.getTagsForStencil(gnmeem, 'push switch no', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'simple_switch;', 
-					75, 19, '', 'SPST', null, null, this.getTagsForStencil(gnmeem, 'simple switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'switch_disconnector;', 
-					75, 19, '', 'Switch Disconnector', null, null, this.getTagsForStencil(gnmeem, 'switch disconnector', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'fuse;', 
-					75, 16, '', 'Fuse', null, null, this.getTagsForStencil(gnmeem, 'fuse', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'liquid_level_actuated;', 
-					75, 28, '', 'Liquid Level Actuated', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'liquid_level_actuated_2;', 
-					75, 32, '', 'Liquid Level Actuated', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'gas_flow_actuated;', 
-					75, 32, '', 'Gas Flow Actuated', null, null, this.getTagsForStencil(gnmeem, 'gas flow actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'flow_actuated;', 
-					75, 31, '', 'Flow Actuated', null, null, this.getTagsForStencil(gnmeem, 'flow actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'pressure_actuated;', 
-					75, 31, '', 'Pressure Actuated', null, null, this.getTagsForStencil(gnmeem, 'pressure actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'temperature_actuated;', 
-					75, 31, '', 'Temperature Actuated', null, null, this.getTagsForStencil(gnmeem, 'temperature actuated', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'safety_interlock;', 
-					75, 37, '', 'Safety Interlock', null, null, this.getTagsForStencil(gnmeem, 'safety interlock', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'temperature_switch;', 
-					75, 18, '', 'Temperature Switch', null, null, this.getTagsForStencil(gnmeem, 'temperature switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=top;shadow=0;dashed=0;align=center;fillColor=#ffffff;strokeColor=#000000;html=1;verticalAlign=bottom;strokeWidth=1;shape=mxgraph.electrical.electro-mechanical.thermostat;fontColor=#000000;fontSize=10;', 
-					75, 7, 'tº', 'Thermostat', null, null, this.getTagsForStencil(gnmeem, 'thermostat', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'limit_switch;', 
-					75, 16, '', 'Limit Switch', null, null, this.getTagsForStencil(gnmeem, 'limit switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'circuit_breaker;', 
-					75, 20, '', 'Circuit Breaker', null, null, this.getTagsForStencil(gnmeem, 'circuit breaker', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'selector_switch;', 
-					75, 66, '', 'Selector Switch', null, null, this.getTagsForStencil(gnmeem, 'selector_switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'shorting_selector;', 
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.twoWaySwitch;aspect=fixed;elSwitchState=2;', 
+					75, 26, '', 'SPDT', null, null, this.getTagsForStencil(gnmeem, '2-way switch new', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.pushbutton;aspect=fixed;elSwitchState=on;', 
+					75, 20, '', 'Pushbutton On', null, null, this.getTagsForStencil(gnmeem, 'pushbutton push button', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.pushbutton;aspect=fixed;elSwitchState=off;', 
+					75, 20, '', 'Pushbutton Off', null, null, this.getTagsForStencil(gnmeem, 'pushbutton push button', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.singleSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 20, '', 'Single Switch On', null, null, this.getTagsForStencil(gnmeem, 'single switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.singleSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 20, '', 'Single Switch Off', null, null, this.getTagsForStencil(gnmeem, 'single switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.switchDisconnector;aspect=fixed;elSwitchState=on;', 
+					75, 20, '', 'Switch Disconnector On', null, null, this.getTagsForStencil(gnmeem, 'switch disconnector', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.switchDisconnector;aspect=fixed;elSwitchState=off;', 
+					75, 20, '', 'Switch Disconnector Off', null, null, this.getTagsForStencil(gnmeem, 'switch disconnector', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.fuse2;aspect=fixed;elSwitchState=off;', 
+					75, 20, '', 'Fuse Off', null, null, this.getTagsForStencil(gnmeem, 'fuse', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.fuse2;aspect=fixed;elSwitchState=on;', 
+					75, 20, '', 'Fuse On', null, null, this.getTagsForStencil(gnmeem, 'fuse', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.liquidLevelActuatedSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 30, '', 'Liquid Level Actuated On', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.liquidLevelActuatedSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 30, '', 'Liquid Level Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.liquidLevelActuatedSwitch2;aspect=fixed;elSwitchState=on;', 
+					75, 32, '', 'Liquid Level Actuated On', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.liquidLevelActuatedSwitch2;aspect=fixed;elSwitchState=off;', 
+					75, 32, '', 'Liquid Level Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'liquid level actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.gasFlowActuatedSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 32, '', 'Gas Flow Actuated On', null, null, this.getTagsForStencil(gnmeem, 'gas flow actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.gasFlowActuatedSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 32, '', 'Gas Flow Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'gas flow actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.flowActuatedSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 31, '', 'Flow Actuated On', null, null, this.getTagsForStencil(gnmeem, 'flow actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.flowActuatedSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 31, '', 'Flow Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'flow actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.pressureActuatedSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 31, '', 'Pressure Actuated On', null, null, this.getTagsForStencil(gnmeem, 'pressure actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.pressureActuatedSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 31, '', 'Pressure Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'pressure actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.temperatureActuatedSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 31, '', 'Temperature Actuated On', null, null, this.getTagsForStencil(gnmeem, 'temperature actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.temperatureActuatedSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 31, '', 'Temperature Actuated Off', null, null, this.getTagsForStencil(gnmeem, 'temperature actuated switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.safetyInterlockSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 45, '', 'Safety Interlock On', null, null, this.getTagsForStencil(gnmeem, 'safety interlock', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.safetyInterlockSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 45, '', 'Safety Interlock Off', null, null, this.getTagsForStencil(gnmeem, 'safety interlock', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.temperatureSwitch;aspect=fixed;elSwitchState=on;', 
+					75, 18, '', 'Temperature Switch On', null, null, this.getTagsForStencil(gnmeem, 'temperature switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.temperatureSwitch;aspect=fixed;elSwitchState=off;', 
+					75, 18, '', 'Temperature Switch Off', null, null, this.getTagsForStencil(gnmeem, 'temperature switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.thermostat2;aspect=fixed;elSwitchState=on;', 
+					75, 21, '', 'Thermostat On', null, null, this.getTagsForStencil(gnmeem, 'thermostat', dtmeem).join(' ')),
+			this.createVertexTemplateEntry('html=1;shape=mxgraph.electrical.electro-mechanical.thermostat2;aspect=fixed;elSwitchState=off;', 
+					75, 21, '', 'Thermostat Off', null, null, this.getTagsForStencil(gnmeem, 'thermostat', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'limitSwitch2;elSwitchState=on;', 
+					75, 19, '', 'Limit Switch On', null, null, this.getTagsForStencil(gnmeem, 'limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'limitSwitch2;elSwitchState=off;', 
+					75, 19, '', 'Limit Switch Off', null, null, this.getTagsForStencil(gnmeem, 'limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'circuitBreaker2;elSwitchState=on;', 
+					75, 20, '', 'Circuit Breaker On', null, null, this.getTagsForStencil(gnmeem, 'circuit breaker', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'circuitBreaker2;elSwitchState=off;', 
+					75, 20, '', 'Circuit Breaker Off', null, null, this.getTagsForStencil(gnmeem, 'circuit breaker', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'selectorSwitch3Position2;elSwitchState=1;', 
+					75, 46, '', 'Selector Switch (3 positions)', null, null, this.getTagsForStencil(gnmeem, 'selector switch three position', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'selectorSwitch4Position2;elSwitchState=1;', 
+					75, 66, '', 'Selector Switch (4 positions)', null, null, this.getTagsForStencil(gnmeem, 'selector switch four position', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'selectorSwitch6Position2;elSwitchState=1;', 
+					75, 106, '', 'Selector Switch (6 positions)', null, null, this.getTagsForStencil(gnmeem, 'selector_switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'shortingSelectorSwitch2;elSwitchState=1;', 
 					60, 66, '', 'Shorting Selector', null, null, this.getTagsForStencil(gnmeem, 'shorting selector', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'proximity_limit_switch;', 
-					75, 55, '', 'Proximity Limit Switch', null, null, this.getTagsForStencil(gnmeem, 'proximity limit switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'inertia_switch;', 
-					75, 19, '', 'Inertia Switch', null, null, this.getTagsForStencil(gnmeem, 'inertia switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'pushbutton_break;', 
-					75, 54, '', 'Pushbutton Break', null, null, this.getTagsForStencil(gnmeem, 'pushbutton break', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'manual_switch;', 
-					75, 18, '', 'Manual Switch', null, null, this.getTagsForStencil(gnmeem, 'manual switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'proximityLimitSwitch2;elSwitchState=on;', 
+					75, 55, '', 'Proximity Limit Switch On', null, null, this.getTagsForStencil(gnmeem, 'proximity limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'proximityLimitSwitch2;elSwitchState=off;', 
+					75, 55, '', 'Proximity Limit Switch Off', null, null, this.getTagsForStencil(gnmeem, 'proximity limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'inertiaSwitch2;elSwitchState=on;', 
+					75, 19, '', 'Inertia Switch On', null, null, this.getTagsForStencil(gnmeem, 'inertia switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'inertiaSwitch2;elSwitchState=off;', 
+					75, 19, '', 'Inertia Switch Off', null, null, this.getTagsForStencil(gnmeem, 'inertia switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'pushbuttonBreak2;elSwitchState=on;', 
+					75, 40, '', 'Pushbutton Break On', null, null, this.getTagsForStencil(gnmeem, 'pushbutton break', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'pushbuttonBreak2;elSwitchState=off;', 
+					75, 40, '', 'Pushbutton Break Off', null, null, this.getTagsForStencil(gnmeem, 'pushbutton break', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'manualSwitch2;elSwitchState=on;', 
+					75, 18, '', 'Manual Switch On', null, null, this.getTagsForStencil(gnmeem, 'manual switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'manualSwitch2;elSwitchState=off;', 
+					75, 18, '', 'Manual Switch Off', null, null, this.getTagsForStencil(gnmeem, 'manual switch', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(meem + 'make_contact;', 
 					75, 16, '', 'Make Contact', null, null, this.getTagsForStencil(gnmeem, 'make contact', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(meem + 'break_contact;', 
 					75, 10, '', 'Break Contact', null, null, this.getTagsForStencil(gnmeem, 'break contact', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'two_way_contact;', 
+			this.createVertexTemplateEntry(meem + 'twoWayContact2;elSwitchState=neutral;', 
 					75, 30, '', 'Two Way Contact', null, null, this.getTagsForStencil(gnmeem, 'two way contact', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'passing_make_contact;', 
-					75, 23, '', 'Passing Make-Contact', null, null, this.getTagsForStencil(gnmeem, 'passing make contact', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'twoWayContact2;elSwitchState=1;', 
+					75, 30, '', 'Two Way Contact Neutral', null, null, this.getTagsForStencil(gnmeem, 'two way contact', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'twoWayContact2;elSwitchState=2;', 
+					75, 30, '', 'Two Way Contact', null, null, this.getTagsForStencil(gnmeem, 'two way contact', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'passingMakeContact2;elSwitchState=on;', 
+					75, 23, '', 'Passing Make-Contact On', null, null, this.getTagsForStencil(gnmeem, 'passing make contact', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'passingMakeContact2;elSwitchState=off;', 
+					75, 23, '', 'Passing Make-Contact Off', null, null, this.getTagsForStencil(gnmeem, 'passing make contact', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(meem + 'stay_put;', 
 					75, 7, '', 'Stay Put', null, null, this.getTagsForStencil(gnmeem, 'stay put', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'dpst;', 
-					75, 26, '', 'DPST', null, null, this.getTagsForStencil(gnmeem, 'dpst', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'spring_return;', 
-					75, 10, '', 'Spring Return', null, null, this.getTagsForStencil(gnmeem, 'spring return', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'spring_return_2;', 
-					75, 19, '', 'Spring Return', null, null, this.getTagsForStencil(gnmeem, 'spring return', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'limit_switch_no;', 
-					75, 24, '', 'Limit Switch NO', null, null, this.getTagsForStencil(gnmeem, 'limit switch no normally open', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'limit_switch_nc;', 
-					75, 13, '', 'Limit Switch NC', null, null, this.getTagsForStencil(gnmeem, 'limit switch nc normally closed', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'dpdt;', 
-					75, 32, '', 'DPDT', null, null, this.getTagsForStencil(gnmeem, 'dpdt', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + '2_position_switch;', 
+			this.createVertexTemplateEntry(meem + 'dpst2;elSwitchState=on;', 
+					75, 39, '', 'DPST On', null, null, this.getTagsForStencil(gnmeem, 'dpst', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'dpst2;elSwitchState=off;', 
+					75, 39, '', 'DPST Off', null, null, this.getTagsForStencil(gnmeem, 'dpst', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'springReturn3;elSwitchState=on;', 
+					75, 26, '', 'Spring Return On', null, null, this.getTagsForStencil(gnmeem, 'spring return', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'springReturn3;elSwitchState=off;', 
+					75, 26, '', 'Spring Return Off', null, null, this.getTagsForStencil(gnmeem, 'spring return', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'limitSwitch;elSwitchState=on;', 
+					75, 25, '', 'Limit Switch NC', null, null, this.getTagsForStencil(gnmeem, 'limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'limitSwitch;elSwitchState=off;', 
+					75, 25, '', 'Limit Switch NO', null, null, this.getTagsForStencil(gnmeem, 'limit switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'dpdt3;elSwitchState=1;', 
+					58, 62, '', 'DPDT', null, null, this.getTagsForStencil(gnmeem, 'dpdt', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'dpdt3;elSwitchState=2;', 
+					58, 62, '', 'DPDT', null, null, this.getTagsForStencil(gnmeem, 'dpdt', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'twoPositionSwitch2;elSwitchState=1;', 
 					75, 70, '', '2-Position Switch', null, null, this.getTagsForStencil(gnmeem, '2 position switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + '3_position_switch;', 
+			this.createVertexTemplateEntry(meem + 'twoPositionSwitch2;elSwitchState=2;', 
+					75, 70, '', '2-Position Switch', null, null, this.getTagsForStencil(gnmeem, '2 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'threePositionSwitch2;elSwitchState=1;', 
 					60, 60, '', '3-Position Switch', null, null, this.getTagsForStencil(gnmeem, '3 position switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + '4_position_switch;', 
+			this.createVertexTemplateEntry(meem + 'threePositionSwitch2;elSwitchState=2;', 
+					60, 60, '', '3-Position Switch', null, null, this.getTagsForStencil(gnmeem, '3 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'threePositionSwitch2;elSwitchState=3;', 
+					60, 60, '', '3-Position Switch', null, null, this.getTagsForStencil(gnmeem, '3 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'fourPositionSwitch2;elSwitchState=1;', 
 					75, 70, '', '4-Position Switch', null, null, this.getTagsForStencil(gnmeem, '4 position switch', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'pushbutton_make;', 
+			this.createVertexTemplateEntry(meem + 'fourPositionSwitch2;elSwitchState=2;', 
+					75, 70, '', '4-Position Switch', null, null, this.getTagsForStencil(gnmeem, '4 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'fourPositionSwitch2;elSwitchState=3;', 
+					75, 70, '', '4-Position Switch', null, null, this.getTagsForStencil(gnmeem, '4 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'fourPositionSwitch2;elSwitchState=4;', 
+					75, 70, '', '4-Position Switch', null, null, this.getTagsForStencil(gnmeem, '4 position switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'pushbuttonMakeSwitch2;elSwitchState=1;', 
 					75, 53, '', 'Pushbutton Make', null, null, this.getTagsForStencil(gnmeem, 'pushbutton make', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'pushbutton_2_circuit;', 
+			this.createVertexTemplateEntry(meem + 'pushbuttonMakeSwitch2;elSwitchState=2;', 
+					75, 53, '', 'Pushbutton Make', null, null, this.getTagsForStencil(gnmeem, 'pushbutton make', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'pushbuttonTwoCircuitSwitch2;elSwitchState=1;', 
 					75, 73, '', 'Pushbutton 2-Circuit', null, null, this.getTagsForStencil(gnmeem, 'pushbutton 2 circuit', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'time_delay_make;', 
-					75, 31, '', 'Time Delay Make', null, null, this.getTagsForStencil(gnmeem, 'time delay make', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'time_delay_break;', 
+			this.createVertexTemplateEntry(meem + 'pushbuttonTwoCircuitSwitch2;elSwitchState=2;', 
+					75, 73, '', 'Pushbutton 2-Circuit', null, null, this.getTagsForStencil(gnmeem, 'pushbutton 2 circuit', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'timeDelaySwitch;elSwitchState=on;', 
 					75, 32, '', 'Time Delay Break', null, null, this.getTagsForStencil(gnmeem, 'time delay break', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'time_delay_make_2;', 
+			this.createVertexTemplateEntry(meem + 'timeDelaySwitch;elSwitchState=off;', 
+					75, 32, '', 'Time Delay Make', null, null, this.getTagsForStencil(gnmeem, 'time delay make', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'timeDelaySwitch2;elSwitchState=off;', 
 					75, 36, '', 'Time Delay Make', null, null, this.getTagsForStencil(gnmeem, 'time delay make', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'time_delay_break_2;', 
-					75, 30, '', 'Time Delay Break', null, null, this.getTagsForStencil(gnmeem, 'time delay break', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'isolator;', 
-					75, 20, '', 'Isolator', null, null, this.getTagsForStencil(gnmeem, 'isolator', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'changeover_contact;', 
+			this.createVertexTemplateEntry(meem + 'timeDelaySwitch2;elSwitchState=on;', 
+					75, 36, '', 'Time Delay Break', null, null, this.getTagsForStencil(gnmeem, 'time delay break', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'isolatorSwitch2;elSwitchState=off;', 
+					75, 20, '', 'Isolator Off', null, null, this.getTagsForStencil(gnmeem, 'isolator', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'isolatorSwitch2;elSwitchState=on;', 
+					75, 20, '', 'Isolator On', null, null, this.getTagsForStencil(gnmeem, 'isolator', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'changeoverContactSwitch2;elSwitchState=1;', 
 					75, 20, '', 'Changeover Contact', null, null, this.getTagsForStencil(gnmeem, 'changeover contact', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(meem + 'reed_switch;', 
-					75, 20, '', 'Reed Switch', null, null, this.getTagsForStencil(gnmeem, 'reed switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'changeoverContactSwitch2;elSwitchState=2;', 
+					75, 20, '', 'Changeover Contact', null, null, this.getTagsForStencil(gnmeem, 'changeover contact', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'reedSwitch2;elSwitchState=on;', 
+					75, 20, '', 'Reed Switch On', null, null, this.getTagsForStencil(gnmeem, 'reed switch', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(meem + 'reedSwitch2;elSwitchState=off;', 
+					75, 20, '', 'Reed Switch Off', null, null, this.getTagsForStencil(gnmeem, 'reed switch', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(meem + 'relay_coil;', 
 					70, 35, '', 'Relay Coil', null, null, this.getTagsForStencil(gnmeem, 'relay coil', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(meem + 'relay;', 
@@ -355,6 +440,8 @@
 					50, 90, '', 'Mercury Switch', null, null, this.getTagsForStencil(gnmeem, 'mercury switch', dtmeem).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Diodes');
+		
 		this.addPaletteFunctions('electrical\Diodes', 'Electrical / Diodes', false,
 		[
 			this.createVertexTemplateEntry(med + 'diode;', 
@@ -385,84 +472,122 @@
 					100, 60, '', 'Transorb 2', null, null, this.getTagsForStencil(gnmed, 'transorb_2', dtmed).join(' '))
 		]);
 		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Sources');
+		
 		this.addPaletteFunctions('electrical\Sources', 'Electrical / Sources', false,
 		[
-			this.createVertexTemplateEntry(mess + 'ac_source;', 
-					60, 60, '', 'AC', null, null, this.getTagsForStencil(gnmess, 'ac_source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=ac;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=dc1;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=dc3;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=none;elSourceType=dependent;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=dc2;elSourceType=dependent;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSourceType=dependent;elSignalType=dc3;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=noise;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=ideal;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=expSquib;', 
+					60, 60, '', 'Source', null, null, this.getTagsForStencil(gnmess, 'source', dtmess).join(' ')),
 			this.createVertexTemplateEntry(mess + 'current_source;', 
 					40, 60, '', 'Current', null, null, this.getTagsForStencil(gnmess, 'current_source', dtmess).join(' ')),
 			this.createVertexTemplateEntry(mess + 'dc_source_1;', 
 					70, 75, '', 'DC', null, null, this.getTagsForStencil(gnmess, 'dc_source_1', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'dc_source_2;', 
-					60, 60, '', 'DC', null, null, this.getTagsForStencil(gnmess, 'dc_source_2', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'dc_source_3;', 
-					60, 60, '', 'DC', null, null, this.getTagsForStencil(gnmess, 'dc_source_3', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'dependent_source_1;', 
-					60, 60, '', 'Dependent', null, null, this.getTagsForStencil(gnmess, 'dependent_source_1', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'dependent_source_2;', 
-					60, 60, '', 'Dependent', null, null, this.getTagsForStencil(gnmess, 'dependent_source_2', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'dependent_source_3;', 
-					60, 60, '', 'Dependent', null, null, this.getTagsForStencil(gnmess, 'dependent_source_3', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'noise_source;', 
-					60, 60, '', 'Noise', null, null, this.getTagsForStencil(gnmess, 'noise_source', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'ideal_source;', 
-					60, 60, '', 'Ideal Source', null, null, this.getTagsForStencil(gnmess, 'ideal source', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mess + 'explosive_squib', 
-					60, 60, '', 'Explosive Squib', null, null, this.getTagsForStencil(gnmess, 'explosive squib', dtmem).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#000000;strokeColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.monocell_battery;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.monocell_battery;', 
 					100, 60, '', 'Accumulator / Monocell Battery', null, null, this.getTagsForStencil(gnmess, 'accumulator monocell battery single cell', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'batteryStack;', 
 					100, 60, '', 'Battery Stack', null, null, this.getTagsForStencil(gnmess, 'battery stack', dtmess).join(' ')),
-			this.createVertexTemplateEntry('pointerEvents=1;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#000000;strokeColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.multicell_battery_tapped;', 
-					100, 70, '', 'Multicell Battery Tapped', null, null, this.getTagsForStencil(gnmess, 'accumulator multicell battery tapped multi multiple cell', dtmem).join(' '))
+			this.createVertexTemplateEntry('pointerEvents=1;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.multicell_battery_tapped;', 
+					100, 70, '', 'Multicell Battery Tapped', null, null, this.getTagsForStencil(gnmess, 'accumulator multicell battery tapped multi multiple cell', dtmem).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=square;', 
+					60, 60, '', 'Source, Square', null, null, this.getTagsForStencil(gnmess, 'source square', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=triangular;', 
+					60, 60, '', 'Source, Triangular', null, null, this.getTagsForStencil(gnmess, 'source triangular', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=sawtooth;', 
+					60, 60, '', 'Source, Sawtooth', null, null, this.getTagsForStencil(gnmess, 'source sawtooth', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=pulse;', 
+					60, 60, '', 'Source, Pulse', null, null, this.getTagsForStencil(gnmess, 'source pulse', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=invPulse;', 
+					60, 60, '', 'Source, Inverse Pulse', null, null, this.getTagsForStencil(gnmess, 'source inverse pulse', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=chopSquare;', 
+					60, 60, '', 'Source, Chopped Square', null, null, this.getTagsForStencil(gnmess, 'source chopped square', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=stepOn;', 
+					60, 60, '', 'Source, Step On', null, null, this.getTagsForStencil(gnmess, 'source step on', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=stepOff;', 
+					60, 60, '', 'Source, Step Off', null, null, this.getTagsForStencil(gnmess, 'source step off', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mess + 'source;aspect=fixed;points=[[0.5,0,0],[1,0.5,0],[0.5,1,0],[0,0.5,0]];elSignalType=dc2;', 
+					60, 60, '', 'Source, DC', null, null, this.getTagsForStencil(gnmess, 'source dc vertical', dtmess).join(' '))
 		]);
+		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Transistors');
 		
 		this.addPaletteFunctions('electrical\Transistors', 'Electrical / Transistors', false,
 		[
 			this.createVertexTemplateEntry(met + 'npn_transistor_1;', 
 					95, 100, '', 'BJT (NPN)', null, null, this.getTagsForStencil(gnmet, 'npn_transistor_1', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'npn_transistor_5;', 
+					64, 100, '', 'BJT (NPN)', null, null, this.getTagsForStencil(gnmet, 'npn_transistor_5', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'nigbt;', 
+					64, 100, '', 'NIGBT', null, null, this.getTagsForStencil(gnmet, 'nigbt', dtmet).join(' ')),
 			this.createVertexTemplateEntry(met + 'pnp_transistor_1;', 
 					95, 100, '', 'BJT (PNP)', null, null, this.getTagsForStencil(gnmet, 'pnp_transistor_1', dtmet).join(' ')),
-			this.createVertexTemplateEntry(met + 'n-channel_jfet_1;', 
+			this.createVertexTemplateEntry(met + 'pnp_transistor_5;', 
+					64, 100, '', 'BJT (PNP)', null, null, this.getTagsForStencil(gnmet, 'pnp_transistor_5', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'pigbt;',
+					64, 100, '', 'PIGBT', null, null, this.getTagsForStencil(gnmet, 'pigbt', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'n-channel_jfet_1;',
 					95, 100, '', 'N Channel JFET', null, null, this.getTagsForStencil(gnmet, 'n-channel_jfet_1', dtmet).join(' ')),
-			this.createVertexTemplateEntry(met + 'p-channel_jfet_1;', 
+			this.createVertexTemplateEntry(met + 'p-channel_jfet_1;',
 					95, 100, '', 'P Channel JFET', null, null, this.getTagsForStencil(gnmet, 'p-channel_jfet_1', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'n-channel_mosfet_1;', 
+			this.createVertexTemplateEntry(mef1 + 'n-channel_mosfet_1;',
 					95, 100, '', 'MOSFET (N)', null, null, this.getTagsForStencil(gnmet, 'n-channel_mosfet_1', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'p-channel_mosfet_1;', 
+			this.createVertexTemplateEntry(mef1 + 'p-channel_mosfet_1;',
 					95, 100, '', 'MOSFET (P)', null, null, this.getTagsForStencil(gnmet, 'p-channel_mosfet_1', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'mosfet_ic_n;', 
+			this.createVertexTemplateEntry(mef1 + 'mosfet_ic_n;',
 					95, 100, '', 'NMOS', null, null, this.getTagsForStencil(gnmet, 'mosfet_ic_n', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'mosfet_ic_p;', 
+			this.createVertexTemplateEntry(mef1 + 'mosfet_ic_p;',
 					95, 100, '', 'PMOS', null, null, this.getTagsForStencil(gnmet, 'mosfet_ic_p', dtmet).join(' ')),
 			this.createVertexTemplateEntry(mef1 + 'mosfet_n_no_bulk;', 
 					95, 100, '', 'MOSFET No Bulk (N)', null, null, this.getTagsForStencil(gnmet, 'mosfet_n_no_bulk', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'mosfet_p_no_bulk;', 
+			this.createVertexTemplateEntry(mef1 + 'mosfet_p_no_bulk;',
 					95, 100, '', 'MOSFET No Bulk (P)', null, null, this.getTagsForStencil(gnmet, 'mosfet_p_no_bulk', dtmet).join(' ')),
 			this.createVertexTemplateEntry(mef1 + 'dual_gate_mosfet_n;', 
 					95, 100, '', 'Dual Gate MOSFET (N)', null, null, this.getTagsForStencil(gnmet, 'dual_gate_mosfet_n', dtmet).join(' ')),
-			this.createVertexTemplateEntry(mef1 + 'dual_gate_mosfet_p;', 
+			this.createVertexTemplateEntry(mef1 + 'dual_gate_mosfet_p;',
 					95, 100, '', 'Dual Gate MOSFET (P)', null, null, this.getTagsForStencil(gnmet, 'dual_gate_mosfet_p', dtmet).join(' ')),
 			this.createVertexTemplateEntry(met + 'nmos;pointerEvents=1;', 
 					60, 100, '', 'NMOS', null, null, this.getTagsForStencil(gnmet, 'nmos', dtmet).join(' ')),
-			this.createVertexTemplateEntry(met + 'pmos;pointerEvents=1;', 
-					60, 100, '', 'PMOS', null, null, this.getTagsForStencil(gnmet, 'pmos', dtmet).join(' '))
+			this.createVertexTemplateEntry(met + 'nmos_bulk;pointerEvents=1;', 
+					60, 100, '', 'NMOS with Bulk', null, null, this.getTagsForStencil(gnmet, 'nmos bulk', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'pmos;pointerEvents=1;',
+					60, 100, '', 'PMOS', null, null, this.getTagsForStencil(gnmet, 'pmos', dtmet).join(' ')),
+			this.createVertexTemplateEntry(met + 'pmos_bulk;pointerEvents=1;', 
+					60, 100, '', 'PMOS with Bulk', null, null, this.getTagsForStencil(gnmet, 'pmos bulk', dtmet).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Instruments');
+		
 		this.addPaletteFunctions('electrical\Instruments', 'Electrical / Instruments', false,
 		[
-			this.createVertexTemplateEntry(mein + 'ampermeter;', 
-					90, 90, '', 'Ampermeter', null, null, this.getTagsForStencil(gnmein, 'ampermeter', dtmein).join(' ')),
+			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;aspect=fixed;fontSize=50;', 
+					90, 90, 'A', 'Ammeter', null, null, this.getTagsForStencil(gnmein, 'ampermeter ammeter', dtmein).join(' ')),
 			this.createVertexTemplateEntry(mein + 'galvanometer;', 
 					90, 90, '', 'Galvanometer', null, null, this.getTagsForStencil(gnmein, 'galvanometer', dtmein).join(' ')),
 			this.createVertexTemplateEntry(mein + 'oscilloscope;', 
 					90, 90, '', 'Oscilloscope', null, null, this.getTagsForStencil(gnmein, 'oscilloscope', dtmein).join(' ')),
 			this.createVertexTemplateEntry(mein + 'signal_generator;', 
 					90, 90, '', 'Signal Generator', null, null, this.getTagsForStencil(gnmein, 'signal_generator', dtmein).join(' ')),
-			this.createVertexTemplateEntry(mein + 'voltmeter;', 
-					90, 90, '', 'Voltmeter', null, null, this.getTagsForStencil(gnmein, 'voltmeter', dtmein).join(' '))
+			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;aspect=fixed;fontSize=50;', 
+					90, 90, 'V', 'Voltmeter', null, null, this.getTagsForStencil(gnmein, 'ampermeter ammeter', dtmein).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Misc');
+		
 		this.addPaletteFunctions('electrical\Misc', 'Electrical / Misc', false,
 		[
 			this.createVertexTemplateEntry(mer + 'aerial_-_antenna_1;', 
@@ -473,9 +598,9 @@
 					64.8, 69.78, '', 'Loop Antenna', null, null, this.getTagsForStencil(gnmer, 'loop_antenna', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'loop_antenna', 
 					100, 100, '', 'Loop Antenna', null, null, this.getTagsForStencil(gnmess, 'loop antenna', dtmem).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.electro-mechanical.motor_1;html=1;shadow=0;dashed=0;fillColor=#ffffff;align=center;fontSize=30;strokeColor=#000000;strokeWidth=1;', 
-					100, 60, 'M', 'Electrical Motor', null, null, this.getTagsForStencil(gnmeem, 'motor_1', dtmeem).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.electro-mechanical.motor_2;html=1;shadow=0;dashed=0;fillColor=#ffffff;align=center;fontSize=30;strokeColor=#000000;strokeWidth=1;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;aspect=fixed;fontSize=35;', 
+					60, 60, 'M', 'Electrical Motor', null, null, this.getTagsForStencil(gnmeem, 'motor_1', dtmeem).join(' ')),
+			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.electro-mechanical.motor_2;html=1;shadow=0;dashed=0;align=center;fontSize=30;strokeWidth=1;', 
 					100, 60, '', 'Motor Armature', null, null, this.getTagsForStencil(gnmeem, 'motor_2', dtmeem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'co-ax;', 
 					40, 60, '', 'Co-Ax', null, null, this.getTagsForStencil(gnmem, 'co-ax', dtmem).join(' ')),
@@ -510,10 +635,10 @@
 			this.createVertexTemplateEntry(mea + 'dac;', 
 					70, 46, '', 'DAC', null, null, this.getTagsForStencil(gnmea, 'dac', dtmea).join(' ')),
 			this.createVertexTemplateEntry(
-					'shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;strokeWidth=1;shape=mxgraph.electrical.abstract.mux2;',
+					'shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.electrical.abstract.mux2;whiteSpace=wrap;',
 					80, 120, 'Mux', 'Mux', null, null, this.getTagsForStencil(gnmea, 'mux', dtmea).join(' ')),
 			this.createVertexTemplateEntry(
-					'shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;strokeWidth=1;shape=mxgraph.electrical.abstract.mux2;operation=demux;',
+					'shadow=0;dashed=0;align=center;html=1;strokeWidth=1;shape=mxgraph.electrical.abstract.mux2;operation=demux;whiteSpace=wrap;',
 					80, 120, 'Demux', 'Demux', null, null, this.getTagsForStencil(gnmea, 'mux', dtmea).join(' ')),
 			this.createVertexTemplateEntry(mea + 'operational_amp_1;', 
 					98, 90, '', 'Operational Amp', null, null, this.getTagsForStencil(gnmea, 'operational_amp_1', dtmea).join(' ')),
@@ -529,7 +654,7 @@
 					52, 46, '', 'Quantizer', null, null, this.getTagsForStencil(gnmea, 'quantizer', dtmea).join(' ')),
 			this.createVertexTemplateEntry(mea + 'delta;', 
 					50, 50, '', 'Delta', null, null, this.getTagsForStencil(gnmea, 'delta', dtmea).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.abstract.function;html=1;shadow=0;dashed=0;fillColor=#ffffff;align=center;strokeColor=#000000;strokeWidth=1;fontSize=24', 
+			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.abstract.function;html=1;shadow=0;dashed=0;align=center;strokeWidth=1;fontSize=24', 
 					50, 50, 'fn', 'Function', null, null, this.getTagsForStencil(gnmea, 'function', dtmea).join(' ')),
 			this.createVertexTemplateEntry(mea + 'integrator;', 
 					50, 50, '', 'Integrator', null, null, this.getTagsForStencil(gnmea, 'integrator', dtmea).join(' ')),
@@ -547,7 +672,7 @@
 					52, 46, '', 'Highpass Filter', null, null, this.getTagsForStencil('mxgraph.electrical.logic_gates', 'highpass_filter', '').join(' ')),
 			this.createVertexTemplateEntry(s + '=mxgraph.electrical.logic_gates.lowpass_filter;', 
 					52, 46, '', 'Lowpass Filter', null, null, this.getTagsForStencil('mxgraph.electrical.logic_gates', 'lowpass_filter', '').join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.abstract.thermistor_with_independent_integral_heater;html=1;shadow=0;dashed=0;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;align=center;overflow=fill;fontSize=12;', 
+			this.createVertexTemplateEntry(mxConstants.STYLE_SHAPE + '=mxgraph.electrical.abstract.thermistor_with_independent_integral_heater;html=1;shadow=0;dashed=0;strokeWidth=1;align=center;overflow=fill;fontSize=12;', 
 					100, 94.25, 
 					'<table cellpadding="0" cellspacing="0" style="width:100%;height:100%;">' +
 					'<tr height="45%">' +
@@ -560,16 +685,16 @@
 					'Thermistor With Independent Integral Heater', null, null, this.getTagsForStencil(gnmea, 'thermistor_with_independent_integral_heater', dtmea).join(' ')),
 			this.createVertexTemplateEntry(mea + 'voltage_regulator;', 
 					70, 58, '', 'Voltage Regulator', null, null, this.getTagsForStencil(gnmea, 'voltage_regulator', dtmea).join(' ')),
-			this.createVertexTemplateEntry(mess + 'vdd;fontSize=24;', 
+			this.createVertexTemplateEntry(mess + 'vss2;fontSize=24;flipV=1;', 
+					60, 40, 
+					'V<sub>ss</sub>', 'Vss', null, null, this.getTagsForStencil(gnmess, 'vss', dtmess).join(' ')),
+			this.createVertexTemplateEntry(mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=top;' + mxConstants.STYLE_VERTICAL_ALIGN + '=bottom;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.vdd;shadow=0;dashed=0;align=center;strokeWidth=1;fontSize=24;html=1;flipV=1;', 
 					60, 40, 
 					'V<sub>dd</sub>', 'Vdd', null, null, this.getTagsForStencil(gnmess, 'vdd', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=top;' + mxConstants.STYLE_VERTICAL_ALIGN + '=bottom;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.vss2;shadow=0;dashed=0;fillColor=#ffffff;align=center;strokeColor=#000000;strokeWidth=1;fontSize=24;html=1;', 
-					60, 40, 
-					'V<sub>ss</sub>', 'Vss', null, null, this.getTagsForStencil(gnmess, 'vss2', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=top;' + mxConstants.STYLE_VERTICAL_ALIGN + '=bottom;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.current_flow;shadow=0;dashed=0;fillColor=#ffffff;align=center;strokeColor=#000000;strokeWidth=1;fontSize=10;html=1;', 
+			this.createVertexTemplateEntry(mxConstants.STYLE_VERTICAL_LABEL_POSITION + '=top;' + mxConstants.STYLE_VERTICAL_ALIGN + '=bottom;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.current_flow;shadow=0;dashed=0;align=center;strokeWidth=1;fontSize=10;html=1;', 
 					70, 10, 
 					'5 mA',	'Current Flow', null, null, this.getTagsForStencil(gnmess, 'current_flow', dtmess).join(' ')),
-			this.createVertexTemplateEntry(mxConstants.STYLE_LABEL_POSITION + '=right;' + mxConstants.STYLE_ALIGN + '=left;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.voltage;shadow=0;dashed=0;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;fontSize=10;html=1;', 
+			this.createVertexTemplateEntry(mxConstants.STYLE_LABEL_POSITION + '=right;' + mxConstants.STYLE_ALIGN + '=left;' + mxConstants.STYLE_SHAPE + '=mxgraph.electrical.signal_sources.voltage;shadow=0;dashed=0;strokeWidth=1;fontSize=10;html=1;', 
 					10, 70, 
 					'1.2 V', 'Voltage', null, null, this.getTagsForStencil(gnmess, 'voltage', dtmess).join(' ')),
 			this.createVertexTemplateEntry(mess + 'equipotential;', 
@@ -588,9 +713,9 @@
 					20, 70, '', 'Permanent Magnet', null, null, this.getTagsForStencil(gnmess, 'permanent magnet', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'thermal_element', 
 					100, 32, '', 'Thermal Element', null, null, this.getTagsForStencil(gnmess, 'thermal element', dtmem).join(' ')),
-			this.createVertexTemplateEntry(mem + 'igniter_plug', 
+			this.createVertexTemplateEntry(mem + 'igniter_plug2', 
 					72, 39, '', 'Igniter Plug', null, null, this.getTagsForStencil(gnmess, 'igniter plug', dtmem).join(' ')),
-			this.createVertexTemplateEntry('shape=mxgraph.arrows2.arrow;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;verticalAlign=top;strokeWidth=1;dy=0;dx=10;notch=0;', 
+			this.createVertexTemplateEntry('shape=mxgraph.arrows2.arrow;verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;dy=0;dx=10;notch=0;', 
 					100, 30, '', 'Pickup Head', null, null, this.getTagsForStencil(gnmess, 'pickup head', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'squib_ignitor', 
 					100, 100, '', 'Squib Ignitor', null, null, this.getTagsForStencil(gnmess, 'squib ignitor', dtmem).join(' ')),
@@ -602,11 +727,11 @@
 					80, 82, '', 'Thermopile', null, null, this.getTagsForStencil(gnmess, 'thermopile', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'indicator', 
 					60, 60, '', 'Indicator', null, null, this.getTagsForStencil(gnmess, 'indicator', dtmem).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.surge_protector;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.surge_protector;', 
 					70, 20, '', 'Surge Protector', null, null, this.getTagsForStencil(gnmess, 'surge protector', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'surge_protector_2;', 
 					70, 24, '', 'Surge Protector', null, null, this.getTagsForStencil(gnmess, 'surge protector', dtmem).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;verticalAlign=top;strokeWidth=1;shape=rect;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=rect;', 
 					130, 50, '', 'Material', null, null, this.getTagsForStencil(gnmess, 'material', dtmem).join(' ')),
 			this.createVertexTemplateEntry(mem + 'sensing_link_squib', 
 					130, 40, '', 'Sensing Link Squib', null, null, this.getTagsForStencil(gnmess, 'sensing link squib', dtmem).join(' ')),
@@ -616,12 +741,12 @@
 					80, 50, '', 'Buzzer', null, null, this.getTagsForStencil(gnmess, 'buzzer', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'adapter', 
 					100, 40, '', 'Adapter', null, null, this.getTagsForStencil(gnmess, 'adapter', dtmer).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;verticalAlign=top;strokeWidth=1;shape=ellipse;perimeter=ellipsePerimeter;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=ellipse;perimeter=ellipsePerimeter;', 
 					15, 15, '', 'Circuit Terminal', null, null, this.getTagsForStencil(gnmess, 'circuit terminal', dtmer).join(' ')),
-			this.createEdgeTemplateEntry('endArrow=open;html=1;strokeColor=#000000;strokeWidth=1;endFill=0;endSize=20;',
+			this.createEdgeTemplateEntry('endArrow=open;html=1;strokeWidth=1;endFill=0;endSize=20;',
 					100, 0, '', 'M/F Contact', null, this.getTagsForStencil(gnmess, '', 'mf contact').join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#000000;strokeColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.mf_contact_2', 
-					100, 10, '', 'MF Contact 2', null, null, this.getTagsForStencil(gnmess, 'mf contact', dtmer).join(' ')),
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.miscellaneous.mf_contact_2', 
+					100, 10, '', 'M/F Contact 2', null, null, this.getTagsForStencil(gnmess, 'mf contact', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'terminal_board', 
 					75, 150, '', 'Terminal Board', null, null, this.getTagsForStencil(gnmess, 'terminal board', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'cable_termination', 
@@ -634,9 +759,9 @@
 					53, 24, '', '2-Conductor Plug', null, null, this.getTagsForStencil(gnmess, '2 conductor plug two', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + '3_conductor_plug', 
 					53, 24, '', '3 Conductor Plug', null, null, this.getTagsForStencil(gnmess, '3 conductor plug', dtmer).join(' ')),
-			this.createVertexTemplateEntry(mem + 'normalled_jacks', 
+			this.createVertexTemplateEntry(mem + 'normalled_jacks2', 
 					230, 65, '', 'Normalled Jacks', null, null, this.getTagsForStencil(gnmess, 'normalled jacks', dtmer).join(' ')),
-			this.createVertexTemplateEntry(mem + 'normalled_jack', 
+			this.createVertexTemplateEntry(mem + 'normalled_jack2', 
 					110, 65, '', 'Normalled Jack', null, null, this.getTagsForStencil(gnmess, 'normalled jack', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'coaxial_outside_conductor', 
 					300, 150, '', 'Coaxial Outside Conductor', null, null, this.getTagsForStencil(gnmess, 'coaxial outside conductor', dtmer).join(' ')),
@@ -669,8 +794,12 @@
 			this.createVertexTemplateEntry(mem + 'f_m_3_conductor_4', 
 					100, 100, '', 'F/M 3 Conductor', null, null, this.getTagsForStencil(gnmess, 'fm 2 conductor', dtmer).join(' ')),
 			this.createVertexTemplateEntry(mem + 'f_m_3_conductor_5', 
-					100, 100, '', 'F/M 3 Conductor', null, null, this.getTagsForStencil(gnmess, 'fm 2 conductor', dtmer).join(' '))
+					100, 100, '', 'F/M 3 Conductor', null, null, this.getTagsForStencil(gnmess, 'fm 2 conductor', dtmer).join(' ')),
+			this.createVertexTemplateEntry(mem + 'plug_socket_connection', 
+					20, 20, '', 'Plug-Socket Connection', null, null, this.getTagsForStencil(gnmess, 'Plug Socket Connection', dtmer).join(' '))
 		]);
+		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Audio');
 		
 		this.addPaletteFunctions('electrical\Audio', 'Electrical / Audio', false,
 		[
@@ -694,6 +823,8 @@
 					47, 60, '', 'Bell', null, null, this.getTagsForStencil(gnmeem, 'bell', dtmeem).join(' '))
 		]);
 		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\PlcLadder');
+		
 		this.addPaletteFunctions('electrical\PlcLadder', 'Electrical / PLC Ladder', false,
 		[
 			this.createVertexTemplateEntry(mep + 'contact;', 
@@ -709,6 +840,8 @@
 			this.createVertexTemplateEntry(mep + 'output_2;', 
 					50, 25, '', 'Output', null, null, this.getTagsForStencil(gnmep, 'output_2', dtmep).join(' '))
 		]);
+		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Optical');
 		
 		this.addPaletteFunctions('electrical\Optical', 'Electrical / Optical', false,
 		[
@@ -742,6 +875,8 @@
 					100, 70, '', 'Solar Cell', null, null, this.getTagsForStencil(gnmeoe, 'solar_cell', dtmeoe).join(' '))
 		]);
 
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\VacuumTubes');
+		
 		this.addPaletteFunctions('electrical\VacuumTubes', 'Electrical / Vacuum Tubes', false,
 		[
 			this.createVertexTemplateEntry(metd + 'diode;', 
@@ -759,6 +894,8 @@
 			this.createVertexTemplateEntry(metd + 'photocell;', 
 					70, 87, '', 'Photocell', null, null, this.getTagsForStencil(gnmetd, 'photocell', dtmetd).join(' '))
 		]);
+		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Waveforms');
 		
 		this.addPaletteFunctions('electrical\Waveforms', 'Electrical / Waveforms', false,
 		[
@@ -780,9 +917,11 @@
 					90, 90, '', 'Step', null, null, this.getTagsForStencil(gnmew, 'step_2', dtmew).join(' '))
 		]);
 		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\RotMech');
+		
 		this.addPaletteFunctions('electrical\RotMech', 'Electrical / Rotating Equipment & Mechanical Functions', false,
 		[
-			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;fontSize=32;fontColor=#000000;perimeter=ellipsePerimeter;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;fontSize=32;perimeter=ellipsePerimeter;', 
 					100, 100, 'M', 'Rotating Machine', null, null, this.getTagsForStencil(gnmerm, 'rotating machine', dtmerm).join(' ')),
 			this.createVertexTemplateEntry(merm + 'armature;pointerEvents=1;', 
 					100, 100, '', 'Armature', null, null, this.getTagsForStencil(gnmerm, 'armature', dtmerm).join(' ')),
@@ -794,11 +933,11 @@
 					100, 100, '', 'Winding Connection', null, null, this.getTagsForStencil(gnmerm, 'winding connection', dtmerm).join(' ')),
 			this.createVertexTemplateEntry(merm + 'synchro;', 
 					80, 100, '', 'Synchro', null, null, this.getTagsForStencil(gnmerm, 'synchro', dtmerm).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;html=1;verticalAlign=top;strokeWidth=1;shape=trapezoid;perimeter=none;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=trapezoid;perimeter=none;', 
 					75, 25, '', 'Brake', null, null, this.getTagsForStencil(gnmerm, 'brake', dtmerm).join(' ')),
 			this.createVertexTemplateEntry(merm + 'gearing;pointerEvents=1;', 
 					100, 64, '', 'Gearing', null, null, this.getTagsForStencil(gnmerm, 'gearing', dtmerm).join(' ')),
-			this.createVertexTemplateEntry(merm + 'verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.rot_mech.rotation;', 
+			this.createVertexTemplateEntry(merm + 'verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=strokeColor;html=1;verticalAlign=top;strokeWidth=1;shape=mxgraph.electrical.rot_mech.rotation;', 
 					69, 54, '', 'Rotation', null, null, this.getTagsForStencil(gnmerm, 'rotation', dtmerm).join(' ')),
 			this.createVertexTemplateEntry(merm + 'clutch;pointerEvents=1;', 
 					100, 20, '', 'Clutch', null, null, this.getTagsForStencil(gnmerm, 'clutch', dtmerm).join(' ')),
@@ -821,7 +960,8 @@
 		]);
 		
 		var sb = this;
-		
+		this.setCurrentSearchEntryLibrary('electrical', 'electrical\Transmission');
+
 		var fns =
 		[
 			this.createVertexTemplateEntry(metr + 'bus_width;pointerEvents=1;', 
@@ -832,13 +972,13 @@
 					130, 130, '', 'Cable Group', null, null, this.getTagsForStencil(gnmetr, 'cable group', dtmetr).join(' ')),
 			this.createVertexTemplateEntry(metr + 'overground_enclosure;', 
 					130, 136, '', 'Overground Enclosure', null, null, this.getTagsForStencil(gnmetr, 'overground enclosure', dtmetr).join(' ')),
-			this.createVertexTemplateEntry(metr + 'optical_fiber;', 
+			this.createVertexTemplateEntry(metr + 'optical_fiber2;', 
 					130, 80, '', 'Optical Fiber', null, null, this.getTagsForStencil(gnmetr, 'optical fiber', dtmetr).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;fillColor=#ffffff;strokeColor=#000000;html=1;verticalAlign=top;strokeWidth=1;shape=ellipse;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;strokeWidth=1;shape=ellipse;', 
 					10, 10, '', 'Terminal', null, null, this.getTagsForStencil(gnmetr, 'terminal', dtmetr).join(' ')),
 			this.createVertexTemplateEntry(metr + 'terminal_3_phase;pointerEvents=1;', 
 					43, 10, '', 'Terminal 3 Phase', null, null, this.getTagsForStencil(gnmetr, 'Terminal 3 Phase', dtmetr).join(' ')),
-			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;fillColor=#ffffff;strokeColor=#000000;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;fontColor=#000000;fontSize=50;fontStyle=1;perimeter=ellipsePerimeter;', 
+			this.createVertexTemplateEntry('verticalLabelPosition=middle;shadow=0;dashed=0;align=center;html=1;verticalAlign=middle;strokeWidth=1;shape=ellipse;fontSize=50;fontStyle=1;perimeter=ellipsePerimeter;whiteSpace=wrap;', 
 					130, 130, 'T', 'Terminal', null, null, this.getTagsForStencil(gnmetr, 'terminal', dtmetr).join(' ')),
 			this.createVertexTemplateEntry(metr + 'line_cable;', 
 					130, 60, '', 'Line/Cable', null, null, this.getTagsForStencil(gnmetr, 'line cable', dtmetr).join(' ')),
@@ -846,15 +986,18 @@
 					130, 88, '', 'Anticreepage Device', null, null, this.getTagsForStencil(gnmetr, 'anticreepage device', dtmetr).join(' ')),
 			this.createVertexTemplateEntry(metr + 'testPoint;', 
 					60, 130, '', 'Test Point', null, null, this.getTagsForStencil(gnmetr, 'test point', dtmetr).join(' ')),
-			this.createEdgeTemplateEntry('endArrow=none;html=1;strokeColor=#000000;strokeWidth=1;',
+			this.createEdgeTemplateEntry('shape=wire;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=auto;html=1;sourcePerimeterSpacing=0;targetPerimeterSpacing=0;' +
+				'endArrow=none;curved=0;rounded=0;strokeColor=#009900;dashed=1;fillColor=#ffff00;dashPattern=12 12;fixDash=1;startSize=6;endSize=6;',
+				100, 0, '', 'Dashed Wire', null, this.getTagsForStencil(gnmess, '', 'cable wire dashed').join(' ')),
+			this.createEdgeTemplateEntry('endArrow=none;html=1;strokeWidth=1;',
 					100, 0, '', 'Transmission Path', null, this.getTagsForStencil(gnmess, '', 'transmission path').join(' ')),
-			this.createEdgeTemplateEntry('endArrow=classicThin;html=1;strokeColor=#000000;strokeWidth=1;endSize=20;',
+			this.createEdgeTemplateEntry('endArrow=classicThin;html=1;strokeWidth=1;endSize=20;',
 					100, 0, '', 'Direction of Flow', null, this.getTagsForStencil(gnmess, '', 'direction flow').join(' ')),
 			this.createVertexTemplateEntry(metr + 'straightBus;', 
 					90, 130, '', 'Straight Bus', null, null, this.getTagsForStencil(gnmetr, 'straight bus', dtmetr).join(' ')),
-			this.createVertexTemplateEntry('html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=15;dx=38;notch=0;arrowHead=55;rounded=0;strokeColor=#000000;strokeWidth=1;fillColor=#FFFFFF;', 
+			this.createVertexTemplateEntry('html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=15;dx=38;notch=0;arrowHead=55;rounded=0;strokeWidth=1', 
 					130, 130, '', 'Elbow Bus', null, null, this.getTagsForStencil(gnmetr, 'elbow bus', dtmetr).join(' ')),
-			this.createVertexTemplateEntry('html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=15;dx=38;notch=0;arrowHead=55;rounded=0;strokeColor=#000000;strokeWidth=1;fillColor=#FFFFFF;flipH=1;', 
+			this.createVertexTemplateEntry('html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=15;dx=38;notch=0;arrowHead=55;rounded=0;strokeWidth=1;flipH=1;', 
 					130, 130, '', 'Elbow Bus', null, null, this.getTagsForStencil(gnmetr, 'elbow bus', dtmetr).join(' ')),
 			this.createVertexTemplateEntry(metr + '2_line_bus;', 
 					130, 25, '', '2-Line Bus', null, null, this.getTagsForStencil(gnmetr, '2 two line bus', dtmetr).join(' ')),
@@ -881,6 +1024,7 @@
 						content.appendChild(fns[i](content));
 					}
 		}));
+		this.setCurrentSearchEntryLibrary();
 	};
 	
 })();

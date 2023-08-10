@@ -60,7 +60,7 @@ export class DiagramComponent implements OnInit {
             this.assessSvc.getAssessmentDetail().subscribe(
                 (data: AssessmentDetail) => {
                     this.assessSvc.assessment = data;
-
+                    this.assessSvc.currentTab = 'prepare';
                     this.navSvc.setCurrentPage('diagram');
                     localStorage.removeItem('tree');
                     this.navSvc.buildTree();

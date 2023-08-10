@@ -5,6 +5,8 @@
 	
 	Sidebar.prototype.createAdvancedShapes = function()
 	{
+		this.setCurrentSearchEntryLibrary('general', 'advanced');
+		
 		var fns = sidebarCreateAdvancedShapes.apply(this, arguments);
 		
 		// Avoids having to bind all functions to "this"
@@ -12,7 +14,8 @@
 
 		// Reusable cells
 		var flow = new mxCell('Vertical Flow Layout', new mxGeometry(0, 0, 270, 280),
-				'swimlane;html=1;startSize=20;horizontal=1;childLayout=flowLayout;flowOrientation=north;resizable=0;interRankCellSpacing=50;containerType=tree;');
+				'swimlane;startSize=20;horizontal=1;childLayout=flowLayout;flowOrientation=north;' +
+				'resizable=0;interRankCellSpacing=50;containerType=tree;fontSize=12;');
 		flow.vertex = true;
 		
 		var flow1 = new mxCell('Start', new mxGeometry(20, 20, 100, 40), 'whiteSpace=wrap;html=1;');
@@ -23,7 +26,9 @@
 		flow2.vertex = true;
 		flow.insert(flow2);
 		
-		var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'html=1;curved=1;');
+		var edge = new mxCell('', new mxGeometry(0, 0, 0, 0),
+			'html=1;rounded=1;curved=0;sourcePerimeterSpacing=0;' +
+			'targetPerimeterSpacing=0;startSize=6;endSize=6;');
 		edge.geometry.relative = true;
 		edge.edge = true;
 		flow1.insertEdge(edge, true);
@@ -53,22 +58,22 @@
 		flow4.insertEdge(edge, false);
 		flow.insert(edge);
 
-		return fns.concat(
+		fns = fns.concat(
 		[
 			this.addDataEntry('container swimlane pool horizontal', 480, 380, 'Horizontal Pool 1',
-				'zZRLbsIwEIZP4709TlHXhJYNSEicwCIjbNWJkWNKwumZxA6IlrRUaisWlmb+eX8LM5mXzdyrnV66Ai2TL0zm3rkQrbLJ0VoG3BRMzhgAp8fgdSQq+ijfKY9VuKcAYsG7snuMyso5G8U6tDaJ9cGUVlXkTXUoacuZIHOjjS0WqnX7blYd1OZt8KYea3PE1bCI+CAtVUMq7/o5b46uCmroSn18WFMm+XCdse5GpLq0OPqAzejxvZQun6MrMfiWUg6mCDpmZM8RENdotjqVyUFUdRS259oLSzISztto5Se0i44gcHEn3i9A/IQB3GbQpmi69DskAn4BSTaGBB4Jicj+k8nTGBP5SExg8odMyL38eH3s6kM8AQ=='),
+				'zZRBbsMgEEVPwx4Gt+o6bptNIkXKCVA8CqhgIiCNndMXG2iUNk6rqq2ysMT8+Z/xvAWE16abO7GTS9ugJvyJ8NpZG9LJdDVqTYCqhvBHAkDjR+B5osvGLt0Jh234TgBS4FXoPSZlZa1Oog+9zqI/KKNFG6vZRirdLERv98MAH8TmpVQzh14dcVWmsw/SUnRRpVGV1qmjbYPQ2RbvcWEdnbGGc8d6GFFywZRE/nF0AbvJ5Ucpbz5HazC4PloOqgkyOaqHBIhKVFuZY7yIwidh+549sYyHjPMyWv4J7WIgCJRdw3sFxA8ZwGUGfe7mTb9CwuAXkFRTSOCWkLDqP5ncTTHht8QE7v+QSSxPL97YO3sQ3wA='),
 			this.addDataEntry('container swimlane pool horizontal', 480, 360, 'Horizontal Pool 2',
-				'zZTBbsIwDIafJvfU6dDOlI0LSEg8QUQtEi1tUBJGy9PPbcJQWTsxaZs4VLJ//07sT1WYKKpm6eRBrW2JhokXJgpnbYhR1RRoDAOuSyYWDIDTx+B1opr1VX6QDutwTwPEhndpjhiVjbUmij60Jon+pCsja8rmKlQ05SKjcKe0KVeytcfuLh/k7u2SzR16fcbNZZDsRlrLhlTenWedPts6SJMEOseFLTkph6Fj212RbGlwdAGbyeV7KW2+RFthcC1ZTroMKjry5wiIK9R7ldrELInSR2H/2XtlSUHCOY5WfEG76ggCz+7E+w2InzCAcQapIf0fAySzESQZ/AKSfAoJPCKS9mbzf0H0NIVIPDAiyP8QEaXX97CvDZ7LDw=='),
+				'zZRRb8IgEMc/De/06MyerZsvmpj4CYi9CBkUA6itn360UE1da5ZlW3wg4f53f477hUBYoeul5QexNiUqwt4IK6wxPu50XaBSBKgsCVsQABoWgfeJbNZl6YFbrPx3DBANJ66OGJWNMSqKzjcqie4steJViOY7IVW54o05tg2c57uPPppbdPKCm757dieteR1UGlRhrLyYynOVhHCO9dtQGWIYVmzbFr3Pa5UOThdH67GeHL6T0uRLNBq9bULJWZZexIr8NQKiAuVeJBubJZG7KOyv3hvLsEk4x9GyL2hXLUGg2SO8D0D8kAGMM0iG9D4GSGYjSDL4BST5FBJ4RiTN3eT/guhlChF7YkSQ/yGiEN7+wy43+C4/AQ=='),
 			this.addDataEntry('container swimlane pool horizontal', 360, 480, 'Vertical Pool 1',
-				'xZRBbsIwEEVP4709ThFrQssGJKSewCIjbNXGyDEl4fSdxKa0NJFQVTULSzP/e+T5b2EmS9esgjrqja/QMvnMZBm8j6lyTYnWMuCmYnLJADgdBi8jruhdflQBD/GRAUgD78qeMClb720S69jaLNZn46w6ULfQ0dGWS0HlThtbrVXrT91bdVS7t2u3CFibC26vi4g7aaMaUjmpNBbiKxnUQyfkjTBEbEZT9VKOtELvMIaWrpxNFXW6IWcpOddo9jqPFfMsqjoJ+8/ZGyQqMqdhZvIHs3WHBrh4kNvvIsNw5Da7OdgXAgKGCMz+gEAxRgCmINDcxZ2CyNMYETkhESj+jwi1t1+r9759ah8='),
+				'xZTRbsIgFIafhsstcKC11zrnjSYmewJiT4SMiqE42z39aMGZabss2bJekHD+n//A+S4gfFE1KyePamNLNIQvCV84a33cVc0CjSFAdUn4EwGgYRF4HnFZ79KjdHjwPwlADLxJc8KobK01Uax9a5JYn3Vl5CFU853SplzL1p66C2ovd6+Xau6w1u+4vdzObqSNbIJKgxpizr8EI9TQCcpXJiXSi9B5bEan6qU00gpthd614UgKiMdMzMSMZ7QocpELhg+MxyZnXXoVT/E8sqEK9V6lxqJIoqyjsP/sfsUYNonkMFV+R3XdwQPKviP7aygwDKVNLr0jwGCIQP4HBMQYAZiCQHMz7hREsjEifEIiIP6PSCiv/1rvffn2PgA='),
 			this.addDataEntry('container swimlane pool vertical', 380, 480, 'Vertical Pool 2',
-				'xZTPbsIwDMafJvf86dDOlI0LSEg8QUQtEi1pUBJGy9PPbdJ1G1TqhXGoZH/219g/RSGitM3ay5PaugoMEW9ElN65mCLblGAM4VRXRKwI5xQ/wt8nqqyv0pP0UMc5Bp4Mn9KcISk750wSQ2xNFsNFWyNrzJYqWpxyxTA8KG2qjWzduTsrRHn4GLKlh6CvsBsGYX+krWxQpaiizcc9FjDnnaCc11dXR2lyxyjsuyPy3/Lg4CM0k8v3Ut58Dc5C9C22XHQVVeoQrwkQVaCPKtuKQZQhCcdv78gSg4zzPlpxg3bTEeSUzcR7Q2bWyvz+ytmQr8NPAow/ikAxRYA/kQAr/hPByxQC8cxLsHggAkzH56uv/XrdvgA='),
+				'vZRBbsIwEEVP470zTquuSVs2ICFxAouMsFUnRrYpCafvJHYILaRiQxaRPG/8Pfnfkpkoqmbp5EGtbYmGiQ8mCmdtiKuqKdAYBlyXTLwzAE4fg8+JbtZ3+UE6rMMjAoiCb2mOGMnGWhOhD61J0J90ZWRN1WKntClXsrXHboAPcvc1VAuHXp9xM0zP/qC1bIhyoiRzYUsNqqEDyjp9tnWQJu0YwbYbkU5Lf4suYDPpuEfJ7hJthcG1tOWky6DiDvEWU+EK9V4lWT5A6SPYX7RjgLRIGd7PU9zkuepiA579l+lNHA/5hPs+kyBd/LXtDJ5lO5+yDXPbzvI5fb9M+RazX/frE31TOT5Jfe/Xi/UD'),
 			this.addDataEntry('vertical tree layout', 280, 190, 'Vertical Tree Layout',
-				'5ZXNUoMwEICfhjuQWvVaqL3oxXa8p7ADmQmECUspfXo3JNgirdMZ7UE9MGT/s182E49FxX6leZW/qBSkx5Yei7RSaFfFPgIpvdAXqcdiLwx9+rzw6YI16K1+xTWUeE1AaAN2XDZgNW+gUSTcOG00AP2eeacatI41dtI51q0oJC9JWuRY0M7jgJY1co1rcTBOVJtsSouDKpEPHkkuZOpyshipxiCc+PalWWwSaKjFgW/lICfGQZSgN10FLgOpXSO0e9hfhNGrHIkVqAJQd+TSihRzB+TBAvNzEFk+hD06Ja+tIvuIPbKlhcN7HjWboH41x/wZa5sLhHXFEyO3NBhjvle1GZ5v0wW4kfC7sXgCIfDPQJj9AIPZhEFkpoFUwf8CcTcBMekf0gzWTgS5Ve3yqFj0CjLshts6YqNVU6aQugtjM5t0X3Oi6qrRCYzGla5zBnhyelOaGiRHsRtn/w6c+cUpmVL601Ny/xunZH6bKSHx+Cz2ttGr+Q4='),
+				'7VZNU4MwEP013IHUqtdS7UVnHNvxnpIVMhMIEwKU/no3JFiQ4nRGvagHBt7bj+y+7E7rkSg7bBQt0kfJQHjkziORklLbr+wQgRBe6HPmkbUXhj4+Xng/Yw06q19QBbm+JCC0ATUVFVjmBZTmMTVOOwWArwfaykpbx1K3wjmWDc8EzRGtSk2V3vKjseCBZJVKxY8y15iGrAMk4pQL5hKRtcbEPRj4dueRtUmgoORHuhc9jo0Dz0Ht2gJcBqRfkXbnBiFi1w22AIdZRTrKybEBmYFWLbo0nOnUqXJjVfNT4Enah906kpaWSN5jTwLjh9P4vN5kovezueuP2jYp17AtaGxwg9NhdNJZr+ZFbYbn23QBbi78dgwHIgT+GREW36DBYqJBZKYDqeBvCXE1EWLSP7AEtg6C2Mvm7kSsOgINdb+yI22UrHIGrF/AStUdMNtUykrF8ASKY82gjL48T5wRdzkBPWMcbvrSlJCzAbLlm5o/vwxssatgtBP23MGITK9MgaCa1+PsX7mB5ewoTq/iV4/i9f8ozozi8mdGEeHpV76zjf4EvAE='),
 			this.addDataEntry('horizontal tree layout', 310, 160, 'Horizontal Tree Layout',
-				'5ZXNUoMwEMefJncgtd4LVQ96sX2BtOxAZgJhwlJKn94NSQWkdTqjHtQDQ/a/X+THZsJ4XBwfjajyF52CYnzNeGy0RrcqjjEoxaJApownLIoCelj0cMUb9t6gEgZKvCUhcgkHoRpwypM28qRLFDZsawDo9Sw63aALrbFTPrRuZaFESdYqx4K+PQlpWaMwuJEnG0TdyTdU5IkV9rlUqa/JE6QeZ2MU27d2FQ3U8iR2fds+3wbIEsy2q8BXINlvBQzC8SqOXvIsHkEXgKajkFammLsIHjpkQQ4yy89pSy+K2gnZe+5AlxYe8GXYfAb71f7oj1jbXCJsKrG3dkujMeV70zajy9v0CX4ogm5qjiCEwQUIi29gsJgxiO00kBT+LxB3MxCz/UOawcaboHa6XQ/CqhfIMT5dYzpGN2UKqT8yrrYt+Dkp6q8bs4fJwNKBzgBH/2/O04ASKA/T6l/Bs7w6J3NOf3pO7n/nnCx/Zk7IHC7H3je5O98A'),
-				
-		 	this.addEntry('vertical flow layout', function()
+				'7VbNToNAEH4a7sBWvBeqHjQxti+whRE2WViyLKX06Z39qYAU00S9qAcC883/NzNpPRKXx3tJ6+JJZMA9svFILIVQ9qs8xsC5F/os80jihaGPjxfeLWgDo/VrKqFS1ziE1uFAeQsWeRCSnUSlqDbbSQB8PdJetMqaNqrnzrTpWMlphdK6UVSqLTtpDaYk62IIQxINpAXjmQtEEoWBz8LI1uQjSYCghIad6N7kMv7agFUgd30NLgLCrwi7vEGIsusHpILjIicGcoTcgyhByR5NOpapwlqQwPLmF8Dy4uwWOZA2FsjffQeK8cOxfJlxMmP8RU/7I7ddwRRsa5pqucP90Dypkjt2rmozvNymc3Cb4fdTcURC4F8gYfUNHKxmHMR6OxAK/hYRNzMiZv1DlsPWicD3otsMwNoAqND9s1Tf2pgbKdoqg8xJaSsPRtDX1IhWpvAMkmHNIDW/rMqdEm85B7WgHF96pEuospFky9c1fz4MbNFUMLkJm3e0IvORSeBUscM0+lcmEC2u4nwUv3oVb/9XcWEVo59ZRRSH33mjm/wNeAM='),
+
+			this.addEntry('vertical flow layout', function()
 			{
 		 		return sb.createVertexTemplateFromCells([flow], flow.geometry.width, flow.geometry.height, 'Vertical Flow Layout', true);
 		 	}),
@@ -76,12 +81,16 @@
 			{
 				var cell = sb.graph.cloneCell(flow);
 				cell.geometry = new mxGeometry(0, 0, 460, 150);
-				cell.style = 'swimlane;html=1;startSize=20;horizontal=0;childLayout=flowLayout;flowOrientation=west;resizable=0;interRankCellSpacing=50;containerType=tree;';
+				cell.style = 'swimlane;html=1;startSize=20;horizontal=0;childLayout=flowLayout;flowOrientation=west;' +
+					'resizable=0;interRankCellSpacing=50;containerType=tree;fontSize=12;';
 				cell.value = 'Horizontal Flow Layout';
 				
 				return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Horizontal Flow Layout', true);
 			})
 		]);
+		
+		this.setCurrentSearchEntryLibrary();
+
+		return fns;
 	};
-	
 })();

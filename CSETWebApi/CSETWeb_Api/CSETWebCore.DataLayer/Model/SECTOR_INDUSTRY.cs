@@ -26,6 +26,9 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [StringLength(150)]
         public string IndustryName { get; set; }
+        public bool Is_NIPP { get; set; }
+        public bool Is_Other { get; set; }
+        public int? NIPP_subsector { get; set; }
 
         [ForeignKey("SectorId")]
         [InverseProperty("SECTOR_INDUSTRY")]
