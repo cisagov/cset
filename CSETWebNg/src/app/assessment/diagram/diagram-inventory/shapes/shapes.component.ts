@@ -104,12 +104,14 @@ export class ShapesComponent implements OnInit {
     });
   }
 
-  changeShapeToComponent(event: any, id: string) {
+  changeShapeToComponent(event: any, shape: any) {
     let type = event.target.value;
+    let id = shape.id;
+    let label = shape.value ? shape.value : '';
 
     this.diagramSvc.getDiagramComponents().subscribe(
       (x: any) => {
-        let label = this.diagramSvc.applyComponentSuffix(type, x);
+        label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x) : label;
 
         this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
           (compList: any) =>
