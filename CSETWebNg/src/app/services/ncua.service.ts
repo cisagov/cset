@@ -449,19 +449,20 @@ let headers = {
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            let childResponses ={"title": subcat?.questions[0].title,  //uses parent's title
-                                 "parentNumber": this.getParentQuestionTitleNumber(subcat?.questions[0].title),
-                                 "category": subcat?.title,
-                                 "examLevel": '',
-                                 "issues": 
-                                    {
-                                      "dors": 0,
-                                      "examinerFindings": 0,
-                                      "supplementalFacts": 0,
-                                      "nonReportables": 0
-                                    },
-                                  "children":[]
-                                };
+            let childResponses = {
+              "title": subcat?.questions[0].title,  //uses parent's title
+              "parentNumber": this.getParentQuestionTitleNumber(subcat?.questions[0].title),
+              "category": subcat?.title,
+              "examLevel": '',
+              "issues": 
+                {
+                  "dors": 0,
+                  "examinerFindings": 0,
+                  "supplementalFacts": 0,
+                  "nonReportables": 0
+                },
+              "children":[]
+            };
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
@@ -583,7 +584,8 @@ let headers = {
                          <p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
                     disableClose: true, data: { title: "Submission Error", messageText: msg }
-                  })
+                  });
+          this.jsonStringReset(); 
         }
         else if (exists === true){
           this.acetSvc.doesMeritFileExist(fileValue).subscribe(
@@ -615,11 +617,11 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                          let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
-                          this.dialog.open(MeritCheckComponent, {
-                            disableClose: true, data: { title: "Submission Error", messageText: msg }
-                          });
-                          this.jsonStringReset();         
+                        let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "Submission Error", messageText: msg }
+                        });
+                        this.jsonStringReset();         
                       }
                     );
                   } else if (overrideChoice == 'overwrite') {
@@ -633,13 +635,15 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                          let msg = "<br><p>Could not write the file."+error+"</p>";
-                          this.dialog.open(MeritCheckComponent, {
-                            disableClose: true, data: { title: "Submission Error", messageText: msg }
-                          });
-                          this.jsonStringReset();         
+                        let msg = "<br><p>Could not write the file."+error+"</p>";
+                        this.dialog.open(MeritCheckComponent, {
+                          disableClose: true, data: { title: "Submission Error", messageText: msg }
+                        });
+                        this.jsonStringReset();         
                       }
                     );
+                  } else {
+                    this.jsonStringReset();         
                   }
                 }); 
               }
@@ -649,19 +653,14 @@ let headers = {
         }
       },
       error => {        
-          console.log(error);
-          let msg = "<br><p>"+error.error+"</p>";
-          this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "Submission Error", messageText: msg }
-          });
-          this.jsonStringReset();         
+        console.log(error);
+        let msg = "<br><p>"+error.error+"</p>";
+        this.dialog.open(MeritCheckComponent, {
+          disableClose: true, data: { title: "Submission Error", messageText: msg }
+        });
+        this.jsonStringReset();         
       }
     )
-    
-
-    
-
-    this.submitInProgress = false;
   }
 
   newMeritFileSteps (fileValue: MeritFileExport) {
@@ -688,6 +687,7 @@ let headers = {
         "creationDate": '',
         "examLevel": '',
         "region": 0,
+        "stateLed": false,
         "guid": ''
       },
       "issuesTotal": {
@@ -699,6 +699,8 @@ let headers = {
       "examProfileData": [],
       "questionData": []
     }; 
+
+    this.submitInProgress = false;
   }
 
   doesDirectoryExist() {
