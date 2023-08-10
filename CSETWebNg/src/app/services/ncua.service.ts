@@ -520,6 +520,14 @@ let headers = {
         }
 
         this.metaDataBuilder();
+      },
+      error => {        
+          console.log(error);
+          let msg = "<br><p>Error"+error+"}}</p>";
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          });
+          this.jsonStringReset();         
       }
     );
   }
@@ -667,13 +675,23 @@ let headers = {
     
     //fileValue.data = JSON.stringify(this.jsonString);
 
-    this.acetSvc.newMeritFile(fileValue).subscribe((r: any) => {
-      let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
-              this.dialog.open(MeritCheckComponent, {
-                disableClose: true, data: { title: "Submission Success", messageText: msg }
-              })
-      this.jsonStringReset();
-    });
+    this.acetSvc.newMeritFile(fileValue).subscribe(
+      (r: any) => {
+        let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
+                this.dialog.open(MeritCheckComponent, {
+                  disableClose: true, data: { title: "Submission Success", messageText: msg }
+                })
+        this.jsonStringReset();
+      },
+      error => {        
+        console.log(error);
+        let msg = "<br><p>Error"+error+"}}</p>";
+        this.dialog.open(MeritCheckComponent, {
+          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+        });
+        this.jsonStringReset();
+      }
+    );
   }
 
   jsonStringReset () {
