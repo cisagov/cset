@@ -405,7 +405,7 @@ import { CsiServiceDemographicsComponent } from './assessment/prepare/csi/csi-se
 import { CsiServiceCompositionComponent } from './assessment/prepare/csi/csi-service-composition/csi-service-composition.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
 import { AssessmentDemographicsTsaComponent } from './assessment/prepare/assessment-info/assessment-demographics-tsa/assessment-demographics-tsa.component';
-import { TsaAnalyticsComponent } from './initial/tsa-analytics/tsa-analytics.component';
+import { AssessmentComparisonAnalyticsComponent } from './initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { QuestionBlockNestedComponent } from './assessment/questions/maturity-questions/nested/question-block-nested/question-block-nested.component';
 import { GroupingBlockNestedComponent } from './assessment/questions/maturity-questions/nested/grouping-block-nested/grouping-block-nested.component';
@@ -639,6 +639,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         OverlayModule,
         PortalModule,
         ScrollingModule,
+        // AutosizeModule,
         // NgChartsModule,
         // MatButtonModule,
         // MatToolbarModule,
@@ -668,6 +669,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         FlexLayoutModule,
         ReactiveFormsModule,
         NgxSliderModule,
+        // TextareaAutosizeModule,
         FileUploadModule,
         AngularEditorModule,
         RouterModule,
@@ -955,7 +957,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         CsiServiceCompositionComponent,
         AssessmentInfo2TsaComponent,
         AssessmentDemographicsTsaComponent,
-        TsaAnalyticsComponent,
+        AssessmentComparisonAnalyticsComponent,
         MaturityQuestionsNestedComponent,
         QuestionBlockNestedComponent,
         GroupingBlockNestedComponent,
