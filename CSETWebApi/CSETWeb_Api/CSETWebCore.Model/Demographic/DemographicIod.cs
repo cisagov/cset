@@ -84,10 +84,14 @@ namespace CSETWebCore.Model.Demographic
 
         public List<ListItem> RevenueAmounts { get; set; }
 
+        /// <summary>
+        /// Used for question 4 
+        /// </summary>
         public List<ListItem> RevenuePercentages { get; set; }
 
         /// <summary>
-        /// The number of people served annually by the critical service
+        /// The number of people served annually by the critical service.
+        /// lUsed for question 5
         /// </summary>
         public List<ListItem> NumberPeopleServed { get; set; }
 
@@ -96,10 +100,14 @@ namespace CSETWebCore.Model.Demographic
         /// </summary>
         public List<ListItem> CriticalInfrastructureSectors { get; set; }
 
+        /// <summary>
+        /// Used for question 8
+        /// </summary>
         public List<ListItem> RegulationTypes { get; set; }
 
         /// <summary>
-        /// Organizations with whom you share cyber data
+        /// Organizations with whom you share cyber data.
+        /// Used for question 9
         /// </summary>
         public List<ListItem> ShareOrgs { get; set; } = new List<ListItem>();
     }
