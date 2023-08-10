@@ -28,7 +28,6 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
     if (!!this.value && (typeof this.value == 'UserObject' || this.value.tagName == 'UserObject'))
-    //if (!!this.value && typeof this.value == 'object')
     {
         obj = this.value;
 
@@ -38,9 +37,6 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 
             obj.setAttribute('internalLabel', attributeValue || '');
         }
-        //if (!this.value || typeof this.value != 'UserObject' && obj.style) {
-        //    this.value = obj;
-        //}
     }
     else
     {
@@ -57,34 +53,16 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
             }
 
             // 'object' is for old diagrams that haven't been updated yet
-            if (!this.value || (typeof this.value != 'UserObject' &&  typeof this.value != 'object') && (obj.style || this.value.style)) {
+            if (!this.value || (typeof this.value != 'UserObject' && typeof this.value != 'object') && (obj.style || this.value.style || this.value == 'Zone')) {
                 this.value = obj;
             }
 
-
-            //obj = doc.createElement('object');
         }
         catch (e)
         {
             console.log(e);
         }
     }
-
-    /*
-    obj.setAttribute(attributeName, attributeValue);
-    console.log('obj:')
-    console.log(obj)
-    // set an internal label as well.  Something to concatenate with the SAL for the display label.
-    if (attributeName === 'label')
-    {
-        obj.setAttribute('internalLabel', attributeValue || '');
-    }
-    if (!this.value || typeof this.value != 'UserObject' && obj.style)
-    {
-        this.value = obj;
-    }
-    */
-    //this.value = obj;
 }
 
 
