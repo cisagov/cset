@@ -1262,15 +1262,18 @@ Actions.prototype.init = function()
 
 
 	// CSET - network analysis
-	action = this.addAction('analyze', function ()
+	action = this.addAction('Analyze', mxUtils.bind(this, function ()
 	{
 		this.analyzeToggled = !this.analyzeToggled;
 		editor.analyzeDiagram = !editor.analyzeDiagram;
-		if (action.onToggle)
+
+		if (this.actions.Analyze.onToggle)
 		{
-			action.onToggle(this.analyzeToggled);
+			this.actions.Analyze.onToggle(this.analyzeToggled);
 		}
-		if (!editor.analyzeDiagram) {
+		
+		if (!editor.analyzeDiagram)
+		{
 			CsetUtils.clearWarningsFromDiagram(graph);
 		}
 		else
@@ -1294,7 +1297,7 @@ Actions.prototype.init = function()
 			CsetUtils.analyzeDiagram(analysisReq, editor);
 		}
 
-	});
+	}));
 	action.setToggleAction(true);
 	action.setSelectedCallback(function ()
 	{
