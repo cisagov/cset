@@ -6,11 +6,8 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-
-    console.log('wrapper object (trying to find '+name+'):')
-    console.log(this.value)
-    if (typeof this.value != 'UserObject')// | typeof this.value != 'object')
-    //if (typeof this.value != 'object')
+    // 'object' is for old diagrams that haven't been updated yet
+    if (typeof this.value != 'UserObject' && typeof this.value != 'object')
     {
         return null;
     }
@@ -30,13 +27,16 @@ mxCell.prototype.getCsetAttribute = function (name)
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
-    console.log('in setCsetAttribute:')
-    console.log(attributeName)
-    console.log(attributeValue)
-    if (!!this.value && typeof this.value == 'UserObject')
-    //if (!!this.value && typeof this.value == 'object')
+    if (!!this.value && (typeof this.value == 'UserObject' || this.value.tagName == 'UserObject'))
     {
         obj = this.value;
+
+        obj.setAttribute(attributeName, attributeValue);
+        // set an internal label as well.  Something to concatenate with the SAL for the display label.
+        if (attributeName === 'label') {
+
+            obj.setAttribute('internalLabel', attributeValue || '');
+        }
     }
     else
     {
@@ -45,24 +45,24 @@ mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
         {
             var doc = mxUtils.createXmlDocument();
             obj = doc.createElement('UserObject');
-            //obj = doc.createElement('object');
+            obj.setAttribute(attributeName, attributeValue);
+            
+            // set an internal label as well.  Something to concatenate with the SAL for the display label.
+            if (attributeName === 'label') {
+                obj.setAttribute('internalLabel', attributeValue || '');
+            }
+
+            // 'object' is for old diagrams that haven't been updated yet
+            if (!this.value || (typeof this.value != 'UserObject' && typeof this.value != 'object') && (obj.style || this.value.style || this.value == 'Zone')) {
+                this.value = obj;
+            }
+
         }
         catch (e)
         {
             console.log(e);
         }
     }
-
-    obj.setAttribute(attributeName, attributeValue);
-    console.log('obj:')
-    console.log(obj)
-    // set an internal label as well.  Something to concatenate with the SAL for the display label.
-    if (attributeName === 'label')
-    {
-        obj.setAttribute('internalLabel', attributeValue || '');
-    }
-
-    //this.value = obj;
 }
 
 
@@ -227,10 +227,12 @@ mxCell.prototype.autoNameComponent = function ()
     {
         return;
     }
-
     // ignore items already labeled
     if (!!this.getCsetAttribute('label'))
     {
+        return;
+    }
+    if (!!this.getAttribute('label')) {
         return;
     }
 
