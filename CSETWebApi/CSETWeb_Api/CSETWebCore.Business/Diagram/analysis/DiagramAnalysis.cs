@@ -74,7 +74,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             var oldWarnings = _context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
             _context.NETWORK_WARNINGS.RemoveRange(oldWarnings);
             _context.SaveChanges();
-
+            
             int n = 0;
             msgs.ForEach(m =>
             {
