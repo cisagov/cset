@@ -154,7 +154,12 @@ export class ShapesComponent implements OnInit {
     let style = shape.style;
     let startOfShape = style.indexOf('=') + 1; // first index of the shape type
     let endOfShape = style.indexOf(';');
+    let label = style.substring(startOfShape, endOfShape);
 
-    return style.substring(startOfShape, endOfShape); // e.g. 'shape=ellipse;' grabs 'ellipse'
+    if (label.includes('.')) {
+      label = label.substring(label.lastIndexOf('.') + 1)
+    }
+
+    return label; // e.g. 'shape=ellipse;' grabs 'ellipse'
   }
 }

@@ -222,7 +222,7 @@ CsetUtils.LoadFileFromCSET = async function (app) {
     // set analysis toggle state
     if (data.analyzeDiagram || false) {
         for (var element of app.toolbar.container.childNodes) {
-            if (element.title == 'Analyze Network Diagram') {
+            if (element.title == 'Analyze') {
                 element.click();
                 break;
             }
@@ -272,6 +272,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     }
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
+    // below is commented because the analyzer was running twice and crashing in the backend
     await CsetUtils.analyzeDiagram(analysisReq, editor);
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
