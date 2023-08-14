@@ -27,15 +27,15 @@
         <select class="form-control" id="orgType" tabindex="0" name="orgType" (change)="update($event)"
             [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
-            <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.id">{{t.value}}</option>
+            <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.key">{{t.name}}</option>
         </select>
     </div>
 
     <div class="form-group mb-4">
         <label for="orgName">Name of Organization</label>
         <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="orgName"
-            id="orgName" [(ngModel)]="demographicData.organizationName" 
-            placeholder="Name of Organization" (blur)="update($event)">
+            id="orgName" [(ngModel)]="demographicData.organizationName" placeholder="Name of Organization"
+            (blur)="update($event)">
     </div>
 
     <div class="form-group">
@@ -52,18 +52,18 @@
             <select class="form-control" id="sector" tabindex="0" name="sector" [(ngModel)]="demographicData.sector"
                 (change)="onChangeSector($event)">
                 <option value="">-- Select Sector --</option>
-                <option *ngFor="let i of demographicData.listSectors" [value]="i.id"
-                    [selected]="i.id == demographicData?.sector">{{i.value}}</option>
+                <option *ngFor="let i of demographicData.listSectors" [value]="i.key"
+                    [selected]="i.key == demographicData?.sector">{{i.name}}</option>
             </select>
         </div>
 
         <div class="form-group mb-4 col-6 pr-0">
             <label for="subsector">Sub-Sector</label>
-            <select class="form-control" id="subsector" tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector"
-                (change)="update($event)">
+            <select class="form-control" id="subsector" tabindex="0" name="subsector"
+                [(ngModel)]="demographicData.subsector" (change)="update($event)">
                 <option value="">-- Select --</option>
-                <option *ngFor="let i of demographicData.listSubsectors" [value]="i.id"
-                    [selected]="i.id == demographicData?.subsector">{{i.value}}</option>
+                <option *ngFor="let i of demographicData.listSubsectors" [value]="i.key"
+                    [selected]="i.key == demographicData?.subsector">{{i.name}}</option>
             </select>
         </div>
 
@@ -71,23 +71,22 @@
 
     <!-- #1 -->
     <div class="form-group mb-4">
-        <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType == 1">
+        <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType == '1'">
             Number of employees in the organization?
         </label>
-        <label for="numberEmployees" *ngIf="demographicData.organizationType != 1">
+        <label for="numberEmployees" *ngIf="demographicData.organizationType != '1'">
             Number of employees in the government agency?
         </label>
         <select class="form-control" id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
-                [(ngModel)]="demographicData.numberEmployeesTotal" (change)="update($event)">
+            [(ngModel)]="demographicData.numberEmployeesTotal" (change)="update($event)">
             <option value="">-- Select --</option>
-            <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [value]="i.id"
-                >{{i.value}}</option>
+            <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [value]="i.key">{{i.name}}</option>
         </select>
     </div>
 
     <!-- #2 -->
     <div class="form-group mb-4">
-        <ng-container *ngIf="demographicData.organizationType == 1">
+        <ng-container *ngIf="demographicData.organizationType == '1'">
             <label for="numberEmployeesUnit">
                 Number of employees in the business unit?
             </label>
@@ -96,7 +95,7 @@
                 organization are the same.
             </div>
         </ng-container>
-        <ng-container *ngIf="demographicData.organizationType != 1">
+        <ng-container *ngIf="demographicData.organizationType != '1'">
             <label for="numberEmployeesUnit">
                 Number of employees in the department?
             </label>
@@ -108,20 +107,20 @@
         <select class="form-control" id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit"
             [(ngModel)]="demographicData.numberEmployeesUnit" (change)="update($event)">
             <option value="">-- Select --</option>
-            <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [value]="i.id"
-                [selected]="i.id == demographicData.numberEmployeesUnit">{{i.value}}</option>
+            <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [value]="i.key"
+                [selected]="i.key == demographicData.numberEmployeesUnit">{{i.name}}</option>
         </select>
     </div>
 
 
     <!-- #3 -->
     <div class="form-group mb-4">
-        <ng-container *ngIf="demographicData.organizationType == 1">
+        <ng-container *ngIf="demographicData.organizationType == '1'">
             <label for="totalAnnualRevenue">
                 What is the total annual revenue for your organization?
             </label>
         </ng-container>
-        <ng-container *ngIf="demographicData.organizationType != 1">
+        <ng-container *ngIf="demographicData.organizationType != '1'">
             <label for="totalAnnualRevenue">
                 What is the total annual funding for your governmental organization or agency?
             </label>
@@ -129,8 +128,8 @@
         <select class="form-control" id="totalAnnualRevenue" tabindex="0" name="totalAnnualRevenue"
             [(ngModel)]="demographicData.annualRevenue" (change)="update($event)">
             <option value="">-- Select --</option>
-            <option *ngFor="let i of demographicData.listRevenueAmounts" [value]="i.id"
-                [selected]="i.id == demographicData.annualRevenue">{{i.value}}</option>
+            <option *ngFor="let i of demographicData.listRevenueAmounts" [value]="i.key"
+                [selected]="i.key == demographicData.annualRevenue">{{i.name}}</option>
         </select>
     </div>
 
@@ -148,13 +147,13 @@
         <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.usesStandard"
                 (change)="changeUsesStandard(true)">
-                <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off" tabindex="0"
-                    [checked]="demographicData.usesStandard"> Yes
+                <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off"
+                    tabindex="0" [checked]="demographicData.usesStandard"> Yes
             </label>
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.usesStandard"
                 (change)="changeUsesStandard(false)">
-                <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off" tabindex="0"
-                    [checked]="!demographicData.usesStandard"> No
+                <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off"
+                    tabindex="0" [checked]="!demographicData.usesStandard"> No
             </label>
         </div>
 
@@ -169,11 +168,11 @@
 
             <div>
                 Most important
-                <select class="form-control"></select>
+                <input class="form-control mb-3" name="standard1" [(ngModel)]="demographicData.standard1" (blur)="update($event)">
             </div>
             <div>
                 Second most important
-                <select class="form-control"></select>
+                <input class="form-control mb-3" name="standard2" [(ngModel)]="demographicData.standard2" (blur)="update($event)">
             </div>
         </div>
     </div>
@@ -189,19 +188,18 @@
         <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.requiredToComply"
                 (change)="setRequireComply(true)">
-                <input class="form-check-input" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0"
-                    [checked]="demographicData.requiredToComply"> Yes
+                <input class="form-check-input" name="complyYes" id="complyYes" type="radio" autocomplete="off"
+                    tabindex="0" [checked]="demographicData.requiredToComply"> Yes
             </label>
             <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.requiredToComply"
                 (change)="setRequireComply(false)">
-                <input class="form-check-input" name="complyNo" id="complyNo" type="radio" autocomplete="off" tabindex="0"
-                    [checked]="!demographicData.requiredToComply"> No
+                <input class="form-check-input" name="complyNo" id="complyNo" type="radio" autocomplete="off"
+                    tabindex="0" [checked]="!demographicData.requiredToComply"> No
             </label>
         </div>
 
 
         <div *ngIf="demographicData.requiredToComply" class="ml-5">
-
 
             <p>Please select the two primary regulation types. If known,
                 please enter the name of each regulation in the spaces
@@ -211,10 +209,10 @@
                 <div class="mb-3">
                     <div>Regulation Type 1:</div>
                     <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-                        <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.id" type="radio" autocomplete="off"
-                            tabindex="0" (click)="changeRegType1(reg, $event)"
-                            [checked]="demographicData.regulationType1 == reg.id">
-                        <label class="radio-custom-label" [for]="'regtype1-' + reg.id">{{ reg.value }}</label>
+                        <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.key" type="radio"
+                            autocomplete="off" tabindex="0" (click)="changeRegType1(reg, $event)"
+                            [checked]="demographicData.regulationType1 == reg.key">
+                        <label class="radio-custom-label" [for]="'regtype1-' + reg.key">{{ reg.name }}</label>
                     </ng-container>
                 </div>
 
@@ -228,10 +226,10 @@
                 </div>
                 <div class="mb-3">
                     <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-                        <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.id" type="radio" autocomplete="off"
-                            tabindex="2" (click)="changeRegType2(reg, $event)"
-                            [checked]="demographicData.regulationType2 == reg.id">
-                        <label class="radio-custom-label" [for]="'regtype2-' + reg.id">{{ reg.value }}</label>
+                        <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.key" type="radio"
+                            autocomplete="off" tabindex="2" (click)="changeRegType2(reg, $event)"
+                            [checked]="demographicData.regulationType2 == reg.key">
+                        <label class="radio-custom-label" [for]="'regtype2-' + reg.key">{{ reg.name }}</label>
                     </ng-container>
                 </div>
 
@@ -255,17 +253,18 @@
             <div class="mb-3">
 
                 <ng-container *ngFor="let org of demographicData.listShareOrgs">
-                    <input type="checkbox" tabindex="0" [id]="'share-org-' + org.id" [name]="'share-org-' + org.id" class="checkbox-custom mt-1"
-                        (change)="changeShareOrg(org, $event)" [(ngModel)]="org.selected">
-                    <label for="{{org.id}}" class="checkbox-custom-label">
-                        {{org.value}}
+                    <input type="checkbox" tabindex="0" [id]="'share-org-' + org.key" [name]="'share-org-' + org.key"
+                        class="checkbox-custom mt-1" (change)="changeShareOrg(org, $event)" [(ngModel)]="org.selected">
+                    <label [for]="'share-org-' + org.key" class="checkbox-custom-label">
+                        {{org.name}}
                     </label>
                 </ng-container>
             </div>
 
             If other, please list:
-            <input type="text" class="form-control" [(ngModel)]="demographicData.shareOther" 
-                name="shareOther" (blur)="update($event)">
+            <input type="text" class="form-control" maxlength="150"
+                [(ngModel)]="demographicData.shareOther" name="shareOther"
+                (blur)="update($event)">
             <p class="font-italic">
                 Commas should be used to separate more than one entry.
             </p>
@@ -287,13 +286,23 @@
                 directly into each box as applicable.
             </div>
             Most significant:
-            <select class="form-control mb-2"></select>
+            <select class="form-control mb-2" id="barrier1" tabindex="0" name="barrier1"
+                [(ngModel)]="demographicData.barrier1" (change)="update($event)">
+                <option value="">-- Select --</option>
+                <option *ngFor="let i of demographicData.listBarriers" [value]="i.key"
+                    [selected]="i.key == demographicData.barrier1">{{i.name}}</option>
+            </select>
             Second most significant:
-            <select class="form-control mb-2"></select>
+            <select class="form-control mb-2" id="barrier2" tabindex="0" name="barrier2"
+                [(ngModel)]="demographicData.barrier2" (change)="update($event)">
+                <option value="">-- Select --</option>
+                <option *ngFor="let i of demographicData.listBarriers" [value]="i.key"
+                    [selected]="i.key == demographicData.barrier2">{{i.name}}</option>
+            </select>
         </div>
 
     </div>
 
 
-   
+
 </form>

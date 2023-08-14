@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
+import { DemographicsIod } from '../../../../models/demographics-iod.model';
 
 @Component({
   selector: 'app-demographics-iod',
@@ -11,7 +12,7 @@ export class DemographicsIodComponent implements OnInit {
   /**
    * The principal model for this page
    */
-  demographicData: any = {};
+  demographicData: DemographicsIod = {};
 
 
 
@@ -63,26 +64,25 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   changeRegType1(o: any, evt: any) {
-    console.log(o);
-    this.demographicData.regulationType1 = o.id;
+    this.demographicData.regulationType1 = o.key;
     this.updateDemographics();
   }
 
   changeRegType2(o: any, evt: any) {
-    console.log(o);
-    this.demographicData.regulationType2 = o.id;
+    this.demographicData.regulationType2 = o.key;
     this.updateDemographics();
   }
 
-  changeShareOrg(evt: any) {
+  changeShareOrg(org: any, evt: any) {
     // see which orgs are selected
+    console.log('changeShareOrg');
+    console.log(org);
 
+    org.selected = (evt.target.value == 'on');
+    this.demographicData.shareOrgs[org.key] = org.selected;
     this.updateDemographics();
   }
 
-  changeValue(evt: any) {
-
-  }
 
 
   update(event: any) {

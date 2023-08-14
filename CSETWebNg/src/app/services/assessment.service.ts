@@ -433,8 +433,8 @@ export class AssessmentService {
           // TODO:  delete this stuff
           if (this.assessment.workflow == 'TSA') {
             this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
-          } else if (this.assessment.workflow == 'IOD') {
-            this.router.navigate(['/assessment', id, 'prepare', 'info-demog-iod']);
+          } else if (this.configSvc.installationMode == 'IOD') {
+            this.router.navigate(['/assessment', id, 'prepare', 'tutorial-imr']);
           } else {
             this.router.navigate(['/assessment', id]);
           }

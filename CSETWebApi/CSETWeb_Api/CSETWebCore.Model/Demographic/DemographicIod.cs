@@ -42,7 +42,9 @@ namespace CSETWebCore.Model.Demographic
         /// cybersecurity efforts?
         /// </summary>
         public bool UsesStandard { get; set; }
+        // Most important
         public string Standard1 { get; set; }
+        // Second important
         public string Standard2 { get; set; }
 
 
@@ -58,15 +60,11 @@ namespace CSETWebCore.Model.Demographic
 
 
         /// <summary>
-        /// The following fields indicate with whom the organization
-        /// shares with or obtains cybersecurity-related information from.
+        /// This list indicates the organizations with whom we
+        /// share cybersecurity-related information.
+        /// ISAC, FBI, CONSULT, DHS, STATE, PEERS, NCFTA
         /// </summary>
-        public bool ShareISAC { get; set; }
-        public bool ShareFBI { get; set; }
-        public bool ShareCyberConsultants { get; set; }
-        public bool ShareDHS { get; set; }
-        public bool ShareLocalGovt { get; set; }
-        public bool ShareNCFTA { get; set; }
+        public List<string> ShareOrgs { get; set; } = new List<string>();
         public string ShareOther { get; set; }
 
 
@@ -83,44 +81,51 @@ namespace CSETWebCore.Model.Demographic
         // ================================================================
         
 
-        public List<ListItem> ListOrgTypes { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListOrgTypes { get; set; } = new List<ListItem2>();
 
-        public List<ListItem> ListSectors { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListSectors { get; set; } = new List<ListItem2>();
 
-        public List<ListItem> ListSubsectors { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListSubsectors { get; set; } = new List<ListItem2>();
         
 
-        public List<ListItem> ListNumberEmployeeTotal { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListNumberEmployeeTotal { get; set; } = new List<ListItem2>();
 
-        public List<ListItem> ListNumberEmployeeUnit { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListNumberEmployeeUnit { get; set; } = new List<ListItem2>();
 
-        public List<ListItem> ListRevenueAmounts { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListRevenueAmounts { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// Used for question 4 
         /// </summary>
-        public List<ListItem> ListRevenuePercentages { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListRevenuePercentages { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// The number of people served annually by the critical service.
         /// lUsed for question 5
         /// </summary>
-        public List<ListItem> ListNumberPeopleServed { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListNumberPeopleServed { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// Used for question 6
         /// </summary>
-        public List<ListItem> ListCISectors { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListCISectors { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// Used for question 8
         /// </summary>
-        public List<ListItem> ListRegulationTypes { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListRegulationTypes { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// Organizations with whom you share cyber data.
         /// Used for question 9
         /// </summary>
-        public List<ListItem> ListShareOrgs { get; set; } = new List<ListItem>();
+        public List<ListItem2> ListShareOrgs { get; set; } = new List<ListItem2>();
+
+        /// <summary>
+        /// Used for question 10
+        /// </summary>
+        public List<ListItem2> ListBarriers { get; set; } = new List<ListItem2>();
+
+        
     }
 }
