@@ -272,6 +272,7 @@ CsetUtils.PersistGraphToCSET = async function (editor) {
     }
 
     CsetUtils.clearWarningsFromDiagram(editor.graph);
+    // below is commented because the analyzer was running twice and crashing in the backend
     await CsetUtils.analyzeDiagram(analysisReq, editor);
     await CsetUtils.PersistDataToCSET(editor, analysisReq.DiagramXml);
 }
