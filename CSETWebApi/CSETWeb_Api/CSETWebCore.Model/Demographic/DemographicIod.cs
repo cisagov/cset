@@ -18,6 +18,10 @@ namespace CSETWebCore.Model.Demographic
         public int AssessmentId { get; set; }
 
         public string OrganizationType { get; set; }
+        public string OrganizationName { get; set; }
+
+        public string Sector { get; set; }
+        public string Subsector { get; set; }
         
         public string NumberEmployeesTotal { get; set; }
         public string NumberEmployeesUnit { get; set; }
@@ -37,7 +41,7 @@ namespace CSETWebCore.Model.Demographic
         /// standard, or similar resource to support or inform its
         /// cybersecurity efforts?
         /// </summary>
-        public bool StandardUsed { get; set; }
+        public bool UsesStandard { get; set; }
         public string Standard1 { get; set; }
         public string Standard2 { get; set; }
 
@@ -46,7 +50,7 @@ namespace CSETWebCore.Model.Demographic
         /// Is your organization required to comply with mandatory,
         /// cybersecurity-related regulation?
         /// </summary>
-        public bool RegulationRequired { get; set; }
+        public bool RequiredToComply { get; set; }
         public string RegulationType1 { get; set; }
         public string Reg1Other { get; set; }
         public string RegulationType2 { get; set; }
@@ -69,6 +73,9 @@ namespace CSETWebCore.Model.Demographic
         public string Barrier1 { get; set; }
         public string Barrier2 { get; set; }
 
+        public string BusinessUnit { get; set; }
+
+
 
         // ================================================================
         //  Following are the collections to support dropdown lists,
@@ -76,39 +83,44 @@ namespace CSETWebCore.Model.Demographic
         // ================================================================
         
 
-        public List<ListItem> ListOrgTypes { get; set; }
+        public List<ListItem> ListOrgTypes { get; set; } = new List<ListItem>();
 
-        public List<ListItem> NumberEmployeeRangeTotal { get; set; }
+        public List<ListItem> ListSectors { get; set; } = new List<ListItem>();
 
-        public List<ListItem> NumberEmployeeRangeUnit { get; set; }
+        public List<ListItem> ListSubsectors { get; set; } = new List<ListItem>();
+        
 
-        public List<ListItem> RevenueAmounts { get; set; }
+        public List<ListItem> ListNumberEmployeeTotal { get; set; } = new List<ListItem>();
+
+        public List<ListItem> ListNumberEmployeeUnit { get; set; } = new List<ListItem>();
+
+        public List<ListItem> ListRevenueAmounts { get; set; } = new List<ListItem>();
 
         /// <summary>
         /// Used for question 4 
         /// </summary>
-        public List<ListItem> RevenuePercentages { get; set; }
+        public List<ListItem> ListRevenuePercentages { get; set; } = new List<ListItem>();
 
         /// <summary>
         /// The number of people served annually by the critical service.
         /// lUsed for question 5
         /// </summary>
-        public List<ListItem> NumberPeopleServed { get; set; }
+        public List<ListItem> ListNumberPeopleServed { get; set; } = new List<ListItem>();
 
         /// <summary>
         /// Used for question 6
         /// </summary>
-        public List<ListItem> CriticalInfrastructureSectors { get; set; }
+        public List<ListItem> ListCISectors { get; set; } = new List<ListItem>();
 
         /// <summary>
         /// Used for question 8
         /// </summary>
-        public List<ListItem> RegulationTypes { get; set; }
+        public List<ListItem> ListRegulationTypes { get; set; } = new List<ListItem>();
 
         /// <summary>
         /// Organizations with whom you share cyber data.
         /// Used for question 9
         /// </summary>
-        public List<ListItem> ShareOrgs { get; set; } = new List<ListItem>();
+        public List<ListItem> ListShareOrgs { get; set; } = new List<ListItem>();
     }
 }

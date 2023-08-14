@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
@@ -12,6 +13,8 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -43,8 +46,18 @@ namespace CSETWebCore.Api.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
 
-            var mgr = new DemographicIodBusiness();
-            var response = mgr.GetDemographics(assessmentId, _context);
+            var mgr = new DemographicIodBusiness(_context);
+            var response = mgr.GetDemographics(assessmentId);
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("api/demographics/ext2/subsectors/{id}")]
+        public IActionResult GetSubsectors(int id)
+        {
+            var mgr = new DemographicIodBusiness(_context);
+            var response = mgr.GetSubsectors(id);
             return Ok(response);
         }
 
@@ -55,12 +68,12 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="demographics"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/demographics/ext")]
+        [Route("api/demographics/ext2")]
         public IActionResult PostExtended2([FromBody] DemographicIod demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
 
-            var mgr = new DemographicIodBusiness();
+            var mgr = new DemographicIodBusiness(_context);
             mgr.SaveDemographics(demographics);
 
             return Ok();

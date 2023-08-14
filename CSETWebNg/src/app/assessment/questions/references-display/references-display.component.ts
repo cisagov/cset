@@ -87,6 +87,14 @@ export class ReferencesDisplayComponent implements OnInit {
   }
 
   /**
+   * Replaces all occurrences of the token {{ cset_document_url }}
+   * with the application's document URL.
+   */
+  replaceDocUrl(s: string) {
+    return s.replaceAll("{{ cset_document_url }}", this.configSvc.docUrl);
+  }
+
+  /**
    * Formats a URL to the document.  Handles uploaded documents via the
    * 'ReferenceDocument' endpoint as well as direct PDFs stored on the
    * file system in the API.  
