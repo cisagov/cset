@@ -6459,8 +6459,6 @@ EditorUi.prototype.destroy = function()
  * Add network analyzer button. 
  */ 
 EditorUi.prototype.toggleAnalyzer = function (e) {
-	console.log('EditorUi.prototype.toggleAnalyzer');
-
 	if (!e.action.toggleAction) {
 		return;
 	}
@@ -6471,10 +6469,9 @@ EditorUi.prototype.toggleAnalyzer = function (e) {
 		e.elmt.classList.add(klas);
 	}
 
-	debugger;
-
 	if (this.editor) {
 		this.editor.analyzeDiagram = e.state;
-		CsetUtils.PersistGraphToCSET(this.editor);
+		//below is commented out because it was doubling up a later call and crashing
+		//CsetUtils.PersistGraphToCSET(this.editor);
 	}
 };
