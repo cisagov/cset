@@ -1,7 +1,7 @@
 {
     "NOTENODE": "Casing on config chain matters",
     "currentConfigChain": [
-        "CSET"
+        "ACET"
     ],
     "appCode": "CSET",
     "isRunningAnonymous": false,
@@ -243,7 +243,10 @@
                     "answerLabel": "Yes Compensating Control",
                     "note": "This will only apply in the ACET skin.  See QuestionsService"
                 }
-            ]
+            ],
+            "questionIcons": {
+                "guidanceIcon": "I"
+            }
         },
         {
             "moduleName": "ISE",
