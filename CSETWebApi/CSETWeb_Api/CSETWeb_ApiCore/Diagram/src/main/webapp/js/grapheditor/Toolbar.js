@@ -179,29 +179,20 @@ Toolbar.prototype.init = function()
 	// CSET - add network analysis button
 	const analyzeKey = 'Analyze';
 	const analyzeElmt = this.addItems(['-', analyzeKey])[1];
-	console.log('huey2');
-	console.log(analyzeElmt);
+
 	if (analyzeElmt) {
 		var analyzeAction = this.editorUi.actions.get(analyzeKey);
-		console.log('huey3');
-		console.log(analyzeAction);
 		
 		analyzeAction.onToggle = mxUtils.bind(this, function (state) {
-			console.log('huey1');
-			console.log(this.editorUi);
 
 			const klas = 'geSprite-analyze-selected';
 			analyzeElmt.classList.remove(klas);
 			if (state) {
-				console.log(state)
 				analyzeElmt.classList.add(klas);
 			}
-			console.log(analyzeElmt)
-
 
 			this.editorUi.toggleAnalyzer({ state: state, elmt: analyzeElmt, action: analyzeAction });
 		});
-		console.log(analyzeAction)
 	}
 
 	this.addSeparator();
