@@ -1262,12 +1262,15 @@ Actions.prototype.init = function()
 
 
 	// CSET - network analysis
-	action = this.addAction('analyze', function ()
+	action = this.addAction('Analyze', function ()
 	{
+		console.log('action:')
+		console.log(action)
 		this.analyzeToggled = !this.analyzeToggled;
 		editor.analyzeDiagram = !editor.analyzeDiagram;
 		if (action.onToggle)
 		{
+			console.log('in onToggle')
 			action.onToggle(this.analyzeToggled);
 		}
 		if (!editor.analyzeDiagram) {

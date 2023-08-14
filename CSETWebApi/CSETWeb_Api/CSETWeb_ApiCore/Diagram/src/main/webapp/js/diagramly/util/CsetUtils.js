@@ -222,7 +222,7 @@ CsetUtils.LoadFileFromCSET = async function (app) {
     // set analysis toggle state
     if (data.analyzeDiagram || false) {
         for (var element of app.toolbar.container.childNodes) {
-            if (element.title == 'Analyze Network Diagram') {
+            if (element.title == 'Analyze') {
                 element.click();
                 break;
             }
