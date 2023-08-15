@@ -46,10 +46,11 @@
 
                         <div class="report-body-imr">
 
-                            <!--
-             <div id="toc-top">
-              <app-crr-cover-sheet [model]="crrModel"></app-crr-cover-sheet>
+                          <div id="toc-top">
+              <app-imr-cover-sheet [model]="crrModel"></app-imr-cover-sheet>
             </div>
+            
+            <!--
             <div class="page-margin-top">
               <app-crr-cover-sheet2 [model]="crrModel"></app-crr-cover-sheet2>
             </div>
@@ -57,15 +58,15 @@
             <div id="main-toc" class="page-margin-top">
               <app-crr-main-toc [model]="crrModel"></app-crr-main-toc>
             </div>
+          -->
   
             <div id="toc-intro" class="page-margin-top">
-              <app-crr-intro-about [model]="crrModel"></app-crr-intro-about>
+              <app-imr-intro-about [model]="crrModel"></app-imr-intro-about>
             </div>
   
-            <div id="toc-mil1-ps" class="page-margin-top">
+            <!-- <div id="toc-mil1-ps" class="page-margin-top">
               <app-crr-mil1-performance-summary [model]="crrModel"></app-crr-mil1-performance-summary>
-            </div>
-        -->
+            </div> -->
 
             <div id="toc-crr-ps" class="page-margin-top">
                 <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="crrModel"></app-cmu-goal-perf-stacked-bar>

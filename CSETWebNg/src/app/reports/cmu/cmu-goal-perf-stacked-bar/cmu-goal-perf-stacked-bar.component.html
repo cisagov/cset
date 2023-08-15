@@ -76,13 +76,13 @@
             <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow" style="margin-right: 0.05rem"
             [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
                 <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
-                  <div class="goalrow-text"><b>{{ goal.title.split('-')[0] }} -</b></div>
+                  <div class="goalrow-text rkw-a"><b>{{ goal.title.split('-')[0] }} -</b></div>
                 </div>
                 <div class="col-6" style="font-size: 8px; padding: 0">
-                  <div class="goalrow-text">{{ stringSplitter(goal.title) }}</div>
+                  <div class="goalrow-text rkw-b">{{ stringSplitter(goal.title) }}</div>
                 </div>
                 <div class="col-5" style="padding: 0.1rem;">
-                  <p class="goalrow-text" [innerHtml]="getStackedBarChart(goal.title) | safe"></p>
+                  <p class="goalrow-text rkw-c" [innerHtml]="getStackedBarChart(goal.title) | safe"></p>
             </div>
         </div>
     </div>
