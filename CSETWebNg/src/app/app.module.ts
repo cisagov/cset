@@ -380,6 +380,7 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
+import { CmuService } from './services/cmu.service';
 import { Utilities } from './services/utilities.service';
 import { NCUAService } from './services/ncua.service';
 
@@ -587,6 +588,8 @@ import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-in
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
+import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
+import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
 
 
 
@@ -1133,6 +1136,8 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
         AssessmentDemogIodComponent,
         DemographicsIodComponent,
         TutorialImrComponent,
+        ImrCoverSheetComponent,
+        ImrIntroAboutComponent,
     ],
     providers: [
         ConfigService,
@@ -1190,6 +1195,7 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
         CrrFilteringService,
         RraFilteringService,
         CrrService,
+        CmuService,
         Utilities,
         NCUAService,
         GalleryService
