@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CrrService } from '../../../services/crr.service';
 import { CrrReportModel } from '../../../models/reports.model';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
   selector: 'app-cmu-goal-perf-stacked-bar',
@@ -16,18 +16,18 @@ export class CmuGoalPerfStackedBarComponent {
   scoreBarCharts: string[] = [];
   stackedBarCharts: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
       this.mil1FullAnswerDistribChart = resp;
     })
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     })
 
-    this.crrSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
     })
@@ -42,6 +42,9 @@ export class CmuGoalPerfStackedBarComponent {
   }
 
   getStackedBarChart(goalTitle: string) {
+    console.log('getStackedBarChart()');
+    console.log(goalTitle);
+    console.log(this.stackedBarCharts);
     return this.stackedBarCharts.find(c => c.title === goalTitle)?.chart;
   }
 
