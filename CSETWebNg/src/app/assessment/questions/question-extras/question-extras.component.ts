@@ -654,7 +654,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   whichSupplementalIcon() {
     const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
-    if (!!behavior && behavior.questionIcons.guidanceIcon?.toLowerCase() == 'g') {
+    if (!!behavior && behavior.questionIcons?.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
     } else {
       return "I";
