@@ -681,7 +681,7 @@ namespace CSETWebCore.Api.Controllers
                                 DisplayNumber = q.DisplayNumber,
                                 QuestionText = q.QuestionText,
                                 MarkForReview = q.MarkForReview,
-                                AnswerText = "U"
+                                AnswerText = "Unanswered"
                             };
                         }
                     }
@@ -698,7 +698,7 @@ namespace CSETWebCore.Api.Controllers
                                 DisplayNumber = q.DisplayNumber,
                                 QuestionText = q.QuestionText,
                                 MarkForReview = q.MarkForReview,
-                                AnswerText = "N"
+                                AnswerText = "No"
                             };
                         }
                     }
