@@ -3,7 +3,7 @@
     "currentConfigChain": [
         "TSA"
     ],
-    "appCode": "CSET",
+    "appCode": "TSA",
     "isRunningAnonymous": false,
     "app": {
         "protocol": "http",
@@ -27,11 +27,11 @@
         "canDeleteCustomModules": true,
         "showExportAllButton": false
     },
-    "galleryLayout": "CSET",
+    "galleryLayout": "TSA",
     "installationMode": "TSA",
     "mobileEnvironment": "",
     "behaviors": {
-        "defaultTitle": "CSET",
+        "defaultTitle": "TSA",
         "showDisclaimer": true,
         "showModuleBuilder": true,
         "showModuleImport": true,
