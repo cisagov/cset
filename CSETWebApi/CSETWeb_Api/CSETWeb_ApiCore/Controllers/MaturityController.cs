@@ -24,6 +24,7 @@ using Newtonsoft.Json;
 using CSETWebCore.Api.Interfaces;
 using NLog;
 using CSETWebCore.Model.Nested;
+using DocumentFormat.OpenXml.Office2013.Excel;
 using J2N.Numerics;
 
 namespace CSETWebCore.Api.Controllers
@@ -651,7 +652,80 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
-        
+
+        [HttpGet]
+        [Route("api/getMaturityDeficiencyListSd")]
+        public IActionResult GetDeficiencyListSd()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var biz = new NestedStructure(assessmentId, 0, _context);
+            List<Grouping> filteredGroupings = new List<Grouping>();
+
+            foreach (var b in biz.MyModel.Groupings)
+            {
+                bool includeGrouping = false;
+                var questions = new List<Question>();
+                foreach (var q in b.Questions)
+                {
+                    bool includeQ = false;
+                    var question = new Question();
+                    if (q.AnswerText == "U")
+                    {
+                        if (q.Options.Any(x => x.OptionType.ToLower() == "radio"))
+                        {
+                            includeQ = true;
+                            question = new Question()
+                            {
+                                QuestionType = q.QuestionType,
+                                DisplayNumber = q.DisplayNumber,
+                                QuestionText = q.QuestionText,
+                                MarkForReview = q.MarkForReview,
+                                AnswerText = "U"
+                            };
+                        }
+                    }
+
+                    if (q.AnswerText == "S")
+                    {
+                        if (q.Options.Any(x =>
+                                x.Selected && x.OptionText == "No" && x.OptionType.ToLower() == "radio"))
+                        {
+                            includeQ = true;
+                            question = new Question()
+                            {
+                                QuestionType = q.QuestionType,
+                                DisplayNumber = q.DisplayNumber,
+                                QuestionText = q.QuestionText,
+                                MarkForReview = q.MarkForReview,
+                                AnswerText = "N"
+                            };
+                        }
+                    }
+
+                    if (includeQ)
+                    {
+                        includeGrouping = true;
+                        questions.Add(question);
+                    }
+                }
+
+                if (includeGrouping)
+                {
+                    includeGrouping = false;
+                    filteredGroupings.Add( new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questions
+                    });
+                    questions = new List<Question>();
+                }
+            }
+            
+           
+            return Ok(filteredGroupings);
+        }
+
         /// <summary>
         /// get all comments and marked for review
         /// </summary>

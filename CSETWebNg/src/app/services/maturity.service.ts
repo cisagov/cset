@@ -276,6 +276,11 @@ export class MaturityService {
   getMaturityDeficiency(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
+
+  getMaturityDeficiencySd(){
+    return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyListSd');
+  }
+
   getMaturityOpenEndedQuestions(maturityModel){
     return this.http.get(this.configSvc.apiUrl + 'getMaturityOpenEndedQList?maturity=' + maturityModel);
   }

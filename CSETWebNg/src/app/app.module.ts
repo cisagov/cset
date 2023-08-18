@@ -582,6 +582,7 @@ import { ImrReportComponent } from './reports/imr/imr-report/imr-report.componen
 import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
 import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
+import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 
 
 
@@ -1123,6 +1124,7 @@ import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-
         KeyReportComponent,
         CmuGoalPerfStackedBarComponent,
         CmuResultsDetailComponent,
+        TsaSdComponent,
     ],
     providers: [
         ConfigService,
