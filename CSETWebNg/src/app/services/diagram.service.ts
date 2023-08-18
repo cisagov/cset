@@ -99,4 +99,38 @@ export class DiagramService {
   deleteCsafProduct(vendorName: string, productName: string) {
     return this.http.post(this.apiUrl + 'vulnerabilities/deleteProduct?vendorName=' + vendorName + '&productName=' + productName, '');
   }
+
+  /**
+   * 
+   */
+  updateAssetType(guid: string, componentType: string, label: string) {
+    return this.http.post(this.apiUrl + 'assetType?guid=' + guid + '&type=' + componentType + '&label=' + label, '');
+  }
+  /**
+   * 
+   */
+  changeShapeToComponent(componentType: string, id: string, label: string) {
+    return this.http.post(this.apiUrl + 'changeShapeToComponent?type=' + componentType + '&id=' + id + '&label=' + label, '');
+  }
+  
+  /**
+   * finds and appends the '-#' suffix a component label needs (e.g. CLK-1, FW-4, etc.)
+   */
+  applyComponentSuffix(type: string, diagramComponentList: any) {
+    let suffix = 1; // tracking the new number after the hyphen (CLK-1, CON-13, etc.)
+    let similarCompLabels = diagramComponentList.filter(c => c.label.substring(0, type.length) == type);
+
+    for (let i = 0; i < similarCompLabels.length; i++) {
+      let compLabel = similarCompLabels[i].label;
+
+      // if (compLabel == type) {
+      //   suffix = 1;
+      // }
+      if (compLabel.charAt(type.length) == '-' && +compLabel.substring(type.length + 1) >= suffix) {
+        suffix = (+compLabel.substring(type.length + 1)) + 1; //gets the number after the hyphen, then increments
+      }
+    }
+
+    return type + '-' + suffix; // append the suffix to the type name, and add a hyphen in between
+  }
 }

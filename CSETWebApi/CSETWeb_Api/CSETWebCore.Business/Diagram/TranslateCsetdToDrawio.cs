@@ -317,7 +317,7 @@ namespace CSETWebCore.Business.Diagram
                 string newID = GetID(oldID);
 
 
-                var xObject = xDrawio.CreateElement("object");
+                var xObject = xDrawio.CreateElement("UserObject"); // v21.0.2 uses 'UserObject' instead of 'object'
                 xRoot.AppendChild(xObject);
                 xObject.SetAttribute("id", newID);
                 xObject.SetAttribute("label", ChildValue(component, "c:label/c:label"));

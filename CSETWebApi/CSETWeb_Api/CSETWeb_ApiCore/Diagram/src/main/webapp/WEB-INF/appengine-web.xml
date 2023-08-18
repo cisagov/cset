@@ -13,13 +13,20 @@
   <!-- Path patterns not supported in production -->
   <static-files>
     <include path="/**">
+      <http-header name="Referrer-Policy" value="strict-origin"/>
 	  <http-header name="Access-Control-Allow-Origin" value="*"/>
+	  <http-header name="X-XSS-Protection" value="1; mode=block"/>
+	  <http-header name="X-Content-Type-Options" value="nosniff"/>
 	</include>
   </static-files>
 
+  <!-- App engine has conflicting interfaces for javax.cache.CacheManager -->
+  <class-loader-config>
+    <priority-specifier filename="cache-api-1.1.1.jar"/>
+  </class-loader-config>
+  
   <instance-class>F1</instance-class>
   <automatic-scaling>
-    <min-idle-instances>1</min-idle-instances>
     <max-idle-instances>1</max-idle-instances>
   </automatic-scaling>
 </appengine-web-app>

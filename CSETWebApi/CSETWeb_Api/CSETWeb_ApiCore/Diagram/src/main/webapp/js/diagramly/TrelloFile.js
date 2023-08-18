@@ -85,10 +85,12 @@ TrelloFile.prototype.doSave = function(title, success, error)
 	// Forces update of data for new extensions
 	var prev = this.meta.name;
 	this.meta.name = title;
-	DrawioFile.prototype.save.apply(this, arguments);
-	this.meta.name = prev;
 	
-	this.saveFile(title, false, success, error);
+	DrawioFile.prototype.save.apply(this, [null, mxUtils.bind(this, function()
+	{
+		this.meta.name = prev;
+		this.saveFile(title, false, success, error);
+	}), error]);
 };
 
 /**
@@ -105,30 +107,18 @@ TrelloFile.prototype.saveFile = function(title, revision, success, error)
 	}
 	else if (!this.savingFile)
 	{
+		// Sets shadow modified state during save
+		this.savingFileTime = new Date();
+		this.setShadowModified(false);
 		this.savingFile = true;
 		
 		if (this.getTitle() == title)
 		{
-			// Makes sure no changes get lost while the file is saved
-			var prevModified = this.isModified;
-			var modified = this.isModified();
-
-			var prepare = mxUtils.bind(this, function()
-			{
-				this.setModified(false);
-				
-				this.isModified = function()
-				{
-					return modified;
-				};
-			});
-			
-			prepare();
-			
 			this.ui.trello.saveFile(this, mxUtils.bind(this, function(meta)
 			{
+				// Checks for changes during save
+				this.setModified(this.getShadowModified());
 				this.savingFile = false;
-				this.isModified = prevModified;
 				this.meta = meta;
 				this.contentChanged();
 				
@@ -136,7 +126,9 @@ TrelloFile.prototype.saveFile = function(title, revision, success, error)
 				{
 					success();
 				}
-				if (this.saveNeededCounter > 0) {
+				
+				if (this.saveNeededCounter > 0)
+				{
 					this.saveNeededCounter--;
 					this.saveFile(title, revision, success, error);
 				}
@@ -144,23 +136,9 @@ TrelloFile.prototype.saveFile = function(title, revision, success, error)
 			mxUtils.bind(this, function(err)
 			{
 				this.savingFile = false;
-				this.isModified = prevModified;
-				this.setModified(modified || this.isModified());
-				
+
 				if (error != null)
 				{
-					// Handles modified state for retries
-					if (err != null && err.retry != null)
-					{
-						var retry = err.retry;
-						
-						err.retry = function()
-						{
-							prepare();
-							retry();
-						};
-					}
-					
 					error(err);
 				}
 			}));
@@ -180,7 +158,8 @@ TrelloFile.prototype.saveFile = function(title, revision, success, error)
 					
 					this.ui.fileLoaded(file);
 					
-					if (this.saveNeededCounter > 0) {
+					if (this.saveNeededCounter > 0)
+					{
 						this.saveNeededCounter--;
 						this.saveFile(title, revision, success, error);
 					}
@@ -202,3 +181,4 @@ TrelloFile.prototype.saveFile = function(title, revision, success, error)
 		error({code: App.ERROR_BUSY});
 	}
 };
+
