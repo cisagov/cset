@@ -63,23 +63,20 @@
                 <td colspan="4"><h2>{{s.displayNumber}}</h2></td>
             </tr>
             <tr>
-                <td class="deficiencies-list-item"><b>{{s.questionText}}</b></td>
+                <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
                 
-                <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                    <div style="width: 7rem">
+                <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;" >
+                    <div>
                         {{s.answerText}}
                         </div>
                     </td>
                     <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
                         src="assets/images/icons/MarkedFlag.png"></td>
         </tr>
-            <tr>
-                <td colspan="4">
-                <hr class="my-2">
-                </td>
-          </tr>
+           
             </ng-template>
         </table>
+        <hr class="my-2">
     </div>
 
             <div *ngIf="!response || response.length == 0" class="mt-3">
