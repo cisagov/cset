@@ -7,9 +7,9 @@
  * 
  * Documentation:
  * 
- * https://desk.draw.io/support/solutions/articles/16000042372
+ * https://www.diagrams.net/doc/faq/voice-plugin
  * 
- * to-do: Use grammer https://msdn.microsoft.com/en-us/library/ee800145.aspx
+ * TODO: Use grammer https://msdn.microsoft.com/en-us/library/ee800145.aspx
  */
 Draw.loadPlugin(function(ui) {
 	// Speech recognition never supported without synthesis 
@@ -36,7 +36,7 @@ Draw.loadPlugin(function(ui) {
 	var micImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA5UlEQVR4Xr3SMYrCQBTGcSfIQiAgRIS9hOANBCurPUAuIAp7A7FVsFkIbLGYA9gKtoKNYG3jll5AFNKG518YMD6SISD4wY9J4MvkMYwRkZqOMSZkifGFe1b4pnvW3TqK8oMo14twxUgXPRSlDxU7TcUNPqATlG7wCi93cA2Iq2x7l7IJsgofB6UTiEjKklFqsabQSdFA5jqDAzrYQGeNNv5d9yDBEAME6NreFmP8Yuma4A8hFpiLSFNAYYYYn0jwCIUnxMcER4h1whS+7hseXKcu9ifGeQ+qeO8GjN7DPve+Q6+oewPhmE63Qfsb6AAAAABJRU5ErkJggg==';
 	
 	// True if we're on ChromOs
-	var chromeOs = /\bCrOS\b/.test(navigator.userAgent);
+	var chromeOs = mxClient.IS_CHROMEOS;
 	
 	// Maximum length of message to speak
 	var maxMessageLength = 1000;
@@ -260,7 +260,7 @@ Draw.loadPlugin(function(ui) {
 	
     ui.actions.addAction('speechHelp', function()
     {
-    	window.open('https://desk.draw.io/support/solutions/articles/16000042372');
+    	window.open('https://www.diagrams.net/doc/faq/voice-plugin');
     });
 
     // Hijacks the settings for storing current voice
@@ -307,14 +307,11 @@ Draw.loadPlugin(function(ui) {
 				})(i);
 			}
 			
-			if (!mxClient.IS_QUIRKS)
-			{
-				parent.div.style.overflowX = 'hidden';
-				parent.div.style.overflowY = 'auto';
-				parent.div.style.maxHeight = '100%';
-				// Workaround for document scrollbars with 100% max height in Chrome
-				parent.div.style.marginBottom = '-20px';
-			}
+			parent.div.style.overflowX = 'hidden';
+			parent.div.style.overflowY = 'auto';
+			parent.div.style.maxHeight = '100%';
+			// Workaround for document scrollbars with 100% max height in Chrome
+			parent.div.style.marginBottom = '-20px';
 		}
 	})));
 	
@@ -690,7 +687,7 @@ Draw.loadPlugin(function(ui) {
 				var recognition = new webkitSpeechRecognition();
 				recognition.interimResults = true;
 				
-				// to-do: Should use grammar instead of trying more alternatives
+				// TODO: Should use grammar instead of trying more alternatives
 				recognition.maxAlternatives = 5;
 				
 				recognition.lang = lang;
@@ -805,7 +802,7 @@ Draw.loadPlugin(function(ui) {
 		    // Main command
 		    tokens[0] = tokens[0].toLowerCase();
 
-		    // to-do: Use hamming distance for best match command but include all possible actions
+		    // TODO: Use hamming distance for best match command but include all possible actions
 		    // which might be too slow
 		    // console.log('connect', naiveHammingDistance(tokens[0], 'connect'), naiveHammingDistance('disable', 'connect'), naiveHammingDistance('change', 'connect'));
 		    
@@ -849,7 +846,7 @@ Draw.loadPlugin(function(ui) {
 			}
 			else if (tokens[0] == 'help')
 			{
-				var wnd = ui.openLink('https://desk.draw.io/support/solutions/articles/16000042372');
+				var wnd = ui.openLink('https://www.diagrams.net/doc/faq/voice-plugin');
 				
 				if (wnd == null)
 				{
@@ -863,8 +860,8 @@ Draw.loadPlugin(function(ui) {
 					
 					if (searchTerm !=  null && searchTerm.length > 0)
 					{
-						ui.openLink('https://desk.draw.io/support/search/solutions?term=' +
-								encodeURIComponent(searchTerm));
+						ui.openLink('https://www.google.com/search?q=site%3Adiagrams.net+inurl%3A%2Fdoc%2Ffaq%2F+' +
+							encodeURIComponent(searchTerm));
 						App.say(command);
 					}
 				}
@@ -1092,7 +1089,7 @@ Draw.loadPlugin(function(ui) {
 								var dx = pt.x - loc.x;
 								var dy = pt.y - loc.y;
 								
-								// to-do: Should add insert to transaction but need absolute position
+								// TODO: Should add insert to transaction but need absolute position
 								graph.model.beginUpdate();
 								try
 								{
@@ -2017,7 +2014,7 @@ Draw.loadPlugin(function(ui) {
 		// Can return more than first word
 		function firstWord(value)
 		{
-			// to-do Use regex
+			// TODO Use regex
 			if (value != null && value.length > maxLabelLength)
 			{
 				var space = value.indexOf(' ');
@@ -2057,8 +2054,7 @@ Draw.loadPlugin(function(ui) {
 
 				if (label == null || label.length == 0 || label.length > maxLabelLength || mxUtils.isNumeric(label))
 				{
-					var state = this.view.getState(cell);
-					var style = (state != null) ? state.style : this.getCellStyle(cell);
+					var style = this.getCurrentCellStyle(cell);
 					var tmp = style[mxConstants.STYLE_SHAPE];
 
 					if (tmp == 'label')
