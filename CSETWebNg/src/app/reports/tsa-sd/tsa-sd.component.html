@@ -55,8 +55,8 @@
             src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
         </div>
         <hr class="page-line m-0">
-        <div *ngFor="let g of response">
-        <h1>{{g.title}}</h1>
+        <div *ngFor="let g of response" style="padding-left: 10px;">
+        <h1 style="font-size:16pt;font-weight:bold;margin:1em 0 0 0">{{g.title}}</h1>
         <table role="presentation" >
           <ng-template ngFor let-s [ngForOf]="g.questions">
             <tr>
