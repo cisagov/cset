@@ -8,7 +8,6 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers.ReportWidgets;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
@@ -16,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -25,26 +25,28 @@ namespace CSETWebCore.Api.Controllers
     public class ReportsCmuController : Controller
     {
         private readonly ITokenManager _token;
-        private readonly ICmuScoringHelper _scoring;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
+        private readonly CmuScoringHelper _scoring;
 
-        public ReportsCmuController(ITokenManager token, ICmuScoringHelper scoring, IAssessmentBusiness assessment,
+
+        public ReportsCmuController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, IReportsDataBusiness report,
             IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
         {
             _token = token;
-            _scoring = scoring;
             _assessment = assessment;
             _demographic = demographic;
             _report = report;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = admin;
             _context = context;
+
+            _scoring = new CmuScoringHelper(context);
         }
 
 
@@ -53,10 +55,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/report/cmu/goalperformance")]
+        [Route("api/report/cmu/goalperformanceaaaaaa")]
         public IActionResult GetGoalPerformance()
         {
-            var assessmentId = _token.AssessmentForUser();
+            // var assessmentId = _token.AssessmentForUser();
+            var assessmentId = 1094;
+
             _scoring.InstantiateScoringHelper(assessmentId);
             var XDocument = _scoring.XDoc;
 
@@ -65,13 +69,13 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (XElement domain in XDocument.Root.Elements())
             {
-                var domainScores = _scoring.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
                 var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
                 barChartInput.IncludePercentFirstBar = true;
                 barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
                 scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
 
-                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+                var goals = domain.Descendants("Goal");
 
                 foreach (XElement goal in goals)
                 {

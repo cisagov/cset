@@ -72,7 +72,10 @@ namespace CSETWebCore.Helpers
 
             LoadStructure();
 
-            ManipulateStructure();
+            if (this.ModelId == 3 || this.ModelId == 4)
+            {
+                ManipulateStructure();
+            }
 
             Rollup();
 
@@ -733,13 +736,13 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="domainAbbrev"></param>
         /// <returns></returns>
-        public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev)
-        {
-            var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev).Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
-            var xQs = xDomain.Descendants("Question").ToList();
+        //public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev)
+        //{
+        //    var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev).Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
+        //    var xQs = xDomain.Descendants("Question").ToList();
 
-            return GetDistrib(xQs);
-        }
+        //    return GetDistrib(xQs);
+        //}
 
         /// <summary>
         /// 
