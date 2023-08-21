@@ -38,7 +38,14 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public String Build_Number { get; set; }
 
     }
+    public class jACCESS_KEY_ASSESSMENT
+    {
+        [Required]
+        public string AccessKey { get; set; }
 
+        [Required]
+        public int Assessment_Id { get; set; }
+    }
 
     public class jASSESSMENT_SELECTED_LEVELS
     {
@@ -872,6 +879,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         [StringLength(50)]
         public string Parent_DrawIO_Id { get; set; }
     }
+
 }
 
 
