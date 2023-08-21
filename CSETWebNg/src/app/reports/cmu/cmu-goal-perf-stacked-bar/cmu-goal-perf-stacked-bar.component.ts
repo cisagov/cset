@@ -11,7 +11,7 @@ export class CmuGoalPerfStackedBarComponent {
   @Input() modelName: string;
   @Input() model: CrrReportModel;
 
-  mil1FullAnswerDistribChart: string = '';
+  fullAnswerDistribChart: string = '';
   legend: string = '';
   scoreBarCharts: string[] = [];
   stackedBarCharts: any[] = [];
@@ -19,15 +19,15 @@ export class CmuGoalPerfStackedBarComponent {
   constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
-      this.mil1FullAnswerDistribChart = resp;
+    this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
+      this.fullAnswerDistribChart = resp;
     })
 
     this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     })
 
-    this.cmuSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getGoalPerformanceSummaryBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
     })

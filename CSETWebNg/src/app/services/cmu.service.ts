@@ -53,8 +53,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 
-  getMil1FullAnswerDistribWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1FullAnswerDistrib',
+  getFullAnswerDistribWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib',
     { responseType: 'text' });
   }
 
@@ -63,8 +63,11 @@ export class CmuService {
     { responseType: 'text'});
   }
 
-  getMil1PerformanceSummaryBodyCharts() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceSummaryBodyCharts');
+  /**
+   * Goal Performance stacked bar charts
+   */
+  getGoalPerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/goalperformance');
   }
 
   getCrrPerformanceSummaryBodyCharts() {
