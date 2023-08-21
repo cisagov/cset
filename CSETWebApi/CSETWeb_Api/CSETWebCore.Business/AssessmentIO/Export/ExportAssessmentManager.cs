@@ -87,6 +87,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
             TinyMapper.Bind<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>();
             TinyMapper.Bind<USER_DETAIL_INFORMATION, jUSER_DETAIL_INFORMATION>();
+            TinyMapper.Bind<ACCESS_KEY_ASSESSMENT, jACCESS_KEY_ASSESSMENT>();
+           
             TinyMapper.Bind<NIST_SAL_QUESTIONS, jNIST_SAL_QUESTION_ANSWERS>(config =>
             {
                 config.Ignore(x => x.Question_Text);
@@ -104,7 +106,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             var assessmentDate = DateTime.MinValue;
             var model = new UploadAssessmentModel();
-
+           
             foreach (var item in _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jASSESSMENTS.Add(TinyMapper.Map<ASSESSMENTS, jASSESSMENTS>(item));
@@ -116,7 +118,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 model.jASSESSMENT_CONTACTS.Add(TinyMapper.Map<ASSESSMENT_CONTACTS,jASSESSMENT_CONTACTS>(item));
             }
+            foreach (var accessKey in _context.ACCESS_KEY_ASSESSMENT.Where(x => x.Assessment_Id == assessmentId))
+            {
+                model.jACCESS_KEY_ASSESSMENT.Add(TinyMapper.Map<ACCESS_KEY_ASSESSMENT, jACCESS_KEY_ASSESSMENT>(accessKey));
 
+            }
 
             foreach (var item in _context.ANSWER
                 .Include(x => x.FINDING).ThenInclude(x => x.ISE_ACTIONS_FINDINGS)
@@ -125,8 +131,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 .Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
-
-                
+               
                 model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(item.HYDRO_DATA_ACTIONS));
                 
                 foreach (var f in item.FINDING)
@@ -166,7 +171,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             {
                 model.jCSET_VERSION.Add(TinyMapper.Map<CSET_VERSION,jCSET_VERSION>(item));
             }
-
+     
             foreach (var item in _context.CUSTOM_BASE_STANDARDS)
             {
                 model.jCUSTOM_BASE_STANDARDS.Add(TinyMapper.Map<CUSTOM_BASE_STANDARDS,jCUSTOM_BASE_STANDARDS>(item));
