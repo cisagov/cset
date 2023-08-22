@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,11 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
     /// IN THE LegacyCSETImport project under 
     /// the stand alone
     /// </summary>
+    public class jACCESS_KEY
+    {
+        [Required]
+        public string AccessKey { get; set; }
+    }
     public class jCSET_VERSION
     {
         [Required]
@@ -108,7 +114,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Int32 AssessmentCreatorId { get; set; }
 
         public DateTime LastAccessedDate { get; set; }
-        
+
         public DateTime AssessmentEffectiveDate { get; set; }
 
         [MaxLength(50)]
@@ -209,7 +215,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Boolean Is_Advanced { get; set; }
 
         [MaxLength(100)]
-        public String? Hidden_Screens { get; set;}
+        public String? Hidden_Screens { get; set; }
 
     }
 
@@ -489,9 +495,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
     }
 
     public class jAVAILABLE_MATURITY_MODELS
-    {   
+    {
         public int Assessment_Id { get; set; }
-        public bool Selected { get; set; }        
+        public bool Selected { get; set; }
         public int model_id { get; set; }
     }
 
@@ -615,7 +621,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         [MaxLength(4000)]
         public String Assessment_Description { get; set; }
-        
+
         [MaxLength(100)]
         public string Workflow { get; set; }
 
@@ -879,7 +885,205 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         [StringLength(50)]
         public string Parent_DrawIO_Id { get; set; }
     }
+    //start here new tables
+    public class jANSWER_PROFILE
+    {
+        [Required]
+        public int Profile_Id { get; set; }
 
+        public string ProfileName { get; set; }
+
+        public DateTime Profile_Date { get; set; }
+    }
+    public class jCIS_CSI_ORGANIZATION_DEMOGRAPHICS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        public bool Motivation_CRR { get; set; }
+
+        public string Motivation_CRR_Description { get; set; }
+        public bool Motivation_RRAP { get; set; }
+
+        public string Motivation_RRAP_Description { get; set; }
+        public bool Motivation_Organization_Request { get; set; }
+
+        public string Motivation_Organization_Request_Description { get; set; }
+        public bool Motivation_Law_Enforcement_Request { get; set; }
+
+        public string Motivation_Law_Enforcement_Description { get; set; }
+        public bool Motivation_Direct_Threats { get; set; }
+
+        public string Motivation_Direct_Threats_Description { get; set; }
+        public bool Motivation_Special_Event { get; set; }
+        public string Motivation_Special_Event_Description { get; set; }
+        public bool Motivation_Other { get; set; }
+        public string Motivation_Other_Description { get; set; }
+        public string Parent_Organization { get; set; }
+        public string Organization_Name { get; set; }
+        public string Site_Name { get; set; }
+        public string Street_Address { get; set; }
+        public DateTime? Visit_Date { get; set; }
+        public bool Completed_For_SLTT { get; set; }
+        public bool Completed_For_Federal { get; set; }
+        public bool Completed_For_National_Special_Event { get; set; }
+        public string CIKR_Sector { get; set; }
+        public string Sub_Sector { get; set; }
+        public string IT_ICS_Staff_Count { get; set; }
+        public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
+
+    }
+    public class jCIS_CSI_SERVICE_COMPOSITION
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [StringLength(400)]
+        public string Networks_Description { get; set; }
+        [StringLength(400)]
+        public string Services_Description { get; set; }
+        [StringLength(400)]
+        public string Applications_Description { get; set; }
+        [StringLength(400)]
+        public string Connections_Description { get; set; }
+        [StringLength(400)]
+        public string Personnel_Description { get; set; }
+        [StringLength(400)]
+        public string Other_Defining_System_Description { get; set; }
+        public int? Primary_Defining_System { get; set; }
+    }
+    public class jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [StringLength(400)]
+        public string Networks_Description { get; set; }
+        [StringLength(400)]
+        public string Services_Description { get; set; }
+        [StringLength(400)]
+        public string Applications_Description { get; set; }
+        [StringLength(400)]
+        public string Connections_Description { get; set; }
+        [StringLength(400)]
+        public string Personnel_Description { get; set; }
+        [StringLength(400)]
+        public string Other_Defining_System_Description { get; set; }
+        public int? Primary_Defining_System { get; set; }
+    }
+    public class jCIS_CSI_SERVICE_DEMOGRAPHICS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [StringLength(50)]
+        public string Critical_Service_Name { get; set; }
+        [StringLength(150)]
+        public string Critical_Service_Description { get; set; }
+        [StringLength(50)]
+        public string IT_ICS_Name { get; set; }
+        public bool Multi_Site { get; set; }
+        [StringLength(150)]
+        public string Multi_Site_Description { get; set; }
+        [StringLength(50)]
+        public string Budget_Basis { get; set; }
+        [StringLength(50)]
+        public string Authorized_Organizational_User_Count { get; set; }
+        [StringLength(50)]
+        public string Authorized_Non_Organizational_User_Count { get; set; }
+        [StringLength(50)]
+        public string Customers_Count { get; set; }
+        [StringLength(50)]
+        public string IT_ICS_Staff_Count { get; set; }
+        [StringLength(50)]
+        public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
+    }
+    public class jCIS_CSI_USER_COUNTS
+    {
+        [Required]
+        public string User_Count { get; set; }
+        public int Sequence { get; set; }
+    }
+    public class jCOUNTY_ANSWERS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [Required]
+        public string County_FIPS{ get; set;}
+
+    }
+    public class jCSAF_FILE
+    {
+        [Required]
+        public string File_Name { get; set; }
+        public byte[] Data { get; set; }
+        public double? File_Size { get; set; }
+        public DateTime? Upload_Date { get; set; }
+    }
+    public class jDEMOGRAPHIC_ANSWERS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [StringLength(100)]
+        public string Employees { get; set; }
+        [StringLength(100)]
+        public string CustomersSupported { get; set; }
+        [StringLength(100)]
+        public string GeographicScope { get; set; }
+        [StringLength(50)]
+        public string CIOExists { get; set; }
+        [StringLength(50)]
+        public string CISOExists { get; set; }
+        [StringLength(10)]
+        public string CyberTrainingProgramExists { get; set; }
+        public int? SectorId { get; set; }
+        public int? SubSectorId { get; set; }
+        [StringLength(10)]
+        public string cyberRiskService { get; set; }
+    }
+    public class jMETRO_ANSWERS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [Required]
+        public string Metro_FIPS { get; set; }
+    }
+    public class jNETWORK_WARNINGS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [Required]
+        public int Id { get; set; }
+       
+        public string WarningText { get; set; }
+    }
+    public class jREGION_ANSWERS
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string State { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string RegionCode { get; set; }
+    }
+    public class jREPORT_DETAIL_SECTION_SELECTION
+    {
+        [Required]
+        public int Report_Section_Id { get; set; }
+        [StringLength(250)]
+        public string Display_Name { get; set; }
+        public int Display_Order { get; set; }
+        public int Report_Order { get; set; }
+        [StringLength(500)]
+        public string Tool_Tip { get; set; }
+    }
+    public class jREPORT_OPTIONS_SELECTION
+    {
+        [Required]
+        public int Assessment_Id { get; set; }
+        [Required]
+        public int Report_Option_Id { get; set; }
+        public bool Is_Selected { get; set; }
+    }
 }
+
 
 
