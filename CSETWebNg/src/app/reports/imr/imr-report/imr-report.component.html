@@ -72,11 +72,11 @@
                 <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="model"></app-cmu-goal-perf-stacked-bar>
             </div>
 
-            <!--
             <div id="toc-nist-csf" class="page-margin-top">
-              <app-crr-nist-csf-summary [model]="crrModel"></app-crr-nist-csf-summary>
+              <app-crr-nist-csf-summary [model]="model"></app-crr-nist-csf-summary>
             </div>
-  
+            
+            <!--
             <div id="toc-mil1-performance" class="page-margin-top">
               <app-crr-mil1-performance [model]="crrModel"></app-crr-mil1-performance>
             </div>
@@ -94,18 +94,20 @@
                     <app-cmu-results-detail [domain]="d"></app-cmu-results-detail>
                 </div>
             </div>
-  <!--
+            
             <div id="toc-resources-referenced" class="page-margin-top">
-              <app-crr-resources [model]="crrModel"></app-crr-resources>
+              <app-imr-resources [model]="model"></app-imr-resources>
             </div>
-  
+            
             <div id="toc-contact-information" class="page-margin-top">
-              <app-crr-contact-information [model]="crrModel"></app-crr-contact-information>
+              <app-crr-contact-information [model]="model"></app-crr-contact-information>
             </div>
-  
+            
             <div id="toc-additional-views" class="page-margin-top">
-              <app-crr-appendix-a-cover [model]="crrModel"></app-crr-appendix-a-cover>
+              <app-crr-appendix-a-cover [model]="model"></app-crr-appendix-a-cover>
             </div>
+
+            <!--
   
             <div id="toc-crr-performance-app-a" class="page-margin-top">
               <app-crr-performance-appendix-a [model]="crrModel"></app-crr-performance-appendix-a>
