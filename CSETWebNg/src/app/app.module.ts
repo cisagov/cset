@@ -590,6 +590,7 @@ import { DemographicsIodComponent } from './assessment/prepare/assessment-info/d
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
 import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
+import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
 
 
 
@@ -1138,6 +1139,7 @@ import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-
         TutorialImrComponent,
         ImrCoverSheetComponent,
         ImrIntroAboutComponent,
+        ImrResourcesComponent,
     ],
     providers: [
         ConfigService,

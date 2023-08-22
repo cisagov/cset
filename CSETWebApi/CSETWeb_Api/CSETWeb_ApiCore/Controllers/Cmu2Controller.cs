@@ -200,5 +200,58 @@ namespace CSETWebCore.Api.Controllers
             totalBarChartString = barChart.ToString();
             return totalBarChartString;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/csfbodydata")]
+        public IActionResult GetNistCsfReportBodyData()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+
+            List<object> funcs = new List<object>();
+
+            foreach (var func in _scoring.XCsf.Descendants("Function"))
+            {
+                var distFunc = _scoring.CrrReferenceAnswerDistrib(func);
+
+                var bciFunc = new BarChartInput() { Height = 80, Width = 100 };
+                bciFunc.IncludePercentFirstBar = true;
+                bciFunc.AnswerCounts = new List<int> { distFunc.Green, distFunc.Yellow, distFunc.Red };
+                var chartFunc = new ScoreBarChart(bciFunc);
+
+                List<object> cats = new List<object>();
+                foreach (var cat in func.Elements())
+                {
+                    var distCat = _scoring.CrrReferenceAnswerDistrib(cat);
+
+                    var bciCat = new BarChartInput() { Height = 15, Width = 360 };
+                    bciCat.IncludePercentFirstBar = true;
+                    bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
+                    var chartCat = new ScoreStackedBarChart(bciCat);
+
+                    cats.Add(new
+                    {
+                        Name = cat.Attribute("name").Value,
+                        ParentCode = cat.Parent.Attribute("code").Value,
+                        Code = cat.Attribute("code").Value,
+                        CatChart = chartCat.ToString()
+                    });
+                }
+
+                funcs.Add(new
+                {
+                    Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)),
+                    Chart = chartFunc.ToString(),
+                    Cats = cats
+                });
+            }
+
+            return Ok(funcs);
+        }
     }
 }

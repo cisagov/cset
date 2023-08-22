@@ -94,7 +94,7 @@ export class CmuService {
   }
 
   getNistCsfSummaryReportBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfReportBodyData');
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfbodydata');
   }
 
   getMil1PerformanceLegendWidget() {
