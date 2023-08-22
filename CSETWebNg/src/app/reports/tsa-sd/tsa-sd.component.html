@@ -48,17 +48,48 @@
 
         <ng-template #mainContent>
 
-        <div class="d-flex flex-row justify-content-between align-items-end">
+        <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseU.length>0">
 
-          <h1 class="page-title">Deficiencies</h1>
+          <h1 class="page-title" style="margin: 2em 0 0.5em 0;">Unanswered - Deficiencies</h1>
           <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
             src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
         </div>
-        <hr class="page-line m-0">
-        <div *ngFor="let g of response" style="padding-left: 10px;">
+        <hr class="page-line m-0" *ngIf="responseU.length>0">
+        
+        <div *ngFor="let g of responseU" style="padding-left: 10px;">
         <h1 style="font-size:16pt;font-weight:bold;margin:1em 0 0 0">{{g.title}}</h1>
         <table role="presentation" >
-          <ng-template ngFor let-s [ngForOf]="g.questions">
+          <ng-template ngFor let-s [ngForOf]="g.questions" >
+            <tr>
+                <td colspan="4"><h2>{{s.displayNumber}}</h2></td>
+            </tr>
+            <tr>
+                <td class="deficiencies-list-item" style="width:630px;"><b>{{s.questionText}}</b></td>
+                
+                <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555;width:100px;" >
+                    <div>
+                        {{s.answerText}}
+                        </div>
+                    </td>
+                    <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.markForReview"
+                        src="assets/images/icons/MarkedFlag.png"></td>
+        </tr>
+           
+            </ng-template>
+        </table>
+        <hr class="my-2">
+    </div>
+    <div class="d-flex flex-row justify-content-between align-items-end" *ngIf="responseS.length>0">
+
+        <h1 class="page-title" style="margin: 2em 0 0.5em 0;">No - Deficiencies</h1>
+        <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+          src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+      </div>
+      <hr class="page-line m-0" *ngIf="responseS.length>0">
+    <div *ngFor="let g of responseS" style="padding-left: 10px;">
+        <h1 style="font-size:16pt;font-weight:bold;margin:1em 0 0 0">{{g.title}}</h1>
+        <table role="presentation" >
+          <ng-template ngFor let-s [ngForOf]="g.questions" >
             <tr>
                 <td colspan="4"><h2>{{s.displayNumber}}</h2></td>
             </tr>
@@ -79,7 +110,8 @@
         <hr class="my-2">
     </div>
 
-            <div *ngIf="!response || response.length == 0" class="mt-3">
+
+            <div *ngIf="(!responseU || responseU.length == 0) && (!responseS || responseS.length == 0)" class="mt-3">
             There are no deficiencies to display
           </div>
         </ng-template>
