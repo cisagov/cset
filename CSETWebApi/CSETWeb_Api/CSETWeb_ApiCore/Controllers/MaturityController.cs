@@ -660,12 +660,14 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var biz = new NestedStructure(assessmentId, 0, _context);
-            List<Grouping> filteredGroupings = new List<Grouping>();
+            List<Grouping> filteredGroupingsU = new List<Grouping>();
+            List<Grouping> filteredGroupingsS = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
             {
                 bool includeGrouping = false;
-                var questions = new List<Question>();
+                var questionsU = new List<Question>();
+                var questionsS = new List<Question>();
                 foreach (var q in b.Questions)
                 {
                     bool includeQ = false;
@@ -683,6 +685,7 @@ namespace CSETWebCore.Api.Controllers
                                 MarkForReview = q.MarkForReview,
                                 AnswerText = "Unanswered"
                             };
+                            questionsU.Add(question);
                         }
                     }
 
@@ -700,30 +703,33 @@ namespace CSETWebCore.Api.Controllers
                                 MarkForReview = q.MarkForReview,
                                 AnswerText = "No"
                             };
+                            questionsS.Add(question);
                         }
                     }
-
-                    if (includeQ)
-                    {
-                        includeGrouping = true;
-                        questions.Add(question);
-                    }
                 }
-
-                if (includeGrouping)
+                
+                if (questionsU.Any())
                 {
-                    includeGrouping = false;
-                    filteredGroupings.Add( new Grouping
+                    filteredGroupingsU.Add(new Grouping
                     {
                         Title = b.Title,
-                        Questions = questions
+                        Questions = questionsU
                     });
-                    questions = new List<Question>();
                 }
+                if (questionsS.Any())
+                {
+                    filteredGroupingsS.Add(new Grouping
+                    {
+                        Title = b.Title,
+                        Questions = questionsS
+                    });
+                }
+
+                questionsU = new List<Question>();
+                questionsS = new List<Question>();
             }
             
-           
-            return Ok(filteredGroupings);
+            return Ok(new {no=filteredGroupingsS, unanswered=filteredGroupingsU});
         }
 
         /// <summary>

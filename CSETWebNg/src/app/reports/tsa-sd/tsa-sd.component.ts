@@ -14,7 +14,8 @@ export class TsaSdComponent implements OnInit{
 
   loading = false;
 
-  response:any; 
+  responseU:any; 
+  responseS:any;
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -44,7 +45,8 @@ export class TsaSdComponent implements OnInit{
       (r: any) => {
         console.log(r);
         this.loading = false;
-        this.response = r;
+        this.responseU = r.unanswered;
+        this.responseS = r.no;
       });
   }
   
