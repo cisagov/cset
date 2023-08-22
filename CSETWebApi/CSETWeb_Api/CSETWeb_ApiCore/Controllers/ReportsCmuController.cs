@@ -31,7 +31,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
-        private readonly CmuScoringHelper _scoring;
+        private readonly ICmuScoringHelper _scoring;
 
 
         public ReportsCmuController(ITokenManager token, IAssessmentBusiness assessment,
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
             _adminTabBusiness = admin;
             _context = context;
 
-            _scoring = new CmuScoringHelper(context);
+            _scoring = new ICmuScoringHelper(context);
         }
 
 

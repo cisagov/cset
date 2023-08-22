@@ -13,13 +13,17 @@ using System.Linq;
 using System.Collections.Generic;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Helpers;
+using CSETWebCore.Business.Reports;
+using CSETWebCore.Reports.Models;
+using CSETWebCore.Api.Models;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
     public class Cmu2Controller : Controller
     {
         private readonly ITokenManager _token;
-        private readonly CmuScoringHelper _scoring;
+        private readonly Helpers.ICmuScoringHelper _scoring;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -40,7 +44,7 @@ namespace CSETWebCore.Api.Controllers
             _context = context;
 
 
-            _scoring = new CmuScoringHelper(context);
+            _scoring = new Helpers.ICmuScoringHelper(context);
         }
 
 
@@ -88,15 +92,15 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="includeResultsStylesheet"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/reportcmu2")]
-        public IActionResult GetModel()
+        [Route("api/cmu/model")]
+        public IActionResult GetModel(bool includeResultsStylesheet = true)
         {
             //var assessmentId = _token.AssessmentForUser();
             var assessmentId = 1094;
 
 
 
-            //_scoring.InstantiateScoringHelper(assessmentId);
+            _scoring.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
             var demographics = _demographic.GetDemographics(assessmentId);
             _report.SetReportsAssessmentId(assessmentId);
@@ -104,29 +108,25 @@ namespace CSETWebCore.Api.Controllers
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var modelXml = biz.GetMaturityStructureAsXml(assessmentId, false);
 
-            var stopHere = 1;
+            var deficiencyData = new MaturityBasicReportData()
+            {
+                Information = _report.GetInformation(),
+                DeficienciesList = _report.GetMaturityDeficiencies(),
+                Comments = _report.GetCommentsList(),
+                MarkedForReviewList = _report.GetMarkedForReviewList(),
+                QuestionsList = _report.GetQuestionsList()
+            };
+            CmuResultsModel cmuResultsData = _scoring.GetCmuResultsSummary(); //GenerateCrrResults();
+            CmuVM viewModel = new CmuVM(detail, demographics.CriticalService, _scoring, deficiencyData);
+            viewModel.ReportData.Comments = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.Comments);
+            viewModel.ReportData.MarkedForReviewList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.MarkedForReviewList);
+            viewModel.ReportData.DeficienciesList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.DeficienciesList);
+            viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
+            viewModel.ReportChart = _scoring.GetPercentageOfPractice();
+            viewModel.CMUResultsData = cmuResultsData;
+            viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(modelXml.Root));
 
-            //var deficiencyData = new MaturityBasicReportData()
-            //{
-            //    Information = _report.GetInformation(),
-            //    DeficienciesList = _report.GetMaturityDeficiencies(),
-            //    Comments = _report.GetCommentsList(),
-            //    MarkedForReviewList = _report.GetMarkedForReviewList(),
-            //    QuestionsList = _report.GetQuestionsList()
-            //};
-            //CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
-            //CrrVM viewModel = new CrrVM(detail, demographics.CriticalService, _crr, deficiencyData);
-            //viewModel.ReportData.Comments = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.Comments);
-            //viewModel.ReportData.MarkedForReviewList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.MarkedForReviewList);
-            //viewModel.ReportData.DeficienciesList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.DeficienciesList);
-            //viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
-            //viewModel.ReportChart = _crr.GetPercentageOfPractice();
-            //viewModel.crrResultsData = crrResultsData;
-            //viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(crrStructure.Root));
-
-            //return Ok(viewModel);
-
-            return Ok();
+            return Ok(viewModel);
         }
 
 

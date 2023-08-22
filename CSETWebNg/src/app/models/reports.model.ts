@@ -33,6 +33,19 @@ export interface MaturityBasicReportData {
   matAnsweredQuestions: any[];
 }
 
+export interface CmuReportModel {
+  structure: any;
+  crrResultsData: CrrResultsModel;
+  assessmentDetails: AssessmentDetail;
+  parentScores: EdmScoreParent[];
+  crrScores: CrrScoringHelper;
+  reportChart: CrrReportChart;
+  criticalService: string;
+  reportData: MaturityBasicReportData;
+  pageNumbers: {[key:string]: number};
+  includeResultsStylesheet: boolean;
+}
+
 export interface CrrReportModel {
   structure: any;
   crrResultsData: CrrResultsModel;

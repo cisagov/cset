@@ -22,7 +22,7 @@ namespace CSETWebCore.Interfaces.Cmu
         public XDocument XCsf { get; set; }
         public void InstantiateScoringHelper(int assessmentId);
         public void LoadStructure();
-        public CrrResultsModel GetCrrResultsSummary();
+        public CmuResultsModel GetCmuResultsSummary();
         public void GetSubgroups(XElement xE, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,

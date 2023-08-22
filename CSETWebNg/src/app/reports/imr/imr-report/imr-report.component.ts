@@ -23,9 +23,10 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { CrrService } from './../../../services/crr.service';
-import { CrrReportModel } from '../../../models/reports.model';
+import { CmuReportModel, CrrReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
   selector: 'app-imr-report',
@@ -34,11 +35,11 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class ImrReportComponent implements OnInit {
 
-  crrModel: CrrReportModel;
+  model: CmuReportModel;
   securityLevel: string = '';
 
   constructor(
-    private crrSvc: CrrService,
+    private cmuSvc: CmuService,
     private titleSvc: Title,
     public configSvc: ConfigService) { }
 
@@ -51,7 +52,7 @@ export class ImrReportComponent implements OnInit {
     }
 
     this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
-    this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
+    this.cmuSvc.getModel().subscribe((data: CmuReportModel) => {
 
       data.structure.Model.Domain.forEach(d => {
         d.Goal.forEach(g => {
@@ -65,8 +66,8 @@ export class ImrReportComponent implements OnInit {
         });
       });
 
-      this.crrModel = data
-      console.log(this.crrModel);
+      this.model = data
+      console.log(this.model);
     },
       error => console.log('Error loading IMR report: ' + (<Error>error).message)
     );
