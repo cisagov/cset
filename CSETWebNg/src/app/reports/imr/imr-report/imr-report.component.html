@@ -47,7 +47,7 @@
                         <div class="report-body-imr">
 
                           <div id="toc-top">
-              <app-imr-cover-sheet [model]="crrModel"></app-imr-cover-sheet>
+              <app-imr-cover-sheet [model]="model"></app-imr-cover-sheet>
             </div>
             
             <!--
@@ -61,7 +61,7 @@
           -->
   
             <div id="toc-intro" class="page-margin-top">
-              <app-imr-intro-about [model]="crrModel"></app-imr-intro-about>
+              <app-imr-intro-about [model]="model"></app-imr-intro-about>
             </div>
   
             <!-- <div id="toc-mil1-ps" class="page-margin-top">
@@ -69,7 +69,7 @@
             </div> -->
 
             <div id="toc-crr-ps" class="page-margin-top">
-                <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="crrModel"></app-cmu-goal-perf-stacked-bar>
+                <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="model"></app-cmu-goal-perf-stacked-bar>
             </div>
 
             <!--
@@ -90,7 +90,7 @@
             </div>
         -->
             <div id="toc-domain-detail" class="page-margin-top">
-                <div *ngFor="let d of crrModel?.structure.Model.Domain" class="page-break">
+                <div *ngFor="let d of model?.structure.Model.Domain" class="page-break">
                     <app-cmu-results-detail [domain]="d"></app-cmu-results-detail>
                 </div>
             </div>

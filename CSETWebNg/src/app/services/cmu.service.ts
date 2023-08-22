@@ -49,18 +49,19 @@ export class CmuService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
-  getCrrModel(){
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
+  /**
+   * WIP - replacing "crrModel"
+   */
+  getModel(){
+    return this.http.get(this.configSvc.apiUrl + 'cmu/model');
   }
 
+  /**
+   * Get the entire answer distribution for the whole assessment
+   */
   getFullAnswerDistribWidget() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib',
     { responseType: 'text' });
-  }
-
-  getMil1PerformanceSummaryLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
-    { responseType: 'text'});
   }
 
   /**
@@ -69,6 +70,14 @@ export class CmuService {
   getGoalPerformanceSummaryBodyCharts() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/goalperformance');
   }
+
+
+
+  getMil1PerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
+    { responseType: 'text'});
+  }
+
 
   getCrrPerformanceSummaryBodyCharts() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');

@@ -26,7 +26,7 @@ namespace CSETWebCore.Helpers
     /// <summary>
     /// 
     /// </summary>
-    public class CmuScoringHelper : ICmuScoringHelper
+    public class ICmuScoringHelper : Interfaces.Cmu.ICmuScoringHelper
     {
         private readonly CSETContext _context;
 
@@ -53,7 +53,7 @@ namespace CSETWebCore.Helpers
         /// Constructor.
         /// </summary>
         /// <param name="context"></param>
-        public CmuScoringHelper(CSETContext context)
+        public ICmuScoringHelper(CSETContext context)
         {
             this._context = context;
         }
@@ -399,7 +399,7 @@ namespace CSETWebCore.Helpers
         {
             try
             {
-                var results = GetCrrResultsSummary();
+                var results = GetCmuResultsSummary();
                 CrrReportChart rChart = new CrrReportChart();
                 foreach (var domain in XDoc.Descendants("Domain").ToList())
                 {
@@ -434,7 +434,7 @@ namespace CSETWebCore.Helpers
         /// Calculates the Goal, MIL and Domain scores and stores them in the XDoc
         /// </summary>
         /// <returns></returns>
-        public CrrResultsModel GetCrrResultsSummary()
+        public CmuResultsModel GetCmuResultsSummary()
         {
             var crrDomains = new List<CrrMaturityDomainModel>();
             foreach (var domain in XDoc.Descendants("Domain").ToList())
@@ -469,13 +469,13 @@ namespace CSETWebCore.Helpers
             // var csv = ExportScoringCsv();
 
 
-            var crrResultsModel = new CrrResultsModel
+            var cmuResultsModel = new CmuResultsModel
             {
                 CrrDomains = crrDomains
             };
-            crrResultsModel.TrimToNElements(10);
-            crrResultsModel.GenerateWidthValues();
-            return crrResultsModel;
+            cmuResultsModel.TrimToNElements(10);
+            cmuResultsModel.GenerateWidthValues();
+            return cmuResultsModel;
         }
 
 
