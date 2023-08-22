@@ -86,11 +86,5 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
         }
-
-
-        public IActionResult Index()
-        {
-            return View();
-        }
     }
 }
