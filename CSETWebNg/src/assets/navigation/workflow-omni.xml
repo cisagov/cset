@@ -28,7 +28,7 @@
 
         <node displaytext="EDM Tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" condition="MATURITY:EDM" />
 
-        <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:CRR" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
 
         <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA ORIGIN-NOT:CF" />
 
@@ -186,17 +186,18 @@
             <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
             <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
             <node id="maturity-questions-nested-2603" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/2603" />
-            <node id="maturity-questions-nested-2604" displaytext="Zone Boundaries – Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/2604" />
-            <node id="maturity-questions-nested-2605" displaytext="Zone Boundaries – Secure/Defend (ZD)" path="assessment/{:id}/maturity-questions-nested/2605" />
-            <node id="maturity-questions-nested-2606" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/2606" />
-            <node id="maturity-questions-nested-2607" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/2607" />
-            <node id="maturity-questions-nested-2608" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/2608" />
-            <node id="maturity-questions-nested-2609" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/2609" />
-            <node id="maturity-questions-nested-2610" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/2610" />
-            <node id="maturity-questions-nested-2611" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/2611" />
-            <node id="maturity-questions-nested-2612" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/2612" />
+            <node id="maturity-questions-nested-2604" displaytext="Zone Boundaries - Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/2604" />
+            <node id="maturity-questions-nested-2605" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/2605" />
+            <node id="maturity-questions-nested-2606" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/2606" />
+            <node id="maturity-questions-nested-2607" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/2607" />
+            <node id="maturity-questions-nested-2608" displaytext="Least Privilege (LP)" path="assessment/{:id}/maturity-questions-nested/2608" />
+            <node id="maturity-questions-nested-2609" displaytext="Shared Accounts (SA)" path="assessment/{:id}/maturity-questions-nested/2609" />
+            <node id="maturity-questions-nested-2610" displaytext="Continuous Monitoring Capabilities (CC)" path="assessment/{:id}/maturity-questions-nested/2610" />
+            <node id="maturity-questions-nested-2611" displaytext="Continuous Monitoring Procedures (CP)" path="assessment/{:id}/maturity-questions-nested/2611" />
+            <node id="maturity-questions-nested-2612" displaytext="Incident Response (IR)" path="assessment/{:id}/maturity-questions-nested/2612" />
             <node id="maturity-questions-nested-2613" displaytext="Logging Policies (LP)" path="assessment/{:id}/maturity-questions-nested/2613" />
             <node id="maturity-questions-nested-2614" displaytext="Patching (PA)" path="assessment/{:id}/maturity-questions-nested/2614" />
+            <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
 

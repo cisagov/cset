@@ -44,6 +44,42 @@ namespace CSETWebCore.Business.Maturity
             QuestionsModel = model;
         }
 
+        /// <summary>
+        /// Calculates the SD Score for grouping
+        /// </summary>
+        /// <returns></returns>
+        public Score CalculateGroupingScoreSD()
+        {
+            if (QuestionsModel.Groupings.FirstOrDefault()?.Questions != null)
+            {
+                FlattenQuestions(QuestionsModel.Groupings.FirstOrDefault()?.Questions);
+                if (allWeights.Any())
+                {
+                    var grouped = allWeights.GroupBy(q => q.QuestionText).Select(r => new GroupedQuestions
+                    {
+                        QuestionText = r.Key,
+                        OptionQuestions = r.ToList()
+                    });
+                    var sumGroupWeights = from g in grouped
+                        select new RollupOptions
+                        {
+                            Type = g.OptionQuestions.FirstOrDefault().Type,
+                            Weight = 1
+                        };
+                    var sumAllWeights = (decimal)sumGroupWeights.Sum(x => x.Weight);
+                    var totalGroupWeights = from g in grouped
+                        select new RollupOptions()
+                        {
+                            Type = g.OptionQuestions.FirstOrDefault().Type,
+                            Weight = 1
+                        };
+                    var sumTotalWeights = (decimal)totalGroupWeights.Sum(x => x?.Weight);
+                    decimal total = sumAllWeights != 0 ? sumTotalWeights / sumAllWeights : 0;
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Calculates the CIS score for a grouping/section.

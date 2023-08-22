@@ -63,7 +63,7 @@ namespace CSETWebCore.Helpers
         /// <param name="sendEmail">Indicates if the temp password email should be sent immediately</param>
         /// <returns></returns>
         public bool CreateUser(CreateUser info, bool sendEmail)
-        {
+         {
             try
             {
                 // Create the USER and USER_DETAIL_INFORMATION records for this new user

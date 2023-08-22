@@ -781,6 +781,13 @@
             Answer Summary
           </button>
         </div>
+        <div>
+          <button tabindex="0" (click)="clickReportLink('sd-deficiency')"
+            class="btn btn-link btn-link-dark text-left">
+            Deficiency Report
+          </button>
+        </div>
+
       </div>
       <div>
         <div class="ml-2" *ngIf="isConfigChainEqual">
@@ -808,15 +815,15 @@
           [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"
         ></app-nav-back-next>
 
-        <div
-          *ngIf="assessSvc.isISE()"
-          style="display: flex; justify-content: space-between"
-          class="my-5"
-        >
-          <button
-            class="btn btn-primary"
-            aria-label="Back"
-            (click)="navSvc.navBack('reports')"
+
+        <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+          [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+
+
+        <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+          <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')"
+            tabindex="0">Back</button>
+          <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)"
             tabindex="0"
           >
             Back

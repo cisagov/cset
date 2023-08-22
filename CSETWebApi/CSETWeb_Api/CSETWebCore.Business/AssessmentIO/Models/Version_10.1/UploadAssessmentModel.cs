@@ -17,6 +17,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
     {
         public DateTime ExportDateTime { get; set; }
         public List<jCSET_VERSION> jCSET_VERSION { get; set; }
+        public List<jACCESS_KEY_ASSESSMENT> jACCESS_KEY_ASSESSMENT { get; set; }
         public List<jASSESSMENT_SELECTED_LEVELS> jASSESSMENT_SELECTED_LEVELS { get; set; }
         public List<jAVAILABLE_STANDARDS> jAVAILABLE_STANDARDS { get; set; }
         
@@ -64,6 +65,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public UploadAssessmentModel()
         {
             this.jADDRESS = new List<jADDRESS>();
+            this.jACCESS_KEY_ASSESSMENT = new List<jACCESS_KEY_ASSESSMENT>();
             this.jANSWER = new List<jANSWER>();
             this.jASSESSMENTS = new List<jASSESSMENTS>();
             this.jASSESSMENTS_REQUIRED_DOCUMENTATION = new List<jASSESSMENTS_REQUIRED_DOCUMENTATION>();
