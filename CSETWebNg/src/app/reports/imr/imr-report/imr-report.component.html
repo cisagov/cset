@@ -85,10 +85,11 @@
               <app-crr-results-summary [model]="crrModel"></app-crr-results-summary>
             </div>
   
+          -->
             <div id="toc-percentage-practices" class="page-margin-top">
-              <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+              <app-cmu-percentage-of-practices [model]="model"></app-cmu-percentage-of-practices>
             </div>
-        -->
+
             <div id="toc-domain-detail" class="page-margin-top">
                 <div *ngFor="let d of model?.structure.Model.Domain" class="page-break">
                     <app-cmu-results-detail [domain]="d" [showRemarks]="false"></app-cmu-results-detail>
