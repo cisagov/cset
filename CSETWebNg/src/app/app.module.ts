@@ -592,6 +592,7 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
 import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
 import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
+import { CmuPercentageOfPracticesComponent } from './reports/cmu/cmu-percentage-of-practices/cmu-percentage-of-practices.component';
 
 
 
@@ -1142,6 +1143,7 @@ import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources
         ImrCoverSheetComponent,
         ImrIntroAboutComponent,
         ImrResourcesComponent,
+        CmuPercentageOfPracticesComponent,
     ],
     providers: [
         ConfigService,
