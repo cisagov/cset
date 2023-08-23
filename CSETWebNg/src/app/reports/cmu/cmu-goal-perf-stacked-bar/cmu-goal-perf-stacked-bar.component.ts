@@ -42,9 +42,6 @@ export class CmuGoalPerfStackedBarComponent {
   }
 
   getStackedBarChart(goalTitle: string) {
-    console.log('getStackedBarChart()');
-    console.log(goalTitle);
-    console.log(this.stackedBarCharts);
     return this.stackedBarCharts.find(c => c.title === goalTitle)?.chart;
   }
 

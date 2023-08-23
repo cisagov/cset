@@ -39,6 +39,9 @@ export class CmuResultsDetailComponent {
   @Input()
   domain: any;
 
+  @Input()
+  showRemarks = true;
+
   constructor(
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
@@ -90,19 +93,23 @@ export class CmuResultsDetailComponent {
    * @param q
    */
   getQuestionNumber(q: any): string {
-    let dot = q.questiontext.trim().indexOf('.');
-    if (dot < 0) {
-      // try the displaytext 
-      dot = q.displaynumber?.lastIndexOf('.');
+    let dot = -1;
 
-      if (dot >= 0) {        
-        return q.displaynumber.trim().substring(dot + 1);
-      }
-      
-      return "Q";
+    // try the displaytext and parse off the "Qx" at the end
+    dot = q.displaynumber?.lastIndexOf('.');
+    if (dot > 0) {        
+      return q.displaynumber.trim().substring(dot + 1);
     }
 
-    return "Q" + q.questiontext.trim().substring(0, dot);
+    // failing that, assume the question text leads with a number and a dot
+    if (!!q.questiontext) {
+      dot = q.questiontext.trim().indexOf('.');
+    } 
+    if (dot > 0) {
+      return "Q" + q.questiontext.trim().substring(0, dot);
+    }
+    
+    return "Q";
   }
 
   /**

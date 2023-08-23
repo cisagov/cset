@@ -60,6 +60,8 @@
     </tr>
 </table>
 
-<h5>Remarks - {{domain?.title}}</h5>
-<p class="mb-5" [innerHTML]="getDomainRemark(domain.remarks)">
-</p>
+<ng-container *ngIf="showRemarks">
+    <h5>Remarks - {{domain?.title}}</h5>
+    <p class="mb-5" [innerHTML]="getDomainRemark(domain.remarks)">
+    </p>
+</ng-container>
