@@ -286,7 +286,7 @@ namespace CSETWebCore.Business.Question
 
             dbAnswer.Assessment_Id = AssessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Type = answer.QuestionType ?? questionType;
+            dbAnswer.Question_Type = answer.QuestionType == "null" ? questionType : answer.QuestionType;
 
             dbAnswer.Question_Number = answer.QuestionNumber != null ? int.Parse(answer.QuestionNumber) : (int?)null;
             dbAnswer.Answer_Text = answer.AnswerText;
