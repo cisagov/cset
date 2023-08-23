@@ -593,6 +593,7 @@ import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-
 import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
 import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
 import { CmuPercentageOfPracticesComponent } from './reports/cmu/cmu-percentage-of-practices/cmu-percentage-of-practices.component';
+import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 
 
 
@@ -1144,6 +1145,7 @@ import { CmuPercentageOfPracticesComponent } from './reports/cmu/cmu-percentage-
         ImrIntroAboutComponent,
         ImrResourcesComponent,
         CmuPercentageOfPracticesComponent,
+        TsaSdComponent,
     ],
     providers: [
         ConfigService,

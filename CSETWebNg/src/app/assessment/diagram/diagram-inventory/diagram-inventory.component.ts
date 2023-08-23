@@ -55,7 +55,7 @@ export class DiagramInventoryComponent implements OnInit {
    */
   ngOnInit() { 
     if (this.assessSvc.hasDiagram()) {
-     this.componentsExist = true;
+      this.componentsExist = true;
     }
     // console.log('components exits='+this.componentsExist)
   }
@@ -71,9 +71,12 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   onShapeChange(list: any) {
-    this.componentsExist = list.length > 0;
-
-    this.compListUpdateFromShapesTab = list;
+    if (list != null) {
+      if (list.length > 0) {
+        this.componentsExist = true;
+      }
+      this.compListUpdateFromShapesTab = list;
+    }
   }
 
   /**

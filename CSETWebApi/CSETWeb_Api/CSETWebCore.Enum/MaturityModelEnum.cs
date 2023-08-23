@@ -16,5 +16,6 @@ namespace CSETWebCore.Enum
         CMMC2=6,
         VADR=7, 
         CIS=8,
+        SD=14
     }
 }
