@@ -34,11 +34,11 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Int32 Id { get; set; }
 
         [Required]
-        public Decimal Version_Id { get; set; }
+        public string Version_Id { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public String Cset_Version { get; set; }
+        public string Cset_Version1 { get; set; }
 
         [MaxLength(500)]
         public String Build_Number { get; set; }
