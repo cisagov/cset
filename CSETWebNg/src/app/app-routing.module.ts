@@ -205,6 +205,7 @@ import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-r
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
+import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 
 const appRoutes: Routes = [
 
@@ -438,6 +439,7 @@ const appRoutes: Routes = [
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
               { path: 'hydro-actions', component: HydroActionsComponent },
               { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
+              
             ]
           },
 
@@ -503,6 +505,7 @@ const appRoutes: Routes = [
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
       { path: 'key-report', component: KeyReportComponent },
+      { path: 'sd-deficiency', component: TsaSdComponent }
     ]
   },
   { path: '**', redirectTo: 'home' }

@@ -198,7 +198,7 @@
             <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
             <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
             <node id="maturity-questions-nested-2603" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/2603" />
-            <node id="maturity-questions-nested-2604" displaytext="Zone Boundaries - Validate (ZV)" path="assessment/{:id}/maturity-questions-nested/2604" />
+            <node id="maturity-questions-nested-2604" displaytext="Zone Boundaries (ZB)" path="assessment/{:id}/maturity-questions-nested/2604" />
             <node id="maturity-questions-nested-2605" displaytext="Encryption (EN)" path="assessment/{:id}/maturity-questions-nested/2605" />
             <node id="maturity-questions-nested-2606" displaytext="Access Control (AC)" path="assessment/{:id}/maturity-questions-nested/2606" />
             <node id="maturity-questions-nested-2607" displaytext="MFA (MF)" path="assessment/{:id}/maturity-questions-nested/2607" />

@@ -3,7 +3,7 @@
     "currentConfigChain": [
         "TSA"
     ],
-    "appCode": "CSET",
+    "appCode": "TSA",
     "isRunningAnonymous": false,
     "app": {
         "protocol": "http",
@@ -31,7 +31,7 @@
     "installationMode": "CSET",
     "mobileEnvironment": "",
     "behaviors": {
-        "defaultTitle": "CSET",
+        "defaultTitle": "TSA",
         "showDisclaimer": true,
         "showModuleBuilder": true,
         "showModuleImport": true,
