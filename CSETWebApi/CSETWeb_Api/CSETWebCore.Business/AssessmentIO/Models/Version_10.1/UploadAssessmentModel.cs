@@ -62,8 +62,38 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public List<string> CustomStandards { get; set; }
         public List<string> CustomStandardDocs { get; set; }
 
+        //Here I  is where i started adding the new items
+        public List<jANSWER_PROFILE> jANSWER_PROFILE { get; set; }
+        public List<jCIS_CSI_ORGANIZATION_DEMOGRAPHICS> jCIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+        public List<jCIS_CSI_SERVICE_COMPOSITION> jCIS_CSI_SERVICE_COMPOSITION { get; set; }
+        public List<jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
+        public List<jCIS_CSI_SERVICE_DEMOGRAPHICS> jCIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+        public List<jCIS_CSI_USER_COUNTS> jCIS_CSI_USER_COUNTS { get; set; }
+        public List<jCOUNTY_ANSWERS> jCOUNTY_ANSWERS { get; set; }
+        public List<jCSAF_FILE> jCSAF_FILE { get; set; }
+        public List<jDEMOGRAPHIC_ANSWERS> jDEMOGRAPHIC_ANSWERS { get; set; }
+        public List<jMETRO_ANSWERS> jMETRO_ANSWERS { get; set; }
+        public List<jNETWORK_WARNINGS> jNETWORK_WARNINGS { get; set; }
+        public List<jREGION_ANSWERS> jREGION_ANSWERS { get; set; }
+        public List<jREPORT_DETAIL_SECTION_SELECTION> jREPORT_DETAIL_SECTION_SELECTION { get; set; }
+        public List<jREPORT_OPTIONS_SELECTION> jREPORT_OPTIONS_SELECTION { get; set; }
         public UploadAssessmentModel()
         {
+            this.jREPORT_OPTIONS_SELECTION = new List<jREPORT_OPTIONS_SELECTION>();
+            this.jREPORT_DETAIL_SECTION_SELECTION = new List<jREPORT_DETAIL_SECTION_SELECTION>();
+            this.jREGION_ANSWERS = new List<jREGION_ANSWERS>();
+            this.jMETRO_ANSWERS = new List<jMETRO_ANSWERS>();
+            this.jDEMOGRAPHIC_ANSWERS = new List<jDEMOGRAPHIC_ANSWERS>();
+            this.jCSAF_FILE = new List<jCSAF_FILE>();
+            this.jCOUNTY_ANSWERS = new List<jCOUNTY_ANSWERS>();
+            this.jCIS_CSI_USER_COUNTS = new List<jCIS_CSI_USER_COUNTS>();
+            this.jCIS_CSI_SERVICE_DEMOGRAPHICS = new List<jCIS_CSI_SERVICE_DEMOGRAPHICS>();
+            this.jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS = new List<jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
+            this.jCIS_CSI_SERVICE_COMPOSITION = new List<jCIS_CSI_SERVICE_COMPOSITION>();
+            this.jCIS_CSI_ORGANIZATION_DEMOGRAPHICS = new List<jCIS_CSI_ORGANIZATION_DEMOGRAPHICS>();
+            this.jANSWER_PROFILE = new List<jANSWER_PROFILE>();
+            //Here up is where i started adding the new items
+
             this.jADDRESS = new List<jADDRESS>();
             this.jACCESS_KEY_ASSESSMENT = new List<jACCESS_KEY_ASSESSMENT>();
             this.jANSWER = new List<jANSWER>();
