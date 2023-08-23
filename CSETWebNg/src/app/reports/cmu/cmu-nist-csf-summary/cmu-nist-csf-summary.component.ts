@@ -33,6 +33,7 @@ import { CmuReportModel } from '../../../models/reports.model';
 export class CmuNistCsfSummaryComponent implements OnInit {
 
   @Input() model: CmuReportModel;
+  
   chartAll: string = '';
   legend: string = '';
   bodyData: any[] = [];

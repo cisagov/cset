@@ -38,7 +38,7 @@ namespace CSETWebCore.Interfaces.Cmu
         public string B2S(bool b);
 
         public AnswerColorDistrib FullAnswerDistrib();
-        public AnswerColorDistrib MIL1FullAnswerDistrib();
+        //public AnswerColorDistrib MIL1FullAnswerDistrib();
         public AnswerColorDistrib DomainAnswerDistrib(string domainAbbrev);
         // public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev);
         public AnswerColorDistrib GoalAnswerDistrib(string domainAbbrev, string goalAbbrev);

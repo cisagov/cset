@@ -95,10 +95,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/cmu/model")]
         public IActionResult GetModel(bool includeResultsStylesheet = true)
         {
-            //var assessmentId = _token.AssessmentForUser();
-            var assessmentId = 1094;
-
-
+            var assessmentId = _token.AssessmentForUser();
 
             _scoring.InstantiateScoringHelper(assessmentId);
             var detail = _assessment.GetAssessmentDetail(assessmentId);
@@ -106,7 +103,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var modelXml = biz.GetMaturityStructureAsXml(assessmentId, false);
+            var modelXml = biz.GetMaturityStructureAsXml(assessmentId, true);
 
             var deficiencyData = new MaturityBasicReportData()
             {
@@ -252,6 +249,25 @@ namespace CSETWebCore.Api.Controllers
             }
 
             return Ok(funcs);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/csfsummarywidget")]
+        public IActionResult GetCsfSummaryWidget()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var distAll = _scoring.CrrReferenceAnswerDistrib(_scoring.XCsf.Root);
+
+            var bciAll = new BarChartInput() { Height = 80, Width = 100 };
+            bciAll.IncludePercentFirstBar = true;
+            bciAll.AnswerCounts = new List<int> { distAll.Green, distAll.Yellow, distAll.Red };
+            return Content(new ScoreBarChart(bciAll).ToString(), "text/html");
         }
     }
 }

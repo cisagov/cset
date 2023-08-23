@@ -73,7 +73,7 @@
             </div>
 
             <div id="toc-nist-csf" class="page-margin-top">
-              <app-crr-nist-csf-summary [model]="model"></app-crr-nist-csf-summary>
+              <app-cmu-nist-csf-summary [model]="model"></app-cmu-nist-csf-summary>
             </div>
             
             <!--
@@ -91,7 +91,7 @@
         -->
             <div id="toc-domain-detail" class="page-margin-top">
                 <div *ngFor="let d of model?.structure.Model.Domain" class="page-break">
-                    <app-cmu-results-detail [domain]="d"></app-cmu-results-detail>
+                    <app-cmu-results-detail [domain]="d" [showRemarks]="false"></app-cmu-results-detail>
                 </div>
             </div>
             
@@ -112,13 +112,13 @@
             <div id="toc-crr-performance-app-a" class="page-margin-top">
               <app-crr-performance-appendix-a [model]="crrModel"></app-crr-performance-appendix-a>
             </div>
-  
+          -->
             <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
-              <app-crr-nist-csf-cat-summary [model]="crrModel"></app-crr-nist-csf-cat-summary>
+            <!--  <app-cmu-nist-csf-cat-summary [model]="model"></app-cmu-nist-csf-cat-summary> -->
             </div>
-  
+  <!--
             <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
-              <app-crr-nist-csf-cat-performance [model]="crrModel"></app-crr-nist-csf-cat-performance>
+              <app-cmu-nist-csf-cat-performance [model]="model"></app-cmu-nist-csf-cat-performance>
             </div>
    -->
                         </div>

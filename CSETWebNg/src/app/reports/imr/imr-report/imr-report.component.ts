@@ -66,8 +66,7 @@ export class ImrReportComponent implements OnInit {
         });
       });
 
-      this.model = data
-      console.log(this.model);
+      this.model = data;
     },
       error => console.log('Error loading IMR report: ' + (<Error>error).message)
     );

@@ -89,7 +89,7 @@ export class CmuService {
   }
 
   getNistCsfSummaryChartWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfsummarywidget',
     { responseType: 'text'});
   }
 

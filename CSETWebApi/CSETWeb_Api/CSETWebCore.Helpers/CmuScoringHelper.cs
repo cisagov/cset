@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Reports;
+using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Model.Crr;
@@ -14,6 +15,7 @@ using CSETWebCore.Reports.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -146,8 +148,8 @@ namespace CSETWebCore.Helpers
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
                 xGrouping.SetAttributeValue("description", sg.Description);
-                if (domainRemark != null) 
-                { 
+                if (domainRemark != null)
+                {
                     xGrouping.SetAttributeValue("remark", domainRemark.DomainRemarks);
                 }
 
@@ -559,14 +561,40 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private void LoadNistCsfMappedAnswers()
         {
+            /// TODO:  Instead of reading an embedded XML file, read the database CSF_MAPPING
+
+            var mappings = from mq in _context.MATURITY_QUESTIONS
+                           join cm in _context.CSF_MAPPING on mq.Mat_Question_Id equals cm.Question_Id
+                           where mq.Maturity_Model_Id == this.ModelId
+                           select new { cm = cm, mq = mq };
+            var abc = mappings.ToList();
+
+
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "CSETWebCore.Helpers.CrrNistCsfMapping.xml";
+            var resourceName = "CSETWebCore.Helpers.NIST_CSF_Structure.xml";
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             using (StreamReader reader = new StreamReader(stream))
             {
-                string result = reader.ReadToEnd();
-                XCsf = XDocument.Parse(result);
+                XCsf = XDocument.Parse(reader.ReadToEnd());
             }
+
+            // populate the XML structure with the mapped questions
+            foreach (var ab in abc)
+            {
+                var node = XCsf.Descendants().Where(x => x.Attribute("title")?.Value == ab.cm.CSF_Code).FirstOrDefault();
+                if (node != null)
+                {
+                    var reff = new XElement("CrrReference");
+                    reff.SetAttributeValue("question-title", ab.mq.Question_Title);
+                    node.Element("References").Add(reff);
+                }
+                else
+                {
+                    var stop = 1;
+                }
+            }
+
+
 
             var questions = XDoc.Descendants("Question").ToList();
 
@@ -706,20 +734,10 @@ namespace CSETWebCore.Helpers
             return GetDistrib(xQs);
         }
 
-        /// <summary>
-        /// Returns the answer distribution of the entire xdoc.
-        /// </summary>
-        /// <returns></returns>
-        public AnswerColorDistrib MIL1FullAnswerDistrib()
-        {
-            var xQs = XDoc.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1").Descendants("Question").ToList();
-
-            return GetDistrib(xQs);
-        }
-
 
         /// <summary>
-        /// 
+        /// Returns the answer distribution for a single domain 
+        /// as specified by its abbreviation.
         /// </summary>
         /// <param name="domainAbbrev"></param>
         /// <returns></returns>
@@ -731,18 +749,6 @@ namespace CSETWebCore.Helpers
             return GetDistrib(xQs);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="domainAbbrev"></param>
-        /// <returns></returns>
-        //public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev)
-        //{
-        //    var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev).Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
-        //    var xQs = xDomain.Descendants("Question").ToList();
-
-        //    return GetDistrib(xQs);
-        //}
 
         /// <summary>
         /// 
