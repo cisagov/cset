@@ -201,7 +201,7 @@ namespace CSETWebCore.Business.Maturity
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
                 {
                     List<ANSWER> answers = allAnswers.Where(x => x.Question_Or_Requirement_Id == myQ.Mat_Question_Id).ToList();
-                    ConsolidateAnswers(answers, out ANSWER answer);
+                    ConsolidateAnswers(answers, out ANSWER answer);                    
 
                     var question = new Model.Nested.Question()
                     {
@@ -227,6 +227,11 @@ namespace CSETWebCore.Business.Maturity
 
                     question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
                     question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
+
+                    if (answer != null)
+                    {
+                        question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                    }
 
 
                     // Include the corresponding baseline selection if it exists
@@ -290,6 +295,11 @@ namespace CSETWebCore.Business.Maturity
 
                 question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
                 question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
+
+                if (answer != null)
+                {
+                    question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                }
 
 
                 // Include the corresponding baseline selection if it exists
@@ -392,6 +402,11 @@ namespace CSETWebCore.Business.Maturity
 
                     question.TTP = _addSup.GetTTPReferenceList(question.QuestionId);
                     question.CSF = _addSup.GetCsfMappings(question.QuestionId, "maturity");
+
+                    if (answer != null)
+                    {
+                        question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                    }
 
 
                     // Include the corresponding baseline selection if it exists
