@@ -72,6 +72,11 @@ export class QuestionFilterService {
    */
   public maturityModelId: number;
 
+  /**
+   * Consuming pages can set a model name
+   */
+  public maturityModelName: string;
+
 
   /**
    * Constructor
@@ -259,7 +264,7 @@ export class QuestionFilterService {
               q.visible = true;
             }
 
-            if (this.showFilters.includes('D') && q.hasDiscovery) {
+            if (this.showFilters.includes('D') && q.hasObservations) {
               q.visible = true;
             }
 

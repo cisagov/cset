@@ -271,6 +271,26 @@ namespace CSETWebCore.Business.Maturity
             return null;
         }
 
+        public HorizBarChart GetDeficiencyChartDataSd()
+        {
+            HorizBarChart hChart = new HorizBarChart();
+            var info = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+            if (info != null)
+            {
+                int maturityModel = (int)MaturityModel.SD;
+                var groupings = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == maturityModel).ToList();
+                var ordered = groupings.OrderBy(x => x.Sequence);
+                var currentScore = new ChartDataSet();
+                hChart.ReportTitle = "Ranked Deficiency Report";
+                currentScore.Label = "Current";
+                foreach (var group in groupings)
+                {
+                    hChart.Labels.Add(group.Sequence + ". " + group.Title);
+                }
+            }
+
+            return null;
+        }
 
         /// <summary>
         /// Builds a list of horizontal bar chart section scoring data.

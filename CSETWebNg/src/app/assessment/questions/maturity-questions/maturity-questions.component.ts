@@ -154,6 +154,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
+        this.filterSvc.maturityModelName = response.modelName;
 
         this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;

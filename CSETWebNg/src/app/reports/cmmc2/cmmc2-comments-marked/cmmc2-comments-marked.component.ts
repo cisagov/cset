@@ -107,7 +107,7 @@ export class Cmmc2CommentsMarkedComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.questionsSvc.answerDisplayLabel(4, abb);
+    return this.questionsSvc.answerDisplayLabel('CMMC2', abb);
   }
 
   printReport() {

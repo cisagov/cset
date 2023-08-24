@@ -26,6 +26,8 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         [StringLength(50)]
         public string SectorName { get; set; }
+        public bool Is_NIPP { get; set; }
+        public int? NIPP_sector { get; set; }
 
         [InverseProperty("Sector")]
         public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }

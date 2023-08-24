@@ -28,6 +28,7 @@ namespace CSETWebCore.Business.Diagram.layers
 
         public LayerVisibility GetLastLayer(string drawIoId)
         {
+            
              return (from node in db.ASSESSMENT_DIAGRAM_COMPONENTS
                        join parent in db.DIAGRAM_CONTAINER on node.Layer_Id equals parent.Container_Id
                        where node.Assessment_Id == assessment_id
@@ -40,6 +41,21 @@ namespace CSETWebCore.Business.Diagram.layers
                            visible = (parent.Visible??true)?"true":"false"
                            
                        }).FirstOrDefault();
+            
+            /*
+            return (from node in db.ASSESSMENT_DIAGRAM_COMPONENTS
+                    join parent in db.DIAGRAM_CONTAINER on node.Zone_Id equals parent.Container_Id
+                    where node.Assessment_Id == assessment_id && node.Parent_DrawIO_Id == drawIoId
+                    select new LayerVisibility()
+                    {
+                        Container_Id = parent.Container_Id,
+                        layerName = parent.Name,
+                        DrawIo_id = node.DrawIO_id,
+                        Parent_DrawIo_id = parent.DrawIO_id,
+                        visible = (parent.Visible ?? true) ? "true" : "false"
+
+                    }).FirstOrDefault();
+            */
         }
 
         internal void UpdateAllLayersAndZones()

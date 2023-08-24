@@ -84,7 +84,7 @@ export class QuestionExtrasComponent implements OnInit {
     public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
     public layoutSvc: LayoutService
-    ) {
+  ) {
   }
 
 
@@ -301,7 +301,7 @@ export class QuestionExtrasComponent implements OnInit {
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.findings == null) {
-          return this.myQuestion.hasDiscovery ? 'inline' : 'none';
+          return this.myQuestion.hasObservations ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
 
@@ -313,8 +313,7 @@ export class QuestionExtrasComponent implements OnInit {
    *
    * @param findid
    */
-  addEditDiscovery(findid) {
-    //this.saveAnswer();
+  addEditObservation(findid) {
 
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
@@ -322,6 +321,7 @@ export class QuestionExtrasComponent implements OnInit {
     // send an empty one.
     const find: Finding = {
       question_Id: this.myQuestion.questionId,
+      questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
       finding_Id: findid,
       summary: '',
@@ -345,17 +345,17 @@ export class QuestionExtrasComponent implements OnInit {
     };
 
     this.dialog.open(FindingsComponent, {
-        data: find,
-        disableClose: true,
-        width: this.layoutSvc.hp ? '90%' : '600px',
-        maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-      })
+      data: find,
+      disableClose: true,
+      width: this.layoutSvc.hp ? '90%' : '600px',
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
+    })
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
-            this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+            this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
@@ -367,7 +367,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Deletes a discovery.
    * @param findingToDelete
    */
-  deleteDiscovery(findingToDelete) {
+  deleteObservation(findingToDelete) {
 
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete "
@@ -378,8 +378,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     if (findingToDelete.summary === null) {
       msg = "Are you sure you want to delete this "
-      + this.observationOrIssue().toLowerCase()
-      + "?";
+        + this.observationOrIssue().toLowerCase()
+        + "?";
     }
 
 
@@ -397,7 +397,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.findings.splice(deleteIndex, 1);
-        this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
 
       }
     });
@@ -491,7 +491,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.questionsSvc.deleteDocument(document.document_Id, this.myQuestion.questionId)
           .subscribe();
 
-          this.questionsSvc.broadcastExtras(this.extras);
+        this.questionsSvc.broadcastExtras(this.extras);
       }
     });
   }
@@ -577,7 +577,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
   forceLoadQuestionExtra(extra: string) {
-    if ((!!this.mode || this.mode === '') && (!this.assessSvc.usesMaturityModel('HYDRO') && extra != 'CMNT') ) {
+    if ((!!this.mode || this.mode === '') && (!this.assessSvc.usesMaturityModel('HYDRO') && extra != 'CMNT')) {
       return;
     }
 
@@ -604,80 +604,34 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Encapsulates logic that determines whether an icon should be displayed.
-   * It can grow as new behaviors are required.
+   * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
-
-    // DETAIL & REVIEWED
-    if (this.myQuestion.is_Maturity
-      && (this.assessSvc.usesMaturityModel('EDM')
-        || this.assessSvc.usesMaturityModel('CRR')
-        || this.assessSvc.usesMaturityModel('CPG')
-        || this.assessSvc.usesMaturityModel('C2M2')
-        || this.assessSvc.isISE())) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
+  
+    if (mode == 'DETAIL') {
+      return behavior?.questionIcons?.showDetails ?? true;
     }
 
-    // RRA
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
+    if (mode == 'SUPP') {
+      return behavior?.questionIcons?.showGuidance ?? true;
     }
 
-    // CISA CIS
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CIS')) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'REVIEWED') {
-        return false;
-      }
-      if (mode == 'DISC') {
-        return false;
-      }
-      if (mode == 'REFS') {
-        return false;
-      }
+    if (mode == 'REFS') {
+      return behavior?.questionIcons?.showReferences ?? true;
     }
 
-    // Renewables HYDRO
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('HYDRO')) {
-      if (mode == 'DETAIL') {
-        return false;
-      }
-      if (mode == 'SUPP') {
-        return false;
-      }
-      if (mode == 'DISC') {
-        return false;
-      }
-      if (mode == 'REFS') {
-        return false;
-      }
-    }
-
-    // ISE model always hides Observations
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('ISE')) {
-      if (mode == 'DISC') {
-        return false;
-      }
-    }
-
-    // OBSERVATIONS
     if (mode == 'DISC') {
-      return this.configSvc.behaviors.showObservations;
+      return behavior?.questionIcons?.showObservations ?? true;
     }
 
-    // DOCUMENTS
+    if (mode == 'REVIEWED') {
+      return behavior?.questionIcons?.showReviewed ?? true;
+    }
+
+
+    // TODO:  define module-specific behaviors for these
+
     if (mode == 'DOCS') {
       return this.configSvc.behaviors.showAssessmentDocuments;
     }
@@ -699,25 +653,18 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   whichSupplementalIcon() {
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('EDM')) {
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    if (!!behavior && behavior.questionIcons?.guidanceIcon?.toLowerCase() == 'g') {
       return "G";
+    } else {
+      return "I";
     }
-
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('RRA')) {
-      return "G";
-    }
-
-    if (this.myQuestion.is_Maturity && this.assessSvc.usesMaturityModel('CRR')) {
-      return "G";
-    }
-
-    return "I";
   }
 
   /**
    * Returns 'Observation' if the assessment is not ISE, 'Issue' if it is ISE
    */
-   observationOrIssue () {
+  observationOrIssue() {
     if (this.assessSvc.isISE()) {
       return 'Issue';
     }
@@ -731,7 +678,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   documentLabel(defaultLabel: string) {
     if (this.assessSvc.isISE()) {
-      if(defaultLabel === 'Source Documents') {
+      if (defaultLabel === 'Source Documents') {
         return 'Resources';
       } else if (defaultLabel === 'Additional Documents') {
         return 'References';

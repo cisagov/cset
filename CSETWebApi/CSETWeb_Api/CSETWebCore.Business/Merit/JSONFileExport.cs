@@ -80,7 +80,7 @@ namespace CSETWebCore.Business.Merit
                 uncPath = new GLOBAL_PROPERTIES()
                 {
                     Property = JSONFileExport.MeritExportPathName,
-                    Property_Value = "\\\\hqwinfs1\\global\\Field_Staff\\ISE"
+                    Property_Value = "\\\\hqwinfs1\\global\\Field_Staff\\ISE" // default path for client
                 };
                 context.GLOBAL_PROPERTIES.Add(uncPath);
                 

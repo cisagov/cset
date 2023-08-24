@@ -478,7 +478,7 @@ mxJsCanvas.prototype.curveTo = function(x1, y1, x2, y2, x3, y3)
 
 mxJsCanvas.prototype.rect = function(x, y, w, h)
 {
-	// to-do: Check if fillRect/strokeRect is faster
+	// TODO: Check if fillRect/strokeRect is faster
 	this.begin();
 	this.moveTo(x, y);
 	this.lineTo(x + w, y);
@@ -577,7 +577,7 @@ mxJsCanvas.prototype.image = function(x, y, w, h, src, aspect, flipH, flipV)
 	}
 	else
 	{
-		// to-do flag error that image wasn't obtaining in canvas preprocessing
+		// TODO flag error that image wasn't obtaining in canvas preprocessing
 	}
 };
 
@@ -807,7 +807,7 @@ mxJsCanvas.prototype.getCanvas = function()
 
 mxJsCanvas.prototype.finish = function(handler)
 {
-	// to-do: Check if waitCounter updates need a monitor. Question is
+	// TODO: Check if waitCounter updates need a monitor. Question is
 	// if image load-handler can be executed in parallel leading to
 	// race conditions when updating the "shared" waitCounter.
 	if (this.waitCounter == 0)

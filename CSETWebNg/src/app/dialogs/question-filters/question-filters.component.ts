@@ -90,12 +90,12 @@ export class QuestionFiltersComponent implements OnInit {
       if(this.assessSvc.isISE()) {
         this.answerOptions.push({ 
           value: o, 
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelId, o) 
+          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o) 
         });
       } else {
         this.answerOptions.push({ 
           value: o, 
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelId, o) 
+          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o) 
         });
       }
     });
