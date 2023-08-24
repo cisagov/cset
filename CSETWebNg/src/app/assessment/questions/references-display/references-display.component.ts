@@ -54,7 +54,7 @@ export class ReferencesDisplayComponent implements OnInit {
   /**
    * 
    */
-  ngOnInit(): void {    
+  ngOnInit(): void {
     // group section_Refs (bookmarks) with their documents
     this.sourceDocuments = this.groupDocumentBookmarks(this.tab.sourceDocumentsList);
     this.additionalDocuments = this.groupDocumentBookmarks(this.tab.additionalDocumentsList);
@@ -79,11 +79,19 @@ export class ReferencesDisplayComponent implements OnInit {
         };
         list.push(listDoc);
       }
-    
+
       listDoc.bookmarks.push(ref.section_Ref.trim());
     });
 
     return list;
+  }
+
+  /**
+    * Replaces all occurrences of the token {{ cset_document_url }}
+    * with the application's document URL.
+    */
+  replaceDocUrl(s: string) {
+    return s.replaceAll("{{ cset_document_url }}", this.configSvc.docUrl);
   }
 
   /**

@@ -27,6 +27,7 @@ import * as internal from "stream";
 export interface Finding {
   // ACET fields
   question_Id: number;
+  questionType: string;
   answer_Id: number;
   finding_Id: number;
   summary: string;

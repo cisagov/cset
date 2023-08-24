@@ -138,7 +138,7 @@ import { TutorialCrrComponent } from './assessment/prepare/maturity/tutorial-crr
 import { CrrReportComponent } from './reports/crr/crr-report/crr-report.component';
 import { CrrDeficiencyComponent } from './reports/crr/crr-deficiency/crr-deficiency.component';
 import { CrrCommentsMarkedComponent } from './reports/crr/crr-comments-marked/crr-comments-marked.component';
-import{TsaAnalyticsComponent} from './initial/tsa-analytics/tsa-analytics.component';
+import { AssessmentComparisonAnalyticsComponent } from './initial/assessmenet-comparison-analytics/assessment-comparison-analytics.component';
 
 import { RraReportComponent } from './reports/rra/rra-report/rra-report.component';
 import { RraDeficiencyComponent } from './reports/rra/rra-deficiency/rra-deficiency.component';
@@ -201,6 +201,8 @@ import { HydroActionItemsReportComponent } from './reports/hydro/hydro-action-it
 import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summary/sd-answer-summary.component';
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
+import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
+import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 
 const appRoutes: Routes = [
 
@@ -292,11 +294,13 @@ const appRoutes: Routes = [
         component: AddQuestionComponent
       },
       {
-        path:'tsa-analytics',
-        component:TsaAnalyticsComponent
+        path: 'assessment-comparison-analytics',
+        component: AssessmentComparisonAnalyticsComponent
       },
-      { path: 'resource-library',
-        component: ResourceLibraryComponent },
+      {
+        path: 'resource-library',
+        component: ResourceLibraryComponent
+      },
       {
         path: 'examination-merge',
         component: MergeExaminationsComponent
@@ -429,6 +433,7 @@ const appRoutes: Routes = [
               { path: 'hydro-feasibility', component: HydroFeasibilityComponent },
               { path: 'hydro-actions', component: HydroActionsComponent },
               { path: 'sd-answer-summary', component: SdAnswerSummaryComponent },
+              
             ]
           },
 
@@ -477,11 +482,12 @@ const appRoutes: Routes = [
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
       { path: 'rrareport', component: RraReportComponent },
       { path: 'rraDeficiencyReport', component: RraDeficiencyComponent },
+      { path: 'imrreport', component: ImrReportComponent },
       { path: 'vadrDeficiencyReport', component: VadrDeficiencyComponent },
       { path: 'vadrOpenEndedReport', component: OpenEndedQuestionsComponent },
       { path: 'cisSurveyReport', component: CisSurveyComponent },
       { path: 'cisSectionScoringReport', component: CisSectionScoringComponent },
-      { path: 'cisRankedDeficiencyReport', component:CisRankedDeficiencyComponent },
+      { path: 'cisRankedDeficiencyReport', component: CisRankedDeficiencyComponent },
       { path: 'vadrReport', component: VadrReportComponent },
       { path: 'mvraReport', component: MvraReportComponent },
       { path: 'cpgReport', component: CpgReportComponent },
@@ -492,7 +498,8 @@ const appRoutes: Routes = [
       { path: 'hydroReport', component: HydroReportComponent },
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
-      { path: 'key-report/:numberOfContacts', component: KeyReportComponent },
+      { path: 'key-report', component: KeyReportComponent },
+      { path: 'sd-deficiency', component: TsaSdComponent }
     ]
   },
   { path: '**', redirectTo: 'home' }

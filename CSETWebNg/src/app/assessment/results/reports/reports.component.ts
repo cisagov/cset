@@ -207,7 +207,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
         if (reportType === 'crrreport') {
             localStorage.setItem('crrReportConfidentiality', this.securitySelected);
         }
-
         window.open(url, "_blank");
     }
 

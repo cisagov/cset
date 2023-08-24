@@ -101,7 +101,7 @@ export class CrrResultsDetailComponent implements OnInit {
    * @returns
    */
   getDomainRemark(remarks: string) {
-    if (remarks.trim().length > 0) {
+    if (remarks?.trim().length > 0) {
       return this.reportSvc.formatLinebreaks(this.domain.remarks);
     }
 
