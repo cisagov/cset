@@ -301,7 +301,7 @@ export class QuestionExtrasComponent implements OnInit {
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.findings == null) {
-          return this.myQuestion.hasDiscovery ? 'inline' : 'none';
+          return this.myQuestion.hasObservations ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
 
@@ -313,8 +313,7 @@ export class QuestionExtrasComponent implements OnInit {
    *
    * @param findid
    */
-  addEditDiscovery(findid) {
-    //this.saveAnswer();
+  addEditObservation(findid) {
 
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
@@ -322,6 +321,7 @@ export class QuestionExtrasComponent implements OnInit {
     // send an empty one.
     const find: Finding = {
       question_Id: this.myQuestion.questionId,
+      questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
       finding_Id: findid,
       summary: '',
@@ -355,7 +355,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
-            this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+            this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
@@ -367,7 +367,7 @@ export class QuestionExtrasComponent implements OnInit {
    * Deletes a discovery.
    * @param findingToDelete
    */
-  deleteDiscovery(findingToDelete) {
+  deleteObservation(findingToDelete) {
 
     // Build a message whether the observation has a title or not
     let msg = "Are you sure you want to delete "
@@ -397,7 +397,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.findings.splice(deleteIndex, 1);
-        this.myQuestion.hasDiscovery = (this.extras.findings.length > 0);
+        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
 
       }
     });

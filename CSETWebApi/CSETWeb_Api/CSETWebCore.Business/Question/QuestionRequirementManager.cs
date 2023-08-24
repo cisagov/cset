@@ -248,14 +248,23 @@ namespace CSETWebCore.Business.Question
         /// <param name="answer"></param>
         public int StoreAnswer(Answer answer)
         {
-            // Find the Question or Requirement
-            var question = _context.NEW_QUESTION.Where(q => q.Question_Id == answer.QuestionId).FirstOrDefault();
-            var requirement = _context.NEW_REQUIREMENT.Where(r => r.Requirement_Id == answer.QuestionId).FirstOrDefault();
-
-            if (question == null && requirement == null)
+            // Verify the Question exists
+            if (
+                (answer.QuestionType == "Question" && !_context.NEW_QUESTION.Any(q => q.Question_Id == answer.QuestionId))
+                || (answer.QuestionType == "Requirement" && !_context.NEW_REQUIREMENT.Any(r => r.Requirement_Id == answer.QuestionId))
+                || (answer.QuestionType == "Component" && !_context.COMPONENT_QUESTIONS.Any(c => c.Question_Id == answer.QuestionId))
+                || (answer.QuestionType == "Maturity" && !_context.MATURITY_QUESTIONS.Any(m => m.Mat_Question_Id == answer.QuestionId))               
+                )
             {
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
             }
+
+            var types = new List<string> { "Question", "Requirement", "Component", "Maturity" };
+            if (!types.Contains(answer.QuestionType))
+            {
+                throw new Exception("Unknown question type:" + answer.QuestionType);
+            }
+
 
 
             // in case a null is passed, store 'unanswered'
@@ -263,7 +272,7 @@ namespace CSETWebCore.Business.Question
             {
                 answer.AnswerText = "U";
             }
-            string questionType = "Question";
+
 
             ANSWER dbAnswer = null;
             if (answer != null && answer.ComponentGuid != Guid.Empty)
@@ -286,7 +295,7 @@ namespace CSETWebCore.Business.Question
 
             dbAnswer.Assessment_Id = AssessmentId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
-            dbAnswer.Question_Type = answer.QuestionType ?? questionType;
+            dbAnswer.Question_Type = answer.QuestionType;
 
             dbAnswer.Question_Number = answer.QuestionNumber != null ? int.Parse(answer.QuestionNumber) : (int?)null;
             dbAnswer.Answer_Text = answer.AnswerText;

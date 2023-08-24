@@ -782,9 +782,18 @@
           </button>
         </div>
         <div>
-          <button tabindex="0" (click)="clickReportLink('sd-deficiency')"
+          <button tabindex="0" 
+            (click)="clickReportLink('sd-deficiency')"
             class="btn btn-link btn-link-dark text-left">
             Deficiency Report
+          </button>
+        </div>
+        <div>
+          <button
+            tabindex="0" 
+            (click)="clickReportLink('commentsmfr')"
+            class="btn btn-link btn-link-dark text-left">
+            Comments and Marked for Review
           </button>
         </div>
 
@@ -809,12 +818,6 @@
           </button>
         </div>
         
-        <app-nav-back-next
-          *ngIf="!assessSvc.isISE()"
-          [page]="'reports'"
-          [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"
-        ></app-nav-back-next>
-
 
         <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
           [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>

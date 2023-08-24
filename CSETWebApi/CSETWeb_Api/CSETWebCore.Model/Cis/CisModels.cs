@@ -88,6 +88,7 @@ namespace CSETWebCore.Model.Nested
         public List<Question> Followups { get; set; } = new List<Question>();
 
         public string Comment { get; set; }
+        public bool HasObservations { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
         public List<int> DocumentIds { get; set; } = new List<int>();
