@@ -818,12 +818,6 @@
           </button>
         </div>
         
-        <app-nav-back-next
-          *ngIf="!assessSvc.isISE()"
-          [page]="'reports'"
-          [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"
-        ></app-nav-back-next>
-
 
         <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
           [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
