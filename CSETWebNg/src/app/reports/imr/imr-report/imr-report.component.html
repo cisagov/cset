@@ -22,35 +22,35 @@
 -------------------------->
 
 <table class="page-layout">
-    <thead>
-        <tr>
-            <td>
-                <div class="header-space">&nbsp;</div>
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="container">
+  <thead>
+    <tr>
+      <td>
+        <div class="header-space">&nbsp;</div>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="container">
 
-                    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
-                        <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
-                            <button id="pdf-download" class="btn btn-primary m-1 p-1"
-                                (click)="printReport()">Download/Print Report</button>
-                        </div>
-                    </div>
-
-                    <div class="pb-3" style="padding-top: 60px">
-                        <!-- <app-crr-side-toc></app-crr-side-toc> -->
-
-                        <div class="report-body-imr">
-
-                          <div id="toc-top">
-              <app-imr-cover-sheet [model]="model"></app-imr-cover-sheet>
+          <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+              <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print
+                Report</button>
             </div>
-            
-            <!--
+          </div>
+
+          <div class="pb-3" style="padding-top: 60px">
+            <!-- <app-crr-side-toc></app-crr-side-toc> -->
+
+            <div class="report-body-imr">
+
+              <div id="toc-top">
+                <app-imr-cover-sheet [model]="model"></app-imr-cover-sheet>
+              </div>
+
+              <!--
             <div class="page-margin-top">
               <app-crr-cover-sheet2 [model]="crrModel"></app-crr-cover-sheet2>
             </div>
@@ -59,24 +59,24 @@
               <app-crr-main-toc [model]="crrModel"></app-crr-main-toc>
             </div>
           -->
-  
-            <div id="toc-intro" class="page-margin-top">
-              <app-imr-intro-about [model]="model"></app-imr-intro-about>
-            </div>
-  
-            <!-- <div id="toc-mil1-ps" class="page-margin-top">
+
+              <div id="toc-intro" class="page-margin-top">
+                <app-imr-intro-about [model]="model"></app-imr-intro-about>
+              </div>
+
+              <!-- <div id="toc-mil1-ps" class="page-margin-top">
               <app-crr-mil1-performance-summary [model]="crrModel"></app-crr-mil1-performance-summary>
             </div> -->
 
-            <div id="toc-crr-ps" class="page-margin-top">
+              <div id="toc-crr-ps" class="page-margin-top">
                 <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="model"></app-cmu-goal-perf-stacked-bar>
-            </div>
+              </div>
 
-            <div id="toc-nist-csf" class="page-margin-top">
-              <app-cmu-nist-csf-summary [model]="model"></app-cmu-nist-csf-summary>
-            </div>
-            
-            <!--
+              <div id="toc-nist-csf" class="page-margin-top">
+                <app-cmu-nist-csf-summary [model]="model"></app-cmu-nist-csf-summary>
+              </div>
+
+              <!--
             <div id="toc-mil1-performance" class="page-margin-top">
               <app-crr-mil1-performance [model]="crrModel"></app-crr-mil1-performance>
             </div>
@@ -86,55 +86,55 @@
             </div>
   
           -->
-            <div id="toc-percentage-practices" class="page-margin-top">
-              <app-cmu-percentage-of-practices [model]="model"></app-cmu-percentage-of-practices>
-            </div>
+              <div id="toc-percentage-practices" class="page-margin-top">
+                <app-cmu-percentage-of-practices [model]="model"></app-cmu-percentage-of-practices>
+              </div>
 
-            <div id="toc-domain-detail" class="page-margin-top">
+              <div id="toc-domain-detail" class="page-margin-top">
                 <div *ngFor="let d of model?.structure.Model.Domain" class="page-break">
-                    <app-cmu-results-detail [domain]="d" [showRemarks]="false"></app-cmu-results-detail>
+                  <app-cmu-results-detail [domain]="d" [showRemarks]="false"></app-cmu-results-detail>
                 </div>
-            </div>
-            
-            <div id="toc-resources-referenced" class="page-margin-top">
-              <app-imr-resources [model]="model"></app-imr-resources>
-            </div>
-            
-            <div id="toc-contact-information" class="page-margin-top">
-              <app-crr-contact-information [model]="model"></app-crr-contact-information>
-            </div>
-            
-            <div id="toc-additional-views" class="page-margin-top">
-              <app-crr-appendix-a-cover [model]="model"></app-crr-appendix-a-cover>
-            </div>
+              </div>
 
-            <!--
-  
-            <div id="toc-crr-performance-app-a" class="page-margin-top">
-              <app-crr-performance-appendix-a [model]="crrModel"></app-crr-performance-appendix-a>
+              <div id="toc-additional-views" class="page-margin-top">
+                <app-crr-appendix-a-cover [moduleName]="'IMR'"></app-crr-appendix-a-cover>
+              </div>
+
+              <div id="toc-resources-referenced" class="page-margin-top">
+                <app-imr-resources [model]="model"></app-imr-resources>
+              </div>
+
+              <div id="toc-contact-information" class="page-margin-top">
+                <app-crr-contact-information [moduleName]="'IMR'"></app-crr-contact-information>
+              </div>
+
+
+
+              <div id="toc-appendix-b" class="page-margin-top">
+                Appendix B:!!!!!
+              </div>
+
+              <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
+                <app-crr-nist-csf-cat-summary [model]="model"></app-crr-nist-csf-cat-summary>
+              </div>
+
+              <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
+                <app-crr-nist-csf-cat-performance [model]="model"></app-crr-nist-csf-cat-performance>
+              </div>
+
             </div>
-          -->
-            <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
-            <!--  <app-cmu-nist-csf-cat-summary [model]="model"></app-cmu-nist-csf-cat-summary> -->
-            </div>
-  <!--
-            <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
-              <app-cmu-nist-csf-cat-performance [model]="model"></app-cmu-nist-csf-cat-performance>
-            </div>
-   -->
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td>
-                <div class="footer-space">&nbsp;</div>
-            </td>
-        </tr>
-    </tfoot>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        <div class="footer-space">&nbsp;</div>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
 <div class="print-header-left"></div>

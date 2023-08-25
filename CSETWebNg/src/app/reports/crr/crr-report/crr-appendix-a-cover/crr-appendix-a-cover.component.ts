@@ -33,6 +33,8 @@ export class CrrAppendixACoverComponent implements OnInit {
 
   @Input() model: CrrReportModel;
 
+  @Input() moduleName: string;
+
   constructor() { }
 
   ngOnInit(): void {

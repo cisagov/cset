@@ -111,10 +111,11 @@ export class CmuService {
   }
 
   getNistCsfCatSummaryBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatSummaryBodyData');
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
   }
 
   getNistCsfCatPerformanceBodyData() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatPerformanceBodyData');
   }
+
 }

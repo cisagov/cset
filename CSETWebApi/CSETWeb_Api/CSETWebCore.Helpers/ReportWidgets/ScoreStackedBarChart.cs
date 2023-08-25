@@ -21,6 +21,15 @@ namespace CSETWebCore.Helpers.ReportWidgets
     {
         private XDocument xDoc;
 
+        private bool _isNA = false;
+
+        private bool _isEmpty = false;
+
+
+        /// <summary>
+        /// Creates an SVG stacked bar chart representing the scores provided.
+        /// </summary>
+        /// <param name="d"></param>
         public ScoreStackedBarChart(BarChartInput d)
         {
             int maxAnswerCount = d.AnswerCounts.Sum();
@@ -30,6 +39,22 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xSvg.SetAttributeValue("width", "100%");
             xSvg.SetAttributeValue("height", d.Height.ToString());
 
+            if (d.AnswerCounts.All(x => x == 0))                
+            {
+                _isNA = true;
+
+                if (d.ShowNA)
+                {
+                    d.AnswerCounts[0] = 1;
+                    maxAnswerCount = 1;
+                    d.BarColors[0] = "placeholder-gray";
+                }
+
+                if (d.HideEmptyChart)
+                {
+                    _isEmpty = true;
+                }
+            }
 
             var x = 0f;
 
@@ -54,7 +79,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     // labels on the segments
                     var xBarLabel = new XElement("text");
                     xSvg.Add(xBarLabel);
-                    xBarLabel.Value = d.AnswerCounts[i].ToString();
+                    xBarLabel.Value = _isNA ? "Not Applicable" : d.AnswerCounts[i].ToString();
                     xBarLabel.SetAttributeValue("x", (x + segmentWidth * 0.5f).ToString());
                     xBarLabel.SetAttributeValue("y", (d.Height * 0.5f).ToString());
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
@@ -80,6 +105,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         public override string ToString()
         {
+            if (_isEmpty)
+            {
+                return "";
+            }
             return xDoc.ToString();
         }   
     }

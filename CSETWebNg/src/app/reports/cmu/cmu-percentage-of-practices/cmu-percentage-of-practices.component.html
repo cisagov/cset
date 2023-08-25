@@ -23,12 +23,12 @@
 <div class="container-fluid landscape" style="font-family: Verdana, sans-serif;">
     <h3 class="depiction-title" style="margin-left: -15px; margin-bottom: 5px;">Summary Results</h3>
     <p>
-        Percentage of Complete Practices
+        The bars represent the percentage of "Yes" answers for each domain
     </p>
 
     <ngx-charts-bar-horizontal [results]="domainCompliance" [barPadding]="10" [yAxis]="'true'" [xAxis]="'true'"
         [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
-        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1" [legend]="true">
+        [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
         <ng-template #tooltipTemplate let-model="model">
             <div class="p-1">
                 {{model.value}}%
