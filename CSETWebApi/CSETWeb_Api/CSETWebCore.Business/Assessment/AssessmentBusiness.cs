@@ -51,8 +51,9 @@ namespace CSETWebCore.Business.Assessment
             _maturityBusiness = maturityBusiness;
             _assessmentUtil = assessmentUtil;
             _standardsBusiness = standardsBusiness;
-            _diagramManager = diagramManager;
             _context = context;
+
+            _diagramManager = new Diagram.DiagramManager(context);
         }
 
 
@@ -403,7 +404,16 @@ namespace CSETWebCore.Business.Assessment
                 // for older assessments, if no features are set, look for actual data and set them
                 if (!assessment.UseMaturity && !assessment.UseStandard && !assessment.UseDiagram)
                 {
-                    DetermineFeaturesFromData(ref assessment);
+                    SetFeaturesOnAssessmentRecord(assessment.Id);
+
+
+                    // populate assessment with feature values from DB
+                    var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+
+                    assessment.UseStandard = dbAssessment.UseStandard;
+                    assessment.UseDiagram = dbAssessment.UseDiagram;
+                    assessment.UseMaturity = dbAssessment.UseMaturity;
+                    assessment.MaturityModel = _maturityBusiness.GetMaturityModel(assessmentId);
                 }
 
                 SetAssessmentTypeInfo(assessment);
@@ -499,37 +509,29 @@ namespace CSETWebCore.Business.Assessment
         /// created prior to incorporating features into the assessment data model.
         /// </summary>
         /// <param name="assessment"></param>
-        public void DetermineFeaturesFromData(ref AssessmentDetail assessment)
+        public void SetFeaturesOnAssessmentRecord(int assessmentId)
         {
-            var a = assessment;
+            var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
-            var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == a.Id);
-
-            if (_context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == a.Id))
+            if (_context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == assessmentId))
             {
-                assessment.UseStandard = true;
                 dbAssessment.UseStandard = true;
-                _context.SaveChanges();
             }
 
 
-            if (_context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == a.Id))
+            if (_context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == assessmentId))
             {
-
-                assessment.UseDiagram = _diagramManager.HasDiagram(a.Id);
-                dbAssessment.UseDiagram = assessment.UseDiagram;
-                _context.SaveChanges();
+                dbAssessment.UseDiagram = _diagramManager.HasDiagram(assessmentId);
             }
 
 
             // determine if there are maturity answers and attach maturity models
-            var maturityAnswers = _context.ANSWER.Where(x => x.Assessment_Id == a.Id && x.Question_Type.ToLower() == "maturity").ToList();
+            var maturityAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type.ToLower() == "maturity").ToList();
             if (maturityAnswers.Count > 0)
             {
-                assessment.UseMaturity = true;
                 dbAssessment.UseMaturity = true;
 
-                if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == a.Id))
+                if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId))
                 {
 
                     // determine the maturity models represented by the questions that have been answered
@@ -539,20 +541,17 @@ namespace CSETWebCore.Business.Assessment
                     {
                         var mm = new AVAILABLE_MATURITY_MODELS()
                         {
-                            Assessment_Id = a.Id,
+                            Assessment_Id = assessmentId,
                             model_id = modelId,
                             Selected = true
                         };
 
                         _context.AVAILABLE_MATURITY_MODELS.Add(mm);
-
-                        // get the newly-attached model for the response
-                        assessment.MaturityModel = _maturityBusiness.GetMaturityModel(a.Id);
                     }
                 }
-
-                _context.SaveChanges();
             }
+
+            _context.SaveChanges();
         }
 
 
@@ -773,7 +772,7 @@ namespace CSETWebCore.Business.Assessment
         public void SetAssessmentTypeInfo(AssessmentDetail assessment)
         {
             // Check for old assessment with multiple assessment types.
-            bool multipleTypes = (assessment.UseStandard && assessment.Standards.Count > 1)
+            bool multipleTypes = (assessment.UseStandard && assessment.Standards?.Count > 1)
                                 || (assessment.UseDiagram && assessment.UseMaturity)
                                 || (assessment.UseDiagram && assessment.UseStandard)
                                 || (assessment.UseMaturity && assessment.UseStandard);
