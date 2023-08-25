@@ -22,7 +22,7 @@ namespace CSETWebCore.Interfaces.Assessment
         AssessmentDetail GetAssessmentDetail(int assessmentId, string token = "");
         void GetMaturityModelDetails(ref AssessmentDetail assessment);
         void GetSelectedStandards(ref AssessmentDetail assessment);
-        void DetermineFeaturesFromData(ref AssessmentDetail assessment);
+        void SetFeaturesOnAssessmentRecord(int assessmentId);
         int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
         void CreateIrpHeaders(int assessmentId);
         List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
