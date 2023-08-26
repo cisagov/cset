@@ -513,40 +513,38 @@ namespace CSETWebCore.Business.Assessment
         {
             var dbAssessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
 
-            if (_context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == assessmentId))
+            dbAssessment.UseStandard = _context.AVAILABLE_STANDARDS.Any(x => x.Assessment_Id == assessmentId);
+
+            dbAssessment.UseDiagram = _context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == assessmentId)
+               && _diagramManager.HasDiagram(assessmentId);
+
+            dbAssessment.UseMaturity = _context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId);
+
+            if (!dbAssessment.UseMaturity)
             {
-                dbAssessment.UseStandard = true;
-            }
-
-
-            if (_context.ASSESSMENT_DIAGRAM_COMPONENTS.Any(x => x.Assessment_Id == assessmentId))
-            {
-                dbAssessment.UseDiagram = _diagramManager.HasDiagram(assessmentId);
-            }
-
-
-            // determine if there are maturity answers and attach maturity models
-            var maturityAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type.ToLower() == "maturity").ToList();
-            if (maturityAnswers.Count > 0)
-            {
-                dbAssessment.UseMaturity = true;
-
-                if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId))
+                // determine if there are maturity answers and attach maturity models
+                var maturityAnswers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type.ToLower() == "maturity").ToList();
+                if (maturityAnswers.Count > 0)
                 {
+                    dbAssessment.UseMaturity = true;
 
-                    // determine the maturity models represented by the questions that have been answered
-                    var qqq = _context.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
-                    var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
-                    foreach (var modelId in maturityModelIds)
+                    // if we have maturity answers but no selected model, assume the selected model
+                    if (!_context.AVAILABLE_MATURITY_MODELS.Any(x => x.Assessment_Id == assessmentId))
                     {
-                        var mm = new AVAILABLE_MATURITY_MODELS()
+                        // determine the maturity models represented by the questions that have been answered
+                        var qqq = _context.MATURITY_QUESTIONS.Where(q => maturityAnswers.Select(x => x.Question_Or_Requirement_Id).Contains(q.Mat_Question_Id)).ToList();
+                        var maturityModelIds = qqq.Select(x => x.Maturity_Model_Id).Distinct().ToList();
+                        foreach (var modelId in maturityModelIds)
                         {
-                            Assessment_Id = assessmentId,
-                            model_id = modelId,
-                            Selected = true
-                        };
+                            var mm = new AVAILABLE_MATURITY_MODELS()
+                            {
+                                Assessment_Id = assessmentId,
+                                model_id = modelId,
+                                Selected = true
+                            };
 
-                        _context.AVAILABLE_MATURITY_MODELS.Add(mm);
+                            _context.AVAILABLE_MATURITY_MODELS.Add(mm);
+                        }
                     }
                 }
             }
@@ -793,7 +791,7 @@ namespace CSETWebCore.Business.Assessment
 
             if (assessment.UseMaturity)
             {
-                if (assessment.MaturityModel == null) 
+                if (assessment.MaturityModel == null)
                 {
                     // Try to get the maturity model if it's null for some reason
                     assessment.MaturityModel = _maturityBusiness.GetMaturityModel(assessment.Id);
