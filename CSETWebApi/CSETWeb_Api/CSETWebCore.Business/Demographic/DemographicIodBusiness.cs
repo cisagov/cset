@@ -127,16 +127,11 @@ namespace CSETWebCore.Business.Demographic
             }).ToList();
 
 
-            d.ListBarriers = new List<ListItem2>
+            d.ListBarriers = opts.Where(opt => opt.DataItemName == "BARRIER").Select(opts => new ListItem2()
             {
-                new ListItem2() { Key = "1", Name = "Potential for increased regulatory scrutiny" },
-                new ListItem2() { Key = "2", Name = "Potential for legal action" },
-                new ListItem2() { Key = "3", Name = "Anti - trust regulation" },
-                new ListItem2() { Key = "4", Name = "Privacy regulation" },
-                new ListItem2() { Key = "5", Name = "Confidentiality of company information" },
-                new ListItem2() { Key = "6", Name = "Impact on reputation" },
-                new ListItem2() { Key = "7", Name = "Relevancy of the information available" }
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
             var sectors = _context.SECTOR.Where(x => x.Is_NIPP).ToList().OrderBy(y => y.SectorName);
 
@@ -145,8 +140,8 @@ namespace CSETWebCore.Business.Demographic
             {
                 d.ListSectors.Add(new ListItem2
                 {
-                    Key = "sec.SectorId",
-                    Name = sec.SectorName
+                    OptionValue = "sec.SectorId",
+                    OptionText = sec.SectorName
                 });
             }
 
