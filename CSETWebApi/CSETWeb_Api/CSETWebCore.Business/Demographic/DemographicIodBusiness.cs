@@ -31,6 +31,7 @@ namespace CSETWebCore.Business.Demographic
         public DemographicIod GetDemographics(int assessmentId)
         {
             var x = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
+            var opts = _context.DETAILS_DEMOGRAPHICS_OPTIONS.ToList();
 
             var d = new DemographicIod();
             d.AssessmentId = assessmentId;
@@ -73,14 +74,12 @@ namespace CSETWebCore.Business.Demographic
 
             d.BusinessUnit = x.Find(z => z.DataItemName == "BUSINESS-UNIT")?.StringValue;
 
-            // ...
-
-
-            d.ListOrgTypes = new List<ListItem2> {
-                new ListItem2() { Key = "1", Name = "Industry"},
-                new ListItem2() { Key = "2", Name = "Federal Entity"},
-                new ListItem2() { Key = "3", Name = "SLTT"}
-            };
+            // org types
+            d.ListOrgTypes = opts.Where(opt => opt.DataItemName == "ORG-TYPE").Select(opts => new ListItem2()
+            {
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
             // get the subsectors for the current sector (if there is one)
             if (!string.IsNullOrEmpty(d.Sector))
@@ -89,80 +88,43 @@ namespace CSETWebCore.Business.Demographic
             }
 
 
-            d.ListNumberEmployeeTotal = new List<ListItem2>
+            d.ListNumberEmployeeTotal = opts.Where(opt => opt.DataItemName == "NUM-EMP-TOTAL").Select(opts => new ListItem2()
             {
-                  new ListItem2() { Key = "1", Name = "< 100"},
-                  new ListItem2() { Key = "2", Name = "100-500"},
-                  new ListItem2() { Key = "3", Name = "501-1,000"},
-                  new ListItem2() { Key = "4", Name = "1,001-5,000"},
-                  new ListItem2() { Key = "5", Name = "5,001-10,000"},
-                  new ListItem2() { Key = "6", Name = "10,001-50,000"},
-                  new ListItem2() { Key = "7", Name = "50,001-100,000"},
-                  new ListItem2() { Key = "8", Name = "> 100,000"}
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
-            d.ListNumberEmployeeUnit = new List<ListItem2>
+            d.ListNumberEmployeeUnit = opts.Where(opt => opt.DataItemName == "NUM-EMP-UNIT").Select(opts => new ListItem2()
             {
-                  new ListItem2() { Key = "1", Name = "N/A"},
-                  new ListItem2() { Key = "2", Name = "< 50"},
-                  new ListItem2() { Key = "3", Name = "50-100"},
-                  new ListItem2() { Key = "4", Name = "101-250"},
-                  new ListItem2() { Key = "5", Name = "251-500"},
-                  new ListItem2() { Key = "6", Name = "501-1,000"},
-                  new ListItem2() { Key = "7", Name = "1,001-2,500"},
-                  new ListItem2() { Key = "8", Name = "2,501-5,000"},
-                  new ListItem2() { Key = "9", Name = "5,001-10,000"},
-                  new ListItem2() { Key = "10", Name = "> 10,000"}
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
-            d.ListRevenueAmounts = new List<ListItem2>
+            d.ListRevenueAmounts = opts.Where(opt => opt.DataItemName == "ANN-REVENUE").Select(opts => new ListItem2()
             {
-                  new ListItem2() { Key = "1", Name = "< $100,000"},
-                  new ListItem2() { Key = "2", Name = "$100,000 - $500,000"},
-                  new ListItem2() { Key = "3", Name = "$500,000 - $1 million"},
-                  new ListItem2() { Key = "4", Name = "$1M - $10M"},
-                  new ListItem2() { Key = "5", Name = "$10M - $100M"},
-                  new ListItem2() { Key = "6", Name = "$100M - $500M"},
-                  new ListItem2() { Key = "7", Name = "$500M - $1B"},
-                  new ListItem2() { Key = "8", Name = "> $1B"}
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
-            d.ListRevenuePercentages = new List<ListItem2>
+            d.ListRevenuePercentages = opts.Where(opt => opt.DataItemName == "ANN-REVENUE-PERCENT").Select(opts => new ListItem2()
             {
-                  new ListItem2() { Key = "1", Name = "1-10%"},
-                  new ListItem2() { Key = "2", Name = "11-20%"},
-                  new ListItem2() { Key = "3", Name = "21-30%"},
-                  new ListItem2() { Key = "4", Name = "31-40%"},
-                  new ListItem2() { Key = "5", Name = "41-50%"},
-                  new ListItem2() { Key = "6", Name = "51-60%"},
-                  new ListItem2() { Key = "7", Name = "61-70%"},
-                  new ListItem2() { Key = "8", Name = "71-80%"},
-                  new ListItem2() { Key = "9", Name = "81-90%"},
-                  new ListItem2() { Key = "10", Name = "91-100%"}
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
 
-            d.ListShareOrgs = new List<ListItem2>
+            d.ListShareOrgs = opts.Where(opt => opt.DataItemName == "SHARE-ORG").Select(opts => new ListItem2()
             {
-                new ListItem2() { Key = "1", Name = "ISAC and/ or Coordinating Council" },
-                new ListItem2() { Key = "2", Name = "FBI - InfraGard" },
-                new ListItem2() { Key = "3", Name = "Cybersecurity suppliers/ consultants" },
-                new ListItem2() { Key = "4", Name = "Department of Homeland Security" },
-                new ListItem2() { Key = "5", Name = "State or local government group" },
-                new ListItem2() { Key = "6", Name = "Industry peers(informal exchanges)" },
-                new ListItem2() { Key = "7", Name = "NCFTA" }
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
 
-            d.ListRegulationTypes = new List<ListItem2>
+            d.ListRegulationTypes = opts.Where(opt => opt.DataItemName == "REG-TYPE").Select(opts => new ListItem2()
             {
-                new ListItem2() { Key = "1", Name = "Federal regulation, not industry specific (HIPAA, FTC, DFARS)" },
-                new ListItem2() { Key = "2", Name = "Federal regulation, industry specific (NERC-CIP)" },
-                new ListItem2() { Key = "3", Name = "Federal civilian agency oversight (FISMA)" },
-                new ListItem2() { Key = "4", Name = "State regulation, not industry specific (breach notification)" },
-                new ListItem2() { Key = "5", Name = "State regulation, industry specific" },
-                new ListItem2() { Key = "6", Name = "State civilian agency oversight" }
-            };
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
 
             d.ListBarriers = new List<ListItem2>
@@ -208,7 +170,7 @@ namespace CSETWebCore.Business.Demographic
                 list.Add(o);
             }
 
-            return list.Select(x => new ListItem2() { Key = "x.IndustryId", Name = x.IndustryName }).ToList();
+            return list.Select(x => new ListItem2() { OptionValue = "x.IndustryId", OptionText = x.IndustryName }).ToList();
         }
 
 
