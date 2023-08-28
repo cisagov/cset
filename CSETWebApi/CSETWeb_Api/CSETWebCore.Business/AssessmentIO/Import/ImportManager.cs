@@ -24,6 +24,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using Ionic.Zip;
+using CSETWebCore.Business.Assessment;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -194,10 +195,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
 
-                    Importer import = new Importer();
-                    int newAssessmentId = import.RunImportManualPortion(model, currentUserId, email, accessKey, context, _token, _assessmentUtil);
+                    Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil);
+                    int newAssessmentId = import.RunImportManualPortion();
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
-
 
 
                     // Save the diagram
@@ -216,6 +216,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq, false);
                     }
 
+                    import.Finalize(newAssessmentId);
 
 
                     // Clean up any imported standards that are unselected
