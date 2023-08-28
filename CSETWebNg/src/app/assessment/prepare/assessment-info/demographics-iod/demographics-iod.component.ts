@@ -30,7 +30,7 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
@@ -40,7 +40,7 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   onChangeSector(evt: any) {
     var sectorId = evt.target.value;
@@ -64,12 +64,12 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   changeRegType1(o: any, evt: any) {
-    this.demographicData.regulationType1 = o.key;
+    this.demographicData.regulationType1 = o.optionValue;
     this.updateDemographics();
   }
 
   changeRegType2(o: any, evt: any) {
-    this.demographicData.regulationType2 = o.key;
+    this.demographicData.regulationType2 = o.optionValue;
     this.updateDemographics();
   }
 
@@ -79,7 +79,7 @@ export class DemographicsIodComponent implements OnInit {
     console.log(org);
 
     org.selected = (evt.target.value == 'on');
-    this.demographicData.shareOrgs[org.key] = org.selected;
+    this.demographicData.shareOrgs[org.optionValue] = org.selected;
     this.updateDemographics();
   }
 

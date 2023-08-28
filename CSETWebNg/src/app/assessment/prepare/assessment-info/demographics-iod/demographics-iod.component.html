@@ -27,7 +27,7 @@
         <select class="form-control" id="orgType" tabindex="0" name="orgType" (change)="update($event)"
             [(ngModel)]="demographicData.organizationType">
             <option [ngValue]="null">-- Select Type --</option>
-            <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.key">{{t.name}}</option>
+            <option *ngFor="let t of demographicData.listOrgTypes" [value]="t.optionValue">{{t.optionText}}</option>
         </select>
     </div>
 
@@ -52,8 +52,8 @@
             <select class="form-control" id="sector" tabindex="0" name="sector" [(ngModel)]="demographicData.sector"
                 (change)="onChangeSector($event)">
                 <option value="">-- Select Sector --</option>
-                <option *ngFor="let i of demographicData.listSectors" [value]="i.key"
-                    [selected]="i.key == demographicData?.sector">{{i.name}}</option>
+                <option *ngFor="let i of demographicData.listSectors" [value]="i.optionValue"
+                    [selected]="i.optionValue == demographicData?.sector">{{i.optionText}}</option>
             </select>
         </div>
 
@@ -62,8 +62,8 @@
             <select class="form-control" id="subsector" tabindex="0" name="subsector"
                 [(ngModel)]="demographicData.subsector" (change)="update($event)">
                 <option value="">-- Select --</option>
-                <option *ngFor="let i of demographicData.listSubsectors" [value]="i.key"
-                    [selected]="i.key == demographicData?.subsector">{{i.name}}</option>
+                <option *ngFor="let i of demographicData.listSubsectors" [value]="i.optionValue"
+                    [selected]="i.optionValue == demographicData?.subsector">{{i.optionText}}</option>
             </select>
         </div>
 
@@ -80,7 +80,7 @@
         <select class="form-control" id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
             [(ngModel)]="demographicData.numberEmployeesTotal" (change)="update($event)">
             <option value="">-- Select --</option>
-            <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [value]="i.key">{{i.name}}</option>
+            <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [value]="i.optionValue">{{i.optionText}}</option>
         </select>
     </div>
 
@@ -107,8 +107,8 @@
         <select class="form-control" id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit"
             [(ngModel)]="demographicData.numberEmployeesUnit" (change)="update($event)">
             <option value="">-- Select --</option>
-            <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [value]="i.key"
-                [selected]="i.key == demographicData.numberEmployeesUnit">{{i.name}}</option>
+            <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [value]="i.optionValue"
+                [selected]="i.optionValue == demographicData.numberEmployeesUnit">{{i.optionText}}</option>
         </select>
     </div>
 
@@ -209,10 +209,10 @@
                 <div class="mb-3">
                     <div>Regulation Type 1:</div>
                     <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-                        <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.key" type="radio"
+                        <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.optionValue" type="radio"
                             autocomplete="off" tabindex="0" (click)="changeRegType1(reg, $event)"
-                            [checked]="demographicData.regulationType1 == reg.key">
-                        <label class="radio-custom-label" [for]="'regtype1-' + reg.key">{{ reg.name }}</label>
+                            [checked]="demographicData.regulationType1 == reg.optionValue">
+                        <label class="radio-custom-label" [for]="'regtype1-' + reg.optionValue">{{ reg.optionText }}</label>
                     </ng-container>
                 </div>
 
@@ -226,10 +226,10 @@
                 </div>
                 <div class="mb-3">
                     <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-                        <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.key" type="radio"
+                        <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.optionValue" type="radio"
                             autocomplete="off" tabindex="2" (click)="changeRegType2(reg, $event)"
-                            [checked]="demographicData.regulationType2 == reg.key">
-                        <label class="radio-custom-label" [for]="'regtype2-' + reg.key">{{ reg.name }}</label>
+                            [checked]="demographicData.regulationType2 == reg.optionValue">
+                        <label class="radio-custom-label" [for]="'regtype2-' + reg.optionValue">{{ reg.optionText }}</label>
                     </ng-container>
                 </div>
 
@@ -253,10 +253,10 @@
             <div class="mb-3">
 
                 <ng-container *ngFor="let org of demographicData.listShareOrgs">
-                    <input type="checkbox" tabindex="0" [id]="'share-org-' + org.key" [name]="'share-org-' + org.key"
+                    <input type="checkbox" tabindex="0" [id]="'share-org-' + org.optionValue" [name]="'share-org-' + org.optionValue"
                         class="checkbox-custom mt-1" (change)="changeShareOrg(org, $event)" [(ngModel)]="org.selected">
-                    <label [for]="'share-org-' + org.key" class="checkbox-custom-label">
-                        {{org.name}}
+                    <label [for]="'share-org-' + org.optionValue" class="checkbox-custom-label">
+                        {{org.optionText}}
                     </label>
                 </ng-container>
             </div>
@@ -289,15 +289,15 @@
             <select class="form-control mb-2" id="barrier1" tabindex="0" name="barrier1"
                 [(ngModel)]="demographicData.barrier1" (change)="update($event)">
                 <option value="">-- Select --</option>
-                <option *ngFor="let i of demographicData.listBarriers" [value]="i.key"
-                    [selected]="i.key == demographicData.barrier1">{{i.name}}</option>
+                <option *ngFor="let i of demographicData.listBarriers" [value]="i.optionValue"
+                    [selected]="i.optionValue == demographicData.barrier1">{{i.optionText}}</option>
             </select>
             Second most significant:
             <select class="form-control mb-2" id="barrier2" tabindex="0" name="barrier2"
                 [(ngModel)]="demographicData.barrier2" (change)="update($event)">
                 <option value="">-- Select --</option>
-                <option *ngFor="let i of demographicData.listBarriers" [value]="i.key"
-                    [selected]="i.key == demographicData.barrier2">{{i.name}}</option>
+                <option *ngFor="let i of demographicData.listBarriers" [value]="i.optionValue"
+                    [selected]="i.optionValue == demographicData.barrier2">{{i.optionText}}</option>
             </select>
         </div>
 
