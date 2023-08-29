@@ -43,17 +43,17 @@ export interface DemographicsIod {
     requiredToComply?: boolean;
     regulationType1?: number;
     reg1Other?: string;
-    regulationType2?: string;
+    regulationType2?: number;
     reg2Other?: string;
 
     /**
      * Lists the orgs
      */
-    shareOrgs?: string[];
+    shareOrgs?: number[];
     shareOther?: string;
 
-    barrier1?: string;
-    barrier2?: string;
+    barrier1?: number;
+    barrier2?: number;
 
     listOrgTypes?: any[];
     listSectors?: any[];
