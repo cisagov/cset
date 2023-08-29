@@ -800,7 +800,12 @@
       </div>
       <div>
         <div class="ml-2" *ngIf="isConfigChainEqual">
-          <app-key-report></app-key-report>
+          <button
+            tabindex="0" 
+            (click)="clickReportLink('appkeyreport')"
+            class="btn btn-link btn-link-dark text-left">
+            Anonymous Key Report (Used to associate identifiable information with an Anonymous Key)
+            </button>
         </div>
 
         <div class="mt-5">
