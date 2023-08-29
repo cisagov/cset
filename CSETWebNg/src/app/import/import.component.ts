@@ -23,13 +23,11 @@
 ////////////////////////////////
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
+import { CodeEditorComponent, CodeEditorService, CodeModel } from '@goecmarc/code-editor';
 import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
-import { interval, Subject, Subscription, timer } from 'rxjs';
-import { debounce } from 'rxjs/operators/debounce';
-import { startWith } from 'rxjs/operators/startWith';
-import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import * as screenfull from "screenfull";
 import { Screenfull } from "screenfull";
 import { FileItem, FileUploader } from 'ng2-file-upload';

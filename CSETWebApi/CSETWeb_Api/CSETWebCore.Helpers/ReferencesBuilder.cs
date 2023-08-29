@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Helpers
 {
@@ -74,24 +75,27 @@ namespace CSETWebCore.Helpers
              out List<CustomDocument> sourceDocList,
             out List<CustomDocument> additionalDocList)
         {
+            // Create a list of documents we actual have on board, so that we don't build any dead links
             List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = _context.MATURITY_SOURCE_FILES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
-                .Concat(
-              _context.MATURITY_REFERENCES.Where(s => s.Mat_Question_Id == maturityQuestion_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
-              ).ToList();
 
             // Source Documents  
-            var sourceDocuments = documents.Where(t => t.IsSource)
-                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
-                .ToList();
+            var doc1 = _context.MATURITY_SOURCE_FILES
+                .Include(x => x.Gen_File)
+                .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
+                .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
+            var sourceDocuments = doc1
+                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
 
 
             // Additional Resource Documents
-            var additionalDocuments = documents.Where(t => !t.IsSource)
-               .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false })
-               .ToList();
+            var doc2 = _context.MATURITY_REFERENCES
+                .Include(x => x.Gen_File)
+                .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
+                .Select(s => new { s.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
+            var additionalDocuments = doc2
+               .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
             additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
         }
 

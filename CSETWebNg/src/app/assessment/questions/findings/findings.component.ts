@@ -27,7 +27,6 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Finding, Importance, FindingContact } from './findings.model';
 import * as _ from 'lodash';
-import { Router } from '@angular/router';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
@@ -50,7 +49,6 @@ export class FindingsComponent implements OnInit {
     private configSvc: ConfigService,
     private dialog: MatDialogRef<FindingsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Finding,
-    private router: Router,
     public assessSvc: AssessmentService
   ) {
     this.finding = data;
@@ -69,8 +67,7 @@ export class FindingsComponent implements OnInit {
     // worry about it
     this.findSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
-      let questionType = localStorage.getItem('questionSet');
-      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, this.finding.questionType)
         .subscribe((response: Finding) => {
           this.finding = response;
           this.answerID = this.finding.answer_Id;
@@ -98,8 +95,7 @@ export class FindingsComponent implements OnInit {
    * 
    */
   refreshContacts(): void {
-    let questionType = localStorage.getItem('questionSet');
-    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType)
+    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, this.finding.questionType)
       .subscribe((response: Finding) => {
         this.finding = response;
         this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,

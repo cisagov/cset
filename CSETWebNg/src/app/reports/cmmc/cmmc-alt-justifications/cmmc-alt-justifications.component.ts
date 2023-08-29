@@ -86,7 +86,7 @@ export class CmmcAltJustificationsComponent implements OnInit {
   }
 
   getFullAnswerText(abb: string) {
-    return this.questionsSvc.answerDisplayLabel(4, abb);
+    return this.questionsSvc.answerDisplayLabel('CMMC', abb);
   }
 
   printReport() {
