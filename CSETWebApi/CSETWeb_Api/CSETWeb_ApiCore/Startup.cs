@@ -238,7 +238,7 @@ namespace CSETWeb_ApiCore
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Diagram")),
                 RequestPath = "/Diagram"
-            });
+            });            
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(

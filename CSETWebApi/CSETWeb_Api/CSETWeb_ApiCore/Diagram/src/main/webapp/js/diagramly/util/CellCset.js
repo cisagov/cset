@@ -6,7 +6,8 @@
  */
 mxCell.prototype.getCsetAttribute = function (name)
 {
-    if (typeof this.value != "object")
+    // 'object' is for old diagrams that haven't been updated yet
+    if (typeof this.value != 'UserObject' && typeof this.value != 'object')
     {
         return null;
     }
@@ -26,32 +27,41 @@ mxCell.prototype.getCsetAttribute = function (name)
 mxCell.prototype.setCsetAttribute = function (attributeName, attributeValue)
 {
     var obj = null;
-
-    if (!!this.value && typeof this.value == "object")
+    if (!!this.value && (typeof this.value == 'UserObject' || this.value.tagName == 'UserObject'))
     {
         obj = this.value;
+
+        obj.setAttribute(attributeName, attributeValue);
+        // set an internal label as well.  Something to concatenate with the SAL for the display label.
+        if (attributeName === 'label') {
+
+            obj.setAttribute('internalLabel', attributeValue || '');
+        }
     }
     else
     {
-        // The cell is just an mxCell.  Wrap it in an object and set the attribute on the wrapper.
+        // The cell is just an mxCell.  Wrap it in a UserObject and set the attribute on the wrapper.
         try
         {
             var doc = mxUtils.createXmlDocument();
-            obj = doc.createElement('object');
-            this.value = obj;
+            obj = doc.createElement('UserObject');
+            obj.setAttribute(attributeName, attributeValue);
+            
+            // set an internal label as well.  Something to concatenate with the SAL for the display label.
+            if (attributeName === 'label') {
+                obj.setAttribute('internalLabel', attributeValue || '');
+            }
+
+            // 'object' is for old diagrams that haven't been updated yet
+            if (!this.value || (typeof this.value != 'UserObject' && typeof this.value != 'object') && (obj.style || this.value.style || this.value == 'Zone')) {
+                this.value = obj;
+            }
+
         }
         catch (e)
         {
             console.log(e);
         }
-    }
-
-    obj.setAttribute(attributeName, attributeValue);
-
-    // set an internal label as well.  Something to concatenate with the SAL for the display label.
-    if (attributeName === 'label')
-    {
-        obj.setAttribute('internalLabel', attributeValue || '');
     }
 }
 
@@ -75,7 +85,9 @@ mxCell.prototype.isParentMSC = function ()
  */
 mxCell.prototype.isBlueConnector = function ()
 {
-    return this.getStyleValue('image').indexOf('connector.svg') >= 0;
+    var imagePath = this.getStyleValue('image');
+    if (imagePath == null) { return false; }
+    return imagePath.indexOf('connector.svg') >= 0;
 }
 
 
@@ -215,10 +227,12 @@ mxCell.prototype.autoNameComponent = function ()
     {
         return;
     }
-
     // ignore items already labeled
     if (!!this.getCsetAttribute('label'))
     {
+        return;
+    }
+    if (!!this.getAttribute('label')) {
         return;
     }
 

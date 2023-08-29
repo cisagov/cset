@@ -338,7 +338,7 @@ export class MaturityFilteringService {
         q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('D') && q.hasDiscovery) {
+      if (filterSvc.showFilters.includes('D') && q.hasObservations) {
         q.visible = true;
       }
 
