@@ -17,8 +17,7 @@ namespace CSETWebCore.DataLayer.Model
         public string DataItemName { get; set; }
         public int Sequence { get; set; }
         [Required]
-        [StringLength(50)]
-        public string OptionValue { get; set; }
+        public int OptionValue { get; set; }
         [Required]
         [StringLength(100)]
         public string OptionText { get; set; }

@@ -45,7 +45,7 @@ export class DemographicsIodComponent implements OnInit {
   onChangeSector(evt: any) {
     var sectorId = evt.target.value;
     this.demographicData.sector = sectorId;
-    this.demographicData.subsector = '';
+    this.demographicData.subsector = null;
     this.updateDemographics();
 
     this.demoSvc.getSubsectors(sectorId).subscribe((data: any[]) => {

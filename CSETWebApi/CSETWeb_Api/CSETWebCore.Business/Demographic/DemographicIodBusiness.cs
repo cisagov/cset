@@ -36,29 +36,29 @@ namespace CSETWebCore.Business.Demographic
             var d = new DemographicIod();
             d.AssessmentId = assessmentId;
 
-            d.OrganizationType = x.Find(z => z.DataItemName == "ORG-TYPE")?.StringValue;
+            d.OrganizationType = x.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
             d.OrganizationName = x.Find(z => z.DataItemName == "ORG-NAME")?.StringValue;
-            d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.StringValue;
-            d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.StringValue;
-            d.NumberEmployeesTotal = x.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.StringValue;
-            d.NumberEmployeesUnit = x.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.StringValue;
+            d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.IntValue;
+            d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+            d.NumberEmployeesTotal = x.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.IntValue;
+            d.NumberEmployeesUnit = x.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
-            d.AnnualRevenue = x.Find(z => z.DataItemName == "ANN-REVENUE")?.StringValue;
+            d.AnnualRevenue = x.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
 
             // body of practice / standard
-            d.UsesStandard = bool.Parse(x.Find(z => z.DataItemName == "STANDARD-USED")?.StringValue ?? "false");
+            d.UsesStandard = x.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? false;
             // most important
             d.Standard1 = x.Find(z => z.DataItemName == "STANDARD1")?.StringValue;
             // second most important
             d.Standard2 = x.Find(z => z.DataItemName == "STANDARD2")?.StringValue;
             // must comply?
-            d.RequiredToComply = bool.Parse(x.Find(z => z.DataItemName == "REGULATION-REQD")?.StringValue ?? "false");
+            d.RequiredToComply = x.Find(z => z.DataItemName == "REGULATION-REQD")?.BoolValue ?? false;
             // reg type 1
-            d.RegulationType1 = x.Find(z => z.DataItemName == "REG-TYPE1")?.StringValue;
+            d.RegulationType1 = x.Find(z => z.DataItemName == "REG-TYPE1")?.IntValue;
             // regulation 1 (free form)
             d.Reg1Other = x.Find(z => z.DataItemName == "REG-1-OTHER")?.StringValue;
             // reg type 2
-            d.RegulationType2 = x.Find(z => z.DataItemName == "REG-TYPE2")?.StringValue;
+            d.RegulationType2 = x.Find(z => z.DataItemName == "REG-TYPE2")?.IntValue;
             // regulation 2 (free forma0
             d.Reg2Other = x.Find(z => z.DataItemName == "REG-2-OTHER")?.StringValue;
             // share orgs (multiples - how best to handle nicely?)
@@ -66,11 +66,11 @@ namespace CSETWebCore.Business.Demographic
 
 
             // share other
-            d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;
+            d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.IntValue;
             // barrier 1
-            d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.StringValue;
+            d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.IntValue;
             // barrier 2
-            d.Barrier2 = x.Find(z => z.DataItemName == "BARRIER2")?.StringValue;
+            d.Barrier2 = x.Find(z => z.DataItemName == "BARRIER2")?.IntValue;
 
             d.BusinessUnit = x.Find(z => z.DataItemName == "BUSINESS-UNIT")?.StringValue;
 
@@ -82,9 +82,9 @@ namespace CSETWebCore.Business.Demographic
             }).ToList();
 
             // get the subsectors for the current sector (if there is one)
-            if (!string.IsNullOrEmpty(d.Sector))
+            if (d.Sector != null)
             {
-                d.ListSubsectors = GetSubsectors(int.Parse(d.Sector));
+                d.ListSubsectors = GetSubsectors((int)d.Sector);
             }
 
 
@@ -140,7 +140,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 d.ListSectors.Add(new ListItem2
                 {
-                    OptionValue = "sec.SectorId",
+                    OptionValue = sec.SectorId,
                     OptionText = sec.SectorName
                 });
             }
@@ -165,7 +165,7 @@ namespace CSETWebCore.Business.Demographic
                 list.Add(o);
             }
 
-            return list.Select(x => new ListItem2() { OptionValue = "x.IndustryId", OptionText = x.IndustryName }).ToList();
+            return list.Select(x => new ListItem2() { OptionValue = x.IndustryId, OptionText = x.IndustryName }).ToList();
         }
 
 
@@ -188,24 +188,21 @@ namespace CSETWebCore.Business.Demographic
             SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit);
             SaveDemoRecord(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue);
 
-
-
-            SaveDemoRecord(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard.ToString());
+            SaveDemoRecord(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
             SaveDemoRecord(demographic.AssessmentId, "STANDARD1", demographic.Standard1);
             SaveDemoRecord(demographic.AssessmentId, "STANDARD2", demographic.Standard2);
-            SaveDemoRecord(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply.ToString());
+            SaveDemoRecord(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply);
             SaveDemoRecord(demographic.AssessmentId, "REG-TYPE1", demographic.RegulationType1);
             SaveDemoRecord(demographic.AssessmentId, "REG-1-OTHER", demographic.Reg1Other);
             SaveDemoRecord(demographic.AssessmentId, "REG-TYPE2", demographic.RegulationType2);
             SaveDemoRecord(demographic.AssessmentId, "REG-2-OTHER", demographic.Reg2Other);
 
+            SaveDemoRecord(demographic.AssessmentId, "SHARE-ORG", demographic.ShareOrgs);
             SaveDemoRecord(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther);
             SaveDemoRecord(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
             SaveDemoRecord(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
 
             SaveDemoRecord(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
-
-
 
             _context.SaveChanges();
         }
@@ -221,6 +218,69 @@ namespace CSETWebCore.Business.Demographic
             };
 
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
+        }
+
+        private void SaveDemoRecord(int assessmentId, string recName, int? value)
+        {
+            var rec = new DETAILS_DEMOGRAPHICS()
+            {
+                Assessment_Id = assessmentId,
+                DataItemName = recName,
+                IntValue = value
+            };
+
+            _context.DETAILS_DEMOGRAPHICS.Add(rec);
+        }
+
+        private void SaveDemoRecord(int assessmentId, string recName, double value)
+        {
+            var rec = new DETAILS_DEMOGRAPHICS()
+            {
+                Assessment_Id = assessmentId,
+                DataItemName = recName,
+                FloatValue = value
+            };
+
+            _context.DETAILS_DEMOGRAPHICS.Add(rec);
+        }
+
+        private void SaveDemoRecord(int assessmentId, string recName, bool value)
+        {
+            var rec = new DETAILS_DEMOGRAPHICS()
+            {
+                Assessment_Id = assessmentId,
+                DataItemName = recName,
+                BoolValue = value
+            };
+
+            _context.DETAILS_DEMOGRAPHICS.Add(rec);
+        }
+
+        private void SaveDemoRecord(int assessmentId, string recName, DateTime value)
+        {
+            var rec = new DETAILS_DEMOGRAPHICS()
+            {
+                Assessment_Id = assessmentId,
+                DataItemName = recName,
+                DateTimeValue = value
+            };
+
+            _context.DETAILS_DEMOGRAPHICS.Add(rec);
+        }
+
+        private void SaveDemoRecord(int assessmentId, string recName, List<int> values)
+        {
+            foreach (int value in values) 
+            { 
+                var rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName,
+                    IntValue = value
+                };
+
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
         }
     }
 }

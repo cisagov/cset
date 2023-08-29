@@ -11,29 +11,31 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace CSETWebCore.Model.Demographic
 {
     /// <summary>
-    /// The demographic data collected by IOD CSAs.  
+    /// The demographic data collected by IOD CSAs. 
+    /// Most of these properties store the int value of the
+    /// OptionValue for their corresponding DETAILS_DEMOGRAPHICS_OPTIONS.
     /// </summary>
     public class DemographicIod
     {
         public int AssessmentId { get; set; }
 
-        public string OrganizationType { get; set; }
+        public int? OrganizationType { get; set; }
         public string OrganizationName { get; set; }
 
-        public string Sector { get; set; }
-        public string Subsector { get; set; }
+        public int? Sector { get; set; }
+        public int? Subsector { get; set; }
         
-        public string NumberEmployeesTotal { get; set; }
-        public string NumberEmployeesUnit { get; set; }
+        public int? NumberEmployeesTotal { get; set; }
+        public int? NumberEmployeesUnit { get; set; }
 
 
-        public string AnnualRevenue { get; set; }
-        public string CriticalServiceRevenuePercent { get; set; }
+        public int? AnnualRevenue { get; set; }
+        public int? CriticalServiceRevenuePercent { get; set; }
 
-        public string NumberPeopleServedByCritSvc { get; set; }
+        public int? NumberPeopleServedByCritSvc { get; set; }
 
-        public string DisruptedSector1 { get; set; }
-        public string DisruptedSector2 { get; set; }
+        public int? DisruptedSector1 { get; set; }
+        public int? DisruptedSector2 { get; set; }
 
 
         /// <summary>
@@ -53,9 +55,9 @@ namespace CSETWebCore.Model.Demographic
         /// cybersecurity-related regulation?
         /// </summary>
         public bool RequiredToComply { get; set; }
-        public string RegulationType1 { get; set; }
+        public int? RegulationType1 { get; set; }
         public string Reg1Other { get; set; }
-        public string RegulationType2 { get; set; }
+        public int? RegulationType2 { get; set; }
         public string Reg2Other { get; set; }
 
 
@@ -64,12 +66,12 @@ namespace CSETWebCore.Model.Demographic
         /// share cybersecurity-related information.
         /// ISAC, FBI, CONSULT, DHS, STATE, PEERS, NCFTA
         /// </summary>
-        public List<string> ShareOrgs { get; set; } = new List<string>();
-        public string ShareOther { get; set; }
+        public List<int> ShareOrgs { get; set; } = new List<int>();
+        public int? ShareOther { get; set; }
 
 
-        public string Barrier1 { get; set; }
-        public string Barrier2 { get; set; }
+        public int? Barrier1 { get; set; }
+        public int? Barrier2 { get; set; }
 
         public string BusinessUnit { get; set; }
 

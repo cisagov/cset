@@ -71,10 +71,10 @@
 
     <!-- #1 -->
     <div class="form-group mb-4">
-        <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType == '1'">
+        <label for="numberEmployeesTotal" *ngIf="demographicData.organizationType == 1">
             Number of employees in the organization?
         </label>
-        <label for="numberEmployees" *ngIf="demographicData.organizationType != '1'">
+        <label for="numberEmployees" *ngIf="demographicData.organizationType != 1">
             Number of employees in the government agency?
         </label>
         <select class="form-control" id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
@@ -86,7 +86,7 @@
 
     <!-- #2 -->
     <div class="form-group mb-4">
-        <ng-container *ngIf="demographicData.organizationType == '1'">
+        <ng-container *ngIf="demographicData.organizationType == 1">
             <label for="numberEmployeesUnit">
                 Number of employees in the business unit?
             </label>
@@ -95,7 +95,7 @@
                 organization are the same.
             </div>
         </ng-container>
-        <ng-container *ngIf="demographicData.organizationType != '1'">
+        <ng-container *ngIf="demographicData.organizationType != 1">
             <label for="numberEmployeesUnit">
                 Number of employees in the department?
             </label>
@@ -115,12 +115,12 @@
 
     <!-- #3 -->
     <div class="form-group mb-4">
-        <ng-container *ngIf="demographicData.organizationType == '1'">
+        <ng-container *ngIf="demographicData.organizationType == 1">
             <label for="totalAnnualRevenue">
                 What is the total annual revenue for your organization?
             </label>
         </ng-container>
-        <ng-container *ngIf="demographicData.organizationType != '1'">
+        <ng-container *ngIf="demographicData.organizationType != 1">
             <label for="totalAnnualRevenue">
                 What is the total annual funding for your governmental organization or agency?
             </label>
