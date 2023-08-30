@@ -43,14 +43,13 @@ export class DemographicsIodComponent implements OnInit {
    *
    */
   onChangeSector(evt: any) {
-    var sectorId = evt.target.value;
-    this.demographicData.sector = sectorId;
     this.demographicData.subsector = null;
     this.updateDemographics();
-
-    this.demoSvc.getSubsectors(sectorId).subscribe((data: any[]) => {
-      this.demographicData.listSubsectors = data;
-    });
+    if (this.demographicData.sector) {
+      this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
+        this.demographicData.listSubsectors = data;
+      });
+    }
   }
 
   changeUsesStandard(val: boolean) {
@@ -74,22 +73,27 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   changeShareOrg(org: any, evt: any) {
-    // see which orgs are selected
-    console.log('changeShareOrg');
-    console.log(org);
 
     org.selected = (evt.target.value == 'on');
-    this.demographicData.shareOrgs[org.optionValue] = org.selected;
+    if (org.selected) {
+      this.demographicData.shareOrgs.push(org.optionValue);
+    } else {
+      this.demographicData.shareOrgs.splice(this.demographicData.shareOrgs.indexOf(org.optionValue, 0));
+    }
     this.updateDemographics();
   }
 
-
+  isSharedOrgChecked(org): boolean {
+    console.log(this.demographicData.shareOrgs)
+    return this.demographicData.shareOrgs.includes(org.optionValue);
+  }
 
   update(event: any) {
     this.updateDemographics();
   }
 
   updateDemographics() {
+    console.log(this.demographicData);
     this.demoSvc.updateDemographic(this.demographicData);
   }
 }

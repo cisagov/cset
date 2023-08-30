@@ -62,11 +62,12 @@ namespace CSETWebCore.Business.Demographic
             // regulation 2 (free forma0
             d.Reg2Other = x.Find(z => z.DataItemName == "REG-2-OTHER")?.StringValue;
             // share orgs (multiples - how best to handle nicely?)
-            var shareOrgs = x.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).ToList();
+            List<int?> shareOrgs = x.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).Select(org => org.IntValue).ToList();
+
 
 
             // share other
-            d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.IntValue;
+            d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;
             // barrier 1
             d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.IntValue;
             // barrier 2
@@ -113,7 +114,7 @@ namespace CSETWebCore.Business.Demographic
             }).ToList();
 
 
-            d.ListShareOrgs = opts.Where(opt => opt.DataItemName == "SHARE-ORG").Select(opts => new ListItem2()
+            d.ListShareOrgs = opts.Where(opt => opt.DataItemName.StartsWith("SHARE-ORG-")).Select(opts => new ListItem2()
             {
                 OptionValue = opts.OptionValue,
                 OptionText = opts.OptionText
@@ -275,7 +276,7 @@ namespace CSETWebCore.Business.Demographic
                 var rec = new DETAILS_DEMOGRAPHICS()
                 {
                     Assessment_Id = assessmentId,
-                    DataItemName = recName,
+                    DataItemName = $"{recName}-{value}",
                     IntValue = value
                 };
 
