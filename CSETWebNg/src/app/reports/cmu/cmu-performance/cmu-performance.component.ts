@@ -38,11 +38,18 @@ export class CmuPerformanceComponent implements OnInit {
   legend: string = '';
   charts: any[] = [];
   scoreBarCharts: string[] = [];
+  heatMaps: any[] = [];
+
+  fullAnswerDistribChart: string = '';
 
   constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.cmuSvc.getCrrPerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
+      this.fullAnswerDistribChart = resp;
+    });
+
+    this.cmuSvc.getBlockLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     });
 
@@ -50,13 +57,18 @@ export class CmuPerformanceComponent implements OnInit {
       this.charts = resp;
     });
 
-    this.cmuSvc.getGoalPerformanceSummaryBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getPerformance().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
+      this.heatMaps = resp.heatMaps;
     });
   }
 
   getChart(i, j) {
     return this.charts[i][j];
+  }
+
+  getHeatMap(goalTitle: string) {
+    return this.heatMaps?.find(c => c.title === goalTitle).chart;
   }
 
     // This function splits strings like
@@ -65,9 +77,5 @@ export class CmuPerformanceComponent implements OnInit {
   // "Goal 3-Risks are identified."
   stringSplitter(str: string) {
     return str.split(" - ")[1] ?? str.split("-")[1];
-  }
-  
-  filterMilDomainGoals(goals) {
-    return goals.filter(g => !g.title.startsWith('MIL'));
   }
 }

@@ -71,7 +71,12 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'cmu/goalperformance');
   }
 
-
+  /**
+  * Goal Performance individual question heat maps
+  */
+  getPerformance() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/performance');
+  }
 
   getMil1PerformanceSummaryLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
@@ -83,8 +88,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
   }
 
-  getCrrPerformanceSummaryLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
+  getBlockLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/blocklegend',
       { responseType: 'text' });
   }
 
