@@ -67,7 +67,7 @@ namespace CSETWebCore.Model.Demographic
         /// ISAC, FBI, CONSULT, DHS, STATE, PEERS, NCFTA
         /// </summary>
         public List<int> ShareOrgs { get; set; } = new List<int>();
-        public int? ShareOther { get; set; }
+        public string ShareOther { get; set; }
 
 
         public int? Barrier1 { get; set; }
