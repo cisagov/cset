@@ -329,7 +329,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr/widget/performanceLegend")]
         public IActionResult GetCrrPerformanceLegend()
         {
-            return Content(new CRRPerformanceLegend().ToString(), "text/html");
+            return Content(new BlockLegend().ToString(), "text/html");
         }
 
         /// <summary>

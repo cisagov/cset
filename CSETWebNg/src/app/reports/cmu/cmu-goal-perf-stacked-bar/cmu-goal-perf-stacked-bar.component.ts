@@ -8,7 +8,7 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-goal-perf-stacked-bar.component.scss']
 })
 export class CmuGoalPerfStackedBarComponent {
-  @Input() modelName: string;
+  @Input() moduleName: string;
   @Input() model: CrrReportModel;
 
   fullAnswerDistribChart: string = '';

@@ -187,6 +187,56 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        /// Gets the charts for Mil1 Performance and returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/performance")]
+        public IActionResult GetPerformanceBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var XDocument = _scoring.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> heatMaps = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 80, Width = 100 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Goal");
+
+                foreach (XElement goal in goals)
+                {
+                    var questionsHeatMap = new QuestionsHeatMap(goal, false, 12);
+                    questionsHeatMap.Scale(1.5);
+
+                    heatMaps.Add(new { Title = goal.Attribute("title").Value, Chart = questionsHeatMap.ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, HeatMaps = heatMaps });
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/widget/blocklegend")]
+        public IActionResult GetBlockLegend()
+        {
+            return Content(new BlockLegend().ToString(), "text/html");
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
@@ -323,7 +373,7 @@ namespace CSETWebCore.Api.Controllers
                     if (cat.Element("References") != null)
                     {
                         var distCategory = GetAnswerDistrib(cat.Element("References"));
-                        distCategory.Height = 20;
+                        distCategory.Height = 15;
                         distCategory.Width = 150;
                         distCategory.HideEmptyChart = true;
                         catChart = new ScoreStackedBarChart(distCategory).ToString();
@@ -334,7 +384,7 @@ namespace CSETWebCore.Api.Controllers
                     foreach (var subcat in cat.Elements("Subcategory"))
                     {
                         var distSubcategory = GetAnswerDistrib(subcat.Element("References"));
-                        distSubcategory.Height = 20;
+                        distSubcategory.Height = 15;
                         distSubcategory.Width = 260;
                         distSubcategory.ShowNA = true;
                         var chartSubcat = new ScoreStackedBarChart(distSubcategory);

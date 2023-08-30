@@ -26,7 +26,8 @@
         Percentage of practices completed by domain
     </p>
 
-    <ngx-charts-bar-horizontal [results]="domainCompliance" [barPadding]="10" [yAxis]="'true'" [xAxis]="'true'"
+    <ngx-charts-bar-horizontal [results]="domainCompliance" [view]="[800, 300]"
+        [barPadding]="10" [yAxis]="'true'" [xAxis]="'true'"
         [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [xScaleMax]="100"
         [xAxisTickFormatting]="formatPercent" [scheme]="colorScheme1">
         <ng-template #tooltipTemplate let-model="model">

@@ -84,7 +84,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     xBarLabel.SetAttributeValue("y", $"{d.Height * 0.5f}");
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
                     xBarLabel.SetAttributeValue("dominant-baseline", "middle");
-                    xBarLabel.SetAttributeValue("font-size", $"{d.Height * .8f}px");
+                    xBarLabel.SetAttributeValue("font-size", "90%");
                     if (d.Height < 15)
                     {
                         xBarLabel.SetAttributeValue("font-size", "100%");

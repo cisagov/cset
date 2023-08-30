@@ -36,54 +36,59 @@
             </div>
             <div class="row" style="height: 80px;">
                 <div class="col-1" style="position: relative; padding: 0;">
-                    <div style="position: absolute; padding: 0; width: 110px;" [innerHtml]="fullAnswerDistribChart | safe"></div>
+                    <div style="position: absolute; padding: 0; width: 110px;"
+                        [innerHtml]="fullAnswerDistribChart | safe"></div>
                 </div>
             </div>
             <div class="row">
                 <div class="col" style="padding: 0;">
-                    <h5 class="appendix-label">{{ modelName }} Summary</h5>
+                    <h5 class="appendix-label">{{ moduleName }} Summary</h5>
                 </div>
             </div>
         </div>
         <div class="col-10" style="width: 85%; padding: 0; position: relative;">
             <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
-                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ modelName }} Performance <br /> Summary</h3>
+                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ moduleName }} Performance <br /> Summary
+                </h3>
             </div>
-            <div class="col-6 tinytext" style="padding: 0; position: absolute; bottom: 0; left: 55%;" [innerHtml]="legend | safe">
+            <div class="col-6 tinytext" style="padding: 0; position: absolute; bottom: 0; left: 55%;"
+                [innerHtml]="legend | safe">
             </div>
         </div>
     </div>
     <div class="row" style="border-top: solid 1.5px black;">
-        <div class="text-1 p-0" style="width: 15%;">
+        <div class="text-1 p-0 font-weight-bold col-2">
             DOMAIN SUMMARY
         </div>
-        <div class="text-1 p-0" style="width: 85%;">
+        <div class="text-1 p-0 font-weight-bold col-10">
             PRACTICE LEVEL PERFORMANCE SUMMARY
         </div>
     </div>
 
-    <div *ngFor="let domain of model?.structure?.groupings; let i = index" class="row" style="border-top: 1px solid black;">
+    <div *ngFor="let domain of model?.structure?.groupings; let i = index" class="row"
+        style="border-top: 1px solid black;">
         <div class="col-2 text-1 py-0 px-4">
             <div class="row">
                 <div class="text-wrap text-1 font-weight-bold">
-                  {{ domain.title.split('(')[0].trim() }}
+                    {{ domain.title.split('(')[0].trim() }}
                 </div>
             </div>
             <div class="row" [innerHtml]="scoreBarCharts[i] | safe">
             </div>
         </div>
         <div class="col-10" style="width: 85%; padding: 0 0 0 0.75rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.groupings); let j = index" class="row goalrow" style="margin-right: 0.05rem"
-            [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.groupings).length ? '0.5px solid black' : '0px'">
+            <div *ngFor="let goal of filterMilDomainGoals(domain.groupings); let j = index" class="row goalrow"
+                style="margin-right: 0.05rem"
+                [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.groupings).length ? '0.5px solid black' : '0px'">
                 <div class="col-6 p-0 pr-3 text-1">
-                  <div class="goalrow-text">
-                    <b>{{ goal.title.split('-')[0] }} -</b>
-                    {{ stringSplitter(goal.title) }}</div>
+                    <div class="goalrow-text">
+                        <b>{{ goal.title.split('-')[0] }} -</b>
+                        {{ stringSplitter(goal.title) }}
+                    </div>
                 </div>
                 <div class="col-6 p-1">
-                  <p class="goalrow-text" [innerHtml]="getStackedBarChart(goal.title) | safe"></p>
+                    <p class="goalrow-text" [innerHtml]="getStackedBarChart(goal.title) | safe"></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-

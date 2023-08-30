@@ -20,58 +20,50 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="container-fluid landscape" style="font-family: Verdana, sans-serif;">
-    <h3 class="depiction-title" style="margin-left: -15px; margin-bottom: 5px;">{{ moduleName }} Performance</h3>
-
-    <div class="row header crr-performance">
-        <div style="width: 9%; padding: 0;">
-            <p class="header"><b>Domain Summary</b></p>
+<div class="container-fluid">
+    <div class="row mb-3">
+        <div class="col-2" style="width: 15%;">
+            <div class="row" style="padding: 0; height: auto; min-width: 130px;">
+                <div class="col-3 tinytext" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem;">
+                    Total number of practices performed
+                </div>
+                <div class="col-3 tinytext" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem;">
+                    Total number of practices incompletely performed
+                </div>
+                <div class="col-3 tinytext" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem;">
+                    Total number of practices not performed
+                </div>
+            </div>
+            <div class="row" style="height: 80px;">
+                <div class="col-1" style="position: relative; padding: 0;">
+                    <div style="position: absolute; padding: 0; width: 110px;"
+                        [innerHtml]="fullAnswerDistribChart | safe"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col" style="padding: 0;">
+                    <h5 class="appendix-label">{{ moduleName }} Summary</h5>
+                </div>
+            </div>
         </div>
-        <div style="width: 27%; padding: 0;">
-            <p>
-                <b>MIL-1 Performed</b>
-                <br />
-                Domain Practices are being performed
-            </p>
-        </div>
-        <div style="width: 18%; padding: 0;">
-            <p>
-                <b>MIL-2 Planned</b>
-                <br />
-                Domain practices are supported by planning, policy, stakeholders, and standards.
-            </p>
-        </div>
-        <div style="width: 18%; padding: 0;">
-            <p>
-                <b>MIL-3 Managed</b>
-                <br />
-                Domain practices are supported by governance and adequate resources.
-            </p>
-        </div>
-        <div style="width: 14%; padding: 0;">
-            <p>
-                <b>MIL-4 Measured</b>
-                <br />
-                Domain practices are supported by measurement, monitoring, and executive oversight.
-            </p>
-        </div>
-        <div style="width: 14%; padding: 0;">
-            <p>
-                <b>MIL-5 Defined</b>
-                <br />
-                Domain practices are supported by enterprise standardization and analysis of lessons learned.
-            </p>
+        <div class="col-10" style="width: 85%; padding: 0; position: relative;">
+            <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
+                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ moduleName }} Performance
+                </h3>
+            </div>
+            <div class="col-6 tinytext" style="padding: 0; position: absolute; bottom: 0; left: 55%;"
+                [innerHtml]="legend | safe">
+            </div>
         </div>
     </div>
-
-
-    <!-- <div *ngFor="let domain of model?.groupings; let i = index" class="row domain">
-      <div class="text-1 font-weight-bold" style="width: 9%; padding: 0;">{{  domain.title  }}</div>
-          <div *ngFor="let chart of charts[i]; let j = index" style="padding: 0"
-          [style.width]="j == 0 ? '27%' : (j == 4 || j == 3 ? '14%' : '18%')"
-          [innerHtml]="getChart(i, j) | safe">
-          </div>
-    </div> -->
+    <div class="row" style="border-top: solid 1.5px black;">
+        <div class="text-1 p-0 font-weight-bold col-2">
+            DOMAIN SUMMARY
+        </div>
+        <div class="text-1 p-0 font-weight-bold col-10">
+            PRACTICE LEVEL PERFORMANCE SUMMARY
+        </div>
+    </div>
 
     <div *ngFor="let domain of model?.structure?.groupings; let i = index" class="row"
         style="border-top: 1px solid black;">
@@ -84,9 +76,8 @@
             <div class="row" [innerHtml]="scoreBarCharts[i] | safe"></div>
         </div>
         <div class="col-10" style="width: 85%; padding: 0 0 0 0.75rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.groupings); let j = index" class="row goalrow"
-                style="margin-right: 0.05rem"
-                [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.groupings).length ? '0.5px solid black' : '0px'">
+            <div *ngFor="let goal of domain.groupings; let j = index" class="row goalrow" style="margin-right: 0.05rem"
+                [style.border-bottom]="j + 1 != domain.groupings.length ? '0.5px solid black' : '0px'">
                 <div class="col-6 p-0 pr-3 text-1">
                     <div class="goalrow-text">
                         <b>{{ goal.title.split('-')[0] }} -</b>
@@ -94,10 +85,8 @@
                     </div>
                 </div>
                 <div class="col-6 p-1">
-                    <p class="goalrow-text"> heat dots here </p>
+                    <p class="goalrow-text" [innerHtml]="getHeatMap(goal.title) | safe"></p>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row" style="padding: 0.25rem; margin-left: 15px" [innerHtml]="legend | safe"></div>
