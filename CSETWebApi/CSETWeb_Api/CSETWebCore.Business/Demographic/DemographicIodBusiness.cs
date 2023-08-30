@@ -61,10 +61,9 @@ namespace CSETWebCore.Business.Demographic
             d.RegulationType2 = x.Find(z => z.DataItemName == "REG-TYPE2")?.IntValue;
             // regulation 2 (free forma0
             d.Reg2Other = x.Find(z => z.DataItemName == "REG-2-OTHER")?.StringValue;
-            // share orgs (multiples - how best to handle nicely?)
-            List<int?> shareOrgs = x.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).Select(org => org.IntValue).ToList();
-
-
+            // share orgs
+            List<int> shareOrgs = x.FindAll(z => z.DataItemName.StartsWith("SHARE-ORG-")).Select(org => (int)org.IntValue).ToList();
+            d.ShareOrgs = shareOrgs;
 
             // share other
             d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;

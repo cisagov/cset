@@ -35,6 +35,7 @@ export class DemographicsIodComponent implements OnInit {
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
+      console.log(this.demographicData)
     });
 
   }
@@ -74,11 +75,11 @@ export class DemographicsIodComponent implements OnInit {
 
   changeShareOrg(org: any, evt: any) {
 
-    org.selected = (evt.target.value == 'on');
+    org.selected = evt.target.checked;
     if (org.selected) {
       this.demographicData.shareOrgs.push(org.optionValue);
     } else {
-      this.demographicData.shareOrgs.splice(this.demographicData.shareOrgs.indexOf(org.optionValue, 0));
+      this.demographicData.shareOrgs.splice(this.demographicData.shareOrgs.indexOf(org.optionValue, 0), 1);
     }
     this.updateDemographics();
   }
