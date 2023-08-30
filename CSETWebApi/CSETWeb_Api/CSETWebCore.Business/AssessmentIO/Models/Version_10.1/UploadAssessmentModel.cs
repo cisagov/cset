@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public List<jACCESS_KEY_ASSESSMENT> jACCESS_KEY_ASSESSMENT { get; set; }
         public List<jASSESSMENT_SELECTED_LEVELS> jASSESSMENT_SELECTED_LEVELS { get; set; }
         public List<jAVAILABLE_STANDARDS> jAVAILABLE_STANDARDS { get; set; }
-        
+
         public List<jCNSS_CIA_JUSTIFICATIONS> jCNSS_CIA_JUSTIFICATIONS { get; set; }
         public List<jASSESSMENTS> jASSESSMENTS { get; set; }
         public List<jCUSTOM_QUESTIONAIRES> jCUSTOM_QUESTIONAIRES { get; set; }
@@ -33,7 +33,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public List<jFRAMEWORK_TIER_TYPE_ANSWER> jFRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         public List<jSUB_CATEGORY_ANSWERS> jSUB_CATEGORY_ANSWERS { get; set; }
         public List<jASSESSMENT_CONTACTS> jASSESSMENT_CONTACTS { get; set; }
-        
+
         public List<jFINDING> jFINDING { get; set; }
         public List<jISE_ACTIONS_FINDINGS> jISE_ACTIONS_FINDINGS { get; set; }
         public List<jHYDRO_DATA_ACTIONS> jHYDRO_DATA_ACTIONS { get; set; }
@@ -44,6 +44,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public List<jNIST_SAL_QUESTION_ANSWERS> jNIST_SAL_QUESTION_ANSWERS { get; set; }
         public List<jINFORMATION> jINFORMATION { get; set; }
         public List<jDEMOGRAPHICS> jDEMOGRAPHICS { get; set; }
+        public List<jDETAILS_DEMOGRAPHICS> jDETAILS_DEMOGRAPHICS { get; set; }
         public List<jPARAMETER_VALUES> jPARAMETER_VALUES { get; set; }
         public List<jPARAMETER_ASSESSMENT> jPARAMETER_ASSESSMENTs { get; set; }
         
@@ -114,6 +115,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
             this.jCUSTOM_STANDARD_BASE_STANDARD = new List<jCUSTOM_STANDARD_BASE_STANDARD>();
             this.jDIAGRAM_CONTAINER = new List<jDIAGRAM_CONTAINER>();
             this.jDEMOGRAPHICS = new List<jDEMOGRAPHICS>();
+            this.jDETAILS_DEMOGRAPHICS = new List<jDETAILS_DEMOGRAPHICS>();
             this.jDOCUMENT_ANSWERS = new List<jDOCUMENT_ANSWERS>();
             this.jDOCUMENT_FILE = new List<jDOCUMENT_FILE>();
             this.jFINANCIAL_HOURS = new List<jFINANCIAL_HOURS>();

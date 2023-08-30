@@ -8,49 +8,37 @@ import { DemographicsIod } from '../../../../models/demographics-iod.model';
   styleUrls: ['./demographics-iod.component.scss']
 })
 export class DemographicsIodComponent implements OnInit {
-
   /**
    * The principal model for this page
    */
   demographicData: DemographicsIod = {};
 
-
-
   employeeNumsOrg: any[];
   employeeNumsBizUnit: any[];
   orgTypes: any[];
 
-
-
-
-  constructor(
-    public demoSvc: DemographicIodService
-  ) {
-
-  }
+  constructor(public demoSvc: DemographicIodService) {}
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
     });
-
   }
 
   /**
-   * 
+   *
    */
   onChangeSector(evt: any) {
-    var sectorId = evt.target.value;
-    this.demographicData.sector = sectorId;
-    this.demographicData.subsector = '';
+    this.demographicData.subsector = null;
     this.updateDemographics();
-
-    this.demoSvc.getSubsectors(sectorId).subscribe((data: any[]) => {
-      this.demographicData.listSubsectors = data;
-    });
+    if (this.demographicData.sector) {
+      this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
+        this.demographicData.listSubsectors = data;
+      });
+    }
   }
 
   changeUsesStandard(val: boolean) {
@@ -64,26 +52,28 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   changeRegType1(o: any, evt: any) {
-    this.demographicData.regulationType1 = o.key;
+    this.demographicData.regulationType1 = o.optionValue;
     this.updateDemographics();
   }
 
   changeRegType2(o: any, evt: any) {
-    this.demographicData.regulationType2 = o.key;
+    this.demographicData.regulationType2 = o.optionValue;
     this.updateDemographics();
   }
 
   changeShareOrg(org: any, evt: any) {
-    // see which orgs are selected
-    console.log('changeShareOrg');
-    console.log(org);
-
-    org.selected = (evt.target.value == 'on');
-    this.demographicData.shareOrgs[org.key] = org.selected;
+    org.selected = evt.target.checked;
+    if (org.selected) {
+      this.demographicData.shareOrgs.push(org.optionValue);
+    } else {
+      this.demographicData.shareOrgs.splice(this.demographicData.shareOrgs.indexOf(org.optionValue, 0), 1);
+    }
     this.updateDemographics();
   }
 
-
+  isSharedOrgChecked(org): boolean {
+    return this.demographicData.shareOrgs.includes(org.optionValue);
+  }
 
   update(event: any) {
     this.updateDemographics();
