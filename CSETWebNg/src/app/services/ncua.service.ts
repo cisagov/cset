@@ -283,6 +283,19 @@ let headers = {
     this.getExamLevelFromAssets();
   }
 
+  regionCodeTranslator(regionCode: number) {
+    switch(regionCode) {
+      case(1):
+        return '1 - Eastern';
+      case(2):
+        return '2 - Southern';
+      case(3):
+        return '3 - Western';
+      case(8):
+        return '8 - ONES';
+    }
+  }
+
   checkExamLevel() {
     if (this.usingExamLevelOverride === false) {
       this.getExamLevelFromAssets();

@@ -155,10 +155,10 @@
             <div class="form-group col-md-3">
                 <label class="mb-1" for="region">Region</label>
                 <select (change)="update($event)" class="form-control" id="region" name="region" tabindex="0" [(ngModel)]="assessment.regionCode">
-                    <option [ngValue]="1">1 - Eastern</option>
-                    <option [ngValue]="2">2 - Southern</option>
-                    <option [ngValue]="3">3 - Western</option>
-                    <option [ngValue]="8">8 - Ones</option>
+                    <option [ngValue]="1">{{ncuaSvc.regionCodeTranslator(1)}}</option>
+                    <option [ngValue]="2">{{ncuaSvc.regionCodeTranslator(2)}}</option>
+                    <option [ngValue]="3">{{ncuaSvc.regionCodeTranslator(3)}}</option>
+                    <option [ngValue]="8">{{ncuaSvc.regionCodeTranslator(8)}}</option>
                 </select>
             </div>
         </div>
@@ -184,7 +184,7 @@
                 </select>
             </div>
         </div>
-        <div *ngIf="assessment.charterType == 1" (click)="toggleJoint()" tabindex="0"
+        <div *ngIf="assessment.charterType == 2 || assessment.charter > 60000" (click)="toggleJoint()" tabindex="0"
             class="state-led cursor-pointer" [ngClass]="{'state-led-selected': assessment.isE_StateLed}">
             <div class="row">
                 <div class="col-2">
