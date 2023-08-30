@@ -25,35 +25,35 @@
 
 export interface DemographicsIod {
     assessmentId?: number;
-    organizationType?: string;
+    organizationType?: number;
     organizationName?: string;
     businessUnit?: string;
-    sector?: string;
-    subsector?: string;
-    numberEmployeesTotal?: string;
-    numberEmployeesUnit?: string;
-    annualRevenue?: string;
-    criticalServiceRevenuePercent?: string;
-    numberPeopleServedByCritSvc?: string;
-    disruptedSector1?: string;
-    disruptedSector2?: string;
+    sector?: number;
+    subsector?: number;
+    numberEmployeesTotal?: number;
+    numberEmployeesUnit?: number;
+    annualRevenue?: number;
+    criticalServiceRevenuePercent?: number;
+    numberPeopleServedByCritSvc?: number;
+    disruptedSector1?: number;
+    disruptedSector2?: number;
     usesStandard?: boolean;
     standard1?: string;
     standard2?: string;
     requiredToComply?: boolean;
-    regulationType1?: string;
+    regulationType1?: number;
     reg1Other?: string;
-    regulationType2?: string;
+    regulationType2?: number;
     reg2Other?: string;
 
     /**
-     * Lists the orgs 
+     * Lists the orgs
      */
-    shareOrgs?: string[];
+    shareOrgs?: number[];
     shareOther?: string;
 
-    barrier1?: string;
-    barrier2?: string;
+    barrier1?: number;
+    barrier2?: number;
 
     listOrgTypes?: any[];
     listSectors?: any[];

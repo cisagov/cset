@@ -55,8 +55,8 @@ namespace CSETWebCore.Model.Demographic
 
     public class ListItem2
     {
-        public string Key { get; set; }
-        public string Name { get; set; }
+        public int OptionValue { get; set; }
+        public string OptionText { get; set; }
     }
 
 
