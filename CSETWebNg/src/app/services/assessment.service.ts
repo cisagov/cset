@@ -224,6 +224,20 @@ export class AssessmentService {
   }
 
   /**
+   * 
+   */
+  getOtherRemarks() {
+    return this.http.get(this.apiUrl + 'remarks', { responseType: 'text' });
+  }
+
+  /**
+   * 
+   */
+  saveOtherRemarks(remarks: string) {
+    return this.http.post(this.apiUrl + 'remarks', JSON.stringify(remarks), headers);
+  }
+
+  /**
    *
    */
   searchContacts(term: User) {

@@ -206,6 +206,7 @@ import { KeyReportComponent } from './assessment/results/reports/key-report/key-
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
+import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 
 const appRoutes: Routes = [
 
@@ -369,6 +370,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
+          { path: 'other-remarks', component: OtherRemarksComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
           {

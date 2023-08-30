@@ -598,6 +598,7 @@ import { CmuDomainComplianceComponent } from './reports/cmu/cmu-domain-complianc
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 import { ImrSideTocComponent } from './reports/imr/imr-side-toc/imr-side-toc.component';
 import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-appendix-cover.component';
+import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 
 
 
@@ -1154,6 +1155,7 @@ import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-
         TsaSdComponent,
         ImrSideTocComponent,
         CmuAppendixCoverComponent,
+        OtherRemarksComponent,
     ],
     providers: [
         ConfigService,
