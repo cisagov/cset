@@ -13,10 +13,6 @@ export class DemographicsIodComponent implements OnInit {
    */
   demographicData: DemographicsIod = {};
 
-  employeeNumsOrg: any[];
-  employeeNumsBizUnit: any[];
-  orgTypes: any[];
-
   constructor(public demoSvc: DemographicIodService) {}
 
   /**

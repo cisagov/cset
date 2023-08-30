@@ -26,25 +26,60 @@
     <span>Protected Features</span>
   </div>
   <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <table class="mt-2 mb-4" *ngIf="modulesList?.length > 0">
+    <table class="mt-2 mb-4 mx-2" *ngIf="modulesList?.length > 0">
       <tr>
-        <th style="width:25%">Module Name</th>
+        <th style="width: 25%">Module Name</th>
         <th style="width: 75%">Module Full Name</th>
       </tr>
       <tr *ngFor="let module of modulesList">
-        <td>{{module.shortName}}</td>
-        <td>{{module.fullName}}</td>
+        <td>{{ module.shortName }}</td>
+        <td>{{ module.fullName }}</td>
         <td></td>
       </tr>
     </table>
 
-    <button class="m-0 mx-3 btn btn-primary" (click)="enableFeature()" *ngIf="anyModulesLocked()">Enable Modules</button>
+    <button class="m-0 mx-3 btn btn-primary" (click)="enableFeature()" *ngIf="anyModulesLocked()">
+      Enable Modules
+    </button>
 
-    <div class="m-0 mx-3 alert alert-success"*ngIf="allModulesUnlocked()">
-      Protected Features are Enabled
-      <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{message.message}}</div>
+    <div class="m-0 mx-3 alert alert-success" *ngIf="allModulesUnlocked()">
+      All Modules are Enabled
+      <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{ message.message }}</div>
     </div>
 
+    <div class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
+      <label for="csaToggle" class="font-weight-bold">CSA Assessment Workflow </label>
+      <div id="csaToggle" class="btn-group btn-group-toggle w-50 ml-2" data-toggle="buttons">
+        <label class="btn btn-level btn-rounded form-check-label" [class.active]="isCsaMode" (change)="toggleCsaMode()">
+          <input
+            class="form-check-input"
+            name="csaModeYes"
+            id="csaModeYes"
+            type="radio"
+            autocomplete="off"
+            tabindex="0"
+            [checked]="isCsaMode"
+          />
+          On
+        </label>
+        <label
+          class="btn btn-level btn-rounded form-check-label"
+          [class.active]="!isCsaMode"
+          (change)="toggleCsaMode()"
+        >
+          <input
+            class="form-check-input"
+            name="csaModeNo"
+            id="csaModeNo"
+            type="radio"
+            autocomplete="off"
+            tabindex="0"
+            [checked]="!isCsaMode"
+          />
+          Off
+        </label>
+      </div>
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
     <button class="btn btn-secondary" (click)="close()">Close</button>

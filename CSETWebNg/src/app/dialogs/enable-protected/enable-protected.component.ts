@@ -37,38 +37,39 @@ export class EnableProtectedComponent implements OnInit {
   modulesList: EnabledModule[];
   message: any;
   enableFeatureButtonClick: boolean = false;
+  isCsaMode: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
     private featureSvc: EnableFeatureService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
   }
 
   /**
-   * 
+   *
    */
   anyModulesLocked() {
     return (this.modulesList && this.modulesList.some(m => !m.unlocked));
   }
 
   /**
-   * 
+   *
    */
   allModulesUnlocked() {
     return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
   }
 
   /**
-   * 
+   *
    */
   enableFeature() {
     this.featureSvc.enableFeature().subscribe(m => {
       this.featureSvc.sendEvent(true);
-      
+
       this.message = m;
       this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
 
@@ -76,8 +77,12 @@ export class EnableProtectedComponent implements OnInit {
     });
   }
 
+  toggleCsaMode() {
+    this.isCsaMode = !this.isCsaMode;
+  }
+
   /**
-   * 
+   *
    */
   close() {
     return this.dialog.close(this.enableFeatureButtonClick);
