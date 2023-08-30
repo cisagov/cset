@@ -22,31 +22,31 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from './../../../../services/crr.service';
+import { CrrReportModel } from '../../../models/reports.model';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-nist-csf-cat-summary',
-  templateUrl: './crr-nist-csf-cat-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+  selector: 'app-cmu-nist-csf-cat-summary',
+  templateUrl: './cmu-nist-csf-cat-summary.component.html',
+  //styleUrls: ['./../cmu-report.component.scss']
 })
-export class CrrNistCsfCatSummaryComponent implements OnInit {
+export class CmuNistCsfCatSummaryComponent implements OnInit {
 
-  @Input() model: CrrReportModel;
+  //@Input() model: CrrReportModel;
 
   @Input() moduleName: string;
 
-  bodyData: any[] = [];
+  csfData: any;
   legend: string = '';
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
-      this.bodyData = resp;
+    this.cmuSvc.getCsfCatSummary().subscribe((resp: any) => {
+      this.csfData = resp;
     })
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     })
   }

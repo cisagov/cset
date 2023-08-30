@@ -62,7 +62,10 @@ namespace CSETWebCore.Model.Nested
     public class Question
     {
         public int QuestionId { get; set; }
+
+        // This is "maturity question type", indicating "memo", etc.
         public string QuestionType { get; set; }
+
         public int Sequence { get; set; }
         public int MaturityLevel { get; set; }  
         public string MaturityLevelName { get; set; }

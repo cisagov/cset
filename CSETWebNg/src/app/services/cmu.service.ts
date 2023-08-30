@@ -27,7 +27,7 @@ import { ConfigService } from './config.service';
 
 const headers = {
   headers: new HttpHeaders()
-      .set('Content-Type', 'application/json'),
+    .set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -50,10 +50,10 @@ export class CmuService {
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
   /**
-   * WIP - replacing "crrModel"
+   * 
    */
-  getModel(){
-    return this.http.get(this.configSvc.apiUrl + 'cmu/model');
+  getDomainCompliance() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/domaincompliance');
   }
 
   /**
@@ -61,7 +61,7 @@ export class CmuService {
    */
   getFullAnswerDistribWidget() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib',
-    { responseType: 'text' });
+      { responseType: 'text' });
   }
 
   /**
@@ -75,7 +75,7 @@ export class CmuService {
 
   getMil1PerformanceSummaryLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
 
@@ -85,21 +85,25 @@ export class CmuService {
 
   getCrrPerformanceSummaryLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getNistCsfSummaryChartWidget() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csfsummarywidget',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
-  getNistCsfSummaryReportBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/csfbodydata');
+  getCsf() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csf');
+  }
+
+  getCsfCatSummary() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
   }
 
   getMil1PerformanceLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getMil1PerformanceBodyCharts() {
@@ -108,10 +112,6 @@ export class CmuService {
 
   getCrrPerformanceAppendixABodyData() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixABodyData');
-  }
-
-  getNistCsfCatSummaryBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
   }
 
   getNistCsfCatPerformanceBodyData() {

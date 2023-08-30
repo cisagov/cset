@@ -476,6 +476,7 @@ import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-con
 import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
 import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CmuNistCsfCatSummaryComponent } from './reports/cmu/cmu-nist-csf-cat-summary/cmu-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
@@ -592,8 +593,10 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
 import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
 import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
-import { CmuPercentageOfPracticesComponent } from './reports/cmu/cmu-percentage-of-practices/cmu-percentage-of-practices.component';
+import { CmuDomainComplianceComponent } from './reports/cmu/cmu-domain-compliance/cmu-domain-compliance.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
+import { ImrSideTocComponent } from './reports/imr/imr-side-toc/imr-side-toc.component';
+import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-appendix-cover.component';
 
 
 
@@ -1037,6 +1040,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         CrrNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
         CmuPerformanceSummaryComponent,
+        CmuNistCsfCatSummaryComponent,
         ImrReportComponent,
         ReferencesBlockComponent,
         NewAssessmentDialogComponent,
@@ -1144,8 +1148,10 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         ImrCoverSheetComponent,
         ImrIntroAboutComponent,
         ImrResourcesComponent,
-        CmuPercentageOfPracticesComponent,
+        CmuDomainComplianceComponent,
         TsaSdComponent,
+        ImrSideTocComponent,
+        CmuAppendixCoverComponent,
     ],
     providers: [
         ConfigService,

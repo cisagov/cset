@@ -20,12 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<img *ngIf="moduleName?.toUpperCase() == 'CRR'" src='assets/images/CRR/CRR_logo.png' class="row cmu-header-logo">
+<img *ngIf="moduleName?.toUpperCase() == 'IMR'" src='assets/images/IMR/IMR_logo.png' class="row cmu-header-logo">
+
+<div *ngIf="!domain">
+    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+      <div class="spinner-size-50"></div>
+    </div>
+  </div>
+
+
 <h1>{{domain?.title}}</h1>
 <p>
     {{domain?.description}}
 </p>
 
-<table *ngFor="let goal of domain?.Goal" class="w-100 cset-table">
+<table *ngFor="let goal of domain?.groupings" class="w-100 cset-table">
     <tr>
         <td colspan="3">
             <div class="font-weight-bold mb-3">
@@ -35,16 +45,16 @@
             </div>
         </td>
     </tr>
-    <tr *ngFor="let q of goal.Question">
-        <td colspan="2" [innerHTML]="q?.questiontext"
-            [class.pl-5]="!!q?.parentquestionid">
+    <tr *ngFor="let q of goal.questions">
+        <td colspan="2" [innerHTML]="q?.questionText"
+            [class.pl-5]="!!q?.parentQuestionId">
         </td>
-        <td *ngIf="q?.isparentquestion != 'true'" [class]="answerCellClass(q?.answer)">
+        <td *ngIf="q?.isParentQuestion != 'true'" [class]="answerCellClass(q?.answerText)">
             <div class="text-center" style="width: 7rem">
-                {{questionsSvc.answerDisplayLabel(4, q.answer)}}
+                {{questionsSvc.answerDisplayLabel(4, q.answerText)}}
             </div>
         </td>
-        <td *ngIf="q?.isparentquestion == 'true'">
+        <td *ngIf="q?.isParentQuestion == 'true'">
             <div style="width: 7rem"></div>
         </td>
     </tr>
@@ -52,11 +62,18 @@
     <tr>
         <td colspan="3" class="font-weight-bold">Option(s) for Consideration</td>
     </tr>
-    <tr *ngFor="let q of parentQuestions(goal.Question)">
+    <tr *ngFor="let q of parentQuestions(goal.questions)">
         <td>{{getQuestionNumber(q)}}</td>
-        <td [innerHTML]="q.referencetext | safe">
+        <td>
+            <div class="mb-3" [innerHTML]="q.referenceText | safe"></div>
+            <div class="mb-3" *ngIf="q.additionalDocuments.length > 0">
+                <div class="font-weight-bold">Additional References</div>
+                <div *ngFor="let res of q.additionalDocuments">
+                    {{res.title}} {{ res.section_Ref }}
+                </div>
+            </div>
         </td>
-        <td [class]="answerCellClass(q?.answer)"></td>
+        <td [class]="answerCellClass(q?.answerText)"></td>
     </tr>
 </table>
 
