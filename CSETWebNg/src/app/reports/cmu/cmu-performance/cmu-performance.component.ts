@@ -22,29 +22,36 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../models/reports.model';
-import { CrrService } from '../../../services/crr.service';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-performance-summary',
-  templateUrl: './cmu-performance-summary.component.html'
+  selector: 'app-cmu-performance',
+  templateUrl: './cmu-performance.component.html',
+  styleUrls: ['./cmu-performance.component.scss']
 })
-export class CmuPerformanceSummaryComponent implements OnInit {
+export class CmuPerformanceComponent implements OnInit {
 
-  @Input() model: CrrReportModel;
+  @Input() model: any;
+
+  @Input() moduleName: string;
 
   legend: string = '';
   charts: any[] = [];
+  scoreBarCharts: string[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getCrrPerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getCrrPerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
     });
 
-    this.crrSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
+    this.cmuSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
       this.charts = resp;
+    });
+
+    this.cmuSvc.getGoalPerformanceSummaryBodyCharts().subscribe((resp: any) => {
+      this.scoreBarCharts = resp.scoreBarCharts;
     });
   }
 
@@ -52,4 +59,15 @@ export class CmuPerformanceSummaryComponent implements OnInit {
     return this.charts[i][j];
   }
 
+    // This function splits strings like
+  // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+  // and
+  // "Goal 3-Risks are identified."
+  stringSplitter(str: string) {
+    return str.split(" - ")[1] ?? str.split("-")[1];
+  }
+  
+  filterMilDomainGoals(goals) {
+    return goals.filter(g => !g.title.startsWith('MIL'));
+  }
 }

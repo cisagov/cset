@@ -65,7 +65,7 @@
                 </tr>
                 <tr *ngFor="let cat of func.cats; last as isLast" [class.bb-2]="!isLast" style="border: none;">
                     <td class="category" class="align-top p-3 pt-0 border-0">
-                        <div style="font-size: 10px; margin-bottom: 1rem; width: 70%;">
+                        <div class="text-1" style="margin-bottom: 1rem; width: 70%;">
                             <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
                         </div>
                         <ng-container *ngIf="cat.catChart">
@@ -78,7 +78,7 @@
                         <table class="m-0 border-0">
                             <tr *ngFor="let subCat of cat.subCats; let i = index" class="p-3 border-0"
                                 [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
-                                <td class="px-1 pt-1 pb-3 border-0" style="width: 210px; font-size: 10px; ">
+                                <td class="px-1 pt-1 pb-3 border-0 text-1" style="width: 210px;">
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="align-top pb-3" style="width: 280px; border: none;">
@@ -93,76 +93,3 @@
         </table>
     </div>
 </div>
-
-<style>
-    .function {
-        font-weight: bolder;
-        height: 100%;
-        width: 75px;
-        display: block;
-        position: relative;
-    }
-
-    .vertical-text {
-        color: #fff;
-        transform: rotate(-90deg);
-        padding: 50px 10px;
-        line-height: 24px;
-    }
-
-    .tinytext {
-        font-size: 8px;
-    }
-
-    th .category,
-    .category {
-        width: 300px;
-    }
-
-    th .subcategory,
-    .subcategory {
-        width: 210px;
-    }
-
-    th .references,
-    .references {
-        width: 280px;
-    }
-
-    table {
-        page-break-inside: auto;
-    }
-
-    th {
-        background-color: black;
-        color: #fff;
-        font-size: 10px;
-        font-weight: bold;
-        text-align: left;
-        height: 20px;
-    }
-
-    tr,
-    td {
-        padding: 0.5rem 0;
-        text-align: left;
-        page-break-inside: avoid !important;
-    }
-
-
-    .bb-1 {
-        border-bottom: solid 1px black !important;
-    }
-
-    .bb-2 {
-        border-bottom: solid 2px black !important;
-    }
-
-    .bb-3 {
-        border-bottom: solid 3px black;
-    }
-
-    .break {
-        page-break-before: always;
-    }
-</style>

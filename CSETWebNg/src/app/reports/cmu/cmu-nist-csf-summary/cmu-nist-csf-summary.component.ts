@@ -28,17 +28,15 @@ import { CmuReportModel } from '../../../models/reports.model';
 @Component({
   selector: 'app-cmu-nist-csf-summary',
   templateUrl: './cmu-nist-csf-summary.component.html',
-  //styleUrls: ['../cmu-report.component.scss']
+  styleUrls: ['./cmu-nist-csf-summary.component.scss']
 })
 export class CmuNistCsfSummaryComponent implements OnInit {
-
-  //@Input() model: CmuReportModel;
 
   model: any;
   
   chartAll: string = '';
   legend: string = '';
-  bodyData: any[] = [];
+  csfData: any;
 
   constructor(private cmuSvc: CmuService) { }
 
@@ -46,7 +44,7 @@ export class CmuNistCsfSummaryComponent implements OnInit {
 
     this.cmuSvc.getCsf().subscribe((resp: any) => {
       this.model = resp;
-      this.bodyData = resp.funcs;
+      this.csfData = resp;
     })
 
     this.cmuSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {

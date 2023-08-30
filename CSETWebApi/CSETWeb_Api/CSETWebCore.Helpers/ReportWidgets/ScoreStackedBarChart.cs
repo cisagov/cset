@@ -68,9 +68,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     float pct = (float)d.AnswerCounts[i] / (float)maxAnswerCount;
                     var segmentWidth = ((float)d.Width * pct);
 
-                    xRect.SetAttributeValue("height", d.Height.ToString());
-                    xRect.SetAttributeValue("width", segmentWidth.ToString());
-                    xRect.SetAttributeValue("x", x.ToString());
+                    xRect.SetAttributeValue("height", $"{d.Height}");
+                    xRect.SetAttributeValue("width", $"{segmentWidth}");
+                    xRect.SetAttributeValue("x", $"{x}");
                     xRect.SetAttributeValue("y", "0");
                     var fillColor = WidgetResources.ColorMap[d.BarColors[i]];
                     xRect.SetAttributeValue("fill", fillColor);
@@ -79,12 +79,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     // labels on the segments
                     var xBarLabel = new XElement("text");
                     xSvg.Add(xBarLabel);
-                    xBarLabel.Value = _isNA ? "Not Applicable" : d.AnswerCounts[i].ToString();
-                    xBarLabel.SetAttributeValue("x", (x + segmentWidth * 0.5f).ToString());
-                    xBarLabel.SetAttributeValue("y", (d.Height * 0.5f).ToString());
+                    xBarLabel.Value = _isNA ? "Not Applicable" : $"{d.AnswerCounts[i]}";
+                    xBarLabel.SetAttributeValue("x", $"{x + segmentWidth * 0.5f}");
+                    xBarLabel.SetAttributeValue("y", $"{d.Height * 0.5f}");
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
                     xBarLabel.SetAttributeValue("dominant-baseline", "middle");
-                    xBarLabel.SetAttributeValue("font-size", "70%");
+                    xBarLabel.SetAttributeValue("font-size", $"{d.Height * .8f}px");
                     if (d.Height < 15)
                     {
                         xBarLabel.SetAttributeValue("font-size", "100%");

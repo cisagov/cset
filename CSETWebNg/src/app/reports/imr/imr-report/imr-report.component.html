@@ -63,6 +63,10 @@
                 <app-cmu-nist-csf-summary></app-cmu-nist-csf-summary>
               </div>
 
+              <div id="toc-imr-perf" class="page-margin-top">
+                <app-cmu-performance [model]="model" [moduleName]="model.structure?.modelName"></app-cmu-performance>
+              </div>
+
               <div id="toc-summary-results" class="page-margin-top">
                 <app-cmu-domain-compliance [data]="model.reportChart"></app-cmu-domain-compliance>
               </div>
