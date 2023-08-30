@@ -26,24 +26,21 @@ import { CrrReportModel } from '../../../models/reports.model';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-nist-csf-cat-summary',
-  templateUrl: './cmu-nist-csf-cat-summary.component.html',
-  //styleUrls: ['./../cmu-report.component.scss']
+  selector: 'app-cmu-nist-csf-cat-performance',
+  templateUrl: './cmu-nist-csf-cat-performance.component.html',
+ // styleUrls: ['./../cmu-report.component.scss']
 })
-export class CmuNistCsfCatSummaryComponent implements OnInit {
+export class CmuNistCsfCatPerformanceComponent implements OnInit {
+
+  @Input() moduleName: string;
 
   csfData: any;
-  legend: string = '';
 
   constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.cmuSvc.getCsfCatSummary().subscribe((resp: any) => {
+    this.cmuSvc.getCsfCatPerf().subscribe((resp: any) => {
       this.csfData = resp;
-    })
-
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
-      this.legend = resp;
     })
   }
 }

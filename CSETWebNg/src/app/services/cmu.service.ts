@@ -114,8 +114,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixABodyData');
   }
 
-  getNistCsfCatPerformanceBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatPerformanceBodyData');
+  getCsfCatPerf() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatperf');
   }
 
 }

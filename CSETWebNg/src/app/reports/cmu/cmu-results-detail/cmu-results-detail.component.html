@@ -23,11 +23,11 @@
 <img *ngIf="moduleName?.toUpperCase() == 'CRR'" src='assets/images/CRR/CRR_logo.png' class="row cmu-header-logo">
 <img *ngIf="moduleName?.toUpperCase() == 'IMR'" src='assets/images/IMR/IMR_logo.png' class="row cmu-header-logo">
 
-<div *ngIf="!domain">
+<div *ngIf="!domain" class="my-5">
     <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-      <div class="spinner-size-50"></div>
+        <div class="spinner-size-50"></div>
     </div>
-  </div>
+</div>
 
 
 <h1>{{domain?.title}}</h1>
@@ -41,13 +41,12 @@
             <div class="font-weight-bold mb-3">
                 {{goal.title}}
             </div>
-            <div [innerHTML]="goal.description">         
+            <div [innerHTML]="goal.description">
             </div>
         </td>
     </tr>
     <tr *ngFor="let q of goal.questions">
-        <td colspan="2" [innerHTML]="q?.questionText"
-            [class.pl-5]="!!q?.parentQuestionId">
+        <td colspan="2" [innerHTML]="q?.questionText" [class.pl-5]="!!q?.parentQuestionId">
         </td>
         <td *ngIf="q?.isParentQuestion != 'true'" [class]="answerCellClass(q?.answerText)">
             <div class="text-center" style="width: 7rem">

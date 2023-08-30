@@ -478,6 +478,7 @@ import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-p
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
 import { CmuNistCsfCatSummaryComponent } from './reports/cmu/cmu-nist-csf-cat-summary/cmu-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
@@ -1038,6 +1039,7 @@ import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-
         CrrPerformanceAppendixAComponent,
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
+        CmuNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
         CmuPerformanceSummaryComponent,
         CmuNistCsfCatSummaryComponent,
