@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,7 +25,7 @@ namespace CSETWebCore.Helpers
     /// in their grouping structure.
     /// 
     /// </summary>
-    public class MaturityStructureAsXml 
+    public class MaturityStructureAsXml
     {
         private readonly CSETContext _context;
 
@@ -212,7 +213,7 @@ namespace CSETWebCore.Helpers
 
 
                         xQuestion.SetAttributeValue("referencetext",
-                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
+                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);        
                     }
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)

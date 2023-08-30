@@ -32,7 +32,9 @@ import { CmuReportModel } from '../../../models/reports.model';
 })
 export class CmuNistCsfSummaryComponent implements OnInit {
 
-  @Input() model: CmuReportModel;
+  //@Input() model: CmuReportModel;
+
+  model: any;
   
   chartAll: string = '';
   legend: string = '';
@@ -42,8 +44,9 @@ export class CmuNistCsfSummaryComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.cmuSvc.getNistCsfSummaryReportBodyData().subscribe((resp: any[]) => {
-      this.bodyData = resp;
+    this.cmuSvc.getCsf().subscribe((resp: any) => {
+      this.model = resp;
+      this.bodyData = resp.funcs;
     })
 
     this.cmuSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {

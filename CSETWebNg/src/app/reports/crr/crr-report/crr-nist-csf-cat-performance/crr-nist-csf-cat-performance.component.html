@@ -43,7 +43,7 @@
                     </tr>
                     <tr class="bb-2" style="border: none;">
                         <td [attr.rowspan]="e.subCatsCount" style="height: 100%; padding: 0; border: none;"
-                        [style.background-color]="model?.cmuScores.csfFunctionColors[e.function.Function.code]">
+                        [style.background-color]="model?.cmuScores?.csfFunctionColors[e.function.Function.code]">
                             <div class="function">
                                 <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }})</div>
                             </div>

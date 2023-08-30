@@ -1,17 +1,22 @@
-<span class="mx-auto">
-    [CISA LOGO]
+<span class="d-flex justify-content-center">
+    <img class="my-4" style="height: 18rem" src="/assets/images/CISA_Logo_1831px.png" alt="cisa">
 </span>
 
-<div class="text-center">
-    INCIDENT MANAGEMENT REVIEW
-    <br>
-    REPORT
-    <br>
-    FOR
-    <br>
-    [facility name maybe]
-    <br>
-    {{this.model?.assessmentDetails?.assessmentDate | date:'dd-MMM-yyyy'}}
+<div class="text-center h3">
+    <div>
+        INCIDENT MANAGEMENT REVIEW
+        <br>
+        REPORT
+    </div>
+    <div class="my-3 h4">
+        FOR
+    </div>
+    <div class="mb-3">
+        {{ this.model?.assessmentDetails?.facility_Name }}
+    </div>
+    <div>
+        {{this.model?.assessmentDetails?.assessmentDate | date:'dd-MMM-yyyy'}}
+    </div>
 </div>
 
 

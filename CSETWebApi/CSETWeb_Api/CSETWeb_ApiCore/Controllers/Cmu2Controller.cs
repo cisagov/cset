@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr2/GetCrrModel")]
         public IActionResult GetCrrModel()
         {
-            var assessmentId = 1094; // _token.AssessmentForUser();
+            var assessmentId = _token.AssessmentForUser();
 
 
 
@@ -87,6 +87,13 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// 
+        /// -----WARNING
+        /// 
+        /// This is too big and complex to be stringified for the HTTP return.
+        /// It never returns.  
+        /// 
+        /// -----WARNING
         /// 
         /// </summary>
         /// <param name="includeResultsStylesheet"></param>
@@ -124,6 +131,18 @@ namespace CSETWebCore.Api.Controllers
             viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(modelXml.Root));
 
             return Ok(viewModel);
+        }
+
+        [HttpGet]
+        [Route("api/cmu/domaincompliance")]
+        public IActionResult GetDomainCompliance()
+        {
+            var assessmentId = _token.AssessmentForUser();
+
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var compliance = _scoring.GetPercentageOfPractice();
+
+            return Ok(compliance);
         }
 
 
@@ -204,11 +223,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/cmu/csfbodydata")]
-        public IActionResult GetNistCsfReportBodyData()
+        [Route("api/cmu/csf")]
+        public IActionResult GetCsf()
         {
             var assessmentId = _token.AssessmentForUser();
             _scoring.InstantiateScoringHelper(assessmentId);
+
 
             List<object> funcs = new List<object>();
 
@@ -248,8 +268,8 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(funcs);
-        }
+            return Ok(new { funcs, _scoring.CsfFunctionColors });
+        }       
 
 
         /// <summary>
@@ -341,8 +361,9 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(funcs);
+            return Ok(new { funcs, _scoring.CsfFunctionColors });
         }
+
 
         private BarChartInput GetDeepAnswerDistrib(XElement element)
         {
@@ -387,6 +408,6 @@ namespace CSETWebCore.Api.Controllers
             return d;
         }
 
-       
+
     }
 }

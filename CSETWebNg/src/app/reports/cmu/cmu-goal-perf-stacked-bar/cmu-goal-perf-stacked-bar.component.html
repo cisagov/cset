@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div class="container-fluid">
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-2" style="width: 15%;">
             <div class="row" style="padding: 0; height: auto; min-width: 130px;">
                 <div class="col-3" style="width: 36.67px; padding: 0.1rem; margin-right: 0.3rem; font-size: 6px;">
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row" style="border-top: 1px solid black;">
+    <div *ngFor="let domain of model?.structure?.groupings; let i = index" class="row" style="border-top: 1px solid black;">
         <div class="col-2" style="width: 15%; padding: 0 1.5rem 0 1rem;">
             <div class="row">
                 <div class="text-wrap" style="font-size: 0.7rem; font-weight: bold;">
@@ -73,8 +73,8 @@
             </div>
         </div>
         <div class="col-10" style="width: 85%; padding: 0 0 0 0.75rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow" style="margin-right: 0.05rem"
-            [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
+            <div *ngFor="let goal of filterMilDomainGoals(domain.groupings); let j = index" class="row goalrow" style="margin-right: 0.05rem"
+            [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.groupings).length ? '0.5px solid black' : '0px'">
                 <div class="col-1" style="font-size: 8px; padding: 0; width: 36px;">
                   <div class="goalrow-text rkw-a"><b>{{ goal.title.split('-')[0] }} -</b></div>
                 </div>
