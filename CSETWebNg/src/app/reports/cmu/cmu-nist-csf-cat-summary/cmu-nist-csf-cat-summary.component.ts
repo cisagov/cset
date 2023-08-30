@@ -32,10 +32,6 @@ import { CmuService } from '../../../services/cmu.service';
 })
 export class CmuNistCsfCatSummaryComponent implements OnInit {
 
-  //@Input() model: CrrReportModel;
-
-  @Input() moduleName: string;
-
   csfData: any;
   legend: string = '';
 

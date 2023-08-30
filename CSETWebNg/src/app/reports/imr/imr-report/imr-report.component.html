@@ -55,7 +55,8 @@
               </div>
 
               <div id="toc-imr-ps" class="page-margin-top">
-                <app-cmu-goal-perf-stacked-bar [modelName]="model.structure?.modelName" [model]="model"></app-cmu-goal-perf-stacked-bar>
+                <app-cmu-goal-perf-stacked-bar [modelName]="model.structure?.modelName"
+                  [model]="model"></app-cmu-goal-perf-stacked-bar>
               </div>
 
               <div id="toc-nist-csf" class="page-margin-top">
@@ -68,12 +69,14 @@
 
               <div id="toc-domain-detail">
                 <div *ngFor="let d of model?.structure?.groupings" class="page-break">
-                  <app-cmu-results-detail [domain]="d" [moduleName]="model.structure?.modelName" [showRemarks]="false"></app-cmu-results-detail>
+                  <app-cmu-results-detail [domain]="d" [moduleName]="model.structure?.modelName"
+                    [showRemarks]="false"></app-cmu-results-detail>
                 </div>
               </div>
 
               <div id="toc-appendix-a" class="page-margin-top">
-                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName" [appendixName]="'A'"></app-cmu-appendix-cover>
+                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName"
+                  [appendixName]="'A'"></app-cmu-appendix-cover>
               </div>
 
               <div id="toc-resources-referenced" class="page-margin-top">
@@ -86,7 +89,8 @@
 
 
               <div id="toc-appendix-b" class="page-margin-top">
-                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName" [appendixName]="'B'"></app-cmu-appendix-cover>                
+                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName"
+                  [appendixName]="'B'"></app-cmu-appendix-cover>
               </div>
 
               <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
@@ -94,7 +98,7 @@
               </div>
 
               <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
-              <!--  <app-crr-nist-csf-cat-performance [model]="model"></app-crr-nist-csf-cat-performance> -->
+                <app-cmu-nist-csf-cat-performance [moduleName]="model.structure?.modelName"></app-cmu-nist-csf-cat-performance>
               </div>
 
             </div>
