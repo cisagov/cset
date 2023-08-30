@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CrrService } from './../../../services/crr.service';
+import { ReportService } from './../../../services/report.service';
 import { CmuReportModel, CrrReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
@@ -35,11 +35,13 @@ import { CmuService } from '../../../services/cmu.service';
 })
 export class ImrReportComponent implements OnInit {
 
-  model: CmuReportModel;
+  model: CmuReportModel = {};
+  modelReferences; any;
   securityLevel: string = '';
 
   constructor(
     private cmuSvc: CmuService,
+    public reportSvc: ReportService,
     private titleSvc: Title,
     public configSvc: ConfigService) { }
 
@@ -51,25 +53,23 @@ export class ImrReportComponent implements OnInit {
       localStorage.removeItem('crrReportConfidentiality');
     }
 
-    this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
-    this.cmuSvc.getModel().subscribe((data: CmuReportModel) => {
+    this.reportSvc.getAssessmentInfoForReport().subscribe((resp: any) => {
+      this.model.assessmentDetails = resp;
+    });
 
-      data.structure.Model.Domain.forEach(d => {
-        d.Goal.forEach(g => {
-          // The Question object needs to be an array for the template to work.
-          // A singular question will be an object.  Create an array and push the question into it
-          if (!Array.isArray(g.Question)) {
-            var onlyChild = Object.assign({}, g.Question);
-            g.Question = [];
-            g.Question.push(onlyChild);
-          }
-        });
-      });
-
-      this.model = data;
+    this.reportSvc.getModelContent('').subscribe((resp: any) => {
+      this.model.structure = resp;
     },
       error => console.log('Error loading IMR report: ' + (<Error>error).message)
     );
+
+    this.cmuSvc.getDomainCompliance().subscribe((resp: any) => {
+      this.model.reportChart = resp;
+    });
+
+    this.cmuSvc.getCsf().subscribe((resp: any) => {
+      this.model.crrScores = resp;
+    });
   }
 
   printReport() {

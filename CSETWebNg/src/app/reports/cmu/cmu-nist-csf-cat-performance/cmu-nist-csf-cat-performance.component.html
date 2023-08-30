@@ -1,0 +1,104 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <h3 class="depiction-title">NIST Cybersecurity Framework<br />Category Performance</h3>
+        </div>
+        <div class="col-6">
+        </div>
+    </div>
+
+
+    <div *ngIf="!csfData" class="my-5">
+        <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+            <div class="spinner-size-50"></div>
+        </div>
+    </div>
+
+    
+    <div *ngFor="let func of csfData.funcs" class="mb-3">
+        <table class="domain-function" style="height: 90%; border: none;">
+            <tbody>
+                <tr style="width: 100%">
+                    <th style="width: 75px;">
+                        <div style="text-align: center;">Function</div>
+                    </th>
+                    <th class="category">Category</th>
+                    <th class="subcategory">Subcategory</th>
+                    <th class="references">{{ moduleName }} References</th>
+                </tr>
+                <tr class="bb-2 border-0">
+                    <td [attr.rowspan]="func.subCatsCount" style="height: 100%; padding: 0; border: none;"
+                        [style.background-color]="csfData.csfFunctionColors[func.function.Function.code]">
+                        <div class="function">
+                            <div class="vertical-text">{{ func.function.Function.name.toUpperCase() }} ({{
+                                func.function.Function.code.toUpperCase() }})</div>
+                        </div>
+                    </td>
+                    <td class="p-3 border-0 align-top"
+                        [innerHtml]="'\<b\>' + func.function.Function.name.toUpperCase() + ' Summary\</b\>\<br /\>' + func.chart | safe">
+                    </td>
+                    <td colspan="2" class="py-3 px-0 align-top border-0">
+                        <b>
+                            {{ func.function.Function.desc }}
+                        </b>
+                    </td>
+                </tr>
+                <tr *ngFor="let cat of func.cats; last as isLast" [class.bb-2]="!isLast" class="border-0">
+                    <td class="category align-top p-3 border-0">
+                        <div class="text-1" style="width: 70%; margin-bottom: 1rem;">
+                            <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
+                        </div>
+                        <ng-container *ngIf="cat.heatMaps.length">
+                            {{ moduleName }} Practices<br />
+                            <div class="d-flex align-content-center flex-wrap"
+                                style="column-gap: 15px; width: 70%">
+                                <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe">
+                                </div>
+                            </div>
+                        </ng-container>
+                    </td>
+                    <td colspan="2" class="align-top border-0">
+                        <table class="m-0 border-0">
+                            <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
+                                [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
+                                <td class="pr-3 py-1 border-0 align-top text-1" style="width: 210px;">
+                                    <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
+                                </td>
+                                <td class="references py-1 border-0" style="width: 280px;">
+                                    <div class="d-flex justify-content-start flex-wrap" style="column-gap: 15px;">
+                                        <div class="flex-00a" *ngFor="let subCatHeatMap of subCat.heatMaps"
+                                            [innerHtml]="subCatHeatMap | safe">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <div *ngIf="func.function.Function.code !== 'RC'" class="break"></div>
+            </tbody>
+        </table>
+    </div>
+</div>

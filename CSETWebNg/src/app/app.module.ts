@@ -476,7 +476,9 @@ import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-con
 import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
 import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CmuNistCsfCatSummaryComponent } from './reports/cmu/cmu-nist-csf-cat-summary/cmu-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
@@ -581,7 +583,7 @@ import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summ
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
-import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
+import { CmuPerformanceComponent } from './reports/cmu/cmu-performance/cmu-performance.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
 import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
 import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
@@ -592,8 +594,10 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
 import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
 import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
 import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
-import { CmuPercentageOfPracticesComponent } from './reports/cmu/cmu-percentage-of-practices/cmu-percentage-of-practices.component';
+import { CmuDomainComplianceComponent } from './reports/cmu/cmu-domain-compliance/cmu-domain-compliance.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
+import { ImrSideTocComponent } from './reports/imr/imr-side-toc/imr-side-toc.component';
+import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-appendix-cover.component';
 
 
 
@@ -1035,8 +1039,10 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         CrrPerformanceAppendixAComponent,
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
+        CmuNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
-        CmuPerformanceSummaryComponent,
+        CmuPerformanceComponent,
+        CmuNistCsfCatSummaryComponent,
         ImrReportComponent,
         ReferencesBlockComponent,
         NewAssessmentDialogComponent,
@@ -1144,8 +1150,10 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         ImrCoverSheetComponent,
         ImrIntroAboutComponent,
         ImrResourcesComponent,
-        CmuPercentageOfPracticesComponent,
+        CmuDomainComplianceComponent,
         TsaSdComponent,
+        ImrSideTocComponent,
+        CmuAppendixCoverComponent,
     ],
     providers: [
         ConfigService,

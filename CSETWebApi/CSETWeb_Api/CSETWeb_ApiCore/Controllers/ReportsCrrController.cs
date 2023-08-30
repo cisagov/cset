@@ -329,7 +329,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr/widget/performanceLegend")]
         public IActionResult GetCrrPerformanceLegend()
         {
-            return Content(new CRRPerformanceLegend().ToString(), "text/html");
+            return Content(new BlockLegend().ToString(), "text/html");
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         var mappedQs = cat.Element("References").Elements().ToList(); ;
 
-                        var block = new NistDomainBlock(mappedQs);
+                        var block = new NistDomainBlock(mappedQs, true);
                         foreach (string heatmap in block.HeatmapList)
                         {
                             heatMaps.Add(heatmap);
@@ -500,7 +500,7 @@ namespace CSETWebCore.Api.Controllers
                     foreach (var subcat in cat.Elements("Subcategory")) 
                     {
                         var mappedQs = subcat.Element("References").Elements().ToList();
-                        var block = new NistDomainBlock(mappedQs);
+                        var block = new NistDomainBlock(mappedQs, false);
                         List<string> subCatHeatMaps = new List<string>();
                         foreach (string heatmap in block.HeatmapList)
                         {

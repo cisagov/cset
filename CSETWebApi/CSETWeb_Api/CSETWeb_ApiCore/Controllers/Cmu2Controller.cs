@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr2/GetCrrModel")]
         public IActionResult GetCrrModel()
         {
-            var assessmentId = 1094; // _token.AssessmentForUser();
+            var assessmentId = _token.AssessmentForUser();
 
 
 
@@ -87,6 +87,13 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// 
+        /// -----WARNING
+        /// 
+        /// This is too big and complex to be stringified for the HTTP return.
+        /// It never returns.  
+        /// 
+        /// -----WARNING
         /// 
         /// </summary>
         /// <param name="includeResultsStylesheet"></param>
@@ -126,6 +133,18 @@ namespace CSETWebCore.Api.Controllers
             return Ok(viewModel);
         }
 
+        [HttpGet]
+        [Route("api/cmu/domaincompliance")]
+        public IActionResult GetDomainCompliance()
+        {
+            var assessmentId = _token.AssessmentForUser();
+
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var compliance = _scoring.GetPercentageOfPractice();
+
+            return Ok(compliance);
+        }
+
 
         /// <summary>
         /// Gets the charts for Goal Performance and returns them in a list of raw HTML strings.
@@ -146,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
             foreach (XElement domain in XDocument.Root.Elements())
             {
                 var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                var barChartInput = new BarChartInput() { Height = 80, Width = 100 };
                 barChartInput.IncludePercentFirstBar = true;
                 barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
                 scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
@@ -157,7 +176,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     var goalScores = _scoring.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
                     goal.Attribute("abbreviation").Value);
-                    var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
+                    var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 300 };
                     stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
 
                     stackedBarCharts.Add(new { Title = goal.Attribute("title").Value, Chart = new ScoreStackedBarChart(stackedBarChartInput).ToString() });
@@ -166,6 +185,56 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
         }
+
+        /// <summary>
+        /// Gets the charts for Mil1 Performance and returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/performance")]
+        public IActionResult GetPerformanceBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var XDocument = _scoring.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> heatMaps = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 80, Width = 100 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Goal");
+
+                foreach (XElement goal in goals)
+                {
+                    var questionsHeatMap = new QuestionsHeatMap(goal, false, 12);
+                    questionsHeatMap.Scale(1.5);
+
+                    heatMaps.Add(new { Title = goal.Attribute("title").Value, Chart = questionsHeatMap.ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, HeatMaps = heatMaps });
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/widget/blocklegend")]
+        public IActionResult GetBlockLegend()
+        {
+            return Content(new BlockLegend().ToString(), "text/html");
+        }
+
 
         /// <summary>
         /// 
@@ -190,7 +259,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _token.AssessmentForUser();
             _scoring.InstantiateScoringHelper(assessmentId);
             var totalDistribution = _scoring.FullAnswerDistrib();
-            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+            var totalBarChartInput = new BarChartInput() { Height = 80, Width = 110, Gap = 10 };
             totalBarChartInput.AnswerCounts = new List<int>
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
             ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
@@ -204,11 +273,12 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/cmu/csfbodydata")]
-        public IActionResult GetNistCsfReportBodyData()
+        [Route("api/cmu/csf")]
+        public IActionResult GetCsf()
         {
             var assessmentId = _token.AssessmentForUser();
             _scoring.InstantiateScoringHelper(assessmentId);
+
 
             List<object> funcs = new List<object>();
 
@@ -248,7 +318,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(funcs);
+            return Ok(new { funcs, _scoring.CsfFunctionColors });
         }
 
 
@@ -303,7 +373,7 @@ namespace CSETWebCore.Api.Controllers
                     if (cat.Element("References") != null)
                     {
                         var distCategory = GetAnswerDistrib(cat.Element("References"));
-                        distCategory.Height = 20;
+                        distCategory.Height = 15;
                         distCategory.Width = 150;
                         distCategory.HideEmptyChart = true;
                         catChart = new ScoreStackedBarChart(distCategory).ToString();
@@ -314,7 +384,7 @@ namespace CSETWebCore.Api.Controllers
                     foreach (var subcat in cat.Elements("Subcategory"))
                     {
                         var distSubcategory = GetAnswerDistrib(subcat.Element("References"));
-                        distSubcategory.Height = 20;
+                        distSubcategory.Height = 15;
                         distSubcategory.Width = 260;
                         distSubcategory.ShowNA = true;
                         var chartSubcat = new ScoreStackedBarChart(distSubcategory);
@@ -341,8 +411,87 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            return Ok(funcs);
+            return Ok(new { funcs, _scoring.CsfFunctionColors });
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/csfcatperf")]
+        public IActionResult GetNistCsfCatPerformanceBodyData()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+
+            XDocument xDoc = _scoring.XCsf;
+            var functions = xDoc.Descendants("Function");
+
+            List<object> funcs = new List<object>();
+            foreach (var func in functions)
+            {
+                var distFunc = GetDeepAnswerDistrib(func);
+
+                distFunc.Height = 65;
+                distFunc.Width = 150;
+                distFunc.IncludePercentFirstBar = true;
+                var barChart = new ScoreBarChart(distFunc);
+
+                List<object> cats = new List<object>();
+                foreach (var cat in func.Elements("Category"))
+                {
+                    List<string> heatMaps = new List<string>();
+
+                    if (cat.Element("References") != null)
+                    {
+                        var mappedQs = cat.Element("References").Elements().ToList(); ;
+
+                        var block = new NistDomainBlock(mappedQs, true);
+                        foreach (string heatmap in block.HeatmapList)
+                        {
+                            heatMaps.Add(heatmap);
+                        }
+                    }
+
+                    List<object> subCats = new List<object>();
+
+                    foreach (var subcat in cat.Elements("Subcategory"))
+                    {
+                        var mappedQs = subcat.Element("References").Elements().ToList();
+                        var block = new NistDomainBlock(mappedQs, false);
+                        List<string> subCatHeatMaps = new List<string>();
+                        foreach (string heatmap in block.HeatmapList)
+                        {
+                            subCatHeatMaps.Add(heatmap);
+                        }
+                        subCats.Add(new { HeatMaps = subCatHeatMaps, SubCat = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(subcat)) });
+                    }
+
+                    cats.Add(new
+                    {
+                        Name = cat.Attribute("name").Value,
+                        ParentCode = cat.Parent.Attribute("code").Value,
+                        Code = cat.Attribute("code").Value,
+                        Desc = cat.Attribute("desc").Value,
+                        HeatMaps = heatMaps,
+                        SubCats = subCats
+                    });
+                }
+
+                funcs.Add(new
+                {
+                    Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)),
+                    SubCatsCount = func.Descendants("Subcategory").Count(),
+                    Chart = barChart.ToString(),
+                    Cats = cats
+                });
+            }
+
+            return Ok(new { funcs, _scoring.CsfFunctionColors });
+        }
+
 
         private BarChartInput GetDeepAnswerDistrib(XElement element)
         {
@@ -387,6 +536,6 @@ namespace CSETWebCore.Api.Controllers
             return d;
         }
 
-       
+
     }
 }

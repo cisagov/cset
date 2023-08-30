@@ -8,7 +8,11 @@ using System.Xml.Linq;
 
 namespace CSETWebCore.Helpers.ReportWidgets
 {
-    public class CRRPerformanceLegend
+    /// <summary>
+    /// A red yellow green legend showing discreet blocks
+    /// for the answer option colors.
+    /// </summary>
+    public class BlockLegend
     {
         private XDocument _xSvgDoc;
         private XElement _xSvg;
@@ -22,7 +26,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <param name="dy"></param>
         private XElement CreateElement(string text, int x, int? y, string dy)
         {
-            var tspan = new XElement("tspan", text, new XAttribute("style", "font-size: 8px;"));
+            var tspan = new XElement("tspan", text, new XAttribute("style", "font-size: .55rem;"));
             tspan.SetAttributeValue("x", x);
             tspan.SetAttributeValue("y", y);
             tspan.SetAttributeValue("dy", dy);
@@ -33,7 +37,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// Constructor
         /// </summary>
-        public CRRPerformanceLegend()
+        public BlockLegend()
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;

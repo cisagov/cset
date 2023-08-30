@@ -23,7 +23,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         {
             int maxAnswerCount = d.AnswerCounts.Max();
 
-            int barWidthInclGap = d.Width / d.AnswerCounts.Count;
+            float barWidthInclGap = (float)d.Width / (float)d.AnswerCounts.Count;
 
             int barTopY = 20;
 
@@ -43,7 +43,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
             // leave a half gap on the left
-            var x = d.Gap / 2;
+            var x = (float)d.Gap / 2f;
 
             for (int i = 0; i < d.AnswerCounts.Count; i++)
             {
