@@ -173,6 +173,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
+import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
@@ -599,6 +600,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 import { ImrSideTocComponent } from './reports/imr/imr-side-toc/imr-side-toc.component';
 import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-appendix-cover.component';
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
+import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 
 
 
@@ -754,6 +756,7 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
         MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
+        LinebreakPlaintextPipe,
         NullishCoalescePipe,
         StatusCreateComponent,
         ProgressComponent,
@@ -1156,6 +1159,7 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
         ImrSideTocComponent,
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
+        CmuOtherRemarksComponent,
     ],
     providers: [
         ConfigService,
