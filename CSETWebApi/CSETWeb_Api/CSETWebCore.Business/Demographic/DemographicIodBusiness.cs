@@ -44,6 +44,11 @@ namespace CSETWebCore.Business.Demographic
             d.NumberEmployeesUnit = x.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
             d.AnnualRevenue = x.Find(z => z.DataItemName == "ANN-REVENUE")?.IntValue;
+            d.CriticalServiceRevenuePercent = x.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
+            d.NumberPeopleServedByCritSvc = x.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
+
+            d.DisruptedSector1 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR1")?.IntValue;
+            d.DisruptedSector2 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR2")?.IntValue;
 
             // body of practice / standard
             d.UsesStandard = x.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? false;
@@ -68,9 +73,9 @@ namespace CSETWebCore.Business.Demographic
             // share other
             d.ShareOther = x.Find(z => z.DataItemName == "SHARE-OTHER")?.StringValue;
             // barrier 1
-            d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.IntValue;
+            d.Barrier1 = x.Find(z => z.DataItemName == "BARRIER1")?.StringValue;
             // barrier 2
-            d.Barrier2 = x.Find(z => z.DataItemName == "BARRIER2")?.IntValue;
+            d.Barrier2 = x.Find(z => z.DataItemName == "BARRIER2")?.StringValue;
 
             d.BusinessUnit = x.Find(z => z.DataItemName == "BUSINESS-UNIT")?.StringValue;
 
@@ -86,7 +91,6 @@ namespace CSETWebCore.Business.Demographic
             {
                 d.ListSubsectors = GetSubsectors((int)d.Sector);
             }
-
 
             d.ListNumberEmployeeTotal = opts.Where(opt => opt.DataItemName == "NUM-EMP-TOTAL").Select(opts => new ListItem2()
             {
@@ -112,6 +116,11 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
+            d.ListNumberPeopleServed = opts.Where(opt => opt.DataItemName == "NUM-PEOPLE-SERVED").Select(opts => new ListItem2()
+            {
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
             d.ListShareOrgs = opts.Where(opt => opt.DataItemName.StartsWith("SHARE-ORG-")).Select(opts => new ListItem2()
             {
@@ -119,13 +128,17 @@ namespace CSETWebCore.Business.Demographic
                 OptionText = opts.OptionText
             }).ToList();
 
+            d.ListStandards = opts.Where(opt => opt.DataItemName == ("STANDARD")).Select(opts => new ListItem2()
+            {
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
             d.ListRegulationTypes = opts.Where(opt => opt.DataItemName == "REG-TYPE").Select(opts => new ListItem2()
             {
                 OptionValue = opts.OptionValue,
                 OptionText = opts.OptionText
             }).ToList();
-
 
             d.ListBarriers = opts.Where(opt => opt.DataItemName == "BARRIER").Select(opts => new ListItem2()
             {
@@ -187,6 +200,10 @@ namespace CSETWebCore.Business.Demographic
             SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal);
             SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit);
             SaveDemoRecord(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue);
+            SaveDemoRecord(demographic.AssessmentId, "ANN-REVENUE-PERCENT", demographic.CriticalServiceRevenuePercent);
+            SaveDemoRecord(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc);
+            SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
+            SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
 
             SaveDemoRecord(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
             SaveDemoRecord(demographic.AssessmentId, "STANDARD1", demographic.Standard1);

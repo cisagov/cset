@@ -18,22 +18,15 @@ namespace CSETWebCore.Model.Demographic
     public class DemographicIod
     {
         public int AssessmentId { get; set; }
-
         public int? OrganizationType { get; set; }
         public string OrganizationName { get; set; }
-
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
-        
         public int? NumberEmployeesTotal { get; set; }
         public int? NumberEmployeesUnit { get; set; }
-
-
         public int? AnnualRevenue { get; set; }
         public int? CriticalServiceRevenuePercent { get; set; }
-
         public int? NumberPeopleServedByCritSvc { get; set; }
-
         public int? DisruptedSector1 { get; set; }
         public int? DisruptedSector2 { get; set; }
 
@@ -70,8 +63,8 @@ namespace CSETWebCore.Model.Demographic
         public string ShareOther { get; set; }
 
 
-        public int? Barrier1 { get; set; }
-        public int? Barrier2 { get; set; }
+        public string Barrier1 { get; set; }
+        public string Barrier2 { get; set; }
 
         public string BusinessUnit { get; set; }
 
@@ -111,6 +104,11 @@ namespace CSETWebCore.Model.Demographic
         /// Used for question 6
         /// </summary>
         public List<ListItem2> ListCISectors { get; set; } = new List<ListItem2>();
+
+        /// <summary>
+        /// Used for question 7
+        /// </summary>
+        public List<ListItem2> ListStandards { get; set; } = new List<ListItem2>();
 
         /// <summary>
         /// Used for question 8
