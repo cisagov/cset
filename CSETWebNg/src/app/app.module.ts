@@ -583,7 +583,7 @@ import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summ
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
-import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
+import { CmuPerformanceComponent } from './reports/cmu/cmu-performance/cmu-performance.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
 import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
 import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
@@ -1041,7 +1041,7 @@ import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-
         CrrNistCsfCatPerformanceComponent,
         CmuNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
-        CmuPerformanceSummaryComponent,
+        CmuPerformanceComponent,
         CmuNistCsfCatSummaryComponent,
         ImrReportComponent,
         ReferencesBlockComponent,

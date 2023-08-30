@@ -20,33 +20,6 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<style>
-  @media print {
-    .function-padding {
-      margin-right: 2rem;
-    }
-  }
-
-  .function-padding {
-    margin-right: 2rem;
-  }
-
-  .appendix-label {
-    font-size: 0.7rem;
-    font-weight: bold;
-    margin: 0;
-  }
-
-  /* Legends */
-  .legend-svg text {
-    font-size: .5rem;
-  }
-
-  .tinytext {
-    font-size: 8px;
-  }
-</style>
-
 <div class="container-fluid">
   <div class="row mb-3">
     <div class="col-3" style="padding-left: 2rem;">
@@ -66,37 +39,37 @@
     </div>
   </div>
   <div class="row" style="border-top: 1px solid black;">
-    <div class="col-3" style="font-size: 10px; padding-left: 2rem;">
+    <div class="col-3 text-1" style="padding-left: 2rem;">
       FUNCTION
     </div>
-    <div class="col-9" style="font-size: 10px; padding: 0;">
+    <div class="col-9 text-1" style="padding: 0;">
       CATEGORY
     </div>
   </div>
 
-  <div *ngFor="let e of bodyData" class="row" style="border-top: 1px solid black;">
+  <div *ngFor="let func of csfData.funcs" class="row" style="border-top: 1px solid black;">
     <div class="col-3">
       <div class="row" style="height: 95%;">
         <div style="height: 100%; margin: 0.25rem 0.75rem 0.25rem 0; width: 10%"
-          [style.background-color]="model?.csfFunctionColors[e.function.Function.code]">
+          [style.background-color]="csfData.csfFunctionColors[func.function.Function.code]">
           <div style="height: 145px;"></div>
         </div>
         <div class="col-10">
           <div class="row">
-            <p style="font-size: 0.75rem; font-weight: bold;">
-              {{ e.function.Function.name }} ({{ e.function.Function.code }})
+            <p class="text-1 font-weight-bold">
+              {{ func.function.Function.name }} ({{ func.function.Function.code }})
             </p>
           </div>
-          <div class="row" style="vertical-align: middle;" [innerHtml]="e.chart | safe">
+          <div class="row" style="vertical-align: middle;" [innerHtml]="func.chart | safe">
           </div>
         </div>
       </div>
     </div>
     <div class="col-9">
-      <div *ngFor="let cat of e.cats; let i = index" class="row"
-        [style.border-bottom]="i != (e.cats.length - 1) ? 'solid 0.5px black' : 'none'">
-        <div class="col-4" style="font-size: 8px; padding: .25rem 0">
-          <div style="font-weight: bold;">
+      <div *ngFor="let cat of func.cats; let i = index" class="row"
+        [style.border-bottom]="i != (func.cats.length - 1) ? 'solid 0.5px black' : 'none'">
+        <div class="col-4 text-1 py-1 px-0">
+          <div class="font-weight-bold">
             {{ cat.parentCode }}.{{ cat.code }}
           </div>
           {{ cat.name }}

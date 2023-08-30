@@ -28,7 +28,7 @@ import { CmuService } from '../../../services/cmu.service';
 @Component({
   selector: 'app-cmu-nist-csf-cat-performance',
   templateUrl: './cmu-nist-csf-cat-performance.component.html',
- // styleUrls: ['./../cmu-report.component.scss']
+  styleUrls: ['./cmu-nist-csf-cat-performance.component.scss']
 })
 export class CmuNistCsfCatPerformanceComponent implements OnInit {
 

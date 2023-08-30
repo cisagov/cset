@@ -165,7 +165,7 @@ namespace CSETWebCore.Api.Controllers
             foreach (XElement domain in XDocument.Root.Elements())
             {
                 var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                var barChartInput = new BarChartInput() { Height = 80, Width = 100 };
                 barChartInput.IncludePercentFirstBar = true;
                 barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
                 scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
@@ -176,7 +176,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     var goalScores = _scoring.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
                     goal.Attribute("abbreviation").Value);
-                    var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
+                    var stackedBarChartInput = new BarChartInput() { Height = 15, Width = 300 };
                     stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
 
                     stackedBarCharts.Add(new { Title = goal.Attribute("title").Value, Chart = new ScoreStackedBarChart(stackedBarChartInput).ToString() });
@@ -209,7 +209,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _token.AssessmentForUser();
             _scoring.InstantiateScoringHelper(assessmentId);
             var totalDistribution = _scoring.FullAnswerDistrib();
-            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+            var totalBarChartInput = new BarChartInput() { Height = 80, Width = 110, Gap = 10 };
             totalBarChartInput.AnswerCounts = new List<int>
                                         { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
             ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
@@ -398,7 +398,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         var mappedQs = cat.Element("References").Elements().ToList(); ;
 
-                        var block = new NistDomainBlock(mappedQs);
+                        var block = new NistDomainBlock(mappedQs, true);
                         foreach (string heatmap in block.HeatmapList)
                         {
                             heatMaps.Add(heatmap);
@@ -410,7 +410,7 @@ namespace CSETWebCore.Api.Controllers
                     foreach (var subcat in cat.Elements("Subcategory"))
                     {
                         var mappedQs = subcat.Element("References").Elements().ToList();
-                        var block = new NistDomainBlock(mappedQs);
+                        var block = new NistDomainBlock(mappedQs, false);
                         List<string> subCatHeatMaps = new List<string>();
                         foreach (string heatmap in block.HeatmapList)
                         {

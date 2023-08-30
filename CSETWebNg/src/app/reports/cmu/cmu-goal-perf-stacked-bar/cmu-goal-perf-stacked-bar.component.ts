@@ -21,16 +21,16 @@ export class CmuGoalPerfStackedBarComponent {
   ngOnInit(): void {
     this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
       this.fullAnswerDistribChart = resp;
-    })
+    });
 
     this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
 
     this.cmuSvc.getGoalPerformanceSummaryBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
-    })
+    });
   }
 
   // This function splits strings like

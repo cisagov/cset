@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    
+
     <div *ngIf="!csfData" class="my-5">
         <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
@@ -67,12 +67,12 @@
                 </tr>
                 <tr *ngFor="let cat of func.cats; last as isLast" [class.bb-2]="!isLast" class="border-0">
                     <td class="category align-top p-3 border-0">
-                        <div style="width: 70%; font-size: 10px; margin-bottom: 1rem;">
+                        <div class="text-1" style="width: 70%; margin-bottom: 1rem;">
                             <b>{{ cat.name }} ({{ cat.code }}):</b> {{ cat.desc }}
                         </div>
                         <ng-container *ngIf="cat.heatMaps.length">
                             {{ moduleName }} Practices<br />
-                            <div class="d-flex justify-content-start align-items-center flex-wrap"
+                            <div class="d-flex align-content-center flex-wrap"
                                 style="column-gap: 15px; width: 70%">
                                 <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe">
                                 </div>
@@ -83,7 +83,7 @@
                         <table class="m-0 border-0">
                             <tr *ngFor="let subCat of cat.subCats; let i = index" style="padding: 1rem; border: none;"
                                 [ngClass]="i + 1 != cat.subCats.length ? 'bb-1' : ''">
-                                <td class="p-1 py-1 border-0 align-top" style="width: 210px; font-size: 10px;">
+                                <td class="pr-3 py-1 border-0 align-top text-1" style="width: 210px;">
                                     <b>{{ subCat.subCat.Subcategory.title }}:</b> {{ subCat.subCat.Subcategory.desc }}
                                 </td>
                                 <td class="references py-1 border-0" style="width: 280px;">
@@ -102,74 +102,3 @@
         </table>
     </div>
 </div>
-
-<style>
-    .function {
-        font-weight: bolder;
-        height: 100%;
-        width: 75px;
-        display: block;
-        position: relative;
-    }
-
-    .vertical-text {
-        color: #fff;
-        transform: rotate(-90deg);
-        padding: 50px 10px;
-        line-height: 24px;
-    }
-
-    .category {
-        width: 300px;
-    }
-
-    .subcategory {
-        width: 210px;
-    }
-
-    .references {
-        width: 280px;
-    }
-
-    .references svg {
-        vertical-align: top;
-    }
-
-
-    table {
-        page-break-inside: auto;
-    }
-
-    th {
-        background-color: black;
-        color: #fff;
-        font-size: 10px;
-        font-weight: bold;
-        text-align: left;
-        height: 20px;
-    }
-
-
-
-    tr,
-    td {
-        page-break-inside: avoid !important;
-    }
-
-
-    .bb-1 {
-        border-bottom: solid 1px black !important;
-    }
-
-    .bb-2 {
-        border-bottom: solid 2px black !important;
-    }
-
-    .bb-3 {
-        border-bottom: solid 3px black;
-    }
-
-    .break {
-        page-break-before: always;
-    }
-</style>
