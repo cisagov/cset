@@ -28,22 +28,23 @@ import { CmuReportModel } from '../../../models/reports.model';
 @Component({
   selector: 'app-cmu-nist-csf-summary',
   templateUrl: './cmu-nist-csf-summary.component.html',
-  //styleUrls: ['../cmu-report.component.scss']
+  styleUrls: ['./cmu-nist-csf-summary.component.scss']
 })
 export class CmuNistCsfSummaryComponent implements OnInit {
 
-  @Input() model: CmuReportModel;
+  model: any;
   
   chartAll: string = '';
   legend: string = '';
-  bodyData: any[] = [];
+  csfData: any;
 
   constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
 
-    this.cmuSvc.getNistCsfSummaryReportBodyData().subscribe((resp: any[]) => {
-      this.bodyData = resp;
+    this.cmuSvc.getCsf().subscribe((resp: any) => {
+      this.model = resp;
+      this.csfData = resp;
     })
 
     this.cmuSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {

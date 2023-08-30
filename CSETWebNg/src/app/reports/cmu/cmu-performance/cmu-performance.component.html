@@ -48,7 +48,7 @@
         </div>
         <div class="col-10" style="width: 85%; padding: 0; position: relative;">
             <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
-                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ moduleName }} Performance <br /> Summary
+                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ moduleName }} Performance
                 </h3>
             </div>
             <div class="col-6 tinytext" style="padding: 0; position: absolute; bottom: 0; left: 55%;"
@@ -73,13 +73,11 @@
                     {{ domain.title.split('(')[0].trim() }}
                 </div>
             </div>
-            <div class="row" [innerHtml]="scoreBarCharts[i] | safe">
-            </div>
+            <div class="row" [innerHtml]="scoreBarCharts[i] | safe"></div>
         </div>
         <div class="col-10" style="width: 85%; padding: 0 0 0 0.75rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.groupings); let j = index" class="row goalrow"
-                style="margin-right: 0.05rem"
-                [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.groupings).length ? '0.5px solid black' : '0px'">
+            <div *ngFor="let goal of domain.groupings; let j = index" class="row goalrow" style="margin-right: 0.05rem"
+                [style.border-bottom]="j + 1 != domain.groupings.length ? '0.5px solid black' : '0px'">
                 <div class="col-6 p-0 pr-3 text-1">
                     <div class="goalrow-text">
                         <b>{{ goal.title.split('-')[0] }} -</b>
@@ -87,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col-6 p-1">
-                    <p class="goalrow-text" [innerHtml]="getStackedBarChart(goal.title) | safe"></p>
+                    <p class="goalrow-text" [innerHtml]="getHeatMap(goal.title) | safe"></p>
                 </div>
             </div>
         </div>

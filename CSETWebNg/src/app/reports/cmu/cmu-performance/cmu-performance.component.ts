@@ -22,32 +22,60 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from './../../../../services/crr.service';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-crr-nist-csf-cat-summary',
-  templateUrl: './crr-nist-csf-cat-summary.component.html',
-  styleUrls: ['./../crr-report.component.scss']
+  selector: 'app-cmu-performance',
+  templateUrl: './cmu-performance.component.html',
+  styleUrls: ['./cmu-performance.component.scss']
 })
-export class CrrNistCsfCatSummaryComponent implements OnInit {
+export class CmuPerformanceComponent implements OnInit {
 
-  @Input() model: CrrReportModel;
+  @Input() model: any;
 
   @Input() moduleName: string;
 
-  bodyData: any[] = [];
   legend: string = '';
+  charts: any[] = [];
+  scoreBarCharts: string[] = [];
+  heatMaps: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  fullAnswerDistribChart: string = '';
+
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
-      this.bodyData = resp;
-    })
+    this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
+      this.fullAnswerDistribChart = resp;
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getBlockLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
+
+    this.cmuSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
+      this.charts = resp;
+    });
+
+    this.cmuSvc.getPerformance().subscribe((resp: any) => {
+      this.scoreBarCharts = resp.scoreBarCharts;
+      this.heatMaps = resp.heatMaps;
+    });
+  }
+
+  getChart(i, j) {
+    return this.charts[i][j];
+  }
+
+  getHeatMap(goalTitle: string) {
+    return this.heatMaps?.find(c => c.title === goalTitle).chart;
+  }
+
+    // This function splits strings like
+  // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
+  // and
+  // "Goal 3-Risks are identified."
+  stringSplitter(str: string) {
+    return str.split(" - ")[1] ?? str.split("-")[1];
   }
 }

@@ -35,6 +35,8 @@ import { ReportService } from '../../../services/report.service';
 })
 export class CmuResultsDetailComponent {
 
+  @Input()
+  moduleName: string;
 
   @Input()
   domain: any;
@@ -84,7 +86,7 @@ export class CmuResultsDetailComponent {
       questions = [].concat(q);
     }
 
-    return questions.filter(x => !x.parentquestionid);
+    return questions.filter(x => !x.parentQuestionId);
   }
 
   /**
@@ -96,17 +98,17 @@ export class CmuResultsDetailComponent {
     let dot = -1;
 
     // try the displaytext and parse off the "Qx" at the end
-    dot = q.displaynumber?.lastIndexOf('.');
+    dot = q.displayNumber?.lastIndexOf('.');
     if (dot > 0) {        
-      return q.displaynumber.trim().substring(dot + 1);
+      return q.displayNumber.trim().substring(dot + 1);
     }
 
     // failing that, assume the question text leads with a number and a dot
-    if (!!q.questiontext) {
-      dot = q.questiontext.trim().indexOf('.');
+    if (!!q.questionText) {
+      dot = q.questionText.trim().indexOf('.');
     } 
     if (dot > 0) {
-      return "Q" + q.questiontext.trim().substring(0, dot);
+      return "Q" + q.questionText.trim().substring(0, dot);
     }
     
     return "Q";

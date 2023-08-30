@@ -41,7 +41,7 @@
               </tr>
               <tr class="bb-2" style="border: none; page-break-inside: auto;">
                   <td [attr.rowspan]="e.subCatsCount" style="height: 100%; padding: 0; border: none;">
-                      <div class="function" [style.background-color]="model?.cmuScores.csfFunctionColors[e.function.Function.code]">
+                      <div class="function" [style.background-color]="model?.cmuScores?.csfFunctionColors[e.function.Function.code]">
                           <div class="vertical-text">{{ e.function.Function.name.toUpperCase() }} ({{ e.function.Function.code.toUpperCase() }})</div>
                       </div>
                   </td>

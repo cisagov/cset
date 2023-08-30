@@ -14,9 +14,8 @@ using CSETWebCore.Model.Question;
 namespace CSETWebCore.Helpers
 {
     /// <summary>
-    /// The idea is a lightweight XDocument based 
-    /// representation of any maturity model's questions
-    /// in their grouping structure.
+    /// Represents a maturity model's questions
+    /// in their grouping structure.  
     /// 
     /// </summary>
     public class MaturityStructureForModel
@@ -63,7 +62,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Gathers questions and answers and builds them into a basic
-        /// hierarchy in an XDocument.
+        /// hierarchy.
         /// </summary>
         private void LoadStructure()
         {
