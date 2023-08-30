@@ -325,7 +325,7 @@ export class TopMenusComponent implements OnInit {
 
       return;
     }
-    this.dialogRef = this.dialog.open(EnableProtectedComponent);
+    this.dialogRef = this.dialog.open(EnableProtectedComponent, { disableClose: true });
     this.dialogRef.afterClosed().subscribe(enableFeatureButtonClick => {
 
       if (enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
