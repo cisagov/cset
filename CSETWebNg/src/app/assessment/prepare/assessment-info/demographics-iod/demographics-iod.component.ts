@@ -8,26 +8,16 @@ import { DemographicsIod } from '../../../../models/demographics-iod.model';
   styleUrls: ['./demographics-iod.component.scss']
 })
 export class DemographicsIodComponent implements OnInit {
-
   /**
    * The principal model for this page
    */
   demographicData: DemographicsIod = {};
 
-
-
   employeeNumsOrg: any[];
   employeeNumsBizUnit: any[];
   orgTypes: any[];
 
-
-
-
-  constructor(
-    public demoSvc: DemographicIodService
-  ) {
-
-  }
+  constructor(public demoSvc: DemographicIodService) {}
 
   /**
    *
@@ -35,9 +25,7 @@ export class DemographicsIodComponent implements OnInit {
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
-      console.log(this.demographicData)
     });
-
   }
 
   /**
@@ -74,7 +62,6 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   changeShareOrg(org: any, evt: any) {
-
     org.selected = evt.target.checked;
     if (org.selected) {
       this.demographicData.shareOrgs.push(org.optionValue);
@@ -85,7 +72,6 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   isSharedOrgChecked(org): boolean {
-    console.log(this.demographicData.shareOrgs)
     return this.demographicData.shareOrgs.includes(org.optionValue);
   }
 
@@ -94,7 +80,6 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   updateDemographics() {
-    console.log(this.demographicData);
     this.demoSvc.updateDemographic(this.demographicData);
   }
 }
