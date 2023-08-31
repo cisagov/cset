@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Helpers.ReportWidgets;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWebCore.Business.Maturity;
@@ -20,7 +21,12 @@ using Newtonsoft.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
-    public class Cmu2Controller : Controller
+    /// <summary>
+    /// This class is intended to be a provider for "CMU" functionality
+    /// for the CISA assessments developed with CMU, e.g., 
+    /// EDM, CRR and IMR.
+    /// </summary>
+    public class CmuController : Controller
     {
         private readonly ITokenManager _token;
         private readonly Helpers.ICmuScoringHelper _scoring;
@@ -31,7 +37,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
 
-        public Cmu2Controller(ITokenManager token, IAssessmentBusiness assessment,
+        public CmuController(ITokenManager token, IAssessmentBusiness assessment,
           IDemographicBusiness demographic, IReportsDataBusiness report,
           IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
         {
@@ -47,53 +53,15 @@ namespace CSETWebCore.Api.Controllers
             _scoring = new Helpers.ICmuScoringHelper(context);
         }
 
-
-        [HttpGet]
-        [Route("api/reportscrr2/GetCrrModel")]
-        public IActionResult GetCrrModel()
-        {
-            var assessmentId = _token.AssessmentForUser();
-
-
-
-            //_crr.InstantiateScoringHelper(assessmentId);
-            //var detail = _assessment.GetAssessmentDetail(assessmentId);
-            //var demographics = _demographic.GetDemographics(assessmentId);
-            //_report.SetReportsAssessmentId(assessmentId);
-
-            //var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            //var crrStructure = biz.GetMaturityStructureAsXml(assessmentId, true);
-
-            //var deficiencyData = new MaturityBasicReportData()
-            //{
-            //    Information = _report.GetInformation(),
-            //    DeficienciesList = _report.GetMaturityDeficiencies(),
-            //    Comments = _report.GetCommentsList(),
-            //    MarkedForReviewList = _report.GetMarkedForReviewList(),
-            //    QuestionsList = _report.GetQuestionsList()
-            //};
-            //CrrResultsModel crrResultsData = _crr.GetCrrResultsSummary(); //GenerateCrrResults();
-            //CrrVM viewModel = new CrrVM(detail, demographics.CriticalService, _crr, deficiencyData);
-            //viewModel.ReportData.Comments = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.Comments);
-            //viewModel.ReportData.MarkedForReviewList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.MarkedForReviewList);
-            //viewModel.ReportData.DeficienciesList = viewModel.ReportData.AddMissingParentsTo(viewModel.ReportData.DeficienciesList);
-            //viewModel.IncludeResultsStylesheet = includeResultsStylesheet;
-            //viewModel.ReportChart = _crr.GetPercentageOfPractice();
-            //viewModel.crrResultsData = crrResultsData;
-            //viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(crrStructure.Root));
-
-            return Ok();
-        }
-
-
+    
         /// <summary>
         /// 
-        /// -----WARNING
+        /// -----WARNING ----------------------------------------
         /// 
         /// This is too big and complex to be stringified for the HTTP return.
         /// It never returns.  
         /// 
-        /// -----WARNING
+        /// -----WARNING ----------------------------------------
         /// 
         /// </summary>
         /// <param name="includeResultsStylesheet"></param>
@@ -133,6 +101,12 @@ namespace CSETWebCore.Api.Controllers
             return Ok(viewModel);
         }
 
+
+        /// <summary>
+        /// Returns name-value pairs indicating the domains
+        /// and percentage compliant ('Yes' answers).
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/cmu/domaincompliance")]
         public IActionResult GetDomainCompliance()
@@ -186,8 +160,9 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
         }
 
+
         /// <summary>
-        /// Gets the charts for Mil1 Performance and returns them in a list of raw HTML strings.
+        /// Gets the charts for Performance and returns them in a list of raw HTML strings.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -226,6 +201,39 @@ namespace CSETWebCore.Api.Controllers
 
         /// <summary>
         /// 
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="mil"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/widget/heatmap")]
+        public IActionResult GetHeatmapWidget([FromQuery] string domain, [FromQuery] double? scale = null)
+        {
+            var assessmentId = _token.AssessmentForUser();
+
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var xDomain = _scoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
+            if (xDomain == null)
+            {
+                return NotFound();
+            }
+
+            // the MilHeatMap class works for Domains as well.  
+            var heatmap = new MilHeatMap(xDomain, false, false);
+            if (scale != null)
+            {
+               heatmap.Scale((double)scale);
+            }
+
+            // return the svg
+            return Content(heatmap.ToString(), "image/svg+xml");
+        }
+
+
+        /// <summary>
+        /// Returns SVG that renders the red/yellow/green legend 
+        /// with square blocks for each answer option.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -493,6 +501,9 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         private BarChartInput GetDeepAnswerDistrib(XElement element)
         {
             var answeredNo = new List<string>() { "N", "U" };
@@ -512,6 +523,10 @@ namespace CSETWebCore.Api.Controllers
             return d;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         BarChartInput GetAnswerDistrib(XElement element)
         {
             var answeredNo = new List<string>() { "N", "U" };
@@ -535,7 +550,5 @@ namespace CSETWebCore.Api.Controllers
 
             return d;
         }
-
-
     }
 }

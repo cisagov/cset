@@ -69,7 +69,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     findings: any = null;
     numberOfContacts: number = 1;
-    isConfigChainEqual:boolean=false;
+    isConfigChainEqual: boolean = false;
     /**
      *
      */
@@ -102,23 +102,23 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             this.isMobile = false;
         }
         this.assessSvc.currentTab = 'results';
-        this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA","TSAonline"]);
+        this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA", "TSAonline"]);
     }
 
     arraysEqual(a, b) {
         if (a === b) return true;
         if (a == null || b == null) return false;
         if (a.length !== b.length) return false;
-      
+
         // If you don't care about the order of the elements inside
         // the array, you should sort both arrays here.
-      
+
         for (let i = 0; i < a.length; ++i) {
-          if (a[i] !== b[i]) return false;
+            if (a[i] !== b[i]) return false;
         }
         return true;
-      }
-      
+    }
+
 
     openSnackBar() {
         this._snackBar.openFromComponent(PrintSnackComponent, {
@@ -197,19 +197,18 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     /**
      *
-     * @param reportType
      */
     clickReportLink(reportType: string, print: boolean = false) {
-
         let url = '/index.html?returnPath=report/' + reportType;
         localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
 
-        if (reportType === 'crrreport') {
-            localStorage.setItem('crrReportConfidentiality', this.securitySelected);
-        }
+        localStorage.setItem('report-confidentiality', this.securitySelected);
         window.open(url, "_blank");
     }
 
+    /**
+     * 
+     */
     clickReportService(report: string) {
         this.reportSvc.getPdf(report, this.securitySelected).subscribe(data => {
             saveAs(data, 'test.pdf');
@@ -256,30 +255,30 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     getAssessmentFindings() {
         this.ncuaSvc.unassignedIssueTitles = [];
         this.findSvc.GetAssessmentFindings().subscribe(
-          (r: any) => {
-            this.findings = r;
-            let title = '';
+            (r: any) => {
+                this.findings = r;
+                let title = '';
 
-            for (let i = 0; i < this.findings?.length; i++) {
-                // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
-                if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
-                    if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
-                        title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
-                        this.ncuaSvc.unassignedIssueTitles.push(title);
+                for (let i = 0; i < this.findings?.length; i++) {
+                    // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
+                    if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
+                        if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
+                            title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
+                            this.ncuaSvc.unassignedIssueTitles.push(title);
+                        }
                     }
                 }
-            }
-            if (this.ncuaSvc.unassignedIssueTitles?.length == 0){
-                this.ncuaSvc.unassignedIssues = false;
-            } else {
-                this.ncuaSvc.unassignedIssues = true;
-            }
+                if (this.ncuaSvc.unassignedIssueTitles?.length == 0) {
+                    this.ncuaSvc.unassignedIssues = false;
+                } else {
+                    this.ncuaSvc.unassignedIssues = true;
+                }
 
 
-          },
-          error => console.log('Findings Error: ' + (<Error>error).message)
+            },
+            error => console.log('Findings Error: ' + (<Error>error).message)
         );
-      }
+    }
 
     onSelectSecurity(val) {
         this.securitySelected = val;
@@ -332,11 +331,11 @@ export class PrintSnackComponent implements OnInit {
     printInstructions: string;
 
     ngOnInit() {
-      const isRunningInElectron = (localStorage.getItem('isRunningInElectron') === 'true');
-      if (isRunningInElectron) {
-        this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P).'
-      } else {
-        this.printInstructions = 'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.'
-      }
+        const isRunningInElectron = (localStorage.getItem('isRunningInElectron') === 'true');
+        if (isRunningInElectron) {
+            this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P).'
+        } else {
+            this.printInstructions = 'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.'
+        }
     }
 }
