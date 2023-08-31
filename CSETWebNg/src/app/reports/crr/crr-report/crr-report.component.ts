@@ -44,10 +44,10 @@ export class CrrReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const securityLevel = localStorage.getItem('crrReportConfidentiality');
+    const securityLevel = localStorage.getItem('report-confidentiality');
     if (securityLevel) {
       securityLevel !== 'None' ? this.securityLevel = securityLevel : this.securityLevel = '';
-      localStorage.removeItem('crrReportConfidentiality');
+      localStorage.removeItem('report-confidentiality');
     }
 
     this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
