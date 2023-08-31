@@ -15,6 +15,10 @@ using System.Xml.XPath;
 
 namespace CSETWebCore.Helpers.ReportWidgets
 {
+    /// <summary>
+    /// Renders an SVG showing all Goals for a MIL or Domain with 
+    /// each Goal's questions below.  
+    /// </summary>
     public class MilHeatMap
     {
         private XDocument _xSvgDoc;
@@ -32,20 +36,26 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
 
         /// <summary>
-        /// 
+        /// Create a heat map with Goal strips and Question blocks below.
+        /// This will work for a MIL or a Domain as the parent.
         /// </summary>
-        public MilHeatMap(XElement xMil, bool showMilStrip, bool collapseGhostGoal, int blockSize = 12)
+        public MilHeatMap(XElement xParent, bool showParentStrip, bool collapseGhostGoal, int blockSize = 12)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
 
-            _xSvg.SetAttributeValue("data-mil", xMil.Attribute("label").Value);
+
+            // label the SVG if this is a MIL
+            if (xParent.Name.ToString().ToLower() == "mil")
+            {
+                _xSvg.SetAttributeValue("data-mil", xParent.Attribute("label").Value);
+            }
 
 
             double gX = 0;
 
             // create goals
-            foreach (var xGoal in xMil.Descendants("Goal"))
+            foreach (var xGoal in xParent.Descendants("Goal"))
             {
                 // goal group
                 var goalGroup = MakeGoal(xGoal, blockSize);
@@ -64,24 +74,24 @@ namespace CSETWebCore.Helpers.ReportWidgets
             }
 
 
-            // create MIL strip 
-            var m = MakeMilStrip(xMil, blockSize);
+            // create parent strip 
+            var m = MakeParentStrip(xParent, blockSize);
             _xSvg.Add(m);
-            double milStripWidth = 0;
+            double parentStripWidth = 0;
             var goalStripRects = m.XPathSelectElements("//rect[contains(@class, 'goal-strip')]");
             foreach (var rect in goalStripRects)
             {
-                milStripWidth += double.Parse(rect.Attribute("width").Value);
-                milStripWidth += gap2;
+                parentStripWidth += double.Parse(rect.Attribute("width").Value);
+                parentStripWidth += gap2;
             }
-            milStripWidth -= gap2;
+            parentStripWidth -= gap2;
 
-            SetStripWidth(m, milStripWidth);
+            SetStripWidth(m, parentStripWidth);
 
 
             // Might need to hide/shift a few things for the Results pages
-            var hasGhostGoal = (xMil.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
-            if (!showMilStrip)
+            var hasGhostGoal = (xParent.Descendants("Goal").All(g => g.Attribute("ghost-goal")?.Value == "true"));
+            if (!showParentStrip)
             {
                 if (!hasGhostGoal)
                 {
@@ -161,9 +171,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// 
         /// </summary>
         /// <returns></returns>
-        private XElement MakeMilStrip(XElement xMil, int blockSize)
+        private XElement MakeParentStrip(XElement xParent, int blockSize)
         {
-            var color = xMil.Attribute("scorecolor").Value;
+            var color = xParent.Attribute("scorecolor").Value;
             var fillColor = WidgetResources.ColorMap.ContainsKey(color) ? WidgetResources.ColorMap[color] : color;
             var textColor = WidgetResources.GetTextColor(color);
 
@@ -174,13 +184,16 @@ namespace CSETWebCore.Helpers.ReportWidgets
             g.Add(r);
             g.Add(t);
 
-            r.SetAttributeValue("id", "MIL");
+            r.SetAttributeValue("id", xParent.Name.ToString().ToUpper());
             r.SetAttributeValue("width", 100d);
             r.SetAttributeValue("height", blockSize);
             r.SetAttributeValue("rx", blockSize / 6d);
             r.SetAttributeValue("fill", fillColor);
 
-            t.Value = xMil.Attribute("label").Value;
+
+            var label = xParent.Attribute("label");
+            var abbrev = xParent.Attribute("abbreviation");
+            t.Value = label?.Value ?? abbrev?.Value ?? "";
             t.SetAttributeValue("x", 100d / 2d);
             t.SetAttributeValue("y", blockSize / 2d);
             t.SetAttributeValue("font-size", "40%");

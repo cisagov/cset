@@ -73,8 +73,8 @@
 
               <div id="toc-domain-detail">
                 <div *ngFor="let d of model?.structure?.groupings" class="page-break">
-                  <app-cmu-results-detail [domain]="d" [moduleName]="model.structure?.modelName"
-                    [showRemarks]="false"></app-cmu-results-detail>
+                  <app-cmu-domain-detail-table [domain]="d" [moduleName]="model.structure?.modelName"
+                    [showRemarks]="false"></app-cmu-domain-detail-table>
                 </div>
               </div>
 

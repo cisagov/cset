@@ -35,6 +35,8 @@
     {{domain?.description}}
 </p>
 
+<div [innerHTML]="heatmapWidget | safe"></div>
+
 <table *ngFor="let goal of domain?.groupings" class="w-100 cset-table">
     <tr>
         <td colspan="3">
