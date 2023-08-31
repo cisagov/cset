@@ -31,7 +31,7 @@ export class TsaSdComponent implements OnInit{
    * 
    */
   ngOnInit(): void {
-    this.titleService.setTitle("Deficiency Report - Pipeline SD02C");
+    this.titleService.setTitle("Deficiency Report - Pipeline SD02-Series");
     this.loading = true;
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
