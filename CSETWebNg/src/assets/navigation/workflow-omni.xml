@@ -44,8 +44,7 @@
         <!-- Critical Service -->
         <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
         <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:CIS" />
-
-        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA,IMR,CPG,MVRA)" />
 
     </node>
 
