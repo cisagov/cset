@@ -30,6 +30,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'linebreakplain' })
 export class LinebreakPlaintextPipe implements PipeTransform {
    transform(text: string): string {
-      return text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+      return text?.replace(/(?:\r\n|\r|\n)/g, '<br />');
    }
 }
