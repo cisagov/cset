@@ -98,6 +98,16 @@ export class CmuService {
       { responseType: 'text' });
   }
 
+    /**
+   * Returns SVG markup for the the specified domain abbreviation.
+   * Scaling the SVG to 1.5 gives a nice readable chart.
+   */
+    getDomainHeatmapWidget(domain: string) {
+      return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&scale=1.5',
+        { responseType: 'text' }
+      );
+    }
+
   getCsf() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csf');
   }

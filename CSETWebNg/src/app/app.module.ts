@@ -586,7 +586,7 @@ import { KeyReportComponent } from './assessment/results/reports/key-report/key-
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
 import { CmuPerformanceComponent } from './reports/cmu/cmu-performance/cmu-performance.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
-import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
+import { CmuResultsDetailComponent } from './reports/cmu/cmu-domain-detail-table/cmu-domain-detail-table.component';
 import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
 import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
 import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';

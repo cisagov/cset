@@ -24,6 +24,14 @@
         <node displaytext="Organization Demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" condition="INSTALL-MODE:IOD" />
         <node displaytext="Assessment Configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" condition="INSTALL-MODE:IOD" />
 
+        <!-- Critical Service -->
+        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:CIS" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
+
+
+        <!-- CIS config page -->
+        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
+
 
         <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
@@ -40,12 +48,6 @@
         <!-- target level selection -->
         <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" condition="MATURITY-ANY(CMMC,CMMC2)" />
 
-
-        <!-- Critical Service -->
-        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
-        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:CIS" />
-
-        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
 
     </node>
 
