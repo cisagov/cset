@@ -328,7 +328,7 @@ export class TopMenusComponent implements OnInit {
     this.dialogRef = this.dialog.open(EnableProtectedComponent, { disableClose: true });
     this.dialogRef.afterClosed().subscribe(results => {
 
-      if (results.enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
+      if (results.enableFeatureButtonClicked && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
 

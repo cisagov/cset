@@ -74,7 +74,7 @@ export class EnableProtectedComponent implements OnInit {
       this.featureSvc.sendEvent(true);
 
       this.message = m;
-      this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+      this.featureSvc.getEnabledFeatures().subscribe(features => this.modulesList = features.enabledModules);
 
       this.enableFeatureButtonClick = true;
     });
