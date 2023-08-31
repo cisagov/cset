@@ -33,6 +33,7 @@ import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 import { Answer } from '../models/questions.model';
+import { environment } from '../../../src/environments/environment';
 
 let headers = {
     headers: new HttpHeaders()
@@ -100,7 +101,8 @@ let headers = {
       "stateLed": false,
       "examLevel": '',
       "region": 0,
-      "guid": ''
+      "guid": '',
+      "version": ''
     },
     "issuesTotal": {
       "dors": 0,
@@ -580,7 +582,8 @@ let headers = {
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
-      "guid": this.questions.assessmentGuid
+      "guid": this.questions.assessmentGuid,
+      "version": environment.visibleVersion
     };
 
     this.jsonString.metaData = metaDataInfo;
@@ -664,7 +667,7 @@ let headers = {
                       }
                     );
                   } else {
-                    this.jsonStringReset();         
+                    this.jsonStringReset();   
                   }
                 }); 
               }
@@ -679,7 +682,7 @@ let headers = {
         this.dialog.open(MeritCheckComponent, {
           disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
-        this.jsonStringReset();         
+        this.jsonStringReset();     
       }
     )
   }
