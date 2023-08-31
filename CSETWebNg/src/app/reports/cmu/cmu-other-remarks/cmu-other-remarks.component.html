@@ -20,38 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="container-fluid">
+    <h3 class="depiction-title">Other Remarks</h3>
 
-    <app-cover-sheet-a [title]="'SECURITY DIRECTIVE PIPELINE 2021-02C (SD02-Series)'" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
-        [facilityName]="facilityName"></app-cover-sheet-a>
-
-    <div class="page-break">
-        <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
+    <div class="p-3" style="border: 1px solid #ced4da; border-radius: .25rem; color: #495057; "
+        [innerHTML]="remarks | linebreakplain">        
     </div>
-
-    <div class="page-break">
-    </div>
-
-    <h1>Answer Summary</h1>
-
-    <div class="mb-4">
-        This report indicates how each question of the Security Directive Pipeline
-        was answered by checking the boxes that were selected.        
-    </div>
-
-    <div>
-        <div *ngIf="loading">
-            <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
-            </div>
-        </div>
-
-        <div *ngIf="!loading">
-            <div *ngFor="let section of domains">
-                <div *ngIf="!!section" class="w-100">
-                    <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>

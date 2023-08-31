@@ -21,14 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-export const environment = {
-  production: true,
-  appUrl: '',
-  apiUrl: '',
-  docUrl: '',
-  appCode: 'CSET',
-  visibleVersion: '12.0.2.9',
-  version: '12.0.2.9',
-  helpContactEmail: '',
-  helpContactPhone: ''
-};
+import { Pipe, PipeTransform } from '@angular/core';
+
+/**
+ * Converts linefeed characters to HTML '<br />' tags
+ * without trying to preserve any HTML in the string.
+ */
+@Pipe({ name: 'linebreakplain' })
+export class LinebreakPlaintextPipe implements PipeTransform {
+   transform(text: string): string {
+      return text?.replace(/(?:\r\n|\r|\n)/g, '<br />');
+   }
+}
