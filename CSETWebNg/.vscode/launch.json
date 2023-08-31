@@ -4,11 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
     
       {
         "name": "Launch Edge",
         "request": "launch",
-        "type": "pwa-msedge",
+        "type": "msedge",
         "url": "http://localhost:4200/",
         "webRoot": "${workspaceFolder}"
       },
@@ -17,7 +18,7 @@
           "request": "launch",
           "name": "Launch Chrome against localhost",
           "url": "http://localhost:4200/",
-          "webRoot": "${workspaceFolder}"
-      },
+          "webRoot": "${workspaceFolder}/src"
+      }     
     ]
 }
