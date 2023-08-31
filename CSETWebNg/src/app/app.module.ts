@@ -308,6 +308,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
@@ -891,6 +892,7 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
         QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
+        GeneralDeficiencyComponent,
         EdmCommentsmarkedComponent,
         CisCommentsmarkedComponent,
         QuestionTextComponent,
