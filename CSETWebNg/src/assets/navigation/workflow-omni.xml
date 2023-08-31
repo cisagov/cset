@@ -45,8 +45,7 @@
         <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
         <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:CIS" />
 
-       <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" 
-            condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALLATION-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA)" />
 
     </node>
 
@@ -212,6 +211,7 @@
             <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
+        <node displaytext="Other Remarks" id="other-remarks" path="assessment/{:id}/other-remarks" condition="MATURITY-ANY(IMR)" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
