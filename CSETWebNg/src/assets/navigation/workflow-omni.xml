@@ -57,7 +57,7 @@
 
 
         <!-- The scenario that will normally show -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD02C,HYDRO)" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD02-Series,HYDRO)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
@@ -192,8 +192,8 @@
             </node>
         </node>
 
-        <!-- SD02C question domains displayed in tree structure -->
-        <node displaytext="SD02C Questions" condition="MATURITY:SD02C">
+        <!-- SD02-Series question domains displayed in tree structure -->
+        <node displaytext="SD02 Series Questions" condition="MATURITY:SD02-Series">
             <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
             <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
             <node id="maturity-questions-nested-2603" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/2603" />
@@ -299,8 +299,8 @@
         <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:CPG" />
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
 
-        <!-- Results - SD02C -->
-        <node displaytext="SD02C Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD02C" />
+        <!-- Results - SD02-Series -->
+        <node displaytext="SD02-Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD02-Series" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">

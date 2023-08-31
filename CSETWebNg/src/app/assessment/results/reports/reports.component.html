@@ -511,10 +511,12 @@
 
       <div *ngIf="
           !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('SD02C') &&
+          assessSvc.usesMaturityModel('SD02-Series') &&
           !isMobile
-        " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>Pipeline Security Directive (SD02C)</h4>
+        "
+        class="d-flex flex-column justify-content-start align-items-start mb-4"
+      >
+        <h4>Pipeline Security Directive (SD02-Series)</h4>
 
         <div>
           <button tabindex="0" (click)="clickReportLink('sd-answer-summary')"
@@ -536,7 +538,14 @@
       </div>
       <div>
         <div class="ml-2" *ngIf="isConfigChainEqual">
-          <app-key-report></app-key-report>
+          <button
+            tabindex="0" 
+            (click)="clickReportLink('appkeyreport')"
+            class="btn btn-link btn-link-dark text-left"
+            matTooltip="Used to associate identifiable information with an Anonymous Key"
+            matTooltipPosition="right">
+            Anonymous Key Report
+            </button>
         </div>
 
         <div class="mt-5">

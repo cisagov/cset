@@ -507,7 +507,8 @@ const appRoutes: Routes = [
       { path: 'hydroActionItemsReport', component: HydroActionItemsReportComponent },
       { path: 'sd-answer-summary', component: SdAnswerSummaryReportComponent },
       { path: 'key-report', component: KeyReportComponent },
-      { path: 'sd-deficiency', component: TsaSdComponent }
+      { path: 'sd-deficiency', component: TsaSdComponent },
+      { path: 'appkeyreport', component: KeyReportComponent }
     ]
   },
   { path: '**', redirectTo: 'home' }

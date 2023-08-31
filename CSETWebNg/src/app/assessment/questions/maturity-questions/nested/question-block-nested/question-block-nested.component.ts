@@ -41,7 +41,7 @@ export class QuestionBlockNestedComponent implements OnInit {
   @Input() grouping: any;
   @Input() questions: Question[];
 
-  questionList: Question[];
+  questionList: Question[] = [];
 
   /** 
    * Some models should show the maturity level.
