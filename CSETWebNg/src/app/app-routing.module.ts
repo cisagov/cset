@@ -207,6 +207,7 @@ import { ImrReportComponent } from './reports/imr/imr-report/imr-report.componen
 import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
+import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 
 const appRoutes: Routes = [
 
@@ -472,6 +473,7 @@ const appRoutes: Routes = [
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
+      { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },
