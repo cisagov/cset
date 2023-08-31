@@ -26,10 +26,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { BehaviorSubject } from 'rxjs';
 
-
 const headers = {
-  headers: new HttpHeaders()
-  .set('Content-Type', 'application/json'),
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -38,30 +36,38 @@ export class EnableFeatureService {
   apiUrl: string;
 
   featuresEnabled: BehaviorSubject<boolean> = new BehaviorSubject(true);
- 
+
   /**
-   * 
-   * @param http 
-   * @param configSvc 
+   *
+   * @param http
+   * @param configSvc
    */
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'EnableProtectedFeature/';
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   getEnabledFeatures(): any {
     return this.http.get(this.apiUrl + 'Features');
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
-  enableFeature(): any {
-    return this.http.post(this.apiUrl + 'unlockFeature/', "", headers);
+  enableModules(): any {
+    return this.http.post(this.apiUrl + 'enableModules/', '', headers);
+  }
+
+  /**
+   *
+   * @returns
+   */
+  setCsaWorkflow(isCsaModeEnabled: boolean): any {
+    return this.http.post(this.apiUrl + 'setCsaWorkflow/', isCsaModeEnabled, headers);
   }
 
   /**

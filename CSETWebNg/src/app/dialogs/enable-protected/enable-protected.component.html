@@ -50,7 +50,7 @@
     <div class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
       <label for="csaToggle" class="font-weight-bold">CSA Assessment Workflow </label>
       <div id="csaToggle" class="btn-group btn-group-toggle w-50 ml-2" data-toggle="buttons">
-        <label class="btn btn-level btn-rounded form-check-label" [class.active]="isCsaMode" (change)="toggleCsaMode()">
+        <label class="btn btn-level btn-rounded form-check-label" [class.active]="csaWorkflowEnabled" (change)="toggleCsaMode()">
           <input
             class="form-check-input"
             name="csaModeYes"
@@ -58,13 +58,13 @@
             type="radio"
             autocomplete="off"
             tabindex="0"
-            [checked]="isCsaMode"
+            [checked]="csaWorkflowEnabled"
           />
           On
         </label>
         <label
           class="btn btn-level btn-rounded form-check-label"
-          [class.active]="!isCsaMode"
+          [class.active]="!csaWorkflowEnabled"
           (change)="toggleCsaMode()"
         >
           <input
@@ -74,7 +74,7 @@
             type="radio"
             autocomplete="off"
             tabindex="0"
-            [checked]="!isCsaMode"
+            [checked]="!csaWorkflowEnabled"
           />
           Off
         </label>
