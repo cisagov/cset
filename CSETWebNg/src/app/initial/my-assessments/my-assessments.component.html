@@ -210,7 +210,7 @@
                         <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                     </td>
                     <td>
-                        <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02C'">
+                        <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02-Series'">
                             <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
                                 {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
                                 {{this.assessment.selectedMaturityModel === 'ISE' ? 'Statement(s) ' : 'Question(s) '}}
