@@ -326,10 +326,14 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent, { disableClose: true });
-    this.dialogRef.afterClosed().subscribe(enableFeatureButtonClick => {
+    this.dialogRef.afterClosed().subscribe(results => {
 
-      if (enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
+      if (results.enableFeatureButtonClick == true && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
+      }
+
+      if (results.csaWorkflowEnabled) {
+        // TODO: refresh and persist csaWorflow override by adding IOD to config chain.
       }
     })
   }
