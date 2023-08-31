@@ -47,10 +47,10 @@ export class ImrReportComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const securityLevel = localStorage.getItem('crrReportConfidentiality');
+    const securityLevel = localStorage.getItem('report-confidentiality');
     if (securityLevel) {
       securityLevel !== 'None' ? this.securityLevel = securityLevel : this.securityLevel = '';
-      localStorage.removeItem('crrReportConfidentiality');
+      localStorage.removeItem('report-confidentiality');
     }
 
     this.reportSvc.getAssessmentInfoForReport().subscribe((resp: any) => {
