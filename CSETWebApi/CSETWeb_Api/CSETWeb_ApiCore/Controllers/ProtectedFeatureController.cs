@@ -63,7 +63,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            bool csaWorkflowEnabled = Convert.ToBoolean(_context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault());
+            bool csaWorkflowEnabled = Convert.ToBoolean(_context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault()?.Property_Value);
 
             return Ok(new { EnabledModules = enabledModules, CsaWorkflowEnabled = csaWorkflowEnabled });
         }
