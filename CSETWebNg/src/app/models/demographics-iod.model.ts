@@ -34,6 +34,7 @@ export interface DemographicsIod {
     numberEmployeesUnit?: number;
     annualRevenue?: number;
     criticalServiceRevenuePercent?: number;
+    criticalDependencyIncidentResponseSupport?: string;
     numberPeopleServedByCritSvc?: number;
     disruptedSector1?: number;
     disruptedSector2?: number;

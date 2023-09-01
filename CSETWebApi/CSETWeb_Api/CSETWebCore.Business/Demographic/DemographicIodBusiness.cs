@@ -47,6 +47,8 @@ namespace CSETWebCore.Business.Demographic
             d.CriticalServiceRevenuePercent = x.Find(z => z.DataItemName == "ANN-REVENUE-PERCENT")?.IntValue;
             d.NumberPeopleServedByCritSvc = x.Find(z => z.DataItemName == "NUM-PEOPLE-SERVED")?.IntValue;
 
+            d.CriticalDependencyIncidentResponseSupport = x.Find(z => z.DataItemName == "CRIT-DEPEND-INCIDENT-RESPONSE")?.StringValue;
+
             d.DisruptedSector1 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR1")?.IntValue;
             d.DisruptedSector2 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR2")?.IntValue;
 
@@ -204,6 +206,8 @@ namespace CSETWebCore.Business.Demographic
             SaveDemoRecord(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc);
             SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
             SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
+            SaveDemoRecord(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport);
+
 
             SaveDemoRecord(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
             SaveDemoRecord(demographic.AssessmentId, "STANDARD1", demographic.Standard1);
