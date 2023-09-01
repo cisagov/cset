@@ -37,12 +37,22 @@ namespace CSETWebCore.Business.Merit
         public const string MeritExportPathName = "NCUAMeritExportPath";
         public void SendFileToMerit(string filename, string data, string uncPath)
         {
+            long minimumFileSize = 28000; // hardcoded value, change if file changes size (sorry)
             if (!DoesDirectoryExist(uncPath))
             {
                 throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
             }
             var pathToCreate = Path.Combine(uncPath, filename);
-            File.WriteAllText(pathToCreate, data);           
+            File.WriteAllText(pathToCreate, data);
+
+            // below checks if file is abnormally small, which makes the data useless to clients
+            long fileSize = new FileInfo(pathToCreate).Length;
+            if (fileSize < minimumFileSize)
+            {
+                File.Delete(pathToCreate);
+                var excp = new MERITApplicationException("file size of " + fileSize + " bytes is abnormally small. File save was aborted. Please refresh and attempt to submit again.");
+                throw excp;
+            }
         }
 
         public bool DoesDirectoryExist(string uncPath)
@@ -98,7 +108,9 @@ namespace CSETWebCore.Business.Merit
         {
             if (!DoesDirectoryExist(uncPath))
             {
-                throw new ApplicationException("Directory does not exist or is unavailable:" + uncPath);
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable:" + uncPath);
+                excp.Path = uncPath;
+                throw excp;
             }
             var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
             if(currentUncPath == null)
