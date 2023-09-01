@@ -32,6 +32,7 @@ import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { NavigationService } from './navigation/navigation.service';
+import { Observable } from 'rxjs';
 
 
 export interface Role {
@@ -354,7 +355,7 @@ export class AssessmentService {
   /**
    * Create a new assessment.
    */
-  newAssessment() {
+  newAssessment(): Promise<any> {
     let workflow: string;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -366,22 +367,26 @@ export class AssessmentService {
       default:
         workflow = 'BASE';
     }
-    this.createAssessment(workflow)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+
+    return new Promise((resolve, reject) => {
+      this.createAssessment(workflow)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id);
+            resolve('assessment loaded');
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
-  newAssessmentGallery(galleryItem: any) {
+  newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -394,65 +399,60 @@ export class AssessmentService {
         workflow = 'BASE';
     }
 
-    this.createNewAssessmentGallery(workflow, galleryItem)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+    return new Promise((resolve, reject) => {
+      this.createNewAssessmentGallery(workflow, galleryItem)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id);
+            resolve('assessment loaded');
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
-
   /**
-   *
+   * Requests the assessment detail from the API
+   * and resolves the promise so that navigation
+   * can take place in the function that called
+   * this one.
    */
-  loadAssessment(id: number) {
-    this.getAssessmentToken(id).then(() => {
+  loadAssessment(id: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getAssessmentToken(id).then(() => {
 
-      this.getAssessmentDetail().subscribe(data => {
-        this.assessment = data;
-        if (this.assessment.baselineAssessmentId) {
-          localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
-        } else {
-          localStorage.setItem("baseline", "0");
-        }
-        // make sure that the acet only switch is turned off when in standard CSET
-        if (this.configSvc.installationMode !== 'ACET') {
-          this.assessment.isAcetOnly = false;
-        }
+        this.getAssessmentDetail().subscribe(data => {
+          this.assessment = data;
+          if (this.assessment.baselineAssessmentId) {
+            localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
+          } else {
+            localStorage.setItem("baseline", "0");
+          }
+          // make sure that the acet only switch is turned off when in standard CSET
+          if (this.configSvc.installationMode !== 'ACET') {
+            this.assessment.isAcetOnly = false;
+          }
 
-        const rpath = localStorage.getItem('returnPath');
-        if (rpath != null) {
+          const rpath = localStorage.getItem('returnPath');
+
+          // normal assessment load
+          if (rpath == null) {
+            resolve('assessment loaded');
+          }
+
+          // return path specified
           localStorage.removeItem('returnPath');
           const returnPath = '/assessment/' + id + '/' + rpath;
           this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
-        } else {
-          // TODO:  open the assessment on the first page of the workflow
-          // the hard part is, this service doesn't know what 
-          // navigationservice knows, and we can't inject it without
-          // a circular dependency.
 
-          
-          //this.navSvc.navFirst();
-
-
-
-          // TODO:  delete this stuff
-          if (this.assessment.workflow == 'TSA') {
-            this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
-          } else if (this.configSvc.installationMode == 'IOD') {
-            this.router.navigate(['/assessment', id, 'prepare', 'tutorial-imr']);
-          } else {
-            this.router.navigate(['/assessment', id]);
-          }
-        }
+          resolve(returnPath);
+        });
       });
     });
   }
