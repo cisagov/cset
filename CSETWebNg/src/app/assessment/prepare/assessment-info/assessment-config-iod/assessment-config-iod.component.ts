@@ -42,7 +42,6 @@ export class AssessmentConfigIodComponent implements OnInit {
   }
 
   changePointOfContact(evt: any) {
-    this.demographics.pointOfContact = evt.target.value;
     this.updateDemographics();
   }
 
