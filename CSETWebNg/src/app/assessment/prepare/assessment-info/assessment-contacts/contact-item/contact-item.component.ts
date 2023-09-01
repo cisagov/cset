@@ -252,10 +252,6 @@ export class ContactItemComponent implements OnInit {
     return false;
   }
 
-  contactRoleSelected(roleId) {
-    this.contact.assessmentRoleId = roleId;
-  }
-
   getRoleName(roleId: number) {
     return this.roles.find(x => x.assessmentRoleId === roleId).assessmentRole;
   }

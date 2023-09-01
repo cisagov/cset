@@ -73,7 +73,7 @@
         [(ngModel)]="demographics.pointOfContact"
       >
         <option [ngValue]="null">-- Select Contact --</option>
-        <option *ngFor="let contact of contacts" [value]="contact.assessmentContactId">
+        <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
           {{ contact.firstName }} {{ contact.lastName }}
         </option>
       </select>
