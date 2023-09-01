@@ -237,6 +237,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.createAssessmentName();
     this.setCharterPad();
 
+    // Set the name & charter in NCUA service to enable the MERIT submit button on the reports page
+    this.ncuaSvc.creditUnionName = this.assessment.creditUnion;
+    this.ncuaSvc.creditUnionCharterNumber = this.assessment.charter;
+
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
