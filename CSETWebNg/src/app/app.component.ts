@@ -43,6 +43,7 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
 import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
+import { NavigationService } from './services/navigation/navigation.service';
 
 
 declare var $: any;
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
+    private navSvc: NavigationService,
     public configSvc: ConfigService,
     public aggregationSvc: AggregationService,
     public dialog: MatDialog,
@@ -297,7 +299,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         "Are you sure you want to create a new assessment? ";
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.assessSvc.newAssessment();
+          //this.assessSvc.newAssessment();
+          this.navSvc.beginNewAssessment();
         }
       });
       return false; // Prevent bubbling
