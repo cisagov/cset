@@ -294,6 +294,8 @@ export class NavigationService {
     this.navTreeSvc.setCurrentPage(target.id);
     this.destinationId = target.id;
 
+    this.buildTree();
+
     // determine the route path
     const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());
     this.router.navigate([targetPath]);
