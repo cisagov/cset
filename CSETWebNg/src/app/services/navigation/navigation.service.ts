@@ -168,6 +168,16 @@ export class NavigationService {
   }
 
   /**
+   * Loads an assessment and navigates to the Prepare tab
+   * so that the user starts on the first page of the workflow.
+   */
+  beginAssessment(assessmentId: number) {
+    this.assessSvc.loadAssessment(assessmentId).then(() => {
+      this.navDirect('phase-prepare');
+    });
+  }
+
+  /**
    *
    */
   buildTree() {
