@@ -355,7 +355,7 @@ export class AssessmentService {
   /**
    * Create a new assessment.
    */
-  newAssessment() {
+  newAssessment(): Promise<any> {
     let workflow: string;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -367,22 +367,26 @@ export class AssessmentService {
       default:
         workflow = 'BASE';
     }
-    this.createAssessment(workflow)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+
+    return new Promise((resolve, reject) => {
+      this.createAssessment(workflow)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id);
+            resolve('assessment loaded');
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
-  newAssessmentGallery(galleryItem: any) {
+  newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -395,19 +399,22 @@ export class AssessmentService {
         workflow = 'BASE';
     }
 
-    this.createNewAssessmentGallery(workflow, galleryItem)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+    return new Promise((resolve, reject) => {
+      this.createNewAssessmentGallery(workflow, galleryItem)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id);
+            resolve('assessment loaded');
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
   /**
@@ -431,7 +438,7 @@ export class AssessmentService {
           if (this.configSvc.installationMode !== 'ACET') {
             this.assessment.isAcetOnly = false;
           }
-          
+
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load
@@ -443,7 +450,7 @@ export class AssessmentService {
           localStorage.removeItem('returnPath');
           const returnPath = '/assessment/' + id + '/' + rpath;
           this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
-          
+
           resolve(returnPath);
         });
       });

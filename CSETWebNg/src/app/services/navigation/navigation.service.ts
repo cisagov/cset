@@ -178,6 +178,21 @@ export class NavigationService {
   }
 
   /**
+   * This version is for creating a NEW assessment
+   */
+  beginNewAssessment() {
+    this.assessSvc.newAssessment().then(() => {
+      this.navDirect('phase-prepare');
+    });
+  }
+
+  beginNewAssessmentGallery(item: any) {
+    this.assessSvc.newAssessmentGallery(item).then(() => {
+      this.navDirect('phase-prepare');
+    });
+  }
+
+  /**
    *
    */
   buildTree() {
@@ -195,18 +210,20 @@ export class NavigationService {
    * Crawls the workflow document to determine the next viewable page.
    */
   navNext(cur: string) {
-    const currentPage = this.workflow.getElementById(cur);
+    const originPage = this.workflow.getElementById(cur);
+    console.log('navNext: origin is ' + originPage.id);
 
-    if (currentPage == null) {
+    if (originPage == null) {
+      console.log('navNext: cannot find node ' + cur);
       return;
     }
 
-    if (currentPage.children.length == 0 && currentPage.nextElementSibling == null && currentPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
       // we are at the last page, nothing to do
       return;
     }
 
-    let target = currentPage;
+    let target = originPage;
 
     do {
       if (target.children.length > 0) {
@@ -219,6 +236,7 @@ export class NavigationService {
       }
     } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
 
+    console.log('navNext: routing to ' + target.id);
     this.routeToTarget(target);
   }
 
@@ -226,18 +244,18 @@ export class NavigationService {
    * Crawls the workflow document to determine the previous viewable page.
    */
   navBack(cur: string) {
-    const currentPage = this.workflow.getElementById(cur);
+    const originPage = this.workflow.getElementById(cur);
 
-    if (currentPage == null) {
+    if (originPage == null) {
       return;
     }
 
-    if (currentPage.previousElementSibling == null && currentPage.parentElement.tagName == 'nav') {
+    if (originPage.previousElementSibling == null && originPage.parentElement.tagName == 'nav') {
       // we are at the first page, nothing to do
       return;
     }
 
-    let target = currentPage;
+    let target = originPage;
 
     do {
       if (target.children.length > 0) {

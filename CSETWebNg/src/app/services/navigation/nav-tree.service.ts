@@ -130,6 +130,8 @@ export class NavTreeService {
         this.adjustNavNode(navNode);
 
         if (this.currentPage === navNode.value) {
+          console.log('BBB-setting this to curxrent: ');
+          console.log(navNode);
           navNode.isCurrent = true;
         }
 

@@ -24,6 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-new-assessment-dialog',
@@ -41,10 +42,11 @@ export class NewAssessmentDialogComponent implements OnInit {
    * 
    */
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any, 
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialogRef<NewAssessmentDialogComponent>,
-    public assessSvc: AssessmentService
-    ) { 
+    public assessSvc: AssessmentService,
+    public navSvc: NavigationService
+  ) {
     this.galleryItem = data;
   }
 
@@ -59,7 +61,7 @@ export class NewAssessmentDialogComponent implements OnInit {
    */
   launchAssessment() {
     this.dialog.close();
-    this.assessSvc.newAssessmentGallery(this.galleryItem);
+    this.navSvc.beginNewAssessmentGallery(this.galleryItem);
   }
 
   /**
