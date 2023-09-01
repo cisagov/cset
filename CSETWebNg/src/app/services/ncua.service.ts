@@ -662,7 +662,7 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                        let msg = "<br><p>Could not write the file."+error+"</p>";
+                        let msg = "<br><p>Could not write the file."+error.error+"</p>";
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Error", messageText: msg }
                         });
@@ -704,9 +704,9 @@ let headers = {
       },
       error => {        
         console.log(error);
-        let msg = "<br><p>Error"+error+"}}</p>";
+        let msg = "<br><p>Error:"+error.error+"</p>";
         this.dialog.open(MeritCheckComponent, {
-          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
         this.jsonStringReset();
       }
