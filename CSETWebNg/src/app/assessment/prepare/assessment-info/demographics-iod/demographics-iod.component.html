@@ -197,54 +197,9 @@
     </select>
   </div>
 
+  <!-- #4 and #5 are located on the iod assessment configuration page with the other critical service fields -->
   <!-- #4 -->
-  <div class="form-group mb-4">
-    <label for="percentageRevenue">
-      Please estimate the percentage of your organization's annual revenue that depends on the critical service.
-    </label>
-    <select
-      class="form-control"
-      id="percentageRevenue"
-      tabindex="0"
-      name="percentageRevenue"
-      [(ngModel)]="demographicData.criticalServiceRevenuePercent"
-      (change)="update($event)"
-    >
-      <option [ngValue]="null">-- Select --</option>
-      <option
-        *ngFor="let i of demographicData.listRevenuePercentages"
-        [ngValue]="i.optionValue"
-        [selected]="i.optionValue === demographicData.criticalServiceRevenuePercent"
-      >
-        {{ i.optionText }}
-      </option>
-    </select>
-  </div>
-
   <!-- #5 -->
-  <div class="form-group mb-4">
-    <label for="NumberPeopleServedByCritSvc">
-      If possible, please estimate the number of people served annually by the critical service. If an estimate is not
-      available, please select N/A.
-    </label>
-    <select
-      class="form-control"
-      id="numberPeopleServedByCritSvc"
-      tabindex="0"
-      name="numberPeopleServedByCritSvc"
-      [(ngModel)]="demographicData.numberPeopleServedByCritSvc"
-      (change)="update($event)"
-    >
-      <option [ngValue]="null">-- Select --</option>
-      <option
-        *ngFor="let i of demographicData.listNumberPeopleServed"
-        [ngValue]="i.optionValue"
-        [selected]="i.optionValue === demographicData.numberPeopleServedByCritSvc"
-      >
-        {{ i.optionText }}
-      </option>
-    </select>
-  </div>
 
   <!-- #6 -->
   <div class="form-group mb-5">
