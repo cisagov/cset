@@ -255,7 +255,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessment.charterType = this.creditUnionOptions[i].charterType;
     this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
-    if (this.creditUnionOptions[i].charterType != 1) {
+    if (this.creditUnionOptions[i].charterType == 1 || +this.assessment.charter >= 60000) {
       this.assessment.isE_StateLed = false;
     }
 
@@ -274,6 +274,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessment.charterType = 0;
     this.assessment.regionCode = 0;
     this.assessment.assets = '0';
+    this.assessment.isE_StateLed = false;
     this.updateAssets();
 
   }
