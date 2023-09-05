@@ -184,7 +184,7 @@
                 </select>
             </div>
         </div>
-        <div *ngIf="assessment.charterType == 2 || assessment.charter > 60000" (click)="toggleJoint()" tabindex="0"
+        <div *ngIf="assessment.charterType == 2 || assessment.charter >= 60000" (click)="toggleJoint()" tabindex="0"
             class="state-led cursor-pointer" [ngClass]="{'state-led-selected': assessment.isE_StateLed}">
             <div class="row">
                 <div class="col-2">
