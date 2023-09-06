@@ -94,6 +94,10 @@
                         <td>{{response?.information?.state_Province_Or_Region}}</td>
                     </tr>
                     <tr>
+                        <td>Region Code:</td>
+                        <td>{{ncuaSvc.regionCodeTranslator(response?.information?.region_Code)}}</td>
+                    </tr>
+                    <tr>
                         <td>Charter:</td>
                         <td>{{response?.information?.charter}}</td>
                     </tr>
