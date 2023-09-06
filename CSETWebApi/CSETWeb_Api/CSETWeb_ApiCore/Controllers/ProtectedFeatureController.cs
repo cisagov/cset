@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
-using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Helpers;
+using Namotion.Reflection;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,10 +34,12 @@ namespace CSETWebCore.Api.Controllers
         
 
         private CSETContext _context;
+        private readonly ITokenManager _tokenManager;
 
-        public ProtectedFeatureController(CSETContext context)
+        public ProtectedFeatureController(CSETContext context, ITokenManager tokenManager)
         {
             _context = context;
+            _tokenManager = tokenManager;
         }
 
 
@@ -86,26 +89,30 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpPost]
-        [Route("api/EnableProtectedFeature/setCsaWorkflow")]
+        [Route("api/EnableProtectedFeature/setCisaAssessorWorkflow")]
         /// <summary>
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
         /// <returns></returns>
-        public IActionResult EnableFAA(bool csaWorkflowEnabled)
+        public IActionResult SetCisaAssessorWorkflow(bool cisaWorkflowEnabled)
         {
-            var csaWorkflowDbProp = _context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault();
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
 
-            if (csaWorkflowDbProp == null)
-            { 
-                return StatusCode(500, new { Message = "'CsaWorkflowEnabled' database property not found." });
+            if (userId != null)
+            {
+               _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
+            }
+            else if (ak != null)
+            {
+               _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
             }
 
-            csaWorkflowDbProp.Property_Value = csaWorkflowEnabled.ToString();
             _context.SaveChanges();
 
             var response = new
             {
-                Message = "'CsaWorkflowEnabled' database property set successfully."
+                Message = "'CisaAssessorWorkflow' database property set successfully."
             };
 
             return Ok(response);

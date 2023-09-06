@@ -28,6 +28,7 @@ namespace CSETWebCore.DataLayer.Model
             AVAILABLE_STANDARDS = new HashSet<AVAILABLE_STANDARDS>();
             CNSS_CIA_JUSTIFICATIONS = new HashSet<CNSS_CIA_JUSTIFICATIONS>();
             COUNTY_ANSWERS = new HashSet<COUNTY_ANSWERS>();
+            DETAILS_DEMOGRAPHICS = new HashSet<DETAILS_DEMOGRAPHICS>();
             DOCUMENT_FILE = new HashSet<DOCUMENT_FILE>();
             FINANCIAL_ASSESSMENT_VALUES = new HashSet<FINANCIAL_ASSESSMENT_VALUES>();
             FINANCIAL_DOMAIN_FILTERS = new HashSet<FINANCIAL_DOMAIN_FILTERS>();
@@ -123,6 +124,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual ICollection<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
+        [InverseProperty("Assessment")]
+        public virtual ICollection<DETAILS_DEMOGRAPHICS> DETAILS_DEMOGRAPHICS { get; set; }
         [InverseProperty("Assessment")]
         public virtual ICollection<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
         [InverseProperty("Assessment")]

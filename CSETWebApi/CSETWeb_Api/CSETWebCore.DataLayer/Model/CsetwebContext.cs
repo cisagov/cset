@@ -264,6 +264,8 @@ namespace CSETWebCore.DataLayer.Model
         {
             modelBuilder.Entity<ACCESS_KEY>(entity =>
             {
+                entity.Property(e => e.CisaAssessorWorkflow).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
             });
 
@@ -358,13 +360,13 @@ namespace CSETWebCore.DataLayer.Model
 
                 entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
 
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
 
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
 
                 entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
 
@@ -1191,6 +1193,11 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<DETAILS_DEMOGRAPHICS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.DataItemName });
+
+                entity.HasOne(d => d.Assessment)
+                    .WithMany(p => p.DETAILS_DEMOGRAPHICS)
+                    .HasForeignKey(d => d.Assessment_Id)
+                    .HasConstraintName("FK_DETAILS_DEMOGRAPHICS_ASSESSMENTS");
             });
 
             modelBuilder.Entity<DETAILS_DEMOGRAPHICS_OPTIONS>(entity =>
