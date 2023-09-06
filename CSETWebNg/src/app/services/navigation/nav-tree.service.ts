@@ -69,7 +69,7 @@ export class NavTreeService {
   buildTree(workflow: Document, magic: string) {
     if (this.magic !== magic) {
       console.log('buildTree - magic compare failed');
-      //return;
+      return;
     }
 
     this.workflow = workflow;
@@ -130,8 +130,6 @@ export class NavTreeService {
         this.adjustNavNode(navNode);
 
         if (this.currentPage === navNode.value) {
-          console.log('BBB-setting this to curxrent: ');
-          console.log(navNode);
           navNode.isCurrent = true;
         }
 

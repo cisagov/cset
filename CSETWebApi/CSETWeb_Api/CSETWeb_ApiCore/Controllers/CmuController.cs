@@ -306,6 +306,7 @@ namespace CSETWebCore.Api.Controllers
 
                     var bciCat = new BarChartInput() { Height = 15, Width = 360 };
                     bciCat.IncludePercentFirstBar = true;
+                    bciCat.ShowNA = true;
                     bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
                     var chartCat = new ScoreStackedBarChart(bciCat);
 
