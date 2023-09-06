@@ -46,6 +46,7 @@ export class ImrReportComponent implements OnInit {
     public configSvc: ConfigService) { }
 
   ngOnInit(): void {
+    this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
 
     const securityLevel = localStorage.getItem('report-confidentiality');
     if (securityLevel) {
