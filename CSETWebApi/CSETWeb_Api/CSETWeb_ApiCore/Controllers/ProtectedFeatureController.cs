@@ -48,7 +48,6 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Returns the FAA module along with its 'locked' status.' 
         /// IsEncryptedModule is used to indicate a 'lockable' module; they are not actually encrypted.
-        /// Also returns the status of the CSA Assessment Workflow toggle.
         /// </summary>
         /// <returns></returns>
         public IActionResult GetFeatures()
@@ -66,9 +65,7 @@ namespace CSETWebCore.Api.Controllers
                 });
             }
 
-            bool csaWorkflowEnabled = Convert.ToBoolean(_context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault()?.Property_Value);
-
-            return Ok(new { EnabledModules = enabledModules, CsaWorkflowEnabled = csaWorkflowEnabled });
+            return Ok(enabledModules);
         }
 
 
@@ -94,7 +91,7 @@ namespace CSETWebCore.Api.Controllers
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
         /// <returns></returns>
-        public IActionResult SetCisaAssessorWorkflow(bool cisaWorkflowEnabled)
+        public IActionResult SetCisaAssessorWorkflow([FromBody] bool cisaWorkflowEnabled)
         {
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
@@ -116,9 +113,32 @@ namespace CSETWebCore.Api.Controllers
             };
 
             return Ok(response);
-
         }
 
+        [HttpGet]
+        [Route("api/EnableProtectedFeature/getCisaAssessorWorkflow")]
+        /// <summary>
+        /// Marks the FAA set as 'unlocked.'
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GetCisaAssessorWorkflow()
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
+
+            bool cisaWorkflowEnabled = false;
+
+            if (userId != null)
+            {
+                cisaWorkflowEnabled = _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow;
+            }
+            else if (ak != null)
+            {
+                cisaWorkflowEnabled = _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow;
+            }
+
+            return Ok(cisaWorkflowEnabled);
+        }
 
         /// <summary>
         /// Marks the FAA set as 'unlocked.' Marks the corresponding gallery card as 'visible'.

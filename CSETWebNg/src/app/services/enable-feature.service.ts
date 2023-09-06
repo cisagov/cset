@@ -63,14 +63,6 @@ export class EnableFeatureService {
   }
 
   /**
-   *
-   * @returns
-   */
-  setCsaWorkflow(isCsaModeEnabled: boolean): any {
-    return this.http.post(this.apiUrl + 'setCsaWorkflow/', isCsaModeEnabled, headers);
-  }
-
-  /**
    * Broadcasts an event that the features have been enabled.
    * The standards list is listening for this so that he can
    * refresh his list.
