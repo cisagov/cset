@@ -45,29 +45,32 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Returns the FAA module along with its 'locked' status.' 
         /// IsEncryptedModule is used to indicate a 'lockable' module; they are not actually encrypted.
+        /// Also returns the status of the CSA Assessment Workflow toggle.
         /// </summary>
         /// <returns></returns>
         public IActionResult GetFeatures()
         {
             var openFaaSets = _context.SETS.Where(s=> s.IsEncryptedModule).ToList();
 
-            var result = new List<EnabledModule>();
+            var enabledModules = new List<EnabledModule>();
 
             foreach (var s in openFaaSets)
             {
-                result.Add(new EnabledModule() { 
+                enabledModules.Add(new EnabledModule() { 
                     ShortName = s.Short_Name,
                     FullName = s.Full_Name,
                     Unlocked = s.IsEncryptedModuleOpen ?? false
                 });
             }
 
-            return Ok(result);
+            bool csaWorkflowEnabled = Convert.ToBoolean(_context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault()?.Property_Value);
+
+            return Ok(new { EnabledModules = enabledModules, CsaWorkflowEnabled = csaWorkflowEnabled });
         }
 
 
         [HttpPost]
-        [Route("api/EnableProtectedFeature/unlockFeature")]
+        [Route("api/EnableProtectedFeature/enableModules")]
         /// <summary>
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
@@ -81,7 +84,34 @@ namespace CSETWebCore.Api.Controllers
             };
             return Ok(response);
         }
-                   
+
+        [HttpPost]
+        [Route("api/EnableProtectedFeature/setCsaWorkflow")]
+        /// <summary>
+        /// Marks the FAA set as 'unlocked.'
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult EnableFAA(bool csaWorkflowEnabled)
+        {
+            var csaWorkflowDbProp = _context.GLOBAL_PROPERTIES.Where(c => c.Property == "CsaWorkflowEnabled").FirstOrDefault();
+
+            if (csaWorkflowDbProp == null)
+            { 
+                return StatusCode(500, new { Message = "'CsaWorkflowEnabled' database property not found." });
+            }
+
+            csaWorkflowDbProp.Property_Value = csaWorkflowEnabled.ToString();
+            _context.SaveChanges();
+
+            var response = new
+            {
+                Message = "'CsaWorkflowEnabled' database property set successfully."
+            };
+
+            return Ok(response);
+
+        }
+
 
         /// <summary>
         /// Marks the FAA set as 'unlocked.' Marks the corresponding gallery card as 'visible'.

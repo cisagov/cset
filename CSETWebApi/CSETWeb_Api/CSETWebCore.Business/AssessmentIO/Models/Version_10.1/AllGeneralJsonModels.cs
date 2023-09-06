@@ -689,6 +689,25 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Nullable<Boolean> IsScoped { get; set; }
     }
 
+    public class jDETAILS_DEMOGRAPHICS 
+    {
+        [Required]
+        public Int32 Assessment_Id { get; set; }
+
+        public String DataItemName { get; set; }
+
+        public String StringValue { get; set; }
+
+        public Nullable<Int32> IntValue { get; set; }
+
+        public Nullable<Double> FloatValue { get; set; }
+
+        public Nullable<Boolean> BoolValue { get; set; }
+
+        public Nullable<DateTime> DateTimeValue { get; set; }
+
+    }
+
     public class jPARAMETER_ASSESSMENT
     {
         [Required]

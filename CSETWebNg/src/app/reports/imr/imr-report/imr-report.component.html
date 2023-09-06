@@ -22,115 +22,106 @@
 -------------------------->
 
 <table class="page-layout">
-    <thead>
-        <tr>
-            <td>
-                <div class="header-space">&nbsp;</div>
-            </td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <div class="container">
+  <thead>
+    <tr>
+      <td>
+        <div class="header-space">&nbsp;</div>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <div class="container">
 
-                    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
-                        <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
-                            <button id="pdf-download" class="btn btn-primary m-1 p-1"
-                                (click)="printReport()">Download/Print Report</button>
-                        </div>
-                    </div>
+          <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="d-sm-inline-flex" style="margin-left: 15px; scroll-margin-top: 60px;">
+              <button id="pdf-download" class="btn btn-primary m-1 p-1" (click)="printReport()">Download/Print
+                Report</button>
+            </div>
+          </div>
 
-                    <div class="pb-3" style="padding-top: 60px">
-                        <!-- <app-crr-side-toc></app-crr-side-toc> -->
+          <div class="pb-3" style="padding-top: 60px">
+            <app-imr-side-toc></app-imr-side-toc>
 
-                        <div class="report-body-imr">
+            <div class="report-body-imr">
 
-                            <!--
-             <div id="toc-top">
-              <app-crr-cover-sheet [model]="crrModel"></app-crr-cover-sheet>
-            </div>
-            <div class="page-margin-top">
-              <app-crr-cover-sheet2 [model]="crrModel"></app-crr-cover-sheet2>
-            </div>
-  
-            <div id="main-toc" class="page-margin-top">
-              <app-crr-main-toc [model]="crrModel"></app-crr-main-toc>
-            </div>
-  
-            <div id="toc-intro" class="page-margin-top">
-              <app-crr-intro-about [model]="crrModel"></app-crr-intro-about>
-            </div>
-  
-            <div id="toc-mil1-ps" class="page-margin-top">
-              <app-crr-mil1-performance-summary [model]="crrModel"></app-crr-mil1-performance-summary>
-            </div>
-        -->
+              <div id="toc-top">
+                <app-imr-cover-sheet [model]="model"></app-imr-cover-sheet>
+              </div>
 
-            <div id="toc-crr-ps" class="page-margin-top">
-                <app-cmu-goal-perf-stacked-bar modelName="IMR" [model]="crrModel"></app-cmu-goal-perf-stacked-bar>
-            </div>
+              <div id="toc-intro" class="page-margin-top">
+                <app-imr-intro-about [model]="model"></app-imr-intro-about>
+              </div>
 
-            <!--
-            <div id="toc-nist-csf" class="page-margin-top">
-              <app-crr-nist-csf-summary [model]="crrModel"></app-crr-nist-csf-summary>
-            </div>
-  
-            <div id="toc-mil1-performance" class="page-margin-top">
-              <app-crr-mil1-performance [model]="crrModel"></app-crr-mil1-performance>
-            </div>
-  
-            <div id="toc-summary-results" class="page-margin-top" style="padding-bottom: 60px">
-              <app-crr-results-summary [model]="crrModel"></app-crr-results-summary>
-            </div>
-  
-            <div id="toc-percentage-practices" class="page-margin-top">
-              <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
-            </div>
-        -->
-            <div id="toc-domain-detail" class="page-margin-top">
-                <div *ngFor="let d of crrModel?.structure.Model.Domain" class="page-break">
-                    <app-cmu-results-detail [domain]="d"></app-cmu-results-detail>
+              <div id="toc-imr-ps" class="page-margin-top">
+                <app-cmu-goal-perf-stacked-bar [moduleName]="model.structure?.modelName"
+                  [model]="model"></app-cmu-goal-perf-stacked-bar>
+              </div>
+
+              <div id="toc-nist-csf" class="page-margin-top">
+                <app-cmu-nist-csf-summary></app-cmu-nist-csf-summary>
+              </div>
+
+              <div id="toc-imr-perf" class="page-margin-top">
+                <app-cmu-performance [model]="model" [moduleName]="model.structure?.modelName"></app-cmu-performance>
+              </div>
+
+              <div id="toc-summary-results" class="page-margin-top">
+                <app-cmu-domain-compliance [data]="model.reportChart"></app-cmu-domain-compliance>
+              </div>
+
+              <div id="toc-domain-detail">
+                <div *ngFor="let d of model?.structure?.groupings" class="page-break">
+                  <app-cmu-domain-detail-table [domain]="d" [moduleName]="model.structure?.modelName"
+                    [showRemarks]="false"></app-cmu-domain-detail-table>
                 </div>
+              </div>
+
+              <div id="toc-other-remarks" class="page-margin-top">
+                <app-cmu-other-remarks></app-cmu-other-remarks>
+              </div>
+
+              <div id="toc-appendix-a" class="page-margin-top">
+                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName"
+                  [appendixName]="'A'"></app-cmu-appendix-cover>
+              </div>
+
+              <div id="toc-resources-referenced" class="page-margin-top">
+                <app-imr-resources [model]="model"></app-imr-resources>
+              </div>
+
+              <div id="toc-contact-information" class="page-margin-top">
+                <app-crr-contact-information [moduleName]="model.structure?.modelName"></app-crr-contact-information>
+              </div>
+
+
+              <div id="toc-appendix-b" class="page-margin-top">
+                <app-cmu-appendix-cover [moduleName]="model.structure?.modelName"
+                  [appendixName]="'B'"></app-cmu-appendix-cover>
+              </div>
+
+              <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
+                <app-cmu-nist-csf-cat-summary></app-cmu-nist-csf-cat-summary>
+              </div>
+
+              <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
+                <app-cmu-nist-csf-cat-performance [moduleName]="model.structure?.modelName"></app-cmu-nist-csf-cat-performance>
+              </div>
+
             </div>
-  <!--
-            <div id="toc-resources-referenced" class="page-margin-top">
-              <app-crr-resources [model]="crrModel"></app-crr-resources>
-            </div>
-  
-            <div id="toc-contact-information" class="page-margin-top">
-              <app-crr-contact-information [model]="crrModel"></app-crr-contact-information>
-            </div>
-  
-            <div id="toc-additional-views" class="page-margin-top">
-              <app-crr-appendix-a-cover [model]="crrModel"></app-crr-appendix-a-cover>
-            </div>
-  
-            <div id="toc-crr-performance-app-a" class="page-margin-top">
-              <app-crr-performance-appendix-a [model]="crrModel"></app-crr-performance-appendix-a>
-            </div>
-  
-            <div id="toc-nist-framework-summary-app-a" class="page-margin-top">
-              <app-crr-nist-csf-cat-summary [model]="crrModel"></app-crr-nist-csf-cat-summary>
-            </div>
-  
-            <div id="toc-nist-framework-performance-app-a" class="page-margin-top">
-              <app-crr-nist-csf-cat-performance [model]="crrModel"></app-crr-nist-csf-cat-performance>
-            </div>
-   -->
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr>
-            <td>
-                <div class="footer-space">&nbsp;</div>
-            </td>
-        </tr>
-    </tfoot>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td>
+        <div class="footer-space">&nbsp;</div>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 
 <div class="print-header-left"></div>

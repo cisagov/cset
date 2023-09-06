@@ -1,0 +1,135 @@
+<!----------------------
+
+   Copyright 2023 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="about-intro">
+</div>
+
+<h3 class="text-center">Incident Management Review Report for</h3>
+<br />
+<div class="text-center h4">{{ model?.assessmentDetails?.facility_Name ?? '[Facility Name]' }}</div>
+
+<br />
+
+<h4>
+    Introduction
+</h4>
+<p>
+    On {{ model?.assessmentDetails?.assessmentDate | date:'MMMM dd yyyy' }}, {{ model?.assessmentDetails?.facility_faName
+    ?? '[Facility Name]' }} conducted an Incident Management Review (IMR). Representatives of the
+    Department of Homeland Security (DHS) recorded responses from key stakeholders regarding the implementation of
+    incident handling and response practices within your organization. The results are reported here.
+</p>
+
+<br />
+
+<h4>Overview and Scope of the IMR</h4>
+<p>
+    The IMR is based on the principle that a resilient incident management function can improve an
+    organization's overall cyber resilience. The IMR consists of a series of questions, the answers to which
+    provide insights into how an organization can improve its ability to identify, analyze, and respond to incidents
+    in a repeatable manner.
+</p>
+
+<p>
+    An “Incident Management Function” is that part(s) of the organization that provides incident handling and
+    response services for the organization. It is responsible for the performance of all incident handling and
+    response practices. In this report, for the sake of simplicity, the term “incident management personnel” refers
+    to the groups or individuals who perform the Incident Management Function activities. Further, the term
+    “organization” refers to the entire [sovereign] group, including the incident management personnel. We use
+    the term “stakeholders” to identify those with a vested interest in the organization's Incident Management
+    Function or in its activities, whether internal or external to the organization.
+</p>
+
+<p>
+    The IMR consists of a structured, facilitated interview of key personnel, and takes approximately a half-day
+    to complete. The IMR helps an organization understand and qualitatively measure its incident handling and
+    response capability and the cybersecurity practices that support it. Key personnel are asked to describe
+    how selected practices for both incident handling and response and cybersecurity are performed and
+    managed. DHS Representatives ask participants to articulate evidence regarding the performance of these
+    practices. The IMR examines Incident Management practices grouped in the following categories.
+</p>
+<ol>
+    <li>Event Detection and Handling</li>
+    <li>Incident Declaration, Handling and Response</li>
+    <li>Post-Incident Analysis and Testing</li>
+    <li>Integrate Organizational Capabilities</li>
+    <li>Protect and Sustain the Incident Management Function</li>
+    <li>Prepare for Incident Response</li>
+</ol>
+
+<p>
+    The practices examined during an IMR are derived from a set of metrics developed in 2002 by the Defense
+    Information Systems Agency (DISA) and National Security Agency (NSA) and called the DoD Computer
+    Network Defense Service Provider (CNDSP) <em>Evaluator Scoring Metrics (ESM)</em>. In 2003, the Department of
+    Homeland Security (DHS) and United States Computer Emergency Readiness Team (US-CERT) funded
+    initial work for the CERT Division at Carnegie Mellon University's Software Engineering Institute to adapt that
+    set of metrics for Federal use into a document called the <em>Federal Incident Response Evaluation (FIRE)
+        Capabilities</em>. Additional practices come from the NIST Cybersecurity Framework, NIST SP 800-61 <em>Computer
+        Security Incident Handling Guide</em>, the Cyber Resilience Review (CRR) and from a larger security and
+    business continuity framework known as the CERT Resilience Management Model (CERT-RMM).
+</p>
+
+<br />
+
+<h4>About this Report</h4>
+<p>
+    The answers that DHS Representatives gathered from your key staff have been collected and
+    evaluated, and are presented in this report.
+</p>
+
+<p>
+    The report summarizes the assessment findings, and provides your organization with options for
+    consideration for each practice. The options for consideration provide general guidelines or
+    activities intended to help your organization improve its incident handling and response capabilities.
+    These options are not meant to fully represent all activities needed for a robust incident
+    management program but, rather, to provide initial guidance on how to incorporate various incident
+    handling and response practices, including National Institute of Standards and Technology (NIST),
+    CERT Resilience Management Model (CERT-RMM), and other standards. Detailed information
+    about CERT-RMM can be found at <a href="https://www.cert.org/resilience"
+        target="_blank">www.cert.org/resilience</a>. The
+    options for consideration provided
+    include guidance from NIST Special Publications. The primary audience for these documents is
+    United States Federal Civilian Agencies, however NIST encourages the adoption of these
+    guidelines by State, local, and tribal governments, as well as private sector organizations.
+    Guidance from the NIST Cybersecurity Framework (NIST CSF) for Improving Critical Infrastructure
+    Cybersecurity is also included. The Framework, created through collaboration between industry
+    and government, consists of standards, guidelines, and practices to promote the protection of
+    critical infrastructure.
+</p>
+<br />
+
+<h4>Incident Management Review Results</h4>
+<p>
+    The IMR is an interview-based assessment. It is understood that participants often do not have
+    complete knowledge of an organization's operations. Actual performance may vary from what is
+    indicated in this report. Organizational performance is presented across several dimensions within
+    the report. Scores are provided for individual Practices, Goals, and Domains.
+</p>
+<br />
+
+<h4>Basic Rules</h4>
+<ol>
+    <li>
+        Practices are either performed (answer =”Yes”), incompletely performed (answer =
+        “Incomplete”), or not performed (answer = “No”)
+    </li>
+</ol>

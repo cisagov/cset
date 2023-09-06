@@ -177,6 +177,7 @@ export class PageVisibilityService {
     targets.forEach((t: string) => {
       has = has || (this.configSvc.installationMode == t);
     });
+
     return has;
   }
 

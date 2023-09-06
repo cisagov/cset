@@ -19,9 +19,9 @@ namespace CSETWebCore.DataLayer.Model
         [StringLength(100)]
         public string TTP_Code { get; set; }
         [StringLength(100)]
-        public string URL { get; set; }
-        [StringLength(100)]
         public string Description { get; set; }
+        [StringLength(100)]
+        public string URL { get; set; }
 
         [InverseProperty("TTP_CodeNavigation")]
         public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }

@@ -99,7 +99,7 @@ export class CrrService {
   }
 
   getNistCsfCatSummaryBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getNistCsfCatSummaryBodyData');
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
   }
 
   getNistCsfCatPerformanceBodyData() {

@@ -183,7 +183,7 @@ export class MyAssessmentsComponent implements OnInit {
     const rid = localStorage.getItem("redirectid");
     if (rid != null) {
       localStorage.removeItem("redirectid");
-      this.assessSvc.loadAssessment(+rid);
+      this.navSvc.beginAssessment(+rid);
     }
 
     this.assessSvc.getAssessmentsCompletion().pipe(

@@ -29,10 +29,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
         public string GoalAbbrev { get; set; }
 
+        public bool ShowNA { get; set; } = false;
+
+        public bool HideEmptyChart { get; set; } = false;
+
 
 
         /// <summary>
-        /// 
+        /// Initialize the input object with some default values.
         /// </summary>
         public BarChartInput()
         {

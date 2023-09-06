@@ -69,7 +69,7 @@ export class NavTreeService {
   buildTree(workflow: Document, magic: string) {
     if (this.magic !== magic) {
       console.log('buildTree - magic compare failed');
-      //return;
+      return;
     }
 
     this.workflow = workflow;

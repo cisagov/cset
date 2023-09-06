@@ -1,0 +1,54 @@
+<span class="d-flex justify-content-center">
+    <img class="my-4" style="height: 18rem" src="/assets/images/CISA_Logo_1831px.png" alt="cisa">
+</span>
+
+<div class="text-center h3">
+    <div>
+        INCIDENT MANAGEMENT REVIEW
+        <br>
+        REPORT
+    </div>
+    <div class="my-3 h4">
+        FOR
+    </div>
+    <div class="mb-3">
+        {{ this.model?.assessmentDetails?.facility_Name }}
+    </div>
+    <div>
+        {{this.model?.assessmentDetails?.assessmentDate | date:'dd-MMM-yyyy'}}
+    </div>
+</div>
+
+
+<div class="page-break"></div>
+
+<div class="report-notification">
+    <h4 style="color: black; text-align: center;">Notification</h4>
+    <p>
+        This report is provided "as-is" for informational purposes only. The Cybersecurity and Infrastructure Security
+        Agency
+        (CISA) does not provide any warranties of any kind regarding any information
+        contained within. In no event shall the United States Government or its contractors or
+        subcontractors be liable for any damages, including but not limited to, direct, indirect,
+        special or consequential damages and including damages based on any negligence
+        of the United States Government or its contractors or subcontractors, arising out of, resulting
+        from, or in any way connected with this report, whether or not based upon warranty,
+        contract, tort, or otherwise, whether or not injury was sustained from, or arose out of the
+        results of, or reliance upon the report.
+    </p>
+    <p>
+        The CISA does not endorse any commercial product or service, including the subject of the
+        analysis in this report. Any reference to specific commercial products, processes, or services
+        by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their
+        endorsement, recommendation, or favoring by CISA.
+    </p>
+    <p>
+        The display of the CISA official seal or other CISA visual identities on this report shall not be
+        interpreted to provide the recipient organization authorization to use the official seal, insignia
+        or other visual identities of the Department of Homeland Security. The CISA seal, insignia,
+        or other visual identities shall not be used in any manner to imply endorsement of any
+        commercial product or activity by CISA or the United States Government. Use of the CISA
+        seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and
+        is against CISA policies governing usage of its seal.
+    </p>
+</div>

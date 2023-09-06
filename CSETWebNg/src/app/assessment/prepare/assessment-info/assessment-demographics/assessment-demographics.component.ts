@@ -64,7 +64,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     assetValues: DemographicsAssetValue[];
     industryList: Industry[];
     contacts: User[];
-    isSLTT:boolean=false;
+    isSLTT: boolean = false;
     demographicData: Demographic = {};
     orgTypes: any[];
 
@@ -123,8 +123,8 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.demoSvc.getDemographic().subscribe(
             (data: Demographic) => {
                 this.demographicData = data;
-                if(this.demographicData.organizationType=="3"){
-                    this.isSLTT=true;
+                if (this.demographicData.organizationType == "3") {
+                    this.isSLTT = true;
                 }
                 // populate Industry dropdown based on Sector
                 this.populateIndustryOptions(this.demographicData.sectorId);
@@ -133,7 +133,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         );
     }
 
-    getOrganizationTypes(){
+    getOrganizationTypes() {
         this.assessSvc.getOrganizationTypes().subscribe(
             (data: any) => {
                 this.orgTypes = data;
@@ -141,14 +141,14 @@ export class AssessmentDemographicsComponent implements OnInit {
         )
     }
 
-    refreshContacts(){
+    refreshContacts() {
         if (this.assessSvc.id()) {
             this.assessSvc
-              .getAssessmentContacts()
-              .then((data: AssessmentContactsResponse) => {
-                this.contacts = data.contactList;
-              });
-          }
+                .getAssessmentContacts()
+                .then((data: AssessmentContactsResponse) => {
+                    this.contacts = data.contactList;
+                });
+        }
     }
 
     populateIndustryOptions(sectorId: number) {
@@ -170,22 +170,27 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
-    changeOrgType(event: any){
+    changeOrgType(event: any) {
         this.demographicData.organizationType = event.target.value;
         this.updateDemographics();
     }
 
-    changeFacilitator(event: any){
+    changeFacilitator(event: any) {
         this.demographicData.facilitator = event.target.value;
         this.updateDemographics();
     }
 
-    changeOrgName(event: any){
+    changeOrgName(event: any) {
         this.demographicData.organizationName = event.target.value;
         this.updateDemographics();
     }
 
-    changeAgency(event: any){
+    changeOrgPointOfContact(event: any) {
+        this.demographicData.orgPointOfContact = event.target.value;
+        this.updateDemographics();
+    }
+
+    changeAgency(event: any) {
         this.demographicData.agency = event.target.value;
         this.updateDemographics();
     }
@@ -195,12 +200,12 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.updateDemographics();
     }
 
-    changePointOfContact(event: any){
+    changePointOfContact(event: any) {
         this.demographicData.pointOfContact = event.target.value;
         this.updateDemographics();
     }
 
-    changeIsScoped(event: any){
+    changeIsScoped(event: any) {
         this.updateDemographics();
     }
 
@@ -218,18 +223,20 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     showOrganizationName() {
-      return this.configSvc.behaviors.showOrganizationName;
+        return this.configSvc.behaviors.showOrganizationName;
     }
 
     showBusinessAgencyName() {
-      return this.configSvc.behaviors.showBusinessAgencyName;
+        return this.configSvc.behaviors.showBusinessAgencyName;
     }
 
     showCriticalService() {
-      return this.configSvc.installationMode !== 'RRA' && this.configSvc.behaviors.showCriticalService;
+        const moduleBehavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel.modelName);
+        return (this.configSvc.behaviors.showCriticalService ?? true)
+            && (moduleBehavior?.showCriticalServiceDemog ?? true);
     }
 
-    
+
     showEdmFields() {
         return this.assessSvc.assessment?.maturityModel?.modelName == 'EDM';
     }

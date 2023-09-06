@@ -157,6 +157,8 @@ import { Cmmc2DomainResultsComponent } from './assessment/results/mat-cmmc2/cmmc
 import { ExecutiveCMMC2Component } from './reports/cmmc2/executive-cmmc2/executive-cmmc2.component';
 import { VadrDeficiencyComponent } from './reports/vadr/vadr-deficiency/vadr-deficiency.component';
 import { AssessmentInfo2TsaComponent } from './assessment/prepare/assessment-info/assessment-info2-tsa/assessment-info2-tsa.component';
+import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
+import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
 import { MaturityQuestionsNestedComponent } from './assessment/questions/maturity-questions/nested/maturity-questions-nested/maturity-questions-nested.component';
 import { TutorialCisComponent } from './assessment/prepare/maturity/tutorial-cis/tutorial-cis.component';
 import { VadrReportComponent } from './reports/vadr/vadr-report/vadr-report.component';
@@ -202,7 +204,10 @@ import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summ
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
+import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
+import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
+import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 
 const appRoutes: Routes = [
 
@@ -322,11 +327,14 @@ const appRoutes: Routes = [
               { path: 'info2', component: Assessment2InfoComponent },
               { path: 'info-tsa', component: AssessmentInfoTsaComponent },
               { path: 'info2-tsa', component: AssessmentInfo2TsaComponent },
+              { path: 'info-demog-iod', component: AssessmentDemogIodComponent },
+              { path: 'info-config-iod', component: AssessmentConfigIodComponent },
               { path: 'model-select', component: ModelSelectComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
               { path: 'tutorial-crr', component: TutorialCrrComponent },
+              { path: 'tutorial-imr', component: TutorialImrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
               { path: 'config-cis', component: ConfigCisComponent },
@@ -363,6 +371,7 @@ const appRoutes: Routes = [
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
+          { path: 'other-remarks', component: OtherRemarksComponent },
           { path: 'diagram-questions', component: DiagramQuestionsComponent },
 
           {
@@ -464,6 +473,7 @@ const appRoutes: Routes = [
       { path: 'executivecmmc2', component: ExecutiveCMMC2Component },
       { path: 'edm', component: EdmComponent },
       { path: 'edmDeficiencyReport', component: EdmDeficiencyComponent },
+      { path: 'genDeficiencyReport', component: GeneralDeficiencyComponent },
       { path: 'edmCommentsmarked', component: EdmCommentsmarkedComponent },
       { path: 'cisCommentsmarked', component: CisCommentsmarkedComponent },
       { path: 'acetexecutive', component: AcetExecutiveComponent },

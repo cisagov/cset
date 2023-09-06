@@ -23,33 +23,24 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { CrrReportModel } from '../../../models/reports.model';
-import { CrrService } from '../../../services/crr.service';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-performance-summary',
-  templateUrl: './cmu-performance-summary.component.html'
+  selector: 'app-cmu-nist-csf-cat-performance',
+  templateUrl: './cmu-nist-csf-cat-performance.component.html',
+  styleUrls: ['./cmu-nist-csf-cat-performance.component.scss']
 })
-export class CmuPerformanceSummaryComponent implements OnInit {
+export class CmuNistCsfCatPerformanceComponent implements OnInit {
 
-  @Input() model: CrrReportModel;
+  @Input() moduleName: string;
 
-  legend: string = '';
-  charts: any[] = [];
+  csfData: any;
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getCrrPerformanceSummaryLegendWidget().subscribe((resp: string) => {
-      this.legend = resp;
-    });
-
-    this.crrSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
-      this.charts = resp;
-    });
+    this.cmuSvc.getCsfCatPerf().subscribe((resp: any) => {
+      this.csfData = resp;
+    })
   }
-
-  getChart(i, j) {
-    return this.charts[i][j];
-  }
-
 }

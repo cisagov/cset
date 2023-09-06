@@ -25,6 +25,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-tutorial-cis',
@@ -35,7 +36,8 @@ export class TutorialCisComponent implements OnInit {
 
   constructor(
     public configSvc: ConfigService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public navSvc: NavigationService
   ) { }
 
   ngOnInit(): void {

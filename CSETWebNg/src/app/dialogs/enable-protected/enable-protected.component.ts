@@ -37,50 +37,58 @@ export class EnableProtectedComponent implements OnInit {
   modulesList: EnabledModule[];
   message: any;
   enableFeatureButtonClick: boolean = false;
+  csaWorkflowEnabled: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
     private featureSvc: EnableFeatureService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+    this.featureSvc.getEnabledFeatures().subscribe(features => {
+      this.modulesList = features.enabledModules;
+      this.csaWorkflowEnabled = features.csaWorkflowEnabled;
+    });
   }
 
   /**
-   * 
+   *
    */
   anyModulesLocked() {
     return (this.modulesList && this.modulesList.some(m => !m.unlocked));
   }
 
   /**
-   * 
+   *
    */
   allModulesUnlocked() {
     return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
   }
 
   /**
-   * 
+   *
    */
-  enableFeature() {
-    this.featureSvc.enableFeature().subscribe(m => {
+  enableModules() {
+    this.featureSvc.enableModules().subscribe(m => {
       this.featureSvc.sendEvent(true);
-      
+
       this.message = m;
-      this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+      this.featureSvc.getEnabledFeatures().subscribe(features => this.modulesList = features.enabledModules);
 
       this.enableFeatureButtonClick = true;
     });
   }
 
+  toggleCsaMode() {
+    this.csaWorkflowEnabled = !this.csaWorkflowEnabled;
+  }
+
   /**
-   * 
+   *
    */
   close() {
-    return this.dialog.close(this.enableFeatureButtonClick);
+    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick, csaWorkflowEnabled: this.csaWorkflowEnabled });
   }
 }
 
