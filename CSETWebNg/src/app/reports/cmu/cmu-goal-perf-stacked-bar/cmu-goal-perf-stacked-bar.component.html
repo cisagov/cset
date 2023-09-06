@@ -41,17 +41,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col" style="padding: 0;">
+                <div class="col p-0">
                     <h5 class="appendix-label">{{ moduleName }} Summary</h5>
                 </div>
             </div>
         </div>
-        <div class="col-10" style="width: 85%; padding: 0; position: relative;">
-            <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
-                <h3 class="depiction-title" style="padding-bottom: 1rem;">{{ moduleName }} Performance <br /> Summary
+        <div class="col-10 p-0 d-flex flex-row">
+            <div class="col-5 p-0" style="display: inline-flex; align-items: end">
+                <h3 class="depiction-title">{{ moduleName }} Performance <br /> Summary
                 </h3>
             </div>
-            <div class="col-6 tinytext" style="padding: 0; position: absolute; bottom: 0; left: 55%;"
+            <div class="col-7 tinytext p-0" style="display: inline-flex; align-items: end"
                 [innerHtml]="legend | safe">
             </div>
         </div>

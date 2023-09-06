@@ -37,7 +37,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IReportsDataBusiness _report;
         private readonly CSETContext _context;
 
-        public ReportsCrrController(ITokenManager token, ICrrScoringHelper crr, IAssessmentBusiness assessment, 
+        public ReportsCrrController(ITokenManager token, ICrrScoringHelper crr, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, IReportsDataBusiness report,
             IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
         {
@@ -86,7 +86,7 @@ namespace CSETWebCore.Api.Controllers
             viewModel.ReportChart = _crr.GetPercentageOfPractice();
             viewModel.crrResultsData = crrResultsData;
             viewModel.Structure = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(crrStructure.Root));
-   
+
             return Ok(viewModel);
         }
 
@@ -180,11 +180,11 @@ namespace CSETWebCore.Api.Controllers
             var XDocument = _crr.XDoc;
 
             List<List<object>> charts = new List<List<object>>();
-            foreach (XElement domain in XDocument.Root.Elements()) 
+            foreach (XElement domain in XDocument.Root.Elements())
             {
                 List<object> chartList = new List<object>();
 
-                for (int i = 1; i <= 5; i++) 
+                for (int i = 1; i <= 5; i++)
                 {
                     XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
                     el.Attribute("label").Value == "MIL-" + i);
@@ -192,7 +192,7 @@ namespace CSETWebCore.Api.Controllers
 
                     if (i == 1)
                     {
-                        chartList.Add( new GoalsHeatMap(mil, 26).ToString());
+                        chartList.Add(new GoalsHeatMap(mil, 26).ToString());
                     }
                     else
                     {
@@ -203,7 +203,7 @@ namespace CSETWebCore.Api.Controllers
 
                 charts.Add(chartList);
             }
-        
+
             return Ok(charts);
         }
 
@@ -247,7 +247,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reportscrr/widget/mil1FullAnswerDistrib")]
 
         public IActionResult getMil1FullAnswerDistribHtml()
-        {            
+        {
             return Content(GetTotalBarChart(), "text/html");
         }
 
@@ -282,7 +282,7 @@ namespace CSETWebCore.Api.Controllers
 
             List<object> funcs = new List<object>();
 
-            foreach (var func in _crr.XCsf.Descendants("Function")) 
+            foreach (var func in _crr.XCsf.Descendants("Function"))
             {
                 var distFunc = _crr.CrrReferenceAnswerDistrib(func);
 
@@ -292,7 +292,7 @@ namespace CSETWebCore.Api.Controllers
                 var chartFunc = new ScoreBarChart(bciFunc);
 
                 List<object> cats = new List<object>();
-                foreach (var cat in func.Elements()) 
+                foreach (var cat in func.Elements())
                 {
                     var distCat = _crr.CrrReferenceAnswerDistrib(cat);
 
@@ -301,21 +301,21 @@ namespace CSETWebCore.Api.Controllers
                     bciCat.AnswerCounts = new List<int> { distCat.Green, distCat.Yellow, distCat.Red };
                     var chartCat = new ScoreStackedBarChart(bciCat);
 
-                    cats.Add(new 
-                        { 
-                            Name = cat.Attribute("name").Value, 
-                            ParentCode = cat.Parent.Attribute("code").Value, 
-                            Code = cat.Attribute("code").Value,
-                            CatChart = chartCat.ToString() 
-                        });
+                    cats.Add(new
+                    {
+                        Name = cat.Attribute("name").Value,
+                        ParentCode = cat.Parent.Attribute("code").Value,
+                        Code = cat.Attribute("code").Value,
+                        CatChart = chartCat.ToString()
+                    });
                 }
 
-                funcs.Add(new 
-                    { 
-                        Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)), 
-                        Chart = chartFunc.ToString(),
-                        Cats = cats
-                    });
+                funcs.Add(new
+                {
+                    Function = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(func)),
+                    Chart = chartFunc.ToString(),
+                    Cats = cats
+                });
             }
 
             return Ok(funcs);
@@ -338,12 +338,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/reportscrr/widget/mil1PerformanceSummaryLegend")]
-
-        public IActionResult getMil1PerformanceSummaryLegend()
+        public IActionResult getMil1PerformanceSummaryLegend([FromQuery] string configuration = "")
         {
-           
-            return Content(GetMil1PerformanceSummaryLegendData(), "text/html");
-}
+            return Content(GetPerformanceSummaryLegend(configuration), "text/html");
+        }
 
         /// <summary>
         /// 
@@ -497,7 +495,7 @@ namespace CSETWebCore.Api.Controllers
 
                     List<object> subCats = new List<object>();
 
-                    foreach (var subcat in cat.Elements("Subcategory")) 
+                    foreach (var subcat in cat.Elements("Subcategory"))
                     {
                         var mappedQs = subcat.Element("References").Elements().ToList();
                         var block = new NistDomainBlock(mappedQs, false);
@@ -532,7 +530,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(funcs);
         }
 
-        private BarChartInput GetDeepAnswerDistrib(XElement element) 
+        private BarChartInput GetDeepAnswerDistrib(XElement element)
         {
             var answeredNo = new List<string>() { "N", "U" };
 
@@ -589,10 +587,16 @@ namespace CSETWebCore.Api.Controllers
             return totalBarChartString;
         }
 
-        private string GetMil1PerformanceSummaryLegendData()
+
+        /// <summary>
+        /// Gets an SVG of the legend with optional NA configuration.
+        /// </summary>
+        /// <param name="configuration"></param>
+        /// <returns></returns>
+        private string GetPerformanceSummaryLegend(string configuration = "")
         {
-            var legend = new MIL1PerformanceSummaryLegend();
+            var legend = new PerformanceSummaryLegend(configuration);
             return legend.ToString();
-        } 
+        }
     }
 }
