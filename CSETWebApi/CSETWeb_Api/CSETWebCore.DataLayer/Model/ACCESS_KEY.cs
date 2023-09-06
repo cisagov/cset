@@ -21,7 +21,7 @@ namespace CSETWebCore.DataLayer.Model
         public DateTime GeneratedDate { get; set; }
         [Required]
         public bool? PreventEncrypt { get; set; }
-        public bool? CisaAssessorWorkflow { get; set; }
+        public bool CisaAssessorWorkflow { get; set; }
 
         [InverseProperty("AccessKeyNavigation")]
         public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }

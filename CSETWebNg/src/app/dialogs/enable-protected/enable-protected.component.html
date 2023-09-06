@@ -38,6 +38,12 @@
       </tr>
     </table>
 
+    <div *ngIf="!modulesList || modulesList.length === 0">
+      <div class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
     <button class="m-0 mx-3 btn btn-primary" (click)="enableModules()" *ngIf="anyModulesLocked()">
       Enable Modules
     </button>
@@ -48,9 +54,13 @@
     </div>
 
     <div class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
-      <label for="csaToggle" class="font-weight-bold">CSA Assessment Workflow </label>
+      <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow </label>
       <div id="csaToggle" class="btn-group btn-group-toggle w-50 ml-2" data-toggle="buttons">
-        <label class="btn btn-level btn-rounded form-check-label" [class.active]="csaWorkflowEnabled" (change)="toggleCsaMode()">
+        <label
+          class="btn btn-level btn-rounded form-check-label"
+          [class.active]="cisaWorkflowEnabled"
+          (change)="toggleCisaAssessorWorkflow()"
+        >
           <input
             class="form-check-input"
             name="csaModeYes"
@@ -58,14 +68,14 @@
             type="radio"
             autocomplete="off"
             tabindex="0"
-            [checked]="csaWorkflowEnabled"
+            [checked]="cisaWorkflowEnabled"
           />
           On
         </label>
         <label
           class="btn btn-level btn-rounded form-check-label"
-          [class.active]="!csaWorkflowEnabled"
-          (change)="toggleCsaMode()"
+          [class.active]="!cisaWorkflowEnabled"
+          (change)="toggleCisaAssessorWorkflow()"
         >
           <input
             class="form-check-input"
@@ -74,7 +84,7 @@
             type="radio"
             autocomplete="off"
             tabindex="0"
-            [checked]="!csaWorkflowEnabled"
+            [checked]="!cisaWorkflowEnabled"
           />
           Off
         </label>

@@ -1,3 +1,4 @@
+import { ConfigService } from './../../services/config.service';
 ////////////////////////////////
 //
 //   Copyright 2023 Battelle Energy Alliance, LLC
@@ -37,18 +38,22 @@ export class EnableProtectedComponent implements OnInit {
   modulesList: EnabledModule[];
   message: any;
   enableFeatureButtonClick: boolean = false;
-  csaWorkflowEnabled: boolean = false;
+  cisaWorkflowEnabled: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
-    private featureSvc: EnableFeatureService) { }
+    private featureSvc: EnableFeatureService,
+    private configSvc: ConfigService) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.featureSvc.getEnabledFeatures().subscribe(features => {
-      this.modulesList = features.enabledModules;
-      this.csaWorkflowEnabled = features.csaWorkflowEnabled;
+    this.featureSvc.getEnabledFeatures().subscribe(enabledModules => {
+      this.modulesList = enabledModules;
+    });
+
+    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
+      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
     });
   }
 
@@ -74,21 +79,22 @@ export class EnableProtectedComponent implements OnInit {
       this.featureSvc.sendEvent(true);
 
       this.message = m;
-      this.featureSvc.getEnabledFeatures().subscribe(features => this.modulesList = features.enabledModules);
+      this.featureSvc.getEnabledFeatures().subscribe(enabledModules => this.modulesList = enabledModules);
 
       this.enableFeatureButtonClick = true;
     });
   }
 
-  toggleCsaMode() {
-    this.csaWorkflowEnabled = !this.csaWorkflowEnabled;
+  toggleCisaAssessorWorkflow() {
+    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
+    console.log(this.cisaWorkflowEnabled);
   }
 
   /**
    *
    */
   close() {
-    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick, csaWorkflowEnabled: this.csaWorkflowEnabled });
+    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
   }
 }
 
