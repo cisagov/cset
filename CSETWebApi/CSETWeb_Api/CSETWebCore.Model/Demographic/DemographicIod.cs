@@ -18,6 +18,7 @@ namespace CSETWebCore.Model.Demographic
     public class DemographicIod
     {
         public int AssessmentId { get; set; }
+        public DateTime AssessmentDate { get; set; }
         public int? OrganizationType { get; set; }
         public string OrganizationName { get; set; }
         public int? Sector { get; set; }

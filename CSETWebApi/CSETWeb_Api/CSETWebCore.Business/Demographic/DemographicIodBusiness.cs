@@ -30,14 +30,18 @@ namespace CSETWebCore.Business.Demographic
         /// <returns></returns>
         public DemographicIod GetDemographics(int assessmentId)
         {
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
             var x = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
             var opts = _context.DETAILS_DEMOGRAPHICS_OPTIONS.ToList();
 
             var d = new DemographicIod();
             d.AssessmentId = assessmentId;
+            d.AssessmentDate = assessment.Assessment_Date;
 
             d.OrganizationType = x.Find(z => z.DataItemName == "ORG-TYPE")?.IntValue;
-            d.OrganizationName = x.Find(z => z.DataItemName == "ORG-NAME")?.StringValue;
+            d.OrganizationName = info.Facility_Name;
             d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
             d.NumberEmployeesTotal = x.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.IntValue;
@@ -190,13 +194,17 @@ namespace CSETWebCore.Business.Demographic
         /// <param name="demographic"></param>
         public void SaveDemographics(DemographicIod demographic)
         {
+            var info = _context.INFORMATION.Where(x => x.Id == demographic.AssessmentId).FirstOrDefault();
+            info.Facility_Name = demographic.OrganizationName;
+
+
             //  Clean out any existing detail records
             var oldRecords = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographic.AssessmentId).ToList();
             _context.DETAILS_DEMOGRAPHICS.RemoveRange(oldRecords);
             _context.SaveChanges();
 
+
             SaveDemoRecord(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType);
-            SaveDemoRecord(demographic.AssessmentId, "ORG-NAME", demographic.OrganizationName);
             SaveDemoRecord(demographic.AssessmentId, "SECTOR", demographic.Sector);
             SaveDemoRecord(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector);
             SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal);
