@@ -75,8 +75,6 @@ export class ModelSelectComponent implements OnInit {
       this.maturitySvc.postSelection(model).subscribe((response: MaturityModel) => {
         this.assessSvc.assessment.maturityModel = response;
 
-        localStorage.removeItem('tree');
-
         // refresh Prepare section of the sidenav
         this.navSvc.buildTree();
       });

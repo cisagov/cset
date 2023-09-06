@@ -86,9 +86,6 @@ export class AssessmentComponent implements OnInit {
     this.assessSvc.getMode();
     this.setTab('prepare');
     this.navSvc.activeResultsView = null;
-    if (localStorage.getItem('tree')) {
-      this.navSvc.buildTree();
-    }
   }
 
   ngOnInit(): void {
