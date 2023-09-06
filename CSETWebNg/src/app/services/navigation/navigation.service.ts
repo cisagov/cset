@@ -116,13 +116,11 @@ export class NavigationService {
 
   setACETSelected(acet: boolean) {
     this.acetSelected = acet;
-    localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
-    localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 
@@ -159,7 +157,6 @@ export class NavigationService {
 
 
       // build the sidenav tree
-      localStorage.removeItem('tree');
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
     },
       (err: HttpErrorResponse) => {
@@ -211,10 +208,8 @@ export class NavigationService {
    */
   navNext(cur: string) {
     const originPage = this.workflow.getElementById(cur);
-    console.log('navNext: origin is ' + originPage.id);
-
     if (originPage == null) {
-      console.log('navNext: cannot find node ' + cur);
+      console.error('navNext: cannot find node ' + cur);
       return;
     }
 
@@ -236,7 +231,6 @@ export class NavigationService {
       }
     } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
 
-    console.log('navNext: routing to ' + target.id);
     this.routeToTarget(target);
   }
 

@@ -141,7 +141,6 @@ export class MyAssessmentsComponent implements OnInit {
     if (localStorage.getItem("returnPath")) {
     }
     else {
-      localStorage.removeItem('tree');
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 

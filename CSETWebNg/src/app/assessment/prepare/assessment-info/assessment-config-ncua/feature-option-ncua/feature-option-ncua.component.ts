@@ -136,7 +136,6 @@ export class FeatureOptionNcuaComponent implements OnInit {
     this.assessSvc.updateAssessmentDetails(this.assessSvc.assessment);
 
     // tell the nav service to refresh the nav tree
-    localStorage.removeItem('tree');
     this.navSvc.buildTree();
   }
 
