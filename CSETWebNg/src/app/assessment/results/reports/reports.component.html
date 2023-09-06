@@ -577,12 +577,8 @@
           >
             Back
           </button> -->
-          <button
-            class="btn btn-primary"
-            aria-label="Submit"
-            (click)="ncuaSvc.submitToMerit(this.findings)"
-            tabindex="0"
-            [disabled]="
+          <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0" 
+          [disabled]="
               (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
               this.ncuaSvc.unassignedIssues ||
               this.ncuaSvc.submitInProgress

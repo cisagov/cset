@@ -85,6 +85,10 @@ let headers = {
   unassignedIssueTitles: any = [];
   unassignedIssues: boolean = false;
 
+  // Make sure we have these variables before we submit MERIT data
+  creditUnionName = "";
+  creditUnionCharterNumber = "";
+
   ISE_StateLed: boolean = false;
 
   questions: any = null;
@@ -623,8 +627,7 @@ let headers = {
                 let msg = `<br>
                   <p>This examination has been previously submitted.</p>
                   <br>
-                  <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
-                  <p>Or would you like to <strong>overwrite</strong> the previous submission?</p>`;
+                  <p>Would you like to <strong>overwrite</strong> the previous submission data?</p>`;
       
                 this.dialog.open(MeritCheckComponent, {
                   disableClose: true, data: { title: "Submission Warning", messageText: msg }
@@ -659,7 +662,7 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                        let msg = "<br><p>Could not write the file."+error+"</p>";
+                        let msg = "<br><p>Could not write the file."+error.error+"</p>";
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Error", messageText: msg }
                         });
@@ -701,9 +704,9 @@ let headers = {
       },
       error => {        
         console.log(error);
-        let msg = "<br><p>Error"+error+"}}</p>";
+        let msg = "<br><p>Error:"+error.error+"</p>";
         this.dialog.open(MeritCheckComponent, {
-          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
         this.jsonStringReset();
       }
