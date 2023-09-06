@@ -1,0 +1,75 @@
+.function {
+    font-weight: bolder;
+    height: 100%;
+    width: 75px;
+    display: block;
+    position: relative;
+}
+
+.vertical-text {
+    color: #fff;
+    transform: rotate(-90deg);
+    padding: 50px 10px;
+    line-height: 24px;
+}
+
+.tinytext {
+    font-size: 8px;
+}
+
+th .category,
+.category {
+    width: 300px;
+}
+
+th .subcategory,
+.subcategory {
+    width: 210px;
+}
+
+th .references,
+.references {
+    width: 280px;
+}
+
+table {
+    page-break-inside: auto;
+}
+
+th {
+    background-color: black;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: left;
+    height: 20px;
+}
+
+.text-1 {
+    font-size: .7rem;
+}
+
+
+tr,
+td {
+    padding: 0.5rem 0;
+    text-align: left;
+    page-break-inside: avoid !important;
+}
+
+
+.bb-1 {
+    border-bottom: solid 1px black !important;
+}
+
+.bb-2 {
+    border-bottom: solid 2px black !important;
+}
+
+.bb-3 {
+    border-bottom: solid 3px black;
+}
+
+.break {
+    page-break-before: always;
+}

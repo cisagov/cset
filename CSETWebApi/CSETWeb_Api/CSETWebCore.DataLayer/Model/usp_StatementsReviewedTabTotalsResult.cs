@@ -9,9 +9,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public int Assessment_Id { get; set; }
         public string ReviewType { get; set; }
-        [Column(TypeName = "decimal(38,2)")]
         public decimal? Totals { get; set; }
-        [Column(TypeName = "decimal(38,2)")]
         public decimal? GrandTotal { get; set; }
     }
 }

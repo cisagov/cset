@@ -1,0 +1,400 @@
+﻿<NistCsfStructure>
+  <Function code="ID" name="Identify" desc="The activities in the Identify Function are foundational for effective use
+    of the Framework. Understanding the business context, the resources
+    that support critical functions, and the related cybersecurity risks
+    enables an organization to focus and prioritize its efforts, consistent
+    with its risk management strategy and business needs.">
+    <Category title="ID.AM" code="AM" name="Asset Management" desc="The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to organizational objectives and the organization’s risk strategy.">
+      <References />
+      <Subcategory title="ID.AM-1" desc="Physical devices and systems within the organization are inventoried">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.AM-2" desc="Software platforms and applications within the organization are inventoried">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.AM-3" desc="Organizational communication and data flows are mapped">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.AM-4" desc="External information systems are catalogued">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.AM-5" desc="Resources (e.g., hardware, devices, data, time, personnel, and software) are prioritized based on their classification, criticality, and business value">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.AM-6" desc="Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders (e.g., suppliers, customers, partners) are established">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="ID.BE" code="BE" name="Business Environment" desc="The organization’s mission, objectives, stakeholders, and activities are understood and prioritized; this information is used to inform cybersecurity roles, responsibilities, and risk management decisions.">
+      <References />
+      <Subcategory title="ID.BE-1" desc="The organization’s role in the supply&#xA;chain is identified and communicated">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.BE-2" desc="The organization’s place in critical infrastructure and its industry sector is identified and communicated">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.BE-3" desc="Priorities for organizational mission, objectives, and activities are established and communicated">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.BE-4" desc="Dependencies and critical functions for delivery of critical services are established">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.BE-5" desc="Resilience requirements to support delivery of critical services are established for all operating states (e.g. under duress/attack, during recovery, normal operations)">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="ID.GV" code="GV" name="Governance" desc="The policies, procedures, and processes to manage and monitor the organization’s regulatory, legal, risk, environmental, and operational requirements are understood and inform the management of cybersecurity risk.">
+      <Subcategory title="ID.GV-1" desc="Organizational cybersecurity policy is established and communicated">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.GV-2" desc="Cybersecurity roles and responsibilities are coordinated and aligned with internal roles and external partners">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.GV-3" desc="Legal and regulatory requirements regarding cybersecurity, including privacy and civil liberties obligations, are understood and managed">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.GV-4" desc="Governance and risk management processes address cybersecurity risks">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="ID.RA" code="RA" name="Risk Assessment" desc="The organization understands the cybersecurity risk to organizational operations (including mission, functions, image, or reputation), organizational assets, and individuals.">
+      <References />
+      <Subcategory title="ID.RA-1" desc="Asset vulnerabilities are identified and documented">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RA-2" desc="Cyber threat intelligence is received from information sharing forums and sources">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RA-3" desc="Threats, both internal and external, are identified and documented">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RA-4" desc="Potential business impacts and likelihoods are identified">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RA-5" desc="Threats, vulnerabilities, likelihoods, and impacts are used to determine risk">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RA-6" desc="Risk responses are identified and prioritized">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="ID.RM" code="RM" name="Risk Management Strategy" desc="The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support operational risk decisions.">
+      <References />
+      <Subcategory title="ID.RM-1" desc="Risk management processes are established, managed, and agreed to by organizational stakeholders">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RM-2" desc="Organizational risk tolerance is determined and clearly expressed">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.RM-3" desc="The organization’s determination of risk tolerance is informed by its role in critical infrastructure and sector specific risk analysis">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="ID.SC" code="SC" name="Supply Chain Risk Management" desc="The organization’s priorities, constraints, risk tolerances, and assumptions are established and used to support risk decisions associated with managing supply chain risk. The organization has established and implemented the processes to identify, assess and manage supply chain risks.">
+      <References />
+      <Subcategory title="ID.SC-1" desc="Cyber supply chain risk management processes are identified, established, assessed, managed, and agreed to by organizational stakeholders">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.SC-2" desc="Suppliers and third party partners of information systems, components, and services are identified, prioritized, and assessed using a cyber supply chain risk assessment process">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.SC-3" desc="Contracts with suppliers and third-party partners are used to implement appropriate measures designed to meet the objectives of an organization’s cyber-security program and Cyber Supply Chain Risk Management Plan.">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.SC-4" desc="Suppliers and third-party partners are routinely assessed using audits, test results, or other forms of evaluations to confirm they are meeting their contractual obligations.">
+        <References />
+      </Subcategory>
+      <Subcategory title="ID.SC-5" desc="Response and recovery planning and testing are conducted with suppliers and third-party providers">
+        <References />
+      </Subcategory>
+    </Category>
+  </Function>
+  <Function code="PR" name="Protect" desc="The Protect Function supports the ability to limit or contain the impact of a potential cybersecurity event.">
+    <Category title="PR.AC" code="AC" name="Identity Management, Authentication and Access Control" desc="Access to physical and logical assets and associated facilities is limited to authorized users, processes, and devices, and is managed consistent with the assessed risk of unauthorized access to authorized activities and transactions.">
+      <References />
+      <Subcategory title="PR.AC-1" desc="Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users and processes">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-2" desc="Physical access to assets is managed and protected">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-3" desc="Remote access is managed">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-4" desc="Access permissions and authorizations are managed, incorporating the principles of least privilege and separation of duties">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-5" desc="Network integrity is protected (e.g., network segregation, network segmentation)">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-6" desc="Identities are proofed and bound to credentials and asserted in interactions">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AC-7" desc="Users, devices, and other assets are authenticated (e.g., single-factor, multi-factor) commensurate with the risk of the transaction (e.g., individuals’ security and privacy risks and other organizational risks)">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="PR.AT" code="AT" name="Awareness and Training" desc="The organization’s personnel and partners are provided cybersecurity awareness education and are trained to perform their cybersecurity-related duties and responsibilities consistent with related policies, procedures, and agreements.">
+      <References />
+      <Subcategory title="PR.AT-1" desc="All users are informed and trained">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AT-2" desc="Privileged users understand their roles and responsibilities">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AT-3" desc="Third-party stakeholders (e.g., suppliers, customers, partners) understand their roles and responsibilities">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AT-4" desc="Senior executives understand their roles and responsibilities">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.AT-5" desc="Physical and cybersecurity personnel understand their roles and responsibilities">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="PR.DS" code="DS" name="Data Security" desc="Information and records (data) are managed consistent with the organization’s risk strategy to protect the confidentiality, integrity, and availability of information.">
+      <References />
+      <Subcategory title="PR.DS-1" desc="Data-at-rest is protected">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-2" desc="Data-in-transit is protected">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-3" desc="Assets are formally managed throughout removal, transfers, and disposition">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-4" desc="Adequate capacity to ensure availability is maintained">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-5" desc="Protections against data leaks are implemented">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-6" desc="Integrity checking mechanisms are used to verify software, firmware, and information integrity">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-7" desc="The development and testing environment(s) are separate from the production environment">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.DS-8" desc="Integrity checking mechanisms are used to verify hardware integrity">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="PR.IP" code="IP" name="Information Protection Processes and Procedures" desc="Security policies (that address purpose, scope, roles, responsibilities, management commitment, and coordination among organizational entities), processes, and procedures are maintained and used to manage protection of information systems and assets.">
+      <References />
+      <Subcategory title="PR.IP-1" desc="A baseline configuration of information technology/industrial control systems is created and maintained incorporating security principles (e.g. concept of least functionality)">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-2" desc="A System Development Life Cycle to manage systems is implemented">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-3" desc="Configuration change control processes are in place">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-4" desc="Backups of information are conducted, maintained, and tested">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-5" desc="Policy and regulations regarding the physical operating environment for organizational assets are met">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-6" desc="Data is destroyed according to policy">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-7" desc="Protection processes are improved">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-8" desc="Effectiveness of protection technologies is shared">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-9" desc="Response plans (Incident Response and Business Continuity) and recovery plans (Incident Recovery and Disaster Recovery) are in place and managed">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-10" desc="Response and recovery plans are tested">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-11" desc="Cybersecurity is included in human resources practices (e.g., deprovisioning, personnel screening)">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.IP-12" desc="A vulnerability management plan is developed and implemented">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="PR.MA" code="MA" name="Maintenance" desc="Maintenance and repairs of industrial control and information system components are performed consistent with policies and procedures.">
+      <References />
+      <Subcategory title="PR.MA-1" desc="Maintenance and repair of organizational assets are performed and logged, with approved and controlled tools">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.MA-2" desc="Remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="PR.PT" code="PT" name="Protective Technology" desc="Technical security solutions are managed to ensure the security and resilience of systems and assets, consistent with related policies, procedures, and agreements.">
+      <References />
+      <Subcategory title="PR.PT-1" desc="Audit/log records are determined, documented, implemented, and reviewed in accordance with policy">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.PT-2" desc="Removable media is protected and its use restricted according to policy">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.PT-3" desc="The principle of least functionality is incorporated by configuring systems to provide only essential capabilities">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.PT-4" desc="Communications and control networks are protected">
+        <References />
+      </Subcategory>
+      <Subcategory title="PR.PT-5" desc="Mechanisms (e.g., failsafe, load balancing, hot swap) are implemented to achieve resilience requirements in normal and adverse situations">
+        <References />
+      </Subcategory>
+    </Category>
+  </Function>
+  <Function code="DE" name="Detect" desc="The Detect Function enables timely discovery of cybersecurity events.">
+    <Category title="DE.AE" code="AE" name="Anomalies and Events" desc="Anomalous activity is detected and the potential impact of events is understood.">
+      <Subcategory title="DE.AE-1" desc="A baseline of network operations and expected data flows for users and systems is established and managed">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.AE-2" desc="Detected events are analyzed to understand attack targets and methods">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.AE-3" desc="Event data are collected and correlated from multiple sources and sensors">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.AE-4" desc="Impact of events is determined">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.AE-5" desc="Incident alert thresholds are established">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="DE.CM" code="CM" name="Security Continuous Monitoring" desc="The information system and assets are monitored to identify cybersecurity events and verify the effectiveness of protective measures.">
+      <References />
+      <Subcategory title="DE.CM-1" desc="The network is monitored to detect potential cybersecurity events">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-2" desc="The physical environment is monitored to detect potential cybersecurity events">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-3" desc="Personnel activity is monitored to detect potential cybersecurity events">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-4" desc="Malicious code is detected">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-5" desc="Unauthorized mobile code is detected">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-6" desc="External service provider activity is monitored to detect potential cybersecurity events">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-7" desc="Monitoring for unauthorized personnel, connections, devices, and software is performed">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.CM-8" desc="Vulnerability scans are performed">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="DE.DP" code="DP" name="Detection Processes" desc="Detection processes and procedures are maintained and tested to ensure awareness of anomalous events.">
+      <Subcategory title="DE.DP-1" desc="Roles and responsibilities for detection are well defined to ensure accountability">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.DP-2" desc="Detection activities comply with all applicable requirements">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.DP-3" desc="Detection processes are tested">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.DP-4" desc="Event detection information is communicated">
+        <References />
+      </Subcategory>
+      <Subcategory title="DE.DP-5" desc="Detection processes are continuously improved">
+        <References />
+      </Subcategory>
+    </Category>
+  </Function>
+  <Function code="RS" name="Respond" desc="The Respond Function supports the ability to contain the impact of a potential cybersecurity event.">
+    <Category title="RS.RP" code="RP" name="Response Planning" desc="Response processes and procedures are executed and maintained, to ensure response to detected cybersecurity incidents.">
+      <Subcategory title="RS.RP-1" desc="Response plan is executed during or after an incident">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RS.CO" code="CO" name="Communications" desc="Response activities are coordinated with internal and external stakeholders (e.g. external support from law enforcement agencies).">
+      <Subcategory title="RS.CO-1" desc="Personnel know their roles and order of operations when a response is needed">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.CO-2" desc="Incidents are reported consistent with established criteria">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.CO-3" desc="Information is shared consistent with response plans">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.CO-4" desc="Coordination with stakeholders occurs consistent with response plans">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.CO-5" desc="Voluntary information sharing occurs with external stakeholders to achieve broader cybersecurity situational awareness">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RS.AN" code="AN" name="Analysis" desc="Analysis is conducted to ensure effective response and support recovery activities.">
+      <Subcategory title="RS.AN-1" desc="Notifications from detection systems are investigated">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.AN-2" desc="The impact of the incident is understood">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.AN-3" desc="Forensics are performed">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.AN-4" desc="Incidents are categorized consistent with response plans">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.AN-5" desc="Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources (e.g. internal testing, security bulletins, or security researchers)">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RS.MI" code="MI" name="Mitigation" desc="Activities are performed to prevent expansion of an event, mitigate its effects, and resolve the incident.">
+      <Subcategory title="RS.MI-1" desc="Incidents are contained">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.MI-2" desc="Incidents are mitigated">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.MI-3" desc="Newly identified vulnerabilities are mitigated or documented as accepted risks">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RS.IM" code="IM" name="Improvements" desc="Organizational response activities are improved by incorporating lessons learned from current and previous detection/response activities.">
+      <References />
+      <Subcategory title="RS.IM-1" desc="Response plans incorporate lessons learned">
+        <References />
+      </Subcategory>
+      <Subcategory title="RS.IM-2" desc="Response strategies are updated">
+        <References />
+      </Subcategory>
+    </Category>
+  </Function>
+  <Function code="RC" name="Recover" desc="The Recover Function supports timely recovery to normal operations to reduce the impact from a cybersecurity event.">
+    <Category title="RC.RP" code="RP" name="Recovery Planning" desc="Recovery processes and procedures are executed and maintained to ensure restoration of systems or assets affected by cybersecurity incidents.">
+      <Subcategory title="RC.RP-1" desc="Recovery plan is executed during or after a cybersecurity incident">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RC.IM" code="IM" name="Improvements" desc="Recovery planning and processes are improved by incorporating lessons learned into future activities.">
+      <References />
+      <Subcategory title="RC.IM-1" desc="Recovery plans incorporate lessons learned">
+        <References />
+      </Subcategory>
+      <Subcategory title="RC.IM-2" desc="Recovery strategies are updated">
+        <References />
+      </Subcategory>
+    </Category>
+    <Category title="RC.CO" code="CO" name="Communications" desc="Restoration activities are coordinated with internal and external parties (e.g. coordinating centers, Internet Service Providers, owners of attacking systems, victims, other CSIRTs, and vendors).">
+      <Subcategory title="RC.CO-1" desc="Public relations are managed">
+        <References />
+      </Subcategory>
+      <Subcategory title="RC.CO-2" desc="Reputation is repaired after an incident">
+        <References />
+      </Subcategory>
+      <Subcategory title="RC.CO-3" desc="Recovery activities are communicated to internal and external stakeholders as well as executive and management teams">
+        <References />
+      </Subcategory>
+    </Category>
+  </Function>
+</NistCsfStructure>

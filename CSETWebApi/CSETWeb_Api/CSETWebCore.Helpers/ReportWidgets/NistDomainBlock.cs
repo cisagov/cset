@@ -49,7 +49,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// Initializes an XDocument with the CRR questions in Domain/Question structure.
         /// Each Domain element is then used to render a heatmap SVG for that domain.
         /// </summary>
-        public NistDomainBlock(List<XElement> crrRefs)
+        public NistDomainBlock(List<XElement> crrRefs, bool isCategory)
         {
             _crrRefs = crrRefs;
             _xMappedAnswers = new XDocument(new XElement("MappedAnswers"));
@@ -121,6 +121,18 @@ namespace CSETWebCore.Helpers.ReportWidgets
             // build a heatmap for each domain
             foreach (var xDomain in _xMappedAnswers.Root.Elements("Domain"))
             {
+                var heatmap = new CsfHeatmap(xDomain);
+                HeatmapList.Add(heatmap.ToString());
+            }
+
+            // build a placeholder heatmap if there are no mapped questions
+            // and we are not building heatmaps for a category
+            if (!isCategory && crrRefs.Count == 0)
+            {
+                var xDomain = new XElement("Domain");
+                xDomain.SetAttributeValue("abbrev", "");
+                xDomain.SetAttributeValue("title", "NA");
+                xDomain.SetAttributeValue("na", "true");
                 var heatmap = new CsfHeatmap(xDomain);
                 HeatmapList.Add(heatmap.ToString());
             }

@@ -255,6 +255,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[DETAILS_DEMOGRAPHICS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DETAILS_DEMOGRAPHICS_OPTIONS]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[DIAGRAM_CONTAINER]",
          "ObjectType": 0
       },
@@ -1379,11 +1387,10 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "(localdb)\\mssqllocaldb.CSETWeb",
+   "UiHint": "INL652652-win10\\MSSQLSERVER01.CSETWeb",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
-   "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,

@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using Microsoft.EntityFrameworkCore;
 
@@ -165,6 +166,42 @@ namespace CSETWebCore.Helpers
 
                 return new List<string>();
             }
+        }
+
+
+        /// <summary>
+        /// Returns an object containing source documents, additional documents 
+        /// for the questions in a maturity model.
+        /// </summary>
+        /// <param name="modelId"></param>
+        /// <returns></returns>
+        public static QuestionReferences GetReferencesForModel(CsetwebContext context, int modelId)
+        {
+            var qr = new QuestionReferences();
+
+            var _questionIds = context.MATURITY_QUESTIONS.Where(q => q.Maturity_Model_Id == modelId).Select(x => x.Mat_Question_Id).ToList();
+            var msf = context.MATURITY_SOURCE_FILES.Where(x => _questionIds.Contains(x.Mat_Question_Id)).Include(x => x.Gen_File).ToList();
+            msf.ForEach(x => {
+                qr.SourceDocuments.Add(new RefDocument()
+                {
+                    Title = x.Gen_File.Title,
+                    FileName = x.Gen_File.File_Name,
+                    SectionRef = x.Section_Ref,
+                    QuestionId = x.Mat_Question_Id
+                });
+            });
+            var mr = context.MATURITY_REFERENCES.Where(x => _questionIds.Contains(x.Mat_Question_Id)).Include(x => x.Gen_File).ToList();
+            mr.ForEach(x => {
+                qr.AddtionalDocuments.Add(new RefDocument()
+                {
+                    Title = x.Gen_File.Title,
+                    FileName = x.Gen_File.File_Name,
+                    SectionRef = x.Section_Ref,
+                    QuestionId = x.Mat_Question_Id
+                });
+            });
+
+            return qr;
         }
     }
 }

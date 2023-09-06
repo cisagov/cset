@@ -90,6 +90,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
         public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
         public virtual DbSet<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
+        public virtual DbSet<DETAILS_DEMOGRAPHICS> DETAILS_DEMOGRAPHICS { get; set; }
+        public virtual DbSet<DETAILS_DEMOGRAPHICS_OPTIONS> DETAILS_DEMOGRAPHICS_OPTIONS { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
         public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
         public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
@@ -1184,6 +1186,17 @@ namespace CSETWebCore.DataLayer.Model
                     .WithMany(p => p.DEMOGRAPHIC_ANSWERS)
                     .HasForeignKey(d => d.SubSectorId)
                     .HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSubSector");
+            });
+
+            modelBuilder.Entity<DETAILS_DEMOGRAPHICS>(entity =>
+            {
+                entity.HasKey(e => new { e.Assessment_Id, e.DataItemName });
+            });
+
+            modelBuilder.Entity<DETAILS_DEMOGRAPHICS_OPTIONS>(entity =>
+            {
+                entity.HasKey(e => e.Option_Id)
+                    .HasName("PK_DETAIL_DEMOG_OPTIONS");
             });
 
             modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>

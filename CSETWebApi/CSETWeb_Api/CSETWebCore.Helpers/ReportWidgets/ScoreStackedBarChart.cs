@@ -21,6 +21,15 @@ namespace CSETWebCore.Helpers.ReportWidgets
     {
         private XDocument xDoc;
 
+        private bool _isNA = false;
+
+        private bool _isEmpty = false;
+
+
+        /// <summary>
+        /// Creates an SVG stacked bar chart representing the scores provided.
+        /// </summary>
+        /// <param name="d"></param>
         public ScoreStackedBarChart(BarChartInput d)
         {
             int maxAnswerCount = d.AnswerCounts.Sum();
@@ -30,6 +39,22 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xSvg.SetAttributeValue("width", "100%");
             xSvg.SetAttributeValue("height", d.Height.ToString());
 
+            if (d.AnswerCounts.All(x => x == 0))                
+            {
+                _isNA = true;
+
+                if (d.ShowNA)
+                {
+                    d.AnswerCounts[0] = 1;
+                    maxAnswerCount = 1;
+                    d.BarColors[0] = "placeholder-gray";
+                }
+
+                if (d.HideEmptyChart)
+                {
+                    _isEmpty = true;
+                }
+            }
 
             var x = 0f;
 
@@ -43,9 +68,9 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     float pct = (float)d.AnswerCounts[i] / (float)maxAnswerCount;
                     var segmentWidth = ((float)d.Width * pct);
 
-                    xRect.SetAttributeValue("height", d.Height.ToString());
-                    xRect.SetAttributeValue("width", segmentWidth.ToString());
-                    xRect.SetAttributeValue("x", x.ToString());
+                    xRect.SetAttributeValue("height", $"{d.Height}");
+                    xRect.SetAttributeValue("width", $"{segmentWidth}");
+                    xRect.SetAttributeValue("x", $"{x}");
                     xRect.SetAttributeValue("y", "0");
                     var fillColor = WidgetResources.ColorMap[d.BarColors[i]];
                     xRect.SetAttributeValue("fill", fillColor);
@@ -54,12 +79,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
                     // labels on the segments
                     var xBarLabel = new XElement("text");
                     xSvg.Add(xBarLabel);
-                    xBarLabel.Value = d.AnswerCounts[i].ToString();
-                    xBarLabel.SetAttributeValue("x", (x + segmentWidth * 0.5f).ToString());
-                    xBarLabel.SetAttributeValue("y", (d.Height * 0.5f).ToString());
+                    xBarLabel.Value = _isNA ? "Not Applicable" : $"{d.AnswerCounts[i]}";
+                    xBarLabel.SetAttributeValue("x", $"{x + segmentWidth * 0.5f}");
+                    xBarLabel.SetAttributeValue("y", $"{d.Height * 0.5f}");
                     xBarLabel.SetAttributeValue("text-anchor", "middle");
                     xBarLabel.SetAttributeValue("dominant-baseline", "middle");
-                    xBarLabel.SetAttributeValue("font-size", "70%");
+                    xBarLabel.SetAttributeValue("font-size", "90%");
                     if (d.Height < 15)
                     {
                         xBarLabel.SetAttributeValue("font-size", "100%");
@@ -80,6 +105,10 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <returns></returns>
         public override string ToString()
         {
+            if (_isEmpty)
+            {
+                return "";
+            }
             return xDoc.ToString();
         }   
     }
