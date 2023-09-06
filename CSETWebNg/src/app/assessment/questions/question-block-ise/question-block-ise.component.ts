@@ -72,7 +72,7 @@ export class QuestionBlockIseComponent implements OnInit {
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Note - -\n';
-  summaryConvoBuffer = '\n- - End of Statement Summary - -\n';
+  summaryConvoBuffer = '\n\n- - End of Statement Summary - -\n';
   summaryBoxMax = 800;
     
   // Used to place buttons/text boxes at the bottom of each subcategory
@@ -577,7 +577,7 @@ export class QuestionBlockIseComponent implements OnInit {
     let summarySegment = '';
     // this.summaryCommentCopy = q.comment;
     if (this.assessSvc.isISE()) {
-      let bracketContact = '[' + this.contactInitials + ']';
+      let bracketContact = '[' + this.contactInitials + ']\n';
 
       if (this.summaryCommentCopy.indexOf(bracketContact) !== 0) {
         if (this.summaryCommentCopy !== '') {

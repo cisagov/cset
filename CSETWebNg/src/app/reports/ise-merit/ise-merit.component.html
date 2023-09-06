@@ -75,35 +75,39 @@
                     <table class="table-site-info">
                         <tr>
                             <td>Assessment Name:</td>
-                            <td>{{this.demographics?.information?.assessment_Name}}</td>
+                            <td>{{demographics?.information?.assessment_Name}}</td>
                         </tr>
                         <tr>
                             <td>Assessment Date:</td>
-                            <td>{{this.demographics?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                            <td>{{demographics?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>Credit Union:</td>
-                            <td>{{this.demographics?.information?.credit_Union_Name}}</td>
+                            <td>{{demographics?.information?.credit_Union_Name}}</td>
                         </tr>
                         <tr>
                             <td>City or Site Name:</td>
-                            <td>{{this.demographics?.information?.city_Or_Site_Name}}</td>
+                            <td>{{demographics?.information?.city_Or_Site_Name}}</td>
                         </tr>
                         <tr>
                             <td>State, Province or Region:</td>
-                            <td>{{this.demographics?.information?.state_Province_Or_Region}}</td>
+                            <td>{{demographics?.information?.state_Province_Or_Region}}</td>
+                        </tr>
+                        <tr>
+                            <td>Region Code:</td>
+                            <td>{{ncuaSvc.regionCodeTranslator(demographics?.information?.region_Code)}}</td>
                         </tr>
                         <tr>
                             <td>Charter:</td>
-                            <td>{{this.demographics?.information?.charter}}</td>
+                            <td>{{demographics?.information?.charter}}</td>
                         </tr>
                         <tr>
                             <td>Assets:</td>
-                            <td>{{this.demographics?.information?.assets | currency}}</td>
+                            <td>{{demographics?.information?.assets | currency}}</td>
                         </tr>
                         <tr>
                             <td>Exam Level:</td>
-                            <td>{{this.examLevel}}</td>
+                            <td>{{examLevel}}</td>
                         </tr>
                     </table>
                 </div>
@@ -271,7 +275,7 @@
                                             <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
                                                 <label class="btn form-check-label btn-copy" style="text-align: right; font-weight: normal;font-size: 14px;
                                                         flex-direction: column; line-height: 150%;" title="Copy to Clipboard"
-                                                        [cdkCopyToClipboard]="this.getChildQuestionNumber(allActionsInFinding.question_Title) + ': ' + allActionsInFinding.action_Items">
+                                                        [cdkCopyToClipboard]="allActionsInFinding.action_Items">
                                                         <span class="cset-icons-copy" ></span>
                                                 </label> {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{ allActionsInFinding.action_Items }}
                                             </div>

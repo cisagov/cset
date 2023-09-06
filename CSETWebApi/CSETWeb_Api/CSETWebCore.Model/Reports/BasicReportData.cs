@@ -66,6 +66,7 @@ namespace CSETWebCore.Business.Reports
             public long Assets { get; set; }
             public string Assessment_Effective_Date { get; set; }
             public string Assessment_Creation_Date { get; set; }
+            public int Region_Code { get; set; }
 
 
             // Maturity Properties
