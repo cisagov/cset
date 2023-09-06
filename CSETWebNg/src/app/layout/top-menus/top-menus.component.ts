@@ -48,20 +48,18 @@ import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 
-
 @Component({
   selector: 'app-top-menus',
   templateUrl: './top-menus.component.html',
   styleUrls: ['./top-menus.component.scss']
 })
 export class TopMenusComponent implements OnInit {
-
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   showFullAccessKey = false;
 
   @Input()
-  skin: string;
+    skin: string;
 
   constructor(
     public auth: AuthenticationService,
@@ -74,14 +72,14 @@ export class TopMenusComponent implements OnInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     ChangeDetectionStrategy.OnPush;
     this.docUrl = this.configSvc.docUrl;
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
+    if (localStorage.getItem('returnPath')) {
+      if (!Number(localStorage.getItem('redirectid'))) {
+        this.hasPath(localStorage.getItem('returnPath'));
       }
     }
 
@@ -90,53 +88,66 @@ export class TopMenusComponent implements OnInit {
 
   hasPath(rpath: string) {
     if (rpath != null) {
-      localStorage.removeItem("returnPath");
-      this.router.navigate([rpath], { queryParamsHandling: "preserve" });
+      localStorage.removeItem('returnPath');
+      this.router.navigate([rpath], { queryParamsHandling: 'preserve' });
     }
   }
 
   setupShortCutKeys() {
     // About
-    this._hotkeysService.add(new Hotkey('alt+a', (event: KeyboardEvent): boolean => {
-      this.about();
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+a', (event: KeyboardEvent): boolean => {
+        this.about();
+        return false; // Prevent bubbling
+      })
+    );
     // Accessibility Features
-    this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "ApplicationDocuments/AccessibilityStatement.pdf", "_blank");
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
+        window.open(this.docUrl + 'ApplicationDocuments/AccessibilityStatement.pdf', '_blank');
+        return false; // Prevent bubbling
+      })
+    );
     // User Guide
-    this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "htmlhelp/index.htm", "_blank");
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
+        window.open(this.docUrl + 'htmlhelp/index.htm', '_blank');
+        return false; // Prevent bubbling
+      })
+    );
     // Resource Library
-    this._hotkeysService.add(new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
-      this.router.navigate(['resource-library']);
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+l', (event: KeyboardEvent): boolean => {
+        this.router.navigate(['resource-library']);
+        return false; // Prevent bubbling
+      })
+    );
     // Parameter Editor
-    this._hotkeysService.add(new Hotkey('alt+m', (event: KeyboardEvent): boolean => {
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+m', (event: KeyboardEvent): boolean => {
+        return false; // Prevent bubbling
+      })
+    );
     // New Assessment
-    this._hotkeysService.add(new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
-      const dialogRef = this.dialog.open(ConfirmComponent);
-      dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to create a new assessment? ";
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.assessSvc.newAssessment();
-        }
-      });
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
+        const dialogRef = this.dialog.open(ConfirmComponent);
+        dialogRef.componentInstance.confirmMessage = 'Are you sure you want to create a new assessment? ';
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.assessSvc.newAssessment();
+          }
+        });
+        return false; // Prevent bubbling
+      })
+    );
     // User Guide (PDF)
-    this._hotkeysService.add(new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
-      window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+p', (event: KeyboardEvent): boolean => {
+        window.open(this.docUrl + 'cdDocs/UserGuide.pdf', '_blank');
+        return false; // Prevent bubbling
+      })
+    );
 
     // Questionnaires
     // this._hotkeysService.add(new Hotkey('alt+q', (event: KeyboardEvent): boolean => {
@@ -144,27 +155,34 @@ export class TopMenusComponent implements OnInit {
     // }));
 
     // Protected Features
-    this._hotkeysService.add(new Hotkey('alt+r', (event: KeyboardEvent): boolean => {
-      this.enableProtectedFeature();
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+r', (event: KeyboardEvent): boolean => {
+        this.enableProtectedFeature();
+        return false; // Prevent bubbling
+      })
+    );
     // Assessment Documents
-    this._hotkeysService.add(new Hotkey('alt+t', (event: KeyboardEvent): boolean => {
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+t', (event: KeyboardEvent): boolean => {
+        return false; // Prevent bubbling
+      })
+    );
     // Advisory
-    this._hotkeysService.add(new Hotkey('alt+v', (event: KeyboardEvent): boolean => {
-      this.advisory();
-      return false; // Prevent bubbling
-    }));
+    this._hotkeysService.add(
+      new Hotkey('alt+v', (event: KeyboardEvent): boolean => {
+        this.advisory();
+        return false; // Prevent bubbling
+      })
+    );
     // Keyboard Shortcuts
-    this._hotkeysService.add(new Hotkey('?', (event: KeyboardEvent): boolean => {
-      if (!this.configSvc.isMobile()) {
-        this.showKeyboardShortcuts();
-      }
-      return false; // Prevent bubbling
-    }));
-
+    this._hotkeysService.add(
+      new Hotkey('?', (event: KeyboardEvent): boolean => {
+        if (!this.configSvc.isMobile()) {
+          this.showKeyboardShortcuts();
+        }
+        return false; // Prevent bubbling
+      })
+    );
   }
 
   /**
@@ -184,43 +202,42 @@ export class TopMenusComponent implements OnInit {
    * or on a mobile device and decides if the item should show.
    */
   showMenuItem(item: string) {
-
     // This is not applicable to a large enterprise setup.
     // Also, we are hiding the FAA gallery cards for now.
     if (item == 'enable protected features') {
-      return (this.configSvc.behaviors?.showEnableProtectedFeatures ?? true);
+      return this.configSvc.behaviors?.showEnableProtectedFeatures ?? true;
     }
 
     if (item == 'reconfigure unc path') {
-      return (this.configSvc.behaviors?.showReconfigureUncPath ?? true);
+      return this.configSvc.behaviors?.showReconfigureUncPath ?? true;
     }
 
     if (item == 'parameter editor') {
-      var show = this.configSvc.behaviors?.showMenuParameterEditor ?? true;
+      let show = this.configSvc.behaviors?.showMenuParameterEditor ?? true;
       show = show && !this.configSvc.isMobile();
-      return (show);
+      return show;
     }
 
     // This should not be offered in mobile or CSET Online
     if (item == 'import modules') {
-      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleImport ?? true));
+      return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleImport ?? true);
     }
 
     // This should not be offered in mobile or CSET Online
     if (item == 'module builder') {
-      return (this.configSvc.behaviors?.showModuleBuilder);
+      return this.configSvc.behaviors?.showModuleBuilder;
     }
 
     if (item == 'module content report') {
-      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleContentReport ?? true));
+      return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showModuleContentReport ?? true);
     }
 
     if (item == 'trend') {
-      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showTrend ?? true));
+      return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showTrend ?? true);
     }
 
     if (item == 'compare') {
-      return (!this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true));
+      return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true);
     }
 
     return true;
@@ -273,16 +290,20 @@ export class TopMenusComponent implements OnInit {
   }
 
   showMenuStrip() {
-    return this.router.url !== '/resource-library'
-      && this.router.url !== '/importModule'
-      && !this.isModuleBuilder(this.router.url);
+    return (
+      this.router.url !== '/resource-library' &&
+      this.router.url !== '/importModule' &&
+      !this.isModuleBuilder(this.router.url)
+    );
   }
 
   showResourceLibraryLink() {
-    return !this.configSvc.isMobile()
-      && this.router.url !== '/resource-library'
-      && this.router.url !== '/importModule'
-      && !this.isModuleBuilder(this.router.url);
+    return (
+      !this.configSvc.isMobile() &&
+      this.router.url !== '/resource-library' &&
+      this.router.url !== '/importModule' &&
+      !this.isModuleBuilder(this.router.url)
+    );
   }
 
   /**
@@ -293,9 +314,11 @@ export class TopMenusComponent implements OnInit {
       return false;
     }
 
-    return this.router.url !== '/resource-library'
-      && this.router.url !== '/importModule'
-      && !this.isModuleBuilder(this.router.url);
+    return (
+      this.router.url !== '/resource-library' &&
+      this.router.url !== '/importModule' &&
+      !this.isModuleBuilder(this.router.url)
+    );
   }
 
   /**
@@ -311,36 +334,39 @@ export class TopMenusComponent implements OnInit {
    */
   editParameters() {
     if (this.dialog.openDialogs[0]) {
-
       return;
     }
     this.dialogRef = this.dialog.open(GlobalParametersComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   enableProtectedFeature() {
     if (this.dialog.openDialogs[0]) {
-
       return;
     }
     this.dialogRef = this.dialog.open(EnableProtectedComponent, { disableClose: true });
-    this.dialogRef.afterClosed().subscribe(results => {
-
+    this.dialogRef.afterClosed().subscribe((results) => {
       if (results.enableFeatureButtonClicked && this.router.url == '/home/landing-page-tabs') {
         this.gallerySvc.refreshCards();
       }
 
-      if (results.csaWorkflowEnabled) {
-        // TODO: refresh and persist csaWorflow override by adding IOD to config chain.
+      // Need to reload application in two cases.
+      // Case 1: cisaWorkflow switch is now on but localStorage still has non IOD installation mode.
+      // Case 2: cisaWorkflowSwitch is now off but localStorage still has IOD installation mode.
+      console.log(results.cisaWorkflowEnabled);
+      console.log(localStorage.getItem('installationMode'));
+      if ((results.cisaWorkflowEnabled && localStorage.getItem('installationMode') != 'IOD') ||
+          (!results.cisaWorkflowEnabled && localStorage.getItem('installationMode') == 'IOD') )
+        {
+        this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
+          window.location.reload();
+        });
       }
-    })
+    });
   }
 
   setMeritExportPath() {
     if (this.dialog.openDialogs[0]) {
-
       return;
     }
     this.dialogRef = this.dialog.open(GlobalConfigurationComponent);
@@ -348,7 +374,6 @@ export class TopMenusComponent implements OnInit {
 
   showKeyboardShortcuts() {
     if (this.dialog.openDialogs[0]) {
-
       return;
     }
     this.dialogRef = this.dialog.open(KeyboardShortcutsComponent);
@@ -362,15 +387,12 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(ExcelExportComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
-
 
   /**
    * Show the RRA tutorial in a dialog.  This is temporary, until
@@ -382,9 +404,7 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(RraMiniUserGuideComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   /**
@@ -396,9 +416,7 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(AboutComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   /**
@@ -410,9 +428,7 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(TermsOfUseComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   advisory() {
@@ -420,9 +436,7 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(AdvisoryComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   editUser() {
@@ -430,35 +444,32 @@ export class TopMenusComponent implements OnInit {
       return;
     }
     this.dialogRef = this.dialog.open(EditUserComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe(
-        (data: CreateUser) => {
-          // the update user request happened when the dialog's form was saved
-          this.dialogRef = undefined;
-        },
-        error => console.log(error.message)
-      );
+    this.dialogRef.afterClosed().subscribe(
+      (data: CreateUser) => {
+        // the update user request happened when the dialog's form was saved
+        this.dialogRef = undefined;
+      },
+      (error) => console.log(error.message)
+    );
   }
 
   checkPasswordReset() {
-    this.auth.passwordStatus()
-      .subscribe((passwordResetRequired: boolean) => {
-        if (passwordResetRequired) {
-          this.resetPassword(true);
-        }
-      });
+    this.auth.passwordStatus().subscribe((passwordResetRequired: boolean) => {
+      if (passwordResetRequired) {
+        this.resetPassword(true);
+      }
+    });
   }
 
   resetPassword(showWarning: boolean) {
-    if (localStorage.getItem("returnPath")) {
-      if (!Number(localStorage.getItem("redirectid"))) {
-        this.hasPath(localStorage.getItem("returnPath"));
+    if (localStorage.getItem('returnPath')) {
+      if (!Number(localStorage.getItem('redirectid'))) {
+        this.hasPath(localStorage.getItem('returnPath'));
       }
     }
     this.dialog
       .open(ChangePasswordComponent, {
-        width: "300px",
+        width: '300px',
         data: { primaryEmail: this.auth.email(), warning: showWarning }
       })
       .afterClosed()
@@ -485,7 +496,7 @@ export class TopMenusComponent implements OnInit {
       return null;
     }
 
-    const hiddenChars  = '●'.repeat(accessKey.substring(0, accessKey.length - 4).length);
+    const hiddenChars = '●'.repeat(accessKey.substring(0, accessKey.length - 4).length);
     const lastFourChars = accessKey.substring(accessKey.length - 4);
 
     return hiddenChars + lastFourChars;
@@ -501,9 +512,7 @@ export class TopMenusComponent implements OnInit {
     }
     // , {width: '800px', height: "500px"}
     this.dialogRef = this.dialog.open(AssessmentDocumentsComponent);
-    this.dialogRef
-      .afterClosed()
-      .subscribe();
+    this.dialogRef.afterClosed().subscribe();
   }
 
   navigateTrend() {

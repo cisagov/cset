@@ -21,5 +21,9 @@ namespace CSETWebCore.DataLayer.Model
         public bool? BoolValue { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? DateTimeValue { get; set; }
+
+        [ForeignKey("Assessment_Id")]
+        [InverseProperty("DETAILS_DEMOGRAPHICS")]
+        public virtual ASSESSMENTS Assessment { get; set; }
     }
 }
