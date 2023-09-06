@@ -49,7 +49,7 @@ export class CpgSummaryComponent implements OnInit {
           if (element.name == 'U') {
             element.name = 'Unanswered';
           } else {
-            element.name = this.configSvc.config.answersCPG.find(x => x.code == element.name).answerLabel;
+            element.name = this.configSvc.config.answersCPG?.find(x => x.code == element.name).answerLabel;
           }
         });
       });
