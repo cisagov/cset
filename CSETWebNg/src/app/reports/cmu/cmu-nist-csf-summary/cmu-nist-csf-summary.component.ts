@@ -51,7 +51,7 @@ export class CmuNistCsfSummaryComponent implements OnInit {
       this.chartAll = resp;
     })
 
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget("1").subscribe((resp: string) => {
       this.legend = resp;
     })
   }

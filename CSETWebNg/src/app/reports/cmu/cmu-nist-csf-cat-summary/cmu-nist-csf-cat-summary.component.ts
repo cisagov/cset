@@ -42,7 +42,7 @@ export class CmuNistCsfCatSummaryComponent implements OnInit {
       this.csfData = resp;
     })
 
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget("2").subscribe((resp: string) => {
       this.legend = resp;
     })
   }
