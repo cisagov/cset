@@ -33,19 +33,64 @@ import { ConfigService } from '../../../services/config.service';
 })
 export class NcuaExcelExportComponent {
 
-  constructor(private dialog: MatDialogRef<NcuaExcelExportComponent>,
-    public configSvc: ConfigService) { }
+  acetCount: number = 0;
+  iseCount: number = 0;
+
+  acetTooltip: string = "";
+  iseTooltip: string = "";
+
+
+  constructor(
+    private dialog: MatDialogRef<NcuaExcelExportComponent>,
+    public configSvc: ConfigService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+    
+  ngOnInit() {
+    this.checkAssessmentTypes();
+  }
+
+
+  checkAssessmentTypes() {
+    for (let i = 0; i < this.data.assessments.length; i++) {
+        if (this.data.assessments[i].type == "ACET") {
+            this.acetCount++;
+        } else if (this.data.assessments[i].type == "ISE") {
+            this.iseCount++;
+        }
+    }
+
+    if (this.acetCount == 0) {
+        this.acetTooltip = "There are no ACET assessments to export.";
+    }
+
+    if (this.iseCount == 0) {
+        this.iseTooltip = "There are no ISE assessments to export.";
+    }
+
+  }
+
 
   close() {
     return this.dialog.close();
   }
 
+
   exportIseToExcel() {
     this.dialog.close('ISE');
   }
 
+
   exportAcetToExcel() {
     this.dialog.close('ACET');
+  }
+
+  getAcetTooltip() {
+    return this.acetTooltip;
+  }
+
+  getIseTooltip() {
+    return this.iseTooltip;
   }
 
 
