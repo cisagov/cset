@@ -125,7 +125,7 @@ export class AssessmentService {
    * If a custom set name is found on the gallery item, include it in the query string.
    * Custom set gallery items are built on the fly and don't have a gallery ID.
    */
-  createNewAssessmentGallery(workflow: string, galleryItem: any) {
+  createNewAssessmentFromGallery(workflow: string, galleryItem: any) {
     let queryString: string = 'workflow=' + workflow + '&galleryGuid=' + galleryItem.gallery_Item_Guid;
     if (!!galleryItem.custom_Set_Name) {
       queryString += '&csn=' + galleryItem.custom_Set_Name
@@ -400,14 +400,15 @@ export class AssessmentService {
     }
 
     return new Promise((resolve, reject) => {
-      this.createNewAssessmentGallery(workflow, galleryItem)
+      this.createNewAssessmentFromGallery(workflow, galleryItem)
         .toPromise()
         .then(
           (response: any) => {
             // set the brand new flag
             this.isBrandNew = true;
-            this.loadAssessment(response.id);
-            resolve('assessment loaded');
+            this.loadAssessment(response.id).then(() => {
+              resolve('assessment loaded');
+            });
           },
           error =>
             console.log(
@@ -429,28 +430,31 @@ export class AssessmentService {
 
         this.getAssessmentDetail().subscribe(data => {
           this.assessment = data;
+
           if (this.assessment.baselineAssessmentId) {
             localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
           } else {
             localStorage.setItem("baseline", "0");
           }
+
           // make sure that the acet only switch is turned off when in standard CSET
           if (this.configSvc.installationMode !== 'ACET') {
             this.assessment.isAcetOnly = false;
           }
 
+
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load
-          if (rpath == null) {
+          if (!rpath) {
             resolve('assessment loaded');
+            return;
           }
-
+          
           // return path specified
           localStorage.removeItem('returnPath');
-          const returnPath = '/assessment/' + id + '/' + rpath;
+          const returnPath = `/assessment/${id}/${rpath}`;
           this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
-
           resolve(returnPath);
         });
       });
