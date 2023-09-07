@@ -231,6 +231,7 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { NcuaExcelExportComponent } from './dialogs/excel-export/ncua-export/ncua-excel-export.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
 import { AggregationService } from './services/aggregation.service';
 import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
@@ -790,6 +791,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         TextComponent,
         ZonesComponent,
         ExcelExportComponent,
+        NcuaExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
         AggregationHomeComponent,
