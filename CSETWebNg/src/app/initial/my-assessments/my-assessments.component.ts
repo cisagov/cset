@@ -372,8 +372,9 @@ export class MyAssessmentsComponent implements OnInit {
     let dialogRef = this.dialog.open(NcuaExcelExportComponent);
     
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
+      if (result != undefined) {
+        window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
+      }
     });
   }
 
