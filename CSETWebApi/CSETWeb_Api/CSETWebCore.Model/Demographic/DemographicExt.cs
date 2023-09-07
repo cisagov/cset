@@ -15,7 +15,7 @@ namespace CSETWebCore.Model.Demographic
     /// Most of these properties store the int value of the
     /// OptionValue for their corresponding DETAILS_DEMOGRAPHICS_OPTIONS.
     /// </summary>
-    public class DemographicIod
+    public class DemographicExt
     {
         public int AssessmentId { get; set; }
         public DateTime AssessmentDate { get; set; }

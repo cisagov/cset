@@ -10,7 +10,7 @@ using CSETWebCore.Model.Demographic;
 
 namespace CSETWebCore.Business.Demographic
 {
-    public class DemographicIodBusiness
+    public class DemographicExtBusiness
     {
         private CSETContext _context;
 
@@ -18,17 +18,17 @@ namespace CSETWebCore.Business.Demographic
         /// 
         /// </summary>
         /// <param name="context"></param>
-        public DemographicIodBusiness(CSETContext context)
+        public DemographicExtBusiness(CSETContext context)
         {
             _context = context;
         }
 
 
         /// <summary>
-        /// Returns an object 
+        /// Returns an object containing the extended Demographics values.
         /// </summary>
         /// <returns></returns>
-        public DemographicIod GetDemographics(int assessmentId)
+        public DemographicExt GetDemographics(int assessmentId)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
             var info = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
@@ -36,7 +36,7 @@ namespace CSETWebCore.Business.Demographic
             var x = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).ToList();
             var opts = _context.DETAILS_DEMOGRAPHICS_OPTIONS.ToList();
 
-            var d = new DemographicIod();
+            var d = new DemographicExt();
             d.AssessmentId = assessmentId;
             d.AssessmentDate = assessment.Assessment_Date;
 
@@ -192,14 +192,19 @@ namespace CSETWebCore.Business.Demographic
         /// 
         /// </summary>
         /// <param name="demographic"></param>
-        public void SaveDemographics(DemographicIod demographic)
+        public void SaveDemographics(DemographicExt demographic)
         {
             var info = _context.INFORMATION.Where(x => x.Id == demographic.AssessmentId).FirstOrDefault();
             info.Facility_Name = demographic.OrganizationName;
 
 
-            //  Clean out any existing detail records
-            var oldRecords = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == demographic.AssessmentId).ToList();
+            //  Clean out any existing detail records for demographics
+
+            // list data items that we do not want to delete
+            var nonDemographics = new List<string>() { "OTHER-REMARKS" };
+            var oldRecords = _context.DETAILS_DEMOGRAPHICS
+                .Where(x => x.Assessment_Id == demographic.AssessmentId && !nonDemographics.Contains(x.DataItemName))
+                .ToList();
             _context.DETAILS_DEMOGRAPHICS.RemoveRange(oldRecords);
             _context.SaveChanges();
 

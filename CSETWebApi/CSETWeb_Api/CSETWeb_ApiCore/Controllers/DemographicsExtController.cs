@@ -19,14 +19,14 @@ using System.Threading.Tasks;
 namespace CSETWebCore.Api.Controllers
 {
     [ApiController]
-    public class DemographicsIodController : ControllerBase
+    public class DemographicsExtController : ControllerBase
     {
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsIodController(ITokenManager token, IAssessmentBusiness assessment,
+        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         {
             var assessmentId = _token.AssessmentForUser();
 
-            var mgr = new DemographicIodBusiness(_context);
+            var mgr = new DemographicExtBusiness(_context);
             var response = mgr.GetDemographics(assessmentId);
             return Ok(response);
         }
@@ -56,7 +56,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/demographics/ext2/subsectors/{id}")]
         public IActionResult GetSubsectors(int id)
         {
-            var mgr = new DemographicIodBusiness(_context);
+            var mgr = new DemographicExtBusiness(_context);
             var response = mgr.GetSubsectors(id);
             return Ok(response);
         }
@@ -69,11 +69,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/demographics/ext2")]
-        public IActionResult PostExtended2([FromBody] DemographicIod demographics)
+        public IActionResult PostExtended2([FromBody] DemographicExt demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
 
-            var mgr = new DemographicIodBusiness(_context);
+            var mgr = new DemographicExtBusiness(_context);
             mgr.SaveDemographics(demographics);
 
             return Ok();
