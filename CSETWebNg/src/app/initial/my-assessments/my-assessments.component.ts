@@ -368,7 +368,11 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   openExportDecisionDialog() {
-    let dialogRef = this.dialog.open(NcuaExcelExportComponent);
+    let dialogRef = this.dialog.open(NcuaExcelExportComponent, {
+      data: {
+        assessments: this.sortedAssessments
+      }
+    });
     
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
