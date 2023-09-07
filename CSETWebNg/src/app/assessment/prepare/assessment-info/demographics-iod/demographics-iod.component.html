@@ -197,58 +197,10 @@
     </select>
   </div>
 
-  <!-- #4 and #5 are located on the iod assessment configuration page with the other critical service fields -->
+  <!-- #4, #5, and #6 are located on the iod assessment configuration page with the other critical service fields -->
   <!-- #4 -->
   <!-- #5 -->
-
   <!-- #6 -->
-  <div class="form-group mb-5">
-    <label for="disruptedSectors">
-      Please select in order of criticality, the two critical infrastructure sectors which, if they were unavailable or
-      disrupted for one week or more, would most affect your ability to sustain the critical service.
-    </label>
-
-    <div>
-      <div>
-        Most important:
-        <select
-          class="form-control mb-3"
-          name="disruptedSector1"
-          tabindex="0"
-          [(ngModel)]="demographicData.disruptedSector1"
-          (change)="update($event)"
-        >
-          <option [ngValue]="null">-- Select --</option>
-          <option
-            *ngFor="let i of demographicData.listSectors"
-            [ngValue]="i.optionValue"
-            [selected]="i.optionValue === demographicData.disruptedSector1"
-          >
-            {{ i.optionText }}
-          </option>
-        </select>
-      </div>
-      <div>
-        Second most important:
-        <select
-          class="form-control mb-3"
-          name="disruptedSector2"
-          tabindex="0"
-          [(ngModel)]="demographicData.disruptedSector2"
-          (change)="update($event)"
-        >
-          <option [ngValue]="null">-- Select --</option>
-          <option
-            *ngFor="let i of demographicData.listSectors"
-            [ngValue]="i.optionValue"
-            [selected]="i.optionValue === demographicData.disruptedSector2"
-          >
-            {{ i.optionText }}
-          </option>
-        </select>
-      </div>
-    </div>
-  </div>
 
   <!-- #7 -->
   <div class="form-group mb-5">
