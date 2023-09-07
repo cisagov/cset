@@ -127,6 +127,55 @@
       </select>
     </div>
 
+    <!-- #6 -->
+    <div class="form-group mb-5">
+      <label for="disruptedSectors">
+        Please select in order of criticality, the two critical infrastructure sectors which, if they were unavailable
+        or disrupted for one week or more, would most affect your ability to sustain the critical service.
+      </label>
+
+      <div>
+        <div>
+          Most important:
+          <select
+            class="form-control mb-3"
+            name="disruptedSector1"
+            tabindex="0"
+            [(ngModel)]="iodDemographics.disruptedSector1"
+            (change)="updateIodDemographics()"
+          >
+            <option [ngValue]="null">-- Select --</option>
+            <option
+              *ngFor="let i of iodDemographics.listSectors"
+              [ngValue]="i.optionValue"
+              [selected]="i.optionValue === iodDemographics.disruptedSector1"
+            >
+              {{ i.optionText }}
+            </option>
+          </select>
+        </div>
+        <div>
+          Second most important:
+          <select
+            class="form-control mb-3"
+            name="disruptedSector2"
+            tabindex="0"
+            [(ngModel)]="iodDemographics.disruptedSector2"
+            (change)="updateIodDemographics()"
+          >
+            <option [ngValue]="null">-- Select --</option>
+            <option
+              *ngFor="let i of iodDemographics.listSectors"
+              [ngValue]="i.optionValue"
+              [selected]="i.optionValue === iodDemographics.disruptedSector2"
+            >
+              {{ i.optionText }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
     <app-nav-back-next [page]="'info-config-iod'"></app-nav-back-next>
   </div>
 </div>
