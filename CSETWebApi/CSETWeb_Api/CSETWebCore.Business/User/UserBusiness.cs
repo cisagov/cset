@@ -295,7 +295,10 @@ namespace CSETWebCore.Business.User
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 IsSuperUser = user.IsSuperUser,
-                PasswordResetRequired = user.PasswordResetRequired ?? true
+                PasswordResetRequired = user.PasswordResetRequired ?? true,
+                IsActive = user.IsActive ?? true,
+                PreventEncrypt = user.PreventEncrypt ?? true,
+                CisaAssessorWorkflow = user.CisaAssessorWorkflow
             };
 
             return ud;

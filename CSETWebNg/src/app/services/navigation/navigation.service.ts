@@ -59,6 +59,7 @@ export class NavigationService {
 
   currentPage = '';
 
+  destinationId = '';
 
 
   @Output()
@@ -115,13 +116,11 @@ export class NavigationService {
 
   setACETSelected(acet: boolean) {
     this.acetSelected = acet;
-    localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 
   setFrameworkSelected(framework: boolean) {
     this.frameworkSelected = framework;
-    localStorage.removeItem('tree');
     this.navTreeSvc.buildTree(this.workflow, this.getMagic());
   }
 
@@ -158,12 +157,36 @@ export class NavigationService {
 
 
       // build the sidenav tree
-      localStorage.removeItem('tree');
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
     },
       (err: HttpErrorResponse) => {
         console.log(err);
       });
+  }
+
+  /**
+   * Loads an assessment and navigates to the Prepare tab
+   * so that the user starts on the first page of the workflow.
+   */
+  beginAssessment(assessmentId: number) {
+    this.assessSvc.loadAssessment(assessmentId).then(() => {
+      this.navDirect('phase-prepare');
+    });
+  }
+
+  /**
+   * This version is for creating a NEW assessment
+   */
+  beginNewAssessment() {
+    this.assessSvc.newAssessment().then(() => {
+      this.navDirect('phase-prepare');
+    });
+  }
+
+  beginNewAssessmentGallery(item: any) {
+    this.assessSvc.newAssessmentGallery(item).then(() => {
+      this.navDirect('phase-prepare');
+    });
   }
 
   /**
@@ -184,18 +207,18 @@ export class NavigationService {
    * Crawls the workflow document to determine the next viewable page.
    */
   navNext(cur: string) {
-    const currentPage = this.workflow.getElementById(cur);
-
-    if (currentPage == null) {
+    const originPage = this.workflow.getElementById(cur);
+    if (originPage == null) {
+      console.error('navNext: cannot find node ' + cur);
       return;
     }
 
-    if (currentPage.children.length == 0 && currentPage.nextElementSibling == null && currentPage.parentElement.tagName == 'nav') {
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
       // we are at the last page, nothing to do
       return;
     }
 
-    let target = currentPage;
+    let target = originPage;
 
     do {
       if (target.children.length > 0) {
@@ -215,18 +238,18 @@ export class NavigationService {
    * Crawls the workflow document to determine the previous viewable page.
    */
   navBack(cur: string) {
-    const currentPage = this.workflow.getElementById(cur);
+    const originPage = this.workflow.getElementById(cur);
 
-    if (currentPage == null) {
+    if (originPage == null) {
       return;
     }
 
-    if (currentPage.previousElementSibling == null && currentPage.parentElement.tagName == 'nav') {
+    if (originPage.previousElementSibling == null && originPage.parentElement.tagName == 'nav') {
       // we are at the first page, nothing to do
       return;
     }
 
-    let target = currentPage;
+    let target = originPage;
 
     do {
       if (target.children.length > 0) {
@@ -240,6 +263,14 @@ export class NavigationService {
     } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
 
     this.routeToTarget(target);
+  }
+
+  /**
+   * Routes to the first available node in the workflow
+   */
+  navFirst() {
+    debugger;
+    const startPage = this.workflow.firstElementChild;
   }
 
   /**
@@ -273,6 +304,9 @@ export class NavigationService {
    */
   routeToTarget(target: HTMLElement) {
     this.navTreeSvc.setCurrentPage(target.id);
+    this.destinationId = target.id;
+
+    this.buildTree();
 
     // determine the route path
     const targetPath = target.attributes['path'].value.replace('{:id}', this.assessSvc.id().toString());

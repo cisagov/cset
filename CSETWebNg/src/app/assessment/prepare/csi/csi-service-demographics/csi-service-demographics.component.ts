@@ -123,6 +123,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
   }
 
   update(): void {
+    console.log(this.csiServiceDemographic);
     this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic)
   }
 

@@ -9,10 +9,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.CryptoBuffer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
-using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Helpers;
+using Namotion.Reflection;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,10 +34,12 @@ namespace CSETWebCore.Api.Controllers
         
 
         private CSETContext _context;
+        private readonly ITokenManager _tokenManager;
 
-        public ProtectedFeatureController(CSETContext context)
+        public ProtectedFeatureController(CSETContext context, ITokenManager tokenManager)
         {
             _context = context;
+            _tokenManager = tokenManager;
         }
 
 
@@ -51,23 +54,23 @@ namespace CSETWebCore.Api.Controllers
         {
             var openFaaSets = _context.SETS.Where(s=> s.IsEncryptedModule).ToList();
 
-            var result = new List<EnabledModule>();
+            var enabledModules = new List<EnabledModule>();
 
             foreach (var s in openFaaSets)
             {
-                result.Add(new EnabledModule() { 
+                enabledModules.Add(new EnabledModule() { 
                     ShortName = s.Short_Name,
                     FullName = s.Full_Name,
                     Unlocked = s.IsEncryptedModuleOpen ?? false
                 });
             }
 
-            return Ok(result);
+            return Ok(enabledModules);
         }
 
 
         [HttpPost]
-        [Route("api/EnableProtectedFeature/unlockFeature")]
+        [Route("api/EnableProtectedFeature/enableModules")]
         /// <summary>
         /// Marks the FAA set as 'unlocked.'
         /// </summary>
@@ -81,7 +84,61 @@ namespace CSETWebCore.Api.Controllers
             };
             return Ok(response);
         }
-                   
+
+        [HttpPost]
+        [Route("api/EnableProtectedFeature/setCisaAssessorWorkflow")]
+        /// <summary>
+        /// Marks the FAA set as 'unlocked.'
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult SetCisaAssessorWorkflow([FromBody] bool cisaWorkflowEnabled)
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
+
+            if (userId != null)
+            {
+               _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
+            }
+            else if (ak != null)
+            {
+               _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
+            }
+
+            _context.SaveChanges();
+
+            var response = new
+            {
+                Message = "'CisaAssessorWorkflow' database property set successfully."
+            };
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("api/EnableProtectedFeature/getCisaAssessorWorkflow")]
+        /// <summary>
+        /// Marks the FAA set as 'unlocked.'
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult GetCisaAssessorWorkflow()
+        {
+            var userId = _tokenManager.GetCurrentUserId();
+            var ak = _tokenManager.GetAccessKey();
+
+            bool cisaWorkflowEnabled = false;
+
+            if (userId != null)
+            {
+                cisaWorkflowEnabled = _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow;
+            }
+            else if (ak != null)
+            {
+                cisaWorkflowEnabled = _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow;
+            }
+
+            return Ok(cisaWorkflowEnabled);
+        }
 
         /// <summary>
         /// Marks the FAA set as 'unlocked.' Marks the corresponding gallery card as 'visible'.

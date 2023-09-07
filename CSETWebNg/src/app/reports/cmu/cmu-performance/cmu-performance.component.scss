@@ -1,0 +1,39 @@
+@media print {
+  @page {
+    size: A4 landscape
+  }
+}
+
+.header {
+  padding: 0.5rem 0;
+}
+
+.domain-label {
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+
+div p {
+  font-size: 10px;
+  padding: 0;
+  /*margin: 0;*/
+}
+
+.domain {
+  border-top: 1px solid black;
+  padding: 0.25rem 0;
+}
+
+.tinytext {
+  font-size: 8px;
+}
+
+.text-1 {
+  font-size: .7rem;
+}
+
+.appendix-label {
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin: 0;
+}

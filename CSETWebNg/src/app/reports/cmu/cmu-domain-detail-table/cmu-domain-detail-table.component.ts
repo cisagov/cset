@@ -21,34 +21,51 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Question } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 import { ConfigService } from '../../../services/config.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { ReportService } from '../../../services/report.service';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
-  selector: 'app-cmu-results-detail',
-  templateUrl: './cmu-results-detail.component.html',
-  styleUrls: ['./cmu-results-detail.component.scss', '../../reports.scss']
+  selector: 'app-cmu-domain-detail-table',
+  templateUrl: './cmu-domain-detail-table.component.html',
+  styleUrls: ['./cmu-domain-detail-table.component.scss', '../../reports.scss']
 })
-export class CmuResultsDetailComponent {
+export class CmuResultsDetailComponent implements OnChanges {
 
+  @Input()
+  moduleName: string;
 
   @Input()
   domain: any;
+
+  @Input()
+  showRemarks = true;
+
+  heatmapWidget = '';
 
   constructor(
     public configSvc: ConfigService,
     public maturitySvc: MaturityService,
     public reportSvc: ReportService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    private cmuSvc: CmuService
   ) { }
 
-  ngOnInit(): void {
+  /**
+   * Get the heatmap as soon as we have a domain
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.domain.firstChange) {
+      this.cmuSvc.getDomainHeatmapWidget(this.domain.abbreviation)
+        .subscribe((resp: string) => {
+          this.heatmapWidget = resp;
+        });
+    }
   }
-
 
   /**
   * Sets the coloring of a cell based on its answer.
@@ -81,7 +98,7 @@ export class CmuResultsDetailComponent {
       questions = [].concat(q);
     }
 
-    return questions.filter(x => !x.parentquestionid);
+    return questions.filter(x => !x.parentQuestionId);
   }
 
   /**
@@ -90,11 +107,23 @@ export class CmuResultsDetailComponent {
    * @param q
    */
   getQuestionNumber(q: any): string {
-    const dot = q.questiontext.trim().indexOf('.');
-    if (dot < 0) {
-      return "Q";
+    let dot = -1;
+
+    // try the displaytext and parse off the "Qx" at the end
+    dot = q.displayNumber?.lastIndexOf('.');
+    if (dot > 0) {        
+      return q.displayNumber.trim().substring(dot + 1);
     }
-    return "Q" + q.questiontext.trim().substring(0, dot);
+
+    // failing that, assume the question text leads with a number and a dot
+    if (!!q.questionText) {
+      dot = q.questionText.trim().indexOf('.');
+    } 
+    if (dot > 0) {
+      return "Q" + q.questionText.trim().substring(0, dot);
+    }
+    
+    return "Q";
   }
 
   /**

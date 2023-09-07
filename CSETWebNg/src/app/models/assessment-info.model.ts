@@ -111,6 +111,9 @@ export interface Demographic {
     organizationType?: string;
     facilitator?: number;
 
+    // Organiztion POC
+    orgPointOfContact?: number;
+
     // Critical Service description
     criticalService?: string;
 

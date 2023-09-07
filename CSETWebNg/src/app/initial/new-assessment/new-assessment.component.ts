@@ -36,6 +36,7 @@ import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { ConfigService } from '../../services/config.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -93,6 +94,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
     public assessSvc: AssessmentService,
+    public navSvc: NavigationService,
     public configSvc: ConfigService) {
   }
 

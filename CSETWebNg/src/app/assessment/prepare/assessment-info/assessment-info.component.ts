@@ -47,7 +47,5 @@ export class AssessmentInfoComponent implements OnInit {
 
 
   ngOnInit() {
-    this.navSvc.setWorkflow('omni');
-    this.navSvc.setCurrentPage('info1');
   }
 }

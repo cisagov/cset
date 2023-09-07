@@ -34,6 +34,8 @@ export class CrrNistCsfCatSummaryComponent implements OnInit {
 
   @Input() model: CrrReportModel;
 
+  @Input() moduleName: string;
+
   bodyData: any[] = [];
   legend: string = '';
 

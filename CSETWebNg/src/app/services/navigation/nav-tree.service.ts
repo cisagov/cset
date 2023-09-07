@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable } from '@angular/core';
+import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { NavTreeNode } from './navigation.service';
 import { PageVisibilityService } from './page-visibility.service';
@@ -32,7 +32,7 @@ import { of as observableOf, BehaviorSubject } from "rxjs";
 @Injectable({
   providedIn: 'root'
 })
-export class NavTreeService {
+export class NavTreeService implements OnChanges {
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -63,26 +63,36 @@ export class NavTreeService {
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
   /**
+   * 
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('CCC-nav-tree service onChanges');
+    console.log(changes);
+  }
+
+  /**
    *
    * @param magic
    */
   buildTree(workflow: Document, magic: string) {
     if (this.magic !== magic) {
       console.log('buildTree - magic compare failed');
-      //return;
+      return;
     }
 
     this.workflow = workflow;
 
-    if (localStorage.getItem('tree')) {
-      let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
-      this.dataSource.data = <NavTreeNode[]>tree;
-    } else {
-      this.dataSource.data = this.buildTocData();
-    }
+    // if (localStorage.getItem('tree')) {
+    //   let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
+    //   this.dataSource.data = <NavTreeNode[]>tree;
+    // } else {
+    //   this.dataSource.data = this.buildTocData();
+    // }
+
+    this.dataSource.data = this.buildTocData();
     this.tocControl.dataNodes = this.dataSource.data;
 
-    localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
+    //localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
