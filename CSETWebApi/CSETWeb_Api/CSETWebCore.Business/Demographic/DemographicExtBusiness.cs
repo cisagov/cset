@@ -57,13 +57,13 @@ namespace CSETWebCore.Business.Demographic
             d.DisruptedSector2 = x.Find(z => z.DataItemName == "DISRUPTED-SECTOR2")?.IntValue;
 
             // body of practice / standard
-            d.UsesStandard = x.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? false;
+            d.UsesStandard = x.Find(z => z.DataItemName == "STANDARD-USED")?.BoolValue ?? true;
             // most important
             d.Standard1 = x.Find(z => z.DataItemName == "STANDARD1")?.StringValue;
             // second most important
             d.Standard2 = x.Find(z => z.DataItemName == "STANDARD2")?.StringValue;
             // must comply?
-            d.RequiredToComply = x.Find(z => z.DataItemName == "REGULATION-REQD")?.BoolValue ?? false;
+            d.RequiredToComply = x.Find(z => z.DataItemName == "REGULATION-REQD")?.BoolValue ?? true;
             // reg type 1
             d.RegulationType1 = x.Find(z => z.DataItemName == "REG-TYPE1")?.IntValue;
             // regulation 1 (free form)
