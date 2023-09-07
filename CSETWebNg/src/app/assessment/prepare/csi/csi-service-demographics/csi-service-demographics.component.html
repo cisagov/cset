@@ -27,8 +27,8 @@
     <div class="form-group">
       <label for="criticalServiceName">Critical Service Name</label>
       <input class="form-control" tabindex="0" type="text" maxlength="50" name="criticalServiceName"
-      id="criticalServiceName" [(ngModel)]="csiServiceDemographic.criticalServiceName"
-      placeholder="Critical Service Name" (change)="update()">
+      id="criticalServiceName" [(ngModel)]="demographics.criticalService"
+      placeholder="Critical Service Name" (change)="updateBaseDemographics()">
     </div>
     <div class="form-group">
       <label for="criticalServiceDescription">Critical Service Description</label>
