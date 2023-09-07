@@ -32,6 +32,7 @@ import { CrrReportModel } from '../../../../models/reports.model';
 export class CrrContactInformationComponent implements OnInit {
 
   @Input() model: CrrReportModel;
+  @Input() moduleName: string;
 
   constructor() { }
 

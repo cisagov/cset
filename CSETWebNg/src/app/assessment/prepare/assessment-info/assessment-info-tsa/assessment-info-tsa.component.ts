@@ -39,8 +39,8 @@ export class AssessmentInfoTsaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.navSvc.setCurrentPage('info-tsa');
     this.navSvc.setWorkflow('omni');
+    this.navSvc.navDirect('phase-prepare');
   }
 
 }

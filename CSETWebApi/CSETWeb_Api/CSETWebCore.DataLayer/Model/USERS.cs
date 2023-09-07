@@ -44,6 +44,7 @@ namespace CSETWebCore.DataLayer.Model
         public bool? IsActive { get; set; }
         [Required]
         public bool? PreventEncrypt { get; set; }
+        public bool CisaAssessorWorkflow { get; set; }
 
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }

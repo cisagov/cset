@@ -209,7 +209,6 @@ export class StandardsComponent implements OnInit {
     this.assessSvc.assessment.standards = selectedStandards;
 
     // refresh sidenav
-    localStorage.removeItem('tree');
     this.navSvc.buildTree();
 
     this.standardSvc

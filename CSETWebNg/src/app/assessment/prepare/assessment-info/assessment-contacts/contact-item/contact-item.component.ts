@@ -82,6 +82,8 @@ export class ContactItemComponent implements OnInit {
   ngOnInit() {
     if (this.roles == null) {
       this.assessSvc.refreshRoles().subscribe((response: Role[]) => {
+        response.find(x => x.assessmentRoleId == 1).assessmentRole = 'Participant';
+        response.find(x => x.assessmentRoleId == 2).assessmentRole = 'Facilitator';
         this.assessSvc.roles = response;
         this.roles = response;
         this.contact.roles = response;
@@ -250,12 +252,8 @@ export class ContactItemComponent implements OnInit {
     return false;
   }
 
-  contactRoleSelected(assessmentRoleId) {
-    this.contact.assessmentRoleId = assessmentRoleId;
-  }
-
-  getRoleFromId(assessmentRoleId: number) {
-    return this.roles.find(x => x.assessmentRoleId === assessmentRoleId).assessmentRole;
+  getRoleName(roleId: number) {
+    return this.roles.find(x => x.assessmentRoleId === roleId).assessmentRole;
   }
 
   shouldDisablePrimaryPoc() {
