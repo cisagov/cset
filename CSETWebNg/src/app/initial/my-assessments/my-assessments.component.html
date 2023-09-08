@@ -70,12 +70,23 @@
                             <span class="icon-link-button-text-dark">Export All</span>
                         </button>
 
-                        <label *ngIf="configSvc.installationMode === 'ACET'"
+                        <!-- If they have the ncua switch we need to account for whether they want to export ACET's or ISE's -->
+                        <div *ngIf="this.ncuaSvc.switchStatus == false">
+                            <label *ngIf="configSvc.installationMode === 'ACET'"
+                                class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
+                                matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
+                                <span class="cset-icons-export-excel fs-base mr-2"></span>
+                                <label for="importFile" class="m-0">Export All to Excel</label>
+                            </label>
+                        </div>
+                        <div *ngIf="this.ncuaSvc.switchStatus == true">
+                            <label *ngIf="configSvc.installationMode === 'ACET'"
                             class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                            matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()" tabindex="0">
+                            matTooltip="Export all assessments to Excel" (click)="openExportDecisionDialog()" tabindex="0">
                             <span class="cset-icons-export-excel fs-base mr-2"></span>
-                            <label for="importFile" class="m-0">Export All to Excel</label>
+                            <label class="m-0">Export All to Excel</label>
                         </label>
+                        </div>
 
                         <label *ngIf="this.ncuaSvc.switchStatus"
                             class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
@@ -112,7 +123,10 @@
             </div>
         </ng-container>
         <ng-template #noAssessmentsElseBlock>
-            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">Welcome to {{appTitle}}</h2>
+            <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0"> 
+                <div *ngIf="appTitle == 'ACET'">Welcome to The Toolbox</div>
+                <div *ngIf="appTitle != 'ACET'">Welcome to {{ appTitle }}</div>
+            </h2>
             <p>To get started, select from one of the options below:</p>
             <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                 <div class="flex-row d-flex flex-00a">

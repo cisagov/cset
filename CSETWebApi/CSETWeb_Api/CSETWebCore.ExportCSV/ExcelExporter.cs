@@ -76,11 +76,11 @@ namespace CSETWebCore.ExportCSV
         }
 
 
-        public MemoryStream ExportToExcelAllNCUA(int userID)
+        public MemoryStream ExportToExcelAllNCUA(int userID, string type = "")
         {
             var stream = new MemoryStream();
             CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
-            export.ProcessAllAssessmentsForUser(userID, stream);
+            export.ProcessAllAssessmentsForUser(userID, stream, type);
             return stream;
         }
 
