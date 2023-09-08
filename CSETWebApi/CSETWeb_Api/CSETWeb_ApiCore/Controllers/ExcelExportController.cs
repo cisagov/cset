@@ -91,12 +91,12 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/ExcelExportAllNCUA")]
-        public IActionResult GetExcelExportAllNCUA(string token)
+        public IActionResult GetExcelExportAllNCUA(string token, string type = "")
         {
             _token.SetToken(token);
             int currentUserId = (int)_token.PayloadInt(Constants.Constants.Token_UserId);
 
-            var stream = _exporter.ExportToExcelAllNCUA(currentUserId);
+            var stream = _exporter.ExportToExcelAllNCUA(currentUserId, type);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 

@@ -22,19 +22,20 @@
 -------------------------->
 
 <div mat-dialog-title class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span>Excel Export</span>
+    <span style="color: white;" class="mr-2 cset-icons-export-excel"></span>
+    <span style="color: white;">Excel Export</span>
 </div>
 <mat-dialog-content>
     <div>
         <div class="container">
             <div class="row">
-                <div class="col-12" style="padding-bottom:15px;">
-                    The excel export is simple data for analysis.  Excel data cannot be reimported.
+                <div class="col-12 m-4">
+                    This excel export is for simple data analysis. Excel data cannot be reimported.
                 </div>
             
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 ml-4 mb-2">
                     <input type="checkbox" name="doNotShowAgain" class="mt-1" autocomplete="off" (change)="setDoNotShow()" [(ngModel)]="doNotShow"
                     [checked]="doNotShow" >
                     <label for="doNotShowAgain">&nbsp;Do not show this message again</label>
