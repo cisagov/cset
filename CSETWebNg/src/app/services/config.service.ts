@@ -76,7 +76,6 @@ export class ConfigService {
    */
   async loadConfig() {
     if (!this.initialized) {
-      console.log('LOAD CONFIG RAN!');
       this.isRunningInElectron = localStorage.getItem('isRunningInElectron') == 'true';
 
       return this.http
