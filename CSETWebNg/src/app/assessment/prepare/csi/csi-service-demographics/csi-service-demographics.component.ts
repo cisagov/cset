@@ -22,34 +22,40 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CsiServiceDemographic, CsiBudgetBasis, CsiStaffCount, CsiCustomerCount, CsiUserCount } from '../../../../models/csi.model';
+import {
+  CsiServiceDemographic,
+  CsiBudgetBasis,
+  CsiStaffCount,
+  CsiCustomerCount,
+  CsiUserCount
+} from '../../../../models/csi.model';
 import { CsiService } from '../../../../services/cis-csi.service';
 import { ConfigService } from './../../../../services/config.service';
-
+import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
   selector: 'app-csi-service-demographics',
   templateUrl: './csi-service-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./csi-service-demographics.component.scss']
 })
 export class CsiServiceDemographicsComponent implements OnInit {
-
   csiServiceDemographic: CsiServiceDemographic = {};
 
   budgetBasisList: CsiBudgetBasis[] = [
-  // 'No formal budget is established',
-  // 'Strict dollar amount',
-  // 'Strict percentage of IT budget',
-  // 'Strict percentage of overall budget',
-  // 'Management discretion',
-  // 'Some other format',
+    // 'No formal budget is established',
+    // 'Strict dollar amount',
+    // 'Strict percentage of IT budget',
+    // 'Strict percentage of overall budget',
+    // 'Management discretion',
+    // 'Some other format',
   ];
   itIcsStaffCountList: CsiStaffCount[] = [
-  // 'None',
-  // '1 to 5',
-  // '6 to 20',
-  // '21 to 50',
-  // '> 50',
+    // 'None',
+    // '1 to 5',
+    // '6 to 20',
+    // '21 to 50',
+    // '> 50',
   ];
   cyberSecurityItIcsStaffCountList: CsiStaffCount[] = [
     // 'None',
@@ -57,105 +63,130 @@ export class CsiServiceDemographicsComponent implements OnInit {
     // '6 to 10',
     // '11 to 20',
     // '> 20',
-    ];
+  ];
   authorizedOrganizationalUserCountList: CsiUserCount[] = [
-  // '1 to 20',
-  // '21 to 50',
-  // '51 to 100',
-  // '101 to 500',
-  // '> 500',
+    // '1 to 20',
+    // '21 to 50',
+    // '51 to 100',
+    // '101 to 500',
+    // '> 500',
   ];
   authorizedNonOrganizationalUserCountList: CsiUserCount[] = [
-  // 'None',
-  // '1 to 50',
-  // '51 to 100',
-  // '101 to 1,000',
-  // '1,001 to 10,000',
-  // '> 10,000',
+    // 'None',
+    // '1 to 50',
+    // '51 to 100',
+    // '101 to 1,000',
+    // '1,001 to 10,000',
+    // '> 10,000',
   ];
   customersCountList: CsiCustomerCount[] = [
-  // '1 to 20',
-  // '21 to 50',
-  // '51 to 100',
-  // '101 to 1,000',
-  // '1,001 to 10,000',
-  // '10,001 to 50,000',
-  // '> 50,000'
+    // '1 to 20',
+    // '21 to 50',
+    // '51 to 100',
+    // '101 to 1,000',
+    // '1,001 to 10,000',
+    // '10,001 to 50,000',
+    // '> 50,000'
   ];
 
-  constructor(private csiSvc: CsiService, private configSvc: ConfigService) { }
+  demographics: any = {};
+
+  constructor(private csiSvc: CsiService, private demoSvc: DemographicService, private configSvc: ConfigService) {}
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiBudgetBases().subscribe(
       (data: CsiBudgetBasis[]) => {
-          this.budgetBasisList = data;
+        this.budgetBasisList = data;
       },
-      error => {
-          console.log('Error getting all CSI budget basis options: ' + (<Error>error).name + (<Error>error).message);
-    });
+      (error) => {
+        console.log('Error getting all CSI budget basis options: ' + (<Error>error).name + (<Error>error).message);
+      }
+    );
     this.csiSvc.getAllCsiStaffCounts().subscribe(
       (data: CsiStaffCount[]) => {
-          this.itIcsStaffCountList = this.filterItIcsStaffCounts(data);
-          this.cyberSecurityItIcsStaffCountList = this.filterCybersecurityItIcsStaffCounts(data);
+        this.itIcsStaffCountList = this.filterItIcsStaffCounts(data);
+        this.cyberSecurityItIcsStaffCountList = this.filterCybersecurityItIcsStaffCounts(data);
       },
-      error => {
-          console.log('Error getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
-    });
+      (error) => {
+        console.log('Error getting all CSI staff count options: ' + (<Error>error).name + (<Error>error).message);
+      }
+    );
     this.csiSvc.getAllCsiUserCounts().subscribe(
       (data: CsiUserCount[]) => {
-          this.authorizedOrganizationalUserCountList = this.filterOrganizationalUserCounts(data);
-          this.authorizedNonOrganizationalUserCountList = this.filterNonOrganizationalUserCounts(data);
+        this.authorizedOrganizationalUserCountList = this.filterOrganizationalUserCounts(data);
+        this.authorizedNonOrganizationalUserCountList = this.filterNonOrganizationalUserCounts(data);
       },
-      error => {
-          console.log('Error getting all CSI user count options: ' + (<Error>error).name + (<Error>error).message);
-    });
+      (error) => {
+        console.log('Error getting all CSI user count options: ' + (<Error>error).name + (<Error>error).message);
+      }
+    );
     this.csiSvc.getAllCsiCustomerCounts().subscribe(
       (data: CsiCustomerCount[]) => {
-          this.customersCountList = this.sortCustomerCounts(data);
+        this.customersCountList = this.sortCustomerCounts(data);
       },
-      error => {
-          console.log('Error getting all CSI customer count options: ' + (<Error>error).name + (<Error>error).message);
+      (error) => {
+        console.log('Error getting all CSI customer count options: ' + (<Error>error).name + (<Error>error).message);
+      }
+    );
+
+    this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic) => {
+      this.csiServiceDemographic = result;
     });
 
-    this.csiSvc.getCsiServiceDemographic().subscribe((result: CsiServiceDemographic)=> {
-      this.csiServiceDemographic = result;
+    this.demoSvc.getDemographic().subscribe((data: any) => {
+      this.demographics = data;
     });
   }
 
   update(): void {
-    console.log(this.csiServiceDemographic);
-    this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic)
+    this.csiSvc.updateCsiServiceDemographic(this.csiServiceDemographic);
+  }
+
+  updateBaseDemographics() {
+    this.demoSvc.updateDemographic(this.demographics);
   }
 
   filterCybersecurityItIcsStaffCounts(list: CsiStaffCount[]) {
-    return list.filter(
-      x => x.sequence == 1 || x.sequence == 2 || x.sequence == 3 || x.sequence == 5 || x.sequence == 7
-      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+    return list
+      .filter((x) => x.sequence == 1 || x.sequence == 2 || x.sequence == 3 || x.sequence == 5 || x.sequence == 7)
+      .sort((a, b) => (a.sequence > b.sequence ? 1 : -1));
   }
 
   filterItIcsStaffCounts(list: CsiStaffCount[]) {
-    return list.filter(
-      x => x.sequence == 1 || x.sequence == 2 || x.sequence == 4 || x.sequence == 6 || x.sequence == 8
-      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+    return list
+      .filter((x) => x.sequence == 1 || x.sequence == 2 || x.sequence == 4 || x.sequence == 6 || x.sequence == 8)
+      .sort((a, b) => (a.sequence > b.sequence ? 1 : -1));
   }
 
   filterOrganizationalUserCounts(list: CsiUserCount[]) {
-    return list.filter(
-      x => x.sequence == 2 || x.sequence == 4 || x.sequence == 5 || x.sequence == 6 || x.sequence == 8
-      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+    return list
+      .filter((x) => x.sequence == 2 || x.sequence == 4 || x.sequence == 5 || x.sequence == 6 || x.sequence == 8)
+      .sort((a, b) => (a.sequence > b.sequence ? 1 : -1));
   }
 
   filterNonOrganizationalUserCounts(list: CsiUserCount[]) {
-    return list.filter(
-      x => x.sequence == 1 || x.sequence == 3 || x.sequence == 5 || x.sequence == 7 || x.sequence == 9 || x.sequence == 10
-      ).sort((a, b) => (a.sequence > b.sequence) ? 1 : -1);
+    return list
+      .filter(
+        (x) =>
+          x.sequence == 1 ||
+          x.sequence == 3 ||
+          x.sequence == 5 ||
+          x.sequence == 7 ||
+          x.sequence == 9 ||
+          x.sequence == 10
+      )
+      .sort((a, b) => (a.sequence > b.sequence ? 1 : -1));
   }
 
   sortCustomerCounts(list: CsiCustomerCount[]) {
-    return list.sort((a, b) => (a.sequence > b.sequence) ? 1 : -1)
+    return list.sort((a, b) => (a.sequence > b.sequence ? 1 : -1));
   }
 
   showCriticalServiceIdentifyingInfo() {
     return this.configSvc.behaviors.showCriticalService;
+  }
+
+  showErrors() {
+    return this.configSvc.installationMode === 'IOD';
   }
 }

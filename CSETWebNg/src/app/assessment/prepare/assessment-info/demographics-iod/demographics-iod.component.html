@@ -21,9 +21,15 @@
   SOFTWARE.
 -------------------------->
 <form>
+  <h5 class="mb-4 alert-warning">
+    NOTE: Completion of all organization demographic, assessment configuration, and critical service fields are required
+    to access reports and assessment exports.
+  </h5>
+
   <div class="form-group mb-4">
     <label for="orgType">Organization Type</label>
     <select
+      [ngClass]="{ 'alert-danger' : !demographicData.organizationType }"
       class="form-control"
       id="orgType"
       tabindex="0"
@@ -41,6 +47,7 @@
   <div class="form-group mb-4">
     <label for="orgName">Name of Organization</label>
     <input
+      [ngClass]="{ 'alert-danger' : !demographicData.organizationName }"
       class="form-control"
       autocomplete="off"
       tabindex="0"
@@ -57,6 +64,7 @@
   <div class="form-group">
     <label for="businessUnit">Business Unit</label>
     <input
+      [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }"
       class="form-control"
       autocomplete="off"
       tabindex="0"
@@ -74,6 +82,7 @@
     <div class="form-group mb-4 col-6 pl-0">
       <label for="sector">Sector</label>
       <select
+        [ngClass]="{ 'alert-danger' : !demographicData.sector}"
         class="form-control"
         id="sector"
         tabindex="0"
@@ -95,6 +104,7 @@
     <div class="form-group mb-4 col-6 pr-0">
       <label for="subsector">Sub-Sector</label>
       <select
+        [ngClass]="{ 'alert-danger' : !demographicData.subsector }"
         class="form-control"
         id="subsector"
         tabindex="0"
@@ -123,6 +133,7 @@
       Number of employees in the government agency?
     </label>
     <select
+      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }"
       class="form-control"
       id="numberEmployeesTotal"
       tabindex="0"
@@ -150,6 +161,7 @@
       <div class="font-italic my-2">Please select N/A if the department and the overall organization are the same.</div>
     </ng-container>
     <select
+      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }"
       class="form-control"
       id="numberEmployeesUnit"
       tabindex="0"
@@ -179,6 +191,7 @@
       </label>
     </ng-container>
     <select
+      [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }"
       class="form-control"
       id="totalAnnualRevenue"
       tabindex="0"
@@ -253,6 +266,7 @@
       <div>
         <label for="standard1">Most important:</label>
         <input
+          [ngClass]="{ 'alert-danger' : !demographicData.standard1 }"
           type="text"
           maxlength="250"
           class="form-control mb-3"
@@ -266,6 +280,7 @@
       <div>
         <label for="standard2">Second most important:</label>
         <input
+          [ngClass]="{ 'alert-danger' : !demographicData.standard2 }"
           type="text"
           maxlength="250"
           class="form-control mb-3"
@@ -440,6 +455,7 @@
       </div>
       <label for="barrier1">Most significant:</label>
       <input
+        [ngClass]="{ 'alert-danger' : !demographicData.barrier1 }"
         type="text"
         maxlength="250"
         class="form-control mb-3"
@@ -451,6 +467,7 @@
       />
       <label for="barrier2">Second most significant:</label>
       <input
+        [ngClass]="{ 'alert-danger' : !demographicData.barrier2 }"
         type="text"
         maxlength="250"
         class="form-control mb-3"
