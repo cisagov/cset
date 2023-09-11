@@ -32,6 +32,7 @@
       <div class="form-group col-md-6">
         <label class="mb-1" for="criticalService">Critical Service</label>
         <textarea
+          [ngClass]="{ 'alert-danger' : !demographics.criticalService && criticalService.touched }"
           appAutoSize
           class="form-control"
           autocomplete="off"
@@ -42,12 +43,14 @@
           [(ngModel)]="demographics.criticalService"
           placeholder="Critical Service"
           (blur)="changeCriticalService($event)"
+          #criticalService="ngModel"
         ></textarea>
       </div>
 
       <div class="form-group col-md-6">
         <label class="mb-1" for="criticalService">Critical Dependency for Incident Response Support</label>
         <textarea
+          [ngClass]="{ 'alert-danger' : !iodDemographics.criticalDependencyIncidentResponseSupport && criticalDependencyIncidentResponseSupport.touched }"
           appAutoSize
           class="form-control"
           autocomplete="off"
@@ -58,6 +61,7 @@
           [(ngModel)]="iodDemographics.criticalDependencyIncidentResponseSupport"
           placeholder="Critical Dependency for Incident Response Support"
           (blur)="updateIodDemographics()"
+          #criticalDependencyIncidentResponseSupport="ngModel"
         ></textarea>
       </div>
     </div>
@@ -84,12 +88,14 @@
         Please estimate the percentage of your organization's annual revenue that depends on the critical service.
       </label>
       <select
+        [ngClass]="{ 'alert-danger' : !iodDemographics.criticalServiceRevenuePercent && criticalServiceRevenuePercent.touched }"
         class="form-control"
         id="percentageRevenue"
         tabindex="0"
         name="percentageRevenue"
         [(ngModel)]="iodDemographics.criticalServiceRevenuePercent"
         (change)="updateIodDemographics()"
+        #criticalServiceRevenuePercent="ngModel"
       >
         <option [ngValue]="null">-- Select --</option>
         <option
@@ -109,12 +115,14 @@
         available, please select N/A.
       </label>
       <select
+        [ngClass]="{ 'alert-danger' : !iodDemographics.numberPeopleServedByCritSvc && numberPeopleServedByCritSvc.touched }"
         class="form-control"
         id="numberPeopleServedByCritSvc"
         tabindex="0"
         name="numberPeopleServedByCritSvc"
         [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc"
         (change)="updateIodDemographics()"
+        #numberPeopleServedByCritSvc="ngModel"
       >
         <option [ngValue]="null">-- Select --</option>
         <option
@@ -138,11 +146,13 @@
         <div>
           Most important:
           <select
+            [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector1 && disruptedSector1.touched }"
             class="form-control mb-3"
             name="disruptedSector1"
             tabindex="0"
             [(ngModel)]="iodDemographics.disruptedSector1"
             (change)="updateIodDemographics()"
+            #disruptedSector1="ngModel"
           >
             <option [ngValue]="null">-- Select --</option>
             <option
@@ -157,11 +167,13 @@
         <div>
           Second most important:
           <select
+            [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector2 && disruptedSector2.touched }"
             class="form-control mb-3"
             name="disruptedSector2"
             tabindex="0"
             [(ngModel)]="iodDemographics.disruptedSector2"
             (change)="updateIodDemographics()"
+            #disruptedSector2="ngModel"
           >
             <option [ngValue]="null">-- Select --</option>
             <option

@@ -184,4 +184,8 @@ export class CsiServiceDemographicsComponent implements OnInit {
   showCriticalServiceIdentifyingInfo() {
     return this.configSvc.behaviors.showCriticalService;
   }
+
+  showErrors() {
+    return this.configSvc.installationMode === 'IOD';
+  }
 }
