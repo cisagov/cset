@@ -87,7 +87,6 @@ export class EnableProtectedComponent implements OnInit {
 
   toggleCisaAssessorWorkflow() {
     this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
-    console.log(this.cisaWorkflowEnabled);
   }
 
   /**

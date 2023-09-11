@@ -36,7 +36,8 @@ import { DemographicService } from '../../../../services/demographic.service';
 @Component({
   selector: 'app-csi-service-demographics',
   templateUrl: './csi-service-demographics.component.html',
-  host: { class: 'd-flex flex-column flex-11a' }
+  host: { class: 'd-flex flex-column flex-11a' },
+  styleUrls: ['./csi-service-demographics.component.scss']
 })
 export class CsiServiceDemographicsComponent implements OnInit {
   csiServiceDemographic: CsiServiceDemographic = {};
