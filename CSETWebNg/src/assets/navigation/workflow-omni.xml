@@ -17,8 +17,8 @@
         <node displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" condition="INSTALL-MODE-NONE(TSA,IOD)" />
         <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" condition="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:ISE" />
 
-        <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="SOURCE:TSA" />
-        <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="SOURCE:TSA" />
+        <node displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" condition="INSTALL-MODE:TSA" />
+        <node displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" condition="INSTALL-MODE:TSA" />
 
         <!-- IOD CSA 'prepare' pages -->
         <node displaytext="Organization Demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" condition="INSTALL-MODE:IOD" />
