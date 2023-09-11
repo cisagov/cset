@@ -29,14 +29,13 @@
   <div class="form-group mb-4">
     <label for="orgType">Organization Type</label>
     <select
-      [ngClass]="{ 'alert-danger' : !demographicData.organizationType && orgType.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.organizationType }"
       class="form-control"
       id="orgType"
       tabindex="0"
       name="orgType"
       (change)="update($event)"
       [(ngModel)]="demographicData.organizationType"
-      #orgType="ngModel"
     >
       <option [ngValue]="null">-- Select Type --</option>
       <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue">
@@ -48,7 +47,7 @@
   <div class="form-group mb-4">
     <label for="orgName">Name of Organization</label>
     <input
-      [ngClass]="{ 'alert-danger' : !demographicData.organizationName && orgName.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.organizationName }"
       class="form-control"
       autocomplete="off"
       tabindex="0"
@@ -59,14 +58,13 @@
       [(ngModel)]="demographicData.organizationName"
       placeholder="Name of Organization"
       (blur)="update($event)"
-      #orgName="ngModel"
     />
   </div>
 
   <div class="form-group">
     <label for="businessUnit">Business Unit</label>
     <input
-      [ngClass]="{ 'alert-danger' : !demographicData.businessUnit && businessUnit.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }"
       class="form-control"
       autocomplete="off"
       tabindex="0"
@@ -77,7 +75,6 @@
       [(ngModel)]="demographicData.businessUnit"
       placeholder="Business Unit/Agency"
       (blur)="update($event)"
-      #businessUnit="ngModel"
     />
   </div>
 
@@ -85,14 +82,13 @@
     <div class="form-group mb-4 col-6 pl-0">
       <label for="sector">Sector</label>
       <select
-        [ngClass]="{ 'alert-danger' : !demographicData.sector && sector.touched }"
+        [ngClass]="{ 'alert-danger' : !demographicData.sector}"
         class="form-control"
         id="sector"
         tabindex="0"
         name="sector"
         [(ngModel)]="demographicData.sector"
         (change)="onChangeSector($event)"
-        #sector="ngModel"
       >
         <option [ngValue]="null">-- Select Sector --</option>
         <option
@@ -108,14 +104,13 @@
     <div class="form-group mb-4 col-6 pr-0">
       <label for="subsector">Sub-Sector</label>
       <select
-        [ngClass]="{ 'alert-danger' : !demographicData.subsector && subsector.touched }"
+        [ngClass]="{ 'alert-danger' : !demographicData.subsector }"
         class="form-control"
         id="subsector"
         tabindex="0"
         name="subsector"
         [(ngModel)]="demographicData.subsector"
         (change)="update($event)"
-        #subsector="ngModel"
       >
         <option [ngValue]="null">-- Select --</option>
         <option
@@ -138,14 +133,13 @@
       Number of employees in the government agency?
     </label>
     <select
-      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal && numberEmployeesTotal.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }"
       class="form-control"
       id="numberEmployeesTotal"
       tabindex="0"
       name="numberEmployeesTotal"
       [(ngModel)]="demographicData.numberEmployeesTotal"
       (change)="update($event)"
-      #numberEmployeesTotal="ngModel"
     >
       <option [ngValue]="null">-- Select --</option>
       <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [ngValue]="i.optionValue">
@@ -167,14 +161,13 @@
       <div class="font-italic my-2">Please select N/A if the department and the overall organization are the same.</div>
     </ng-container>
     <select
-      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit && numberEmployeesUnit.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }"
       class="form-control"
       id="numberEmployeesUnit"
       tabindex="0"
       name="numberEmployeesUnit"
       [(ngModel)]="demographicData.numberEmployeesUnit"
       (change)="update($event)"
-      #numberEmployeesUnit="ngModel"
     >
       <option [ngValue]="null">-- Select --</option>
       <option
@@ -198,14 +191,13 @@
       </label>
     </ng-container>
     <select
-      [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue && annualRevenue.touched }"
+      [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }"
       class="form-control"
       id="totalAnnualRevenue"
       tabindex="0"
       name="totalAnnualRevenue"
       [(ngModel)]="demographicData.annualRevenue"
       (change)="update($event)"
-      #annualRevenue="ngModel"
     >
       <option [ngValue]="null">-- Select --</option>
       <option
@@ -274,7 +266,7 @@
       <div>
         <label for="standard1">Most important:</label>
         <input
-          [ngClass]="{ 'alert-danger' : !demographicData.standard1 && standard1.touched }"
+          [ngClass]="{ 'alert-danger' : !demographicData.standard1 }"
           type="text"
           maxlength="250"
           class="form-control mb-3"
@@ -283,13 +275,12 @@
           list="listStandards"
           [(ngModel)]="demographicData.standard1"
           (blur)="update($event)"
-          #standard1="ngModel"
         />
       </div>
       <div>
         <label for="standard2">Second most important:</label>
         <input
-          [ngClass]="{ 'alert-danger' : !demographicData.standard2 && standard2.touched }"
+          [ngClass]="{ 'alert-danger' : !demographicData.standard2 }"
           type="text"
           maxlength="250"
           class="form-control mb-3"
@@ -298,7 +289,6 @@
           list="listStandards"
           [(ngModel)]="demographicData.standard2"
           (blur)="update($event)"
-          #standard2="ngModel"
         />
       </div>
       <datalist id="listStandards">
@@ -465,7 +455,7 @@
       </div>
       <label for="barrier1">Most significant:</label>
       <input
-        [ngClass]="{ 'alert-danger' : !demographicData.barrier1 && barrier1.touched }"
+        [ngClass]="{ 'alert-danger' : !demographicData.barrier1 }"
         type="text"
         maxlength="250"
         class="form-control mb-3"
@@ -474,11 +464,10 @@
         list="listBarriers"
         [(ngModel)]="demographicData.barrier1"
         (blur)="update($event)"
-        #barrier1="ngModel"
       />
       <label for="barrier2">Second most significant:</label>
       <input
-        [ngClass]="{ 'alert-danger' : !demographicData.barrier2 && barrier2.touched }"
+        [ngClass]="{ 'alert-danger' : !demographicData.barrier2 }"
         type="text"
         maxlength="250"
         class="form-control mb-3"
@@ -487,7 +476,6 @@
         list="listBarriers"
         [(ngModel)]="demographicData.barrier2"
         (blur)="update($event)"
-        #barrier2="ngModel"
       />
     </div>
   </div>

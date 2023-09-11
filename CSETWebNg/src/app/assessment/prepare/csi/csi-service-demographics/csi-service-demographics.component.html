@@ -27,7 +27,7 @@
     <div class="form-group">
       <label for="criticalServiceName">Critical Service Name</label>
       <input
-        [ngClass]="{ 'alert-danger': !demographics.criticalService && criticalService.touched && showErrors() }"
+        [ngClass]="{ 'alert-danger': !demographics.criticalService && showErrors() }"
         class="form-control"
         tabindex="0"
         type="text"
@@ -37,14 +37,13 @@
         [(ngModel)]="demographics.criticalService"
         placeholder="Critical Service Name"
         (change)="updateBaseDemographics()"
-        #criticalService="ngModel"
       />
     </div>
     <div class="form-group">
       <label for="criticalServiceDescription">Critical Service Description</label>
       <input
         [ngClass]="{
-          'alert-danger': !csiServiceDemographic.criticalServiceDescription && criticalServiceDescription.touched && showErrors()
+          'alert-danger': !csiServiceDemographic.criticalServiceDescription && showErrors()
         }"
         class="form-control"
         tabindex="0"
@@ -55,13 +54,12 @@
         [(ngModel)]="csiServiceDemographic.criticalServiceDescription"
         placeholder="Critical Service Description"
         (change)="update()"
-        #criticalServiceDescription="ngModel"
       />
     </div>
     <div class="form-group">
       <label for="itIcsName">Name of IT/ICS System (supporting the Critical Service)</label>
       <input
-        [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsName && itIcsName.touched && showErrors() }"
+        [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsName && showErrors() }"
         class="form-control"
         tabindex="0"
         type="text"
@@ -71,7 +69,6 @@
         [(ngModel)]="csiServiceDemographic.itIcsName"
         placeholder="Name of IT/ICS System (supporting the Critical Service)"
         (change)="update()"
-        #itIcsName="ngModel"
       />
     </div>
     <div class="form-group">
@@ -105,7 +102,7 @@
           'alert-danger':
             !csiServiceDemographic.multiSiteDescription &&
             csiServiceDemographic.multiSite &&
-            multiSiteDescription.touched && showErrors()
+            showErrors()
         }"
         class="form-control"
         tabindex="0"
@@ -116,7 +113,6 @@
         [(ngModel)]="csiServiceDemographic.multiSiteDescription"
         (change)="update()"
         [disabled]="!csiServiceDemographic.multiSite"
-        #multiSiteDescription="ngModel"
       />
     </div>
   </ng-container>
@@ -136,6 +132,7 @@
           class="btn btn-level border-2 mb-1"
           *ngFor="let budgetB of budgetBasisList"
           [class.active]="budgetB.budget_Basis === csiServiceDemographic.budgetBasis"
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.budgetBasis && showErrors() }"      
         >
           <input
             ngbButton
@@ -168,6 +165,7 @@
           class="btn btn-level mb-1"
           *ngFor="let totalITStaffItem of itIcsStaffCountList"
           [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount"
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.itIcsStaffCount && showErrors() }"    
         >
           <input
             ngbButton
@@ -200,6 +198,7 @@
           class="btn btn-level mb-1"
           *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
           [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount"
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }"    
         >
           <input
             ngbButton
@@ -234,6 +233,7 @@
           [class.active]="
             authorizedOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedOrganizationalUserCount
           "
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.authorizedOrganizationalUserCount && showErrors() }"  
         >
           <input
             ngbButton
@@ -269,6 +269,7 @@
             authorizedNonOrganizationalUserCountItem.user_Count ===
             csiServiceDemographic.authorizedNonOrganizationalUserCount
           "
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.authorizedNonOrganizationalUserCount && showErrors() }"  
         >
           <input
             ngbButton
@@ -301,6 +302,7 @@
           class="btn btn-level mb-1"
           *ngFor="let customersCountItem of customersCountList"
           [class.active]="customersCountItem.customer_Count === csiServiceDemographic.customersCount"
+          [ngClass]="{ 'unanswered': !csiServiceDemographic.customersCount && showErrors() }"  
         >
           <input
             ngbButton
