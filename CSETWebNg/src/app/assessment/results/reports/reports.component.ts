@@ -291,7 +291,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   // This checks if we should apply cisa assessor workflow field validation to disable reports and export.
   shouldReportsandExportBeDisabledCisaAssessor() {
-    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation.isValid
+    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation?.isValid
   }
 
   showExcelExportDialog() {

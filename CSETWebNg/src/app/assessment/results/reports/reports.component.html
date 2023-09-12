@@ -60,6 +60,10 @@
   <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
     Please answer all organization demographic, assessment configuration, and critical service fields to access reports
     and assessment export.
+    <p class="mt-2">The following fields are incomplete:</p>
+    <ul>
+      <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
+    </ul>
   </div>
 
   <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
