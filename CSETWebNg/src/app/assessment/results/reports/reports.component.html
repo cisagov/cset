@@ -311,6 +311,17 @@
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
+      
+      <!-- Don't submit to MERIT without a CU name and charter! -->
+      <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionCharterNumber == '00000'">
+        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+          <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
+          <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+            "Submit" button is disabled until a Credit Union Name and Charter Number have been entered.
+            </div>
+        </div>
+      </div>
+
       <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues"
         class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
@@ -583,17 +594,12 @@
         <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
           <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')"
             tabindex="0">Back</button>
-          <!-- <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)"
-            tabindex="0"
-          >
-            Back
-          </button> -->
           <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0" 
-          [disabled]="
-              (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
-              this.ncuaSvc.unassignedIssues ||
-              this.ncuaSvc.submitInProgress
-            ">
+          [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
+              (ncuaSvc.switchStatus && ncuaSvc.creditUnionName == '') || 
+              (ncuaSvc.switchStatus && ncuaSvc.creditUnionCharterNumber == '00000') ||
+              ncuaSvc.unassignedIssues ||
+              ncuaSvc.submitInProgress">
             Submit
           </button>
         </div>
