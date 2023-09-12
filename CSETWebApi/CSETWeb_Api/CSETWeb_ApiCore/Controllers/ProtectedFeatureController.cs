@@ -88,7 +88,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpPost]
         [Route("api/EnableProtectedFeature/setCisaAssessorWorkflow")]
         /// <summary>
-        /// Marks the FAA set as 'unlocked.'
+        /// Toggles the Cisa Assessor Workflow for the given user.
         /// </summary>
         /// <returns></returns>
         public IActionResult SetCisaAssessorWorkflow([FromBody] bool cisaWorkflowEnabled)

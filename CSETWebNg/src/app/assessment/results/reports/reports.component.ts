@@ -37,305 +37,310 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { FindingsService } from '../../../services/findings.service';
+import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 
 @Component({
-    selector: 'app-reports',
-    templateUrl: './reports.component.html',
-    // eslint-disable-next-line
-    host: { class: 'd-flex flex-column flex-11a' }
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
+  /**
+   * Indicates if all ACET questions have been answered.  This is only
+   * used when the ACET model is in use and this is an ACET installation.
+   */
+  unassignedIssueTitles: any = [];
 
-    /**
-     * Indicates if all ACET questions have been answered.  This is only
-     * used when the ACET model is in use and this is an ACET installation.
-     */
-    unassignedIssueTitles: any = [];
+  disableAcetReportLinks: boolean = true;
+  disableIseReportLinks: boolean = true;
+  disableEntirePage: boolean = false;
 
-    disableAcetReportLinks: boolean = true;
-    disableIseReportLinks: boolean = true;
-    disableEntirePage: boolean = false;
+  securityIdentifier: any = [];
+  securitySelected: string = 'None';
+  isMobile = false;
 
-    securityIdentifier: any = [];
-    securitySelected: string = "None";
-    isMobile = false;
+  lastModifiedTimestamp = '';
 
-    lastModifiedTimestamp = '';
+  exportExtension: string;
 
-    exportExtension: string;
+  dialogRef: MatDialogRef<any>;
+  isCyberFlorida: boolean = false;
 
-    dialogRef: MatDialogRef<any>;
-    isCyberFlorida: boolean = false;
+  findings: any = null;
+  numberOfContacts: number = 1;
+  isConfigChainEqual: boolean = false;
 
-    findings: any = null;
-    numberOfContacts: number = 1;
-    isConfigChainEqual: boolean = false;
-    /**
-     *
-     */
-    constructor(
-        private _snackBar: MatSnackBar,
-        public assessSvc: AssessmentService,
-        public navSvc: NavigationService,
-        private acetSvc: ACETService,
-        private ncuaSvc: NCUAService,
-        public findSvc: FindingsService,
-        public fileSvc: FileUploadClientService,
-        public authSvc: AuthenticationService,
-        private router: Router,
-        private route: ActivatedRoute,
-        public configSvc: ConfigService,
-        public demoSvc: DemographicExtendedService,
-        private cdr: ChangeDetectorRef,
-        private reportSvc: ReportService,
-        public dialog: MatDialog
-    ) {
-        if (this.assessSvc.assessment == null) {
-            this.assessSvc.getAssessmentDetail().subscribe(
-                (data: any) => {
-                    this.assessSvc.assessment = data;
-                });
-        }
-        if (this.configSvc.mobileEnvironment) {
-            this.isMobile = true;
-        } else {
-            this.isMobile = false;
-        }
-        this.assessSvc.currentTab = 'results';
-        this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ["TSA", "TSAonline"]);
+  cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
+  /**
+   *
+   */
+  constructor(
+    private _snackBar: MatSnackBar,
+    public assessSvc: AssessmentService,
+    public navSvc: NavigationService,
+    private acetSvc: ACETService,
+    private ncuaSvc: NCUAService,
+    public findSvc: FindingsService,
+    public fileSvc: FileUploadClientService,
+    public authSvc: AuthenticationService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public configSvc: ConfigService,
+    public demoSvc: DemographicExtendedService,
+    private cdr: ChangeDetectorRef,
+    private reportSvc: ReportService,
+    public dialog: MatDialog
+  ) {
+    if (this.assessSvc.assessment == null) {
+      this.assessSvc.getAssessmentDetail().subscribe((data: any) => {
+        this.assessSvc.assessment = data;
+      });
+    }
+    if (this.configSvc.mobileEnvironment) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
+    }
+    this.assessSvc.currentTab = 'results';
+    this.isConfigChainEqual = this.arraysEqual(this.configSvc.config.currentConfigChain, ['TSA', 'TSAonline']);
+  }
+
+  arraysEqual(a, b) {
+    if (a === b) {return true;}
+    if (a == null || b == null) {return false;}
+    if (a.length !== b.length) {return false;}
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+
+    for (let i = 0; i < a.length; ++i) {
+      if (a[i] !== b[i]) {return false;}
+    }
+    return true;
+  }
+
+  openSnackBar() {
+    this._snackBar.openFromComponent(PrintSnackComponent, {
+      verticalPosition: 'top',
+      horizontalPosition: 'center'
+    });
+  }
+
+  /**
+   *
+   */
+  ngOnInit() {
+    this.exportExtension = localStorage.getItem('exportExtension');
+
+    this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
+      this.router.navigate([value], { relativeTo: this.route.parent });
+    });
+
+    // call the API for a ruling on whether all questions have been answered
+    this.disableAcetReportLinks = false;
+    this.disableIseReportLinks = false;
+    if (this.configSvc.installationMode === 'ACET') {
+      if (this.assessSvc.isISE()) {
+        this.checkIseDisabledStatus();
+
+        this.getAssessmentFindings();
+      } else {
+        this.checkAcetDisabledStatus();
+      }
     }
 
-    arraysEqual(a, b) {
-        if (a === b) return true;
-        if (a == null || b == null) return false;
-        if (a.length !== b.length) return false;
+    this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
+      this.cisaAssessorWorkflowFieldValidation = result;
+      if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
+        this.disableEntirePage = true;
+      }
+    });
 
-        // If you don't care about the order of the elements inside
-        // the array, you should sort both arrays here.
-
-        for (let i = 0; i < a.length; ++i) {
-            if (a[i] !== b[i]) return false;
-        }
-        return true;
+    // disable everything if this is a Cyber Florida and demographics aren't complete
+    if (this.configSvc.installationMode === 'CF') {
+      this.isCyberFlorida = true;
+      this.demoSvc.getDemoAnswered().subscribe((answered: boolean) => {
+        this.disableEntirePage = !answered;
+      });
+    } else {
+      this.isCyberFlorida = false;
     }
 
+    this.reportSvc.getSecurityIdentifiers().subscribe((data) => {
+      this.securityIdentifier = data;
+    });
 
-    openSnackBar() {
-        this._snackBar.openFromComponent(PrintSnackComponent, {
-            verticalPosition: 'top',
-            horizontalPosition: 'center'
-        });
+    this.assessSvc.getLastModified().subscribe((data: string) => {
+      this.lastModifiedTimestamp = data;
+    });
+  }
+
+  /**
+   *
+   */
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
+  }
+
+  /**
+   * Decides whether the Observation Tear-Out Sheets
+   * link should be shown.
+   */
+  showObservationTearouts() {
+    if (this.assessSvc.isISE()) {
+      return false;
     }
 
-    /**
-     *
-     */
-    ngOnInit() {
-        this.exportExtension = localStorage.getItem('exportExtension');
+    if (this.isMobile) {
+      return false;
+    }
 
-        this.navSvc.navItemSelected.asObservable().subscribe((value: string) => {
-            this.router.navigate([value], { relativeTo: this.route.parent });
-        });
+    return this.configSvc.behaviors.showObservations;
+  }
 
-        // call the API for a ruling on whether all questions have been answered
+  /**
+   *
+   */
+  clickReportLink(reportType: string, print: boolean = false) {
+    const url = '/index.html?returnPath=report/' + reportType;
+    localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
+
+    localStorage.setItem('report-confidentiality', this.securitySelected);
+    window.open(url, '_blank');
+  }
+
+  /**
+   *
+   */
+  clickReportService(report: string) {
+    this.reportSvc.getPdf(report, this.securitySelected).subscribe((data) => {
+      saveAs(data, 'test.pdf');
+    });
+  }
+
+  /**
+   * If all ACET statements are not answered, set the 'disable' flag
+   * to true.
+   */
+  checkAcetDisabledStatus() {
+    this.disableAcetReportLinks = true;
+    if (!this.assessSvc.usesMaturityModel('ACET')) {
+      return;
+    }
+
+    this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
+      if (percentAnswered == 100) {
         this.disableAcetReportLinks = false;
+      }
+    });
+  }
+
+  /**
+   * If all ACET ISE statements are not answered, set the 'disable' flag
+   * to true.
+   */
+  checkIseDisabledStatus() {
+    this.disableIseReportLinks = true;
+    if (!this.assessSvc.isISE()) {
+      return;
+    }
+    this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
+      if (percentAnswered == 100) {
         this.disableIseReportLinks = false;
-        if (this.configSvc.installationMode === 'ACET') {
-            if (this.assessSvc.isISE()) {
-                this.checkIseDisabledStatus();
+      }
+    });
+  }
 
-                this.getAssessmentFindings();
+  /**
+   * Gets all ISE Findings/Issues,
+   * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
+   */
+  getAssessmentFindings() {
+    this.ncuaSvc.unassignedIssueTitles = [];
+    this.findSvc.GetAssessmentFindings().subscribe(
+      (r: any) => {
+        this.findings = r;
+        let title = '';
+
+        for (let i = 0; i < this.findings?.length; i++) {
+          // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
+          if (
+            this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) ==
+            this.ncuaSvc.getExamLevel().substring(0, 4)
+          ) {
+            if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
+              title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
+              this.ncuaSvc.unassignedIssueTitles.push(title);
             }
-            else {
-                this.checkAcetDisabledStatus();
-            }
+          }
         }
-
-        // disable everything if this is a Cyber Florida and demographics aren't complete
-        if (this.configSvc.installationMode === 'CF') {
-            this.isCyberFlorida = true;
-            this.demoSvc.getDemoAnswered().subscribe((answered: boolean) => {
-                this.disableEntirePage = !answered;
-            });
+        if (this.ncuaSvc.unassignedIssueTitles?.length == 0) {
+          this.ncuaSvc.unassignedIssues = false;
+        } else {
+          this.ncuaSvc.unassignedIssues = true;
         }
-        else {
-            this.isCyberFlorida = false;
-        }
+      },
+      (error) => console.log('Findings Error: ' + (<Error>error).message)
+    );
+  }
 
-        this.reportSvc.getSecurityIdentifiers().subscribe(data => {
-            this.securityIdentifier = data;
-        })
+  onSelectSecurity(val) {
+    this.securitySelected = val;
+  }
 
-        this.assessSvc.getLastModified().subscribe((data: string) => {
-            this.lastModifiedTimestamp = data;
-        });
+  // This checks if we should apply cisa assessor workflow field validation to disable reports and export.
+  shouldReportsandExportBeDisabledCisaAssessor() {
+    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation?.isValid
+  }
+
+  showExcelExportDialog() {
+    const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+    if (this.dialog.openDialogs[0] || doNotShow) {
+      this.exportToExcel();
+      return;
     }
+    this.dialogRef = this.dialog.open(ExcelExportComponent);
+    this.dialogRef.afterClosed().subscribe();
+  }
 
+  exportToExcel() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+  }
 
-    /**
-     *
-     */
-    ngAfterViewInit() {
-        this.cdr.detectChanges();
-    }
+  /**
+   *
+   */
+  clickExport() {
+    // get short-term JWT from API
+    this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
+      const url = this.fileSvc.exportUrl + '?token=' + response.token;
 
-    /**
-     * Decides whether the Observation Tear-Out Sheets
-     * link should be shown.
-     */
-    showObservationTearouts() {
-        if (this.assessSvc.isISE()) {
-            return false;
-        }
-
-        if (this.isMobile) {
-            return false;
-        }
-
-        return this.configSvc.behaviors.showObservations;
-    }
-
-    /**
-     *
-     */
-    clickReportLink(reportType: string, print: boolean = false) {
-        let url = '/index.html?returnPath=report/' + reportType;
-        localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-
-        localStorage.setItem('report-confidentiality', this.securitySelected);
-        window.open(url, "_blank");
-    }
-
-    /**
-     * 
-     */
-    clickReportService(report: string) {
-        this.reportSvc.getPdf(report, this.securitySelected).subscribe(data => {
-            saveAs(data, 'test.pdf');
-        });
-    }
-
-    /**
-     * If all ACET statements are not answered, set the 'disable' flag
-     * to true.
-     */
-    checkAcetDisabledStatus() {
-        this.disableAcetReportLinks = true;
-        if (!this.assessSvc.usesMaturityModel('ACET')) {
-            return;
-        }
-
-        this.acetSvc.getAnswerCompletionRate().subscribe((percentAnswered: number) => {
-            if (percentAnswered == 100) {
-                this.disableAcetReportLinks = false;
-            }
-        });
-    }
-
-    /**
-     * If all ACET ISE statements are not answered, set the 'disable' flag
-     * to true.
-     */
-    checkIseDisabledStatus() {
-        this.disableIseReportLinks = true;
-        if (!this.assessSvc.isISE()) {
-            return;
-        }
-        this.acetSvc.getIseAnswerCompletionRate().subscribe((percentAnswered: number) => {
-            if (percentAnswered == 100) {
-                this.disableIseReportLinks = false;
-            }
-        });
-    }
-
-    /**
-     * Gets all ISE Findings/Issues,
-     * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
-     */
-    getAssessmentFindings() {
-        this.ncuaSvc.unassignedIssueTitles = [];
-        this.findSvc.GetAssessmentFindings().subscribe(
-            (r: any) => {
-                this.findings = r;
-                let title = '';
-
-                for (let i = 0; i < this.findings?.length; i++) {
-                    // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
-                    if (this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) == this.ncuaSvc.getExamLevel().substring(0, 4)) {
-                        if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
-                            title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
-                            this.ncuaSvc.unassignedIssueTitles.push(title);
-                        }
-                    }
-                }
-                if (this.ncuaSvc.unassignedIssueTitles?.length == 0) {
-                    this.ncuaSvc.unassignedIssues = false;
-                } else {
-                    this.ncuaSvc.unassignedIssues = true;
-                }
-
-
-            },
-            error => console.log('Findings Error: ' + (<Error>error).message)
-        );
-    }
-
-    onSelectSecurity(val) {
-        this.securitySelected = val;
-    }
-
-    showExcelExportDialog() {
-        const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-        const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-        if (this.dialog.openDialogs[0] || doNotShow) {
-            this.exportToExcel();
-            return;
-        }
-        this.dialogRef = this.dialog.open(ExcelExportComponent);
-        this.dialogRef
-            .afterClosed()
-            .subscribe();
-    }
-
-    exportToExcel() {
-        window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-    }
-
-    /**
-     *
-     */
-    clickExport() {
-        // get short-term JWT from API
-        this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id)
-            .subscribe((response: any) => {
-                const url = this.fileSvc.exportUrl + "?token=" + response.token;
-
-                window.location.href = url;
-            });
-    }
+      window.location.href = url;
+    });
+  }
 }
 
 @Component({
-    selector: 'snack-bar-component-example-snack',
-    template: '<span>To print or save any of these reports as PDF, click the report which will open in a new window. {{ printInstructions }} To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button>',
-    styles: [
-        '',
-    ],
+  selector: 'snack-bar-component-example-snack',
+  template:
+    '<span>To print or save any of these reports as PDF, click the report which will open in a new window. {{ printInstructions }} To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button>',
+  styles: ['']
 })
 export class PrintSnackComponent implements OnInit {
-    constructor(
-        public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
-        @Inject(MAT_SNACK_BAR_DATA) public data: any) {
-    }
+  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: any) {}
 
-    printInstructions: string;
+  printInstructions: string;
 
-    ngOnInit() {
-        const isRunningInElectron = (localStorage.getItem('isRunningInElectron') === 'true');
-        if (isRunningInElectron) {
-            this.printInstructions = 'In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P).'
-        } else {
-            this.printInstructions = 'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.'
-        }
+  ngOnInit() {
+    const isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true';
+    if (isRunningInElectron) {
+      this.printInstructions =
+        'In the top left corner of the report window, click the "File" button in the menu bar and select "Print" (CTRL + P).';
+    } else {
+      this.printInstructions =
+        'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.';
     }
+  }
 }
