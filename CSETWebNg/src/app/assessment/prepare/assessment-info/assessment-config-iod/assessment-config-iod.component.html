@@ -24,6 +24,22 @@
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <h3 class="mb-3">Assessment Configuration</h3>
 
+    <div class="form-row">
+      <div class="form-group col-md-6">
+          
+          <label class="mb-1" for="name">Assessment Name</label>
+          <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
+              [(ngModel)]="assessment.assessmentName"
+              (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+      </div>
+      <div class="form-group col-md-6">
+          <label class="mb-1" for="date">Assessment Date</label>
+          <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
+              [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+          <mat-datepicker #picker></mat-datepicker>
+      </div>
+  </div>
+
     <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
 
     <hr class="w-100 hr-sal my-5" />

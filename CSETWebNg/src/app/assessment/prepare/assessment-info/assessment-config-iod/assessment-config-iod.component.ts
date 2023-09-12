@@ -4,7 +4,7 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
-import { AssessmentContactsResponse } from '../../../../models/assessment-info.model';
+import { AssessmentContactsResponse, AssessmentDetail } from '../../../../models/assessment-info.model';
 import { User } from '../../../../models/user.model';
 
 @Component({
@@ -14,15 +14,15 @@ import { User } from '../../../../models/user.model';
 })
 export class AssessmentConfigIodComponent implements OnInit {
   iodDemographics: DemographicsIod = {};
-
   demographics: any = {};
-
   contacts: User[];
+  assessment: AssessmentDetail = {};
 
   constructor(
-    public assessmentSvc: AssessmentService,
+    private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
-    private iodDemoSvc: DemographicIodService
+    private iodDemoSvc: DemographicIodService,
+    private configSvc: ConfigService
   ) {}
 
   ngOnInit() {
@@ -32,8 +32,46 @@ export class AssessmentConfigIodComponent implements OnInit {
 
     this.iodDemoSvc.getDemographics().subscribe((data: any) => {
       this.iodDemographics = data;
-      this.refreshContacts()
+      this.refreshContacts();
     });
+
+    this.getAssessmentDetail();
+  }
+
+  /**
+   * Called every time this page is loaded.
+   */
+  getAssessmentDetail() {
+    this.assessment = this.assessSvc.assessment;
+
+    // a few things for a brand new assessment
+    if (this.assessSvc.isBrandNew) {
+      // RRA install presets the maturity model
+      if (this.configSvc.installationMode === 'RRA') {
+        this.assessSvc.setRraDefaults();
+        this.assessSvc.updateAssessmentDetails(this.assessment);
+      }
+    }
+
+    this.assessSvc.isBrandNew = false;
+    // Null out a 'low date' so that we display a blank
+    const assessDate: Date = new Date(this.assessment.assessmentDate);
+    if (assessDate.getFullYear() <= 1900) {
+      this.assessment.assessmentDate = null;
+    }
+  }
+
+  /**
+   *
+   */
+  update(e) {
+    // default Assessment Name if it is left empty
+    if (this.assessment) {
+      if (this.assessment.assessmentName.trim().length === 0) {
+        this.assessment.assessmentName = '(Untitled Assessment)';
+      }
+    }
+    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   changeCriticalService(evt: any) {
@@ -54,8 +92,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   }
 
   refreshContacts() {
-    if (this.assessmentSvc.id()) {
-      this.assessmentSvc.getAssessmentContacts().then((data: AssessmentContactsResponse) => {
+    if (this.assessSvc.id()) {
+      this.assessSvc.getAssessmentContacts().then((data: AssessmentContactsResponse) => {
         this.contacts = data.contactList;
       });
     }
