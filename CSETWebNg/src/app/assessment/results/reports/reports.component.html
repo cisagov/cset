@@ -50,12 +50,23 @@
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
+  
   <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
     </button>
   </div>
-  <div class="alert alert-warning" *ngIf="disableEntirePage">
+
+  <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
+    Please answer all organization demographic, assessment configuration, and critical service fields to access reports
+    and assessment export.
+    <p class="mt-2">The following fields are incomplete:</p>
+    <ul>
+      <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
+    </ul>
+  </div>
+
+  <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
     All demographics information on the Assessment Information page must be
     provided in order to view reports.
   </div>

@@ -69,3 +69,8 @@ export interface DemographicsIod {
     listShareOrgs?: any[];
     listBarriers?: any[];
 }
+
+export interface CisaWorkflowFieldValidationResponse {
+  invalidField: string[];
+  isValid: boolean;
+}

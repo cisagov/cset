@@ -187,7 +187,8 @@
           [ngClass]="{
             'alert-danger':
               !serviceComposition.otherDefiningSystemDescription &&
-              definingSystem.defining_System_Id === 10 &&
+              (serviceComposition.primaryDefiningSystem === 10 ||
+                this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)) &&
               showErrors()
           }"
           class="form-control"
