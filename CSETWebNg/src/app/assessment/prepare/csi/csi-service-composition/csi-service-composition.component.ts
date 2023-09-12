@@ -30,7 +30,8 @@ import { ConfigService } from './../../../../services/config.service';
 
 @Component({
   selector: 'app-csi-service-composition',
-  templateUrl: './csi-service-composition.component.html'
+  templateUrl: './csi-service-composition.component.html',
+  styleUrls: ['./csi-service-composition.component.scss']
 })
 export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
@@ -115,6 +116,7 @@ export class CsiServiceCompositionComponent implements OnInit {
       this.serviceComposition.primaryDefiningSystem &&
       this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id
     );
+
   }
 
   // check if the other defining system description should be disabled

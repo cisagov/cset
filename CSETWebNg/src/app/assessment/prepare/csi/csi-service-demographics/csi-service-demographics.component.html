@@ -132,7 +132,7 @@
           class="btn btn-level border-2 mb-1"
           *ngFor="let budgetB of budgetBasisList"
           [class.active]="budgetB.budget_Basis === csiServiceDemographic.budgetBasis"
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.budgetBasis && showErrors() }"      
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.budgetBasis && showErrors() }"      
         >
           <input
             ngbButton
@@ -165,7 +165,7 @@
           class="btn btn-level mb-1"
           *ngFor="let totalITStaffItem of itIcsStaffCountList"
           [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount"
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.itIcsStaffCount && showErrors() }"    
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsStaffCount && showErrors() }"    
         >
           <input
             ngbButton
@@ -198,7 +198,7 @@
           class="btn btn-level mb-1"
           *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
           [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount"
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }"    
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }"    
         >
           <input
             ngbButton
@@ -233,7 +233,7 @@
           [class.active]="
             authorizedOrganizationalUserCountItem.user_Count === csiServiceDemographic.authorizedOrganizationalUserCount
           "
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.authorizedOrganizationalUserCount && showErrors() }"  
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.authorizedOrganizationalUserCount && showErrors() }"  
         >
           <input
             ngbButton
@@ -269,7 +269,7 @@
             authorizedNonOrganizationalUserCountItem.user_Count ===
             csiServiceDemographic.authorizedNonOrganizationalUserCount
           "
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.authorizedNonOrganizationalUserCount && showErrors() }"  
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.authorizedNonOrganizationalUserCount && showErrors() }"  
         >
           <input
             ngbButton
@@ -302,7 +302,7 @@
           class="btn btn-level mb-1"
           *ngFor="let customersCountItem of customersCountList"
           [class.active]="customersCountItem.customer_Count === csiServiceDemographic.customersCount"
-          [ngClass]="{ 'unanswered': !csiServiceDemographic.customersCount && showErrors() }"  
+          [ngClass]="{ 'alert-danger': !csiServiceDemographic.customersCount && showErrors() }"  
         >
           <input
             ngbButton

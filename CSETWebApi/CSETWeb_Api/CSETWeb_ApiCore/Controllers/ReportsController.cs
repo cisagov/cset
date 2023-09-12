@@ -711,11 +711,14 @@ namespace CSETWebCore.Api.Controllers
 
             var iodDemoBusiness = new DemographicExtBusiness(_context);
             var demoBusiness = new DemographicBusiness(_context, _assessmentUtil);
+            var cisServiceDemographicBusiness = new CisDemographicBusiness(_context, _assessmentUtil);
 
             Demographics demographics = demoBusiness.GetDemographics(assessmentId);
             DemographicExt iodDemograhics = iodDemoBusiness.GetDemographics(assessmentId);
+            CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
+            CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
 
-            CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics);
+            CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
             return Ok(validator.ValidateFields());
         }
     }
