@@ -150,12 +150,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       }
     }
 
-    this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
-      this.cisaAssessorWorkflowFieldValidation = result;
-      if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
-        this.disableEntirePage = true;
-      }
-    });
+    if (this.configSvc.installationMode === 'IOD') {
+      this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
+        this.cisaAssessorWorkflowFieldValidation = result;
+        if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
+          this.disableEntirePage = true;
+        }
+      });
+    }
 
     // disable everything if this is a Cyber Florida and demographics aren't complete
     if (this.configSvc.installationMode === 'CF') {
