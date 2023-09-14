@@ -29,6 +29,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
   headers: new HttpHeaders()
@@ -68,6 +69,7 @@ export class QuestionsService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
+    private tSvc: TranslocoService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService
   ) {
@@ -454,5 +456,18 @@ export class QuestionsService {
     }
 
     return answerCode;
+  }
+
+  /**
+   * Eager loading to get language loaded up front
+   * @param transloco 
+   * @returns 
+   */
+  loadLoco(lang: string): Promise<void> {
+    return new Promise<void>(() => {
+      console.log(`loadLoco: ${lang}`);
+      this.tSvc.setActiveLang(lang);
+      this.tSvc.load(lang);
+    });
   }
 }
