@@ -20,13 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<ng-container *transloco="let t">
 <h4>Organization Details</h4>
 <form #f="ngForm">
     <div class="form-row">
         <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
         <div class="form-group col-md-6">
             
-            <label class="mb-1" for="name">Assessment Name</label>
+            <label class="mb-1" for="name">{{t('assessment-name')}}</label>
             <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true"
                 [(ngModel)]="assessment.assessmentName"
                 (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
@@ -73,3 +74,4 @@
     </div>
 
 </div>
+</ng-container>
