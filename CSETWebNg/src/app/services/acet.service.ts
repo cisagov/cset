@@ -26,6 +26,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { AdminSaveData, AttributePair } from '../models/admin-save.model';
 import { AcetDashboard } from '../models/acet-dashboard.model';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
     headers: new HttpHeaders()
@@ -41,9 +42,11 @@ export class ACETService {
 
 
     apiUrl: string;
+    spanishFlag: boolean = false;
     constructor(
         private http: HttpClient,
-        private configSvc: ConfigService
+        private configSvc: ConfigService,
+        public assessSvc: AssessmentService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -290,6 +293,10 @@ export class ACETService {
         }
 
         return level;
+    }
+
+    setSpanish(input: boolean) {
+        this.spanishFlag = input;
     }
 }
 

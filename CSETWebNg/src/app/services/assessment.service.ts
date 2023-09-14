@@ -539,6 +539,9 @@ export class AssessmentService {
    * Indicates if the assessment uses the specified maturity model.
    */
   usesMaturityModel(modelName: string) {
+    if (modelName == 'ACET' && this.assessment.isAcetOnly == true) {
+      return true;
+    }
     if (!this.assessment) {
       return false;
     }
@@ -550,11 +553,11 @@ export class AssessmentService {
     if (!this.assessment.maturityModel) {
       return false;
     }
-
+    
     if (!this.assessment.maturityModel.modelName) {
       return false;
     }
-
+    
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }

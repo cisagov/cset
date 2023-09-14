@@ -29,6 +29,11 @@ using System.ComponentModel;
 using CSETWebCore.Business.Aggregation;
 using static Lucene.Net.Util.Fst.Util;
 using Microsoft.IdentityModel.Tokens;
+using DocumentFormat.OpenXml.Packaging;
+using CSETWebCore.DataLayer.Manual;
+using Npoi.Mapper;
+using NPOI.SS.UserModel;
+using System.IO;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -810,7 +815,7 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, bool spanishFlag = false)
         {
             var response = new MaturityResponse();
 
@@ -872,6 +877,22 @@ namespace CSETWebCore.Business.Maturity
 
             var questions = questionQuery.ToList();
 
+            //
+            if (spanishFlag)
+            {
+                Dictionary<int, SpanishQuestionRow> dictionary = test();
+                questions.ForEach(
+                    question => {
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
+                        {
+                            question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
+                        }
+                    });
+            }
+            //
+
 
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
@@ -904,9 +925,10 @@ namespace CSETWebCore.Business.Maturity
 
             response.Groupings = tempModel.SubGroupings;
 
-
             // Add any glossary terms
             response.Glossary = this.GetGlossaryEntries(myModel.model_id);
+
+
 
             return response;
         }
@@ -2697,5 +2719,36 @@ namespace CSETWebCore.Business.Maturity
         {
             return _context.HYDRO_PROGRESS.ToList();
         }
+
+
+        public Dictionary<int, SpanishQuestionRow> test()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWebCore.Business\\Question\\ACET Spanish Question Mapping.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<SpanishQuestionRow>> myExcelObjects = mapper.Take<SpanishQuestionRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, SpanishQuestionRow>();
+
+            foreach (RowInfo<SpanishQuestionRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Mat_Question_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dict;
+        }
+
     }
 }

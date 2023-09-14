@@ -214,6 +214,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/AnswerQuestion")]
         public IActionResult StoreAnswer([FromBody] Answer answer)
         {
+            var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            mb.test();
+
             if (answer == null)
             {
                 return Ok(0);
@@ -248,7 +251,7 @@ namespace CSETWebCore.Api.Controllers
 
             if (answer.Is_Maturity)
             {
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                //var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 return Ok(mb.StoreAnswer(assessmentId, answer));
             }
 
@@ -492,7 +495,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new FindingsManager(_context, assessmentId);
-
+            
 
             if (finding.IsFindingEmpty(cancel))
             {
