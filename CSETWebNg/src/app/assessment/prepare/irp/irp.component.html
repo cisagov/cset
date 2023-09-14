@@ -26,17 +26,17 @@
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-app-mode form-check-label"
                   [class.active]="acetSvc.spanishFlag == false" (click)="toggleSpanish(false)"
-                  matTooltip="Show English text">
+                  matTooltip="Read in English">
                   <input name="app_language" class="form-check-input" type="radio" autocomplete="off"
                     [checked]="acetSvc.spanishFlag == false">
                   English
                 </label>
                 <label class="btn btn-app-mode form-check-label"
                   [class.active]="acetSvc.spanishFlag == true" (click)="toggleSpanish(true)"
-                  matTooltip="Show Spanish text">
+                  matTooltip="Leer en Español">
                   <input name="app_language" class="form-check-input" type="radio" autocomplete="off"
                     [checked]="acetSvc.spanishFlag == true">
-                  Spanish
+                    Español
                 </label>
             </div>
         </div>
