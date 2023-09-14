@@ -1,0 +1,15 @@
+{
+    "prepare": "Prepare",
+    "assessment configuration": "Assessment Configuration",
+    "assessment information": "Assessment Information",
+    "organization details": "Organization Details",
+    "assessment-name": "Assessment Name",
+    "assessment-date": "Assessment Date",
+    "facility name": "Facility Name",
+    "city or site name": "City or Site Name",
+    "state province region": "State/Province/Region",
+    "assessment type": "Assessment Type",
+    "demographics": "Demographics",
+    "next": "Next",
+    "back": "Back"
+}
