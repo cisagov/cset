@@ -930,5 +930,32 @@ export class QuestionBlockIseComponent implements OnInit {
       }
   }
 
+
+  /* This function is used for 508 compliance. 
+  * It allows the user to select the "Yes"/"No", "Comment" and "Mark for review" buttons
+  * via the "Enter" key in case they can't use a mouse.
+  */
+  checkKeyPress(event: any, q: Question, buttonType: string, answer: string = "") {
+    if (event) {
+      if (event.key === "Enter") {
+        
+        // For "Yes"/"No" buttons
+        if (buttonType == "answer" && answer != "") {
+          this.storeAnswer(q, answer);
+        }
+
+        // For the "Comment" button
+        if (buttonType == "comment") {
+          this.toggleComment(q);
+        }
+
+        // For the "MFR" button
+        if (buttonType == "mfr") {
+          this.saveMFR(q);
+        }
+      }
+    }
+  }
+
   
 }

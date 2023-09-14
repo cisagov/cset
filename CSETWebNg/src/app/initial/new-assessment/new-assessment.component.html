@@ -34,7 +34,7 @@
         #swiper
     >
         <ng-template swiperSlide *ngFor="let c of row.galleryItems; let i = index">
-            <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card" (mouseover)="onHover(c.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
+            <div [attr.id]="'c'+c.gallery_Item_Guid" class="card gallery-card" tabindex="0" (focus)="onHover(c.gallery_Item_Guid)" (mouseover)="onHover(c.gallery_Item_Guid)" (mouseleave)="onHoverOut(-1, c.gallery_Item_Guid)">
                 <div class="card-image-parent">
                     <img class="card-image-child" [src]="getImageSrc(c.icon_File_Name_Small)">
                 </div>
