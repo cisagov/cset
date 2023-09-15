@@ -37,7 +37,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
         /// <summary>
         /// Constructor
         /// </summary>
-        public BlockLegend()
+        public BlockLegend(bool includeGoal = true)
         {
             _xSvgDoc = new XDocument(new XElement("svg"));
             _xSvg = _xSvgDoc.Root;
@@ -86,9 +86,14 @@ namespace CSETWebCore.Helpers.ReportWidgets
             int questionLegend_x = 35;
             int questionLegend_y = 40;
             var questionLegend = new XElement("text",
-            CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null),
-            CreateElement("G1 = Goal Number", questionLegend_x + 105, questionLegend_y, null)
+            CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null)            
             );
+
+            if (includeGoal)
+            {
+                questionLegend.Add(
+                    CreateElement("G1 = Goal Number", questionLegend_x + 105, questionLegend_y, null));
+            }
 
             g.Add(title);
             g.Add(green);
