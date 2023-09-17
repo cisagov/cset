@@ -30,7 +30,7 @@
     <input class="form-check-input" type="checkbox" ngbButton 
       [ngModel]="getNgModel(l)"
       (ngModelChange)="filterChanged(l.level, $event)">
-      {{ l.label }}
+      {{ acetSvc.spanishFlag ? spanishTranslate(l.label) : l.label }}
     </label>    
 
 </div>

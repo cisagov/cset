@@ -57,7 +57,7 @@
     </div>
     <div>
         <div class="d-block mb-2">
-            <h2>Statements</h2>
+            <h2>{{ acetSvc.spanishFlag ? 'Declaración' : 'Statements'}}</h2>
             <div class="mb-2" *ngIf="showTargetLevel">
                 The target maturity level for this assessment is set to
                 <strong [innerText]="maturitySvc.targetLevelName()"></strong>.

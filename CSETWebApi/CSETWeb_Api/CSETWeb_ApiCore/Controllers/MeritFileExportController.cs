@@ -210,15 +210,5 @@ namespace CSETWebCore.Api.Controllers
             return Ok(guidCarrier);
         }
 
-        //[HttpGet]
-        //[Route("api/generateNewGuid")]
-        //public IActionResult GenerateNewGuid()
-        //{
-        //    int assessmentId = _token.AssessmentForUser();
-
-        //    Guid newGuid = Guid.NewGuid();
-
-        //    return Ok(newGuid);
-        //}
     }
 }
