@@ -12,6 +12,7 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Model.Acet;
+using CSETWebCore.Business.Acet;
 using Npoi.Mapper;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace CSETWebCore.Business.IRP
             Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
             if (spanishFlag) 
             {
-                dictionary = test();
+                dictionary = AcetBusiness.buildIRPDictionary();
             }
 
             foreach (IRP_HEADER header in _context.IRP_HEADER)
@@ -136,11 +137,11 @@ namespace CSETWebCore.Business.IRP
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
         }
-
+        /*
         public Dictionary<int, IRPModel> test()
         {
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWebCore.Business\\IRP\\Spanish_Mapped_IRPS.xlsx");
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\IRP\\Spanish_Mapped_IRPS.xlsx");
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -165,5 +166,6 @@ namespace CSETWebCore.Business.IRP
             }
             return dict;
         }
+        */
     }
 }

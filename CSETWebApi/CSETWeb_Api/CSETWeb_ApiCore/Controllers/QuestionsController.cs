@@ -215,7 +215,6 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult StoreAnswer([FromBody] Answer answer)
         {
             var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            mb.test();
 
             if (answer == null)
             {

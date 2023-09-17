@@ -28,12 +28,9 @@ using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel;
 using CSETWebCore.Business.Aggregation;
 using static Lucene.Net.Util.Fst.Util;
+using CSETWebCore.Business.Acet;
 using Microsoft.IdentityModel.Tokens;
-using DocumentFormat.OpenXml.Packaging;
 using CSETWebCore.DataLayer.Manual;
-using Npoi.Mapper;
-using NPOI.SS.UserModel;
-using System.IO;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -880,11 +877,12 @@ namespace CSETWebCore.Business.Maturity
             //
             if (spanishFlag)
             {
-                Dictionary<int, SpanishQuestionRow> dictionary = test();
+                Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                 questions.ForEach(
                     question => {
                         var output = new SpanishQuestionRow();
                         var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
                         if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
                         {
                             question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
@@ -905,6 +903,21 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            //
+            if (spanishFlag)
+            {
+                Dictionary<int, MATURITY_GROUPINGS> dictionary = AcetBusiness.buildGroupingDictionary();
+                allGroupings.ForEach(
+                    group => {
+                        var output = new MATURITY_GROUPINGS();
+                        var temp = new MATURITY_GROUPINGS();
+                        if (dictionary.TryGetValue(group.Grouping_Id, out output))
+                        {
+                            group.Title = dictionary[group.Grouping_Id].Title;
+                        }
+                    });
+            }
+            //
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
@@ -2720,11 +2733,11 @@ namespace CSETWebCore.Business.Maturity
             return _context.HYDRO_PROGRESS.ToList();
         }
 
-
+        /*
         public Dictionary<int, SpanishQuestionRow> test()
         {
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("C:\\Users\\WINSMR\\cset\\CSETWebApi\\CSETWeb_Api\\CSETWebCore.Business\\Question\\ACET Spanish Question Mapping.xlsx");
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\Question\\ACET Spanish Question Mapping.xlsx");
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -2750,5 +2763,35 @@ namespace CSETWebCore.Business.Maturity
             return dict;
         }
 
+
+        public Dictionary<int, MATURITY_GROUPINGS> testGroupings()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\Question\\Spanish ACET Groupings.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<MATURITY_GROUPINGS>> myExcelObjects = mapper.Take<MATURITY_GROUPINGS>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, MATURITY_GROUPINGS>();
+
+            foreach (RowInfo<MATURITY_GROUPINGS> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Grouping_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dict;
+        }
+        */
     }
 }
