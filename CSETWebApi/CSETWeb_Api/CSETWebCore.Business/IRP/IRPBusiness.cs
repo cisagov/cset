@@ -137,35 +137,5 @@ namespace CSETWebCore.Business.IRP
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
         }
-        /*
-        public Dictionary<int, IRPModel> test()
-        {
-            MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\IRP\\Spanish_Mapped_IRPS.xlsx");
-            file.CopyTo(memStream);
-
-            IWorkbook workbook = WorkbookFactory.Create(memStream);
-
-            var mapper = new Mapper(workbook);
-            List<RowInfo<IRPModel>> myExcelObjects = mapper.Take<IRPModel>(workbook.ActiveSheetIndex).ToList();
-
-            var rowCount = myExcelObjects.Count;
-
-            var dict = new Dictionary<int, IRPModel>();
-
-            foreach (RowInfo<IRPModel> item in myExcelObjects)
-            {
-                try
-                {
-                    dict.Add(item.Value.IRP_Id, item.Value);
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            return dict;
-        }
-        */
     }
 }
