@@ -20,105 +20,108 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
+<ng-container *transloco="let t">
+  <div class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
-  <!-- Tabs -->
-  <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
-    <div class="d-flex justify-content-start flex-11a">
-      <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}"
-          class.active="false" (click)="toggleNav()">
-          <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
-            matTooltip="Expand/Collapse options" matTooltipPosition="below">
-            <span class="fs-base-1 m-0"
-              [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
-          </button>
-        </li>
-      </ul>
-      <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
-          (click)="setTab('prepare')">
+    <!-- Tabs -->
+    <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
+      <div class="d-flex justify-content-start flex-11a">
+        <ul class="nav d-flex justify-content-start flex-00a bgc-secondary questions-tab-border">
+          <li class="d-flex align-items-center flex-00a"
+            [ngClass]="{'nav-tab':expandNav, 'nav-tab-collapsed':!expandNav}" class.active="false"
+            (click)="toggleNav()">
+            <button class="icon-button-light mx-2 d-flex justify-content-start align-items-center flex-00a"
+              matTooltip="Expand/Collapse options" matTooltipPosition="below">
+              <span class="fs-base-1 m-0"
+                [ngClass]="{'cset-icons-chevron-left':expandNav, 'cset-icons-chevron-right':!expandNav}"></span>
+            </button>
+          </li>
+        </ul>
+        <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
+          <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
+            (click)="setTab('prepare')">
 
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
-            <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
-            <span class="nav-tab-text ml-2">Prepare</span>
+            <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+              (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
+              <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
+              <span class="nav-tab-text ml-2">{{t('prepare')}}</span>
+            </button>
+          </li>
+          <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
+            (click)="setTab('questions')">
+            <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+              (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
+              <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
+              <span class="nav-tab-text ml-2">{{t('assessment')}}</span>
+            </button>
+          </li>
+          <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
+            (click)="setTab('results')">
+            <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+              (click)="navSvc.navDirect('phase-results')" tabindex="0">
+              <span class="tab-icon cset-icons-results"></span>
+              <span class="nav-tab-text ml-2">{{t('results')}}</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
+      <mat-sidenav-container id="sidenav-container" class="d-flex flex-column flex-11a">
+        <mat-sidenav #sNav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav" (scroll)="handleScroll('sidenav')"
+          (openedChange)="openStateChange($event)">
+
+          <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
+            <i class="fas fa-home"></i>
           </button>
-        </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
-          (click)="setTab('questions')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
-            <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
-            <span class="nav-tab-text ml-2">Assessment</span>
-          </button>
-        </li>
-        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
-          (click)="setTab('results')">
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-            (click)="navSvc.navDirect('phase-results')" tabindex="0">
-            <span class="tab-icon cset-icons-results"></span>
-            <span class="nav-tab-text ml-2">Results</span>
-          </button>
-        </li>
-      </ul>
+
+          <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
+
+            <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
+              [class.current-node]="node?.isCurrent">
+              <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)" tabindex="0"
+                class="btn btn-link no-underline ta-left">
+                <span class="menu-link ws-normal">
+                  {{node?.label}}
+                </span>
+              </button>
+            </mat-tree-node>
+
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
+              <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle tabindex="0">
+                <div class="menu-link d-flex">
+                  <mat-icon style="position: relative; top: -.1rem;">
+                    {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                  </mat-icon>
+                  <div class="text-wrap text-left u-hover">
+                    {{node?.label}}
+                  </div>
+                </div>
+              </button>
+
+              <ul class="mat-tree-node" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
+                <ng-container matTreeNodeOutlet></ng-container>
+              </ul>
+            </mat-nested-tree-node>
+
+          </mat-tree>
+
+          <div *ngIf="navSvc.isNavLoading">
+            <div class="spinner-container toc m-0 d-flex justify-content-center align-items-center flex-11a">
+              <div class="spinner-size-50"></div>
+            </div>
+          </div>
+
+        </mat-sidenav>
+
+        <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
+          <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
+            <router-outlet></router-outlet>
+          </div>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
     </div>
   </div>
-
-  <!-- Content -->
-  <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
-    <mat-sidenav-container id="sidenav-container" class="d-flex flex-column flex-11a">
-      <mat-sidenav #sNav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav"
-        (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
-
-        <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
-          <i class="fas fa-home"></i>
-        </button>
-
-        <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
-
-          <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
-            [class.current-node]="node?.isCurrent">
-            <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)" tabindex="0"
-              class="btn btn-link no-underline ta-left">
-              <span class="menu-link ws-normal">
-                {{node?.label}}
-              </span>
-            </button>
-          </mat-tree-node>
-
-          <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
-            <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle  tabindex="0">
-              <div class="menu-link d-flex">
-                <mat-icon style="position: relative; top: -.1rem;">
-                  {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                </mat-icon>
-                <div class="text-wrap text-left u-hover">
-                  {{node?.label}}
-                </div>
-              </div>
-            </button>
-
-            <ul class="mat-tree-node" *ngIf="navTreeSvc?.tocControl?.isExpanded(node)">
-              <ng-container matTreeNodeOutlet></ng-container>
-            </ul>
-          </mat-nested-tree-node>
-
-        </mat-tree>
-
-        <div *ngIf="navSvc.isNavLoading">
-          <div class="spinner-container toc m-0 d-flex justify-content-center align-items-center flex-11a">
-            <div class="spinner-size-50"></div>
-          </div>
-        </div>
-
-      </mat-sidenav>
-
-      <mat-sidenav-content class="bgc-gray-50 d-flex flex-column flex-11a oy-auto ">
-        <div class="max-1000 h-0 d-flex flex-column flex-11a" id="sidenav-content">
-          <router-outlet></router-outlet>
-        </div>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </div>
-</div>
+</ng-container>

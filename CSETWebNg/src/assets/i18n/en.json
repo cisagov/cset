@@ -1,7 +1,26 @@
 {
+    "my assessments": "Мy Assessments",
+    "import": "Import",
+    "export all": "Export All",
+    "tools": "Tools",
+    "resource library": "Resource Library",
+    "help": "Help",
+    "new assessment": "New Assessment",
+    "status": "Status",
+    "last modified": "Last Modified",
+    "primary assessor": "Primary Assessor",
+    "prevent encryption": "Prevent Encryption",
+
     "prepare": "Prepare",
     "assessment": "Assessment",
     "results": "Results",
+    "rra tutorial": "RRA Tutorial",
+    "goal performance": "Goal Performance",
+    "assessment tiers": "Assessment Tiers",
+    "performance summary": "Performance Summary",
+    "reports": "Reports",
+    "feedback": "Feedback",
+
     "assessment configuration": "Assessment Configuration",
     "assessment information": "Assessment Information",
     "organization details": "Organization Details",
@@ -26,14 +45,18 @@
         "I": "Inc",
         "Iss": "Issue(N)",
         "S": "S",
+
         "Y-MVRA": "Fully",
         "N-MVRA": "Not",
         "A-MVRA": "Partial",
+
         "A-ACET": "Yes(C)",
+
         "Y-CPG": "Imp",
         "I-CPG": "Prog",
         "S-CPG": "Scoped",
         "N-CPG": "Not",
+
         "FI-C2M2": "FI",
         "LI-C2M2": "LI",
         "PI-C2M2": "PI",
@@ -61,5 +84,12 @@
 
         "mfr-flag": "This control requires further review",
         "requires-review": "One or more controls in this category requires further review."
+    },
+    "answer-label": {
+        "FI-C2M2": "Fully Implemented (FI)",
+        "LI-C2M2": "Largely Implemented (LI)",
+        "PI-C2M2": "Partially Implemented (PI)",
+        "NI-C2M2": "Not Implemented (NI)"
+
     }
 }
