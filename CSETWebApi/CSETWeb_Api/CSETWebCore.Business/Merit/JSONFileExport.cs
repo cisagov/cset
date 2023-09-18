@@ -37,7 +37,7 @@ namespace CSETWebCore.Business.Merit
         public const string MeritExportPathName = "NCUAMeritExportPath";
         public void SendFileToMerit(string filename, string data, string uncPath)
         {
-            long minimumFileSize = 30000; // hardcoded value, change if file changes size (sorry)
+            long minimumFileSize = 28000; // hardcoded value, change if file changes size (sorry)
             if (!DoesDirectoryExist(uncPath))
             {
                 throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
