@@ -21,20 +21,42 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { HttpClient } from '@angular/common/http';
+import {
+  TRANSLOCO_LOADER,
+  Translation,
+  TranslocoLoader,
+  TRANSLOCO_CONFIG,
+  translocoConfig,
+  TranslocoModule
+} from '@ngneat/transloco';
+import { Injectable, isDevMode, NgModule } from '@angular/core';
 
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
 
-export const environment = {
-  production: false,
-  appUrl: 'http://localhost:4200/',
-  apiUrl: 'https://localhost:5001/api/',
-  docUrl: 'https://localhost:5001/Documents/',
-  appCode: 'CSET',
-  visibleVersion: '11.5.2.3',
-  version: '12.0.3.1',
-  helpContactEmail: 'cset@cisa.dhs.gov',
-  helpContactPhone: ''
-};
+@Injectable({ providedIn: 'root' })
+export class TranslocoHttpLoader implements TranslocoLoader {
+  constructor(private http: HttpClient) {}
+
+  getTranslation(lang: string) {
+    return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
+  }
+}
+
+@NgModule({
+  exports: [ TranslocoModule ],
+  providers: [
+    {
+      provide: TRANSLOCO_CONFIG,
+      useValue: translocoConfig({
+        availableLangs: ['en', 'uk', 'es'],
+        defaultLang: 'en',
+        fallbackLang: 'en',
+        // Remove this option if your application doesn't support changing language in runtime.
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      })
+    },
+    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader }
+  ]
+})
+export class TranslocoRootModule {}

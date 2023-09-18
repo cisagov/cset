@@ -107,7 +107,7 @@
                         <div *ngIf="q.parentQuestionId !== null">
                             <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                                 <label *ngFor="let option of answerOptions">
-                                    <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label"
+                                    <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label" tabindex="0" (keydown)="checkKeyPress($event, q, 'answer', option)"
                                       [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
                                       [matTooltip]="this.displayTooltip(maturityModelId, option)" [disabled]="option === 'N' && autoGenerateInProgress">
                                         <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
@@ -115,18 +115,18 @@
                                             {{ questionsSvc.answerButtonLabel(maturityModelName, option) }}
                                     </label>
                                 </label>
-
+                                
                                 <!-- Comment bubble button -->
                                 <label class="btn form-check-label btn-iss" [matTooltip]="hasComment(q) ? 'Notes with content':'Notes'" matTooltipPosition="below"
                                   [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
-                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
+                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (keydown)="checkKeyPress($event, q, 'comment')" (click)="toggleComment(q)">
                                     <span class="cset-icons-comment fs-base"></span>
                                 </label>
 
                                 <!-- Mark For Review Flag  -->
                                 <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
                                   matTooltip="This control requires further review.">
-                                    <input name="q_{{ q.questionId }}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                                    <input name="q_{{ q.questionId }}_F" type="checkbox" (keydown)="checkKeyPress($event, q, 'mfr')" (click)="saveMFR(q);" tabindex="0"
                                       checked="{{ q.markForReview === true }}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>

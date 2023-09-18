@@ -49,7 +49,7 @@ export class CmuPerformanceComponent implements OnInit {
       this.fullAnswerDistribChart = resp;
     });
 
-    this.cmuSvc.getBlockLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getBlockLegendWidget(false).subscribe((resp: string) => {
       this.legend = resp;
     });
 

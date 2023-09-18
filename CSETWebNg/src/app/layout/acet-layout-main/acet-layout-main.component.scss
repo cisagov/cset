@@ -1684,6 +1684,11 @@ ul.nav-tabs li.active button .tab-icon {
   background-color: $white;
 }
 
+.menu-panel [mat-menu-item].mat-mdc-menu-item:focus {
+  color: $black !important;
+  background-color: $primary-700;
+}
+
 .menu-panel [mat-menu-item].mat-mdc-menu-item.disabled-menu-item,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:focus,
 .menu-panel [mat-menu-item].mat-menu-item.disabled-menu-item:hover {
