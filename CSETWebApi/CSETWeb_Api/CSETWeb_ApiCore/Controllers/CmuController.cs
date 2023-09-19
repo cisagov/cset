@@ -238,9 +238,9 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/cmu/widget/blocklegend")]
-        public IActionResult GetBlockLegend()
+        public IActionResult GetBlockLegend(bool includeGoal = true)
         {
-            return Content(new BlockLegend().ToString(), "text/html");
+            return Content(new BlockLegend(includeGoal).ToString(), "text/html");
         }
 
 

@@ -355,8 +355,9 @@ export class TopMenusComponent implements OnInit {
       // Case 2: cisaWorkflowSwitch is now off but localStorage still has IOD installation mode.
       if ((results.cisaWorkflowEnabled && localStorage.getItem('installationMode') != 'IOD') ||
           (!results.cisaWorkflowEnabled && localStorage.getItem('installationMode') == 'IOD') )
-        {
+      {
         this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
+          this.goHome();
           window.location.reload();
         });
       }
