@@ -11,5 +11,70 @@
     "assessment type": "Tipo de Evaluación",
     "demographics": "Demographica",
     "next": "Siguiente",
-    "back": "Previo"
+    "back": "Previo",
+
+    "button-label": {
+        "Y": "Sí",
+        "N": "No",
+        "NA": "N/A",
+        "A": "Alt",
+        "U": "Sin Respuesta",
+        "I": "Inc",
+        "Iss": "Issue(N)",
+        "S": "S",
+        "Y-MVRA": "Fully",
+        "N-MVRA": "Not",
+        "A-MVRA": "Partial",
+        "A-ACET": "Sí(C)",
+        "Y-CPG": "Imp",
+        "I-CPG": "Prog",
+        "S-CPG": "Scoped",
+        "N-CPG": "Not",
+        "FI-C2M2": "FI",
+        "LI-C2M2": "LI",
+        "PI-C2M2": "PI",
+        "NI-C2M2": "NI"
+    },
+    "tooltip": {
+        "Y": "Sí",
+        "N": "No",
+        "NA": "N/A",
+        "A": "Alternate",
+        "U": "Sin Respuesta",
+        "I": "Incomplete",
+        "Iss": "No with Issue(s)",
+        "S": "",
+
+        "Y-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
+        "I-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
+        "S-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
+        "N-CPG": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
+      
+        "FI-C2M2": "Fully Implemented - Complete",
+        "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
+        "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
+        "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
+
+        "A-ACET": "Sí(C)",
+
+        "mfr-flag": "This control requires further review",
+        "requires-review": "[ES] One or more controls in this category requires further review."
+    },
+    "level": {
+        "baseline": "Básico",
+        "evolving": "En desarrollo",
+        "intermediate": "Intermedio",
+        "advanced": "Avanzado",
+        "innovative": "Innovador",
+
+        "baseline-desc": "very limited use of technology.",
+        "evolving-desc": "limited complexity in terms of the technology it uses.",
+        "intermediate-desc": "uses technology that may be somewhat complex in terms of volume and sophistication.",
+        "advanced-desc": "uses complex technology in terms of scope and sophistication.",
+        "innovative-desc": "uses extremely complex technology to deliver myriad products and services."
+    },
+    "irp": {
+        "inherent risk profiles": "Perfil de Riesgo Inherente",
+        "risk levels": "Niveles de iesgo"
+    }
 }

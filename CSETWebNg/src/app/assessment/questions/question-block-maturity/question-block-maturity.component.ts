@@ -292,21 +292,4 @@ export class QuestionBlockMaturityComponent implements OnInit {
         .subscribe();
     }, 500);
   }
-
-  spanishTranslate(label: string) {
-    switch(label) {
-      case 'Baseline':
-        return 'Básico';
-      case 'Evolving':
-        return 'En desarrollo';
-      case 'Intermediate':
-        return 'Intermedio';
-      case 'Advanced':
-        return 'Avanzado';
-      case 'Innovative':
-        return 'Innovador';
-      default:
-        return '';
-    }
-  }
 }
