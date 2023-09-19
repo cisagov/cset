@@ -19,6 +19,7 @@ using CSETWebCore.Reports.Models;
 using CSETWebCore.Api.Models;
 using Newtonsoft.Json;
 using CSETWebCore.Model.Acet;
+using CSETWebCore.Business.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,7 +34,8 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [Route("api/crrm/exportAccessKeyAssessments")]
+        [ApiKeyAuthorize]
+        [Route("api/crrm/exportAllAccessKeyAssessments")]
         public IActionResult GetAssessments()
         {
             return Ok();
