@@ -59,7 +59,28 @@
         "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
         "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
 
+        "A-ACET": "Yes(C)",
+
         "mfr-flag": "This control requires further review",
         "requires-review": "One or more controls in this category requires further review."
+    },
+    
+    "level": {
+        "baseline": "Baseline",
+        "evolving": "Evolving",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "innovative": "Innovative",
+
+        "baseline-desc": "very limited use of technology.",
+        "evolving-desc": "limited complexity in terms of the technology it uses.",
+        "intermediate-desc": "uses technology that may be somewhat complex in terms of volume and sophistication.",
+        "advanced-desc": "uses complex technology in terms of scope and sophistication.",
+        "innovative-desc": "uses extremely complex technology to deliver myriad products and services."
+    },
+
+    "irp": {
+        "inherent risk profiles": "Inherent Risk Profiles",
+        "risk levels": "Risk Levels"
     }
 }

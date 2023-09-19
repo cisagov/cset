@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import { AdminSaveData, AttributePair } from '../models/admin-save.model';
 import { AcetDashboard } from '../models/acet-dashboard.model';
 import { AssessmentService } from './assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
     headers: new HttpHeaders()
@@ -46,7 +47,8 @@ export class ACETService {
     constructor(
         private http: HttpClient,
         private configSvc: ConfigService,
-        public assessSvc: AssessmentService
+        public assessSvc: AssessmentService,
+        public transSvc: TranslocoService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -296,7 +298,29 @@ export class ACETService {
     }
 
     setSpanish(input: boolean) {
+        if (input == true) {
+            this.transSvc.setActiveLang('es');
+        }
+        else {
+            this.transSvc.setActiveLang('en');
+        }
         this.spanishFlag = input;
     }
+/*
+    translateSpanishAnswer(answer: string) {
+        switch(answer) {
+            case 'Yes':
+                return 'Sí';
+            case 'No':
+                return 'No';
+            case 'N/A':
+                return 'N/A';
+            case 'Yes(C)':
+                return 'Sí(C)';
+            default:
+                return answer;
+        }
+    }
+    */
 }
 
