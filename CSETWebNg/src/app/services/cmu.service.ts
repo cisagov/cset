@@ -88,8 +88,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
   }
 
-  getBlockLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/blocklegend',
+  getBlockLegendWidget(includeGoal: boolean) {
+    return this.http.get(this.configSvc.apiUrl + `cmu/widget/blocklegend?includeGoal=${includeGoal}`,
       { responseType: 'text' });
   }
 
