@@ -59,7 +59,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentEffectiveDate: Date = new Date();
 
   contactInitials: string = "";
-  lastModifiedTimestamp: string = "";
+  lastModifiedTimestamp: string = Date.now().toString();
 
   assessmentControl = new UntypedFormControl('');
   assessmentCharterControl = new UntypedFormControl('');
@@ -134,8 +134,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       let myArray = data.split(" ");
       this.lastModifiedTimestamp = myArray[1];
-    });
 
+      // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
+      // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
+      this.createAssessmentName();
+    });
+    
   }
 
   /**
@@ -150,6 +154,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         this.contactInitials = "_" + response.contactList[0].firstName;
+        this.createAssessmentName();
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -181,9 +186,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.assessment.assessmentDate = null;
       this.assessmentEffectiveDate = null;
     }
-    
-    if (this.assessment.assessmentName === "New Assessment")
-      this.createAssessmentName();
 
   }
 
@@ -216,13 +218,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     let i = 0;
     while (i < this.creditUnionOptions.length) {
       if (e.target.value == this.creditUnionOptions[i].name) {
-        console.log("Credit Union Name match found at: " + i);
         this.populateAssessmentFields(i);
         break;
       }
 
       if ((e.target.value.padStart(5, '0')) === (this.creditUnionOptions[i].charter.toString())) {
-        console.log("Charter Number match found at: " + i);
         this.populateAssessmentFields(i);
         break;
       }
