@@ -39,6 +39,7 @@ export class EnableProtectedComponent implements OnInit {
   message: any;
   enableFeatureButtonClick: boolean = false;
   cisaWorkflowEnabled: boolean = false;
+  cisaWorkflowStatusLoaded: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
     private featureSvc: EnableFeatureService,
@@ -54,6 +55,7 @@ export class EnableProtectedComponent implements OnInit {
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
       this.cisaWorkflowEnabled = cisaWorkflowEnabled;
+      this.cisaWorkflowStatusLoaded = true;
     });
   }
 
