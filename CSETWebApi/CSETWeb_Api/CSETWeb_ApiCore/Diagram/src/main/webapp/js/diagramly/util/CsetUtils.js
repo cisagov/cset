@@ -287,6 +287,7 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
         revision: revision
     };
 
+
     const bg = '#ffffff';
     const xmlserializer = new XMLSerializer();
     let svgRoot = editor.graph.getSvg(bg, 1, 0, true, null, true, true, null, null, false);
@@ -298,10 +299,11 @@ CsetUtils.PersistDataToCSET = async function (editor, xml, revision) {
     await CsetUtils.saveDiagram(req);
 }
 
-function testForBase64(strValue){
+function testForBase64(strValue) {
     var base64regex = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
     if (!base64regex.test(strValue)) {
-        return btoa(strValue);
+        //return btoa(strValue);
+        return Base64.encode(strValue);
     }
     return strValue;
 }
