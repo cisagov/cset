@@ -133,6 +133,12 @@
                             </div>
                         </div>
                     </div>
+                    <div style="display: inline">
+                        <app-question-extras *ngIf="q.parentQuestionId != null" [myQuestion]="q" 
+                            [ncuaDisplay]="true" [iconsToDisplay]="['REFS']"
+                            (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                        </app-question-extras>
+                    </div>
 
                     <div *ngIf="q.extrasExpanded">
                         <div class="form-group">
@@ -143,19 +149,16 @@
 
                     <hr>
 
-                    <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
-                    <!-- <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
-                      class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                      (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
-                    </button> -->
-
-                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
-                      class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                    <app-question-extras *ngIf="q.parentQuestionId == null" #extrasComponent [myQuestion]="q"
+                        [ncuaDisplay]="true" [iconsToDisplay]="['DETAIL', 'SUPP', 'REVIEWED']"
+                      class="w-100" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                     </app-question-extras>
 
                 </div>
+                <!-- last variable is from the ngFor loop -->
                 <div *ngIf="last">
                     <div>
+                        <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
                         <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
                         class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                         (click)="updateCorePlusStatus()">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
