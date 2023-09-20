@@ -2935,7 +2935,7 @@ DR_EXPLAIN.workZoneSizer_FrameMode = (function(){
                 ;
 
             var newArticleWrapperHeight = newArticlePreWrapperHeight
-                - this.dom.$articleHeader.outerHeight( true )
+                - ( 0 < this.dom.$articleHeader.length ? this.dom.$articleHeader.outerHeight( true ) : 0 )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderTopWidth" )
                 - this.dom.getCssNumericValue( this.dom.$articleWrapper, "borderBottomWidth" )
             ;
@@ -3197,7 +3197,7 @@ DR_EXPLAIN.navTree_Menu = (function(){
         this.doSetDataManager();
         this.doSetNodeVisibleStatusArrByUrlEncoder();
 
-        this.navArr = this.populateTable( this.dataManager.getRootNodesArray(), true);
+        this.navArr = this.populateTable( this.dataManager.getRootNodesArray(), true, null );
         var navTreeItemsCollection = this.getNavCollection( this.navArr, null );
         this.navTreeView = navTreeView = new NavTree__View({ collection: navTreeItemsCollection, $navTree: this.$navTree });
 
@@ -3213,6 +3213,12 @@ DR_EXPLAIN.navTree_Menu = (function(){
     {
         var li = containerElement.appendChild(document.createElement("li"));
         li.className = "b-tree_item";
+        if (node.isThroughSelected)
+        {
+            li.className += " m-tree__item__throughSelected";
+            if (depth == 1)
+                li.className += " m-tree__item__throughSelectedRoot";
+        }
         var div = li.appendChild(document.createElement("div"));
         div.className = "b-tree__itemContent";
         if (node.isSelected)
@@ -3481,7 +3487,7 @@ DR_EXPLAIN.navTree_Menu = (function(){
         //console.log( 'validateOpenState:', VarTOpnd );
     },
 
-    populateTable: function( nodeArr, isVisible ) {
+    populateTable: function( nodeArr, isVisible, parent ) {
 
         if ( nodeArr.length === 0 ) {
             return null;
@@ -3494,14 +3500,24 @@ DR_EXPLAIN.navTree_Menu = (function(){
             var isOpened = this.nodeVisibleStatusArr[ node.node_index ];
             var isNodeVisible = !!(isVisible && isOpened);
 
-            itemArr.push({
+            var item = {
                 'title': node.title,
                 'link': node.link,
                 'nodeIndex': node.node_index,
-                'childs': this.populateTable( node.children(), isNodeVisible ),
                 'isVisible': isNodeVisible,
-                'isSelected': ( node.link === this.dataManager.getPageFilename() )
-            });
+                'isSelected': (node.link === this.dataManager.getPageFilename()),
+                'isThroughSelected': false,
+                'childs': []
+            };
+
+            item['isThroughSelected'] = item['isSelected'];
+
+            item['childs'] = this.populateTable(node.children(), isNodeVisible, item);
+
+            if (item['isThroughSelected'] && parent !== null)
+                parent['isThroughSelected'] = true;
+
+            itemArr.push(item);
         }
         return itemArr;
     },
