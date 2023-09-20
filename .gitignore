@@ -3,7 +3,10 @@
 *.zip
 dist
 
+## Mac OS ##
+.DS_Store
 
+## Web ##
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Release
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
 /CSETWebApi/CSETWeb_Api/AddCSETUser/publish
