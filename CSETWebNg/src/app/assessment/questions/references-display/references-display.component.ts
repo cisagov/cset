@@ -68,12 +68,12 @@ export class ReferencesDisplayComponent implements OnInit {
     const list = [];
 
     docList?.forEach(ref => {
-      let listDoc = list.find(d => d.fileName == ref.file_Name);
+      let listDoc = list.find(d => d.fileName == ref.file_Name && d.title == ref.title);
       if (!listDoc) {
         listDoc = {
           fileId: ref.file_Id,
-          fileName: ref.file_Name,
-          title: ref.title,
+          fileName: ref.file_Name?.trim(),
+          title: ref.title.trim(),
           isUploaded: ref.is_Uploaded,
           bookmarks: []
         };

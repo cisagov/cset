@@ -69,6 +69,10 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Builds lists of Source Documents and Additional Resource) Document references for the question.
+        /// 
+        /// Documents without a filename are allowed because they will be displayed as flat tet but with
+        /// no links rendered.  This will allow references to documents that are not onboard in CSET
+        /// but the user could look up on their own.
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
@@ -87,7 +91,7 @@ namespace CSETWebCore.Helpers
                 .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
             var sourceDocuments = doc1
                 .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
 
 
             // Additional Resource Documents
@@ -97,7 +101,7 @@ namespace CSETWebCore.Helpers
                 .Select(s => new { s.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
             var additionalDocuments = doc2
                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
         }
 
 
