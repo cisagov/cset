@@ -26,8 +26,8 @@
     <div class="form-row">
         <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
         <div class="form-group col-md-6">
-            
-            <label class="mb-1" for="name">{{t('assessment-name')}}</label>
+
+            <label class="mb-1" for="name">{{t('assessment name')}}</label>
             <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true"
                 [(ngModel)]="assessment.assessmentName"
                 (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
@@ -58,17 +58,17 @@
             <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                 (change)="update($event)" tabindex="0">
         </div>
-    </div>   
+    </div>
 </form>
 <div class="mt-4">
     <h4>Assessment Type</h4>
     <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
     <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
-    
+
     <div *ngIf="isAwwa">
         <p>
-            Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a> 
-            can be imported into this assessment.  
+            Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a>
+            can be imported into this assessment.
         </p>
         <button class="btn btn-primary" (click)="showAwwaDialog()">Import AWWA Tool Results</button>
     </div>
