@@ -43,11 +43,11 @@
     <Folder Include="Documents\cdDocs_CRR\" />
   </ItemGroup>
 
-	<ItemGroup>
-		<None Update="Diagram\**">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
+  <ItemGroup>
+  	<None Update="Diagram\**">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  </ItemGroup>
 
   <ItemGroup>
   	<None Update="LuceneIndex\**">
