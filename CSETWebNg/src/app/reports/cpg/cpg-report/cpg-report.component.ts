@@ -69,12 +69,14 @@ export class CpgReportComponent implements OnInit {
     });
 
     this.cpgSvc.getAnswerDistrib().subscribe((resp: any) => {
+      const cpgAnswerOptions = this.configSvc.config.moduleBehaviors.find(b => b.moduleName == 'CPG').answerOptions;
+
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
             element.name = 'Unanswered';
           } else {
-            element.name = this.configSvc.config.answersCPG?.find(x => x.code == element.name).answerLabel;
+            element.name = cpgAnswerOptions?.find(x => x.code == element.name).answerLabel;
           }
         });
       });
