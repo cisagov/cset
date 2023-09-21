@@ -54,5 +54,15 @@
   		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
   	</None>
   </ItemGroup>
+	
+  <ItemGroup>
+  	<None Update="IISUrlRewrite.xml">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+	  
+  	<None Update="WebApp\Holder.html">
+  		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
+  </ItemGroup>
 
 </Project>
