@@ -536,7 +536,7 @@ export class AssessmentService {
   }
 
   /**
-   * Indicates if the assessment uses the specified maturity model.
+   * Indicates if the assessment uses the specified maturity model name.
    */
   usesMaturityModel(modelName: string) {
     if (!this.assessment) {
@@ -560,6 +560,13 @@ export class AssessmentService {
     }
 
     return this.assessment.maturityModel.modelName.toLowerCase() === modelName.toLowerCase();
+  }
+
+  /**
+   * Indicates if the assessment uses the maturity model for the specified ID
+   */
+  usesMaturityModelId(modelId: number) {
+    return this.assessment?.useMaturity && modelId == this.assessment?.maturityModel?.modelId;
   }
 
   /**

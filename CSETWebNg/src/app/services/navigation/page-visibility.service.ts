@@ -241,7 +241,7 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has ||
-      (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModel(t.trim()))
+      (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())))
     });
     return has;
   }
