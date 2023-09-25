@@ -50,7 +50,7 @@
     For optimal viewing experience access your reports from a desktop browser
   </div>
 
-  
+
   <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
       Observations Tear-Out Sheets
@@ -311,7 +311,7 @@
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
-      
+
       <!-- Don't submit to MERIT without a Credit Union name or asset value above $0 -->
       <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionName === null || ncuaSvc.assetsAsNumber == 0">
         <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
@@ -566,7 +566,7 @@
       <div>
         <div class="ml-2" *ngIf="isConfigChainEqual">
           <button
-            tabindex="0" 
+            tabindex="0"
             (click)="clickReportLink('appkeyreport')"
             class="btn btn-link btn-link-dark text-left"
             matTooltip="Used to associate identifiable information with an Anonymous Key"
@@ -587,23 +587,25 @@
         </div>
 
 
-        <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
-          [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 
 
         <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
           <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')"
-            tabindex="0">Back</button>
-          <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0" 
+          tabindex="0">Back</button>
+          <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)" tabindex="0"
           [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
-              (ncuaSvc.switchStatus && ncuaSvc.creditUnionName == '') || 
+          (ncuaSvc.switchStatus && ncuaSvc.creditUnionName == '') ||
               (ncuaSvc.switchStatus && ncuaSvc.assetsAsNumber == 0) ||
               ncuaSvc.unassignedIssues ||
               ncuaSvc.submitInProgress">
-            Submit
-          </button>
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+    [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
+    
 </div>
