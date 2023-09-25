@@ -104,15 +104,9 @@ export class ConfigService {
                 .toPromise()
                 .then((cisaAssessorWorkflowEnabled) => {
                   if (cisaAssessorWorkflowEnabled) {
-                    return this.http
-                      .get('assets/settings/config.IOD.json')
-                      .toPromise()
-                      .then((iodConfig) => {
-                        merge(this.config, iodConfig);
-                        localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
-                        this.setConfigPropertiesForLocalService();
-                      });
+                    return this.enableCisaAssessorWorkflow()
                   }
+
                   localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
                 });
             });
@@ -121,6 +115,17 @@ export class ConfigService {
           console.error('FAILED TO LOAD APPLICATION CONFIGURATION');
         });
     }
+  }
+
+  enableCisaAssessorWorkflow() {
+    return this.http
+      .get('assets/settings/config.IOD.json')
+      .toPromise()
+      .then((iodConfig) => {
+        merge(this.config, iodConfig);
+        localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
+        this.setConfigPropertiesForLocalService();
+      });
   }
 
   /**
@@ -225,10 +230,7 @@ export class ConfigService {
   }
 
   setCisaAssessorWorkflow(cisaAssessorWorkflowEnabled: boolean) {
-    return this.http.post(
-      this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow',
-      cisaAssessorWorkflowEnabled
-    );
+    return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
   }
 
   switchConfigsForMode(installationMode) {

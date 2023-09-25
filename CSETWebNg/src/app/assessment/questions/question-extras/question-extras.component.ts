@@ -58,6 +58,10 @@ export class QuestionExtrasComponent implements OnInit {
 
   @Input() myOptions: any;
 
+  // ISE options
+  @Input() ncuaDisplay: boolean = false;
+  @Input() iconsToDisplay: string[] = [];
+
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
@@ -607,8 +611,14 @@ export class QuestionExtrasComponent implements OnInit {
    * Use "moduleBehaviors" configuration for the current module/model.
    */
   displayIcon(mode) {
+    //NCUA asked for specific behavior. See comment on displayIconISE function.
+    if (this.ncuaDisplay) {
+      let result = this.displayIconISE(mode);
+      return result;
+    }
+
     const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName)
-  
+
     if (mode == 'DETAIL') {
       return behavior?.questionIcons?.showDetails ?? true;
     }
@@ -645,6 +655,19 @@ export class QuestionExtrasComponent implements OnInit {
     }
 
     return true;
+  }
+
+  /**
+   * Custom show/hide functionality for ISE icons. Requires "this.ncuaDisplay" to be true.
+   * This function takes an array of strings ("this.iconsToDisplay") and if it finds the mode (icon)
+   * you want to show (['REFS', 'SUPP'], etc)
+   */
+  displayIconISE(mode) {
+    if (this.iconsToDisplay.includes(mode)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**

@@ -328,7 +328,14 @@ function createWindow() {
   })
 
   // Load landing page if any window in app fails to load
-  mainWindow.webContents.on('did-fail-load', () => {
+  mainWindow.webContents.on('did-fail-load', (event) => {
+
+    // This event is triggered inside diagram even when the page loads successfully.
+    // Not sure why... so we're ignoring it for now.
+    if (event.sender.getURL().includes('diagram/src/main/webapp/index.html')) {
+      return;
+    }
+
     mainWindow.loadURL(
       url.format({
         pathname: path.join(__dirname, 'dist/index.html'),

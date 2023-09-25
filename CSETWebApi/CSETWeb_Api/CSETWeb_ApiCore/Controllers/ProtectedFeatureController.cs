@@ -12,8 +12,7 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Module;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Helpers;
-using Namotion.Reflection;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -116,9 +115,10 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("api/EnableProtectedFeature/getCisaAssessorWorkflow")]
         /// <summary>
-        /// Marks the FAA set as 'unlocked.'
+        /// Gets the status of the CISA assessor workflow for the current user.
         /// </summary>
         /// <returns></returns>
         public IActionResult GetCisaAssessorWorkflow()
@@ -126,6 +126,7 @@ namespace CSETWebCore.Api.Controllers
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
 
+            // Assume false if we can't find the user or access key (they are probably on the login page).
             bool cisaWorkflowEnabled = false;
 
             if (userId != null)
