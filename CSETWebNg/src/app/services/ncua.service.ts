@@ -33,6 +33,7 @@ import { ACETService } from './acet.service';
 import { IRPService } from './irp.service';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 import { Answer } from '../models/questions.model';
+import { environment } from '../../../src/environments/environment';
 
 let headers = {
     headers: new HttpHeaders()
@@ -84,6 +85,10 @@ let headers = {
   unassignedIssueTitles: any = [];
   unassignedIssues: boolean = false;
 
+  // Make sure we have these variables before we submit MERIT data
+  creditUnionName = "";
+  creditUnionCharterNumber = "";
+
   ISE_StateLed: boolean = false;
 
   questions: any = null;
@@ -100,7 +105,8 @@ let headers = {
       "stateLed": false,
       "examLevel": '',
       "region": 0,
-      "guid": ''
+      "guid": '',
+      "version": ''
     },
     "issuesTotal": {
       "dors": 0,
@@ -281,6 +287,19 @@ let headers = {
     this.assetsAsString = amount;
     this.assetsAsNumber = parseInt(amount);
     this.getExamLevelFromAssets();
+  }
+
+  regionCodeTranslator(regionCode: number) {
+    switch(regionCode) {
+      case(1):
+        return '1 - Eastern';
+      case(2):
+        return '2 - Southern';
+      case(3):
+        return '3 - Western';
+      case(8):
+        return '8 - ONES';
+    }
   }
 
   checkExamLevel() {
@@ -567,7 +586,8 @@ let headers = {
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
-      "guid": this.questions.assessmentGuid
+      "guid": this.questions.assessmentGuid,
+      "version": environment.visibleVersion
     };
 
     this.jsonString.metaData = metaDataInfo;
@@ -607,8 +627,7 @@ let headers = {
                 let msg = `<br>
                   <p>This examination has been previously submitted.</p>
                   <br>
-                  <p>Would you like to save this examination as a <strong>new</strong> submission?</p>
-                  <p>Or would you like to <strong>overwrite</strong> the previous submission?</p>`;
+                  <p>Would you like to <strong>overwrite</strong> the previous submission data?</p>`;
       
                 this.dialog.open(MeritCheckComponent, {
                   disableClose: true, data: { title: "Submission Warning", messageText: msg }
@@ -643,7 +662,7 @@ let headers = {
                         this.jsonStringReset(); 
                       },
                       error => {        
-                        let msg = "<br><p>Could not write the file."+error+"</p>";
+                        let msg = "<br><p>Could not write the file."+error.error+"</p>";
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Error", messageText: msg }
                         });
@@ -651,7 +670,7 @@ let headers = {
                       }
                     );
                   } else {
-                    this.jsonStringReset();         
+                    this.jsonStringReset();   
                   }
                 }); 
               }
@@ -666,7 +685,7 @@ let headers = {
         this.dialog.open(MeritCheckComponent, {
           disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
-        this.jsonStringReset();         
+        this.jsonStringReset();     
       }
     )
   }
@@ -685,9 +704,9 @@ let headers = {
       },
       error => {        
         console.log(error);
-        let msg = "<br><p>Error"+error+"}}</p>";
+        let msg = "<br><p>Error:"+error.error+"</p>";
         this.dialog.open(MeritCheckComponent, {
-          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+          disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
         this.jsonStringReset();
       }

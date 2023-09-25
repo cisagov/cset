@@ -31,6 +31,8 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
+import { NavigationService } from './navigation/navigation.service';
+import { Observable } from 'rxjs';
 
 
 export interface Role {
@@ -123,7 +125,7 @@ export class AssessmentService {
    * If a custom set name is found on the gallery item, include it in the query string.
    * Custom set gallery items are built on the fly and don't have a gallery ID.
    */
-  createNewAssessmentGallery(workflow: string, galleryItem: any) {
+  createNewAssessmentFromGallery(workflow: string, galleryItem: any) {
     let queryString: string = 'workflow=' + workflow + '&galleryGuid=' + galleryItem.gallery_Item_Guid;
     if (!!galleryItem.custom_Set_Name) {
       queryString += '&csn=' + galleryItem.custom_Set_Name
@@ -220,6 +222,20 @@ export class AssessmentService {
    */
   getOrganizationTypes() {
     return this.http.get(this.apiUrl + 'getOrganizationTypes');
+  }
+
+  /**
+   * 
+   */
+  getOtherRemarks() {
+    return this.http.get(this.apiUrl + 'remarks', { responseType: 'text' });
+  }
+
+  /**
+   * 
+   */
+  saveOtherRemarks(remarks: string) {
+    return this.http.post(this.apiUrl + 'remarks', JSON.stringify(remarks), headers);
   }
 
   /**
@@ -339,7 +355,7 @@ export class AssessmentService {
   /**
    * Create a new assessment.
    */
-  newAssessment() {
+  newAssessment(): Promise<any> {
     let workflow: string;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -351,22 +367,26 @@ export class AssessmentService {
       default:
         workflow = 'BASE';
     }
-    this.createAssessment(workflow)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+
+    return new Promise((resolve, reject) => {
+      this.createAssessment(workflow)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id);
+            resolve('assessment loaded');
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
-  newAssessmentGallery(galleryItem: any) {
+  newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
@@ -379,52 +399,64 @@ export class AssessmentService {
         workflow = 'BASE';
     }
 
-    this.createNewAssessmentGallery(workflow, galleryItem)
-      .toPromise()
-      .then(
-        (response: any) => {
-          // set the brand new flag
-          this.isBrandNew = true;
-          this.loadAssessment(response.id);
-        },
-        error =>
-          console.log(
-            'Unable to create new assessment: ' + (<Error>error).message
-          )
-      );
+    return new Promise((resolve, reject) => {
+      this.createNewAssessmentFromGallery(workflow, galleryItem)
+        .toPromise()
+        .then(
+          (response: any) => {
+            // set the brand new flag
+            this.isBrandNew = true;
+            this.loadAssessment(response.id).then(() => {
+              resolve('assessment loaded');
+            });
+          },
+          error =>
+            console.log(
+              'Unable to create new assessment: ' + (<Error>error).message
+            )
+        );
+    });
   }
 
-
   /**
-   *
+   * Requests the assessment detail from the API
+   * and resolves the promise so that navigation
+   * can take place in the function that called
+   * this one.
    */
-  loadAssessment(id: number) {
-    this.getAssessmentToken(id).then(() => {
+  loadAssessment(id: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.getAssessmentToken(id).then(() => {
 
-      this.getAssessmentDetail().subscribe(data => {
-        this.assessment = data;
-        if (this.assessment.baselineAssessmentId) {
-          localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
-        } else {
-          localStorage.setItem("baseline", "0");
-        }
-        // make sure that the acet only switch is turned off when in standard CSET
-        if (this.configSvc.installationMode !== 'ACET') {
-          this.assessment.isAcetOnly = false;
-        }
+        this.getAssessmentDetail().subscribe(data => {
+          this.assessment = data;
 
-        const rpath = localStorage.getItem('returnPath');
-        if (rpath != null) {
-          localStorage.removeItem('returnPath');
-          const returnPath = '/assessment/' + id + '/' + rpath;
-          this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
-        } else {
-          if (this.assessment.workflow == 'TSA') {
-            this.router.navigate(['/assessment', id, 'prepare', 'info-tsa']);
+          if (this.assessment.baselineAssessmentId) {
+            localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
           } else {
-            this.router.navigate(['/assessment', id]);
+            localStorage.setItem("baseline", "0");
           }
-        }
+
+          // make sure that the acet only switch is turned off when in standard CSET
+          if (this.configSvc.installationMode !== 'ACET') {
+            this.assessment.isAcetOnly = false;
+          }
+
+
+          const rpath = localStorage.getItem('returnPath');
+
+          // normal assessment load
+          if (!rpath) {
+            resolve('assessment loaded');
+            return;
+          }
+          
+          // return path specified
+          localStorage.removeItem('returnPath');
+          const returnPath = `/assessment/${id}/${rpath}`;
+          this.router.navigate([returnPath], { queryParamsHandling: 'preserve' });
+          resolve(returnPath);
+        });
       });
     });
   }

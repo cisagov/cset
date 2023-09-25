@@ -419,7 +419,7 @@ table.table-site-info {
 }
 
 table.table-site-info td {
-  padding:.3rem;
+  padding: .3rem;
   vertical-align: top;
 }
 
@@ -1732,6 +1732,10 @@ div.function-statement {
   display: flex;
 }
 
+.cmu-header-logo {
+  width: 20%;
+  height: auto;
+}
 
 
 
@@ -1836,11 +1840,13 @@ div.spinner-size-50 {
   font-weight: bold;
 }
 
-.nested-question-text, .nested-question-text p {
+.nested-question-text,
+.nested-question-text p {
   margin-bottom: 1rem;
 }
 
-.nested-option-block, .nested-option-block p {
+.nested-option-block,
+.nested-option-block p {
   margin-bottom: 1rem !important;
 }
 
@@ -2188,4 +2194,3 @@ $secondary-color: #777;
 }
 
 //////////////////////////////////////////////////////////////////
-

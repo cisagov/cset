@@ -13,7 +13,6 @@ using System.Text;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.ACETDashboard;
 using CSETWebCore.Interfaces.Maturity;
-using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
 using Microsoft.EntityFrameworkCore;
@@ -56,22 +55,36 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="userID"></param>
         /// <param name="stream"></param>
-        public void ProcessAllAssessmentsForUser(int userID, MemoryStream stream)
+        public void ProcessAllAssessmentsForUser(int userID, MemoryStream stream, string type = "")
         {
             DataTable dtAll = null;
-           
+
             // get all the assessment IDs that this user has access to
             var myAssessmentIDs = db.ASSESSMENT_CONTACTS.Where(x => x.UserId == userID).Select(y => y.Assessment_Id).ToList();
+            var assessmentName = "";
+
             foreach (int assessmentID in myAssessmentIDs)
             {
+                var query = db.INFORMATION.Where(x => x.Id == assessmentID).FirstOrDefault();
+                if (query != null)
+                {
+                    assessmentName = query.Assessment_Name;
+                }
+
                 // ignore assessments that don't have the ACET standard
                 if (IsACET(assessmentID))
                 {
                     continue;
                 }
 
+                // ignore the assessments the user didn't want (ACET or ISE) because they have different excel column requirements
+                if (!assessmentName.Contains(type))
+                {
+                    continue;
+                }
+
                 // get the values as a DataTable
-                DataTable dt = BuildAssessment(assessmentID);
+                DataTable dt = BuildAssessment(assessmentID, type);
 
                 // append the row into dtAll .....
                 if (dtAll == null)
@@ -104,39 +117,54 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="stream"></param>
-        public DataTable BuildAssessment(int assessmentID)
+        public DataTable BuildAssessment(int assessmentID, string type = "")
         {
             var assess = db.ASSESSMENTS
                 .Include(x => x.INFORMATION)
                 .Where(x => x.Assessment_Id == assessmentID)
                 .FirstOrDefault();
+
             if (assess == null)
             {
                 return null;
             }
 
             // A few helper classes gather data
-            
             var acetDashboard = _acet.LoadDashboard(assessmentID);
-
             var maturityDomains = _maturity.GetMaturityAnswers(assessmentID);
 
-
             // Build the row for the assessment
-            var export = new SingleRowExport();
+            SingleRowExport export = null;
+            if (type == "ISE")
+            {
+                export = new SingleRowExport(type);
+            }
+            else
+            {
+                export = new SingleRowExport();
+            }
+
+            var assessName = assess.INFORMATION.Assessment_Name;
 
             export.d["Version"] = db.CSET_VERSION.FirstOrDefault().Cset_Version1;
 
-            export.d["Assessment Name"] = assess.INFORMATION.Assessment_Name;
+            export.d["Assessment Name"] = assessName;
             export.d["CU Name"] = acetDashboard.CreditUnionName;
             export.d["CU #"] = acetDashboard.Charter;
             export.d["Assets"] = acetDashboard.Assets;
 
-            ProcessIRP(assessmentID, acetDashboard, ref export);
-
-            ProcessMaturity(acetDashboard, maturityDomains, ref export);
-
-            ProcessStatementAnswers(assessmentID, ref export);
+            // Build different Excel columns for ACET/ISE
+            if (type == "ACET")
+            {
+                ProcessIRP(assessmentID, acetDashboard, ref export, assessName);
+                ProcessMaturity(acetDashboard, maturityDomains, ref export);
+                ProcessStatementAnswers(assessmentID, ref export);
+            }
+            else if (type == "ISE")
+            {
+                ProcessIseIRP(assessmentID, acetDashboard, ref export, assessName);
+                ProcessIseAnswers(assessmentID, ref export);
+            }
 
             return export.ToDataTable();
         }
@@ -146,7 +174,7 @@ namespace CSETWebCore.ExportCSV
         /// 
         /// </summary>
         /// <param name="export"></param>
-        private void ProcessIRP(int assessmentID, ACETDashboard acetDashboard, ref SingleRowExport export)
+        private void ProcessIRP(int assessmentID, ACETDashboard acetDashboard, ref SingleRowExport export, string assessmentName)
         {
             // build a quick dictionary for textual risk level values
             Dictionary<int, string> riskLevelDescription = new Dictionary<int, string>
@@ -167,6 +195,33 @@ namespace CSETWebCore.ExportCSV
             var irpAnswers = db.ASSESSMENT_IRP
                 .Include(x => x.IRP)
                 .Where(x => x.Assessment_Id == assessmentID)
+                .OrderBy(i => i.IRP.Item_Number)
+                .ToList();
+
+            foreach (var irpAnswer in irpAnswers)
+            {
+                export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+            }
+        }
+
+        private void ProcessIseIRP(int assessmentID, ACETDashboard acetDashboard, ref SingleRowExport export, string assessmentName)
+        {
+            // build a quick dictionary for textual risk level values
+            Dictionary<int, string> riskLevelDescription = new Dictionary<int, string>
+            {
+                { 0, "0" },
+                { 1, "1 - Least" },
+                { 2, "2 - Minimal" },
+                { 3, "3 - Moderate" },
+                { 4, "4 - Significant" },
+                { 5, "5 - Most" }
+            };
+
+            // Currently the ISE irp's start at ID 46, so this is a hard coded check
+            // there's probably a better way to do this. Maybe add a specfic field to the db?
+            var irpAnswers = db.ASSESSMENT_IRP
+                .Include(x => x.IRP)
+                .Where(x => x.Assessment_Id == assessmentID && x.IRP_Id > 45)
                 .OrderBy(i => i.IRP.Item_Number)
                 .ToList();
 
@@ -259,13 +314,52 @@ namespace CSETWebCore.ExportCSV
                 export.d[g.Question_Title.Substring(5)] = answerTranslation[g.Answer_Text];
             }
         }
+
+        private void ProcessIseAnswers(int assessmentID, ref SingleRowExport export)
+        {
+            var stmt = from answ in db.ANSWER
+                       join mat_q in db.MATURITY_QUESTIONS on answ.Question_Or_Requirement_Id equals mat_q.Mat_Question_Id
+                       where answ.Assessment_Id == assessmentID && answ.Question_Type == "Maturity" && mat_q.Question_Title.StartsWith("Stmt")
+                       orderby mat_q.Parent_Question_Id
+                       select new { mat_q.Question_Title, answ.Answer_Text, mat_q.Maturity_Level_Id };
+
+            var myAnswers = stmt.ToList();
+
+            // removes parent statements "1", "2", etc that are always unanswered. Leaves "1.1", "1.2", etc
+            myAnswers = myAnswers.Where(s => s.Question_Title.Contains('.')).ToList();
+
+            Dictionary<string, string> answerTranslation = new Dictionary<string, string>
+            {
+                ["Y"] = "Yes",
+                ["N"] = "No",
+                ["U"] = "U",
+            };
+
+            foreach (var g in myAnswers)
+            {
+                if (g.Maturity_Level_Id == 17)
+                {
+                    export.d[g.Question_Title] = answerTranslation[g.Answer_Text];
+                } else if (g.Maturity_Level_Id == 18)
+                {
+                    var modifiedTitle = g.Question_Title + 'c';
+                    export.d[modifiedTitle] = answerTranslation[g.Answer_Text];
+
+                } else if (g.Maturity_Level_Id == 19)
+                {
+                    var modifiedTitle = g.Question_Title + "c+";
+                    export.d[modifiedTitle] += answerTranslation[g.Answer_Text];
+                }
+            }
+        }
     }
 
 
-    /// <summary>
-    /// Defines the column names and values in a single NCUA export row.
-    /// </summary>
-    public class SingleRowExport
+
+/// <summary>
+/// Defines the column names and values in a single NCUA export row.
+/// </summary>
+public class SingleRowExport
     {
         public Dictionary<string, string> d = new Dictionary<string, string>();
 
@@ -276,6 +370,14 @@ namespace CSETWebCore.ExportCSV
         public SingleRowExport()
         {
             foreach (string h in headers)
+            {
+                d.Add(h, string.Empty);
+            }
+        }
+
+        public SingleRowExport(string type)
+        {
+            foreach (string h in iseHeaders)
             {
                 d.Add(h, string.Empty);
             }
@@ -956,6 +1058,432 @@ namespace CSETWebCore.ExportCSV
                 "494"
             };
 
+        private static string[] iseHeaders = new String[] {
+            "Version",
+            "Assessment Name",
+            "CU Name",
+            "CU #",
+            "Assets",
+            "IRP1",
+            "IRP2",
+            "IRP3",
+            "IRP4",
+            "IRP5",
+            "IRP6",
+            "IRP7",
+            "IRP8",
+            "IRP9",
+            "Stmt 1.1",
+            "Stmt 1.2",
+            "Stmt 1.3",
+            "Stmt 1.4",
+            "Stmt 1.5",
+            "Stmt 1.6",
+            "Stmt 1.7",
+            "Stmt 1.8",
+            "Stmt 2.1",
+            "Stmt 2.2",
+            "Stmt 2.3",
+            "Stmt 2.4",
+            "Stmt 3.1",
+            "Stmt 3.2",
+            "Stmt 3.3",
+            "Stmt 3.4",
+            "Stmt 3.5",
+            "Stmt 4.1",
+            "Stmt 4.2",
+            "Stmt 4.3",
+            "Stmt 4.4",
+            "Stmt 4.5",
+            "Stmt 4.6",
+            "Stmt 5.1",
+            "Stmt 5.2",
+            "Stmt 5.3",
+            "Stmt 5.4",
+            "Stmt 5.5",
+            "Stmt 5.6",
+            "Stmt 5.7",
+            "Stmt 5.8",
+            "Stmt 5.9",
+            "Stmt 6.1",
+            "Stmt 6.2",
+            "Stmt 6.3",
+            "Stmt 6.4",
+            "Stmt 6.5",
+            "Stmt 7.1",
+            "Stmt 7.2",
+            "Stmt 7.3",
+            "Stmt 7.4",
+            "Stmt 8.1",
+            "Stmt 8.2",
+            "Stmt 8.3",
+            "Stmt 8.4",
+            "Stmt 8.5",
+            "Stmt 8.6",
+            "Stmt 1.1c",
+            "Stmt 1.2c",
+            "Stmt 1.3c",
+            "Stmt 1.4c",
+            "Stmt 1.5c",
+            "Stmt 1.6c",
+            "Stmt 1.7c",
+            "Stmt 1.8c",
+            "Stmt 1.9c+",
+            "Stmt 1.10c+",
+            "Stmt 1.11c+",
+            "Stmt 1.12c+",
+            "Stmt 1.13c+",
+            "Stmt 2.1c",
+            "Stmt 2.2c",
+            "Stmt 2.3c",
+            "Stmt 2.4c",
+            "Stmt 2.5c+",
+            "Stmt 2.6c+",
+            "Stmt 2.7c+",
+            "Stmt 2.8c+",
+            "Stmt 3.1c",
+            "Stmt 3.2c",
+            "Stmt 3.3c",
+            "Stmt 3.4c",
+            "Stmt 3.5c",
+            "Stmt 3.6c+",
+            "Stmt 3.7c+",
+            "Stmt 3.8c+",
+            "Stmt 3.9c+",
+            "Stmt 3.10c+",
+            "Stmt 3.11c+",
+            "Stmt 3.12c+",
+            "Stmt 3.13c+",
+            "Stmt 4.1c",
+            "Stmt 4.2c",
+            "Stmt 4.3c",
+            "Stmt 4.4c",
+            "Stmt 4.5c",
+            "Stmt 4.6c+",
+            "Stmt 4.7c+",
+            "Stmt 4.8c+",
+            "Stmt 4.9c+",
+            "Stmt 4.10c+",
+            "Stmt 4.11c+",
+            "Stmt 4.12c+",
+            "Stmt 4.13c+",
+            "Stmt 4.14c+",
+            "Stmt 4.15c+",
+            "Stmt 4.16c+",
+            "Stmt 4.17c+",
+            "Stmt 4.18c+",
+            "Stmt 5.1c",
+            "Stmt 5.2c",
+            "Stmt 5.3c",
+            "Stmt 5.4c",
+            "Stmt 5.5c",
+            "Stmt 5.6c",
+            "Stmt 5.7c+",
+            "Stmt 5.8c+",
+            "Stmt 5.9c+",
+            "Stmt 5.10c+",
+            "Stmt 5.11c+",
+            "Stmt 5.12c+",
+            "Stmt 6.1c",
+            "Stmt 6.2c",
+            "Stmt 6.3c+",
+            "Stmt 6.4c+",
+            "Stmt 6.5c+",
+            "Stmt 7.1c",
+            "Stmt 7.2c",
+            "Stmt 7.3c",
+            "Stmt 7.4c",
+            "Stmt 7.5c",
+            "Stmt 7.6c",
+            "Stmt 7.7c+",
+            "Stmt 7.8c+",
+            "Stmt 7.9c+",
+            "Stmt 7.10c+",
+            "Stmt 7.11c+",
+            "Stmt 7.12c+",
+            "Stmt 7.13c+",
+            "Stmt 8.1c",
+            "Stmt 8.2c",
+            "Stmt 8.3c",
+            "Stmt 8.4c",
+            "Stmt 8.5c",
+            "Stmt 8.6c",
+            "Stmt 8.7c",
+            "Stmt 8.8c",
+            "Stmt 8.9c",
+            "Stmt 8.10c+",
+            "Stmt 8.11c+",
+            "Stmt 8.12c+",
+            "Stmt 8.13c+",
+            "Stmt 8.14c+",
+            "Stmt 8.15c+",
+            "Stmt 8.16c+",
+            "Stmt 8.17c+",
+            "Stmt 8.18c+",
+            "Stmt 9.1c",
+            "Stmt 9.2c",
+            "Stmt 9.3c",
+            "Stmt 9.4c",
+            "Stmt 9.5c",
+            "Stmt 9.6c+",
+            "Stmt 9.7c+",
+            "Stmt 9.8c+",
+            "Stmt 9.9c+",
+            "Stmt 9.10c+",
+            "Stmt 9.11c+",
+            "Stmt 9.12c+",
+            "Stmt 9.13c+",
+            "Stmt 9.14c+",
+            "Stmt 9.15c+",
+            "Stmt 9.16c+",
+            "Stmt 9.17c+",
+            "Stmt 9.18c+",
+            "Stmt 9.19c+",
+            "Stmt 9.20c+",
+            "Stmt 9.21c+",
+            "Stmt 10.1c",
+            "Stmt 10.2c",
+            "Stmt 10.3c",
+            "Stmt 10.4c",
+            "Stmt 10.5c+",
+            "Stmt 10.6c+",
+            "Stmt 10.7c+",
+            "Stmt 10.8c+",
+            "Stmt 10.9c+",
+            "Stmt 10.10c+",
+            "Stmt 10.11c+",
+            "Stmt 10.12c+",
+            "Stmt 11.1c",
+            "Stmt 11.2c",
+            "Stmt 11.3c",
+            "Stmt 11.4c+",
+            "Stmt 11.5c+",
+            "Stmt 11.6c+",
+            "Stmt 11.7c+",
+            "Stmt 11.8c+",
+            "Stmt 11.9c+",
+            "Stmt 11.10c+",
+            "Stmt 11.11c+",
+            "Stmt 11.12c+",
+            "Stmt 11.13c+",
+            "Stmt 11.14c+",
+            "Stmt 12.1c",
+            "Stmt 12.2c",
+            "Stmt 12.3c",
+            "Stmt 12.4c+",
+            "Stmt 12.5c+",
+            "Stmt 12.6c+",
+            "Stmt 12.7c+",
+            "Stmt 12.8c+",
+            "Stmt 12.9c+",
+            "Stmt 12.10c+",
+            "Stmt 12.11c+",
+            "Stmt 12.12c+",
+            "Stmt 12.13c+",
+            "Stmt 12.14c+",
+            "Stmt 12.15c+",
+            "Stmt 13.1c",
+            "Stmt 13.2c",
+            "Stmt 13.3c",
+            "Stmt 13.4c+",
+            "Stmt 13.5c+",
+            "Stmt 13.6c+",
+            "Stmt 13.7c+",
+            "Stmt 13.8c+",
+            "Stmt 13.9c+",
+            "Stmt 13.10c+",
+            "Stmt 13.11c+",
+            "Stmt 13.12c+",
+            "Stmt 13.13c+",
+            "Stmt 13.14c+",
+            "Stmt 13.15c+",
+            "Stmt 13.16c+",
+            "Stmt 13.17c+",
+            "Stmt 13.18c+",
+            "Stmt 13.19c+",
+            "Stmt 13.20c+",
+            "Stmt 13.21c+",
+            "Stmt 13.22c+",
+            "Stmt 14.1c",
+            "Stmt 14.2c",
+            "Stmt 14.3c+",
+            "Stmt 14.4c+",
+            "Stmt 14.5c+",
+            "Stmt 14.6c+",
+            "Stmt 14.7c+",
+            "Stmt 14.8c+",
+            "Stmt 14.9c+",
+            "Stmt 14.10c+",
+            "Stmt 14.11c+",
+            "Stmt 15.1c",
+            "Stmt 15.2c",
+            "Stmt 15.3c",
+            "Stmt 15.4c",
+            "Stmt 15.5c+",
+            "Stmt 15.6c+",
+            "Stmt 15.7c+",
+            "Stmt 15.8c+",
+            "Stmt 15.9c+",
+            "Stmt 15.10c+",
+            "Stmt 15.11c+",
+            "Stmt 15.12c+",
+            "Stmt 16.1c",
+            "Stmt 16.2c",
+            "Stmt 16.3c+",
+            "Stmt 16.4c+",
+            "Stmt 16.5c+",
+            "Stmt 16.6c+",
+            "Stmt 16.7c+",
+            "Stmt 16.8c+",
+            "Stmt 16.9c+",
+            "Stmt 16.10c+",
+            "Stmt 16.11c+",
+            "Stmt 16.12c+",
+            "Stmt 16.13c+",
+            "Stmt 16.14c+",
+            "Stmt 16.15c+",
+            "Stmt 17.1c+",
+            "Stmt 17.2c+",
+            "Stmt 17.3c+",
+            "Stmt 17.4c+",
+            "Stmt 17.5c+",
+            "Stmt 17.6c+",
+            "Stmt 17.7c+",
+            "Stmt 17.8c+",
+            "Stmt 17.9c+",
+            "Stmt 17.10c+",
+            "Stmt 17.11c+",
+            "Stmt 17.12c+",
+            "Stmt 17.13c+",
+            "Stmt 17.14c+",
+            "Stmt 17.15c+",
+            "Stmt 18.1c+",
+            "Stmt 18.2c+",
+            "Stmt 18.3c+",
+            "Stmt 18.4c+",
+            "Stmt 18.5c+",
+            "Stmt 19.1c+",
+            "Stmt 19.2c+",
+            "Stmt 19.3c+",
+            "Stmt 19.4c+",
+            "Stmt 19.5c+",
+            "Stmt 19.6c+",
+            "Stmt 19.7c+",
+            "Stmt 19.8c+",
+            "Stmt 19.9c+",
+            "Stmt 19.10c+",
+            "Stmt 19.11c+",
+            "Stmt 19.12c+",
+            "Stmt 19.13c+",
+            "Stmt 19.14c+",
+            "Stmt 19.15c+",
+            "Stmt 20.1c+",
+            "Stmt 20.2c+",
+            "Stmt 20.3c+",
+            "Stmt 20.4c+",
+            "Stmt 20.5c+",
+            "Stmt 20.6c+",
+            "Stmt 20.7c+",
+            "Stmt 20.8c+",
+            "Stmt 20.9c+",
+            "Stmt 20.10c+",
+            "Stmt 21.1c+",
+            "Stmt 21.2c+",
+            "Stmt 21.3c+",
+            "Stmt 21.4c+",
+            "Stmt 21.5c+",
+            "Stmt 21.6c+",
+            "Stmt 21.7c+",
+            "Stmt 21.8c+",
+            "Stmt 21.9c+",
+            "Stmt 22.1c+",
+            "Stmt 22.2c+",
+            "Stmt 22.3c+",
+            "Stmt 22.4c+",
+            "Stmt 22.5c+",
+            "Stmt 22.6c+",
+            "Stmt 23.1c+",
+            "Stmt 23.2c+",
+            "Stmt 23.3c+",
+            "Stmt 23.4c+",
+            "Stmt 23.5c+",
+            "Stmt 23.6c+",
+            "Stmt 23.7c+",
+            "Stmt 23.8c+",
+            "Stmt 23.9c+",
+            "Stmt 23.10c+",
+            "Stmt 23.11c+",
+            "Stmt 23.12c+",
+            "Stmt 23.13c+",
+            "Stmt 23.14c+",
+            "Stmt 23.15c+",
+            "Stmt 23.16c+",
+            "Stmt 23.17c+",
+            "Stmt 23.18c+",
+            "Stmt 23.19c+",
+            "Stmt 23.20c+",
+            "Stmt 23.21c+",
+            "Stmt 23.22c+",
+            "Stmt 23.23c+",
+            "Stmt 23.24c+",
+            "Stmt 23.25c+",
+            "Stmt 23.26c+",
+            "Stmt 23.27c+",
+            "Stmt 23.28c+",
+            "Stmt 24.1c+",
+            "Stmt 24.2c+",
+            "Stmt 24.3c+",
+            "Stmt 24.4c+",
+            "Stmt 24.5c+",
+            "Stmt 24.6c+",
+            "Stmt 24.7c+",
+            "Stmt 24.8c+",
+            "Stmt 24.9c+",
+            "Stmt 24.10c+",
+            "Stmt 24.11c+",
+            "Stmt 24.12c+",
+            "Stmt 24.13c+",
+            "Stmt 24.14c+",
+            "Stmt 24.15c+",
+            "Stmt 24.16c+",
+            "Stmt 24.17c+",
+            "Stmt 24.18c+",
+            "Stmt 25.1c+",
+            "Stmt 25.2c+",
+            "Stmt 25.3c+",
+            "Stmt 25.4c+",
+            "Stmt 25.5c+",
+            "Stmt 25.6c+",
+            "Stmt 25.7c+",
+            "Stmt 25.8c+",
+            "Stmt 25.9c+",
+            "Stmt 25.10c+",
+            "Stmt 25.11c+",
+            "Stmt 25.12c+",
+            "Stmt 25.13c+",
+            "Stmt 25.14c+",
+            "Stmt 25.15c+",
+            "Stmt 25.16c+",
+            "Stmt 25.17c+",
+            "Stmt 25.18c+",
+            "Stmt 25.19c+",
+            "Stmt 25.20c+",
+            "Stmt 25.21c+",
+            "Stmt 25.22c+",
+            "Stmt 25.23c+",
+            "Stmt 25.24c+",
+            "Stmt 25.25c+",
+            "Stmt 25.26c+",
+            "Stmt 25.27c+",
+            "Stmt 25.28c+",
+            "Stmt 25.29c+",
+            "Stmt 25.30c+",
+            "Stmt 25.31c+",
+            "Stmt 25.32c+",
+            "Stmt 25.33c+",
+            "Stmt 25.34c+",
+            "Stmt 25.35c+"
+        };
         #endregion
     }
 }

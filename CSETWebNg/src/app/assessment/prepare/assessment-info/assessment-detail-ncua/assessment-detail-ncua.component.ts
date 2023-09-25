@@ -59,7 +59,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentEffectiveDate: Date = new Date();
 
   contactInitials: string = "";
-  lastModifiedTimestamp: string = "";
+  lastModifiedTimestamp: string = Date.now().toString();
 
   assessmentControl = new UntypedFormControl('');
   assessmentCharterControl = new UntypedFormControl('');
@@ -134,8 +134,12 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       let myArray = data.split(" ");
       this.lastModifiedTimestamp = myArray[1];
-    });
 
+      // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
+      // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
+      this.createAssessmentName();
+    });
+    
   }
 
   /**
@@ -150,6 +154,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
 
       this.assessSvc.getAssessmentContacts().then((response: any) => {
         this.contactInitials = "_" + response.contactList[0].firstName;
+        this.createAssessmentName();
       });
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
@@ -181,9 +186,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.assessment.assessmentDate = null;
       this.assessmentEffectiveDate = null;
     }
-    
-    if (this.assessment.assessmentName === "New Assessment")
-      this.createAssessmentName();
 
   }
 
@@ -216,13 +218,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     let i = 0;
     while (i < this.creditUnionOptions.length) {
       if (e.target.value == this.creditUnionOptions[i].name) {
-        console.log("Credit Union Name match found at: " + i);
         this.populateAssessmentFields(i);
         break;
       }
 
       if ((e.target.value.padStart(5, '0')) === (this.creditUnionOptions[i].charter.toString())) {
-        console.log("Charter Number match found at: " + i);
         this.populateAssessmentFields(i);
         break;
       }
@@ -236,6 +236,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     
     this.createAssessmentName();
     this.setCharterPad();
+
+    // Set the name & charter in NCUA service to enable the MERIT submit button on the reports page
+    this.ncuaSvc.creditUnionName = this.assessment.creditUnion;
+    this.ncuaSvc.creditUnionCharterNumber = this.assessment.charter;
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
@@ -251,7 +255,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessment.charterType = this.creditUnionOptions[i].charterType;
     this.assessment.regionCode = this.creditUnionOptions[i].regionCode;
 
-    if (this.creditUnionOptions[i].charterType != 1) {
+    if (this.creditUnionOptions[i].charterType == 1 || +this.assessment.charter >= 60000) {
       this.assessment.isE_StateLed = false;
     }
 
@@ -270,6 +274,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessment.charterType = 0;
     this.assessment.regionCode = 0;
     this.assessment.assets = '0';
+    this.assessment.isE_StateLed = false;
     this.updateAssets();
 
   }

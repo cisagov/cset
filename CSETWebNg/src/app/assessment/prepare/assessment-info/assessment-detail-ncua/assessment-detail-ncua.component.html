@@ -129,7 +129,8 @@
 
         <div class="form-group">
             <label class="mb-1" for="creditUnion">Credit Union Name</label>
-            <input type="text" (focus)="$event.target.select()" maxlength="100" class="form-control" 
+            <span *ngIf="ncuaSvc.creditUnionName === '' || ncuaSvc.creditUnionName === null" style="color:red; font-size: 12px"> (Required)</span>
+            <input type="text" (focus)="$event.target.select()" maxlength="100" class="form-control"
                 id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
                 [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" tabindex="0">
             <cdk-virtual-scroll-viewport itemSize="20">
@@ -155,17 +156,17 @@
             <div class="form-group col-md-3">
                 <label class="mb-1" for="region">Region</label>
                 <select (change)="update($event)" class="form-control" id="region" name="region" tabindex="0" [(ngModel)]="assessment.regionCode">
-                    <option [ngValue]="1">1 - Eastern</option>
-                    <option [ngValue]="2">2 - Southern</option>
-                    <option [ngValue]="3">3 - Western</option>
-                    <option [ngValue]="8">8 - Ones</option>
+                    <option [ngValue]="1">{{ncuaSvc.regionCodeTranslator(1)}}</option>
+                    <option [ngValue]="2">{{ncuaSvc.regionCodeTranslator(2)}}</option>
+                    <option [ngValue]="3">{{ncuaSvc.regionCodeTranslator(3)}}</option>
+                    <option [ngValue]="8">{{ncuaSvc.regionCodeTranslator(8)}}</option>
                 </select>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <span class="mb-1" for="assets">Assets </span>
-                <span style="color:red">(Required Value)</span>
+                <span *ngIf="ncuaSvc.assetsAsNumber == 0" style="color:red; font-size: 12px;">(Required)</span>
                 <input type="text" maxlength="21" class="form-control" id="assets" name="assets" tabindex="0"
                 [(ngModel)]="assessment.assets" (blur)="updateAssets()" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
@@ -184,7 +185,7 @@
                 </select>
             </div>
         </div>
-        <div *ngIf="assessment.charterType == 1" (click)="toggleJoint()" tabindex="0"
+        <div *ngIf="assessment.charterType == 2 || assessment.charter >= 60000" (click)="toggleJoint()" tabindex="0"
             class="state-led cursor-pointer" [ngClass]="{'state-led-selected': assessment.isE_StateLed}">
             <div class="row">
                 <div class="col-2">

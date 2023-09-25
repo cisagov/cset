@@ -95,7 +95,6 @@ namespace CSETWebCore.Business.Demographic
                 _context.SaveChanges();
             }
 
-            dbServiceDemographics.Critical_Service_Name = serviceDemographics.CriticalServiceName;
             dbServiceDemographics.Critical_Service_Description = serviceDemographics.CriticalServiceDescription;
             dbServiceDemographics.IT_ICS_Name = serviceDemographics.ItIcsName;
             dbServiceDemographics.Multi_Site = serviceDemographics.MultiSite;
@@ -227,7 +226,6 @@ namespace CSETWebCore.Business.Demographic
 
             if (dbServiceDemographics != null)
             {
-                serviceDemographics.CriticalServiceName = dbServiceDemographics.Critical_Service_Name;
                 serviceDemographics.CriticalServiceDescription = dbServiceDemographics.Critical_Service_Description;
                 serviceDemographics.ItIcsName = dbServiceDemographics.IT_ICS_Name;
                 serviceDemographics.MultiSite = dbServiceDemographics.Multi_Site;

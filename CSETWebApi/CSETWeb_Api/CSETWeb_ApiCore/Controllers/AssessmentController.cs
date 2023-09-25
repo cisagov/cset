@@ -335,6 +335,9 @@ namespace CSETWebCore.Api.Controllers
         }
 
         
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/getMergeNames")]
         public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 
@@ -344,6 +347,10 @@ namespace CSETWebCore.Api.Controllers
             return Ok(_assessmentBusiness.GetNames(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10));
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/getPreventEncrypt")]
         public IActionResult GetPreventEncryptStatus()
@@ -395,5 +402,26 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("api/remarks")]
+        public IActionResult GetOtherRemarks()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            var remark = this._assessmentBusiness.GetOtherRemarks(assessmentId);
+
+            return Ok(remark);
+        }
+
+        [HttpPost]
+        [Route("api/remarks")]
+        public IActionResult SaveOtherRemarks([FromBody] string remark)
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+
+            this._assessmentBusiness.SaveOtherRemarks(assessmentId, remark);
+
+            return Ok();
+        }
     }
 }

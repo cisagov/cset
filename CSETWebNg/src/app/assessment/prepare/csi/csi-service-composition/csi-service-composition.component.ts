@@ -30,26 +30,24 @@ import { ConfigService } from './../../../../services/config.service';
 
 @Component({
   selector: 'app-csi-service-composition',
-  templateUrl: './csi-service-composition.component.html'
+  templateUrl: './csi-service-composition.component.html',
+  styleUrls: ['./csi-service-composition.component.scss']
 })
 export class CsiServiceCompositionComponent implements OnInit {
-
   serviceComposition: CsiServiceComposition = {};
   definingSystemsList: CsiDefiningSystem[] = [];
 
-  constructor(
-    private csiSvc: CsiService,
-    private assessSvc: AssessmentService,
-    private configSvc: ConfigService) {}
+  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService, private configSvc: ConfigService) {}
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiDefiningSystems().subscribe(
       (data: CsiDefiningSystem[]) => {
-          this.definingSystemsList = data;
+        this.definingSystemsList = data;
       },
-      error => {
-          console.log('Error getting all CSI defining systems options: ' + (<Error>error).name + (<Error>error).message);
-    });
+      (error) => {
+        console.log('Error getting all CSI defining systems options: ' + (<Error>error).name + (<Error>error).message);
+      }
+    );
 
     if (this.assessSvc.id()) {
       this.getCsiServiceComposition();
@@ -64,7 +62,10 @@ export class CsiServiceCompositionComponent implements OnInit {
       this.serviceComposition.primaryDefiningSystem = null;
 
       // Clear other description input if other system is not selected as primary or secondary
-      if (definingSystem.defining_System_Id === 10 && !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)) {
+      if (
+        definingSystem.defining_System_Id === 10 &&
+        !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)
+      ) {
         this.serviceComposition.otherDefiningSystemDescription = null;
       }
     }
@@ -76,13 +77,15 @@ export class CsiServiceCompositionComponent implements OnInit {
       this.serviceComposition.secondaryDefiningSystems.push(definingSystem.defining_System_Id);
     } else {
       this.serviceComposition.secondaryDefiningSystems.splice(
-        (this.serviceComposition.secondaryDefiningSystems.findIndex(
-          x => x === definingSystem.defining_System_Id
-        )
-      ), 1);
+        this.serviceComposition.secondaryDefiningSystems.findIndex((x) => x === definingSystem.defining_System_Id),
+        1
+      );
 
       // Clear other description input if other system is not selected as primary or secondary
-      if (definingSystem.defining_System_Id === 10 && !(this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id)) {
+      if (
+        definingSystem.defining_System_Id === 10 &&
+        !(this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id)
+      ) {
         this.serviceComposition.otherDefiningSystemDescription = null;
       }
     }
@@ -100,19 +103,28 @@ export class CsiServiceCompositionComponent implements OnInit {
 
   // check if a primary defining system checkbox should be disabled
   isPrimaryDefiningSystemDisabled(definingSystem: CsiDefiningSystem) {
-    return (this.serviceComposition.primaryDefiningSystem && this.serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id) ||
-            this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
+    return (
+      (this.serviceComposition.primaryDefiningSystem &&
+        this.serviceComposition.primaryDefiningSystem !== definingSystem.defining_System_Id) ||
+      this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)
+    );
   }
 
   // check if a secondary defining system checkbox should be disabled
   isSecondaryDefiningSystemDisabled(definingSystem: CsiDefiningSystem) {
-    return this.serviceComposition.primaryDefiningSystem && this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id;
+    return (
+      this.serviceComposition.primaryDefiningSystem &&
+      this.serviceComposition.primaryDefiningSystem === definingSystem.defining_System_Id
+    );
+
   }
 
   // check if the other defining system description should be disabled
   isOtherDefiningSystemDescriptionDisabled(definingSystem: CsiDefiningSystem) {
-    return this.serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id &&
-            !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id);
+    return (
+      this.serviceComposition.primaryDefiningSystem != definingSystem.defining_System_Id &&
+      !this.serviceComposition.secondaryDefiningSystems?.includes(definingSystem.defining_System_Id)
+    );
   }
 
   update() {
@@ -121,10 +133,10 @@ export class CsiServiceCompositionComponent implements OnInit {
 
   getCsiServiceComposition() {
     this.csiSvc.getCsiServiceComposition().subscribe(
-        (data: CsiServiceComposition) => {
-          this.serviceComposition = data;
-        },
-        error => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
+      (data: CsiServiceComposition) => {
+        this.serviceComposition = data;
+      },
+      (error) => console.log('CIS CSI service composition load Error: ' + (<Error>error).message)
     );
   }
 
@@ -132,4 +144,7 @@ export class CsiServiceCompositionComponent implements OnInit {
     return this.configSvc.behaviors.showCriticalService;
   }
 
+  showErrors() {
+    return this.configSvc.installationMode === 'IOD';
+  }
 }

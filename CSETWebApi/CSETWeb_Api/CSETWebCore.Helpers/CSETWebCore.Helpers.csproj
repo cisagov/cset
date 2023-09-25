@@ -7,9 +7,11 @@
 
   <ItemGroup>
     <None Remove="CrrNistCsfMapping.xml" />
+    <None Remove="NIST_CSF_Structure.xml" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="NIST_CSF_Structure.xml" />
     <EmbeddedResource Include="CrrNistCsfMapping.xml" />
   </ItemGroup>
 

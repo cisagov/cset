@@ -138,7 +138,7 @@ namespace CSETWebCore.Business.BusinessManagers.Diagram.analysis
 
 
                 //do a little preprocessing to get the attribute values
-                var styleString = node.FirstChild.Attributes["style"].Value;
+                var styleString = node.FirstChild.Attributes["style"]?.Value ?? "";
 
 
                 // if it is a group then skip it

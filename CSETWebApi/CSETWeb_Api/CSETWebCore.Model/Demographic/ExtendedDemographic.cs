@@ -53,6 +53,13 @@ namespace CSETWebCore.Model.Demographic
         public string Value { get; set; }
     }
 
+    public class ListItem2
+    {
+        public int OptionValue { get; set; }
+        public string OptionText { get; set; }
+    }
+
+
     public class GeographicSelections
     {
         public List<GeoRegion> Regions { get; set; } = new List<GeoRegion>();

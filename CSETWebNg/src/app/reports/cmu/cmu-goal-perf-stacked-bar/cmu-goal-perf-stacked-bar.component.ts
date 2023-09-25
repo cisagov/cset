@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CrrService } from '../../../services/crr.service';
 import { CrrReportModel } from '../../../models/reports.model';
+import { CmuService } from '../../../services/cmu.service';
 
 @Component({
   selector: 'app-cmu-goal-perf-stacked-bar',
@@ -8,29 +8,29 @@ import { CrrReportModel } from '../../../models/reports.model';
   styleUrls: ['./cmu-goal-perf-stacked-bar.component.scss']
 })
 export class CmuGoalPerfStackedBarComponent {
-  @Input() modelName: string;
+  @Input() moduleName: string;
   @Input() model: CrrReportModel;
 
-  mil1FullAnswerDistribChart: string = '';
+  fullAnswerDistribChart: string = '';
   legend: string = '';
   scoreBarCharts: string[] = [];
   stackedBarCharts: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) { }
 
   ngOnInit(): void {
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
-      this.mil1FullAnswerDistribChart = resp;
-    })
+    this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
+      this.fullAnswerDistribChart = resp;
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getGoalPerformanceSummaryBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
-    })
+    });
   }
 
   // This function splits strings like
