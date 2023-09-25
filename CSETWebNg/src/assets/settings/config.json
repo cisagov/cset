@@ -238,6 +238,7 @@
             "moduleName": "ACET",
             "answerOptions": [
                 {
+                    "skin": "ACET",
                     "code": "A",
                     "buttonLabel": "Yes(C)",
                     "buttonCss": "btn-alt",

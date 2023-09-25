@@ -22,6 +22,9 @@ namespace CSETWebCore.Constants
         public static string Token_AggregationId = "aggreg";
         public static string Token_Scope = "scope";
 
+        public const string API_KEY_CONFIG_NAME = "ApiKey";
+        public const string API_KEY_HEADER_NAME = "X-API-KEY";
+
         public const string UNIVERSAL_DB = "Universal";
         public const string KEY_DB = "Key";
         public const string CFATS_DB = "Cfats";

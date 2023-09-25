@@ -209,8 +209,11 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 .Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER.Add(TinyMapper.Map<ANSWER,jANSWER>(item));
-               
-                model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(item.HYDRO_DATA_ACTIONS));
+
+                if (item.HYDRO_DATA_ACTIONS != null)
+                {
+                    model.jHYDRO_DATA_ACTIONS.Add(TinyMapper.Map<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>(item.HYDRO_DATA_ACTIONS));
+                }
                 
                 foreach (var f in item.FINDING)
                 {

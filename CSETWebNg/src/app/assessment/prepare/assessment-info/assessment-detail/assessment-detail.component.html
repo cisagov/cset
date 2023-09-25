@@ -58,17 +58,17 @@
             <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                 (change)="update($event)" tabindex="0">
         </div>
-    </div>   
+    </div>
 </form>
 <div class="mt-4">
     <h4>Assessment Type</h4>
     <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
     <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
-    
+
     <div *ngIf="isAwwa">
         <p>
-            Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a> 
-            can be imported into this assessment.  
+            Results from the <a href="https://awwa.org/cyber" target="_blank">AWWA Cybersecurity Assessment Tool</a>
+            can be imported into this assessment.
         </p>
         <button class="btn btn-primary" (click)="showAwwaDialog()">Import AWWA Tool Results</button>
     </div>
