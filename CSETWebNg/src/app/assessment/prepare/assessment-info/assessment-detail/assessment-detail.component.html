@@ -27,7 +27,7 @@
         <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
         <div class="form-group col-md-6">
             
-            <label class="mb-1" for="name">{{t('assessment-name')}}</label>
+            <label class="mb-1" for="name">{{t('assessment name')}}</label>
             <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true"
                 [(ngModel)]="assessment.assessmentName"
                 (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">

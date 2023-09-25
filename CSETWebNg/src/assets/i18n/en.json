@@ -16,7 +16,46 @@
     "requires review": "Requires Review",
     "next": "Next",
     "back": "Back",
+    "expand all": "Expand All",
+    "collapse all": "Collapse All",
+    "filter": "Filter",
+    "reviewed": "Reviewed",
+    "domain": "Domain",
 
+    "contact": {
+        "Contacts": "Contacts",
+        "Add Contact": "Add Contacts",
+        "Email Contacts": "Email Contacts",
+
+        "Assessment Owner": "Assessment Owner",
+        "First Name": "First Name",
+        "Last Name": "Last Name",
+        "Title": "Title",
+        "Report To": "Report To",
+        "Organization": "Organization",
+        "Site Name": "Site Name",
+        "Cell Phone": "Cell Phone",
+        "Office Phone": "Office Phone",
+        "Email": "Email",
+        "Email Address": "Email Address",
+        "Emergency Communications Protocol": "Emergency Communications Protocol",
+        "Primary point of contact": "Primary point of contact",
+        "Participated in site visit": "Participated in site visit",
+        "Role": "Role",
+        "Participant": "Participant",
+        "Facilitator": "Facilitator",
+        "Save": "Save",
+        "Cancel": "Cancel",
+        "Change": "Change",
+        "Remove": "Remove"
+    },
+
+    "acet": {
+        "credit union": "Credit Union",
+        "charter": "Charter",
+        "assets": "Assets",
+        "auto populate": "Auto-populated based on data provided"
+    },
     "button-label": {
         "Y": "Yes",
         "N": "No",
@@ -62,7 +101,10 @@
         "A-ACET": "Yes(C)",
 
         "mfr-flag": "This control requires further review",
-        "requires-review": "One or more controls in this category requires further review."
+        "requires-review": "One or more controls in this category requires further review.",
+        "supp-guidance": "Supplemental Guidance",
+        "Exam Step": "",
+        "Details/Standard": ""
     },
     
     "level": {
@@ -80,7 +122,51 @@
     },
 
     "irp": {
+        "Inherent Risk": "Inherent Risk",
         "inherent risk profiles": "Inherent Risk Profiles",
-        "risk levels": "Risk Levels"
+
+        "irp desc start": "The IRP has",
+        "five risk areas": "five risk areas",
+        "irp desc end": "across five categories. It is measured on a scale from least risk to most risk in this order below:",
+
+        "inherent risk profile summary": "Inherent Risk Profile Summary",
+        "category": "Category",
+        "totals": "Totals",
+        "risk levels": "Risk Levels",
+        "override risk level": "Override Risk Level",
+        "override risk level is": "Override Risk Level is",
+        "override reason": "Override Reason",
+        "override reason placeholder": "Please provide an explanation for why the total inherent risk profile is being overriden.",
+
+        "No Override": "No Override",
+        "1 - Least": "1 - Least",
+        "2 - Minimal": "Minimal",
+        "3 - Moderate": "3 - Moderate",
+        "4 - Significant": "4 - Significant",
+        "5 - Most": "5 - Most",
+
+        "Least": "Least",
+        "Minimal": "Minimal",
+        "Moderate": "Moderate",
+        "Significant": "Significant",
+        "Most": "Most"
+    },
+    "filterMenu": {
+        "Question filters": "Question Filters",
+        "Statement filters": "Statement Filters",
+        "select deselect all": "Select/Deselect All",
+
+        "show unanswered questions": "Show unanswered questions",
+        "show questions with comments": "Show questions with comments",
+        "show questions with notes": "Show questions with notes",
+        "show questions marked for review": "Show questions marked for review",
+        "show questions with observations": "Show questions with observations",
+
+        "show unanswered statements": "Show unanswered statements",
+        "show statements with comments": "Show statements with comments",
+        "show statements with notes": "Show statements with notes",
+        "show statements marked for review": "Show statements marked for review",
+        "show statements with observations": "Show statements with observations",
+        "show statements with issues": "Show statements with issues"
     }
 }
