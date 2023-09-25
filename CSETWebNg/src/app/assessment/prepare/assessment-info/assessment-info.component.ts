@@ -28,6 +28,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
+import { ACETService } from '../../../services/acet.service';
 import { MatDialogRef , MatDialogModule} from '@angular/material/dialog';
 
 @Component({
@@ -42,7 +43,8 @@ export class AssessmentInfoComponent implements OnInit {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService,
     ) { }
 
 

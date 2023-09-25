@@ -550,11 +550,11 @@ export class AssessmentService {
     if (!this.assessment.maturityModel) {
       return false;
     }
-
+    
     if (!this.assessment.maturityModel.modelName) {
       return false;
     }
-
+    
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }

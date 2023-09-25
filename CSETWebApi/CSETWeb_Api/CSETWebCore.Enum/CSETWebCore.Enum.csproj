@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Npoi.Mapper" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Constants\CSETWebCore.Constants.csproj" />
   </ItemGroup>
 

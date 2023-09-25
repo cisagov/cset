@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { ACETService } from '../../../services/acet.service';
 
 @Component({
     selector: 'app-irp',
@@ -40,7 +41,8 @@ export class IRPComponent implements OnInit {
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
-        private irpSvc: IRPService
+        private irpSvc: IRPService,
+        public acetSvc: ACETService
     ) { }
 
     ngOnInit() {
@@ -48,7 +50,7 @@ export class IRPComponent implements OnInit {
     }
 
     loadFrameworks() {
-        this.irpSvc.getIRPList().subscribe(
+        this.irpSvc.getIRPList(this.acetSvc.spanishFlag).subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
             },
@@ -61,5 +63,10 @@ export class IRPComponent implements OnInit {
     setResponse(irp: IRP, val) {
         irp.response = val;
         this.irpSvc.postSelection(irp).subscribe();
+    }
+
+    toggleSpanish(toggle: boolean) {
+        this.acetSvc.setSpanish(toggle);
+        this.loadFrameworks();
     }
 }

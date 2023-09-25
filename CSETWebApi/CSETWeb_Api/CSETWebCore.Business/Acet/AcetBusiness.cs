@@ -14,7 +14,10 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
-
+using System.IO;
+using NPOI.SS.UserModel;
+using Npoi.Mapper;
+using CSETWebCore.DataLayer.Manual;
 
 namespace CSETWebCore.Business.Acet
 {
@@ -206,5 +209,152 @@ namespace CSETWebCore.Business.Acet
             _context.SaveChanges();
 
         }
+        
+        public static Dictionary<int, SpanishQuestionRow> buildQuestionDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<SpanishQuestionRow>> myExcelObjects = mapper.Take<SpanishQuestionRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, SpanishQuestionRow>();
+
+            foreach (RowInfo<SpanishQuestionRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Mat_Question_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, MATURITY_GROUPINGS> buildGroupingDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<MATURITY_GROUPINGS>> myExcelObjects = mapper.Take<MATURITY_GROUPINGS>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, MATURITY_GROUPINGS>();
+
+            foreach (RowInfo<MATURITY_GROUPINGS> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Grouping_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, IRPModel> buildIRPDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPModel>> myExcelObjects = mapper.Take<IRPModel>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, IRPModel>();
+
+            foreach (RowInfo<IRPModel> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.IRP_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, IRPSpanishRow> buildIRPHeaderDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<int, IRPSpanishRow>();
+            
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.IRP_Header_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return dict;
+        }
+
+        public static Dictionary<string, IRPSpanishRow> buildIRPDashboardDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<string, IRPSpanishRow>();
+
+            // ACETDashboard
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.EnglishHeader, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return dict;
+        }
+
     }
 }

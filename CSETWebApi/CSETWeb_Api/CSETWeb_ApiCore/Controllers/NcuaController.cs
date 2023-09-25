@@ -14,6 +14,7 @@ using CSETWebCore.Interfaces.Helpers;
 using Snickler.EFCore;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Api.Controllers
 {

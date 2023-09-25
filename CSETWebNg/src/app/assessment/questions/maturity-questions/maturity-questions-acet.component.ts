@@ -34,6 +34,7 @@ import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { CompletionService } from '../../../services/completion.service';
+import { ACETService } from '../../../services/acet.service';
 
 
 @Component({
@@ -49,6 +50,9 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   showTargetLevel = false;    // TODO: set this from a new column in the DB
 
 
+  showEnglishToggle = true;
+  showSpanishToggle = true;
+
   loaded = false;
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
@@ -63,7 +67,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     private acetFilteringSvc: AcetFilteringService,
     public navSvc: NavigationService,
     public completionSvc: CompletionService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public acetSvc: ACETService
   ) {
 
     if (this.assessSvc.assessment == null) {
@@ -100,7 +105,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, null, this.acetSvc.spanishFlag).subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
@@ -178,5 +183,10 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
+  }
+
+  toggleSpanish(toggle: boolean) {
+    this.acetSvc.setSpanish(toggle);
+    this.loadQuestions();
   }
 }
