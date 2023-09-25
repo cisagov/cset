@@ -33,9 +33,12 @@ namespace CSETWebCore.Business.IRP
         {
             IRPResponse response = new IRPResponse();
             Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
+            Dictionary<int, IRPSpanishRow> dictionaryHeaders = new Dictionary<int, IRPSpanishRow>();
+
             if (spanishFlag) 
             {
                 dictionary = AcetBusiness.buildIRPDictionary();
+                dictionaryHeaders = AcetBusiness.buildIRPHeaderDictionary();
             }
 
             foreach (IRP_HEADER header in _context.IRP_HEADER)
@@ -44,6 +47,13 @@ namespace CSETWebCore.Business.IRP
                 {
                     header = header.Header
                 };
+
+                if (spanishFlag)
+                {
+                    var output = new IRPSpanishRow();
+                    if (dictionaryHeaders.TryGetValue(header.IRP_Header_Id, out output))
+                        tempHeader.header = dictionaryHeaders[header.IRP_Header_Id].SpanishHeader;
+                }
 
                 foreach (DataLayer.Model.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
                 {

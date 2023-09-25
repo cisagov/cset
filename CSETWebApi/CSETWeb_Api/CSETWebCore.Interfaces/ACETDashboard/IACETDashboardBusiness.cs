@@ -8,7 +8,7 @@ namespace CSETWebCore.Interfaces.ACETDashboard
 {
     public interface IACETDashboardBusiness
     {
-        Model.Acet.ACETDashboard LoadDashboard(int assessmentId);
+        Model.Acet.ACETDashboard LoadDashboard(int assessmentId, bool spanishFlag = false);
         string GetOverallIrp(int assessmentId);
         int GetOverallIrpNumber(int assessmentId);
         Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);

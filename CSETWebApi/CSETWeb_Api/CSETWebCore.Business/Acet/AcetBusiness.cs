@@ -297,5 +297,64 @@ namespace CSETWebCore.Business.Acet
             return dict;
         }
 
+        public static Dictionary<int, IRPSpanishRow> buildIRPHeaderDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<int, IRPSpanishRow>();
+            
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.IRP_Header_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return dict;
+        }
+
+        public static Dictionary<string, IRPSpanishRow> buildIRPDashboardDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<string, IRPSpanishRow>();
+
+            // ACETDashboard
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.EnglishHeader, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return dict;
+        }
+
     }
 }

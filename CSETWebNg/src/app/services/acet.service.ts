@@ -72,8 +72,11 @@ export class ACETService {
 
 
     ////////////////////  Dashboard functions /////////////////////////////
-    getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'acet/dashboard');
+    getAcetDashboard(spanishFlag?: boolean) {
+        if (spanishFlag == null) {
+            spanishFlag = false;
+        }
+        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + spanishFlag);
     }
 
     postSelection(selected: AcetDashboard) {
