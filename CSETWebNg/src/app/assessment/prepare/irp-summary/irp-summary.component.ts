@@ -66,7 +66,7 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     loadDashboard() {
-        this.acetSvc.getAcetDashboard().subscribe(
+        this.acetSvc.getAcetDashboard(this.acetSvc.spanishFlag).subscribe(
             (data: AcetDashboard) => {
                 this.acetDashboard = data;
 
@@ -128,5 +128,10 @@ export class IrpSummaryComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
+    }
+
+    toggleSpanish(toggle: boolean) {
+        this.acetSvc.setSpanish(toggle);
+        this.loadDashboard();
     }
 }

@@ -30,6 +30,7 @@ import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
+import { ACETService } from './acet.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -381,6 +382,17 @@ export class QuestionsService {
   }
 
   /**
+   * Finds the button definition and returns its code for use in transloco translating
+   */
+  answerButtonLabelTransloco(modelName: string, answerCode: string) {
+    if (modelName == 'ACET' && answerCode == 'A') {
+      return answerCode + '-ACET';
+    }
+
+    return answerCode;
+  }
+
+  /**
    * Finds the answer in the default object or the model-specific object.
    * Standards questions screen pass '0' for the modelId.
    */
@@ -433,4 +445,40 @@ export class QuestionsService {
       this.tSvc.load(lang);
     });
   }
+
+  /**
+   * Finds the answer in the default object or the model-specific object.
+   * Standards questions screen pass '0' for the modelId.
+   */
+  findAnsDefinitionTransloco(modelName: string, answerCode: string) {
+    // assume unanswered if null or undefined
+    if (!answerCode) {
+      answerCode = 'U';
+    }
+    let ans = '';
+    // first look for a skin-specific label set
+    // let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
+    //   && x.moduleName == modelName)?.answers.find(y => y.code == answerCode);
+    // if (ans) {
+    //   return ans;
+    // }
+
+    // next, look for a model-specific label set with no skin defined
+    let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
+    if (!!model) {
+      ans = model.answerOptions?.find(o => o.code == answerCode);
+      if (ans) {
+        return answerCode + '-' + modelName;
+      }
+    }
+
+    // fallback to default options
+    ans = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);    
+    if (ans) {
+      return answerCode;
+    }
+
+    return answerCode;
+  }
+
 }

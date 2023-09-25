@@ -31,6 +31,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
+import { ACETService } from '../../../services/acet.service';
 
 
 /**
@@ -75,7 +76,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public assessSvc: AssessmentService,
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService
   ) {
 
   }
