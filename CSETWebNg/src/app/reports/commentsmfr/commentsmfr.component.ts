@@ -28,6 +28,7 @@ import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-commentsmfr',
@@ -36,13 +37,18 @@ import { MaturityService } from '../../services/maturity.service';
 })
 export class CommentsMfrComponent implements OnInit {
   response: any = null;
+  remarks: string;
 
   loading: boolean = false;
 
   questionAliasSingular: string;
 
+  /**
+   * 
+   */
   constructor(
     public analysisSvc: ReportAnalysisService,
+    public assessSvc: AssessmentService,
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
@@ -50,6 +56,9 @@ export class CommentsMfrComponent implements OnInit {
     public maturitySvc: MaturityService
   ) { }
 
+  /**
+   * 
+   */
   ngOnInit(): void {
     this.loading = true;
     this.titleService.setTitle("Comments and Marked For Review Report");
@@ -64,6 +73,10 @@ export class CommentsMfrComponent implements OnInit {
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
+
+    this.assessSvc.getOtherRemarks().subscribe((resp: any) => {
+      this.remarks = resp;
+    });
   }
 
   getQuestion(q) {

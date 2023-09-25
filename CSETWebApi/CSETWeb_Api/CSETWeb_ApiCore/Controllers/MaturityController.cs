@@ -230,8 +230,16 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 assessmentId = _tokenManager.AssessmentForUser();
+                _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
+
+                // if the assessment ID is provided we will derive the modelId
+                var xy = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                if (xy != null)
+                {
+                    modelId = xy.model_id;
+                }
             }
-            catch (Exception)
+            catch (Exception ggg)
             {
                 // It's okay to call this controller method
                 // without an assessment ID for the module content report

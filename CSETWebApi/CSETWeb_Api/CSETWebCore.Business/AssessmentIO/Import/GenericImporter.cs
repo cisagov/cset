@@ -123,6 +123,10 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     //get all the 
                     foreach (var jRow in jRowsForTable)
                     {
+                        if (!jRow.HasValues)
+                        {
+                            continue;
+                        }
                         try
                         {
                             var idMap = UpdateDatabaseRow(jRow, xTable as XmlElement);

@@ -170,9 +170,9 @@ html {
     margin: 0;
     background: #fff;
     color: #000;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    font-size: 16px;
+    font-size: 14px;
     * font-size: 100%;
     line-height: 1.45;
 }
@@ -486,7 +486,7 @@ html[dir="rtl"] .b-article__wrapper .os-padding.vscroll {
 }
 
 .b-article__innerWrapper {
-    padding: 20px 15px;
+    padding: 40px;
 }
 
 .b-article__innerWrapper.hscroll {
@@ -508,7 +508,7 @@ html[dir="rtl"] .b-article__wrapper .os-padding.vscroll {
 }
 
 div.menu_on_page {
-    margin: 15px 0;
+    margin: 50px 0;
 }
 
 div.menu_on_page > h2 {
@@ -973,12 +973,25 @@ html[dir="rtl"] .b-tree__itemLink {
     cursor: default;
 }
 
+.m-tree__item__throughSelected {
+    border-left: 1px solid #263238;
+}
+
+html[dir="rtl"] .m-tree__item__throughSelected {
+    border-left: none;
+    border-right: 1px solid #263238;
+}
+
+.m-tree__item__throughSelectedRoot {
+    background-color: #26323816;
+}
+
 .b-tree__itemText {
     text-decoration: none;
     padding-left: 5px;
     padding-bottom: 2px;
-    font-family: Arial;
-    font-size: 0.8em;
+    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.95em;
     width: 100%;
     white-space: pre;
 }
@@ -1051,7 +1064,6 @@ html[dir="rtl"] .b-tree__i_indexitem {
 .b-tree__i_article_inner,
 .b-tree__i_indexitem_inner {
     background: url( '../i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
-    -background-image: url( '../i/blocks/interface-icons/interface-icons-sprite-8.png' );
 
     position: absolute;
     z-index: 10;
@@ -1089,10 +1101,6 @@ html[dir="rtl"] .b-tree__i_indexitem_inner {
     width: 11px;
     height: 10px;
     background-position: -15px -4px;
-
-    font-size: 8px;
-    width: 12px;
-    height: 12px;
 }
 
 .b-tree__i_expander_doOpen {
@@ -1109,10 +1117,6 @@ html[dir="rtl"] .b-tree__i_expander_doOpen {
     width: 9px;
     height: 9px;
     background-position: -4px -5px;
-
-    font-size: 8px;
-    width: 12px;
-    height: 12px;
 }
 
 .b-tree__i_expander_doClose {
@@ -1814,7 +1818,6 @@ html[dir="rtl"] .b-tabs__wrapperItemInner div.b-tree.vscroll {
 .b-interfaceIcon {
     position: absolute;
     background: url( '../i/blocks/interface-icons/interface-icons-sprite.png' ) 0 0 no-repeat;
-    -background-image: url( '../i/blocks/interface-icons/interface-icons-sprite-8.png' );
 
     z-index: 10;
     overflow: hidden;
@@ -2368,6 +2371,11 @@ html[dir="rtl"] .b-pageLayout.b-pageLayout__xs .m-article__headerSide__buttons {
 }
 
 .b-pageLayout.b-pageLayout__xs .description_on_page .detbl {
+    width: auto !important;
+    max-width: 100%;
+}
+
+.b-pageLayout.b-pageLayout__xs .description_on_page table.de-text-block {
     width: auto !important;
     max-width: 100%;
 }

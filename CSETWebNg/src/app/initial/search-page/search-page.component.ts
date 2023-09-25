@@ -32,6 +32,7 @@ import { SwiperOptions } from 'swiper';
 import Fuse from 'fuse.js';
 import { map } from 'lodash';
 import { ConfigService } from '../../services/config.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-search-page',
@@ -93,6 +94,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     public breakpointObserver: BreakpointObserver,
     public gallerySvc: GalleryService,
     public assessSvc: AssessmentService,
+    public navSvc: NavigationService,
     public configSvc: ConfigService) {
 
   }

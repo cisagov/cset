@@ -29,6 +29,7 @@ import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
   headers: new HttpHeaders()
@@ -68,11 +69,10 @@ export class QuestionsService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
+    private tSvc: TranslocoService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService
-  ) {
-    this.initializeAnswerButtonDefs();
-  }
+  ) {  }
 
   /**
    * The page can store its model here for accessibility by question-extras
@@ -342,47 +342,6 @@ export class QuestionsService {
   }
 
 
-  private answerButtonDefs: any[] = [];
-
-  /**
-   * Incorporates settings from config.json into the
-   * service so that answer button properties can be searched.
-   */
-  initializeAnswerButtonDefs() {
-    // load default answer set
-    this.answerButtonDefs.push({
-      modelId: 0,
-      answers: this.configSvc.config.answersDefault
-    });
-
-    this.answerButtonDefs.push({
-      modelId: 9,
-      answers: this.configSvc.config.answersMVRA
-    });
-
-    this.answerButtonDefs.push({
-      modelId: 10,
-      answers: this.configSvc.config.answersISE
-    });
-
-    this.answerButtonDefs.push({
-      modelId: 11,
-      answers: this.configSvc.config.answersCPG
-    });
-
-    this.answerButtonDefs.push({
-      modelId: 12,
-      answers: this.configSvc.config.answersC2M2
-    });
-
-    // ACET labels are only used in the ACET skin
-    this.answerButtonDefs.push({
-      skin: 'ACET',
-      modelId: 1,
-      answers: this.configSvc.config.answersACET
-    });
-  }
-
   /**
    * Finds the button definition and return its CSS
    */
@@ -426,33 +385,52 @@ export class QuestionsService {
    * Standards questions screen pass '0' for the modelId.
    */
   findAnsDefinition(modelName: string, answerCode: string) {
+
+    let ans = null;
+
     // assume unanswered if null or undefined
     if (!answerCode) {
       answerCode = 'U';
     }
 
-    // first look for a skin-specific label set
-    let ans = this.answerButtonDefs.find(x => x.skin == this.configSvc.installationMode
-      && x.moduleName == modelName)?.answers.find(y => y.code == answerCode);
-    if (ans) {
-      return ans;
-    }
-
-    // next, look for a model-specific label set with no skin defined
-    let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
-    if (!!model) {
-      ans = model.answerOptions?.find(o => o.code == answerCode);
-      if (ans) {
-        return ans;
+    // look for model-specific answer options
+    if (modelName && modelName.trim().length > 0) {
+      let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
+      if (!!model) {
+        
+        // first look for a skin-specific answer option
+        ans = model.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
+        if (ans) {
+          return ans;
+        }
+        
+        // or the general version of the answer option for the model
+        ans = model.answerOptions?.find(o => o.code == answerCode && !o.skin);
+        if (ans) {
+          return ans;
+        }
       }
     }
-
-    // fallback to default options
+    
+    // fallback to default options for standard-based or model-based
     ans = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);    
     if (ans) {
       return ans;
     }
 
     return answerCode;
+  }
+
+  /**
+   * Eager loading to get language loaded up front
+   * @param transloco 
+   * @returns 
+   */
+  loadLoco(lang: string): Promise<void> {
+    return new Promise<void>(() => {
+      console.log(`loadLoco: ${lang}`);
+      this.tSvc.setActiveLang(lang);
+      this.tSvc.load(lang);
+    });
   }
 }

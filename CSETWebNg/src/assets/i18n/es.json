@@ -1,0 +1,15 @@
+{
+    "prepare": "Preparar",
+    "assessment configuration": "Configuratión de Evaluación",
+    "assessment information": "Datos de la Evaluación",
+    "organization details": "Detalles de la Organizacion",
+    "assessment name": "Nombre de Evaluación",
+    "assessment date": "Fecha de Evaluación",
+    "facility name": "Nombre de Facilidad",
+    "city or site name": "Nombre de ciudad o sitio",
+    "state province region": "State/Province/Region",
+    "assessment type": "Tipo de Evaluación",
+    "demographics": "Demographica",
+    "next": "Siguiente",
+    "back": "Previo"
+}

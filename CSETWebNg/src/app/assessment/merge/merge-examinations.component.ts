@@ -382,7 +382,7 @@ export class MergeExaminationsComponent implements OnInit {
     let galItem = { gallery_Item_Guid: "f2407ff1-9f0f-420b-8f86-8528b60fcbc1"};
 
     // Create a brand new assessment
-    this.assessSvc.createNewAssessmentGallery("ACET", galItem)
+    this.assessSvc.createNewAssessmentFromGallery("ACET", galItem)
     .toPromise()
     .then(
       (response: any) => {

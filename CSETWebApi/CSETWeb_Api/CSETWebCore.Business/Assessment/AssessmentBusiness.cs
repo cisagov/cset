@@ -871,5 +871,47 @@ namespace CSETWebCore.Business.Assessment
 
             return results;
         }
+
+
+        /// <summary>
+        /// Gets the OTHER-REMARKS detail record 
+        /// </summary>
+        /// <returns></returns>
+        public string GetOtherRemarks(int assessmentId)
+        {
+            var dd = _context.DETAILS_DEMOGRAPHICS
+                .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "OTHER-REMARKS").FirstOrDefault();
+
+            if (dd != null)
+            {
+                return dd.StringValue;
+            }
+
+            return "";
+        }
+
+
+        /// <summary>
+        /// Persists OTHER-REMARKS.
+        /// </summary>
+        /// <param name="remark"></param>
+        public void SaveOtherRemarks(int assessmentId, string remark)
+        {
+            var dd = _context.DETAILS_DEMOGRAPHICS
+               .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "OTHER-REMARKS").FirstOrDefault();
+
+            if (dd == null)
+            {
+                dd = new DETAILS_DEMOGRAPHICS
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = "OTHER-REMARKS"
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(dd);
+            }
+
+            dd.StringValue = remark;
+            _context.SaveChanges();
+        }
     }
 }

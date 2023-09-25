@@ -72,7 +72,7 @@ export class QuestionBlockIseComponent implements OnInit {
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Note - -\n';
-  summaryConvoBuffer = '\n- - End of Statement Summary - -\n';
+  summaryConvoBuffer = '\n\n- - End of Statement Summary - -\n';
   summaryBoxMax = 800;
     
   // Used to place buttons/text boxes at the bottom of each subcategory
@@ -577,7 +577,7 @@ export class QuestionBlockIseComponent implements OnInit {
     let summarySegment = '';
     // this.summaryCommentCopy = q.comment;
     if (this.assessSvc.isISE()) {
-      let bracketContact = '[' + this.contactInitials + ']';
+      let bracketContact = '[' + this.contactInitials + ']\n';
 
       if (this.summaryCommentCopy.indexOf(bracketContact) !== 0) {
         if (this.summaryCommentCopy !== '') {
@@ -928,6 +928,33 @@ export class QuestionBlockIseComponent implements OnInit {
         this.extras.findings.splice(deleteIndex, 1);
         this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
       }
+  }
+
+
+  /* This function is used for 508 compliance. 
+  * It allows the user to select the "Yes"/"No", "Comment" and "Mark for review" buttons
+  * via the "Enter" key in case they can't use a mouse.
+  */
+  checkKeyPress(event: any, q: Question, buttonType: string, answer: string = "") {
+    if (event) {
+      if (event.key === "Enter") {
+        
+        // For "Yes"/"No" buttons
+        if (buttonType == "answer" && answer != "") {
+          this.storeAnswer(q, answer);
+        }
+
+        // For the "Comment" button
+        if (buttonType == "comment") {
+          this.toggleComment(q);
+        }
+
+        // For the "MFR" button
+        if (buttonType == "mfr") {
+          this.saveMFR(q);
+        }
+      }
+    }
   }
 
   

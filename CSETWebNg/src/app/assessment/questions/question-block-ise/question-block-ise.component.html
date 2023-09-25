@@ -107,7 +107,7 @@
                         <div *ngIf="q.parentQuestionId !== null">
                             <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                                 <label *ngFor="let option of answerOptions">
-                                    <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label"
+                                    <label *ngIf="(option !== 'NA' && option !== 'A')" class="btn form-check-label" tabindex="0" (keydown)="checkKeyPress($event, q, 'answer', option)"
                                       [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
                                       [matTooltip]="this.displayTooltip(maturityModelId, option)" [disabled]="option === 'N' && autoGenerateInProgress">
                                         <input name="q_{{q.questionId}}" id="radio-button" class="form-check-input" type="radio" autocomplete="off"
@@ -115,23 +115,29 @@
                                             {{ questionsSvc.answerButtonLabel(maturityModelName, option) }}
                                     </label>
                                 </label>
-
+                                
                                 <!-- Comment bubble button -->
                                 <label class="btn form-check-label btn-iss" [matTooltip]="hasComment(q) ? 'Notes with content':'Notes'" matTooltipPosition="below"
                                   [class.answer-selected]="q.extrasExpanded === true || hasComment(q)">
-                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (click)="toggleComment(q)">
+                                    <input name="q_{{ q.questionId }}_C" id="checkbox_comment" type="checkbox" (keydown)="checkKeyPress($event, q, 'comment')" (click)="toggleComment(q)">
                                     <span class="cset-icons-comment fs-base"></span>
                                 </label>
 
                                 <!-- Mark For Review Flag  -->
                                 <label class="mr-0 ml-2 btn form-check-label btn-mfr" [class.answer-selected]="q.markForReview === true"
                                   matTooltip="This control requires further review.">
-                                    <input name="q_{{ q.questionId }}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
+                                    <input name="q_{{ q.questionId }}_F" type="checkbox" (keydown)="checkKeyPress($event, q, 'mfr')" (click)="saveMFR(q);" tabindex="0"
                                       checked="{{ q.markForReview === true }}">
                                     <span class="cset-icons-flag-dark fs-base"></span>
                                 </label>
                             </div>
                         </div>
+                    </div>
+                    <div style="display: inline">
+                        <app-question-extras *ngIf="q.parentQuestionId != null" [myQuestion]="q" 
+                            [ncuaDisplay]="true" [iconsToDisplay]="['REFS']"
+                            (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                        </app-question-extras>
                     </div>
 
                     <div *ngIf="q.extrasExpanded">
@@ -143,19 +149,16 @@
 
                     <hr>
 
-                    <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
-                    <!-- <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
-                      class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
-                      (click)="updateCorePlusStatus(q)">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
-                    </button> -->
-
-                    <app-question-extras *ngIf="q.parentQuestionId === null || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
-                      class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
+                    <app-question-extras *ngIf="q.parentQuestionId == null" #extrasComponent [myQuestion]="q"
+                        [ncuaDisplay]="true" [iconsToDisplay]="['DETAIL', 'SUPP', 'REVIEWED']"
+                      class="w-100" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                     </app-question-extras>
 
                 </div>
+                <!-- last variable is from the ngFor loop -->
                 <div *ngIf="last">
                     <div>
+                        <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
                         <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
                         class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                         (click)="updateCorePlusStatus()">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide CORE+'}}
@@ -205,7 +208,7 @@
                         <button class="btn btn-primary add mt-2 mb-4" (click)="addEditIssue(q.parentQuestionId, 0)">Add an Issue</button>
                     </div>
                     <textarea id="{{ 'summaryComment' + q.parentQuestionId }}" class="form-control mb-2" style="width: 100%; min-height: 40px; max-height: summaryBoxMax + 'px'" [(ngModel)]="this.summaryCommentCopy" [placeholder]="textForSummary"
-                        (focus)="autoResize(q.parentQuestionId)" (keydown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, q.parentQuestionId, $event)"></textarea>
+                        (focus)="autoResize(q.parentQuestionId)" (keydown)="autoResize(q.parentQuestionId)" (change)="storeSummaryComment(q, q.parentQuestionId, $event)" spellcheck="true"></textarea>
                 </div>
             </ng-container>
         </div>

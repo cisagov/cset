@@ -4,6 +4,8 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Demographic;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
@@ -15,8 +17,12 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Aggregation;
+using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.CisaAssessorWorkflow;
+using CSETWebCore.Model.Demographic;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
@@ -691,6 +697,29 @@ namespace CSETWebCore.Api.Controllers
             var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
             var resp = report.GetResponse(set);
             return Ok(resp);
+        }
+
+        /// <summary>
+        /// Validates the required fields for the CISA Assessor Workflow in order to unlock reports and export.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/reports/CisaAssessorWorkflowValidateFields")]
+        public IActionResult CisaAssessorWorkflowValidateFields()
+        {
+            var assessmentId = _token.AssessmentForUser();
+
+            var iodDemoBusiness = new DemographicExtBusiness(_context);
+            var demoBusiness = new DemographicBusiness(_context, _assessmentUtil);
+            var cisServiceDemographicBusiness = new CisDemographicBusiness(_context, _assessmentUtil);
+
+            Demographics demographics = demoBusiness.GetDemographics(assessmentId);
+            DemographicExt iodDemograhics = iodDemoBusiness.GetDemographics(assessmentId);
+            CisServiceDemographics cisServiceDemographics = cisServiceDemographicBusiness.GetServiceDemographics(assessmentId);
+            CisServiceComposition cisServiceComposition = cisServiceDemographicBusiness.GetServiceComposition(assessmentId);
+
+            CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
+            return Ok(validator.ValidateFields());
         }
     }
 }

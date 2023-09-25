@@ -1,3 +1,4 @@
+import { ConfigService } from './../../services/config.service';
 ////////////////////////////////
 //
 //   Copyright 2023 Battelle Energy Alliance, LLC
@@ -37,50 +38,64 @@ export class EnableProtectedComponent implements OnInit {
   modulesList: EnabledModule[];
   message: any;
   enableFeatureButtonClick: boolean = false;
+  cisaWorkflowEnabled: boolean = false;
+  cisaWorkflowStatusLoaded: boolean = false;
 
   constructor(private dialog: MatDialogRef<EnableProtectedComponent>,
-    private featureSvc: EnableFeatureService) { }
+    private featureSvc: EnableFeatureService,
+    private configSvc: ConfigService) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+    this.featureSvc.getEnabledFeatures().subscribe(enabledModules => {
+      this.modulesList = enabledModules;
+    });
+
+    this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
+      this.cisaWorkflowEnabled = cisaWorkflowEnabled;
+      this.cisaWorkflowStatusLoaded = true;
+    });
   }
 
   /**
-   * 
+   *
    */
   anyModulesLocked() {
     return (this.modulesList && this.modulesList.some(m => !m.unlocked));
   }
 
   /**
-   * 
+   *
    */
   allModulesUnlocked() {
     return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
   }
 
   /**
-   * 
+   *
    */
-  enableFeature() {
-    this.featureSvc.enableFeature().subscribe(m => {
+  enableModules() {
+    this.featureSvc.enableModules().subscribe(m => {
       this.featureSvc.sendEvent(true);
-      
+
       this.message = m;
-      this.featureSvc.getEnabledFeatures().subscribe(ml => this.modulesList = ml);
+      this.featureSvc.getEnabledFeatures().subscribe(enabledModules => this.modulesList = enabledModules);
 
       this.enableFeatureButtonClick = true;
     });
   }
 
+  toggleCisaAssessorWorkflow() {
+    this.cisaWorkflowEnabled = !this.cisaWorkflowEnabled;
+  }
+
   /**
-   * 
+   *
    */
   close() {
-    return this.dialog.close(this.enableFeatureButtonClick);
+    return this.dialog.close({ enableFeatureButtonClicked: this.enableFeatureButtonClick, cisaWorkflowEnabled: this.cisaWorkflowEnabled });
   }
 }
 

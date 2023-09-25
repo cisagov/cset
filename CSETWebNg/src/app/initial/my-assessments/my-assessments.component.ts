@@ -48,6 +48,7 @@ import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/exp
 import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
 import * as moment from "moment";
 import { forEach } from "lodash";
+import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 
 
 interface UserAssessment {
@@ -141,7 +142,6 @@ export class MyAssessmentsComponent implements OnInit {
     if (localStorage.getItem("returnPath")) {
     }
     else {
-      localStorage.removeItem('tree');
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 
@@ -183,7 +183,7 @@ export class MyAssessmentsComponent implements OnInit {
     const rid = localStorage.getItem("redirectid");
     if (rid != null) {
       localStorage.removeItem("redirectid");
-      this.assessSvc.loadAssessment(+rid);
+      this.navSvc.beginAssessment(+rid);
     }
 
     this.assessSvc.getAssessmentsCompletion().pipe(
@@ -365,6 +365,20 @@ export class MyAssessmentsComponent implements OnInit {
    */
   exportToExcelAllAcet() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken');
+  }
+
+  openExportDecisionDialog() {
+    let dialogRef = this.dialog.open(NcuaExcelExportComponent, {
+      data: {
+        assessments: this.sortedAssessments
+      }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
+      }
+    });
   }
 
   proceedToMerge() {

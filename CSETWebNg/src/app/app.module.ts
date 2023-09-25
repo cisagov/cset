@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { APP_INITIALIZER, NgModule} from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -49,50 +49,50 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { MatSliderModule } from '@angular/material/slider';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {A11yModule} from '@angular/cdk/a11y';
-import {CdkAccordionModule} from '@angular/cdk/accordion';
-import {ClipboardModule} from '@angular/cdk/clipboard';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {PortalModule} from '@angular/cdk/portal';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {CdkStepperModule} from '@angular/cdk/stepper';
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatBadgeModule} from '@angular/material/badge';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatButtonModule} from '@angular/material/button';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import {MatCardModule} from '@angular/material/card';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
-import {MatListModule} from '@angular/material/list';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatSliderModule} from '@angular/material/slider';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatSortModule} from '@angular/material/sort';
-import {MatTableModule} from '@angular/material/table';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatTreeModule} from '@angular/material/tree';
-import {OverlayModule} from '@angular/cdk/overlay';
+import { A11yModule } from '@angular/cdk/a11y';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { PortalModule } from '@angular/cdk/portal';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { CdkStepperModule } from '@angular/cdk/stepper';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 import { NgxSliderModule } from 'ngx-slider-v2';
 import { BrowserModule } from '@angular/platform-browser';
@@ -173,6 +173,7 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ProgressComponent } from './helpers/progress/progress.component';
 import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
+import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
@@ -231,6 +232,7 @@ import { TextComponent } from './assessment/diagram/diagram-inventory/text/text.
 import { ZonesComponent } from './assessment/diagram/diagram-inventory/zones/zones.component';
 import { DiagramService } from './services/diagram.service';
 import { ExcelExportComponent } from './dialogs/excel-export/excel-export.component';
+import { NcuaExcelExportComponent } from './dialogs/excel-export/ncua-export/ncua-excel-export.component';
 import { MergeComponent } from './aggregation/merge/merge.component';
 import { AggregationService } from './services/aggregation.service';
 import { MergeQuestionDetailComponent } from './dialogs/merge-question-detail/merge-question-detail.component';
@@ -252,6 +254,7 @@ import { LayoutMainComponent } from './layout/layout-main/layout-main.component'
 import { AcetLayoutMainComponent } from './layout/acet-layout-main/acet-layout-main.component';
 import { TsaLayoutMainComponent } from './layout/tsa-layout-main/tsa-layout-main.component';
 import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main.component';
+import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
 import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
@@ -306,6 +309,7 @@ import { GroupingBlockComponent } from './assessment/questions/grouping-block/gr
 import { QuestionBlockMaturityComponent } from './assessment/questions/question-block-maturity/question-block-maturity.component';
 import { QuestionBlockIseComponent } from './assessment/questions/question-block-ise/question-block-ise.component';
 import { EdmDeficiencyComponent } from './reports/edm-deficiency/edm-deficiency.component';
+import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
 import { EdmCommentsmarkedComponent } from './reports/edm-commentsmarked/edm-commentsmarked.component';
 import { CisCommentsmarkedComponent } from './reports/cis-commentsmarked/cis-commentsmarked.component';
 import { MaturityQuestionsAcetComponent } from './assessment/questions/maturity-questions/maturity-questions-acet.component';
@@ -379,6 +383,7 @@ import { CrrResultsPage } from './assessment/results/crr/crr-results-page/crr-re
 import { CrrResultsDetailComponent } from './assessment/results/crr/crr-results-detail/crr-results-detail.component';
 import { CrrHeatmapComponent } from './assessment/results/crr/crr-heatmap/crr-heatmap.component';
 import { CrrService } from './services/crr.service';
+import { CmuService } from './services/cmu.service';
 import { Utilities } from './services/utilities.service';
 import { NCUAService } from './services/ncua.service';
 
@@ -474,7 +479,9 @@ import { CrrContactInformationComponent } from './reports/crr/crr-report/crr-con
 import { CrrAppendixACoverComponent } from './reports/crr/crr-report/crr-appendix-a-cover/crr-appendix-a-cover.component';
 import { CrrPerformanceAppendixAComponent } from './reports/crr/crr-report/crr-performance-appendix-a/crr-performance-appendix-a.component';
 import { CrrNistCsfCatSummaryComponent } from './reports/crr/crr-report/crr-nist-csf-cat-summary/crr-nist-csf-cat-summary.component';
+import { CmuNistCsfCatSummaryComponent } from './reports/cmu/cmu-nist-csf-cat-summary/cmu-nist-csf-cat-summary.component';
 import { CrrNistCsfCatPerformanceComponent } from './reports/crr/crr-report/crr-nist-csf-cat-performance/crr-nist-csf-cat-performance.component';
+import { CmuNistCsfCatPerformanceComponent } from './reports/cmu/cmu-nist-csf-cat-performance/cmu-nist-csf-cat-performance.component';
 import { CrrSideTocComponent } from './reports/crr/crr-report/crr-side-toc/crr-side-toc.component';
 import { CrrMainTocComponent } from './reports/crr/crr-report/crr-main-toc/crr-main-toc.component';
 import { Cmmc2CommentsMarkedComponent } from './reports/cmmc2/cmmc2-comments-marked/cmmc2-comments-marked.component';
@@ -579,11 +586,25 @@ import { SdAnswerSummaryComponent } from './assessment/results/sd/sd-answer-summ
 import { SdAnswerSummaryReportComponent } from './reports/sd/sd-answer-summary-report/sd-answer-summary-report.component';
 import { KeyReportComponent } from './assessment/results/reports/key-report/key-report.component';
 import { ImrReportComponent } from './reports/imr/imr-report/imr-report.component';
-import { CmuPerformanceSummaryComponent } from './reports/cmu/cmu-performance-summary/cmu-performance-summary.component';
+import { CmuPerformanceComponent } from './reports/cmu/cmu-performance/cmu-performance.component';
 import { CmuGoalPerfStackedBarComponent } from './reports/cmu/cmu-goal-perf-stacked-bar/cmu-goal-perf-stacked-bar.component';
-import { CmuResultsDetailComponent } from './reports/cmu/cmu-results-detail/cmu-results-detail.component';
+import { CmuResultsDetailComponent } from './reports/cmu/cmu-domain-detail-table/cmu-domain-detail-table.component';
+import { CmuNistCsfSummaryComponent } from './reports/cmu/cmu-nist-csf-summary/cmu-nist-csf-summary.component';
+import { AssessmentConfigIodComponent } from './assessment/prepare/assessment-info/assessment-config-iod/assessment-config-iod.component';
+import { AssessmentDemogIodComponent } from './assessment/prepare/assessment-info/assessment-demog-iod/assessment-demog-iod.component';
+import { DemographicsIodComponent } from './assessment/prepare/assessment-info/demographics-iod/demographics-iod.component';
+import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr/tutorial-imr.component';
+import { ImrCoverSheetComponent } from './reports/imr/imr-cover-sheet/imr-cover-sheet.component';
+import { ImrIntroAboutComponent } from './reports/imr/imr-intro-about/imr-intro-about.component';
+import { ImrResourcesComponent } from './reports/imr/imr-resources/imr-resources.component';
+import { CmuDomainComplianceComponent } from './reports/cmu/cmu-domain-compliance/cmu-domain-compliance.component';
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
-
+import { ImrSideTocComponent } from './reports/imr/imr-side-toc/imr-side-toc.component';
+import { CmuAppendixCoverComponent } from './reports/cmu/cmu-appendix-cover/cmu-appendix-cover.component';
+import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
+import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
+import { TranslocoRootModule } from './transloco-root.module';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @NgModule({
@@ -675,6 +696,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         AngularEditorModule,
         RouterModule,
         CurrencyMaskModule,
+        TranslocoRootModule,
         NgbModule,
         NgxChartsModule,
         TooltipModule,
@@ -738,6 +760,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
+        LinebreakPlaintextPipe,
         NullishCoalescePipe,
         StatusCreateComponent,
         ProgressComponent,
@@ -790,6 +813,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         TextComponent,
         ZonesComponent,
         ExcelExportComponent,
+        NcuaExcelExportComponent,
         MergeComponent,
         MergeQuestionDetailComponent,
         AggregationHomeComponent,
@@ -872,6 +896,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         QuestionBlockIseComponent,
         EdmComponent,
         EdmDeficiencyComponent,
+        GeneralDeficiencyComponent,
         EdmCommentsmarkedComponent,
         CisCommentsmarkedComponent,
         QuestionTextComponent,
@@ -946,6 +971,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         RraLayoutMainComponent,
         AboutRraComponent,
         LogoRraComponent,
+        IodLayoutComponent,
         LogoCsetComponent,
         TopMenusComponent,
         LogoForReportsComponent,
@@ -1023,8 +1049,10 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         CrrPerformanceAppendixAComponent,
         CrrNistCsfCatSummaryComponent,
         CrrNistCsfCatPerformanceComponent,
+        CmuNistCsfCatPerformanceComponent,
         CrrSideTocComponent,
-        CmuPerformanceSummaryComponent,
+        CmuPerformanceComponent,
+        CmuNistCsfCatSummaryComponent,
         ImrReportComponent,
         ReferencesBlockComponent,
         NewAssessmentDialogComponent,
@@ -1124,9 +1152,23 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         KeyReportComponent,
         CmuGoalPerfStackedBarComponent,
         CmuResultsDetailComponent,
+        CmuNistCsfSummaryComponent,
+        AssessmentConfigIodComponent,
+        AssessmentDemogIodComponent,
+        DemographicsIodComponent,
+        TutorialImrComponent,
+        ImrCoverSheetComponent,
+        ImrIntroAboutComponent,
+        ImrResourcesComponent,
+        CmuDomainComplianceComponent,
         TsaSdComponent,
+        ImrSideTocComponent,
+        CmuAppendixCoverComponent,
+        OtherRemarksComponent,
+        CmuOtherRemarksComponent,
     ],
     providers: [
+        TranslocoService,
         ConfigService,
         AuthenticationService,
         {
@@ -1140,6 +1182,13 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
             },
             deps: [ConfigService, AuthenticationService],
             multi: true
+        },
+        {
+            // This is not working correctly; the service still doesn't get loaded before app startup
+            provide: APP_INITIALIZER,
+            multi: true,
+            useFactory: preloadLanguage,
+            deps: [TranslocoService]
         },
         {
             provide: HTTP_INTERCEPTORS,
@@ -1182,6 +1231,7 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
         CrrFilteringService,
         RraFilteringService,
         CrrService,
+        CmuService,
         Utilities,
         NCUAService,
         GalleryService
@@ -1190,3 +1240,14 @@ import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 })
 
 export class AppModule { }
+
+export function preloadLanguage(transloco: TranslocoService) {
+    return function () {
+        return () => {
+            console.log('preloadUser');
+            let lang = 'EN';
+            transloco.setActiveLang(lang);
+            return transloco.load(lang).toPromise();
+        }
+    };
+}
