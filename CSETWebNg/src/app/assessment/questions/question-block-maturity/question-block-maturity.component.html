@@ -105,7 +105,7 @@
                         <!-- Mark For Review Flag  -->
                         <label class="mr-0 ml-2 btn form-check-label btn-mfr d-flex align-items-center"
                             [class.answer-selected]="q.markForReview === true"
-                            matTooltip="This control requires further review.">
+                            [matTooltip]="('tooltip.mfr-flag' | transloco)">
                             <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
                                 checked="{{q.markForReview === true}}">
                             <span class="cset-icons-flag-dark fs-base"></span>
