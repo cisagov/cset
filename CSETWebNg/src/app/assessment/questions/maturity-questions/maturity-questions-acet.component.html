@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
+<div *transloco="let t" class="white-panel">
     <div id="top"></div>
     <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -43,13 +43,13 @@
             <div class="d-flex flex-column flex-00a w-100 mb-3">            
                 <div class="d-flex align-items-start flex-11a">
                     <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-                        matTooltip="Collapse All" aria-label="Collapse All"><i class="fas fa-compress-alt"></i></button>
-                    <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
-                        aria-label="Expand All">
+                        [matTooltip]="t('collapse all')" [aria-label]="t('collapse all')"><i class="fas fa-compress-alt"></i></button>
+                    <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" [matTooltip]="t('expand all')"
+                        [aria-label]="t('expand all')">
                         <i class="fas fa-expand-alt"></i>
                     </button>
                     <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
-                        <i class="cset-icons-filter" matTooltip="Filter" aria-label="Filter"></i>
+                        <i class="cset-icons-filter" [matTooltip]="t('filter')" [aria-label]="t('filter')"></i>
                     </button>
                 </div>
             </div>
