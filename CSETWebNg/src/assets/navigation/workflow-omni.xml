@@ -4,13 +4,13 @@
     <node displaytext="Prepare" id="phase-prepare">
 
         <!-- maturity model tutorials -->
-        <node displaytext="CMMC Tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" condition="MATURITY:CMMC" />
-        <node displaytext="CIS Tutorial" id="tutorial-cis" path="assessment/{:id}/prepare/tutorial-cis" condition="MATURITY:CIS" />
-        <node displaytext="CMMC Tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" condition="MATURITY:CMMC2" />
-        <node displaytext="EDM Tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" condition="MATURITY:EDM" />
-        <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:CRR" />
-        <node displaytext="IMR Tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" condition="MATURITY:IMR" />
-        <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:RRA ORIGIN-NOT:CF" />
+        <node displaytext="CMMC Tutorial" id="tutorial-cmmc" path="assessment/{:id}/prepare/tutorial-cmmc" condition="MATURITY:2" />
+        <node displaytext="CIS Tutorial" id="tutorial-cis" path="assessment/{:id}/prepare/tutorial-cis" condition="MATURITY:8" />
+        <node displaytext="CMMC Tutorial" id="tutorial-cmmc2" path="assessment/{:id}/prepare/tutorial-cmmc2" condition="MATURITY:6" />
+        <node displaytext="EDM Tutorial" id="tutorial-edm" path="assessment/{:id}/prepare/tutorial-edm" condition="MATURITY:3" />
+        <node displaytext="CRR Tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" condition="MATURITY:4" />
+        <node displaytext="IMR Tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" condition="MATURITY:15" />
+        <node displaytext="Ransomware Readiness Tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" condition="MATURITY:5 ORIGIN-NOT:CF" />
 
 
         <!-- vanilla prepare pages -->
@@ -25,28 +25,28 @@
         <node displaytext="Assessment Configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" condition="INSTALL-MODE:IOD" />
 
         <!-- CIS config page -->
-        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:CIS" />
+        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" condition="MATURITY:8" />
 
 
         <!-- Critical Service -->
-        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:CIS" />
-        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE:IOD MATURITY-ANY(CRR,CIS,EDM,RRA,IMR,CPG,MVRA)" />
+        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE-NONE(IOD) MATURITY:8" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" condition="INSTALL-MODE:IOD MATURITY-ANY(4,8,3,5,15,11,9)" />
 
 
         <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" condition="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
 
         <!-- ACET/ISE-specific screens -->
-        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:ACET" />
-        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:ACET" />
-        <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:ISE" />
+        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:1" />
+        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:1" />
+        <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:10" />
 
 
         <!-- Diagram -->
         <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" condition="OPTION:DIAGRAM" />
 
         <!-- target level selection -->
-        <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" condition="MATURITY-ANY(CMMC,CMMC2)" />
+        <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" condition="MATURITY-ANY(2,6)" />
 
     </node>
 
@@ -58,17 +58,17 @@
 
 
         <!-- The scenario that will normally show -->
-        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(ACET,ISE,CIS,MVRA,SD02-Series,HYDRO)" />
+        <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" condition="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
-        <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(ACET,ISE)" />
+        <node displaytext="Maturity Questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(1,10)" />
 
         <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:ACET" />
-        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:ISE" />
+        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:1" />
+        <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:10" />
 
         <!-- CIS questions displayed in tree structure -->
-        <node displaytext="CIS Questions" condition="MATURITY:CIS">
+        <node displaytext="CIS Questions" condition="MATURITY:8">
             <node id="maturity-questions-nested-2301" displaytext="Cybersecurity Management">
                 <node id="maturity-questions-nested-2306" path="assessment/{:id}/maturity-questions-nested/2306" displaytext="1. Cybersecurity Leadership" />
                 <node id="maturity-questions-nested-2307" displaytext="Cybersecurity Architecture">
@@ -118,7 +118,7 @@
         </node>
 
         <!-- HYDRO questions displayed in tree structure -->
-        <node displaytext="Hydropower Questions" condition="MATURITY:HYDRO">
+        <node displaytext="Hydropower Questions" condition="MATURITY:13">
             <node id="maturity-questions-nested-2577" displaytext="Management">
                 <node id="maturity-questions-nested-2578" path="assessment/{:id}/maturity-questions-nested/2578" displaytext="1. Leadership and Personnel" />
                 <node id="maturity-questions-nested-2579" path="assessment/{:id}/maturity-questions-nested/2579" displaytext="2. Training" />
@@ -146,7 +146,7 @@
         </node>
 
         <!-- MVRA questions displayed in tree structure -->
-        <node displaytext="MVRA Questions" condition="MATURITY:MVRA">
+        <node displaytext="MVRA Questions" condition="MATURITY:9">
             <node id="maturity-questions-2338" displaytext="Anticipate">
                 <node id="maturity-questions-2343" displaytext="Adaptive Response" path="assessment/{:id}/maturity-questions/2343" />
                 <node id="maturity-questions-2344" displaytext="Business Environment" path="assessment/{:id}/maturity-questions/2344" />
@@ -194,7 +194,7 @@
         </node>
 
         <!-- SD02-Series question domains displayed in tree structure -->
-        <node displaytext="SD02 Series Questions" condition="MATURITY:SD02-Series">
+        <node displaytext="SD02 Series Questions" condition="MATURITY:14">
             <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
             <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
             <node id="maturity-questions-nested-2603" displaytext="External Connections (EC)" path="assessment/{:id}/maturity-questions-nested/2603" />
@@ -212,7 +212,7 @@
             <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
-        <node displaytext="Other Remarks" id="other-remarks" path="assessment/{:id}/other-remarks" condition="MATURITY-ANY(IMR)" />
+        <node displaytext="Other Remarks" id="other-remarks" path="assessment/{:id}/other-remarks" condition="MATURITY-ANY(15)" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
@@ -232,76 +232,76 @@
 
 
         <!-- Results - CMMC -->
-        <node displaytext="Target and Achieved Levels" id="cmmc-level-results" path="assessment/{:id}/results/cmmc-level-results" condition="MATURITY:CMMC" />
-        <node displaytext="Level Drill Down" id="cmmc-level-drilldown" path="assessment/{:id}/results/cmmc-level-drilldown" condition="MATURITY:CMMC" />
-        <node displaytext="Compliance Score" id="cmmc-compliance" path="assessment/{:id}/results/cmmc-compliance" condition="MATURITY:CMMC" />
-        <node displaytext="Detailed Gaps List" id="cmmc-gaps" path="assessment/{:id}/results/cmmc-gaps" condition="MATURITY:CMMC" />
+        <node displaytext="Target and Achieved Levels" id="cmmc-level-results" path="assessment/{:id}/results/cmmc-level-results" condition="MATURITY:2" />
+        <node displaytext="Level Drill Down" id="cmmc-level-drilldown" path="assessment/{:id}/results/cmmc-level-drilldown" condition="MATURITY:2" />
+        <node displaytext="Compliance Score" id="cmmc-compliance" path="assessment/{:id}/results/cmmc-compliance" condition="MATURITY:2" />
+        <node displaytext="Detailed Gaps List" id="cmmc-gaps" path="assessment/{:id}/results/cmmc-gaps" condition="MATURITY:2" />
 
 
         <!-- Results - CMMC2 -->
-        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" condition="MATURITY:CMMC2" />
-        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" condition="MATURITY:CMMC2" />
-        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" condition="MATURITY:CMMC2 TARGET-LEVEL-GT:1" />
+        <node displaytext="Performance by Level" id="cmmc2-level-results" path="assessment/{:id}/results/cmmc2-level-results" condition="MATURITY:6" />
+        <node displaytext="Performance by Domain" id="cmmc2-domain-results" path="assessment/{:id}/results/cmmc2-domain-results" condition="MATURITY:6" />
+        <node displaytext="SPRS Score" id="sprs-score" path="assessment/{:id}/results/sprs-score" condition="MATURITY:6 TARGET-LEVEL-GT:1" />
 
 
 
         <!-- Results - EDM -->
-        <node displaytext="Summary Results" id="summary-results" path="assessment/{:id}/results/summary-results" condition="MATURITY:EDM" />
-        <node displaytext="Relationship Formation" id="relationship-formation" path="assessment/{:id}/results/relationship-formation" condition="MATURITY:EDM" />
-        <node displaytext="Relationship Management and Governance" id="relationship-management" path="assessment/{:id}/results/relationship-management" condition="MATURITY:EDM" />
-        <node displaytext="Service Protection and Sustainment" id="service-protection" path="assessment/{:id}/results/service-protection" condition="MATURITY:EDM" />
-        <node displaytext="Maturity Indicator Levels" id="maturity-indicator-levels" path="assessment/{:id}/results/maturity-indicator-levels" condition="MATURITY:EDM" />
+        <node displaytext="Summary Results" id="summary-results" path="assessment/{:id}/results/summary-results" condition="MATURITY:3" />
+        <node displaytext="Relationship Formation" id="relationship-formation" path="assessment/{:id}/results/relationship-formation" condition="MATURITY:3" />
+        <node displaytext="Relationship Management and Governance" id="relationship-management" path="assessment/{:id}/results/relationship-management" condition="MATURITY:3" />
+        <node displaytext="Service Protection and Sustainment" id="service-protection" path="assessment/{:id}/results/service-protection" condition="MATURITY:3" />
+        <node displaytext="Maturity Indicator Levels" id="maturity-indicator-levels" path="assessment/{:id}/results/maturity-indicator-levels" condition="MATURITY:3" />
 
 
 
         <!-- Results - CRR -->
-        <node displaytext="Summary Results" id="crr-summary-results" path="assessment/{:id}/results/crr-summary-results" condition="MATURITY:CRR" />
-        <node displaytext="Asset Management" id="crr-domain-am" path="assessment/{:id}/results/crr-domain-am" condition="MATURITY:CRR" />
-        <node displaytext="Controls Management" id="crr-domain-cm" path="assessment/{:id}/results/crr-domain-cm" condition="MATURITY:CRR" />
-        <node displaytext="Configuration and Change Management" id="crr-domain-ccm" path="assessment/{:id}/results/crr-domain-ccm" condition="MATURITY:CRR" />
-        <node displaytext="Vulnerability Management" id="crr-domain-vm" path="assessment/{:id}/results/crr-domain-vm" condition="MATURITY:CRR" />
-        <node displaytext="Incident Management" id="crr-domain-im" path="assessment/{:id}/results/crr-domain-im" condition="MATURITY:CRR" />
-        <node displaytext="Service Continuity Management" id="crr-domain-scm" path="assessment/{:id}/results/crr-domain-scm" condition="MATURITY:CRR" />
-        <node displaytext="Risk Management" id="crr-domain-rm" path="assessment/{:id}/results/crr-domain-rm" condition="MATURITY:CRR" />
-        <node displaytext="External Dependencies Management" id="crr-domain-edm" path="assessment/{:id}/results/crr-domain-edm" condition="MATURITY:CRR" />
-        <node displaytext="Training and Awareness" id="crr-domain-ta" path="assessment/{:id}/results/crr-domain-ta" condition="MATURITY:CRR" />
-        <node displaytext="Situational Awareness" id="crr-domain-sa" path="assessment/{:id}/results/crr-domain-sa" condition="MATURITY:CRR" />
+        <node displaytext="Summary Results" id="crr-summary-results" path="assessment/{:id}/results/crr-summary-results" condition="MATURITY:4" />
+        <node displaytext="Asset Management" id="crr-domain-am" path="assessment/{:id}/results/crr-domain-am" condition="MATURITY:4" />
+        <node displaytext="Controls Management" id="crr-domain-cm" path="assessment/{:id}/results/crr-domain-cm" condition="MATURITY:4" />
+        <node displaytext="Configuration and Change Management" id="crr-domain-ccm" path="assessment/{:id}/results/crr-domain-ccm" condition="MATURITY:4" />
+        <node displaytext="Vulnerability Management" id="crr-domain-vm" path="assessment/{:id}/results/crr-domain-vm" condition="MATURITY:4" />
+        <node displaytext="Incident Management" id="crr-domain-im" path="assessment/{:id}/results/crr-domain-im" condition="MATURITY:4" />
+        <node displaytext="Service Continuity Management" id="crr-domain-scm" path="assessment/{:id}/results/crr-domain-scm" condition="MATURITY:4" />
+        <node displaytext="Risk Management" id="crr-domain-rm" path="assessment/{:id}/results/crr-domain-rm" condition="MATURITY:4" />
+        <node displaytext="External Dependencies Management" id="crr-domain-edm" path="assessment/{:id}/results/crr-domain-edm" condition="MATURITY:4" />
+        <node displaytext="Training and Awareness" id="crr-domain-ta" path="assessment/{:id}/results/crr-domain-ta" condition="MATURITY:4" />
+        <node displaytext="Situational Awareness" id="crr-domain-sa" path="assessment/{:id}/results/crr-domain-sa" condition="MATURITY:4" />
 
 
 
         <!-- Results - RRA -->
-        <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" condition="MATURITY:RRA" />
-        <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" condition="MATURITY:RRA" />
-        <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" condition="MATURITY:RRA" />
+        <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" condition="MATURITY:5" />
+        <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" condition="MATURITY:5" />
+        <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" condition="MATURITY:5" />
 
 
 
         <!-- Results - ACET -->
-        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:ACET" />
-        <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:ACET" />
+        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:1" />
+        <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:1" />
 
 
 
         <!-- Results - CIS -->
-        <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:CIS" />
-        <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:CIS" />
+        <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" condition="MATURITY:8" />
+        <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" condition="MATURITY:8" />
 
         <!-- Results - HYDRO -->
-        <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:HYDRO" />
-        <node displaytext="Feasibility" id="hydro-feasibility" path="assessment/{:id}/results/hydro-feasibility" condition="MATURITY:HYDRO" />
-        <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" condition="MATURITY:HYDRO" />
-        <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" condition="MATURITY:HYDRO" />
+        <node displaytext="Assessment Scores" id="hydro-deficiency" path="assessment/{:id}/results/hydro-deficiency" condition="MATURITY:13" />
+        <node displaytext="Feasibility" id="hydro-feasibility" path="assessment/{:id}/results/hydro-feasibility" condition="MATURITY:13" />
+        <node displaytext="Impact" id="hydro-impact" path="assessment/{:id}/results/hydro-impact" condition="MATURITY:13" />
+        <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" condition="MATURITY:13" />
 
         <!-- Results - MVRA -->
-        <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:MVRA" />
-        <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" condition="MATURITY:MVRA" />
+        <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" condition="MATURITY:9" />
+        <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" condition="MATURITY:9" />
 
         <!-- Results - CPG -->
-        <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:CPG" />
-        <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:CPG" />
+        <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:11" />
+        <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:11" />
 
         <!-- Results - SD02-Series -->
-        <node displaytext="SD02-Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:SD02-Series" />
+        <node displaytext="SD02-Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:14" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">
