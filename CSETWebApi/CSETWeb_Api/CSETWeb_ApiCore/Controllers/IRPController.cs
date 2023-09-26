@@ -39,10 +39,10 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/irps")]
-        public IActionResult GetIRPList()
+        public IActionResult GetIRPList(bool spanishFlag = false)
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_irp.GetIRPList(assessmentId));
+            return Ok(_irp.GetIRPList(assessmentId, spanishFlag));
         }
 
         /// <summary>

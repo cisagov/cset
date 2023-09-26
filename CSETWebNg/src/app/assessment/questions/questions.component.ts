@@ -32,6 +32,7 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
 import { ɵNullViewportScroller } from '@angular/common';
+import { ACETService } from '../../services/acet.service';
 
 @Component({
   selector: 'app-questions',
@@ -71,7 +72,8 @@ export class QuestionsComponent implements AfterViewChecked {
     private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public acetSvc: ACETService
   ) {
     const magic = this.navSvc.getMagic();
 
