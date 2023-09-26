@@ -107,7 +107,7 @@ export class MaturityService {
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
-
+  
   /**
    * Posts the current selections to the server.
    */
@@ -216,10 +216,10 @@ export class MaturityService {
   /**
    * Asks the API for all maturity questions/answers for the current assessment.
    */
-  getQuestionsList(installationMode: string, fillEmpty: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean, groupingId?: number, spanishFlag?: boolean) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty + '&groupingId=' + groupingId + '&spanishFlag=' + spanishFlag,
       headers
     );
   }

@@ -28,7 +28,9 @@ using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel;
 using CSETWebCore.Business.Aggregation;
 using static Lucene.Net.Util.Fst.Util;
+using CSETWebCore.Business.Acet;
 using Microsoft.IdentityModel.Tokens;
+using CSETWebCore.DataLayer.Manual;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -810,7 +812,7 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, bool spanishFlag = false)
         {
             var response = new MaturityResponse();
 
@@ -872,6 +874,23 @@ namespace CSETWebCore.Business.Maturity
 
             var questions = questionQuery.ToList();
 
+            //
+            if (spanishFlag)
+            {
+                Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                questions.ForEach(
+                    question => {
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
+                        if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
+                        {
+                            question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
+                        }
+                    });
+            }
+            //
+
 
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Maturity")
@@ -884,6 +903,21 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            //
+            if (spanishFlag)
+            {
+                Dictionary<int, MATURITY_GROUPINGS> dictionary = AcetBusiness.buildGroupingDictionary();
+                allGroupings.ForEach(
+                    group => {
+                        var output = new MATURITY_GROUPINGS();
+                        var temp = new MATURITY_GROUPINGS();
+                        if (dictionary.TryGetValue(group.Grouping_Id, out output))
+                        {
+                            group.Title = dictionary[group.Grouping_Id].Title;
+                        }
+                    });
+            }
+            //
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
@@ -904,9 +938,10 @@ namespace CSETWebCore.Business.Maturity
 
             response.Groupings = tempModel.SubGroupings;
 
-
             // Add any glossary terms
             response.Glossary = this.GetGlossaryEntries(myModel.model_id);
+
+
 
             return response;
         }

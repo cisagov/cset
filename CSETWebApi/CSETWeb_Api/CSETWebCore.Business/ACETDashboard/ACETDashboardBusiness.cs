@@ -13,6 +13,7 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Business.Acet;
 
 namespace CSETWebCore.Business.ACETDashboard
 {
@@ -37,13 +38,20 @@ namespace CSETWebCore.Business.ACETDashboard
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, bool spanishFlag = false)
         {
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
+            Dictionary<string, IRPSpanishRow> dictionaryHeaders = new Dictionary<string, IRPSpanishRow>();
 
             List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId);
+
+            if (spanishFlag)
+            {
+                dictionaryHeaders = AcetBusiness.buildIRPDashboardDictionary();
+            }
+
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -51,7 +59,18 @@ namespace CSETWebCore.Business.ACETDashboard
                     Maturity = d.DomainMaturity,
                     Name = d.DomainName
                 });
-
+            }
+            if (spanishFlag)
+            {
+                var output = new IRPSpanishRow();
+                foreach (var irp in result.Irps)
+                {
+                    if (dictionaryHeaders.TryGetValue(irp.HeaderText, out output))
+                    {
+                        irp.HeaderText = dictionaryHeaders[irp.HeaderText].SpanishHeader;
+                    }
+                }
+                
             }
 
             return result;

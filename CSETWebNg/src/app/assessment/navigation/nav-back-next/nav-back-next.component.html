@@ -20,7 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div style="display: flex; justify-content: space-between;" class="my-5">
-    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)" [class.display-hidden]="hide == 'back'" tabindex="0">Back</button>
-    <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)" [class.display-hidden]="hide == 'next'" tabindex="0">Next</button>
-</div>
+<ng-container *transloco="let t">
+  <div style="display: flex; justify-content: space-between;" class="my-5">
+      <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)" [class.display-hidden]="hide == 'back'" tabindex="0">{{ t('back') }}</button>
+      <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)" [class.display-hidden]="hide == 'next'" tabindex="0">{{ t('next') }}</button>
+  </div>
+</ng-container>

@@ -28,6 +28,7 @@ import { QuestionGrouping } from '../../../models/questions.model';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ACETService } from '../../../services/acet.service';
 
 
 /**
@@ -59,7 +60,8 @@ export class DomainMaturityFilterComponent implements OnInit {
     public maturityFilteringSvc: MaturityFilteringService,
     public acetFilteringSvc: AcetFilteringService,
     public assessSvc: AssessmentService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService
   ) { }
 
   /**
@@ -112,6 +114,23 @@ export class DomainMaturityFilterComponent implements OnInit {
       } else {
         this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
       }
+  }
+
+  spanishTranslate(label: string) {
+    switch(label) {
+      case 'Baseline':
+        return 'Básico';
+      case 'Evolving':
+        return 'En desarrollo';
+      case 'Intermediate':
+        return 'Intermedio';
+      case 'Advanced':
+        return 'Avanzado';
+      case 'Innovative':
+        return 'Innovador';
+      default:
+        return '';
+    }
   }
 
 

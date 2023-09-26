@@ -10,7 +10,7 @@ namespace CSETWebCore.Interfaces.IRP
 {
     public interface IIRPBusiness
     {
-        IRPResponse GetIRPList(int assessmentId);
+        IRPResponse GetIRPList(int assessmentId, bool spanishFlag);
         void PersistSelectedIRP(int assessmentId, IRPModel irp);
     }
 }

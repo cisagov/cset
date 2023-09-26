@@ -26,6 +26,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { AdminSaveData, AttributePair } from '../models/admin-save.model';
 import { AcetDashboard } from '../models/acet-dashboard.model';
+import { AssessmentService } from './assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
     headers: new HttpHeaders()
@@ -41,9 +43,12 @@ export class ACETService {
 
 
     apiUrl: string;
+    spanishFlag: boolean = false;
     constructor(
         private http: HttpClient,
-        private configSvc: ConfigService
+        private configSvc: ConfigService,
+        public assessSvc: AssessmentService,
+        public transSvc: TranslocoService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -67,8 +72,11 @@ export class ACETService {
 
 
     ////////////////////  Dashboard functions /////////////////////////////
-    getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'acet/dashboard');
+    getAcetDashboard(spanishFlag?: boolean) {
+        if (spanishFlag == null) {
+            spanishFlag = false;
+        }
+        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + spanishFlag);
     }
 
     postSelection(selected: AcetDashboard) {
@@ -291,5 +299,31 @@ export class ACETService {
 
         return level;
     }
+
+    setSpanish(input: boolean) {
+        if (input == true) {
+            this.transSvc.setActiveLang('es');
+        }
+        else {
+            this.transSvc.setActiveLang('en');
+        }
+        this.spanishFlag = input;
+    }
+/*
+    translateSpanishAnswer(answer: string) {
+        switch(answer) {
+            case 'Yes':
+                return 'Sí';
+            case 'No':
+                return 'No';
+            case 'N/A':
+                return 'N/A';
+            case 'Yes(C)':
+                return 'Sí(C)';
+            default:
+                return answer;
+        }
+    }
+    */
 }
 

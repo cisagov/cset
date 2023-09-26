@@ -134,11 +134,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
+        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0, bool spanishFlag = false)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, spanishFlag));
         }
 
         [HttpGet]
@@ -335,7 +335,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetGrouping([FromQuery] int groupingId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-
+            
             var grouping = _context.MATURITY_GROUPINGS.FirstOrDefault(x => x.Grouping_Id == groupingId);
             if (grouping == null)
             {
@@ -349,7 +349,7 @@ namespace CSETWebCore.Api.Controllers
 
             // convert it to a MaturityResponse
             MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(resp1);
-
+            var excel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
             resp.ModelName = model.Model_Name;

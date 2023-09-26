@@ -20,10 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<table class="cset-table mb-3">
+<table class="cset-table mb-3" *transloco="let t; read: 'irp'">
     <tr>
-        <th rowspan="2">Category</th>
-        <th colspan="5" class="text-center">{{ title }}</th>
+        <th rowspan="2">{{ t('category') }}</th>
+        <th colspan="5" class="text-center">{{ t(title) }}</th>
         <!--th rowspan="2">Risk Level</th-->
     </tr>
     <tr>
@@ -43,7 +43,7 @@
         <!--td class="text-nowrap" [innerHTML]="reportSvc.formatLinebreaks(irp.comment)"></td-->
     </tr>
     <tr>
-        <td class="border-table">Totals</td>
+        <td class="border-table">{{ t('totals') }}</td>
         <td class="border-table text-right">{{ acetDashboard?.sumRisk[0] }}</td>
         <td class="border-table text-right">{{ acetDashboard?.sumRisk[1] }}</td>
         <td class="border-table text-right">{{ acetDashboard?.sumRisk[2] }}</td>
