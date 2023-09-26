@@ -20,26 +20,41 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
+<div
+  class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
     <h3 class="mb-3">Assessment Configuration</h3>
 
+
     <div class="form-row">
       <div class="form-group col-md-6">
-          
-          <label class="mb-1" for="name">Assessment Name</label>
-          <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
-              [(ngModel)]="assessment.assessmentName"
-              (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">
+
+        <label class="mb-1" for="name">Assessment Name</label>
+        <input type="text" maxlength="100" class="form-control" id="name"
+        name="name" required focusOnInit="true"
+        [(ngModel)]="assessment.assessmentName"
+        (ngModelChange)="assessment.assessmentName" (change)="update($event)"
+        autofocus tabindex="0">
       </div>
       <div class="form-group col-md-6">
-          <label class="mb-1" for="date">Assessment Date</label>
-          <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
-              [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
-          <mat-datepicker #picker></mat-datepicker>
+        <label class="mb-1" for="date">Assessment Date</label>
+        <input matInput MatDatepickerInput class="form-control" id="date"
+        name="date" [(ngModel)]="assessment.assessmentDate"
+        [matDatepicker]="picker" (focus)="picker.open()"
+        (blur)="update($event)" (click)="picker.open()"
+        (ngModelChange)="update($event)" tabindex="0">
+        <mat-datepicker #picker></mat-datepicker>
       </div>
-  </div>
+    </div>
 
+    <div class="my-4">
+      <h4>Assessment Type</h4>
+      <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
+      <p
+        *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription"
+        [innerHtml]="assessment.typeDescription | safe"></p>
+    </div>
+    
     <app-assessment-contacts (triggerChange)="refreshContacts()"></app-assessment-contacts>
 
     <hr class="w-100 hr-sal my-5" />
@@ -58,12 +73,12 @@
           id="criticalService"
           [(ngModel)]="demographics.criticalService"
           placeholder="Critical Service"
-          (blur)="changeCriticalService($event)"
-        ></textarea>
+          (blur)="changeCriticalService($event)"></textarea>
       </div>
 
       <div class="form-group col-md-6">
-        <label class="mb-1" for="criticalService">Critical Dependency for Incident Response Support</label>
+        <label class="mb-1" for="criticalService">Critical Dependency for
+          Incident Response Support</label>
         <textarea
           [ngClass]="{ 'alert-danger' : !iodDemographics.criticalDependencyIncidentResponseSupport }"
           appAutoSize
@@ -75,31 +90,33 @@
           id="criticalDependency"
           [(ngModel)]="iodDemographics.criticalDependencyIncidentResponseSupport"
           placeholder="Critical Dependency for Incident Response Support"
-          (blur)="updateIodDemographics()"
-        ></textarea>
+          (blur)="updateIodDemographics()"></textarea>
       </div>
     </div>
 
     <div class="form-group">
-      <label class="mb-1" for="critSvcPointOfContact">Critical Service Point of Contact</label>
+      <label class="mb-1" for="critSvcPointOfContact">Critical Service Point of
+        Contact</label>
       <select
         class="form-control"
         id="critSvcPointOfContact"
         tabindex="0"
         name="critSvcPointOfContact"
         (change)="changePointOfContact($event)"
-        [(ngModel)]="demographics.pointOfContact"
-      >
+        [(ngModel)]="demographics.pointOfContact">
         <option [ngValue]="null">-- Select Contact --</option>
-        <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
+        <option *ngFor="let contact of contacts"
+          [ngValue]="contact.assessmentContactId">
           {{ contact.firstName }} {{ contact.lastName }}
         </option>
       </select>
     </div>
+
     <!-- #4 -->
     <div class="form-group mb-4">
       <label for="percentageRevenue">
-        Please estimate the percentage of your organization's annual revenue that depends on the critical service.
+        Please estimate the percentage of your organization's annual revenue
+        that depends on the critical service.
       </label>
       <select
         [ngClass]="{ 'alert-danger' : !iodDemographics.criticalServiceRevenuePercent }"
@@ -108,14 +125,12 @@
         tabindex="0"
         name="percentageRevenue"
         [(ngModel)]="iodDemographics.criticalServiceRevenuePercent"
-        (change)="updateIodDemographics()"
-      >
+        (change)="updateIodDemographics()">
         <option [ngValue]="null">-- Select --</option>
         <option
           *ngFor="let i of iodDemographics.listRevenuePercentages"
           [ngValue]="i.optionValue"
-          [selected]="i.optionValue === iodDemographics.criticalServiceRevenuePercent"
-        >
+          [selected]="i.optionValue === iodDemographics.criticalServiceRevenuePercent">
           {{ i.optionText }}
         </option>
       </select>
@@ -124,7 +139,8 @@
     <!-- #5 -->
     <div class="form-group mb-4">
       <label for="NumberPeopleServedByCritSvc">
-        If possible, please estimate the number of people served annually by the critical service. If an estimate is not
+        If possible, please estimate the number of people served annually by the
+        critical service. If an estimate is not
         available, please select N/A.
       </label>
       <select
@@ -134,14 +150,12 @@
         tabindex="0"
         name="numberPeopleServedByCritSvc"
         [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc"
-        (change)="updateIodDemographics()"
-      >
+        (change)="updateIodDemographics()">
         <option [ngValue]="null">-- Select --</option>
         <option
           *ngFor="let i of iodDemographics.listNumberPeopleServed"
           [ngValue]="i.optionValue"
-          [selected]="i.optionValue === iodDemographics.numberPeopleServedByCritSvc"
-        >
+          [selected]="i.optionValue === iodDemographics.numberPeopleServedByCritSvc">
           {{ i.optionText }}
         </option>
       </select>
@@ -150,8 +164,10 @@
     <!-- #6 -->
     <div class="form-group mb-5">
       <label for="disruptedSectors">
-        Please select in order of criticality, the two critical infrastructure sectors which, if they were unavailable
-        or disrupted for one week or more, would most affect your ability to sustain the critical service.
+        Please select in order of criticality, the two critical infrastructure
+        sectors which, if they were unavailable
+        or disrupted for one week or more, would most affect your ability to
+        sustain the critical service.
       </label>
 
       <div>
@@ -163,14 +179,12 @@
             name="disruptedSector1"
             tabindex="0"
             [(ngModel)]="iodDemographics.disruptedSector1"
-            (change)="updateIodDemographics()"
-          >
+            (change)="updateIodDemographics()">
             <option [ngValue]="null">-- Select --</option>
             <option
               *ngFor="let i of iodDemographics.listSectors"
               [ngValue]="i.optionValue"
-              [selected]="i.optionValue === iodDemographics.disruptedSector1"
-            >
+              [selected]="i.optionValue === iodDemographics.disruptedSector1">
               {{ i.optionText }}
             </option>
           </select>
@@ -183,14 +197,12 @@
             name="disruptedSector2"
             tabindex="0"
             [(ngModel)]="iodDemographics.disruptedSector2"
-            (change)="updateIodDemographics()"
-          >
+            (change)="updateIodDemographics()">
             <option [ngValue]="null">-- Select --</option>
             <option
               *ngFor="let i of iodDemographics.listSectors"
               [ngValue]="i.optionValue"
-              [selected]="i.optionValue === iodDemographics.disruptedSector2"
-            >
+              [selected]="i.optionValue === iodDemographics.disruptedSector2">
               {{ i.optionText }}
             </option>
           </select>
