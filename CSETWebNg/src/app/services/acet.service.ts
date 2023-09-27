@@ -47,7 +47,7 @@ export class ACETService {
         private http: HttpClient,
         private configSvc: ConfigService,
         public assessSvc: AssessmentService,
-        public transSvc: TranslocoService
+        public tSvc: TranslocoService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -295,6 +295,5 @@ export class ACETService {
 
         return level;
     }
-
 }
 

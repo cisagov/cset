@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-<h4>Organization Details</h4>
+<h4>{{t('organization details')}}</h4>
 <form #f="ngForm">
     <div class="form-row">
         <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
@@ -61,7 +61,7 @@
     </div>
 </form>
 <div class="mt-4">
-    <h4>Assessment Type</h4>
+    <h4>{{t('assessment type')}}</h4>
     <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
     <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
 
