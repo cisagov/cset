@@ -72,7 +72,7 @@ export class ACETService {
 
     ////////////////////  Dashboard functions /////////////////////////////
     getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + (this.transSvc.getActiveLang() == 'es'));
+        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
     }
 
     postSelection(selected: AcetDashboard) {
@@ -93,7 +93,7 @@ export class ACETService {
     * Returns the maturity details.
     */
     getMatDetailList() {
-        return this.http.get(this.apiUrl + 'getMaturityResults?spanishFlag=' + (this.transSvc.getActiveLang() == 'es'));
+        return this.http.get(this.apiUrl + 'getMaturityResults?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 

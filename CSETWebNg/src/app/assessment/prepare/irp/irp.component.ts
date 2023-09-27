@@ -44,7 +44,7 @@ export class IRPComponent implements OnInit {
         public navSvc: NavigationService,
         private irpSvc: IRPService,
         public acetSvc: ACETService,
-        public transSvc: TranslocoService
+        public tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -52,7 +52,7 @@ export class IRPComponent implements OnInit {
     }
 
     loadFrameworks() {
-        this.irpSvc.getIRPList(this.transSvc.getActiveLang() == "es").subscribe(
+        this.irpSvc.getIRPList(this.tSvc.getActiveLang() == "es").subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
             },
