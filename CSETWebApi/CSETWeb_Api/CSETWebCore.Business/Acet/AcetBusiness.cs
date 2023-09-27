@@ -18,6 +18,7 @@ using System.IO;
 using NPOI.SS.UserModel;
 using Npoi.Mapper;
 using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Business.Acet
 {
@@ -239,7 +240,7 @@ namespace CSETWebCore.Business.Acet
             return dict;
         }
 
-        public static Dictionary<int, MATURITY_GROUPINGS> buildGroupingDictionary()
+        public static Dictionary<int, GroupingSpanishRow> buildGroupingDictionary()
         {
             MemoryStream memStream = new MemoryStream();
             FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx");
@@ -248,17 +249,46 @@ namespace CSETWebCore.Business.Acet
             IWorkbook workbook = WorkbookFactory.Create(memStream);
 
             var mapper = new Mapper(workbook);
-            List<RowInfo<MATURITY_GROUPINGS>> myExcelObjects = mapper.Take<MATURITY_GROUPINGS>(workbook.ActiveSheetIndex).ToList();
+            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
 
             var rowCount = myExcelObjects.Count;
 
-            var dict = new Dictionary<int, MATURITY_GROUPINGS>();
-
-            foreach (RowInfo<MATURITY_GROUPINGS> item in myExcelObjects)
+            var dict = new Dictionary<int, GroupingSpanishRow>();
+            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
             {
                 try
                 {
                     dict.Add(item.Value.Grouping_Id, item.Value);
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return dict;
+        }
+
+        public static Dictionary<string, GroupingSpanishRow> buildResultsGroupingDictionary()
+        {
+            MemoryStream memStream = new MemoryStream();
+            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx");
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<string, GroupingSpanishRow>();
+
+            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.English_Title, item.Value);
                 }
                 catch (Exception ex)
                 {

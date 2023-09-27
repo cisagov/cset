@@ -29,6 +29,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { LayoutService } from '../../../services/layout.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -41,7 +42,9 @@ export class AcetDetailComponent implements OnInit {
     readonly collapseAll = "Collapse All";
     matDetails: any;
     matRange: any;
-    matRangeString: any;
+    // matRangeString: any;
+    matRangeStartString: any;
+    matRangeEndString: any;
     expand: string;
     expanded: boolean;
     overallIrp: string;
@@ -64,7 +67,8 @@ export class AcetDetailComponent implements OnInit {
         private assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public layoutSvc: LayoutService
+        public layoutSvc: LayoutService,
+        private transSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -77,6 +81,14 @@ export class AcetDetailComponent implements OnInit {
     }
 
     loadMatDetails() {
+        if (this.transSvc.getActiveLang() == "es") {
+            this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
+                "Inteligencia de Amenazas y Colaboración",
+                "Controles de Ciberseguridad",
+                "Gestión de Dependencia Externa",
+                "Gestión de Incidentes Cibernéticos y Resiliencia"
+                ];
+        }
         this.acetSvc.getMatDetailList().subscribe(
             (data: any) => {
                 data.forEach((domain: MaturityDomain) => {
@@ -162,7 +174,9 @@ export class AcetDetailComponent implements OnInit {
                 var dataArray = data as string[];
                 this.matRange = dataArray;
                 if (dataArray.length > 1) {
-                    this.matRangeString = dataArray[0] + " - " + dataArray[dataArray.length - 1];
+                    // this.matRangeString = dataArray[0] + " - " + dataArray[dataArray.length - 1];
+                    this.matRangeStartString = dataArray[0].toLowerCase();
+                    this.matRangeEndString = dataArray[dataArray.length - 1].toLowerCase();
                     this.bottomExpected = dataArray[0];
                 }
 
