@@ -406,7 +406,7 @@ export class QuestionsService {
     }
 
     // look for model-specific answer options
-    if (modelName && modelName.trim().length > 0) {
+    if (modelName.length > 0 && modelName.trim().length > 0) {
       let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
       if (!!model) {
         

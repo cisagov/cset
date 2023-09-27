@@ -533,11 +533,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults()
+        public IActionResult GetMaturityResults(bool spanishFlag = false)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId);
+            var maturity = manager.GetMaturityAnswers(assessmentId, spanishFlag);
 
             return Ok(maturity);
         }

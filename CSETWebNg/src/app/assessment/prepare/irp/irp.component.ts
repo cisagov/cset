@@ -28,6 +28,7 @@ import { IRPService } from '../../../services/irp.service';
 import { IRPResponse, IRP } from '../../../models/irp.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { ACETService } from '../../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-irp',
@@ -42,7 +43,8 @@ export class IRPComponent implements OnInit {
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         private irpSvc: IRPService,
-        public acetSvc: ACETService
+        public acetSvc: ACETService,
+        public transSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -50,7 +52,7 @@ export class IRPComponent implements OnInit {
     }
 
     loadFrameworks() {
-        this.irpSvc.getIRPList(this.acetSvc.spanishFlag).subscribe(
+        this.irpSvc.getIRPList(this.transSvc.getActiveLang() == "es").subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
             },
@@ -65,8 +67,4 @@ export class IRPComponent implements OnInit {
         this.irpSvc.postSelection(irp).subscribe();
     }
 
-    toggleSpanish(toggle: boolean) {
-        this.acetSvc.setSpanish(toggle);
-        this.loadFrameworks();
-    }
 }
