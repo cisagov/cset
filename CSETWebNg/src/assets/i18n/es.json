@@ -1,4 +1,18 @@
 {
+    "my assessments": "Mis Evaluaciones",
+    "import": "Importar",
+    "export all": "Exportar Todo",
+    "tools": "Herramientas",
+    "resource library": "Biblioteca de recursos",
+    "help": "Ayuda",
+    "new assessment": "Nueva Evaluación",
+    "status": "Estado",
+    "last modified": "Modificada",
+    "primary assessor": "Evaluador Principal",
+    "prevent encryption": "Prevenir el Cifrado",
+    "user language": "Idioma del Usuario",
+    "note language change": "Seleccione su idioma preferido.  Al cambiar el idioma sera dirijido a la pajina principal.",
+
     "prepare": "Preparar",
     "assessment configuration": "Configuratión de evaluación",
     "assessment information": "Datos de la evaluación",
@@ -17,8 +31,7 @@
     "filter": "Filtrar",
     "reviewed": "Revisado",
     "domain": "Dominio",
-    "user language": "Idioma del Usuario",
-    "note language change": "Seleccione su idioma preferido.  Al cambiar el idioma sera dirijido a la pajina principal.",
+   
 
     "contact": {
         "Contacts": "[ES] Contacts",
