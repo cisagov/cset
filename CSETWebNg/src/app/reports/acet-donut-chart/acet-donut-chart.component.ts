@@ -66,7 +66,7 @@ export class AcetDonutChartComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-    if (this.acetSvc.spanishFlag) {
+    if (this.transSvc.getActiveLang() == "es") {
       this.donutData.forEach(element => {
         element.name = this.transSvc.translate('level.' + element.name.toLowerCase());
       });

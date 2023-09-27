@@ -70,7 +70,8 @@
         "maturity results": "[ES] ACET Maturity Results",
         "actual level": "[ES] Actual Level",
         "assessment factor": "[ES] Assessment Factor",
-        "components": "[ES] Components"
+        "components": "[ES] Components",
+        "statements": "Declaración"
     },
 
     "buttons": {
