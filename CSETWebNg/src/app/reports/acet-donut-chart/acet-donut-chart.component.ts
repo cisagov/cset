@@ -62,13 +62,13 @@ export class AcetDonutChartComponent implements OnInit, OnChanges {
   constructor(
     public boSvc: BreakpointObserver,
     public acetSvc: ACETService,
-    public transSvc: TranslocoService
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
-    if (this.transSvc.getActiveLang() == "es") {
+    if (this.tSvc.getActiveLang() == "es") {
       this.donutData.forEach(element => {
-        element.name = this.transSvc.translate('level.' + element.name.toLowerCase());
+        element.name = this.tSvc.translate('level.' + element.name.toLowerCase());
       });
     }
     // using the observable so that we have an event to reevaluate

@@ -68,7 +68,7 @@ export class AcetDetailComponent implements OnInit {
         public navSvc: NavigationService,
         public acetSvc: ACETService,
         public layoutSvc: LayoutService,
-        private transSvc: TranslocoService
+        private tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -81,7 +81,7 @@ export class AcetDetailComponent implements OnInit {
     }
 
     loadMatDetails() {
-        if (this.transSvc.getActiveLang() == "es") {
+        if (this.tSvc.getActiveLang() == "es") {
             this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
                 "Inteligencia de Amenazas y Colaboración",
                 "Controles de Ciberseguridad",
