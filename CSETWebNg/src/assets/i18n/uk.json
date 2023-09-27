@@ -10,6 +10,8 @@
     "last modified": "Остання зміна",
     "primary assessor": "Первинний оцінювач",
     "prevent encryption": "запобігти шифруванню",
+    "user language": "Мова користувача",
+    "note language change": "Виберіть потрібну мову. Коли ви зміните мову, ви перейдете на головну сторінку.",
 
     "prepare": "Приготуйте",
     "assessment": "Оцінка",
@@ -33,8 +35,18 @@
     "demographics": "Демографія",
     "practices": "Практики",
     "requires review": "Потребує перегляду",
-    "next": "Далі",
-    "back": "Назад",
+
+    "buttons": {
+        "ok": "OK",
+        "save": "Зберегти",
+        "cancel": "Скасувати",
+        "change": "Змінити",
+        "remove": "Видалити",
+        "next": "Далі",
+        "back": "Назад"
+    },
+
+   
     "button-label": {
         "Y": "Так",
         "N": "Ні",
