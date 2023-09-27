@@ -48,7 +48,7 @@ export class ACETService {
         private http: HttpClient,
         private configSvc: ConfigService,
         public assessSvc: AssessmentService,
-        public transSvc: TranslocoService
+        public tSvc: TranslocoService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -302,10 +302,10 @@ export class ACETService {
 
     setSpanish(input: boolean) {
         if (input == true) {
-            this.transSvc.setActiveLang('es');
+            this.tSvc.setActiveLang('es');
         }
         else {
-            this.transSvc.setActiveLang('en');
+            this.tSvc.setActiveLang('en');
         }
         this.spanishFlag = input;
     }

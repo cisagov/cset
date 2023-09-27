@@ -22,7 +22,7 @@
 -------------------------->
 
 <div *transloco="let t" class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
+  <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">{{t('assessment configuration')}}</h3>
   <div *ngIf="this.configSvc.installationMode === 'ACET'">
     <div *ngIf="assessSvc.usesMaturityModel('ACET')" class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">

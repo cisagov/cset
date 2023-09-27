@@ -36,6 +36,7 @@ import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-assessment',
@@ -80,7 +81,8 @@ export class AssessmentComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public tSvc: TranslocoService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -90,6 +92,10 @@ export class AssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.evaluateWindowSize();
+
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.navSvc.buildTree();
+    });
   }
 
   setTab(tab) {
