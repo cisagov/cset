@@ -54,7 +54,7 @@ export class IrpSummaryComponent implements OnInit {
         public acetFilteringSvc: AcetFilteringService,
         public ncuaSvc: NCUAService,
         public layoutSvc: LayoutService,
-        public transSvc: TranslocoService
+        public tSvc: TranslocoService
     ) { }
 
     /**

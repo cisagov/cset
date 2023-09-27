@@ -70,7 +70,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public completionSvc: CompletionService,
     private dialog: MatDialog,
     public acetSvc: ACETService,
-    private transSvc: TranslocoService
+    private tSvc: TranslocoService
   ) {
 
     if (this.assessSvc.assessment == null) {
@@ -107,7 +107,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, null, this.transSvc.getActiveLang() == "es").subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, null, this.tSvc.getActiveLang() == "es").subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
