@@ -43,7 +43,6 @@ export class ACETService {
 
 
     apiUrl: string;
-    spanishFlag: boolean = false;
     constructor(
         private http: HttpClient,
         private configSvc: ConfigService,
@@ -72,11 +71,8 @@ export class ACETService {
 
 
     ////////////////////  Dashboard functions /////////////////////////////
-    getAcetDashboard(spanishFlag?: boolean) {
-        if (spanishFlag == null) {
-            spanishFlag = false;
-        }
-        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + spanishFlag);
+    getAcetDashboard() {
+        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + (this.transSvc.getActiveLang() == 'es'));
     }
 
     postSelection(selected: AcetDashboard) {
@@ -97,7 +93,7 @@ export class ACETService {
     * Returns the maturity details.
     */
     getMatDetailList() {
-        return this.http.get(this.apiUrl + 'getMaturityResults');
+        return this.http.get(this.apiUrl + 'getMaturityResults?spanishFlag=' + (this.transSvc.getActiveLang() == 'es'));
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 
@@ -299,31 +295,5 @@ export class ACETService {
 
         return level;
     }
-
-    setSpanish(input: boolean) {
-        if (input == true) {
-            this.tSvc.setActiveLang('es');
-        }
-        else {
-            this.tSvc.setActiveLang('en');
-        }
-        this.spanishFlag = input;
-    }
-/*
-    translateSpanishAnswer(answer: string) {
-        switch(answer) {
-            case 'Yes':
-                return 'Sí';
-            case 'No':
-                return 'No';
-            case 'N/A':
-                return 'N/A';
-            case 'Yes(C)':
-                return 'Sí(C)';
-            default:
-                return answer;
-        }
-    }
-    */
 }
 

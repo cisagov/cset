@@ -30,8 +30,7 @@
     "collapse all": "Desplegar todo",
     "filter": "Filtrar",
     "reviewed": "Revisado",
-    "domain": "Dominio",
-   
+    "domain": "[ES] Domain",
 
     "contact": {
         "Contacts": "Contactos",
@@ -59,9 +58,16 @@
 
     "acet": {
         "credit union": "Unión de crédito",
+        "credit union name": "Nombre de la cooperativa de crédito",
         "charter": "[ES] Charter",
         "assets": "Activos",
         "auto populate": "[ES] Auto-populated based on data provided"
+        "target maturity range": "[ES] Target Maturity Range",
+        "maturity results": "[ES] ACET Maturity Results",
+        "actual level": "[ES] Actual Level",
+        "assessment factor": "[ES] Assessment Factor",
+        "components": "[ES] Components",
+        "statements": "Declaración"
     },
 
     "titles": {
@@ -141,6 +147,8 @@
         "requires-review": "[ES] One or more controls in this category requires further review."
     },
     "level": {
+        "incomplete": "Incompleto",
+        "ad hoc": "[ES] Ad Hoc",
         "baseline": "Básico",
         "evolving": "En desarrollo",
         "intermediate": "Intermedio",
@@ -163,6 +171,7 @@
         
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "category": "Categoría",
+        "total %": "Totale %",
         "totals": "Totales",
         "risk levels": "Niveles de iesgo",
         "override risk level": "Anular el nivel de riesgo",
@@ -171,12 +180,6 @@
         "override reason placeholder": "[ES] Please provide an explanation for why the total inherent risk profile is being overriden.",
 
         "No Override": "[ES] No Override",
-        "1 - Least": "1 - Insignificante",
-        "2 - Minimal": "2 - Mínimo",
-        "3 - Moderate": "3 - Moderado",
-        "4 - Significant": "4 - Significativo",
-        "5 - Most": "5 - Mayor",
-
         "Least": "Insignificante",
         "Minimal": "Mínimo",
         "Moderate": "Moderado",

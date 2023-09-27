@@ -906,14 +906,14 @@ namespace CSETWebCore.Business.Maturity
             //
             if (spanishFlag)
             {
-                Dictionary<int, MATURITY_GROUPINGS> dictionary = AcetBusiness.buildGroupingDictionary();
+                Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
                 allGroupings.ForEach(
                     group => {
-                        var output = new MATURITY_GROUPINGS();
-                        var temp = new MATURITY_GROUPINGS();
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
                         if (dictionary.TryGetValue(group.Grouping_Id, out output))
                         {
-                            group.Title = dictionary[group.Grouping_Id].Title;
+                            group.Title = dictionary[group.Grouping_Id].Spanish_Title;
                         }
                     });
             }
@@ -1287,10 +1287,10 @@ namespace CSETWebCore.Business.Maturity
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-        public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
+        public List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
-            return CalculateComponentValues(data, assessmentId);
+            return CalculateComponentValues(data, assessmentId, spanishFlag);
         }
 
         public List<MaturityDomain> GetIseMaturityAnswers(int assessmentId)
@@ -1318,9 +1318,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
+        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId, bool spanishFlag = false)
         {
-
             var maturityDomains = new List<MaturityDomain>();
             var domains = _context.FINANCIAL_DOMAINS.ToList();
             var standardCategories = _context.FINANCIAL_DETAILS.ToList();
@@ -1335,6 +1334,12 @@ namespace CSETWebCore.Business.Maturity
                                  };
 
             var maturityRange = GetMaturityRange(assessmentId);
+            Dictionary<string, GroupingSpanishRow> dictionary = new Dictionary<string, GroupingSpanishRow>();
+
+            if (spanishFlag)
+            {
+                dictionary = AcetBusiness.buildResultsGroupingDictionary();
+            }
 
             if (maturity.Count > 0)
             {
@@ -1545,6 +1550,39 @@ namespace CSETWebCore.Business.Maturity
 
                     double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
                     maturityDomain.TargetPercentageAchieved = AchPerTol;
+
+                    //
+                    if (spanishFlag)
+                    {
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
+                        if (dictionary.TryGetValue(maturityDomain.DomainName, out output))
+                        {
+                            maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
+                            maturityDomain.Assessments.ForEach(
+                                assessment => {
+                                    var output = new GroupingSpanishRow();
+                                    var temp = new GroupingSpanishRow();
+                                    // test if not finding a match will safely skip
+                                    if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
+                                    {
+                                        assessment.AssessmentFactor = dictionary[assessment.AssessmentFactor].Spanish_Title;
+
+                                        assessment.Components.ForEach(
+                                            component => {
+                                                var output = new GroupingSpanishRow();
+                                                var temp = new GroupingSpanishRow();
+                                                // test if not finding a match will safely skip
+                                                if (dictionary.TryGetValue(component.ComponentName, out output))
+                                                {
+                                                    component.ComponentName = dictionary[component.ComponentName].Spanish_Title;
+                                                }
+                                            });
+                                    }
+                                });
+                        }
+                    }
+                    //
 
                     maturityDomains.Add(maturityDomain);
                 }
