@@ -605,6 +605,7 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
+import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 
 
 @NgModule({
@@ -1166,6 +1167,7 @@ import { TranslocoService } from '@ngneat/transloco';
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
+        UserLanguageComponent,
     ],
     providers: [
         TranslocoService,
@@ -1173,23 +1175,27 @@ import { TranslocoService } from '@ngneat/transloco';
         AuthenticationService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
+            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, transloco: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
-                        return authSvc.checkLocal();
+                        authSvc.getUserLang().subscribe((resp: any) => {
+                            console.log(resp.lang);
+                            transloco.setActiveLang(resp.lang);
+                            return authSvc.checkLocal();
+                        });
                     });
                 };
             },
-            deps: [ConfigService, AuthenticationService],
+            deps: [ConfigService, AuthenticationService, TranslocoService],
             multi: true
         },
-        {
-            // This is not working correctly; the service still doesn't get loaded before app startup
-            provide: APP_INITIALIZER,
-            multi: true,
-            useFactory: preloadLanguage,
-            deps: [TranslocoService]
-        },
+        // {
+        //     // This is not working correctly; the service still doesn't get loaded before app startup
+        //     provide: APP_INITIALIZER,
+        //     multi: true,
+        //     useFactory: preloadLanguage,
+        //     deps: [TranslocoService]
+        // },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -1241,13 +1247,17 @@ import { TranslocoService } from '@ngneat/transloco';
 
 export class AppModule { }
 
-export function preloadLanguage(transloco: TranslocoService) {
-    return function () {
-        return () => {
-            console.log('preloadUser');
-            let lang = 'EN';
-            transloco.setActiveLang(lang);
-            return transloco.load(lang).toPromise();
-        }
-    };
-}
+// export function preloadLanguage(transloco: TranslocoService) {
+//     return function () {
+//         return () => {
+//             console.log('preloadUser');
+
+//             this.authSvc.getUserLang().subscribe((resp: any) => {
+//                 console.log(resp);
+//                 this.lang = resp.lang.toLowerCase();
+//                 transloco.setActiveLang(this.lang);
+//                 return transloco.load(this.lang).toPromise();
+//             });
+//         }
+//     };
+// }

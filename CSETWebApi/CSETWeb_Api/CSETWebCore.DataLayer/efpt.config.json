@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Model2",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -1388,7 +1388,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "(localdb)\\INLLocalDb2022.CSETWeb",
+   "UiHint": "inl621231.CSETWeb.dbo",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,

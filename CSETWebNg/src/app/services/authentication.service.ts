@@ -295,6 +295,14 @@ export class AuthenticationService {
     });
   }
 
+  getUserLang() {
+    return this.http.get(this.configSvc.apiUrl + 'contacts/userlang');
+  }
+
+  setUserLang(data: string) {
+    return this.http.post(this.configSvc.apiUrl + 'contacts/userlang', JSON.stringify({lang: data}), headers);
+  }
+
   updateUser(data: CreateUser): Observable<CreateUser> {
     return this.http.post(this.configSvc.apiUrl + 'contacts/UpdateUser', data, headers);
   }
