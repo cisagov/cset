@@ -39,6 +39,7 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { CompletionService } from '../../../services/completion.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-maturity-questions',
@@ -77,7 +78,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private tSvc: TranslocoService
   ) {
 
     // listen for NavigationEnd to know when the page changed
@@ -88,6 +90,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.groupingId = +this.route.snapshot.params['grp'];
         this.loadGrouping(+this.groupingId);
       }
+    });
+
+    this.tSvc.langChanges$.subscribe((event) => {
+      console.log(event);
     });
 
 
@@ -103,6 +109,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+   
+
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];

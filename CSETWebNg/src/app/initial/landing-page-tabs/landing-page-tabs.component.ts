@@ -74,6 +74,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     }
   }
 
+
   setTab(tab) {
     this.currentTab = tab;
   }

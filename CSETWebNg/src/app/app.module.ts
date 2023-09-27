@@ -1175,12 +1175,11 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
         AuthenticationService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, transloco: TranslocoService) => {
+            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
                         authSvc.getUserLang().subscribe((resp: any) => {
-                            console.log(resp.lang);
-                            transloco.setActiveLang(resp.lang);
+                            tSvc.setActiveLang(resp.lang);
                             return authSvc.checkLocal();
                         });
                     });
@@ -1189,13 +1188,6 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
             deps: [ConfigService, AuthenticationService, TranslocoService],
             multi: true
         },
-        // {
-        //     // This is not working correctly; the service still doesn't get loaded before app startup
-        //     provide: APP_INITIALIZER,
-        //     multi: true,
-        //     useFactory: preloadLanguage,
-        //     deps: [TranslocoService]
-        // },
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -1246,18 +1238,3 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
 })
 
 export class AppModule { }
-
-// export function preloadLanguage(transloco: TranslocoService) {
-//     return function () {
-//         return () => {
-//             console.log('preloadUser');
-
-//             this.authSvc.getUserLang().subscribe((resp: any) => {
-//                 console.log(resp);
-//                 this.lang = resp.lang.toLowerCase();
-//                 transloco.setActiveLang(this.lang);
-//                 return transloco.load(this.lang).toPromise();
-//             });
-//         }
-//     };
-// }

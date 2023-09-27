@@ -22,6 +22,7 @@
 -------------------------->
 
 <div *transloco="let t" class="white-panel d-flex flex-column justify-content-start flex-11a">
+
   <h3 *ngIf="this.configSvc.installationMode !== 'ACET'" class="mb-3">Assessment Configuration</h3>
   <h3 *ngIf="this.configSvc.installationMode === 'ACET'" class="mb-3">{{ t('demographics') }}</h3>
 

@@ -20,9 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
+<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <h3 class="mb-3">Assessment Configuration</h3>
+        <h3 class="mb-3">{{t('assessment configuration')}}</h3>
 
         <app-assessment-detail class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-detail>
         
