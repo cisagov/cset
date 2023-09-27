@@ -97,7 +97,10 @@ export class ACETService {
     * Returns the maturity details.
     */
     getMatDetailList() {
-        return this.http.get(this.apiUrl + 'getMaturityResults');
+        if (this.spanishFlag == null) {
+            this.spanishFlag = false;
+        }
+        return this.http.get(this.apiUrl + 'getMaturityResults?spanishFlag=' + this.spanishFlag);
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 

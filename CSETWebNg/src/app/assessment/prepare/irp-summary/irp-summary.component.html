@@ -47,7 +47,11 @@
         <div *ngIf="!layoutSvc.hp" class="d-table w-100">
             <div class="d-table-row">
                 <div class="d-table-cell pl-3 pb-3">
-                    {{ t('override risk level is') }} &quot;<span class="blue-text font-weight-bold">{{ t(overrideLabel) }}&quot;</span>
+                    <!-- below is .substring(4) to allow Transloco to remain DRY (ex. "1 - Least" turns into "Least") -->
+                    {{ t('override risk level is') }} &quot;
+                    <span class="blue-text font-weight-bold">
+                        {{ overrideLabel.substring(0, 4) + t(overrideLabel.substring(4)) }}&quot;
+                    </span>
                 </div>
             </div>
             <div class="d-table-row">
@@ -58,11 +62,11 @@
                     <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
                         (change)="changeInfoIrp();">
                         <option [ngValue]="0">{{ t('No Override') }}</option>
-                        <option [ngValue]="1">{{ t('1 - Least') }}</option>
-                        <option [ngValue]="2">{{ t('2 - Minimal') }}</option>
-                        <option [ngValue]="3">{{ t('3 - Moderate') }}</option>
-                        <option [ngValue]="4">{{ t('4 - Significant') }}</option>
-                        <option [ngValue]="5">{{ t('5 - Most') }}</option>
+                        <option [ngValue]="1">1 - {{ t('Least') }}</option>
+                        <option [ngValue]="2">2 - {{ t('Minimal') }}</option>
+                        <option [ngValue]="3">3 - {{ t('Moderate') }}</option>
+                        <option [ngValue]="4">4 - {{ t('Significant') }}</option>
+                        <option [ngValue]="5">5 - {{ t('Most') }}</option>
                     </select>
                 </div>
             </div>
@@ -91,11 +95,11 @@
                 <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
                     (change)="changeInfoIrp();">
                     <option [ngValue]="0">{{ t('No Override') }}</option>
-                    <option [ngValue]="1">{{ t('1 - Least') }}</option>
-                    <option [ngValue]="2">{{ t('2 - Minimal') }}</option>
-                    <option [ngValue]="3">{{ t('3 - Moderate') }}</option>
-                    <option [ngValue]="4">{{ t('4 - Significant') }}</option>
-                    <option [ngValue]="5">{{ t('5 - Most') }}</option>
+                    <option [ngValue]="1">1 - {{ t('Least') }}</option>
+                    <option [ngValue]="2">2 - {{ t('Minimal') }}</option>
+                    <option [ngValue]="3">3 - {{ t('Moderate') }}</option>
+                    <option [ngValue]="4">4 - {{ t('Significant') }}</option>
+                    <option [ngValue]="5">5 - {{ t('Most') }}</option>
                 </select>
             </div>
 
