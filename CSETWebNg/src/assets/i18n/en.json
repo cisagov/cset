@@ -1,4 +1,18 @@
 {
+    "my assessments": "My Assessments",
+    "import": "Import",
+    "export all": "Export All",
+    "tools": "Tools",
+    "resource library": "Resource Library",
+    "help": "Help",
+    "new assessment": "New Assessment",
+    "status": "Status",
+    "last modified": "Last Modified",
+    "primary assessor": "Primary Assessor",
+    "prevent encryption": "Prevent Encryption",
+    "user language": "User Language",
+    "note language change": "Select your desired language.  Note that upon changing the display language you will be directed to the My Assessments page.",
+
     "prepare": "Prepare",
     "assessment": "Assessment",
     "results": "Results",
@@ -21,6 +35,15 @@
     "filter": "Filter",
     "reviewed": "Reviewed",
     "domain": "Domain",
+
+    "buttons": {
+        "ok": "OK",
+        "save": "Save",
+        "cancel": "Cancel",
+        "change": "Change",
+        "remove": "Remove"
+    },
+
 
     "contact": {
         "Contacts": "Contacts",
