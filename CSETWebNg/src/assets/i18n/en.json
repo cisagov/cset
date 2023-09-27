@@ -83,7 +83,8 @@
         "maturity results": "ACET Maturity Results",
         "actual level": "Actual Level",
         "assessment factor": "Assessment Factor",
-        "components": "Components"
+        "components": "Components",
+        "statements": "Statements"
     },
     "button-label": {
         "Y": "Yes",

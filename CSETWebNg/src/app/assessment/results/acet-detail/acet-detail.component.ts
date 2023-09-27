@@ -29,6 +29,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { LayoutService } from '../../../services/layout.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -66,7 +67,8 @@ export class AcetDetailComponent implements OnInit {
         private assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public acetSvc: ACETService,
-        public layoutSvc: LayoutService
+        public layoutSvc: LayoutService,
+        private transSvc: TranslocoService
     ) { }
 
     ngOnInit() {
@@ -79,7 +81,7 @@ export class AcetDetailComponent implements OnInit {
     }
 
     loadMatDetails() {
-        if (this.acetSvc.spanishFlag) {
+        if (this.transSvc.getActiveLang() == "es") {
             this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
                 "Inteligencia de Amenazas y Colaboración",
                 "Controles de Ciberseguridad",
