@@ -77,7 +77,7 @@ interface UserAssessment {
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
-  sortedAssessments: UserAssessment[] = null;
+  sortedAssessments: UserAssessment[] = [];
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
