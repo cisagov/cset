@@ -130,7 +130,7 @@
                             {{ q.displayNumber }}
                         </span>
                         <span class="question-mat-level-name ml-4" *ngIf="showLevelIndicator(q)">
-                            {{ acetSvc.spanishFlag ? spanishTranslate(q.maturityLevelName) : q.maturityLevelName }}
+                            {{ 'level.' + q.maturityLevelName.toLowerCase() | transloco }}
                         </span>
                     </div>
 

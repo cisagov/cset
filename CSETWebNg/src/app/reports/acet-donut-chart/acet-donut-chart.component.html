@@ -20,5 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<ngx-charts-pie-grid [view]="view" [scheme]="colorScheme" [label]="label" [designatedTotal]="100" [results]="donutData" [minWidth]="minWidth" (select)="onSelect($event)">
-</ngx-charts-pie-grid>
+<div *transloco="let t">
+  <ngx-charts-pie-grid [view]="view" [scheme]="colorScheme" [label]="t('irp.' + label.toLowerCase())" [designatedTotal]="100" [results]="donutData" [minWidth]="minWidth" (select)="onSelect($event)">
+  </ngx-charts-pie-grid>
+</div>

@@ -35,6 +35,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { MaturityFilteringService } from '../../../services/filtering/maturity-filtering/maturity-filtering.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ACETService } from '../../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -68,7 +69,8 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     public completionSvc: CompletionService,
     private dialog: MatDialog,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private transSvc: TranslocoService
   ) {
 
     if (this.assessSvc.assessment == null) {
@@ -105,7 +107,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   loadQuestions() {
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, null, this.acetSvc.spanishFlag).subscribe(
+    this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, null, this.transSvc.getActiveLang() == "es").subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
@@ -185,8 +187,4 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
     this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
   }
 
-  toggleSpanish(toggle: boolean) {
-    this.acetSvc.setSpanish(toggle);
-    this.loadQuestions();
-  }
 }

@@ -88,9 +88,16 @@
     },
     "acet": {
         "credit union": "Credit Union",
+        "credit union name": "Credit Union Name",
         "charter": "Charter",
         "assets": "Assets",
-        "auto populate": "Auto-populated based on data provided"
+        "auto populate": "Auto-populated based on data provided",
+        "target maturity range": "Target Maturity Range",
+        "maturity results": "ACET Maturity Results",
+        "actual level": "Actual Level",
+        "assessment factor": "Assessment Factor",
+        "components": "Components",
+        "statements": "Statements"
     },
     "button-label": {
         "Y": "Yes",
@@ -139,6 +146,8 @@
         "Details/Standard": ""
     },
     "level": {
+        "incomplete": "Incomplete",
+        "ad hoc" : "Ad Hoc",
         "baseline": "Baseline",
         "evolving": "Evolving",
         "intermediate": "Intermediate",
@@ -158,6 +167,7 @@
         "irp desc end": "across five categories. It is measured on a scale from least risk to most risk in this order below:",
         "inherent risk profile summary": "Inherent Risk Profile Summary",
         "category": "Category",
+        "total %": "Total %",
         "totals": "Totals",
         "risk levels": "Risk Levels",
         "override risk level": "Override Risk Level",
@@ -165,11 +175,6 @@
         "override reason": "Override Reason",
         "override reason placeholder": "Please provide an explanation for why the total inherent risk profile is being overriden.",
         "No Override": "No Override",
-        "1 - Least": "1 - Least",
-        "2 - Minimal": "Minimal",
-        "3 - Moderate": "3 - Moderate",
-        "4 - Significant": "4 - Significant",
-        "5 - Most": "5 - Most",
         "Least": "Least",
         "Minimal": "Minimal",
         "Moderate": "Moderate",

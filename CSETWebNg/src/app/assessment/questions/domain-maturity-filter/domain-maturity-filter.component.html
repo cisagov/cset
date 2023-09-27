@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 --------------------------> 
-<div class="btn-group btn-group-toggle my-1">
+<div *transloco="let t; read:'level'" class="btn-group btn-group-toggle my-1">
 
   <label *ngFor="let l of maturityLevels" class="btn btn-app-mode" 
     [class.font-weight-bold]="l.applicable"
@@ -30,7 +30,7 @@
     <input class="form-check-input" type="checkbox" ngbButton 
       [ngModel]="getNgModel(l)"
       (ngModelChange)="filterChanged(l.level, $event)">
-      {{ acetSvc.spanishFlag ? spanishTranslate(l.label) : l.label }}
+      {{ t(l.label.toLowerCase()) }}
     </label>    
 
 </div>
