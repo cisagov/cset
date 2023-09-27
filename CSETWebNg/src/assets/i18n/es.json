@@ -17,6 +17,8 @@
     "filter": "Filtrar",
     "reviewed": "Revisado",
     "domain": "Dominio",
+    "user language": "Idioma del Usuario",
+    "note language change": "Seleccione su idioma preferido.  Al cambiar el idioma sera dirijido a la pajina principal.",
 
     "contact": {
         "Contacts": "[ES] Contacts",
@@ -52,6 +54,17 @@
         "assets": "[ES] Assets",
         "auto populate": "[ES] Auto-populated based on data provided"
     },
+
+    "buttons": {
+        "ok": "Aceptar",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "change": "Cambiar",
+        "remove": "Quitar",
+        "next": "Siguiente",
+        "back": "Previo"
+    },
+
     "button-label": {
         "Y": "Sí",
         "N": "No",

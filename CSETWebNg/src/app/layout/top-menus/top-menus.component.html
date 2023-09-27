@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="collapse navbar-collapse" id="csetNavbarCollapse">
+<div *transloco="let t" class="collapse navbar-collapse" id="csetNavbarCollapse">
 
     <div *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
@@ -272,6 +272,10 @@
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
                 <span class="cset-icons-key fs-base mr-2 align-middle"></span>
                 <span>Change Password</span>
+            </button>
+            <button mat-menu-item (click)="editLanguage()">
+                <span class="fas fa-language fs-base mr-2 align-middle"></span>
+                <span>{{t('user language')}}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base mr-2 align-middle"></span>

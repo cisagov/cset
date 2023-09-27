@@ -45,6 +45,8 @@ namespace CSETWebCore.DataLayer.Model
         [Required]
         public bool? PreventEncrypt { get; set; }
         public bool CisaAssessorWorkflow { get; set; }
+        [StringLength(5)]
+        public string Lang { get; set; }
 
         [InverseProperty("User")]
         public virtual USER_SECURITY_QUESTIONS USER_SECURITY_QUESTIONS { get; set; }
