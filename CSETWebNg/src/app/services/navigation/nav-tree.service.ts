@@ -28,6 +28,7 @@ import { PageVisibilityService } from './page-visibility.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,8 @@ export class NavTreeService implements OnChanges {
 
   constructor(
     private assessSvc: AssessmentService,
-    private pageVisibliltySvc: PageVisibilityService
+    private pageVisibliltySvc: PageVisibilityService,
+    private tSvc: TranslocoService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -119,11 +121,19 @@ export class NavTreeService implements OnChanges {
   domToNav(domNodes: HTMLCollection, navNodes: NavTreeNode[]) {
     Array.from(domNodes).forEach((workflowNode: HTMLElement) => {
 
-      // nodes without a 'displaytext' attribute are ignored
-      if (!!workflowNode.attributes['displaytext']) {
+      // nodes without a 'displaytext' or 'd' attribute are ignored
+      if (!!workflowNode.attributes['displaytext'] || !!workflowNode.attributes['d']) {
+
+        let displaytext = workflowNode.attributes['displaytext']?.value;
+        let d = workflowNode.attributes['d']?.value;
+
+        // localize the 'd' attribute
+        if (!!d) {
+          displaytext = this.tSvc.translate(`titles.${d}`);
+        }
 
         const navNode: NavTreeNode = {
-          label: workflowNode.attributes['displaytext'].value,
+          label: displaytext,
           value: workflowNode.id ?? 0,
           children: [],
           expandable: true,
@@ -157,9 +167,10 @@ export class NavTreeService implements OnChanges {
    */
   adjustNavNode(node: NavTreeNode) {
     if (node.value == 'maturity-questions') {
-      const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias;
+      // Models may use a specific term (alias) for "questions" or "practices"
+      const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias?.toLowerCase();
       if (!!alias) {
-        node.label = alias;
+        node.label = this.tSvc.translate(`titles.${alias}`);
       }
     }
   }

@@ -12,7 +12,6 @@
     "prevent encryption": "Prevent Encryption",
     "user language": "User Language",
     "note language change": "Select your desired language.  Note that upon changing the display language you will be directed to the My Assessments page.",
-
     "prepare": "Prepare",
     "assessment": "Assessment",
     "results": "Results",
@@ -35,21 +34,36 @@
     "filter": "Filter",
     "reviewed": "Reviewed",
     "domain": "Domain",
-
     "buttons": {
         "ok": "OK",
         "save": "Save",
         "cancel": "Cancel",
         "change": "Change",
-        "remove": "Remove"
+        "remove": "Remove",
+        "email": "Email"
     },
-
-
+    "titles": {
+        "prepare": "Prepare",
+        "assessment": "Assessment",
+        "results": "Results",
+        "assessment configuration": "Assessment Configuration",
+        "assessment information": "Assessment Information",
+        "security assurance level (sal)": "Security Assurance Level (sal)",
+        "standard questions": "Standard Questions",
+        "maturity questions": "Maturity Questions",
+        "security practices": "Security Practices",
+        "practices": "practices",
+        "imr tutorial": "IMR Tutorial",
+        "cmmc tutorial": "CMMC Tutorial",
+        "cis tutorial": "CIS Tutorial",
+        "edm tutorial": "EDM Tutorial",
+        "crr tutorial": "CRR Tutorial",
+        "rra tutorial": "Ransomware Readiness Tutorial"
+    },
     "contact": {
         "Contacts": "Contacts",
         "Add Contact": "Add Contacts",
         "Email Contacts": "Email Contacts",
-
         "Assessment Owner": "Assessment Owner",
         "First Name": "First Name",
         "Last Name": "Last Name",
@@ -59,7 +73,7 @@
         "Site Name": "Site Name",
         "Cell Phone": "Cell Phone",
         "Office Phone": "Office Phone",
-        "Email": "Email",
+        "email": "Email",
         "Email Address": "Email Address",
         "Emergency Communications Protocol": "Emergency Communications Protocol",
         "Primary point of contact": "Primary point of contact",
@@ -72,7 +86,6 @@
         "Change": "Change",
         "Remove": "Remove"
     },
-
     "acet": {
         "credit union": "Credit Union",
         "charter": "Charter",
@@ -110,48 +123,39 @@
         "I": "Incomplete",
         "Iss": "No with Issue(s)",
         "S": "",
-
         "Y-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
         "I-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
         "S-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
         "N-CPG": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
-      
         "FI-C2M2": "Fully Implemented - Complete",
         "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
         "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
         "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
-
         "A-ACET": "Yes(C)",
-
         "mfr-flag": "This control requires further review",
         "requires-review": "One or more controls in this category requires further review.",
         "supp-guidance": "Supplemental Guidance",
         "Exam Step": "",
         "Details/Standard": ""
     },
-    
     "level": {
         "baseline": "Baseline",
         "evolving": "Evolving",
         "intermediate": "Intermediate",
         "advanced": "Advanced",
         "innovative": "Innovative",
-
         "baseline-desc": "very limited use of technology.",
         "evolving-desc": "limited complexity in terms of the technology it uses.",
         "intermediate-desc": "uses technology that may be somewhat complex in terms of volume and sophistication.",
         "advanced-desc": "uses complex technology in terms of scope and sophistication.",
         "innovative-desc": "uses extremely complex technology to deliver myriad products and services."
     },
-
     "irp": {
         "Inherent Risk": "Inherent Risk",
         "inherent risk profiles": "Inherent Risk Profiles",
-
         "irp desc start": "The IRP has",
         "five risk areas": "five risk areas",
         "irp desc end": "across five categories. It is measured on a scale from least risk to most risk in this order below:",
-
         "inherent risk profile summary": "Inherent Risk Profile Summary",
         "category": "Category",
         "totals": "Totals",
@@ -160,14 +164,12 @@
         "override risk level is": "Override Risk Level is",
         "override reason": "Override Reason",
         "override reason placeholder": "Please provide an explanation for why the total inherent risk profile is being overriden.",
-
         "No Override": "No Override",
         "1 - Least": "1 - Least",
         "2 - Minimal": "Minimal",
         "3 - Moderate": "3 - Moderate",
         "4 - Significant": "4 - Significant",
         "5 - Most": "5 - Most",
-
         "Least": "Least",
         "Minimal": "Minimal",
         "Moderate": "Moderate",
@@ -178,13 +180,11 @@
         "Question filters": "Question Filters",
         "Statement filters": "Statement Filters",
         "select deselect all": "Select/Deselect All",
-
         "show unanswered questions": "Show unanswered questions",
         "show questions with comments": "Show questions with comments",
         "show questions with notes": "Show questions with notes",
         "show questions marked for review": "Show questions marked for review",
         "show questions with observations": "Show questions with observations",
-
         "show unanswered statements": "Show unanswered statements",
         "show statements with comments": "Show statements with comments",
         "show statements with notes": "Show statements with notes",

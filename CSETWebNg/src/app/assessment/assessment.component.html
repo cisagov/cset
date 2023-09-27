@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
+<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
   <!-- Tabs -->
   <div class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
@@ -42,7 +42,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
-            <span class="nav-tab-text ml-2">Prepare</span>
+            <span class="nav-tab-text ml-2">{{t('titles.prepare')}}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
@@ -50,7 +50,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
-            <span class="nav-tab-text ml-2">Assessment</span>
+            <span class="nav-tab-text ml-2">{{t('titles.assessment')}}</span>
           </button>
         </li>
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
@@ -58,7 +58,7 @@
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results"></span>
-            <span class="nav-tab-text ml-2">Results</span>
+            <span class="nav-tab-text ml-2">{{t('titles.results')}}</span>
           </button>
         </li>
       </ul>

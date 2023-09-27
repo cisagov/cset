@@ -40,7 +40,7 @@
                                 class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">Import</label>
+                                <label for="importFile" class="m-0">{{t('import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
                             </label>
@@ -68,7 +68,7 @@
                                 matTooltip="Export a copy of all assessments to another location."
                                 [disabled]="exportAllInProgress">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Export All</span>
+                                <span class="icon-link-button-text-dark">{{t('export all')}}</span>
                             </button>
 
                             <!-- If they have the ncua switch we need to account for whether they want to export ACET's or ISE's -->
@@ -106,7 +106,7 @@
                             [disabled]="disabledEncrypt"
                             matTooltip="Stops the 'enter password' screen from appearing on export"
                             style="margin-left: auto; margin-right: 0; border: 2px solid gray">
-                            <label style="margin-top: 15px; padding-right: 10px;">Prevent Encryption</label>
+                            <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
                         </mat-checkbox>
 
                     </div>
@@ -206,8 +206,8 @@
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
-                        style="width:15%;">Primary Assessor</th>
-                    <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
+                        style="width:15%;">{{t('primary assessor')}}</th>
+                    <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
                     <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                     <th aria-label="export assessment" style="width:5%;"></th>
                     <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
@@ -318,7 +318,7 @@
                 <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
                 <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
                 <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
-                <th aria-label="status" mat-sort-header="status" style="width:15%;">Status</th>
+                <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
                 <th aria-label="merge assessment" style="width:5%;"></th>
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
