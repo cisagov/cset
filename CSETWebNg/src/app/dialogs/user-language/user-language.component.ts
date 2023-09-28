@@ -18,7 +18,6 @@ export class UserLanguageComponent implements OnInit {
     { value: "uk", name: "українська" }
   ];
 
-  @Output() langChangeEvent = new EventEmitter<string>();
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
@@ -41,9 +40,7 @@ export class UserLanguageComponent implements OnInit {
   save() {
     this.tSvc.setActiveLang(this.langSelection);
     this.authSvc.setUserLang(this.langSelection).subscribe(() => {
-      // broadcast an event in case the underlying page needs to hear it and 
-      // make a server call to get refreshed data for the new language
-      this.langChangeEvent.emit(`LANG=${this.langSelection}`);
+      // 
     },
       error => console.error('Error updating user langugage: ' + error.message));
     this.dialog.close();

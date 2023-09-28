@@ -45,9 +45,9 @@ import { TranslocoService } from '@ngneat/transloco';
   selector: 'app-maturity-questions',
   templateUrl: './maturity-questions.component.html'
 })
-export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
+export class MaturityQuestionsComponent implements OnInit {
 
-  groupings: QuestionGrouping[] = null;
+  groupings: QuestionGrouping[] = [];
   pageTitle: string = '';
   modelId: number;
   modelName: string = '';
@@ -57,7 +57,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   loaded = false;
 
-  grouping: QuestionGrouping;
+  grouping: QuestionGrouping | null;
   groupingId: Number;
   title: string;
 
@@ -93,7 +93,7 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     });
 
     this.tSvc.langChanges$.subscribe((event) => {
-      console.log(event);
+      this.load();
     });
 
 
@@ -108,9 +108,17 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.assessSvc.currentTab = 'questions';
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
-   
+    this.load();
+  }
 
+  /**
+   * 
+   */
+  load() {
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
@@ -122,19 +130,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   *
-   */
-  ngAfterViewInit() {
-  }
-
   isNcuaModel() {
     if (this.modelName == 'ACET' || this.modelName == 'ISE') {
       return true;
     }
     return false;
   }
-
 
   /**
    * Returns the URL of the Questions page in the user guide.
