@@ -68,8 +68,7 @@ export class NavTreeService implements OnChanges {
    * 
    */
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('CCC-nav-tree service onChanges');
-    console.log(changes);
+
   }
 
   /**
@@ -78,23 +77,15 @@ export class NavTreeService implements OnChanges {
    */
   buildTree(workflow: Document, magic: string) {
     if (this.magic !== magic) {
-      console.log('buildTree - magic compare failed');
+      console.warn('buildTree - magic compare failed');
       return;
     }
 
     this.workflow = workflow;
 
-    // if (localStorage.getItem('tree')) {
-    //   let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
-    //   this.dataSource.data = <NavTreeNode[]>tree;
-    // } else {
-    //   this.dataSource.data = this.buildTocData();
-    // }
-
     this.dataSource.data = this.buildTocData();
     this.tocControl.dataNodes = this.dataSource.data;
 
-    //localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
@@ -203,7 +194,6 @@ export class NavTreeService implements OnChanges {
    */
   setQuestionsTree() {
     const d = this.dataSource.data;
-    this.dataSource.data = null;
     this.dataSource.data = d;
   }
 

@@ -40,7 +40,7 @@
                                 class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">{{t('import')}}</label>
+                                <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
                             </label>
@@ -256,7 +256,7 @@
                                 (click)="removeAssessment(assessment, i)"
                                 matTooltip="Permanently remove this assessment.">
                                 <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Remove</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
                         </td>
                         <td>
@@ -265,7 +265,7 @@
                                 (click)="clickDownloadLink(assessment.assessmentId)"
                                 matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Export</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
                         </td>
                         <td *ngIf="showColumn('analytics')">
@@ -274,7 +274,7 @@
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
                                 matTooltip="View the analytics for this assessment.">
                                 <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Analytics</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
                             </button>
                         </td>
                     </tr>
