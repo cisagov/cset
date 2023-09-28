@@ -1069,6 +1069,11 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.form-check-input:focus {
+  background-color: $primary-color;
+  color: $active-text-color;
+}
+
 .btn-pc-only {
   display: inline-block;
 }

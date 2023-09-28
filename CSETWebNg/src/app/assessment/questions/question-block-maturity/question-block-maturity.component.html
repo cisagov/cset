@@ -91,23 +91,20 @@
                 <div *ngIf="!q.isParentQuestion">
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                        <!-- <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center"
-                            [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelName, option)"> -->
-                        <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center"
+                        <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center" tabindex="0"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
                             [matTooltip]="'tooltip.' + questionsSvc.findAnsDefinitionTransloco(maturityModelName, option) | transloco">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
-                                (click)="storeAnswer(q, option)" [checked]="q.answer === option">
+                                (click)="storeAnswer(q, option)" [checked]="q.answer === option"
+                                (keydown)="checkAnswerKeyPress($event, q, option)">
                                 {{ 'button-label.' + questionsSvc.findAnsDefinitionTransloco(maturityModelName, option) | transloco }}
-                                <!-- {{ questionsSvc.answerButtonLabel(maturityModelName, option) }} -->
                         </label>
                         <!-- Mark For Review Flag  -->
                         <label class="mr-0 ml-2 btn form-check-label btn-mfr d-flex align-items-center"
                             [class.answer-selected]="q.markForReview === true"
                             [matTooltip]="('tooltip.mfr-flag' | transloco)">
-                            <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
-                                checked="{{q.markForReview === true}}">
+                            <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" (keydown)="checkReviewKeyPress($event, q)"
+                                tabindex="0" checked="{{q.markForReview === true}}">
                             <span class="cset-icons-flag-dark fs-base"></span>
                         </label>
                     </div>
