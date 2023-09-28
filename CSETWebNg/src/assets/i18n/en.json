@@ -1,7 +1,5 @@
 {
     "my assessments": "My Assessments",
-    "import": "Import",
-    "export all": "Export All",
     "tools": "Tools",
     "resource library": "Resource Library",
     "help": "Help",
@@ -40,7 +38,13 @@
         "cancel": "Cancel",
         "change": "Change",
         "remove": "Remove",
-        "email": "Email"
+        "email": "Email",
+        "login": "Login",
+        "logout": "Logout",
+        "analytics": "Analytics",
+        "export": "Export",
+        "import": "Import",
+        "export all": "Export All"
     },
     "titles": {
         "prepare": "Prepare",
