@@ -23,6 +23,8 @@
     "state province region": "State/Province/Region",
     "assessment type": "Assessment Type",
     "demographics": "Demographics",
+    "critical service name": "Critical Service Name",
+    "critical service description": "Critical Service Description",
     "practices": "Practices",
     "requires review": "Requires Review",
     "next": "Next",
@@ -44,7 +46,8 @@
         "analytics": "Analytics",
         "export": "Export",
         "import": "Import",
-        "export all": "Export All"
+        "export all": "Export All",
+        "export all to excel": "Export All to Excel"
     },
     "titles": {
         "prepare": "Prepare",
@@ -52,17 +55,22 @@
         "results": "Results",
         "assessment configuration": "Assessment Configuration",
         "assessment information": "Assessment Information",
-        "security assurance level (sal)": "Security Assurance Level (sal)",
+        "service demographics": "Service Demographics",
+        "critical service information": "Critical Service Information",
+        "security assurance level (sal)": "Security Assurance Level (SAL)",
         "standard questions": "Standard Questions",
         "maturity questions": "Maturity Questions",
         "security practices": "Security Practices",
+        "questions": "Questions",
         "practices": "practices",
+        "other remarks": "Other Remarks",
         "imr tutorial": "IMR Tutorial",
         "cmmc tutorial": "CMMC Tutorial",
         "cis tutorial": "CIS Tutorial",
         "edm tutorial": "EDM Tutorial",
         "crr tutorial": "CRR Tutorial",
-        "rra tutorial": "Ransomware Readiness Tutorial"
+        "rra tutorial": "Ransomware Readiness Tutorial",
+        "reports": "Reports"
     },
     "contact": {
         "Contacts": "Contacts",

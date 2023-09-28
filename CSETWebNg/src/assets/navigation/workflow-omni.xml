@@ -212,7 +212,7 @@
             <node id="maturity-questions-nested-2615" displaytext="Cybersecurity Assessment Plan (CAP)" path="assessment/{:id}/maturity-questions-nested/2615" />
         </node>
 
-        <node displaytext="Other Remarks" id="other-remarks" path="assessment/{:id}/other-remarks" condition="MATURITY-ANY(15)" />
+        <node d="other remarks" id="other-remarks" path="assessment/{:id}/other-remarks" condition="MATURITY-ANY(15)" />
 
         <!-- Diagram questions -->
         <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
@@ -315,7 +315,7 @@
 
         <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
 
-        <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
+        <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
         <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" condition="ORIGIN:CF" /-->
 
