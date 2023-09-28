@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using System;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Assessment
@@ -42,6 +43,7 @@ namespace CSETWebCore.Model.Assessment
         public bool Diagram { get; set; } = false;
 
         public string Origin { get; set; }
+        public Guid GalleryGuid { get; set; }
     }
 
 

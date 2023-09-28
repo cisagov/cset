@@ -65,7 +65,8 @@ namespace CSETWebCore.Api.Controllers
         {
             Guid galleryGuid = Guid.Empty;
             var currentUserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid));
+            
+            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, new GalleryConfig() { GalleryGuid = galleryGuid }));
         }
 
 
@@ -107,7 +108,7 @@ namespace CSETWebCore.Api.Controllers
 
 
             // create new empty assessment
-            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid);
+            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, config);
 
 
             // build a list of Sets to be selected
