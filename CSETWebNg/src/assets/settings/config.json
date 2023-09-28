@@ -4,6 +4,7 @@
         "CSET"
     ],
     "appCode": "CSET",
+    "defaultLang": "en",
     "isRunningAnonymous": false,
     "app": {
         "protocol": "http",
