@@ -57,7 +57,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid)
+        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, GalleryConfig config)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.Assessment
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
                 ExecutiveSummary = defaultExecSumm,
-                GalleryItemGuid = galleryGuid,
+                GalleryItemGuid = config.GalleryGuid,
                 ISE_StateLed = false,
             };
 
@@ -113,8 +113,13 @@ namespace CSETWebCore.Business.Assessment
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
 
+            //if acet or ise then do this            
 
-            CreateIrpHeaders(assessment_id);
+            if (Helpers.IRPHelper.UsesIRP(config.Model.ModelName))
+            {
+                CreateIrpHeaders(assessment_id);
+            }
+                
 
             return newAssessment;
         }
