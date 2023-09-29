@@ -269,7 +269,7 @@ function createWindow() {
   // Customize the look of all new windows and handle different types of urls from within angular application
   mainWindow.webContents.setWindowOpenHandler(details => {
     // trying to load url in form of index.html?returnPath=report/
-    if (details.url.includes('returnPath=report')) {
+    if (details.url.includes('index.html?returnPath=report')) {
       let childWindow = new BrowserWindow({
         parent: mainWindow,
         width: 1000,
@@ -284,6 +284,14 @@ function createWindow() {
       log.info('Navigated to ' + newUrl);
       childWindow.loadURL(newUrl);
 
+      // Setup external links in child windows
+      childWindow.webContents.setWindowOpenHandler(details => {
+        if (!details.url.startsWith('file:///')) {
+          shell.openExternal(details.url);
+          return {action: 'deny'};
+        }
+      });
+
       return {action: 'deny'};
 
     // navigating to help section; prevent additional popup windows
@@ -296,15 +304,21 @@ function createWindow() {
 
         childWindow.loadURL(details.url);
 
-        childWindow.webContents.on('new-window', (event, newUrl) => {
-          event.preventDefault();
-          childWindow.loadURL(newUrl);
-        })
+        // Setup external links in child windows
+        childWindow.webContents.setWindowOpenHandler(details => {
+          if (!details.url.startsWith('file:///')) {
+            shell.openExternal(details.url);
+            return {action: 'deny'};
+          } else {
+            childWindow.loadURL(newUrl);
+            return {action: 'deny'};
+          }
+        });
 
       return { action: 'deny' };
 
-    // Navigating to external url; open in web browser
-    } else if (details.url.includes('.com') || details.url.includes('.gov') || details.url.includes('.org')) {
+    // Navigating to external url if not using file protocol; open in web browser
+    } else if (!details.url.startsWith('file:///')) {
       shell.openExternal(details.url);
       return {action: 'deny'};
     }
