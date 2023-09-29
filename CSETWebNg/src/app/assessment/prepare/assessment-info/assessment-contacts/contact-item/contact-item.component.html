@@ -40,10 +40,10 @@
       </div>
       <div class="p-3 d-flex flex-column flex-11a">
         <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.phone != null && contact.phone !== ''">{{ t('contact.Office Phone')
+        <span class="fs-small fw-400" *ngIf="contact.phone != null && contact.phone !== ''">{{ t('contact.office phone')
           }}:
           {{contact.phone}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{ t('contact.Cell Phone')
+        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{ t('contact.cell phone')
           }}:
           {{contact.cellPhone}}</span>
         <span class="fs-small fw-400"
@@ -64,7 +64,7 @@
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
           (click)="openEmailDialog()" [disabled]="!enableMyControls" *ngIf="!auth.isLocal">
           <span class="cset-icons-envelope fs-base-2"></span>
-          <span class="d-none d-md-flex fs-smaller">{{ t('contact.Email') }}</span>
+          <span class="d-none d-md-flex fs-smaller">{{ t('contact.email') }}</span>
         </button>
         <button type="button" class="p-0 m-2 btn icon-button d-flex flex-column align-items-center flex-00a"
           (click)="removeContact()" [disabled]="!enableMyControls">
@@ -73,7 +73,7 @@
         </button>
       </span>
 
-      <span class="pr-3 fw-600" *ngIf="!showControls()">{{ t('contact.Assessment Owner') }}</span>
+      <span class="pr-3 fw-600" *ngIf="!showControls()">{{ t('contact.assessment owner') }}</span>
     </div>
 
 
@@ -91,11 +91,11 @@
         <span class="fs-small fw-400"
           *ngIf="contact.siteName != null && contact.siteName !== ''">{{contact.siteName}}</span>
         <span class="fs-small fw-400">{{contact.primaryEmail}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.phone != null && contact.phone !== ''">{{ t('contact.Office Phone')
+        <span class="fs-small fw-400" *ngIf="contact.phone != null && contact.phone !== ''">{{ t('contact.office phone')
           }}:
           {{contact.phone}}</span>
-        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{ t('contact.Cell
-          Phone')
+        <span class="fs-small fw-400" *ngIf="contact.cellPhone != null && contact.cellPhone !== ''">{{ t('contact.cell
+          phone')
           }}:
           {{contact.cellPhone}}</span>
         <span class="fs-small fw-400"
@@ -134,18 +134,18 @@
           <div class="d-flex flex-wrap flex-11a">
 
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="fName">{{ t('contact.First Name') }}</label>
+              <label class="mb-1" for="fName">{{ t('contact.first name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="fName" id="fName"
-                [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.First Name')"
+                [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.first name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
               <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">First name is required</div>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="lName">{{ t('contact.Last Name') }}</label>
+              <label class="mb-1" for="lName">{{ t('contact.last name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="lName" id="lName"
-                [(ngModel)]="contact.lastName" #lName="ngModel" [placeholder]="t('contact.Last Name')"
+                [(ngModel)]="contact.lastName" #lName="ngModel" [placeholder]="t('contact.last name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
               <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
@@ -153,63 +153,63 @@
           </div>
           <div class="d-flex flex-wrap flex-11a">
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">{{ t('contact.Title') }}</label>
+              <label class="mb-1" for="title">{{ t('contact.title') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="title" id="title"
-                [(ngModel)]="contact.title" #title="ngModel" [placeholder]="t('contact.Title')" (keydown.esc)="abandonEdit()"
+                [(ngModel)]="contact.title" #title="ngModel" [placeholder]="t('contact.title')" (keydown.esc)="abandonEdit()"
                 matInput>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">{{ t('contact.Report To') }}</label>
+              <label class="mb-1" for="title">{{ t('contact.report to') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="reportTo" id="reportTo"
-                [(ngModel)]="contact.reportsTo" #reportTo="ngModel" [placeholder]="t('contact.Report To')"
+                [(ngModel)]="contact.reportsTo" #reportTo="ngModel" [placeholder]="t('contact.report to')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">{{ t('contact.Organization') }}</label>
+              <label class="mb-1" for="title">{{ t('contact.organization') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="Organization"
                 id="organization" [(ngModel)]="contact.organizationName" #organization="ngModel"
-                [placeholder]="t('contact.Organization')" (keydown.esc)="abandonEdit()" matInput>
+                [placeholder]="t('contact.organization')" (keydown.esc)="abandonEdit()" matInput>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="phone">{{ t('contact.Site Name') }}</label>
+              <label class="mb-1" for="phone">{{ t('contact.site name') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="siteName" id="siteName"
-                [(ngModel)]="contact.siteName" #siteName="ngModel" [placeholder]="t('contact.Site Name')"
+                [(ngModel)]="contact.siteName" #siteName="ngModel" [placeholder]="t('contact.site name')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">
             <div class="form-group mr-0 mr-sm-2 d-flex flex-column flex-11a">
-              <label class="mb-1" for="title">{{ t('contact.Cell Phone') }}</label>
+              <label class="mb-1" for="title">{{ t('contact.cell phone') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="cellPhone" id="cellPhone"
-                [(ngModel)]="contact.cellPhone" #cellPhone="ngModel" [placeholder]="t('contact.Cell Phone')"
+                [(ngModel)]="contact.cellPhone" #cellPhone="ngModel" [placeholder]="t('contact.cell phone')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
-              <label class="mb-1" for="phone">{{ t('contact.Office Phone') }}</label>
+              <label class="mb-1" for="phone">{{ t('contact.office phone') }}</label>
               <input class="form-control" autocomplete="off" type="text" maxlength="150" name="officePhone"
-                id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel" [placeholder]="t('contact.Office Phone')"
+                id="officePhone" [(ngModel)]="contact.phone" #officePhone="ngModel" [placeholder]="t('contact.office phone')"
                 (keydown.esc)="abandonEdit()" matInput>
             </div>
           </div>
           <div class="form-group d-flex flex-column flex-11a">
             <label class="mb-1" for="email">{{ t('contact.email') }}</label>
             <input class="form-control" type="email" autocomplete="off" maxlength="150" name="email" id="email"
-              [(ngModel)]="contact.primaryEmail" #email="ngModel" [placeholder]="t('contact.Email Address')"
+              [(ngModel)]="contact.primaryEmail" #email="ngModel" [placeholder]="t('contact.email address')"
               (keydown.esc)="abandonEdit()" matInput email>
 
             <div *ngIf="f.submitted && !email.valid" class="m-0 mt-2 alert alert-danger">Please enter a valid email
               address.</div>
           </div>
           <div class="form-group d-flex flex-column flex-11a">
-            <label class="mb-1" for="email">{{ t('contact.Emergency Communications Protocol') }}</label>
+            <label class="mb-1" for="email">{{ t('contact.emergency communications protocol') }}</label>
             <input class="form-control" type="text" autocomplete="off" maxlength="150" name="ecp" id="ecp"
               [(ngModel)]="contact.emergencyCommunicationsProtocol" #ecp="ngModel"
-              [placeholder]="t('contact.Emergency Communications Protocol')" (keydown.esc)="abandonEdit()" matInput email>
+              [placeholder]="t('contact.emergency communications protocol')" (keydown.esc)="abandonEdit()" matInput email>
           </div>
 
           <!-- Contact Checkboxes -->
@@ -217,24 +217,24 @@
             <div class="mb-2">
               <input type="checkbox" class="checkbox-custom" id="primaryPoc" name="primaryPoc"
                 [(ngModel)]="contact.isPrimaryPoc" [disabled]="shouldDisablePrimaryPoc()">
-              <label class="checkbox-custom-label" for="primaryPoc">{{ t('contact.Primary point of contact') }}</label>
+              <label class="checkbox-custom-label" for="primaryPoc">{{ t('contact.primary point of contact') }}</label>
             </div>
             <div>
               <input type="checkbox" class="checkbox-custom" id="siteParticipant" name="siteParticipant"
                 [(ngModel)]="contact.isSiteParticipant">
-              <label class="checkbox-custom-label" for="siteParticipant">{{ t('contact.Participated in site visit') }}</label>
+              <label class="checkbox-custom-label" for="siteParticipant">{{ t('contact.participated in site visit') }}</label>
             </div>
           </div>
 
           <!-- Role Buttons -->
           <div class="form-group d-flex flex-column flex-11a">
-            <label class="mb-1" for="role">{{ t('contact.Role') }}</label>
+            <label class="mb-1" for="role">{{ t('contact.role') }}</label>
             <div class="btn-group btn-group-toggle d-block" id="role" data-toggle="buttons" ngbRadioGroup>
               <label ngbButtonLabel class="btn btn-level btn-rounded form-check-label"
                 [class.active]="role.assessmentRoleId === this.contact.assessmentRoleId" *ngFor="let role of roles">
                 <input ngbButton type="radio" autocomplete="off" name="contact-role"
                   [(ngModel)]="contact.assessmentRoleId" [value]="role.assessmentRoleId">
-                {{ t(role.assessmentRole) }}
+                {{ t('contact.'+role.assessmentRole.toLowerCase()) }}
               </label>
             </div>
           </div>

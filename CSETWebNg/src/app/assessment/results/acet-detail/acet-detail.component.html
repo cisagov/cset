@@ -40,7 +40,7 @@
             <div class="d-table-row">
                 <div class="d-table-cell pr-3 label-cell">IRP:</div>
                 <!-- <div class="d-table-cell">{{ t('irp.' + overallIrp) }}</div> -->
-                <div *ngIf="overallIrp" class="d-table-cell">{{ t('irp.' + overallIrp) }}</div>
+                <div *ngIf="overallIrp" class="d-table-cell">{{ t('irp.' + overallIrp.toLowerCase()) }}</div>
             </div>
             <div class="d-table-row">
                 <div class="d-table-cell pr-3 label-cell">{{ t('acet.target maturity range') }}:</div>
