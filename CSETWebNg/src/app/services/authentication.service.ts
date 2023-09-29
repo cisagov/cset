@@ -95,9 +95,6 @@ export class AuthenticationService {
    *
    */
   checkLocal() {
-    
-
-
     return this.http
       .post(
         this.configSvc.apiUrl + 'auth/login/standalone',

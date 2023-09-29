@@ -332,7 +332,7 @@ function createWindow() {
 
     // This event is triggered inside diagram even when the page loads successfully.
     // Not sure why... so we're ignoring it for now.
-    if (event.sender.getURL().includes('diagram/src/main/webapp/index.html')) {
+    if (event.sender?.getURL().includes('diagram/src/main/webapp/index.html')) {
       return;
     }
 
