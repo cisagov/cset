@@ -84,7 +84,10 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.loadQuestions();
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.navSvc.buildTree();
+      this.loadQuestions();
+    });
   }
 
   /**
