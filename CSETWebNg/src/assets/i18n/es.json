@@ -10,8 +10,7 @@
     "primary assessor": "Evaluador principal",
     "prevent encryption": "Prevenir el cifrado",
     "user language": "Idioma del usuario",
-    "note language change": "Seleccione su idioma preferido.  Al cambiar el idioma será dirijido a la página principal.",
-
+    "note language change": "Seleccione el idioma deseado",
     "prepare": "Preparar",
     "assessment configuration": "Configuratión de evaluación",
     "assessment information": "Datos de la evaluación",
@@ -22,7 +21,9 @@
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
     "assessment type": "Tipo de evaluación",
-    "demographics": "Demographica",
+    "demographics": "Demografía",
+    "critical service name": "Nombre del servicio critíco",
+    "critical service description": "Descripción del servicio critíco",
     "next": "Siguiente",
     "back": "Previo",
     "expand all": "Expandir todo",
@@ -57,7 +58,6 @@
         "not authorized message": "[ES] You are not authorized to make changes to the contacts on this assessment.",
         "contact an administrator message": "[ES] Please contact an administrator for this assessment to make changes, or to gain administrative access."
     },
-
     "acet": {
         "credit union": "Unión de crédito",
         "credit union name": "Nombre de la cooperativa de crédito",
@@ -72,13 +72,14 @@
         "statements": "Declaración",
         "acet dashboard": "[ES] ACET Dashboard"
     },
-
     "titles": {
         "prepare": "Preparar",
         "assessment": "Evaluación",
         "results": "Resultados",
         "assessment configuration": "Configuración de evaluación",
         "assessment information": "Información de evaluación",
+        "service demographics": "Demografía del servicio",
+        "critical service information": "Información del servicio crítico",
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
         "maturity questions": "Preguntas de madurez",
@@ -86,8 +87,10 @@
         "inherent risk profiles": "Perfil de riesgo inherente",
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "security practices": "Prácticas de seguridad",
+        "questions": "Preguntas",
         "practices": "Prácticas",
         "acet maturity results": "[ES] ACET Maturity Results",
+        "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
         "cmmc tutorial": "Tutorial de CMMC",
         "cis tutorial": "Tutorial de CIS",
@@ -95,9 +98,8 @@
         "crr tutorial": "Tutorial de CRR",
         "rra tutorial": "Tutorial de Ransomware Readiness",
         "acet dashboard": "[ES] ACET Dashboard",
-        "reports": "[ES] Reports"
+        "reports": "Informes"
     },
-
     "buttons": {
         "ok": "Aceptar",
         "save": "Guardar",
@@ -106,9 +108,15 @@
         "remove": "Quitar",
         "next": "Siguiente",
         "close": "Cerrar",
-        "back": "Previo"
+        "back": "Previo",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "analytics": "Analítica",
+        "export": "Exportar",
+        "import": "Importar",
+        "export all": "Exportar todo",
+        "export all to excel": "Exportar todo a Excel"
     },
-
     "button-label": {
         "Y": "Sí",
         "N": "No",
@@ -140,19 +148,15 @@
         "I": "Incomplete",
         "Iss": "No with Issue(s)",
         "S": "",
-
         "Y-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
         "I-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
         "S-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
         "N-CPG": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
-      
         "FI-C2M2": "Fully Implemented - Complete",
         "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
         "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
         "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
-
         "A-ACET": "Sí(C)",
-
         "mfr-flag": "Este control requiere una revisión adicional",
         "requires-review": "[ES] One or more controls in this category requires further review.",
         "supplemental guidance": "[ES] Supplemental Guidance",
@@ -177,7 +181,6 @@
         "intermediate": "Intermedio",
         "advanced": "Avanzado",
         "innovative": "Innovador",
-
         "baseline-desc": "uso muy limitado de tecnología.",
         "evolving-desc": "complejidad limitada en términos de la tecnología que utiliza.",
         "intermediate-desc": "utiliza tecnología que puede ser algo compleja en términos de volumen y sofisticación.",
@@ -188,11 +191,9 @@
         "Inherent Risk": "Riesgo inherente",
         "inherent risk profile": "Perfil de riesgo inherente",
         "inherent risk profiles": "Perfil de riesgo inherente",
-        
         "irp desc start": "El IRP tiene",
         "five risk areas": "cinco áreas de riesgo",
         "irp desc end": "a través de cinco categorías. Se mide en una escala desde el menor riesgo hasta el mayor riesgo en este orden a continuación:",
-        
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "category": "Categoría",
         "total %": "Totale %",
@@ -216,13 +217,11 @@
         "Question filters": "Filtros de preguntas",
         "Statement filters": "Filtros de declaración",
         "select deselect all": "Seleccionar/Deseleccionar todo",
-
         "show unanswered questions": "Mostrar preguntas sin respuesta",
         "show questions with comments": "Mostrar preguntas con comentarios",
         "show questions with notes": "Mostrar preguntas con notas",
         "show questions marked for review": "Mostrar preguntas marcadas para revisión",
         "show questions with observations": "Mostrar preguntas con observaciónes",
-
         "show unanswered statements": "Mostrar declaraciones sin respuesta",
         "show statements with comments": "Mostrar declaraciones con comentarios",
         "show statements with notes": "Mostrar declaraciones con apuntes",

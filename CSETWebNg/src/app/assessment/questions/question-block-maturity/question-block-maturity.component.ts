@@ -292,4 +292,23 @@ export class QuestionBlockMaturityComponent implements OnInit {
         .subscribe();
     }, 500);
   }
+
+  checkAnswerKeyPress(event: any, q: Question, newAnswerValue: string) {
+    if (event) {
+      if (event.key === "Enter") {
+        this.storeAnswer(q, newAnswerValue);
+      }
+    }
+
+  }
+
+  checkReviewKeyPress(event: any, q: Question) {
+    if (event) {
+      if (event.key === "Enter") {
+        this.saveMFR(q);
+      }
+    }
+  }
+
+
 }
