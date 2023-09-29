@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+<div *transloco="let t" id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
   <div class="p-0 d-flex flex-column flex-10a mx-auto col-lg-8 col-md-8 col-sm-10">
 
     <!-- CSET Logo and Name -->
@@ -98,7 +98,7 @@
         <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required</div>
         <div class="mt-2 d-flex justify-content-between flex-00a">
           <div class="d-flex flex-nowrap flex-00a">
-            <button type="submit" [disabled]="loading" class="btn btn-primary">Login</button>
+            <button type="submit" [disabled]="loading" class="btn btn-primary">{{t('buttons.login')}}</button>
             <div class="spinner-container" *ngIf="loading">
               <div style="max-width: 30px; max-height: 30px;"></div>
             </div>

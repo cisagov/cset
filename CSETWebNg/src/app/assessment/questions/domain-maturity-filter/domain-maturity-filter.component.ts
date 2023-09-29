@@ -121,4 +121,13 @@ export class DomainMaturityFilterComponent implements OnInit {
     
   }
 
+  checkFilterKeydown(level: any, event: any) {
+    if (event) {
+      if (event.key == "Enter") {
+        this.filterChanged(level);
+      }
+    }
+  }
+
+
 }

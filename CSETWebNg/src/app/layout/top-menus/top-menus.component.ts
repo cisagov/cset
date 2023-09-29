@@ -136,7 +136,13 @@ export class TopMenusComponent implements OnInit {
         dialogRef.componentInstance.confirmMessage = 'Are you sure you want to create a new assessment? ';
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.assessSvc.newAssessment();
+            //this.assessSvc.newAssessment();
+            this.router.navigate(['/landing-page-tabs'], {
+              queryParams: {
+                'tab': 'newAssessment'
+              },
+              queryParamsHandling: 'merge',
+            });
           }
         });
         return false; // Prevent bubbling

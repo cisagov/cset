@@ -20,16 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div
+<div *transloco="let t"
   class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">Assessment Configuration</h3>
+    <h3 class="mb-3">{{t('assessment configuration')}}</h3>
 
 
     <div class="form-row">
       <div class="form-group col-md-6">
 
-        <label class="mb-1" for="name">Assessment Name</label>
+        <label class="mb-1" for="name">{{t('assessment name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="name"
         name="name" required focusOnInit="true"
         [(ngModel)]="assessment.assessmentName"
@@ -37,7 +37,7 @@
         autofocus tabindex="0">
       </div>
       <div class="form-group col-md-6">
-        <label class="mb-1" for="date">Assessment Date</label>
+        <label class="mb-1" for="date">{{t('assessment date')}}</label>
         <input matInput MatDatepickerInput class="form-control" id="date"
         name="date" [(ngModel)]="assessment.assessmentDate"
         [matDatepicker]="picker" (focus)="picker.open()"
@@ -48,7 +48,7 @@
     </div>
 
     <div class="my-4">
-      <h4>Assessment Type</h4>
+      <h4>{{t('assessment type')}}</h4>
       <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
       <p
         *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription"
@@ -61,7 +61,7 @@
 
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label class="mb-1" for="criticalService">Critical Service</label>
+        <label class="mb-1" for="criticalService">{{t('critical service name')}}</label>
         <textarea
           [ngClass]="{ 'alert-danger' : !demographics.criticalService }"
           appAutoSize
@@ -72,7 +72,7 @@
           name="criticalService"
           id="criticalService"
           [(ngModel)]="demographics.criticalService"
-          placeholder="Critical Service"
+          placeholder="{{t('critical service name')}}"
           (blur)="changeCriticalService($event)"></textarea>
       </div>
 

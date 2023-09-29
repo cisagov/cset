@@ -16,6 +16,7 @@ namespace CSETWebCore.Model.Authentication
         public bool ResetRequired { get; set; }
         public bool IsPasswordExpired { get; set; }
         public bool IsSuperUser { get; set; }
+        public string Lang { get; set; }
         public string ExportExtension { get; set; }
         public string ImportExtensions { get; set; }
         public string LinkerTime { get; set; }

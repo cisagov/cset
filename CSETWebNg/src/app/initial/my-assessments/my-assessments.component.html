@@ -40,7 +40,7 @@
                                 class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">{{t('import')}}</label>
+                                <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
                             </label>
@@ -49,18 +49,10 @@
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
-                                <label for="importFile" class="m-0">Import</label>
+                                <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
                             </label>
-
-                            <!-- making an Export All button for auto test -->
-                            <!-- <label *ngIf="authSvc.isLocal && configSvc.showExportAllButton()" class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Export all assessments to an external directory.">
-                                <span class="mr-2 fs-base cset-icons-export-up"></span>
-                                <label for="importFile" class="m-0">Export All</label>
-                                <input tabindex="0" class="display-none" id="exportAll" (change)="exportAllAssessments()">
-                            </label> -->
 
                             <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
@@ -78,7 +70,7 @@
                                     matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()"
                                     tabindex="0">
                                     <span class="cset-icons-export-excel fs-base mr-2"></span>
-                                    <label for="importFile" class="m-0">Export All to Excel</label>
+                                    <label for="importFile" class="m-0">{{t('export all to excel')}}</label>
                                 </label>
                             </div>
                             <div *ngIf="this.ncuaSvc.switchStatus == true">
@@ -87,7 +79,7 @@
                                     matTooltip="Export all assessments to Excel" (click)="openExportDecisionDialog()"
                                     tabindex="0">
                                     <span class="cset-icons-export-excel fs-base mr-2"></span>
-                                    <label class="m-0">Export All to Excel</label>
+                                    <label class="m-0">{{t('export all to excel')}}</label>
                                 </label>
                             </div>
 
@@ -256,7 +248,7 @@
                                 (click)="removeAssessment(assessment, i)"
                                 matTooltip="Permanently remove this assessment.">
                                 <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Remove</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
                         </td>
                         <td>
@@ -265,7 +257,7 @@
                                 (click)="clickDownloadLink(assessment.assessmentId)"
                                 matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Export</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
                         </td>
                         <td *ngIf="showColumn('analytics')">
@@ -274,7 +266,7 @@
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
                                 matTooltip="View the analytics for this assessment.">
                                 <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
-                                <span class="icon-link-button-text-dark">Analytics</span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
                             </button>
                         </td>
                     </tr>
