@@ -12,19 +12,10 @@
     "prevent encryption": "запобігти шифруванню",
     "user language": "Мова користувача",
     "note language change": "Виберіть потрібну мову",
-
-    "prepare": "Приготуйте",
-    "assessment": "Оцінка",
-    "results": "Результати",
-    "rra tutorial": "Посібник із готовності до програм-вимагачів",
     "goal performance": "Цільова продуктивність",
     "assessment tiers": "Рівні оцінювання",
     "performance summary": "Підсумок продуктивності",
-    "reports": "Звіти",
     "feedback": "Зворотній зв'язок",
-
-    "assessment configuration": "Конфігурація оцінювання",
-    "assessment information": "Інформація про оцінку",
     "organization details": "Деталі організації",
     "assessment name": "Назва оцінки",
     "assessment date": "Дата оцінювання",
@@ -33,11 +24,30 @@
     "state province region": "Штат / Провінція / Регіон",
     "assessment type": "Тип оцінки",
     "demographics": "Демографія",
-    "practices": "Практики",
     "requires review": "Потребує перегляду",
 
     "titles": {
-        "assessment configuration": "AC!"
+        "prepare": "Приготуйте",
+        "assessment": "Оцінка",
+        "results": "Результати",
+        "assessment configuration": "Конфігурація оцінювання",
+        "assessment information": "Інформація про оцінку",
+        "service demographics": "Service Demographics",
+        "critical service information": "Critical Service Information",
+        "security assurance level (sal)": "Security Assurance Level (SAL)",
+        "standard questions": "Standard Questions",
+        "maturity questions": "Maturity Questions",
+        "security practices": "Security Practices",
+        "questions": "Questions",
+        "practices": "Практики",
+        "other remarks": "Other Remarks",
+        "imr tutorial": "IMR Tutorial",
+        "cmmc tutorial": "CMMC Tutorial",
+        "cis tutorial": "CIS Tutorial",
+        "edm tutorial": "EDM Tutorial",
+        "crr tutorial": "CRR Tutorial",
+        "rra tutorial": "Посібник із готовності до програм-вимагачів",
+        "reports": "Звіти"
     },
     
     "buttons": {
