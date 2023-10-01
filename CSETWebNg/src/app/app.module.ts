@@ -1182,7 +1182,7 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
 
                             // Set the default language based on config
                             tSvc.setActiveLang(configSvc.config.defaultLang);
-                            tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
+                            return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
                                 return authSvc.checkLocal();
                             });
                         });
