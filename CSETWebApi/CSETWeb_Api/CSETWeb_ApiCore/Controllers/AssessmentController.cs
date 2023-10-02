@@ -95,7 +95,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness) _assessmentBusiness;
-            switch (config.Model.ModelName)
+            switch (config.Model?.ModelName)
             {
                 case "ACET":
                 case "ISE":
