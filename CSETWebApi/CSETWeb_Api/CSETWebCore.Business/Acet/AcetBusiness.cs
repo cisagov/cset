@@ -210,11 +210,23 @@ namespace CSETWebCore.Business.Acet
             _context.SaveChanges();
 
         }
-        
+
+        private static Dictionary<int, SpanishQuestionRow> dict = null;
+
         public static Dictionary<int, SpanishQuestionRow> buildQuestionDictionary()
         {
+            if (AcetBusiness.dict != null)
+            {
+                return AcetBusiness.dict;
+            }
+
+            String defaultPath = "App_Data\\ACET Spanish Question Mapping.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx");
+            if(Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -224,7 +236,7 @@ namespace CSETWebCore.Business.Acet
 
             var rowCount = myExcelObjects.Count;
 
-            var dict = new Dictionary<int, SpanishQuestionRow>();
+            AcetBusiness.dict = new Dictionary<int, SpanishQuestionRow>();
 
             foreach (RowInfo<SpanishQuestionRow> item in myExcelObjects)
             {
@@ -232,9 +244,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.Mat_Question_Id, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
                 }
             }
             return dict;
@@ -260,9 +276,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.Grouping_Id, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
                 }
             }
 
@@ -290,9 +310,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.English_Title, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
                 }
             }
             return dict;
@@ -319,8 +343,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.IRP_Id, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
 
                 }
             }
@@ -347,8 +376,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.IRP_Header_Id, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
 
                 }
             }
@@ -377,8 +411,13 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.EnglishHeader, item.Value);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+                    //TODO: It is a big pet peeve of mine to have empty try catches
+                    //Please atleast log the error.  
+                    //if it is something you expect to see often and you know it is not an error
+                    //then exception tossing and catching is really expensive please refactor 
+                    //such that it is not necessary such as test for containment before adding.
 
                 }
             }

@@ -17,6 +17,6 @@ namespace CSETWebCore.Interfaces.Dashboard
     {
         //Task<List<AssessmentData>> GetUserAssessments(string userId);
         Task<List<SectorIndustryVM>> GetSectors();
-        Task<DashboardGraphData> GetDashboardData(string industry);
+        DashboardGraphData GetDashboardData(string industry);
     }
 }
