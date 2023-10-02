@@ -14,6 +14,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Business.Acet;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Business.ACETDashboard
 {
@@ -43,14 +44,15 @@ namespace CSETWebCore.Business.ACETDashboard
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
-            Dictionary<string, IRPSpanishRow> dictionaryHeaders = new Dictionary<string, IRPSpanishRow>();
+            Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
+            Dictionary<string, GroupingSpanishRow> dictionaryDomain = new Dictionary<string, GroupingSpanishRow>();
 
             List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId);
 
-            if (spanishFlag)
-            {
-                dictionaryHeaders = AcetBusiness.buildIRPDashboardDictionary();
-            }
+            //if (spanishFlag)
+            //{
+            //    dictionaryHeaders = AcetBusiness.buildIRPDashboardDictionary();
+            //}
 
             foreach (var d in domains)
             {
@@ -62,15 +64,27 @@ namespace CSETWebCore.Business.ACETDashboard
             }
             if (spanishFlag)
             {
-                var output = new IRPSpanishRow();
+                dictionaryIrp = AcetBusiness.buildIRPDashboardDictionary();
+                dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+
+                var outputIrp = new IRPSpanishRow();
+                var outputGrouping = new GroupingSpanishRow();
+
                 foreach (var irp in result.Irps)
                 {
-                    if (dictionaryHeaders.TryGetValue(irp.HeaderText, out output))
+                    if (dictionaryIrp.TryGetValue(irp.HeaderText, out outputIrp))
                     {
-                        irp.HeaderText = dictionaryHeaders[irp.HeaderText].SpanishHeader;
+                        irp.HeaderText = dictionaryIrp[irp.HeaderText].SpanishHeader;
                     }
                 }
-                
+                foreach (var domain in result.Domains)
+                {
+                    if (dictionaryDomain.TryGetValue(domain.Name, out outputGrouping))
+                    {
+                        domain.Name = dictionaryDomain[domain.Name].Spanish_Title;
+                    }
+                }
+
             }
 
             return result;

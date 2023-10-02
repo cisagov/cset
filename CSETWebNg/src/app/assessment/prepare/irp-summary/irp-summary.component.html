@@ -32,7 +32,7 @@
                     <!-- below is .substring(4) to allow Transloco to remain DRY (ex. "1 - Least" turns into "Least") -->
                     {{ t('override risk level is') }} &quot;
                     <span class="blue-text font-weight-bold">
-                        {{ overrideLabel.substring(0, 4) + t(overrideLabel.substring(4)) }}&quot;
+                        {{ overrideLabel.substring(0, 4) + t(overrideLabel.substring(4).toLowerCase()) }}&quot;
                     </span>
                 </div>
             </div>
@@ -43,12 +43,12 @@
                 <div class="d-table-cell align-top pb-3">
                     <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
                         (change)="changeInfoIrp();">
-                        <option [ngValue]="0">{{ t('No Override') }}</option>
-                        <option [ngValue]="1">1 - {{ t('Least') }}</option>
-                        <option [ngValue]="2">2 - {{ t('Minimal') }}</option>
-                        <option [ngValue]="3">3 - {{ t('Moderate') }}</option>
-                        <option [ngValue]="4">4 - {{ t('Significant') }}</option>
-                        <option [ngValue]="5">5 - {{ t('Most') }}</option>
+                        <option [ngValue]="0">{{ t('no override') }}</option>
+                        <option [ngValue]="1">1 - {{ t('least') }}</option>
+                        <option [ngValue]="2">2 - {{ t('minimal') }}</option>
+                        <option [ngValue]="3">3 - {{ t('moderate') }}</option>
+                        <option [ngValue]="4">4 - {{ t('significant') }}</option>
+                        <option [ngValue]="5">5 - {{ t('most') }}</option>
                     </select>
                 </div>
             </div>
@@ -67,7 +67,7 @@
 
         <div *ngIf="layoutSvc.hp" class="ml-3 w-100">
             <div class="pb-3">
-                {{ t('override risk level is') }} &quot;<span class="blue-text font-weight-bold">{{ t(overrideLabel) }}&quot;</span>
+                {{ t('override risk level is') }} &quot;<span class="blue-text font-weight-bold">{{ t(overrideLabel).toLowerCase() }}&quot;</span>
             </div>
 
             <div>
@@ -76,12 +76,12 @@
             <div class="mb-3">
                 <select [(ngModel)]="acetDashboard.override" class="form-control override-select"
                     (change)="changeInfoIrp();">
-                    <option [ngValue]="0">{{ t('No Override') }}</option>
-                    <option [ngValue]="1">1 - {{ t('Least') }}</option>
-                    <option [ngValue]="2">2 - {{ t('Minimal') }}</option>
-                    <option [ngValue]="3">3 - {{ t('Moderate') }}</option>
-                    <option [ngValue]="4">4 - {{ t('Significant') }}</option>
-                    <option [ngValue]="5">5 - {{ t('Most') }}</option>
+                    <option [ngValue]="0">{{ t('no override') }}</option>
+                    <option [ngValue]="1">1 - {{ t('least') }}</option>
+                    <option [ngValue]="2">2 - {{ t('minimal') }}</option>
+                    <option [ngValue]="3">3 - {{ t('moderate') }}</option>
+                    <option [ngValue]="4">4 - {{ t('significant') }}</option>
+                    <option [ngValue]="5">5 - {{ t('most') }}</option>
                 </select>
             </div>
 
