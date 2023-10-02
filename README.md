@@ -531,7 +531,7 @@ with `production: true`
 
 then run `ng serve --prod`
 
-### Error within compailing server
+### Error within compiling server
 
 Moustrap Error:
 
