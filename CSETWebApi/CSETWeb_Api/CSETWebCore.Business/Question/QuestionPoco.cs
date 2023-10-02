@@ -545,8 +545,7 @@ namespace CSETWebCore.Business.Question
         }
 
 
-        /// <summary>
-        /// TODO: Do we need to deal with Requirements Mode??
+        /// <summary>        
         /// </summary>
         private String categoryAndQuesitonNumber;
         public String CategoryAndQuestionNumber

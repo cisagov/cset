@@ -157,8 +157,6 @@ namespace CSETWebCore.Business.Demographic
 
             dbDemographics.OrganizationType = demographics.OrganizationType == 0 ? null : demographics.OrganizationType;
             dbDemographics.OrganizationName = demographics.OrganizationName;
-            // TODO:  dbDemographics.OrgPointOfContact = demographics.OrgPointOfContact == 0 ? null : demographics.OrgPointOfContact;
-            
 
             _context.DEMOGRAPHICS.Update(dbDemographics);
             _context.SaveChanges();
