@@ -300,7 +300,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           //this.assessSvc.newAssessment();
-          this.navSvc.beginNewAssessment();
+          //this.navSvc.beginNewAssessment();
+          this.router.navigate(['/landing-page-tabs'], {
+            queryParams: {
+              'tab': 'newAssessment'
+            },
+            queryParamsHandling: 'merge',
+          });
         }
       });
       return false; // Prevent bubbling

@@ -314,6 +314,40 @@ export class NavigationService {
   }
 
   /**
+   * Determines if the specified page is the first visible page in the nav flow.
+   * Used to hide the "Back" button.
+   * @returns
+   */
+  isFirstVisiblePage(id: string): boolean {
+    if (!this.workflow) {
+      return false;
+    }
+
+    let target = this.workflow.getElementById(id);
+    if (!target) {
+      console.error(`No workflow element found for id ${id}`);
+      return false;
+    }
+
+    do {
+      if (!target.previousElementSibling) {
+        while (!target.previousElementSibling && target.tagName != 'nav') {
+          target = <HTMLElement>target.parentElement;
+        }
+        target = <HTMLElement>target.previousElementSibling;
+      } else {
+        target = <HTMLElement>target.previousElementSibling;
+      }
+    } while (!!target && !this.pageVisibliltySvc.showPage(target));
+
+    if (!target) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Determines if the specified page is the last visible page in the nav flow.
    * Used to hide the "Next" button.
    * @returns
@@ -324,6 +358,10 @@ export class NavigationService {
     }
 
     let target = this.workflow.getElementById(id);
+    if (!target) {
+      console.error(`No workflow element found for id ${id}`);
+      return false;
+    }
 
     do {
       if (target.children.length > 0) {

@@ -39,6 +39,10 @@ export class NavBackNextComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    const isFirstVisible = this.navSvc.isFirstVisiblePage(this.page);
+    if (isFirstVisible) {
+      this.hide = 'back';
+    }
   }
 
 }
