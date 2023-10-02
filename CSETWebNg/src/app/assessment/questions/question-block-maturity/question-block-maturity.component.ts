@@ -32,6 +32,7 @@ import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ACETService } from '../../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 /**
@@ -77,7 +78,8 @@ export class QuestionBlockMaturityComponent implements OnInit {
     public acetFilteringSvc: AcetFilteringService,
     public layoutSvc: LayoutService,
     public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    public tSvc: TranslocoService
   ) {
 
   }

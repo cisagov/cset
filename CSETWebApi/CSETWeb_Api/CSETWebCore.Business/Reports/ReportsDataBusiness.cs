@@ -4,9 +4,11 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Acet;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
@@ -235,7 +237,7 @@ namespace CSETWebCore.Business.Reports
         /// but could be used by other maturity models with some work.
         /// </summary>
         /// <returns></returns>
-        public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList()
+        public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList(string language)
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
@@ -265,6 +267,20 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
+            Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
+            if (language == "es")
+            {
+                allGroupings.ForEach(
+                    group => {
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
+                        if (dictionaryGrouping.TryGetValue(group.Grouping_Id, out output))
+                        {
+                            group.Title = dictionaryGrouping[group.Grouping_Id].Spanish_Title;
+                        }
+                    });
+            }
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
@@ -312,6 +328,16 @@ namespace CSETWebCore.Business.Reports
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview
                                 };
+
+                                if (language == "es")
+                                {
+                                    var output = new SpanishQuestionRow();
+                                    var temp = new SpanishQuestionRow();
+                                    if (dictionaryQuestion.TryGetValue(question.QuestionId, out output))
+                                    {
+                                        newQuestion.QuestionText = dictionaryQuestion[question.QuestionId].Question_Text;
+                                    }
+                                }
 
                                 if (question.Answer == "N")
                                 {
