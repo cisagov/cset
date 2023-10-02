@@ -37,8 +37,8 @@
 
 
         <!-- ACET/ISE-specific screens -->
-        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:1" />
-        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:1" />
+        <node d="inherent risk profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:1" />
+        <node d="inherent risk profile summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" condition="MATURITY:1" />
         <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" condition="MATURITY:10" />
 
 
@@ -64,7 +64,7 @@
         <node d="maturity questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" condition="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(1,10)" />
 
         <!-- Custom ACET questions page for ACET or ISE in ACET skin -->
-        <node displaytext="Statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:1" />
+        <node d="statements" id="maturity-questions-acet" path="assessment/{:id}/maturity-questions-acet" condition="INSTALL-MODE:ACET MATURITY:1" />
         <node displaytext="Statements" id="maturity-questions-ise" path="assessment/{:id}/maturity-questions-ise" condition="INSTALL-MODE:ACET MATURITY:10" />
 
         <!-- CIS questions displayed in tree structure -->
@@ -277,8 +277,8 @@
 
 
         <!-- Results - ACET -->
-        <node displaytext="ACET Maturity Results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:1" />
-        <node displaytext="ACET Dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:1" />
+        <node d="acet maturity results" id="acet-detail" path="assessment/{:id}/results/acet-detail" condition="MATURITY:1" />
+        <node d="acet dashboard" id="acet-dashboard" path="assessment/{:id}/results/acet-dashboard" condition="MATURITY:1" />
 
 
 

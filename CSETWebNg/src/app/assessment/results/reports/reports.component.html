@@ -20,42 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<ng-container *transloco="let t">
+<div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
+  <div *ngIf="!assessSvc.isISE()">
+    <h3>{{ t('reports') }}</h3>
 
-  <div class="white-panel oy-auto d-flex flex-column flex-11a">
-    <div *ngIf="!assessSvc.isISE()">
-      <h3>{{t('titles.reports')}}</h3>
-
-      <p>
-        Thank you for completing your assessment. The reports on this page capture
-        summaries of your results that can help your organization’s cybersecurity
-        planning and growth going forward. The assessment was last updated
-        {{ lastModifiedTimestamp }}. Any reports run prior to that update may not
-        reflect the current state of the assessment.
-        <button mat-stroked-button (click)="openSnackBar()">
-          Printing Report Instructions
-        </button>
-      </p>
-
-      <p *ngIf="isCyberFlorida" style="margin-top: 20px">
-        We appreciate your participation in the CyberSecureFlorida initiative, a
-        first-of-its-kind effort to assess the cybersecurity strengths and
-        weaknesses of Florida’s collective critical infrastructure. The
-        information gathered through this effort will be essential to helping
-        Florida’s elected leaders determine how best to allocate resources and
-        enact appropriate legislation to create a more secure Sunshine State!
-      </p>
-      <p></p>
-    </div>
-
-    <div class="alert alert-warning" *ngIf="isMobile">
-      For optimal viewing experience access your reports from a desktop browser
-    </div>
-
-
-    <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
-      <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Observations Tear-Out Sheets
+    <p>
+      {{ t('assessment complete message') }}
+      {{ lastModifiedTimestamp }}. {{ t('reports run prior message') }}.
+      <button mat-stroked-button (click)="openSnackBar()">
+        {{ t('printing report instructions button') }}
       </button>
     </div>
 
@@ -74,8 +47,29 @@
       provided in order to view reports.
     </div>
 
-    <div [class.div-shield]="disableEntirePage">
-      <div *ngIf="
+
+  <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
+    <button (click)="clickReportLink('discoveries')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      {{ t('observations tear-out sheets') }}
+    </button>
+  </div>
+
+  <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
+    Please answer all organization demographic, assessment configuration, and critical service fields to access reports
+    and assessment export.
+    <p class="mt-2">The following fields are incomplete:</p>
+    <ul>
+      <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
+    </ul>
+  </div>
+
+  <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
+    All demographics information on the Assessment Information page must be
+    provided in order to view reports.
+  </div>
+
+  <div [class.div-shield]="disableEntirePage">
+    <div *ngIf="
         !!assessSvc.assessment &&
         (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) &&
         !isMobile
@@ -278,9 +272,9 @@
         assessSvc.usesMaturityModel('ACET') &&
         !isMobile
       " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>ACET Reports</h4>
-        <!-- commenting out this warning for now because NCUA people wanted reports always available -->
-        <!-- <div *ngIf="disableAcetReportLinks" class="
+      <h4>{{ t('acet.acet reports') }}</h4>
+      <!-- commenting out this warning for now because NCUA people wanted reports always available -->
+      <!-- <div *ngIf="disableAcetReportLinks" class="
         alert-warning
         mt-2
         mb-2
@@ -296,24 +290,36 @@
           Some reports are disabled until all statements have been answered.
         </span>
       </div> -->
-        <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-          ACET Executive Summary
-        </button>
-        <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-          ACET Gap Report
-        </button>
-        <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
-          ACET Comments and Marked for Review
-        </button>
-        <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
-          ACET Answered Statements
-        </button>
-        <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
-          ACET Compensating Controls
-        </button>
+      <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        {{ t('acet.executive summary') }}
+      </button>
+      <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        {{t('acet.gap report') }}
+      </button>
+      <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        {{ t('acet.comments and marked for review') }}
+      </button>
+      <button (click)="clickReportLink('acetansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
+        {{ t('acet.answered statements') }}
+      </button>
+      <button (click)="clickReportLink('acetcompensatingcontrols')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
+        {{ t('acet.compensating controls') }}
+      </button>
+    </div>
+
+    <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <h4>ISE Reports</h4>
+
+      <!-- Don't submit to MERIT without a Credit Union name or asset value above $0 -->
+      <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionName === null || ncuaSvc.assetsAsNumber == 0">
+        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+          <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
+          <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+            "Submit" button is disabled until all required fields on the 'Assessment Configuration' page have been specified.
+          </div>
+        </div>
       </div>
 
       <div *ngIf="assessSvc.isISE() && !isMobile"
@@ -616,4 +622,4 @@
       [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 
   </div>
-</ng-container>
+</div>
