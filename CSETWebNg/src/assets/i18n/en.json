@@ -119,6 +119,7 @@
         "maturity results": "ACET Maturity Results",
         "actual level": "Actual Level",
         "assessment factor": "Assessment Factor",
+        "component": "Component",
         "components": "Components",
         "statements": "Statements",
         "acet dashboard": "ACET Dashboard"
@@ -245,7 +246,19 @@
         "acet": {
             "acet reports": "ACET Reports",
             "executive summary": "ACET Executive Summary",
-            "gap report": "ACET Gap Report",
+            "gap report": {
+                "gap report": "ACET Gap Report",
+                "gap report title 1": "GAP",
+                "gap report title 2": "REPORT",
+                "gap disclaimer 1": "This gap report lists the statements that are not currently compliant or 'No' answers.",
+                "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
+                "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
+                "gaps": "Gaps",
+                "marked for review": "Marked for Review",
+                "domain": "Domain",
+                "assessment factor": "Assessment Factor",
+                "component": "Component"
+            },
             "comments and marked for review": "ACET Comments and Marked for Review",
             "answered statements": "ACET Answered Statements",
             "compensating controls": "ACET Compensating Controls"
