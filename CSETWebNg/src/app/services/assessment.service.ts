@@ -117,10 +117,6 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'contacts/allroles');
   }
 
-  createAssessment(workflow: string) {
-    return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
-  }
-
   /**
    * If a custom set name is found on the gallery item, include it in the query string.
    * Custom set gallery items are built on the fly and don't have a gallery ID.
@@ -352,39 +348,6 @@ export class AssessmentService {
       .subscribe((mode: string) => (this.applicationMode = mode));
   }
 
-  /**
-   * Create a new assessment.
-   */
-  newAssessment(): Promise<any> {
-    let workflow: string;
-    switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        workflow = 'ACET';
-        break;
-      case 'TSA':
-        workflow = 'TSA';
-        break;
-      default:
-        workflow = 'BASE';
-    }
-
-    return new Promise((resolve, reject) => {
-      this.createAssessment(workflow)
-        .toPromise()
-        .then(
-          (response: any) => {
-            // set the brand new flag
-            this.isBrandNew = true;
-            this.loadAssessment(response.id);
-            resolve('assessment loaded');
-          },
-          error =>
-            console.log(
-              'Unable to create new assessment: ' + (<Error>error).message
-            )
-        );
-    });
-  }
 
   newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';

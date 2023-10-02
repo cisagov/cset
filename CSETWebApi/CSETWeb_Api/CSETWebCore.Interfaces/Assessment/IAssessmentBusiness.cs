@@ -14,7 +14,8 @@ namespace CSETWebCore.Interfaces.Assessment
 {
     public interface IAssessmentBusiness
     {
-        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid);
+        AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, GalleryConfig config);
+        int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
         AssessmentDetail CreateNewAssessmentForImport(int? currentUserId, string accessKey);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForUser(int userId);
         IEnumerable<usp_Assessments_For_UserResult> GetAssessmentsForAccessKey(string accessKey);
@@ -23,8 +24,7 @@ namespace CSETWebCore.Interfaces.Assessment
         void GetMaturityModelDetails(ref AssessmentDetail assessment);
         void GetSelectedStandards(ref AssessmentDetail assessment);
         void SetFeaturesOnAssessmentRecord(int assessmentId);
-        int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment);
-        void CreateIrpHeaders(int assessmentId);
+        
         List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);

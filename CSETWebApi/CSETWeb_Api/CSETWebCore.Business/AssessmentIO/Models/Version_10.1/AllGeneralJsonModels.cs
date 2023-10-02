@@ -215,7 +215,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Boolean Is_Advanced { get; set; }
 
         [MaxLength(100)]
-        public String? Hidden_Screens { get; set; }
+        public String Hidden_Screens { get; set; }
 
     }
 
