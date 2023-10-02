@@ -364,9 +364,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            return Ok(mm.GetHydroDonutData(assessmentId));
+            return Ok(hmm.GetHydroDonutData(assessmentId));
         }
 
 
@@ -381,9 +381,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            return Ok(mm.GetHydroActions(assessmentId));
+            return Ok(hmm.GetHydroActions(assessmentId));
         }
 
 
@@ -398,9 +398,9 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var hmm = new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            return Ok(mm.GetHydroActionsReport(assessmentId));
+            return Ok(hmm.GetHydroActionsReport(assessmentId));
         }
 
 
