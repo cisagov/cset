@@ -1,6 +1,7 @@
 {
     "my assessments": "Mis evaluaciones",
-    "tools": "Herramientas",
+    "import": "Importar",
+    "export all": "Exportar todo",
     "resource library": "Biblioteca de recursos",
     "help": "Ayuda",
     "new assessment": "Nueva evaluación",
@@ -11,7 +12,6 @@
     "user language": "Idioma del usuario",
     "note language change": "Seleccione el idioma deseado",
     "prepare": "Preparar",
-    "assessment configuration": "Configuratión de evaluación",
     "assessment information": "Datos de la evaluación",
     "organization details": "Detalles de la organización",
     "assessment name": "Nombre de evaluación",
@@ -30,27 +30,32 @@
     "filter": "Filtrar",
     "reviewed": "Revisado",
     "domain": "[ES] Domain",
+    "maturity level": "[ES] Maturity Level",
+
     "contact": {
-        "Contacts": "Contactos",
-        "Add Contact": "Agregar Contacto",
-        "Email Contacts": "Mandar E-mail a los Contactos",
-        "Assessment Owner": "Dueño de Evaluación",
-        "First Name": "Nombre de Pila",
-        "Last Name": "Apellido",
-        "Title": "Título",
-        "Report To": "Reportar a",
-        "Organization": "Organización",
-        "Site Name": "Nombre de Sitio",
-        "Cell Phone": "Celular",
-        "Office Phone": "Teléfono de Oficina",
+        "contacts": "Contactos",
+        "add contact": "Agregar Contacto",
+        "email contacts": "Mandar E-mail a los Contactos",
+
+        "assessment owner": "Dueño de Evaluación",
+        "first name": "Nombre de Pila",
+        "last name": "Apellido",
+        "title": "Título",
+        "report to": "Reportar a",
+        "organization": "Organización",
+        "site name": "Nombre de Sitio",
+        "cell phone": "Celular",
+        "office phone": "Teléfono de Oficina",
         "email": "E-mail",
-        "Email Address": "[ES] Email Address",
-        "Emergency Communications Protocol": "[ES] Emergency Communications Protocol",
-        "Primary point of contact": "[ES] Primary point of contact",
-        "Participated in site visit": "[ES] Participated in site visit",
-        "Role": "Rol",
-        "Participant": "Participante",
-        "Facilitator": "Facilitador"
+        "email address": "[ES] Email Address",
+        "emergency communications protocol": "[ES] Emergency Communications Protocol",
+        "primary point of contact": "[ES] Primary point of contact",
+        "participated in site visit": "[ES] Participated in site visit",
+        "role": "Rol",
+        "participant": "Participante",
+        "facilitator": "Facilitador",
+        "not authorized message": "[ES] You are not authorized to make changes to the contacts on this assessment.",
+        "contact an administrator message": "[ES] Please contact an administrator for this assessment to make changes, or to gain administrative access."
     },
     "acet": {
         "credit union": "Unión de crédito",
@@ -63,7 +68,8 @@
         "actual level": "[ES] Actual Level",
         "assessment factor": "[ES] Assessment Factor",
         "components": "[ES] Components",
-        "statements": "Declaración"
+        "statements": "Declaración",
+        "acet dashboard": "[ES] ACET Dashboard"
     },
     "titles": {
         "prepare": "Preparar",
@@ -76,9 +82,13 @@
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
         "maturity questions": "Preguntas de madurez",
+        "statements": "Declaración",
+        "inherent risk profiles": "Perfil de riesgo inherente",
+        "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "security practices": "Prácticas de seguridad",
         "questions": "Preguntas",
         "practices": "Prácticas",
+        "acet maturity results": "[ES] ACET Maturity Results",
         "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
         "cmmc tutorial": "Tutorial de CMMC",
@@ -86,6 +96,7 @@
         "edm tutorial": "Tutorial de EDM",
         "crr tutorial": "Tutorial de CRR",
         "rra tutorial": "Tutorial de Ransomware Readiness",
+        "acet dashboard": "[ES] ACET Dashboard",
         "reports": "Informes"
     },
     "buttons": {
@@ -95,6 +106,7 @@
         "change": "Cambiar",
         "remove": "Quitar",
         "next": "Siguiente",
+        "close": "Cerrar",
         "back": "Previo",
         "login": "Iniciar sesión",
         "logout": "Cerrar sesión",
@@ -145,9 +157,22 @@
         "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
         "A-ACET": "Sí(C)",
         "mfr-flag": "Este control requiere una revisión adicional",
-        "requires-review": "[ES] One or more controls in this category requires further review."
+        "requires-review": "[ES] One or more controls in this category requires further review.",
+        "supplemental guidance": "[ES] Supplemental Guidance",
+        "details/standard": "[ES] Details/Standard",
+        "exam step": "[ES] Exam Step",
+        "comment": "[ES] Comment",
+        "comments with content": "[ES] Comments with content",
+        "references": "[ES] References",
+        "observations": "[ES] Observations",
+        "observations with content": "[ES] Observations with content",
+        "issues": "[ES] Issues",
+        "issues with content": "[ES] Issues with content"
     },
     "level": {
+        "low": "Pequeño",
+        "medium": "Medio",
+        "high": "Grande",
         "incomplete": "Incompleto",
         "ad hoc": "[ES] Ad Hoc",
         "baseline": "Básico",
@@ -163,6 +188,7 @@
     },
     "irp": {
         "Inherent Risk": "Riesgo inherente",
+        "inherent risk profile": "Perfil de riesgo inherente",
         "inherent risk profiles": "Perfil de riesgo inherente",
         "irp desc start": "El IRP tiene",
         "five risk areas": "cinco áreas de riesgo",
@@ -172,16 +198,19 @@
         "total %": "Totale %",
         "totals": "Totales",
         "risk levels": "Niveles de iesgo",
+        "overall risk level is": "El nivel de riesgo general es",
         "override risk level": "Anular el nivel de riesgo",
         "override risk level is": "Anular el nivel de riesgo es",
         "override reason": "Anular el motivo",
         "override reason placeholder": "[ES] Please provide an explanation for why the total inherent risk profile is being overriden.",
-        "No Override": "[ES] No Override",
-        "Least": "Insignificante",
-        "Minimal": "Mínimo",
-        "Moderate": "Moderado",
-        "Significant": "Significativo",
-        "Most": "Mayor"
+        "cybersecurity maturity": "[ES] Cybersecurity Maturity",
+
+        "no override": "[ES] No Override",
+        "least": "Insignificante",
+        "minimal": "Mínimo",
+        "moderate": "Moderado",
+        "significant": "Significativo",
+        "most": "Mayor"
     },
     "filterMenu": {
         "Question filters": "Filtros de preguntas",
@@ -198,5 +227,54 @@
         "show statements marked for review": "Mostrar declaraciones marcadas para revisión",
         "show statements with observations": "Mostrar declaraciones con observaciónes",
         "show statements with issues": "Mostrar declaraciones con problemas"
+    },
+    "reports": {
+        "reports": "[ES] Reports",
+        "assessment complete message": "[ES] Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
+        "reports run prior message": "[ES] Any reports run prior to that update may not reflect the current state of the assessment.",
+        "printing report instructions button": "[ES] Printing Reports Instructions",
+        "printing instructions electron": "[ES] To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+        "printing instructions non-electron": "[ES] To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
+        "observations tear-out sheets": "[ES] Observations Tear-Out Sheets",
+        "acet": {
+            "acet reports": "[ES] ACET Reports",
+            "executive summary": "[ES] ACET Executive Summary",
+            "gap report": "[ES] ACET Gap Report",
+            "comments and marked for review": "[ES] ACET Comments and Marked for Review",
+            "answered statements": "[ES] ACET Answered Statements",
+            "compensating controls": "[ES] ACET Compensating Controls"
+        }
+    },
+    "observation": {
+        "observation title": "[ES] Observation Title",
+        "importance": "[ES] Importance",
+        "add an observation": "[ES] Add an Observation",
+        "observation details": "[ES] Observation Details",
+        "title": "[ES] Title",
+        "resolution date": "[ES] Resolution Date",
+        "issue": "[ES] Issue",
+        "impacts": "[ES] Impacts",
+        "recommendations": "[ES] Recommendations",
+        "vulnerabilities": "[ES] Vulnerabilities",
+        "individuals responsible": "[ES] Individuals Responsible",
+        "clear selections": "[ES] Clear Selections",
+        "observation description": "[ES] The question observation section is for advanced users that want to collect extra information about specific questions in the assessment."
+    },
+    "references": {
+        "source documents": "[ES] Source Documents",
+        "additional documents": "[ES] Additional Documents",
+        "no reference documents available": "[ES] no reference documents available"
+    },
+    "tools": {
+        "tools": "Herramientas",
+        "enable protected features": "[ES] Enable Protected Features",
+        "assessment documents": "[ES] Assessment Documents",
+        "parameter editor": "[ES] Parameter Editor",
+        "export assessment to excel": "[ES] Export Assessment to Excel",
+        "import modules": "[ES] Import Modules",
+        "module builder": "[ES] Module Builder",
+        "module content report": "[ES] Module Content Report",
+        "trend": "Tendencia",
+        "compare": "Comparar"
     }
 }

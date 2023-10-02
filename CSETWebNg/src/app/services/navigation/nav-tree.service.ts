@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { NavTreeNode } from './navigation.service';
 import { PageVisibilityService } from './page-visibility.service';
@@ -33,7 +33,7 @@ import { TranslocoService } from '@ngneat/transloco';
 @Injectable({
   providedIn: 'root'
 })
-export class NavTreeService implements OnChanges {
+export class NavTreeService {
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -63,13 +63,6 @@ export class NavTreeService implements OnChanges {
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
-
-  /**
-   * 
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
 
   /**
    *

@@ -13,6 +13,8 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
+using CSETWebCore.Business.Acet;
+using CSETWebCore.Model.Maturity;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -76,7 +78,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ACETDomains")]
-        public IActionResult GetAcetDomains()
+        public IActionResult GetAcetDomains(bool spanishFlag = false)
         {
             List<ACETDomain> domains = new List<ACETDomain>();
             foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
@@ -86,6 +88,18 @@ namespace CSETWebCore.Api.Controllers
                     DomainName = domain.Domain,
                     DomainId = domain.DomainId
                 });
+            }
+            if (spanishFlag)
+            {
+                Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+                var outputGrouping = new GroupingSpanishRow();
+                foreach (var domain in domains)
+                {
+                    if (dictionaryDomain.TryGetValue(domain.DomainName, out outputGrouping))
+                    {
+                        domain.DomainName = dictionaryDomain[domain.DomainName].Spanish_Title;
+                    }
+                }
             }
             return Ok(domains);
         }

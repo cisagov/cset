@@ -29,6 +29,7 @@ import { AcetFilteringService } from '../../../services/filtering/maturity-filte
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 /**
@@ -61,7 +62,8 @@ export class DomainMaturityFilterComponent implements OnInit {
     public acetFilteringSvc: AcetFilteringService,
     public assessSvc: AssessmentService,
     public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private tSvc: TranslocoService
   ) { }
 
   /**
@@ -69,7 +71,6 @@ export class DomainMaturityFilterComponent implements OnInit {
    */
   ngOnInit() {
     this.domainName = this.domain.title;
-
     if (this.assessSvc.isISE()) {
       this.determineIseFilter();
     }
@@ -99,7 +100,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * @param level 
    */
   isFilterActive(level: any) {
-    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);
+    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);    
     if (!filterForDomain) {
       return false;
     }
@@ -116,21 +117,8 @@ export class DomainMaturityFilterComponent implements OnInit {
       }
   }
 
-  spanishTranslate(label: string) {
-    switch(label) {
-      case 'Baseline':
-        return 'Básico';
-      case 'Evolving':
-        return 'En desarrollo';
-      case 'Intermediate':
-        return 'Intermedio';
-      case 'Advanced':
-        return 'Avanzado';
-      case 'Innovative':
-        return 'Innovador';
-      default:
-        return '';
-    }
+  spanishHelper() {
+    
   }
 
   checkFilterKeydown(level: any, event: any) {
