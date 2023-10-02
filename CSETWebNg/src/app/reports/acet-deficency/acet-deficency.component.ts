@@ -28,6 +28,7 @@ import { QuestionsService } from '../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class AcetDeficencyComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public acetSvc: ACETService
+    public acetSvc: ACETService,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
