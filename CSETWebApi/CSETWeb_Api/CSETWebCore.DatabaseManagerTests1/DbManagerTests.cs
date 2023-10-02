@@ -69,10 +69,16 @@ namespace CSETWebCore.DatabaseManager.Tests
             string clientCode = "Test";
             string appCode = "Test";
             DbManager manager = new DbManager(new Version("12.0.3.2"), clientCode, appCode);
-            
+
             //manager.ForceCloseAndDetach(DbManager.localdb2019_ConnectionString, "TestWeb");
             //manager.AttachTest("TestWeb", testdb, testlog);
+
+#pragma warning disable IDE0090 // Use 'new(...)'
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             VersionUpgrader upgrader = new VersionUpgrader(Assembly.GetAssembly(typeof(DbManager)).Location);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore IDE0090 // Use 'new(...)'
+
             manager.SetupDb();
 
             upgrader.UpgradeOnly(new Version("12.0.3.2"), "data source=(localdb)\\mssqllocaldb;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");

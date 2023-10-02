@@ -324,13 +324,7 @@ namespace CSETWebCore.Business.Standards
             get { return standardMode; }
             set { standardMode = value; }
         }
-        public StandardModeEnum GetRecommendedMode()
-        {
-            //TODO:  Implement
-
-            return StandardModeEnum.Question;
-        }
-
+        
         private LevelManager levelManager;
         private STANDARD_SELECTION standard = null;
 

@@ -82,13 +82,17 @@ namespace CSETWebCore.AutoResponder
         {
 
             ExcelProcess excel = new ExcelProcess();
+#pragma warning disable CS8604 // Possible null reference argument.
             string path = excel.BuildSheet(_context, configuration.GetValue<string>("ExcelWorkBookPassword"));
+
             foreach(var email in configuration.GetSection("Notifications:Weekly").GetChildren())
             {
+
                 _emailHelper.SendWeekly(path,
                     email.GetValue<string>("email"),
                     email.GetValue<string>("FirstName"),
                     email.GetValue<string>("LastName"));
+#pragma warning restore CS8604 // Possible null reference argument.
             }
                 
 

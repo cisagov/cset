@@ -83,9 +83,7 @@ namespace CSETWebCore.Business.User
 
                     throw;
                 }
-
-                //TODO: Add logging
-                Console.WriteLine(ex);
+                NLog.LogManager.GetCurrentClassLogger().Error(ex);
                 tmpContext.USERS.Remove(u);
             }
 
