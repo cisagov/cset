@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-acet-dashboard',
@@ -49,16 +50,31 @@ export class AcetDashboardComponent implements OnInit {
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
-        public acetSvc: ACETService
+        public acetSvc: ACETService,
+        private tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
-        this.loadDashboard();
+        // this.loadDashboard();
+        this.tSvc.langChanges$.subscribe((event) => {
+            this.loadDashboard();
+            if (this.tSvc.getActiveLang() == "es") {
+                this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
+                    "Inteligencia de Amenazas y Colaboración",
+                    "Controles de Ciberseguridad",
+                    "Gestión de Dependencia Externa",
+                    "Gestión de Incidentes Cibernéticos y Resiliencia"
+                    ];
+            }
+            this.navSvc.buildTree();
+
+        });
     }
 
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
             (data: AcetDashboard) => {
+                console.log(data)
                 this.acetDashboard = data;
 
                 // Checks to remove any ISE irp data from the ACET results
