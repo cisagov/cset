@@ -174,15 +174,6 @@ export class NavigationService {
     });
   }
 
-  /**
-   * This version is for creating a NEW assessment
-   */
-  beginNewAssessment() {
-    this.assessSvc.newAssessment().then(() => {
-      this.navDirect('phase-prepare');
-    });
-  }
-
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
       this.navDirect('phase-prepare');

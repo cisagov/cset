@@ -26,7 +26,7 @@ using Nelibur.ObjectMapper;
 
 namespace CSETWebCore.Business.Assessment
 {
-    public class AssessmentBusiness : IAssessmentBusiness
+    public class AssessmentBusiness : IAssessmentBusiness, ICreateAssessmentBusiness
     {
         private readonly ITokenManager _tokenManager;
         private readonly IUtilities _utilities;
@@ -52,12 +52,11 @@ namespace CSETWebCore.Business.Assessment
             _assessmentUtil = assessmentUtil;
             _standardsBusiness = standardsBusiness;
             _context = context;
-
             _diagramManager = new Diagram.DiagramManager(context);
         }
 
 
-        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, Guid galleryGuid)
+        public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, GalleryConfig config)
         {
             DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
 
@@ -68,8 +67,7 @@ namespace CSETWebCore.Business.Assessment
 
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = (workflow.ToLower() == "acet") ?
-                    "ACET 00000 " + DateTime.Now.ToString("MMddyy") : "New Assessment",
+                AssessmentName = "New Assessment",
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
@@ -77,7 +75,7 @@ namespace CSETWebCore.Business.Assessment
                 AssessmentEffectiveDate = nowUTC,
                 Workflow = workflow,
                 ExecutiveSummary = defaultExecSumm,
-                GalleryItemGuid = galleryGuid,
+                GalleryItemGuid = config.GalleryGuid,
                 ISE_StateLed = false,
             };
 
@@ -112,9 +110,6 @@ namespace CSETWebCore.Business.Assessment
 
 
             _standardsBusiness.PersistSelectedStandards(assessment_id, null);
-
-
-            CreateIrpHeaders(assessment_id);
 
             return newAssessment;
         }
@@ -587,12 +582,8 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
 
-            dbAssessment.Charter = string.IsNullOrEmpty(assessment.Charter) ? "00000" : assessment.Charter.PadLeft(5, '0');
-            dbAssessment.CreditUnionName = assessment.CreditUnion;
+            dbAssessment.Charter = "00000";            
             dbAssessment.Assets = assessment.Assets.ToString();
-            dbAssessment.ISE_StateLed = assessment.ISE_StateLed;
-            dbAssessment.MatDetail_targetBandOnly = (app_code == "ACET");
-
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
@@ -614,18 +605,6 @@ namespace CSETWebCore.Business.Assessment
                 };
                 _context.INFORMATION.Add(dbInformation);
                 _context.SaveChanges();
-            }
-
-            if (app_code == "ACET")
-            {
-                if (!assessment.AssessmentName.StartsWith("ISE ") && (!assessment.AssessmentName.StartsWith("Merged ")))
-                {
-                    var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
-                        ? string.Empty
-                        : assessment.CreditUnion + " ";
-                    assessment.AssessmentName =
-                        app_code + " " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
-                }
             }
 
             // add or update the INFORMATION record
@@ -662,52 +641,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-        /// <summary>
-        /// Create new headers for IRP calculations
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        public void CreateIrpHeaders(int assessmentId)
-        {
-            int idOffset = 1;
-
-            // now just properties on an Assessment
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-
-            foreach (IRP_HEADER header in _context.IRP_HEADER)
-            {
-                IRPSummary summary = new IRPSummary();
-                summary.HeaderText = header.Header;
-
-                ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h =>
-                    h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id &&
-                    h.ASSESSMENT.Assessment_Id == assessmentId);
-
-                summary.RiskLevel = 0;
-                headerInfo = new ASSESSMENT_IRP_HEADER()
-                {
-                    RISK_LEVEL = 0,
-                    IRP_HEADER = header
-                };
-                headerInfo.ASSESSMENT = assessment;
-                if (_context.ASSESSMENT_IRP_HEADER.Count() == 0)
-                {
-                    headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;
-                }
-                else
-                {
-                    headerInfo.HEADER_RISK_LEVEL_ID =
-                        _context.ASSESSMENT_IRP_HEADER.Max(i => i.HEADER_RISK_LEVEL_ID) + idOffset;
-                    idOffset++;
-                }
-
-                summary.RiskLevelId = headerInfo.HEADER_RISK_LEVEL_ID ?? 0;
-
-                _context.ASSESSMENT_IRP_HEADER.Add(headerInfo);
-            }
-
-            _context.SaveChanges();
-        }
-
+     
 
         /// <summary>
         /// Get all organization types
@@ -747,21 +681,6 @@ namespace CSETWebCore.Business.Assessment
         {
             return _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
         }
-
-        //public void GetMaturityDetails(ref AssessmentDetail assessment)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void GetSelectedStandards(ref AssessmentDetail assessment)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void DetermineFeaturesFromData(ref AssessmentDetail assessment)
-        //{
-        //    throw new NotImplementedException();
-        //}
 
         /// <summary>
         /// Sets the assessment type title and description.

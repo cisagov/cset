@@ -503,7 +503,7 @@ namespace CSETWebCore.Business.GalleryParser
     {
         public bool IsGroup { get; set; }
         public int? Group_Id { get; set; }
-        public string? Gallery_Item_Guid { get; set; }
+        public string Gallery_Item_Guid { get; set; }
         public string Value { get; set; }
     }
 

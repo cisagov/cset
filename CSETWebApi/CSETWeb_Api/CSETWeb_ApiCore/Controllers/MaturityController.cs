@@ -239,7 +239,7 @@ namespace CSETWebCore.Api.Controllers
                     modelId = xy.model_id;
                 }
             }
-            catch (Exception ggg)
+            catch (Exception)
             {
                 // It's okay to call this controller method
                 // without an assessment ID for the module content report
@@ -672,19 +672,17 @@ namespace CSETWebCore.Api.Controllers
             List<Grouping> filteredGroupingsS = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
-            {
-                bool includeGrouping = false;
+            {   
                 var questionsU = new List<Question>();
                 var questionsS = new List<Question>();
                 foreach (var q in b.Questions)
                 {
-                    bool includeQ = false;
+                    
                     var question = new Question();
                     if (q.AnswerText == "U")
                     {
                         if (q.Options.Any(x => x.OptionType.ToLower() == "radio"))
-                        {
-                            includeQ = true;
+                        {                    
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -701,8 +699,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         if (q.Options.Any(x =>
                                 x.Selected && x.OptionText == "No" && x.OptionType.ToLower() == "radio"))
-                        {
-                            includeQ = true;
+                        {   
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,

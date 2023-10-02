@@ -31,6 +31,7 @@ namespace CSETWebCore.Api.Controllers
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
+        private IACETAssessmentBusiness _acsetAssessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
         private readonly IStandardsBusiness _standards;
@@ -40,11 +41,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
+            IACETAssessmentBusiness acetAssessmentBusiness, 
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _assessmentBusiness = assessmentBusiness;
+            _acsetAssessmentBusiness = acetAssessmentBusiness;
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
             _context = context;
@@ -53,21 +56,6 @@ namespace CSETWebCore.Api.Controllers
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
         }
-
-        /// <summary>
-        /// Creates a new Assessment with the current user as the first contact
-        /// in an admin role.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/createassessment")]
-        public IActionResult CreateAssessment([FromQuery] string workflow)
-        {
-            Guid galleryGuid = Guid.Empty;
-            var currentUserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid));
-        }
-
 
         /// <summary>
         /// Creates a new Assessment and populates it with the options defined
@@ -82,14 +70,14 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] Guid galleryGuid, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
-
-
+            
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
             var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == galleryGuid);
             if (galleryItem != null)
             {
                 config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
+                config.GalleryGuid = galleryGuid;
             }
             else
             {
@@ -97,6 +85,7 @@ namespace CSETWebCore.Api.Controllers
                 if (csn != null)
                 {
                     config = JsonConvert.DeserializeObject<GalleryConfig>($"{{Sets:[\"{csn}\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}}");
+                    config.GalleryGuid = galleryGuid;
                     //_galleryEditor.AddGalleryItem(null, null, )
                 }
                 else
@@ -105,9 +94,17 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
+            ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness) _assessmentBusiness;
+            switch (config.Model.ModelName)
+            {
+                case "ACET":
+                case "ISE":
+                    assessmentBusiness = (ICreateAssessmentBusiness) _acsetAssessmentBusiness;
+                    break;
+            }
 
             // create new empty assessment
-            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid);
+            var assessment = assessmentBusiness.CreateNewAssessment(currentUserId, workflow, config);
 
 
             // build a list of Sets to be selected
@@ -197,7 +194,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+            assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
 
             return Ok(assessment);
         }

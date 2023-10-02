@@ -602,8 +602,14 @@ namespace CSETWebCore.Business.Question
                     Comment = comment
                 });
             } 
-            catch (Exception ex)
+            catch (Exception)
             {
+                //TODO: It is a big pet peeve of mine to have empty try catches
+                //Please atleast log the error.  
+                //if it is something you expect to see often and you know it is not an error
+                //then exception tossing and catching is really expensive please refactor 
+                //such that it is not necessary such as test for containment before adding.
+
                 HYDRO_DATA_ACTIONS hda = new HYDRO_DATA_ACTIONS()
                 {
                     Answer = answer,
