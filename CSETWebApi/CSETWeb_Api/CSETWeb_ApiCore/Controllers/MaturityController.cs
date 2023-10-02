@@ -308,7 +308,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
         }
 
 
@@ -318,7 +318,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
         }
 
 
