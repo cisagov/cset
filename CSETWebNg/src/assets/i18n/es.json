@@ -9,7 +9,7 @@
     "primary assessor": "Evaluador principal",
     "prevent encryption": "Prevenir el cifrado",
     "user language": "Idioma del usuario",
-    "note language change": "Seleccione su idioma preferido.  Al cambiar el idioma será dirijido a la página principal.",
+    "note language change": "Seleccione el idioma deseado",
     "prepare": "Preparar",
     "assessment configuration": "Configuratión de evaluación",
     "assessment information": "Datos de la evaluación",
@@ -20,7 +20,9 @@
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
     "assessment type": "Tipo de evaluación",
-    "demographics": "Demographica",
+    "demographics": "Demografía",
+    "critical service name": "Nombre del servicio critíco",
+    "critical service description": "Descripción del servicio critíco",
     "next": "Siguiente",
     "back": "Previo",
     "expand all": "Expandir todo",
@@ -69,17 +71,22 @@
         "results": "Resultados",
         "assessment configuration": "Configuración de evaluación",
         "assessment information": "Información de evaluación",
+        "service demographics": "Demografía del servicio",
+        "critical service information": "Información del servicio crítico",
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
         "maturity questions": "Preguntas de madurez",
         "security practices": "Prácticas de seguridad",
+        "questions": "Preguntas",
         "practices": "Prácticas",
+        "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
         "cmmc tutorial": "Tutorial de CMMC",
         "cis tutorial": "Tutorial de CIS",
         "edm tutorial": "Tutorial de EDM",
         "crr tutorial": "Tutorial de CRR",
-        "rra tutorial": "Tutorial de Ransomware Readiness"
+        "rra tutorial": "Tutorial de Ransomware Readiness",
+        "reports": "Informes"
     },
     "buttons": {
         "ok": "Aceptar",
@@ -94,7 +101,8 @@
         "analytics": "Analítica",
         "export": "Exportar",
         "import": "Importar",
-        "export all": "Exportar todo"
+        "export all": "Exportar todo",
+        "export all to excel": "Exportar todo a Excel"
     },
     "button-label": {
         "Y": "Sí",
