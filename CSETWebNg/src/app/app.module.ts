@@ -1178,13 +1178,10 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
             useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
+                        // Load and set the language based on config
                         return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
-
-                            // Set the default language based on config
                             tSvc.setActiveLang(configSvc.config.defaultLang);
-                            return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
-                                return authSvc.checkLocal();
-                            });
+                            return authSvc.checkLocal();
                         });
                     });
                 };

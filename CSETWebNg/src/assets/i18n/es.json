@@ -22,14 +22,10 @@
     "demographics": "Demografía",
     "critical service name": "Nombre del servicio critíco",
     "critical service description": "Descripción del servicio critíco",
-    "next": "Siguiente",
-    "back": "Previo",
-    "expand all": "Expandir todo",
-    "collapse all": "Desplegar todo",
-    "filter": "Filtrar",
-    "reviewed": "Revisado",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
+    "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
+    "auto load guidance": "Carga automática de guía",
 
     "contact": {
         "contacts": "Contactos",
@@ -74,6 +70,7 @@
         "prepare": "Preparar",
         "assessment": "Evaluación",
         "results": "Resultados",
+        "search results": "Resultados de la búsqueda",
         "assessment configuration": "Configuración de evaluación",
         "assessment information": "Información de evaluación",
         "service demographics": "Demografía del servicio",
@@ -113,7 +110,11 @@
         "export": "Exportar",
         "import": "Importar",
         "export all": "Exportar todo",
-        "export all to excel": "Exportar todo a Excel"
+        "export all to excel": "Exportar todo a Excel",
+        "expand all": "Expandir todo",
+        "collapse all": "Desplegar todo",
+        "filter": "Filtrar",
+        "reviewed": "Revisado"
     },
     "button-label": {
         "Y": "Sí",
@@ -166,7 +167,8 @@
         "observations": "[ES] Observations",
         "observations with content": "[ES] Observations with content",
         "issues": "[ES] Issues",
-        "issues with content": "[ES] Issues with content"
+        "issues with content": "[ES] Issues with content",
+        "answered count": "Indica el número de preguntas respondidas del total de esta página"
     },
     "level": {
         "low": "Pequeño",
