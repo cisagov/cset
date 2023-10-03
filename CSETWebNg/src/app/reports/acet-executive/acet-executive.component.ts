@@ -27,6 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 
@@ -64,11 +65,12 @@ export class AcetExecutiveComponent implements OnInit {
     public reportSvc: ReportService,
     public acetSvc: ACETService,
     private titleService: Title,
-
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
+    // this.titleService.setTitle(this.tSvc.translate('reports.acet.executive summary.executive summary'));
 
     this.getMatRange();
 

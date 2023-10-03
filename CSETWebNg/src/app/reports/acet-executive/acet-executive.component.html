@@ -22,14 +22,14 @@
 -------------------------->
 <head>
 </head>
-<div class="report-body mb-5">
+<div *transloco="let t; read: 'reports.acet.executive summary'" class="report-body mb-5">
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-              EXECUTIVE
+                {{ t('executive summary title 1') }}
             </p>
             <p class="report-title">
-              SUMMARY
+                {{ t('executive summary title 2') }}
             </p>
         </div>
         <div class="column">
@@ -63,7 +63,7 @@
     <!---->
     <div class="ml-3 mr-3 form">
         <h1 class="page-header">
-            Site Information
+            {{ t('site information') }}
         </h1>
         <hr class="page-line">
 
