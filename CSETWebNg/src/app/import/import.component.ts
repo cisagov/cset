@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CodeEditorComponent, CodeEditorService, CodeModel } from '@goecmarc/code-editor';
+import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
 import { Subject, Subscription } from 'rxjs';
