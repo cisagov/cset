@@ -20,24 +20,24 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
+<div *transloco="let t" class="white-panel">
   <div id="top"></div>
   <div class="d-flex flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
     <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
       <div class="mr-3 answered-count" *ngIf="!!groupings"
-        matTooltip="Indicates the number of answered questions out of the total for this page">
+        matTooltip="{{t('tooltip.answered count')}}">
         {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
       </div>
       <div>
         <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-          matTooltip="Collapse All" aria-label="Collapse All">
+          matTooltip="{{t('buttons.collapse all')}}" aria-label="{{t('buttons.collapse all')}}">
           <i class="fas fa-compress-alt"></i></button>
-        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="Expand All"
-          aria-label="Expand All"><i class="fas fa-expand-alt"></i></button>
+        <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" matTooltip="{{t('buttons.expand all')}}"
+          aria-label="{{t('buttons.expand all')}}"><i class="fas fa-expand-alt"></i></button>
         <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()"
-          matTooltip="Filter">
-          <i class="cset-icons-filter" aria-label="Filter"></i>
+          matTooltip="{{t('buttons.filter')}}">
+          <i class="cset-icons-filter" aria-label="{{t('buttons.filter')}}"></i>
         </button>
       </div>
 

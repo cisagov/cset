@@ -20,10 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="mx-4 mt-4">
-  <h4>Search Results</h4>
+<div *transloco="let t" class="mx-4 mt-4">
+  <h4>{{t('titles.search results')}}</h4>
   <div *ngIf="rows.length == 0">
-    No items were found matching the search request. 
+    {{t('no search results')}}
   </div>
   <div style="height:235px; margin: 0 1.5rem" *ngFor="let row of rows">
     <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
