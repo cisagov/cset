@@ -26,14 +26,11 @@
     "critical service description": "Critical Service Description",
     "practices": "Practices",
     "requires review": "Requires Review",
-    "next": "Next",
-    "back": "Back",
-    "expand all": "Expand All",
-    "collapse all": "Collapse All",
-    "filter": "Filter",
-    "reviewed": "Reviewed",
     "domain": "Domain",
     "maturity level": "Maturity Level",
+    "no search results": "No items were found matching the search request.",
+    "auto load guidance": "Auto-load Guidance",
+    
     "buttons": {
         "ok": "OK",
         "save": "Save",
@@ -50,12 +47,17 @@
         "export": "Export",
         "import": "Import",
         "export all": "Export All",
-        "export all to excel": "Export All to Excel"
+        "export all to excel": "Export All to Excel",
+        "expand all": "Expand All",
+        "collapse all": "Collapse All",
+        "filter": "Filter",
+        "reviewed": "Reviewed"    
     },
     "titles": {
         "prepare": "Prepare",
         "assessment": "Assessment",
         "results": "Results",
+        "search results": "Search Results",
         "assessment configuration": "Assessment Configuration",
         "assessment information": "Assessment Information",
         "service demographics": "Service Demographics",
@@ -173,7 +175,8 @@
         "observations": "Observations",
         "observations with content": "Observations with content",
         "issues": "Issues",
-        "issues with content": "Issues with content"
+        "issues with content": "Issues with content",
+        "answered count": "Indicates the number of answered questions out of the total for this page"
     },
     "level": {
         "low": "Low",
