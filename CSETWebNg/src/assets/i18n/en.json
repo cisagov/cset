@@ -20,6 +20,7 @@
     "facility name": "Facility Name",
     "city or site name": "City or Site Name",
     "state province region": "State/Province/Region",
+    "state, province, or region": "State, Province, or Region",
     "assessment type": "Assessment Type",
     "demographics": "Demographics",
     "critical service name": "Critical Service Name",
@@ -28,6 +29,7 @@
     "requires review": "Requires Review",
     "domain": "Domain",
     "maturity level": "Maturity Level",
+    "maturity detail": "Maturity Detail",
     "no search results": "No items were found matching the search request.",
     "auto load guidance": "Auto-load Guidance",
     
@@ -117,6 +119,7 @@
         "assets": "Assets",
         "auto populate": "Auto-populated based on data provided",
         "target maturity range": "Target Maturity Range",
+        "target percentage achieved": "Target Percentage Achieved",
         "maturity results": "ACET Maturity Results",
         "actual level": "Actual Level",
         "assessment factor": "Assessment Factor",
@@ -208,6 +211,8 @@
         "totals": "Totals",
         "risk levels": "Risk Levels",
         "overall risk level is": "Overall Risk Level is",
+        "overall risk level has not been overridden": "Overall Risk Level has not been overridden",
+        "overall risk level has been overriden to": "Overall Risk Level has been overriden to",
         "override risk level": "Override Risk Level",
         "override risk level is": "Override Risk Level is",
         "override reason": "Override Reason",
@@ -247,6 +252,7 @@
             "acet reports": "ACET Reports",
             "executive summary": {
                 "executive summary": "ACET Executive Summary",
+                "page tab title": "Executive Report - ACET",
                 "executive summary title 1": "EXECUTIVE",
                 "executive summary title 2": "SUMMARY",
                 "site information": "Site Information"
