@@ -354,7 +354,10 @@ export class QuestionsService {
    * Finds the button definition and returns its label
    */
   answerButtonLabel(modelName: string, answerCode: string): string {
-    return this.findAnsDefinition(modelName, answerCode).buttonLabel;
+    const def = this.findAnsDefinition(modelName, answerCode);
+    let key = `answer-options.button-labels.${def.buttonLabelKey}`;
+    const disp = this.tSvc.translate(key);
+    return this.tSvc.translate(disp);
   }
 
   /**
@@ -362,11 +365,8 @@ export class QuestionsService {
    * If a tooltip is not defined, the button label is returned.
    */
   answerButtonTooltip(modelName: string, answerCode: string): string {
-    var t = this.findAnsDefinition(modelName, answerCode);
-      if (!!t.buttonTooltip) {
-        return t.buttonTooltip;
-      }
-      return t.buttonLabel;
+    var def = this.findAnsDefinition(modelName, answerCode);
+      return this.tSvc.translate(`answer-options.button-tooltips.${def.buttonLabelKey}`);
   }
 
   /**
