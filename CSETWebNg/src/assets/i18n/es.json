@@ -18,12 +18,14 @@
     "facility name": "Nombre de facilidad",
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
+    "state, province, or region": "Estado, provincia, o región",
     "assessment type": "Tipo de evaluación",
     "demographics": "Demografía",
     "critical service name": "Nombre del servicio critíco",
     "critical service description": "Descripción del servicio critíco",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
+    "maturity detail": "[ES] Maturity Detail",
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
 
@@ -59,6 +61,7 @@
         "assets": "Activos",
         "auto populate": "Auto-generado basado en los datos proporcionados.",
         "target maturity range": "Rango de madurez objetivo",
+        "target percentage achieved": "[ES] Target Percentage Achieved",
         "maturity results": "Resultados de madurez de ACET",
         "actual level": "Nivel actual",
         "assessment factor": "Factor de evaluación",
@@ -200,6 +203,8 @@
         "totals": "Totales",
         "risk levels": "Niveles de iesgo",
         "overall risk level is": "El nivel de riesgo general es",
+        "overall risk level has not been overridden": "[ES] Overall Risk Level has not been overridden",
+        "overall risk level has been overriden to": "[ES] Overall Risk Level has been overriden to",
         "override risk level": "Anular el nivel de riesgo",
         "override risk level is": "Anular el nivel de riesgo es",
         "override reason": "Anular el motivo",
@@ -239,7 +244,11 @@
         "acet": {
             "acet reports": "Los informes de ACET",
             "executive summary": {
-                "executive summary": "Resumen ejecutivo de ACET"
+                "executive summary": "Resumen ejecutivo de ACET",
+                "page tab title": "Executive Summary - ACET",
+                "executive summary title 1": "RESUMEN",
+                "executive summary title 2": "EJECUTIVO",
+                "site information": "[ES] Site Information"
             },
             "gap report": {
                 "gap report": "Informe de brechas de ACET",
