@@ -137,7 +137,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0, bool spanishFlag = false)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-
+            if (installationMode == "ACET")
+            {
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, spanishFlag));
+            }
             return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, spanishFlag));
         }
 
@@ -488,7 +491,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
+            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
         }
 
 
@@ -502,7 +505,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
+            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
         }
 
 
