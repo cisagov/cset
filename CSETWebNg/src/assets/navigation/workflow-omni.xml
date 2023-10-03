@@ -301,7 +301,7 @@
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:11" />
 
         <!-- Results - SD02-Series -->
-        <node displaytext="SD02-Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:14" />
+        <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:14" />
 
         <!-- Results - Diagram -->
         <node displaytext="Components Results" condition="OPTION:DIAGRAM">
