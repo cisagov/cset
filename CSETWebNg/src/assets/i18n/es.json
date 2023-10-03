@@ -156,15 +156,37 @@
             "Fully-MVRA": "Completo",
             "Not-MVRA": "No",
             "Partial-MVRA": "Parcial",
+            "Alt-ACET": "Sí - control de contrapartida",
             "Imp-CPG": "Implementado - Una organización ha implementado y continúa manteniendo las acciones recomendadas, o una alternativa adecuada, necesaria para lograr el resultado establecido.",
             "Prog-CPG": "En curso - Una organización está en el proceso de implementar las acciones recomendadas dentro de una meta, o una alternativa adecuada, para lograr el resultado establecido.",
             "Scoped-CPG": "Delimitado - Una organización ha identificado el conjunto completo de actividades requeridas para alcanzar el resultado establecido de una meta.",
             "Not-CPG": "No implementado - Una organización no tiene planes inmediatos para implementar las acciones recomendadas para una meta.",
-            "FI-C2M2": "Fully Implemented - Complete",
-            "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
-            "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-            "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
-            "Alt-ACET": "Sí(C)"
+            "FI-C2M2": "[ES] Fully Implemented - Complete",
+            "LI-C2M2": "[ES] Largely Implemented - Complete, but with a recognized opportunity for improvement",
+            "PI-C2M2": "[ES] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
+            "NI-C2M2": "[ES] Not Implemented - Absent; the practice is not performed by the organization"
+        },
+        "labels": {
+            "Yes": "[ES] Yes",
+            "No": "[ES] No",
+            "NA": "[ES] N/A",
+            "Alt": "[ES] Alternate",
+            "U": "[ES] Unanswered",
+            "Inc": "[ES] Incomplete",
+            "Iss": "[ES] No with Issue(s)",
+            "S": "[ES] Selected",
+            "Fully-MVRA": "[ES] Fully Implemented",
+            "Not-MVRA": "[ES] Not Implemented",
+            "Partial-MVRA": "[ES] Partially Implemented",
+            "Alt-ACET": "Sí - control de contrapartida",
+            "Imp-CPG": "[ES] Implemented",
+            "Prog-CPG": "[ES] In Progress",
+            "Scoped-CPG": "[ES] Scoped",
+            "Not-CPG": "[ES] Not Implemented",
+            "FI-C2M2": "[ES] Fully Implemented (FI)",
+            "LI-C2M2": "[ES] Largely Implemented (LI)",
+            "PI-C2M2": "[ES] Partially Implemented (PI)",
+            "NI-C2M2": "[ES] Not Implemented (NI)"
         }
     },
 
@@ -201,7 +223,12 @@
         "evolving-desc": "complejidad limitada en términos de la tecnología que utiliza.",
         "intermediate-desc": "utiliza tecnología que puede ser algo compleja en términos de volumen y sofisticación.",
         "advanced-desc": "utiliza tecnología compleja en términos de alcance y sofisticación.",
-        "innovative-desc": "utiliza tecnología extremadamente compleja para ofrecer una miríada de productos y servicios."
+        "innovative-desc": "utiliza tecnología extremadamente compleja para ofrecer una miríada de productos y servicios.",
+        "mil-1": "MIL-1",
+        "mil-2": "MIL-2",
+        "mil-3": "MIL-3",
+        "mil-4": "MIL-4",
+        "mil-5": "MIL-5"
     },
     "irp": {
         "Inherent Risk": "Riesgo inherente",

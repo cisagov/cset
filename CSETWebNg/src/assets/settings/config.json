@@ -71,44 +71,37 @@
     },
     "answerOptionsDefault": [
         {
-            "code": "U",
-            "answerLabel": "Unanswered"
+            "code": "U"
         },
         {
             "code": "Y",
             "buttonLabelKey": "Yes",
-            "buttonCss": "btn-yes",
-            "answerLabel": "Yes"
+            "buttonCss": "btn-yes"
         },
         {
             "code": "N",
             "buttonLabelKey": "No",
-            "buttonCss": "btn-no",
-            "answerLabel": "No"
+            "buttonCss": "btn-no"
         },
         {
             "code": "NA",
             "buttonLabelKey": "N/A",
-            "buttonCss": "btn-na",
-            "answerLabel": "N/A"
+            "buttonCss": "btn-na"
         },
         {
             "code": "A",
             "buttonLabelKey": "Alt",
-            "buttonCss": "btn-alt",
-            "answerLabel": "Alternate"
+            "buttonCss": "btn-alt"
         },
         {
             "code": "I",
             "buttonLabelKey": "Inc",
-            "buttonCss": "btn-inc",
-            "answerLabel": "Incomplete"
+            "buttonCss": "btn-inc"
         },
         {
             "code": "Iss",
             "buttonLabelKey": "Issue(N)",
-            "buttonCss": "btn-iss",
-            "answerLabel": "No with Issue(s)"
+            "buttonCss": "btn-iss"
         }
     ],
     "moduleBehaviors": [
@@ -200,30 +193,22 @@
                 {
                     "code": "FI",
                     "buttonLabelKey": "FI-C2M2",
-                    "buttonCss": "btn-c2m2-fi",
-                    "answerLabel": "Fully Implemented (FI)",
-                    "buttonTooltip": "Fully Implemented - Complete"
+                    "buttonCss": "btn-c2m2-fi"
                 },
                 {
                     "code": "LI",
                     "buttonLabelKey": "LI-C2M2",
-                    "buttonCss": "btn-c2m2-li",
-                    "answerLabel": "Largely Implemented (LI)",
-                    "buttonTooltip": "Largely Implemented - Complete, but with a recognized opportunity for improvement"
+                    "buttonCss": "btn-c2m2-li"
                 },
                 {
                     "code": "PI",
                     "buttonLabelKey": "PI-C2M2",
-                    "buttonCss": "btn-c2m2-pi",
-                    "answerLabel": "Partially Implemented (PI)",
-                    "buttonTooltip": "Partially Implemented - Incomplete; there are multiple opportunities for improvement"
+                    "buttonCss": "btn-c2m2-pi"
                 },
                 {
                     "code": "NI",
                     "buttonLabelKey": "NI-C2M2",
-                    "buttonCss": "btn-c2m2-ni",
-                    "answerLabel": "Not Implemented (NI)",
-                    "buttonTooltip": "Not Implemented - Absent; the practice is not performed by the organization"
+                    "buttonCss": "btn-c2m2-ni"
                 }
             ]
         },
@@ -235,7 +220,6 @@
                     "code": "A",
                     "buttonLabelKey": "Yes(C)",
                     "buttonCss": "btn-alt",
-                    "answerLabel": "Yes Compensating Control",
                     "note": "This will only apply in the ACET skin.  See QuestionsService"
                 }
             ]
@@ -249,14 +233,12 @@
                 {
                     "code": "Y",
                     "buttonLabelKey": "Yes",
-                    "buttonCss": "btn-yes",
-                    "answerLabel": ""
+                    "buttonCss": "btn-yes"
                 },
                 {
                     "code": "N",
                     "buttonLabelKey": "No",
-                    "buttonCss": "btn-no",
-                    "answerLabel": ""
+                    "buttonCss": "btn-no"
                 },
                 {
                     "code": "U",
@@ -279,20 +261,17 @@
                 {
                     "code": "Y",
                     "buttonLabelKey": "Fully-MVRA",
-                    "buttonCss": "btn-yes",
-                    "answerLabel": "Fully Implemented"
+                    "buttonCss": "btn-yes"
                 },
                 {
                     "code": "N",
                     "buttonLabelKey": "Not-MVRA",
-                    "buttonCss": "btn-no",
-                    "answerLabel": "Not Implemented"
+                    "buttonCss": "btn-no"
                 },
                 {
                     "code": "A",
                     "buttonLabelKey": "Partial-MVRA",
-                    "buttonCss": "btn-alt",
-                    "answerLabel": "Partially Implemented"
+                    "buttonCss": "btn-alt"
                 }
             ]
         }

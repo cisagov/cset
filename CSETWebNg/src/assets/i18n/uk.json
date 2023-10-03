@@ -118,6 +118,8 @@
             "Fully-MVRA": "Повністю",
             "Not-MVRA": "ні",
             "Partial-MVRA": "Частковий",
+
+            "Alt-ACET": "[UK] Yes(C)",
     
             "Imp-CPG": "[UK] Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
             "Prog-CPG": "[UK] In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
@@ -128,6 +130,28 @@
             "LI-C2M2": "[UK] Largely Implemented - Complete, but with a recognized opportunity for improvement",
             "PI-C2M2": "[UK] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
             "NI-C2M2": "[UK] Not Implemented - Absent; the practice is not performed by the organization"
+        },
+        "labels": {
+            "Yes": "[UK] Yes",
+            "No": "[UK] No",
+            "NA": "[UK] N/A",
+            "Alt": "[UK] Alternate",
+            "U": "[UK] Unanswered",
+            "Inc": "[UK] Incomplete",
+            "Iss": "[UK] No with Issue(s)",
+            "S": "[UK] Selected",
+            "Fully-MVRA": "[UK] Fully Implemented",
+            "Not-MVRA": "[UK] Not Implemented",
+            "Partial-MVRA": "[UK] Partially Implemented",
+            "Alt-ACET": "[UK] Yes(C)",
+            "Imp-CPG": "[UK] Implemented",
+            "Prog-CPG": "[UK] In Progress",
+            "Scoped-CPG": "[UK] Scoped",
+            "Not-CPG": "[UK] Not Implemented",
+            "FI-C2M2": "[UK] Fully Implemented (FI)",
+            "LI-C2M2": "[UK] Largely Implemented (LI)",
+            "PI-C2M2": "[UK] Partially Implemented (PI)",
+            "NI-C2M2": "[UK] Not Implemented (NI)"
         }
     },
 
@@ -140,11 +164,27 @@
         "questions mode": "[UK]Questions Mode displays simple questions that correspond to standard requirements",
         "requirements mode": "[UK]Requirements Mode displays requirement text verbatim as it appears in the standard"
     },
-    "answer-label": {
-        "FI-C2M2": "[UK] Fully Implemented (FI)",
-        "LI-C2M2": "[UK] Largely Implemented (LI)",
-        "PI-C2M2": "[UK] Partially Implemented (PI)",
-        "NI-C2M2": "[UK] Not Implemented (NI)"
-
+    "level": {
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "basic": "Basic",
+        "incomplete": "Incomplete",
+        "ad hoc" : "Ad Hoc",
+        "baseline": "Baseline",
+        "evolving": "Evolving",
+        "intermediate": "Intermediate",
+        "advanced": "Advanced",
+        "innovative": "Innovative",
+        "baseline-desc": "very limited use of technology.",
+        "evolving-desc": "limited complexity in terms of the technology it uses.",
+        "intermediate-desc": "uses technology that may be somewhat complex in terms of volume and sophistication.",
+        "advanced-desc": "uses complex technology in terms of scope and sophistication.",
+        "innovative-desc": "uses extremely complex technology to deliver myriad products and services.",
+        "mil-1": "MIL-1",
+        "mil-2": "MIL-2",
+        "mil-3": "MIL-3",
+        "mil-4": "MIL-4",
+        "mil-5": "MIL-5"
     }
 }

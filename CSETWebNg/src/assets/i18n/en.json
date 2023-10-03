@@ -164,6 +164,7 @@
             "Fully-MVRA": "Fully",
             "Not-MVRA": "Not",
             "Partial-MVRA": "Partial",
+            "Alt-ACET": "Yes Compensating Control",
             "Imp-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
             "Prog-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
             "Scoped-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
@@ -171,8 +172,7 @@
             "FI-C2M2": "Fully Implemented - Complete",
             "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
             "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-            "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
-            "Alt-ACET": "Yes(C)"
+            "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization"
         },
         "labels": {
             "Yes": "Yes",
@@ -186,15 +186,15 @@
             "Fully-MVRA": "Fully Implemented",
             "Not-MVRA": "Not Implemented",
             "Partial-MVRA": "Partially Implemented",
-            "Alt-ACET": "Yes(C)",
+            "Alt-ACET": "Yes Compensating Control",
             "Imp-CPG": "Implemented",
             "Prog-CPG": "In Progress",
             "Scoped-CPG": "Scoped",
             "Not-CPG": "Not Implemented",
-            "FI-C2M2": "FI",
-            "LI-C2M2": "LI",
-            "PI-C2M2": "PI",
-            "NI-C2M2": "NI"
+            "FI-C2M2": "Fully Implemented (FI)",
+            "LI-C2M2": "Largely Implemented (LI)",
+            "PI-C2M2": "Partially Implemented (PI)",
+            "NI-C2M2": "Not Implemented (NI)"
         }
     },
     
@@ -232,7 +232,12 @@
         "evolving-desc": "limited complexity in terms of the technology it uses.",
         "intermediate-desc": "uses technology that may be somewhat complex in terms of volume and sophistication.",
         "advanced-desc": "uses complex technology in terms of scope and sophistication.",
-        "innovative-desc": "uses extremely complex technology to deliver myriad products and services."
+        "innovative-desc": "uses extremely complex technology to deliver myriad products and services.",
+        "mil-1": "MIL-1",
+        "mil-2": "MIL-2",
+        "mil-3": "MIL-3",
+        "mil-4": "MIL-4",
+        "mil-5": "MIL-5"
     },
     "irp": {
         "Inherent Risk": "Inherent Risk",
