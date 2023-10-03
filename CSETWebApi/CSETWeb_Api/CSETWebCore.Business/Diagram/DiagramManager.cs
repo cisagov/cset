@@ -489,7 +489,7 @@ namespace CSETWebCore.Business.Diagram
             return edges;
         }
 
-        //TODO check to see if this is still the same
+        
         /// <summary>
         /// 
         /// </summary>
@@ -501,16 +501,6 @@ namespace CSETWebCore.Business.Diagram
             //get the parent id
             var lm = new LayerManager(_context, assessment_id);
             var list = lm.GetLastLayer(drawIoId);
-
-            //Dictionary<string, LayerVisibility> allItems = list.ToDictionary(x => x.DrawIo_id, x => x);
-            //LayerVisibility layer = new LayerVisibility();
-            //LayerVisibility lastLayer = new LayerVisibility();
-            //while (!string.IsNullOrEmpty(drawIoId) && allItems.TryGetValue(drawIoId, out layer))
-            //{
-            //    lastLayer = layer;
-            //    drawIoId = layer.Parent_DrawIo_id;
-            //}
-
             return list;
         }
 
