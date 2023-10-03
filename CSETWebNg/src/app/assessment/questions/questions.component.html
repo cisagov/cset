@@ -27,17 +27,17 @@
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label *ngIf="showQuestionsToggle" class="btn btn-app-mode form-check-label"
         [class.active]="assessSvc.applicationMode == 'Q'" (click)="setMode('Q')"
-        matTooltip="Questions Mode displays simple questions that correspond to standard requirements">
+        matTooltip="{{t('tooltip.questions mode')}}">
         <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
           [checked]="assessSvc.applicationMode == 'Q'">
-        Questions Mode
+          {{t('buttons.questions mode')}}
       </label>
       <label *ngIf="showRequirementsToggle" class="btn btn-app-mode form-check-label"
         [class.active]="assessSvc.applicationMode == 'R'" (click)="setMode('R')"
-        matTooltip="Requirements Mode displays requirement text verbatim as it appears in the standard">
+        matTooltip="{{t('tooltip.requirements mode')}}">
         <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
           [checked]="assessSvc.applicationMode == 'R'">
-        Requirements Mode
+          {{t('buttons.requirements mode')}}
       </label>
     </div>
 
@@ -77,7 +77,7 @@
   </div>
 
   <p *ngIf="!!categories" class="mb-4">
-    Unanswered questions are calculated as a '{{questionsSvc.answerButtonLabel('', 'N')}}' response
+    {{ msgUnansweredEqualsNo }}
   </p>
 
 

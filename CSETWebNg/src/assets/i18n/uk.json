@@ -26,6 +26,7 @@
     "requires review": "Потребує перегляду",
     "no search results": "Не знайдено елементів, що відповідають пошуковому запиту.",
     "auto load guidance": "Автоматичне завантаження вказівок",
+    "unanswered equals no": "Питання без відповіді обчислюються як відповідь '{{no-ans}}'",
 
     "titles": {
         "prepare": "Приготуйте",
@@ -72,59 +73,72 @@
         "expand all": "Розгорнути все",
         "collapse all": "Закрити все",
         "filter": "фільтр",
-        "reviewed": "Переглянуто"
+        "reviewed": "Переглянуто",
+        "questions mode": "Режим питаньe",
+        "requirements mode": "Режим вимог"
+    },
+
+    "answer-options": {
+        "button-labels": {
+            "Yes": "Так",
+            "No": "Ні",
+            "N/A": "Н/Д",
+            "Alt": "заміщення",
+            "Unanswered": "Unanswered",
+            "Inc": "Неповний",
+            "Issue(N)": "Issue(N)",
+            "S": "S",
+    
+            "Fully-MVRA": "Повністю",
+            "Not-MVRA": "ні",
+            "Partial-MVRA": "Частковий",
+    
+            "Alt-ACET": "Yes(C)",
+    
+            "Imp-CPG": "[UK] Imp",
+            "Prog-CPG": "[UK] Prog",
+            "Scoped-CPG": "[UK] Scoped",
+            "Not-CPG": "[UK] Not",
+    
+            "FI-C2M2": "FI",
+            "LI-C2M2": "LI",
+            "PI-C2M2": "PI",
+            "NI-C2M2": "NI"
+        },
+        "button-tooltips": {
+            "Yes": "Так",
+            "No": "Ні",
+            "N/A": "Н/Д",
+            "Alt": "заміщення",
+            "Unanswered": "Unanswered [UK]",
+            "Inc": "Неповний",
+            "Issue(N)": "No with Issues [UK]",
+            "S": "",
+
+            "Fully-MVRA": "Повністю",
+            "Not-MVRA": "ні",
+            "Partial-MVRA": "Частковий",
+    
+            "Imp-CPG": "[UK] Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
+            "Prog-CPG": "[UK] In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
+            "Scoped-CPG": "[UK] Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
+            "Not-CPG": "[UK] Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
+          
+            "FI-C2M2": "[UK] Fully Implemented - Complete",
+            "LI-C2M2": "[UK] Largely Implemented - Complete, but with a recognized opportunity for improvement",
+            "PI-C2M2": "[UK] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
+            "NI-C2M2": "[UK] Not Implemented - Absent; the practice is not performed by the organization"
+        }
     },
 
    
-    "button-label": {
-        "Y": "Так",
-        "N": "Ні",
-        "NA": "Н/Д",
-        "A": "заміщення",
-        "U": "Unanswered",
-        "I": "Неповний",
-        "Iss": "Issue(N)",
-        "S": "S",
-
-        "Y-MVRA": "Повністю",
-        "N-MVRA": "ні",
-        "A-MVRA": "Частковий",
-
-        "A-ACET": "Yes(C)",
-
-        "Y-CPG": "[UK] Imp",
-        "I-CPG": "[UK] Prog",
-        "S-CPG": "[UK] Scoped",
-        "N-CPG": "[UK] Not",
-
-        "FI-C2M2": "FI",
-        "LI-C2M2": "LI",
-        "PI-C2M2": "PI",
-        "NI-C2M2": "NI"
-    },
+    
     "tooltip": {
-        "Y": "Так",
-        "N": "Ні",
-        "NA": "Н/Д",
-        "A": "заміщення",
-        "U": "Unanswered [UK]",
-        "I": "Неповний",
-        "Iss": "No with Issues [UK]",
-        "S": "",
-
-        "Y-CPG": "[UK] Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
-        "I-CPG": "[UK] In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
-        "S-CPG": "[UK] Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
-        "N-CPG": "[UK] Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
-      
-        "FI-C2M2": "[UK] Fully Implemented - Complete",
-        "LI-C2M2": "[UK] Largely Implemented - Complete, but with a recognized opportunity for improvement",
-        "PI-C2M2": "[UK] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-        "NI-C2M2": "[UK] Not Implemented - Absent; the practice is not performed by the organization",
-
         "mfr-flag": "Цей контроль потребує додаткового перегляду",
         "requires-review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки.",
-        "answered count": "Вказує кількість запитань із відповідями на цій сторінці"
+        "answered count": "Вказує кількість запитань із відповідями на цій сторінці",
+        "questions mode": "[UK]Questions Mode displays simple questions that correspond to standard requirements",
+        "requirements mode": "[UK]Requirements Mode displays requirement text verbatim as it appears in the standard"
     },
     "answer-label": {
         "FI-C2M2": "[UK] Fully Implemented (FI)",
