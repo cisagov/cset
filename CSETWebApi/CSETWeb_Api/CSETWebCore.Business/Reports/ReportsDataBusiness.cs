@@ -288,7 +288,6 @@ namespace CSETWebCore.Business.Reports
 
             var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
-            // ToDo: Refactor the following stucture of loops
             foreach (var domain in questionGrouping.SubGroupings)
             {
                 var newDomain = new MatAnsweredQuestionDomain()

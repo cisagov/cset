@@ -47,7 +47,6 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentid = _token.AssessmentForUser();
 
-            //TODO: make this async
             TinyMapper.Bind<GENERAL_SAL_DESCRIPTIONS, GeneralSalDescriptionsWeights>();
             TinyMapper.Bind<GEN_SAL_WEIGHTS, GenSalWeights>();
 

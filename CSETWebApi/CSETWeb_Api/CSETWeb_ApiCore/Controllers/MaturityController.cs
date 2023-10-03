@@ -439,13 +439,6 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult ImportSurvey([FromBody] Model.Nested.CisImportRequest request)
         {
             var assessmentId = _tokenManager.AssessmentForUser();
-
-
-            // TODO: verify that the user has permission to both assessments
-
-
-
-
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.ImportCisAnswers(request.Dest, request.Source);
             return Ok();

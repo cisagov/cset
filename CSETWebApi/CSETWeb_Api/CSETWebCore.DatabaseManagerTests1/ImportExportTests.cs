@@ -38,11 +38,11 @@ namespace CSETWebCore.DatabaseManager.Tests
     [TestClass()]
     public class ImportExportTests
     {
-        private CSETContext context;
-        private TokenManager tokenManager;
-        private LocalInstallationHelper localHelper;
-        private PasswordHash passwordHash;
-        private IConfiguration config;
+        private CSETContext? context;
+        private TokenManager? tokenManager;
+        private LocalInstallationHelper? localHelper;
+        private PasswordHash? passwordHash;
+        private IConfiguration? config;
 
         [TestInitialize()]
         public void Initialize()
@@ -78,18 +78,17 @@ namespace CSETWebCore.DatabaseManager.Tests
         public void ExportAllAssessmentsTest()
         {
             //setup a copy file
-            //setup a destination file
-            string clientCode = "DHS";
-            string appCode = "CSET";
-
+            //setup a destination file            
             UserAuthentication userAuth = new UserAuthentication(passwordHash, null, localHelper, tokenManager, null, config, context);
             Login login = new Login { Email = null, Password = null, TzOffset = "300", Scope = "CSET" };
 
             string loginToken = userAuth.AuthenticateStandalone(login, tokenManager).Token;
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var assessments = context.ASSESSMENTS.Select(x => x.Assessment_Id).AsEnumerable();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
-            for( int i=0; i<assessments.Count(); i++ )
+            for ( int i=0; i<assessments.Count(); i++ )
             {
                 int assess_Id = assessments.ElementAt(i);
 

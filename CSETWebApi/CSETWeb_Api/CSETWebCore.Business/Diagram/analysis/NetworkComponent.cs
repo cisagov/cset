@@ -33,9 +33,6 @@ namespace CSETWebCore.Business
         public bool IsIDSOrIPS {
             get
             {
-                //TODO if this is an MSC
-                //look to see if the MSC contains 
-                //an ips or ids
                 return this.Component_Symbol_Id == Constants.Constants.IDS_TYPE || this.Component_Symbol_Id == Constants.Constants.IPS_TYPE;
 
             }

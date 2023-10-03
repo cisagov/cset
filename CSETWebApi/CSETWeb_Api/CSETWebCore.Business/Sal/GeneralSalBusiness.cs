@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Sal
             //currently selected items can be retrieved from the database
             double weight = 0;
             foreach (GEN_SAL_WEIGHTS mapping in weights)
-            { // TODO: probably better to iterate through the children on the page but dictionary works for now.
+            { 
                 weight += (double)mapping.Weight;
             }
 
