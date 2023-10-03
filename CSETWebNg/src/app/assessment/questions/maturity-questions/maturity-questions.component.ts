@@ -165,7 +165,7 @@ export class MaturityQuestionsComponent implements OnInit {
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+        this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
 
         this.loaded = true;

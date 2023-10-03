@@ -38,8 +38,10 @@ export class UserLanguageComponent implements OnInit {
   *
   */
   save() {
-    this.tSvc.setActiveLang(this.langSelection);
-    this.authSvc.setUserLang(this.langSelection).subscribe(() => {
+    this.tSvc.load(this.langSelection).toPromise().then(() => {
+      this.tSvc.setActiveLang(this.langSelection);
+      this.authSvc.setUserLang(this.langSelection).subscribe(() => {
+    });
       // 
     },
       error => console.error('Error updating user langugage: ' + error.message));
