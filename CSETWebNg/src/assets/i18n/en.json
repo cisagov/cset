@@ -3,7 +3,6 @@
     "import": "Import",
     "export all": "Export All",
     "resource library": "Resource Library",
-    "help": "Help",
     "new assessment": "New Assessment",
     "status": "Status",
     "last modified": "Last Modified",
@@ -21,6 +20,7 @@
     "facility name": "Facility Name",
     "city or site name": "City or Site Name",
     "state province region": "State/Province/Region",
+    "state, province, or region": "State, Province, or Region",
     "assessment type": "Assessment Type",
     "demographics": "Demographics",
     "critical service name": "Critical Service Name",
@@ -29,6 +29,7 @@
     "requires review": "Requires Review",
     "domain": "Domain",
     "maturity level": "Maturity Level",
+    "maturity detail": "Maturity Detail",
     "no search results": "No items were found matching the search request.",
     "auto load guidance": "Auto-load Guidance",
     
@@ -118,13 +119,13 @@
         "assets": "Assets",
         "auto populate": "Auto-populated based on data provided",
         "target maturity range": "Target Maturity Range",
+        "target percentage achieved": "Target Percentage Achieved",
         "maturity results": "ACET Maturity Results",
         "actual level": "Actual Level",
         "assessment factor": "Assessment Factor",
         "component": "Component",
         "components": "Components",
-        "statements": "Statements",
-        "acet dashboard": "ACET Dashboard"
+        "statements": "Statements"
     },
     "button-label": {
         "Y": "Yes",
@@ -210,6 +211,8 @@
         "totals": "Totals",
         "risk levels": "Risk Levels",
         "overall risk level is": "Overall Risk Level is",
+        "overall risk level has not been overridden": "Overall Risk Level has not been overridden",
+        "overall risk level has been overriden to": "Overall Risk Level has been overriden to",
         "override risk level": "Override Risk Level",
         "override risk level is": "Override Risk Level is",
         "override reason": "Override Reason",
@@ -239,7 +242,6 @@
         "show statements with issues": "Show statements with issues"
     },
     "reports": {
-        "reports": "Reports",
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",
@@ -248,7 +250,13 @@
         "observations tear-out sheets": "Observations Tear-Out Sheets",
         "acet": {
             "acet reports": "ACET Reports",
-            "executive summary": "ACET Executive Summary",
+            "executive summary": {
+                "executive summary": "ACET Executive Summary",
+                "page tab title": "Executive Report - ACET",
+                "executive summary title 1": "EXECUTIVE",
+                "executive summary title 2": "SUMMARY",
+                "site information": "Site Information"
+            },
             "gap report": {
                 "gap report": "ACET Gap Report",
                 "gap report title 1": "GAP",
@@ -298,5 +306,16 @@
         "module content report": "Module Content Report",
         "trend": "Trend",
         "compare": "Compare"
+    },
+    "help": {
+        "help": "Help",
+        "about": "About",
+        "keyboard shortcuts": "Keyboard Shortcuts",
+        "legal": {
+            "legal": "Legal",
+            "accessibility document": "Accessibility Document",
+            "advisory": "Advisory",
+            "terms of use": "Terms of Use"
+        }
     }
 }
