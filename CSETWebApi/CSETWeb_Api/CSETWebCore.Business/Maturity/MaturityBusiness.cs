@@ -618,11 +618,12 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode)
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode, int maturityModelId = 3)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
             //if the application is ACET the default is ACET
+            //see ACETMaturityBusiness implementation
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS
               .Include(x => x.model)
@@ -632,7 +633,7 @@ namespace CSETWebCore.Business.Maturity
                 myModel = new AVAILABLE_MATURITY_MODELS()
                 {
                     Assessment_Id = assessmentId,
-                    model_id = (installationMode == "ACET") ? 1 : 3,
+                    model_id = maturityModelId,
                     Selected = true
                 };
                 _context.AVAILABLE_MATURITY_MODELS.Add(myModel);
@@ -814,7 +815,11 @@ namespace CSETWebCore.Business.Maturity
         public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, bool spanishFlag = false)
         {
             var response = new MaturityResponse();
+            return GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, response, spanishFlag);
+        }
 
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, MaturityResponse response, bool spanishFlag = false)
+        {
             if (fill)
             {
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
@@ -845,13 +850,6 @@ namespace CSETWebCore.Business.Maturity
 
 
             response.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
-
-            if (response.ModelName == "ACET")
-            {
-                response.OverallIRP = GetOverallIrpNumber(assessmentId);
-                response.MaturityTargetLevel = response.OverallIRP;
-            }
-
 
             // get the levels and their display names for this model
             response.Levels = GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
@@ -1167,119 +1165,6 @@ namespace CSETWebCore.Business.Maturity
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return dbAnswer.Answer_Id;
-        }
-
-
-        /// <summary>
-        /// Returns the percentage of maturity questions that have been answered for the 
-        /// current maturity level (IRP).
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public double GetAnswerCompletionRate(int assessmentId)
-        {
-            var irp = GetOverallIrpNumber(assessmentId);
-
-            // get the highest maturity level for the risk level (use the stairstep model)
-            var topMatLevel = GetTopMatLevelForRisk(irp);
-
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
-
-            var answeredCount = 0;
-            var totalCount = 0;
-            foreach (var d in answerDistribution)
-            {
-                if (d.Answer_Text != "U")
-                {
-                    answeredCount += d.Count;
-                }
-                totalCount += d.Count;
-            }
-
-            return ((double)answeredCount / (double)totalCount) * 100d;
-        }
-
-
-        /// <summary>
-        /// Returns the percentage of maturity questions that have been answered for the 
-        /// current maturity level (IRP).
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public double GetIseAnswerCompletionRate(int assessmentId)
-        {
-            var irp = GetOverallIseIrpNumber(assessmentId);
-
-            // get the highest maturity level for the risk level (use the stairstep model)
-            var topMatLevel = GetIseTopMatLevelForRisk(irp);
-
-            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
-
-            var answeredCount = 0;
-            var totalCount = 0;
-            foreach (var d in answerDistribution)
-            {
-                if (d.Answer_Text != "U")
-                {
-                    answeredCount += d.Count;
-                }
-                totalCount += d.Count;
-            }
-
-            return ((double)answeredCount / (double)totalCount) * 100d;
-        }
-
-
-        /// <summary>
-        /// Using the 'stairstep' model, determines the highest maturity level
-        /// that corresponds to the specified IRP/risk.  
-        /// 
-        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
-        /// though this method only returns the top level.
-        /// </summary>
-        /// <param name="irp"></param>
-        /// <returns></returns>
-        private int GetTopMatLevelForRisk(int irp)
-        {
-            switch (irp)
-            {
-                case 1:
-                case 2:
-                    return 1; // Baseline
-                case 3:
-                    return 2; // Evolving
-                case 4:
-                    return 3; // Intermediate
-                case 5:
-                    return 4; // Advanced
-            }
-
-            return 0;
-        }
-
-
-        /// <summary>
-        /// Using the 'stairstep' model, determines the highest maturity level
-        /// that corresponds to the specified IRP/risk.  
-        /// 
-        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
-        /// though this method only returns the top level.
-        /// </summary>
-        /// <param name="irp"></param>
-        /// <returns></returns>
-        private int GetIseTopMatLevelForRisk(int irp)
-        {
-            switch (irp)
-            {
-                case 1:
-                    return 1; // SCUEP
-                case 2:
-                    return 2; // CORE
-                case 3:
-                    return 3; // CORE+
-            }
-
-            return 0;
         }
 
 
