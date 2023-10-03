@@ -3,7 +3,6 @@
     "import": "Import",
     "export all": "Export All",
     "resource library": "Resource Library",
-    "help": "Help",
     "new assessment": "New Assessment",
     "status": "Status",
     "last modified": "Last Modified",
@@ -121,8 +120,7 @@
         "assessment factor": "Assessment Factor",
         "component": "Component",
         "components": "Components",
-        "statements": "Statements",
-        "acet dashboard": "ACET Dashboard"
+        "statements": "Statements"
     },
     "button-label": {
         "Y": "Yes",
@@ -236,7 +234,6 @@
         "show statements with issues": "Show statements with issues"
     },
     "reports": {
-        "reports": "Reports",
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",
@@ -245,7 +242,12 @@
         "observations tear-out sheets": "Observations Tear-Out Sheets",
         "acet": {
             "acet reports": "ACET Reports",
-            "executive summary": "ACET Executive Summary",
+            "executive summary": {
+                "executive summary": "ACET Executive Summary",
+                "executive summary title 1": "EXECUTIVE",
+                "executive summary title 2": "SUMMARY",
+                "site information": "Site Information"
+            },
             "gap report": {
                 "gap report": "ACET Gap Report",
                 "gap report title 1": "GAP",
@@ -295,5 +297,16 @@
         "module content report": "Module Content Report",
         "trend": "Trend",
         "compare": "Compare"
+    },
+    "help": {
+        "help": "Help",
+        "about": "About",
+        "keyboard shortcuts": "Keyboard Shortcuts",
+        "legal": {
+            "legal": "Legal",
+            "accessibility document": "Accessibility Document",
+            "advisory": "Advisory",
+            "terms of use": "Terms of Use"
+        }
     }
 }

@@ -22,7 +22,7 @@
 -------------------------->
 <div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
   <div *ngIf="!assessSvc.isISE()">
-    <h3>{{ t('reports') }}</h3>
+    <h3>{{ 'titles.reports' | transloco }}</h3>
 
     <p>
       {{ t('assessment complete message') }}
@@ -291,10 +291,10 @@
         </span>
       </div> -->
       <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.executive summary') }}
+        {{ t('acet.executive summary.executive summary') }}
       </button>
       <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('acet.gap report.gap report') }}
+        {{ t('acet.gap report.gap report') }}
       </button>
       <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         {{ t('acet.comments and marked for review') }}
