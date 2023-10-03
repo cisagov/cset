@@ -22,14 +22,14 @@
 -------------------------->
 <head>
 </head>
-<div class="report-body mb-5">
+<div *transloco="let t; read: 'reports.acet.executive summary'" class="report-body mb-5">
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-              EXECUTIVE
+                {{ t('executive summary title 1') }}
             </p>
             <p class="report-title">
-              SUMMARY
+                {{ t('executive summary title 2') }}
             </p>
         </div>
         <div class="column">
@@ -63,37 +63,37 @@
     <!---->
     <div class="ml-3 mr-3 form">
         <h1 class="page-header">
-            Site Information
+            {{ t('site information') }}
         </h1>
         <hr class="page-line">
 
         <table class="table-site-info">
             <tr>
-                <td>Assessment Name:</td>
+                <td>{{ 'assessment name' | transloco }}:</td>
                 <td>{{response?.information?.assessment_Name}}</td>
             </tr>
             <tr>
-                <td>Assessment Date:</td>
+                <td>{{ 'assessment date' | transloco }}:</td>
                 <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
             </tr>
             <tr>
-                <td>Credit Union:</td>
+                <td>{{ 'acet.credit union' | transloco }}:</td>
                 <td>{{response?.information?.credit_Union_Name}}</td>
             </tr>
             <tr>
-                <td>City or Site Name:</td>
+                <td>{{ 'city or site name' | transloco }}:</td>
                 <td>{{response?.information?.city_Or_Site_Name}}</td>
             </tr>
             <tr>
-                <td>State, Province or Region:</td>
+                <td>{{ 'state, province, or region' | transloco }}:</td>
                 <td>{{response?.information?.state_Province_Or_Region}}</td>
             </tr>
             <tr>
-                <td>Charter:</td>
+                <td>{{ 'acet.charter' | transloco }}:</td>
                 <td>{{response?.information?.charter}}</td>
             </tr>
             <tr>
-                <td>Assets:</td>
+                <td>{{ 'acet.assets' | transloco }}:</td>
                 <td>{{response?.information?.assets | currency}}</td>
             </tr>
         </table>
@@ -101,7 +101,7 @@
     <div class="page-break"></div>
 
     <h1 class="page-header">
-        Maturity Detail
+        {{ 'maturity detail' | transloco }}
     </h1>
     <div *ngFor="let domain of domainDataList; index as i">
         <hr class="page-line">
@@ -112,7 +112,7 @@
             <div class="col-4 my-auto">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.domainMaturity)"
                         style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
-                        {{ domain.levelDisplay }}</div>
+                        {{ 'level.' + domain.levelDisplay.toLowerCase() | transloco }}</div>
             </div>
 
         </div>
@@ -125,7 +125,7 @@
                 <div class="col-4 my-auto">
                     <div class="alert" [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
                         style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
-                        {{ factor.levelDisplay }}</div>
+                        {{ 'level.' + factor.levelDisplay.toLowerCase() | transloco }}</div>
                 </div>
 
             </div>
@@ -139,7 +139,7 @@
                         <div class="col-4 my-auto">
                             <div class="alert" [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
                                 style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
-                                {{ comp.levelDisplay }}</div>
+                                {{ 'level.' + comp.levelDisplay.toLowerCase() | transloco }}</div>
                         </div>
                     </div>
                     <div class="ml-3 mr-3 form">
@@ -160,27 +160,27 @@
 
     <div class="page-break"></div>
     <h1 class="page-header">
-        Inherent Risk Profile
+        {{ 'irp.inherent risk profile' | transloco }}
     </h1>
     <hr class="page-line" />
     <app-irp-section [acetDashboard]="acetDashboard"></app-irp-section>
 
     <div class="page-break"></div>
     <h1 class="page-header">
-        Cybersecurity Maturity
+        {{ 'irp.cybersecurity maturity' | transloco }}
     </h1>
     <hr class="page-line" />
     <div class="cover-page-bottom mb-4">
         <div class="chart-column">
-            <p class="page-title" style="text-align: center; padding-right: 460px">Domain
+            <p class="page-title" style="text-align: center; padding-right: 460px">{{ 'domain' | transloco }}
             </p>
         </div>
         <div class="chart-column">
-            <p style="text-align: center; color: #1274d2; padding-right: 25px">Maturity
-                Level</p>
+            <p style="text-align: center; color: #1274d2; padding-right: 25px">{{ 'maturity level' | transloco }}
+            </p>
         </div>
         <div class="chart-column">
-            <p style="text-align: center; color: #1274d2;">Target Percentage Achieved</p>
+            <p style="text-align: center; color: #1274d2;">{{ 'acet.target percentage achieved' | transloco }}</p>
         </div>
 
     </div>
@@ -188,12 +188,12 @@
         <div class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
                 <p style="text-align: left; padding-bottom: 24px">
-                    <b>Domain {{i+1}}:</b> {{domainData.domainName}}</p>
+                    <b>{{ 'domain' | transloco }} {{i+1}}:</b> {{domainData.domainName}}</p>
             </div>
         </div>
         <div class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
-                <p class="chart-maturity-level"><b>{{domainData.domainMaturity}}</b></p>
+                <p class="chart-maturity-level"><b>{{ 'level.'+domainData.domainMaturity.toLowerCase() | transloco }}</b></p>
             </div>
         </div>
         <div class="chart-column">

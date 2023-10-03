@@ -3,7 +3,6 @@
     "import": "Importar",
     "export all": "Exportar todo",
     "resource library": "Biblioteca de recursos",
-    "help": "Ayuda",
     "new assessment": "Nueva evaluación",
     "status": "Estado",
     "last modified": "Modificada",
@@ -19,12 +18,14 @@
     "facility name": "Nombre de facilidad",
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
+    "state, province, or region": "Estado, provincia, o región",
     "assessment type": "Tipo de evaluación",
     "demographics": "Demografía",
     "critical service name": "Nombre del servicio critíco",
     "critical service description": "Descripción del servicio critíco",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
+    "maturity detail": "[ES] Maturity Detail",
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
 
@@ -58,15 +59,15 @@
         "credit union name": "Nombre de la cooperativa de crédito",
         "charter": "Carta",
         "assets": "Activos",
-        "auto populate": "[ES] Auto-populated based on data provided",
-        "target maturity range": "[ES] Target Maturity Range",
-        "maturity results": "[ES] ACET Maturity Results",
-        "actual level": "[ES] Actual Level",
+        "auto populate": "Auto-generado basado en los datos proporcionados.",
+        "target maturity range": "Rango de madurez objetivo",
+        "target percentage achieved": "[ES] Target Percentage Achieved",
+        "maturity results": "Resultados de madurez de ACET",
+        "actual level": "Nivel actual",
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
         "components": "Componentes",
-        "statements": "Declaración",
-        "acet dashboard": "[ES] ACET Dashboard"
+        "statements": "Declaración"
     },
     "titles": {
         "prepare": "Preparar",
@@ -86,7 +87,7 @@
         "security practices": "Prácticas de seguridad",
         "questions": "Preguntas",
         "practices": "Prácticas",
-        "acet maturity results": "[ES] ACET Maturity Results",
+        "acet maturity results": "Resultados de madurez de ACET",
         "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
         "cmmc tutorial": "Tutorial de CMMC",
@@ -94,7 +95,7 @@
         "edm tutorial": "Tutorial de EDM",
         "crr tutorial": "Tutorial de CRR",
         "rra tutorial": "Tutorial de Ransomware Readiness",
-        "acet dashboard": "[ES] ACET Dashboard",
+        "acet dashboard": "Panel de control de ACET",
         "reports": "Informes"
     },
     "buttons": {
@@ -159,8 +160,8 @@
         "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization",
         "A-ACET": "Sí(C)",
         "mfr-flag": "Este control requiere una revisión adicional",
-        "requires-review": "[ES] One or more controls in this category requires further review.",
-        "supplemental guidance": "[ES] Supplemental Guidance",
+        "requires-review": "Una o más controles en esta categoría requieren una revisión adicional.",
+        "supplemental guidance": "Orientación complementaria",
         "details/standard": "[ES] Details/Standard",
         "exam step": "[ES] Exam Step",
         "comment": "[ES] Comment",
@@ -202,6 +203,8 @@
         "totals": "Totales",
         "risk levels": "Niveles de iesgo",
         "overall risk level is": "El nivel de riesgo general es",
+        "overall risk level has not been overridden": "[ES] Overall Risk Level has not been overridden",
+        "overall risk level has been overriden to": "[ES] Overall Risk Level has been overriden to",
         "override risk level": "Anular el nivel de riesgo",
         "override risk level is": "Anular el nivel de riesgo es",
         "override reason": "Anular el motivo",
@@ -232,7 +235,6 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "reports": {
-        "reports": "[ES] Reports",
         "assessment complete message": "[ES] Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
         "reports run prior message": "[ES] Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "[ES] Printing Reports Instructions",
@@ -241,7 +243,13 @@
         "observations tear-out sheets": "[ES] Observations Tear-Out Sheets",
         "acet": {
             "acet reports": "Los informes de ACET",
-            "executive summary": "Resumen ejecutivo de ACET",
+            "executive summary": {
+                "executive summary": "Resumen ejecutivo de ACET",
+                "page tab title": "Executive Summary - ACET",
+                "executive summary title 1": "RESUMEN",
+                "executive summary title 2": "EJECUTIVO",
+                "site information": "[ES] Site Information"
+            },
             "gap report": {
                 "gap report": "Informe de brechas de ACET",
                 "gap report title 1": "INFORME",
@@ -291,5 +299,16 @@
         "module content report": "[ES] Module Content Report",
         "trend": "Tendencia",
         "compare": "Comparar"
+    },
+    "help": {
+        "help": "Ayuda",
+        "about": "[ES] About",
+        "keyboard shortcuts": "[ES] Keyboard Shortcuts",
+        "legal": {
+            "legal": "[ES] Legal",
+            "accessibility document": "[ES] Accessibility Document",
+            "advisory": "[ES] Advisory",
+            "terms of use": "[ES] Terms of Use"
+        }
     }
 }
