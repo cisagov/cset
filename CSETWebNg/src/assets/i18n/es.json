@@ -28,7 +28,7 @@
     "requires review": "Requiere Revisión",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
-    "maturity detail": "[ES] Maturity Detail",
+    "maturity detail": "Detalle de madurez",
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
     "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}'",
@@ -68,7 +68,7 @@
         "assets": "Activos",
         "auto populate": "Auto-generado basado en los datos proporcionados.",
         "target maturity range": "Rango de madurez objetivo",
-        "target percentage achieved": "[ES] Target Percentage Achieved",
+        "target percentage achieved": "Porcentaje de objetivo alcanzado",
         "maturity results": "Resultados de madurez de ACET",
         "actual level": "Nivel actual",
         "assessment factor": "Factor de evaluación",
@@ -174,11 +174,11 @@
             "NI-C2M2": "[ES] Not Implemented - Absent; the practice is not performed by the organization"
         },
         "labels": {
-            "Yes": "[ES] Yes",
-            "No": "[ES] No",
-            "NA": "[ES] N/A",
+            "Yes": "Sí",
+            "No": "No",
+            "NA": "N/A",
             "Alt": "[ES] Alternate",
-            "U": "[ES] Unanswered",
+            "U": "Sin respuesta",
             "Inc": "[ES] Incomplete",
             "Iss": "[ES] No with Issue(s)",
             "S": "[ES] Selected",
@@ -202,15 +202,15 @@
         "category requires review": "Una o más controles en esta categoría requieren una revisión adicional",
         "assessment requires review": "Esta evaluación contiene respuestas que requieren una revisión adicional",
         "supplemental guidance": "Orientación complementaria",
-        "details/standard": "[ES] Details/Standard",
-        "exam step": "[ES] Exam Step",
-        "comment": "[ES] Comment",
-        "comments with content": "[ES] Comments with content",
-        "references": "[ES] References",
-        "observations": "[ES] Observations",
-        "observations with content": "[ES] Observations with content",
-        "issues": "[ES] Issues",
-        "issues with content": "[ES] Issues with content",
+        "details/standard": "Detalles/Examen",
+        "exam step": "Estándar paso",
+        "comment": "Comentario",
+        "comments with content": "Comentarios con contenido",
+        "references": "Referencias",
+        "observations": "Observaciones",
+        "observations with content": "Observaciones con contenido",
+        "issues": "Problemas",
+        "issues with content": "Problemas con contenido",
         "answered count": "Indica el número de preguntas respondidas del total de esta página",
         "questions mode": "El modo Preguntas muestra preguntas simples que corresponden a los requisitos estándar",
         "requirements mode": "El modo Requisitos muestra el texto del requisito palabra por palabra tal como aparece en el estándar"
@@ -251,15 +251,15 @@
         "totals": "Totales",
         "risk levels": "Niveles de iesgo",
         "overall risk level is": "El nivel de riesgo general es",
-        "overall risk level has not been overridden": "[ES] Overall Risk Level has not been overridden",
-        "overall risk level has been overriden to": "[ES] Overall Risk Level has been overriden to",
+        "overall risk level has not been overridden": "Nivel de Riesgo General no ha sido anulado",
+        "overall risk level has been overriden to": "Nivel de Riesgo General ha sido anulado a",
         "override risk level": "Anular el nivel de riesgo",
         "override risk level is": "Anular el nivel de riesgo es",
         "override reason": "Anular el motivo",
-        "override reason placeholder": "[ES] Please provide an explanation for why the total inherent risk profile is being overriden.",
-        "cybersecurity maturity": "[ES] Cybersecurity Maturity",
+        "override reason placeholder": "Por favor, proporcione una explicación de por qué se está anulando el perfil de riesgo inherente total.",
+        "cybersecurity maturity": "Madurez de Ciberseguridad",
 
-        "no override": "[ES] No Override",
+        "no override": "Sin anulación",
         "least": "Insignificante",
         "minimal": "Mínimo",
         "moderate": "Moderado",
@@ -283,12 +283,12 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "reports": {
-        "assessment complete message": "[ES] Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
-        "reports run prior message": "[ES] Any reports run prior to that update may not reflect the current state of the assessment.",
-        "printing report instructions button": "[ES] Printing Reports Instructions",
-        "printing instructions electron": "[ES] To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-        "printing instructions non-electron": "[ES] To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-        "observations tear-out sheets": "[ES] Observations Tear-Out Sheets",
+        "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
+        "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
+        "printing report instructions button": "Instrucciones para imprimir informes",
+        "printing instructions electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",
+        "printing instructions non-electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior izquierda de la ventana del informe, haga clic en el botón \"Archivo\" en la barra de menú y seleccione \"Imprimir\" (CTRL + P). Para exportar una copia de su evaluación a otra ubicación (.csetw), haga clic en el logotipo de CSET en la esquina superior izquierda de la página. En \"Mis Evaluaciones\", verá su evaluación y un botón de Exportar en el lado derecho de la página.",
+        "observations tear-out sheets": "Observaciones Hojas",
         "acet": {
             "acet reports": "Los informes de ACET",
             "executive summary": {
@@ -296,7 +296,7 @@
                 "page tab title": "Executive Summary - ACET",
                 "executive summary title 1": "RESUMEN",
                 "executive summary title 2": "EJECUTIVO",
-                "site information": "[ES] Site Information"
+                "site information": "Información del Sitio"
             },
             "gap report": {
                 "gap report": "Informe de brechas de ACET",
@@ -311,52 +311,52 @@
                 "assessment factor": "Factor de evaluación",
                 "component": "Componente"
             },            
-            "comments and marked for review": "[ES] ACET Comments and Marked for Review",
-            "answered statements": "[ES] ACET Answered Statements",
-            "compensating controls": "[ES] ACET Compensating Controls"
+            "comments and marked for review": "Comentarios y Marcado para Revisión ACET",
+            "answered statements": "Declaraciones respondidas ACET",
+            "compensating controls": "Controles compensatorios ACET"
         }
     },
     "observation": {
-        "observation title": "[ES] Observation Title",
-        "importance": "[ES] Importance",
-        "add an observation": "[ES] Add an Observation",
-        "observation details": "[ES] Observation Details",
-        "title": "[ES] Title",
-        "resolution date": "[ES] Resolution Date",
-        "issue": "[ES] Issue",
-        "impacts": "[ES] Impacts",
-        "recommendations": "[ES] Recommendations",
-        "vulnerabilities": "[ES] Vulnerabilities",
-        "individuals responsible": "[ES] Individuals Responsible",
-        "clear selections": "[ES] Clear Selections",
-        "observation description": "[ES] The question observation section is for advanced users that want to collect extra information about specific questions in the assessment."
+        "observation title": "Título de la Observación",
+        "importance": "Importancia",
+        "add an observation": "Agregar una Observación",
+        "observation details": "Detalles de la Observación",
+        "title": "Título",
+        "resolution date": "Fecha de Resolución",
+        "issue": "Problema",
+        "impacts": "Impactos",
+        "recommendations": "Recomendaciones",
+        "vulnerabilities": "Vulnerabilidades",
+        "individuals responsible": "Personas responsables",
+        "clear selections": "Limpiar selecciones",
+        "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación."
     },
     "references": {
-        "source documents": "[ES] Source Documents",
-        "additional documents": "[ES] Additional Documents",
-        "no reference documents available": "[ES] no reference documents available"
+        "source documents": "Documentos Fuente",
+        "additional documents": "Documentos Adicionales",
+        "no reference documents available": "no hay documentos de referencia disponibles"
     },
     "tools": {
         "tools": "Herramientas",
-        "enable protected features": "[ES] Enable Protected Features",
-        "assessment documents": "[ES] Assessment Documents",
-        "parameter editor": "[ES] Parameter Editor",
-        "export assessment to excel": "[ES] Export Assessment to Excel",
-        "import modules": "[ES] Import Modules",
-        "module builder": "[ES] Module Builder",
-        "module content report": "[ES] Module Content Report",
+        "enable protected features": "Habilitar funciones protegidas",
+        "assessment documents": "Documentos de evaluación",
+        "parameter editor": "Editor de parámetros",
+        "export assessment to excel": "Exportar evaluación a excel",
+        "import modules": "Importar módulos",
+        "module builder": "Constructor de módulos",
+        "module content report": "Informe de contenido del módulo",
         "trend": "Tendencia",
         "compare": "Comparar"
     },
     "help": {
         "help": "Ayuda",
-        "about": "[ES] About",
-        "keyboard shortcuts": "[ES] Keyboard Shortcuts",
+        "about": "Sobre",
+        "keyboard shortcuts": "Atajos de teclado",
         "legal": {
-            "legal": "[ES] Legal",
-            "accessibility document": "[ES] Accessibility Document",
-            "advisory": "[ES] Advisory",
-            "terms of use": "[ES] Terms of Use"
+            "legal": "Legal",
+            "accessibility document": "Documento de accesibilidad",
+            "advisory": "Asesoramiento",
+            "terms of use": "Términos de uso"
         }
     }
 }
