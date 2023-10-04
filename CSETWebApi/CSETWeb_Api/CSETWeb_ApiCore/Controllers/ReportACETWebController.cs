@@ -98,8 +98,8 @@ namespace CSETWebCore.Api.Controllers
             data.MatAnsweredQuestions = _report.GetIseAllQuestionList();
             data.Information = _report.GetInformation();
 
-            var assessInfo = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-            data.AssessmentGuid = assessInfo.Assessment_GUID.ToString();
+            data.AssessmentGuid = _report.GetAssessmentGuid(assessmentId);
+            data.CsetVersion = _report.GetCsetVersion();
             return Ok(data);
         }
 
