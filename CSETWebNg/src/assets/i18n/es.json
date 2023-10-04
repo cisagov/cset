@@ -5,6 +5,8 @@
     "resource library": "Biblioteca de recursos",
     "new assessment": "Nueva evaluación",
     "status": "Estado",
+    "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
+    "completion-statements": "{{complete}}/{{total}} declaraciones respondidas",
     "last modified": "Modificada",
     "primary assessor": "Evaluador principal",
     "prevent encryption": "Prevenir el cifrado",
@@ -23,12 +25,16 @@
     "demographics": "Demografía",
     "critical service name": "Nombre del servicio critíco",
     "critical service description": "Descripción del servicio critíco",
+    "requires review": "Requiere Revisión",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
     "maturity detail": "[ES] Maturity Detail",
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
     "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}'",
+    "sal intro 1": "[ES]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
+    "sal intro 2": "[ES]For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
+    "sal intro 3": "[ES]The SAL applies to Standard and Diagram Component question sets.",
 
     "contact": {
         "contacts": "Contactos",
@@ -193,7 +199,8 @@
 
     "tooltip": {
         "mfr-flag": "Este control requiere una revisión adicional",
-        "requires-review": "Una o más controles en esta categoría requieren una revisión adicional.",
+        "category requires review": "Una o más controles en esta categoría requieren una revisión adicional",
+        "assessment requires review": "Esta evaluación contiene respuestas que requieren una revisión adicional",
         "supplemental guidance": "Orientación complementaria",
         "details/standard": "[ES] Details/Standard",
         "exam step": "[ES] Exam Step",

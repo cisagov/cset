@@ -52,7 +52,7 @@ export class SdAnswerSummaryReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleService.setTitle("Answer Summary - Pipeline SD02-Series");
+    this.titleService.setTitle("Answer Summary - Pipeline SD02 Series");
     this.loading = true;
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
