@@ -310,18 +310,6 @@
     </div>
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>ISE Reports</h4>
-
-      <!-- Don't submit to MERIT without a Credit Union name or asset value above $0 -->
-      <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionName === null || ncuaSvc.assetsAsNumber == 0">
-        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
-          <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-          <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-            "Submit" button is disabled until all required fields on the 'Assessment Configuration' page have been specified.
-          </div>
-        </div>
-      </div>
-
       <div *ngIf="assessSvc.isISE() && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>ISE Reports</h4>
