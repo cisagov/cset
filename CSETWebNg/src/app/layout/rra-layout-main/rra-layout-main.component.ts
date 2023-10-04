@@ -24,7 +24,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -45,8 +44,7 @@ export class RraLayoutMainComponent implements OnInit, AfterViewInit {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
-
-  @ViewChild('acc') accordion: NgbAccordion;
+  footerClosed:boolean = true;
 
   constructor(
     public auth: AuthenticationService,
@@ -95,10 +93,10 @@ export class RraLayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   isFooterOpen() {
-    if (!!this.accordion) {
-      return this.accordion.isExpanded('footerPanel');
+    if (!this.footerClosed) {
+      return this.footerClosed = true;
     }
-    return false;
+    return this.footerClosed = false;
   }
 
 }
