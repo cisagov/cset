@@ -224,13 +224,9 @@
                             <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                         </td>
                         <td>
-                            <div
-                                *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02-Series'">
+                            <div *ngIf="assessment.selectedMaturityModel !== 'CIS' && assessment.selectedMaturityModel !== 'SD02 Series'">
                                 <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                    {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
-                                    {{this.assessment.selectedMaturityModel === 'ISE' ? 'Statement(s) ' : 'Question(s)
-                                    '}}
-                                    Completed
+                                    {{ { c: assessment.completedQuestionsCount, t: assessment.totalAvailableQuestionsCount, qa: this.assessment.questionAlias, l: tSvc.getActiveLang() } | completionCount }}
                                 </span>
                                 <ng-template #blankAssessment>
                                     Blank Assessment
@@ -238,8 +234,7 @@
                                 <br>
                             </div>
                             <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                                matTooltip="This assessment contains answers that require further review.">Needs
-                                Review
+                                matTooltip="{{t('tooltip.assessment requires review')}}">{{t('requires review')}}
                             </span>
                         </td>
                         <td>

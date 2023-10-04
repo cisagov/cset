@@ -193,7 +193,7 @@
             </node>
         </node>
 
-        <!-- SD02-Series question domains displayed in tree structure -->
+        <!--  Series question domains displayed in tree structure -->
         <node displaytext="SD02 Series Questions" condition="MATURITY:14">
             <node id="maturity-questions-nested-2601" displaytext="Identify Cyber Critical Systems (IC)" path="assessment/{:id}/maturity-questions-nested/2601" />
             <node id="maturity-questions-nested-2602" displaytext="Network Segmentation (NS)" path="assessment/{:id}/maturity-questions-nested/2602" />
@@ -300,7 +300,7 @@
         <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" condition="MATURITY:11" />
         <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" condition="MATURITY:11" />
 
-        <!-- Results - SD02-Series -->
+        <!-- Results - SD02 Series -->
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" condition="MATURITY:14" />
 
         <!-- Results - Diagram -->
