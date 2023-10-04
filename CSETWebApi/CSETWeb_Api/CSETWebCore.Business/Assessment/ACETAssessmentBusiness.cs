@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Assessment;
@@ -18,18 +19,21 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Lucene.Net.Util.Fst.Util;
 
 namespace CSETWebCore.Business.Assessment
 {
     public class ACETAssessmentBusiness : AssessmentBusiness, ICreateAssessmentBusiness, IACETAssessmentBusiness
     {
         private CSETContext _context;
+        private IMaturityBusiness _maturityBusiness;
 
         public ACETAssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication, IUtilities utilities, IContactBusiness contactBusiness, ISalBusiness salBusiness, IMaturityBusiness maturityBusiness, IAssessmentUtil assessmentUtil, IStandardsBusiness standardsBusiness, IDiagramManager diagramManager, CSETContext context)
             : base(httpContext, authentication, utilities, contactBusiness, salBusiness, maturityBusiness, assessmentUtil, standardsBusiness, diagramManager, context)
         {
 
             this._context = context;
+            this._maturityBusiness = maturityBusiness;
         }
 
         public new int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessment)
@@ -42,16 +46,40 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.ISE_StateLed = assessment.ISE_StateLed;
             dbAssessment.MatDetail_targetBandOnly = true;
 
-            
-            if (!assessment.AssessmentName.StartsWith("ISE ") && (!assessment.AssessmentName.StartsWith("Merged ")))
+            var model = _maturityBusiness.GetMaturityModel(assessmentId);
+            if (model != null)
             {
-                var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
-                    ? string.Empty
-                    : assessment.CreditUnion + " ";
-                assessment.AssessmentName = "ACET " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
+                // if ACET (1), name "ACET "
+                if (model.ModelId == 1 && (!assessment.AssessmentName.StartsWith("Merged ")))
+                {
+                    var creditUnion = string.IsNullOrEmpty(assessment.CreditUnion)
+                        ? string.Empty
+                        : assessment.CreditUnion + " ";
+                    assessment.AssessmentName = "ACET " + dbAssessment.Charter + " " + creditUnion + dbAssessment.Assessment_Date.ToString("MMddyy");
+                }
             }
+
+            var result = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
+            if (result != null)
+            {
+                // set workflow for legacy assessments
+                if (string.IsNullOrEmpty(assessment.Workflow))
+                {
+                    if (result.IsAcetOnly ?? false)
+                    {
+                        assessment.Workflow = "ACET";
+                    }
+                    else
+                    {
+                        assessment.Workflow = "BASE";
+                    }
+                }
+            }
+
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             dbInformation.Assessment_Name = assessment.AssessmentName;
+            dbInformation.Workflow = assessment.Workflow;
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
 
