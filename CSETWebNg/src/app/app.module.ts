@@ -175,6 +175,7 @@ import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
+import { CompletionCountPipe } from './helpers/completion-count.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
@@ -608,6 +609,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -761,6 +763,7 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
         MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
+        CompletionCountPipe,
         LinebreakPlaintextPipe,
         NullishCoalescePipe,
         StatusCreateComponent,

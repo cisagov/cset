@@ -1,11 +1,12 @@
 {
     "my assessments": "Мої оцінки",
-    
     "tools": "Інструменти",
     "resource library": "Бібліотека ресурсів",
     "help": "Довідка",
     "new assessment": "Нова оцінка",
     "status": "Статус",
+    "completion-questions": "Дано відповідь на {{complete}}/{{total}} тверджень",
+    "completion-statements": "Дано відповідь на {{complete}}/{{total}} тверджень",
     "last modified": "Остання зміна",
     "primary assessor": "Первинний оцінювач",
     "prevent encryption": "запобігти шифруванню",
@@ -27,6 +28,9 @@
     "no search results": "Не знайдено елементів, що відповідають пошуковому запиту.",
     "auto load guidance": "Автоматичне завантаження вказівок",
     "unanswered equals no": "Питання без відповіді обчислюються як відповідь '{{no-ans}}'",
+    "sal intro 1": "[UK]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
+    "sal intro 2": "[UK]For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
+    "sal intro 3": "[UK]The SAL applies to Standard and Diagram Component question sets.",
 
     "titles": {
         "prepare": "Приготуйте",
@@ -37,7 +41,7 @@
         "assessment information": "Інформація про оцінку",
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
-        "security assurance level (sal)": "Security Assurance Level (SAL)",
+        "security assurance level (sal)": "Рівень безпеки (SAL)",
         "standard questions": "Standard Questions",
         "maturity questions": "Maturity Questions",
         "security practices": "Security Practices",
@@ -159,7 +163,8 @@
     
     "tooltip": {
         "mfr-flag": "Цей контроль потребує додаткового перегляду",
-        "requires-review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки.",
+        "category requires review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки",
+        "assessment requires review": "[UK] Ця оцінка містить відповіді, які потребують додаткового перегляду",
         "answered count": "Вказує кількість запитань із відповідями на цій сторінці",
         "questions mode": "[UK]Questions Mode displays simple questions that correspond to standard requirements",
         "requirements mode": "[UK]Requirements Mode displays requirement text verbatim as it appears in the standard"
