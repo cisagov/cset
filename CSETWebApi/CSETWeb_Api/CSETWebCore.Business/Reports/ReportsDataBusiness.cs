@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
@@ -1726,8 +1727,14 @@ namespace CSETWebCore.Business.Reports
 
         }
 
-        
-
+        public string GetCsetVersion()
+        {
+            return _context.CSET_VERSION.Select(x => x.Cset_Version1).FirstOrDefault();
+        }
+        public string GetAssessmentGuid(int assessmentId)
+        {
+            return _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Assessment_GUID).FirstOrDefault().ToString();
+        }
 
     }
 }
