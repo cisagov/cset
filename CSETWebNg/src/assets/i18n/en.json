@@ -5,6 +5,8 @@
     "resource library": "Resource Library",
     "new assessment": "New Assessment",
     "status": "Status",
+    "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
+    "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
     "last modified": "Last Modified",
     "primary assessor": "Primary Assessor",
     "prevent encryption": "Prevent Encryption",
@@ -33,6 +35,9 @@
     "no search results": "No items were found matching the search request.",
     "auto load guidance": "Auto-load Guidance",
     "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response",
+    "sal intro 1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
+    "sal intro 2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
+    "sal intro 3": "The SAL applies to Standard and Diagram Component question sets.",
     
     "buttons": {
         "ok": "OK",
@@ -200,9 +205,9 @@
     },
     
     "tooltip": {
-        
         "mfr-flag": "This control requires further review",
-        "requires-review": "One or more controls in this category requires further review.",
+        "category requires review": "One or more controls in this category requires further review",
+        "assessment requires review": "This assessment contains answers that require further review",
         "supplemental guidance": "Supplemental Guidance",
         "details/standard": "Details/Standard",
         "exam step": "Exam Step",
