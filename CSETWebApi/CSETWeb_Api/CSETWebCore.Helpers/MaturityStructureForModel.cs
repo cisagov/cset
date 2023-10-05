@@ -313,7 +313,7 @@ namespace CSETWebCore.Helpers
                 out List<CustomDocument> additionalDocs)
         {
             var refBuilder = new Helpers.ReferencesBuilder(_context);
-            refBuilder.BuildDocumentsForMaturityQuestion(questionId, out List<CustomDocument> s,
+            refBuilder.BuildRefDocumentsForMaturityQuestion(questionId, out List<CustomDocument> s,
                 out List<CustomDocument> r);
 
             sourceDocs = s;
