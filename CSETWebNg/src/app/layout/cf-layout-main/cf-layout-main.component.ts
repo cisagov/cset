@@ -32,6 +32,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
+import { FooterService } from '../../services/footer.service';
 
 @Component({
   selector: 'cf-layout-main',
@@ -58,7 +59,8 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router, 
+    private footerSvc: FooterService
   ) { }
 
   ngOnInit() {

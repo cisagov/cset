@@ -24,6 +24,7 @@
 import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
+import { DemographicExtendedService } from '../demographic-extended.service';
 
 /**
  * Analyzes assessment
@@ -35,7 +36,8 @@ export class PageVisibilityService {
 
   constructor(
     private assessSvc: AssessmentService,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private demographics: DemographicExtendedService
   ) { }
 
   /**
@@ -85,8 +87,6 @@ export class PageVisibilityService {
       if (c == 'HIDE') {
         show = false;
       }
-
-
       // "Source" checks the assessment's 'workflow' value (the skin it was born in)
       if (c.startsWith('SOURCE:') || c.startsWith('SOURCE-ANY(')) {
         show = show && this.sourceAny(c);;
@@ -152,6 +152,9 @@ export class PageVisibilityService {
 
       if (c == 'SHOW-EXEC-SUMMARY') {
         show = show && this.showExecSummaryPage();
+      }
+      if(c == 'CF-DEMOGRAPHICS-COMPLETE'){
+        show = show && this.cfDemographicsComplete();
       }
 
     });
@@ -285,5 +288,17 @@ export class PageVisibilityService {
   showExecSummaryPage(): boolean {
     let assessment = this.assessSvc.assessment;
     return assessment?.useDiagram || assessment?.useStandard;
+  }
+
+  cfDemographicsComplete():boolean {
+    //if this is CF installation and the demographics are not complete return false
+    //else return true; 
+    if(this.assessSvc.assessment?.origin == "CF"){
+      if(this.demographics.AreDemographicsComplete()){
+        return true;
+      }
+      return false; 
+    }
+    return true;
   }
 }

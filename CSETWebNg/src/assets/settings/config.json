@@ -1,7 +1,7 @@
 {
     "NOTENODE": "Casing on config chain matters",
     "currentConfigChain": [
-        "CSET"
+        "CF"
     ],
     "appCode": "CSET",
     "defaultLang": "en",
