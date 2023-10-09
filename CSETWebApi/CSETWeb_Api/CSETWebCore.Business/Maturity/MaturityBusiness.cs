@@ -30,6 +30,8 @@ using static Lucene.Net.Util.Fst.Util;
 using CSETWebCore.Business.Acet;
 using Microsoft.IdentityModel.Tokens;
 using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Business.User;
+using Org.BouncyCastle.Bcpg;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -812,13 +814,13 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, bool spanishFlag = false)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId)
         {
             var response = new MaturityResponse();
-            return GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, response, spanishFlag);
+            return GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId, response);
         }
 
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, MaturityResponse response, bool spanishFlag = false)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId, MaturityResponse response)
         {
             if (fill)
             {
@@ -869,10 +871,23 @@ namespace CSETWebCore.Business.Maturity
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }
 
+
+            // filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if this is an "RRA CF" assessment
+            bool isRraSub = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "RRA CF").FirstOrDefault()?.BoolValue ?? false;
+            if (isRraSub)
+            {
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == "RRA CF").Select(q => q.Mat_Question_Id).ToList();
+                questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
+            }
+
+
+
+
             var questions = questionQuery.ToList();
 
             //
-            if (spanishFlag)
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            if (user.Lang == "es")
             {
                 Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                 questions.ForEach(
@@ -901,7 +916,7 @@ namespace CSETWebCore.Business.Maturity
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             //
-            if (spanishFlag)
+            if (user.Lang == "es")
             {
                 Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
                 allGroupings.ForEach(
@@ -937,8 +952,6 @@ namespace CSETWebCore.Business.Maturity
 
             // Add any glossary terms
             response.Glossary = this.GetGlossaryEntries(myModel.model_id);
-
-
 
             return response;
         }

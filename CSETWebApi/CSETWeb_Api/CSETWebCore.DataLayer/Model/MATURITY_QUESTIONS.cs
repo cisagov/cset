@@ -93,6 +93,8 @@ namespace CSETWebCore.DataLayer.Model
         [InverseProperty("Mat_Question")]
         public virtual ICollection<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
         [InverseProperty("Mat_Question")]
+        public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
+        [InverseProperty("Mat_Question")]
         public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
     }
 }
