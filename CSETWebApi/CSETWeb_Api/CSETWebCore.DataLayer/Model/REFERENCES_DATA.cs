@@ -6,39 +6,36 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of REFERENCES_DATA records
+/// </summary>
+public partial class REFERENCES_DATA
 {
     /// <summary>
-    /// A collection of REFERENCES_DATA records
+    /// The Reference Id is used to
     /// </summary>
-    public partial class REFERENCES_DATA
-    {
-        public REFERENCES_DATA()
-        {
-            PROCUREMENT_REFERENCES = new HashSet<PROCUREMENT_REFERENCES>();
-            RECOMMENDATIONS_REFERENCES = new HashSet<RECOMMENDATIONS_REFERENCES>();
-        }
+    [Key]
+    public int Reference_Id { get; set; }
 
-        /// <summary>
-        /// The Reference Id is used to
-        /// </summary>
-        [Key]
-        public int Reference_Id { get; set; }
-        /// <summary>
-        /// The Reference Doc Id is used to
-        /// </summary>
-        public int? Reference_Doc_Id { get; set; }
-        /// <summary>
-        /// The Reference Sections is used to
-        /// </summary>
-        public string Reference_Sections { get; set; }
+    /// <summary>
+    /// The Reference Doc Id is used to
+    /// </summary>
+    public int? Reference_Doc_Id { get; set; }
 
-        [ForeignKey("Reference_Doc_Id")]
-        [InverseProperty("REFERENCES_DATA")]
-        public virtual REFERENCE_DOCS Reference_Doc { get; set; }
-        [InverseProperty("Reference")]
-        public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
-        [InverseProperty("Reference")]
-        public virtual ICollection<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
-    }
+    /// <summary>
+    /// The Reference Sections is used to
+    /// </summary>
+    public string Reference_Sections { get; set; }
+
+    [InverseProperty("Reference")]
+    public virtual ICollection<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; } = new List<PROCUREMENT_REFERENCES>();
+
+    [InverseProperty("Reference")]
+    public virtual ICollection<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; } = new List<RECOMMENDATIONS_REFERENCES>();
+
+    [ForeignKey("Reference_Doc_Id")]
+    [InverseProperty("REFERENCES_DATA")]
+    public virtual REFERENCE_DOCS Reference_Doc { get; set; }
 }

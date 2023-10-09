@@ -6,23 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class DOCUMENT_ANSWERS
-    {
-        /// <summary>
-        /// The Document Id is used to
-        /// </summary>
-        [Key]
-        public int Document_Id { get; set; }
-        [Key]
-        public int Answer_Id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Answer_Id")]
-        [InverseProperty("DOCUMENT_ANSWERS")]
-        public virtual ANSWER Answer { get; set; }
-        [ForeignKey("Document_Id")]
-        [InverseProperty("DOCUMENT_ANSWERS")]
-        public virtual DOCUMENT_FILE Document { get; set; }
-    }
+[PrimaryKey("Document_Id", "Answer_Id")]
+public partial class DOCUMENT_ANSWERS
+{
+    /// <summary>
+    /// The Document Id is used to
+    /// </summary>
+    [Key]
+    public int Document_Id { get; set; }
+
+    [Key]
+    public int Answer_Id { get; set; }
+
+    [ForeignKey("Answer_Id")]
+    [InverseProperty("DOCUMENT_ANSWERS")]
+    public virtual ANSWER Answer { get; set; }
+
+    [ForeignKey("Document_Id")]
+    [InverseProperty("DOCUMENT_ANSWERS")]
+    public virtual DOCUMENT_FILE Document { get; set; }
 }

@@ -6,21 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class HYDRO_DATA_ACTIONS
-    {
-        [Key]
-        public int Answer_Id { get; set; }
-        public int Progress_Id { get; set; }
-        [Unicode(false)]
-        public string Comment { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Answer_Id")]
-        [InverseProperty("HYDRO_DATA_ACTIONS")]
-        public virtual ANSWER Answer { get; set; }
-        [ForeignKey("Progress_Id")]
-        [InverseProperty("HYDRO_DATA_ACTIONS")]
-        public virtual HYDRO_PROGRESS Progress { get; set; }
-    }
+public partial class HYDRO_DATA_ACTIONS
+{
+    [Key]
+    public int Answer_Id { get; set; }
+
+    public int Progress_Id { get; set; }
+
+    [Unicode(false)]
+    public string Comment { get; set; }
+
+    [ForeignKey("Answer_Id")]
+    [InverseProperty("HYDRO_DATA_ACTIONS")]
+    public virtual ANSWER Answer { get; set; }
+
+    [ForeignKey("Progress_Id")]
+    [InverseProperty("HYDRO_DATA_ACTIONS")]
+    public virtual HYDRO_PROGRESS Progress { get; set; }
 }

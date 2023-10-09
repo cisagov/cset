@@ -6,21 +6,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CIS_CSI_CUSTOMER_COUNTS
 {
-    public partial class CIS_CSI_CUSTOMER_COUNTS
-    {
-        public CIS_CSI_CUSTOMER_COUNTS()
-        {
-            CIS_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIS_CSI_SERVICE_DEMOGRAPHICS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Customer_Count { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string Customer_Count { get; set; }
-        public int Sequence { get; set; }
+    public int Sequence { get; set; }
 
-        [InverseProperty("Customers_CountNavigation")]
-        public virtual ICollection<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
-    }
+    [InverseProperty("Customers_CountNavigation")]
+    public virtual ICollection<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; } = new List<CIS_CSI_SERVICE_DEMOGRAPHICS>();
 }

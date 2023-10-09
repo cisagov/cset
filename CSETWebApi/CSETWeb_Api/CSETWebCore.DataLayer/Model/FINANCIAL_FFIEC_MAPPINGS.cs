@@ -6,21 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FINANCIAL_FFIEC_MAPPINGS records
-    /// </summary>
-    public partial class FINANCIAL_FFIEC_MAPPINGS
-    {
-        [Key]
-        public int StmtNumber { get; set; }
-        [Key]
-        [StringLength(255)]
-        public string FFIECBookletsMapping { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("StmtNumber")]
-        [InverseProperty("FINANCIAL_FFIEC_MAPPINGS")]
-        public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FINANCIAL_FFIEC_MAPPINGS records
+/// </summary>
+[PrimaryKey("StmtNumber", "FFIECBookletsMapping")]
+public partial class FINANCIAL_FFIEC_MAPPINGS
+{
+    [Key]
+    public int StmtNumber { get; set; }
+
+    [Key]
+    [StringLength(255)]
+    public string FFIECBookletsMapping { get; set; }
+
+    [ForeignKey("StmtNumber")]
+    [InverseProperty("FINANCIAL_FFIEC_MAPPINGS")]
+    public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
 }

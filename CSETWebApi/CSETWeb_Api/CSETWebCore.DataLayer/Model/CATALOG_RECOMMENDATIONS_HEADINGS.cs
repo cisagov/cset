@@ -6,35 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of CATALOG_RECOMMENDATIONS_HEADINGS records
+/// </summary>
+public partial class CATALOG_RECOMMENDATIONS_HEADINGS
 {
     /// <summary>
-    /// A collection of CATALOG_RECOMMENDATIONS_HEADINGS records
+    /// The Id is used to
     /// </summary>
-    public partial class CATALOG_RECOMMENDATIONS_HEADINGS
-    {
-        public CATALOG_RECOMMENDATIONS_HEADINGS()
-        {
-            CATALOG_RECOMMENDATIONS_DATA = new HashSet<CATALOG_RECOMMENDATIONS_DATA>();
-        }
+    [Key]
+    public int Id { get; set; }
 
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
-        /// <summary>
-        /// The Heading Num is used to
-        /// </summary>
-        public int Heading_Num { get; set; }
-        /// <summary>
-        /// The Heading Name is used to
-        /// </summary>
-        [Required]
-        [StringLength(200)]
-        public string Heading_Name { get; set; }
+    /// <summary>
+    /// The Heading Num is used to
+    /// </summary>
+    public int Heading_Num { get; set; }
 
-        [InverseProperty("Parent_Heading")]
-        public virtual ICollection<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
-    }
+    /// <summary>
+    /// The Heading Name is used to
+    /// </summary>
+    [Required]
+    [StringLength(200)]
+    public string Heading_Name { get; set; }
+
+    [InverseProperty("Parent_Heading")]
+    public virtual ICollection<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; } = new List<CATALOG_RECOMMENDATIONS_DATA>();
 }

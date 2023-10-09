@@ -6,44 +6,42 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of QUESTION_GROUP_HEADING records
+/// </summary>
+[Index("Question_Group_Heading_Id", Name = "IX_QUESTION_GROUP_HEADING_1", IsUnique = true)]
+[Index("Question_Group_Heading1", Name = "IX_Question_Group_Heading", IsUnique = true)]
+public partial class QUESTION_GROUP_HEADING
 {
     /// <summary>
-    /// A collection of QUESTION_GROUP_HEADING records
+    /// The Question Group Heading is used to
     /// </summary>
-    [Index("Question_Group_Heading_Id", Name = "IX_QUESTION_GROUP_HEADING_1", IsUnique = true)]
-    [Index("Question_Group_Heading1", Name = "IX_Question_Group_Heading", IsUnique = true)]
-    public partial class QUESTION_GROUP_HEADING
-    {
-        public QUESTION_GROUP_HEADING()
-        {
-            NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
-            UNIVERSAL_SUB_CATEGORY_HEADINGS = new HashSet<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
-        }
+    [Key]
+    [Column("Question_Group_Heading")]
+    [StringLength(250)]
+    public string Question_Group_Heading1 { get; set; }
 
-        /// <summary>
-        /// The Question Group Heading is used to
-        /// </summary>
-        [Key]
-        [Column("Question_Group_Heading")]
-        [StringLength(250)]
-        public string Question_Group_Heading1 { get; set; }
-        /// <summary>
-        /// The Std Ref is used to
-        /// </summary>
-        [StringLength(10)]
-        public string Std_Ref { get; set; }
-        /// <summary>
-        /// The Universal Weight is used to
-        /// </summary>
-        public int Universal_Weight { get; set; }
-        /// <summary>
-        /// The Question Group Heading Id is used to
-        /// </summary>
-        public int Question_Group_Heading_Id { get; set; }
-        public bool Is_Custom { get; set; }
+    /// <summary>
+    /// The Std Ref is used to
+    /// </summary>
+    [StringLength(10)]
+    public string Std_Ref { get; set; }
 
-        public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
-        public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
-    }
+    /// <summary>
+    /// The Universal Weight is used to
+    /// </summary>
+    public int Universal_Weight { get; set; }
+
+    /// <summary>
+    /// The Question Group Heading Id is used to
+    /// </summary>
+    public int Question_Group_Heading_Id { get; set; }
+
+    public bool Is_Custom { get; set; }
+
+    public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; } = new List<NEW_REQUIREMENT>();
+
+    public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; } = new List<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
 }

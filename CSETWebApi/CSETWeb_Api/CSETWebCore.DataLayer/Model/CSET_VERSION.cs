@@ -6,31 +6,33 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of CSET_VERSION records
+/// </summary>
+public partial class CSET_VERSION
 {
     /// <summary>
-    /// A collection of CSET_VERSION records
+    /// The Id is used to
     /// </summary>
-    public partial class CSET_VERSION
-    {
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
-        /// <summary>
-        /// The Version Id is used to
-        /// </summary>
-        [Column(TypeName = "decimal(18, 4)")]
-        public decimal Version_Id { get; set; }
-        /// <summary>
-        /// The Cset Version is used to
-        /// </summary>
-        [Required]
-        [Column("Cset_Version")]
-        [StringLength(50)]
-        public string Cset_Version1 { get; set; }
-        [StringLength(500)]
-        public string Build_Number { get; set; }
-    }
+    [Key]
+    public int Id { get; set; }
+
+    /// <summary>
+    /// The Version Id is used to
+    /// </summary>
+    [Column(TypeName = "decimal(18, 4)")]
+    public decimal Version_Id { get; set; }
+
+    /// <summary>
+    /// The Cset Version is used to
+    /// </summary>
+    [Required]
+    [Column("Cset_Version")]
+    [StringLength(50)]
+    public string Cset_Version1 { get; set; }
+
+    [StringLength(500)]
+    public string Build_Number { get; set; }
 }

@@ -6,16 +6,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of COMPONENT_SYMBOLS_GM_TO_CSET records
+/// </summary>
+public partial class COMPONENT_SYMBOLS_GM_TO_CSET
 {
-    /// <summary>
-    /// A collection of COMPONENT_SYMBOLS_GM_TO_CSET records
-    /// </summary>
-    public partial class COMPONENT_SYMBOLS_GM_TO_CSET
-    {
-        [Key]
-        [StringLength(200)]
-        public string GM_FingerType { get; set; }
-        public int Id { get; set; }
-    }
+    [Key]
+    [StringLength(200)]
+    public string GM_FingerType { get; set; }
+
+    public int Id { get; set; }
 }

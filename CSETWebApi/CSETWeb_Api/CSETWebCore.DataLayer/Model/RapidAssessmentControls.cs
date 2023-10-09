@@ -6,14 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class RapidAssessmentControls
 {
-    public partial class RapidAssessmentControls
-    {
-        [Key]
-        public byte order { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string value { get; set; }
-    }
+    [Key]
+    public byte order { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string value { get; set; }
 }

@@ -6,24 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of REPORT_OPTIONS records
+/// </summary>
+public partial class REPORT_OPTIONS
 {
-    /// <summary>
-    /// A collection of REPORT_OPTIONS records
-    /// </summary>
-    public partial class REPORT_OPTIONS
-    {
-        public REPORT_OPTIONS()
-        {
-            REPORT_OPTIONS_SELECTION = new HashSet<REPORT_OPTIONS_SELECTION>();
-        }
+    [Key]
+    public int Report_Option_Id { get; set; }
 
-        [Key]
-        public int Report_Option_Id { get; set; }
-        [StringLength(250)]
-        public string Display_Name { get; set; }
+    [StringLength(250)]
+    public string Display_Name { get; set; }
 
-        [InverseProperty("Report_Option")]
-        public virtual ICollection<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
-    }
+    [InverseProperty("Report_Option")]
+    public virtual ICollection<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; } = new List<REPORT_OPTIONS_SELECTION>();
 }

@@ -6,29 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of RECOMMENDATIONS_REFERENCES records
+/// </summary>
+[PrimaryKey("Data_Id", "Reference_Id")]
+public partial class RECOMMENDATIONS_REFERENCES
 {
     /// <summary>
-    /// A collection of RECOMMENDATIONS_REFERENCES records
+    /// The Data Id is used to
     /// </summary>
-    public partial class RECOMMENDATIONS_REFERENCES
-    {
-        /// <summary>
-        /// The Data Id is used to
-        /// </summary>
-        [Key]
-        public int Data_Id { get; set; }
-        /// <summary>
-        /// The Reference Id is used to
-        /// </summary>
-        [Key]
-        public int Reference_Id { get; set; }
+    [Key]
+    public int Data_Id { get; set; }
 
-        [ForeignKey("Data_Id")]
-        [InverseProperty("RECOMMENDATIONS_REFERENCES")]
-        public virtual CATALOG_RECOMMENDATIONS_DATA Data { get; set; }
-        [ForeignKey("Reference_Id")]
-        [InverseProperty("RECOMMENDATIONS_REFERENCES")]
-        public virtual REFERENCES_DATA Reference { get; set; }
-    }
+    /// <summary>
+    /// The Reference Id is used to
+    /// </summary>
+    [Key]
+    public int Reference_Id { get; set; }
+
+    [ForeignKey("Data_Id")]
+    [InverseProperty("RECOMMENDATIONS_REFERENCES")]
+    public virtual CATALOG_RECOMMENDATIONS_DATA Data { get; set; }
+
+    [ForeignKey("Reference_Id")]
+    [InverseProperty("RECOMMENDATIONS_REFERENCES")]
+    public virtual REFERENCES_DATA Reference { get; set; }
 }
