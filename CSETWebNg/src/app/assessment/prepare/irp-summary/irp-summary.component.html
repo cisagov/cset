@@ -30,9 +30,9 @@
             <div class="d-table-row">
                 <div class="d-table-cell pl-3 pb-3">
                     <!-- below is .substring(4) to allow Transloco to remain DRY (ex. "1 - Least" turns into "Least") -->
-                    {{ t('override risk level is') }} &quot;
+                    {{ t('override risk level is') }} 
                     <span class="blue-text font-weight-bold">
-                        {{ overrideLabel.substring(0, 4) + t(overrideLabel.substring(4).toLowerCase()) }}&quot;
+                        &quot;{{ overrideLabel.substring(0, 4) + t(overrideLabel.substring(4).toLowerCase()) }}&quot;
                     </span>
                 </div>
             </div>
