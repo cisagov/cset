@@ -505,7 +505,7 @@ namespace CSETWebCore.Business.Question
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
-                refBuilder.BuildDocumentsForMaturityQuestion(info.QuestionID,
+                refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
                     out List<CustomDocument> sourceDocList,
                     out List<CustomDocument> additionalDocList);
                 SourceDocumentsList = sourceDocList;

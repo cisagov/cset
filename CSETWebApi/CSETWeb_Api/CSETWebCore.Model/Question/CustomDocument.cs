@@ -13,6 +13,7 @@ namespace CSETWebCore.Model.Question
         public string File_Name { get; set; }
         public string Section_Ref { get; set; }
         public bool Is_Uploaded { get; set; }
+        public int? Sequence { get; set; }
 
         public CustomDocument()
         {
