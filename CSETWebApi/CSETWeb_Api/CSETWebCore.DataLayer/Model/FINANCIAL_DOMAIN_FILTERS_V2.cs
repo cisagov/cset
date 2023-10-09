@@ -6,26 +6,30 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FiltersNormalized records
-    /// </summary>
-    public partial class FINANCIAL_DOMAIN_FILTERS_V2
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        public int DomainId { get; set; }
-        [Key]
-        public int Financial_Level_Id { get; set; }
-        public bool IsOn { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("DomainId")]
-        [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
-        public virtual FINANCIAL_DOMAINS Domain { get; set; }
-        [ForeignKey("Financial_Level_Id")]
-        [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
-        public virtual FINANCIAL_MATURITY Financial_Level { get; set; }
-    }
+/// <summary>
+/// A collection of FiltersNormalized records
+/// </summary>
+[PrimaryKey("Assessment_Id", "DomainId", "Financial_Level_Id")]
+public partial class FINANCIAL_DOMAIN_FILTERS_V2
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    public int DomainId { get; set; }
+
+    [Key]
+    public int Financial_Level_Id { get; set; }
+
+    public bool IsOn { get; set; }
+
+    [ForeignKey("DomainId")]
+    [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
+    public virtual FINANCIAL_DOMAINS Domain { get; set; }
+
+    [ForeignKey("Financial_Level_Id")]
+    [InverseProperty("FINANCIAL_DOMAIN_FILTERS_V2")]
+    public virtual FINANCIAL_MATURITY Financial_Level { get; set; }
 }

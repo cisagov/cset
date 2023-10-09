@@ -6,28 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of REPORT_DETAIL_SECTIONS records
+/// </summary>
+public partial class REPORT_DETAIL_SECTIONS
 {
-    /// <summary>
-    /// A collection of REPORT_DETAIL_SECTIONS records
-    /// </summary>
-    public partial class REPORT_DETAIL_SECTIONS
-    {
-        public REPORT_DETAIL_SECTIONS()
-        {
-            REPORT_DETAIL_SECTION_SELECTION = new HashSet<REPORT_DETAIL_SECTION_SELECTION>();
-        }
+    [Key]
+    public int Report_Section_Id { get; set; }
 
-        [Key]
-        public int Report_Section_Id { get; set; }
-        [StringLength(250)]
-        public string Display_Name { get; set; }
-        public int Display_Order { get; set; }
-        public int Report_Order { get; set; }
-        [StringLength(500)]
-        public string Tool_Tip { get; set; }
+    [StringLength(250)]
+    public string Display_Name { get; set; }
 
-        [InverseProperty("Report_Section")]
-        public virtual ICollection<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
-    }
+    public int Display_Order { get; set; }
+
+    public int Report_Order { get; set; }
+
+    [StringLength(500)]
+    public string Tool_Tip { get; set; }
+
+    [InverseProperty("Report_Section")]
+    public virtual ICollection<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; } = new List<REPORT_DETAIL_SECTION_SELECTION>();
 }

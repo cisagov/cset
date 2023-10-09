@@ -6,20 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class ANALYTICS_MATURITY_GROUPINGS
-    {
-        [Key]
-        public int Maturity_Model_Id { get; set; }
-        [Key]
-        public int Maturity_Question_Id { get; set; }
-        [Key]
-        [StringLength(200)]
-        public string Question_Group { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Maturity_Model_Id")]
-        [InverseProperty("ANALYTICS_MATURITY_GROUPINGS")]
-        public virtual MATURITY_MODELS Maturity_Model { get; set; }
-    }
+[PrimaryKey("Maturity_Model_Id", "Maturity_Question_Id", "Question_Group")]
+public partial class ANALYTICS_MATURITY_GROUPINGS
+{
+    [Key]
+    public int Maturity_Model_Id { get; set; }
+
+    [Key]
+    public int Maturity_Question_Id { get; set; }
+
+    [Key]
+    [StringLength(200)]
+    public string Question_Group { get; set; }
+
+    [ForeignKey("Maturity_Model_Id")]
+    [InverseProperty("ANALYTICS_MATURITY_GROUPINGS")]
+    public virtual MATURITY_MODELS Maturity_Model { get; set; }
 }

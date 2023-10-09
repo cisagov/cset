@@ -6,24 +6,30 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class DETAILS_DEMOGRAPHICS
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        [StringLength(100)]
-        public string DataItemName { get; set; }
-        public string StringValue { get; set; }
-        public int? IntValue { get; set; }
-        public double? FloatValue { get; set; }
-        public bool? BoolValue { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? DateTimeValue { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("DETAILS_DEMOGRAPHICS")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "DataItemName")]
+public partial class DETAILS_DEMOGRAPHICS
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    [StringLength(100)]
+    public string DataItemName { get; set; }
+
+    public string StringValue { get; set; }
+
+    public int? IntValue { get; set; }
+
+    public double? FloatValue { get; set; }
+
+    public bool? BoolValue { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? DateTimeValue { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("DETAILS_DEMOGRAPHICS")]
+    public virtual ASSESSMENTS Assessment { get; set; }
 }

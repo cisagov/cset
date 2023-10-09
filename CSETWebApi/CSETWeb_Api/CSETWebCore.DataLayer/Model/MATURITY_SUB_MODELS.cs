@@ -8,20 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-public partial class DETAILS_DEMOGRAPHICS_OPTIONS
+public partial class MATURITY_SUB_MODELS
 {
     [Key]
-    public int Option_Id { get; set; }
-
-    [Required]
     [StringLength(50)]
-    public string DataItemName { get; set; }
+    public string Sub_Model_Name { get; set; }
 
-    public int Sequence { get; set; }
-
-    public int OptionValue { get; set; }
-
-    [Required]
-    [StringLength(100)]
-    public string OptionText { get; set; }
+    [InverseProperty("Sub_Model_NameNavigation")]
+    public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; } = new List<MATURITY_SUB_MODEL_QUESTIONS>();
 }

@@ -6,23 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FRAMEWORK_TIER_TYPE records
+/// </summary>
+public partial class FRAMEWORK_TIER_TYPE
 {
-    /// <summary>
-    /// A collection of FRAMEWORK_TIER_TYPE records
-    /// </summary>
-    public partial class FRAMEWORK_TIER_TYPE
-    {
-        public FRAMEWORK_TIER_TYPE()
-        {
-            FRAMEWORK_TIER_TYPE_ANSWER = new HashSet<FRAMEWORK_TIER_TYPE_ANSWER>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string TierType { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string TierType { get; set; }
-
-        [InverseProperty("TierTypeNavigation")]
-        public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
-    }
+    [InverseProperty("TierTypeNavigation")]
+    public virtual ICollection<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; } = new List<FRAMEWORK_TIER_TYPE_ANSWER>();
 }

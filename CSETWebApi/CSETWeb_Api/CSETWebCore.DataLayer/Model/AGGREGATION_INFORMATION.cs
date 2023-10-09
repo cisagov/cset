@@ -6,50 +6,57 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of AGGREGATION_INFORMATION records
+/// </summary>
+public partial class AGGREGATION_INFORMATION
 {
-    /// <summary>
-    /// A collection of AGGREGATION_INFORMATION records
-    /// </summary>
-    public partial class AGGREGATION_INFORMATION
-    {
-        public AGGREGATION_INFORMATION()
-        {
-            AGGREGATION_ASSESSMENT = new HashSet<AGGREGATION_ASSESSMENT>();
-        }
+    [Key]
+    public int AggregationID { get; set; }
 
-        [Key]
-        public int AggregationID { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? Aggregation_Date { get; set; }
-        [StringLength(50)]
-        public string Aggregation_Mode { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Aggregation_Name { get; set; }
-        [StringLength(100)]
-        public string Facility_Name { get; set; }
-        [StringLength(100)]
-        public string State_Province_Or_Region { get; set; }
-        [StringLength(100)]
-        public string Assessor_Name { get; set; }
-        [StringLength(100)]
-        public string Assessor_Email { get; set; }
-        [StringLength(100)]
-        public string Assessor_Phone { get; set; }
-        [StringLength(4000)]
-        public string Assessment_Description { get; set; }
-        [StringLength(4000)]
-        public string Additional_Notes_And_Comments { get; set; }
-        [Column(TypeName = "ntext")]
-        public string Executive_Summary { get; set; }
-        [Column(TypeName = "ntext")]
-        public string Enterprise_Evaluation_Summary { get; set; }
+    [Column(TypeName = "datetime")]
+    public DateTime? Aggregation_Date { get; set; }
 
-        [ForeignKey("Aggregation_Mode")]
-        [InverseProperty("AGGREGATION_INFORMATION")]
-        public virtual AGGREGATION_TYPES Aggregation_ModeNavigation { get; set; }
-        [InverseProperty("Aggregation")]
-        public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
-    }
+    [StringLength(50)]
+    public string Aggregation_Mode { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Aggregation_Name { get; set; }
+
+    [StringLength(100)]
+    public string Facility_Name { get; set; }
+
+    [StringLength(100)]
+    public string State_Province_Or_Region { get; set; }
+
+    [StringLength(100)]
+    public string Assessor_Name { get; set; }
+
+    [StringLength(100)]
+    public string Assessor_Email { get; set; }
+
+    [StringLength(100)]
+    public string Assessor_Phone { get; set; }
+
+    [StringLength(4000)]
+    public string Assessment_Description { get; set; }
+
+    [StringLength(4000)]
+    public string Additional_Notes_And_Comments { get; set; }
+
+    [Column(TypeName = "ntext")]
+    public string Executive_Summary { get; set; }
+
+    [Column(TypeName = "ntext")]
+    public string Enterprise_Evaluation_Summary { get; set; }
+
+    [InverseProperty("Aggregation")]
+    public virtual ICollection<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; } = new List<AGGREGATION_ASSESSMENT>();
+
+    [ForeignKey("Aggregation_Mode")]
+    [InverseProperty("AGGREGATION_INFORMATION")]
+    public virtual AGGREGATION_TYPES Aggregation_ModeNavigation { get; set; }
 }

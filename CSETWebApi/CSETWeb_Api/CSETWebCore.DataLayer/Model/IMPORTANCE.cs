@@ -6,24 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of IMPORTANCE records
+/// </summary>
+public partial class IMPORTANCE
 {
-    /// <summary>
-    /// A collection of IMPORTANCE records
-    /// </summary>
-    public partial class IMPORTANCE
-    {
-        public IMPORTANCE()
-        {
-            FINDING = new HashSet<FINDING>();
-        }
+    [Key]
+    public int Importance_Id { get; set; }
 
-        [Key]
-        public int Importance_Id { get; set; }
-        [StringLength(50)]
-        public string Value { get; set; }
+    [StringLength(50)]
+    public string Value { get; set; }
 
-        [InverseProperty("Importance")]
-        public virtual ICollection<FINDING> FINDING { get; set; }
-    }
+    [InverseProperty("Importance")]
+    public virtual ICollection<FINDING> FINDING { get; set; } = new List<FINDING>();
 }

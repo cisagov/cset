@@ -6,22 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of VISIO_MAPPING records
-    /// </summary>
-    public partial class VISIO_MAPPING
-    {
-        [Key]
-        [StringLength(100)]
-        public string Specific_Type { get; set; }
-        [Key]
-        [StringLength(200)]
-        public string Stencil_Name { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Specific_Type")]
-        [InverseProperty("VISIO_MAPPING")]
-        public virtual DIAGRAM_TYPES Specific_TypeNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of VISIO_MAPPING records
+/// </summary>
+[PrimaryKey("Specific_Type", "Stencil_Name")]
+public partial class VISIO_MAPPING
+{
+    [Key]
+    [StringLength(100)]
+    public string Specific_Type { get; set; }
+
+    [Key]
+    [StringLength(200)]
+    public string Stencil_Name { get; set; }
+
+    [ForeignKey("Specific_Type")]
+    [InverseProperty("VISIO_MAPPING")]
+    public virtual DIAGRAM_TYPES Specific_TypeNavigation { get; set; }
 }

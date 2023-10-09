@@ -6,38 +6,41 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CIS_CSI_SERVICE_COMPOSITION
 {
-    public partial class CIS_CSI_SERVICE_COMPOSITION
-    {
-        public CIS_CSI_SERVICE_COMPOSITION()
-        {
-            CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS = new HashSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
-        }
+    [Key]
+    public int Assessment_Id { get; set; }
 
-        [Key]
-        public int Assessment_Id { get; set; }
-        [StringLength(400)]
-        public string Networks_Description { get; set; }
-        [StringLength(400)]
-        public string Services_Description { get; set; }
-        [StringLength(400)]
-        public string Applications_Description { get; set; }
-        [StringLength(400)]
-        public string Connections_Description { get; set; }
-        [StringLength(400)]
-        public string Personnel_Description { get; set; }
-        [StringLength(400)]
-        public string Other_Defining_System_Description { get; set; }
-        public int? Primary_Defining_System { get; set; }
+    [StringLength(400)]
+    public string Networks_Description { get; set; }
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Primary_Defining_System")]
-        [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
-        public virtual CIS_CSI_DEFINING_SYSTEMS Primary_Defining_SystemNavigation { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
-    }
+    [StringLength(400)]
+    public string Services_Description { get; set; }
+
+    [StringLength(400)]
+    public string Applications_Description { get; set; }
+
+    [StringLength(400)]
+    public string Connections_Description { get; set; }
+
+    [StringLength(400)]
+    public string Personnel_Description { get; set; }
+
+    [StringLength(400)]
+    public string Other_Defining_System_Description { get; set; }
+
+    public int? Primary_Defining_System { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; } = new List<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
+
+    [ForeignKey("Primary_Defining_System")]
+    [InverseProperty("CIS_CSI_SERVICE_COMPOSITION")]
+    public virtual CIS_CSI_DEFINING_SYSTEMS Primary_Defining_SystemNavigation { get; set; }
 }
