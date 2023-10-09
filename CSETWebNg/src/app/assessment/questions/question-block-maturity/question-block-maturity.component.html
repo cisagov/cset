@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="question-group mb-3">
+<div *transloco="let t" class="question-group mb-3">
     <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
         (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
         [attr.aria-expanded]="myGrouping.expanded">
@@ -32,9 +32,9 @@
             <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
-                    matTooltip="One or more controls in this category requires further review.">
+                    matTooltip="{{ t('tooltip.category requires review') }}">
                     <span class="mr-1 cset-icons-flag-dark fs-small"></span>
-                    <span class="mb-1 fs-small">Requires Review</span>
+                    <span class="mb-1 fs-small">{{ t('requires review') }}</span>
                 </span>
                 <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
@@ -47,7 +47,7 @@
                 </div>
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
-                    matTooltip="One or more controls in this category requires further review.">
+                    matTooltip="{{ t('tooltip.category requires review') }}">
                     <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                 </span>
             </div>
@@ -93,11 +93,11 @@
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
                         <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center" tabindex="0"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
-                            [matTooltip]="'tooltip.' + questionsSvc.findAnsDefinitionTransloco(maturityModelName, option) | transloco">
+                            [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelName, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
                                 (click)="storeAnswer(q, option)" [checked]="q.answer === option"
                                 (keydown)="checkAnswerKeyPress($event, q, option)">
-                                {{ 'button-label.' + questionsSvc.findAnsDefinitionTransloco(maturityModelName, option) | transloco }}
+                                {{ questionsSvc.answerButtonLabel(maturityModelName, option) }}
                         </label>
                         <!-- Mark For Review Flag  -->
                         <label class="mr-0 ml-2 btn form-check-label btn-mfr d-flex align-items-center"

@@ -289,6 +289,11 @@ namespace CSETWebCore.Api.Controllers
                 throw new Exception("Not currently authorized to update the Assessment", null);
             }
 
+            if (assessmentDetail.Workflow == "ACET")
+            {
+                return Ok(_acsetAssessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
+            }
+
             return Ok(_assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
         }
 

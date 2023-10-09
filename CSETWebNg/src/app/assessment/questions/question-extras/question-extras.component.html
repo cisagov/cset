@@ -142,7 +142,7 @@
         <span *ngIf="displayIcon('REVIEWED')" class="btn-group btn-group-toggle">
             <label class="btn btn-level form-check-label" [class.active]="myQuestion?.reviewed">
                 <input class="form-check-input" type="checkbox" data-toggle="toggle" (click)="storeReviewed($event)"
-                    [checked]="myQuestion?.reviewed" />{{ 'reviewed' | transloco }}
+                    [checked]="myQuestion?.reviewed" />{{ 'buttons.reviewed' | transloco }}
             </label>
         </span>
 
