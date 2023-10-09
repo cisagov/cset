@@ -25,7 +25,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 import { ConfigService } from '../../../services/config.service';
 import { ReportService } from '../../../services/report.service';
-import { LinebreakPipe } from '../../../helpers/linebreak.pipe';
 import { QuestionsService } from '../../../services/questions.service';
 
 @Component({

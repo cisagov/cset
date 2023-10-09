@@ -29,6 +29,7 @@ namespace CSETWebCore.Business.Reports
         public List<MatRelevantAnswers> QuestionsList { get; set; }
         public List<MatAnsweredQuestionDomain> MatAnsweredQuestions { get; set; }
         public string AssessmentGuid { get; set; }
+        public string CsetVersion { get; set; }
 
         /// <summary>
         /// Gets the parent questions missing from the given list. Requires the QuestionsList

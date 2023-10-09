@@ -22,7 +22,7 @@
 -------------------------->
 <div *transloco="let t; read: 'reports'" class="white-panel oy-auto d-flex flex-column flex-11a">
   <div *ngIf="!assessSvc.isISE()">
-    <h3>{{ t('reports') }}</h3>
+    <h3>{{ 'titles.reports' | transloco }}</h3>
 
     <p>
       {{ t('assessment complete message') }}
@@ -291,10 +291,10 @@
         </span>
       </div> -->
       <button (click)="clickReportLink('acetexecutive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{ t('acet.executive summary') }}
+        {{ t('acet.executive summary.executive summary') }}
       </button>
       <button (click)="clickReportLink('acetgaps')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('acet.gap report.gap report') }}
+        {{ t('acet.gap report.gap report') }}
       </button>
       <button (click)="clickReportLink('acetcommentsmarked')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         {{ t('acet.comments and marked for review') }}
@@ -310,18 +310,6 @@
     </div>
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>ISE Reports</h4>
-
-      <!-- Don't submit to MERIT without a Credit Union name or asset value above $0 -->
-      <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionName === null || ncuaSvc.assetsAsNumber == 0">
-        <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
-          <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-          <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-            "Submit" button is disabled until all required fields on the 'Assessment Configuration' page have been specified.
-          </div>
-        </div>
-      </div>
-
       <div *ngIf="assessSvc.isISE() && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>ISE Reports</h4>
@@ -556,10 +544,10 @@
 
         <div *ngIf="
           !!assessSvc.assessment &&
-          assessSvc.usesMaturityModel('SD02-Series') &&
+          assessSvc.usesMaturityModel('SD02 Series') &&
           !isMobile
         " class="d-flex flex-column justify-content-start align-items-start mb-4">
-          <h4>Pipeline Security Directive (SD02-Series)</h4>
+          <h4>Pipeline Security Directive (SD02 Series)</h4>
 
           <div>
             <button tabindex="0" (click)="clickReportLink('sd-answer-summary')"

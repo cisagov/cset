@@ -61,6 +61,8 @@ export class MaturityQuestionsComponent implements OnInit {
   groupingId: Number;
   title: string;
 
+  msgUnansweredEqualsNo = '';
+
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
   private _routerSub = Subscription.EMPTY;
@@ -113,6 +115,12 @@ export class MaturityQuestionsComponent implements OnInit {
    */
   ngOnInit() {
     this.load();
+
+    // refresh the page in case of language change
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.load();
+    });
+
   }
 
   /**
@@ -165,8 +173,13 @@ export class MaturityQuestionsComponent implements OnInit {
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+        this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
+
+        // set the message with the current "no" answer value
+        const codeForNo = this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N';
+        const noValue = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
+        this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': noValue });
 
         this.loaded = true;
 

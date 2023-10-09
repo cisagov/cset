@@ -175,6 +175,7 @@ import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
+import { CompletionCountPipe } from './helpers/completion-count.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
@@ -196,7 +197,7 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@goecmarc/code-editor';
+import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -609,6 +610,7 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
 import { FooterService } from './services/footer.service';
 
 
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -762,6 +764,7 @@ import { FooterService } from './services/footer.service';
         MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
+        CompletionCountPipe,
         LinebreakPlaintextPipe,
         NullishCoalescePipe,
         StatusCreateComponent,
@@ -1179,13 +1182,10 @@ import { FooterService } from './services/footer.service';
             useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
+                        // Load and set the language based on config
                         return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
-
-                            // Set the default language based on config
                             tSvc.setActiveLang(configSvc.config.defaultLang);
-                            return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
-                                return authSvc.checkLocal();
-                            });
+                            return authSvc.checkLocal();
                         });
                     });
                 };
