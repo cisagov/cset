@@ -34,8 +34,11 @@ const headers = {
 
 @Injectable()
 export class DemographicExtendedService {
+ 
   apiUrl: string;
   id: number;
+  lastGeographics: Geographics;
+  lastDemograph: ExtendedDemographics;
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'demographics/ext';
@@ -103,6 +106,7 @@ export class DemographicExtendedService {
    * Persist the model to the API.
    */
   updateExtendedDemographics(demographic: ExtendedDemographics) {
+    this.lastDemograph = demographic;
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
     .subscribe();
   }
@@ -111,7 +115,18 @@ export class DemographicExtendedService {
    * 
    */
   persistGeographicSelections(x: Geographics) {
+    this.lastGeographics = x;
     this.http.post(this.apiUrl + '/geographics', JSON.stringify(x), headers)
     .subscribe();
+  }
+
+  AreDemographicsComplete():boolean {
+    if(this.lastDemograph && this.lastGeographics){
+      for(var a in this.lastDemograph){
+        console.log("Getting Property");
+        console.log(a);
+      }
+    }
+    return false;
   }
 }
