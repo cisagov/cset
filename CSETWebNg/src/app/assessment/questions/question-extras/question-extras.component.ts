@@ -39,6 +39,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { MaturityService } from '../../../services/maturity.service';
 import { LayoutService } from '../../../services/layout.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -87,7 +88,8 @@ export class QuestionExtrasComponent implements OnInit {
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
     private maturitySvc: MaturityService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private tSvc: TranslocoService
   ) {
   }
 
@@ -374,15 +376,13 @@ export class QuestionExtrasComponent implements OnInit {
   deleteObservation(findingToDelete) {
 
     // Build a message whether the observation has a title or not
-    let msg = "Are you sure you want to delete "
-      + this.observationOrIssue().toLowerCase()
+    let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm')
       + " '"
       + findingToDelete.summary
       + "?'";
 
     if (findingToDelete.summary === null) {
-      msg = "Are you sure you want to delete this "
-        + this.observationOrIssue().toLowerCase()
+      msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm')
         + "?";
     }
 
