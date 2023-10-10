@@ -873,11 +873,14 @@ namespace CSETWebCore.Business.Maturity
 
 
             // filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if this is an "RRA CF" assessment
-            bool isRraSub = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "RRA CF").FirstOrDefault()?.BoolValue ?? false;
-            if (isRraSub)
+            if (response.ModelId == 5)
             {
-                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == "RRA CF").Select(q => q.Mat_Question_Id).ToList();
-                questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
+                bool isRraSub = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "RRA CF").FirstOrDefault()?.BoolValue ?? false;
+                if (isRraSub)
+                {
+                    var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == "RRA CF").Select(q => q.Mat_Question_Id).ToList();
+                    questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
+                }
             }
 
 
