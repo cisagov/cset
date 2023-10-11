@@ -8,10 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+using CSETWebCore.Business.Acet;
 using CSETWebCore.Constants;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Question;
 
@@ -475,7 +475,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, int userId)
         {
             try
             {
@@ -500,6 +500,22 @@ namespace CSETWebCore.Business.Question
                 tabData.SupplementalFact = FormatSupplementalInfo(tabData.SupplementalFact);
 
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
+
+                //
+                var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+                if (user.Lang == "es")
+                {
+                    Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                    var output = new SpanishQuestionRow();
+                    var temp = new SpanishQuestionRow();
+
+                    if (dictionary.TryGetValue(info.MaturityQuestion.Mat_Question_Id, out output))
+                    {
+                        tabData.SupplementalInfo = dictionary[info.MaturityQuestion.Mat_Question_Id].Supplemental_Info;
+                        tabData.ExaminationApproach = dictionary[info.MaturityQuestion.Mat_Question_Id].Examination_Approach;
+                    }
+                }
+                //
 
                 RequirementsData = tabData;
 
