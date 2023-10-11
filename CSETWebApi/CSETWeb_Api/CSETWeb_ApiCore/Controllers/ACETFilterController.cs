@@ -119,6 +119,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var userId = _tokenManager.GetUserId();
             List<ACETFilter> filters = new List<ACETFilter>();
 
             //full cross join
@@ -139,6 +140,27 @@ namespace CSETWebCore.Api.Controllers
                                   Financial_Level_Id = c.Financial_Level_Id,
                                   IsOn = subfilter.IsOn
                               }).ToList();
+
+            if (_context.USERS.Where(x => x.UserId == userId).FirstOrDefault().Lang == "es")
+            {
+                Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+                var output = new GroupingSpanishRow();
+                if (dictionaryDomain.Count > 0)
+                {
+                    tmpFilters = (from c in crossJoin
+                                  join a in _context.FINANCIAL_DOMAIN_FILTERS_V2 on new { c.Financial_Level_Id, c.DomainId } equals new { a.Financial_Level_Id, a.DomainId }
+                                  into myFilters
+                                  from subfilter in myFilters.DefaultIfEmpty()
+                                  where subfilter.Assessment_Id == assessmentId
+                                  select new
+                                  {
+                                      DomainId = c.DomainId,
+                                      DomainName = (dictionaryDomain.TryGetValue(c.Domain, out output) ? dictionaryDomain[c.Domain].Spanish_Title : c.Domain),
+                                      Financial_Level_Id = c.Financial_Level_Id,
+                                      IsOn = subfilter.IsOn
+                                  }).ToList();
+                }
+            }
 
             var groups = tmpFilters.GroupBy(d => d.DomainId, d => d, (key, g) => new { DomainId = key, DomainName = g.First().DomainName, Tiers = g.ToList() }).ToList();
 
