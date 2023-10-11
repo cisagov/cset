@@ -883,6 +883,8 @@ namespace CSETWebCore.Business.Maturity
                         if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
                         {
                             question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
+                            question.Examination_Approach = dictionary[question.Mat_Question_Id].Examination_Approach;
+                            question.Supplemental_Info = dictionary[question.Mat_Question_Id].Supplemental_Info;
                         }
                     });
             }

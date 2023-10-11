@@ -40,8 +40,18 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
+    englishSortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+        "Threat Intelligence & Collaboration",
+        "Cybersecurity Controls",
+        "External Dependency Management",
+        "Cyber Incident Management and Resilience"];
 
-
+    spanishSortDomainListKey: string[] = ["Gestión y Supervisión del Riesgo Cibernético",
+        "Inteligencia de Amenazas y Colaboración",
+        "Controles de Ciberseguridad",
+        "Gestión de Dependencia Externa",
+        "Gestión de Incidentes Cibernéticos y Resiliencia"];
+    
     apiUrl: string;
     constructor(
         private http: HttpClient,

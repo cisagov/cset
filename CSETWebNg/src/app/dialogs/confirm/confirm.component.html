@@ -20,10 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="confirm-dialog d-flex flex-column justify-content-center flex-11a">
+<div *transloco="let t" class="confirm-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-check-circle"></span>
-    <span>Please Confirm</span>
+    <span>{{ t('dialogs.please confirm') }}</span>
   </div>
 
   <div class="p-3 pb-0 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
@@ -33,7 +33,7 @@
   </div>
 
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-      <button class=" btn btn-primary m-0 mr-2" (click)="dialogRef.close(true)">Yes</button>
-      <button class="btn btn-secondary" (click)="dialogRef.close(false)">No</button>
+      <button class=" btn btn-primary m-0 mr-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.Yes') }}</button>
+      <button class="btn btn-secondary" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.No') }}</button>
     </mat-dialog-actions>
 </div>

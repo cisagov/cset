@@ -121,6 +121,9 @@
         "import": "Importar",
         "export all": "Exportar todo",
         "export all to excel": "Exportar todo a Excel",
+        "export all assessments to excel": "Exportar todas las evaluaciones a Excel",
+        "merge examinations": "Fusionar los exámenes",
+        "end merging": "Finalizar la fusión",
         "expand all": "Expandir todo",
         "collapse all": "Desplegar todo",
         "filter": "Filtro",
@@ -141,7 +144,7 @@
             "Fully-MVRA": "Completo",
             "Not-MVRA": "No",
             "Partial-MVRA": "Parcial",
-            "Alt-ACET": "Sí(C)",
+            "Yes(C)": "Sí(C)",
             "Imp-CPG": "Imp",
             "Prog-CPG": "Prog",
             "Scoped-CPG": "Del",
@@ -155,7 +158,7 @@
             "Yes": "Sí",
             "No": "No",
             "N/A": "N/A",
-            "Alt": "Alternativo",
+            "Alt": "Alternar",
             "Unanswered": "Sin respuesta",
             "Inc": "Incompleto",
             "Issue(N)": "No with Issue(s)",
@@ -163,7 +166,7 @@
             "Fully-MVRA": "Completo",
             "Not-MVRA": "No",
             "Partial-MVRA": "Parcial",
-            "Alt-ACET": "Sí - control de contrapartida",
+            "Yes(C)": "Sí - control de contrapartida",
             "Imp-CPG": "Implementado - Una organización ha implementado y continúa manteniendo las acciones recomendadas, o una alternativa adecuada, necesaria para lograr el resultado establecido.",
             "Prog-CPG": "En curso - Una organización está en el proceso de implementar las acciones recomendadas dentro de una meta, o una alternativa adecuada, para lograr el resultado establecido.",
             "Scoped-CPG": "Delimitado - Una organización ha identificado el conjunto completo de actividades requeridas para alcanzar el resultado establecido de una meta.",
@@ -177,15 +180,16 @@
             "Yes": "Sí",
             "No": "No",
             "NA": "N/A",
-            "Alt": "[ES] Alternate",
+            "N/A": "N/A",
+            "Alt": "Alternar",
             "U": "Sin respuesta",
-            "Inc": "[ES] Incomplete",
-            "Iss": "[ES] No with Issue(s)",
-            "S": "[ES] Selected",
+            "Inc": "Incompleto",
+            "Iss": "No con problemas",
+            "S": "Seleccionado",
             "Fully-MVRA": "[ES] Fully Implemented",
             "Not-MVRA": "[ES] Not Implemented",
             "Partial-MVRA": "[ES] Partially Implemented",
-            "Alt-ACET": "Sí - control de contrapartida",
+            "Yes(C)": "Sí - control de contrapartida",
             "Imp-CPG": "[ES] Implemented",
             "Prog-CPG": "[ES] In Progress",
             "Scoped-CPG": "[ES] Scoped",
@@ -194,6 +198,13 @@
             "LI-C2M2": "[ES] Largely Implemented (LI)",
             "PI-C2M2": "[ES] Partially Implemented (PI)",
             "NI-C2M2": "[ES] Not Implemented (NI)"
+        },
+        "placeholders": {
+            "alt acet": "Descripción, explicación y/o justificación para el control compensatorio",
+            "alt cset": "Descripción explicación y/o justificación para la respuesta alternativa"
+        },
+        "warnings": {
+            "description required": "* Descripción requerida"
         }
     },
 
@@ -213,7 +224,12 @@
         "issues with content": "Problemas con contenido",
         "answered count": "Indica el número de preguntas respondidas del total de esta página",
         "questions mode": "El modo Preguntas muestra preguntas simples que corresponden a los requisitos estándar",
-        "requirements mode": "El modo Requisitos muestra el texto del requisito palabra por palabra tal como aparece en el estándar"
+        "requirements mode": "El modo Requisitos muestra el texto del requisito palabra por palabra tal como aparece en el estándar",
+        "risk description": "Descripción del riesgo",
+        "validation approach": "Enfoque de validación",
+        "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
+        "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
+        "export to excel": "Exportar todas las evaluaciones a Excel"
     },
     "level": {
         "low": "Pequeño",
@@ -221,7 +237,7 @@
         "high": "Grande",
         "basic": "Básico",
         "incomplete": "Incompleto",
-        "ad hoc": "[ES] Ad Hoc",
+        "ad hoc": "Ad Hoc",
         "baseline": "Básico",
         "evolving": "En desarrollo",
         "intermediate": "Intermedio",
@@ -269,12 +285,15 @@
     "filterMenu": {
         "Question filters": "Filtros de preguntas",
         "Statement filters": "Filtros de declaración",
+        "search": "Búsqueda",
         "select deselect all": "Seleccionar/Deseleccionar todo",
+        "show questions answered": "Mostrar preguntas respondidas",
         "show unanswered questions": "Mostrar preguntas sin respuesta",
         "show questions with comments": "Mostrar preguntas con comentarios",
         "show questions with notes": "Mostrar preguntas con notas",
         "show questions marked for review": "Mostrar preguntas marcadas para revisión",
         "show questions with observations": "Mostrar preguntas con observaciónes",
+        "show statements answered": "Mostrar declaraciones respondidas",
         "show unanswered statements": "Mostrar declaraciones sin respuesta",
         "show statements with comments": "Mostrar declaraciones con comentarios",
         "show statements with notes": "Mostrar declaraciones con apuntes",
@@ -282,13 +301,38 @@
         "show statements with observations": "Mostrar declaraciones con observaciónes",
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
+    "dialogs" : {
+        "please confirm": "Por favor, confirme"
+    },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
         "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
         "printing report instructions button": "Instrucciones para imprimir informes",
         "printing instructions electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",
         "printing instructions non-electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior izquierda de la ventana del informe, haga clic en el botón \"Archivo\" en la barra de menú y seleccione \"Imprimir\" (CTRL + P). Para exportar una copia de su evaluación a otra ubicación (.csetw), haga clic en el logotipo de CSET en la esquina superior izquierda de la página. En \"Mis Evaluaciones\", verá su evaluación y un botón de Exportar en el lado derecho de la página.",
-        "observations tear-out sheets": "Observaciones Hojas",
+        "site information": "Información del sitio",
+        "additional notes and comments": "Notas y comentarios adicionales",
+        "principal assessor name": "Nombre del evaluador principal",
+        "disclaimer": {
+            "disclaimer": "[ES] Disclaimer",
+            "disclaimer section 1": "[ES] The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
+            "disclaimer section 2": "[ES] CISA does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by CISA.",
+            "disclaimer section 3": "[ES] The display of the CISA official seal or other CISA visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia, or other visual identities of CISA. The CISA seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by CISA or the United States Government. Use of the CISA seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against CISA policies governing usage of the seal.",
+            "disclaimer section 4": "[ES] The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the CSET Program Office."
+        },
+        "advisory": {
+            "advisory": "[ES] Advisory",
+            "advisory section 1": "[ES] CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization’s security posture.",
+            "advisory section 2": "[ES] The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET® is not intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
+            "advisory section 3": "[ES] CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
+            "advisory section 4": "[ES] Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity."
+        },
+        "observations tear-out sheets": {
+            "observations tear-out sheets": "Observaciones Hojas",
+            "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
+            "question identifier": "Identificador de pregunta",
+            "question text": "Texto de la pregunta"
+        },
         "acet": {
             "acet reports": "Los informes de ACET",
             "executive summary": {
@@ -324,12 +368,17 @@
         "title": "Título",
         "resolution date": "Fecha de Resolución",
         "issue": "Problema",
+        "observation": "Observación",
         "impacts": "Impactos",
         "recommendations": "Recomendaciones",
         "vulnerabilities": "Vulnerabilidades",
         "individuals responsible": "Personas responsables",
         "clear selections": "Limpiar selecciones",
-        "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación."
+        "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación.",
+        "delete issue confirm": "¿Está seguro de que desea eliminar el problema",
+        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema",
+        "delete observation confirm": "¿Está seguro de que desea eliminar la observación",
+        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación"
     },
     "references": {
         "source documents": "Documentos Fuente",
