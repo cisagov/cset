@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Question;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.Question
 {
@@ -16,11 +17,13 @@ namespace CSETWebCore.Business.Question
     {
         private CSETContext _context;
         private readonly IHtmlFromXamlConverter _converter;
+        private ITokenManager _tokenManager;
 
-        public InformationTabBuilder(CSETContext context, IHtmlFromXamlConverter converter)
+        public InformationTabBuilder(CSETContext context, IHtmlFromXamlConverter converter, ITokenManager tokenManager)
         {
             _context = context;
             _converter = converter;
+            _tokenManager = tokenManager;
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace CSETWebCore.Business.Question
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
-            tab.BuildMaturityInfoTab(maturityInfoData);
+            tab.BuildMaturityInfoTab(maturityInfoData, (int)_tokenManager.GetUserId());
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }
