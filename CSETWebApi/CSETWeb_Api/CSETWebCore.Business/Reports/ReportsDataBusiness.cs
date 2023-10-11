@@ -1501,6 +1501,20 @@ namespace CSETWebCore.Business.Reports
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
+                    //
+                    var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
+                    if (user.Lang == "es")
+                    {
+                        Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
+                        if (dictionary.TryGetValue(f.mq.Mat_Question_Id, out output))
+                        {
+                            questionText = dictionary[f.mq.Mat_Question_Id].Question_Text;
+                        }
+                    }
+                    //
                     return;
 
                 default:
