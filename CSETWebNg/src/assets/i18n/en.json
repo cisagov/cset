@@ -335,7 +335,8 @@
         },
         "observations tear-out sheets": {
             "observations tear-out sheets": "Observations Tear-Out Sheets",
-            "observation title": "OBSERVATIONS TEAR-OUT SHEETS",
+            "observation title 1": "OBSERVATIONS TEAR-",
+            "observation title 2": "OUT SHEETS",
             "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
             "question identifier": "Question Identifier",
             "question text": "Question Text"

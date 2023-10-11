@@ -307,7 +307,7 @@ export class QuestionExtrasComponent implements OnInit {
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.findings == null) {
-          return this.myQuestion.hasObservations ? 'inline' : 'none';
+          return (this.myQuestion.hasObservations || this.myQuestion.hasDiscovery) ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
 
