@@ -47,12 +47,7 @@ namespace CSETWebCore.Business.ACETDashboard
             Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
             Dictionary<string, GroupingSpanishRow> dictionaryDomain = new Dictionary<string, GroupingSpanishRow>();
 
-            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId);
-
-            //if (spanishFlag)
-            //{
-            //    dictionaryHeaders = AcetBusiness.buildIRPDashboardDictionary();
-            //}
+            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, spanishFlag);
 
             foreach (var d in domains)
             {

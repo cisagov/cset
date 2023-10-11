@@ -99,7 +99,6 @@ export class QuestionFiltersComponent implements OnInit {
         });
       }
     });
-
     if (this.assessSvc.isISE()) {
       // Remove 'N/A' and 'Compensating Control' from ISE filters menu.
       this.answerOptions = this.answerOptions.slice(0, 2);

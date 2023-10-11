@@ -41,11 +41,7 @@ export class AcetExecutiveComponent implements OnInit {
   graphdata: any = [];
   maturityDetail: MaturityDomain[];
   domainDataList: any = [];
-  sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
-    "Threat Intelligence & Collaboration",
-    "Cybersecurity Controls",
-    "External Dependency Management",
-    "Cyber Incident Management and Resilience"]
+  sortDomainListKey: string[] = [];
 
   sortedDomainList: any = []
 
@@ -71,12 +67,10 @@ export class AcetExecutiveComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Executive Report - ACET");
     if (this.tSvc.getActiveLang() == "es") {
-      this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
-          "Inteligencia de Amenazas y Colaboración",
-          "Controles de Ciberseguridad",
-          "Gestión de Dependencia Externa",
-          "Gestión de Incidentes Cibernéticos y Resiliencia"
-          ];
+      this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
+    }
+    else {
+        this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
     }
     //this.titleService.setTitle(this.tSvc.translate('reports.acet.executive summary.page tab title'));
 

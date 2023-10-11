@@ -28,6 +28,7 @@ import { ACETDomain, Domain, QuestionGrouping } from '../../../models/questions.
 import { Injectable, Output, EventEmitter } from "@angular/core";
 import { QuestionFilterService } from "../question-filter.service";
 import { AssessmentService } from "../../assessment.service";
+import { TranslocoService } from "@ngneat/transloco";
 
 
 
@@ -70,7 +71,8 @@ export class AcetFilteringService {
     constructor(
         public http: HttpClient,
         public configSvc: ConfigService,
-        public assessmentSvc: AssessmentService
+        public assessmentSvc: AssessmentService,
+        private tSvc: TranslocoService
     ) {
         this.getACETDomains().subscribe((domains: ACETDomain[]) => {
             this.domains = domains;
@@ -347,7 +349,7 @@ export class AcetFilteringService {
      *
      */
     getACETDomains() {
-        return this.http.get(this.configSvc.apiUrl + 'ACETDomains');
+        return this.http.get(this.configSvc.apiUrl + 'ACETDomains?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
     }
 
     /**

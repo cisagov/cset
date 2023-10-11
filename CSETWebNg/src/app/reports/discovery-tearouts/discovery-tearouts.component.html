@@ -25,7 +25,7 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                OBSERVATIONS TEAR-OUT SHEETS
+                {{ 'reports.observations tear-out sheets.observation title' | transloco }}
             </p>
         </div>
         <div class="column">
@@ -56,19 +56,17 @@
 
     <div class="page-break">
         <div style="margin-bottom: 3em;">
-            <h1>Site Information</h1>
+            <h1>{{ 'reports.site information' | transloco }}</h1>
             <app-site-information [response]="response"></app-site-information>
         </div>
 
         <div *ngIf="response?.individuals.length === 0" style="font-style: italic; font-weight: bold;">
-            The assessment does not contain any observations that are assigned to an individual.
+            {{ 'reports.observations tear-out sheets.no observations message' | transloco }}
         </div>
     </div>
 
-
-
     <div *ngFor="let individual of response?.individuals">
-        <div class="page-break">
+        <div *transloco="let t; read: 'observation'" class="page-break">
             <div id="indiv_{{individual.individualfullname.replace(' ','_')}}"
                 style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.individualfullname}}
             </div>
@@ -78,37 +76,37 @@
                     <td colspan="4" class="tint1">{{finding.finding}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Question Identifier:</td>
+                    <td class="tint2">{{ 'reports.observation tear-out sheets.question identifier' | transloco }}:</td>
                     <td colspan="3">{{finding.questionIdentifier}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Question Text:</td>
+                    <td class="tint2">{{ 'reports.observation tear-out sheets.question text' | transloco }}:</td>
                     <td colspan="3" [innerHTML]="finding.questionText"></td>
                 </tr>
                 <tr>
-                    <td class="tint2" style="width: 25%">Importance:</td>
+                    <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
                     <td style="width: 25%">{{finding.importance}}</td>
-                    <td class="tint2" style="width: 25%">Resolution Date:</td>
+                    <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
                     <td style="width: 25%">{{finding.resolutionDate | date:'dd-MMM-yyyy'}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Issue:</td>
+                    <td class="tint2">{{ t('issue') }}:</td>
                     <td colspan="3">{{finding.issue}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Impacts:</td>
+                    <td class="tint2">{{ t('impacts') }}:</td>
                     <td colspan="3">{{finding.impact}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Recommendations:</td>
+                    <td class="tint2">{{ t('recommendations') }}:</td>
                     <td colspan="3">{{finding.recommendations}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Vulnerabilities:</td>
+                    <td class="tint2">{{ t('vulnerabilities') }}:</td>
                     <td colspan="3">{{finding.vulnerabilities}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">Contacts:</td>
+                    <td class="tint2">{{ 'contact.contacts' | transloco }}:</td>
                     <td colspan="3">{{finding.otherContacts.replace(',',', ')}}</td>
                 </tr>
             </table>
