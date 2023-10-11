@@ -173,6 +173,8 @@ namespace CSETWebCore.DataLayer.Model
         public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
         public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
         public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+        public virtual DbSet<MATURITY_SUB_MODELS> MATURITY_SUB_MODELS { get; set; }
+        public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
         public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
         public virtual DbSet<METRO_AREA> METRO_AREA { get; set; }
         public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
@@ -2275,6 +2277,21 @@ namespace CSETWebCore.DataLayer.Model
                     .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
             });
 
+            modelBuilder.Entity<MATURITY_SUB_MODEL_QUESTIONS>(entity =>
+            {
+                entity.HasKey(e => new { e.Mat_Question_Id, e.Sub_Model_Name });
+
+                entity.HasOne(d => d.Mat_Question)
+                    .WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS)
+                    .HasForeignKey(d => d.Mat_Question_Id)
+                    .HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS");
+
+                entity.HasOne(d => d.Sub_Model_NameNavigation)
+                    .WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS)
+                    .HasForeignKey(d => d.Sub_Model_Name)
+                    .HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_SUB_MODELS");
+            });
+            
             modelBuilder.Entity<METRO_ANSWERS>(entity =>
             {
                 entity.HasKey(e => new { e.Assessment_Id, e.Metro_FIPS })

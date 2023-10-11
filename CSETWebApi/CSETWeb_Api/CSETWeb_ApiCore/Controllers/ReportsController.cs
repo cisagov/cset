@@ -232,19 +232,21 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
+            int userId = (int)_token.GetUserId();
 
-            var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+            var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true, 0);
+            var resp = biz.GetMaturityQuestions(assessmentId, userId, "", true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            var dict = mm.GetReferences(assessmentId);
+            var dict = biz.GetReferences(assessmentId);
 
 
             resp.Groupings.First().SubGroupings.ForEach(goal => goal.Questions.ForEach(q =>
             {
                 var newQ = new MaturityQuestion
                 {
+                    Mat_Question_Id = q.QuestionId,
                     Question_Title = q.DisplayNumber,
                     Question_Text = q.QuestionText,
                     Answer = new ANSWER() { Answer_Text = q.Answer },
@@ -312,10 +314,11 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
+            int userId = (int)_token.GetUserId();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, "", true, 0);
+            var resp = mm.GetMaturityQuestions(assessmentId, userId, "", true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);
