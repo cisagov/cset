@@ -820,6 +820,11 @@ namespace CSETWebCore.Business.Maturity
             return GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId, response);
         }
 
+
+        /// <summary>
+        /// Assembles a response consisting of maturity questions for the assessment.
+        /// </summary>
+        /// <returns></returns>
         public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId, MaturityResponse response)
         {
             if (fill)
@@ -872,17 +877,14 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-            // filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if this is an "RRA CF" assessment
-            if (response.ModelId == 5)
+            // Special "sub-model" logic 
+            // Filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if the assessment uses a sub-model
+            var maturitySubmodule = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
+            if (maturitySubmodule != null)
             {
-                bool isRraSub = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "RRA CF").FirstOrDefault()?.BoolValue ?? false;
-                if (isRraSub)
-                {
-                    var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == "RRA CF").Select(q => q.Mat_Question_Id).ToList();
-                    questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
-                }
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodule.StringValue).Select(q => q.Mat_Question_Id).ToList();
+                questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
             }
-
 
 
 
