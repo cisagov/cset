@@ -52,11 +52,7 @@ export class AcetDetailComponent implements OnInit {
     bottomExpected: string;
 
     domainDataList: any = [];
-    sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
-        "Threat Intelligence & Collaboration",
-        "Cybersecurity Controls",
-        "External Dependency Management",
-        "Cyber Incident Management and Resilience"]
+    sortDomainListKey: string[] = [];
 
     sortedDomainList: any = [];
 
@@ -82,12 +78,10 @@ export class AcetDetailComponent implements OnInit {
 
     loadMatDetails() {
         if (this.tSvc.getActiveLang() == "es") {
-            this.sortDomainListKey = ["Gestión y Supervisión del Riesgo Cibernético",
-                "Inteligencia de Amenazas y Colaboración",
-                "Controles de Ciberseguridad",
-                "Gestión de Dependencia Externa",
-                "Gestión de Incidentes Cibernéticos y Resiliencia"
-                ];
+            this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
+        }
+        else {
+            this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
         }
         this.acetSvc.getMatDetailList().subscribe(
             (data: any) => {

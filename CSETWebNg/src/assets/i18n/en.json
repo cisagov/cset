@@ -56,6 +56,9 @@
         "import": "Import",
         "export all": "Export All",
         "export all to excel": "Export All to Excel",
+        "export all assessments to excel": "Export all assessments to Excel",
+        "merge examinations": "Merge Examinations",
+        "end merging": "End Merging",
         "expand all": "Expand All",
         "collapse all": "Collapse All",
         "filter": "Filter",
@@ -184,6 +187,7 @@
             "Yes": "Yes",
             "No": "No",
             "NA": "N/A",
+            "N/A": "N/A",
             "Alt": "Alternate",
             "U": "Unanswered",
             "Inc": "Incomplete",
@@ -229,7 +233,10 @@
         "questions mode": "Questions Mode displays simple questions that correspond to standard requirements",
         "requirements mode": "Requirements Mode displays requirement text verbatim as it appears in the standard",
         "risk description": "Risk Description",
-        "validation approach": "Validation Approach"
+        "validation approach": "Validation Approach",
+        "prevent encryption": "Stops the 'enter password' screen from appearing on export",
+        "import": "Import an assessment from an external {{appCode}} file.",
+        "export to excel": "Export all assessments to Excel"
     },
     "level": {
         "low": "Low",
