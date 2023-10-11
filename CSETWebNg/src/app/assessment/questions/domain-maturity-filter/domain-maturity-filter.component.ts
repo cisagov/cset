@@ -100,7 +100,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * @param level 
    */
   isFilterActive(level: any) {
-    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);    
+    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);
     if (!filterForDomain) {
       return false;
     }
@@ -115,10 +115,6 @@ export class DomainMaturityFilterComponent implements OnInit {
       } else {
         this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
       }
-  }
-
-  spanishHelper() {
-    
   }
 
   checkFilterKeydown(level: any, event: any) {
