@@ -121,6 +121,9 @@
         "import": "Importar",
         "export all": "Exportar todo",
         "export all to excel": "Exportar todo a Excel",
+        "export all assessments to excel": "Exportar todas las evaluaciones a Excel",
+        "merge examinations": "Fusionar los exámenes",
+        "end merging": "Finalizar la fusión",
         "expand all": "Expandir todo",
         "collapse all": "Desplegar todo",
         "filter": "Filtro",
@@ -155,7 +158,7 @@
             "Yes": "Sí",
             "No": "No",
             "N/A": "N/A",
-            "Alt": "Alternativo",
+            "Alt": "Alternar",
             "Unanswered": "Sin respuesta",
             "Inc": "Incompleto",
             "Issue(N)": "No with Issue(s)",
@@ -177,11 +180,12 @@
             "Yes": "Sí",
             "No": "No",
             "NA": "N/A",
-            "Alt": "[ES] Alternate",
+            "N/A": "N/A",
+            "Alt": "Alternar",
             "U": "Sin respuesta",
-            "Inc": "[ES] Incomplete",
-            "Iss": "[ES] No with Issue(s)",
-            "S": "[ES] Selected",
+            "Inc": "Incompleto",
+            "Iss": "No con problemas",
+            "S": "Seleccionado",
             "Fully-MVRA": "[ES] Fully Implemented",
             "Not-MVRA": "[ES] Not Implemented",
             "Partial-MVRA": "[ES] Partially Implemented",
@@ -196,11 +200,11 @@
             "NI-C2M2": "[ES] Not Implemented (NI)"
         },
         "placeholders": {
-            "alt acet": "[ES] Description, explanation and/or justification for compensating control",
-            "alt cset": "[ES] Description explanation and/or justification for alternate answer"
+            "alt acet": "Descripción, explicación y/o justificación para el control compensatorio",
+            "alt cset": "Descripción explicación y/o justificación para la respuesta alternativa"
         },
         "warnings": {
-            "description required": "[ES] * Description required"
+            "description required": "* Descripción requerida"
         }
     },
 
@@ -221,8 +225,11 @@
         "answered count": "Indica el número de preguntas respondidas del total de esta página",
         "questions mode": "El modo Preguntas muestra preguntas simples que corresponden a los requisitos estándar",
         "requirements mode": "El modo Requisitos muestra el texto del requisito palabra por palabra tal como aparece en el estándar",
-        "risk description": "[ES] Risk Description",
-        "validation approach": "[ES] Validation Approach"
+        "risk description": "Descripción del riesgo",
+        "validation approach": "Enfoque de validación",
+        "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
+        "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
+        "export to excel": "Exportar todas las evaluaciones a Excel"
     },
     "level": {
         "low": "Pequeño",
@@ -230,7 +237,7 @@
         "high": "Grande",
         "basic": "Básico",
         "incomplete": "Incompleto",
-        "ad hoc": "[ES] Ad Hoc",
+        "ad hoc": "Ad Hoc",
         "baseline": "Básico",
         "evolving": "En desarrollo",
         "intermediate": "Intermedio",
@@ -278,15 +285,15 @@
     "filterMenu": {
         "Question filters": "Filtros de preguntas",
         "Statement filters": "Filtros de declaración",
-        "search": "[ES] Search",
+        "search": "Búsqueda",
         "select deselect all": "Seleccionar/Deseleccionar todo",
-        "show questions answered": "[ES] Show questions answered",
+        "show questions answered": "Mostrar preguntas respondidas",
         "show unanswered questions": "Mostrar preguntas sin respuesta",
         "show questions with comments": "Mostrar preguntas con comentarios",
         "show questions with notes": "Mostrar preguntas con notas",
         "show questions marked for review": "Mostrar preguntas marcadas para revisión",
         "show questions with observations": "Mostrar preguntas con observaciónes",
-        "show statements answered": "[ES] Show statements answered",
+        "show statements answered": "Mostrar declaraciones respondidas",
         "show unanswered statements": "Mostrar declaraciones sin respuesta",
         "show statements with comments": "Mostrar declaraciones con comentarios",
         "show statements with notes": "Mostrar declaraciones con apuntes",
@@ -295,7 +302,7 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "dialogs" : {
-        "please confirm": "[ES] Please Confirm"
+        "please confirm": "Por favor, confirme"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
@@ -303,9 +310,9 @@
         "printing report instructions button": "Instrucciones para imprimir informes",
         "printing instructions electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",
         "printing instructions non-electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior izquierda de la ventana del informe, haga clic en el botón \"Archivo\" en la barra de menú y seleccione \"Imprimir\" (CTRL + P). Para exportar una copia de su evaluación a otra ubicación (.csetw), haga clic en el logotipo de CSET en la esquina superior izquierda de la página. En \"Mis Evaluaciones\", verá su evaluación y un botón de Exportar en el lado derecho de la página.",
-        "site information": "[ES] Site Information",
-        "additional notes and comments": "[ES] Additional Notes and Comments",
-        "principal assessor name": "[ES] Principal Assessor Name",
+        "site information": "Información del sitio",
+        "additional notes and comments": "Notas y comentarios adicionales",
+        "principal assessor name": "Nombre del evaluador principal",
         "disclaimer": {
             "disclaimer": "[ES] Disclaimer",
             "disclaimer section 1": "[ES] The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
@@ -322,9 +329,9 @@
         },
         "observations tear-out sheets": {
             "observations tear-out sheets": "Observaciones Hojas",
-            "no observations message": "[ES] The assessment does not contain any observations that are assigned to an individual.",
-            "question identifier": "[ES] Question Identifier",
-            "question text": "[ES] Question Text"
+            "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
+            "question identifier": "Identificador de pregunta",
+            "question text": "Texto de la pregunta"
         },
         "acet": {
             "acet reports": "Los informes de ACET",
@@ -368,10 +375,10 @@
         "individuals responsible": "Personas responsables",
         "clear selections": "Limpiar selecciones",
         "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación.",
-        "delete issue confirm": "[ES] Are you sure you want to delete issue",
-        "delete this issue confirm": "[ES] Are you sure you want to delete this issue",
-        "delete observation confirm": "[ES] Are you sure you want to delete observation",
-        "delete this observation confirm": "[ES] Are you sure you want to delete this observation"
+        "delete issue confirm": "¿Está seguro de que desea eliminar el problema",
+        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema",
+        "delete observation confirm": "¿Está seguro de que desea eliminar la observación",
+        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación"
     },
     "references": {
         "source documents": "Documentos Fuente",
