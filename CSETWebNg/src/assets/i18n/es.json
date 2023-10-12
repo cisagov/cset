@@ -329,6 +329,8 @@
         },
         "observations tear-out sheets": {
             "observations tear-out sheets": "Observaciones Hojas",
+            "observation title 1": "OBSERVACIONES",
+            "observation title 2": "HOJAS",
             "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
             "question identifier": "Identificador de pregunta",
             "question text": "Texto de la pregunta"

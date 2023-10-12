@@ -150,6 +150,7 @@ export interface Question {
     answerMemo?: string;
     comment: string;
     feedback: string;
+    hasDiscovery: boolean;
     hasObservations: boolean;
     hasDocument: boolean;
     documentIds: number[];
