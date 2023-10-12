@@ -48,7 +48,9 @@ export class IRPComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.loadFrameworks();
+        this.tSvc.langChanges$.subscribe((event) => {
+            this.loadFrameworks();
+        });
     }
 
     loadFrameworks() {

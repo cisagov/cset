@@ -133,4 +133,19 @@
   <ItemGroup>
     <Folder Include="Dashboard\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App_Data\ACET Spanish Question Mapping.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\Spanish ACET Groupings.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\Spanish_Mapped_IRPS.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\Spanish_Mapped_IRP_Headers.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
