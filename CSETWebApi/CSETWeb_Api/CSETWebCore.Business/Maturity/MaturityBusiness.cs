@@ -68,7 +68,9 @@ namespace CSETWebCore.Business.Maturity
                     from a in _context.ASSESSMENTS
                     join gii in _context.GALLERY_ITEM on a.GalleryItemGuid equals gii.Gallery_Item_Guid into gig
                     from gi in gig.DefaultIfEmpty()
-                    where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                    where amm.model_id == mm.Maturity_Model_Id 
+                        && amm.Assessment_Id == assessmentId && a.Assessment_Id == assessmentId
+
 
                     select new Model.Maturity.MaturityModel()
                     {
@@ -78,6 +80,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionsAlias = mm.Questions_Alias,
                         ModelDescription = (gi != null) ? gi.Description : string.Empty
                     };
+
             var myModel = q.FirstOrDefault();
 
             if (myModel != null)
