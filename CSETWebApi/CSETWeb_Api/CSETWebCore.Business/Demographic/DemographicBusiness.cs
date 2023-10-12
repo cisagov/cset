@@ -172,7 +172,8 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
-        /// 
+        /// Extended Demographics can be stored both in the DEMOGRAPHIC_ANSWERS and
+        /// the DETAILS_DEMOGRAPHICS table.  
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
@@ -181,9 +182,14 @@ namespace CSETWebCore.Business.Demographic
             var demo = new ExtendedDemographic();
             demo.AssessmentId = assessmentId;
 
-
-            // get values in DEMOGRAPHIC_ANSWERS
+            // get values from DEMOGRAPHIC_ANSWERS (one row per assessment)
             var da = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            if (da == null)
+            {
+                da = new DEMOGRAPHIC_ANSWERS();
+            }
+
             demo.CustomersSupported = da.CustomersSupported;
             demo.CyberRiskService = da.CyberRiskService;
             demo.CioExists = da.CIOExists;
@@ -195,7 +201,7 @@ namespace CSETWebCore.Business.Demographic
             demo.SubSectorId = da.SubSectorId;
 
 
-            // get values in DETAILS_DEMOGRAPHICS
+            // get values from DETAILS_DEMOGRAPHICS (multiple name/value rows per assessment)
             var demogBiz = new DemographicBusiness(_context, _assessmentUtil);
             demo.Hb7055 = demogBiz.GetDD(assessmentId, "HB-7055");
             demo.Hb7055Party = demogBiz.GetDD(assessmentId, "HB-7055-PARTY");
