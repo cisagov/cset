@@ -19,6 +19,7 @@ using NPOI.SS.UserModel;
 using Npoi.Mapper;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.Model.Maturity;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Business.Acet
 {
@@ -244,13 +245,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.Mat_Question_Id, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
             return dict;
@@ -258,8 +255,13 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<int, GroupingSpanishRow> buildGroupingDictionary()
         {
+            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx");
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -276,13 +278,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.Grouping_Id, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
 
@@ -291,8 +289,14 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<string, GroupingSpanishRow> buildResultsGroupingDictionary()
         {
+            
+            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx");
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -310,13 +314,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.English_Title, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
             return dict;
@@ -324,8 +324,13 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<int, IRPModel> buildIRPDictionary()
         {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRPS.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx");
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -343,14 +348,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.IRP_Id, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
-
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
             return dict;
@@ -358,8 +358,13 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<int, IRPSpanishRow> buildIRPHeaderDictionary()
         {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -376,14 +381,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.IRP_Header_Id, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
-
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
 
@@ -392,8 +392,13 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<string, IRPSpanishRow> buildIRPDashboardDictionary()
         {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             MemoryStream memStream = new MemoryStream();
-            FileStream file = File.OpenRead("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx");
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            }
+            FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
             IWorkbook workbook = WorkbookFactory.Create(memStream);
@@ -411,14 +416,9 @@ namespace CSETWebCore.Business.Acet
                 {
                     dict.Add(item.Value.EnglishHeader, item.Value);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    //TODO: It is a big pet peeve of mine to have empty try catches
-                    //Please atleast log the error.  
-                    //if it is something you expect to see often and you know it is not an error
-                    //then exception tossing and catching is really expensive please refactor 
-                    //such that it is not necessary such as test for containment before adding.
-
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
                 }
             }
 
