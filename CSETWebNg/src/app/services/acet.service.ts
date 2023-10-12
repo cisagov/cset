@@ -159,8 +159,7 @@ export class ACETService {
     }
 
     getAnsweredQuestions() {
-        let language = this.tSvc.getActiveLang();
-        return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions?language=' + language, headers);
+        return this.http.get(this.apiUrl + 'reports/acet/getAnsweredQuestions', headers);
     }
 
     getIseAnsweredQuestions() {
