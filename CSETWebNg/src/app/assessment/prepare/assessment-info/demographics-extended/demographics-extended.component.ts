@@ -153,7 +153,6 @@ export class DemographicsExtendedComponent implements OnInit {
   getDemographics() {
     this.demoSvc.getDemographics().subscribe(
       (data: Demographic) => {
-        console.log(data);
         this.demographicData = data;
 
         // populate Subsector (industry) dropdown based on Sector
@@ -326,6 +325,24 @@ export class DemographicsExtendedComponent implements OnInit {
 
   setCyberRisk(value:string){    
     this.demographicData.cyberRiskService = value;
+    this.updateDemographics();
+  }
+
+  setHb7055(value:string){    
+    this.demographicData.hb7055 = value;
+    if (value !== 'Y') {
+      this.demographicData.hb7055Party = '';
+    }
+    this.updateDemographics();
+  }
+
+  setHb7055Party(event) {
+    this.demographicData.hb7055Party = event.target.value;
+    this.updateDemographics();
+  }
+
+  setInfrastructureItOt(value: string) {
+    this.demographicData.infrastructureItOt = value;
     this.updateDemographics();
   }
 }
