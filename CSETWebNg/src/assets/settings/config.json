@@ -71,7 +71,8 @@
     },
     "answerOptionsDefault": [
         {
-            "code": "U"
+            "code": "U",
+            "buttonLabelKey": "U"
         },
         {
             "code": "Y",
