@@ -328,4 +328,22 @@ export class DemographicsExtendedComponent implements OnInit {
     this.demographicData.cyberRiskService = value;
     this.updateDemographics();
   }
+
+  setHb7055(value:string){    
+    this.demographicData.hb7055 = value;
+    if (value !== 'Y') {
+      this.demographicData.hb7055Party = '';
+    }
+    this.updateDemographics();
+  }
+
+  setHb7055Party(event) {
+    this.demographicData.hb7055Party = event.target.value;
+    this.updateDemographics();
+  }
+
+  setInfrastructureItOt(value: string) {
+    this.demographicData.infrastructureItOt = value;
+    this.updateDemographics();
+  }
 }
