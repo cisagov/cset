@@ -59,7 +59,7 @@ export class PageVisibilityService {
    * Evaluates conditions where a page should be hidden and
    * ignored in the TOC and next/back workflow.
    */
-  showPage(page: HTMLElement): boolean {
+  showPage(page: HTMLElement): boolean {     
     // look for a condition on the current page or its nearest parent
     let nnnn = page.closest('[condition]');
     let conditionAttrib = nnnn?.attributes['condition']?.value.trim();
@@ -290,11 +290,11 @@ export class PageVisibilityService {
     return assessment?.useDiagram || assessment?.useStandard;
   }
 
-  cfDemographicsComplete():boolean {
+  cfDemographicsComplete() {
     //if this is CF installation and the demographics are not complete return false
     //else return true; 
     if(this.assessSvc.assessment?.origin == "CF"){
-      if(this.demographics.AreDemographicsComplete()){
+      if(this.demographics.AreDemographicsCompleteNav()){
         return true;
       }
       return false; 

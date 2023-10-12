@@ -25,6 +25,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { ExtendedDemographics, Geographics } from '../models/demographics-extended.model';
+import { Observable, forkJoin } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Demographic } from '../models/assessment-info.model';
 
 
 const headers = {
@@ -34,6 +37,7 @@ const headers = {
 
 @Injectable()
 export class DemographicExtendedService {
+  
  
   apiUrl: string;
   id: number;
@@ -46,7 +50,7 @@ export class DemographicExtendedService {
 
  
 
-  getDemographics() {
+  getDemographics(){    
     return this.http.get(this.apiUrl);
   }
 
@@ -120,13 +124,47 @@ export class DemographicExtendedService {
     .subscribe();
   }
 
-  AreDemographicsComplete():boolean {
-    if(this.lastDemograph && this.lastGeographics){
-      for(var a in this.lastDemograph){
-        console.log("Getting Property");
-        console.log(a);
+  getThePropertyCompleteList(obj){
+    var keys = [];
+    var exceptList = ["subSector", "sector", "assessment"];
+    for(var key in obj){
+      if(!exceptList.includes(key)){
+        keys.push(key);
       }
     }
+    return keys;
+  }
+
+
+  preloadDemoAndGeo() {
+    var sources = [this.getDemographics(),this.getGeographics()];
+    forkJoin(sources).subscribe(results=>{
+      this.lastDemograph = results[0];
+      this.lastGeographics = results[1];
+    });
+  }
+
+  AreDemographicsCompleteNav(){    
+    return this.AreDemographicsComplete(this.lastDemograph,this.lastGeographics);
+  }
+
+  AreDemographicsComplete(demoGraphics, geoGraphics):boolean {
+
+    if(demoGraphics && geoGraphics){
+      var complete = true;
+      var entered = false;
+      for(var a of this.getThePropertyCompleteList(demoGraphics)){
+        entered = true; 
+        complete = complete && Boolean(demoGraphics[a]);
+      }
+      for(var b of this.getThePropertyCompleteList(geoGraphics)){
+        entered = true;
+        complete = complete && Boolean(geoGraphics[b]);
+      }
+      console.log("demographics complete"+complete);
+      return complete && entered;
+    }
+    console.log("2 demographics complete:false");
     return false;
   }
 }
