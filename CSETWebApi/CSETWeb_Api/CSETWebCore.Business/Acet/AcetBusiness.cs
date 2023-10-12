@@ -226,7 +226,12 @@ namespace CSETWebCore.Business.Acet
             if(Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx";
+            } 
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, SpanishQuestionRow>();
             }
+
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
@@ -260,6 +265,10 @@ namespace CSETWebCore.Business.Acet
             if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, GroupingSpanishRow>();
             }
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
@@ -296,6 +305,11 @@ namespace CSETWebCore.Business.Acet
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
             }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<string, GroupingSpanishRow>();
+            }
+
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
@@ -330,6 +344,11 @@ namespace CSETWebCore.Business.Acet
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx";
             }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, IRPModel>();
+            }
+
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
@@ -364,6 +383,11 @@ namespace CSETWebCore.Business.Acet
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, IRPSpanishRow>();
+            }
+
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
@@ -398,6 +422,11 @@ namespace CSETWebCore.Business.Acet
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<string, IRPSpanishRow>();
+            }
+
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
 
