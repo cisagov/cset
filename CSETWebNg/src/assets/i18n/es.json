@@ -6,7 +6,7 @@
     "new assessment": "Nueva evaluación",
     "status": "Estado",
     "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
-    "completion-statements": "{{complete}}/{{total}} declaraciones respondidas",
+    "completion-statements": "{{complete}}/{{total}} declaraciónes respondidas",
     "last modified": "Modificada",
     "primary assessor": "Evaluador principal",
     "prevent encryption": "Prevenir el cifrado",
@@ -88,7 +88,7 @@
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
         "maturity questions": "Preguntas de madurez",
-        "statements": "Declaración",
+        "statements": "Declaraciónes",
         "inherent risk profiles": "Perfil de riesgo inherente",
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "security practices": "Prácticas de seguridad",
@@ -313,6 +313,11 @@
         "site information": "Información del sitio",
         "additional notes and comments": "Notas y comentarios adicionales",
         "principal assessor name": "Nombre del evaluador principal",
+        "marked for review": "Marcado para revisión",
+        "statement": "Declaración",
+        "domain": "Dominio",
+        "assessment factor": "Factor de evaluación",
+        "component": "Componente",
         "disclaimer": {
             "disclaimer": "[ES] Disclaimer",
             "disclaimer section 1": "[ES] The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
@@ -333,7 +338,8 @@
             "observation title 2": "HOJAS",
             "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
             "question identifier": "Identificador de pregunta",
-            "question text": "Texto de la pregunta"
+            "question text": "Texto de la pregunta",
+            "marked for review": "Marked for Review"
         },
         "acet": {
             "acet reports": "Los informes de ACET",
@@ -352,13 +358,10 @@
                 "gap disclaimer 2": "A menudo se le conoce como el Informe de Brechas. Este informe tiene la intención de listar las brechas, ayudar a los usuarios del informe a identificar las brechas, priorizar el trabajo y comenzar a elaborar un plan para abordar las brechas mediante la implementación de los controles necesarios para cumplir con la declaración asociada.",
                 "gap disclaimer 3": "El porcentaje de brecha en cada dominio también se muestra y ayudará a determinar la prioridad. ACET es un modelo de madurez acumulativa, lo que significa que los niveles inferiores deben completarse antes de pasar a los niveles superiores. Idealmente, se debe completar la línea base antes de enfocar los esfuerzos en los controles en evolución y así sucesivamente, siguiendo la línea de niveles de madurez.",
                 "gaps": "Brechas",
-                "marked for review": "Marcado para revisión",
-                "domain": "Dominio",
-                "assessment factor": "Factor de evaluación",
-                "component": "Componente"
+                "marked for review": "Marcado para revisión"
             },
             "comments and mfr": {
-                "comments report": "[ES] ACET Comments and Marked for Review",
+                "comments report": "Comentarios y Marcado para Revisión ACET",
                 "comments report title 1": "[ES] COMMENTS REVIEW",
                 "comments report title 2": "[ES] REPORT",
                 "statements mfr": "[ES] Statements Marked for Review",
@@ -367,7 +370,17 @@
                 "statement comments": "[ES] Statement Comments",
                 "no statements with comments": "[ES] There are no statements with comments"
             },
-            "answered statements": "Declaraciones respondidas ACET",
+            "answered statements": {
+                "answered statements report": "Declaraciones respondidas ACET",
+                "answered statements report title 1": "[ES] ANSWERED STATEMENTS",
+                "answered statements report title 2": "[ES] REPORT",
+                "answered statements": "[ES] Answered Statements",
+                "report desc 1": "[ES] This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
+                "report desc 2": "[ES] The statement set is determined by your maturity level.",
+                "maturity level key": "[ES] Maturity Level Key",
+                "answers": "[ES] Answers",
+                "comments": "[ES] Comments"
+            },
             "compensating controls": "Controles compensatorios ACET"
         }
     },

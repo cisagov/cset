@@ -21,8 +21,10 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
+using DocumentFormat.OpenXml.EMMA;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using Org.BouncyCastle.Asn1.Pkcs;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
@@ -110,6 +112,26 @@ namespace CSETWebCore.Business.Reports
                     matAns.IsParentWithChildren = true;
                 }
             }
+
+            int userId = (int)_tokenManager.GetUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            //
+            if (user.Lang == "es")
+            {
+                responseList.ForEach(
+                   matAns =>
+                   {
+                       Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                       var output = new SpanishQuestionRow();
+                       var temp = new SpanishQuestionRow();
+
+                       if (dictionary.TryGetValue(matAns.Mat.Mat_Question_Id, out output))
+                       {
+                           matAns.Mat.Question_Text = dictionary[matAns.Mat.Mat_Question_Id].Question_Text;
+                       }
+                   });
+            }
+            //
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
@@ -249,7 +271,7 @@ namespace CSETWebCore.Business.Reports
         /// but could be used by other maturity models with some work.
         /// </summary>
         /// <returns></returns>
-        public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList(string language)
+        public List<MatAnsweredQuestionDomain> GetAnsweredQuestionList()
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
@@ -281,7 +303,10 @@ namespace CSETWebCore.Business.Reports
 
             Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
             Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
-            if (language == "es")
+            int userId = (int)_tokenManager.GetUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+
+            if (user.Lang == "es")
             {
                 allGroupings.ForEach(
                     group => {
@@ -340,7 +365,7 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview
                                 };
 
-                                if (language == "es")
+                                if (user.Lang == "es")
                                 {
                                     var output = new SpanishQuestionRow();
                                     var temp = new SpanishQuestionRow();
