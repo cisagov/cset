@@ -358,11 +358,11 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<int, IRPSpanishRow> buildIRPHeaderDictionary()
         {
-            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx";
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             MemoryStream memStream = new MemoryStream();
-            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx"))
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
             {
-                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx";
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             }
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
@@ -392,11 +392,11 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<string, IRPSpanishRow> buildIRPDashboardDictionary()
         {
-            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx";
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             MemoryStream memStream = new MemoryStream();
-            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx"))
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
             {
-                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx.xlsx";
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
             }
             FileStream file = File.OpenRead(defaultPath);
             file.CopyTo(memStream);
