@@ -879,10 +879,10 @@ namespace CSETWebCore.Business.Maturity
 
             // Special "sub-model" logic 
             // Filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if the assessment uses a sub-model
-            var maturitySubmodule = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
-            if (maturitySubmodule != null)
+            var maturitySubmodel = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
+            if (maturitySubmodel != null)
             {
-                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodule.StringValue).Select(q => q.Mat_Question_Id).ToList();
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
                 questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
             }
 

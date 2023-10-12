@@ -1,7 +1,7 @@
 {
     "NOTENODE": "Casing on config chain matters",
     "currentConfigChain": [
-        "CF"
+        "CSET"
     ],
     "appCode": "CSET",
     "defaultLang": "en",
@@ -71,7 +71,8 @@
     },
     "answerOptionsDefault": [
         {
-            "code": "U"
+            "code": "U",
+            "buttonLabelKey": "U"
         },
         {
             "code": "Y",

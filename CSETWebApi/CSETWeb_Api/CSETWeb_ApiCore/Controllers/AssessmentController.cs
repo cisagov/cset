@@ -21,8 +21,9 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -176,6 +177,14 @@ namespace CSETWebCore.Api.Controllers
                     }
 
                     mb.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                }
+
+
+                // store submodel selection
+                if (!String.IsNullOrEmpty(config.Model.Submodel))
+                {
+                    var demo = new DemographicBusiness(_context, _assessmentUtil);
+                    demo.SaveDD(assessment.Id, "MATURITY-SUBMODEL", config.Model.Submodel, null);
                 }
             }
 
