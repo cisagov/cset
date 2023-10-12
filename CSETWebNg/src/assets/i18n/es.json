@@ -356,8 +356,17 @@
                 "domain": "Dominio",
                 "assessment factor": "Factor de evaluación",
                 "component": "Componente"
-            },            
-            "comments and marked for review": "Comentarios y Marcado para Revisión ACET",
+            },
+            "comments and mfr": {
+                "comments report": "[ES] ACET Comments and Marked for Review",
+                "comments report title 1": "[ES] COMMENTS REVIEW",
+                "comments report title 2": "[ES] REPORT",
+                "statements mfr": "[ES] Statements Marked for Review",
+                "statement": "[ES] Statement",
+                "no statements marked": "[ES] There are no statements marked for review",
+                "statement comments": "[ES] Statement Comments",
+                "no statements with comments": "[ES] There are no statements with comments"
+            },
             "answered statements": "Declaraciones respondidas ACET",
             "compensating controls": "Controles compensatorios ACET"
         }
