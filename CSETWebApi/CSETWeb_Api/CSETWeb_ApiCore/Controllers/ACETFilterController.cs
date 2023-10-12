@@ -15,6 +15,8 @@ using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Business.Acet;
 using CSETWebCore.Model.Maturity;
+using NLog;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -78,30 +80,47 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ACETDomains")]
-        public IActionResult GetAcetDomains(bool spanishFlag = false)
+        public IActionResult GetAcetDomains()
         {
-            List<ACETDomain> domains = new List<ACETDomain>();
-            foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
+            var userId = _tokenManager.GetCurrentUserId();
+            var userLang = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault()?.Lang ?? "en";
+
+            try
             {
-                domains.Add(new ACETDomain()
+                List<ACETDomain> domains = new List<ACETDomain>();
+                foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
                 {
-                    DomainName = domain.Domain,
-                    DomainId = domain.DomainId
-                });
-            }
-            if (spanishFlag)
-            {
-                Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
-                var outputGrouping = new GroupingSpanishRow();
-                foreach (var domain in domains)
-                {
-                    if (dictionaryDomain.TryGetValue(domain.DomainName, out outputGrouping))
+                    domains.Add(new ACETDomain()
                     {
-                        domain.DomainName = dictionaryDomain[domain.DomainName].Spanish_Title;
+                        DomainName = domain.Domain,
+                        DomainId = domain.DomainId
+                    });
+                }
+
+
+                if (userLang == "es")
+                {
+                    Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+
+                    var outputGrouping = new GroupingSpanishRow();
+
+                    foreach (var domain in domains)
+                    {
+                        if (dictionaryDomain.TryGetValue(domain.DomainName, out outputGrouping))
+                        {
+                            domain.DomainName = dictionaryDomain[domain.DomainName].Spanish_Title;
+                        }
                     }
                 }
+
+                return Ok(domains);
             }
-            return Ok(domains);
+            catch (Exception ex1)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error(ex1);
+            }
+
+            return Ok();
         }
 
 
@@ -125,7 +144,7 @@ namespace CSETWebCore.Api.Controllers
             //full cross join
             //select DomainId, financial_level_id from FINANCIAL_DOMAINS, FINANCIAL_MATURITY
             var crossJoin = from b in _context.FINANCIAL_DOMAINS
-                            from c in _context.FINANCIAL_MATURITY                            
+                            from c in _context.FINANCIAL_MATURITY
                             select new { b.DomainId, c.Financial_Level_Id, b.Domain };
 
             var tmpFilters = (from c in crossJoin
