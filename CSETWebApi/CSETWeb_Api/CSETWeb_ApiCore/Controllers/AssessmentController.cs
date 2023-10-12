@@ -161,22 +161,22 @@ namespace CSETWebCore.Api.Controllers
             // Model
             if (config.Model != null)
             {
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
-                var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessment.Id);
+                var matBiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                matBiz.PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
+
+                var newModel = matBiz.GetMaturityModel(assessment.Id);
                 assessment.MaturityModel = newModel;
                 assessment.UseMaturity = true;
 
                 // maturity level - for models that track a target level
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-
-                if (mb.ModelsWithTargetLevel.Contains(config.Model.ModelName))
+                if (matBiz.ModelsWithTargetLevel.Contains(config.Model.ModelName))
                 {
                     if (config.Model.Level == 0)
                     {
                         config.Model.Level = 1;
                     }
 
-                    mb.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                    matBiz.PersistMaturityLevel(assessment.Id, config.Model.Level);
                 }
 
 
