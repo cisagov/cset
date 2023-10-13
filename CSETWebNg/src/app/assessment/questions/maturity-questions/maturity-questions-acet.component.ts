@@ -123,6 +123,7 @@ export class MaturityQuestionsAcetComponent implements OnInit, AfterViewInit {
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
         this.filterSvc.maturityModelId = response.modelId;
+        this.filterSvc.maturityModelName = response.modelName;
 
         // get the selected maturity filters
         this.acetFilteringSvc.initializeMatFilters(response.maturityTargetLevel).then((x: any) => {

@@ -19,6 +19,7 @@ namespace CSETWebCore.Model.User
                 return $"{FirstName} {LastName}".Trim();
             }
         }
+        public string Lang { get; set; }
         public bool IsSuperUser { get; set; }
         public bool PasswordResetRequired { get; set; }
         public bool IsActive { get; set; }

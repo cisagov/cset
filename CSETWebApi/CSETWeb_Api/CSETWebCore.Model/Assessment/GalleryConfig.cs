@@ -52,5 +52,10 @@ namespace CSETWebCore.Model.Assessment
         public string ModelName { get; set; }
 
         public int Level { get; set; }
+
+        /// <summary>
+        /// An optional subset of maturity questions.  The full model is not shown.
+        /// </summary>
+        public string Submodel { get; set; }
     }
 }

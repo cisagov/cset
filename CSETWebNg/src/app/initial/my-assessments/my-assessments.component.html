@@ -38,7 +38,7 @@
                         <div class="d-flex flex-row">
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()" tabindex="0"
                                 class="m-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
                                 <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
@@ -47,7 +47,7 @@
 
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-2 fs-base cset-icons-import"></span>
                                 <label for="importFile" class="m-0">{{t('buttons.import')}}</label>
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
@@ -67,19 +67,19 @@
                             <div *ngIf="this.ncuaSvc.switchStatus == false">
                                 <label *ngIf="configSvc.installationMode === 'ACET'"
                                     class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                                    matTooltip="Export all assessments to Excel" (click)="exportToExcelAllAcet()"
+                                    matTooltip="{{ t('tooltip.export to excel') }}" (click)="exportToExcelAllAcet()"
                                     tabindex="0">
                                     <span class="cset-icons-export-excel fs-base mr-2"></span>
-                                    <label for="importFile" class="m-0">{{t('export all to excel')}}</label>
+                                    <label for="importFile" class="m-0">{{t('buttons.export all to excel')}}</label>
                                 </label>
                             </div>
                             <div *ngIf="this.ncuaSvc.switchStatus == true">
                                 <label *ngIf="configSvc.installationMode === 'ACET'"
                                     class="m-0 ml-2 btn btn-secondary d-flex justify-content-end flex-00a"
-                                    matTooltip="Export all assessments to Excel" (click)="openExportDecisionDialog()"
+                                    matTooltip="{{ t('tooltip.export to excel') }}" (click)="openExportDecisionDialog()"
                                     tabindex="0">
                                     <span class="cset-icons-export-excel fs-base mr-2"></span>
-                                    <label class="m-0">{{t('export all to excel')}}</label>
+                                    <label class="m-0">{{t('buttons.export all to excel')}}</label>
                                 </label>
                             </div>
 
@@ -88,15 +88,15 @@
                                 (click)="this.ncuaSvc.prepExaminationMerge()" tabindex="0">
                                 <span class="fs-base"></span>
                                 <label for="mergeExamination" class="m-0">
-                                    <span>{{this.ncuaSvc.prepForMerge === false ? 'Merge Examinations' : 'End
-                                        Merging'}}</span>
+                                    <span>{{this.ncuaSvc.prepForMerge === false ? t('buttons.merge examinations') : t('buttons.end
+                                        merging')}}</span>
                                 </label>
                             </label>
                         </div>
 
                         <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
                             [disabled]="disabledEncrypt"
-                            matTooltip="Stops the 'enter password' screen from appearing on export"
+                            matTooltip="{{ t('tooltip.prevent encryption') }}"
                             style="margin-left: auto; margin-right: 0; border: 2px solid gray">
                             <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
                         </mat-checkbox>

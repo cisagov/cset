@@ -18,5 +18,9 @@ namespace CSETWebCore.DataLayer.Manual
         public string Question_Title { get; set; }
         [Column("Question_Text")]
         public string Question_Text { get; set; }
+        [Column("Supplemental_Info")]
+        public string Supplemental_Info { get; set; }
+        [Column("Examination_Approach")]
+        public string Examination_Approach { get; set; }
     }
 }

@@ -56,6 +56,9 @@
         "import": "Import",
         "export all": "Export All",
         "export all to excel": "Export All to Excel",
+        "export all assessments to excel": "Export all assessments to Excel",
+        "merge examinations": "Merge Examinations",
+        "end merging": "End Merging",
         "expand all": "Expand All",
         "collapse all": "Collapse All",
         "filter": "Filter",
@@ -148,7 +151,7 @@
             "Fully-MVRA": "Fully",
             "Not-MVRA": "Not",
             "Partial-MVRA": "Partial",
-            "Alt-ACET": "Yes(C)",
+            "Yes(C)": "Yes(C)",
             "Imp-CPG": "Imp",
             "Prog-CPG": "Prog",
             "Scoped-CPG": "Scoped",
@@ -170,7 +173,7 @@
             "Fully-MVRA": "Fully",
             "Not-MVRA": "Not",
             "Partial-MVRA": "Partial",
-            "Alt-ACET": "Yes Compensating Control",
+            "Yes(C)": "Yes Compensating Control",
             "Imp-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
             "Prog-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
             "Scoped-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
@@ -184,6 +187,7 @@
             "Yes": "Yes",
             "No": "No",
             "NA": "N/A",
+            "N/A": "N/A",
             "Alt": "Alternate",
             "U": "Unanswered",
             "Inc": "Incomplete",
@@ -192,7 +196,7 @@
             "Fully-MVRA": "Fully Implemented",
             "Not-MVRA": "Not Implemented",
             "Partial-MVRA": "Partially Implemented",
-            "Alt-ACET": "Yes Compensating Control",
+            "Yes(C)": "Yes Compensating Control",
             "Imp-CPG": "Implemented",
             "Prog-CPG": "In Progress",
             "Scoped-CPG": "Scoped",
@@ -201,6 +205,13 @@
             "LI-C2M2": "Largely Implemented (LI)",
             "PI-C2M2": "Partially Implemented (PI)",
             "NI-C2M2": "Not Implemented (NI)"
+        },
+        "placeholders": {
+            "alt acet": "Description, explanation and/or justification for compensating control",
+            "alt cset": "Description explanation and/or justification for alternate answer"
+        },
+        "warnings": {
+            "description required": "* Description required"
         }
     },
     
@@ -220,7 +231,12 @@
         "issues with content": "Issues with content",
         "answered count": "Indicates the number of answered questions out of the total for this page",
         "questions mode": "Questions Mode displays simple questions that correspond to standard requirements",
-        "requirements mode": "Requirements Mode displays requirement text verbatim as it appears in the standard"
+        "requirements mode": "Requirements Mode displays requirement text verbatim as it appears in the standard",
+        "risk description": "Risk Description",
+        "validation approach": "Validation Approach",
+        "prevent encryption": "Stops the 'enter password' screen from appearing on export",
+        "import": "Import an assessment from an external {{appCode}} file.",
+        "export to excel": "Export all assessments to Excel"
     },
     "level": {
         "low": "Low",
@@ -275,12 +291,15 @@
     "filterMenu": {
         "Question filters": "Question Filters",
         "Statement filters": "Statement Filters",
+        "search": "Search",
         "select deselect all": "Select/Deselect All",
+        "show questions answered": "Show questions answered",
         "show unanswered questions": "Show unanswered questions",
         "show questions with comments": "Show questions with comments",
         "show questions with notes": "Show questions with notes",
         "show questions marked for review": "Show questions marked for review",
         "show questions with observations": "Show questions with observations",
+        "show statements answered": "Show statements answered",
         "show unanswered statements": "Show unanswered statements",
         "show statements with comments": "Show statements with comments",
         "show statements with notes": "Show statements with notes",
@@ -288,13 +307,41 @@
         "show statements with observations": "Show statements with observations",
         "show statements with issues": "Show statements with issues"
     },
+    "dialogs" : {
+        "please confirm": "Please Confirm"
+    },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",
         "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
         "printing instructions non-electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top left corner of the report window, click the \"File\" button in the menu bar and select \"Print\" (CTRL + P). To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
-        "observations tear-out sheets": "Observations Tear-Out Sheets",
+        "site information": "Site Information",
+        "additional notes and comments": "Additional Notes and Comments",
+        "principal assessor name": "Principal Assessor Name",
+        "marked for review": "Marked for Review",
+        "disclaimer": {
+            "disclaimer": "Disclaimer",
+            "disclaimer section 1": "The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
+            "disclaimer section 2": "CISA does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by CISA.",
+            "disclaimer section 3": "The display of the CISA official seal or other CISA visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia, or other visual identities of CISA. The CISA seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by CISA or the United States Government. Use of the CISA seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against CISA policies governing usage of the seal.",
+            "disclaimer section 4": "The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the CSET Program Office."
+        },
+        "advisory": {
+            "advisory": "Advisory",
+            "advisory section 1": "CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization’s security posture.",
+            "advisory section 2": "The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET® is not intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
+            "advisory section 3": "CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
+            "advisory section 4": "Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity."
+        },
+        "observations tear-out sheets": {
+            "observations tear-out sheets": "Observations Tear-Out Sheets",
+            "observation title 1": "OBSERVATIONS TEAR-",
+            "observation title 2": "OUT SHEETS",
+            "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
+            "question identifier": "Question Identifier",
+            "question text": "Question Text"
+        },
         "acet": {
             "acet reports": "ACET Reports",
             "executive summary": {
@@ -317,7 +364,16 @@
                 "assessment factor": "Assessment Factor",
                 "component": "Component"
             },
-            "comments and marked for review": "ACET Comments and Marked for Review",
+            "comments and mfr": {
+                "comments report": "ACET Comments and Marked for Review",
+                "comments report title 1": "COMMENTS REVIEW",
+                "comments report title 2": "REPORT",
+                "statements mfr": "Statements Marked for Review",
+                "statement": "Statement",
+                "no statements marked": "There are no statements marked for review",
+                "statement comments": "Statement Comments",
+                "no statements with comments": "There are no statements with comments"
+            },
             "answered statements": "ACET Answered Statements",
             "compensating controls": "ACET Compensating Controls"
         }
@@ -330,12 +386,17 @@
         "title": "Title",
         "resolution date": "Resolution Date",
         "issue": "Issue",
+        "observation": "Observation",
         "impacts": "Impacts",
         "recommendations": "Recommendations",
         "vulnerabilities": "Vulnerabilities",
         "individuals responsible": "Individuals Responsible",
         "clear selections": "Clear Selections",
-        "observation description": "The question observation section is for advanced users that want to collect extra information about specific questions in the assessment."
+        "observation description": "The question observation section is for advanced users that want to collect extra information about specific questions in the assessment.",
+        "delete issue confirm": "Are you sure you want to delete issue",
+        "delete this issue confirm": "Are you sure you want to delete this issue",
+        "delete observation confirm": "Are you sure you want to delete observation",
+        "delete this observation confirm": "Are you sure you want to delete this observation"
     },
     "references": {
         "source documents": "Source Documents",
