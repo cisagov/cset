@@ -38,6 +38,7 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { NCUAService } from '../../../services/ncua.service';
 import { FindingsService } from '../../../services/findings.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-reports',
@@ -327,11 +328,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 @Component({
   selector: 'snack-bar-component-example-snack',
   template:
-    '<span>To print or save any of these reports as PDF, click the report which will open in a new window. {{ printInstructions }} To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page. </span> <button (click)="snackBarRef.dismiss()">Close</button>',
+    '<span>{{ tSvc.translate(printInstructions) }}</span><button (click)="snackBarRef.dismiss()">{{ tSvc.translate(\'buttons.close\') }}</button>',
   styles: ['']
 })
 export class PrintSnackComponent implements OnInit {
-  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>, @Inject(MAT_SNACK_BAR_DATA) public data: any) {}
+  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>, 
+    @Inject(MAT_SNACK_BAR_DATA) public data: any,
+    public tSvc: TranslocoService
+  ) {}
 
   printInstructions: string;
 
@@ -339,10 +343,10 @@ export class PrintSnackComponent implements OnInit {
     const isRunningInElectron = localStorage.getItem('isRunningInElectron') === 'true';
     if (isRunningInElectron) {
       this.printInstructions =
-        'In the top left corner of the report window, click the "File" button in the menu bar and select "Print" (CTRL + P).';
+        'reports.printing instructions electron';
     } else {
       this.printInstructions =
-        'In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print.';
+        'reports.printing instructions non-electron';
     }
   }
 }
