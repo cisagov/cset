@@ -349,7 +349,7 @@ export class AcetFilteringService {
      *
      */
     getACETDomains() {
-        return this.http.get(this.configSvc.apiUrl + 'ACETDomains?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
+        return this.http.get(this.configSvc.apiUrl + 'ACETDomains');
     }
 
     /**
