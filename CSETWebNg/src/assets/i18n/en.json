@@ -386,7 +386,16 @@
                 "answers": "Answers",
                 "comments": "Comments"
             },
-            "compensating controls": "ACET Compensating Controls"
+            "compensating controls": {
+                "compensating controls report": "ACET Compensating Controls",
+                "compensating controls report title 1": "COMPENSATING CONTROLS",
+                "compensating controls report title 2": "REPORT",
+                "compensating controls": "Compensating Controls",
+                "report desc": "This report contains all the statements that have an associated compensating control and the comment provided.",
+                "compensating comment": "Compensating Comment",
+                "no compensating comment": "No compensating comment or explanation was provided.",
+                "no compensating controls": "There are no compensating controls to display"
+            }
         }
     },
     "observation": {
