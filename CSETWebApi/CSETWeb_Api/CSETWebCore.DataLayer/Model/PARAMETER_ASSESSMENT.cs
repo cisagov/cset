@@ -6,22 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class PARAMETER_ASSESSMENT
-    {
-        [Key]
-        public int Parameter_ID { get; set; }
-        [Key]
-        public int Assessment_ID { get; set; }
-        [StringLength(2000)]
-        public string Parameter_Value_Assessment { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_ID")]
-        [InverseProperty("PARAMETER_ASSESSMENT")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Parameter_ID")]
-        [InverseProperty("PARAMETER_ASSESSMENT")]
-        public virtual PARAMETERS Parameter { get; set; }
-    }
+[PrimaryKey("Parameter_ID", "Assessment_ID")]
+public partial class PARAMETER_ASSESSMENT
+{
+    [Key]
+    public int Parameter_ID { get; set; }
+
+    [Key]
+    public int Assessment_ID { get; set; }
+
+    [StringLength(2000)]
+    public string Parameter_Value_Assessment { get; set; }
+
+    [ForeignKey("Assessment_ID")]
+    [InverseProperty("PARAMETER_ASSESSMENT")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Parameter_ID")]
+    [InverseProperty("PARAMETER_ASSESSMENT")]
+    public virtual PARAMETERS Parameter { get; set; }
 }

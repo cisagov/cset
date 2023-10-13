@@ -6,23 +6,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class HYDRO_PROGRESS
 {
-    public partial class HYDRO_PROGRESS
-    {
-        public HYDRO_PROGRESS()
-        {
-            HYDRO_DATA_ACTIONS = new HashSet<HYDRO_DATA_ACTIONS>();
-        }
+    [Key]
+    public int Progress_Id { get; set; }
 
-        [Key]
-        public int Progress_Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        [Unicode(false)]
-        public string Progress_Text { get; set; }
+    [Required]
+    [StringLength(50)]
+    [Unicode(false)]
+    public string Progress_Text { get; set; }
 
-        [InverseProperty("Progress")]
-        public virtual ICollection<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
-    }
+    [InverseProperty("Progress")]
+    public virtual ICollection<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; } = new List<HYDRO_DATA_ACTIONS>();
 }

@@ -6,19 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class CUSTOM_BASE_STANDARDS
-    {
-        [Key]
-        [StringLength(50)]
-        public string Custom_Questionaire_Name { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Base_Standard { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Custom_Questionaire_Name")]
-        [InverseProperty("CUSTOM_BASE_STANDARDS")]
-        public virtual CUSTOM_QUESTIONAIRES Custom_Questionaire_NameNavigation { get; set; }
-    }
+[PrimaryKey("Custom_Questionaire_Name", "Base_Standard")]
+public partial class CUSTOM_BASE_STANDARDS
+{
+    [Key]
+    [StringLength(50)]
+    public string Custom_Questionaire_Name { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Base_Standard { get; set; }
+
+    [ForeignKey("Custom_Questionaire_Name")]
+    [InverseProperty("CUSTOM_BASE_STANDARDS")]
+    public virtual CUSTOM_QUESTIONAIRES Custom_Questionaire_NameNavigation { get; set; }
 }

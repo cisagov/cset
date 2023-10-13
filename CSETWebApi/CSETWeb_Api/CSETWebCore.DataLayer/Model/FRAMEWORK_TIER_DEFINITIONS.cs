@@ -6,24 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FRAMEWORK_TIER_DEFINITIONS records
-    /// </summary>
-    public partial class FRAMEWORK_TIER_DEFINITIONS
-    {
-        [Key]
-        [StringLength(50)]
-        public string Tier { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string TierType { get; set; }
-        [StringLength(1024)]
-        public string TierQuestion { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Tier")]
-        [InverseProperty("FRAMEWORK_TIER_DEFINITIONS")]
-        public virtual FRAMEWORK_TIERS TierNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FRAMEWORK_TIER_DEFINITIONS records
+/// </summary>
+[PrimaryKey("Tier", "TierType")]
+public partial class FRAMEWORK_TIER_DEFINITIONS
+{
+    [Key]
+    [StringLength(50)]
+    public string Tier { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string TierType { get; set; }
+
+    [StringLength(1024)]
+    public string TierQuestion { get; set; }
+
+    [ForeignKey("Tier")]
+    [InverseProperty("FRAMEWORK_TIER_DEFINITIONS")]
+    public virtual FRAMEWORK_TIERS TierNavigation { get; set; }
 }

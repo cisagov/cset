@@ -117,7 +117,7 @@ export class AuthenticationService {
           }
 
           // if there's a language for the user, set it
-          if (!!response.lang) {
+          if (!!response?.lang) {
             this.tSvc.setActiveLang(response.lang);
             this.tSvc.load(response.lang);
           }

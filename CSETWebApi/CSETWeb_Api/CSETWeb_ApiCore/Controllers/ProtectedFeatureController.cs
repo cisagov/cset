@@ -131,11 +131,19 @@ namespace CSETWebCore.Api.Controllers
 
             if (userId != null)
             {
-                cisaWorkflowEnabled = _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow;
+                var user = _context.USERS.Where(u => u.UserId == userId).FirstOrDefault();
+                if (user!=null)
+                {
+                    cisaWorkflowEnabled =user .CisaAssessorWorkflow;
+                }
             }
             else if (ak != null)
             {
-                cisaWorkflowEnabled = _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow;
+                var acesskey = _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault();
+                if (acesskey != null)
+                {
+                    cisaWorkflowEnabled = acesskey.CisaAssessorWorkflow;
+                }
             }
 
             return Ok(cisaWorkflowEnabled);

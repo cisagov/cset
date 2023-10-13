@@ -6,29 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FINANCIAL_COMPONENTS records
+/// </summary>
+[Index("FinComponent", Name = "IX_FINANCIAL_COMPONENTS", IsUnique = true)]
+public partial class FINANCIAL_COMPONENTS
 {
-    /// <summary>
-    /// A collection of FINANCIAL_COMPONENTS records
-    /// </summary>
-    [Index("FinComponent", Name = "IX_FINANCIAL_COMPONENTS", IsUnique = true)]
-    public partial class FINANCIAL_COMPONENTS
-    {
-        public FINANCIAL_COMPONENTS()
-        {
-            FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
-        }
+    [Key]
+    public int FinComponentId { get; set; }
 
-        [Key]
-        public int FinComponentId { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string FinComponent { get; set; }
-        [StringLength(50)]
-        public string Acronym { get; set; }
-        public int? Number { get; set; }
+    [Required]
+    [StringLength(255)]
+    public string FinComponent { get; set; }
 
-        [InverseProperty("FinComponent")]
-        public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
-    }
+    [StringLength(50)]
+    public string Acronym { get; set; }
+
+    public int? Number { get; set; }
+
+    [InverseProperty("FinComponent")]
+    public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; } = new List<FINANCIAL_GROUPS>();
 }

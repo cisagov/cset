@@ -6,17 +6,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class NAVIGATION_STATE
 {
-    public partial class NAVIGATION_STATE
-    {
-        [Key]
-        public string Name { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsError { get; set; }
-        public bool IsVisited { get; set; }
-        [Required]
-        public bool? IsAvailable { get; set; }
-        public double PercentCompletion { get; set; }
-    }
+    [Key]
+    public string Name { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public bool IsError { get; set; }
+
+    public bool IsVisited { get; set; }
+
+    [Required]
+    public bool? IsAvailable { get; set; }
+
+    public double PercentCompletion { get; set; }
 }

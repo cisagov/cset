@@ -6,28 +6,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class EXT_SECTOR
 {
-    public partial class EXT_SECTOR
-    {
-        public EXT_SECTOR()
-        {
-            DEMOGRAPHIC_ANSWERS = new HashSet<DEMOGRAPHIC_ANSWERS>();
-            EXT_SUB_SECTOR = new HashSet<EXT_SUB_SECTOR>();
-        }
+    [Key]
+    public int SectorId { get; set; }
 
-        [Key]
-        public int SectorId { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string SectorName { get; set; }
-        [Required]
-        [StringLength(4000)]
-        public string SectorHelp { get; set; }
+    [Required]
+    [StringLength(150)]
+    public string SectorName { get; set; }
 
-        [InverseProperty("Sector")]
-        public virtual ICollection<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
-        [InverseProperty("Sector")]
-        public virtual ICollection<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
-    }
+    [Required]
+    [StringLength(4000)]
+    public string SectorHelp { get; set; }
+
+    [InverseProperty("Sector")]
+    public virtual ICollection<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; } = new List<DEMOGRAPHIC_ANSWERS>();
+
+    [InverseProperty("Sector")]
+    public virtual ICollection<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; } = new List<EXT_SUB_SECTOR>();
 }

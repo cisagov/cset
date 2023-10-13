@@ -6,26 +6,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Index("Defining_System", Name = "IX_CIS_CSI_DEFINING_SYSTEMS", IsUnique = true)]
+public partial class CIS_CSI_DEFINING_SYSTEMS
 {
-    [Index("Defining_System", Name = "IX_CIS_CSI_DEFINING_SYSTEMS", IsUnique = true)]
-    public partial class CIS_CSI_DEFINING_SYSTEMS
-    {
-        public CIS_CSI_DEFINING_SYSTEMS()
-        {
-            CIS_CSI_SERVICE_COMPOSITION = new HashSet<CIS_CSI_SERVICE_COMPOSITION>();
-            CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS = new HashSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
-        }
+    [Key]
+    public int Defining_System_Id { get; set; }
 
-        [Key]
-        public int Defining_System_Id { get; set; }
-        [Required]
-        [StringLength(400)]
-        public string Defining_System { get; set; }
+    [Required]
+    [StringLength(400)]
+    public string Defining_System { get; set; }
 
-        [InverseProperty("Primary_Defining_SystemNavigation")]
-        public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION> CIS_CSI_SERVICE_COMPOSITION { get; set; }
-        [InverseProperty("Defining_System")]
-        public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
-    }
+    [InverseProperty("Primary_Defining_SystemNavigation")]
+    public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION> CIS_CSI_SERVICE_COMPOSITION { get; set; } = new List<CIS_CSI_SERVICE_COMPOSITION>();
+
+    [InverseProperty("Defining_System")]
+    public virtual ICollection<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; } = new List<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>();
 }

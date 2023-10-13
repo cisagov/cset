@@ -6,56 +6,66 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class NIST_SAL_INFO_TYPES
-    {
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Assessment_Id { get; set; }
-        /// <summary>
-        /// The Type Value is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Type_Value { get; set; }
-        /// <summary>
-        /// The Selected is used to
-        /// </summary>
-        public bool Selected { get; set; }
-        /// <summary>
-        /// The Confidentiality Value is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Confidentiality_Value { get; set; }
-        [StringLength(1500)]
-        public string Confidentiality_Special_Factor { get; set; }
-        /// <summary>
-        /// The Integrity Value is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Integrity_Value { get; set; }
-        [StringLength(1500)]
-        public string Integrity_Special_Factor { get; set; }
-        /// <summary>
-        /// The Availability Value is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Availability_Value { get; set; }
-        [StringLength(1500)]
-        public string Availability_Special_Factor { get; set; }
-        /// <summary>
-        /// The Area is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Area { get; set; }
-        [StringLength(50)]
-        public string NIST_Number { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("NIST_SAL_INFO_TYPES")]
-        public virtual STANDARD_SELECTION Assessment { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "Type_Value")]
+public partial class NIST_SAL_INFO_TYPES
+{
+    /// <summary>
+    /// The Id is used to
+    /// </summary>
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    /// <summary>
+    /// The Type Value is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Type_Value { get; set; }
+
+    /// <summary>
+    /// The Selected is used to
+    /// </summary>
+    public bool Selected { get; set; }
+
+    /// <summary>
+    /// The Confidentiality Value is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Confidentiality_Value { get; set; }
+
+    [StringLength(1500)]
+    public string Confidentiality_Special_Factor { get; set; }
+
+    /// <summary>
+    /// The Integrity Value is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Integrity_Value { get; set; }
+
+    [StringLength(1500)]
+    public string Integrity_Special_Factor { get; set; }
+
+    /// <summary>
+    /// The Availability Value is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Availability_Value { get; set; }
+
+    [StringLength(1500)]
+    public string Availability_Special_Factor { get; set; }
+
+    /// <summary>
+    /// The Area is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Area { get; set; }
+
+    [StringLength(50)]
+    public string NIST_Number { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("NIST_SAL_INFO_TYPES")]
+    public virtual STANDARD_SELECTION Assessment { get; set; }
 }

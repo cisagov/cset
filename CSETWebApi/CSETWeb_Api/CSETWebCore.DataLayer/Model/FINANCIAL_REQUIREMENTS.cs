@@ -6,24 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FINANCIAL_REQUIREMENTS records
-    /// </summary>
-    public partial class FINANCIAL_REQUIREMENTS
-    {
-        [Key]
-        public int StmtNumber { get; set; }
-        [Key]
-        public int Requirement_Id { get; set; }
-        public int? maturity_question_id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Requirement_Id")]
-        [InverseProperty("FINANCIAL_REQUIREMENTS")]
-        public virtual NEW_REQUIREMENT Requirement { get; set; }
-        [ForeignKey("StmtNumber")]
-        [InverseProperty("FINANCIAL_REQUIREMENTS")]
-        public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FINANCIAL_REQUIREMENTS records
+/// </summary>
+[PrimaryKey("StmtNumber", "Requirement_Id")]
+public partial class FINANCIAL_REQUIREMENTS
+{
+    [Key]
+    public int StmtNumber { get; set; }
+
+    [Key]
+    public int Requirement_Id { get; set; }
+
+    public int? maturity_question_id { get; set; }
+
+    [ForeignKey("Requirement_Id")]
+    [InverseProperty("FINANCIAL_REQUIREMENTS")]
+    public virtual NEW_REQUIREMENT Requirement { get; set; }
+
+    [ForeignKey("StmtNumber")]
+    [InverseProperty("FINANCIAL_REQUIREMENTS")]
+    public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
 }

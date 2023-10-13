@@ -6,53 +6,62 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class MATURITY_ANSWER_OPTIONS
 {
-    public partial class MATURITY_ANSWER_OPTIONS
-    {
-        public MATURITY_ANSWER_OPTIONS()
-        {
-            ANSWER = new HashSet<ANSWER>();
-            MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation = new HashSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
-            MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation = new HashSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
-            MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
-        }
+    [Key]
+    public int Mat_Option_Id { get; set; }
 
-        [Key]
-        public int Mat_Option_Id { get; set; }
-        [Required]
-        [StringLength(1000)]
-        public string Option_Text { get; set; }
-        public int Mat_Question_Id { get; set; }
-        public int Answer_Sequence { get; set; }
-        public int? ElementId { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal? Weight { get; set; }
-        [StringLength(50)]
-        public string Mat_Option_Type { get; set; }
-        public int? Parent_Option_Id { get; set; }
-        public bool Has_Answer_Text { get; set; }
-        [StringLength(500)]
-        public string Formula { get; set; }
-        [Column(TypeName = "decimal(18, 2)")]
-        public decimal? Threshold { get; set; }
-        [StringLength(500)]
-        public string RiFormula { get; set; }
-        public int? ThreatType { get; set; }
-        public bool Is_None { get; set; }
+    [Required]
+    [StringLength(1000)]
+    public string Option_Text { get; set; }
 
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("MATURITY_ANSWER_OPTIONS")]
-        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
-        [InverseProperty("Mat_Option")]
-        public virtual HYDRO_DATA HYDRO_DATA { get; set; }
-        [InverseProperty("Mat_Option")]
-        public virtual ICollection<ANSWER> ANSWER { get; set; }
-        [InverseProperty("Mat_Option_Id_1Navigation")]
-        public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation { get; set; }
-        [InverseProperty("Mat_Option_Id_2Navigation")]
-        public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation { get; set; }
-        [InverseProperty("Parent_Option")]
-        public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
-    }
+    public int Mat_Question_Id { get; set; }
+
+    public int Answer_Sequence { get; set; }
+
+    public int? ElementId { get; set; }
+
+    [Column(TypeName = "decimal(18, 2)")]
+    public decimal? Weight { get; set; }
+
+    [StringLength(50)]
+    public string Mat_Option_Type { get; set; }
+
+    public int? Parent_Option_Id { get; set; }
+
+    public bool Has_Answer_Text { get; set; }
+
+    [StringLength(500)]
+    public string Formula { get; set; }
+
+    [Column(TypeName = "decimal(18, 2)")]
+    public decimal? Threshold { get; set; }
+
+    [StringLength(500)]
+    public string RiFormula { get; set; }
+
+    public int? ThreatType { get; set; }
+
+    public bool Is_None { get; set; }
+
+    [InverseProperty("Mat_Option")]
+    public virtual ICollection<ANSWER> ANSWER { get; set; } = new List<ANSWER>();
+
+    [InverseProperty("Mat_Option")]
+    public virtual HYDRO_DATA HYDRO_DATA { get; set; }
+
+    [InverseProperty("Mat_Option_Id_1Navigation")]
+    public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation { get; set; } = new List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
+
+    [InverseProperty("Mat_Option_Id_2Navigation")]
+    public virtual ICollection<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation { get; set; } = new List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>();
+
+    [InverseProperty("Parent_Option")]
+    public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; } = new List<MATURITY_QUESTIONS>();
+
+    [ForeignKey("Mat_Question_Id")]
+    [InverseProperty("MATURITY_ANSWER_OPTIONS")]
+    public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
 }

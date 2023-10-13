@@ -6,33 +6,34 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of SECTOR_INDUSTRY records
+/// </summary>
+[PrimaryKey("SectorId", "IndustryId")]
+[Index("IndustryId", Name = "IX_SECTOR_INDUSTRY", IsUnique = true)]
+public partial class SECTOR_INDUSTRY
 {
-    /// <summary>
-    /// A collection of SECTOR_INDUSTRY records
-    /// </summary>
-    [Index("IndustryId", Name = "IX_SECTOR_INDUSTRY", IsUnique = true)]
-    public partial class SECTOR_INDUSTRY
-    {
-        public SECTOR_INDUSTRY()
-        {
-            DEMOGRAPHICS = new HashSet<DEMOGRAPHICS>();
-        }
+    [Key]
+    public int SectorId { get; set; }
 
-        [Key]
-        public int SectorId { get; set; }
-        [Key]
-        public int IndustryId { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string IndustryName { get; set; }
-        public bool Is_NIPP { get; set; }
-        public bool Is_Other { get; set; }
-        public int? NIPP_subsector { get; set; }
+    [Key]
+    public int IndustryId { get; set; }
 
-        [ForeignKey("SectorId")]
-        [InverseProperty("SECTOR_INDUSTRY")]
-        public virtual SECTOR Sector { get; set; }
-        public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
-    }
+    [Required]
+    [StringLength(150)]
+    public string IndustryName { get; set; }
+
+    public bool Is_NIPP { get; set; }
+
+    public bool Is_Other { get; set; }
+
+    public int? NIPP_subsector { get; set; }
+
+    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
+
+    [ForeignKey("SectorId")]
+    [InverseProperty("SECTOR_INDUSTRY")]
+    public virtual SECTOR Sector { get; set; }
 }
