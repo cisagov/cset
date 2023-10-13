@@ -6,32 +6,40 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class ADDRESS
-    {
-        [StringLength(150)]
-        public string PrimaryEmail { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string AddressType { get; set; }
-        [Key]
-        public Guid Id { get; set; }
-        [StringLength(150)]
-        public string City { get; set; }
-        [StringLength(150)]
-        public string Country { get; set; }
-        [StringLength(150)]
-        public string Line1 { get; set; }
-        [StringLength(150)]
-        public string Line2 { get; set; }
-        [StringLength(150)]
-        public string State { get; set; }
-        [StringLength(150)]
-        public string Zip { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Id")]
-        [InverseProperty("ADDRESS")]
-        public virtual USER_DETAIL_INFORMATION IdNavigation { get; set; }
-    }
+[PrimaryKey("AddressType", "Id")]
+public partial class ADDRESS
+{
+    [StringLength(150)]
+    public string PrimaryEmail { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string AddressType { get; set; }
+
+    [Key]
+    public Guid Id { get; set; }
+
+    [StringLength(150)]
+    public string City { get; set; }
+
+    [StringLength(150)]
+    public string Country { get; set; }
+
+    [StringLength(150)]
+    public string Line1 { get; set; }
+
+    [StringLength(150)]
+    public string Line2 { get; set; }
+
+    [StringLength(150)]
+    public string State { get; set; }
+
+    [StringLength(150)]
+    public string Zip { get; set; }
+
+    [ForeignKey("Id")]
+    [InverseProperty("ADDRESS")]
+    public virtual USER_DETAIL_INFORMATION IdNavigation { get; set; }
 }

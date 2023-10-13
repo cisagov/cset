@@ -6,20 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class vQUESTION_HEADINGS
 {
-    [Keyless]
-    public partial class vQUESTION_HEADINGS
-    {
-        public int Heading_Pair_Id { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string Question_Group_Heading { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string Universal_Sub_Category { get; set; }
-        [StringLength(1000)]
-        public string Sub_Heading_Question_Description { get; set; }
-        public int Universal_Sub_Category_Id { get; set; }
-    }
+    public int Heading_Pair_Id { get; set; }
+
+    [Required]
+    [StringLength(250)]
+    public string Question_Group_Heading { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Universal_Sub_Category { get; set; }
+
+    [StringLength(1000)]
+    public string Sub_Heading_Question_Description { get; set; }
+
+    public int Universal_Sub_Category_Id { get; set; }
 }

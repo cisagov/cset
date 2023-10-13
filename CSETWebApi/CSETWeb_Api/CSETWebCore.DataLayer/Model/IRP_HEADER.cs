@@ -6,27 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of IRP_HEADER records
+/// </summary>
+public partial class IRP_HEADER
 {
-    /// <summary>
-    /// A collection of IRP_HEADER records
-    /// </summary>
-    public partial class IRP_HEADER
-    {
-        public IRP_HEADER()
-        {
-            ASSESSMENT_IRP_HEADER = new HashSet<ASSESSMENT_IRP_HEADER>();
-            IRP = new HashSet<IRP>();
-        }
+    [Key]
+    public int IRP_Header_Id { get; set; }
 
-        [Key]
-        public int IRP_Header_Id { get; set; }
-        [StringLength(200)]
-        public string Header { get; set; }
+    [StringLength(200)]
+    public string Header { get; set; }
 
-        [InverseProperty("IRP_HEADER")]
-        public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
-        [InverseProperty("Header")]
-        public virtual ICollection<IRP> IRP { get; set; }
-    }
+    [InverseProperty("IRP_HEADER")]
+    public virtual ICollection<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; } = new List<ASSESSMENT_IRP_HEADER>();
+
+    [InverseProperty("Header")]
+    public virtual ICollection<IRP> IRP { get; set; } = new List<IRP>();
 }

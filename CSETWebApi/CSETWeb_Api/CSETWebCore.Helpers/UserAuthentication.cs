@@ -237,7 +237,7 @@ namespace CSETWebCore.Helpers
             {
                 Token = token,
                 Email = primaryEmailSO,
-                Lang = user.Lang ?? "en",
+                Lang = user==null? "en": user.Lang ?? "en",
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,

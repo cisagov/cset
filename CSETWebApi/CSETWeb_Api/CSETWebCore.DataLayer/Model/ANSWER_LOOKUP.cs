@@ -6,34 +6,29 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of ANSWER_LOOKUP records
+/// </summary>
+public partial class ANSWER_LOOKUP
 {
     /// <summary>
-    /// A collection of ANSWER_LOOKUP records
+    /// The Answer Text is used to
     /// </summary>
-    public partial class ANSWER_LOOKUP
-    {
-        public ANSWER_LOOKUP()
-        {
-            ANSWER = new HashSet<ANSWER>();
-            SUB_CATEGORY_ANSWERS = new HashSet<SUB_CATEGORY_ANSWERS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Answer_Text { get; set; }
 
-        /// <summary>
-        /// The Answer Text is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-        /// <summary>
-        /// The Answer Full Name is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Answer_Full_Name { get; set; }
+    /// <summary>
+    /// The Answer Full Name is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Answer_Full_Name { get; set; }
 
-        [InverseProperty("Answer_TextNavigation")]
-        public virtual ICollection<ANSWER> ANSWER { get; set; }
-        [InverseProperty("Answer_TextNavigation")]
-        public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
-    }
+    [InverseProperty("Answer_TextNavigation")]
+    public virtual ICollection<ANSWER> ANSWER { get; set; } = new List<ANSWER>();
+
+    [InverseProperty("Answer_TextNavigation")]
+    public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; } = new List<SUB_CATEGORY_ANSWERS>();
 }

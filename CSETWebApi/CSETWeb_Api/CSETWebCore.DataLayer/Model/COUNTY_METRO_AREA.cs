@@ -6,22 +6,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class COUNTY_METRO_AREA
-    {
-        [Key]
-        [StringLength(10)]
-        public string County_FIPS { get; set; }
-        [Key]
-        [StringLength(10)]
-        public string Metro_FIPS { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("County_FIPS")]
-        [InverseProperty("COUNTY_METRO_AREA")]
-        public virtual COUNTIES County_FIPSNavigation { get; set; }
-        [ForeignKey("Metro_FIPS")]
-        [InverseProperty("COUNTY_METRO_AREA")]
-        public virtual METRO_AREA Metro_FIPSNavigation { get; set; }
-    }
+[PrimaryKey("County_FIPS", "Metro_FIPS")]
+public partial class COUNTY_METRO_AREA
+{
+    [Key]
+    [StringLength(10)]
+    public string County_FIPS { get; set; }
+
+    [Key]
+    [StringLength(10)]
+    public string Metro_FIPS { get; set; }
+
+    [ForeignKey("County_FIPS")]
+    [InverseProperty("COUNTY_METRO_AREA")]
+    public virtual COUNTIES County_FIPSNavigation { get; set; }
+
+    [ForeignKey("Metro_FIPS")]
+    [InverseProperty("COUNTY_METRO_AREA")]
+    public virtual METRO_AREA Metro_FIPSNavigation { get; set; }
 }

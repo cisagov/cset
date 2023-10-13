@@ -6,46 +6,52 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of MATURITY_GROUPINGS records
+/// </summary>
+public partial class MATURITY_GROUPINGS
 {
-    /// <summary>
-    /// A collection of MATURITY_GROUPINGS records
-    /// </summary>
-    public partial class MATURITY_GROUPINGS
-    {
-        public MATURITY_GROUPINGS()
-        {
-            MATURITY_DOMAIN_REMARKS = new HashSet<MATURITY_DOMAIN_REMARKS>();
-            MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
-        }
+    [Key]
+    public int Grouping_Id { get; set; }
 
-        [Key]
-        public int Grouping_Id { get; set; }
-        [StringLength(500)]
-        public string Title { get; set; }
-        [StringLength(2000)]
-        public string Description { get; set; }
-        public int Maturity_Model_Id { get; set; }
-        public int Sequence { get; set; }
-        public int? Parent_Id { get; set; }
-        public int? Group_Level { get; set; }
-        public int Type_Id { get; set; }
-        [StringLength(250)]
-        public string Title_Id { get; set; }
-        [StringLength(20)]
-        public string Abbreviation { get; set; }
-        [StringLength(20)]
-        public string Title_Prefix { get; set; }
+    [StringLength(500)]
+    public string Title { get; set; }
 
-        [ForeignKey("Maturity_Model_Id")]
-        [InverseProperty("MATURITY_GROUPINGS")]
-        public virtual MATURITY_MODELS Maturity_Model { get; set; }
-        [ForeignKey("Type_Id")]
-        [InverseProperty("MATURITY_GROUPINGS")]
-        public virtual MATURITY_GROUPING_TYPES Type { get; set; }
-        [InverseProperty("Grouping")]
-        public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
-        [InverseProperty("Grouping")]
-        public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
-    }
+    [StringLength(2000)]
+    public string Description { get; set; }
+
+    public int Maturity_Model_Id { get; set; }
+
+    public int Sequence { get; set; }
+
+    public int? Parent_Id { get; set; }
+
+    public int? Group_Level { get; set; }
+
+    public int Type_Id { get; set; }
+
+    [StringLength(250)]
+    public string Title_Id { get; set; }
+
+    [StringLength(20)]
+    public string Abbreviation { get; set; }
+
+    [StringLength(20)]
+    public string Title_Prefix { get; set; }
+
+    [InverseProperty("Grouping")]
+    public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; } = new List<MATURITY_DOMAIN_REMARKS>();
+
+    [InverseProperty("Grouping")]
+    public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; } = new List<MATURITY_QUESTIONS>();
+
+    [ForeignKey("Maturity_Model_Id")]
+    [InverseProperty("MATURITY_GROUPINGS")]
+    public virtual MATURITY_MODELS Maturity_Model { get; set; }
+
+    [ForeignKey("Type_Id")]
+    [InverseProperty("MATURITY_GROUPINGS")]
+    public virtual MATURITY_GROUPING_TYPES Type { get; set; }
 }

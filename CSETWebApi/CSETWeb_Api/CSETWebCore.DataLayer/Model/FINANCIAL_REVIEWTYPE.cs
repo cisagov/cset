@@ -6,23 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FINANCIAL_REVIEWTYPE records
+/// </summary>
+public partial class FINANCIAL_REVIEWTYPE
 {
-    /// <summary>
-    /// A collection of FINANCIAL_REVIEWTYPE records
-    /// </summary>
-    public partial class FINANCIAL_REVIEWTYPE
-    {
-        public FINANCIAL_REVIEWTYPE()
-        {
-            FINANCIAL_HOURS = new HashSet<FINANCIAL_HOURS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string ReviewType { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string ReviewType { get; set; }
-
-        [InverseProperty("ReviewTypeNavigation")]
-        public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
-    }
+    [InverseProperty("ReviewTypeNavigation")]
+    public virtual ICollection<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; } = new List<FINANCIAL_HOURS>();
 }

@@ -6,18 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of GLOSSARY records
+/// </summary>
+[PrimaryKey("Maturity_Model_Id", "Term")]
+public partial class GLOSSARY
 {
-    /// <summary>
-    /// A collection of GLOSSARY records
-    /// </summary>
-    public partial class GLOSSARY
-    {
-        [Key]
-        public int Maturity_Model_Id { get; set; }
-        [Key]
-        [StringLength(100)]
-        public string Term { get; set; }
-        public string Definition { get; set; }
-    }
+    [Key]
+    public int Maturity_Model_Id { get; set; }
+
+    [Key]
+    [StringLength(100)]
+    public string Term { get; set; }
+
+    public string Definition { get; set; }
 }

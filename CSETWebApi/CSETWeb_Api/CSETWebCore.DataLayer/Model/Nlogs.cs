@@ -6,20 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class Nlogs
 {
-    [Keyless]
-    public partial class Nlogs
-    {
-        public int Id { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime Date { get; set; }
-        [StringLength(10)]
-        public string Level { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string Logger { get; set; }
-        [StringLength(4000)]
-        public string Message { get; set; }
-    }
+    public int Id { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime Date { get; set; }
+
+    [StringLength(10)]
+    public string Level { get; set; }
+
+    [Required]
+    [StringLength(255)]
+    public string Logger { get; set; }
+
+    [StringLength(4000)]
+    public string Message { get; set; }
 }

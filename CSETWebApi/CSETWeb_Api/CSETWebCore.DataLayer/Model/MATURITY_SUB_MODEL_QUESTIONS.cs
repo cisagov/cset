@@ -6,21 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class MATURITY_SUB_MODEL_QUESTIONS
-    {
-        [Key]
-        public int Mat_Question_Id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Sub_Model_Name { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("MATURITY_SUB_MODEL_QUESTIONS")]
-        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
-        [ForeignKey("Sub_Model_Name")]
-        [InverseProperty("MATURITY_SUB_MODEL_QUESTIONS")]
-        public virtual MATURITY_SUB_MODELS Sub_Model_NameNavigation { get; set; }
-    }
+[PrimaryKey("Mat_Question_Id", "Sub_Model_Name")]
+public partial class MATURITY_SUB_MODEL_QUESTIONS
+{
+    [Key]
+    public int Mat_Question_Id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Sub_Model_Name { get; set; }
+
+    [ForeignKey("Mat_Question_Id")]
+    [InverseProperty("MATURITY_SUB_MODEL_QUESTIONS")]
+    public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
+
+    [ForeignKey("Sub_Model_Name")]
+    [InverseProperty("MATURITY_SUB_MODEL_QUESTIONS")]
+    public virtual MATURITY_SUB_MODELS Sub_Model_NameNavigation { get; set; }
 }

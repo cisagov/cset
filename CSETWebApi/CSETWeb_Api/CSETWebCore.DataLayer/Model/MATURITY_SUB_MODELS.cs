@@ -6,20 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class MATURITY_SUB_MODELS
 {
-    public partial class MATURITY_SUB_MODELS
-    {
-        public MATURITY_SUB_MODELS()
-        {
-            MATURITY_SUB_MODEL_QUESTIONS = new HashSet<MATURITY_SUB_MODEL_QUESTIONS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Sub_Model_Name { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string Sub_Model_Name { get; set; }
-
-        [InverseProperty("Sub_Model_NameNavigation")]
-        public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
-    }
+    [InverseProperty("Sub_Model_NameNavigation")]
+    public virtual ICollection<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; } = new List<MATURITY_SUB_MODEL_QUESTIONS>();
 }

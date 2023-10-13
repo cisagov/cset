@@ -6,24 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of MATURITY_GROUPING_TYPES records
+/// </summary>
+public partial class MATURITY_GROUPING_TYPES
 {
-    /// <summary>
-    /// A collection of MATURITY_GROUPING_TYPES records
-    /// </summary>
-    public partial class MATURITY_GROUPING_TYPES
-    {
-        public MATURITY_GROUPING_TYPES()
-        {
-            MATURITY_GROUPINGS = new HashSet<MATURITY_GROUPINGS>();
-        }
+    [Key]
+    public int Type_Id { get; set; }
 
-        [Key]
-        public int Type_Id { get; set; }
-        [StringLength(100)]
-        public string Grouping_Type_Name { get; set; }
+    [StringLength(100)]
+    public string Grouping_Type_Name { get; set; }
 
-        [InverseProperty("Type")]
-        public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
-    }
+    [InverseProperty("Type")]
+    public virtual ICollection<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; } = new List<MATURITY_GROUPINGS>();
 }

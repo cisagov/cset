@@ -6,29 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FILE_REF_KEYS records
+/// </summary>
+public partial class FILE_REF_KEYS
 {
     /// <summary>
-    /// A collection of FILE_REF_KEYS records
+    /// The Doc Num is used to
     /// </summary>
-    public partial class FILE_REF_KEYS
-    {
-        public FILE_REF_KEYS()
-        {
-            GEN_FILE = new HashSet<GEN_FILE>();
-            STANDARD_SOURCE_FILE = new HashSet<STANDARD_SOURCE_FILE>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Doc_Num { get; set; }
 
-        /// <summary>
-        /// The Doc Num is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Doc_Num { get; set; }
+    [InverseProperty("Doc_NumNavigation")]
+    public virtual ICollection<GEN_FILE> GEN_FILE { get; set; } = new List<GEN_FILE>();
 
-        [InverseProperty("Doc_NumNavigation")]
-        public virtual ICollection<GEN_FILE> GEN_FILE { get; set; }
-        [InverseProperty("Doc_NumNavigation")]
-        public virtual ICollection<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
-    }
+    [InverseProperty("Doc_NumNavigation")]
+    public virtual ICollection<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; } = new List<STANDARD_SOURCE_FILE>();
 }

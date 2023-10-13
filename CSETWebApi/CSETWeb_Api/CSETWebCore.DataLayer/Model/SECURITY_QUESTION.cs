@@ -6,19 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of SECURITY_QUESTION records
+/// </summary>
+public partial class SECURITY_QUESTION
 {
-    /// <summary>
-    /// A collection of SECURITY_QUESTION records
-    /// </summary>
-    public partial class SECURITY_QUESTION
-    {
-        [Key]
-        public int SecurityQuestionId { get; set; }
-        [Required]
-        [StringLength(500)]
-        public string SecurityQuestion { get; set; }
-        [Required]
-        public bool? IsCustomQuestion { get; set; }
-    }
+    [Key]
+    public int SecurityQuestionId { get; set; }
+
+    [Required]
+    [StringLength(500)]
+    public string SecurityQuestion { get; set; }
+
+    [Required]
+    public bool? IsCustomQuestion { get; set; }
 }

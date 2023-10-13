@@ -6,20 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of COMPONENT_NAMES_LEGACY records
-    /// </summary>
-    public partial class COMPONENT_NAMES_LEGACY
-    {
-        public int Component_Symbol_id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Old_Symbol_Name { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Component_Symbol_id")]
-        [InverseProperty("COMPONENT_NAMES_LEGACY")]
-        public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
-    }
+/// <summary>
+/// A collection of COMPONENT_NAMES_LEGACY records
+/// </summary>
+public partial class COMPONENT_NAMES_LEGACY
+{
+    public int Component_Symbol_id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Old_Symbol_Name { get; set; }
+
+    [ForeignKey("Component_Symbol_id")]
+    [InverseProperty("COMPONENT_NAMES_LEGACY")]
+    public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
 }

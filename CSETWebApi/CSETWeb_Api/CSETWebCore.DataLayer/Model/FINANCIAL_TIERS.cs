@@ -6,21 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FINANCIAL_TIERS records
-    /// </summary>
-    public partial class FINANCIAL_TIERS
-    {
-        [Key]
-        public int StmtNumber { get; set; }
-        [Key]
-        [StringLength(255)]
-        public string Label { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("StmtNumber")]
-        [InverseProperty("FINANCIAL_TIERS")]
-        public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FINANCIAL_TIERS records
+/// </summary>
+[PrimaryKey("StmtNumber", "Label")]
+public partial class FINANCIAL_TIERS
+{
+    [Key]
+    public int StmtNumber { get; set; }
+
+    [Key]
+    [StringLength(255)]
+    public string Label { get; set; }
+
+    [ForeignKey("StmtNumber")]
+    [InverseProperty("FINANCIAL_TIERS")]
+    public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
 }
