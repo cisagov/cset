@@ -6,31 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of PARAMETERS records
+/// </summary>
+public partial class PARAMETERS
 {
-    /// <summary>
-    /// A collection of PARAMETERS records
-    /// </summary>
-    public partial class PARAMETERS
-    {
-        public PARAMETERS()
-        {
-            PARAMETER_ASSESSMENT = new HashSet<PARAMETER_ASSESSMENT>();
-            PARAMETER_REQUIREMENTS = new HashSet<PARAMETER_REQUIREMENTS>();
-            PARAMETER_VALUES = new HashSet<PARAMETER_VALUES>();
-        }
+    [Key]
+    public int Parameter_ID { get; set; }
 
-        [Key]
-        public int Parameter_ID { get; set; }
-        [Required]
-        [StringLength(500)]
-        public string Parameter_Name { get; set; }
+    [Required]
+    [StringLength(500)]
+    public string Parameter_Name { get; set; }
 
-        [InverseProperty("Parameter")]
-        public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
-        [InverseProperty("Parameter")]
-        public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
-        [InverseProperty("Parameter")]
-        public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
-    }
+    [InverseProperty("Parameter")]
+    public virtual ICollection<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; } = new List<PARAMETER_ASSESSMENT>();
+
+    [InverseProperty("Parameter")]
+    public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; } = new List<PARAMETER_REQUIREMENTS>();
+
+    [InverseProperty("Parameter")]
+    public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; } = new List<PARAMETER_VALUES>();
 }

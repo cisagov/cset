@@ -6,24 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FINANCIAL_QUESTIONS records
-    /// </summary>
-    public partial class FINANCIAL_QUESTIONS
-    {
-        [Key]
-        public int StmtNumber { get; set; }
-        [Key]
-        public int Question_Id { get; set; }
-        public int? Maturity_Question_Id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Question_Id")]
-        [InverseProperty("FINANCIAL_QUESTIONS")]
-        public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey("StmtNumber")]
-        [InverseProperty("FINANCIAL_QUESTIONS")]
-        public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FINANCIAL_QUESTIONS records
+/// </summary>
+[PrimaryKey("StmtNumber", "Question_Id")]
+public partial class FINANCIAL_QUESTIONS
+{
+    [Key]
+    public int StmtNumber { get; set; }
+
+    [Key]
+    public int Question_Id { get; set; }
+
+    public int? Maturity_Question_Id { get; set; }
+
+    [ForeignKey("Question_Id")]
+    [InverseProperty("FINANCIAL_QUESTIONS")]
+    public virtual NEW_QUESTION Question { get; set; }
+
+    [ForeignKey("StmtNumber")]
+    [InverseProperty("FINANCIAL_QUESTIONS")]
+    public virtual FINANCIAL_DETAILS StmtNumberNavigation { get; set; }
 }

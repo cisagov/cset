@@ -6,31 +6,29 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of DEMOGRAPHICS_ASSET_VALUES records
+/// </summary>
+public partial class DEMOGRAPHICS_ASSET_VALUES
 {
-    /// <summary>
-    /// A collection of DEMOGRAPHICS_ASSET_VALUES records
-    /// </summary>
-    public partial class DEMOGRAPHICS_ASSET_VALUES
-    {
-        public DEMOGRAPHICS_ASSET_VALUES()
-        {
-            DEMOGRAPHICS = new HashSet<DEMOGRAPHICS>();
-        }
+    public int DemographicsAssetId { get; set; }
 
-        public int DemographicsAssetId { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string AssetValue { get; set; }
-        public int? ValueOrder { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string AppCode { get; set; }
+    [Key]
+    [StringLength(50)]
+    public string AssetValue { get; set; }
 
-        [ForeignKey("AppCode")]
-        [InverseProperty("DEMOGRAPHICS_ASSET_VALUES")]
-        public virtual APP_CODE AppCodeNavigation { get; set; }
-        [InverseProperty("AssetValueNavigation")]
-        public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
-    }
+    public int? ValueOrder { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string AppCode { get; set; }
+
+    [ForeignKey("AppCode")]
+    [InverseProperty("DEMOGRAPHICS_ASSET_VALUES")]
+    public virtual APP_CODE AppCodeNavigation { get; set; }
+
+    [InverseProperty("AssetValueNavigation")]
+    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
 }

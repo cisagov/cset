@@ -6,17 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of JWT records
+/// </summary>
+public partial class JWT
 {
-    /// <summary>
-    /// A collection of JWT records
-    /// </summary>
-    public partial class JWT
-    {
-        [Key]
-        [StringLength(200)]
-        public string Secret { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime Generated { get; set; }
-    }
+    [Key]
+    [StringLength(200)]
+    public string Secret { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime Generated { get; set; }
 }

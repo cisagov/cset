@@ -6,31 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of REQUIREMENT_LEVEL_TYPE records
+/// </summary>
+public partial class REQUIREMENT_LEVEL_TYPE
 {
     /// <summary>
-    /// A collection of REQUIREMENT_LEVEL_TYPE records
+    /// The Level Type is used to
     /// </summary>
-    public partial class REQUIREMENT_LEVEL_TYPE
-    {
-        public REQUIREMENT_LEVEL_TYPE()
-        {
-            REQUIREMENT_LEVELS = new HashSet<REQUIREMENT_LEVELS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Level_Type { get; set; }
 
-        /// <summary>
-        /// The Level Type is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Level_Type { get; set; }
-        /// <summary>
-        /// The Level Type Full Name is used to
-        /// </summary>
-        [StringLength(50)]
-        public string Level_Type_Full_Name { get; set; }
+    /// <summary>
+    /// The Level Type Full Name is used to
+    /// </summary>
+    [StringLength(50)]
+    public string Level_Type_Full_Name { get; set; }
 
-        [InverseProperty("Level_TypeNavigation")]
-        public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
-    }
+    [InverseProperty("Level_TypeNavigation")]
+    public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; } = new List<REQUIREMENT_LEVELS>();
 }

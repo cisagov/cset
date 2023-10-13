@@ -6,43 +6,48 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of REQUIREMENT_LEVELS records
+/// </summary>
+[PrimaryKey("Requirement_Id", "Standard_Level", "Level_Type")]
+public partial class REQUIREMENT_LEVELS
 {
     /// <summary>
-    /// A collection of REQUIREMENT_LEVELS records
+    /// The Requirement Id is used to
     /// </summary>
-    public partial class REQUIREMENT_LEVELS
-    {
-        /// <summary>
-        /// The Requirement Id is used to
-        /// </summary>
-        [Key]
-        public int Requirement_Id { get; set; }
-        /// <summary>
-        /// The Standard Level is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Standard_Level { get; set; }
-        /// <summary>
-        /// The Level Type is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Level_Type { get; set; }
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        public int? Id { get; set; }
+    [Key]
+    public int Requirement_Id { get; set; }
 
-        [ForeignKey("Level_Type")]
-        [InverseProperty("REQUIREMENT_LEVELS")]
-        public virtual REQUIREMENT_LEVEL_TYPE Level_TypeNavigation { get; set; }
-        [ForeignKey("Requirement_Id")]
-        [InverseProperty("REQUIREMENT_LEVELS")]
-        public virtual NEW_REQUIREMENT Requirement { get; set; }
-        [ForeignKey("Standard_Level")]
-        [InverseProperty("REQUIREMENT_LEVELS")]
-        public virtual STANDARD_SPECIFIC_LEVEL Standard_LevelNavigation { get; set; }
-    }
+    /// <summary>
+    /// The Standard Level is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Standard_Level { get; set; }
+
+    /// <summary>
+    /// The Level Type is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Level_Type { get; set; }
+
+    /// <summary>
+    /// The Id is used to
+    /// </summary>
+    public int? Id { get; set; }
+
+    [ForeignKey("Level_Type")]
+    [InverseProperty("REQUIREMENT_LEVELS")]
+    public virtual REQUIREMENT_LEVEL_TYPE Level_TypeNavigation { get; set; }
+
+    [ForeignKey("Requirement_Id")]
+    [InverseProperty("REQUIREMENT_LEVELS")]
+    public virtual NEW_REQUIREMENT Requirement { get; set; }
+
+    [ForeignKey("Standard_Level")]
+    [InverseProperty("REQUIREMENT_LEVELS")]
+    public virtual STANDARD_SPECIFIC_LEVEL Standard_LevelNavigation { get; set; }
 }

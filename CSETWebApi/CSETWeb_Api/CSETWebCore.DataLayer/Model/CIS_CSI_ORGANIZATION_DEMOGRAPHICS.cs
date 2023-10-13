@@ -6,63 +6,90 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class CIS_CSI_ORGANIZATION_DEMOGRAPHICS
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        public bool Motivation_CRR { get; set; }
-        [StringLength(150)]
-        public string Motivation_CRR_Description { get; set; }
-        public bool Motivation_RRAP { get; set; }
-        [StringLength(150)]
-        public string Motivation_RRAP_Description { get; set; }
-        public bool Motivation_Organization_Request { get; set; }
-        [StringLength(150)]
-        public string Motivation_Organization_Request_Description { get; set; }
-        public bool Motivation_Law_Enforcement_Request { get; set; }
-        [StringLength(150)]
-        public string Motivation_Law_Enforcement_Description { get; set; }
-        public bool Motivation_Direct_Threats { get; set; }
-        [StringLength(150)]
-        public string Motivation_Direct_Threats_Description { get; set; }
-        public bool Motivation_Special_Event { get; set; }
-        [StringLength(150)]
-        public string Motivation_Special_Event_Description { get; set; }
-        public bool Motivation_Other { get; set; }
-        [StringLength(150)]
-        public string Motivation_Other_Description { get; set; }
-        [StringLength(50)]
-        public string Parent_Organization { get; set; }
-        [StringLength(50)]
-        public string Organization_Name { get; set; }
-        [StringLength(50)]
-        public string Site_Name { get; set; }
-        [StringLength(75)]
-        public string Street_Address { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime? Visit_Date { get; set; }
-        public bool Completed_For_SLTT { get; set; }
-        public bool Completed_For_Federal { get; set; }
-        public bool Completed_For_National_Special_Event { get; set; }
-        [StringLength(50)]
-        public string CIKR_Sector { get; set; }
-        [StringLength(50)]
-        public string Sub_Sector { get; set; }
-        [StringLength(50)]
-        public string IT_ICS_Staff_Count { get; set; }
-        [StringLength(50)]
-        public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICS")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Cybersecurity_IT_ICS_Staff_Count")]
-        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation")]
-        public virtual CIS_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
-        [ForeignKey("IT_ICS_Staff_Count")]
-        [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation")]
-        public virtual CIS_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
-    }
+public partial class CIS_CSI_ORGANIZATION_DEMOGRAPHICS
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    public bool Motivation_CRR { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_CRR_Description { get; set; }
+
+    public bool Motivation_RRAP { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_RRAP_Description { get; set; }
+
+    public bool Motivation_Organization_Request { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_Organization_Request_Description { get; set; }
+
+    public bool Motivation_Law_Enforcement_Request { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_Law_Enforcement_Description { get; set; }
+
+    public bool Motivation_Direct_Threats { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_Direct_Threats_Description { get; set; }
+
+    public bool Motivation_Special_Event { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_Special_Event_Description { get; set; }
+
+    public bool Motivation_Other { get; set; }
+
+    [StringLength(150)]
+    public string Motivation_Other_Description { get; set; }
+
+    [StringLength(50)]
+    public string Parent_Organization { get; set; }
+
+    [StringLength(50)]
+    public string Organization_Name { get; set; }
+
+    [StringLength(50)]
+    public string Site_Name { get; set; }
+
+    [StringLength(75)]
+    public string Street_Address { get; set; }
+
+    [Column(TypeName = "date")]
+    public DateTime? Visit_Date { get; set; }
+
+    public bool Completed_For_SLTT { get; set; }
+
+    public bool Completed_For_Federal { get; set; }
+
+    public bool Completed_For_National_Special_Event { get; set; }
+
+    [StringLength(50)]
+    public string CIKR_Sector { get; set; }
+
+    [StringLength(50)]
+    public string Sub_Sector { get; set; }
+
+    [StringLength(50)]
+    public string IT_ICS_Staff_Count { get; set; }
+
+    [StringLength(50)]
+    public string Cybersecurity_IT_ICS_Staff_Count { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICS")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Cybersecurity_IT_ICS_Staff_Count")]
+    [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation")]
+    public virtual CIS_CSI_STAFF_COUNTS Cybersecurity_IT_ICS_Staff_CountNavigation { get; set; }
+
+    [ForeignKey("IT_ICS_Staff_Count")]
+    [InverseProperty("CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation")]
+    public virtual CIS_CSI_STAFF_COUNTS IT_ICS_Staff_CountNavigation { get; set; }
 }

@@ -207,7 +207,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   clickReportLink(reportType: string, print: boolean = false) {
     const url = '/index.html?returnPath=report/' + reportType;
     localStorage.setItem('REPORT-' + reportType.toUpperCase(), print.toString());
-
     localStorage.setItem('report-confidentiality', this.securitySelected);
     window.open(url, '_blank');
   }

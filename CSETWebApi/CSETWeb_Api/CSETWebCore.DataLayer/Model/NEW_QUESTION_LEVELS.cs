@@ -6,28 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of NEW_QUESTION_LEVELS records
-    /// </summary>
-    public partial class NEW_QUESTION_LEVELS
-    {
-        [Key]
-        public int New_Question_Set_Id { get; set; }
-        /// <summary>
-        /// The Universal Sal Level is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Universal_Sal_Level { get; set; }
-        public int? IgnoreMe { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("New_Question_Set_Id")]
-        [InverseProperty("NEW_QUESTION_LEVELS")]
-        public virtual NEW_QUESTION_SETS New_Question_Set { get; set; }
-        [ForeignKey("Universal_Sal_Level")]
-        [InverseProperty("NEW_QUESTION_LEVELS")]
-        public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of NEW_QUESTION_LEVELS records
+/// </summary>
+[PrimaryKey("Universal_Sal_Level", "New_Question_Set_Id")]
+public partial class NEW_QUESTION_LEVELS
+{
+    [Key]
+    public int New_Question_Set_Id { get; set; }
+
+    /// <summary>
+    /// The Universal Sal Level is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Universal_Sal_Level { get; set; }
+
+    public int? IgnoreMe { get; set; }
+
+    [ForeignKey("New_Question_Set_Id")]
+    [InverseProperty("NEW_QUESTION_LEVELS")]
+    public virtual NEW_QUESTION_SETS New_Question_Set { get; set; }
+
+    [ForeignKey("Universal_Sal_Level")]
+    [InverseProperty("NEW_QUESTION_LEVELS")]
+    public virtual UNIVERSAL_SAL_LEVEL Universal_Sal_LevelNavigation { get; set; }
 }

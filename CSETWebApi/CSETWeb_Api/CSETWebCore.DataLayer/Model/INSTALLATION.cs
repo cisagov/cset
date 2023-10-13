@@ -6,19 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of INSTALLATION records
+/// </summary>
+public partial class INSTALLATION
 {
-    /// <summary>
-    /// A collection of INSTALLATION records
-    /// </summary>
-    public partial class INSTALLATION
-    {
-        [StringLength(200)]
-        public string JWT_Secret { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime Generated_UTC { get; set; }
-        [Key]
-        [StringLength(200)]
-        public string Installation_ID { get; set; }
-    }
+    [StringLength(200)]
+    public string JWT_Secret { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime Generated_UTC { get; set; }
+
+    [Key]
+    [StringLength(200)]
+    public string Installation_ID { get; set; }
 }
