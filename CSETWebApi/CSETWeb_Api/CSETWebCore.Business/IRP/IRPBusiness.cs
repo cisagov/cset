@@ -16,6 +16,7 @@ using CSETWebCore.Business.Acet;
 using Npoi.Mapper;
 using NPOI.SS.UserModel;
 using System.Collections.Generic;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.IRP
 {
@@ -34,7 +35,6 @@ namespace CSETWebCore.Business.IRP
             IRPResponse response = new IRPResponse();
             Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
             Dictionary<int, IRPSpanishRow> dictionaryHeaders = new Dictionary<int, IRPSpanishRow>();
-
             if (spanishFlag) 
             {
                 dictionary = AcetBusiness.buildIRPDictionary();
@@ -84,6 +84,8 @@ namespace CSETWebCore.Business.IRP
                             tempIRP.Risk_3_Description = dictionary[tempIRP.IRP_Id].Risk_3_Description;
                             tempIRP.Risk_4_Description = dictionary[tempIRP.IRP_Id].Risk_4_Description;
                             tempIRP.Risk_5_Description = dictionary[tempIRP.IRP_Id].Risk_5_Description;
+                            tempIRP.DescriptionComment = dictionary[tempIRP.IRP_Id].DescriptionComment;
+                            tempIRP.Validation_Approach = dictionary[tempIRP.IRP_Id].Validation_Approach;
                         }
                     }
 
