@@ -57,9 +57,11 @@ export class QuestionBlockMaturityComponent implements OnInit {
   percentAnswered = 0;
   answerOptions = [];
 
-  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
+  // altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
+  // altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
 
+  // tokenized placeholder for transloco, made this variable a switch between the different placeholders
+  altTextPlaceholder = "alt cset";
   showQuestionIds = false;
 
   maturityModelId: number;
@@ -99,7 +101,7 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
 
     if (this.configSvc.installationMode === "ACET") {
-      this.altTextPlaceholder = this.altTextPlaceholder_ACET;
+      this.altTextPlaceholder = "alt acet";
     }
 
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {

@@ -29,6 +29,11 @@ export interface ExtendedDemographics {
     sectorId?: number;
     subSectorId?: number;
 
+    hb7055?: string;
+    hb7055Party?: string;
+
+    infrastructureItOt?: string;
+
     employees?: string;
     customersSupported?: string;
     geographicScope?: string;

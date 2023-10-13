@@ -185,12 +185,23 @@ namespace CSETWebCore.Business.Reports
 
             var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
+
             // We don't consider parent questions that have children to be unanswered for certain maturity models
             // (i.e. for CRR, EDM since they just house the question extras)
             if (ignoreParentQuestions)
             {
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
+
+
+            // If the assessment is using a submodel, only keep the submodel's subset of questions
+            var maturitySubmodel = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == _assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
+            if (maturitySubmodel != null)
+            {
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
+                responseList = responseList.Where(x => whitelist.Contains(x.Mat.Mat_Question_Id)).ToList();
+            }
+
 
             return responseList;
         }
@@ -1501,6 +1512,20 @@ namespace CSETWebCore.Business.Reports
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
+                    //
+                    var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
+                    if (user.Lang == "es")
+                    {
+                        Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
+                        if (dictionary.TryGetValue(f.mq.Mat_Question_Id, out output))
+                        {
+                            questionText = dictionary[f.mq.Mat_Question_Id].Question_Text;
+                        }
+                    }
+                    //
                     return;
 
                 default:

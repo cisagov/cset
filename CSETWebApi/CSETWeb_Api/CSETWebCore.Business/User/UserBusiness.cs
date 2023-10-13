@@ -296,7 +296,8 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = user.PasswordResetRequired ?? true,
                 IsActive = user.IsActive ?? true,
                 PreventEncrypt = user.PreventEncrypt ?? true,
-                CisaAssessorWorkflow = user.CisaAssessorWorkflow
+                CisaAssessorWorkflow = user.CisaAssessorWorkflow,
+                Lang = user.Lang
             };
 
             return ud;
