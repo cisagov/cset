@@ -7,7 +7,7 @@
    "IncludeConnectionString": false,
    "ModelNamespace": null,
    "OutputContextPath": null,
-   "OutputPath": "Model2",
+   "OutputPath": "Model",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "CSETWebCore.DataLayer",
    "Schemas": null,
@@ -581,6 +581,14 @@
       },
       {
          "Name": "[dbo].[MATURITY_SOURCE_FILES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MATURITY_SUB_MODEL_QUESTIONS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MATURITY_SUB_MODELS]",
          "ObjectType": 0
       },
       {
@@ -1388,7 +1396,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "inl621231.CSETWeb.dbo",
+   "UiHint": "(localdb)\\inllocaldb2022.CSETWeb",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,

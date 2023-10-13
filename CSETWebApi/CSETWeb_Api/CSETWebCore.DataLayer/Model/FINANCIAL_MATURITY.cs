@@ -6,31 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FINANCIAL_MATURITY records
+/// </summary>
+[Index("MaturityLevel", Name = "IX_FINANCIAL_MATURITY", IsUnique = true)]
+public partial class FINANCIAL_MATURITY
 {
-    /// <summary>
-    /// A collection of FINANCIAL_MATURITY records
-    /// </summary>
-    [Index("MaturityLevel", Name = "IX_FINANCIAL_MATURITY", IsUnique = true)]
-    public partial class FINANCIAL_MATURITY
-    {
-        public FINANCIAL_MATURITY()
-        {
-            FINANCIAL_DOMAIN_FILTERS_V2 = new HashSet<FINANCIAL_DOMAIN_FILTERS_V2>();
-            FINANCIAL_GROUPS = new HashSet<FINANCIAL_GROUPS>();
-        }
+    [Key]
+    public int Financial_Level_Id { get; set; }
 
-        [Key]
-        public int Financial_Level_Id { get; set; }
-        [Required]
-        [StringLength(255)]
-        public string MaturityLevel { get; set; }
-        [StringLength(50)]
-        public string Acronym { get; set; }
+    [Required]
+    [StringLength(255)]
+    public string MaturityLevel { get; set; }
 
-        [InverseProperty("Financial_Level")]
-        public virtual ICollection<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
-        [InverseProperty("Financial_Level")]
-        public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
-    }
+    [StringLength(50)]
+    public string Acronym { get; set; }
+
+    [InverseProperty("Financial_Level")]
+    public virtual ICollection<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; } = new List<FINANCIAL_DOMAIN_FILTERS_V2>();
+
+    [InverseProperty("Financial_Level")]
+    public virtual ICollection<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; } = new List<FINANCIAL_GROUPS>();
 }

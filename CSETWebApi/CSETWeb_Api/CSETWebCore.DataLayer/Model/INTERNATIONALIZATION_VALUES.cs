@@ -6,21 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class INTERNATIONALIZATION_VALUES
 {
-    [Keyless]
-    public partial class INTERNATIONALIZATION_VALUES
-    {
-        [StringLength(50)]
-        public string TargetTableName { get; set; }
-        [StringLength(50)]
-        public string TargetColumnName { get; set; }
-        [StringLength(50)]
-        public string KeyColumns { get; set; }
-        [StringLength(50)]
-        public string KeyValues { get; set; }
-        [StringLength(50)]
-        public string LanguageCode { get; set; }
-        public string Value { get; set; }
-    }
+    [StringLength(50)]
+    public string TargetTableName { get; set; }
+
+    [StringLength(50)]
+    public string TargetColumnName { get; set; }
+
+    [StringLength(50)]
+    public string KeyColumns { get; set; }
+
+    [StringLength(50)]
+    public string KeyValues { get; set; }
+
+    [StringLength(50)]
+    public string LanguageCode { get; set; }
+
+    public string Value { get; set; }
 }

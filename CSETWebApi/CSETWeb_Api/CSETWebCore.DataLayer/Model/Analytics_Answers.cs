@@ -6,17 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class Analytics_Answers
 {
-    [Keyless]
-    public partial class Analytics_Answers
-    {
-        public int Assessment_Id { get; set; }
-        public int Question_Or_Requirement_Id { get; set; }
-        [Required]
-        [StringLength(20)]
-        public string Question_Type { get; set; }
-        [StringLength(1)]
-        public string Answer_Text { get; set; }
-    }
+    public int Assessment_Id { get; set; }
+
+    public int Question_Or_Requirement_Id { get; set; }
+
+    [Required]
+    [StringLength(20)]
+    public string Question_Type { get; set; }
+
+    [StringLength(1)]
+    public string Answer_Text { get; set; }
 }

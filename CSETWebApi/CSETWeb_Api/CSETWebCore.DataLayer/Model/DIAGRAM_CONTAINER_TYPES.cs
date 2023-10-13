@@ -6,23 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of DIAGRAM_CONTAINER_TYPES records
+/// </summary>
+public partial class DIAGRAM_CONTAINER_TYPES
 {
-    /// <summary>
-    /// A collection of DIAGRAM_CONTAINER_TYPES records
-    /// </summary>
-    public partial class DIAGRAM_CONTAINER_TYPES
-    {
-        public DIAGRAM_CONTAINER_TYPES()
-        {
-            DIAGRAM_CONTAINER = new HashSet<DIAGRAM_CONTAINER>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string ContainerType { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string ContainerType { get; set; }
-
-        [InverseProperty("ContainerTypeNavigation")]
-        public virtual ICollection<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
-    }
+    [InverseProperty("ContainerTypeNavigation")]
+    public virtual ICollection<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; } = new List<DIAGRAM_CONTAINER>();
 }

@@ -6,21 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of MATURITY_REFERENCE_TEXT records
-    /// </summary>
-    public partial class MATURITY_REFERENCE_TEXT
-    {
-        [Key]
-        public int Mat_Question_Id { get; set; }
-        [Key]
-        public int Sequence { get; set; }
-        public string Reference_Text { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("MATURITY_REFERENCE_TEXT")]
-        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
-    }
+/// <summary>
+/// A collection of MATURITY_REFERENCE_TEXT records
+/// </summary>
+[PrimaryKey("Mat_Question_Id", "Sequence")]
+public partial class MATURITY_REFERENCE_TEXT
+{
+    [Key]
+    public int Mat_Question_Id { get; set; }
+
+    [Key]
+    public int Sequence { get; set; }
+
+    public string Reference_Text { get; set; }
+
+    [ForeignKey("Mat_Question_Id")]
+    [InverseProperty("MATURITY_REFERENCE_TEXT")]
+    public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
 }

@@ -30,6 +30,7 @@ import { County, ExtendedDemographics, ListItem, Region, Sector, Subsector, Geog
 import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicExtendedService } from '../../../../services/demographic-extended.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 
 @Component({
@@ -57,6 +58,7 @@ export class DemographicsExtendedComponent implements OnInit {
    * This is the model that contains the current answers
    */
   demographicData: ExtendedDemographics = {};
+  geoGraphics: any;
 
 
   /**
@@ -66,6 +68,7 @@ export class DemographicsExtendedComponent implements OnInit {
     private demoSvc: DemographicExtendedService,
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
+    private navSvc: NavigationService,
     private dialog: MatDialog
   ) { }
 
@@ -143,7 +146,7 @@ export class DemographicsExtendedComponent implements OnInit {
     this.getDemographics();
 
     setTimeout(() => {
-      this.getGeographics();
+      this.getGeographics();     
     }, 1000);
   }
 
@@ -157,6 +160,7 @@ export class DemographicsExtendedComponent implements OnInit {
 
         // populate Subsector (industry) dropdown based on Sector
         this.getSubsectors(this.demographicData.sectorId, false);
+        this.checkComplete();
       },
       error => console.log('Demographic load Error: ' + (<Error>error).message)
     );
@@ -168,6 +172,7 @@ export class DemographicsExtendedComponent implements OnInit {
   getGeographics() {
     this.demoSvc.getGeographics().subscribe(
       (data: any) => {
+        this.geoGraphics = data;
         data.regions.forEach(x => {
           this.regionList.find(y => y.regionCode == x.regionCode).selected = true;
         });
@@ -180,6 +185,7 @@ export class DemographicsExtendedComponent implements OnInit {
           this.metroList.find(y => y.fips == x).selected = true;
         });
         this.buildMetros();
+        this.checkComplete();
       }
     );
   }
@@ -207,15 +213,26 @@ export class DemographicsExtendedComponent implements OnInit {
    * 
    */
   update(event: any) {
-    this.updateDemographics();
+    this.updateDemographics();    
   }
-
   /**
    * 
    */
   updateDemographics() {
     this.demoSvc.updateExtendedDemographics(this.demographicData);
+    this.checkComplete();    
   }
+
+  checkComplete(){
+    if(this.demoSvc.AreDemographicsComplete(this.demographicData,this.geoGraphics)){
+      this.navSvc.setNextEnabled(true);
+    }
+    else{
+      this.navSvc.setNextEnabled(false);
+    }
+  }
+
+  
 
   /**
    * Called when 'select all' or 'select none' is clicked

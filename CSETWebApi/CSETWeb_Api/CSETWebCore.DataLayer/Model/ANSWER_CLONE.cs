@@ -6,40 +6,58 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class ANSWER_CLONE
-    {
-        [Key]
-        public int Profile_Id { get; set; }
-        [Key]
-        public int Question_Or_Requirement_Id { get; set; }
-        public bool? Mark_For_Review { get; set; }
-        public string Comment { get; set; }
-        [StringLength(2048)]
-        public string Alternate_Justification { get; set; }
-        public int? Question_Number { get; set; }
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-        public Guid Component_Guid { get; set; }
-        [StringLength(50)]
-        public string Custom_Question_Guid { get; set; }
-        public int? Old_Answer_Id { get; set; }
-        public bool Reviewed { get; set; }
-        [StringLength(2048)]
-        public string FeedBack { get; set; }
-        [Key]
-        [StringLength(20)]
-        public string Question_Type { get; set; }
-        public bool? Is_Requirement { get; set; }
-        public bool? Is_Component { get; set; }
-        public bool? Is_Framework { get; set; }
-        public bool? Is_Maturity { get; set; }
-        public string Free_Response_Answer { get; set; }
-        public int? Mat_Option_Id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Profile_Id")]
-        [InverseProperty("ANSWER_CLONE")]
-        public virtual ANSWER_PROFILE Profile { get; set; }
-    }
+[PrimaryKey("Profile_Id", "Question_Or_Requirement_Id", "Question_Type")]
+public partial class ANSWER_CLONE
+{
+    [Key]
+    public int Profile_Id { get; set; }
+
+    [Key]
+    public int Question_Or_Requirement_Id { get; set; }
+
+    public bool? Mark_For_Review { get; set; }
+
+    public string Comment { get; set; }
+
+    [StringLength(2048)]
+    public string Alternate_Justification { get; set; }
+
+    public int? Question_Number { get; set; }
+
+    [StringLength(50)]
+    public string Answer_Text { get; set; }
+
+    public Guid Component_Guid { get; set; }
+
+    [StringLength(50)]
+    public string Custom_Question_Guid { get; set; }
+
+    public int? Old_Answer_Id { get; set; }
+
+    public bool Reviewed { get; set; }
+
+    [StringLength(2048)]
+    public string FeedBack { get; set; }
+
+    [Key]
+    [StringLength(20)]
+    public string Question_Type { get; set; }
+
+    public bool? Is_Requirement { get; set; }
+
+    public bool? Is_Component { get; set; }
+
+    public bool? Is_Framework { get; set; }
+
+    public bool? Is_Maturity { get; set; }
+
+    public string Free_Response_Answer { get; set; }
+
+    public int? Mat_Option_Id { get; set; }
+
+    [ForeignKey("Profile_Id")]
+    [InverseProperty("ANSWER_CLONE")]
+    public virtual ANSWER_PROFILE Profile { get; set; }
 }

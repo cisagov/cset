@@ -6,17 +6,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class USER_EMAIL_HISTORY
-    {
-        [Key]
-        public int UserId { get; set; }
-        [Key]
-        public DateTime EmailSentDate { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("UserId")]
-        [InverseProperty("USER_EMAIL_HISTORY")]
-        public virtual USERS User { get; set; }
-    }
+[PrimaryKey("UserId", "EmailSentDate")]
+public partial class USER_EMAIL_HISTORY
+{
+    [Key]
+    public int UserId { get; set; }
+
+    [Key]
+    public DateTime EmailSentDate { get; set; }
+
+    [ForeignKey("UserId")]
+    [InverseProperty("USER_EMAIL_HISTORY")]
+    public virtual USERS User { get; set; }
 }

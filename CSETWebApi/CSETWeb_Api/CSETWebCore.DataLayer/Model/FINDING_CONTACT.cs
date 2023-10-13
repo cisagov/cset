@@ -6,22 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class FINDING_CONTACT
-    {
-        [Key]
-        public int Finding_Id { get; set; }
-        [Key]
-        public int Assessment_Contact_Id { get; set; }
-        public int? IgnoreThis { get; set; }
-        public Guid? Id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Contact_Id")]
-        [InverseProperty("FINDING_CONTACT")]
-        public virtual ASSESSMENT_CONTACTS Assessment_Contact { get; set; }
-        [ForeignKey("Finding_Id")]
-        [InverseProperty("FINDING_CONTACT")]
-        public virtual FINDING Finding { get; set; }
-    }
+[PrimaryKey("Finding_Id", "Assessment_Contact_Id")]
+public partial class FINDING_CONTACT
+{
+    [Key]
+    public int Finding_Id { get; set; }
+
+    [Key]
+    public int Assessment_Contact_Id { get; set; }
+
+    public int? IgnoreThis { get; set; }
+
+    public Guid? Id { get; set; }
+
+    [ForeignKey("Assessment_Contact_Id")]
+    [InverseProperty("FINDING_CONTACT")]
+    public virtual ASSESSMENT_CONTACTS Assessment_Contact { get; set; }
+
+    [ForeignKey("Finding_Id")]
+    [InverseProperty("FINDING_CONTACT")]
+    public virtual FINDING Finding { get; set; }
 }

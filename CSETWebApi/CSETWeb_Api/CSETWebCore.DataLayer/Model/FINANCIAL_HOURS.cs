@@ -6,34 +6,40 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of FINANCIAL_HOURS records
-    /// </summary>
-    public partial class FINANCIAL_HOURS
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Component { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string ReviewType { get; set; }
-        [Column(TypeName = "decimal(9, 2)")]
-        public decimal Hours { get; set; }
-        [StringLength(512)]
-        public string OtherSpecifyValue { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("FINANCIAL_HOURS")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Component")]
-        [InverseProperty("FINANCIAL_HOURS")]
-        public virtual FINANCIAL_HOURS_COMPONENT ComponentNavigation { get; set; }
-        [ForeignKey("ReviewType")]
-        [InverseProperty("FINANCIAL_HOURS")]
-        public virtual FINANCIAL_REVIEWTYPE ReviewTypeNavigation { get; set; }
-    }
+/// <summary>
+/// A collection of FINANCIAL_HOURS records
+/// </summary>
+[PrimaryKey("Assessment_Id", "Component", "ReviewType")]
+public partial class FINANCIAL_HOURS
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Component { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string ReviewType { get; set; }
+
+    [Column(TypeName = "decimal(9, 2)")]
+    public decimal Hours { get; set; }
+
+    [StringLength(512)]
+    public string OtherSpecifyValue { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("FINANCIAL_HOURS")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Component")]
+    [InverseProperty("FINANCIAL_HOURS")]
+    public virtual FINANCIAL_HOURS_COMPONENT ComponentNavigation { get; set; }
+
+    [ForeignKey("ReviewType")]
+    [InverseProperty("FINANCIAL_HOURS")]
+    public virtual FINANCIAL_REVIEWTYPE ReviewTypeNavigation { get; set; }
 }

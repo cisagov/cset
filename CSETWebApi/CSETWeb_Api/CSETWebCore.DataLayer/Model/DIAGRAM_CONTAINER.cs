@@ -6,52 +6,56 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of DIAGRAM_CONTAINER records
+/// </summary>
+public partial class DIAGRAM_CONTAINER
 {
-    /// <summary>
-    /// A collection of DIAGRAM_CONTAINER records
-    /// </summary>
-    public partial class DIAGRAM_CONTAINER
-    {
-        public DIAGRAM_CONTAINER()
-        {
-            ASSESSMENT_DIAGRAM_COMPONENTSLayer = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
-            ASSESSMENT_DIAGRAM_COMPONENTSZone = new HashSet<ASSESSMENT_DIAGRAM_COMPONENTS>();
-            InverseParent = new HashSet<DIAGRAM_CONTAINER>();
-        }
+    [Key]
+    public int Container_Id { get; set; }
 
-        [Key]
-        public int Container_Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string ContainerType { get; set; }
-        [Required]
-        [StringLength(250)]
-        public string Name { get; set; }
-        [Required]
-        public bool? Visible { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string DrawIO_id { get; set; }
-        public int Assessment_Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Universal_Sal_Level { get; set; }
-        public int Parent_Id { get; set; }
-        [StringLength(50)]
-        public string Parent_Draw_IO_Id { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string ContainerType { get; set; }
 
-        [ForeignKey("ContainerType")]
-        [InverseProperty("DIAGRAM_CONTAINER")]
-        public virtual DIAGRAM_CONTAINER_TYPES ContainerTypeNavigation { get; set; }
-        [ForeignKey("Parent_Id")]
-        [InverseProperty("InverseParent")]
-        public virtual DIAGRAM_CONTAINER Parent { get; set; }
-        [InverseProperty("Layer")]
-        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSLayer { get; set; }
-        [InverseProperty("Zone")]
-        public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSZone { get; set; }
-        [InverseProperty("Parent")]
-        public virtual ICollection<DIAGRAM_CONTAINER> InverseParent { get; set; }
-    }
+    [Required]
+    [StringLength(250)]
+    public string Name { get; set; }
+
+    [Required]
+    public bool? Visible { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string DrawIO_id { get; set; }
+
+    public int Assessment_Id { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Universal_Sal_Level { get; set; }
+
+    public int Parent_Id { get; set; }
+
+    [StringLength(50)]
+    public string Parent_Draw_IO_Id { get; set; }
+
+    [InverseProperty("Layer")]
+    public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSLayer { get; set; } = new List<ASSESSMENT_DIAGRAM_COMPONENTS>();
+
+    [InverseProperty("Zone")]
+    public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTSZone { get; set; } = new List<ASSESSMENT_DIAGRAM_COMPONENTS>();
+
+    [ForeignKey("ContainerType")]
+    [InverseProperty("DIAGRAM_CONTAINER")]
+    public virtual DIAGRAM_CONTAINER_TYPES ContainerTypeNavigation { get; set; }
+
+    [InverseProperty("Parent")]
+    public virtual ICollection<DIAGRAM_CONTAINER> InverseParent { get; set; } = new List<DIAGRAM_CONTAINER>();
+
+    [ForeignKey("Parent_Id")]
+    [InverseProperty("InverseParent")]
+    public virtual DIAGRAM_CONTAINER Parent { get; set; }
 }

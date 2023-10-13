@@ -53,7 +53,7 @@
 
 
     <!-- Assessment Phase -->
-    <node d="assessment" id="phase-assessment">
+    <node d="assessment" id="phase-assessment" condition="CF-DEMOGRAPHICS-COMPLETE">
         <node d="standard questions" id="questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
 
 
@@ -220,7 +220,7 @@
 
 
     <!-- Results Phase -->
-    <node d="results" id="phase-results">
+    <node d="results" id="phase-results" condition="CF-DEMOGRAPHICS-COMPLETE">
         <!-- Results - Standards -->
         <node displaytext="Standard Results" condition="OPTION:STANDARD">
             <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />

@@ -6,20 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CIS_CSI_BUDGET_BASES
 {
-    public partial class CIS_CSI_BUDGET_BASES
-    {
-        public CIS_CSI_BUDGET_BASES()
-        {
-            CIS_CSI_SERVICE_DEMOGRAPHICS = new HashSet<CIS_CSI_SERVICE_DEMOGRAPHICS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Budget_Basis { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string Budget_Basis { get; set; }
-
-        [InverseProperty("Budget_BasisNavigation")]
-        public virtual ICollection<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
-    }
+    [InverseProperty("Budget_BasisNavigation")]
+    public virtual ICollection<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; } = new List<CIS_CSI_SERVICE_DEMOGRAPHICS>();
 }

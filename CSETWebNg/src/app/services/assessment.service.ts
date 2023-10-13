@@ -33,6 +33,7 @@ import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { NavigationService } from './navigation/navigation.service';
 import { Observable } from 'rxjs';
+import { DemographicExtendedService } from './demographic-extended.service';
 
 
 export interface Role {
@@ -82,7 +83,8 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private router: Router
+    private router: Router,    
+    private extDemoSvc: DemographicExtendedService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -404,8 +406,7 @@ export class AssessmentService {
           if (this.configSvc.installationMode !== 'ACET') {
             this.assessment.isAcetOnly = false;
           }
-
-
+          this.extDemoSvc.preloadDemoAndGeo();
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load

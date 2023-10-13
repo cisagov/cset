@@ -6,46 +6,51 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of GEN_SAL_WEIGHTS records
+/// </summary>
+[PrimaryKey("Sal_Name", "Slider_Value")]
+[Index("Sal_Name", "Slider_Value", Name = "IX_GEN_SAL_WEIGHTS", IsUnique = true)]
+public partial class GEN_SAL_WEIGHTS
 {
     /// <summary>
-    /// A collection of GEN_SAL_WEIGHTS records
+    /// The Sal Weight Id is used to
     /// </summary>
-    [Index("Sal_Name", "Slider_Value", Name = "IX_GEN_SAL_WEIGHTS", IsUnique = true)]
-    public partial class GEN_SAL_WEIGHTS
-    {
-        /// <summary>
-        /// The Sal Weight Id is used to
-        /// </summary>
-        public int Sal_Weight_Id { get; set; }
-        /// <summary>
-        /// The Sal Name is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Sal_Name { get; set; }
-        /// <summary>
-        /// The Slider Value is used to
-        /// </summary>
-        [Key]
-        public int Slider_Value { get; set; }
-        /// <summary>
-        /// The Weight is used to
-        /// </summary>
-        [Column(TypeName = "decimal(18, 0)")]
-        public decimal Weight { get; set; }
-        /// <summary>
-        /// The Display is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Display { get; set; }
+    public int Sal_Weight_Id { get; set; }
 
-        [ForeignKey("Sal_Name")]
-        [InverseProperty("GEN_SAL_WEIGHTS")]
-        public virtual GEN_SAL_NAMES Sal_Name1 { get; set; }
-        [ForeignKey("Sal_Name")]
-        [InverseProperty("GEN_SAL_WEIGHTS")]
-        public virtual GENERAL_SAL_DESCRIPTIONS Sal_NameNavigation { get; set; }
-    }
+    /// <summary>
+    /// The Sal Name is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Sal_Name { get; set; }
+
+    /// <summary>
+    /// The Slider Value is used to
+    /// </summary>
+    [Key]
+    public int Slider_Value { get; set; }
+
+    /// <summary>
+    /// The Weight is used to
+    /// </summary>
+    [Column(TypeName = "decimal(18, 0)")]
+    public decimal Weight { get; set; }
+
+    /// <summary>
+    /// The Display is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Display { get; set; }
+
+    [ForeignKey("Sal_Name")]
+    [InverseProperty("GEN_SAL_WEIGHTS")]
+    public virtual GEN_SAL_NAMES Sal_Name1 { get; set; }
+
+    [ForeignKey("Sal_Name")]
+    [InverseProperty("GEN_SAL_WEIGHTS")]
+    public virtual GENERAL_SAL_DESCRIPTIONS Sal_NameNavigation { get; set; }
 }
