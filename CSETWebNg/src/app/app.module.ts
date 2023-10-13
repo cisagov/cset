@@ -608,6 +608,7 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 import { FooterService } from './services/footer.service';
+import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 
 
 
@@ -1172,6 +1173,7 @@ import { FooterService } from './services/footer.service';
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
         UserLanguageComponent,
+        AssessmentConvertCfComponent,
     ],
     providers: [
         TranslocoService,
