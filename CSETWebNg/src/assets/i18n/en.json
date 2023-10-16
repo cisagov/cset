@@ -315,7 +315,8 @@
         "show statements with issues": "Show statements with issues"
     },
     "dialogs" : {
-        "please confirm": "Please Confirm"
+        "please confirm": "Please Confirm",
+        "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",

@@ -309,7 +309,8 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "dialogs" : {
-        "please confirm": "Por favor, confirme"
+        "please confirm": "Por favor, confirme",
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
