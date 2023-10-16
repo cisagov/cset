@@ -440,5 +440,19 @@
             "advisory": "Asesoramiento",
             "terms of use": "Términos de uso"
         }
+    },
+    "merge examinations": {
+        "merge examinations": "Fusionar Exámenes",
+        "assessments processed": "[ES] Assessments Processed",
+        "cancel merge": "Cancelar Fusión",
+        "lead exam": "Liderar Examen",
+        "exam": "Examen",
+        "merge in progress": "Fusión de Exámenes en progreso, espere  por favor...",
+        "no conflicts 1": "No hay respuestas conflictivas dentro de los exámenes seleccionados. Puede regresar a la pantalla de",
+        "assessment list": "Lista de Evaluaciones",
+        "no conflicts 2": "para seleccionar exámenes diferentes, o",
+        "click here": "haga clic aquí",
+        "no conflicts 3": "para proceder con la fusión."
+
     }
 }

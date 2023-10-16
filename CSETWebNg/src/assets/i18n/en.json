@@ -445,5 +445,18 @@
             "advisory": "Advisory",
             "terms of use": "Terms of Use"
         }
+    },
+    "merge examinations": {
+        "merge examinations": "Merge Examinations",
+        "assessments processed": "Assessments Processed",
+        "cancel merge": "Cancel Merge",
+        "lead exam": "Lead Exam",
+        "exam": "Exam",
+        "merge in progress": "Merging in progress, please wait...",
+        "no conflicts 1": "There are no conflicting answers within the chosen examinations. Either return to the",
+        "assessment list": "Assessment List",
+        "no conflicts 2": "screen to select different examinations, or",
+        "click here": "Click Here",
+        "no conflicts 3": "to proceed with the merge."
     }
 }
