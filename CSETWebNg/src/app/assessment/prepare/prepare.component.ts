@@ -63,7 +63,6 @@ export class PrepareComponent implements OnInit {
     .asObservable()
     .subscribe(
       (tgt: boolean) => {
-        console.log("got message to rebuild tree");
         this.navSvc.buildTree();
       }
     );
