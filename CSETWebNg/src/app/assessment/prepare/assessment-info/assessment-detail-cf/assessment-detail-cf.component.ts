@@ -37,7 +37,9 @@ import { ConfigService } from '../../../../services/config.service';
 })
 export class AssessmentDetailCfComponent implements OnInit {
 
-  assessment: AssessmentDetail = {};
+  assessment: AssessmentDetail = {
+    assessmentName: ''
+  };
 
   /**
    * 
