@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="question-group mb-3">
+<div *transloco="let t" class="question-group mb-3">
     <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
         (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
         [attr.aria-expanded]="myGrouping.expanded">
@@ -32,9 +32,9 @@
             <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
-                    matTooltip="One or more controls in this category requires further review.">
+                    matTooltip="{{ t('tooltip.category requires review') }}">
                     <span class="mr-1 cset-icons-flag-dark fs-small"></span>
-                    <span class="mb-1 fs-small">Requires Review</span>
+                    <span class="mb-1 fs-small">{{ t('requires review') }}</span>
                 </span>
                 <app-progress [value]="percentAnswered" class="mr-2 ml-2"></app-progress>
                 <i class="cset-icons-chevron-down q-expand" [class.expand-flip]="myGrouping.expanded"></i>
@@ -47,7 +47,7 @@
                 </div>
                 <span [class.display-hidden]="!myGrouping.hasReviewItems"
                     class="d-flex justify-content-center align-items-center flex-00a"
-                    matTooltip="One or more controls in this category requires further review.">
+                    matTooltip="{{ t('tooltip.category requires review') }}">
                     <span class="mr-1 cset-icons-flag-dark fs-small"></span>
                 </span>
             </div>
@@ -69,7 +69,7 @@
                         {{ q.displayNumber }}
                         <div>
                             <span class="question-mat-level-name" *ngIf="showLevelIndicator(q)">
-                                {{ q.maturityLevelName }}
+                                {{ t('level.' + q.maturityLevelName.toLowerCase()) }}
                             </span>
                         </div>
                     </div>
@@ -91,29 +91,29 @@
                 <div *ngIf="!q.isParentQuestion">
                     <!-- build the list of answer choice buttons -->
                     <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons">
-                        <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center"
+                        <label *ngFor="let option of answerOptions" class="btn form-check-label d-flex align-items-center" tabindex="0"
                             [class]="questionsSvc.answerOptionCss(maturityModelName, option)" [class.answer-selected]="q.answer === option"
                             [matTooltip]="questionsSvc.answerButtonTooltip(maturityModelName, option)">
                             <input name="q_{{q.questionId}}" class="form-check-input" type="radio" autocomplete="off"
-                                (click)="storeAnswer(q, option)" [checked]="q.answer === option">
-                            {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
+                                (click)="storeAnswer(q, option)" [checked]="q.answer === option"
+                                (keydown)="checkAnswerKeyPress($event, q, option)">
+                                {{questionsSvc.answerButtonLabel(maturityModelName, option)}}
                         </label>
-
                         <!-- Mark For Review Flag  -->
                         <label class="mr-0 ml-2 btn form-check-label btn-mfr d-flex align-items-center"
                             [class.answer-selected]="q.markForReview === true"
-                            matTooltip="This control requires further review.">
-                            <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" tabindex="0"
-                                checked="{{q.markForReview === true}}">
+                            [matTooltip]="t('tooltip.mfr-flag')">
+                            <input name="q_{{q.questionId}}_F" type="checkbox" (click)="saveMFR(q);" (keydown)="checkReviewKeyPress($event, q)"
+                                tabindex="0" checked="{{q.markForReview === true}}">
                             <span class="cset-icons-flag-dark fs-base"></span>
                         </label>
                     </div>
 
                     <div *ngIf="q.answer === 'A'">
                         <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                            style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
+                            style="width: 100%; min-height: 80px;" [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">{{ t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                             {{ q.displayNumber }}
                         </span>
                         <span class="question-mat-level-name ml-4" *ngIf="showLevelIndicator(q)">
-                            {{ q.maturityLevelName }}
+                            {{ 'level.' + q.maturityLevelName.toLowerCase() | transloco }}
                         </span>
                     </div>
 
@@ -167,14 +167,14 @@
 
                     <div *ngIf="q.answer === 'A'">
                         <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                            style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
+                            style="width: 100%; min-height: 80px;" [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">{{ t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
             </div>
 
-            <app-question-extras *ngIf="q.isParentQuestion || !q.parentQuestionId" #extrasComponent [myQuestion]="q"
+            <app-question-extras *ngIf="(q.isParentQuestion || !q.parentQuestionId)" #extrasComponent [myQuestion]="q"
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()"
                 (changeComponents)="refreshComponentOverrides()">
             </app-question-extras>

@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.1" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.3" />
+    <PackageReference Include="Npoi.Mapper" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

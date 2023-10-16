@@ -3,3566 +3,2792 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CsetwebContext : DbContext
 {
-    public partial class CsetwebContext : DbContext
+    
+    public CsetwebContext()
     {
-        public CsetwebContext()
-        {
-        }
 
-        public CsetwebContext(DbContextOptions<CsetwebContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<ACCESS_KEY> ACCESS_KEY { get; set; }
-        public virtual DbSet<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }
-        public virtual DbSet<ADDRESS> ADDRESS { get; set; }
-        public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
-        public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
-        public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
-        public virtual DbSet<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
-        public virtual DbSet<ANSWER> ANSWER { get; set; }
-        public virtual DbSet<ANSWER_CLONE> ANSWER_CLONE { get; set; }
-        public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
-        public virtual DbSet<ANSWER_ORDER> ANSWER_ORDER { get; set; }
-        public virtual DbSet<ANSWER_PROFILE> ANSWER_PROFILE { get; set; }
-        public virtual DbSet<ANSWER_QUESTION_TYPES> ANSWER_QUESTION_TYPES { get; set; }
-        public virtual DbSet<APP_CODE> APP_CODE { get; set; }
-        public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
-        public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
-        public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
-        public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
-        public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
-        public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
-        public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
-        public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
-        public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-        public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
-        public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
-        public virtual DbSet<Analytics_Answers> Analytics_Answers { get; set; }
-        public virtual DbSet<Answer_Components> Answer_Components { get; set; }
-        public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
-        public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
-        public virtual DbSet<Answer_Components_InScope> Answer_Components_InScope { get; set; }
-        public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
-        public virtual DbSet<Answer_Maturity> Answer_Maturity { get; set; }
-        public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
-        public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
-        public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
-        public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
-        public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
-        public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
-        public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
-        public virtual DbSet<CIS_CSI_BUDGET_BASES> CIS_CSI_BUDGET_BASES { get; set; }
-        public virtual DbSet<CIS_CSI_CUSTOMER_COUNTS> CIS_CSI_CUSTOMER_COUNTS { get; set; }
-        public virtual DbSet<CIS_CSI_DEFINING_SYSTEMS> CIS_CSI_DEFINING_SYSTEMS { get; set; }
-        public virtual DbSet<CIS_CSI_ORGANIZATION_DEMOGRAPHICS> CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
-        public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION> CIS_CSI_SERVICE_COMPOSITION { get; set; }
-        public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
-        public virtual DbSet<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
-        public virtual DbSet<CIS_CSI_STAFF_COUNTS> CIS_CSI_STAFF_COUNTS { get; set; }
-        public virtual DbSet<CIS_CSI_USER_COUNTS> CIS_CSI_USER_COUNTS { get; set; }
-        public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
-        public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
-        public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
-        public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
-        public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
-        public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
-        public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
-        public virtual DbSet<CONFIDENTIAL_TYPE> CONFIDENTIAL_TYPE { get; set; }
-        public virtual DbSet<COUNTIES> COUNTIES { get; set; }
-        public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
-        public virtual DbSet<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
-        public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
-        public virtual DbSet<CSAF_FILE> CSAF_FILE { get; set; }
-        public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
-        public virtual DbSet<CSF_MAPPING> CSF_MAPPING { get; set; }
-        public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
-        public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
-        public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
-        public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
-        public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
-        public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
-        public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
-        public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
-        public virtual DbSet<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
-        public virtual DbSet<DETAILS_DEMOGRAPHICS> DETAILS_DEMOGRAPHICS { get; set; }
-        public virtual DbSet<DETAILS_DEMOGRAPHICS_OPTIONS> DETAILS_DEMOGRAPHICS_OPTIONS { get; set; }
-        public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
-        public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
-        public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
-        public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
-        public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
-        public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
-        public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
-        public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
-        public virtual DbSet<EXT_SECTOR> EXT_SECTOR { get; set; }
-        public virtual DbSet<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
-        public virtual DbSet<ExcelExport> ExcelExport { get; set; }
-        public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
-        public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
-        public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
-        public virtual DbSet<FINANCIAL_ASSESSMENT_FACTORS> FINANCIAL_ASSESSMENT_FACTORS { get; set; }
-        public virtual DbSet<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
-        public virtual DbSet<FINANCIAL_ATTRIBUTES> FINANCIAL_ATTRIBUTES { get; set; }
-        public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
-        public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
-        public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
-        public virtual DbSet<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
-        public virtual DbSet<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
-        public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
-        public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
-        public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
-        public virtual DbSet<FINANCIAL_HOURS_COMPONENT> FINANCIAL_HOURS_COMPONENT { get; set; }
-        public virtual DbSet<FINANCIAL_MATURITY> FINANCIAL_MATURITY { get; set; }
-        public virtual DbSet<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
-        public virtual DbSet<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
-        public virtual DbSet<FINANCIAL_REVIEWTYPE> FINANCIAL_REVIEWTYPE { get; set; }
-        public virtual DbSet<FINANCIAL_TIERS> FINANCIAL_TIERS { get; set; }
-        public virtual DbSet<FINDING> FINDING { get; set; }
-        public virtual DbSet<FINDING_CONTACT> FINDING_CONTACT { get; set; }
-        public virtual DbSet<FRAMEWORK_TIERS> FRAMEWORK_TIERS { get; set; }
-        public virtual DbSet<FRAMEWORK_TIER_DEFINITIONS> FRAMEWORK_TIER_DEFINITIONS { get; set; }
-        public virtual DbSet<FRAMEWORK_TIER_TYPE> FRAMEWORK_TIER_TYPE { get; set; }
-        public virtual DbSet<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
-        public virtual DbSet<GALLERY_GROUP> GALLERY_GROUP { get; set; }
-        public virtual DbSet<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
-        public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
-        public virtual DbSet<GALLERY_LAYOUT> GALLERY_LAYOUT { get; set; }
-        public virtual DbSet<GALLERY_ROWS> GALLERY_ROWS { get; set; }
-        public virtual DbSet<GENERAL_SAL> GENERAL_SAL { get; set; }
-        public virtual DbSet<GENERAL_SAL_DESCRIPTIONS> GENERAL_SAL_DESCRIPTIONS { get; set; }
-        public virtual DbSet<GEN_FILE> GEN_FILE { get; set; }
-        public virtual DbSet<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
-        public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
-        public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
-        public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
-        public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
-        public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
-        public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
-        public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
-        public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
-        public virtual DbSet<INFORMATION> INFORMATION { get; set; }
-        public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
-        public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
-        public virtual DbSet<IRP> IRP { get; set; }
-        public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
-        public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
-        public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
-        public virtual DbSet<JWT> JWT { get; set; }
-        public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
-        public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
-        public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
-        public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
-        public virtual DbSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK { get; set; }
-        public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
-        public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
-        public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
-        public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
-        public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
-        public virtual DbSet<MATURITY_LEVEL_USAGE_TYPES> MATURITY_LEVEL_USAGE_TYPES { get; set; }
-        public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
-        public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
-        public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
-        public virtual DbSet<MATURITY_QUESTION_PROPS> MATURITY_QUESTION_PROPS { get; set; }
-        public virtual DbSet<MATURITY_QUESTION_TYPES> MATURITY_QUESTION_TYPES { get; set; }
-        public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
-        public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
-        public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
-        public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
-        public virtual DbSet<METRO_AREA> METRO_AREA { get; set; }
-        public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
-        public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
-        public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
-        public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
-        public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
-        public virtual DbSet<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
-        public virtual DbSet<NEW_QUESTION> NEW_QUESTION { get; set; }
-        public virtual DbSet<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
-        public virtual DbSet<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
-        public virtual DbSet<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
-        public virtual DbSet<NIST_SAL_INFO_TYPES> NIST_SAL_INFO_TYPES { get; set; }
-        public virtual DbSet<NIST_SAL_INFO_TYPES_DEFAULTS> NIST_SAL_INFO_TYPES_DEFAULTS { get; set; }
-        public virtual DbSet<NIST_SAL_QUESTIONS> NIST_SAL_QUESTIONS { get; set; }
-        public virtual DbSet<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
-        public virtual DbSet<Nlogs> Nlogs { get; set; }
-        public virtual DbSet<PARAMETERS> PARAMETERS { get; set; }
-        public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
-        public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
-        public virtual DbSet<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
-        public virtual DbSet<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
-        public virtual DbSet<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCY { get; set; }
-        public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
-        public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
-        public virtual DbSet<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
-        public virtual DbSet<QUESTION_GROUP_HEADING> QUESTION_GROUP_HEADING { get; set; }
-        public virtual DbSet<QUESTION_GROUP_TYPE> QUESTION_GROUP_TYPE { get; set; }
-        public virtual DbSet<RECENT_FILES> RECENT_FILES { get; set; }
-        public virtual DbSet<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
-        public virtual DbSet<REFERENCES_DATA> REFERENCES_DATA { get; set; }
-        public virtual DbSet<REFERENCE_DOCS> REFERENCE_DOCS { get; set; }
-        public virtual DbSet<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
-        public virtual DbSet<REGION_ANSWERS> REGION_ANSWERS { get; set; }
-        public virtual DbSet<REPORT_DETAIL_SECTIONS> REPORT_DETAIL_SECTIONS { get; set; }
-        public virtual DbSet<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
-        public virtual DbSet<REPORT_OPTIONS> REPORT_OPTIONS { get; set; }
-        public virtual DbSet<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
-        public virtual DbSet<REPORT_STANDARDS_SELECTION> REPORT_STANDARDS_SELECTION { get; set; }
-        public virtual DbSet<REQUIRED_DOCUMENTATION> REQUIRED_DOCUMENTATION { get; set; }
-        public virtual DbSet<REQUIRED_DOCUMENTATION_HEADERS> REQUIRED_DOCUMENTATION_HEADERS { get; set; }
-        public virtual DbSet<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
-        public virtual DbSet<REQUIREMENT_LEVEL_TYPE> REQUIREMENT_LEVEL_TYPE { get; set; }
-        public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
-        public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
-        public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
-        public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
-        public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
-        public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
-        public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
-        public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
-        public virtual DbSet<SECTOR> SECTOR { get; set; }
-        public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
-        public virtual DbSet<SECTOR_STANDARD_RECOMMENDATIONS> SECTOR_STANDARD_RECOMMENDATIONS { get; set; }
-        public virtual DbSet<SECURITY_QUESTION> SECURITY_QUESTION { get; set; }
-        public virtual DbSet<SETS> SETS { get; set; }
-        public virtual DbSet<SETS_CATEGORY> SETS_CATEGORY { get; set; }
-        public virtual DbSet<SET_FILES> SET_FILES { get; set; }
-        public virtual DbSet<SHAPE_TYPES> SHAPE_TYPES { get; set; }
-        public virtual DbSet<SP80053_FAMILY_ABBREVIATIONS> SP80053_FAMILY_ABBREVIATIONS { get; set; }
-        public virtual DbSet<STANDARD_CATEGORY> STANDARD_CATEGORY { get; set; }
-        public virtual DbSet<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; }
-        public virtual DbSet<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }
-        public virtual DbSet<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
-        public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
-        public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
-        public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
-        public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
-        public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
-        public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
-        public virtual DbSet<TTP> TTP { get; set; }
-        public virtual DbSet<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
-        public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
-        public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
-        public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
-        public virtual DbSet<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
-        public virtual DbSet<USERS> USERS { get; set; }
-        public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
-        public virtual DbSet<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
-        public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
-        public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
-        public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
-        public virtual DbSet<WEIGHT> WEIGHT { get; set; }
-        public virtual DbSet<vFinancialGroups> vFinancialGroups { get; set; }
-        public virtual DbSet<vParameters> vParameters { get; set; }
-        public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ACCESS_KEY>(entity =>
-            {
-                entity.Property(e => e.CisaAssessorWorkflow).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
-            {
-                entity.HasKey(e => new { e.AccessKey, e.Assessment_Id });
-
-                entity.HasOne(d => d.AccessKeyNavigation)
-                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                    .HasForeignKey(d => d.AccessKey)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ACCESS_KEY_ASSESSMENT)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
-            });
-
-            modelBuilder.Entity<ADDRESS>(entity =>
-            {
-                entity.HasKey(e => new { e.AddressType, e.Id })
-                    .HasName("PK_ADDRESS_1");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithMany(p => p.ADDRESS)
-                    .HasForeignKey(d => d.Id)
-                    .HasConstraintName("FK_ADDRESS_USER_DETAIL_INFORMATION1");
-            });
-
-            modelBuilder.Entity<AGGREGATION_ASSESSMENT>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Aggregation_Id })
-                    .HasName("PK__AGGREGAT__985B1205C06FF728");
-
-                entity.HasOne(d => d.Aggregation)
-                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
-                    .HasForeignKey(d => d.Aggregation_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__AGGREGATI__Aggre__6EAB62A3");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.AGGREGATION_ASSESSMENT)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK__AGGREGATI__Asses__6CC31A31");
-            });
-
-            modelBuilder.Entity<AGGREGATION_INFORMATION>(entity =>
-            {
-                entity.HasKey(e => e.AggregationID)
-                    .HasName("PK__AggregationInformation");
-
-                entity.HasComment("A collection of AGGREGATION_INFORMATION records");
-
-                entity.HasOne(d => d.Aggregation_ModeNavigation)
-                    .WithMany(p => p.AGGREGATION_INFORMATION)
-                    .HasForeignKey(d => d.Aggregation_Mode)
-                    .HasConstraintName("FK_AGGREGATION_INFORMATION_AGGREGATION_TYPES");
-            });
-
-            modelBuilder.Entity<AGGREGATION_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of AGGREGATION_TYPES records");
-            });
-
-            modelBuilder.Entity<ANALYTICS_MATURITY_GROUPINGS>(entity =>
-            {
-                entity.HasKey(e => new { e.Maturity_Model_Id, e.Maturity_Question_Id, e.Question_Group });
-
-                entity.HasOne(d => d.Maturity_Model)
-                    .WithMany(p => p.ANALYTICS_MATURITY_GROUPINGS)
-                    .HasForeignKey(d => d.Maturity_Model_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS");
-            });
-
-            modelBuilder.Entity<ANSWER>(entity =>
-            {
-                entity.HasKey(e => e.Answer_Id)
-                    .HasName("PK_ANSWER_1");
-
-                entity.HasComment("A collection of ANSWER records");
-
-                entity.Property(e => e.Alternate_Justification).HasComment("The Alternate Justification is used to");
-
-                entity.Property(e => e.Answer_Text)
-                    .HasDefaultValueSql("('U')")
-                    .HasComment("The Answer Text is used to");
-
-                entity.Property(e => e.Comment).HasComment("The Comment is used to");
-
-                entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
-
-                entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end))", false);
-
-                entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end))", false);
-
-                entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end))", false);
-
-                entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end))", false);
-
-                entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
-
-                entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
-
-                entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
-
-                entity.HasOne(d => d.Answer_TextNavigation)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Answer_Text)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ANSWER_Answer_Lookup");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ANSWER_ASSESSMENTS");
-
-                entity.HasOne(d => d.Mat_Option)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Mat_Option_Id)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_ANSWER_MATURITY_ANSWER_OPTIONS1");
-
-                entity.HasOne(d => d.Question_TypeNavigation)
-                    .WithMany(p => p.ANSWER)
-                    .HasForeignKey(d => d.Question_Type)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ANSWER_ANSWER_QUESTION_TYPES");
-            });
-
-            modelBuilder.Entity<ANSWER_CLONE>(entity =>
-            {
-                entity.HasKey(e => new { e.Profile_Id, e.Question_Or_Requirement_Id, e.Question_Type });
-
-                entity.HasOne(d => d.Profile)
-                    .WithMany(p => p.ANSWER_CLONE)
-                    .HasForeignKey(d => d.Profile_Id)
-                    .HasConstraintName("FK_ANSWER_CLONE_ANSWER_PROFILE");
-            });
-
-            modelBuilder.Entity<ANSWER_LOOKUP>(entity =>
-            {
-                entity.HasKey(e => e.Answer_Text)
-                    .HasName("PK_Answer_Lookup");
-
-                entity.HasComment("A collection of ANSWER_LOOKUP records");
-
-                entity.Property(e => e.Answer_Text).HasComment("The Answer Text is used to");
-
-                entity.Property(e => e.Answer_Full_Name).HasComment("The Answer Full Name is used to");
-            });
-
-            modelBuilder.Entity<ANSWER_PROFILE>(entity =>
-            {
-                entity.Property(e => e.Profile_Date).HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.Asessment)
-                    .WithMany(p => p.ANSWER_PROFILE)
-                    .HasForeignKey(d => d.Asessment_Id)
-                    .HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
-            });
-
-            modelBuilder.Entity<ANSWER_QUESTION_TYPES>(entity =>
-            {
-                entity.HasKey(e => e.Question_Type)
-                    .HasName("PK_Answer_Question_Types");
-
-                entity.HasComment("A collection of ANSWER_QUESTION_TYPES records");
-            });
-
-            modelBuilder.Entity<APP_CODE>(entity =>
-            {
-                entity.HasComment("A collection of APP_CODE records");
-            });
-
-            modelBuilder.Entity<ASSESSMENTS>(entity =>
-            {
-                entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_Aggregation_1");
-
-                entity.HasComment("A collection of ASSESSMENTS records");
-
-                entity.Property(e => e.AssessmentCreatedDate).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.ISE_StateLed).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
-
-                entity.HasOne(d => d.AssessmentCreator)
-                    .WithMany(p => p.ASSESSMENTS)
-                    .HasForeignKey(d => d.AssessmentCreatorId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_ASSESSMENTS_USERS");
-
-                entity.HasOne(d => d.GalleryItemGu)
-                    .WithMany(p => p.ASSESSMENTS)
-                    .HasForeignKey(d => d.GalleryItemGuid)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
-            });
-
-            modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Documentation_Id });
-
-                entity.Property(e => e.Answer).HasDefaultValueSql("('U')");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Documentation)
-                    .WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION)
-                    .HasForeignKey(d => d.Documentation_Id)
-                    .HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_CONTACTS>(entity =>
-            {
-                entity.HasComment("A collection of ASSESSMENT_CONTACTS records");
-
-                entity.HasOne(d => d.AssessmentRole)
-                    .WithMany(p => p.ASSESSMENT_CONTACTS)
-                    .HasForeignKey(d => d.AssessmentRoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ASSESSMENT_CONTACTS_ASSESSMENT_ROLES");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ASSESSMENT_CONTACTS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ASSESSMENT_CONTACTS_ASSESSMENTS");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.ASSESSMENT_CONTACTS)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_ASSESSMENT_CONTACTS_USERS");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid })
-                    .HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Component_Symbol)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS)
-                    .HasForeignKey(d => d.Component_Symbol_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS1");
-
-                entity.HasOne(d => d.Layer)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer)
-                    .HasForeignKey(d => d.Layer_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER");
-
-                entity.HasOne(d => d.Zone)
-                    .WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSZone)
-                    .HasForeignKey(d => d.Zone_Id)
-                    .HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id })
-                    .HasName("PK_Assessment_IRP");
-
-                entity.HasComment("A collection of ASSESSMENT_IRP records");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ASSESSMENT_IRP)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
-
-                entity.HasOne(d => d.IRP)
-                    .WithMany(p => p.ASSESSMENT_IRP)
-                    .HasForeignKey(d => d.IRP_Id)
-                    .HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
-            {
-                entity.HasKey(e => new { e.ASSESSMENT_ID, e.IRP_HEADER_ID });
-
-                entity.HasComment("A collection of ASSESSMENT_IRP_HEADER records");
-
-                entity.HasOne(d => d.ASSESSMENT)
-                    .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.ASSESSMENT_ID)
-                    .HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
-
-                entity.HasOne(d => d.IRP_HEADER)
-                    .WithMany(p => p.ASSESSMENT_IRP_HEADER)
-                    .HasForeignKey(d => d.IRP_HEADER_ID)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_ROLES>(entity =>
-            {
-                entity.HasKey(e => e.AssessmentRoleId)
-                    .HasName("PK_ASSESSMENT_ROLES_1");
-
-                entity.HasComment("A collection of ASSESSMENT_ROLES records");
-            });
-
-            modelBuilder.Entity<ASSESSMENT_SELECTED_LEVELS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Level_Name });
-
-                entity.HasComment("A collection of ASSESSMENT_SELECTED_LEVELS records");
-
-                entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
-
-                entity.Property(e => e.Standard_Specific_Sal_Level).HasComment("The Standard Specific Sal Level is used to");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.ASSESSMENT_SELECTED_LEVELS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ASSESSMENT_SELECTED_LEVELS_STANDARD_SELECTION");
-
-                entity.HasOne(d => d.Level_NameNavigation)
-                    .WithMany(p => p.ASSESSMENT_SELECTED_LEVELS)
-                    .HasForeignKey(d => d.Level_Name)
-                    .HasConstraintName("FK_ASSESSMENT_SELECTED_LEVELS_LEVEL_NAMES");
-            });
-
-            modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.model_id });
-
-                entity.HasComment("A collection of AVAILABLE_MATURITY_MODELS records");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
-
-                entity.HasOne(d => d.model)
-                    .WithMany(p => p.AVAILABLE_MATURITY_MODELS)
-                    .HasForeignKey(d => d.model_id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__AVAILABLE__model__6F6A7CB2");
-            });
-
-            modelBuilder.Entity<AVAILABLE_STANDARDS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Set_Name });
-
-                entity.HasComment("A collection of AVAILABLE_STANDARDS records");
-
-                entity.Property(e => e.Set_Name).HasComment("The Old Entity Name is used to");
-
-                entity.Property(e => e.Selected).HasComment("The Selected is used to");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.AVAILABLE_STANDARDS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_AVAILABLE_STANDARDS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.AVAILABLE_STANDARDS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_AVAILABLE_STANDARDS_SETS");
-            });
-
-            modelBuilder.Entity<Analytics_Answers>(entity =>
-            {
-                entity.ToView("Analytics_Answers");
-            });
-
-            modelBuilder.Entity<Answer_Components>(entity =>
-            {
-                entity.ToView("Answer_Components");
-            });
-
-            modelBuilder.Entity<Answer_Components_Default>(entity =>
-            {
-                entity.ToView("Answer_Components_Default");
-            });
-
-            modelBuilder.Entity<Answer_Components_Exploded>(entity =>
-            {
-                entity.ToView("Answer_Components_Exploded");
-            });
-
-            modelBuilder.Entity<Answer_Components_InScope>(entity =>
-            {
-                entity.ToView("Answer_Components_InScope");
-            });
-
-            modelBuilder.Entity<Answer_Components_Overrides>(entity =>
-            {
-                entity.ToView("Answer_Components_Overrides");
-            });
-
-            modelBuilder.Entity<Answer_Maturity>(entity =>
-            {
-                entity.ToView("Answer_Maturity");
-            });
-
-            modelBuilder.Entity<Answer_Questions>(entity =>
-            {
-                entity.ToView("Answer_Questions");
-            });
-
-            modelBuilder.Entity<Answer_Questions_No_Components>(entity =>
-            {
-                entity.ToView("Answer_Questions_No_Components");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<Answer_Requirements>(entity =>
-            {
-                entity.ToView("Answer_Requirements");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<Answer_Standards_InScope>(entity =>
-            {
-                entity.ToView("Answer_Standards_InScope");
-            });
-
-            modelBuilder.Entity<Assessments_For_User>(entity =>
-            {
-                entity.ToView("Assessments_For_User");
-            });
-
-            modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
-            {
-                entity.HasKey(e => e.Data_Id)
-                    .HasName("PK_Catalog_Recommendations_Data");
-
-                entity.HasComment("A collection of CATALOG_RECOMMENDATIONS_DATA records");
-
-                entity.Property(e => e.Data_Id).HasComment("The Data Id is used to");
-
-                entity.Property(e => e.Enhancement).HasComment("The Enhancement is used to");
-
-                entity.Property(e => e.Enhancement_Html).HasComment("The Enhancement Html is used to");
-
-                entity.Property(e => e.Flow_Document).HasComment("The Flow Document is used to");
-
-                entity.Property(e => e.Heading).HasComment("The Heading is used to");
-
-                entity.Property(e => e.Heading_Html).HasComment("The Heading Html is used to");
-
-                entity.Property(e => e.Parent_Heading_Id).HasComment("The Parent Heading Id is used to");
-
-                entity.Property(e => e.Req_Oracle_Id).HasComment("The Req Oracle Id is used to");
-
-                entity.Property(e => e.Requirement).HasComment("The Requirement is used to");
-
-                entity.Property(e => e.Requirement_Html).HasComment("The Requirement Html is used to");
-
-                entity.Property(e => e.Requirement_Text).HasComment("The Requirement Text is used to");
-
-                entity.Property(e => e.Section_Long_Number).HasComment("The Section Long Number is used to");
-
-                entity.Property(e => e.Section_Short_Name).HasComment("The Section Short Name is used to");
-
-                entity.Property(e => e.Section_Short_Number).HasComment("The Section Short Number is used to");
-
-                entity.Property(e => e.Supplemental_Guidance).HasComment("The Supplemental Guidance is used to");
-
-                entity.Property(e => e.Supplemental_Guidance_Html).HasComment("The Supplemental Guidance Html is used to");
-
-                entity.Property(e => e.Topic_Name).HasComment("The Topic Name is used to");
-
-                entity.HasOne(d => d.Parent_Heading)
-                    .WithMany(p => p.CATALOG_RECOMMENDATIONS_DATA)
-                    .HasForeignKey(d => d.Parent_Heading_Id)
-                    .HasConstraintName("FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS");
-            });
-
-            modelBuilder.Entity<CATALOG_RECOMMENDATIONS_HEADINGS>(entity =>
-            {
-                entity.HasComment("A collection of CATALOG_RECOMMENDATIONS_HEADINGS records");
-
-                entity.Property(e => e.Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Heading_Name).HasComment("The Heading Name is used to");
-
-                entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
-            });
-
-            modelBuilder.Entity<CIS_CSI_CUSTOMER_COUNTS>(entity =>
-            {
-                entity.HasKey(e => e.Customer_Count)
-                    .HasName("PK_CIS_CSI_CUSTOMER_AMOUNTS");
-            });
-
-            modelBuilder.Entity<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
-            {
-                entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_CIS_CS_SITE_INFORMATION");
-
-                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICS)
-                    .HasForeignKey<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIS_CS_SITE_INFORMATION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
-                    .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
-
-                entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
-                    .HasForeignKey(d => d.IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
-            });
-
-            modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION>(entity =>
-            {
-                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIS_CSI_SERVICE_COMPOSITION)
-                    .HasForeignKey<CIS_CSI_SERVICE_COMPOSITION>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Primary_Defining_SystemNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION)
-                    .HasForeignKey(d => d.Primary_Defining_System)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_CIS_CSI_DEFINING_SYSTEMS");
-            });
-
-            modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Defining_System_Id });
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_SERVICE_COMPOSITION");
-
-                entity.HasOne(d => d.Defining_System)
-                    .WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
-                    .HasForeignKey(d => d.Defining_System_Id)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_DEFINING_SYSTEMS");
-            });
-
-            modelBuilder.Entity<CIS_CSI_SERVICE_DEMOGRAPHICS>(entity =>
-            {
-                entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_CIS_CS_DEMOGRAPHICS");
-
-                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
-                    .HasForeignKey<CIS_CSI_SERVICE_DEMOGRAPHICS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CIS_CS_DEMOGRAPHICS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Authorized_Non_Organizational_User_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
-                    .HasForeignKey(d => d.Authorized_Non_Organizational_User_Count)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_USER_COUNTS");
-
-                entity.HasOne(d => d.Budget_BasisNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
-                    .HasForeignKey(d => d.Budget_Basis)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_BUDGET_BASES");
-
-                entity.HasOne(d => d.Customers_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS)
-                    .HasForeignKey(d => d.Customers_Count)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_CUSTOMER_COUNTS");
-
-                entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation)
-                    .HasForeignKey(d => d.Cybersecurity_IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
-
-                entity.HasOne(d => d.IT_ICS_Staff_CountNavigation)
-                    .WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation)
-                    .HasForeignKey(d => d.IT_ICS_Staff_Count)
-                    .HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
-            });
-
-            modelBuilder.Entity<CIS_CSI_STAFF_COUNTS>(entity =>
-            {
-                entity.HasKey(e => e.Staff_Count)
-                    .HasName("PK_CIS_CSI_STAFF_AMOUNTS");
-            });
-
-            modelBuilder.Entity<CIS_CSI_USER_COUNTS>(entity =>
-            {
-                entity.HasKey(e => e.User_Count)
-                    .HasName("PK_CIS_CSI_USER_AMOUNTS");
-            });
-
-            modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.CIA_Type });
-
-                entity.HasComment("");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.CNSS_CIA_JUSTIFICATIONS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_CNSS_CIA_JUSTIFICATIONS_ASSESSMENTS");
-
-                entity.HasOne(d => d.CIA_TypeNavigation)
-                    .WithMany(p => p.CNSS_CIA_JUSTIFICATIONS)
-                    .HasForeignKey(d => d.CIA_Type)
-                    .HasConstraintName("FK_CNSS_CIA_JUSTIFICATIONS_CNSS_CIA_TYPES");
-            });
-
-            modelBuilder.Entity<CNSS_CIA_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of CNSS_CIA_TYPES records");
-            });
-
-            modelBuilder.Entity<COMPONENT_FAMILY>(entity =>
-            {
-                entity.HasKey(e => e.Component_Family_Name)
-                    .HasName("PK_ComponentFamily");
-
-                entity.HasComment("A collection of COMPONENT_FAMILY records");
-
-                entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
-            });
-
-            modelBuilder.Entity<COMPONENT_NAMES_LEGACY>(entity =>
-            {
-                entity.HasComment("A collection of COMPONENT_NAMES_LEGACY records");
-
-                entity.HasOne(d => d.Component_Symbol)
-                    .WithMany(p => p.COMPONENT_NAMES_LEGACY)
-                    .HasForeignKey(d => d.Component_Symbol_id)
-                    .HasConstraintName("FK_COMPONENT_NAMES_LEGACY_COMPONENT_SYMBOLS");
-            });
-
-            modelBuilder.Entity<COMPONENT_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Component_Symbol_Id });
-
-                entity.HasComment("A collection of COMPONENT_QUESTIONS records");
-
-                entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");
-
-                entity.Property(e => e.Rank).HasComment("The Rank is used to");
-
-                entity.Property(e => e.Seq).HasComment("The Seq is used to");
-
-                entity.Property(e => e.Weight).HasComment("The Weight is used to");
-
-                entity.HasOne(d => d.Component_Symbol)
-                    .WithMany(p => p.COMPONENT_QUESTIONS)
-                    .HasForeignKey(d => d.Component_Symbol_Id)
-                    .HasConstraintName("FK_COMPONENT_QUESTIONS_COMPONENT_SYMBOLS");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.COMPONENT_QUESTIONS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_Component_Questions_NEW_QUESTION");
-            });
-
-            modelBuilder.Entity<COMPONENT_SYMBOLS>(entity =>
-            {
-                entity.HasComment("A collection of COMPONENT_SYMBOLS records");
-
-                entity.Property(e => e.Component_Symbol_Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Abbreviation).HasComment("The Abbreviation is used to");
-
-                entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
-
-                entity.Property(e => e.File_Name).HasComment("The File Name is used to");
-
-                entity.Property(e => e.Height).HasDefaultValueSql("((60))");
-
-                entity.Property(e => e.Symbol_Group_Id).HasComment("The Symbol Group Id is used to");
-
-                entity.Property(e => e.Symbol_Name).HasDefaultValueSql("('')");
-
-                entity.Property(e => e.Width).HasDefaultValueSql("((60))");
-
-                entity.HasOne(d => d.Component_Family_NameNavigation)
-                    .WithMany(p => p.COMPONENT_SYMBOLS)
-                    .HasForeignKey(d => d.Component_Family_Name)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
-
-                entity.HasOne(d => d.Symbol_Group)
-                    .WithMany(p => p.COMPONENT_SYMBOLS)
-                    .HasForeignKey(d => d.Symbol_Group_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COMPONENT_SYMBOLS_SYMBOL_GROUPS");
-            });
-
-            modelBuilder.Entity<COMPONENT_SYMBOLS_GM_TO_CSET>(entity =>
-            {
-                entity.HasComment("A collection of COMPONENT_SYMBOLS_GM_TO_CSET records");
-            });
-
-            modelBuilder.Entity<COUNTIES>(entity =>
-            {
-                entity.HasKey(e => e.County_FIPS)
-                    .HasName("PK_counties1");
-
-                entity.HasOne(d => d.STATE_REGION)
-                    .WithMany(p => p.COUNTIES)
-                    .HasForeignKey(d => new { d.State, d.RegionCode })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COUNTIES_STATE_REGION");
-            });
-
-            modelBuilder.Entity<COUNTRIES>(entity =>
-            {
-                entity.HasComment("A collection of COUNTRIES records");
-            });
-
-            modelBuilder.Entity<COUNTY_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.County_FIPS })
-                    .HasName("PK_ExtendedDemographicCountyAnswers");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.COUNTY_ANSWERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_ASSESSMENTS");
-
-                entity.HasOne(d => d.County_FIPSNavigation)
-                    .WithMany(p => p.COUNTY_ANSWERS)
-                    .HasForeignKey(d => d.County_FIPS)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ExtendedDemographicCountyAnswers_COUNTIES");
-            });
-
-            modelBuilder.Entity<COUNTY_METRO_AREA>(entity =>
-            {
-                entity.HasKey(e => new { e.County_FIPS, e.Metro_FIPS })
-                    .HasName("PK_County_MetropolitanArea");
-
-                entity.HasOne(d => d.County_FIPSNavigation)
-                    .WithMany(p => p.COUNTY_METRO_AREA)
-                    .HasForeignKey(d => d.County_FIPS)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_County_MetropolitanArea_COUNTIES");
-
-                entity.HasOne(d => d.Metro_FIPSNavigation)
-                    .WithMany(p => p.COUNTY_METRO_AREA)
-                    .HasForeignKey(d => d.Metro_FIPS)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_COUNTY_METRO_AREA_METRO_AREA");
-            });
-
-            modelBuilder.Entity<CSET_VERSION>(entity =>
-            {
-                entity.HasComment("A collection of CSET_VERSION records");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasComment("The Id is used to");
-
-                entity.Property(e => e.Cset_Version1).HasComment("The Cset Version is used to");
-
-                entity.Property(e => e.Version_Id).HasComment("The Version Id is used to");
-            });
-
-            modelBuilder.Entity<CSF_MAPPING>(entity =>
-            {
-                entity.HasKey(e => new { e.CSF_Code, e.Question_Type, e.Question_Id });
-            });
-
-            modelBuilder.Entity<CUSTOM_BASE_STANDARDS>(entity =>
-            {
-                entity.HasKey(e => new { e.Custom_Questionaire_Name, e.Base_Standard })
-                    .HasName("PK_CUSTOM_BASE_STANDARDS_1");
-
-                entity.HasOne(d => d.Custom_Questionaire_NameNavigation)
-                    .WithMany(p => p.CUSTOM_BASE_STANDARDS)
-                    .HasForeignKey(d => d.Custom_Questionaire_Name)
-                    .HasConstraintName("FK_CUSTOM_BASE_STANDARD_CUSTOM_QUESTIONAIRES");
-            });
-
-            modelBuilder.Entity<CUSTOM_QUESTIONAIRE_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Custom_Questionaire_Name, e.Question_Id });
-
-                entity.HasOne(d => d.Custom_Questionaire_NameNavigation)
-                    .WithMany(p => p.CUSTOM_QUESTIONAIRE_QUESTIONS)
-                    .HasForeignKey(d => d.Custom_Questionaire_Name)
-                    .HasConstraintName("FK_CUSTON_QUESTIONAIRE_QUESTIONS_CUSTOM_QUESTIONAIRES");
-            });
-
-            modelBuilder.Entity<CUSTOM_STANDARD_BASE_STANDARD>(entity =>
-            {
-                entity.HasOne(d => d.Base_StandardNavigation)
-                    .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation)
-                    .HasForeignKey(d => d.Base_Standard)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS");
-
-                entity.HasOne(d => d.Custom_Questionaire_NameNavigation)
-                    .WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation)
-                    .HasForeignKey(d => d.Custom_Questionaire_Name)
-                    .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
-            });
-
-            modelBuilder.Entity<DEMOGRAPHICS>(entity =>
-            {
-                entity.HasComment("A collection of DEMOGRAPHICS records");
-
-                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-
-                entity.Property(e => e.IsScoped).HasDefaultValueSql("((0))");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.DEMOGRAPHICS)
-                    .HasForeignKey<DEMOGRAPHICS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENTS");
-
-                entity.HasOne(d => d.AssetValueNavigation)
-                    .WithMany(p => p.DEMOGRAPHICS)
-                    .HasForeignKey(d => d.AssetValue)
-                    .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ASSET_VALUES");
-
-                entity.HasOne(d => d.FacilitatorNavigation)
-                    .WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation)
-                    .HasForeignKey(d => d.Facilitator)
-                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
-
-                entity.HasOne(d => d.Industry)
-                    .WithMany(p => p.DEMOGRAPHICS)
-                    .HasPrincipalKey(p => p.IndustryId)
-                    .HasForeignKey(d => d.IndustryId)
-                    .HasConstraintName("FK_DEMOGRAPHICS_SECTOR_INDUSTRY");
-
-                entity.HasOne(d => d.OrganizationTypeNavigation)
-                    .WithMany(p => p.DEMOGRAPHICS)
-                    .HasForeignKey(d => d.OrganizationType)
-                    .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
-
-                entity.HasOne(d => d.PointOfContactNavigation)
-                    .WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation)
-                    .HasForeignKey(d => d.PointOfContact)
-                    .HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.DEMOGRAPHICS)
-                    .HasForeignKey(d => d.SectorId)
-                    .HasConstraintName("FK_DEMOGRAPHICS_SECTOR");
-
-                entity.HasOne(d => d.SizeNavigation)
-                    .WithMany(p => p.DEMOGRAPHICS)
-                    .HasForeignKey(d => d.Size)
-                    .HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
-            });
-
-            modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
-            {
-                entity.HasComment("A collection of DEMOGRAPHICS_ASSET_VALUES records");
-
-                entity.Property(e => e.AppCode).HasDefaultValueSql("('CSET')");
-
-                entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.AppCodeNavigation)
-                    .WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES)
-                    .HasForeignKey(d => d.AppCode)
-                    .HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
-            });
-
-            modelBuilder.Entity<DEMOGRAPHICS_ORGANIZATION_TYPE>(entity =>
-            {
-                entity.HasComment("A collection of DEMOGRAPHICS_ORGANIZATION_TYPE records");
-
-                entity.Property(e => e.OrganizationTypeId).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<DEMOGRAPHICS_SIZE>(entity =>
-            {
-                entity.HasKey(e => e.Size)
-                    .HasName("PK_DemographicsSize");
-
-                entity.HasComment("A collection of DEMOGRAPHICS_SIZE records");
-
-                entity.Property(e => e.DemographicId).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<DEMOGRAPHIC_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => e.Assessment_Id)
-                    .HasName("PK_FloridaDemographicRenameMe");
-
-                entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.DEMOGRAPHIC_ANSWERS)
-                    .HasForeignKey<DEMOGRAPHIC_ANSWERS>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ExtendedDemographicAnswer_ASSESSMENTS");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.DEMOGRAPHIC_ANSWERS)
-                    .HasForeignKey(d => d.SectorId)
-                    .HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSector");
-
-                entity.HasOne(d => d.SubSector)
-                    .WithMany(p => p.DEMOGRAPHIC_ANSWERS)
-                    .HasForeignKey(d => d.SubSectorId)
-                    .HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSubSector");
-            });
-
-            modelBuilder.Entity<DETAILS_DEMOGRAPHICS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.DataItemName });
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.DETAILS_DEMOGRAPHICS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_DETAILS_DEMOGRAPHICS_ASSESSMENTS");
-            });
-
-            modelBuilder.Entity<DETAILS_DEMOGRAPHICS_OPTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Option_Id)
-                    .HasName("PK_DETAIL_DEMOG_OPTIONS");
-            });
-
-            modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>
-            {
-                entity.HasComment("A collection of DIAGRAM_CONTAINER records");
-
-                entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('L')");
-
-                entity.Property(e => e.Visible).HasDefaultValueSql("((1))");
-
-                entity.HasOne(d => d.ContainerTypeNavigation)
-                    .WithMany(p => p.DIAGRAM_CONTAINER)
-                    .HasForeignKey(d => d.ContainerType)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER_TYPES");
-
-                entity.HasOne(d => d.Parent)
-                    .WithMany(p => p.InverseParent)
-                    .HasForeignKey(d => d.Parent_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER");
-            });
-
-            modelBuilder.Entity<DIAGRAM_CONTAINER_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of DIAGRAM_CONTAINER_TYPES records");
-            });
-
-            modelBuilder.Entity<DIAGRAM_OBJECT_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of DIAGRAM_OBJECT_TYPES records");
-            });
-
-            modelBuilder.Entity<DIAGRAM_TEMPLATES>(entity =>
-            {
-                entity.HasComment("A collection of DIAGRAM_TEMPLATES records");
-
-                entity.Property(e => e.Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.File_Name).HasComment("The File Name is used to");
-
-                entity.Property(e => e.Is_Read_Only)
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("The Is Read Only is used to");
-
-                entity.Property(e => e.Is_Visible)
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("The Is Visible is used to");
-
-                entity.Property(e => e.Template_Name).HasComment("The Template Name is used to");
-            });
-
-            modelBuilder.Entity<DIAGRAM_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of DIAGRAM_TYPES records");
-
-                entity.HasOne(d => d.Object_TypeNavigation)
-                    .WithMany(p => p.DIAGRAM_TYPES)
-                    .HasForeignKey(d => d.Object_Type)
-                    .HasConstraintName("FK_DIAGRAM_TYPES_DIAGRAM_OBJECT_TYPES");
-            });
-
-            modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Document_Id, e.Answer_Id });
-
-                entity.HasComment("");
-
-                entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
-
-                entity.HasOne(d => d.Answer)
-                    .WithMany(p => p.DOCUMENT_ANSWERS)
-                    .HasForeignKey(d => d.Answer_Id)
-                    .HasConstraintName("FK_DOCUMENT_ANSWERS_ANSWER");
-
-                entity.HasOne(d => d.Document)
-                    .WithMany(p => p.DOCUMENT_ANSWERS)
-                    .HasForeignKey(d => d.Document_Id)
-                    .HasConstraintName("FK_Document_Answers_DOCUMENT_FILE");
-            });
-
-            modelBuilder.Entity<DOCUMENT_FILE>(entity =>
-            {
-                entity.HasKey(e => e.Document_Id)
-                    .HasName("PK__document_file__00000000000001C8");
-
-                entity.HasComment("");
-
-                entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
-
-                entity.Property(e => e.CreatedTimestamp).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Path).HasComment("The Path is used to");
-
-                entity.Property(e => e.Title).HasComment("The Title is used to");
-
-                entity.Property(e => e.UpdatedTimestamp).HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.DOCUMENT_FILE)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DOCUMENT_FILE_ASSESSMENTS");
-
-                entity.HasOne(d => d.AssessmentNavigation)
-                    .WithMany(p => p.DOCUMENT_FILE)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
-            });
-
-            modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
-            {
-                entity.HasKey(e => new { e.Set_Name, e.Question_Id });
-
-                entity.HasComment("A collection of EXTRA_ACET_MAPPING records");
-            });
-
-            modelBuilder.Entity<EXT_SECTOR>(entity =>
-            {
-                entity.HasKey(e => e.SectorId)
-                    .HasName("PK_ExtendedSector");
-            });
-
-            modelBuilder.Entity<EXT_SUB_SECTOR>(entity =>
-            {
-                entity.HasKey(e => e.SubSectorId)
-                    .HasName("PK_ExtendedSubSector_1");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.EXT_SUB_SECTOR)
-                    .HasForeignKey(d => d.SectorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ExtendedSubSector_ExtendedSector");
-            });
-
-            modelBuilder.Entity<ExcelExport>(entity =>
-            {
-                entity.ToView("ExcelExport");
-            });
-
-            modelBuilder.Entity<FILE_KEYWORDS>(entity =>
-            {
-                entity.HasKey(e => new { e.Gen_File_Id, e.Keyword })
-                    .HasName("FILE_KEYWORDS_PK");
-
-                entity.HasComment("A collection of FILE_KEYWORDS records");
-
-                entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
-
-                entity.Property(e => e.Keyword).HasComment("The Keyword is used to");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.FILE_KEYWORDS)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FILE_KEYWORDS_GEN_FILE_FK");
-            });
-
-            modelBuilder.Entity<FILE_REF_KEYS>(entity =>
-            {
-                entity.HasComment("A collection of FILE_REF_KEYS records");
-
-                entity.Property(e => e.Doc_Num).HasComment("The Doc Num is used to");
-            });
-
-            modelBuilder.Entity<FILE_TYPE>(entity =>
-            {
-                entity.HasKey(e => e.File_Type_Id)
-                    .HasName("SYS_C0014416");
-
-                entity.HasComment("A collection of FILE_TYPE records");
-
-                entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
-
-                entity.Property(e => e.Description).HasComment("The Description is used to");
-
-                entity.Property(e => e.File_Type1).HasComment("The File Type is used to");
-
-                entity.Property(e => e.Mime_Type).HasComment("The Mime Type is used to");
-            });
-
-            modelBuilder.Entity<FINANCIAL_ASSESSMENT_FACTORS>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_ASSESSMENT_FACTORS records");
-
-                entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<FINANCIAL_ASSESSMENT_VALUES>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.AttributeName });
-
-                entity.HasComment("A collection of FINANCIAL_ASSESSMENT_VALUES records");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_ASSESSMENTS");
-
-                entity.HasOne(d => d.AttributeNameNavigation)
-                    .WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES)
-                    .HasForeignKey(d => d.AttributeName)
-                    .HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_FINANCIAL_ATTRIBUTES");
-            });
-
-            modelBuilder.Entity<FINANCIAL_ATTRIBUTES>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_ATTRIBUTES records");
-            });
-
-            modelBuilder.Entity<FINANCIAL_COMPONENTS>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_COMPONENTS records");
-
-                entity.Property(e => e.FinComponentId).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<FINANCIAL_DETAILS>(entity =>
-            {
-                entity.HasKey(e => e.StmtNumber)
-                    .HasName("PK_FINANCIAL_TIERS");
-
-                entity.HasComment("A collection of FINANCIAL_DETAILS records");
-
-                entity.Property(e => e.StmtNumber).ValueGeneratedNever();
-
-                entity.HasOne(d => d.FinancialGroup)
-                    .WithMany(p => p.FINANCIAL_DETAILS)
-                    .HasForeignKey(d => d.FinancialGroupId)
-                    .HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_GROUPS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_DOMAINS>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_DOMAINS records");
-
-                entity.Property(e => e.DomainId).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.DomainId });
-
-                entity.HasComment("A collection of FINANCIAL_DOMAIN_FILTERS records");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Domain)
-                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
-                    .HasForeignKey(d => d.DomainId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_FINANCIAL_DOMAINS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS_V2>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.DomainId, e.Financial_Level_Id })
-                    .HasName("PK_FiltersNormalized");
-
-                entity.HasComment("A collection of FiltersNormalized records");
-
-                entity.HasOne(d => d.Domain)
-                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
-                    .HasForeignKey(d => d.DomainId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_DOMAINS");
-
-                entity.HasOne(d => d.Financial_Level)
-                    .WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
-                    .HasForeignKey(d => d.Financial_Level_Id)
-                    .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_MATURITY");
-            });
-
-            modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
-            {
-                entity.HasKey(e => new { e.StmtNumber, e.FFIECBookletsMapping })
-                    .HasName("PK_FINANCIAL_FFIEC_MAPPINGS_1");
-
-                entity.HasComment("A collection of FINANCIAL_FFIEC_MAPPINGS records");
-
-                entity.HasOne(d => d.StmtNumberNavigation)
-                    .WithMany(p => p.FINANCIAL_FFIEC_MAPPINGS)
-                    .HasForeignKey(d => d.StmtNumber)
-                    .HasConstraintName("FK_FINANCIAL_FFIEC_MAPPINGS_FINANCIAL_DETAILS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_GROUPS>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_GROUPS records");
-
-                entity.HasOne(d => d.AssessmentFactor)
-                    .WithMany(p => p.FINANCIAL_GROUPS)
-                    .HasForeignKey(d => d.AssessmentFactorId)
-                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_ASSESSMENT_FACTORS");
-
-                entity.HasOne(d => d.Domain)
-                    .WithMany(p => p.FINANCIAL_GROUPS)
-                    .HasForeignKey(d => d.DomainId)
-                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_DOMAINS");
-
-                entity.HasOne(d => d.FinComponent)
-                    .WithMany(p => p.FINANCIAL_GROUPS)
-                    .HasForeignKey(d => d.FinComponentId)
-                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_COMPONENTS");
-
-                entity.HasOne(d => d.Financial_Level)
-                    .WithMany(p => p.FINANCIAL_GROUPS)
-                    .HasForeignKey(d => d.Financial_Level_Id)
-                    .HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_MATURITY");
-            });
-
-            modelBuilder.Entity<FINANCIAL_HOURS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Component, e.ReviewType })
-                    .HasName("PK_FINANCIAL_ASSESSMENT_HOURS");
-
-                entity.HasComment("A collection of FINANCIAL_HOURS records");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.FINANCIAL_HOURS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_FINANCIAL_HOURS_ASSESSMENTS");
-
-                entity.HasOne(d => d.ComponentNavigation)
-                    .WithMany(p => p.FINANCIAL_HOURS)
-                    .HasForeignKey(d => d.Component)
-                    .HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_HOURS_COMPONENT");
-
-                entity.HasOne(d => d.ReviewTypeNavigation)
-                    .WithMany(p => p.FINANCIAL_HOURS)
-                    .HasForeignKey(d => d.ReviewType)
-                    .HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_REVIEWTYPE");
-            });
-
-            modelBuilder.Entity<FINANCIAL_HOURS_COMPONENT>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_HOURS_COMPONENT records");
-
-                entity.HasOne(d => d.Domain)
-                    .WithMany(p => p.FINANCIAL_HOURS_COMPONENT)
-                    .HasForeignKey(d => d.DomainId)
-                    .HasConstraintName("FK_FINANCIAL_HOURS_COMPONENT_FINANCIAL_DOMAINS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_MATURITY>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_MATURITY records");
-
-                entity.Property(e => e.Financial_Level_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.StmtNumber, e.Question_Id })
-                    .HasName("PK_FINANCIAL_QUESTIONS_1");
-
-                entity.HasComment("A collection of FINANCIAL_QUESTIONS records");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.FINANCIAL_QUESTIONS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_FINANCIAL_QUESTIONS_NEW_QUESTION");
-
-                entity.HasOne(d => d.StmtNumberNavigation)
-                    .WithMany(p => p.FINANCIAL_QUESTIONS)
-                    .HasForeignKey(d => d.StmtNumber)
-                    .HasConstraintName("FK_FINANCIAL_QUESTIONS_FINANCIAL_DETAILS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_REQUIREMENTS>(entity =>
-            {
-                entity.HasKey(e => new { e.StmtNumber, e.Requirement_Id });
-
-                entity.HasComment("A collection of FINANCIAL_REQUIREMENTS records");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.FINANCIAL_REQUIREMENTS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_FINANCIAL_REQUIREMENTS_NEW_REQUIREMENT");
-
-                entity.HasOne(d => d.StmtNumberNavigation)
-                    .WithMany(p => p.FINANCIAL_REQUIREMENTS)
-                    .HasForeignKey(d => d.StmtNumber)
-                    .HasConstraintName("FK_FINANCIAL_REQUIREMENTS_FINANCIAL_DETAILS");
-            });
-
-            modelBuilder.Entity<FINANCIAL_REVIEWTYPE>(entity =>
-            {
-                entity.HasComment("A collection of FINANCIAL_REVIEWTYPE records");
-            });
-
-            modelBuilder.Entity<FINANCIAL_TIERS>(entity =>
-            {
-                entity.HasKey(e => new { e.StmtNumber, e.Label })
-                    .HasName("PK_FINANCIAL_TIERS_1");
-
-                entity.HasComment("A collection of FINANCIAL_TIERS records");
-
-                entity.HasOne(d => d.StmtNumberNavigation)
-                    .WithMany(p => p.FINANCIAL_TIERS)
-                    .HasForeignKey(d => d.StmtNumber)
-                    .HasConstraintName("FK_FINANCIAL_TIERS_FINANCIAL_DETAILS");
-            });
-
-            modelBuilder.Entity<FINDING>(entity =>
-            {
-                entity.HasOne(d => d.Answer)
-                    .WithMany(p => p.FINDING)
-                    .HasForeignKey(d => d.Answer_Id)
-                    .HasConstraintName("FK_FINDING_ANSWER");
-
-                entity.HasOne(d => d.Importance)
-                    .WithMany(p => p.FINDING)
-                    .HasForeignKey(d => d.Importance_Id)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_FINDING_IMPORTANCE1");
-            });
-
-            modelBuilder.Entity<FINDING_CONTACT>(entity =>
-            {
-                entity.HasKey(e => new { e.Finding_Id, e.Assessment_Contact_Id })
-                    .HasName("PK_FINDING_CONTACT_1");
-
-                entity.HasOne(d => d.Assessment_Contact)
-                    .WithMany(p => p.FINDING_CONTACT)
-                    .HasForeignKey(d => d.Assessment_Contact_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FINDING_CONTACT_ASSESSMENT_CONTACTS");
-
-                entity.HasOne(d => d.Finding)
-                    .WithMany(p => p.FINDING_CONTACT)
-                    .HasForeignKey(d => d.Finding_Id)
-                    .HasConstraintName("FK_FINDING_INDIVIDUAL_FINDING1");
-            });
-
-            modelBuilder.Entity<FRAMEWORK_TIERS>(entity =>
-            {
-                entity.HasComment("A collection of FRAMEWORK_TIERS records");
-            });
-
-            modelBuilder.Entity<FRAMEWORK_TIER_DEFINITIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Tier, e.TierType });
-
-                entity.HasComment("A collection of FRAMEWORK_TIER_DEFINITIONS records");
-
-                entity.HasOne(d => d.TierNavigation)
-                    .WithMany(p => p.FRAMEWORK_TIER_DEFINITIONS)
-                    .HasForeignKey(d => d.Tier)
-                    .HasConstraintName("FK_FRAMEWORK_TIER_DEFINITIONS_FRAMEWORK_TIERS");
-            });
-
-            modelBuilder.Entity<FRAMEWORK_TIER_TYPE>(entity =>
-            {
-                entity.HasComment("A collection of FRAMEWORK_TIER_TYPE records");
-            });
-
-            modelBuilder.Entity<FRAMEWORK_TIER_TYPE_ANSWER>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.TierType });
-
-                entity.HasComment("");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_ASSESSMENTS");
-
-                entity.HasOne(d => d.TierNavigation)
-                    .WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
-                    .HasForeignKey(d => d.Tier)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_FRAMEWORK_TIERS");
-
-                entity.HasOne(d => d.TierTypeNavigation)
-                    .WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
-                    .HasForeignKey(d => d.TierType)
-                    .HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_FRAMEWORK_TIER_TYPE");
-            });
-
-            modelBuilder.Entity<GALLERY_GROUP>(entity =>
-            {
-                entity.HasKey(e => e.Group_Id)
-                    .HasName("PK_GALLERY_GROUP_1");
-            });
-
-            modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
-            {
-                entity.HasKey(e => e.Group_Detail_Id)
-                    .HasName("PK_GALLERY_GROUP_DETAILS_1");
-
-                entity.HasOne(d => d.Gallery_Item_Gu)
-                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
-                    .HasForeignKey(d => d.Gallery_Item_Guid)
-                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
-
-                entity.HasOne(d => d.Group)
-                    .WithMany(p => p.GALLERY_GROUP_DETAILS)
-                    .HasForeignKey(d => d.Group_Id)
-                    .HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
-            });
-
-            modelBuilder.Entity<GALLERY_ITEM>(entity =>
-            {
-                entity.Property(e => e.Gallery_Item_Guid).ValueGeneratedNever();
-
-                entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<GALLERY_ROWS>(entity =>
-            {
-                entity.HasKey(e => new { e.Layout_Name, e.Row_Index });
-
-                entity.HasOne(d => d.Group)
-                    .WithMany(p => p.GALLERY_ROWS)
-                    .HasForeignKey(d => d.Group_Id)
-                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_GROUP");
-
-                entity.HasOne(d => d.Layout_NameNavigation)
-                    .WithMany(p => p.GALLERY_ROWS)
-                    .HasForeignKey(d => d.Layout_Name)
-                    .HasConstraintName("FK_GALLERY_ROWS_GALLERY_LAYOUT");
-            });
-
-            modelBuilder.Entity<GENERAL_SAL>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Sal_Name })
-                    .HasName("PK_GENERAL_SAL_1");
-
-                entity.HasComment("");
-
-                entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Sal_Name).HasComment("The Sal Weight Id is used to");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.GENERAL_SAL)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_GENERAL_SAL_ASSESSMENTS");
-
-                entity.HasOne(d => d.Sal_NameNavigation)
-                    .WithMany(p => p.GENERAL_SAL)
-                    .HasForeignKey(d => d.Sal_Name)
-                    .HasConstraintName("FK_GENERAL_SAL_GEN_SAL_NAMES");
-            });
-
-            modelBuilder.Entity<GENERAL_SAL_DESCRIPTIONS>(entity =>
-            {
-                entity.HasComment("A collection of GENERAL_SAL_DESCRIPTIONS records");
-            });
-
-            modelBuilder.Entity<GEN_FILE>(entity =>
-            {
-                entity.HasKey(e => e.Gen_File_Id)
-                    .HasName("SYS_C0014438");
-
-                entity.HasComment("A collection of GEN_FILE records");
-
-                entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
-
-                entity.Property(e => e.Comments).HasComment("The Comments is used to");
-
-                entity.Property(e => e.Description).HasComment("The Description is used to");
-
-                entity.Property(e => e.Doc_Num)
-                    .HasDefaultValueSql("('NONE')")
-                    .HasComment("The Doc Num is used to");
-
-                entity.Property(e => e.Doc_Version).HasComment("The Doc Version is used to");
-
-                entity.Property(e => e.File_Name).HasComment("The File Name is used to");
-
-                entity.Property(e => e.File_Size).HasComment("The File Size is used to");
-
-                entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
-
-                entity.Property(e => e.Is_Uploaded).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Name).HasComment("The Name is used to");
-
-                entity.Property(e => e.Publish_Date).HasComment("The Publish Date is used to");
-
-                entity.Property(e => e.Short_Name).HasComment("The Short Name is used to");
-
-                entity.Property(e => e.Source_Type).HasComment("The Source Type is used to");
-
-                entity.Property(e => e.Summary).HasComment("The Summary is used to");
-
-                entity.Property(e => e.Title).HasComment("The Title is used to");
-
-                entity.HasOne(d => d.Doc_NumNavigation)
-                    .WithMany(p => p.GEN_FILE)
-                    .HasForeignKey(d => d.Doc_Num)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GEN_FILE_FILE_REF_KEYS");
-
-                entity.HasOne(d => d.File_Type)
-                    .WithMany(p => p.GEN_FILE)
-                    .HasForeignKey(d => d.File_Type_Id)
-                    .HasConstraintName("FK_GEN_FILE_FILE_TYPE");
-            });
-
-            modelBuilder.Entity<GEN_FILE_LIB_PATH_CORL>(entity =>
-            {
-                entity.HasKey(e => new { e.Gen_File_Id, e.Lib_Path_Id })
-                    .HasName("TABLE3_PK");
-
-                entity.HasComment("A collection of GEN_FILE_LIB_PATH_CORL records");
-
-                entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
-
-                entity.Property(e => e.Lib_Path_Id).HasComment("The Lib Path Id is used to");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.GEN_FILE_LIB_PATH_CORL)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE");
-
-                entity.HasOne(d => d.Lib_Path)
-                    .WithMany(p => p.GEN_FILE_LIB_PATH_CORL)
-                    .HasForeignKey(d => d.Lib_Path_Id)
-                    .HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH");
-            });
-
-            modelBuilder.Entity<GEN_SAL_NAMES>(entity =>
-            {
-                entity.HasComment("A collection of GEN_SAL_NAMES records");
-            });
-
-            modelBuilder.Entity<GEN_SAL_WEIGHTS>(entity =>
-            {
-                entity.HasKey(e => new { e.Sal_Name, e.Slider_Value });
-
-                entity.HasComment("A collection of GEN_SAL_WEIGHTS records");
-
-                entity.Property(e => e.Sal_Name).HasComment("The Sal Name is used to");
-
-                entity.Property(e => e.Slider_Value).HasComment("The Slider Value is used to");
-
-                entity.Property(e => e.Display).HasComment("The Display is used to");
-
-                entity.Property(e => e.Sal_Weight_Id).HasComment("The Sal Weight Id is used to");
-
-                entity.Property(e => e.Weight).HasComment("The Weight is used to");
-
-                entity.HasOne(d => d.Sal_NameNavigation)
-                    .WithMany(p => p.GEN_SAL_WEIGHTS)
-                    .HasForeignKey(d => d.Sal_Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_GEN_SAL_WEIGHTS_GENERAL_SAL_DESCRIPTIONS");
-
-                entity.HasOne(d => d.Sal_Name1)
-                    .WithMany(p => p.GEN_SAL_WEIGHTS)
-                    .HasForeignKey(d => d.Sal_Name)
-                    .HasConstraintName("FK_GEN_SAL_WEIGHTS_GEN_SAL_NAMES");
-            });
-
-            modelBuilder.Entity<GLOBAL_PROPERTIES>(entity =>
-            {
-                entity.HasKey(e => e.Property)
-                    .HasName("PK_GlobalProperties");
-
-                entity.HasComment("A collection of GLOBAL_PROPERTIES records");
-
-                entity.Property(e => e.Property).HasComment("The Property is used to");
-
-                entity.Property(e => e.Property_Value).HasComment("The Property Value is used to");
-            });
-
-            modelBuilder.Entity<GLOSSARY>(entity =>
-            {
-                entity.HasKey(e => new { e.Maturity_Model_Id, e.Term });
-
-                entity.HasComment("A collection of GLOSSARY records");
-            });
-
-            modelBuilder.Entity<HYDRO_DATA>(entity =>
-            {
-                entity.HasKey(e => e.Mat_Option_Id)
-                    .IsClustered(false);
-
-                entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
-                    .IsUnique()
-                    .IsClustered();
-
-                entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Mat_Option)
-                    .WithOne(p => p.HYDRO_DATA)
-                    .HasForeignKey<HYDRO_DATA>(d => d.Mat_Option_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.HYDRO_DATA)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
-            });
-
-            modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Answer_Id)
-                    .HasName("PK__HYDRO_DA__36918F3818A6E56C");
-
-                entity.Property(e => e.Answer_Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Answer)
-                    .WithOne(p => p.HYDRO_DATA_ACTIONS)
-                    .HasForeignKey<HYDRO_DATA_ACTIONS>(d => d.Answer_Id)
-                    .HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
-
-                entity.HasOne(d => d.Progress)
-                    .WithMany(p => p.HYDRO_DATA_ACTIONS)
-                    .HasForeignKey(d => d.Progress_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
-            });
-
-            modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
-            {
-                entity.HasKey(e => e.Progress_Id)
-                    .HasName("PK__HYDRO_PR__D558797A8254CF40");
-
-                entity.Property(e => e.Progress_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<IMPORTANCE>(entity =>
-            {
-                entity.HasKey(e => e.Importance_Id)
-                    .HasName("PK_IMPORTANCE_1");
-
-                entity.HasComment("A collection of IMPORTANCE records");
-            });
-
-            modelBuilder.Entity<INFORMATION>(entity =>
-            {
-                entity.HasComment("A collection of INFORMATION records");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasComment("The Id is used to");
-
-                entity.Property(e => e.Additional_Contacts).HasComment("The Additional Contacts is used to");
-
-                entity.Property(e => e.Additional_Notes_And_Comments).HasComment("The Additional Notes And Comments is used to");
-
-                entity.Property(e => e.Assessment_Description).HasComment("The Assessment Description is used to");
-
-                entity.Property(e => e.Assessment_Name).HasComment("The Assessment Name is used to");
-
-                entity.Property(e => e.Assessor_Email).HasComment("The Assessor Email is used to");
-
-                entity.Property(e => e.Assessor_Name).HasComment("The Assessor Name is used to");
-
-                entity.Property(e => e.Assessor_Phone).HasComment("The Assessor Phone is used to");
-
-                entity.Property(e => e.City_Or_Site_Name).HasComment("The City Or Site Name is used to");
-
-                entity.Property(e => e.Enterprise_Evaluation_Summary).HasComment("The Enterprise Evaluation Summary is used to");
-
-                entity.Property(e => e.Executive_Summary).HasComment("The Executive Summary is used to");
-
-                entity.Property(e => e.Facility_Name).HasComment("The Facility Name is used to");
-
-                entity.Property(e => e.IsAcetOnly).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.State_Province_Or_Region).HasComment("The State Province Or Region is used to");
-
-                entity.HasOne(d => d.IdNavigation)
-                    .WithOne(p => p.INFORMATION)
-                    .HasForeignKey<INFORMATION>(d => d.Id)
-                    .HasConstraintName("FK_INFORMATION_ASSESSMENTS");
-
-                entity.HasOne(d => d.eMass_Document)
-                    .WithMany(p => p.INFORMATION)
-                    .HasForeignKey(d => d.eMass_Document_Id)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_INFORMATION_DOCUMENT_FILE1");
-            });
-
-            modelBuilder.Entity<INSTALLATION>(entity =>
-            {
-                entity.HasComment("A collection of INSTALLATION records");
-            });
-
-            modelBuilder.Entity<IRP>(entity =>
-            {
-                entity.HasComment("A collection of IRP records");
-
-                entity.Property(e => e.IRP_ID).ValueGeneratedNever();
-
-                entity.Property(e => e.Risk_Type).HasDefaultValueSql("('IRP')");
-
-                entity.HasOne(d => d.Header)
-                    .WithMany(p => p.IRP)
-                    .HasForeignKey(d => d.Header_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_IRP_IRP_HEADER");
-            });
-
-            modelBuilder.Entity<IRP_HEADER>(entity =>
-            {
-                entity.HasComment("A collection of IRP_HEADER records");
-
-                entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<ISE_ACTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Action_Item_Id, e.Mat_Question_Id });
-
-                entity.HasComment("ISE specific fields for issues");
-
-                entity.Property(e => e.Action_Item_Id).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.ISE_ACTIONS)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ISE_ACTIO__Mat_Q__7F2CAE86");
-            });
-
-            modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
-            {
-                entity.HasKey(e => new { e.Finding_Id, e.Mat_Question_Id });
-
-                entity.HasOne(d => d.Finding)
-                    .WithMany(p => p.ISE_ACTIONS_FINDINGS)
-                    .HasForeignKey(d => d.Finding_Id)
-                    .HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
-            });
-
-            modelBuilder.Entity<JWT>(entity =>
-            {
-                entity.HasComment("A collection of JWT records");
-            });
-
-            modelBuilder.Entity<LEVEL_BACKUP_ACET>(entity =>
-            {
-                entity.HasKey(e => new { e.requirement_id, e.Standard_Level });
-
-                entity.HasComment("A collection of LEVEL_BACKUP_ACET records");
-            });
-
-            modelBuilder.Entity<LEVEL_BACKUP_ACET_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.New_Question_Set_Id, e.universal_sal_level });
-
-                entity.HasComment("A collection of LEVEL_BACKUP_ACET_QUESTIONS records");
-            });
-
-            modelBuilder.Entity<LEVEL_NAMES>(entity =>
-            {
-                entity.HasKey(e => e.Level_Name)
-                    .HasName("PK_Level_Names");
-
-                entity.HasComment("A collection of LEVEL_NAMES records");
-
-                entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
-            });
-
-            modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Mat_Option_Id)
-                    .HasName("PK_MATURITY_ANSWER_OPTIONS_1");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1");
-            });
-
-            modelBuilder.Entity<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Option_Id_1, e.Mat_Option_Id_2 })
-                    .HasName("PK_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
-
-                entity.HasOne(d => d.Mat_Option_Id_1Navigation)
-                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation)
-                    .HasForeignKey(d => d.Mat_Option_Id_1)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
-
-                entity.HasOne(d => d.Mat_Option_Id_2Navigation)
-                    .WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation)
-                    .HasForeignKey(d => d.Mat_Option_Id_2)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS2");
-            });
-
-            modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
-            {
-                entity.HasKey(e => new { e.Grouping_ID, e.Assessment_Id });
-
-                entity.HasComment("A collection of MATURITY_DOMAIN_REMARKS records");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.MATURITY_DOMAIN_REMARKS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_DOMAIN_REMARKS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Grouping)
-                    .WithMany(p => p.MATURITY_DOMAIN_REMARKS)
-                    .HasForeignKey(d => d.Grouping_ID)
-                    .HasConstraintName("FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS");
-            });
-
-            modelBuilder.Entity<MATURITY_EXTRA>(entity =>
-            {
-                entity.Property(e => e.Maturity_Question_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
-            {
-                entity.HasKey(e => e.Grouping_Id)
-                    .HasName("PK_MATURITY_ELEMENT");
-
-                entity.HasComment("A collection of MATURITY_GROUPINGS records");
-
-                entity.Property(e => e.Title_Id).HasDefaultValueSql("(NEXT VALUE FOR [MaturityNodeSequence])");
-
-                entity.HasOne(d => d.Maturity_Model)
-                    .WithMany(p => p.MATURITY_GROUPINGS)
-                    .HasForeignKey(d => d.Maturity_Model_Id)
-                    .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_MODELS");
-
-                entity.HasOne(d => d.Type)
-                    .WithMany(p => p.MATURITY_GROUPINGS)
-                    .HasForeignKey(d => d.Type_Id)
-                    .HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
-            });
-
-            modelBuilder.Entity<MATURITY_GROUPING_TYPES>(entity =>
-            {
-                entity.HasComment("A collection of MATURITY_GROUPING_TYPES records");
-            });
-
-            modelBuilder.Entity<MATURITY_LEVELS>(entity =>
-            {
-                entity.HasComment("A collection of MATURITY_LEVELS records");
-
-                entity.HasOne(d => d.Maturity_Model)
-                    .WithMany(p => p.MATURITY_LEVELS)
-                    .HasForeignKey(d => d.Maturity_Model_Id)
-                    .HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
-            });
-
-            modelBuilder.Entity<MATURITY_MODELS>(entity =>
-            {
-                entity.HasComment("A collection of MATURITY_MODELS records");
-
-                entity.Property(e => e.Analytics_Rollup_Level)
-                    .HasDefaultValueSql("((1))")
-                    .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
-
-                entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation)
-                    .WithMany(p => p.MATURITY_MODELS)
-                    .HasForeignKey(d => d.Maturity_Level_Usage_Type)
-                    .HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
-            });
-
-            modelBuilder.Entity<MATURITY_POSSIBLE_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Maturity_Model_Id, e.Maturity_Answer });
-            });
-
-            modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Mat_Question_Id)
-                    .HasName("PK__MATURITY__EBDCEAE635AFA091");
-
-                entity.HasComment("A collection of MATURITY_QUESTIONS records");
-
-                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))", true);
-
-                entity.HasOne(d => d.Grouping)
-                    .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Grouping_Id)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS");
-
-                entity.HasOne(d => d.Mat_Question_TypeNavigation)
-                    .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Mat_Question_Type)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
-
-                entity.HasOne(d => d.Maturity_Level)
-                    .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Maturity_Level_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MATURITY___Matur__5B638405");
-
-                entity.HasOne(d => d.Maturity_Model)
-                    .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Maturity_Model_Id)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_MODELS");
-
-                entity.HasOne(d => d.Parent_Option)
-                    .WithMany(p => p.MATURITY_QUESTIONS)
-                    .HasForeignKey(d => d.Parent_Option_Id)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_OPTIONS");
-
-                entity.HasOne(d => d.Parent_Question)
-                    .WithMany(p => p.InverseParent_Question)
-                    .HasForeignKey(d => d.Parent_Question_Id)
-                    .HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS");
-            });
-
-            modelBuilder.Entity<MATURITY_QUESTION_PROPS>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.PropertyName });
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_QUESTION_PROPS)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS");
-            });
-
-            modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.HasComment("A collection of MATURITY_REFERENCES records");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.MATURITY_REFERENCES)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_REFERENCES)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
-            });
-
-            modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Sequence });
-
-                entity.HasComment("A collection of MATURITY_REFERENCE_TEXT records");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_REFERENCE_TEXT)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS");
-            });
-
-            modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
-            {
-                entity.HasKey(e => new { e.Mat_Question_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.HasComment("A collection of MATURITY_SOURCE_FILES records");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.MATURITY_SOURCE_FILES)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_GEN_FILE");
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.MATURITY_SOURCE_FILES)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
-            });
-
-            modelBuilder.Entity<METRO_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Metro_FIPS })
-                    .HasName("PK_ExtendedDemographicMetropolitanAnswers_1");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.METRO_ANSWERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ExtendedDemographicMetropolitanAnswers_ASSESSMENTS");
-
-                entity.HasOne(d => d.Metro_FIPSNavigation)
-                    .WithMany(p => p.METRO_ANSWERS)
-                    .HasForeignKey(d => d.Metro_FIPS)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_METRO_ANSWERS_METRO_AREA");
-            });
-
-            modelBuilder.Entity<METRO_AREA>(entity =>
-            {
-                entity.HasKey(e => e.Metro_FIPS)
-                    .HasName("PK_MetropolitanArea_1");
-            });
-
-            modelBuilder.Entity<MODES_SETS_MATURITY_MODELS>(entity =>
-            {
-                entity.HasKey(e => e.App_Code_Id)
-                    .HasName("PK_MODES_MATURITY_MODELS_1");
-
-                entity.HasOne(d => d.AppCodeNavigation)
-                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
-                    .HasForeignKey(d => d.AppCode)
-                    .HasConstraintName("FK_MODES_MATURITY_MODELS_APP_CODE");
-
-                entity.HasOne(d => d.Model_NameNavigation)
-                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
-                    .HasPrincipalKey(p => p.Model_Name)
-                    .HasForeignKey(d => d.Model_Name)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.MODES_SETS_MATURITY_MODELS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
-            });
-
-            modelBuilder.Entity<NAVIGATION_STATE>(entity =>
-            {
-                entity.Property(e => e.IsAvailable).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<NCSF_CATEGORY>(entity =>
-            {
-                entity.HasKey(e => e.NCSF_Cat_Id)
-                    .HasName("PK_NCSF_Category");
-
-                entity.HasComment("A collection of NCSF_CATEGORY records");
-
-                entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValueSql("((50))");
-
-                entity.HasOne(d => d.NCSF_Function)
-                    .WithMany(p => p.NCSF_CATEGORY)
-                    .HasForeignKey(d => d.NCSF_Function_Id)
-                    .HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
-            });
-
-            modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
-            {
-                entity.HasComment("A collection of NCSF_FUNCTIONS records");
-            });
-
-            modelBuilder.Entity<NERC_RISK_RANKING>(entity =>
-            {
-                entity.HasComment("A collection of NERC_RISK_RANKING records");
-
-                entity.Property(e => e.Compliance_Risk_Rank).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.NERC_RISK_RANKING)
-                    .HasForeignKey(d => d.Question_id)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_NERC_RISK_RANKING_NEW_QUESTION");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.NERC_RISK_RANKING)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_NERC_RISK_RANKING_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<NETWORK_WARNINGS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Id })
-                    .HasName("PK__network_warnings_001");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.NETWORK_WARNINGS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_NETWORK_WARNING_ASSESSMENTS");
-            });
-
-            modelBuilder.Entity<NEW_QUESTION>(entity =>
-            {
-                entity.HasKey(e => e.Question_Id)
-                    .HasName("PK_All_Question_TEMP");
-
-                entity.HasComment("A collection of NEW_QUESTION records");
-
-                entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
-
-                entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
-
-                entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
-
-                entity.HasOne(d => d.Heading_Pair)
-                    .WithMany(p => p.NEW_QUESTION)
-                    .HasPrincipalKey(p => p.Heading_Pair_Id)
-                    .HasForeignKey(d => d.Heading_Pair_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SUB_CATEGORY_HEADINGS");
-
-                entity.HasOne(d => d.Original_Set_NameNavigation)
-                    .WithMany(p => p.NEW_QUESTION)
-                    .HasForeignKey(d => d.Original_Set_Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_QUESTION_SETS");
-
-                entity.HasOne(d => d.Universal_Sal_LevelNavigation)
-                    .WithMany(p => p.NEW_QUESTION)
-                    .HasForeignKey(d => d.Universal_Sal_Level)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SAL_LEVEL");
-            });
-
-            modelBuilder.Entity<NEW_QUESTION_LEVELS>(entity =>
-            {
-                entity.HasKey(e => new { e.Universal_Sal_Level, e.New_Question_Set_Id })
-                    .HasName("PK_NEW_QUESTION_LEVELS_1");
-
-                entity.HasComment("A collection of NEW_QUESTION_LEVELS records");
-
-                entity.Property(e => e.Universal_Sal_Level).HasComment("The Universal Sal Level is used to");
-
-                entity.HasOne(d => d.New_Question_Set)
-                    .WithMany(p => p.NEW_QUESTION_LEVELS)
-                    .HasForeignKey(d => d.New_Question_Set_Id)
-                    .HasConstraintName("FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS");
-
-                entity.HasOne(d => d.Universal_Sal_LevelNavigation)
-                    .WithMany(p => p.NEW_QUESTION_LEVELS)
-                    .HasForeignKey(d => d.Universal_Sal_Level)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_QUESTION_LEVELS_UNIVERSAL_SAL_LEVEL");
-            });
-
-            modelBuilder.Entity<NEW_QUESTION_SETS>(entity =>
-            {
-                entity.HasKey(e => e.New_Question_Set_Id)
-                    .HasName("PK_NEW_QUESTION_SETS_1");
-
-                entity.HasComment("A collection of NEW_QUESTION_SETS records");
-
-                entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");
-
-                entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.NEW_QUESTION_SETS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_NEW_QUESTION_SETS_NEW_QUESTION");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.NEW_QUESTION_SETS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_NEW_QUESTION_SETS_SETS");
-            });
-
-            modelBuilder.Entity<NEW_REQUIREMENT>(entity =>
-            {
-                entity.HasComment("A collection of NEW_REQUIREMENT records");
-
-                entity.Property(e => e.Supp_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))", true);
-
-                entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))", true);
-
-                entity.HasOne(d => d.NCSF_Cat)
-                    .WithMany(p => p.NEW_REQUIREMENT)
-                    .HasForeignKey(d => d.NCSF_Cat_Id)
-                    .HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
-
-                entity.HasOne(d => d.Original_Set_NameNavigation)
-                    .WithMany(p => p.NEW_REQUIREMENT)
-                    .HasForeignKey(d => d.Original_Set_Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_REQUIREMENT_SETS");
-
-                entity.HasOne(d => d.Question_Group_Heading)
-                    .WithMany(p => p.NEW_REQUIREMENT)
-                    .HasPrincipalKey(p => p.Question_Group_Heading_Id)
-                    .HasForeignKey(d => d.Question_Group_Heading_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING");
-
-                entity.HasOne(d => d.Standard_CategoryNavigation)
-                    .WithMany(p => p.NEW_REQUIREMENT)
-                    .HasForeignKey(d => d.Standard_Category)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_NEW_REQUIREMENT_STANDARD_CATEGORY");
-            });
-
-            modelBuilder.Entity<NIST_SAL_INFO_TYPES>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Type_Value })
-                    .HasName("PK_NIST_SAL");
-
-                entity.HasComment("");
-
-                entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Type_Value).HasComment("The Type Value is used to");
-
-                entity.Property(e => e.Area).HasComment("The Area is used to");
-
-                entity.Property(e => e.Availability_Value).HasComment("The Availability Value is used to");
-
-                entity.Property(e => e.Confidentiality_Value).HasComment("The Confidentiality Value is used to");
-
-                entity.Property(e => e.Integrity_Value).HasComment("The Integrity Value is used to");
-
-                entity.Property(e => e.Selected).HasComment("The Selected is used to");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.NIST_SAL_INFO_TYPES)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_NIST_SAL_STANDARD_SELECTION");
-            });
-
-            modelBuilder.Entity<NIST_SAL_INFO_TYPES_DEFAULTS>(entity =>
-            {
-                entity.HasComment("A collection of NIST_SAL_INFO_TYPES_DEFAULTS records");
-            });
-
-            modelBuilder.Entity<NIST_SAL_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => e.Question_Id)
-                    .HasName("PK_NIST_SAL_QUESTIONS_1");
-
-                entity.HasComment("A collection of NIST_SAL_QUESTIONS records");
-
-                entity.Property(e => e.Question_Id)
-                    .ValueGeneratedNever()
-                    .HasComment("The Question Id is used to");
-
-                entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
-
-                entity.Property(e => e.Question_Text).HasComment("The Question Text is used to");
-            });
-
-            modelBuilder.Entity<NIST_SAL_QUESTION_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Question_Id });
-
-                entity.Property(e => e.Question_Answer).HasDefaultValueSql("('No')");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.NIST_SAL_QUESTION_ANSWERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_STANDARD_SELECTION");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.NIST_SAL_QUESTION_ANSWERS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_NIST_SAL_QUESTIONS");
-            });
-
-            modelBuilder.Entity<Nlogs>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            });
-
-            modelBuilder.Entity<PARAMETERS>(entity =>
-            {
-                entity.HasKey(e => e.Parameter_ID)
-                    .HasName("PK_Parameters");
-
-                entity.HasComment("A collection of PARAMETERS records");
-            });
-
-            modelBuilder.Entity<PARAMETER_ASSESSMENT>(entity =>
-            {
-                entity.HasKey(e => new { e.Parameter_ID, e.Assessment_ID })
-                    .HasName("PK_ASSESSMENT_PARAMETERS");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.PARAMETER_ASSESSMENT)
-                    .HasForeignKey(d => d.Assessment_ID)
-                    .HasConstraintName("FK_ASSESSMENT_PARAMETERS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Parameter)
-                    .WithMany(p => p.PARAMETER_ASSESSMENT)
-                    .HasForeignKey(d => d.Parameter_ID)
-                    .HasConstraintName("FK_ASSESSMENT_PARAMETERS_PARAMETERS");
-            });
-
-            modelBuilder.Entity<PARAMETER_REQUIREMENTS>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Parameter_Id })
-                    .HasName("PK_Parameter_Requirements");
-
-                entity.HasComment("A collection of PARAMETER_REQUIREMENTS records");
-
-                entity.HasOne(d => d.Parameter)
-                    .WithMany(p => p.PARAMETER_REQUIREMENTS)
-                    .HasForeignKey(d => d.Parameter_Id)
-                    .HasConstraintName("FK_Parameter_Requirements_Parameters");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.PARAMETER_REQUIREMENTS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_Parameter_Requirements_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<PARAMETER_VALUES>(entity =>
-            {
-                entity.HasKey(e => new { e.Answer_Id, e.Parameter_Id });
-
-                entity.HasOne(d => d.Answer)
-                    .WithMany(p => p.PARAMETER_VALUES)
-                    .HasForeignKey(d => d.Answer_Id)
-                    .HasConstraintName("FK_PARAMETER_VALUES_ANSWER");
-
-                entity.HasOne(d => d.Parameter)
-                    .WithMany(p => p.PARAMETER_VALUES)
-                    .HasForeignKey(d => d.Parameter_Id)
-                    .HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
-            });
-
-            modelBuilder.Entity<PASSWORD_HISTORY>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.Created });
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.PASSWORD_HISTORY)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PASSWORD_HISTORY_USERS");
-            });
-
-            modelBuilder.Entity<PROCUREMENT_DEPENDENCY>(entity =>
-            {
-                entity.HasKey(e => new { e.Procurement_Id, e.Dependencies_Id });
-
-                entity.HasComment("A collection of PROCUREMENT_DEPENDENCY records");
-
-                entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
-
-                entity.Property(e => e.Dependencies_Id).HasComment("The Dependencies Id is used to");
-
-                entity.HasOne(d => d.Dependencies)
-                    .WithMany(p => p.PROCUREMENT_DEPENDENCYDependencies)
-                    .HasForeignKey(d => d.Dependencies_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA1");
-
-                entity.HasOne(d => d.Procurement)
-                    .WithMany(p => p.PROCUREMENT_DEPENDENCYProcurement)
-                    .HasForeignKey(d => d.Procurement_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA");
-            });
-
-            modelBuilder.Entity<PROCUREMENT_LANGUAGE_DATA>(entity =>
-            {
-                entity.HasKey(e => e.Procurement_Id)
-                    .HasName("PK_Procurement_Language_Data");
-
-                entity.HasComment("A collection of PROCUREMENT_LANGUAGE_DATA records");
-
-                entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
-
-                entity.Property(e => e.Basis).HasComment("The Basis is used to");
-
-                entity.Property(e => e.Fatmeasures).HasComment("The Fatmeasures is used to");
-
-                entity.Property(e => e.Flow_Document).HasComment("The Flow Document is used to");
-
-                entity.Property(e => e.Heading).HasComment("The Heading is used to");
-
-                entity.Property(e => e.Language_Guidance).HasComment("The Language Guidance is used to");
-
-                entity.Property(e => e.Maintenance_Guidance).HasComment("The Maintenance Guidance is used to");
-
-                entity.Property(e => e.Parent_Heading_Id).HasComment("The Parent Heading Id is used to");
-
-                entity.Property(e => e.Procurement_Language).HasComment("The Procurement Language is used to");
-
-                entity.Property(e => e.References_Doc).HasComment("The References Doc is used to");
-
-                entity.Property(e => e.Satmeasures).HasComment("The Satmeasures is used to");
-
-                entity.Property(e => e.Section_Number).HasComment("The Section Number is used to");
-
-                entity.Property(e => e.Topic_Name).HasComment("The Topic Name is used to");
-
-                entity.HasOne(d => d.Parent_Heading)
-                    .WithMany(p => p.PROCUREMENT_LANGUAGE_DATA)
-                    .HasForeignKey(d => d.Parent_Heading_Id)
-                    .HasConstraintName("FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS");
-            });
-
-            modelBuilder.Entity<PROCUREMENT_LANGUAGE_HEADINGS>(entity =>
-            {
-                entity.HasComment("A collection of PROCUREMENT_LANGUAGE_HEADINGS records");
-
-                entity.Property(e => e.Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Heading_Name).HasComment("The Heading Name is used to");
-
-                entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
-            });
-
-            modelBuilder.Entity<PROCUREMENT_REFERENCES>(entity =>
-            {
-                entity.HasKey(e => new { e.Procurement_Id, e.Reference_Id })
-                    .HasName("PK_Procurement_References");
-
-                entity.HasComment("A collection of PROCUREMENT_REFERENCES records");
-
-                entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
-
-                entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
-
-                entity.HasOne(d => d.Procurement)
-                    .WithMany(p => p.PROCUREMENT_REFERENCES)
-                    .HasForeignKey(d => d.Procurement_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Procurement_References_Procurement_Language_Data");
-
-                entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.PROCUREMENT_REFERENCES)
-                    .HasForeignKey(d => d.Reference_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Procurement_References_References_Data");
-            });
-
-            modelBuilder.Entity<QUESTION_GROUP_HEADING>(entity =>
-            {
-                entity.HasComment("A collection of QUESTION_GROUP_HEADING records");
-
-                entity.Property(e => e.Question_Group_Heading1).HasComment("The Question Group Heading is used to");
-
-                entity.Property(e => e.Question_Group_Heading_Id)
-                    .ValueGeneratedOnAdd()
-                    .HasComment("The Question Group Heading Id is used to");
-
-                entity.Property(e => e.Std_Ref).HasComment("The Std Ref is used to");
-
-                entity.Property(e => e.Universal_Weight).HasComment("The Universal Weight is used to");
-            });
-
-            modelBuilder.Entity<QUESTION_GROUP_TYPE>(entity =>
-            {
-                entity.HasKey(e => e.Question_Group_Id)
-                    .HasName("PK_Question_Group_Type");
-
-                entity.HasComment("A collection of QUESTION_GROUP_TYPE records");
-
-                entity.Property(e => e.Question_Group_Id).HasComment("The Question Group Id is used to");
-
-                entity.Property(e => e.Group_Header).HasComment("The Group Header is used to");
-
-                entity.Property(e => e.Group_Name).HasComment("The Group Name is used to");
-
-                entity.Property(e => e.Scoring_Group).HasComment("The Scoring Group is used to");
-
-                entity.Property(e => e.Scoring_Type).HasComment("The Scoring Type is used to");
-            });
-
-            modelBuilder.Entity<RECENT_FILES>(entity =>
-            {
-                entity.HasKey(e => e.RecentFileId)
-                    .HasName("PK_RECENT_FILES_1");
-
-                entity.HasComment("");
-            });
-
-            modelBuilder.Entity<RECOMMENDATIONS_REFERENCES>(entity =>
-            {
-                entity.HasKey(e => new { e.Data_Id, e.Reference_Id })
-                    .HasName("PK_Recommendations_References");
-
-                entity.HasComment("A collection of RECOMMENDATIONS_REFERENCES records");
-
-                entity.Property(e => e.Data_Id).HasComment("The Data Id is used to");
-
-                entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
-
-                entity.HasOne(d => d.Data)
-                    .WithMany(p => p.RECOMMENDATIONS_REFERENCES)
-                    .HasForeignKey(d => d.Data_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Recommendations_References_Catalog_Recommendations_Data");
-
-                entity.HasOne(d => d.Reference)
-                    .WithMany(p => p.RECOMMENDATIONS_REFERENCES)
-                    .HasForeignKey(d => d.Reference_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Recommendations_References_References_Data");
-            });
-
-            modelBuilder.Entity<REFERENCES_DATA>(entity =>
-            {
-                entity.HasKey(e => e.Reference_Id)
-                    .HasName("PK_References_Data");
-
-                entity.HasComment("A collection of REFERENCES_DATA records");
-
-                entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
-
-                entity.Property(e => e.Reference_Doc_Id).HasComment("The Reference Doc Id is used to");
-
-                entity.Property(e => e.Reference_Sections).HasComment("The Reference Sections is used to");
-
-                entity.HasOne(d => d.Reference_Doc)
-                    .WithMany(p => p.REFERENCES_DATA)
-                    .HasForeignKey(d => d.Reference_Doc_Id)
-                    .HasConstraintName("FK_References_Data_Reference_Docs");
-            });
-
-            modelBuilder.Entity<REFERENCE_DOCS>(entity =>
-            {
-                entity.HasKey(e => e.Reference_Doc_Id)
-                    .HasName("PK_Reference_Docs");
-
-                entity.HasComment("A collection of REFERENCE_DOCS records");
-
-                entity.Property(e => e.Reference_Doc_Id).HasComment("The Reference Doc Id is used to");
-
-                entity.Property(e => e.Date_Last_Checked).HasComment("The Date Last Checked is used to");
-
-                entity.Property(e => e.Date_Updated).HasComment("The Date Updated is used to");
-
-                entity.Property(e => e.Doc_Link).HasComment("The Doc Link is used to");
-
-                entity.Property(e => e.Doc_Name).HasComment("The Doc Name is used to");
-
-                entity.Property(e => e.Doc_Notes).HasComment("The Doc Notes is used to");
-
-                entity.Property(e => e.Doc_Short).HasComment("The Doc Short is used to");
-
-                entity.Property(e => e.Doc_Url).HasComment("The Doc Url is used to");
-            });
-
-            modelBuilder.Entity<REF_LIBRARY_PATH>(entity =>
-            {
-                entity.HasKey(e => e.Lib_Path_Id)
-                    .HasName("REF_LIBRARY_PATH_PK");
-
-                entity.HasComment("A collection of REF_LIBRARY_PATH records");
-
-                entity.Property(e => e.Lib_Path_Id).HasComment("The Lib Path Id is used to");
-
-                entity.Property(e => e.Parent_Path_Id).HasComment("The Parent Path Id is used to");
-
-                entity.Property(e => e.Path_Name).HasComment("The Path Name is used to");
-
-                entity.HasOne(d => d.Parent_Path)
-                    .WithMany(p => p.InverseParent_Path)
-                    .HasForeignKey(d => d.Parent_Path_Id)
-                    .HasConstraintName("FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH");
-            });
-
-            modelBuilder.Entity<REGION_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.State, e.RegionCode })
-                    .HasName("PK_ExtendedDemographicRegionAnswers");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.REGION_ANSWERS)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_ASSESSMENTS");
-
-                entity.HasOne(d => d.STATE_REGION)
-                    .WithMany(p => p.REGION_ANSWERS)
-                    .HasForeignKey(d => new { d.State, d.RegionCode })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ExtendedDemographicRegionAnswers_STATE_REGION");
-            });
-
-            modelBuilder.Entity<REPORT_DETAIL_SECTIONS>(entity =>
-            {
-                entity.HasComment("A collection of REPORT_DETAIL_SECTIONS records");
-
-                entity.Property(e => e.Report_Section_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<REPORT_DETAIL_SECTION_SELECTION>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Report_Section_Id });
-
-                entity.HasComment("");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.REPORT_DETAIL_SECTION_SELECTION)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_REPORT_DETAIL_SECTION_SELECTION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Report_Section)
-                    .WithMany(p => p.REPORT_DETAIL_SECTION_SELECTION)
-                    .HasForeignKey(d => d.Report_Section_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_REPORT_DETAIL_SECTION_SELECTION_REPORT_DETAIL_SECTIONS");
-            });
-
-            modelBuilder.Entity<REPORT_OPTIONS>(entity =>
-            {
-                entity.HasComment("A collection of REPORT_OPTIONS records");
-
-                entity.Property(e => e.Report_Option_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<REPORT_OPTIONS_SELECTION>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessment_Id, e.Report_Option_Id });
-
-                entity.HasComment("");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithMany(p => p.REPORT_OPTIONS_SELECTION)
-                    .HasForeignKey(d => d.Assessment_Id)
-                    .HasConstraintName("FK_REPORT_OPTIONS_SELECTION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Report_Option)
-                    .WithMany(p => p.REPORT_OPTIONS_SELECTION)
-                    .HasForeignKey(d => d.Report_Option_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_REPORT_OPTIONS_SELECTION_REPORT_OPTIONS");
-            });
-
-            modelBuilder.Entity<REPORT_STANDARDS_SELECTION>(entity =>
-            {
-                entity.HasKey(e => new { e.Assesment_Id, e.Report_Set_Entity_Name });
-
-                entity.HasComment("");
-
-                entity.HasOne(d => d.Assesment)
-                    .WithMany(p => p.REPORT_STANDARDS_SELECTION)
-                    .HasForeignKey(d => d.Assesment_Id)
-                    .HasConstraintName("FK_REPORT_STANDARDS_SELECTION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Report_Set_Entity_NameNavigation)
-                    .WithMany(p => p.REPORT_STANDARDS_SELECTION)
-                    .HasForeignKey(d => d.Report_Set_Entity_Name)
-                    .HasConstraintName("FK_REPORT_STANDARDS_SELECTION_SETS");
-            });
-
-            modelBuilder.Entity<REQUIRED_DOCUMENTATION>(entity =>
-            {
-                entity.HasComment("A collection of REQUIRED_DOCUMENTATION records");
-
-                entity.HasOne(d => d.RDH)
-                    .WithMany(p => p.REQUIRED_DOCUMENTATION)
-                    .HasForeignKey(d => d.RDH_Id)
-                    .HasConstraintName("FK_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION_HEADERS");
-            });
-
-            modelBuilder.Entity<REQUIRED_DOCUMENTATION_HEADERS>(entity =>
-            {
-                entity.HasComment("A collection of REQUIRED_DOCUMENTATION_HEADERS records");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_LEVELS>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Standard_Level, e.Level_Type });
-
-                entity.HasComment("A collection of REQUIREMENT_LEVELS records");
-
-                entity.Property(e => e.Requirement_Id).HasComment("The Requirement Id is used to");
-
-                entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
-
-                entity.Property(e => e.Level_Type).HasComment("The Level Type is used to");
-
-                entity.Property(e => e.Id).HasComment("The Id is used to");
-
-                entity.HasOne(d => d.Level_TypeNavigation)
-                    .WithMany(p => p.REQUIREMENT_LEVELS)
-                    .HasForeignKey(d => d.Level_Type)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_REQUIREMENT_LEVELS_REQUIREMENT_LEVEL_TYPE");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_LEVELS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_LEVELS_NEW_REQUIREMENT");
-
-                entity.HasOne(d => d.Standard_LevelNavigation)
-                    .WithMany(p => p.REQUIREMENT_LEVELS)
-                    .HasForeignKey(d => d.Standard_Level)
-                    .HasConstraintName("FK_REQUIREMENT_LEVELS_STANDARD_SPECIFIC_LEVEL");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_LEVEL_TYPE>(entity =>
-            {
-                entity.HasComment("A collection of REQUIREMENT_LEVEL_TYPE records");
-
-                entity.Property(e => e.Level_Type).HasComment("The Level Type is used to");
-
-                entity.Property(e => e.Level_Type_Full_Name).HasComment("The Level Type Full Name is used to");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Requirement_Id })
-                    .HasName("PK_REQUIREMENT_QUESTIONS_1");
-
-                entity.HasComment("A collection of REQUIREMENT_QUESTIONS records");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.REQUIREMENT_QUESTIONS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_QUESTIONS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_QUESTIONS_SETS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Id, e.Set_Name })
-                    .HasName("PK_REQUIREMENT_QUESTIONS_SETS_1");
-
-                entity.HasComment("A collection of REQUIREMENT_QUESTIONS_SETS records");
-
-                entity.HasOne(d => d.Question)
-                    .WithMany(p => p.REQUIREMENT_QUESTIONS_SETS)
-                    .HasForeignKey(d => d.Question_Id)
-                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_QUESTIONS_SETS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_NEW_REQUIREMENT");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.REQUIREMENT_QUESTIONS_SETS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_SETS");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_REFERENCES>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.HasComment("A collection of REQUIREMENT_REFERENCES records");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.REQUIREMENT_REFERENCES)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_REQUIREMENT_REFERENCES_GEN_FILE");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_REFERENCES)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_REFERENCES_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_REFERENCE_TEXT>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Sequence });
-            });
-
-            modelBuilder.Entity<REQUIREMENT_SETS>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Set_Name })
-                    .HasName("PK_QUESTION_SETS");
-
-                entity.HasComment("A collection of REQUIREMENT_SETS records");
-
-                entity.Property(e => e.Requirement_Id).HasComment("The Requirement Id is used to");
-
-                entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_SETS)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.REQUIREMENT_SETS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_QUESTION_SETS_SETS");
-            });
-
-            modelBuilder.Entity<REQUIREMENT_SOURCE_FILES>(entity =>
-            {
-                entity.HasKey(e => new { e.Requirement_Id, e.Gen_File_Id, e.Section_Ref });
-
-                entity.HasComment("A collection of REQUIREMENT_SOURCE_FILES records");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.REQUIREMENT_SOURCE_FILES)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_GEN_FILE");
-
-                entity.HasOne(d => d.Requirement)
-                    .WithMany(p => p.REQUIREMENT_SOURCE_FILES)
-                    .HasForeignKey(d => d.Requirement_Id)
-                    .HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
-            });
-
-            modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
-            {
-                entity.HasKey(e => e.Sal_Determination_Type)
-                    .HasName("PK_SAL_DETERMINATION_TYPES_1");
-
-                entity.HasComment("A collection of SAL_DETERMINATION_TYPES records");
-            });
-
-            modelBuilder.Entity<SECTOR>(entity =>
-            {
-                entity.HasComment("A collection of SECTOR records");
-            });
-
-            modelBuilder.Entity<SECTOR_INDUSTRY>(entity =>
-            {
-                entity.HasKey(e => new { e.SectorId, e.IndustryId });
-
-                entity.HasComment("A collection of SECTOR_INDUSTRY records");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.SECTOR_INDUSTRY)
-                    .HasForeignKey(d => d.SectorId)
-                    .HasConstraintName("FK_SECTOR_INDUSTRY_SECTOR");
-            });
-
-            modelBuilder.Entity<SECTOR_STANDARD_RECOMMENDATIONS>(entity =>
-            {
-                entity.HasKey(e => new { e.Sector_Id, e.Industry_Id, e.Organization_Size, e.Asset_Value, e.Set_Name });
-
-                entity.HasComment("A collection of SECTOR_STANDARD_RECOMMENDATIONS records");
-
-                entity.HasOne(d => d.Sector)
-                    .WithMany(p => p.SECTOR_STANDARD_RECOMMENDATIONS)
-                    .HasForeignKey(d => d.Sector_Id)
-                    .HasConstraintName("FK_SECTOR_STANDARD_RECOMMENDATIONS_SECTOR");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.SECTOR_STANDARD_RECOMMENDATIONS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_SECTOR_STANDARD_RECOMMENDATIONS_SETS");
-            });
-
-            modelBuilder.Entity<SECURITY_QUESTION>(entity =>
-            {
-                entity.HasComment("A collection of SECURITY_QUESTION records");
-
-                entity.Property(e => e.IsCustomQuestion).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<SETS>(entity =>
-            {
-                entity.HasComment("A collection of SETS records");
-
-                entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
-
-                entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
-
-                entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Is_Displayed).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.Is_Pass_Fail).HasComment("The Is Pass Fail is used to");
-
-                entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
-
-                entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
-
-                entity.HasOne(d => d.Set_Category)
-                    .WithMany(p => p.SETS)
-                    .HasForeignKey(d => d.Set_Category_Id)
-                    .HasConstraintName("FK_SETS_Sets_Category");
-            });
-
-            modelBuilder.Entity<SETS_CATEGORY>(entity =>
-            {
-                entity.HasKey(e => e.Set_Category_Id)
-                    .HasName("PK_Sets_Category");
-
-                entity.HasComment("A collection of SETS_CATEGORY records");
-
-                entity.Property(e => e.Set_Category_Id).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<SET_FILES>(entity =>
-            {
-                entity.HasKey(e => new { e.SetName, e.Gen_File_Id });
-
-                entity.HasComment("A collection of SET_FILES records");
-
-                entity.HasOne(d => d.Gen_File)
-                    .WithMany(p => p.SET_FILES)
-                    .HasForeignKey(d => d.Gen_File_Id)
-                    .HasConstraintName("FK_SET_FILES_GEN_FILE");
-
-                entity.HasOne(d => d.SetNameNavigation)
-                    .WithMany(p => p.SET_FILES)
-                    .HasForeignKey(d => d.SetName)
-                    .HasConstraintName("FK_SET_FILES_SETS");
-            });
-
-            modelBuilder.Entity<SHAPE_TYPES>(entity =>
-            {
-                entity.HasKey(e => e.Diagram_Type_XML)
-                    .HasName("PK_Shape_Types");
-
-                entity.HasComment("A collection of SHAPE_TYPES records");
-            });
-
-            modelBuilder.Entity<SP80053_FAMILY_ABBREVIATIONS>(entity =>
-            {
-                entity.HasComment("A collection of SP80053_FAMILY_ABBREVIATIONS records");
-            });
-
-            modelBuilder.Entity<STANDARD_CATEGORY>(entity =>
-            {
-                entity.HasComment("A collection of STANDARD_CATEGORY records");
-
-                entity.Property(e => e.Standard_Category1).HasComment("The Standard Category is used to");
-            });
-
-            modelBuilder.Entity<STANDARD_CATEGORY_SEQUENCE>(entity =>
-            {
-                entity.HasKey(e => new { e.Standard_Category, e.Set_Name });
-
-                entity.HasComment("A collection of STANDARD_CATEGORY_SEQUENCE records");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.STANDARD_CATEGORY_SEQUENCE)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_STANDARD_CATEGORY_SEQUENCE_SETS");
-
-                entity.HasOne(d => d.Standard_CategoryNavigation)
-                    .WithMany(p => p.STANDARD_CATEGORY_SEQUENCE)
-                    .HasForeignKey(d => d.Standard_Category)
-                    .HasConstraintName("FK_STANDARD_CATEGORY_SEQUENCE_STANDARD_CATEGORY");
-            });
-
-            modelBuilder.Entity<STANDARD_SELECTION>(entity =>
-            {
-                entity.HasComment("A collection of STANDARD_SELECTION records");
-
-                entity.Property(e => e.Assessment_Id)
-                    .ValueGeneratedNever()
-                    .HasComment("The Id is used to");
-
-                entity.Property(e => e.Application_Mode)
-                    .HasDefaultValueSql("('Questions Based')")
-                    .HasComment("The Application Mode is used to");
-
-                entity.Property(e => e.Selected_Sal_Level)
-                    .HasDefaultValueSql("('Low')")
-                    .HasComment("The Selected Sal Level is used to");
-
-                entity.HasOne(d => d.Assessment)
-                    .WithOne(p => p.STANDARD_SELECTION)
-                    .HasForeignKey<STANDARD_SELECTION>(d => d.Assessment_Id)
-                    .HasConstraintName("FK_STANDARD_SELECTION_ASSESSMENTS");
-
-                entity.HasOne(d => d.Last_Sal_Determination_TypeNavigation)
-                    .WithMany(p => p.STANDARD_SELECTION)
-                    .HasForeignKey(d => d.Last_Sal_Determination_Type)
-                    .HasConstraintName("FK_STANDARD_SELECTION_SAL_DETERMINATION_TYPES");
-
-                entity.HasOne(d => d.Selected_Sal_LevelNavigation)
-                    .WithMany(p => p.STANDARD_SELECTION)
-                    .HasPrincipalKey(p => p.Full_Name_Sal)
-                    .HasForeignKey(d => d.Selected_Sal_Level)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_STANDARD_SELECTION_UNIVERSAL_SAL_LEVEL");
-            });
-
-            modelBuilder.Entity<STANDARD_SOURCE_FILE>(entity =>
-            {
-                entity.HasKey(e => new { e.Set_Name, e.Doc_Num })
-                    .HasName("PK_Standard_Source_File");
-
-                entity.HasComment("A collection of STANDARD_SOURCE_FILE records");
-
-                entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
-
-                entity.Property(e => e.Doc_Num).HasComment("The Doc Num is used to");
-
-                entity.HasOne(d => d.Doc_NumNavigation)
-                    .WithMany(p => p.STANDARD_SOURCE_FILE)
-                    .HasForeignKey(d => d.Doc_Num)
-                    .HasConstraintName("FK_Standard_Source_File_FILE_REF_KEYS");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.STANDARD_SOURCE_FILE)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_Standard_Source_File_SETS");
-            });
-
-            modelBuilder.Entity<STANDARD_SPECIFIC_LEVEL>(entity =>
-            {
-                entity.HasComment("A collection of STANDARD_SPECIFIC_LEVEL records");
-
-                entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
-
-                entity.Property(e => e.Display_Name).HasDefaultValueSql("('No Display Name')");
-
-                entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
-
-                entity.Property(e => e.Level_Order).HasComment("The Level Order is used to");
-
-                entity.Property(e => e.Standard)
-                    .HasDefaultValueSql("('No Standard')")
-                    .HasComment("The Standard is used to");
-            });
-
-            modelBuilder.Entity<STANDARD_TO_UNIVERSAL_MAP>(entity =>
-            {
-                entity.HasKey(e => new { e.Universal_Sal_Level, e.Standard_Level });
-
-                entity.HasComment("A collection of STANDARD_TO_UNIVERSAL_MAP records");
-
-                entity.Property(e => e.Universal_Sal_Level).HasComment("The Universal Sal Level is used to");
-
-                entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
-
-                entity.HasOne(d => d.Standard_LevelNavigation)
-                    .WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP)
-                    .HasForeignKey(d => d.Standard_Level)
-                    .HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_STANDARD_SPECIFIC_LEVEL");
-
-                entity.HasOne(d => d.Universal_Sal_LevelNavigation)
-                    .WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP)
-                    .HasForeignKey(d => d.Universal_Sal_Level)
-                    .HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_UNIVERSAL_SAL_LEVEL");
-            });
-
-            modelBuilder.Entity<STATES_AND_PROVINCES>(entity =>
-            {
-                entity.HasComment("A collection of STATES_AND_PROVINCES records");
-
-                entity.HasOne(d => d.Country_CodeNavigation)
-                    .WithMany(p => p.STATES_AND_PROVINCES)
-                    .HasPrincipalKey(p => p.ISO_code)
-                    .HasForeignKey(d => d.Country_Code)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_STATES_AND_PROVINCES_COUNTRIES");
-            });
-
-            modelBuilder.Entity<STATE_REGION>(entity =>
-            {
-                entity.HasKey(e => new { e.State, e.RegionCode });
-            });
-
-            modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>
-            {
-                entity.HasKey(e => new { e.Assessement_Id, e.Heading_Pair_Id, e.Component_Guid, e.Is_Component });
-
-                entity.HasComment("");
-
-                entity.Property(e => e.Component_Guid)
-                    .HasDefaultValueSql("((0))")
-                    .HasComment("The Component Id is used to");
-
-                entity.Property(e => e.Is_Component).HasComment("The Is Component is used to");
-
-                entity.Property(e => e.Answer_Text).HasComment("The Answer Text is used to");
-
-                entity.HasOne(d => d.Answer_TextNavigation)
-                    .WithMany(p => p.SUB_CATEGORY_ANSWERS)
-                    .HasForeignKey(d => d.Answer_Text)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_Answer_Lookup");
-
-                entity.HasOne(d => d.Assessement)
-                    .WithMany(p => p.SUB_CATEGORY_ANSWERS)
-                    .HasForeignKey(d => d.Assessement_Id)
-                    .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
-
-                entity.HasOne(d => d.Heading_Pair)
-                    .WithMany(p => p.SUB_CATEGORY_ANSWERS)
-                    .HasPrincipalKey(p => p.Heading_Pair_Id)
-                    .HasForeignKey(d => d.Heading_Pair_Id)
-                    .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_UNIVERSAL_SUB_CATEGORY_HEADINGS");
-            });
-
-            modelBuilder.Entity<SYMBOL_GROUPS>(entity =>
-            {
-                entity.HasComment("A collection of SYMBOL_GROUPS records");
-
-                entity.Property(e => e.Id).HasComment("The Id is used to");
-
-                entity.Property(e => e.Symbol_Group_Name).HasComment("The Symbol Group Name is used to");
-
-                entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
-            });
-
-            modelBuilder.Entity<TTP_MAT_QUESTION>(entity =>
-            {
-                entity.HasKey(e => new { e.TTP_Code, e.Mat_Question_Id });
-
-                entity.HasOne(d => d.Mat_Question)
-                    .WithMany(p => p.TTP_MAT_QUESTION)
-                    .HasForeignKey(d => d.Mat_Question_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS");
-
-                entity.HasOne(d => d.TTP_CodeNavigation)
-                    .WithMany(p => p.TTP_MAT_QUESTION)
-                    .HasForeignKey(d => d.TTP_Code)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TTP_MAT_QUESTION_TTP");
-            });
-
-            modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
-            {
-                entity.HasKey(e => e.Universal_Area_Name)
-                    .HasName("UNIVERSAL_AREA_PK");
-
-                entity.HasComment("A collection of UNIVERSAL_AREA records");
-
-                entity.Property(e => e.Universal_Area_Name).HasComment("The Universal Area Name is used to");
-
-                entity.Property(e => e.Area_Weight).HasComment("The Area Weight is used to");
-
-                entity.Property(e => e.Comments).HasComment("The Comments is used to");
-
-                entity.Property(e => e.Universal_Area_Number)
-                    .ValueGeneratedOnAdd()
-                    .HasComment("The Universal Area Number is used to");
-            });
-
-            modelBuilder.Entity<UNIVERSAL_SAL_LEVEL>(entity =>
-            {
-                entity.HasComment("A collection of UNIVERSAL_SAL_LEVEL records");
-
-                entity.Property(e => e.Universal_Sal_Level1).HasComment("The Universal Sal Level is used to");
-
-                entity.Property(e => e.Full_Name_Sal).HasComment("The Full Name Sal is used to");
-
-                entity.Property(e => e.Sal_Level_Order).HasComment("The Sal Level Order is used to");
-            });
-
-            modelBuilder.Entity<UNIVERSAL_SUB_CATEGORIES>(entity =>
-            {
-                entity.HasComment("A collection of UNIVERSAL_SUB_CATEGORIES records");
-
-                entity.Property(e => e.Universal_Sub_Category).HasComment("The Universal Sub Category is used to");
-
-                entity.Property(e => e.Universal_Sub_Category_Id)
-                    .ValueGeneratedOnAdd()
-                    .HasComment("The Universal Sub Category Id is used to");
-            });
-
-            modelBuilder.Entity<UNIVERSAL_SUB_CATEGORY_HEADINGS>(entity =>
-            {
-                entity.HasKey(e => new { e.Question_Group_Heading_Id, e.Universal_Sub_Category_Id, e.Set_Name })
-                    .HasName("PK_UNIVERSAL_SUB_CATEGORY_HEADINGS_1");
-
-                entity.HasComment("A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records");
-
-                entity.Property(e => e.Set_Name).HasDefaultValueSql("('Standards')");
-
-                entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))", false);
-
-                entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
-
-                entity.HasOne(d => d.Question_Group_Heading)
-                    .WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
-                    .HasPrincipalKey(p => p.Question_Group_Heading_Id)
-                    .HasForeignKey(d => d.Question_Group_Heading_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_QUESTION_GROUP_HEADING");
-
-                entity.HasOne(d => d.Set_NameNavigation)
-                    .WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
-                    .HasForeignKey(d => d.Set_Name)
-                    .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS");
-
-                entity.HasOne(d => d.Universal_Sub_Category)
-                    .WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
-                    .HasPrincipalKey(p => p.Universal_Sub_Category_Id)
-                    .HasForeignKey(d => d.Universal_Sub_Category_Id)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB_CATEGORIES");
-            });
-
-            modelBuilder.Entity<USERS>(entity =>
-            {
-                entity.HasKey(e => e.UserId)
-                    .HasName("PK_USERS_1");
-
-                entity.HasComment("A collection of USERS records");
-
-                entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
-            });
-
-            modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
-            {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-            });
-
-            modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.EmailSentDate });
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.USER_EMAIL_HISTORY)
-                    .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK_USER_EMAIL_HISTORY_USERS");
-            });
-
-            modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>
-            {
-                entity.HasKey(e => e.UserId)
-                    .HasName("PK_USER_SECURITY_QUESTIONS_1");
-
-                entity.HasComment("A collection of USER_SECURITY_QUESTIONS records");
-
-                entity.Property(e => e.UserId).ValueGeneratedNever();
-
-                entity.HasOne(d => d.User)
-                    .WithOne(p => p.USER_SECURITY_QUESTIONS)
-                    .HasForeignKey<USER_SECURITY_QUESTIONS>(d => d.UserId)
-                    .HasConstraintName("FK_USER_SECURITY_QUESTIONS_USERS");
-            });
-
-            modelBuilder.Entity<VIEW_QUESTIONS_STATUS>(entity =>
-            {
-                entity.ToView("VIEW_QUESTIONS_STATUS");
-            });
-
-            modelBuilder.Entity<VISIO_MAPPING>(entity =>
-            {
-                entity.HasKey(e => new { e.Specific_Type, e.Stencil_Name });
-
-                entity.HasComment("A collection of VISIO_MAPPING records");
-
-                entity.HasOne(d => d.Specific_TypeNavigation)
-                    .WithMany(p => p.VISIO_MAPPING)
-                    .HasForeignKey(d => d.Specific_Type)
-                    .HasConstraintName("FK_VISIO_MAPPING_DIAGRAM_TYPES");
-            });
-
-            modelBuilder.Entity<WEIGHT>(entity =>
-            {
-                entity.HasKey(e => e.Weight1)
-                    .HasName("PK_QUESTION_WEIGHT");
-
-                entity.HasComment("A collection of WEIGHT records");
-
-                entity.Property(e => e.Weight1).ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<vFinancialGroups>(entity =>
-            {
-                entity.ToView("vFinancialGroups");
-            });
-
-            modelBuilder.Entity<vParameters>(entity =>
-            {
-                entity.ToView("vParameters");
-            });
-
-            modelBuilder.Entity<vQUESTION_HEADINGS>(entity =>
-            {
-                entity.ToView("vQUESTION_HEADINGS");
-            });
-
-            modelBuilder.HasSequence<int>("MaturityNodeSequence");
-
-            OnModelCreatingGeneratedProcedures(modelBuilder);
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+    public CsetwebContext(DbContextOptions<CsetwebContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<ACCESS_KEY> ACCESS_KEY { get; set; }
+
+    public virtual DbSet<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; }
+
+    public virtual DbSet<ADDRESS> ADDRESS { get; set; }
+
+    public virtual DbSet<AGGREGATION_ASSESSMENT> AGGREGATION_ASSESSMENT { get; set; }
+
+    public virtual DbSet<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
+
+    public virtual DbSet<AGGREGATION_TYPES> AGGREGATION_TYPES { get; set; }
+
+    public virtual DbSet<ANALYTICS_MATURITY_GROUPINGS> ANALYTICS_MATURITY_GROUPINGS { get; set; }
+
+    public virtual DbSet<ANSWER> ANSWER { get; set; }
+
+    public virtual DbSet<ANSWER_CLONE> ANSWER_CLONE { get; set; }
+
+    public virtual DbSet<ANSWER_LOOKUP> ANSWER_LOOKUP { get; set; }
+
+    public virtual DbSet<ANSWER_ORDER> ANSWER_ORDER { get; set; }
+
+    public virtual DbSet<ANSWER_PROFILE> ANSWER_PROFILE { get; set; }
+
+    public virtual DbSet<ANSWER_QUESTION_TYPES> ANSWER_QUESTION_TYPES { get; set; }
+
+    public virtual DbSet<APP_CODE> APP_CODE { get; set; }
+
+    public virtual DbSet<ASSESSMENTS> ASSESSMENTS { get; set; }
+
+    public virtual DbSet<ASSESSMENTS_REQUIRED_DOCUMENTATION> ASSESSMENTS_REQUIRED_DOCUMENTATION { get; set; }
+
+    public virtual DbSet<ASSESSMENT_CONTACTS> ASSESSMENT_CONTACTS { get; set; }
+
+    public virtual DbSet<ASSESSMENT_DETAIL_FILTER_DATA> ASSESSMENT_DETAIL_FILTER_DATA { get; set; }
+
+    public virtual DbSet<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; }
+
+    public virtual DbSet<ASSESSMENT_IRP> ASSESSMENT_IRP { get; set; }
+
+    public virtual DbSet<ASSESSMENT_IRP_HEADER> ASSESSMENT_IRP_HEADER { get; set; }
+
+    public virtual DbSet<ASSESSMENT_ROLES> ASSESSMENT_ROLES { get; set; }
+
+    public virtual DbSet<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
+
+    public virtual DbSet<AVAILABLE_MATURITY_MODELS> AVAILABLE_MATURITY_MODELS { get; set; }
+
+    public virtual DbSet<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; }
+
+    public virtual DbSet<Analytics_Answers> Analytics_Answers { get; set; }
+
+    public virtual DbSet<Answer_Components> Answer_Components { get; set; }
+
+    public virtual DbSet<Answer_Components_Default> Answer_Components_Default { get; set; }
+
+    public virtual DbSet<Answer_Components_Exploded> Answer_Components_Exploded { get; set; }
+
+    public virtual DbSet<Answer_Components_InScope> Answer_Components_InScope { get; set; }
+
+    public virtual DbSet<Answer_Components_Overrides> Answer_Components_Overrides { get; set; }
+
+    public virtual DbSet<Answer_Maturity> Answer_Maturity { get; set; }
+
+    public virtual DbSet<Answer_Questions> Answer_Questions { get; set; }
+
+    public virtual DbSet<Answer_Questions_No_Components> Answer_Questions_No_Components { get; set; }
+
+    public virtual DbSet<Answer_Requirements> Answer_Requirements { get; set; }
+
+    public virtual DbSet<Answer_Standards_InScope> Answer_Standards_InScope { get; set; }
+
+    public virtual DbSet<Assessments_For_User> Assessments_For_User { get; set; }
+
+    public virtual DbSet<CATALOG_RECOMMENDATIONS_DATA> CATALOG_RECOMMENDATIONS_DATA { get; set; }
+
+    public virtual DbSet<CATALOG_RECOMMENDATIONS_HEADINGS> CATALOG_RECOMMENDATIONS_HEADINGS { get; set; }
+
+    public virtual DbSet<CIS_CSI_BUDGET_BASES> CIS_CSI_BUDGET_BASES { get; set; }
+
+    public virtual DbSet<CIS_CSI_CUSTOMER_COUNTS> CIS_CSI_CUSTOMER_COUNTS { get; set; }
+
+    public virtual DbSet<CIS_CSI_DEFINING_SYSTEMS> CIS_CSI_DEFINING_SYSTEMS { get; set; }
+
+    public virtual DbSet<CIS_CSI_ORGANIZATION_DEMOGRAPHICS> CIS_CSI_ORGANIZATION_DEMOGRAPHICS { get; set; }
+
+    public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION> CIS_CSI_SERVICE_COMPOSITION { get; set; }
+
+    public virtual DbSet<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS> CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS { get; set; }
+
+    public virtual DbSet<CIS_CSI_SERVICE_DEMOGRAPHICS> CIS_CSI_SERVICE_DEMOGRAPHICS { get; set; }
+
+    public virtual DbSet<CIS_CSI_STAFF_COUNTS> CIS_CSI_STAFF_COUNTS { get; set; }
+
+    public virtual DbSet<CIS_CSI_USER_COUNTS> CIS_CSI_USER_COUNTS { get; set; }
+
+    public virtual DbSet<CNSS_CIA_JUSTIFICATIONS> CNSS_CIA_JUSTIFICATIONS { get; set; }
+
+    public virtual DbSet<CNSS_CIA_TYPES> CNSS_CIA_TYPES { get; set; }
+
+    public virtual DbSet<COMPONENT_FAMILY> COMPONENT_FAMILY { get; set; }
+
+    public virtual DbSet<COMPONENT_NAMES_LEGACY> COMPONENT_NAMES_LEGACY { get; set; }
+
+    public virtual DbSet<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; }
+
+    public virtual DbSet<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
+
+    public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
+
+    public virtual DbSet<CONFIDENTIAL_TYPE> CONFIDENTIAL_TYPE { get; set; }
+
+    public virtual DbSet<COUNTIES> COUNTIES { get; set; }
+
+    public virtual DbSet<COUNTRIES> COUNTRIES { get; set; }
+
+    public virtual DbSet<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
+
+    public virtual DbSet<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
+
+    public virtual DbSet<CSAF_FILE> CSAF_FILE { get; set; }
+
+    public virtual DbSet<CSET_VERSION> CSET_VERSION { get; set; }
+
+    public virtual DbSet<CSF_MAPPING> CSF_MAPPING { get; set; }
+
+    public virtual DbSet<CUSTOM_BASE_STANDARDS> CUSTOM_BASE_STANDARDS { get; set; }
+
+    public virtual DbSet<CUSTOM_QUESTIONAIRES> CUSTOM_QUESTIONAIRES { get; set; }
+
+    public virtual DbSet<CUSTOM_QUESTIONAIRE_QUESTIONS> CUSTOM_QUESTIONAIRE_QUESTIONS { get; set; }
+
+    public virtual DbSet<CUSTOM_STANDARD_BASE_STANDARD> CUSTOM_STANDARD_BASE_STANDARD { get; set; }
+
+    public virtual DbSet<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
+
+    public virtual DbSet<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
+
+    public virtual DbSet<DEMOGRAPHICS_ORGANIZATION_TYPE> DEMOGRAPHICS_ORGANIZATION_TYPE { get; set; }
+
+    public virtual DbSet<DEMOGRAPHICS_SIZE> DEMOGRAPHICS_SIZE { get; set; }
+
+    public virtual DbSet<DEMOGRAPHIC_ANSWERS> DEMOGRAPHIC_ANSWERS { get; set; }
+
+    public virtual DbSet<DETAILS_DEMOGRAPHICS> DETAILS_DEMOGRAPHICS { get; set; }
+
+    public virtual DbSet<DETAILS_DEMOGRAPHICS_OPTIONS> DETAILS_DEMOGRAPHICS_OPTIONS { get; set; }
+
+    public virtual DbSet<DIAGRAM_CONTAINER> DIAGRAM_CONTAINER { get; set; }
+
+    public virtual DbSet<DIAGRAM_CONTAINER_TYPES> DIAGRAM_CONTAINER_TYPES { get; set; }
+
+    public virtual DbSet<DIAGRAM_OBJECT_TYPES> DIAGRAM_OBJECT_TYPES { get; set; }
+
+    public virtual DbSet<DIAGRAM_TEMPLATES> DIAGRAM_TEMPLATES { get; set; }
+
+    public virtual DbSet<DIAGRAM_TYPES> DIAGRAM_TYPES { get; set; }
+
+    public virtual DbSet<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
+
+    public virtual DbSet<DOCUMENT_FILE> DOCUMENT_FILE { get; set; }
+
+    public virtual DbSet<EXTRA_ACET_MAPPING> EXTRA_ACET_MAPPING { get; set; }
+
+    public virtual DbSet<EXT_SECTOR> EXT_SECTOR { get; set; }
+
+    public virtual DbSet<EXT_SUB_SECTOR> EXT_SUB_SECTOR { get; set; }
+
+    public virtual DbSet<ExcelExport> ExcelExport { get; set; }
+
+    public virtual DbSet<FILE_KEYWORDS> FILE_KEYWORDS { get; set; }
+
+    public virtual DbSet<FILE_REF_KEYS> FILE_REF_KEYS { get; set; }
+
+    public virtual DbSet<FILE_TYPE> FILE_TYPE { get; set; }
+
+    public virtual DbSet<FINANCIAL_ASSESSMENT_FACTORS> FINANCIAL_ASSESSMENT_FACTORS { get; set; }
+
+    public virtual DbSet<FINANCIAL_ASSESSMENT_VALUES> FINANCIAL_ASSESSMENT_VALUES { get; set; }
+
+    public virtual DbSet<FINANCIAL_ATTRIBUTES> FINANCIAL_ATTRIBUTES { get; set; }
+
+    public virtual DbSet<FINANCIAL_COMPONENTS> FINANCIAL_COMPONENTS { get; set; }
+
+    public virtual DbSet<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
+
+    public virtual DbSet<FINANCIAL_DOMAINS> FINANCIAL_DOMAINS { get; set; }
+
+    public virtual DbSet<FINANCIAL_DOMAIN_FILTERS> FINANCIAL_DOMAIN_FILTERS { get; set; }
+
+    public virtual DbSet<FINANCIAL_DOMAIN_FILTERS_V2> FINANCIAL_DOMAIN_FILTERS_V2 { get; set; }
+
+    public virtual DbSet<FINANCIAL_FFIEC_MAPPINGS> FINANCIAL_FFIEC_MAPPINGS { get; set; }
+
+    public virtual DbSet<FINANCIAL_GROUPS> FINANCIAL_GROUPS { get; set; }
+
+    public virtual DbSet<FINANCIAL_HOURS> FINANCIAL_HOURS { get; set; }
+
+    public virtual DbSet<FINANCIAL_HOURS_COMPONENT> FINANCIAL_HOURS_COMPONENT { get; set; }
+
+    public virtual DbSet<FINANCIAL_MATURITY> FINANCIAL_MATURITY { get; set; }
+
+    public virtual DbSet<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; }
+
+    public virtual DbSet<FINANCIAL_REQUIREMENTS> FINANCIAL_REQUIREMENTS { get; set; }
+
+    public virtual DbSet<FINANCIAL_REVIEWTYPE> FINANCIAL_REVIEWTYPE { get; set; }
+
+    public virtual DbSet<FINANCIAL_TIERS> FINANCIAL_TIERS { get; set; }
+
+    public virtual DbSet<FINDING> FINDING { get; set; }
+
+    public virtual DbSet<FINDING_CONTACT> FINDING_CONTACT { get; set; }
+
+    public virtual DbSet<FRAMEWORK_TIERS> FRAMEWORK_TIERS { get; set; }
+
+    public virtual DbSet<FRAMEWORK_TIER_DEFINITIONS> FRAMEWORK_TIER_DEFINITIONS { get; set; }
+
+    public virtual DbSet<FRAMEWORK_TIER_TYPE> FRAMEWORK_TIER_TYPE { get; set; }
+
+    public virtual DbSet<FRAMEWORK_TIER_TYPE_ANSWER> FRAMEWORK_TIER_TYPE_ANSWER { get; set; }
+
+    public virtual DbSet<GALLERY_GROUP> GALLERY_GROUP { get; set; }
+
+    public virtual DbSet<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
+
+    public virtual DbSet<GALLERY_ITEM> GALLERY_ITEM { get; set; }
+
+    public virtual DbSet<GALLERY_LAYOUT> GALLERY_LAYOUT { get; set; }
+
+    public virtual DbSet<GALLERY_ROWS> GALLERY_ROWS { get; set; }
+
+    public virtual DbSet<GENERAL_SAL> GENERAL_SAL { get; set; }
+
+    public virtual DbSet<GENERAL_SAL_DESCRIPTIONS> GENERAL_SAL_DESCRIPTIONS { get; set; }
+
+    public virtual DbSet<GEN_FILE> GEN_FILE { get; set; }
+
+    public virtual DbSet<GEN_FILE_LIB_PATH_CORL> GEN_FILE_LIB_PATH_CORL { get; set; }
+
+    public virtual DbSet<GEN_SAL_NAMES> GEN_SAL_NAMES { get; set; }
+
+    public virtual DbSet<GEN_SAL_WEIGHTS> GEN_SAL_WEIGHTS { get; set; }
+
+    public virtual DbSet<GLOBAL_PROPERTIES> GLOBAL_PROPERTIES { get; set; }
+
+    public virtual DbSet<GLOSSARY> GLOSSARY { get; set; }
+
+    public virtual DbSet<HYDRO_DATA> HYDRO_DATA { get; set; }
+
+    public virtual DbSet<HYDRO_DATA_ACTIONS> HYDRO_DATA_ACTIONS { get; set; }
+
+    public virtual DbSet<HYDRO_PROGRESS> HYDRO_PROGRESS { get; set; }
+
+    public virtual DbSet<IMPORTANCE> IMPORTANCE { get; set; }
+
+    public virtual DbSet<INFORMATION> INFORMATION { get; set; }
+
+    public virtual DbSet<INSTALLATION> INSTALLATION { get; set; }
+
+    public virtual DbSet<INTERNATIONALIZATION_VALUES> INTERNATIONALIZATION_VALUES { get; set; }
+
+    public virtual DbSet<IRP> IRP { get; set; }
+
+    public virtual DbSet<IRP_HEADER> IRP_HEADER { get; set; }
+
+    public virtual DbSet<ISE_ACTIONS> ISE_ACTIONS { get; set; }
+
+    public virtual DbSet<ISE_ACTIONS_FINDINGS> ISE_ACTIONS_FINDINGS { get; set; }
+
+    public virtual DbSet<JWT> JWT { get; set; }
+
+    public virtual DbSet<LEVEL_BACKUP_ACET> LEVEL_BACKUP_ACET { get; set; }
+
+    public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
+
+    public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+
+    public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
+
+    public virtual DbSet<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK { get; set; }
+
+    public virtual DbSet<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; }
+
+    public virtual DbSet<MATURITY_EXTRA> MATURITY_EXTRA { get; set; }
+
+    public virtual DbSet<MATURITY_GROUPINGS> MATURITY_GROUPINGS { get; set; }
+
+    public virtual DbSet<MATURITY_GROUPING_TYPES> MATURITY_GROUPING_TYPES { get; set; }
+
+    public virtual DbSet<MATURITY_LEVELS> MATURITY_LEVELS { get; set; }
+
+    public virtual DbSet<MATURITY_LEVEL_USAGE_TYPES> MATURITY_LEVEL_USAGE_TYPES { get; set; }
+
+    public virtual DbSet<MATURITY_MODELS> MATURITY_MODELS { get; set; }
+
+    public virtual DbSet<MATURITY_POSSIBLE_ANSWERS> MATURITY_POSSIBLE_ANSWERS { get; set; }
+
+    public virtual DbSet<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
+
+    public virtual DbSet<MATURITY_QUESTION_PROPS> MATURITY_QUESTION_PROPS { get; set; }
+
+    public virtual DbSet<MATURITY_QUESTION_TYPES> MATURITY_QUESTION_TYPES { get; set; }
+
+    public virtual DbSet<MATURITY_REFERENCES> MATURITY_REFERENCES { get; set; }
+
+    public virtual DbSet<MATURITY_REFERENCE_TEXT> MATURITY_REFERENCE_TEXT { get; set; }
+
+    public virtual DbSet<MATURITY_SOURCE_FILES> MATURITY_SOURCE_FILES { get; set; }
+
+    public virtual DbSet<MATURITY_SUB_MODELS> MATURITY_SUB_MODELS { get; set; }
+
+    public virtual DbSet<MATURITY_SUB_MODEL_QUESTIONS> MATURITY_SUB_MODEL_QUESTIONS { get; set; }
+
+    public virtual DbSet<METRO_ANSWERS> METRO_ANSWERS { get; set; }
+
+    public virtual DbSet<METRO_AREA> METRO_AREA { get; set; }
+
+    public virtual DbSet<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
+
+    public virtual DbSet<NAVIGATION_STATE> NAVIGATION_STATE { get; set; }
+
+    public virtual DbSet<NCSF_CATEGORY> NCSF_CATEGORY { get; set; }
+
+    public virtual DbSet<NCSF_FUNCTIONS> NCSF_FUNCTIONS { get; set; }
+
+    public virtual DbSet<NERC_RISK_RANKING> NERC_RISK_RANKING { get; set; }
+
+    public virtual DbSet<NETWORK_WARNINGS> NETWORK_WARNINGS { get; set; }
+
+    public virtual DbSet<NEW_QUESTION> NEW_QUESTION { get; set; }
+
+    public virtual DbSet<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; }
+
+    public virtual DbSet<NEW_QUESTION_SETS> NEW_QUESTION_SETS { get; set; }
+
+    public virtual DbSet<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
+
+    public virtual DbSet<NIST_SAL_INFO_TYPES> NIST_SAL_INFO_TYPES { get; set; }
+
+    public virtual DbSet<NIST_SAL_INFO_TYPES_DEFAULTS> NIST_SAL_INFO_TYPES_DEFAULTS { get; set; }
+
+    public virtual DbSet<NIST_SAL_QUESTIONS> NIST_SAL_QUESTIONS { get; set; }
+
+    public virtual DbSet<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
+
+    public virtual DbSet<Nlogs> Nlogs { get; set; }
+
+    public virtual DbSet<PARAMETERS> PARAMETERS { get; set; }
+
+    public virtual DbSet<PARAMETER_ASSESSMENT> PARAMETER_ASSESSMENT { get; set; }
+
+    public virtual DbSet<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; }
+
+    public virtual DbSet<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
+
+    public virtual DbSet<PASSWORD_HISTORY> PASSWORD_HISTORY { get; set; }
+
+    public virtual DbSet<PROCUREMENT_DEPENDENCY> PROCUREMENT_DEPENDENCY { get; set; }
+
+    public virtual DbSet<PROCUREMENT_LANGUAGE_DATA> PROCUREMENT_LANGUAGE_DATA { get; set; }
+
+    public virtual DbSet<PROCUREMENT_LANGUAGE_HEADINGS> PROCUREMENT_LANGUAGE_HEADINGS { get; set; }
+
+    public virtual DbSet<PROCUREMENT_REFERENCES> PROCUREMENT_REFERENCES { get; set; }
+
+    public virtual DbSet<QUESTION_GROUP_HEADING> QUESTION_GROUP_HEADING { get; set; }
+
+    public virtual DbSet<QUESTION_GROUP_TYPE> QUESTION_GROUP_TYPE { get; set; }
+
+    public virtual DbSet<RECENT_FILES> RECENT_FILES { get; set; }
+
+    public virtual DbSet<RECOMMENDATIONS_REFERENCES> RECOMMENDATIONS_REFERENCES { get; set; }
+
+    public virtual DbSet<REFERENCES_DATA> REFERENCES_DATA { get; set; }
+
+    public virtual DbSet<REFERENCE_DOCS> REFERENCE_DOCS { get; set; }
+
+    public virtual DbSet<REF_LIBRARY_PATH> REF_LIBRARY_PATH { get; set; }
+
+    public virtual DbSet<REGION_ANSWERS> REGION_ANSWERS { get; set; }
+
+    public virtual DbSet<REPORT_DETAIL_SECTIONS> REPORT_DETAIL_SECTIONS { get; set; }
+
+    public virtual DbSet<REPORT_DETAIL_SECTION_SELECTION> REPORT_DETAIL_SECTION_SELECTION { get; set; }
+
+    public virtual DbSet<REPORT_OPTIONS> REPORT_OPTIONS { get; set; }
+
+    public virtual DbSet<REPORT_OPTIONS_SELECTION> REPORT_OPTIONS_SELECTION { get; set; }
+
+    public virtual DbSet<REPORT_STANDARDS_SELECTION> REPORT_STANDARDS_SELECTION { get; set; }
+
+    public virtual DbSet<REQUIRED_DOCUMENTATION> REQUIRED_DOCUMENTATION { get; set; }
+
+    public virtual DbSet<REQUIRED_DOCUMENTATION_HEADERS> REQUIRED_DOCUMENTATION_HEADERS { get; set; }
+
+    public virtual DbSet<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; }
+
+    public virtual DbSet<REQUIREMENT_LEVEL_TYPE> REQUIREMENT_LEVEL_TYPE { get; set; }
+
+    public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
+
+    public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
+
+    public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
+
+    public virtual DbSet<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; }
+
+    public virtual DbSet<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; }
+
+    public virtual DbSet<REQUIREMENT_SOURCE_FILES> REQUIREMENT_SOURCE_FILES { get; set; }
+
+    public virtual DbSet<RapidAssessmentControls> RapidAssessmentControls { get; set; }
+
+    public virtual DbSet<SAL_DETERMINATION_TYPES> SAL_DETERMINATION_TYPES { get; set; }
+
+    public virtual DbSet<SECTOR> SECTOR { get; set; }
+
+    public virtual DbSet<SECTOR_INDUSTRY> SECTOR_INDUSTRY { get; set; }
+
+    public virtual DbSet<SECTOR_STANDARD_RECOMMENDATIONS> SECTOR_STANDARD_RECOMMENDATIONS { get; set; }
+
+    public virtual DbSet<SECURITY_QUESTION> SECURITY_QUESTION { get; set; }
+
+    public virtual DbSet<SETS> SETS { get; set; }
+
+    public virtual DbSet<SETS_CATEGORY> SETS_CATEGORY { get; set; }
+
+    public virtual DbSet<SET_FILES> SET_FILES { get; set; }
+
+    public virtual DbSet<SHAPE_TYPES> SHAPE_TYPES { get; set; }
+
+    public virtual DbSet<SP80053_FAMILY_ABBREVIATIONS> SP80053_FAMILY_ABBREVIATIONS { get; set; }
+
+    public virtual DbSet<STANDARD_CATEGORY> STANDARD_CATEGORY { get; set; }
+
+    public virtual DbSet<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; }
+
+    public virtual DbSet<STANDARD_SELECTION> STANDARD_SELECTION { get; set; }
+
+    public virtual DbSet<STANDARD_SOURCE_FILE> STANDARD_SOURCE_FILE { get; set; }
+
+    public virtual DbSet<STANDARD_SPECIFIC_LEVEL> STANDARD_SPECIFIC_LEVEL { get; set; }
+
+    public virtual DbSet<STANDARD_TO_UNIVERSAL_MAP> STANDARD_TO_UNIVERSAL_MAP { get; set; }
+
+    public virtual DbSet<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; }
+
+    public virtual DbSet<STATE_REGION> STATE_REGION { get; set; }
+
+    public virtual DbSet<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; }
+
+    public virtual DbSet<SYMBOL_GROUPS> SYMBOL_GROUPS { get; set; }
+
+    public virtual DbSet<TTP> TTP { get; set; }
+
+    public virtual DbSet<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
+
+    public virtual DbSet<UNIVERSAL_AREA> UNIVERSAL_AREA { get; set; }
+
+    public virtual DbSet<UNIVERSAL_SAL_LEVEL> UNIVERSAL_SAL_LEVEL { get; set; }
+
+    public virtual DbSet<UNIVERSAL_SUB_CATEGORIES> UNIVERSAL_SUB_CATEGORIES { get; set; }
+
+    public virtual DbSet<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; }
+
+    public virtual DbSet<USERS> USERS { get; set; }
+
+    public virtual DbSet<USER_DETAIL_INFORMATION> USER_DETAIL_INFORMATION { get; set; }
+
+    public virtual DbSet<USER_EMAIL_HISTORY> USER_EMAIL_HISTORY { get; set; }
+
+    public virtual DbSet<USER_SECURITY_QUESTIONS> USER_SECURITY_QUESTIONS { get; set; }
+
+    public virtual DbSet<VIEW_QUESTIONS_STATUS> VIEW_QUESTIONS_STATUS { get; set; }
+
+    public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
+
+    public virtual DbSet<WEIGHT> WEIGHT { get; set; }
+
+    public virtual DbSet<vFinancialGroups> vFinancialGroups { get; set; }
+
+    public virtual DbSet<vParameters> vParameters { get; set; }
+
+    public virtual DbSet<vQUESTION_HEADINGS> vQUESTION_HEADINGS { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ACCESS_KEY>(entity =>
+        {
+            entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+        });
+
+        modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
+        {
+            entity.HasOne(d => d.AccessKeyNavigation).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ACCESS_KEY");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ACCESS_KEY_ASSESSMENT)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ACCESS_KEY_ASSESSMENT_ASSESSMENTS");
+        });
+
+        modelBuilder.Entity<ADDRESS>(entity =>
+        {
+            entity.HasKey(e => new { e.AddressType, e.Id }).HasName("PK_ADDRESS_1");
+
+            entity.HasOne(d => d.IdNavigation).WithMany(p => p.ADDRESS).HasConstraintName("FK_ADDRESS_USER_DETAIL_INFORMATION1");
+        });
+
+        modelBuilder.Entity<AGGREGATION_ASSESSMENT>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Aggregation_Id }).HasName("PK__AGGREGAT__985B1205C06FF728");
+
+            entity.HasOne(d => d.Aggregation).WithMany(p => p.AGGREGATION_ASSESSMENT)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AGGREGATI__Aggre__6EAB62A3");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.AGGREGATION_ASSESSMENT).HasConstraintName("FK__AGGREGATI__Asses__6CC31A31");
+        });
+
+        modelBuilder.Entity<AGGREGATION_INFORMATION>(entity =>
+        {
+            entity.HasKey(e => e.AggregationID).HasName("PK__AggregationInformation");
+
+            entity.ToTable(tb => tb.HasComment("A collection of AGGREGATION_INFORMATION records"));
+
+            entity.HasOne(d => d.Aggregation_ModeNavigation).WithMany(p => p.AGGREGATION_INFORMATION).HasConstraintName("FK_AGGREGATION_INFORMATION_AGGREGATION_TYPES");
+        });
+
+        modelBuilder.Entity<AGGREGATION_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of AGGREGATION_TYPES records"));
+        });
+
+        modelBuilder.Entity<ANALYTICS_MATURITY_GROUPINGS>(entity =>
+        {
+            entity.HasOne(d => d.Maturity_Model).WithMany(p => p.ANALYTICS_MATURITY_GROUPINGS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ANALYTICS_MATURITY_GROUPINGS_MATURITY_MODELS");
+        });
+
+        modelBuilder.Entity<ANSWER>(entity =>
+        {
+            entity.HasKey(e => e.Answer_Id).HasName("PK_ANSWER_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of ANSWER records"));
+
+            entity.Property(e => e.Alternate_Justification).HasComment("The Alternate Justification is used to");
+            entity.Property(e => e.Answer_Text)
+                .HasDefaultValueSql("('U')")
+                .HasComment("The Answer Text is used to");
+            entity.Property(e => e.Comment).HasComment("The Comment is used to");
+            entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
+            entity.Property(e => e.Is_Component).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Component' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Framework).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Framework' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Maturity).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Maturity' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Is_Requirement).HasComputedColumnSql("(CONVERT([bit],case [Question_Type] when 'Requirement' then (1) else (0) end,(0)))", false);
+            entity.Property(e => e.Mark_For_Review).HasComment("The Mark For Review is used to");
+            entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
+            entity.Property(e => e.Question_Or_Requirement_Id).HasComment("The Question Or Requirement Id is used to");
+
+            entity.HasOne(d => d.Answer_TextNavigation).WithMany(p => p.ANSWER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ANSWER_Answer_Lookup");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ANSWER).HasConstraintName("FK_ANSWER_ASSESSMENTS");
+
+            entity.HasOne(d => d.Mat_Option).WithMany(p => p.ANSWER)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_ANSWER_MATURITY_ANSWER_OPTIONS1");
+
+            entity.HasOne(d => d.Question_TypeNavigation).WithMany(p => p.ANSWER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ANSWER_ANSWER_QUESTION_TYPES");
+        });
+
+        modelBuilder.Entity<ANSWER_CLONE>(entity =>
+        {
+            entity.HasOne(d => d.Profile).WithMany(p => p.ANSWER_CLONE).HasConstraintName("FK_ANSWER_CLONE_ANSWER_PROFILE");
+        });
+
+        modelBuilder.Entity<ANSWER_LOOKUP>(entity =>
+        {
+            entity.HasKey(e => e.Answer_Text).HasName("PK_Answer_Lookup");
+
+            entity.ToTable(tb => tb.HasComment("A collection of ANSWER_LOOKUP records"));
+
+            entity.Property(e => e.Answer_Text).HasComment("The Answer Text is used to");
+            entity.Property(e => e.Answer_Full_Name).HasComment("The Answer Full Name is used to");
+        });
+
+        modelBuilder.Entity<ANSWER_PROFILE>(entity =>
+        {
+            entity.Property(e => e.Profile_Date).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Asessment).WithMany(p => p.ANSWER_PROFILE).HasConstraintName("FK_ANSWER_PROFILE_ASSESSMENTS");
+        });
+
+        modelBuilder.Entity<ANSWER_QUESTION_TYPES>(entity =>
+        {
+            entity.HasKey(e => e.Question_Type).HasName("PK_Answer_Question_Types");
+
+            entity.ToTable(tb => tb.HasComment("A collection of ANSWER_QUESTION_TYPES records"));
+        });
+
+        modelBuilder.Entity<APP_CODE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of APP_CODE records"));
+        });
+
+        modelBuilder.Entity<ASSESSMENTS>(entity =>
+        {
+            entity.HasKey(e => e.Assessment_Id).HasName("PK_Aggregation_1");
+
+            entity.ToTable(tb =>
+                {
+                    tb.HasComment("A collection of ASSESSMENTS records");
+                    tb.HasTrigger("document_cascade_delete");
+                });
+
+            entity.Property(e => e.AssessmentCreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
+            entity.Property(e => e.ISE_StateLed).HasDefaultValueSql("((0))");
+            entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
+
+            entity.HasOne(d => d.AssessmentCreator).WithMany(p => p.ASSESSMENTS)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_ASSESSMENTS_USERS");
+
+            entity.HasOne(d => d.GalleryItem).WithMany(p => p.ASSESSMENTS)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_ASSESSMENTS_GALLERY_ITEM");
+        });
+
+        modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
+        {
+            entity.Property(e => e.Answer).HasDefaultValueSql("('U')");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION).HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Documentation).WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION).HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION");
+        });
+
+        modelBuilder.Entity<ASSESSMENT_CONTACTS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_CONTACTS records"));
+
+            entity.HasOne(d => d.AssessmentRole).WithMany(p => p.ASSESSMENT_CONTACTS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ASSESSMENT_CONTACTS_ASSESSMENT_ROLES");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_CONTACTS).HasConstraintName("FK_ASSESSMENT_CONTACTS_ASSESSMENTS");
+
+            entity.HasOne(d => d.User).WithMany(p => p.ASSESSMENT_CONTACTS)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_ASSESSMENT_CONTACTS_USERS");
+        });
+
+        modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid }).HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
+
+            entity.ToTable(tb => tb.HasTrigger("ASSESSMENT_DIAGRAM_COMPONENT_DELETE_Trigger"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Component_Symbol).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTS).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_COMPONENT_SYMBOLS1");
+
+            entity.HasOne(d => d.Layer).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSLayer).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER");
+
+            entity.HasOne(d => d.Zone).WithMany(p => p.ASSESSMENT_DIAGRAM_COMPONENTSZone).HasConstraintName("FK_ASSESSMENT_DIAGRAM_COMPONENTS_DIAGRAM_CONTAINER1");
+        });
+
+        modelBuilder.Entity<ASSESSMENT_IRP>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.IRP_Id }).HasName("PK_Assessment_IRP");
+
+            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_IRP records"));
+
+            entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_IRP).HasConstraintName("FK__Assessmen__Asses__5DEAEAF5");
+
+            entity.HasOne(d => d.IRP).WithMany(p => p.ASSESSMENT_IRP).HasConstraintName("FK__Assessmen__IRP_I__5EDF0F2E");
+        });
+
+        modelBuilder.Entity<ASSESSMENT_IRP_HEADER>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_IRP_HEADER records"));
+
+            entity.HasOne(d => d.ASSESSMENT).WithMany(p => p.ASSESSMENT_IRP_HEADER).HasConstraintName("FK__ASSESSMEN__ASSES__658C0CBD");
+
+            entity.HasOne(d => d.IRP_HEADER).WithMany(p => p.ASSESSMENT_IRP_HEADER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__ASSESSMEN__IRP_H__668030F6");
+        });
+
+        modelBuilder.Entity<ASSESSMENT_ROLES>(entity =>
+        {
+            entity.HasKey(e => e.AssessmentRoleId).HasName("PK_ASSESSMENT_ROLES_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_ROLES records"));
+        });
+
+        modelBuilder.Entity<ASSESSMENT_SELECTED_LEVELS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of ASSESSMENT_SELECTED_LEVELS records"));
+
+            entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
+            entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
+            entity.Property(e => e.Standard_Specific_Sal_Level).HasComment("The Standard Specific Sal Level is used to");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENT_SELECTED_LEVELS).HasConstraintName("FK_ASSESSMENT_SELECTED_LEVELS_STANDARD_SELECTION");
+
+            entity.HasOne(d => d.Level_NameNavigation).WithMany(p => p.ASSESSMENT_SELECTED_LEVELS).HasConstraintName("FK_ASSESSMENT_SELECTED_LEVELS_LEVEL_NAMES");
+        });
+
+        modelBuilder.Entity<AVAILABLE_MATURITY_MODELS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of AVAILABLE_MATURITY_MODELS records"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.AVAILABLE_MATURITY_MODELS).HasConstraintName("FK_AVAILABLE_MATURITY_MODELS_ASSESSMENTS");
+
+            entity.HasOne(d => d.model).WithMany(p => p.AVAILABLE_MATURITY_MODELS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__AVAILABLE__model__6F6A7CB2");
+        });
+
+        modelBuilder.Entity<AVAILABLE_STANDARDS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of AVAILABLE_STANDARDS records"));
+
+            entity.Property(e => e.Set_Name).HasComment("The Old Entity Name is used to");
+            entity.Property(e => e.Selected).HasComment("The Selected is used to");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.AVAILABLE_STANDARDS).HasConstraintName("FK_AVAILABLE_STANDARDS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.AVAILABLE_STANDARDS).HasConstraintName("FK_AVAILABLE_STANDARDS_SETS");
+        });
+
+        modelBuilder.Entity<Analytics_Answers>(entity =>
+        {
+            entity.ToView("Analytics_Answers");
+        });
+
+        modelBuilder.Entity<Answer_Components>(entity =>
+        {
+            entity.ToView("Answer_Components");
+        });
+
+        modelBuilder.Entity<Answer_Components_Default>(entity =>
+        {
+            entity.ToView("Answer_Components_Default");
+        });
+
+        modelBuilder.Entity<Answer_Components_Exploded>(entity =>
+        {
+            entity.ToView("Answer_Components_Exploded");
+        });
+
+        modelBuilder.Entity<Answer_Components_InScope>(entity =>
+        {
+            entity.ToView("Answer_Components_InScope");
+        });
+
+        modelBuilder.Entity<Answer_Components_Overrides>(entity =>
+        {
+            entity.ToView("Answer_Components_Overrides");
+        });
+
+        modelBuilder.Entity<Answer_Maturity>(entity =>
+        {
+            entity.ToView("Answer_Maturity");
+        });
+
+        modelBuilder.Entity<Answer_Questions>(entity =>
+        {
+            entity.ToView("Answer_Questions");
+        });
+
+        modelBuilder.Entity<Answer_Questions_No_Components>(entity =>
+        {
+            entity.ToView("Answer_Questions_No_Components");
+
+            entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+        });
+
+        modelBuilder.Entity<Answer_Requirements>(entity =>
+        {
+            entity.ToView("Answer_Requirements");
+
+            entity.Property(e => e.Answer_Id).ValueGeneratedOnAdd();
+        });
+
+        modelBuilder.Entity<Answer_Standards_InScope>(entity =>
+        {
+            entity.ToView("Answer_Standards_InScope");
+        });
+
+        modelBuilder.Entity<Assessments_For_User>(entity =>
+        {
+            entity.ToView("Assessments_For_User");
+        });
+
+        modelBuilder.Entity<CATALOG_RECOMMENDATIONS_DATA>(entity =>
+        {
+            entity.HasKey(e => e.Data_Id).HasName("PK_Catalog_Recommendations_Data");
+
+            entity.ToTable(tb => tb.HasComment("A collection of CATALOG_RECOMMENDATIONS_DATA records"));
+
+            entity.Property(e => e.Data_Id).HasComment("The Data Id is used to");
+            entity.Property(e => e.Enhancement).HasComment("The Enhancement is used to");
+            entity.Property(e => e.Enhancement_Html).HasComment("The Enhancement Html is used to");
+            entity.Property(e => e.Flow_Document).HasComment("The Flow Document is used to");
+            entity.Property(e => e.Heading).HasComment("The Heading is used to");
+            entity.Property(e => e.Heading_Html).HasComment("The Heading Html is used to");
+            entity.Property(e => e.Parent_Heading_Id).HasComment("The Parent Heading Id is used to");
+            entity.Property(e => e.Req_Oracle_Id).HasComment("The Req Oracle Id is used to");
+            entity.Property(e => e.Requirement).HasComment("The Requirement is used to");
+            entity.Property(e => e.Requirement_Html).HasComment("The Requirement Html is used to");
+            entity.Property(e => e.Requirement_Text).HasComment("The Requirement Text is used to");
+            entity.Property(e => e.Section_Long_Number).HasComment("The Section Long Number is used to");
+            entity.Property(e => e.Section_Short_Name).HasComment("The Section Short Name is used to");
+            entity.Property(e => e.Section_Short_Number).HasComment("The Section Short Number is used to");
+            entity.Property(e => e.Supplemental_Guidance).HasComment("The Supplemental Guidance is used to");
+            entity.Property(e => e.Supplemental_Guidance_Html).HasComment("The Supplemental Guidance Html is used to");
+            entity.Property(e => e.Topic_Name).HasComment("The Topic Name is used to");
+
+            entity.HasOne(d => d.Parent_Heading).WithMany(p => p.CATALOG_RECOMMENDATIONS_DATA).HasConstraintName("FK_CATALOG_RECOMMENDATIONS_DATA_CATALOG_RECOMMENDATIONS_HEADINGS");
+        });
+
+        modelBuilder.Entity<CATALOG_RECOMMENDATIONS_HEADINGS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of CATALOG_RECOMMENDATIONS_HEADINGS records"));
+
+            entity.Property(e => e.Id).HasComment("The Id is used to");
+            entity.Property(e => e.Heading_Name).HasComment("The Heading Name is used to");
+            entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
+        });
+
+        modelBuilder.Entity<CIS_CSI_CUSTOMER_COUNTS>(entity =>
+        {
+            entity.HasKey(e => e.Customer_Count).HasName("PK_CIS_CSI_CUSTOMER_AMOUNTS");
+        });
+
+        modelBuilder.Entity<CIS_CSI_ORGANIZATION_DEMOGRAPHICS>(entity =>
+        {
+            entity.HasKey(e => e.Assessment_Id).HasName("PK_CIS_CS_SITE_INFORMATION");
+
+            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICS).HasConstraintName("FK_CIS_CS_SITE_INFORMATION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation).WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation).HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
+
+            entity.HasOne(d => d.IT_ICS_Staff_CountNavigation).WithMany(p => p.CIS_CSI_ORGANIZATION_DEMOGRAPHICSIT_ICS_Staff_CountNavigation).HasConstraintName("FK_CIS_CSI_ORGANIZATION_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
+        });
+
+        modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION>(entity =>
+        {
+            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.CIS_CSI_SERVICE_COMPOSITION).HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Primary_Defining_SystemNavigation).WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION).HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_CIS_CSI_DEFINING_SYSTEMS");
+        });
+
+        modelBuilder.Entity<CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS>(entity =>
+        {
+            entity.HasOne(d => d.Assessment).WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS).HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_SERVICE_COMPOSITION");
+
+            entity.HasOne(d => d.Defining_System).WithMany(p => p.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS).HasConstraintName("FK_CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS_CIS_CSI_DEFINING_SYSTEMS");
+        });
+
+        modelBuilder.Entity<CIS_CSI_SERVICE_DEMOGRAPHICS>(entity =>
+        {
+            entity.HasKey(e => e.Assessment_Id).HasName("PK_CIS_CS_DEMOGRAPHICS");
+
+            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS).HasConstraintName("FK_CIS_CS_DEMOGRAPHICS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Authorized_Non_Organizational_User_CountNavigation).WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS).HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_USER_COUNTS");
+
+            entity.HasOne(d => d.Budget_BasisNavigation).WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS).HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_BUDGET_BASES");
+
+            entity.HasOne(d => d.Customers_CountNavigation).WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICS).HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_CUSTOMER_COUNTS");
+
+            entity.HasOne(d => d.Cybersecurity_IT_ICS_Staff_CountNavigation).WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSCybersecurity_IT_ICS_Staff_CountNavigation).HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS_2");
+
+            entity.HasOne(d => d.IT_ICS_Staff_CountNavigation).WithMany(p => p.CIS_CSI_SERVICE_DEMOGRAPHICSIT_ICS_Staff_CountNavigation).HasConstraintName("FK_CIS_CSI_SERVICE_DEMOGRAPHICS_CIS_CSI_STAFF_COUNTS");
+        });
+
+        modelBuilder.Entity<CIS_CSI_STAFF_COUNTS>(entity =>
+        {
+            entity.HasKey(e => e.Staff_Count).HasName("PK_CIS_CSI_STAFF_AMOUNTS");
+        });
+
+        modelBuilder.Entity<CIS_CSI_USER_COUNTS>(entity =>
+        {
+            entity.HasKey(e => e.User_Count).HasName("PK_CIS_CSI_USER_AMOUNTS");
+        });
+
+        modelBuilder.Entity<CNSS_CIA_JUSTIFICATIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.CNSS_CIA_JUSTIFICATIONS).HasConstraintName("FK_CNSS_CIA_JUSTIFICATIONS_ASSESSMENTS");
+
+            entity.HasOne(d => d.CIA_TypeNavigation).WithMany(p => p.CNSS_CIA_JUSTIFICATIONS).HasConstraintName("FK_CNSS_CIA_JUSTIFICATIONS_CNSS_CIA_TYPES");
+        });
+
+        modelBuilder.Entity<CNSS_CIA_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of CNSS_CIA_TYPES records"));
+        });
+
+        modelBuilder.Entity<COMPONENT_FAMILY>(entity =>
+        {
+            entity.HasKey(e => e.Component_Family_Name).HasName("PK_ComponentFamily");
+
+            entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_FAMILY records"));
+
+            entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
+        });
+
+        modelBuilder.Entity<COMPONENT_NAMES_LEGACY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_NAMES_LEGACY records"));
+
+            entity.HasOne(d => d.Component_Symbol).WithMany(p => p.COMPONENT_NAMES_LEGACY).HasConstraintName("FK_COMPONENT_NAMES_LEGACY_COMPONENT_SYMBOLS");
+        });
+
+        modelBuilder.Entity<COMPONENT_QUESTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_QUESTIONS records"));
+
+            entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");
+            entity.Property(e => e.Rank).HasComment("The Rank is used to");
+            entity.Property(e => e.Seq).HasComment("The Seq is used to");
+            entity.Property(e => e.Weight).HasComment("The Weight is used to");
+
+            entity.HasOne(d => d.Component_Symbol).WithMany(p => p.COMPONENT_QUESTIONS).HasConstraintName("FK_COMPONENT_QUESTIONS_COMPONENT_SYMBOLS");
+
+            entity.HasOne(d => d.Question).WithMany(p => p.COMPONENT_QUESTIONS).HasConstraintName("FK_Component_Questions_NEW_QUESTION");
+        });
+
+        modelBuilder.Entity<COMPONENT_SYMBOLS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_SYMBOLS records"));
+
+            entity.Property(e => e.Component_Symbol_Id).HasComment("The Id is used to");
+            entity.Property(e => e.Abbreviation).HasComment("The Abbreviation is used to");
+            entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
+            entity.Property(e => e.File_Name).HasComment("The File Name is used to");
+            entity.Property(e => e.Height).HasDefaultValueSql("((60))");
+            entity.Property(e => e.Symbol_Group_Id).HasComment("The Symbol Group Id is used to");
+            entity.Property(e => e.Symbol_Name).HasDefaultValueSql("('')");
+            entity.Property(e => e.Width).HasDefaultValueSql("((60))");
+
+            entity.HasOne(d => d.Component_Family_NameNavigation).WithMany(p => p.COMPONENT_SYMBOLS).HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
+
+            entity.HasOne(d => d.Symbol_Group).WithMany(p => p.COMPONENT_SYMBOLS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_COMPONENT_SYMBOLS_SYMBOL_GROUPS");
+        });
+
+        modelBuilder.Entity<COMPONENT_SYMBOLS_GM_TO_CSET>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_SYMBOLS_GM_TO_CSET records"));
+        });
+
+        modelBuilder.Entity<COUNTIES>(entity =>
+        {
+            entity.HasKey(e => e.County_FIPS).HasName("PK_counties1");
+
+            entity.HasOne(d => d.STATE_REGION).WithMany(p => p.COUNTIES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_COUNTIES_STATE_REGION");
+        });
+
+        modelBuilder.Entity<COUNTRIES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of COUNTRIES records"));
+        });
+
+        modelBuilder.Entity<COUNTY_ANSWERS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.County_FIPS }).HasName("PK_ExtendedDemographicCountyAnswers");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.COUNTY_ANSWERS).HasConstraintName("FK_ExtendedDemographicCountyAnswers_ASSESSMENTS");
+
+            entity.HasOne(d => d.County_FIPSNavigation).WithMany(p => p.COUNTY_ANSWERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ExtendedDemographicCountyAnswers_COUNTIES");
+        });
+
+        modelBuilder.Entity<COUNTY_METRO_AREA>(entity =>
+        {
+            entity.HasKey(e => new { e.County_FIPS, e.Metro_FIPS }).HasName("PK_County_MetropolitanArea");
+
+            entity.HasOne(d => d.County_FIPSNavigation).WithMany(p => p.COUNTY_METRO_AREA)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_County_MetropolitanArea_COUNTIES");
+
+            entity.HasOne(d => d.Metro_FIPSNavigation).WithMany(p => p.COUNTY_METRO_AREA)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_COUNTY_METRO_AREA_METRO_AREA");
+        });
+
+        modelBuilder.Entity<CSET_VERSION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of CSET_VERSION records"));
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasComment("The Id is used to");
+            entity.Property(e => e.Cset_Version1).HasComment("The Cset Version is used to");
+            entity.Property(e => e.Version_Id).HasComment("The Version Id is used to");
+        });
+
+        modelBuilder.Entity<CUSTOM_BASE_STANDARDS>(entity =>
+        {
+            entity.HasKey(e => new { e.Custom_Questionaire_Name, e.Base_Standard }).HasName("PK_CUSTOM_BASE_STANDARDS_1");
+
+            entity.HasOne(d => d.Custom_Questionaire_NameNavigation).WithMany(p => p.CUSTOM_BASE_STANDARDS).HasConstraintName("FK_CUSTOM_BASE_STANDARD_CUSTOM_QUESTIONAIRES");
+        });
+
+        modelBuilder.Entity<CUSTOM_QUESTIONAIRE_QUESTIONS>(entity =>
+        {
+            entity.HasOne(d => d.Custom_Questionaire_NameNavigation).WithMany(p => p.CUSTOM_QUESTIONAIRE_QUESTIONS).HasConstraintName("FK_CUSTON_QUESTIONAIRE_QUESTIONS_CUSTOM_QUESTIONAIRES");
+        });
+
+        modelBuilder.Entity<CUSTOM_STANDARD_BASE_STANDARD>(entity =>
+        {
+            entity.HasOne(d => d.Base_StandardNavigation).WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDBase_StandardNavigation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS");
+
+            entity.HasOne(d => d.Custom_Questionaire_NameNavigation).WithMany(p => p.CUSTOM_STANDARD_BASE_STANDARDCustom_Questionaire_NameNavigation).HasConstraintName("FK_CUSTOM_STANDARD_BASE_STANDARD_SETS1");
+        });
+
+        modelBuilder.Entity<DEMOGRAPHICS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS records"));
+
+            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+            entity.Property(e => e.IsScoped).HasDefaultValueSql("((0))");
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENTS");
+
+            entity.HasOne(d => d.AssetValueNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ASSET_VALUES");
+
+            entity.HasOne(d => d.FacilitatorNavigation).WithMany(p => p.DEMOGRAPHICSFacilitatorNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_FACILITATOR");
+
+            entity.HasOne(d => d.Industry).WithMany(p => p.DEMOGRAPHICS)
+                .HasPrincipalKey(p => p.IndustryId)
+                .HasForeignKey(d => d.IndustryId)
+                .HasConstraintName("FK_DEMOGRAPHICS_SECTOR_INDUSTRY");
+
+            entity.HasOne(d => d.OrganizationTypeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_ORGANIZATION_TYPE");
+
+            entity.HasOne(d => d.PointOfContactNavigation).WithMany(p => p.DEMOGRAPHICSPointOfContactNavigation).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENT_CONTACTS_POINTOFCONTACT");
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_SECTOR");
+
+            entity.HasOne(d => d.SizeNavigation).WithMany(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_DEMOGRAPHICS_SIZE");
+        });
+
+        modelBuilder.Entity<DEMOGRAPHICS_ASSET_VALUES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS_ASSET_VALUES records"));
+
+            entity.Property(e => e.AppCode).HasDefaultValueSql("('CSET')");
+            entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.AppCodeNavigation).WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES).HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
+        });
+
+        modelBuilder.Entity<DEMOGRAPHICS_ORGANIZATION_TYPE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS_ORGANIZATION_TYPE records"));
+
+            entity.Property(e => e.OrganizationTypeId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<DEMOGRAPHICS_SIZE>(entity =>
+        {
+            entity.HasKey(e => e.Size).HasName("PK_DemographicsSize");
+
+            entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS_SIZE records"));
+
+            entity.Property(e => e.DemographicId).ValueGeneratedOnAdd();
+        });
+
+        modelBuilder.Entity<DEMOGRAPHIC_ANSWERS>(entity =>
+        {
+            entity.HasKey(e => e.Assessment_Id).HasName("PK_FloridaDemographicRenameMe");
+
+            entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.DEMOGRAPHIC_ANSWERS).HasConstraintName("FK_ExtendedDemographicAnswer_ASSESSMENTS");
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.DEMOGRAPHIC_ANSWERS).HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSector");
+
+            entity.HasOne(d => d.SubSector).WithMany(p => p.DEMOGRAPHIC_ANSWERS).HasConstraintName("FK_ExtendedDemographicAnswer_ExtendedSubSector");
+        });
+
+        modelBuilder.Entity<DETAILS_DEMOGRAPHICS>(entity =>
+        {
+            entity.HasOne(d => d.Assessment).WithMany(p => p.DETAILS_DEMOGRAPHICS).HasConstraintName("FK_DETAILS_DEMOGRAPHICS_ASSESSMENTS");
+        });
+
+        modelBuilder.Entity<DETAILS_DEMOGRAPHICS_OPTIONS>(entity =>
+        {
+            entity.HasKey(e => e.Option_Id).HasName("PK_DETAIL_DEMOG_OPTIONS");
+        });
+
+        modelBuilder.Entity<DIAGRAM_CONTAINER>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_CONTAINER records"));
+
+            entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('L')");
+            entity.Property(e => e.Visible).HasDefaultValueSql("((1))");
+
+            entity.HasOne(d => d.ContainerTypeNavigation).WithMany(p => p.DIAGRAM_CONTAINER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER_TYPES");
+
+            entity.HasOne(d => d.Parent).WithMany(p => p.InverseParent)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DIAGRAM_CONTAINER_DIAGRAM_CONTAINER");
+        });
+
+        modelBuilder.Entity<DIAGRAM_CONTAINER_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_CONTAINER_TYPES records"));
+        });
+
+        modelBuilder.Entity<DIAGRAM_OBJECT_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_OBJECT_TYPES records"));
+        });
+
+        modelBuilder.Entity<DIAGRAM_TEMPLATES>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_DIAGRAM_TEMPATES");
+
+            entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_TEMPLATES records"));
+
+            entity.Property(e => e.Id).HasComment("The Id is used to");
+            entity.Property(e => e.File_Name).HasComment("The File Name is used to");
+            entity.Property(e => e.Is_Read_Only)
+                .HasDefaultValueSql("((1))")
+                .HasComment("The Is Read Only is used to");
+            entity.Property(e => e.Is_Visible)
+                .HasDefaultValueSql("((1))")
+                .HasComment("The Is Visible is used to");
+            entity.Property(e => e.Template_Name).HasComment("The Template Name is used to");
+        });
+
+        modelBuilder.Entity<DIAGRAM_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_TYPES records"));
+
+            entity.HasOne(d => d.Object_TypeNavigation).WithMany(p => p.DIAGRAM_TYPES).HasConstraintName("FK_DIAGRAM_TYPES_DIAGRAM_OBJECT_TYPES");
+        });
+
+        modelBuilder.Entity<DOCUMENT_ANSWERS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
+
+            entity.HasOne(d => d.Answer).WithMany(p => p.DOCUMENT_ANSWERS).HasConstraintName("FK_DOCUMENT_ANSWERS_ANSWER");
+
+            entity.HasOne(d => d.Document).WithMany(p => p.DOCUMENT_ANSWERS).HasConstraintName("FK_Document_Answers_DOCUMENT_FILE");
+        });
+
+        modelBuilder.Entity<DOCUMENT_FILE>(entity =>
+        {
+            entity.HasKey(e => e.Document_Id).HasName("PK__document_file__00000000000001C8");
+
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.Property(e => e.Document_Id).HasComment("The Document Id is used to");
+            entity.Property(e => e.CreatedTimestamp).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Path).HasComment("The Path is used to");
+            entity.Property(e => e.Title).HasComment("The Title is used to");
+            entity.Property(e => e.UpdatedTimestamp).HasDefaultValueSql("(getdate())");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.DOCUMENT_FILE)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DOCUMENT_FILE_ASSESSMENTS");
+
+            entity.HasOne(d => d.AssessmentNavigation).WithMany(p => p.DOCUMENT_FILE)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DOCUMENT_FILE_DEMOGRAPHICS");
+        });
+
+        modelBuilder.Entity<EXTRA_ACET_MAPPING>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of EXTRA_ACET_MAPPING records"));
+        });
+
+        modelBuilder.Entity<EXT_SECTOR>(entity =>
+        {
+            entity.HasKey(e => e.SectorId).HasName("PK_ExtendedSector");
+        });
+
+        modelBuilder.Entity<EXT_SUB_SECTOR>(entity =>
+        {
+            entity.HasKey(e => e.SubSectorId).HasName("PK_ExtendedSubSector_1");
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.EXT_SUB_SECTOR)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ExtendedSubSector_ExtendedSector");
+        });
+
+        modelBuilder.Entity<ExcelExport>(entity =>
+        {
+            entity.ToView("ExcelExport");
+        });
+
+        modelBuilder.Entity<FILE_KEYWORDS>(entity =>
+        {
+            entity.HasKey(e => new { e.Gen_File_Id, e.Keyword }).HasName("FILE_KEYWORDS_PK");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FILE_KEYWORDS records"));
+
+            entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
+            entity.Property(e => e.Keyword).HasComment("The Keyword is used to");
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.FILE_KEYWORDS).HasConstraintName("FILE_KEYWORDS_GEN_FILE_FK");
+        });
+
+        modelBuilder.Entity<FILE_REF_KEYS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FILE_REF_KEYS records"));
+
+            entity.Property(e => e.Doc_Num).HasComment("The Doc Num is used to");
+        });
+
+        modelBuilder.Entity<FILE_TYPE>(entity =>
+        {
+            entity.HasKey(e => e.File_Type_Id).HasName("SYS_C0014416");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FILE_TYPE records"));
+
+            entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
+            entity.Property(e => e.Description).HasComment("The Description is used to");
+            entity.Property(e => e.File_Type1).HasComment("The File Type is used to");
+            entity.Property(e => e.Mime_Type).HasComment("The Mime Type is used to");
+        });
+
+        modelBuilder.Entity<FINANCIAL_ASSESSMENT_FACTORS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_ASSESSMENT_FACTORS records"));
+
+            entity.Property(e => e.AssessmentFactorId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<FINANCIAL_ASSESSMENT_VALUES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_ASSESSMENT_VALUES records"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES).HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_ASSESSMENTS");
+
+            entity.HasOne(d => d.AttributeNameNavigation).WithMany(p => p.FINANCIAL_ASSESSMENT_VALUES).HasConstraintName("FK_FINANCIAL_ASSESSMENT_VALUES_FINANCIAL_ATTRIBUTES");
+        });
+
+        modelBuilder.Entity<FINANCIAL_ATTRIBUTES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_ATTRIBUTES records"));
+        });
+
+        modelBuilder.Entity<FINANCIAL_COMPONENTS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_COMPONENTS records"));
+
+            entity.Property(e => e.FinComponentId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<FINANCIAL_DETAILS>(entity =>
+        {
+            entity.HasKey(e => e.StmtNumber).HasName("PK_FINANCIAL_TIERS");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_DETAILS records"));
+
+            entity.Property(e => e.StmtNumber).ValueGeneratedNever();
+
+            entity.HasOne(d => d.FinancialGroup).WithMany(p => p.FINANCIAL_DETAILS).HasConstraintName("FK_FINANCIAL_DETAILS_FINANCIAL_GROUPS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_DOMAINS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_DOMAINS records"));
+
+            entity.Property(e => e.DomainId).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_DOMAIN_FILTERS records"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.FINANCIAL_DOMAIN_FILTERS).HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Domain).WithMany(p => p.FINANCIAL_DOMAIN_FILTERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_FINANCIAL_DOMAINS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_DOMAIN_FILTERS_V2>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.DomainId, e.Financial_Level_Id }).HasName("PK_FiltersNormalized");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FiltersNormalized records"));
+
+            entity.HasOne(d => d.Domain).WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_DOMAINS");
+
+            entity.HasOne(d => d.Financial_Level).WithMany(p => p.FINANCIAL_DOMAIN_FILTERS_V2).HasConstraintName("FK_FINANCIAL_DOMAIN_FILTERS_V2_FINANCIAL_MATURITY");
+        });
+
+        modelBuilder.Entity<FINANCIAL_FFIEC_MAPPINGS>(entity =>
+        {
+            entity.HasKey(e => new { e.StmtNumber, e.FFIECBookletsMapping }).HasName("PK_FINANCIAL_FFIEC_MAPPINGS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_FFIEC_MAPPINGS records"));
+
+            entity.HasOne(d => d.StmtNumberNavigation).WithMany(p => p.FINANCIAL_FFIEC_MAPPINGS).HasConstraintName("FK_FINANCIAL_FFIEC_MAPPINGS_FINANCIAL_DETAILS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_GROUPS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_GROUPS records"));
+
+            entity.HasOne(d => d.AssessmentFactor).WithMany(p => p.FINANCIAL_GROUPS).HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_ASSESSMENT_FACTORS");
+
+            entity.HasOne(d => d.Domain).WithMany(p => p.FINANCIAL_GROUPS).HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_DOMAINS");
+
+            entity.HasOne(d => d.FinComponent).WithMany(p => p.FINANCIAL_GROUPS).HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_COMPONENTS");
+
+            entity.HasOne(d => d.Financial_Level).WithMany(p => p.FINANCIAL_GROUPS).HasConstraintName("FK_FINANCIAL_GROUPS_FINANCIAL_MATURITY");
+        });
+
+        modelBuilder.Entity<FINANCIAL_HOURS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Component, e.ReviewType }).HasName("PK_FINANCIAL_ASSESSMENT_HOURS");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_HOURS records"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.FINANCIAL_HOURS).HasConstraintName("FK_FINANCIAL_HOURS_ASSESSMENTS");
+
+            entity.HasOne(d => d.ComponentNavigation).WithMany(p => p.FINANCIAL_HOURS).HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_HOURS_COMPONENT");
+
+            entity.HasOne(d => d.ReviewTypeNavigation).WithMany(p => p.FINANCIAL_HOURS).HasConstraintName("FK_FINANCIAL_HOURS_FINANCIAL_REVIEWTYPE");
+        });
+
+        modelBuilder.Entity<FINANCIAL_HOURS_COMPONENT>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_HOURS_COMPONENT records"));
+
+            entity.HasOne(d => d.Domain).WithMany(p => p.FINANCIAL_HOURS_COMPONENT).HasConstraintName("FK_FINANCIAL_HOURS_COMPONENT_FINANCIAL_DOMAINS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_MATURITY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_MATURITY records"));
+
+            entity.Property(e => e.Financial_Level_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<FINANCIAL_QUESTIONS>(entity =>
+        {
+            entity.HasKey(e => new { e.StmtNumber, e.Question_Id }).HasName("PK_FINANCIAL_QUESTIONS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_QUESTIONS records"));
+
+            entity.HasOne(d => d.Question).WithMany(p => p.FINANCIAL_QUESTIONS).HasConstraintName("FK_FINANCIAL_QUESTIONS_NEW_QUESTION");
+
+            entity.HasOne(d => d.StmtNumberNavigation).WithMany(p => p.FINANCIAL_QUESTIONS).HasConstraintName("FK_FINANCIAL_QUESTIONS_FINANCIAL_DETAILS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_REQUIREMENTS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_REQUIREMENTS records"));
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.FINANCIAL_REQUIREMENTS).HasConstraintName("FK_FINANCIAL_REQUIREMENTS_NEW_REQUIREMENT");
+
+            entity.HasOne(d => d.StmtNumberNavigation).WithMany(p => p.FINANCIAL_REQUIREMENTS).HasConstraintName("FK_FINANCIAL_REQUIREMENTS_FINANCIAL_DETAILS");
+        });
+
+        modelBuilder.Entity<FINANCIAL_REVIEWTYPE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_REVIEWTYPE records"));
+        });
+
+        modelBuilder.Entity<FINANCIAL_TIERS>(entity =>
+        {
+            entity.HasKey(e => new { e.StmtNumber, e.Label }).HasName("PK_FINANCIAL_TIERS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of FINANCIAL_TIERS records"));
+
+            entity.HasOne(d => d.StmtNumberNavigation).WithMany(p => p.FINANCIAL_TIERS).HasConstraintName("FK_FINANCIAL_TIERS_FINANCIAL_DETAILS");
+        });
+
+        modelBuilder.Entity<FINDING>(entity =>
+        {
+            entity.HasOne(d => d.Answer).WithMany(p => p.FINDING).HasConstraintName("FK_FINDING_ANSWER");
+
+            entity.HasOne(d => d.Importance).WithMany(p => p.FINDING)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_FINDING_IMPORTANCE1");
+        });
+
+        modelBuilder.Entity<FINDING_CONTACT>(entity =>
+        {
+            entity.HasKey(e => new { e.Finding_Id, e.Assessment_Contact_Id }).HasName("PK_FINDING_CONTACT_1");
+
+            entity.HasOne(d => d.Assessment_Contact).WithMany(p => p.FINDING_CONTACT)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FINDING_CONTACT_ASSESSMENT_CONTACTS");
+
+            entity.HasOne(d => d.Finding).WithMany(p => p.FINDING_CONTACT).HasConstraintName("FK_FINDING_INDIVIDUAL_FINDING1");
+        });
+
+        modelBuilder.Entity<FRAMEWORK_TIERS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FRAMEWORK_TIERS records"));
+        });
+
+        modelBuilder.Entity<FRAMEWORK_TIER_DEFINITIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FRAMEWORK_TIER_DEFINITIONS records"));
+
+            entity.HasOne(d => d.TierNavigation).WithMany(p => p.FRAMEWORK_TIER_DEFINITIONS).HasConstraintName("FK_FRAMEWORK_TIER_DEFINITIONS_FRAMEWORK_TIERS");
+        });
+
+        modelBuilder.Entity<FRAMEWORK_TIER_TYPE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of FRAMEWORK_TIER_TYPE records"));
+        });
+
+        modelBuilder.Entity<FRAMEWORK_TIER_TYPE_ANSWER>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER).HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_ASSESSMENTS");
+
+            entity.HasOne(d => d.TierNavigation).WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_FRAMEWORK_TIERS");
+
+            entity.HasOne(d => d.TierTypeNavigation).WithMany(p => p.FRAMEWORK_TIER_TYPE_ANSWER).HasConstraintName("FK_FRAMEWORK_TIER_TYPE_ANSWER_FRAMEWORK_TIER_TYPE");
+        });
+
+        modelBuilder.Entity<GALLERY_GROUP>(entity =>
+        {
+            entity.HasKey(e => e.Group_Id).HasName("PK_GALLERY_GROUP_1");
+        });
+
+        modelBuilder.Entity<GALLERY_GROUP_DETAILS>(entity =>
+        {
+            entity.HasKey(e => e.Group_Detail_Id).HasName("PK_GALLERY_GROUP_DETAILS_1");
+
+            entity.HasOne(d => d.Gallery_Item).WithMany(p => p.GALLERY_GROUP_DETAILS).HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_ITEM");
+
+            entity.HasOne(d => d.Group).WithMany(p => p.GALLERY_GROUP_DETAILS).HasConstraintName("FK_GALLERY_GROUP_DETAILS_GALLERY_GROUP");
+        });
+
+        modelBuilder.Entity<GALLERY_ITEM>(entity =>
+        {
+            entity.Property(e => e.Gallery_Item_Guid).ValueGeneratedNever();
+            entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
+        });
+
+        modelBuilder.Entity<GALLERY_ROWS>(entity =>
+        {
+            entity.HasOne(d => d.Group).WithMany(p => p.GALLERY_ROWS).HasConstraintName("FK_GALLERY_ROWS_GALLERY_GROUP");
+
+            entity.HasOne(d => d.Layout_NameNavigation).WithMany(p => p.GALLERY_ROWS).HasConstraintName("FK_GALLERY_ROWS_GALLERY_LAYOUT");
+        });
+
+        modelBuilder.Entity<GENERAL_SAL>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Sal_Name }).HasName("PK_GENERAL_SAL_1");
+
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
+            entity.Property(e => e.Sal_Name).HasComment("The Sal Weight Id is used to");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.GENERAL_SAL).HasConstraintName("FK_GENERAL_SAL_ASSESSMENTS");
+
+            entity.HasOne(d => d.Sal_NameNavigation).WithMany(p => p.GENERAL_SAL).HasConstraintName("FK_GENERAL_SAL_GEN_SAL_NAMES");
+        });
+
+        modelBuilder.Entity<GENERAL_SAL_DESCRIPTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of GENERAL_SAL_DESCRIPTIONS records"));
+        });
+
+        modelBuilder.Entity<GEN_FILE>(entity =>
+        {
+            entity.HasKey(e => e.Gen_File_Id).HasName("SYS_C0014438");
+
+            entity.ToTable(tb => tb.HasComment("A collection of GEN_FILE records"));
+
+            entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
+            entity.Property(e => e.Comments).HasComment("The Comments is used to");
+            entity.Property(e => e.Description).HasComment("The Description is used to");
+            entity.Property(e => e.Doc_Num)
+                .HasDefaultValueSql("('NONE')")
+                .HasComment("The Doc Num is used to");
+            entity.Property(e => e.Doc_Version).HasComment("The Doc Version is used to");
+            entity.Property(e => e.File_Name).HasComment("The File Name is used to");
+            entity.Property(e => e.File_Size).HasComment("The File Size is used to");
+            entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
+            entity.Property(e => e.Is_Uploaded).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Name).HasComment("The Name is used to");
+            entity.Property(e => e.Publish_Date).HasComment("The Publish Date is used to");
+            entity.Property(e => e.Short_Name).HasComment("The Short Name is used to");
+            entity.Property(e => e.Source_Type).HasComment("The Source Type is used to");
+            entity.Property(e => e.Summary).HasComment("The Summary is used to");
+            entity.Property(e => e.Title).HasComment("The Title is used to");
+
+            entity.HasOne(d => d.Doc_NumNavigation).WithMany(p => p.GEN_FILE)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GEN_FILE_FILE_REF_KEYS");
+
+            entity.HasOne(d => d.File_Type).WithMany(p => p.GEN_FILE).HasConstraintName("FK_GEN_FILE_FILE_TYPE");
+        });
+
+        modelBuilder.Entity<GEN_FILE_LIB_PATH_CORL>(entity =>
+        {
+            entity.HasKey(e => new { e.Gen_File_Id, e.Lib_Path_Id }).HasName("TABLE3_PK");
+
+            entity.ToTable(tb => tb.HasComment("A collection of GEN_FILE_LIB_PATH_CORL records"));
+
+            entity.Property(e => e.Gen_File_Id).HasComment("The Gen File Id is used to");
+            entity.Property(e => e.Lib_Path_Id).HasComment("The Lib Path Id is used to");
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.GEN_FILE_LIB_PATH_CORL).HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE");
+
+            entity.HasOne(d => d.Lib_Path).WithMany(p => p.GEN_FILE_LIB_PATH_CORL).HasConstraintName("FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH");
+        });
+
+        modelBuilder.Entity<GEN_SAL_NAMES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of GEN_SAL_NAMES records"));
+        });
+
+        modelBuilder.Entity<GEN_SAL_WEIGHTS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of GEN_SAL_WEIGHTS records"));
+
+            entity.Property(e => e.Sal_Name).HasComment("The Sal Name is used to");
+            entity.Property(e => e.Slider_Value).HasComment("The Slider Value is used to");
+            entity.Property(e => e.Display).HasComment("The Display is used to");
+            entity.Property(e => e.Sal_Weight_Id).HasComment("The Sal Weight Id is used to");
+            entity.Property(e => e.Weight).HasComment("The Weight is used to");
+
+            entity.HasOne(d => d.Sal_NameNavigation).WithMany(p => p.GEN_SAL_WEIGHTS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_GEN_SAL_WEIGHTS_GENERAL_SAL_DESCRIPTIONS");
+
+            entity.HasOne(d => d.Sal_Name1).WithMany(p => p.GEN_SAL_WEIGHTS).HasConstraintName("FK_GEN_SAL_WEIGHTS_GEN_SAL_NAMES");
+        });
+
+        modelBuilder.Entity<GLOBAL_PROPERTIES>(entity =>
+        {
+            entity.HasKey(e => e.Property).HasName("PK_GlobalProperties");
+
+            entity.ToTable(tb => tb.HasComment("A collection of GLOBAL_PROPERTIES records"));
+
+            entity.Property(e => e.Property).HasComment("The Property is used to");
+            entity.Property(e => e.Property_Value).HasComment("The Property Value is used to");
+        });
+
+        modelBuilder.Entity<GLOSSARY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of GLOSSARY records"));
+        });
+
+        modelBuilder.Entity<HYDRO_DATA>(entity =>
+        {
+            entity.HasKey(e => e.Mat_Option_Id).IsClustered(false);
+
+            entity.HasIndex(e => new { e.Mat_Question_Id, e.Mat_Option_Id }, "IX_HYDRO_DATA")
+                .IsUnique()
+                .IsClustered();
+
+            entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Mat_Option).WithOne(p => p.HYDRO_DATA)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__HYDRO_DAT__Mat_O__377107A9");
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.HYDRO_DATA)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__HYDRO_DAT__Mat_Q__38652BE2");
+        });
+
+        modelBuilder.Entity<HYDRO_DATA_ACTIONS>(entity =>
+        {
+            entity.HasKey(e => e.Answer_Id).HasName("PK__HYDRO_DA__36918F3818A6E56C");
+
+            entity.Property(e => e.Answer_Id).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Answer).WithOne(p => p.HYDRO_DATA_ACTIONS).HasConstraintName("FK_HYDRO_DATA_ACTIONS_ANSWER");
+
+            entity.HasOne(d => d.Progress).WithMany(p => p.HYDRO_DATA_ACTIONS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__HYDRO_DAT__Progr__76D69450");
+        });
+
+        modelBuilder.Entity<HYDRO_PROGRESS>(entity =>
+        {
+            entity.HasKey(e => e.Progress_Id).HasName("PK__HYDRO_PR__D558797A8254CF40");
+
+            entity.Property(e => e.Progress_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<IMPORTANCE>(entity =>
+        {
+            entity.HasKey(e => e.Importance_Id).HasName("PK_IMPORTANCE_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of IMPORTANCE records"));
+        });
+
+        modelBuilder.Entity<INFORMATION>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Information__000000000000023C");
+
+            entity.ToTable(tb => tb.HasComment("A collection of INFORMATION records"));
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasComment("The Id is used to");
+            entity.Property(e => e.Additional_Contacts).HasComment("The Additional Contacts is used to");
+            entity.Property(e => e.Additional_Notes_And_Comments).HasComment("The Additional Notes And Comments is used to");
+            entity.Property(e => e.Assessment_Description).HasComment("The Assessment Description is used to");
+            entity.Property(e => e.Assessment_Name).HasComment("The Assessment Name is used to");
+            entity.Property(e => e.Assessor_Email).HasComment("The Assessor Email is used to");
+            entity.Property(e => e.Assessor_Name).HasComment("The Assessor Name is used to");
+            entity.Property(e => e.Assessor_Phone).HasComment("The Assessor Phone is used to");
+            entity.Property(e => e.City_Or_Site_Name).HasComment("The City Or Site Name is used to");
+            entity.Property(e => e.Enterprise_Evaluation_Summary).HasComment("The Enterprise Evaluation Summary is used to");
+            entity.Property(e => e.Executive_Summary).HasComment("The Executive Summary is used to");
+            entity.Property(e => e.Facility_Name).HasComment("The Facility Name is used to");
+            entity.Property(e => e.IsAcetOnly).HasDefaultValueSql("((0))");
+            entity.Property(e => e.State_Province_Or_Region).HasComment("The State Province Or Region is used to");
+
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.INFORMATION).HasConstraintName("FK_INFORMATION_ASSESSMENTS");
+
+            entity.HasOne(d => d.eMass_Document).WithMany(p => p.INFORMATION)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_INFORMATION_DOCUMENT_FILE1");
+        });
+
+        modelBuilder.Entity<INSTALLATION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of INSTALLATION records"));
+        });
+
+        modelBuilder.Entity<IRP>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of IRP records"));
+
+            entity.Property(e => e.IRP_ID).ValueGeneratedNever();
+            entity.Property(e => e.Risk_Type).HasDefaultValueSql("('IRP')");
+
+            entity.HasOne(d => d.Header).WithMany(p => p.IRP)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_IRP_IRP_HEADER");
+        });
+
+        modelBuilder.Entity<IRP_HEADER>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of IRP_HEADER records"));
+
+            entity.Property(e => e.IRP_Header_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<ISE_ACTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("ISE specific fields for issues"));
+
+            entity.Property(e => e.Action_Item_Id).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.ISE_ACTIONS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_QUESTIONS_MAT_QUESTION_ID");
+        });
+
+        modelBuilder.Entity<ISE_ACTIONS_FINDINGS>(entity =>
+        {
+            entity.HasOne(d => d.Finding).WithMany(p => p.ISE_ACTIONS_FINDINGS).HasConstraintName("FK_ISE_ACTIONS_FINDINGS_FINDING");
+        });
+
+        modelBuilder.Entity<JWT>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of JWT records"));
+        });
+
+        modelBuilder.Entity<LEVEL_BACKUP_ACET>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of LEVEL_BACKUP_ACET records"));
+        });
+
+        modelBuilder.Entity<LEVEL_BACKUP_ACET_QUESTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of LEVEL_BACKUP_ACET_QUESTIONS records"));
+        });
+
+        modelBuilder.Entity<LEVEL_NAMES>(entity =>
+        {
+            entity.HasKey(e => e.Level_Name).HasName("PK_Level_Names");
+
+            entity.ToTable(tb => tb.HasComment("A collection of LEVEL_NAMES records"));
+
+            entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
+        });
+
+        modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
+        {
+            entity.HasKey(e => e.Mat_Option_Id).HasName("PK_MATURITY_ANSWER_OPTIONS_1");
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_ANSWER_OPTIONS).HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1");
+        });
+
+        modelBuilder.Entity<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK>(entity =>
+        {
+            entity.HasKey(e => new { e.Mat_Option_Id_1, e.Mat_Option_Id_2 }).HasName("PK_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+            entity.HasOne(d => d.Mat_Option_Id_1Navigation).WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS");
+
+            entity.HasOne(d => d.Mat_Option_Id_2Navigation).WithMany(p => p.MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK_MATURITY_ANSWER_OPTIONS2");
+        });
+
+        modelBuilder.Entity<MATURITY_DOMAIN_REMARKS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_DOMAIN_REMARKS records"));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.MATURITY_DOMAIN_REMARKS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_DOMAIN_REMARKS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Grouping).WithMany(p => p.MATURITY_DOMAIN_REMARKS).HasConstraintName("FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS");
+        });
+
+        modelBuilder.Entity<MATURITY_EXTRA>(entity =>
+        {
+            entity.Property(e => e.Maturity_Question_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<MATURITY_GROUPINGS>(entity =>
+        {
+            entity.HasKey(e => e.Grouping_Id).HasName("PK_MATURITY_ELEMENT");
+
+            entity.ToTable(tb =>
+                {
+                    tb.HasComment("A collection of MATURITY_GROUPINGS records");
+                    tb.HasTrigger("trg_update_maturity_groupings");
+                });
+
+            entity.Property(e => e.Title_Id).HasDefaultValueSql("(NEXT VALUE FOR [MaturityNodeSequence])");
+
+            entity.HasOne(d => d.Maturity_Model).WithMany(p => p.MATURITY_GROUPINGS).HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_MODELS");
+
+            entity.HasOne(d => d.Type).WithMany(p => p.MATURITY_GROUPINGS).HasConstraintName("FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES");
+        });
+
+        modelBuilder.Entity<MATURITY_GROUPING_TYPES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_GROUPING_TYPES records"));
+        });
+
+        modelBuilder.Entity<MATURITY_LEVELS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_LEVELS records"));
+
+            entity.HasOne(d => d.Maturity_Model).WithMany(p => p.MATURITY_LEVELS).HasConstraintName("FK_MATURITY_LEVELS_MATURITY_MODELS");
+        });
+
+        modelBuilder.Entity<MATURITY_MODELS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_MODELS records"));
+
+            entity.Property(e => e.Analytics_Rollup_Level)
+                .HasDefaultValueSql("((1))")
+                .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
+
+            entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation).WithMany(p => p.MATURITY_MODELS).HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
+        });
+
+        modelBuilder.Entity<MATURITY_QUESTIONS>(entity =>
+        {
+            entity.HasKey(e => e.Mat_Question_Id).HasName("PK__MATURITY__EBDCEAE635AFA091");
+
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_QUESTIONS records"));
+
+            entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Question_Text]),(0)))", true);
+
+            entity.HasOne(d => d.Grouping).WithMany(p => p.MATURITY_QUESTIONS).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS");
+
+            entity.HasOne(d => d.Mat_Question_TypeNavigation).WithMany(p => p.MATURITY_QUESTIONS).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES");
+
+            entity.HasOne(d => d.Maturity_Level).WithMany(p => p.MATURITY_QUESTIONS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MATURITY___Matur__5B638405");
+
+            entity.HasOne(d => d.Maturity_Model).WithMany(p => p.MATURITY_QUESTIONS).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_MODELS");
+
+            entity.HasOne(d => d.Parent_Option).WithMany(p => p.MATURITY_QUESTIONS).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_OPTIONS");
+
+            entity.HasOne(d => d.Parent_Question).WithMany(p => p.InverseParent_Question).HasConstraintName("FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS");
+        });
+
+        modelBuilder.Entity<MATURITY_QUESTION_PROPS>(entity =>
+        {
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_QUESTION_PROPS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS");
+        });
+
+        modelBuilder.Entity<MATURITY_REFERENCES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_REFERENCES records"));
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_GEN_FILE");
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCES).HasConstraintName("FK_MATURITY_REFERENCES_MATURITY_QUESTIONS");
+        });
+
+        modelBuilder.Entity<MATURITY_REFERENCE_TEXT>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_REFERENCE_TEXT records"));
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_REFERENCE_TEXT).HasConstraintName("FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS");
+        });
+
+        modelBuilder.Entity<MATURITY_SOURCE_FILES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of MATURITY_SOURCE_FILES records"));
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_GEN_FILE");
+
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SOURCE_FILES).HasConstraintName("FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS");
+        });
+
+        modelBuilder.Entity<MATURITY_SUB_MODEL_QUESTIONS>(entity =>
+        {
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS).HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS");
+
+            entity.HasOne(d => d.Sub_Model_NameNavigation).WithMany(p => p.MATURITY_SUB_MODEL_QUESTIONS).HasConstraintName("FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_SUB_MODELS");
+        });
+
+        modelBuilder.Entity<METRO_ANSWERS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Metro_FIPS }).HasName("PK_ExtendedDemographicMetropolitanAnswers_1");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.METRO_ANSWERS).HasConstraintName("FK_ExtendedDemographicMetropolitanAnswers_ASSESSMENTS");
+
+            entity.HasOne(d => d.Metro_FIPSNavigation).WithMany(p => p.METRO_ANSWERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_METRO_ANSWERS_METRO_AREA");
+        });
+
+        modelBuilder.Entity<METRO_AREA>(entity =>
+        {
+            entity.HasKey(e => e.Metro_FIPS).HasName("PK_MetropolitanArea_1");
+        });
+
+        modelBuilder.Entity<MODES_SETS_MATURITY_MODELS>(entity =>
+        {
+            entity.HasKey(e => e.App_Code_Id).HasName("PK_MODES_MATURITY_MODELS_1");
+
+            entity.HasOne(d => d.AppCodeNavigation).WithMany(p => p.MODES_SETS_MATURITY_MODELS).HasConstraintName("FK_MODES_MATURITY_MODELS_APP_CODE");
+
+            entity.HasOne(d => d.Model_NameNavigation).WithMany(p => p.MODES_SETS_MATURITY_MODELS)
+                .HasPrincipalKey(p => p.Model_Name)
+                .HasForeignKey(d => d.Model_Name)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_MODES_SETS_MATURITY_MODELS_MATURITY_MODELS");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.MODES_SETS_MATURITY_MODELS)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_MODES_MATURITY_MODELS_SETS");
+        });
+
+        modelBuilder.Entity<NAVIGATION_STATE>(entity =>
+        {
+            entity.Property(e => e.IsAvailable).HasDefaultValueSql("((1))");
+        });
+
+        modelBuilder.Entity<NCSF_CATEGORY>(entity =>
+        {
+            entity.HasKey(e => e.NCSF_Cat_Id).HasName("PK_NCSF_Category");
+
+            entity.ToTable(tb => tb.HasComment("A collection of NCSF_CATEGORY records"));
+
+            entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValueSql("((50))");
+
+            entity.HasOne(d => d.NCSF_Function).WithMany(p => p.NCSF_CATEGORY).HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
+        });
+
+        modelBuilder.Entity<NCSF_FUNCTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of NCSF_FUNCTIONS records"));
+        });
+
+        modelBuilder.Entity<NERC_RISK_RANKING>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of NERC_RISK_RANKING records"));
+
+            entity.Property(e => e.Compliance_Risk_Rank).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Question).WithMany(p => p.NERC_RISK_RANKING)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_NERC_RISK_RANKING_NEW_QUESTION");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.NERC_RISK_RANKING)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_NERC_RISK_RANKING_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<NETWORK_WARNINGS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Id }).HasName("PK__network_warnings_001");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.NETWORK_WARNINGS).HasConstraintName("FK_NETWORK_WARNING_ASSESSMENTS");
+        });
+
+        modelBuilder.Entity<NEW_QUESTION>(entity =>
+        {
+            entity.HasKey(e => e.Question_Id).HasName("PK_All_Question_TEMP");
+
+            entity.ToTable(tb => tb.HasComment("A collection of NEW_QUESTION records"));
+
+            entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
+            entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
+            entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
+
+            entity.HasOne(d => d.Heading_Pair).WithMany(p => p.NEW_QUESTION)
+                .HasPrincipalKey(p => p.Heading_Pair_Id)
+                .HasForeignKey(d => d.Heading_Pair_Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SUB_CATEGORY_HEADINGS");
+
+            entity.HasOne(d => d.Original_Set_NameNavigation).WithMany(p => p.NEW_QUESTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_QUESTION_SETS");
+
+            entity.HasOne(d => d.Universal_Sal_LevelNavigation).WithMany(p => p.NEW_QUESTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_QUESTION_UNIVERSAL_SAL_LEVEL");
+        });
+
+        modelBuilder.Entity<NEW_QUESTION_LEVELS>(entity =>
+        {
+            entity.HasKey(e => new { e.Universal_Sal_Level, e.New_Question_Set_Id }).HasName("PK_NEW_QUESTION_LEVELS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of NEW_QUESTION_LEVELS records"));
+
+            entity.Property(e => e.Universal_Sal_Level).HasComment("The Universal Sal Level is used to");
+
+            entity.HasOne(d => d.New_Question_Set).WithMany(p => p.NEW_QUESTION_LEVELS).HasConstraintName("FK_NEW_QUESTION_LEVELS_NEW_QUESTION_SETS");
+
+            entity.HasOne(d => d.Universal_Sal_LevelNavigation).WithMany(p => p.NEW_QUESTION_LEVELS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_QUESTION_LEVELS_UNIVERSAL_SAL_LEVEL");
+        });
+
+        modelBuilder.Entity<NEW_QUESTION_SETS>(entity =>
+        {
+            entity.HasKey(e => e.New_Question_Set_Id).HasName("PK_NEW_QUESTION_SETS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of NEW_QUESTION_SETS records"));
+
+            entity.Property(e => e.Question_Id).HasComment("The Question Id is used to");
+            entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+
+            entity.HasOne(d => d.Question).WithMany(p => p.NEW_QUESTION_SETS).HasConstraintName("FK_NEW_QUESTION_SETS_NEW_QUESTION");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.NEW_QUESTION_SETS).HasConstraintName("FK_NEW_QUESTION_SETS_SETS");
+        });
+
+        modelBuilder.Entity<NEW_REQUIREMENT>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of NEW_REQUIREMENT records"));
+
+            entity.Property(e => e.Supp_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))", true);
+            entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))", true);
+
+            entity.HasOne(d => d.NCSF_Cat).WithMany(p => p.NEW_REQUIREMENT).HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
+
+            entity.HasOne(d => d.Original_Set_NameNavigation).WithMany(p => p.NEW_REQUIREMENT)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_REQUIREMENT_SETS");
+
+            entity.HasOne(d => d.Question_Group_Heading).WithMany(p => p.NEW_REQUIREMENT)
+                .HasPrincipalKey(p => p.Question_Group_Heading_Id)
+                .HasForeignKey(d => d.Question_Group_Heading_Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING");
+
+            entity.HasOne(d => d.Standard_CategoryNavigation).WithMany(p => p.NEW_REQUIREMENT)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_NEW_REQUIREMENT_STANDARD_CATEGORY");
+        });
+
+        modelBuilder.Entity<NIST_SAL_INFO_TYPES>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.Type_Value }).HasName("PK_NIST_SAL");
+
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.Property(e => e.Assessment_Id).HasComment("The Id is used to");
+            entity.Property(e => e.Type_Value).HasComment("The Type Value is used to");
+            entity.Property(e => e.Area).HasComment("The Area is used to");
+            entity.Property(e => e.Availability_Value).HasComment("The Availability Value is used to");
+            entity.Property(e => e.Confidentiality_Value).HasComment("The Confidentiality Value is used to");
+            entity.Property(e => e.Integrity_Value).HasComment("The Integrity Value is used to");
+            entity.Property(e => e.Selected).HasComment("The Selected is used to");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.NIST_SAL_INFO_TYPES).HasConstraintName("FK_NIST_SAL_STANDARD_SELECTION");
+        });
+
+        modelBuilder.Entity<NIST_SAL_INFO_TYPES_DEFAULTS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of NIST_SAL_INFO_TYPES_DEFAULTS records"));
+        });
+
+        modelBuilder.Entity<NIST_SAL_QUESTIONS>(entity =>
+        {
+            entity.HasKey(e => e.Question_Id).HasName("PK_NIST_SAL_QUESTIONS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of NIST_SAL_QUESTIONS records"));
+
+            entity.Property(e => e.Question_Id)
+                .ValueGeneratedNever()
+                .HasComment("The Question Id is used to");
+            entity.Property(e => e.Question_Number).HasComment("The Question Number is used to");
+            entity.Property(e => e.Question_Text).HasComment("The Question Text is used to");
+        });
+
+        modelBuilder.Entity<NIST_SAL_QUESTION_ANSWERS>(entity =>
+        {
+            entity.Property(e => e.Question_Answer).HasDefaultValueSql("('No')");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.NIST_SAL_QUESTION_ANSWERS).HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_STANDARD_SELECTION");
+
+            entity.HasOne(d => d.Question).WithMany(p => p.NIST_SAL_QUESTION_ANSWERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_NIST_SAL_QUESTIONS");
+        });
+
+        modelBuilder.Entity<Nlogs>(entity =>
+        {
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
+        });
+
+        modelBuilder.Entity<PARAMETERS>(entity =>
+        {
+            entity.HasKey(e => e.Parameter_ID).HasName("PK_Parameters");
+
+            entity.ToTable(tb => tb.HasComment("A collection of PARAMETERS records"));
+        });
+
+        modelBuilder.Entity<PARAMETER_ASSESSMENT>(entity =>
+        {
+            entity.HasKey(e => new { e.Parameter_ID, e.Assessment_ID }).HasName("PK_ASSESSMENT_PARAMETERS");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.PARAMETER_ASSESSMENT).HasConstraintName("FK_ASSESSMENT_PARAMETERS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Parameter).WithMany(p => p.PARAMETER_ASSESSMENT).HasConstraintName("FK_ASSESSMENT_PARAMETERS_PARAMETERS");
+        });
+
+        modelBuilder.Entity<PARAMETER_REQUIREMENTS>(entity =>
+        {
+            entity.HasKey(e => new { e.Requirement_Id, e.Parameter_Id }).HasName("PK_Parameter_Requirements");
+
+            entity.ToTable(tb => tb.HasComment("A collection of PARAMETER_REQUIREMENTS records"));
+
+            entity.HasOne(d => d.Parameter).WithMany(p => p.PARAMETER_REQUIREMENTS).HasConstraintName("FK_Parameter_Requirements_Parameters");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.PARAMETER_REQUIREMENTS).HasConstraintName("FK_Parameter_Requirements_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<PARAMETER_VALUES>(entity =>
+        {
+            entity.HasOne(d => d.Answer).WithMany(p => p.PARAMETER_VALUES).HasConstraintName("FK_PARAMETER_VALUES_ANSWER");
+
+            entity.HasOne(d => d.Parameter).WithMany(p => p.PARAMETER_VALUES).HasConstraintName("FK_PARAMETER_VALUES_PARAMETERS");
+        });
+
+        modelBuilder.Entity<PASSWORD_HISTORY>(entity =>
+        {
+            entity.HasOne(d => d.User).WithMany(p => p.PASSWORD_HISTORY)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PASSWORD_HISTORY_USERS");
+        });
+
+        modelBuilder.Entity<PROCUREMENT_DEPENDENCY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of PROCUREMENT_DEPENDENCY records"));
+
+            entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
+            entity.Property(e => e.Dependencies_Id).HasComment("The Dependencies Id is used to");
+
+            entity.HasOne(d => d.Dependencies).WithMany(p => p.PROCUREMENT_DEPENDENCYDependencies)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA1");
+
+            entity.HasOne(d => d.Procurement).WithMany(p => p.PROCUREMENT_DEPENDENCYProcurement)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PROCUREMENT_DEPENDENCY_PROCUREMENT_LANGUAGE_DATA");
+        });
+
+        modelBuilder.Entity<PROCUREMENT_LANGUAGE_DATA>(entity =>
+        {
+            entity.HasKey(e => e.Procurement_Id).HasName("PK_Procurement_Language_Data");
+
+            entity.ToTable(tb => tb.HasComment("A collection of PROCUREMENT_LANGUAGE_DATA records"));
+
+            entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
+            entity.Property(e => e.Basis).HasComment("The Basis is used to");
+            entity.Property(e => e.Fatmeasures).HasComment("The Fatmeasures is used to");
+            entity.Property(e => e.Flow_Document).HasComment("The Flow Document is used to");
+            entity.Property(e => e.Heading).HasComment("The Heading is used to");
+            entity.Property(e => e.Language_Guidance).HasComment("The Language Guidance is used to");
+            entity.Property(e => e.Maintenance_Guidance).HasComment("The Maintenance Guidance is used to");
+            entity.Property(e => e.Parent_Heading_Id).HasComment("The Parent Heading Id is used to");
+            entity.Property(e => e.Procurement_Language).HasComment("The Procurement Language is used to");
+            entity.Property(e => e.References_Doc).HasComment("The References Doc is used to");
+            entity.Property(e => e.Satmeasures).HasComment("The Satmeasures is used to");
+            entity.Property(e => e.Section_Number).HasComment("The Section Number is used to");
+            entity.Property(e => e.Topic_Name).HasComment("The Topic Name is used to");
+
+            entity.HasOne(d => d.Parent_Heading).WithMany(p => p.PROCUREMENT_LANGUAGE_DATA).HasConstraintName("FK_PROCUREMENT_LANGUAGE_DATA_PROCUREMENT_LANGUAGE_HEADINGS");
+        });
+
+        modelBuilder.Entity<PROCUREMENT_LANGUAGE_HEADINGS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of PROCUREMENT_LANGUAGE_HEADINGS records"));
+
+            entity.Property(e => e.Id).HasComment("The Id is used to");
+            entity.Property(e => e.Heading_Name).HasComment("The Heading Name is used to");
+            entity.Property(e => e.Heading_Num).HasComment("The Heading Num is used to");
+        });
+
+        modelBuilder.Entity<PROCUREMENT_REFERENCES>(entity =>
+        {
+            entity.HasKey(e => new { e.Procurement_Id, e.Reference_Id }).HasName("PK_Procurement_References");
+
+            entity.ToTable(tb => tb.HasComment("A collection of PROCUREMENT_REFERENCES records"));
+
+            entity.Property(e => e.Procurement_Id).HasComment("The Procurement Id is used to");
+            entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
+
+            entity.HasOne(d => d.Procurement).WithMany(p => p.PROCUREMENT_REFERENCES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Procurement_References_Procurement_Language_Data");
+
+            entity.HasOne(d => d.Reference).WithMany(p => p.PROCUREMENT_REFERENCES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Procurement_References_References_Data");
+        });
+
+        modelBuilder.Entity<QUESTION_GROUP_HEADING>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of QUESTION_GROUP_HEADING records"));
+
+            entity.Property(e => e.Question_Group_Heading1).HasComment("The Question Group Heading is used to");
+            entity.Property(e => e.Question_Group_Heading_Id)
+                .ValueGeneratedOnAdd()
+                .HasComment("The Question Group Heading Id is used to");
+            entity.Property(e => e.Std_Ref).HasComment("The Std Ref is used to");
+            entity.Property(e => e.Universal_Weight).HasComment("The Universal Weight is used to");
+        });
+
+        modelBuilder.Entity<QUESTION_GROUP_TYPE>(entity =>
+        {
+            entity.HasKey(e => e.Question_Group_Id).HasName("PK_Question_Group_Type");
+
+            entity.ToTable(tb => tb.HasComment("A collection of QUESTION_GROUP_TYPE records"));
+
+            entity.Property(e => e.Question_Group_Id).HasComment("The Question Group Id is used to");
+            entity.Property(e => e.Group_Header).HasComment("The Group Header is used to");
+            entity.Property(e => e.Group_Name).HasComment("The Group Name is used to");
+            entity.Property(e => e.Scoring_Group).HasComment("The Scoring Group is used to");
+            entity.Property(e => e.Scoring_Type).HasComment("The Scoring Type is used to");
+        });
+
+        modelBuilder.Entity<RECENT_FILES>(entity =>
+        {
+            entity.HasKey(e => e.RecentFileId).HasName("PK_RECENT_FILES_1");
+
+            entity.ToTable(tb => tb.HasComment(""));
+        });
+
+        modelBuilder.Entity<RECOMMENDATIONS_REFERENCES>(entity =>
+        {
+            entity.HasKey(e => new { e.Data_Id, e.Reference_Id }).HasName("PK_Recommendations_References");
+
+            entity.ToTable(tb => tb.HasComment("A collection of RECOMMENDATIONS_REFERENCES records"));
+
+            entity.Property(e => e.Data_Id).HasComment("The Data Id is used to");
+            entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
+
+            entity.HasOne(d => d.Data).WithMany(p => p.RECOMMENDATIONS_REFERENCES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Recommendations_References_Catalog_Recommendations_Data");
+
+            entity.HasOne(d => d.Reference).WithMany(p => p.RECOMMENDATIONS_REFERENCES)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Recommendations_References_References_Data");
+        });
+
+        modelBuilder.Entity<REFERENCES_DATA>(entity =>
+        {
+            entity.HasKey(e => e.Reference_Id).HasName("PK_References_Data");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REFERENCES_DATA records"));
+
+            entity.Property(e => e.Reference_Id).HasComment("The Reference Id is used to");
+            entity.Property(e => e.Reference_Doc_Id).HasComment("The Reference Doc Id is used to");
+            entity.Property(e => e.Reference_Sections).HasComment("The Reference Sections is used to");
+
+            entity.HasOne(d => d.Reference_Doc).WithMany(p => p.REFERENCES_DATA).HasConstraintName("FK_References_Data_Reference_Docs");
+        });
+
+        modelBuilder.Entity<REFERENCE_DOCS>(entity =>
+        {
+            entity.HasKey(e => e.Reference_Doc_Id).HasName("PK_Reference_Docs");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REFERENCE_DOCS records"));
+
+            entity.Property(e => e.Reference_Doc_Id).HasComment("The Reference Doc Id is used to");
+            entity.Property(e => e.Date_Last_Checked).HasComment("The Date Last Checked is used to");
+            entity.Property(e => e.Date_Updated).HasComment("The Date Updated is used to");
+            entity.Property(e => e.Doc_Link).HasComment("The Doc Link is used to");
+            entity.Property(e => e.Doc_Name).HasComment("The Doc Name is used to");
+            entity.Property(e => e.Doc_Notes).HasComment("The Doc Notes is used to");
+            entity.Property(e => e.Doc_Short).HasComment("The Doc Short is used to");
+            entity.Property(e => e.Doc_Url).HasComment("The Doc Url is used to");
+        });
+
+        modelBuilder.Entity<REF_LIBRARY_PATH>(entity =>
+        {
+            entity.HasKey(e => e.Lib_Path_Id).HasName("REF_LIBRARY_PATH_PK");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REF_LIBRARY_PATH records"));
+
+            entity.Property(e => e.Lib_Path_Id).HasComment("The Lib Path Id is used to");
+            entity.Property(e => e.Parent_Path_Id).HasComment("The Parent Path Id is used to");
+            entity.Property(e => e.Path_Name).HasComment("The Path Name is used to");
+
+            entity.HasOne(d => d.Parent_Path).WithMany(p => p.InverseParent_Path).HasConstraintName("FK_REF_LIBRARY_PATH_REF_LIBRARY_PATH");
+        });
+
+        modelBuilder.Entity<REGION_ANSWERS>(entity =>
+        {
+            entity.HasKey(e => new { e.Assessment_Id, e.State, e.RegionCode }).HasName("PK_ExtendedDemographicRegionAnswers");
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.REGION_ANSWERS).HasConstraintName("FK_ExtendedDemographicRegionAnswers_ASSESSMENTS");
+
+            entity.HasOne(d => d.STATE_REGION).WithMany(p => p.REGION_ANSWERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ExtendedDemographicRegionAnswers_STATE_REGION");
+        });
+
+        modelBuilder.Entity<REPORT_DETAIL_SECTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REPORT_DETAIL_SECTIONS records"));
+
+            entity.Property(e => e.Report_Section_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<REPORT_DETAIL_SECTION_SELECTION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.REPORT_DETAIL_SECTION_SELECTION).HasConstraintName("FK_REPORT_DETAIL_SECTION_SELECTION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Report_Section).WithMany(p => p.REPORT_DETAIL_SECTION_SELECTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REPORT_DETAIL_SECTION_SELECTION_REPORT_DETAIL_SECTIONS");
+        });
+
+        modelBuilder.Entity<REPORT_OPTIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REPORT_OPTIONS records"));
+
+            entity.Property(e => e.Report_Option_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<REPORT_OPTIONS_SELECTION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.HasOne(d => d.Assessment).WithMany(p => p.REPORT_OPTIONS_SELECTION).HasConstraintName("FK_REPORT_OPTIONS_SELECTION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Report_Option).WithMany(p => p.REPORT_OPTIONS_SELECTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REPORT_OPTIONS_SELECTION_REPORT_OPTIONS");
+        });
+
+        modelBuilder.Entity<REPORT_STANDARDS_SELECTION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.HasOne(d => d.Assesment).WithMany(p => p.REPORT_STANDARDS_SELECTION).HasConstraintName("FK_REPORT_STANDARDS_SELECTION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Report_Set_Entity_NameNavigation).WithMany(p => p.REPORT_STANDARDS_SELECTION).HasConstraintName("FK_REPORT_STANDARDS_SELECTION_SETS");
+        });
+
+        modelBuilder.Entity<REQUIRED_DOCUMENTATION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIRED_DOCUMENTATION records"));
+
+            entity.HasOne(d => d.RDH).WithMany(p => p.REQUIRED_DOCUMENTATION).HasConstraintName("FK_REQUIRED_DOCUMENTATION_REQUIRED_DOCUMENTATION_HEADERS");
+        });
+
+        modelBuilder.Entity<REQUIRED_DOCUMENTATION_HEADERS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIRED_DOCUMENTATION_HEADERS records"));
+        });
+
+        modelBuilder.Entity<REQUIREMENT_LEVELS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_LEVELS records"));
+
+            entity.Property(e => e.Requirement_Id).HasComment("The Requirement Id is used to");
+            entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
+            entity.Property(e => e.Level_Type).HasComment("The Level Type is used to");
+            entity.Property(e => e.Id).HasComment("The Id is used to");
+
+            entity.HasOne(d => d.Level_TypeNavigation).WithMany(p => p.REQUIREMENT_LEVELS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_REQUIREMENT_LEVELS_REQUIREMENT_LEVEL_TYPE");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_LEVELS).HasConstraintName("FK_REQUIREMENT_LEVELS_NEW_REQUIREMENT");
+
+            entity.HasOne(d => d.Standard_LevelNavigation).WithMany(p => p.REQUIREMENT_LEVELS).HasConstraintName("FK_REQUIREMENT_LEVELS_STANDARD_SPECIFIC_LEVEL");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_LEVEL_TYPE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_LEVEL_TYPE records"));
+
+            entity.Property(e => e.Level_Type).HasComment("The Level Type is used to");
+            entity.Property(e => e.Level_Type_Full_Name).HasComment("The Level Type Full Name is used to");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_QUESTIONS>(entity =>
+        {
+            entity.HasKey(e => new { e.Question_Id, e.Requirement_Id }).HasName("PK_REQUIREMENT_QUESTIONS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_QUESTIONS records"));
+
+            entity.HasOne(d => d.Question).WithMany(p => p.REQUIREMENT_QUESTIONS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_QUESTIONS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_QUESTIONS_SETS>(entity =>
+        {
+            entity.HasKey(e => new { e.Question_Id, e.Set_Name }).HasName("PK_REQUIREMENT_QUESTIONS_SETS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_QUESTIONS_SETS records"));
+
+            entity.HasOne(d => d.Question).WithMany(p => p.REQUIREMENT_QUESTIONS_SETS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_NEW_QUESTION");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_QUESTIONS_SETS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_NEW_REQUIREMENT");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_QUESTIONS_SETS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_SETS_SETS");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_REFERENCES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_REFERENCES records"));
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_GEN_FILE");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_SETS>(entity =>
+        {
+            entity.HasKey(e => new { e.Requirement_Id, e.Set_Name }).HasName("PK_QUESTION_SETS");
+
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_SETS records"));
+
+            entity.Property(e => e.Requirement_Id).HasComment("The Requirement Id is used to");
+            entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_REQUIREMENT_SETS_NEW_REQUIREMENT");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.REQUIREMENT_SETS).HasConstraintName("FK_QUESTION_SETS_SETS");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_SOURCE_FILES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_SOURCE_FILES records"));
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_GEN_FILE");
+
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_SOURCE_FILES).HasConstraintName("FK_REQUIREMENT_SOURCE_FILES_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<SAL_DETERMINATION_TYPES>(entity =>
+        {
+            entity.HasKey(e => e.Sal_Determination_Type).HasName("PK_SAL_DETERMINATION_TYPES_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of SAL_DETERMINATION_TYPES records"));
+        });
+
+        modelBuilder.Entity<SECTOR>(entity =>
+        {
+            entity.HasKey(e => e.SectorId).HasName("PK_SECTOR_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of SECTOR records"));
+        });
+
+        modelBuilder.Entity<SECTOR_INDUSTRY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SECTOR_INDUSTRY records"));
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.SECTOR_INDUSTRY).HasConstraintName("FK_SECTOR_INDUSTRY_SECTOR");
+        });
+
+        modelBuilder.Entity<SECTOR_STANDARD_RECOMMENDATIONS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SECTOR_STANDARD_RECOMMENDATIONS records"));
+
+            entity.HasOne(d => d.Sector).WithMany(p => p.SECTOR_STANDARD_RECOMMENDATIONS).HasConstraintName("FK_SECTOR_STANDARD_RECOMMENDATIONS_SECTOR");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.SECTOR_STANDARD_RECOMMENDATIONS).HasConstraintName("FK_SECTOR_STANDARD_RECOMMENDATIONS_SETS");
+        });
+
+        modelBuilder.Entity<SECURITY_QUESTION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SECURITY_QUESTION records"));
+
+            entity.Property(e => e.IsCustomQuestion).HasDefaultValueSql("((1))");
+        });
+
+        modelBuilder.Entity<SETS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SETS records"));
+
+            entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+            entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
+            entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Is_Displayed).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Is_Pass_Fail).HasComment("The Is Pass Fail is used to");
+            entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
+            entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
+
+            entity.HasOne(d => d.Set_Category).WithMany(p => p.SETS).HasConstraintName("FK_SETS_Sets_Category");
+        });
+
+        modelBuilder.Entity<SETS_CATEGORY>(entity =>
+        {
+            entity.HasKey(e => e.Set_Category_Id).HasName("PK_Sets_Category");
+
+            entity.ToTable(tb => tb.HasComment("A collection of SETS_CATEGORY records"));
+
+            entity.Property(e => e.Set_Category_Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<SET_FILES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SET_FILES records"));
+
+            entity.HasOne(d => d.Gen_File).WithMany(p => p.SET_FILES).HasConstraintName("FK_SET_FILES_GEN_FILE");
+
+            entity.HasOne(d => d.SetNameNavigation).WithMany(p => p.SET_FILES).HasConstraintName("FK_SET_FILES_SETS");
+        });
+
+        modelBuilder.Entity<SHAPE_TYPES>(entity =>
+        {
+            entity.HasKey(e => e.Diagram_Type_XML).HasName("PK_Shape_Types");
+
+            entity.ToTable(tb => tb.HasComment("A collection of SHAPE_TYPES records"));
+        });
+
+        modelBuilder.Entity<SP80053_FAMILY_ABBREVIATIONS>(entity =>
+        {
+            entity.HasKey(e => e.ID).HasName("PK_NEW_53_FAMILY_ABBREVIATIONS");
+
+            entity.ToTable(tb => tb.HasComment("A collection of SP80053_FAMILY_ABBREVIATIONS records"));
+        });
+
+        modelBuilder.Entity<STANDARD_CATEGORY>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_CATEGORY records"));
+
+            entity.Property(e => e.Standard_Category1).HasComment("The Standard Category is used to");
+        });
+
+        modelBuilder.Entity<STANDARD_CATEGORY_SEQUENCE>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_CATEGORY_SEQUENCE records"));
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.STANDARD_CATEGORY_SEQUENCE).HasConstraintName("FK_STANDARD_CATEGORY_SEQUENCE_SETS");
+
+            entity.HasOne(d => d.Standard_CategoryNavigation).WithMany(p => p.STANDARD_CATEGORY_SEQUENCE).HasConstraintName("FK_STANDARD_CATEGORY_SEQUENCE_STANDARD_CATEGORY");
+        });
+
+        modelBuilder.Entity<STANDARD_SELECTION>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_SELECTION records"));
+
+            entity.Property(e => e.Assessment_Id)
+                .ValueGeneratedNever()
+                .HasComment("The Id is used to");
+            entity.Property(e => e.Application_Mode)
+                .HasDefaultValueSql("('Questions Based')")
+                .HasComment("The Application Mode is used to");
+            entity.Property(e => e.Selected_Sal_Level)
+                .HasDefaultValueSql("('Low')")
+                .HasComment("The Selected Sal Level is used to");
+
+            entity.HasOne(d => d.Assessment).WithOne(p => p.STANDARD_SELECTION).HasConstraintName("FK_STANDARD_SELECTION_ASSESSMENTS");
+
+            entity.HasOne(d => d.Last_Sal_Determination_TypeNavigation).WithMany(p => p.STANDARD_SELECTION).HasConstraintName("FK_STANDARD_SELECTION_SAL_DETERMINATION_TYPES");
+
+            entity.HasOne(d => d.Selected_Sal_LevelNavigation).WithMany(p => p.STANDARD_SELECTION)
+                .HasPrincipalKey(p => p.Full_Name_Sal)
+                .HasForeignKey(d => d.Selected_Sal_Level)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_STANDARD_SELECTION_UNIVERSAL_SAL_LEVEL");
+        });
+
+        modelBuilder.Entity<STANDARD_SOURCE_FILE>(entity =>
+        {
+            entity.HasKey(e => new { e.Set_Name, e.Doc_Num }).HasName("PK_Standard_Source_File");
+
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_SOURCE_FILE records"));
+
+            entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
+            entity.Property(e => e.Doc_Num).HasComment("The Doc Num is used to");
+
+            entity.HasOne(d => d.Doc_NumNavigation).WithMany(p => p.STANDARD_SOURCE_FILE).HasConstraintName("FK_Standard_Source_File_FILE_REF_KEYS");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.STANDARD_SOURCE_FILE).HasConstraintName("FK_Standard_Source_File_SETS");
+        });
+
+        modelBuilder.Entity<STANDARD_SPECIFIC_LEVEL>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_SPECIFIC_LEVEL records"));
+
+            entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
+            entity.Property(e => e.Display_Name).HasDefaultValueSql("('No Display Name')");
+            entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
+            entity.Property(e => e.Level_Order).HasComment("The Level Order is used to");
+            entity.Property(e => e.Standard)
+                .HasDefaultValueSql("('No Standard')")
+                .HasComment("The Standard is used to");
+        });
+
+        modelBuilder.Entity<STANDARD_TO_UNIVERSAL_MAP>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STANDARD_TO_UNIVERSAL_MAP records"));
+
+            entity.Property(e => e.Universal_Sal_Level).HasComment("The Universal Sal Level is used to");
+            entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
+
+            entity.HasOne(d => d.Standard_LevelNavigation).WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP).HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_STANDARD_SPECIFIC_LEVEL");
+
+            entity.HasOne(d => d.Universal_Sal_LevelNavigation).WithMany(p => p.STANDARD_TO_UNIVERSAL_MAP).HasConstraintName("FK_STANDARD_TO_UNIVERSAL_MAP_UNIVERSAL_SAL_LEVEL");
+        });
+
+        modelBuilder.Entity<STATES_AND_PROVINCES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of STATES_AND_PROVINCES records"));
+
+            entity.HasOne(d => d.Country_CodeNavigation).WithMany(p => p.STATES_AND_PROVINCES)
+                .HasPrincipalKey(p => p.ISO_code)
+                .HasForeignKey(d => d.Country_Code)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_STATES_AND_PROVINCES_COUNTRIES");
+        });
+
+        modelBuilder.Entity<SUB_CATEGORY_ANSWERS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment(""));
+
+            entity.Property(e => e.Component_Guid)
+                .HasDefaultValueSql("((0))")
+                .HasComment("The Component Id is used to");
+            entity.Property(e => e.Is_Component).HasComment("The Is Component is used to");
+            entity.Property(e => e.Answer_Text).HasComment("The Answer Text is used to");
+
+            entity.HasOne(d => d.Answer_TextNavigation).WithMany(p => p.SUB_CATEGORY_ANSWERS)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_Answer_Lookup");
+
+            entity.HasOne(d => d.Assessement).WithMany(p => p.SUB_CATEGORY_ANSWERS).HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
+
+            entity.HasOne(d => d.Heading_Pair).WithMany(p => p.SUB_CATEGORY_ANSWERS)
+                .HasPrincipalKey(p => p.Heading_Pair_Id)
+                .HasForeignKey(d => d.Heading_Pair_Id)
+                .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_UNIVERSAL_SUB_CATEGORY_HEADINGS");
+        });
+
+        modelBuilder.Entity<SYMBOL_GROUPS>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of SYMBOL_GROUPS records"));
+
+            entity.Property(e => e.Id).HasComment("The Id is used to");
+            entity.Property(e => e.Symbol_Group_Name).HasComment("The Symbol Group Name is used to");
+            entity.Property(e => e.Symbol_Group_Title).HasComment("The Symbol Group Title is used to");
+        });
+
+        modelBuilder.Entity<TTP_MAT_QUESTION>(entity =>
+        {
+            entity.HasOne(d => d.Mat_Question).WithMany(p => p.TTP_MAT_QUESTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS");
+
+            entity.HasOne(d => d.TTP_CodeNavigation).WithMany(p => p.TTP_MAT_QUESTION)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_TTP_MAT_QUESTION_TTP");
+        });
+
+        modelBuilder.Entity<UNIVERSAL_AREA>(entity =>
+        {
+            entity.HasKey(e => e.Universal_Area_Name).HasName("UNIVERSAL_AREA_PK");
+
+            entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_AREA records"));
+
+            entity.Property(e => e.Universal_Area_Name).HasComment("The Universal Area Name is used to");
+            entity.Property(e => e.Area_Weight).HasComment("The Area Weight is used to");
+            entity.Property(e => e.Comments).HasComment("The Comments is used to");
+            entity.Property(e => e.Universal_Area_Number)
+                .ValueGeneratedOnAdd()
+                .HasComment("The Universal Area Number is used to");
+        });
+
+        modelBuilder.Entity<UNIVERSAL_SAL_LEVEL>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SAL_LEVEL records"));
+
+            entity.Property(e => e.Universal_Sal_Level1).HasComment("The Universal Sal Level is used to");
+            entity.Property(e => e.Full_Name_Sal).HasComment("The Full Name Sal is used to");
+            entity.Property(e => e.Sal_Level_Order).HasComment("The Sal Level Order is used to");
+        });
+
+        modelBuilder.Entity<UNIVERSAL_SUB_CATEGORIES>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SUB_CATEGORIES records"));
+
+            entity.Property(e => e.Universal_Sub_Category).HasComment("The Universal Sub Category is used to");
+            entity.Property(e => e.Universal_Sub_Category_Id)
+                .ValueGeneratedOnAdd()
+                .HasComment("The Universal Sub Category Id is used to");
+        });
+
+        modelBuilder.Entity<UNIVERSAL_SUB_CATEGORY_HEADINGS>(entity =>
+        {
+            entity.HasKey(e => new { e.Question_Group_Heading_Id, e.Universal_Sub_Category_Id, e.Set_Name }).HasName("PK_UNIVERSAL_SUB_CATEGORY_HEADINGS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records"));
+
+            entity.Property(e => e.Set_Name).HasDefaultValueSql("('Standards')");
+            entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))", false);
+            entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.Question_Group_Heading).WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
+                .HasPrincipalKey(p => p.Question_Group_Heading_Id)
+                .HasForeignKey(d => d.Question_Group_Heading_Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_QUESTION_GROUP_HEADING");
+
+            entity.HasOne(d => d.Set_NameNavigation).WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS).HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_SETS");
+
+            entity.HasOne(d => d.Universal_Sub_Category).WithMany(p => p.UNIVERSAL_SUB_CATEGORY_HEADINGS)
+                .HasPrincipalKey(p => p.Universal_Sub_Category_Id)
+                .HasForeignKey(d => d.Universal_Sub_Category_Id)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_UNIVERSAL_SUB_CATEGORY_HEADINGS_UNIVERSAL_SUB_CATEGORIES");
+        });
+
+        modelBuilder.Entity<USERS>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK_USERS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
+
+            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
+            entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
+            entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+        });
+
+        modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>
+        {
+            entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
+        });
+
+        modelBuilder.Entity<USER_EMAIL_HISTORY>(entity =>
+        {
+            entity.HasOne(d => d.User).WithMany(p => p.USER_EMAIL_HISTORY).HasConstraintName("FK_USER_EMAIL_HISTORY_USERS");
+        });
+
+        modelBuilder.Entity<USER_SECURITY_QUESTIONS>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK_USER_SECURITY_QUESTIONS_1");
+
+            entity.ToTable(tb => tb.HasComment("A collection of USER_SECURITY_QUESTIONS records"));
+
+            entity.Property(e => e.UserId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.User).WithOne(p => p.USER_SECURITY_QUESTIONS).HasConstraintName("FK_USER_SECURITY_QUESTIONS_USERS");
+        });
+
+        modelBuilder.Entity<VIEW_QUESTIONS_STATUS>(entity =>
+        {
+            entity.ToView("VIEW_QUESTIONS_STATUS");
+        });
+
+        modelBuilder.Entity<VISIO_MAPPING>(entity =>
+        {
+            entity.ToTable(tb => tb.HasComment("A collection of VISIO_MAPPING records"));
+
+            entity.HasOne(d => d.Specific_TypeNavigation).WithMany(p => p.VISIO_MAPPING).HasConstraintName("FK_VISIO_MAPPING_DIAGRAM_TYPES");
+        });
+
+        modelBuilder.Entity<WEIGHT>(entity =>
+        {
+            entity.HasKey(e => e.Weight1).HasName("PK_QUESTION_WEIGHT");
+
+            entity.ToTable(tb => tb.HasComment("A collection of WEIGHT records"));
+
+            entity.Property(e => e.Weight1).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<vFinancialGroups>(entity =>
+        {
+            entity.ToView("vFinancialGroups");
+        });
+
+        modelBuilder.Entity<vParameters>(entity =>
+        {
+            entity.ToView("vParameters");
+        });
+
+        modelBuilder.Entity<vQUESTION_HEADINGS>(entity =>
+        {
+            entity.ToView("vQUESTION_HEADINGS");
+        });
+        modelBuilder.HasSequence<int>("MaturityNodeSequence");
+
+        OnModelCreatingGeneratedProcedures(modelBuilder);
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

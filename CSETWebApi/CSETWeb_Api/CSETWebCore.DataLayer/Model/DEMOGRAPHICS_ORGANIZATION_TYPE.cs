@@ -6,25 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of DEMOGRAPHICS_ORGANIZATION_TYPE records
+/// </summary>
+public partial class DEMOGRAPHICS_ORGANIZATION_TYPE
 {
-    /// <summary>
-    /// A collection of DEMOGRAPHICS_ORGANIZATION_TYPE records
-    /// </summary>
-    public partial class DEMOGRAPHICS_ORGANIZATION_TYPE
-    {
-        public DEMOGRAPHICS_ORGANIZATION_TYPE()
-        {
-            DEMOGRAPHICS = new HashSet<DEMOGRAPHICS>();
-        }
+    [Key]
+    public int OrganizationTypeId { get; set; }
 
-        [Key]
-        public int OrganizationTypeId { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string OrganizationType { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string OrganizationType { get; set; }
 
-        [InverseProperty("OrganizationTypeNavigation")]
-        public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; }
-    }
+    [InverseProperty("OrganizationTypeNavigation")]
+    public virtual ICollection<DEMOGRAPHICS> DEMOGRAPHICS { get; set; } = new List<DEMOGRAPHICS>();
 }

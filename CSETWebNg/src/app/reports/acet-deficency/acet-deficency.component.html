@@ -20,17 +20,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div *transloco="let t; read:'reports.acet.gap report'" class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p
                 class="report-title">
-                GAP
+                {{ t('gap report title 1') }}
             </p>
             <p
                 class="report-title">
-                REPORT
+                {{ t('gap report title 2') }}
             </p>
         </div>
         <div class="column">
@@ -65,18 +65,14 @@
 
         <div class="disclaimer-blurb mt-4">
             <p>
-                This gap report lists the statements that are not currently compliant or "No" answers.
+              {{ t('gap disclaimer 1') }}
             </p>
             <p>
-                This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
-                the report in identifying gaps, prioritizing work, and beginning to make a plan to address
-                the gaps by implementing the controls necessary to come into compliance with the associated statement.
+              {{ t('gap disclaimer 2') }}
             </p>
             <p>
-                The percentage gap in each domain is also listed and will help to determine the priority.
-                ACET is a cumulative maturity model meaning lower levels should be completed before
-                moving to higher levels. Ideally baseline should be completed before focusing efforts on
-                controls in evolving and so forth up the line of maturity levels.</p>
+              {{ t('gap disclaimer 3') }}
+            </p>
         </div>
 
         <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
@@ -85,25 +81,25 @@
 
         <ng-template #mainContent>
           <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">Gaps</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+            <h1 class="page-title">{{ t('gaps') }}</h1>
+            <p style="color: #de761c;text-align: right;">{{ t('marked for review') }} - <img class="MarkedFlag"
               src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
             <table role="presentation">
               <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <tr class="rkw-domain" *ngIf="d.isDeficient">
-                  <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - Domain</td>
+                  <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - {{ 'domain' | transloco }}</td>
                 </tr>
                 <ng-container *ngFor="let f of d.assessmentFactors">
                   <tr *ngIf="f.isDeficient">
                     <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} -
-                      Assessment Factor
+                      {{ 'acet.assessment factor' | transloco }}
                     </td>
                   </tr>
                   <ng-container *ngFor="let c of f.components">
                     <tr *ngIf="c.isDeficient">
-                      <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - Component</td>
+                      <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - {{ 'acet.component' | transloco }}</td>
                     </tr>
                     <ng-container *ngFor="let q of c.questions">
                       <tr *ngIf="c.isDeficient && q.answerText == 'N'">
@@ -111,7 +107,7 @@
                                 <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
                                 <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                                   <div style="width: 7rem">
-                                    {{questionsSvc.answerDisplayLabel(1, s.answer.answer_Text)}}
+                                    {{ 'answer-options.button-labels.' + questionsSvc.answerDisplayLabel('ACET',q.answerText) | transloco }}
                                   </div>
                                 </td>
                                 <td class="deficiencies-list-flag"><img title="marked for review"
@@ -128,7 +124,7 @@
                                           <tr>
                                             <td
                                             style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                            <b>Comment:</b>
+                                            <b>{{ 'tooltip.comment' | transloco }}:</b>
                                           </td>
                                           <td
                                           style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">

@@ -49,6 +49,7 @@ import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/imp
 import * as moment from "moment";
 import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
+import { TranslocoService } from "@ngneat/transloco";
 
 
 interface UserAssessment {
@@ -67,6 +68,7 @@ interface UserAssessment {
   selectedStandards?: string;
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
+  questionAlias: string;
 }
 
 @Component({
@@ -77,7 +79,7 @@ interface UserAssessment {
 })
 export class MyAssessmentsComponent implements OnInit {
   comparer: Comparer = new Comparer();
-  sortedAssessments: UserAssessment[] = null;
+  sortedAssessments: UserAssessment[] = [];
   unsupportedImportFile: boolean = false;
 
   browserIsIE: boolean = false;
@@ -113,7 +115,7 @@ export class MyAssessmentsComponent implements OnInit {
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
-    private reportSvc: ReportService,
+    public tSvc: TranslocoService,
     private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService
@@ -193,7 +195,13 @@ export class MyAssessmentsComponent implements OnInit {
             assessments.forEach((item, index, arr) => {
               let type = '';
               if (item.useDiagram) type += ', Diagram';
-              if (item.useMaturity) type += ', ' + item.selectedMaturityModel;
+              item.questionAlias = 'questions';
+              if (item.useMaturity) {
+                type += ', ' + item.selectedMaturityModel;
+                if (item.selectedMaturityModel === 'ISE') {
+                  item.questionAlias = 'statements';
+                }
+              }
               if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
               if (type.length > 0) type = type.substring(2);
               item.type = type;

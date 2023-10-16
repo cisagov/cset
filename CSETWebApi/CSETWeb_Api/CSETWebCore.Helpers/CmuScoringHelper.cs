@@ -588,10 +588,6 @@ namespace CSETWebCore.Helpers
                     reff.SetAttributeValue("question-title", ab.mq.Question_Title);
                     node.Element("References").Add(reff);
                 }
-                else
-                {
-                    var stop = 1;
-                }
             }
 
 

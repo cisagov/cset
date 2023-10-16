@@ -21,18 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Injectable, OnChanges, SimpleChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { NavTreeNode } from './navigation.service';
 import { PageVisibilityService } from './page-visibility.service';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NavTreeService implements OnChanges {
+export class NavTreeService {
 
   dataSource: MatTreeNestedDataSource<NavTreeNode> = new MatTreeNestedDataSource<NavTreeNode>();
   dataChange: BehaviorSubject<NavTreeNode[]> = new BehaviorSubject<NavTreeNode[]>([]);
@@ -48,7 +49,8 @@ export class NavTreeService implements OnChanges {
 
   constructor(
     private assessSvc: AssessmentService,
-    private pageVisibliltySvc: PageVisibilityService
+    private pageVisibliltySvc: PageVisibilityService,
+    private tSvc: TranslocoService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -63,36 +65,20 @@ export class NavTreeService implements OnChanges {
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
   /**
-   * 
-   */
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('CCC-nav-tree service onChanges');
-    console.log(changes);
-  }
-
-  /**
    *
    * @param magic
    */
   buildTree(workflow: Document, magic: string) {
     if (this.magic !== magic) {
-      console.log('buildTree - magic compare failed');
+      console.warn('buildTree - magic compare failed');
       return;
     }
 
     this.workflow = workflow;
 
-    // if (localStorage.getItem('tree')) {
-    //   let tree: any = this.parseTocData(JSON.parse(localStorage.getItem('tree')));
-    //   this.dataSource.data = <NavTreeNode[]>tree;
-    // } else {
-    //   this.dataSource.data = this.buildTocData();
-    // }
-
     this.dataSource.data = this.buildTocData();
     this.tocControl.dataNodes = this.dataSource.data;
 
-    //localStorage.setItem('tree', JSON.stringify(this.dataSource.data));
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
@@ -119,11 +105,19 @@ export class NavTreeService implements OnChanges {
   domToNav(domNodes: HTMLCollection, navNodes: NavTreeNode[]) {
     Array.from(domNodes).forEach((workflowNode: HTMLElement) => {
 
-      // nodes without a 'displaytext' attribute are ignored
-      if (!!workflowNode.attributes['displaytext']) {
+      // nodes without a 'displaytext' or 'd' attribute are ignored
+      if (!!workflowNode.attributes['displaytext'] || !!workflowNode.attributes['d']) {
+
+        let displaytext = workflowNode.attributes['displaytext']?.value;
+        let d = workflowNode.attributes['d']?.value;
+
+        // localize the 'd' attribute
+        if (!!d) {
+          displaytext = this.tSvc.translate(`titles.${d}`);
+        }
 
         const navNode: NavTreeNode = {
-          label: workflowNode.attributes['displaytext'].value,
+          label: displaytext,
           value: workflowNode.id ?? 0,
           children: [],
           expandable: true,
@@ -157,9 +151,10 @@ export class NavTreeService implements OnChanges {
    */
   adjustNavNode(node: NavTreeNode) {
     if (node.value == 'maturity-questions') {
-      const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias;
+      // Models may use a specific term (alias) for "questions" or "practices"
+      const alias = this.assessSvc.assessment?.maturityModel?.questionsAlias?.toLowerCase();
       if (!!alias) {
-        node.label = alias;
+        node.label = this.tSvc.translate(`titles.${alias}`);
       }
     }
   }
@@ -192,7 +187,6 @@ export class NavTreeService implements OnChanges {
    */
   setQuestionsTree() {
     const d = this.dataSource.data;
-    this.dataSource.data = null;
     this.dataSource.data = d;
   }
 

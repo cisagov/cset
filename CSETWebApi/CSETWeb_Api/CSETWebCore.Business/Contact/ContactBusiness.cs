@@ -169,8 +169,6 @@ namespace CSETWebCore.Business.Contact
 
         /// <summary>
         /// Connects an existing USER to an existing ASSESSMENT for the specified role.
-        /// TODO:  Enforce no duplicates - a user should only be connected once.
-        ///        If a new role is supplied, update the existing ASSESSMENT_CONTACTS role.
         /// </summary>
         public ContactDetail AddContactToAssessment(int assessmentId, int userId, int roleid, bool invited)
         {

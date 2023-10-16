@@ -132,6 +132,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IAdminTabBusiness, AdminTabBusiness>();
             services.AddTransient<IAnalyticsBusiness, AnalyticsBusiness>();
             services.AddTransient<IAssessmentBusiness, AssessmentBusiness>();
+            services.AddTransient<IACETAssessmentBusiness, ACETAssessmentBusiness>();
             services.AddTransient<IAssessmentModeData, AssessmentModeData>();
             services.AddTransient<IAssessmentUtil, AssessmentUtil>();
             services.AddTransient<IContactBusiness, ContactBusiness>();

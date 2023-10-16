@@ -21,8 +21,9 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -31,6 +32,7 @@ namespace CSETWebCore.Api.Controllers
     public class AssessmentController : ControllerBase
     {
         private readonly IAssessmentBusiness _assessmentBusiness;
+        private IACETAssessmentBusiness _acsetAssessmentBusiness;
         private readonly ITokenManager _tokenManager;
         private readonly IDocumentBusiness _documentBusiness;
         private readonly IStandardsBusiness _standards;
@@ -40,11 +42,13 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
+            IACETAssessmentBusiness acetAssessmentBusiness, 
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
         {
             _assessmentBusiness = assessmentBusiness;
+            _acsetAssessmentBusiness = acetAssessmentBusiness;
             _tokenManager = tokenManager;
             _documentBusiness = documentBusiness;
             _context = context;
@@ -53,21 +57,6 @@ namespace CSETWebCore.Api.Controllers
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
         }
-
-        /// <summary>
-        /// Creates a new Assessment with the current user as the first contact
-        /// in an admin role.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("api/createassessment")]
-        public IActionResult CreateAssessment([FromQuery] string workflow)
-        {
-            Guid galleryGuid = Guid.Empty;
-            var currentUserId = _tokenManager.GetUserId();
-            return Ok(_assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid));
-        }
-
 
         /// <summary>
         /// Creates a new Assessment and populates it with the options defined
@@ -82,14 +71,14 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] Guid galleryGuid, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
-
-
+            
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
             var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == galleryGuid);
             if (galleryItem != null)
             {
                 config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
+                config.GalleryGuid = galleryGuid;
             }
             else
             {
@@ -97,6 +86,7 @@ namespace CSETWebCore.Api.Controllers
                 if (csn != null)
                 {
                     config = JsonConvert.DeserializeObject<GalleryConfig>($"{{Sets:[\"{csn}\"],SALLevel:\"Low\",QuestionMode:\"Questions\"}}");
+                    config.GalleryGuid = galleryGuid;
                     //_galleryEditor.AddGalleryItem(null, null, )
                 }
                 else
@@ -105,9 +95,17 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
+            ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness) _assessmentBusiness;
+            switch (config.Model?.ModelName)
+            {
+                case "ACET":
+                case "ISE":
+                    assessmentBusiness = (ICreateAssessmentBusiness) _acsetAssessmentBusiness;
+                    break;
+            }
 
             // create new empty assessment
-            var assessment = _assessmentBusiness.CreateNewAssessment(currentUserId, workflow, galleryGuid);
+            var assessment = assessmentBusiness.CreateNewAssessment(currentUserId, workflow, config);
 
 
             // build a list of Sets to be selected
@@ -163,22 +161,30 @@ namespace CSETWebCore.Api.Controllers
             // Model
             if (config.Model != null)
             {
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
-                var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessment.Id);
+                var matBiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                matBiz.PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
+
+                var newModel = matBiz.GetMaturityModel(assessment.Id);
                 assessment.MaturityModel = newModel;
                 assessment.UseMaturity = true;
 
                 // maturity level - for models that track a target level
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-
-                if (mb.ModelsWithTargetLevel.Contains(config.Model.ModelName))
+                if (matBiz.ModelsWithTargetLevel.Contains(config.Model.ModelName))
                 {
                     if (config.Model.Level == 0)
                     {
                         config.Model.Level = 1;
                     }
 
-                    mb.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                    matBiz.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                }
+
+
+                // store submodel selection
+                if (!String.IsNullOrEmpty(config.Model.Submodel))
+                {
+                    var demo = new DemographicBusiness(_context, _assessmentUtil);
+                    demo.SaveDD(assessment.Id, "MATURITY-SUBMODEL", config.Model.Submodel, null);
                 }
             }
 
@@ -197,7 +203,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            _assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
+            assessmentBusiness.SaveAssessmentDetail(assessment.Id, assessment);
 
             return Ok(assessment);
         }
@@ -290,6 +296,11 @@ namespace CSETWebCore.Api.Controllers
             if (assessmentId != assessmentDetail.Id)
             {
                 throw new Exception("Not currently authorized to update the Assessment", null);
+            }
+
+            if (assessmentDetail.Workflow == "ACET")
+            {
+                return Ok(_acsetAssessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));
             }
 
             return Ok(_assessmentBusiness.SaveAssessmentDetail(assessmentId, assessmentDetail));

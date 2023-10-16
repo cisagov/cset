@@ -28,6 +28,8 @@ import { QuestionGrouping } from '../../../models/questions.model';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { AssessmentService } from '../../../services/assessment.service';
+import { ACETService } from '../../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 /**
@@ -59,7 +61,9 @@ export class DomainMaturityFilterComponent implements OnInit {
     public maturityFilteringSvc: MaturityFilteringService,
     public acetFilteringSvc: AcetFilteringService,
     public assessSvc: AssessmentService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService,
+    private tSvc: TranslocoService
   ) { }
 
   /**
@@ -67,7 +71,6 @@ export class DomainMaturityFilterComponent implements OnInit {
    */
   ngOnInit() {
     this.domainName = this.domain.title;
-
     if (this.assessSvc.isISE()) {
       this.determineIseFilter();
     }
@@ -112,6 +115,14 @@ export class DomainMaturityFilterComponent implements OnInit {
       } else {
         this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
       }
+  }
+
+  checkFilterKeydown(level: any, event: any) {
+    if (event) {
+      if (event.key == "Enter") {
+        this.filterChanged(level);
+      }
+    }
   }
 
 

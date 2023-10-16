@@ -6,27 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class FRAMEWORK_TIER_TYPE_ANSWER
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string TierType { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Tier { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Tier")]
-        [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
-        public virtual FRAMEWORK_TIERS TierNavigation { get; set; }
-        [ForeignKey("TierType")]
-        [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
-        public virtual FRAMEWORK_TIER_TYPE TierTypeNavigation { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "TierType")]
+public partial class FRAMEWORK_TIER_TYPE_ANSWER
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string TierType { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Tier { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Tier")]
+    [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
+    public virtual FRAMEWORK_TIERS TierNavigation { get; set; }
+
+    [ForeignKey("TierType")]
+    [InverseProperty("FRAMEWORK_TIER_TYPE_ANSWER")]
+    public virtual FRAMEWORK_TIER_TYPE TierTypeNavigation { get; set; }
 }

@@ -26,6 +26,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { AdminSaveData, AttributePair } from '../models/admin-save.model';
 import { AcetDashboard } from '../models/acet-dashboard.model';
+import { AssessmentService } from './assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
     headers: new HttpHeaders()
@@ -38,12 +40,24 @@ const headers = {
  */
 @Injectable()
 export class ACETService {
+    englishSortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
+        "Threat Intelligence & Collaboration",
+        "Cybersecurity Controls",
+        "External Dependency Management",
+        "Cyber Incident Management and Resilience"];
 
-
+    spanishSortDomainListKey: string[] = ["Gestión y Supervisión del Riesgo Cibernético",
+        "Inteligencia de Amenazas y Colaboración",
+        "Controles de Ciberseguridad",
+        "Gestión de Dependencia Externa",
+        "Gestión de Incidentes Cibernéticos y Resiliencia"];
+    
     apiUrl: string;
     constructor(
         private http: HttpClient,
-        private configSvc: ConfigService
+        private configSvc: ConfigService,
+        public assessSvc: AssessmentService,
+        public tSvc: TranslocoService
     ) {
         if (this.configSvc.apiUrl) {
             this.apiUrl = this.configSvc.apiUrl;
@@ -68,7 +82,7 @@ export class ACETService {
 
     ////////////////////  Dashboard functions /////////////////////////////
     getAcetDashboard() {
-        return this.http.get(this.apiUrl + 'acet/dashboard');
+        return this.http.get(this.apiUrl + 'acet/dashboard?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
     }
 
     postSelection(selected: AcetDashboard) {
@@ -89,7 +103,7 @@ export class ACETService {
     * Returns the maturity details.
     */
     getMatDetailList() {
-        return this.http.get(this.apiUrl + 'getMaturityResults');
+        return this.http.get(this.apiUrl + 'getMaturityResults?spanishFlag=' + (this.tSvc.getActiveLang() == 'es'));
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
 

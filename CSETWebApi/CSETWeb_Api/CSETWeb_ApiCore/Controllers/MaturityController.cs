@@ -137,8 +137,14 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            int userId = (int)_tokenManager.GetUserId();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, installationMode, fill, groupingId));
+            if (installationMode == "ACET")
+            {
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId));
+            }
+
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId));
         }
 
         [HttpGet]
@@ -239,7 +245,7 @@ namespace CSETWebCore.Api.Controllers
                     modelId = xy.model_id;
                 }
             }
-            catch (Exception ggg)
+            catch (Exception)
             {
                 // It's okay to call this controller method
                 // without an assessment ID for the module content report
@@ -308,7 +314,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetResultsData(assessmentId));
         }
 
 
@@ -318,7 +324,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
+            return Ok(new HydroMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetHydroProgress());
         }
 
 
@@ -335,7 +341,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetGrouping([FromQuery] int groupingId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-
+            
             var grouping = _context.MATURITY_GROUPINGS.FirstOrDefault(x => x.Grouping_Id == groupingId);
             if (grouping == null)
             {
@@ -349,7 +355,7 @@ namespace CSETWebCore.Api.Controllers
 
             // convert it to a MaturityResponse
             MaturityResponse resp = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).ConvertToMaturityResponse(resp1);
-
+            var excel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
             var model = _context.MATURITY_MODELS.FirstOrDefault(x => x.Maturity_Model_Id == grouping.Maturity_Model_Id);
             resp.ModelName = model.Model_Name;
@@ -436,13 +442,6 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult ImportSurvey([FromBody] Model.Nested.CisImportRequest request)
         {
             var assessmentId = _tokenManager.AssessmentForUser();
-
-
-            // TODO: verify that the user has permission to both assessments
-
-
-
-
             var biz = new CisQuestionsBusiness(_context, _assessmentUtil, assessmentId);
             biz.ImportCisAnswers(request.Dest, request.Source);
             return Ok();
@@ -488,7 +487,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
+            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetAnswerCompletionRate(assessmentId));
         }
 
 
@@ -502,7 +501,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
+            return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetIseAnswerCompletionRate(assessmentId));
         }
 
 
@@ -533,11 +532,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults()
+        public IActionResult GetMaturityResults(bool spanishFlag = false)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId);
+            var maturity = manager.GetMaturityAnswers(assessmentId, spanishFlag);
 
             return Ok(maturity);
         }
@@ -672,19 +671,17 @@ namespace CSETWebCore.Api.Controllers
             List<Grouping> filteredGroupingsS = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
-            {
-                bool includeGrouping = false;
+            {   
                 var questionsU = new List<Question>();
                 var questionsS = new List<Question>();
                 foreach (var q in b.Questions)
                 {
-                    bool includeQ = false;
+                    
                     var question = new Question();
                     if (q.AnswerText == "U")
                     {
                         if (q.Options.Any(x => x.OptionType.ToLower() == "radio"))
-                        {
-                            includeQ = true;
+                        {                    
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -701,8 +698,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         if (q.Options.Any(x =>
                                 x.Selected && x.OptionText == "No" && x.OptionType.ToLower() == "radio"))
-                        {
-                            includeQ = true;
+                        {   
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,

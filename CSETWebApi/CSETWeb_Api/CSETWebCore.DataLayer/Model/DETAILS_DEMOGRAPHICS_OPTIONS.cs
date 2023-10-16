@@ -6,19 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class DETAILS_DEMOGRAPHICS_OPTIONS
 {
-    public partial class DETAILS_DEMOGRAPHICS_OPTIONS
-    {
-        [Key]
-        public int Option_Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string DataItemName { get; set; }
-        public int Sequence { get; set; }
-        public int OptionValue { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string OptionText { get; set; }
-    }
+    [Key]
+    public int Option_Id { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string DataItemName { get; set; }
+
+    public int Sequence { get; set; }
+
+    public int OptionValue { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string OptionText { get; set; }
 }

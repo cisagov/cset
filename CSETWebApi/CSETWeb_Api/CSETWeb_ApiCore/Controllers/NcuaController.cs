@@ -14,6 +14,7 @@ using CSETWebCore.Interfaces.Helpers;
 using Snickler.EFCore;
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.Question;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -52,11 +53,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/getMergeData")]
         public IList<Get_Merge_ConflictsResult> GetMergeAnswers([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, [FromQuery] int id4, [FromQuery] int id5,
                                                                 [FromQuery] int id6, [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
-        {
-            // Todo: Add security check for authorization
-            // Call assessments for user on each assessment ID
-
-            // if true
+        {   
             return _context.Get_Merge_Conflicts(id1, id2, id3, id4, id5, id6, id7, id8, id9, id10); 
         }
 

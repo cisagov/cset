@@ -27,10 +27,10 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/acet/dashboard")]
-        public IActionResult GetDashboard()
+        public IActionResult GetDashboard(bool spanishFlag = false)
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_acetDashboard.LoadDashboard(assessmentId));
+            return Ok(_acetDashboard.LoadDashboard(assessmentId, spanishFlag));
         }
 
         [HttpPost]

@@ -6,24 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of SETS_CATEGORY records
+/// </summary>
+public partial class SETS_CATEGORY
 {
-    /// <summary>
-    /// A collection of SETS_CATEGORY records
-    /// </summary>
-    public partial class SETS_CATEGORY
-    {
-        public SETS_CATEGORY()
-        {
-            SETS = new HashSet<SETS>();
-        }
+    [Key]
+    public int Set_Category_Id { get; set; }
 
-        [Key]
-        public int Set_Category_Id { get; set; }
-        [StringLength(250)]
-        public string Set_Category_Name { get; set; }
+    [StringLength(250)]
+    public string Set_Category_Name { get; set; }
 
-        [InverseProperty("Set_Category")]
-        public virtual ICollection<SETS> SETS { get; set; }
-    }
+    [InverseProperty("Set_Category")]
+    public virtual ICollection<SETS> SETS { get; set; } = new List<SETS>();
 }

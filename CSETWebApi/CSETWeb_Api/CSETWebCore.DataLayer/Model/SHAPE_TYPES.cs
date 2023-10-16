@@ -6,22 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of SHAPE_TYPES records
+/// </summary>
+public partial class SHAPE_TYPES
 {
-    /// <summary>
-    /// A collection of SHAPE_TYPES records
-    /// </summary>
-    public partial class SHAPE_TYPES
-    {
-        [Key]
-        [StringLength(50)]
-        public string Diagram_Type_XML { get; set; }
-        [StringLength(50)]
-        public string Telerik_Shape_Type { get; set; }
-        [StringLength(50)]
-        public string Visio_Shape_Type { get; set; }
-        public bool IsDefault { get; set; }
-        [StringLength(50)]
-        public string DisplayName { get; set; }
-    }
+    [Key]
+    [StringLength(50)]
+    public string Diagram_Type_XML { get; set; }
+
+    [StringLength(50)]
+    public string Telerik_Shape_Type { get; set; }
+
+    [StringLength(50)]
+    public string Visio_Shape_Type { get; set; }
+
+    public bool IsDefault { get; set; }
+
+    [StringLength(50)]
+    public string DisplayName { get; set; }
 }

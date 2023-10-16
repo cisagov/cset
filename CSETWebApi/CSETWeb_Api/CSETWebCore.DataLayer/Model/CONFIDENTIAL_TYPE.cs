@@ -6,15 +6,16 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CONFIDENTIAL_TYPE
 {
-    public partial class CONFIDENTIAL_TYPE
-    {
-        [Key]
-        public int ConfidentialTypeId { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string ConfidentialTypeKey { get; set; }
-        public int? ConfidentialTypeOrder { get; set; }
-    }
+    [Key]
+    public int ConfidentialTypeId { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string ConfidentialTypeKey { get; set; }
+
+    public int? ConfidentialTypeOrder { get; set; }
 }

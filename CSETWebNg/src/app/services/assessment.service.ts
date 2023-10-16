@@ -33,6 +33,7 @@ import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
 import { NavigationService } from './navigation/navigation.service';
 import { Observable } from 'rxjs';
+import { DemographicExtendedService } from './demographic-extended.service';
 
 
 export interface Role {
@@ -82,7 +83,8 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private router: Router
+    private router: Router,    
+    private extDemoSvc: DemographicExtendedService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -115,10 +117,6 @@ export class AssessmentService {
    */
   refreshRoles() {
     return this.http.get(this.apiUrl + 'contacts/allroles');
-  }
-
-  createAssessment(workflow: string) {
-    return this.http.get(this.apiUrl + 'createassessment?workflow=' + workflow);
   }
 
   /**
@@ -352,39 +350,6 @@ export class AssessmentService {
       .subscribe((mode: string) => (this.applicationMode = mode));
   }
 
-  /**
-   * Create a new assessment.
-   */
-  newAssessment(): Promise<any> {
-    let workflow: string;
-    switch (this.configSvc.installationMode || '') {
-      case 'ACET':
-        workflow = 'ACET';
-        break;
-      case 'TSA':
-        workflow = 'TSA';
-        break;
-      default:
-        workflow = 'BASE';
-    }
-
-    return new Promise((resolve, reject) => {
-      this.createAssessment(workflow)
-        .toPromise()
-        .then(
-          (response: any) => {
-            // set the brand new flag
-            this.isBrandNew = true;
-            this.loadAssessment(response.id);
-            resolve('assessment loaded');
-          },
-          error =>
-            console.log(
-              'Unable to create new assessment: ' + (<Error>error).message
-            )
-        );
-    });
-  }
 
   newAssessmentGallery(galleryItem: any): Promise<any> {
     let workflow = 'BASE';
@@ -441,8 +406,7 @@ export class AssessmentService {
           if (this.configSvc.installationMode !== 'ACET') {
             this.assessment.isAcetOnly = false;
           }
-
-
+          this.extDemoSvc.preloadDemoAndGeo();
           const rpath = localStorage.getItem('returnPath');
 
           // normal assessment load
@@ -536,7 +500,7 @@ export class AssessmentService {
   }
 
   /**
-   * Indicates if the assessment uses the specified maturity model.
+   * Indicates if the assessment uses the specified maturity model name.
    */
   usesMaturityModel(modelName: string) {
     if (!this.assessment) {
@@ -550,16 +514,23 @@ export class AssessmentService {
     if (!this.assessment.maturityModel) {
       return false;
     }
-
+    
     if (!this.assessment.maturityModel.modelName) {
       return false;
     }
-
+    
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }
 
     return this.assessment.maturityModel.modelName.toLowerCase() === modelName.toLowerCase();
+  }
+
+  /**
+   * Indicates if the assessment uses the maturity model for the specified ID
+   */
+  usesMaturityModelId(modelId: number) {
+    return this.assessment?.useMaturity && modelId == this.assessment?.maturityModel?.modelId;
   }
 
   /**

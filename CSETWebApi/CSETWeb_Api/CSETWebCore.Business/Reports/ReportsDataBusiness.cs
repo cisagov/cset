@@ -4,9 +4,12 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
@@ -18,8 +21,10 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
+using DocumentFormat.OpenXml.EMMA;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using Org.BouncyCastle.Asn1.Pkcs;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
@@ -108,6 +113,26 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
+            int userId = (int)_tokenManager.GetUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            //
+            if (user.Lang == "es")
+            {
+                responseList.ForEach(
+                   matAns =>
+                   {
+                       Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                       var output = new SpanishQuestionRow();
+                       var temp = new SpanishQuestionRow();
+
+                       if (dictionary.TryGetValue(matAns.Mat.Mat_Question_Id, out output))
+                       {
+                           matAns.Mat.Question_Text = dictionary[matAns.Mat.Mat_Question_Id].Question_Text;
+                       }
+                   });
+            }
+            //
+
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
                 && x.Level_Name == Constants.Constants.MaturityLevel).Select(x => int.Parse(x.Standard_Specific_Sal_Level)).FirstOrDefault();
@@ -182,12 +207,23 @@ namespace CSETWebCore.Business.Reports
 
             var responseList = GetQuestionsList().Where(x => deficientAnswerValues.Contains(x.ANSWER.Answer_Text)).ToList();
 
+
             // We don't consider parent questions that have children to be unanswered for certain maturity models
             // (i.e. for CRR, EDM since they just house the question extras)
             if (ignoreParentQuestions)
             {
                 responseList = responseList.Where(x => !x.IsParentWithChildren).ToList();
             }
+
+
+            // If the assessment is using a submodel, only keep the submodel's subset of questions
+            var maturitySubmodel = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == _assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
+            if (maturitySubmodel != null)
+            {
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
+                responseList = responseList.Where(x => whitelist.Contains(x.Mat.Mat_Question_Id)).ToList();
+            }
+
 
             return responseList;
         }
@@ -265,6 +301,23 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
+            Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
+            int userId = (int)_tokenManager.GetUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+
+            if (user.Lang == "es")
+            {
+                allGroupings.ForEach(
+                    group => {
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
+                        if (dictionaryGrouping.TryGetValue(group.Grouping_Id, out output))
+                        {
+                            group.Title = dictionaryGrouping[group.Grouping_Id].Spanish_Title;
+                        }
+                    });
+            }
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
@@ -272,7 +325,6 @@ namespace CSETWebCore.Business.Reports
 
             var maturityDomains = new List<MatAnsweredQuestionDomain>();
 
-            // ToDo: Refactor the following stucture of loops
             foreach (var domain in questionGrouping.SubGroupings)
             {
                 var newDomain = new MatAnsweredQuestionDomain()
@@ -312,6 +364,16 @@ namespace CSETWebCore.Business.Reports
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview
                                 };
+
+                                if (user.Lang == "es")
+                                {
+                                    var output = new SpanishQuestionRow();
+                                    var temp = new SpanishQuestionRow();
+                                    if (dictionaryQuestion.TryGetValue(question.QuestionId, out output))
+                                    {
+                                        newQuestion.QuestionText = dictionaryQuestion[question.QuestionId].Question_Text;
+                                    }
+                                }
 
                                 if (question.Answer == "N")
                                 {
@@ -1475,6 +1537,20 @@ namespace CSETWebCore.Business.Reports
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
+                    //
+                    var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
+                    if (user.Lang == "es")
+                    {
+                        Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
+                        if (dictionary.TryGetValue(f.mq.Mat_Question_Id, out output))
+                        {
+                            questionText = dictionary[f.mq.Mat_Question_Id].Question_Text;
+                        }
+                    }
+                    //
                     return;
 
                 default:
@@ -1701,8 +1777,14 @@ namespace CSETWebCore.Business.Reports
 
         }
 
-        
-
+        public string GetCsetVersion()
+        {
+            return _context.CSET_VERSION.Select(x => x.Cset_Version1).FirstOrDefault();
+        }
+        public string GetAssessmentGuid(int assessmentId)
+        {
+            return _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Assessment_GUID).FirstOrDefault().ToString();
+        }
 
     }
 }

@@ -6,21 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class Assessments_For_User
 {
-    [Keyless]
-    public partial class Assessments_For_User
-    {
-        public int AssessmentId { get; set; }
-        [Required]
-        [StringLength(100)]
-        public string AssessmentName { get; set; }
-        public DateTime AssessmentDate { get; set; }
-        public DateTime AssessmentCreatedDate { get; set; }
-        [StringLength(301)]
-        public string CreatorName { get; set; }
-        public DateTime? LastModifiedDate { get; set; }
-        public bool MarkedForReview { get; set; }
-        public int? UserId { get; set; }
-    }
+    public int AssessmentId { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string AssessmentName { get; set; }
+
+    public DateTime AssessmentDate { get; set; }
+
+    public DateTime AssessmentCreatedDate { get; set; }
+
+    [StringLength(301)]
+    public string CreatorName { get; set; }
+
+    public DateTime? LastModifiedDate { get; set; }
+
+    public bool MarkedForReview { get; set; }
+
+    public int? UserId { get; set; }
 }

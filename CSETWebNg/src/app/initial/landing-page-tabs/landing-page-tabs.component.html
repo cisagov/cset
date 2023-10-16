@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
+<div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
     <!-- Tabs -->
     <div #tabs class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
@@ -31,7 +31,7 @@
             <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
               tabindex="0">
               <span class="tab-icon mr-2" id="prepareIcon"><i class="fa-solid fa-file-circle-plus"></i></span>
-              <span class="nav-tab-text">New Assessment</span>
+              <span class="nav-tab-text">{{t('new assessment')}}</span>
             </button>
           </li>
           <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('myAssessments')"
@@ -39,7 +39,7 @@
             <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
               tabindex="0">
               <span class="tab-icon mr-2" id="questionsIcon"><i class="fa-solid fa-clipboard-check"></i></span>
-              <span class="nav-tab-text">My Assessments</span>
+              <span class="nav-tab-text">{{ t('my assessments') }}</span>
             </button>
           </li>
         </ul>
@@ -57,7 +57,7 @@
         </div>
         <div class="input-bar-item" *ngIf="isSearch">
           <div class="input-group">
-            <button class="btn btn-primary" (click)="cancelSearch()">Back</button>
+            <button class="btn btn-primary" (click)="cancelSearch()">{{t('buttons.back')}}</button>
           </div>
         </div>
 

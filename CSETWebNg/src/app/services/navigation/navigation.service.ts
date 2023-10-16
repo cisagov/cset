@@ -52,6 +52,8 @@ export interface NavTreeNode {
 })
 export class NavigationService {
 
+  
+
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -68,6 +70,8 @@ export class NavigationService {
   @Output()
   scrollToQuestion = new EventEmitter<string>();
 
+  @Output()
+  disableNext = new EventEmitter<boolean>();
 
   isNavLoading = false;
 
@@ -174,15 +178,6 @@ export class NavigationService {
     });
   }
 
-  /**
-   * This version is for creating a NEW assessment
-   */
-  beginNewAssessment() {
-    this.assessSvc.newAssessment().then(() => {
-      this.navDirect('phase-prepare');
-    });
-  }
-
   beginNewAssessmentGallery(item: any) {
     this.assessSvc.newAssessmentGallery(item).then(() => {
       this.navDirect('phase-prepare');
@@ -232,6 +227,14 @@ export class NavigationService {
     } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
 
     this.routeToTarget(target);
+  }
+
+  /**
+   * Enables or disables the next button
+   * @param enableNext 
+   */
+  setNextEnabled(enableNext: boolean) {
+    this.disableNext.emit(enableNext);
   }
 
   /**
@@ -314,6 +317,40 @@ export class NavigationService {
   }
 
   /**
+   * Determines if the specified page is the first visible page in the nav flow.
+   * Used to hide the "Back" button.
+   * @returns
+   */
+  isFirstVisiblePage(id: string): boolean {
+    if (!this.workflow) {
+      return false;
+    }
+
+    let target = this.workflow.getElementById(id);
+    if (!target) {
+      console.error(`No workflow element found for id ${id}`);
+      return false;
+    }
+
+    do {
+      if (!target.previousElementSibling) {
+        while (!target.previousElementSibling && target.tagName != 'nav') {
+          target = <HTMLElement>target.parentElement;
+        }
+        target = <HTMLElement>target.previousElementSibling;
+      } else {
+        target = <HTMLElement>target.previousElementSibling;
+      }
+    } while (!!target && !this.pageVisibliltySvc.showPage(target));
+
+    if (!target) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Determines if the specified page is the last visible page in the nav flow.
    * Used to hide the "Next" button.
    * @returns
@@ -324,6 +361,10 @@ export class NavigationService {
     }
 
     let target = this.workflow.getElementById(id);
+    if (!target) {
+      console.error(`No workflow element found for id ${id}`);
+      return false;
+    }
 
     do {
       if (target.children.length > 0) {

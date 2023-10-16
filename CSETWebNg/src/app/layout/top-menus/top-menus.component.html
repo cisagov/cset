@@ -20,20 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="collapse navbar-collapse" id="csetNavbarCollapse">
+<div *transloco="let t" class="collapse navbar-collapse" id="csetNavbarCollapse">
 
     <div *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
             class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
             *ngIf="configSvc.installationMode !== 'RRA'">
             <span class="cset-icons-tools fs-base-4 mr-2 align-middle"></span>
-            <span>Tools</span>
+            <span>{{ t('tools.tools') }}</span>
         </button>
 
         <mat-menu #tools="matMenu" class="menu-panel">
             <button mat-menu-item (click)="enableProtectedFeature()" *ngIf="showMenuItem('enable protected features')">
                 <span class="cset-icons-key-shield fs-base mr-2 align-middle"></span>
-                <span>Enable Protected Features</span>
+                <span>{{ t('tools.enable protected features') }}</span>
             </button>
 
             <button mat-menu-item (click)="setMeritExportPath()" *ngIf="assessSvc.isISE() && configSvc.config.currentConfigChain.includes('development')">
@@ -46,41 +46,41 @@
             <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showItemForCurrentSkin('assessment documents')"
                 [ngClass]="{'disabled-menu-item' : !inAssessment()}" (click)="showAssessDocs()">
                 <span class="cset-icons-books-stack-1 fs-base mr-2 align-middle"></span>
-                <span>Assessment Documents</span>
+                <span>{{ t('tools.assessment documents') }}</span>
             </button>
             <button mat-menu-item [disabled]="!inAssessment()" *ngIf="showMenuItem('parameter editor')"
                 [ngClass]="{'disabled-menu-item' : !inAssessment()}"
                 (click)="editParameters()">
                 <span class="cset-icons-puzzle fs-base mr-2 align-middle"></span>
-                <span>Parameter Editor</span>
+                <span>{{ t('tools.parameter editor') }}</span>
             </button>
             <button mat-menu-item [disabled]="!inAssessment()" [ngClass]="{'disabled-menu-item' : !inAssessment()}"
                 (click)="showExcelExportDialog()">
                 <span class="cset-icons-export-excel fs-base mr-2 align-middle"></span>
-                <span>Export Assessment to Excel</span>
+                <span>{{ t('tools.export assessment to excel') }}</span>
             </button>
 
             <hr class="menu-divider" />
 
             <button mat-menu-item [routerLink]="['/importModule']" *ngIf="showMenuItem('import modules')">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
-                <span>Import Modules</span>
+                <span>{{ t('tools.import modules') }}</span>
             </button>
             <button mat-menu-item [routerLink]="['/set-list']" *ngIf="showMenuItem('module builder')">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
-                <span>Module Builder</span>
+                <span>{{ t('tools.module builder') }}</span>
             </button>
             <button mat-menu-item [routerLink]="['/module-content-launch']" *ngIf="showMenuItem('module content report')">
                 <span class="cset-icons-module fs-base mr-2 align-middle"></span>
-                <span>Module Content Report</span>
+                <span>{{ t('tools.module content report') }}</span>
             </button>
             <button mat-menu-item (click)="navigateTrend()" *ngIf="showMenuItem('trend')">
                 <span class="cset2-icons-trend fs-base mr-2 align-middle"></span>
-                <span>Trend</span>
+                <span>{{ t('tools.trend') }}</span>
             </button>
             <button mat-menu-item (click)="navigateCompare()" *ngIf="showMenuItem('compare')">
                 <span class="cset2-icons-compare fs-base mr-2 align-middle"></span>
-                <span>Compare</span>
+                <span>{{ t('tools.compare') }}</span>
             </button>
         </mat-menu>
     </div>
@@ -90,7 +90,7 @@
         <a mat-button class="navbar-menu-header ws-no-wrap"
             href="index.html?returnPath=resource-library" target="csetResourceLibrary">
             <span class="cset-icons-library fs-base-4 mr-2 align-middle"></span>
-            <span>Resource Library</span>
+            <span>{{t('resource library')}}</span>
         </a>
     </div>
 
@@ -100,7 +100,7 @@
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
-            <span>Help</span>
+            <span>{{ t('help.help') }}</span>
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
@@ -160,35 +160,35 @@
 
             <button mat-menu-item (click)="about()">
                 <span class="cset-icons-cset-lock fs-base mr-2 align-middle"></span>
-                <span>About</span>
+                <span>{{ t('help.about') }}</span>
             </button>
             <button mat-menu-item (click)="showKeyboardShortcuts()" *ngIf="!configSvc.isMobile()">
                 <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2 align-middle"></span>
-                <span>Keyboard Shortcuts</span>
+                <span>{{ t('help.keyboard shortcuts') }}</span>
             </button>
 
             <button mat-menu-item [matMenuTriggerFor]="legal">
                 <span class="fas fa-balance-scale fs-base mr-2 align-middle"></span>
-                <span>Legal</span>
+                <span>{{ t('help.legal.legal') }}</span>
             </button>
 
         </mat-menu>
 
 
 
-        <mat-menu #legal="matMenu" class="menu-panel">
+        <mat-menu #legal="matMenu" *transloco="let t; read: 'help.legal'" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
                 <span class="cset-icons-accessibility-doc fs-base mr-2 align-middle"></span>
-                <span>Accessibility Document</span>
+                <span>{{ t('accessibility document') }}</span>
             </a>
             <button mat-menu-item (click)="advisory()">
                 <span class="cset-icons-advisory fs-base mr-2 align-middle"></span>
-                <span>Advisory</span>
+                <span>{{ t('advisory') }}</span>
             </button>
 
             <button mat-menu-item (click)="termsOfUse()">
                 <span class="cset-icons-handshake fs-base mr-2 align-middle"></span>
-                <span>Terms of Use</span>
+                <span>{{ t('terms of use') }}</span>
             </button>
         </mat-menu>
     </div>
@@ -199,7 +199,7 @@
         <button mat-button [matMenuTriggerFor]="help" #helpTrigger="matMenuTrigger"
             (keyup.arrowdown)="helpTrigger.openMenu()" class="dropdown-toggle navbar-menu-header">
             <span class="cset-icons-question-circle-outline fs-base-4 mr-2 align-middle"></span>
-            <span>Help</span>
+            <span>{{ t('help.help') }}</span>
         </button>
 
         <mat-menu #help="matMenu" class="menu-panel">
@@ -214,35 +214,35 @@
 
             <button mat-menu-item (click)="about()">
                 <span class="cset2-icons-hexbug2 fs-base mr-2 align-middle"></span>
-                <span>About</span>
+                <span>{{ t('help.about') }}</span>
             </button>
             <button mat-menu-item (click)="showKeyboardShortcuts()">
                 <span class="cset-icons-keyboard-shortcuts-key fs-base mr-2 align-middle"></span>
-                <span>Keyboard Shortcuts</span>
+                <span>{{ t('help.keyboard shortcuts') }}</span>
             </button>
 
             <button mat-menu-item [matMenuTriggerFor]="legal">
                 <span class="fas fa-balance-scale fs-base mr-2 align-middle"></span>
-                <span>Legal</span>
+                <span>{{ t('help.legal.legal') }}</span>
             </button>
 
         </mat-menu>
 
 
 
-        <mat-menu #legal="matMenu" class="menu-panel">
+        <mat-menu #legal="matMenu" *transloco="let t; read: 'help.legal'" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
                 <span class="cset-icons-accessibility-doc fs-base mr-2 align-middle"></span>
-                <span>Accessibility Document</span>
+                <span>{{ t('accessibility document') }}</span>
             </a>
             <button mat-menu-item (click)="advisory()">
                 <span class="cset-icons-advisory fs-base mr-2 align-middle"></span>
-                <span>Advisory</span>
+                <span>{{ t('advisory') }}</span>
             </button>
 
             <button mat-menu-item (click)="termsOfUse()">
                 <span class="cset-icons-handshake fs-base mr-2 align-middle"></span>
-                <span>Terms of Use</span>
+                <span>{{ t('terms of use') }}</span>
             </button>
         </mat-menu>
     </div>
@@ -267,15 +267,19 @@
             </button>
             <button mat-menu-item (click)="goHome()">
                 <span class="cset-icons-clipboard-check fs-base mr-2 align-middle"></span>
-                <span>My Assessments</span>
+                <span>{{ t('my assessments') }}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="resetPassword()">
                 <span class="cset-icons-key fs-base mr-2 align-middle"></span>
                 <span>Change Password</span>
             </button>
+            <button mat-menu-item (click)="editLanguage()">
+                <span class="fas fa-language fs-base mr-2 align-middle"></span>
+                <span>{{t('user language')}}</span>
+            </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base mr-2 align-middle"></span>
-                <span>Logout</span>
+                <span>{{t('buttons.logout')}}</span>
             </button>
         </mat-menu>
     </div>
@@ -295,11 +299,11 @@
         <mat-menu #usermenu="matMenu" class="menu-panel">
             <button mat-menu-item (click)="goHome()">
                 <span class="cset-icons-clipboard-check fs-base mr-2 align-middle"></span>
-                <span>My Assessments</span>
+                <span>{{ t('my assessments') }}</span>
             </button>
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="auth.logout()">
                 <span class="cset-icons-logout fs-base mr-2 align-middle"></span>
-                <span>Logout</span>
+                <span>{{ t('buttons.logout') }}</span>
             </button>
         </mat-menu>
     </div>

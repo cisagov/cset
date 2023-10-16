@@ -6,35 +6,33 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class COUNTIES
 {
-    public partial class COUNTIES
-    {
-        public COUNTIES()
-        {
-            COUNTY_ANSWERS = new HashSet<COUNTY_ANSWERS>();
-            COUNTY_METRO_AREA = new HashSet<COUNTY_METRO_AREA>();
-        }
+    [Key]
+    [StringLength(10)]
+    public string County_FIPS { get; set; }
 
-        [Key]
-        [StringLength(10)]
-        public string County_FIPS { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string CountyName { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string State { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string RegionCode { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string CountyName { get; set; }
 
-        [ForeignKey("State,RegionCode")]
-        [InverseProperty("COUNTIES")]
-        public virtual STATE_REGION STATE_REGION { get; set; }
-        [InverseProperty("County_FIPSNavigation")]
-        public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; }
-        [InverseProperty("County_FIPSNavigation")]
-        public virtual ICollection<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
-    }
+    [Required]
+    [StringLength(50)]
+    public string State { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string RegionCode { get; set; }
+
+    [InverseProperty("County_FIPSNavigation")]
+    public virtual ICollection<COUNTY_ANSWERS> COUNTY_ANSWERS { get; set; } = new List<COUNTY_ANSWERS>();
+
+    [InverseProperty("County_FIPSNavigation")]
+    public virtual ICollection<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; } = new List<COUNTY_METRO_AREA>();
+
+    [ForeignKey("State, RegionCode")]
+    [InverseProperty("COUNTIES")]
+    public virtual STATE_REGION STATE_REGION { get; set; }
 }

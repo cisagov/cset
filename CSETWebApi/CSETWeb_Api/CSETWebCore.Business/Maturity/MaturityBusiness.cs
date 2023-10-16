@@ -22,13 +22,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
-using CSETWebCore.Model.Hydro;
 using J2N;
 using Microsoft.AspNetCore.Http.Features;
 using System.ComponentModel;
 using CSETWebCore.Business.Aggregation;
 using static Lucene.Net.Util.Fst.Util;
+using CSETWebCore.Business.Acet;
 using Microsoft.IdentityModel.Tokens;
+using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Business.User;
+using Org.BouncyCastle.Bcpg;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -65,7 +68,9 @@ namespace CSETWebCore.Business.Maturity
                     from a in _context.ASSESSMENTS
                     join gii in _context.GALLERY_ITEM on a.GalleryItemGuid equals gii.Gallery_Item_Guid into gig
                     from gi in gig.DefaultIfEmpty()
-                    where amm.model_id == mm.Maturity_Model_Id && amm.Assessment_Id == assessmentId
+                    where amm.model_id == mm.Maturity_Model_Id 
+                        && amm.Assessment_Id == assessmentId && a.Assessment_Id == assessmentId
+
 
                     select new Model.Maturity.MaturityModel()
                     {
@@ -75,6 +80,7 @@ namespace CSETWebCore.Business.Maturity
                         QuestionsAlias = mm.Questions_Alias,
                         ModelDescription = (gi != null) ? gi.Description : string.Empty
                     };
+
             var myModel = q.FirstOrDefault();
 
             if (myModel != null)
@@ -617,11 +623,12 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode)
+        public AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode, int maturityModelId = 3)
         {
             //if the available maturity model is not selected and the application is CSET
             //the default is EDM
             //if the application is ACET the default is ACET
+            //see ACETMaturityBusiness implementation
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS
               .Include(x => x.model)
@@ -631,7 +638,7 @@ namespace CSETWebCore.Business.Maturity
                 myModel = new AVAILABLE_MATURITY_MODELS()
                 {
                     Assessment_Id = assessmentId,
-                    model_id = (installationMode == "ACET") ? 1 : 3,
+                    model_id = maturityModelId,
                     Selected = true
                 };
                 _context.AVAILABLE_MATURITY_MODELS.Add(myModel);
@@ -810,10 +817,19 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId)
         {
             var response = new MaturityResponse();
+            return GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId, response);
+        }
 
+
+        /// <summary>
+        /// Assembles a response consisting of maturity questions for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId, MaturityResponse response)
+        {
             if (fill)
             {
                 _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
@@ -845,13 +861,6 @@ namespace CSETWebCore.Business.Maturity
 
             response.MaturityTargetLevel = GetMaturityTargetLevel(assessmentId);
 
-            if (response.ModelName == "ACET")
-            {
-                response.OverallIRP = GetOverallIrpNumber(assessmentId);
-                response.MaturityTargetLevel = response.OverallIRP;
-            }
-
-
             // get the levels and their display names for this model
             response.Levels = GetMaturityLevelsForModel(myModel.model_id, response.MaturityTargetLevel);
 
@@ -870,7 +879,39 @@ namespace CSETWebCore.Business.Maturity
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }
 
+
+            // Special "sub-model" logic 
+            // Filter out questions that aren't whitelisted in MATURITY_SUB_MODEL_QUESTIONS if the assessment uses a sub-model
+            var maturitySubmodel = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL").FirstOrDefault();
+            if (maturitySubmodel != null)
+            {
+                var whitelist = _context.MATURITY_SUB_MODEL_QUESTIONS.Where(x => x.Sub_Model_Name == maturitySubmodel.StringValue).Select(q => q.Mat_Question_Id).ToList();
+                questionQuery = questionQuery.Where(x => whitelist.Contains(x.Mat_Question_Id));
+            }
+
+
+
             var questions = questionQuery.ToList();
+
+            //
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            if (user.Lang == "es")
+            {
+                Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
+                questions.ForEach(
+                    question => {
+                        var output = new SpanishQuestionRow();
+                        var temp = new SpanishQuestionRow();
+                        // test if not finding a match will safely skip
+                        if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
+                        {
+                            question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
+                            question.Examination_Approach = dictionary[question.Mat_Question_Id].Examination_Approach;
+                            question.Supplemental_Info = dictionary[question.Mat_Question_Id].Supplemental_Info;
+                        }
+                    });
+            }
+            //
 
 
             // Get all MATURITY answers for the assessment
@@ -884,6 +925,21 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
+            //
+            if (user.Lang == "es")
+            {
+                Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
+                allGroupings.ForEach(
+                    group => {
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
+                        if (dictionary.TryGetValue(group.Grouping_Id, out output))
+                        {
+                            group.Title = dictionary[group.Grouping_Id].Spanish_Title;
+                        }
+                    });
+            }
+            //
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
@@ -903,7 +959,6 @@ namespace CSETWebCore.Business.Maturity
             }
 
             response.Groupings = tempModel.SubGroupings;
-
 
             // Add any glossary terms
             response.Glossary = this.GetGlossaryEntries(myModel.model_id);
@@ -1136,126 +1191,13 @@ namespace CSETWebCore.Business.Maturity
         }
 
 
-        /// <summary>
-        /// Returns the percentage of maturity questions that have been answered for the 
-        /// current maturity level (IRP).
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public double GetAnswerCompletionRate(int assessmentId)
-        {
-            var irp = GetOverallIrpNumber(assessmentId);
-
-            // get the highest maturity level for the risk level (use the stairstep model)
-            var topMatLevel = GetTopMatLevelForRisk(irp);
-
-            var answerDistribution = _context.AcetAnswerDistribution(assessmentId, topMatLevel).ToList();
-
-            var answeredCount = 0;
-            var totalCount = 0;
-            foreach (var d in answerDistribution)
-            {
-                if (d.Answer_Text != "U")
-                {
-                    answeredCount += d.Count;
-                }
-                totalCount += d.Count;
-            }
-
-            return ((double)answeredCount / (double)totalCount) * 100d;
-        }
-
-
-        /// <summary>
-        /// Returns the percentage of maturity questions that have been answered for the 
-        /// current maturity level (IRP).
-        /// </summary>
-        /// <param name="assessmentId"></param>
-        /// <returns></returns>
-        public double GetIseAnswerCompletionRate(int assessmentId)
-        {
-            var irp = GetOverallIseIrpNumber(assessmentId);
-
-            // get the highest maturity level for the risk level (use the stairstep model)
-            var topMatLevel = GetIseTopMatLevelForRisk(irp);
-
-            var answerDistribution = _context.IseAnswerDistribution(assessmentId, topMatLevel).ToList();
-
-            var answeredCount = 0;
-            var totalCount = 0;
-            foreach (var d in answerDistribution)
-            {
-                if (d.Answer_Text != "U")
-                {
-                    answeredCount += d.Count;
-                }
-                totalCount += d.Count;
-            }
-
-            return ((double)answeredCount / (double)totalCount) * 100d;
-        }
-
-
-        /// <summary>
-        /// Using the 'stairstep' model, determines the highest maturity level
-        /// that corresponds to the specified IRP/risk.  
-        /// 
-        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
-        /// though this method only returns the top level.
-        /// </summary>
-        /// <param name="irp"></param>
-        /// <returns></returns>
-        private int GetTopMatLevelForRisk(int irp)
-        {
-            switch (irp)
-            {
-                case 1:
-                case 2:
-                    return 1; // Baseline
-                case 3:
-                    return 2; // Evolving
-                case 4:
-                    return 3; // Intermediate
-                case 5:
-                    return 4; // Advanced
-            }
-
-            return 0;
-        }
-
-
-        /// <summary>
-        /// Using the 'stairstep' model, determines the highest maturity level
-        /// that corresponds to the specified IRP/risk.  
-        /// 
-        /// This stairstep model must match the stairstep defined in the UI -- getStairstepRequired(),
-        /// though this method only returns the top level.
-        /// </summary>
-        /// <param name="irp"></param>
-        /// <returns></returns>
-        private int GetIseTopMatLevelForRisk(int irp)
-        {
-            switch (irp)
-            {
-                case 1:
-                    return 1; // SCUEP
-                case 2:
-                    return 2; // CORE
-                case 3:
-                    return 3; // CORE+
-            }
-
-            return 0;
-        }
-
-
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-        public List<MaturityDomain> GetMaturityAnswers(int assessmentId)
+        public List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
-            return CalculateComponentValues(data, assessmentId);
+            return CalculateComponentValues(data, assessmentId, spanishFlag);
         }
 
         public List<MaturityDomain> GetIseMaturityAnswers(int assessmentId)
@@ -1283,9 +1225,8 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId)
+        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId, bool spanishFlag = false)
         {
-
             var maturityDomains = new List<MaturityDomain>();
             var domains = _context.FINANCIAL_DOMAINS.ToList();
             var standardCategories = _context.FINANCIAL_DETAILS.ToList();
@@ -1300,6 +1241,12 @@ namespace CSETWebCore.Business.Maturity
                                  };
 
             var maturityRange = GetMaturityRange(assessmentId);
+            Dictionary<string, GroupingSpanishRow> dictionary = new Dictionary<string, GroupingSpanishRow>();
+
+            if (spanishFlag)
+            {
+                dictionary = AcetBusiness.buildResultsGroupingDictionary();
+            }
 
             if (maturity.Count > 0)
             {
@@ -1510,6 +1457,39 @@ namespace CSETWebCore.Business.Maturity
 
                     double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
                     maturityDomain.TargetPercentageAchieved = AchPerTol;
+
+                    //
+                    if (spanishFlag)
+                    {
+                        var output = new GroupingSpanishRow();
+                        var temp = new GroupingSpanishRow();
+                        if (dictionary.TryGetValue(maturityDomain.DomainName, out output))
+                        {
+                            maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
+                            maturityDomain.Assessments.ForEach(
+                                assessment => {
+                                    var output = new GroupingSpanishRow();
+                                    var temp = new GroupingSpanishRow();
+                                    // test if not finding a match will safely skip
+                                    if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
+                                    {
+                                        assessment.AssessmentFactor = dictionary[assessment.AssessmentFactor].Spanish_Title;
+
+                                        assessment.Components.ForEach(
+                                            component => {
+                                                var output = new GroupingSpanishRow();
+                                                var temp = new GroupingSpanishRow();
+                                                // test if not finding a match will safely skip
+                                                if (dictionary.TryGetValue(component.ComponentName, out output))
+                                                {
+                                                    component.ComponentName = dictionary[component.ComponentName].Spanish_Title;
+                                                }
+                                            });
+                                    }
+                                });
+                        }
+                    }
+                    //
 
                     maturityDomains.Add(maturityDomain);
                 }
@@ -2404,298 +2384,6 @@ namespace CSETWebCore.Business.Maturity
             }
 
             return questionAnswer;
-        }
-
-
-        public List<HydroDonutData> GetHydroDonutData(int assessmentId)
-        {
-            var result = from question in _context.MATURITY_QUESTIONS
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
-                         join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
-                         join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
-                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id && answer.Assessment_Id == assessmentId
-                         select new { question, action, answerOption };
-
-            List<HydroDonutData> response = new List<HydroDonutData>();
-
-            foreach (var item in result.Distinct().ToList())
-            {
-                HydroDonutData data = new HydroDonutData()
-                {
-                    Actions = item.action,
-                    //Answer = item.answer,
-                    AnswerOption = item.answerOption,
-                    Question = item.question
-                };
-
-                response.Add(data);
-            }
-
-            return response;
-        }
-
-
-        public List<HydroActionsByDomain> GetHydroActions(int assessmentId)
-        {
-
-            var result = from subGrouping in _context.MATURITY_GROUPINGS
-                         join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
-                         join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
-                         join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
-                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
-                              && answer.Mat_Option_Id == action.Mat_Option_Id
-                              && answer.Assessment_Id == assessmentId
-                         select new { subGrouping, domain, question, action, answer };
-
-            List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
-            List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
-
-            if (result.IsNullOrEmpty())
-            {
-                return actionsByDomains;
-            }
-
-            var currDomain = result.ToList().FirstOrDefault().domain;
-
-            foreach (var item in result.Distinct().ToList())
-            {
-                if (item.domain != currDomain)
-                {
-                    HydroActionsByDomain domainData = new HydroActionsByDomain()
-                    {
-                        DomainName = currDomain.Title,
-                        DomainSequence = currDomain.Sequence,
-                        ActionsQuestions = actionQuestions
-                    };
-
-                    actionsByDomains.Add(domainData);
-                    currDomain = item.domain;
-                    actionQuestions = new List<HydroActionQuestion>();
-                }
-
-
-                if (_context.HYDRO_DATA_ACTIONS.Find(item.answer.Answer_Id) == null)
-                {
-                    _context.HYDRO_DATA_ACTIONS.Add(
-                        new HYDRO_DATA_ACTIONS()
-                        {
-                            Answer = item.answer,
-                            Answer_Id = item.answer.Answer_Id,
-                            Progress_Id = 1,
-                            Comment = ""
-                        }
-                    );
-                    _context.SaveChanges();
-                }
-
-                HYDRO_DATA_ACTIONS actionData = _context.HYDRO_DATA_ACTIONS.Where(x => x.Answer_Id == item.answer.Answer_Id).FirstOrDefault();
-
-                actionQuestions.Add(
-                    new HydroActionQuestion()
-                    {
-                        Action = item.action,
-                        Question = item.question,
-                        ActionData = actionData
-                    }
-                );
-            }
-
-
-
-            actionsByDomains.Add(
-                new HydroActionsByDomain()
-                {
-                    DomainName = currDomain.Title,
-                    DomainSequence = currDomain.Sequence,
-                    ActionsQuestions = actionQuestions
-                }
-            );
-
-            return actionsByDomains;
-        }
-
-
-        public List<HydroActionQuestion> GetHydroActionsReport(int assessmentId)
-        {
-
-            var result = from subGrouping in _context.MATURITY_GROUPINGS
-                         join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
-                         join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
-                         join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
-                         where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
-                              && answer.Mat_Option_Id == action.Mat_Option_Id
-                              && answer.Assessment_Id == assessmentId
-                         select new { subGrouping, domain, question, action, answer };
-
-            List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();
-
-            if (result.IsNullOrEmpty())
-            {
-                return actionQuestions;
-            }
-
-            var currDomain = result.ToList().FirstOrDefault()?.domain;
-
-            foreach (var item in result.Distinct().ToList())
-            {
-                if (_context.HYDRO_DATA_ACTIONS.Find(item.answer.Answer_Id) == null)
-                {
-                    _context.HYDRO_DATA_ACTIONS.Add(
-                        new HYDRO_DATA_ACTIONS()
-                        {
-                            Answer_Id = item.answer.Answer_Id,
-                            Progress_Id = 1,
-                            Comment = ""
-                        }
-                    );
-                    _context.SaveChanges();
-                }
-
-                HYDRO_DATA_ACTIONS actionData = _context.HYDRO_DATA_ACTIONS.Where(x => x.Answer_Id == item.answer.Answer_Id).FirstOrDefault();
-
-                actionQuestions.Add(
-                    new HydroActionQuestion()
-                    {
-                        Action = item.action,
-                        Question = item.question,
-                        ActionData = actionData
-                    }
-                );
-            };
-
-            return actionQuestions;
-        }
-
-
-        public List<HydroResults> GetResultsData(int assessmentId)
-        {
-            var response = from answer in _context.ANSWER
-                          join data in _context.HYDRO_DATA on answer.Mat_Option_Id equals data.Mat_Option_Id
-                          join question in _context.MATURITY_QUESTIONS 
-                                on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
-                          join grouping in _context.MATURITY_GROUPINGS 
-                                on question.Grouping_Id equals grouping.Grouping_Id
-                          join parentGrouping in _context.MATURITY_GROUPINGS
-                                on grouping.Parent_Id equals parentGrouping.Grouping_Id
-                          where answer.Assessment_Id == assessmentId && answer.Answer_Text == "S"
-                          select new { answer, data, question, grouping, parentGrouping };
-
-            List<HydroResults> resultsList = new List<HydroResults>();
-            List<HYDRO_DATA> groupItems = new List<HYDRO_DATA>();
-            int currParentSequence = 0;
-            int currParentId = 0;
-            int currQuestionId = 0;
-            bool notFirst = false;
-            bool impactLimitNotReached = true;
-            bool feasibilityLimitNotReached = true;
-
-            HydroImpacts impactTotals = new HydroImpacts();
-            HydroFeasibilities feasibilityTotals = new HydroFeasibilities();
-
-            foreach (var item in response)
-            {
-                if (currParentId != item.parentGrouping.Grouping_Id && notFirst)
-                {
-                    HydroResults results = new HydroResults()
-                    {
-                        HydroData = groupItems,
-                        impactTotals = impactTotals,
-                        feasibilityTotals = feasibilityTotals,
-                        parentGroupId = currParentId,
-                        parentSequence = currParentSequence
-                    };
-                    resultsList.Add(results);
-                    
-                    groupItems = new List<HYDRO_DATA>(); // clear the groupItems list
-                    impactTotals = new HydroImpacts();
-                    feasibilityTotals = new HydroFeasibilities();
-                }
-
-                if (currQuestionId != item.question.Mat_Question_Id)
-                {
-                    impactLimitNotReached = true;
-                    feasibilityLimitNotReached = true;
-                }
-
-                var impactStrings = item.data.Impact.Split(',');
-
-                if (impactLimitNotReached && (impactStrings.Length != 1 || !string.IsNullOrEmpty(impactStrings[0])))
-                {
-                    foreach (string impact in impactStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
-                    {
-                        if (impact.Equals("1"))
-                        {
-                            impactTotals.Economic++;
-                            impactLimitNotReached = false;
-                        }
-                        else if (impact.Equals("2"))
-                        {
-                            impactTotals.Environmental++;
-                            impactLimitNotReached = false;
-                        }
-                        else if (impact.Equals("3"))
-                        {
-                            impactTotals.Operational++;
-                            impactLimitNotReached = false;
-                        }
-                        else if (impact.Equals("4"))
-                        {
-                            impactTotals.Safety++;
-                            impactLimitNotReached = false;
-                        }
-                    }
-                }
-
-                var feasibilityStrings = item.data.Feasibility.Split(',');
-
-                if (feasibilityLimitNotReached && (feasibilityStrings.Length != 1 || !string.IsNullOrEmpty(feasibilityStrings[0])))
-                {
-                    foreach (string feas in feasibilityStrings) // start here, incorperate the impactLimits per question (checkboxes don't count mulitple times for one question))
-                    {
-                        if (feas.Equals("1"))
-                        {
-                            feasibilityTotals.Easy++;
-                            feasibilityLimitNotReached = false;
-                        }
-                        else if (feas.Equals("2"))
-                        {
-                            feasibilityTotals.Medium++;
-                            feasibilityLimitNotReached = false;
-                        }
-                        else if (feas.Equals("3"))
-                        {
-                            feasibilityTotals.Hard++;
-                            feasibilityLimitNotReached = false;
-                        }
-                    }
-                }
-
-                currParentId = item.parentGrouping.Grouping_Id; // update the current ID and name
-                currParentSequence = item.parentGrouping.Sequence;
-                currQuestionId = item.question.Mat_Question_Id;
-
-                groupItems.Add(item.data);
-                notFirst = true;
-            }
-
-            HydroResults lastResults = new HydroResults()
-            {
-                HydroData = groupItems,
-                impactTotals = impactTotals,
-                feasibilityTotals = feasibilityTotals,
-                parentGroupId = currParentId,
-                parentSequence = currParentSequence
-            };
-            resultsList.Add(lastResults);
-
-            return resultsList;
-        }
-
-        public List<HYDRO_PROGRESS> GetHydroProgress()
-        {
-            return _context.HYDRO_PROGRESS.ToList();
         }
     }
 }

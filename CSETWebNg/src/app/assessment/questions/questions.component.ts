@@ -32,6 +32,8 @@ import { QuestionFilterService } from '../../services/filtering/question-filter.
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
 import { ɵNullViewportScroller } from '@angular/common';
+import { ACETService } from '../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-questions',
@@ -60,6 +62,8 @@ export class QuestionsComponent implements AfterViewChecked {
 
   scrollComplete = false;
 
+  msgUnansweredEqualsNo = '';
+
 
   /**
    *
@@ -71,7 +75,9 @@ export class QuestionsComponent implements AfterViewChecked {
     private configSvc: ConfigService,
     public filterSvc: QuestionFilterService,
     public navSvc: NavigationService,
-    private dialog: MatDialog
+    public tSvc: TranslocoService,
+    private dialog: MatDialog,
+    public acetSvc: ACETService
   ) {
     const magic = this.navSvc.getMagic();
 
@@ -103,6 +109,12 @@ export class QuestionsComponent implements AfterViewChecked {
       );
     localStorage.setItem("questionSet", this.assessSvc.applicationMode == 'R' ? "Requirement" : "Question");
     this.assessSvc.currentTab = 'questions';
+
+    // refresh the page in case of language change
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.loadQuestions();
+    });
+
   }
 
   updateComponentsOverride() {
@@ -224,6 +236,8 @@ export class QuestionsComponent implements AfterViewChecked {
    * Retrieves the complete list of questions
    */
   loadQuestions() {
+    // set the message with the current "no" answer value
+    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', {'no-ans': this.questionsSvc.answerButtonLabel('', 'N')});
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(

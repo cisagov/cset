@@ -70,6 +70,79 @@
 <hr>
 
 <div class="mb-5">
+    <div class="form-group mb-5">
+        <p class="font-italic">
+            Are you completing the full assessment (156 questions) as local government submitter in response to
+            <a href="https://www.flsenate.gov/Session/Bill/2023/7055" target="_blank">Florida House Bill 7055</a>?
+        </p>
+        <div class="d-flex flex-column ml-3">
+            <input class="radio-custom" name="HB7055No" id="HB7055No" type="radio" autocomplete="off" tabindex="1"
+                (click)="setHb7055('N')" [checked]="demographicData.hb7055 == 'N'">
+            <label class="radio-custom-label" for="HB7055No">No</label>
+            <input class="radio-custom" name="HB7055Yes" id="HB7055Yes" type="radio" autocomplete="off" tabindex="0"
+                (click)="setHb7055('Y')" [checked]="demographicData.hb7055 == 'Y'">
+            <label class="radio-custom-label" for="HB7055Yes">Yes</label>
+        </div>
+
+        <div *ngIf="demographicData.hb7055 == 'Y'" class="ml-5 mt-3">
+            <p>
+                What state or local government agency are you completing on behalf of?
+            </p>
+            <input type="text" maxlength="100" class="form-control" [(ngModel)]="demographicData.hb7055Party"
+                (blur)="setHb7055Party($event)">
+        </div>
+    </div>
+
+    <div class="form-group mb-5">
+        <p class="font-italic">
+            Are the critical cyber services supporting your core operations/mission primarily Information Technology
+            (IT) or Operational Technology (OT) systems?
+        </p>
+
+        <div class="d-flex flex-column ml-3">
+            <input class="radio-custom" name="primaryType" id="primaryIT" type="radio" autocomplete="off" tabindex="0"
+                (click)="setInfrastructureItOt('IT')" [checked]="demographicData.infrastructureItOt == 'IT'">
+            <label class="radio-custom-label" for="primaryIT">
+                <strong class="mr-4">Information Technology (IT)</strong>
+                <div>
+                    <div>
+                        Any equipment or interconnected system or
+                        subsystem of equipment that is used in the automatic acquisition, storage, manipulation,
+                        management,
+                        movement, control, display, switching, interchange, transmission, or reception of data or
+                        information.
+                        <div class="font-italic mt-2 ml-4 mb-4">
+                            Examples include the internet, mobile phones, business operations support, computers,
+                            content management and performance software, and software and support for office automation
+                            systems such as email, word processing and spreadsheets.
+                        </div>
+                    </div>
+                </div>
+            </label>
+            <input class="radio-custom" name="primaryType" id="primaryOT" type="radio" autocomplete="off" tabindex="0"
+                (click)="setInfrastructureItOt('OT')" [checked]="demographicData.infrastructureItOt == 'OT'">
+            <label class="radio-custom-label" for="primaryOT">
+                <strong class="mr-4">Operational Technology (OT)</strong>
+                <div>
+                    Programmable systems or devices that interact
+                    with the physical environment (or manage devices that interact with the physical environment). These
+                    systems/devices detect or cause a direct change through the monitoring and/or control of devices,
+                    processes, and events.
+                    <div class="font-italic mt-2 ml-4">
+                        Examples include industrial control systems, plant floor controls, hospital diagnostic and
+                        monitoring systems, transportation control systems, building management systems, fire control
+                        systems, and physical access control mechanisms.
+                    </div>
+                </div>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+<hr>
+
+<div class="mb-5">
     <h4>Geographic</h4>
     <p class="font-italic">
         Select the geographic areas where your business/operations <u>primarily</u>
@@ -221,31 +294,32 @@
                 {{i.value}}
             </option>
         </select>
-    </div>    
- <div class="form-group mb-5">
-        <p style="font-weight:bold">
+    </div>
+    <div class="form-group mb-5">
+        <h5>
             Additional Cybersecurity Risk Service
-        </p>
-        <p>            
-            In addition to the CSET reports available, Cyber Florida will provide a select number of participants with information directly related to education and training courses that target the cybersecurity improvement areas identified from the risk assessment information submitted. The free service will also identify the knowledge and skills necessary to mitigate cyber risks within the submitter’s agency, organization, or company. Additionally, the selected participants will have free access to a full suite of cyber workforce development toolsets that will identify skills gaps, display various training pathways for upskilling employees, and assist with finding the most qualified new cyber talent, if needed. To be considered for the no-cost analysis, interested participants must fully complete their CSET risk assessment.            
+        </h5>
+        <p>
+            In addition to the CSET reports available, Cyber Florida will provide a select number of participants with
+            information directly related to education and training courses that target the cybersecurity improvement
+            areas identified from the risk assessment information submitted. The free service will also identify the
+            knowledge and skills necessary to mitigate cyber risks within the submitter’s agency, organization, or
+            company. Additionally, the selected participants will have free access to a full suite of cyber workforce
+            development toolsets that will identify skills gaps, display various training pathways for upskilling
+            employees, and assist with finding the most qualified new cyber talent, if needed. To be considered for the
+            no-cost analysis, interested participants must fully complete their CSET risk assessment.
         </p>
         <p class="font-italic">Are you interested in being considered for this free assessment follow-on service?</p>
-        <div class="d-flex flex-column ml-3">            
-            <input class="radio-custom" name="CFYes" id="CFYes" type="radio" autocomplete="off" 
-                tabindex="0"
-                (click)="setCyberRisk('Y')"
-                [checked]="demographicData.cyberRiskService == 'Y'">
-            <label class="radio-custom-label" for="CFYes">Yes</label>            
-            <input class="radio-custom" name="CFNo" id="CFNo" type="radio" autocomplete="off" 
-                tabindex="1"
-                (click)="setCyberRisk('N')"
-                [checked]="demographicData.cyberRiskService == 'N'">
-            <label class="radio-custom-label" for="CFNo">No</label>
-            <input class="radio-custom" name="CFMaybe" id="CFMaybe" type="radio" autocomplete="off" 
-                  tabindex="2"
-                  (click)="setCyberRisk('M')"
-                  [checked]="demographicData.cyberRiskService == 'M'">
-             <label class="radio-custom-label" for="CFMaybe">Maybe Later</label>                 
-         </div>
-    </div>    
+        <div class="d-flex flex-column ml-3">
+            <input class="radio-custom" name="FreeAssessYes" id="FreeAssessYes" type="radio" autocomplete="off"
+                tabindex="0" (click)="setCyberRisk('Y')" [checked]="demographicData.cyberRiskService == 'Y'">
+            <label class="radio-custom-label" for="FreeAssessYes">Yes</label>
+            <input class="radio-custom" name="FreeAssessNo" id="FreeAssessNo" type="radio" autocomplete="off"
+                tabindex="0" (click)="setCyberRisk('N')" [checked]="demographicData.cyberRiskService == 'N'">
+            <label class="radio-custom-label" for="FreeAssessNo">No</label>
+            <input class="radio-custom" name="FreeAssessMaybe" id="FreeAssessMaybe" type="radio" autocomplete="off"
+                tabindex="0" (click)="setCyberRisk('M')" [checked]="demographicData.cyberRiskService == 'M'">
+            <label class="radio-custom-label" for="FreeAssessMaybe">Maybe Later</label>
+        </div>
+    </div>
 </div>

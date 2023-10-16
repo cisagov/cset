@@ -14,7 +14,12 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
-
+using System.IO;
+using NPOI.SS.UserModel;
+using Npoi.Mapper;
+using CSETWebCore.DataLayer.Manual;
+using CSETWebCore.Model.Maturity;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Business.Acet
 {
@@ -206,5 +211,248 @@ namespace CSETWebCore.Business.Acet
             _context.SaveChanges();
 
         }
+
+        private static Dictionary<int, SpanishQuestionRow> dict = null;
+
+        public static Dictionary<int, SpanishQuestionRow> buildQuestionDictionary()
+        {
+            if (AcetBusiness.dict != null)
+            {
+                return AcetBusiness.dict;
+            }
+
+            String defaultPath = "App_Data\\ACET Spanish Question Mapping.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if(Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx";
+            } 
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, SpanishQuestionRow>();
+            }
+
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<SpanishQuestionRow>> myExcelObjects = mapper.Take<SpanishQuestionRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            AcetBusiness.dict = new Dictionary<int, SpanishQuestionRow>();
+
+            foreach (RowInfo<SpanishQuestionRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Mat_Question_Id, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, GroupingSpanishRow> buildGroupingDictionary()
+        {
+            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, GroupingSpanishRow>();
+            }
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, GroupingSpanishRow>();
+            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.Grouping_Id, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+
+            return dict;
+        }
+
+        public static Dictionary<string, GroupingSpanishRow> buildResultsGroupingDictionary()
+        {
+            
+            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<string, GroupingSpanishRow>();
+            }
+
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<string, GroupingSpanishRow>();
+
+            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.English_Title, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, IRPModel> buildIRPDictionary()
+        {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRPS.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRPS.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, IRPModel>();
+            }
+
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPModel>> myExcelObjects = mapper.Take<IRPModel>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+
+            var dict = new Dictionary<int, IRPModel>();
+
+            foreach (RowInfo<IRPModel> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.IRP_Id, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+            return dict;
+        }
+
+        public static Dictionary<int, IRPSpanishRow> buildIRPHeaderDictionary()
+        {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<int, IRPSpanishRow>();
+            }
+
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<int, IRPSpanishRow>();
+            
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.IRP_Header_Id, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+
+            return dict;
+        }
+
+        public static Dictionary<string, IRPSpanishRow> buildIRPDashboardDictionary()
+        {
+            String defaultPath = "App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            MemoryStream memStream = new MemoryStream();
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx"))
+            {
+                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish_Mapped_IRP_Headers.xlsx";
+            }
+            else if (!Path.Exists(defaultPath))
+            {
+                return new Dictionary<string, IRPSpanishRow>();
+            }
+
+            FileStream file = File.OpenRead(defaultPath);
+            file.CopyTo(memStream);
+
+            IWorkbook workbook = WorkbookFactory.Create(memStream);
+
+            var mapper = new Mapper(workbook);
+            List<RowInfo<IRPSpanishRow>> myExcelObjects = mapper.Take<IRPSpanishRow>(workbook.ActiveSheetIndex).ToList();
+
+            var rowCount = myExcelObjects.Count;
+            var dict = new Dictionary<string, IRPSpanishRow>();
+
+            // ACETDashboard
+            foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
+            {
+                try
+                {
+                    dict.Add(item.Value.EnglishHeader, item.Value);
+                }
+                catch (Exception e)
+                {
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
+                }
+            }
+
+            return dict;
+        }
+
     }
 }

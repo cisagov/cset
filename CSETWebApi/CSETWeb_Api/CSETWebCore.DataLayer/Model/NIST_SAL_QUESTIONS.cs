@@ -6,33 +6,29 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of NIST_SAL_QUESTIONS records
+/// </summary>
+public partial class NIST_SAL_QUESTIONS
 {
     /// <summary>
-    /// A collection of NIST_SAL_QUESTIONS records
+    /// The Question Id is used to
     /// </summary>
-    public partial class NIST_SAL_QUESTIONS
-    {
-        public NIST_SAL_QUESTIONS()
-        {
-            NIST_SAL_QUESTION_ANSWERS = new HashSet<NIST_SAL_QUESTION_ANSWERS>();
-        }
+    [Key]
+    public int Question_Id { get; set; }
 
-        /// <summary>
-        /// The Question Id is used to
-        /// </summary>
-        [Key]
-        public int Question_Id { get; set; }
-        /// <summary>
-        /// The Question Number is used to
-        /// </summary>
-        public int Question_Number { get; set; }
-        /// <summary>
-        /// The Question Text is used to
-        /// </summary>
-        public string Question_Text { get; set; }
+    /// <summary>
+    /// The Question Number is used to
+    /// </summary>
+    public int Question_Number { get; set; }
 
-        [InverseProperty("Question")]
-        public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
-    }
+    /// <summary>
+    /// The Question Text is used to
+    /// </summary>
+    public string Question_Text { get; set; }
+
+    [InverseProperty("Question")]
+    public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; } = new List<NIST_SAL_QUESTION_ANSWERS>();
 }

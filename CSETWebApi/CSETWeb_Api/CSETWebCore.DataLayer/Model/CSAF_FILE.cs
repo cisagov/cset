@@ -6,16 +6,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class CSAF_FILE
 {
-    public partial class CSAF_FILE
-    {
-        [Key]
-        [StringLength(250)]
-        public string File_Name { get; set; }
-        public byte[] Data { get; set; }
-        public double? File_Size { get; set; }
-        [Column(TypeName = "datetime")]
-        public DateTime? Upload_Date { get; set; }
-    }
+    [Key]
+    [StringLength(250)]
+    public string File_Name { get; set; }
+
+    public byte[] Data { get; set; }
+
+    public double? File_Size { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? Upload_Date { get; set; }
 }

@@ -41,7 +41,7 @@
             "assets": [
               {
                 "glob": "**/*.js",
-                "input": "./node_modules/@goecmarc/code-editor/workers",
+                "input": "./node_modules/@ngstack/code-editor/workers",
                 "output": "./assets/workers"
               },
               {
@@ -196,7 +196,7 @@
               "src/favicon_renew.ico",
               {
                 "glob": "**/*.js",
-                "input": "./node_modules/@goecmarc/code-editor/workers",
+                "input": "./node_modules/@ngstack/code-editor/workers",
                 "output": "./assets/workers"
               },
               {

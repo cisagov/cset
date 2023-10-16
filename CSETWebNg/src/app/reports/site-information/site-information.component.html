@@ -21,37 +21,37 @@
   SOFTWARE.
 -------------------------->
 
-<table class="table-site-info">
+<table *transloco="let t" class="table-site-info">
     <tr>
-        <td>Assessment Name</td>
+        <td>{{ t('assessment name') }}</td>
         <td>{{response?.information.assessment_Name}}</td>
     </tr>
     <tr>
-        <td>Assessment Date</td>
+        <td>{{ t('assessment date') }}</td>
         <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
     </tr>
     <tr>
-        <td>Facility Name</td>
+        <td>{{ t('facility name') }}</td>
         <td>{{response?.information.facility_Name}}</td>
     </tr>
     <tr>
-        <td>City or Site Name</td>
+        <td>{{ t('city or site name') }}</td>
         <td>{{response?.information.city_Or_Site_Name}}</td>
     </tr>
     <tr>
-        <td>State, Province or Region</td>
+        <td>{{ t('state, province, or region') }}</td>
         <td>{{response?.information.state_Province_Or_Region}}</td>
     </tr>
     <tr>
-        <td>Principal Assessor Name</td>
+        <td>{{ t('reports.principal assessor name') }}</td>
         <td>{{response?.information.assessor_Name}}</td>
     </tr>
     <tr>
-        <td>Additional Notes and Comments</td>
+        <td>{{ t('reports.additional notes and comments') }}</td>
         <td [innerHTML]="reportSvc.formatLinebreaks(response?.information.additional_Notes_And_Comments)"></td>
     </tr>
     <tr>
-        <td>Contacts</td>
+        <td>{{ t('contact.contacts') }}</td>
         <td>
             <div *ngFor="let c of response?.information.additional_Contacts">
                 {{c}}
