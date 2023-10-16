@@ -54,7 +54,7 @@
 
     <!-- Assessment Phase -->
     <node d="assessment" id="phase-assessment" condition="CF-DEMOGRAPHICS-COMPLETE">
-        <node d="standard questions" id="questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
+        <node d="standard questions" id="standard-questions" path="assessment/{:id}/questions" condition="OPTION:STANDARD" />
 
 
         <!-- The scenario that will normally show -->

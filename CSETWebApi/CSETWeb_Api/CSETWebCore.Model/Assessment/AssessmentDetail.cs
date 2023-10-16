@@ -58,6 +58,8 @@ namespace CSETWebCore.Model.Assessment
 
         public List<string> Standards { get; set; }
 
+        public string ApplicationMode { get; set; }
+
         public QuestionRequirementCounts QuestionRequirementCounts { get; set; }
 
 
