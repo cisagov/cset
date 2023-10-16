@@ -48,6 +48,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
+import { translate } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-top-menus',
@@ -133,10 +134,9 @@ export class TopMenusComponent implements OnInit {
     this._hotkeysService.add(
       new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
         const dialogRef = this.dialog.open(ConfirmComponent);
-        dialogRef.componentInstance.confirmMessage = 'Are you sure you want to create a new assessment? ';
+        dialogRef.componentInstance.confirmMessage = translate('dialogs.confirm create new assessment');
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            //this.assessSvc.newAssessment();
             this.router.navigate(['/landing-page-tabs'], {
               queryParams: {
                 'tab': 'newAssessment'
