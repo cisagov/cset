@@ -59,6 +59,8 @@ export interface AssessmentDetail {
     // A list of selected standards
     standards?: string[];
 
+    applicationMode?: string;
+
     typeTitle?: string;
     typeDescription?: string;
 }
