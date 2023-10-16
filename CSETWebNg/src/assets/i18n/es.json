@@ -38,6 +38,7 @@
 
     "contact": {
         "contacts": "Contactos",
+        "contact": "Contacto",
         "add contact": "Agregar Contacto",
         "email contacts": "Mandar E-mail a los Contactos",
 
@@ -229,7 +230,10 @@
         "validation approach": "Enfoque de validación",
         "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
         "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
-        "export to excel": "Exportar todas las evaluaciones a Excel"
+        "export to excel": "Exportar todas las evaluaciones a Excel",
+        "remove assessment": "Eliminar permanentemente esta evaluación.",
+        "export assessment": "Exportar una copia de esta evaluación a otra ubicación",
+        "analytics": "Ver los análisis de esta evaluación."
     },
     "level": {
         "low": "Pequeño",
@@ -302,7 +306,9 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "dialogs" : {
-        "please confirm": "Por favor, confirme"
+        "please confirm": "Confirme, por favor",
+        "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
+        "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
@@ -443,7 +449,7 @@
     },
     "merge examinations": {
         "merge examinations": "Fusionar Exámenes",
-        "assessments processed": "[ES] Assessments Processed",
+        "assessments processed": "Evaluaciones procesadas",
         "cancel merge": "Cancelar Fusión",
         "lead exam": "Liderar Examen",
         "exam": "Examen",
@@ -453,6 +459,13 @@
         "no conflicts 2": "para seleccionar exámenes diferentes, o",
         "click here": "haga clic aquí",
         "no conflicts 3": "para proceder con la fusión."
-
+    },
+    "about": {
+        "about": "Sobre",
+        "version": "Versión",
+        "acet": {
+            "we ensure financial stability": "Garantizamos la estabilidad financiera",
+            "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
+        }
     }
 }

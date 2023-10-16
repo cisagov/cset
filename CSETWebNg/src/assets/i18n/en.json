@@ -97,6 +97,7 @@
     },
     "contact": {
         "contacts": "Contacts",
+        "contact": "Contact",
         "add contact": "Add Contacts",
         "email contacts": "Email Contacts",
         "assessment owner": "Assessment Owner",
@@ -236,7 +237,10 @@
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
         "import": "Import an assessment from an external {{appCode}} file.",
-        "export to excel": "Export all assessments to Excel"
+        "export to excel": "Export all assessments to Excel",
+        "remove assessment": "Permanently remove this assessment.",
+        "export assessment": "Export a copy of this assessment to another location",
+        "analytics": "View the analytics for this assessment."
     },
     "level": {
         "low": "Low",
@@ -308,7 +312,9 @@
         "show statements with issues": "Show statements with issues"
     },
     "dialogs" : {
-        "please confirm": "Please Confirm"
+        "please confirm": "Please Confirm",
+        "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
+        "remove assessment": "Are you sure you want to remove {{assessmentName}}?"
     },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
@@ -458,5 +464,13 @@
         "no conflicts 2": "screen to select different examinations, or",
         "click here": "Click Here",
         "no conflicts 3": "to proceed with the merge."
+    },
+    "about": {
+        "about": "About",
+        "version": "Version",
+        "acet": {
+            "we ensure financial stability": "We Ensure Financial Stability",
+            "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
+        }
     }
 }
