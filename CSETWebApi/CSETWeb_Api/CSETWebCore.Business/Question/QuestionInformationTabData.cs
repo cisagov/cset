@@ -511,7 +511,7 @@ namespace CSETWebCore.Business.Question
 
                     if (dictionary.TryGetValue(info.MaturityQuestion.Mat_Question_Id, out output))
                     {
-                        tabData.SupplementalInfo = dictionary[info.MaturityQuestion.Mat_Question_Id].Supplemental_Info;
+                        tabData.SupplementalInfo = FormatSupplementalInfo(dictionary[info.MaturityQuestion.Mat_Question_Id].Supplemental_Info);
                         tabData.ExaminationApproach = dictionary[info.MaturityQuestion.Mat_Question_Id].Examination_Approach;
                     }
                 }

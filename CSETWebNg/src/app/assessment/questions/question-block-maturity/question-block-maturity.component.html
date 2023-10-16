@@ -174,21 +174,6 @@
                 </div>
             </div>
 
-            <!-- if ACET and Spanish, hide Supplemental Guidance and Details/Standard icons -->
-            <!-- <app-question-extras *ngIf="(q.isParentQuestion || !q.parentQuestionId) && (assessSvc.usesMaturityModel('ACET') && tSvc.getActiveLang() == 'es')" 
-                #extrasComponent [myQuestion]="q"
-                class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()" [ncuaDisplay]="true" 
-                [iconsToDisplay]="['REFS', 'CMNT', 'DISC', 'REVIEWED']"
-                (changeComponents)="refreshComponentOverrides()">
-            </app-question-extras> -->
-
-            <!-- otherwise, show icons as normal -->
-            <!-- <app-question-extras *ngIf="(q.isParentQuestion || !q.parentQuestionId) && ((assessSvc.usesMaturityModel('ACET') && tSvc.getActiveLang() != 'es') 
-                || !assessSvc.usesMaturityModel('ACET'))" #extrasComponent [myQuestion]="q"
-                class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()"
-                (changeComponents)="refreshComponentOverrides()">
-            </app-question-extras> -->
-
             <app-question-extras *ngIf="(q.isParentQuestion || !q.parentQuestionId)" #extrasComponent [myQuestion]="q"
                 class="w-100 mb-3" (changeExtras)="refreshReviewIndicator()"
                 (changeComponents)="refreshComponentOverrides()">
