@@ -276,6 +276,7 @@ namespace CSETWebCore.Business.Demographic
 
         /// <summary>
         /// Persists a DETAILS_DEMOGRAPHICS record for the assessment.
+        /// Replaces an existing record; does not create another one with the same name.
         /// TODO:  implement a datatype option.
         /// </summary>
         public void SaveDD(int assessmentId, string key, string value, string dataType)

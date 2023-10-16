@@ -51,6 +51,7 @@
         "back": "Back",
         "login": "Login",
         "logout": "Logout",
+        "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
         "import": "Import",
@@ -137,6 +138,12 @@
         "component": "Component",
         "components": "Components",
         "statements": "Statements"
+    },
+    "cyberFlorida": {
+        "convert message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To convert this assessment to include all questions, click the button below.",
+        "convert confirm 1": "Are you sure you want to convert this assessment?  This is a one-way conversion; it cannot be undone.",
+        "convert confirm 2": "The assessment has been converted.",
+        "title convert complete": "Conversion Complete"
     },
     "answer-options": {
         "button-labels": {

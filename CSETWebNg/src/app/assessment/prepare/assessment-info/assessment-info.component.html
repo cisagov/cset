@@ -35,7 +35,7 @@
   <app-assessment-config *ngIf="false && this.configSvc.installationMode !== 'RRA' && this.configSvc.installationMode !== 'ACET'" class="mb-5"></app-assessment-config>
   <app-assessment-config-ncua *ngIf="false && this.configSvc.installationMode === 'ACET'" class="mb-5"></app-assessment-config-ncua>
 
-  <app-assessment-convert-cf *ngIf="true" class="mt-4"></app-assessment-convert-cf>
+  <app-assessment-convert-cf class="mt-4"></app-assessment-convert-cf>
 
 
   <app-nav-back-next [page]="'info1'"></app-nav-back-next>
