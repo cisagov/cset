@@ -106,7 +106,8 @@ let headers = {
       "examLevel": '',
       "region": 0,
       "guid": '',
-      "version": ''
+      "acet_version": '',
+      "db_version": ''
     },
     "issuesTotal": {
       "dors": 0,
@@ -461,7 +462,7 @@ let headers = {
         this.questions = r;
         this.information = this.questions.information;
         this.examLevel = this.getExamLevel();
-
+        
         // goes through domains
         for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
           let domain = this.questions?.matAnsweredQuestions[0]?.assessmentFactors[i];
@@ -587,7 +588,8 @@ let headers = {
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
       "guid": this.questions.assessmentGuid,
-      "version": environment.visibleVersion
+      "acet_version": environment.visibleVersion,
+      "db_version": this.questions.csetVersion
     };
 
     this.jsonString.metaData = metaDataInfo;
@@ -725,7 +727,9 @@ let headers = {
         "examLevel": '',
         "region": 0,
         "stateLed": false,
-        "guid": ''
+        "guid": '',
+        "acet_version": '',
+        "db_version": ''
       },
       "issuesTotal": {
         "dors": 0,

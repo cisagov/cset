@@ -21,12 +21,12 @@
   SOFTWARE.
 -------------------------->
 <ng-container *transloco="let t">
-<h4>Organization Details</h4>
+<h4>{{t('organization details')}}</h4>
 <form #f="ngForm">
     <div class="form-row">
         <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
         <div class="form-group col-md-6">
-
+            
             <label class="mb-1" for="name">{{t('assessment name')}}</label>
             <input type="text" maxlength="100" [disabled]="configSvc.installationMode === 'ACET'" class="form-control" id="name" name="name" required focusOnInit="true"
                 [(ngModel)]="assessment.assessmentName"
@@ -36,32 +36,32 @@
             </div>
         </div>
         <div class="form-group col-md-6">
-            <label class="mb-1" for="date">Assessment Date</label>
+            <label class="mb-1" for="date">{{t('assessment date')}}</label>
             <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
                 [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
         </div>
     </div>
     <div class="form-group" *ngIf="showFacilityName()">
-        <label class="mb-1" for="facility">Facility Name</label>
+        <label class="mb-1" for="facility">{{t('facility name')}}</label>
         <input type="text" maxlength="100" class="form-control" id="facility" name="facility" [(ngModel)]="assessment.facilityName"
             (change)="update($event)" tabindex="0">
     </div>
     <div class="form-row">
         <div class="form-group col-md-6" *ngIf="showCityName()">
-            <label class="mb-1" for="citySite">City Or Site Name</label>
+            <label class="mb-1" for="citySite">{{t('city or site name')}}</label>
             <input type="text" maxlength="100" class="form-control" id="citySite" name="citySite" [(ngModel)]="assessment.cityOrSiteName"
                 (change)="update($event)" tabindex="0">
         </div>
         <div class="form-group col-md-6" *ngIf="showStateName()">
-            <label class="mb-1" for="stateProvRegion">State/Province/Region</label>
+            <label class="mb-1" for="stateProvRegion">{{t('state province region')}}</label>
             <input type="text" maxlength="100" class="form-control" id="stateProvRegion" name="stateProvRegion" [(ngModel)]="assessment.stateProvRegion"
                 (change)="update($event)" tabindex="0">
         </div>
     </div>
 </form>
 <div class="mt-4">
-    <h4>Assessment Type</h4>
+    <h4>{{t('assessment type')}}</h4>
     <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
     <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
 

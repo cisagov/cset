@@ -6,40 +6,44 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Index("Id", Name = "IX_USER_DETAIL_INFORMATION", IsUnique = true)]
+public partial class USER_DETAIL_INFORMATION
 {
-    [Index("Id", Name = "IX_USER_DETAIL_INFORMATION", IsUnique = true)]
-    public partial class USER_DETAIL_INFORMATION
-    {
-        public USER_DETAIL_INFORMATION()
-        {
-            ADDRESS = new HashSet<ADDRESS>();
-        }
+    [Key]
+    public Guid Id { get; set; }
 
-        [Key]
-        public Guid Id { get; set; }
-        [StringLength(150)]
-        public string CellPhone { get; set; }
-        [StringLength(150)]
-        public string FirstName { get; set; }
-        [StringLength(150)]
-        public string LastName { get; set; }
-        [StringLength(150)]
-        public string HomePhone { get; set; }
-        [StringLength(150)]
-        public string OfficePhone { get; set; }
-        [StringLength(150)]
-        public string ImagePath { get; set; }
-        [StringLength(150)]
-        public string JobTitle { get; set; }
-        [StringLength(150)]
-        public string Organization { get; set; }
-        [StringLength(150)]
-        public string PrimaryEmail { get; set; }
-        [StringLength(150)]
-        public string SecondaryEmail { get; set; }
+    [StringLength(150)]
+    public string CellPhone { get; set; }
 
-        [InverseProperty("IdNavigation")]
-        public virtual ICollection<ADDRESS> ADDRESS { get; set; }
-    }
+    [StringLength(150)]
+    public string FirstName { get; set; }
+
+    [StringLength(150)]
+    public string LastName { get; set; }
+
+    [StringLength(150)]
+    public string HomePhone { get; set; }
+
+    [StringLength(150)]
+    public string OfficePhone { get; set; }
+
+    [StringLength(150)]
+    public string ImagePath { get; set; }
+
+    [StringLength(150)]
+    public string JobTitle { get; set; }
+
+    [StringLength(150)]
+    public string Organization { get; set; }
+
+    [StringLength(150)]
+    public string PrimaryEmail { get; set; }
+
+    [StringLength(150)]
+    public string SecondaryEmail { get; set; }
+
+    [InverseProperty("IdNavigation")]
+    public virtual ICollection<ADDRESS> ADDRESS { get; set; } = new List<ADDRESS>();
 }

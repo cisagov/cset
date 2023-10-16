@@ -6,39 +6,41 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FINANCIAL_GROUPS records
+/// </summary>
+[Index("DomainId", "AssessmentFactorId", "FinComponentId", "Financial_Level_Id", Name = "IX_FINANCIAL_GROUPS", IsUnique = true)]
+public partial class FINANCIAL_GROUPS
 {
-    /// <summary>
-    /// A collection of FINANCIAL_GROUPS records
-    /// </summary>
-    [Index("DomainId", "AssessmentFactorId", "FinComponentId", "Financial_Level_Id", Name = "IX_FINANCIAL_GROUPS", IsUnique = true)]
-    public partial class FINANCIAL_GROUPS
-    {
-        public FINANCIAL_GROUPS()
-        {
-            FINANCIAL_DETAILS = new HashSet<FINANCIAL_DETAILS>();
-        }
+    [Key]
+    public int FinancialGroupId { get; set; }
 
-        [Key]
-        public int FinancialGroupId { get; set; }
-        public int DomainId { get; set; }
-        public int AssessmentFactorId { get; set; }
-        public int FinComponentId { get; set; }
-        public int Financial_Level_Id { get; set; }
+    public int DomainId { get; set; }
 
-        [ForeignKey("AssessmentFactorId")]
-        [InverseProperty("FINANCIAL_GROUPS")]
-        public virtual FINANCIAL_ASSESSMENT_FACTORS AssessmentFactor { get; set; }
-        [ForeignKey("DomainId")]
-        [InverseProperty("FINANCIAL_GROUPS")]
-        public virtual FINANCIAL_DOMAINS Domain { get; set; }
-        [ForeignKey("FinComponentId")]
-        [InverseProperty("FINANCIAL_GROUPS")]
-        public virtual FINANCIAL_COMPONENTS FinComponent { get; set; }
-        [ForeignKey("Financial_Level_Id")]
-        [InverseProperty("FINANCIAL_GROUPS")]
-        public virtual FINANCIAL_MATURITY Financial_Level { get; set; }
-        [InverseProperty("FinancialGroup")]
-        public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; }
-    }
+    public int AssessmentFactorId { get; set; }
+
+    public int FinComponentId { get; set; }
+
+    public int Financial_Level_Id { get; set; }
+
+    [ForeignKey("AssessmentFactorId")]
+    [InverseProperty("FINANCIAL_GROUPS")]
+    public virtual FINANCIAL_ASSESSMENT_FACTORS AssessmentFactor { get; set; }
+
+    [ForeignKey("DomainId")]
+    [InverseProperty("FINANCIAL_GROUPS")]
+    public virtual FINANCIAL_DOMAINS Domain { get; set; }
+
+    [InverseProperty("FinancialGroup")]
+    public virtual ICollection<FINANCIAL_DETAILS> FINANCIAL_DETAILS { get; set; } = new List<FINANCIAL_DETAILS>();
+
+    [ForeignKey("FinComponentId")]
+    [InverseProperty("FINANCIAL_GROUPS")]
+    public virtual FINANCIAL_COMPONENTS FinComponent { get; set; }
+
+    [ForeignKey("Financial_Level_Id")]
+    [InverseProperty("FINANCIAL_GROUPS")]
+    public virtual FINANCIAL_MATURITY Financial_Level { get; set; }
 }

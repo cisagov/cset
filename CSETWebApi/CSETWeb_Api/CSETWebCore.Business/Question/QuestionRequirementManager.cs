@@ -545,10 +545,7 @@ namespace CSETWebCore.Business.Question
 
         /// <summary>
         /// Returns the number of questions that are relevant for the selected standards 
-        /// when in REQUIREMENTS mode.
-        /// 
-        /// TODO:  This query is a copy of the one above.  Find a way to have a single copy of the query
-        /// that can be used for full queries or counts or whatever.
+        /// when in REQUIREMENTS mode.        
         /// </summary>
         /// <returns></returns>
         public int NumberOfRequirements()
@@ -572,8 +569,6 @@ namespace CSETWebCore.Business.Question
         /// 
         /// The query differs whether a single or multiple standards are selected.
         /// 
-        /// TODO:  These queries are copies of the ones above.  Find a way to have a single instance of each query
-        /// that can be used for both full data queries and counts in an efficient way.
         /// </summary>
         /// <returns></returns>
         public int NumberOfQuestions()

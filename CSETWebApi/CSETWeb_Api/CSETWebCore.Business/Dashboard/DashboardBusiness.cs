@@ -245,7 +245,7 @@ namespace CSETWebCore.Business.Dashboard
         }
 
 
-        public async Task<DashboardGraphData> GetDashboardData(string selectedSector)
+        public DashboardGraphData GetDashboardData(string selectedSector)
         {
             var getMedian = _context.analytics_getMedianOverall().ToList();
             var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15,67);

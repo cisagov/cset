@@ -23,9 +23,8 @@ namespace CSETWebCore.Interfaces.Maturity
         void PersistSelectedMaturityModel(int assessmentId, string modelName);
         void ClearMaturityModel(int assessmentId);
         void PersistMaturityLevel(int assessmentId, int level);
-        AVAILABLE_MATURITY_MODELS ProcessModelDefaults(int assessmentId, string installationMode);
         object GetEdmPercentScores(int assessmentId);
-        MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId);
+        MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId);
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
@@ -33,13 +32,12 @@ namespace CSETWebCore.Interfaces.Maturity
             List<FullAnswer> answers);
 
         int StoreAnswer(int assessmentId, Answer answer);
-        double GetAnswerCompletionRate(int assessmentId);
-        List<MaturityDomain> GetMaturityAnswers(int assessmentId);
+        List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false);
         bool GetTargetBandOnly(int assessmentId);
         void SetTargetBandOnly(int assessmentId, bool value);
 
         List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity,
-            int assessmentId);
+            int assessmentId, bool spanishFlag = false);
 
         List<string> GetMaturityRange(int assessmentId);
         List<string> GetIseMaturityRange(int assessmentId);

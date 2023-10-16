@@ -6,14 +6,15 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[PrimaryKey("Maturity_Model_Id", "Maturity_Answer")]
+public partial class MATURITY_POSSIBLE_ANSWERS
 {
-    public partial class MATURITY_POSSIBLE_ANSWERS
-    {
-        [Key]
-        public int Maturity_Model_Id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Maturity_Answer { get; set; }
-    }
+    [Key]
+    public int Maturity_Model_Id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Maturity_Answer { get; set; }
 }

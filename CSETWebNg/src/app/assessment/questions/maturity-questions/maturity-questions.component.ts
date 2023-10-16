@@ -39,14 +39,15 @@ import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { CompletionService } from '../../../services/completion.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-maturity-questions',
   templateUrl: './maturity-questions.component.html'
 })
-export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
+export class MaturityQuestionsComponent implements OnInit {
 
-  groupings: QuestionGrouping[] = null;
+  groupings: QuestionGrouping[] = [];
   pageTitle: string = '';
   modelId: number;
   modelName: string = '';
@@ -56,9 +57,11 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
 
   loaded = false;
 
-  grouping: QuestionGrouping;
+  grouping: QuestionGrouping | null;
   groupingId: Number;
   title: string;
+
+  msgUnansweredEqualsNo = '';
 
   filterDialogRef: MatDialogRef<QuestionFiltersComponent>;
 
@@ -77,7 +80,8 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private tSvc: TranslocoService
   ) {
 
     // listen for NavigationEnd to know when the page changed
@@ -88,6 +92,10 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.groupingId = +this.route.snapshot.params['grp'];
         this.loadGrouping(+this.groupingId);
       }
+    });
+
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.load();
     });
 
 
@@ -102,7 +110,23 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     this.assessSvc.currentTab = 'questions';
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
+    this.load();
+
+    // refresh the page in case of language change
+    this.tSvc.langChanges$.subscribe((event) => {
+      this.load();
+    });
+
+  }
+
+  /**
+   * 
+   */
+  load() {
     // determine whether displaying a grouping or all questions for the model
     this.grouping = null;
     this.groupingId = +this.route.snapshot.params['grp'];
@@ -114,19 +138,12 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   *
-   */
-  ngAfterViewInit() {
-  }
-
   isNcuaModel() {
     if (this.modelName == 'ACET' || this.modelName == 'ISE') {
       return true;
     }
     return false;
   }
-
 
   /**
    * Returns the URL of the Questions page in the user guide.
@@ -156,8 +173,13 @@ export class MaturityQuestionsComponent implements OnInit, AfterViewInit {
         this.filterSvc.maturityModelId = response.modelId;
         this.filterSvc.maturityModelName = response.modelName;
 
-        this.pageTitle = this.questionsAlias + ' - ' + this.modelName;
+        this.pageTitle = this.tSvc.translate('titles.' + this.questionsAlias.toLowerCase().trim()) + ' - ' + this.modelName;
         this.glossarySvc.glossaryEntries = response.glossary;
+
+        // set the message with the current "no" answer value
+        const codeForNo = this.assessSvc.assessment?.maturityModel?.modelId == 12 ? 'NI' : 'N';
+        const noValue = this.questionsSvc.answerButtonLabel(this.modelName, codeForNo);
+        this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': noValue });
 
         this.loaded = true;
 

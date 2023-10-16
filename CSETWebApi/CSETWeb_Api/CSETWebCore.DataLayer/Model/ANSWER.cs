@@ -6,91 +6,109 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of ANSWER records
+/// </summary>
+[Index("Assessment_Id", "Question_Or_Requirement_Id", "Question_Type", "Component_Guid", "Mat_Option_Id", Name = "IX_ANSWER", IsUnique = true)]
+[Index("Assessment_Id", Name = "NonClusteredIndex-Answers_Assessment_Id")]
+public partial class ANSWER
 {
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    public int Answer_Id { get; set; }
+
     /// <summary>
-    /// A collection of ANSWER records
+    /// The Question Or Requirement Id is used to
     /// </summary>
-    [Index("Assessment_Id", "Question_Or_Requirement_Id", "Question_Type", "Component_Guid", "Mat_Option_Id", Name = "IX_ANSWER", IsUnique = true)]
-    [Index("Assessment_Id", Name = "NonClusteredIndex-Answers_Assessment_Id")]
-    public partial class ANSWER
-    {
-        public ANSWER()
-        {
-            DOCUMENT_ANSWERS = new HashSet<DOCUMENT_ANSWERS>();
-            FINDING = new HashSet<FINDING>();
-            PARAMETER_VALUES = new HashSet<PARAMETER_VALUES>();
-        }
+    public int Question_Or_Requirement_Id { get; set; }
 
-        public int Assessment_Id { get; set; }
-        [Key]
-        public int Answer_Id { get; set; }
-        /// <summary>
-        /// The Question Or Requirement Id is used to
-        /// </summary>
-        public int Question_Or_Requirement_Id { get; set; }
-        /// <summary>
-        /// The Mark For Review is used to
-        /// </summary>
-        public bool? Mark_For_Review { get; set; }
-        /// <summary>
-        /// The Comment is used to
-        /// </summary>
-        public string Comment { get; set; }
-        /// <summary>
-        /// The Alternate Justification is used to
-        /// </summary>
-        [StringLength(2048)]
-        public string Alternate_Justification { get; set; }
-        /// <summary>
-        /// The Question Number is used to
-        /// </summary>
-        public int? Question_Number { get; set; }
-        /// <summary>
-        /// The Answer Text is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Answer_Text { get; set; }
-        /// <summary>
-        /// The Component Guid is used to
-        /// </summary>
-        public Guid Component_Guid { get; set; }
-        [StringLength(50)]
-        public string Custom_Question_Guid { get; set; }
-        public int? Old_Answer_Id { get; set; }
-        public bool Reviewed { get; set; }
-        [StringLength(2048)]
-        public string FeedBack { get; set; }
-        [Required]
-        [StringLength(20)]
-        public string Question_Type { get; set; }
-        public bool? Is_Requirement { get; set; }
-        public bool? Is_Component { get; set; }
-        public bool? Is_Framework { get; set; }
-        public bool? Is_Maturity { get; set; }
-        public string Free_Response_Answer { get; set; }
-        public int? Mat_Option_Id { get; set; }
+    /// <summary>
+    /// The Mark For Review is used to
+    /// </summary>
+    public bool? Mark_For_Review { get; set; }
 
-        [ForeignKey("Answer_Text")]
-        [InverseProperty("ANSWER")]
-        public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("ANSWER")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Mat_Option_Id")]
-        [InverseProperty("ANSWER")]
-        public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
-        [ForeignKey("Question_Type")]
-        [InverseProperty("ANSWER")]
-        public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
-        [InverseProperty("Answer")]
-        public virtual HYDRO_DATA_ACTIONS HYDRO_DATA_ACTIONS { get; set; }
-        [InverseProperty("Answer")]
-        public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; }
-        [InverseProperty("Answer")]
-        public virtual ICollection<FINDING> FINDING { get; set; }
-        [InverseProperty("Answer")]
-        public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; }
-    }
+    /// <summary>
+    /// The Comment is used to
+    /// </summary>
+    public string Comment { get; set; }
+
+    /// <summary>
+    /// The Alternate Justification is used to
+    /// </summary>
+    [StringLength(2048)]
+    public string Alternate_Justification { get; set; }
+
+    /// <summary>
+    /// The Question Number is used to
+    /// </summary>
+    public int? Question_Number { get; set; }
+
+    /// <summary>
+    /// The Answer Text is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Answer_Text { get; set; }
+
+    /// <summary>
+    /// The Component Guid is used to
+    /// </summary>
+    public Guid Component_Guid { get; set; }
+
+    [StringLength(50)]
+    public string Custom_Question_Guid { get; set; }
+
+    public int? Old_Answer_Id { get; set; }
+
+    public bool Reviewed { get; set; }
+
+    [StringLength(2048)]
+    public string FeedBack { get; set; }
+
+    [Required]
+    [StringLength(20)]
+    public string Question_Type { get; set; }
+
+    public bool? Is_Requirement { get; set; }
+
+    public bool? Is_Component { get; set; }
+
+    public bool? Is_Framework { get; set; }
+
+    public bool? Is_Maturity { get; set; }
+
+    public string Free_Response_Answer { get; set; }
+
+    public int? Mat_Option_Id { get; set; }
+
+    [ForeignKey("Answer_Text")]
+    [InverseProperty("ANSWER")]
+    public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("ANSWER")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [InverseProperty("Answer")]
+    public virtual ICollection<DOCUMENT_ANSWERS> DOCUMENT_ANSWERS { get; set; } = new List<DOCUMENT_ANSWERS>();
+
+    [InverseProperty("Answer")]
+    public virtual ICollection<FINDING> FINDING { get; set; } = new List<FINDING>();
+
+    [InverseProperty("Answer")]
+    public virtual HYDRO_DATA_ACTIONS HYDRO_DATA_ACTIONS { get; set; }
+
+    [ForeignKey("Mat_Option_Id")]
+    [InverseProperty("ANSWER")]
+    public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }
+
+    [InverseProperty("Answer")]
+    public virtual ICollection<PARAMETER_VALUES> PARAMETER_VALUES { get; set; } = new List<PARAMETER_VALUES>();
+
+    [ForeignKey("Question_Type")]
+    [InverseProperty("ANSWER")]
+    public virtual ANSWER_QUESTION_TYPES Question_TypeNavigation { get; set; }
 }

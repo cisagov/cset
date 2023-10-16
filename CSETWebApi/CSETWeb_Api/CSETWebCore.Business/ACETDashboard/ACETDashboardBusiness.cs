@@ -13,6 +13,8 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
+using CSETWebCore.Business.Acet;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Business.ACETDashboard
 {
@@ -37,13 +39,16 @@ namespace CSETWebCore.Business.ACETDashboard
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, bool spanishFlag = false)
         {
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
+            Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
+            Dictionary<string, GroupingSpanishRow> dictionaryDomain = new Dictionary<string, GroupingSpanishRow>();
 
-            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId);
+            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, spanishFlag);
+
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -51,6 +56,29 @@ namespace CSETWebCore.Business.ACETDashboard
                     Maturity = d.DomainMaturity,
                     Name = d.DomainName
                 });
+            }
+            if (spanishFlag)
+            {
+                dictionaryIrp = AcetBusiness.buildIRPDashboardDictionary();
+                dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+
+                var outputIrp = new IRPSpanishRow();
+                var outputGrouping = new GroupingSpanishRow();
+
+                foreach (var irp in result.Irps)
+                {
+                    if (dictionaryIrp.TryGetValue(irp.HeaderText, out outputIrp))
+                    {
+                        irp.HeaderText = dictionaryIrp[irp.HeaderText].SpanishHeader;
+                    }
+                }
+                foreach (var domain in result.Domains)
+                {
+                    if (dictionaryDomain.TryGetValue(domain.Name, out outputGrouping))
+                    {
+                        domain.Name = dictionaryDomain[domain.Name].Spanish_Title;
+                    }
+                }
 
             }
 

@@ -26,6 +26,8 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatAnsweredQuestionDomain> GetIseAllQuestionList();
 
         List<SourceFiles> GetIseSourceFiles();
+        string GetCsetVersion();
+        string GetAssessmentGuid(int assessmentId);
         List<string> GetDomains();
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,

@@ -26,6 +26,8 @@
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnChanges, OnInit, } from '@angular/core';
+import { ACETService } from '../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-acet-donut-chart',
@@ -58,10 +60,17 @@ export class AcetDonutChartComponent implements OnInit, OnChanges {
   hp = false;
 
   constructor(
-    public boSvc: BreakpointObserver
+    public boSvc: BreakpointObserver,
+    public acetSvc: ACETService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
+    if (this.tSvc.getActiveLang() == "es") {
+      this.donutData.forEach(element => {
+        element.name = this.tSvc.translate('level.' + element.name.toLowerCase());
+      });
+    }
     // using the observable so that we have an event to reevaluate
     this.boSvc.observe(Breakpoints.HandsetPortrait).subscribe(hp => {
       this.hp = hp.matches;

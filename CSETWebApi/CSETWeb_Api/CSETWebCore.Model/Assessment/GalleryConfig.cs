@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using System;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Model.Assessment
@@ -42,6 +43,7 @@ namespace CSETWebCore.Model.Assessment
         public bool Diagram { get; set; } = false;
 
         public string Origin { get; set; }
+        public Guid GalleryGuid { get; set; }
     }
 
 
@@ -50,5 +52,10 @@ namespace CSETWebCore.Model.Assessment
         public string ModelName { get; set; }
 
         public int Level { get; set; }
+
+        /// <summary>
+        /// An optional subset of maturity questions.  The full model is not shown.
+        /// </summary>
+        public string Submodel { get; set; }
     }
 }

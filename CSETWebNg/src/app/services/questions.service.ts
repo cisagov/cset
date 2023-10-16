@@ -30,6 +30,7 @@ import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
+import { ACETService } from './acet.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -72,7 +73,7 @@ export class QuestionsService {
     private tSvc: TranslocoService,
     private assessmentSvc: AssessmentService,
     private questionFilterSvc: QuestionFilterService
-  ) {  }
+  ) { }
 
   /**
    * The page can store its model here for accessibility by question-extras
@@ -258,7 +259,7 @@ export class QuestionsService {
    */
   getAllSubGroupingQuestionCount(modelId: number, groupLevel: number) {
     return this.http.get(this.configSvc.apiUrl + 'AllSubGroupingQuestionCount?modelId=' + modelId +
-    '&groupLevel=' + groupLevel, headers);
+      '&groupLevel=' + groupLevel, headers);
   }
 
   /**
@@ -353,7 +354,8 @@ export class QuestionsService {
    * Finds the button definition and returns its label
    */
   answerButtonLabel(modelName: string, answerCode: string): string {
-    return this.findAnsDefinition(modelName, answerCode).buttonLabel;
+    const def = this.findAnsDefinition(modelName, answerCode);
+    return this.tSvc.translate(`answer-options.button-labels.${def.buttonLabelKey}`);
   }
 
   /**
@@ -361,23 +363,16 @@ export class QuestionsService {
    * If a tooltip is not defined, the button label is returned.
    */
   answerButtonTooltip(modelName: string, answerCode: string): string {
-    var t = this.findAnsDefinition(modelName, answerCode);
-      if (!!t.buttonTooltip) {
-        return t.buttonTooltip;
-      }
-      return t.buttonLabel;
+    var def = this.findAnsDefinition(modelName, answerCode);
+    return this.tSvc.translate(`answer-options.button-tooltips.${def.buttonLabelKey}`);
   }
 
   /**
-   * Finds the button definition and returns its full label (tooltip)
+   * Finds the button definition and returns its full label
    */
   answerDisplayLabel(modelName: string, answerCode: string) {
     const def = this.findAnsDefinition(modelName, answerCode);
-    if (!def) {
-      console.log('cannot find definition for model: ' + modelName + ', answerCode: ' + answerCode);
-      return "?";
-    }
-    return def.answerLabel;
+    return this.tSvc.translate(`answer-options.labels.${def.buttonLabelKey}`);
   }
 
   /**
@@ -386,7 +381,7 @@ export class QuestionsService {
    */
   findAnsDefinition(modelName: string, answerCode: string) {
 
-    let ans = null;
+    let ansDef = null;
 
     // assume unanswered if null or undefined
     if (!answerCode) {
@@ -394,43 +389,35 @@ export class QuestionsService {
     }
 
     // look for model-specific answer options
-    if (modelName && modelName.trim().length > 0) {
+    if (!!modelName && modelName.length > 0 && modelName.trim().length > 0) {
       let model = this.configSvc.config.moduleBehaviors.find(x => x.moduleName == modelName);
+
       if (!!model) {
-        
+
         // first look for a skin-specific answer option
-        ans = model.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
-        if (ans) {
-          return ans;
+        ansDef = model.answerOptions?.find(o => o.code == answerCode && o.skin == this.configSvc.installationMode);
+        if (ansDef) {
+          return ansDef;
         }
-        
+
         // or the general version of the answer option for the model
-        ans = model.answerOptions?.find(o => o.code == answerCode && !o.skin);
-        if (ans) {
-          return ans;
+        ansDef = model.answerOptions?.find(o => o.code == answerCode && !o.skin);
+        if (ansDef) {
+          return ansDef;
         }
       }
     }
-    
+
     // fallback to default options for standard-based or model-based
-    ans = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);    
-    if (ans) {
-      return ans;
+    ansDef = this.configSvc.config.answerOptionsDefault.find(x => x.code == answerCode);
+    if (ansDef) {
+      return ansDef;
     }
 
-    return answerCode;
-  }
-
-  /**
-   * Eager loading to get language loaded up front
-   * @param transloco 
-   * @returns 
-   */
-  loadLoco(lang: string): Promise<void> {
-    return new Promise<void>(() => {
-      console.log(`loadLoco: ${lang}`);
-      this.tSvc.setActiveLang(lang);
-      this.tSvc.load(lang);
-    });
+    // return a dummy definition to help us spot holes in the lookup
+    return {
+      buttonLabelKey: "X",
+      buttonCss: "btn-yes"
+    };
   }
 }

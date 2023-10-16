@@ -83,9 +83,7 @@ namespace CSETWebCore.Business.User
 
                     throw;
                 }
-
-                //TODO: Add logging
-                Console.WriteLine(ex);
+                NLog.LogManager.GetCurrentClassLogger().Error(ex);
                 tmpContext.USERS.Remove(u);
             }
 
@@ -298,7 +296,8 @@ namespace CSETWebCore.Business.User
                 PasswordResetRequired = user.PasswordResetRequired ?? true,
                 IsActive = user.IsActive ?? true,
                 PreventEncrypt = user.PreventEncrypt ?? true,
-                CisaAssessorWorkflow = user.CisaAssessorWorkflow
+                CisaAssessorWorkflow = user.CisaAssessorWorkflow,
+                Lang = user.Lang
             };
 
             return ud;

@@ -6,37 +6,33 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of SYMBOL_GROUPS records
+/// </summary>
+public partial class SYMBOL_GROUPS
 {
     /// <summary>
-    /// A collection of SYMBOL_GROUPS records
+    /// The Id is used to
     /// </summary>
-    public partial class SYMBOL_GROUPS
-    {
-        public SYMBOL_GROUPS()
-        {
-            COMPONENT_SYMBOLS = new HashSet<COMPONENT_SYMBOLS>();
-        }
+    [Key]
+    public int Id { get; set; }
 
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Id { get; set; }
-        /// <summary>
-        /// The Symbol Group Name is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Symbol_Group_Name { get; set; }
-        /// <summary>
-        /// The Symbol Group Title is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Symbol_Group_Title { get; set; }
+    /// <summary>
+    /// The Symbol Group Name is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Symbol_Group_Name { get; set; }
 
-        [InverseProperty("Symbol_Group")]
-        public virtual ICollection<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; }
-    }
+    /// <summary>
+    /// The Symbol Group Title is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Symbol_Group_Title { get; set; }
+
+    [InverseProperty("Symbol_Group")]
+    public virtual ICollection<COMPONENT_SYMBOLS> COMPONENT_SYMBOLS { get; set; } = new List<COMPONENT_SYMBOLS>();
 }

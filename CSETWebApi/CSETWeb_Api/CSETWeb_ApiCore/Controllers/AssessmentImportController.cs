@@ -41,47 +41,12 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
         }
 
-
-        /// <summary>
-        /// Gets the path to the Legacy CSET Import process. Checks for both dev and production versions.
-        /// </summary>
-        /// <returns></returns>
-        private string GetLegacyImportProcessPath()
-        {
-            var dir = new FileInfo(AppDomain.CurrentDomain.BaseDirectory).Directory;
-
-            // TODO: Problem: These paths create a dependency and should be some sort of variable for installation as well as debugging. 
-            // Also, can the user change the installation directory? If so, this gets messed up...
-            var importFile = dir.Parent.Parent.Parent.Parent.FullName + "\\CSETStandAlone\\LegacyCSETImport\\Bin\\Debug\\LegacyCSETImport.exe";
-            var importProductionFile = Path.Combine(dir.Parent.FullName, "LegacyCSETImport.exe");
-
-            var path = string.Empty;
-            if (System.IO.File.Exists(importFile))
-            {
-                path = importFile;
-            }
-            else if (System.IO.File.Exists(importProductionFile))
-            {
-                path = importProductionFile;
-            }
-            return path;
-        }
-
-
-        private bool LegacyImportProcessExists()
-        {
-            var processPath = GetLegacyImportProcessPath();
-            var processExists = !string.IsNullOrEmpty(processPath);
-            return processExists;
-        }
-
-
         [HttpGet]
         //  [CSETAuthorize]
         [Route("api/assessment/legacy/import/installed")]
         public IActionResult LegacyImportIsInstalled()
         {
-            return Ok(LegacyImportProcessExists());
+            return Ok(false);
         }
 
 

@@ -6,29 +6,37 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// ISE specific fields for issues
-    /// </summary>
-    public partial class ISE_ACTIONS
-    {
-        [Key]
-        public int Mat_Question_Id { get; set; }
-        public string Description { get; set; }
-        [StringLength(1000)]
-        public string Action_Items { get; set; }
-        [StringLength(100)]
-        public string Regulatory_Citation { get; set; }
-        public int? Parent_Id { get; set; }
-        [Key]
-        public int Action_Item_Id { get; set; }
-        public int? Severity { get; set; }
-        public int? Mat_Option_Id { get; set; }
-        public int? Sequence { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("ISE_ACTIONS")]
-        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
-    }
+/// <summary>
+/// ISE specific fields for issues
+/// </summary>
+[PrimaryKey("Action_Item_Id", "Mat_Question_Id")]
+public partial class ISE_ACTIONS
+{
+    [Key]
+    public int Mat_Question_Id { get; set; }
+
+    public string Description { get; set; }
+
+    [StringLength(1000)]
+    public string Action_Items { get; set; }
+
+    [StringLength(100)]
+    public string Regulatory_Citation { get; set; }
+
+    public int? Parent_Id { get; set; }
+
+    [Key]
+    public int Action_Item_Id { get; set; }
+
+    public int? Severity { get; set; }
+
+    public int? Mat_Option_Id { get; set; }
+
+    public int? Sequence { get; set; }
+
+    [ForeignKey("Mat_Question_Id")]
+    [InverseProperty("ISE_ACTIONS")]
+    public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
 }

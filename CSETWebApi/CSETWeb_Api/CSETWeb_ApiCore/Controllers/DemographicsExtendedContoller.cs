@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 
 using Microsoft.AspNetCore.Authorization;
+using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,14 +27,16 @@ namespace CSETWebCore.Api.Controllers
     {
         private readonly ITokenManager _token;
         private readonly IAssessmentBusiness _assessment;
+        private readonly IAssessmentUtil _assessmentUtil;
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsExtendedController(ITokenManager token, IAssessmentBusiness assessment,
+        public DemographicsExtendedController(ITokenManager token, IAssessmentBusiness assessment, IAssessmentUtil assessmentUtil,
             IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
+            _assessmentUtil = assessmentUtil;
             _demographic = demographic;
             _context = context;
         }
@@ -45,21 +48,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/demographics/ext")]
-        public IActionResult GetDemographics()
+        public IActionResult GetExtendedDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var demo = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+            var demoBiz = new DemographicBusiness(_context, _assessmentUtil);
+            var resp = demoBiz.GetExtendedDemographics(assessmentId);
 
-            if (demo == null)
-            {
-                demo = new DEMOGRAPHIC_ANSWERS()
-                {
-                    Assessment_Id = assessmentId
-                };
-            }
-
-            return Ok(demo);
+            return Ok(resp);
         }
 
 

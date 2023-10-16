@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Standards;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Common;
 using CSETWebCore.Interfaces.Document;
@@ -13,8 +14,13 @@ using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Hydro;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
+using Npoi.Mapper;
+using NPOI.HPSF;
+using NPOI.SS.UserModel;
+using NPOI.Util;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CSETWebCore.Business.Question
@@ -287,7 +293,7 @@ namespace CSETWebCore.Business.Question
         {
             var qvm = new QuestionDetailsBusiness(
                 new StandardSpecficLevelRepository(_context),
-                new InformationTabBuilder(_context, _htmlConverter),
+                new InformationTabBuilder(_context, _htmlConverter, _tokenManager),
                 _context, _tokenManager, _document
             );
 
@@ -596,8 +602,14 @@ namespace CSETWebCore.Business.Question
                     Comment = comment
                 });
             } 
-            catch (Exception ex)
+            catch (Exception)
             {
+                //TODO: It is a big pet peeve of mine to have empty try catches
+                //Please atleast log the error.  
+                //if it is something you expect to see often and you know it is not an error
+                //then exception tossing and catching is really expensive please refactor 
+                //such that it is not necessary such as test for containment before adding.
+
                 HYDRO_DATA_ACTIONS hda = new HYDRO_DATA_ACTIONS()
                 {
                     Answer = answer,

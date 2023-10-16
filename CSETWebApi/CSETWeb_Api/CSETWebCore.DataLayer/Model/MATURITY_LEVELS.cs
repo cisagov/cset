@@ -6,29 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of MATURITY_LEVELS records
+/// </summary>
+public partial class MATURITY_LEVELS
 {
-    /// <summary>
-    /// A collection of MATURITY_LEVELS records
-    /// </summary>
-    public partial class MATURITY_LEVELS
-    {
-        public MATURITY_LEVELS()
-        {
-            MATURITY_QUESTIONS = new HashSet<MATURITY_QUESTIONS>();
-        }
+    public int Level { get; set; }
 
-        public int Level { get; set; }
-        [StringLength(50)]
-        public string Level_Name { get; set; }
-        [Key]
-        public int Maturity_Level_Id { get; set; }
-        public int? Maturity_Model_Id { get; set; }
+    [StringLength(50)]
+    public string Level_Name { get; set; }
 
-        [ForeignKey("Maturity_Model_Id")]
-        [InverseProperty("MATURITY_LEVELS")]
-        public virtual MATURITY_MODELS Maturity_Model { get; set; }
-        [InverseProperty("Maturity_Level")]
-        public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; }
-    }
+    [Key]
+    public int Maturity_Level_Id { get; set; }
+
+    public int? Maturity_Model_Id { get; set; }
+
+    [InverseProperty("Maturity_Level")]
+    public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; } = new List<MATURITY_QUESTIONS>();
+
+    [ForeignKey("Maturity_Model_Id")]
+    [InverseProperty("MATURITY_LEVELS")]
+    public virtual MATURITY_MODELS Maturity_Model { get; set; }
 }

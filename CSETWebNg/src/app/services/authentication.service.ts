@@ -33,6 +33,7 @@ import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
 import { environment } from '../../environments/environment';
+import { TranslocoService } from '@ngneat/transloco';
 
 export interface LoginResponse {
   token: string;
@@ -42,6 +43,7 @@ export interface LoginResponse {
   userLastName: string;
   userFirstName: string;
   userId?: number;
+  lang: string;
   email: string;
   accessKey?: string;
   exportExtension: string;
@@ -66,6 +68,7 @@ export class AuthenticationService {
     private http: HttpClient,
     private router: Router,
     private configSvc: ConfigService,
+    private tSvc: TranslocoService,
     public dialog: MatDialog
   ) {
     if (!this.initialized) {
@@ -105,11 +108,18 @@ export class AuthenticationService {
       .toPromise()
       .then(
         (response: LoginResponse) => {
+
           if (response?.email === null || response?.email === undefined) {
             this.isLocal = false;
           } else {
             this.isLocal = true;
             this.storeUserData(response);
+          }
+
+          // if there's a language for the user, set it
+          if (!!response?.lang) {
+            this.tSvc.setActiveLang(response.lang);
+            this.tSvc.load(response.lang);
           }
 
           localStorage.setItem('cset.isLocal', this.isLocal + '');
@@ -164,23 +174,23 @@ export class AuthenticationService {
     let scope: string;
 
     switch (this.configSvc.installationMode || '') {
-    case 'ACET':
-      scope = 'ACET';
-      break;
-    case 'TSA':
-      scope = 'TSA';
-      break;
-    case 'RRA':
-      scope = 'RRA';
-      break;
-    case 'CF':
-      scope = 'CF';
-      break;
-    case 'IOD':
-      scope = 'IOD';
-      break;
-    default:
-      scope = environment.appCode;
+      case 'ACET':
+        scope = 'ACET';
+        break;
+      case 'TSA':
+        scope = 'TSA';
+        break;
+      case 'RRA':
+        scope = 'RRA';
+        break;
+      case 'CF':
+        scope = 'CF';
+        break;
+      case 'IOD':
+        scope = 'IOD';
+        break;
+      default:
+        scope = environment.appCode;
     }
 
     return this.http
@@ -198,6 +208,8 @@ export class AuthenticationService {
         map((user: LoginResponse) => {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
           this.storeUserData(user);
+
+          this.tSvc.setActiveLang(user.lang);
 
           this.isAuthenticated = true;
 
@@ -239,7 +251,7 @@ export class AuthenticationService {
             this.scheduleTokenRefresh(this.http, resp.token);
           },
           (error) => {
-            console.log(<Error>error.message);
+            console.warn(<Error>error.message);
           }
         );
       }
@@ -293,6 +305,14 @@ export class AuthenticationService {
       params: headers.params,
       responseType: 'text'
     });
+  }
+
+  getUserLang() {
+    return this.http.get(this.configSvc.apiUrl + 'contacts/userlang');
+  }
+
+  setUserLang(data: string) {
+    return this.http.post(this.configSvc.apiUrl + 'contacts/userlang', JSON.stringify({ lang: data }), headers);
   }
 
   updateUser(data: CreateUser): Observable<CreateUser> {

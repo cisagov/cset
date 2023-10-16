@@ -6,29 +6,36 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of MATURITY_SOURCE_FILES records
-    /// </summary>
-    public partial class MATURITY_SOURCE_FILES
-    {
-        [Key]
-        public int Mat_Question_Id { get; set; }
-        [Key]
-        public int Gen_File_Id { get; set; }
-        [Key]
-        [StringLength(400)]
-        public string Section_Ref { get; set; }
-        public int? Page_Number { get; set; }
-        [StringLength(2000)]
-        public string Destination_String { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Gen_File_Id")]
-        [InverseProperty("MATURITY_SOURCE_FILES")]
-        public virtual GEN_FILE Gen_File { get; set; }
-        [ForeignKey("Mat_Question_Id")]
-        [InverseProperty("MATURITY_SOURCE_FILES")]
-        public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
-    }
+/// <summary>
+/// A collection of MATURITY_SOURCE_FILES records
+/// </summary>
+[PrimaryKey("Mat_Question_Id", "Gen_File_Id", "Section_Ref")]
+public partial class MATURITY_SOURCE_FILES
+{
+    [Key]
+    public int Mat_Question_Id { get; set; }
+
+    [Key]
+    public int Gen_File_Id { get; set; }
+
+    [Key]
+    [StringLength(400)]
+    public string Section_Ref { get; set; }
+
+    public int? Page_Number { get; set; }
+
+    [StringLength(2000)]
+    public string Destination_String { get; set; }
+
+    public int? Sequence { get; set; }
+
+    [ForeignKey("Gen_File_Id")]
+    [InverseProperty("MATURITY_SOURCE_FILES")]
+    public virtual GEN_FILE Gen_File { get; set; }
+
+    [ForeignKey("Mat_Question_Id")]
+    [InverseProperty("MATURITY_SOURCE_FILES")]
+    public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
 }

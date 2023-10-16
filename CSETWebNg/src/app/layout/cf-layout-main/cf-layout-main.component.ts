@@ -24,7 +24,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -32,6 +31,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
+import { FooterService } from '../../services/footer.service';
 
 @Component({
   selector: 'cf-layout-main',
@@ -46,8 +46,7 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = true;
-
-  @ViewChild('acc') accordion: NgbAccordion;
+  footerClosed:boolean = true;
 
   constructor(
     public auth: AuthenticationService,
@@ -58,7 +57,8 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router, 
+    private footerSvc: FooterService
   ) { }
 
   ngOnInit() {
@@ -91,10 +91,10 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
   }
 
   isFooterOpen() {
-    if (!!this.accordion) {
-      return this.accordion.isExpanded('footerPanel');
+    if (!this.footerClosed) {
+      return this.footerClosed = true;
     }
-    return false;
+    return this.footerClosed = false;
   }
 
 }

@@ -1,0 +1,8 @@
+<ng-container *ngIf="isCfEntry">
+    <div *transloco="let t" style="border: 2px solid #333; border-radius: .3rem; padding: 1rem">
+        <div class="mb-3">
+            {{t('cyberFlorida.convert message')}}
+        </div>
+        <button class="btn btn-primary" (click)="convert()">{{t('buttons.convert')}}</button>
+    </div>
+</ng-container>

@@ -20,22 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 --------------------------> 
-<div class="d-flex flex-column justify-content-center flex-11a">
+<div *transloco="let t; read: 'filterMenu'" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-filter" aria-label="Filter"></span>
-    <span>{{question}} Filters</span>
+    <span class="mr-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
+    <span>{{ t(question + ' filters') }}</span>
   </div>
 
   <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <div class="question-filters pr-3 form-check">
       <div>
-        <input placeholder="Search" class="form-control" [value]="filterSvc.filterSearchString" (keyup)="updateFilterString($event)" />
+        <input placeholder="{{ t('search') }}" class="form-control" [value]="filterSvc.filterSearchString" (keyup)="updateFilterString($event)" />
       </div>
       <hr class="mt-3 mb-1" />
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('ALL')" id="cbSelectAll" name="cbSelectAll" (click)="updateFilters($event, 'ALL')">
         <label class="checkbox-custom-label d-block m-0" for="cbSelectAll">
-          Select/Deselect All
+          {{ t('select deselect all') }}
         </label>
       </div>
       <hr class="m-1" />
@@ -43,7 +43,7 @@
         <div>
           <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)" [id]="getId(option)" (click)="updateFilters($event, option.value)">
           <label [for]="getId(option)" class="checkbox-custom-label d-block">
-            Show {{questions}} answered <em><strong>{{option.text}}</strong></em>
+            {{ t('show ' + questions + ' answered') }} <em><strong>{{option.text}}</strong></em>
           </label>
         </div>
       </div>
@@ -56,13 +56,13 @@
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU" (click)="updateFilters($event, 'U')">
         <label for="cbShowU" class="checkbox-custom-label d-block">
-          Show unanswered {{questions}}
+          {{ t('show unanswered ' + questions) }}
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments" name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments" class="checkbox-custom-label d-block">
-          Show {{questions}} with {{comments}}
+          {{ t('show '+ questions + ' with ' + comments) }}
         </label>
       </div>
       <div *ngIf="!isInstallation('ACET')" >
@@ -74,13 +74,13 @@
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked" name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked" class="checkbox-custom-label d-block">
-          Show {{questions}} marked for review
+          {{ t('show ' + questions + ' marked for review') }}
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('D')" id="cbShowDisc" name="cbShowDisc" (click)="updateFilters($event, 'D')">
         <label for="cbShowDisc" class="checkbox-custom-label d-block">
-          Show {{questions}} with {{observations}}
+          {{ t('show ' + questions + ' with ' + observations) }}
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">

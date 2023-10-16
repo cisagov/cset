@@ -38,70 +38,86 @@ namespace CSETWebCore.Helpers
         /// Populates sourceDocList and additionalDocList with any connections from 
         /// REQUIREMENT_SOURCE_FILES and REQUIREMENT_REFERENCES, respectively.
         /// </summary>
-        /// <param name="requirement_ID"></param>
+        /// <param name="requirementId"></param>
         /// <param name="controlContext"></param>
-        public void BuildReferenceDocuments(int requirement_ID,
+        public void BuildReferenceDocuments(int requirementId,
             out List<CustomDocument> sourceDocList,
             out List<CustomDocument> additionalDocList)
         {
-            // Build a list of available documents
+            // Create a list of documents we actual have on board, so that we don't build any dead links
+            List<string> onboardRefDocs = GetBuildDocuments();
 
-            List<string> availableRefDocs = GetBuildDocuments();
 
-            var documents = _context.REQUIREMENT_SOURCE_FILES.Where(s => s.Requirement_Id == requirement_ID)
-                .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = true, s.Gen_File.Is_Uploaded })
-                .Concat(
-                    _context.REQUIREMENT_REFERENCES.Where(s => s.Requirement_Id == requirement_ID).Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, IsSource = false, s.Gen_File.Is_Uploaded })
-                ).ToList();
+            // Source Documents  
+            var q1 = _context.REQUIREMENT_SOURCE_FILES
+                .Include(x => x.Gen_File)
+                .Where(s => s.Requirement_Id == requirementId)
+                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded ?? false, Sequence = s.Sequence });
 
-            // Source Documents        
-            var sourceDocuments = documents.Where(t => t.IsSource)
-                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            sourceDocList = SortList(q1, onboardRefDocs);
 
 
             // Additional Resource Documents
-            var additionalDocuments = documents.Where(t => !t.IsSource)
-                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded).ToList();
+            var q2 = _context.REQUIREMENT_REFERENCES
+                .Include(x => x.Gen_File)
+                .Where(s => s.Requirement_Id == requirementId)
+                .OrderBy(s => s.Sequence)
+                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded ?? false, Sequence = s.Sequence });
+
+            additionalDocList = SortList(q2, onboardRefDocs);
         }
 
 
         /// <summary>
         /// Builds lists of Source Documents and Additional Resource) Document references for the question.
-        /// 
-        /// Documents without a filename are allowed because they will be displayed as flat tet but with
-        /// no links rendered.  This will allow references to documents that are not onboard in CSET
-        /// but the user could look up on their own.
         /// </summary>
         /// <param name="maturityQuestion_ID"></param>
         /// <param name="controlContext"></param>
-        public void BuildDocumentsForMaturityQuestion(int maturityQuestion_ID,
+        public void BuildRefDocumentsForMaturityQuestion(int maturityQuestion_ID,
              out List<CustomDocument> sourceDocList,
             out List<CustomDocument> additionalDocList)
         {
             // Create a list of documents we actual have on board, so that we don't build any dead links
-            List<string> availableRefDocs = GetBuildDocuments();
+            List<string> onboardRefDocs = GetBuildDocuments();
 
 
             // Source Documents  
-            var doc1 = _context.MATURITY_SOURCE_FILES
+            var q1 = _context.MATURITY_SOURCE_FILES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
-                .Select(s => new { s.Gen_File.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
-            var sourceDocuments = doc1
-                .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            sourceDocList = sourceDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
+                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded ?? false, Sequence = s.Sequence });
+
+            sourceDocList = SortList(q1, onboardRefDocs);
 
 
             // Additional Resource Documents
-            var doc2 = _context.MATURITY_REFERENCES
+            var q2 = _context.MATURITY_REFERENCES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
-                .Select(s => new { s.Gen_File_Id, s.Gen_File.Title, s.Gen_File.File_Name, s.Section_Ref, s.Gen_File.Is_Uploaded });
-            var additionalDocuments = doc2
-               .Select(s => new CustomDocument() { File_Id = s.Gen_File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded ?? false });
-            additionalDocList = additionalDocuments.Where(d => availableRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
+                .OrderBy(s => s.Sequence)
+                .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded ?? false, Sequence = s.Sequence });
+            
+            additionalDocList = SortList(q2, onboardRefDocs);
+        }
+
+
+        /// <summary>
+        /// Arranges the list with sequenced entries up front (orderd by sequence)
+        /// and any non-sequenced entries after that.
+        /// 
+        /// Documents without a filename are allowed because they will be displayed as plain text but with
+        /// no links rendered.  This will allow us to list references to documents that are not onboard in CSET
+        /// but the user could look up on their own. 
+        /// </summary>
+        private List<CustomDocument> SortList(IQueryable<CustomDocument> q, List<string> onboardRefDocs)
+        {
+            var list = q
+               .Select(s => new CustomDocument() { File_Id = s.File_Id, Title = s.Title, File_Name = s.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Is_Uploaded, Sequence = s.Sequence });
+
+            var sorted = list.Where(x => x.Sequence != null).OrderBy(x => x.Sequence).ToList();
+            sorted.AddRange(list.Where(x => x.Sequence == null));
+
+            return sorted.Where(d => onboardRefDocs.Contains(d.File_Name) || d.Is_Uploaded || string.IsNullOrEmpty(d.File_Name)).ToList();
         }
 
 
@@ -170,42 +186,6 @@ namespace CSETWebCore.Helpers
 
                 return new List<string>();
             }
-        }
-
-
-        /// <summary>
-        /// Returns an object containing source documents, additional documents 
-        /// for the questions in a maturity model.
-        /// </summary>
-        /// <param name="modelId"></param>
-        /// <returns></returns>
-        public static QuestionReferences GetReferencesForModel(CsetwebContext context, int modelId)
-        {
-            var qr = new QuestionReferences();
-
-            var _questionIds = context.MATURITY_QUESTIONS.Where(q => q.Maturity_Model_Id == modelId).Select(x => x.Mat_Question_Id).ToList();
-            var msf = context.MATURITY_SOURCE_FILES.Where(x => _questionIds.Contains(x.Mat_Question_Id)).Include(x => x.Gen_File).ToList();
-            msf.ForEach(x => {
-                qr.SourceDocuments.Add(new RefDocument()
-                {
-                    Title = x.Gen_File.Title,
-                    FileName = x.Gen_File.File_Name,
-                    SectionRef = x.Section_Ref,
-                    QuestionId = x.Mat_Question_Id
-                });
-            });
-            var mr = context.MATURITY_REFERENCES.Where(x => _questionIds.Contains(x.Mat_Question_Id)).Include(x => x.Gen_File).ToList();
-            mr.ForEach(x => {
-                qr.AddtionalDocuments.Add(new RefDocument()
-                {
-                    Title = x.Gen_File.Title,
-                    FileName = x.Gen_File.File_Name,
-                    SectionRef = x.Section_Ref,
-                    QuestionId = x.Mat_Question_Id
-                });
-            });
-
-            return qr;
         }
     }
 }

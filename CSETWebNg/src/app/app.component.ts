@@ -44,6 +44,7 @@ import { ExcelExportComponent } from './dialogs/excel-export/excel-export.compon
 import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
 import { NavigationService } from './services/navigation/navigation.service';
+import { FooterService } from './services/footer.service';
 
 
 declare var $: any;
@@ -71,6 +72,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService,
+    private footerSvc:FooterService,
     storageManager: LocalStoreManager
   ) {
     storageManager.initialiseStorageSyncListener();
@@ -300,7 +302,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           //this.assessSvc.newAssessment();
-          this.navSvc.beginNewAssessment();
+          //this.navSvc.beginNewAssessment();
+          this.router.navigate(['/landing-page-tabs'], {
+            queryParams: {
+              'tab': 'newAssessment'
+            },
+            queryParamsHandling: 'merge',
+          });
         }
       });
       return false; // Prevent bubbling
@@ -347,9 +355,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   isFooterOpen() {
-    if (!!this.accordion) {
-      return this.accordion.isExpanded('footerPanel');
-    }
-    return false;
+    this.footerSvc.isFooterOpen(this.accordion);
   }
 }

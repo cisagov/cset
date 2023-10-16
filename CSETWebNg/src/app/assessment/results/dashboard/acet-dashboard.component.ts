@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ACETService } from '../../../services/acet.service';
 import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-acet-dashboard',
@@ -38,27 +39,36 @@ export class AcetDashboardComponent implements OnInit {
 
     overrideLabel: string;
     overriddenLabel: string;
-    sortDomainListKey: string[] = ["Cyber Risk Management & Oversight",
-        "Threat Intelligence & Collaboration",
-        "Cybersecurity Controls",
-        "External Dependency Management",
-        "Cyber Incident Management and Resilience"];
+    sortDomainListKey: string[] = [];
 
     sortedDomainList: any = [];
 
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
-        public acetSvc: ACETService
+        public acetSvc: ACETService,
+        private tSvc: TranslocoService
     ) { }
 
     ngOnInit() {
-        this.loadDashboard();
+        // this.loadDashboard();
+        this.tSvc.langChanges$.subscribe((event) => {
+            this.loadDashboard();
+            if (this.tSvc.getActiveLang() == "es") {
+                this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
+            }
+            else {
+                this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
+            }
+            this.navSvc.buildTree();
+
+        });
     }
 
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
             (data: AcetDashboard) => {
+                console.log(data)
                 this.acetDashboard = data;
 
                 // Checks to remove any ISE irp data from the ACET results

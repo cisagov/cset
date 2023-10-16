@@ -47,6 +47,7 @@ import { FileUploadClientService } from '../../services/file-client.service';
 import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
+import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
 
 @Component({
   selector: 'app-top-menus',
@@ -135,7 +136,13 @@ export class TopMenusComponent implements OnInit {
         dialogRef.componentInstance.confirmMessage = 'Are you sure you want to create a new assessment? ';
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.assessSvc.newAssessment();
+            //this.assessSvc.newAssessment();
+            this.router.navigate(['/landing-page-tabs'], {
+              queryParams: {
+                'tab': 'newAssessment'
+              },
+              queryParamsHandling: 'merge',
+            });
           }
         });
         return false; // Prevent bubbling
@@ -438,6 +445,9 @@ export class TopMenusComponent implements OnInit {
     this.dialogRef.afterClosed().subscribe();
   }
 
+  /**
+   * 
+   */
   editUser() {
     if (this.dialog.openDialogs[0]) {
       return;
@@ -452,6 +462,28 @@ export class TopMenusComponent implements OnInit {
     );
   }
 
+  /**
+   * Display a dialog to let the user change the display language.
+   */
+  editLanguage() {
+    if (this.dialog.openDialogs[0]) {
+      return;
+    }
+    this.dialogRef = this.dialog.open(UserLanguageComponent);
+    this.dialogRef.afterClosed().subscribe(
+      (data: any) => {
+        // the update user request happened when the dialog's form was saved
+        this.dialogRef = undefined;
+        //this.goHome();
+        //window.location.reload();
+      },
+      (error) => console.log(error.message)
+    );
+  }
+
+  /**
+   * 
+   */
   checkPasswordReset() {
     this.auth.passwordStatus().subscribe((passwordResetRequired: boolean) => {
       if (passwordResetRequired) {

@@ -30,6 +30,7 @@ import { ACETService } from '../../../services/acet.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class IrpSummaryComponent implements OnInit {
         public acetSvc: ACETService,
         public acetFilteringSvc: AcetFilteringService,
         public ncuaSvc: NCUAService,
-        public layoutSvc: LayoutService
+        public layoutSvc: LayoutService,
+        public tSvc: TranslocoService
     ) { }
 
     /**
@@ -129,4 +131,5 @@ export class IrpSummaryComponent implements OnInit {
                 console.log('Error getting all documents: ' + (<Error>error).stack);
             });
     }
+
 }

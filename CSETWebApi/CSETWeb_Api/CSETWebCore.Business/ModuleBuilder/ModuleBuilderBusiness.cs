@@ -627,8 +627,6 @@ namespace CSETWebCore.Business.ModuleBuilder
             NEW_QUESTION q = new NEW_QUESTION
             {
                 Simple_Question = request.CustomQuestionText,
-
-                // TODO:  std_ref + std_ref_number must be unique
                 Std_Ref = request.SetName,
                 Std_Ref_Number = newStdRefNum,
 
@@ -1562,8 +1560,6 @@ namespace CSETWebCore.Business.ModuleBuilder
 
         /// <summary>
         /// Removes the NEW_REQUIREMENT record from the set.
-        /// 
-        /// TODO:  Actually delete the NEW_REQUIREMENT record?
         /// </summary>
         /// <param name="parms"></param>
         public void RemoveRequirement(Requirement parms)

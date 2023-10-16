@@ -4,6 +4,7 @@
         "CSET"
     ],
     "appCode": "CSET",
+    "defaultLang": "en",
     "isRunningAnonymous": false,
     "app": {
         "protocol": "http",
@@ -71,43 +72,37 @@
     "answerOptionsDefault": [
         {
             "code": "U",
-            "answerLabel": "Unanswered"
+            "buttonLabelKey": "U"
         },
         {
             "code": "Y",
-            "buttonLabel": "Yes",
-            "buttonCss": "btn-yes",
-            "answerLabel": "Yes"
+            "buttonLabelKey": "Yes",
+            "buttonCss": "btn-yes"
         },
         {
             "code": "N",
-            "buttonLabel": "No",
-            "buttonCss": "btn-no",
-            "answerLabel": "No"
+            "buttonLabelKey": "No",
+            "buttonCss": "btn-no"
         },
         {
             "code": "NA",
-            "buttonLabel": "N/A",
-            "buttonCss": "btn-na",
-            "answerLabel": "N/A"
+            "buttonLabelKey": "N/A",
+            "buttonCss": "btn-na"
         },
         {
             "code": "A",
-            "buttonLabel": "Alt",
-            "buttonCss": "btn-alt",
-            "answerLabel": "Alternate"
+            "buttonLabelKey": "Alt",
+            "buttonCss": "btn-alt"
         },
         {
             "code": "I",
-            "buttonLabel": "Inc",
-            "buttonCss": "btn-inc",
-            "answerLabel": "Incomplete"
+            "buttonLabelKey": "Inc",
+            "buttonCss": "btn-inc"
         },
         {
             "code": "Iss",
-            "buttonLabel": "Issue(N)",
-            "buttonCss": "btn-iss",
-            "answerLabel": "No with Issue(s)"
+            "buttonLabelKey": "Issue(N)",
+            "buttonCss": "btn-iss"
         }
     ],
     "moduleBehaviors": [
@@ -155,7 +150,7 @@
             }
         },
         {
-            "moduleName": "SD02-Series",
+            "moduleName": "SD02 Series",
             "questionIcons": {
                 "showDetails": false
             }
@@ -170,31 +165,23 @@
             "answerOptions": [
                 {
                     "code": "Y",
-                    "buttonLabel": "Imp",
-                    "buttonCss": "btn-yes",
-                    "answerLabel": "Implemented",
-                    "buttonTooltip": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome."
-                },
+                    "buttonLabelKey": "Imp-CPG",
+                    "buttonCss": "btn-yes"
+                 },
                 {
                     "code": "I",
-                    "buttonLabel": "Prog",
-                    "buttonCss": "btn-na",
-                    "answerLabel": "In Progress",
-                    "buttonTooltip": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome."
+                    "buttonLabelKey": "Prog-CPG",
+                    "buttonCss": "btn-na"
                 },
                 {
                     "code": "S",
-                    "buttonLabel": "Scoped",
-                    "buttonCss": "btn-alt",
-                    "answerLabel": "Scoped",
-                    "buttonTooltip": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal."
+                    "buttonLabelKey": "Scoped-CPG",
+                    "buttonCss": "btn-alt"
                 },
                 {
                     "code": "N",
-                    "buttonLabel": "Not",
-                    "buttonCss": "btn-no",
-                    "answerLabel": "Not Implemented",
-                    "buttonTooltip": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal."
+                    "buttonLabelKey": "Not-CPG",
+                    "buttonCss": "btn-no"
                 }
             ]
         },
@@ -206,31 +193,23 @@
             "answerOptions": [
                 {
                     "code": "FI",
-                    "buttonLabel": "FI",
-                    "buttonCss": "btn-c2m2-fi",
-                    "answerLabel": "Fully Implemented (FI)",
-                    "buttonTooltip": "Fully Implemented - Complete"
+                    "buttonLabelKey": "FI-C2M2",
+                    "buttonCss": "btn-c2m2-fi"
                 },
                 {
                     "code": "LI",
-                    "buttonLabel": "LI",
-                    "buttonCss": "btn-c2m2-li",
-                    "answerLabel": "Largely Implemented (LI)",
-                    "buttonTooltip": "Largely Implemented - Complete, but with a recognized opportunity for improvement"
+                    "buttonLabelKey": "LI-C2M2",
+                    "buttonCss": "btn-c2m2-li"
                 },
                 {
                     "code": "PI",
-                    "buttonLabel": "PI",
-                    "buttonCss": "btn-c2m2-pi",
-                    "answerLabel": "Partially Implemented (PI)",
-                    "buttonTooltip": "Partially Implemented - Incomplete; there are multiple opportunities for improvement"
+                    "buttonLabelKey": "PI-C2M2",
+                    "buttonCss": "btn-c2m2-pi"
                 },
                 {
                     "code": "NI",
-                    "buttonLabel": "NI",
-                    "buttonCss": "btn-c2m2-ni",
-                    "answerLabel": "Not Implemented (NI)",
-                    "buttonTooltip": "Not Implemented - Absent; the practice is not performed by the organization"
+                    "buttonLabelKey": "NI-C2M2",
+                    "buttonCss": "btn-c2m2-ni"
                 }
             ]
         },
@@ -240,9 +219,8 @@
                 {
                     "skin": "ACET",
                     "code": "A",
-                    "buttonLabel": "Yes(C)",
+                    "buttonLabelKey": "Yes(C)",
                     "buttonCss": "btn-alt",
-                    "answerLabel": "Yes Compensating Control",
                     "note": "This will only apply in the ACET skin.  See QuestionsService"
                 }
             ]
@@ -255,19 +233,17 @@
             "answerOptions": [
                 {
                     "code": "Y",
-                    "buttonLabel": "Yes",
-                    "buttonCss": "btn-yes",
-                    "answerLabel": ""
+                    "buttonLabelKey": "Yes",
+                    "buttonCss": "btn-yes"
                 },
                 {
                     "code": "N",
-                    "buttonLabel": "No",
-                    "buttonCss": "btn-no",
-                    "answerLabel": ""
+                    "buttonLabelKey": "No",
+                    "buttonCss": "btn-no"
                 },
                 {
                     "code": "U",
-                    "buttonLabel": "Unanswered"
+                    "buttonLabelKey": "Unanswered"
                 }
             ]
         },
@@ -285,21 +261,18 @@
             "answerOptions": [
                 {
                     "code": "Y",
-                    "buttonLabel": "Fully",
-                    "buttonCss": "btn-yes",
-                    "answerLabel": "Fully Implemented"
+                    "buttonLabelKey": "Fully-MVRA",
+                    "buttonCss": "btn-yes"
                 },
                 {
                     "code": "N",
-                    "buttonLabel": "Not",
-                    "buttonCss": "btn-no",
-                    "answerLabel": "Not Implemented"
+                    "buttonLabelKey": "Not-MVRA",
+                    "buttonCss": "btn-no"
                 },
                 {
                     "code": "A",
-                    "buttonLabel": "Partial",
-                    "buttonCss": "btn-alt",
-                    "answerLabel": "Partially Implemented"
+                    "buttonLabelKey": "Partial-MVRA",
+                    "buttonCss": "btn-alt"
                 }
             ]
         }

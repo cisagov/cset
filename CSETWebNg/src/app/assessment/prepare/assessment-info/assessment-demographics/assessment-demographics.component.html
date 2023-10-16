@@ -20,6 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<ng-container *transloco="let t">
 <h4>Demographics</h4>
 <form>
     <div class="form-row">
@@ -106,10 +107,10 @@
     </div>
     <div class="form-row" *ngIf="showCriticalService()">
         <div class="form-group col-md-6">
-            <label class="mb-1" for="criticalService">Critical Service</label>
+            <label class="mb-1" for="criticalService">{{t('critical service name')}}</label>
             <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100"
                 name="criticalService" id="criticalService" [(ngModel)]="demographicData.criticalService"
-                placeholder="Critical Service" (blur)="changeCriticalService($event)"></textarea>
+                placeholder="{{t('critical service name')}}" (blur)="changeCriticalService($event)"></textarea>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="critSvcPointOfContact">Critical Service Point of Contact</label>
@@ -134,3 +135,4 @@
         </div>
     </div>
 </form>
+</ng-container>

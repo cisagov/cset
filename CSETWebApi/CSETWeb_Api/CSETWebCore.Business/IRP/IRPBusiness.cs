@@ -4,11 +4,19 @@
 // 
 // 
 //////////////////////////////// 
+using System.IO;
+using System;
 using System.Linq;
+using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.IRP;
 using CSETWebCore.Model.Acet;
+using CSETWebCore.Business.Acet;
+using Npoi.Mapper;
+using NPOI.SS.UserModel;
+using System.Collections.Generic;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.IRP
 {
@@ -22,9 +30,16 @@ namespace CSETWebCore.Business.IRP
             _context = context;
             _assessmentUtil = assessmentUtil;
         }
-        public IRPResponse GetIRPList(int assessmentId)
+        public IRPResponse GetIRPList(int assessmentId, bool spanishFlag = false)
         {
             IRPResponse response = new IRPResponse();
+            Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
+            Dictionary<int, IRPSpanishRow> dictionaryHeaders = new Dictionary<int, IRPSpanishRow>();
+            if (spanishFlag) 
+            {
+                dictionary = AcetBusiness.buildIRPDictionary();
+                dictionaryHeaders = AcetBusiness.buildIRPHeaderDictionary();
+            }
 
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
@@ -32,6 +47,13 @@ namespace CSETWebCore.Business.IRP
                 {
                     header = header.Header
                 };
+
+                if (spanishFlag)
+                {
+                    var output = new IRPSpanishRow();
+                    if (dictionaryHeaders.TryGetValue(header.IRP_Header_Id, out output))
+                        tempHeader.header = dictionaryHeaders[header.IRP_Header_Id].SpanishHeader;
+                }
 
                 foreach (DataLayer.Model.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
                 {
@@ -49,6 +71,23 @@ namespace CSETWebCore.Business.IRP
                         Validation_Approach = irp.Validation_Approach,
                         Risk_Type = irp.Risk_Type
                     };
+
+                    if (spanishFlag)
+                    {
+                        var output = new IRPModel();
+                        var temp = new IRPModel();
+                        if (dictionary.TryGetValue(tempIRP.IRP_Id, out output))
+                        {
+                            tempIRP.Description = dictionary[tempIRP.IRP_Id].Description;
+                            tempIRP.Risk_1_Description = dictionary[tempIRP.IRP_Id].Risk_1_Description;
+                            tempIRP.Risk_2_Description = dictionary[tempIRP.IRP_Id].Risk_2_Description;
+                            tempIRP.Risk_3_Description = dictionary[tempIRP.IRP_Id].Risk_3_Description;
+                            tempIRP.Risk_4_Description = dictionary[tempIRP.IRP_Id].Risk_4_Description;
+                            tempIRP.Risk_5_Description = dictionary[tempIRP.IRP_Id].Risk_5_Description;
+                            tempIRP.DescriptionComment = dictionary[tempIRP.IRP_Id].DescriptionComment;
+                            tempIRP.Validation_Approach = dictionary[tempIRP.IRP_Id].Validation_Approach;
+                        }
+                    }
 
                     // Get the existing answer or create a blank 
                     ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(ans =>
@@ -78,7 +117,7 @@ namespace CSETWebCore.Business.IRP
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
 
-
+            
             return response;
         }
 

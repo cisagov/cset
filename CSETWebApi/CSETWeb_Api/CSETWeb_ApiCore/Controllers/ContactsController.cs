@@ -520,6 +520,54 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Returns the language for the current user
+        /// </summary>
+        [HttpGet]
+        [Route("api/contacts/userlang")]
+        public IActionResult GetUserLanguage()
+        {
+            var currentUserId = _token.GetUserId();
+
+            var user = _context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault();
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"No user found for ID {currentUserId}");
+            }
+
+            if (user.Lang == null)
+            {
+                user.Lang = "en";
+                _context.SaveChanges();
+            }
+
+            var userLang = new { lang = user.Lang };
+            return Ok(userLang);
+        }
+
+
+        /// <summary>
+        /// Sets the current user's preferred language
+        /// </summary>
+        /// <param name="lang"></param>
+        [HttpPost]
+        [Route("api/contacts/userlang")]
+        public IActionResult SaveUserLanguage([FromBody] UserLanguage lang)
+        {
+            // update the USER
+            var currentUserId = _token.GetUserId();
+            var user = _context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault();
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"No user found for ID {currentUserId}");
+            }
+            user.Lang = lang.Lang;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+        /// <summary>
         /// Checks to see if the user can remove themself from an Assessment.  If they are
         /// the only ADMIN and there are any USERs on the Assessment, then 
         /// it is not allowed.

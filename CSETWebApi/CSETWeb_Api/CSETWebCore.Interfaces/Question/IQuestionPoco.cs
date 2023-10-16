@@ -58,17 +58,11 @@ namespace CSETWebCore.Interfaces.Question
         int NercRankNumber { get; set; }
         //NERC_RISK_RANKING NERC_Rank { get; }
 
-        //TODO: Need to come back to this
-        //NetworkComponent NetworkComponent { get; set; }
         NEW_REQUIREMENT NEW_REQUIREMENT { get; }
         //ObservableCollection<ParameterContainer> Parameters { get; set; }
 
-        //TODO: Need to come back to this
-        //ProfileCategory ProfileCategory { get; }
         string ProfileComments { get; }
 
-        //TODO: need to come back to this 
-        //ProfileQuestion ProfileQuestionData { get; set; }
         string ProfileReferences { get; }
         NEW_QUESTION Question { get; }
         AnswerEnum QuestionAnswer { get; set; }

@@ -175,6 +175,7 @@ import { SafePipe } from './helpers/safe.pipe';
 import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
+import { CompletionCountPipe } from './helpers/completion-count.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
@@ -196,7 +197,7 @@ import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
 import { SalService } from './services/sal.service';
 import { StandardService } from './services/standard.service';
-import { CodeEditorModule } from '@goecmarc/code-editor';
+import { CodeEditorModule } from '@ngstack/code-editor';
 import { SetListComponent } from './builder/custom-set-list/custom-set-list.component';
 import { SetBuilderService } from './services/set-builder.service';
 import { CustomSetComponent } from './builder/set-detail/set-detail.component';
@@ -605,6 +606,10 @@ import { OtherRemarksComponent } from './assessment/questions/other-remarks/othe
 import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-other-remarks.component';
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
+import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { FooterService } from './services/footer.service';
+import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
+
 
 
 @NgModule({
@@ -760,6 +765,7 @@ import { TranslocoService } from '@ngneat/transloco';
         MeritCheckComponent,
         SafePipe,
         LinebreakPipe,
+        CompletionCountPipe,
         LinebreakPlaintextPipe,
         NullishCoalescePipe,
         StatusCreateComponent,
@@ -1166,6 +1172,8 @@ import { TranslocoService } from '@ngneat/transloco';
         CmuAppendixCoverComponent,
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
+        UserLanguageComponent,
+        AssessmentConvertCfComponent,
     ],
     providers: [
         TranslocoService,
@@ -1173,22 +1181,19 @@ import { TranslocoService } from '@ngneat/transloco';
         AuthenticationService,
         {
             provide: APP_INITIALIZER,
-            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService) => {
+            useFactory: (configSvc: ConfigService, authSvc: AuthenticationService, tSvc: TranslocoService) => {
                 return () => {
                     return configSvc.loadConfig().then(() => {
-                        return authSvc.checkLocal();
+                        // Load and set the language based on config
+                        return tSvc.load(configSvc.config.defaultLang).toPromise().then(() => {
+                            tSvc.setActiveLang(configSvc.config.defaultLang);
+                            return authSvc.checkLocal();
+                        });
                     });
                 };
             },
-            deps: [ConfigService, AuthenticationService],
+            deps: [ConfigService, AuthenticationService, TranslocoService],
             multi: true
-        },
-        {
-            // This is not working correctly; the service still doesn't get loaded before app startup
-            provide: APP_INITIALIZER,
-            multi: true,
-            useFactory: preloadLanguage,
-            deps: [TranslocoService]
         },
         {
             provide: HTTP_INTERCEPTORS,
@@ -1234,20 +1239,10 @@ import { TranslocoService } from '@ngneat/transloco';
         CmuService,
         Utilities,
         NCUAService,
-        GalleryService
+        GalleryService, 
+        FooterService
     ],
     bootstrap: [AppComponent]
 })
 
 export class AppModule { }
-
-export function preloadLanguage(transloco: TranslocoService) {
-    return function () {
-        return () => {
-            console.log('preloadUser');
-            let lang = 'EN';
-            transloco.setActiveLang(lang);
-            return transloco.load(lang).toPromise();
-        }
-    };
-}

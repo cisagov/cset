@@ -13,6 +13,10 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
+using CSETWebCore.Business.Acet;
+using CSETWebCore.Model.Maturity;
+using NLog;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -78,16 +82,45 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/ACETDomains")]
         public IActionResult GetAcetDomains()
         {
-            List<ACETDomain> domains = new List<ACETDomain>();
-            foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
+            var userId = _tokenManager.GetCurrentUserId();
+            var userLang = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault()?.Lang ?? "en";
+
+            try
             {
-                domains.Add(new ACETDomain()
+                List<ACETDomain> domains = new List<ACETDomain>();
+                foreach (var domain in _context.FINANCIAL_DOMAINS.ToList())
                 {
-                    DomainName = domain.Domain,
-                    DomainId = domain.DomainId
-                });
+                    domains.Add(new ACETDomain()
+                    {
+                        DomainName = domain.Domain,
+                        DomainId = domain.DomainId
+                    });
+                }
+
+
+                if (userLang == "es")
+                {
+                    Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+
+                    var outputGrouping = new GroupingSpanishRow();
+
+                    foreach (var domain in domains)
+                    {
+                        if (dictionaryDomain.TryGetValue(domain.DomainName, out outputGrouping))
+                        {
+                            domain.DomainName = dictionaryDomain[domain.DomainName].Spanish_Title;
+                        }
+                    }
+                }
+
+                return Ok(domains);
             }
-            return Ok(domains);
+            catch (Exception ex1)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error(ex1);
+            }
+
+            return Ok();
         }
 
 
@@ -105,12 +138,13 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var userId = _tokenManager.GetUserId();
             List<ACETFilter> filters = new List<ACETFilter>();
 
             //full cross join
             //select DomainId, financial_level_id from FINANCIAL_DOMAINS, FINANCIAL_MATURITY
             var crossJoin = from b in _context.FINANCIAL_DOMAINS
-                            from c in _context.FINANCIAL_MATURITY                            
+                            from c in _context.FINANCIAL_MATURITY
                             select new { b.DomainId, c.Financial_Level_Id, b.Domain };
 
             var tmpFilters = (from c in crossJoin
@@ -125,6 +159,27 @@ namespace CSETWebCore.Api.Controllers
                                   Financial_Level_Id = c.Financial_Level_Id,
                                   IsOn = subfilter.IsOn
                               }).ToList();
+
+            if (_context.USERS.Where(x => x.UserId == userId).FirstOrDefault().Lang == "es")
+            {
+                Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
+                var output = new GroupingSpanishRow();
+                if (dictionaryDomain.Count > 0)
+                {
+                    tmpFilters = (from c in crossJoin
+                                  join a in _context.FINANCIAL_DOMAIN_FILTERS_V2 on new { c.Financial_Level_Id, c.DomainId } equals new { a.Financial_Level_Id, a.DomainId }
+                                  into myFilters
+                                  from subfilter in myFilters.DefaultIfEmpty()
+                                  where subfilter.Assessment_Id == assessmentId
+                                  select new
+                                  {
+                                      DomainId = c.DomainId,
+                                      DomainName = (dictionaryDomain.TryGetValue(c.Domain, out output) ? dictionaryDomain[c.Domain].Spanish_Title : c.Domain),
+                                      Financial_Level_Id = c.Financial_Level_Id,
+                                      IsOn = subfilter.IsOn
+                                  }).ToList();
+                }
+            }
 
             var groups = tmpFilters.GroupBy(d => d.DomainId, d => d, (key, g) => new { DomainId = key, DomainName = g.First().DomainName, Tiers = g.ToList() }).ToList();
 

@@ -24,7 +24,8 @@
         "showBusinessAgencyName": true,
         "showCriticalService": true,
         "allowDiagram":false,
-        "showPrivacyWarning":true
+        "showPrivacyWarning":true,
+        "showTheUpgradeButton":true
     }
 }
 

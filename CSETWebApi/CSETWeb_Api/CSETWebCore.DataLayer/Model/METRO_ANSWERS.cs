@@ -6,21 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class METRO_ANSWERS
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        [StringLength(10)]
-        public string Metro_FIPS { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("METRO_ANSWERS")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Metro_FIPS")]
-        [InverseProperty("METRO_ANSWERS")]
-        public virtual METRO_AREA Metro_FIPSNavigation { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "Metro_FIPS")]
+public partial class METRO_ANSWERS
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    [StringLength(10)]
+    public string Metro_FIPS { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("METRO_ANSWERS")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Metro_FIPS")]
+    [InverseProperty("METRO_ANSWERS")]
+    public virtual METRO_AREA Metro_FIPSNavigation { get; set; }
 }

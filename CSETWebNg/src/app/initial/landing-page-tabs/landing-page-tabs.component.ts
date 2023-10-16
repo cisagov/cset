@@ -65,12 +65,14 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const tabsEl = this.tabsElementRef.nativeElement;
-    tabsEl.classList.add('sticky-tabs');
-    if (this.authSvc.isLocal) {
-      tabsEl.style.top = '81px';
-    } else {
-      tabsEl.style.top = '62px';
+    if (!!this.tabsElementRef) { 
+      const tabsEl = this.tabsElementRef.nativeElement;
+      tabsEl.classList.add('sticky-tabs');
+      if (this.authSvc.isLocal) {
+        tabsEl.style.top = '81px';
+      } else {
+        tabsEl.style.top = '62px';
+      }
     }
   }
 
@@ -86,6 +88,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     this.isSearch = true;
     this.searchString = val;
   }
+
   cancelSearch(){
     this.isSearch = false;
     this.searchString = '';

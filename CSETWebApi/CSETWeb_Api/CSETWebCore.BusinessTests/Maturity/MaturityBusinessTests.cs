@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Maturity.Tests
     [TestClass()]
     public class MaturityBusinessTests
     {
-        private CSETContext context;
+        private CSETContext? context;
 
         [TestInitialize()]
         public void Initialize()
