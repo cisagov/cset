@@ -19,6 +19,7 @@
         "showBusinessAgencyName": true,
         "showCriticalService": true,
         "showExportOnReports": false,
-        "showFeedback": false
+        "showFeedback": false,
+        "showDisclaimer": false
     }
 }

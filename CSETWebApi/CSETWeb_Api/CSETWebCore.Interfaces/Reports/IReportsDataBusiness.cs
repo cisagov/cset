@@ -21,7 +21,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<MatRelevantAnswers> GetMarkedForReviewList();
         List<MatRelevantAnswers> GetAlternatesList();
         List<MatRelevantAnswers> GetQuestionsList();
-        List<MatAnsweredQuestionDomain> GetAnsweredQuestionList(string language);
+        List<MatAnsweredQuestionDomain> GetAnsweredQuestionList();
         List<MatAnsweredQuestionDomain> GetIseAnsweredQuestionList();
         List<MatAnsweredQuestionDomain> GetIseAllQuestionList();
 

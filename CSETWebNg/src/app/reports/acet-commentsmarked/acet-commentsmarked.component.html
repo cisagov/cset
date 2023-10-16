@@ -75,11 +75,11 @@
             <table role="presentation">
                 <ng-template ngFor let-s [ngForOf]="response?.markedForReviewList">
                     <tr>
-                        <td class="deficiencies-list-item"><b>{{ t('statement') }} {{s.mat.sequence}}:</b></td>
+                        <td class="deficiencies-list-item"><b>{{ 'reports.statement' | transloco }} {{s.mat.sequence}}:</b></td>
                         <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                         <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                             <div style="width: 7rem">
-                                {{ 'answer-options.labels.' + questionsSvc.answerDisplayLabel(1, s.answer.answer_Text) | transloco }}
+                                {{ questionsSvc.answerDisplayLabel('ACET', s.answer.answer_Text)}}
                             </div>
                         </td>
                         <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
@@ -129,11 +129,11 @@
             <table>
                 <ng-template ngFor let-s [ngForOf]="response?.comments">
                     <tr>
-                        <td class="deficiencies-list-item"><b>{{ t('statement') }} {{s.mat.sequence}}:</b></td>
+                        <td class="deficiencies-list-item"><b>{{ 'reports.statement' | transloco }} {{s.mat.sequence}}:</b></td>
                         <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                         <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                             <div style="width: 7rem">
-                                {{ 'answer-options.labels.' + questionsSvc.answerDisplayLabel(1, s.answer.answer_Text) | transloco }}
+                                {{questionsSvc.answerDisplayLabel('ACET', s.answer.answer_Text)}}
                             </div>
                         </td>
                         <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
