@@ -76,6 +76,12 @@
         "components": "Componentes",
         "statements": "Declaración"
     },
+    "cyberFlorida": {
+        "convert message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
+        "convert confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
+        "convert confirm 2": "La evaluación se ha convertido.",
+        "title convert complete": "Conversión completa"
+    },
     "titles": {
         "prepare": "Preparar",
         "assessment": "Evaluación",
@@ -116,6 +122,7 @@
         "back": "Previo",
         "login": "Iniciar sesión",
         "logout": "Cerrar sesión",
+        "convert": "Convertir",
         "analytics": "Analítica",
         "export": "Exportar",
         "import": "Importar",
