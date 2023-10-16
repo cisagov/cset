@@ -7,6 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AssessmentDemogIodComponent {
 
+importClick(){
+console.log("import test")
+}
 
+
+
+
+exportClick(){
+console.log("export test")
+
+}
 
 }
