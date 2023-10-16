@@ -1,8 +1,8 @@
-<div style="border: 2px solid #333; border-radius: .3rem; padding: 1rem">
-    <div class="mb-3">
-        This assessment is using a subset of a standard and maturity model.  
-        To convert this assessment to a full thing, click the button below.
-        This is a one-way conversion; it cannot be undone.
+<ng-container *ngIf="isCfEntry">
+    <div *transloco="let t" style="border: 2px solid #333; border-radius: .3rem; padding: 1rem">
+        <div class="mb-3">
+            {{t('cyberFlorida.convert message')}}
+        </div>
+        <button class="btn btn-primary" (click)="convert()">{{t('buttons.convert')}}</button>
     </div>
-    <button class="btn btn-primary" (click)="convert()">Convert</button>
-</div>
+</ng-container>

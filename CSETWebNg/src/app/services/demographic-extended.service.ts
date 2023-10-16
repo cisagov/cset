@@ -37,8 +37,8 @@ const headers = {
 
 @Injectable()
 export class DemographicExtendedService {
-  
- 
+
+
   apiUrl: string;
   id: number;
   lastGeographics: Geographics;
@@ -48,9 +48,9 @@ export class DemographicExtendedService {
     this.apiUrl = this.configSvc.apiUrl + 'demographics/ext';
   }
 
- 
 
-  getDemographics(){    
+
+  getDemographics() {
     return this.http.get(this.apiUrl);
   }
 
@@ -112,7 +112,7 @@ export class DemographicExtendedService {
   updateExtendedDemographics(demographic: ExtendedDemographics) {
     this.lastDemograph = demographic;
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe();
+      .subscribe();
   }
 
   /**
@@ -121,14 +121,14 @@ export class DemographicExtendedService {
   persistGeographicSelections(x: Geographics) {
     this.lastGeographics = x;
     this.http.post(this.apiUrl + '/geographics', JSON.stringify(x), headers)
-    .subscribe();
+      .subscribe();
   }
 
-  getThePropertyCompleteList(obj){
+  getThePropertyCompleteList(obj) {
     var keys = [];
-    var exceptList = ["subSector", "sector", "assessment"];
-    for(var key in obj){
-      if(!exceptList.includes(key)){
+    var exceptList = ["subSector", "sector", "assessment", "hb7055Party"];
+    for (var key in obj) {
+      if (!exceptList.includes(key)) {
         keys.push(key);
       }
     }
@@ -137,34 +137,34 @@ export class DemographicExtendedService {
 
 
   preloadDemoAndGeo() {
-    var sources = [this.getDemographics(),this.getGeographics()];
-    forkJoin(sources).subscribe(results=>{
+    var sources = [this.getDemographics(), this.getGeographics()];
+    forkJoin(sources).subscribe(results => {
       this.lastDemograph = results[0];
       this.lastGeographics = results[1];
     });
   }
 
-  AreDemographicsCompleteNav(){    
-    return this.AreDemographicsComplete(this.lastDemograph,this.lastGeographics);
+  AreDemographicsCompleteNav() {
+    return this.AreDemographicsComplete(this.lastDemograph, this.lastGeographics);
   }
 
-  AreDemographicsComplete(demoGraphics, geoGraphics):boolean {
+  AreDemographicsComplete(demoGraphics, geoGraphics): boolean {
 
-    if(demoGraphics && geoGraphics){
+    if (demoGraphics && geoGraphics) {
       var complete = true;
       var entered = false;
-      for(var a of this.getThePropertyCompleteList(demoGraphics)){
-        entered = true; 
+      for (var a of this.getThePropertyCompleteList(demoGraphics)) {
+        entered = true;
         complete = complete && Boolean(demoGraphics[a]);
       }
-      for(var b of this.getThePropertyCompleteList(geoGraphics)){
+      for (var b of this.getThePropertyCompleteList(geoGraphics)) {
         entered = true;
         complete = complete && Boolean(geoGraphics[b]);
       }
-      console.log("demographics complete"+complete);
+
       return complete && entered;
     }
-    console.log("2 demographics complete:false");
+
     return false;
   }
 }
