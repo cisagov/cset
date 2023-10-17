@@ -21,26 +21,50 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AssessmentService } from '../../../services/assessment.service';
-import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NCUAService } from '../../../services/ncua.service';
-import { ACETService } from '../../../services/acet.service';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { ConfigService } from './config.service';
 
-@Component({
-  selector: 'app-assessment-info',
-  templateUrl: './assessment-info.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+
+const headers = {
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
+
+@Injectable({
+  providedIn: 'root'
 })
-export class AssessmentInfoComponent {
+export class ConversionService {
 
+  private initialized = false;
+  private apiUrl: string;
+
+  /**
+   * CTOR
+   */
   constructor(
-    public assessSvc: AssessmentService,
-    public configSvc: ConfigService,
-    public navSvc: NavigationService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
-    ) { }
+    private http: HttpClient,
+    private configSvc: ConfigService
+  ) {
+    if (!this.initialized) {
+      this.apiUrl = this.configSvc.apiUrl;
+
+      this.initialized = true;
+    }
+  }
+
+  /**
+   * 
+   */
+  isEntryCfAssessment() {
+    return this.http.get(this.apiUrl + 'convert/cf/entry');
+  }
+
+  /**
+    * Converts a Cyber Florida "entry" assessment to a full assessment
+    * with 
+    */
+  convertCfSub() {
+    return this.http.get(this.apiUrl + 'convert/cf');
+  }
 }

@@ -86,7 +86,7 @@
 
         <div *ngIf="demographicData.hb7055 == 'Y'" class="ml-5 mt-3">
             <p>
-                What state or local government agency are you completing on behalf of?"
+                What state or local government agency are you completing on behalf of?
             </p>
             <input type="text" maxlength="100" class="form-control" [(ngModel)]="demographicData.hb7055Party"
                 (blur)="setHb7055Party($event)">

@@ -77,6 +77,12 @@
         "components": "Componentes",
         "statements": "Declaración"
     },
+    "cyberFlorida": {
+        "convert message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
+        "convert confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
+        "convert confirm 2": "La evaluación se ha convertido.",
+        "title convert complete": "Conversión completa"
+    },
     "titles": {
         "prepare": "Preparar",
         "assessment": "Evaluación",
@@ -88,6 +94,7 @@
         "critical service information": "Información del servicio crítico",
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
+        "standard requirements": "Requisitos del estándar",
         "maturity questions": "Preguntas de madurez",
         "statements": "Declaraciones",
         "inherent risk profiles": "Perfil de riesgo inherente",
@@ -117,6 +124,7 @@
         "back": "Previo",
         "login": "Iniciar sesión",
         "logout": "Cerrar sesión",
+        "convert": "Convertir",
         "analytics": "Analítica",
         "export": "Exportar",
         "import": "Importar",
@@ -308,7 +316,8 @@
     "dialogs" : {
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
-        "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?"
+        "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",

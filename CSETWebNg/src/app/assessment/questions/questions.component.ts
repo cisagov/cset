@@ -170,9 +170,10 @@ export class QuestionsComponent implements AfterViewChecked {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
+    this.assessSvc.applicationMode = mode;
     this.questionsSvc.setMode(mode).subscribe(() => {
       this.loadQuestions();
-      this.navSvc.setQuestionsTree();
+      this.navSvc.buildTree();
     });
     localStorage.setItem("questionSet", mode == 'R' ? "Requirement" : "Question");
   }
