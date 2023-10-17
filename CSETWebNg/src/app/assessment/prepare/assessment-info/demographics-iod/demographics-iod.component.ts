@@ -4,6 +4,7 @@ import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { saveAs } from 'file-saver';
+import isValidFilename from 'valid-filename';
 
 
 @Component({
@@ -55,20 +56,21 @@ export class DemographicsIodComponent implements OnInit {
         
         if (this.demographicData.organizationName){
 
-          //verify org name
-
-          var FileSaver = require('file-saver');
-          var demoString = JSON.stringify(this.demographicData);
-          const blob = new Blob([demoString], { type: 'application/json' });
-          
-          try {
-            FileSaver.saveAs(blob, this.demographicData.organizationName + ".json");
-          } catch (error) {
-            console.error("Error during file download:", error);
+          if(!(isValidFilename(this.demographicData.organizationName))){
+            console.log("caught invalid filename");
           }
-
+            var FileSaver = require('file-saver');
+            var demoString = JSON.stringify(this.demographicData);
+            const blob = new Blob([demoString], { type: 'application/json' });
+            
+            try {
+              FileSaver.saveAs(blob, this.demographicData.organizationName + ".json");
+            } catch (error) {
+              console.error("Error during file download:", error);
+            }
+          
         } else {
-          if(confirm("Organization name required to export")){
+            if(confirm("Organization name required to export")){
           }
         }
         
