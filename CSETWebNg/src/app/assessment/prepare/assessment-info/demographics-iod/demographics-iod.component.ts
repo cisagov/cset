@@ -47,9 +47,9 @@ export class DemographicsIodComponent implements OnInit {
     console.log(file)
   }
 
-  importExport(importExportFlag){
-    if (importExportFlag == "import"){
-      
+  importExport(importExportObject){
+    if (importExportObject.flag == "import"){
+      this.demographicData = importExportObject.data;
     } else {
         this.demographicData.version = 1;
         
