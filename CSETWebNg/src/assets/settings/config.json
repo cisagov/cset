@@ -215,6 +215,7 @@
         },
         {
             "moduleName": "ACET",
+            "independentSuppGuidance": true,
             "answerOptions": [
                 {
                     "skin": "ACET",

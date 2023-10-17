@@ -741,4 +741,14 @@ export class QuestionExtrasComponent implements OnInit {
       && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
   }
 
+  /**
+   * Returns if Supplemental Guidance should be 
+   * independent from Examination Approach or not
+   * @returns
+   */
+  seperateGuidanceFromApproach() {
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    return behavior.independentSuppGuidance;
+  }
+
 }
