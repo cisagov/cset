@@ -51,6 +51,7 @@
         "back": "Back",
         "login": "Login",
         "logout": "Logout",
+        "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
         "import": "Import",
@@ -77,6 +78,7 @@
         "critical service information": "Critical Service Information",
         "security assurance level (sal)": "Security Assurance Level (SAL)",
         "standard questions": "Standard Questions",
+        "standard requirements": "Standard Requirements",
         "maturity questions": "Maturity Questions",
         "security practices": "Security Practices",        
         "questions": "Questions",
@@ -138,6 +140,12 @@
         "component": "Component",
         "components": "Components",
         "statements": "Statements"
+    },
+    "cyberFlorida": {
+        "convert message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To convert this assessment to include all questions, click the button below.",
+        "convert confirm 1": "Are you sure you want to convert this assessment?  This is a one-way conversion; it cannot be undone.",
+        "convert confirm 2": "The assessment has been converted.",
+        "title convert complete": "Conversion Complete"
     },
     "answer-options": {
         "button-labels": {
@@ -314,7 +322,8 @@
     "dialogs" : {
         "please confirm": "Please Confirm",
         "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
-        "remove assessment": "Are you sure you want to remove {{assessmentName}}?"
+        "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+        "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
