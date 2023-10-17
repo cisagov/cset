@@ -54,6 +54,9 @@ export class DemographicsIodComponent implements OnInit {
         this.demographicData.version = 1;
         
         if (this.demographicData.organizationName){
+
+          //verify org name
+
           var FileSaver = require('file-saver');
           var demoString = JSON.stringify(this.demographicData);
           const blob = new Blob([demoString], { type: 'application/json' });
@@ -65,9 +68,8 @@ export class DemographicsIodComponent implements OnInit {
           }
 
         } else {
-          // Find better way to send notification to user
-          // Verify organization name can be used as file name
-          console.log("Organization name required")
+          if(confirm("Organization name required to export")){
+          }
         }
         
       }
