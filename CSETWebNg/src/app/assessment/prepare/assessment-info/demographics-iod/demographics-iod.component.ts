@@ -57,7 +57,8 @@ export class DemographicsIodComponent implements OnInit {
         if (this.demographicData.organizationName){
 
           if(!(isValidFilename(this.demographicData.organizationName))){
-            console.log("caught invalid filename");
+            //File name will be saved with '_' instead of any invalid characters
+            //Could implement functionality that replaces invalid characters manually 
           }
             var FileSaver = require('file-saver');
             var demoString = JSON.stringify(this.demographicData);
