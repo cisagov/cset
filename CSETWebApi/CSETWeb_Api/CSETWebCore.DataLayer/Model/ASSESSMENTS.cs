@@ -77,7 +77,9 @@ namespace CSETWebCore.DataLayer.Model
         public DateTime? AssessmentEffectiveDate { get; set; }
         public Guid? GalleryItemGuid { get; set; }
         public bool? ISE_StateLed { get; set; }
-
+        [StringLength(50)]
+        public string PCII { get; set; }
+    
         [ForeignKey("AssessmentCreatorId")]
         [InverseProperty("ASSESSMENTS")]
         public virtual USERS AssessmentCreator { get; set; }
