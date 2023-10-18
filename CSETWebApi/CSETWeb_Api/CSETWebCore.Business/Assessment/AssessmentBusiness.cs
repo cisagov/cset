@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -602,7 +603,6 @@ namespace CSETWebCore.Business.Assessment
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
 
-
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
             {
@@ -641,6 +641,19 @@ namespace CSETWebCore.Business.Assessment
             else
             {
                 _maturityBusiness.ClearMaturityModel(assessmentId);
+            }
+
+            /* Update File naming convention
+               [client-assessment type-report type].pcii.[PCII Number].[extension]
+               [client-assessment type - report type].non-pcii.[Date of Assessment].[extension]
+            */
+            if (user != null && user.CisaAssessorWorkflow)
+            {
+                var dateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'HH''mm");
+                var shortName = assessment.MaturityModel?.ModelName;
+                var assessmentName = $"{shortName}.non-pcii.{dateTime}";
+                assessment.AssessmentName = assessmentName;
+                //SaveAssessmentDetail(assessment_id, newAssessment);
             }
 
             _assessmentUtil.TouchAssessment(assessmentId);
