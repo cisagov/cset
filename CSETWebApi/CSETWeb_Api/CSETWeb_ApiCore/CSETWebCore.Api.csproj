@@ -22,6 +22,7 @@
     <PackageReference Include="NSoupCore" Version="1.0.0" />
     <PackageReference Include="Snickler.EFCore" Version="3.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.10" />
   </ItemGroup>
 
   <ItemGroup>

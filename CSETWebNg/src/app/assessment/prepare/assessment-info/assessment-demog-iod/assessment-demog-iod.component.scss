@@ -1,0 +1,13 @@
+.button-container {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;
+    align-content: center;
+    bottom: 5px;
+  }
+
+  .hidden-input {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;    
+  }
