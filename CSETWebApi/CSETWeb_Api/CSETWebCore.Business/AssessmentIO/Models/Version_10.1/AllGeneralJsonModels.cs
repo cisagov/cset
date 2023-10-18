@@ -1054,7 +1054,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public int? SectorId { get; set; }
         public int? SubSectorId { get; set; }
         [StringLength(10)]
-        public string cyberRiskService { get; set; }
+        public string CyberRiskService { get; set; }
     }
     public class jMETRO_ANSWERS
     {

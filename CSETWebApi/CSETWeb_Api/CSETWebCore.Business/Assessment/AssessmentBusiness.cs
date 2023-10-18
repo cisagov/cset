@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -415,10 +416,17 @@ namespace CSETWebCore.Business.Assessment
 
 
                 var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-                if (ss != null && ss.Hidden_Screens != null)
+                if (ss != null)
                 {
-                    assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                    if (ss.Hidden_Screens != null)
+                    {
+                        assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                    }
+
+                    assessment.ApplicationMode = ss.Application_Mode.Substring(0, 1).ToUpper();
                 }
+
+
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;

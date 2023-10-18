@@ -18,17 +18,17 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div *transloco="let t; read: 'reports.acet.answered statements'" class="report-body mb-5">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p
                 class="report-title">
-                ANSWERED STATEMENTS
+                {{ t('answered statements report title 1') }}
             </p>
             <p
                 class="report-title">
-                REPORT
+                {{ t('answered statements report title 2') }}
             </p>
         </div>
         <div class="column">
@@ -60,59 +60,58 @@
         </div>
     </div>
     <div class="page-break">
-        <h1 class="page-title">Answered Statements</h1>
+        <h1 class="page-title">{{ t('answered statements') }}</h1>
         <hr class="page-line">
         <div class="paragraph">
             <p><br>
-                This report includes all the statements within your maturity level, your answers, and whether there is a
-                comment
-                attached to the statement.
+                {{ t('report desc 1') }}
                 <br><br>
-                The statement set is determined by your maturity level.<br>
+                {{ t('report desc 2') }}
+                <br>
             </p>
         </div>
         <div class="page-break pb-5">
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div>
                     <div class="report-text-blue text-underline">
-                        Maturity Level Key:
+                        {{ t('maturity level key') }}:
                     </div>
-                    B - Baseline<br>
-                    E - Evolving<br>
-                    INT - Intermediate<br>
-                    ADV - Advanced<br>
-                    INN - Innovative
+                    B - {{ 'level.baseline' | transloco }}<br>
+                    E - {{ 'level.evolving' | transloco }}<br>
+                    INT - {{ 'level.intermediate' | transloco }}<br>
+                    ADV - {{ 'level.advanced' | transloco }}<br>
+                    INN - {{ 'level.innovative' | transloco }}
                 </div>
                 <div style="align-self: flex-end;">
-                    <div class="h2 report-text-blue">Answered Statements</div>
+                    <div class="h2 report-text-blue">{{ t('answered statements') }}</div>
                 </div>
             </div>
             <table class="table-responsive td-align-top td-padding-half-rem">
                 <tr class="report-text-blue">
                     <td></td>
                     <td></td>
-                    <td>Answers</td>
-                    <td>Maturity Level</td>
-                    <td>Comments</td>
+                    <td>{{ t('answers') }}</td>
+                    <td>{{ 'maturity level' | transloco }}</td>
+                    <td>{{ t('comments') }}</td>
                 </tr>
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - Domain</td>
+                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - {{ 'reports.domain' | transloco }}</td>
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - Assessment Factor
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - {{ 'reports.assessment factor' | transloco }}
                             </td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
                             <tr>
-                                <td colspan="5" class="background-3 pl-5">{{c.title}} - Component</td>
+                                <td colspan="5" class="background-3 pl-5">{{c.title}} - {{ 'reports.component' | transloco }}</td>
                             </tr>
                             <ng-container *ngFor="let q of c.questions">
                                 <tr>
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                                     <td class="pr-3" [innerHTML]="q.questionText"></td>
-                                    <td class="pr-3">{{questionsSvc.answerDisplayLabel(1, q.answerText)}}</td>
+                                    <td class="pr-3">{{questionsSvc.answerDisplayLabel('ACET', q.answerText)}}</td>
                                     <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td>
                                     <td>{{q.comments}}</td>
                                 </tr>

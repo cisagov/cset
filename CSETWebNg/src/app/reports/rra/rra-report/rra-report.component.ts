@@ -102,8 +102,6 @@ export class RraReportComponent implements OnInit {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
       this.response = r;
 
-      console.log(this.response);
-
       // this should be called first because it creates a normalized object that others use
       this.createAnswerDistribByGoal(r);
 

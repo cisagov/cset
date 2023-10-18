@@ -157,6 +157,16 @@ export class NavTreeService {
         node.label = this.tSvc.translate(`titles.${alias}`);
       }
     }
+
+    if (node.value == 'standard-questions') {
+      const mode = this.assessSvc.applicationMode?.toLowerCase();
+      if (mode == 'q') {
+        node.label = this.tSvc.translate('titles.standard questions');
+      }
+      if (mode == 'r') {
+        node.label = this.tSvc.translate('titles.standard requirements');
+      }
+    }
   }
 
   /**

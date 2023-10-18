@@ -21,40 +21,50 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { NavigationService } from '../../../services/navigation/navigation.service';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { ConfigService } from './config.service';
 
-@Component({
-  selector: 'app-nav-back-next',
-  templateUrl: './nav-back-next.component.html'
+
+const headers = {
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  params: new HttpParams()
+};
+
+@Injectable({
+  providedIn: 'root'
 })
-export class NavBackNextComponent implements OnInit {
+export class ConversionService {
 
-  @Input() page: string;
+  private initialized = false;
+  private apiUrl: string;
 
-  @Input() hide: string;
-
+  /**
+   * CTOR
+   */
   constructor(
-    public navSvc: NavigationService
-  ) { 
+    private http: HttpClient,
+    private configSvc: ConfigService
+  ) {
+    if (!this.initialized) {
+      this.apiUrl = this.configSvc.apiUrl;
 
-  }
-
-  nextMode = true;
-
-  ngOnInit(): void {
-    this.navSvc.disableNext
-    .asObservable()
-    .subscribe(
-      (tgt: boolean) => {
-        this.nextMode = tgt;
-      }
-    );
-
-    const isFirstVisible = this.navSvc.isFirstVisiblePage(this.page);
-    if (isFirstVisible) {
-      this.hide = 'back';
+      this.initialized = true;
     }
   }
 
+  /**
+   * 
+   */
+  isEntryCfAssessment() {
+    return this.http.get(this.apiUrl + 'convert/cf/entry');
+  }
+
+  /**
+    * Converts a Cyber Florida "entry" assessment to a full assessment
+    * with 
+    */
+  convertCfSub() {
+    return this.http.get(this.apiUrl + 'convert/cf');
+  }
 }

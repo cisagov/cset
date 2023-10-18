@@ -52,6 +52,8 @@ export interface NavTreeNode {
 })
 export class NavigationService {
 
+  
+
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
    */
@@ -68,6 +70,8 @@ export class NavigationService {
   @Output()
   scrollToQuestion = new EventEmitter<string>();
 
+  @Output()
+  disableNext = new EventEmitter<boolean>();
 
   isNavLoading = false;
 
@@ -223,6 +227,14 @@ export class NavigationService {
     } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
 
     this.routeToTarget(target);
+  }
+
+  /**
+   * Enables or disables the next button
+   * @param enableNext 
+   */
+  setNextEnabled(enableNext: boolean) {
+    this.disableNext.emit(enableNext);
   }
 
   /**

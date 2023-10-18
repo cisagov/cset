@@ -22,14 +22,11 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { AssessmentDetail } from '../../../models/assessment-info.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
-import { MatDialogRef , MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-assessment-info',
@@ -37,17 +34,13 @@ import { MatDialogRef , MatDialogModule} from '@angular/material/dialog';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AssessmentInfoComponent implements OnInit {
+export class AssessmentInfoComponent {
 
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
     public ncuaSvc: NCUAService,
-    public acetSvc: ACETService,
+    public acetSvc: ACETService
     ) { }
-
-
-  ngOnInit() {
-  }
 }

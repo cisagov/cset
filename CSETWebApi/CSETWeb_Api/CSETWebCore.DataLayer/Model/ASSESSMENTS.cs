@@ -67,11 +67,6 @@ public partial class ASSESSMENTS
 
     public bool? ISE_StateLed { get; set; }
 
-    public bool Is_PCII { get; set; }
-
-    [StringLength(50)]
-    public string PCII_Number { get; set; }
-
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 

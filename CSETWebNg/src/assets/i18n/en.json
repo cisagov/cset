@@ -51,6 +51,7 @@
         "back": "Back",
         "login": "Login",
         "logout": "Logout",
+        "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
         "import": "Import",
@@ -77,6 +78,7 @@
         "critical service information": "Critical Service Information",
         "security assurance level (sal)": "Security Assurance Level (SAL)",
         "standard questions": "Standard Questions",
+        "standard requirements": "Standard Requirements",
         "maturity questions": "Maturity Questions",
         "security practices": "Security Practices",        
         "questions": "Questions",
@@ -97,6 +99,7 @@
     },
     "contact": {
         "contacts": "Contacts",
+        "contact": "Contact",
         "add contact": "Add Contacts",
         "email contacts": "Email Contacts",
         "assessment owner": "Assessment Owner",
@@ -137,6 +140,12 @@
         "component": "Component",
         "components": "Components",
         "statements": "Statements"
+    },
+    "cyberFlorida": {
+        "convert message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To convert this assessment to include all questions, click the button below.",
+        "convert confirm 1": "Are you sure you want to convert this assessment?  This is a one-way conversion; it cannot be undone.",
+        "convert confirm 2": "The assessment has been converted.",
+        "title convert complete": "Conversion Complete"
     },
     "answer-options": {
         "button-labels": {
@@ -236,7 +245,10 @@
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
         "import": "Import an assessment from an external {{appCode}} file.",
-        "export to excel": "Export all assessments to Excel"
+        "export to excel": "Export all assessments to Excel",
+        "remove assessment": "Permanently remove this assessment.",
+        "export assessment": "Export a copy of this assessment to another location",
+        "analytics": "View the analytics for this assessment."
     },
     "level": {
         "low": "Low",
@@ -308,7 +320,10 @@
         "show statements with issues": "Show statements with issues"
     },
     "dialogs" : {
-        "please confirm": "Please Confirm"
+        "please confirm": "Please Confirm",
+        "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
+        "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+        "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
@@ -319,6 +334,11 @@
         "site information": "Site Information",
         "additional notes and comments": "Additional Notes and Comments",
         "principal assessor name": "Principal Assessor Name",
+        "marked for review": "Marked for Review",
+        "statement": "Statement",
+        "domain": "Domain",
+        "assessment factor": "Assessment Factor",
+        "component": "Component",
         "disclaimer": {
             "disclaimer": "Disclaimer",
             "disclaimer section 1": "The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
@@ -335,7 +355,8 @@
         },
         "observations tear-out sheets": {
             "observations tear-out sheets": "Observations Tear-Out Sheets",
-            "observation title": "OBSERVATIONS TEAR-OUT SHEETS",
+            "observation title 1": "OBSERVATIONS TEAR-",
+            "observation title 2": "OUT SHEETS",
             "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
             "question identifier": "Question Identifier",
             "question text": "Question Text"
@@ -357,14 +378,39 @@
                 "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
                 "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
                 "gaps": "Gaps",
-                "marked for review": "Marked for Review",
-                "domain": "Domain",
-                "assessment factor": "Assessment Factor",
-                "component": "Component"
+                "marked for review": "Marked for Review"
             },
-            "comments and marked for review": "ACET Comments and Marked for Review",
-            "answered statements": "ACET Answered Statements",
-            "compensating controls": "ACET Compensating Controls"
+            "comments and mfr": {
+                "comments report": "ACET Comments and Marked for Review",
+                "comments report title 1": "COMMENTS REVIEW",
+                "comments report title 2": "REPORT",
+                "statements mfr": "Statements Marked for Review",
+                "statement": "Statement",
+                "no statements marked": "There are no statements marked for review",
+                "statement comments": "Statement Comments",
+                "no statements with comments": "There are no statements with comments"
+            },
+            "answered statements": {
+                "answered statements report": "ACET Answered Statements",
+                "answered statements report title 1": "ANSWERED STATEMENTS",
+                "answered statements report title 2": "REPORT",
+                "answered statements": "Answered Statements",
+                "report desc 1": "This report includes all the statements within your maturity level, your answers, and whether there is a comment attached to the statement.",
+                "report desc 2": "The statement set is determined by your maturity level.",
+                "maturity level key": "Maturity Level Key",
+                "answers": "Answers",
+                "comments": "Comments"
+            },
+            "compensating controls": {
+                "compensating controls report": "ACET Compensating Controls",
+                "compensating controls report title 1": "COMPENSATING CONTROLS",
+                "compensating controls report title 2": "REPORT",
+                "compensating controls": "Compensating Controls",
+                "report desc": "This report contains all the statements that have an associated compensating control and the comment provided.",
+                "compensating comment": "Compensating Comment",
+                "no compensating comment": "No compensating comment or explanation was provided.",
+                "no compensating controls": "There are no compensating controls to display"
+            }
         }
     },
     "observation": {
@@ -413,6 +459,27 @@
             "accessibility document": "Accessibility Document",
             "advisory": "Advisory",
             "terms of use": "Terms of Use"
+        }
+    },
+    "merge examinations": {
+        "merge examinations": "Merge Examinations",
+        "assessments processed": "Assessments Processed",
+        "cancel merge": "Cancel Merge",
+        "lead exam": "Lead Exam",
+        "exam": "Exam",
+        "merge in progress": "Merging in progress, please wait...",
+        "no conflicts 1": "There are no conflicting answers within the chosen examinations. Either return to the",
+        "assessment list": "Assessment List",
+        "no conflicts 2": "screen to select different examinations, or",
+        "click here": "Click Here",
+        "no conflicts 3": "to proceed with the merge."
+    },
+    "about": {
+        "about": "About",
+        "version": "Version",
+        "acet": {
+            "we ensure financial stability": "We Ensure Financial Stability",
+            "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
         }
     }
 }

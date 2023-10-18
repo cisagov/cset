@@ -71,7 +71,8 @@
     },
     "answerOptionsDefault": [
         {
-            "code": "U"
+            "code": "U",
+            "buttonLabelKey": "U"
         },
         {
             "code": "Y",
@@ -214,6 +215,7 @@
         },
         {
             "moduleName": "ACET",
+            "independentSuppGuidance": true,
             "answerOptions": [
                 {
                     "skin": "ACET",

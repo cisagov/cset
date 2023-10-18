@@ -21,8 +21,9 @@ using J2N.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NodaTime;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+//using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
+using CSETWebCore.Business.Demographic;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -160,22 +161,30 @@ namespace CSETWebCore.Api.Controllers
             // Model
             if (config.Model != null)
             {
-                new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
-                var newModel = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityModel(assessment.Id);
+                var matBiz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
+                matBiz.PersistSelectedMaturityModel(assessment.Id, config.Model.ModelName);
+
+                var newModel = matBiz.GetMaturityModel(assessment.Id);
                 assessment.MaturityModel = newModel;
                 assessment.UseMaturity = true;
 
                 // maturity level - for models that track a target level
-                var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-
-                if (mb.ModelsWithTargetLevel.Contains(config.Model.ModelName))
+                if (matBiz.ModelsWithTargetLevel.Contains(config.Model.ModelName))
                 {
                     if (config.Model.Level == 0)
                     {
                         config.Model.Level = 1;
                     }
 
-                    mb.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                    matBiz.PersistMaturityLevel(assessment.Id, config.Model.Level);
+                }
+
+
+                // store submodel selection
+                if (!String.IsNullOrEmpty(config.Model.Submodel))
+                {
+                    var demo = new DemographicBusiness(_context, _assessmentUtil);
+                    demo.SaveDD(assessment.Id, "MATURITY-SUBMODEL", config.Model.Submodel, null);
                 }
             }
 

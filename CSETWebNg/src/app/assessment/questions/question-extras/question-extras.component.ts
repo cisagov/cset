@@ -307,7 +307,7 @@ export class QuestionExtrasComponent implements OnInit {
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.findings == null) {
-          return this.myQuestion.hasObservations ? 'inline' : 'none';
+          return (this.myQuestion.hasObservations || this.myQuestion.hasDiscovery) ? 'inline' : 'none';
         }
         return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
 
@@ -739,6 +739,16 @@ export class QuestionExtrasComponent implements OnInit {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
       && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
       && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+  }
+
+  /**
+   * Returns if Supplemental Guidance should be 
+   * independent from Examination Approach or not
+   * @returns
+   */
+  seperateGuidanceFromApproach() {
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    return behavior.independentSuppGuidance;
   }
 
 }

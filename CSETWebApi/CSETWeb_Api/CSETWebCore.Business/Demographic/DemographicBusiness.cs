@@ -4,11 +4,14 @@
 // 
 // 
 //////////////////////////////// 
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Demographic;
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -169,7 +172,48 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
+        /// Extended Demographics can be stored both in the DEMOGRAPHIC_ANSWERS and
+        /// the DETAILS_DEMOGRAPHICS table.  
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
+        public ExtendedDemographic GetExtendedDemographics(int assessmentId)
+        {
+            var demo = new ExtendedDemographic();
+            demo.AssessmentId = assessmentId;
+
+            // get values from DEMOGRAPHIC_ANSWERS (one row per assessment)
+            var da = _context.DEMOGRAPHIC_ANSWERS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+            if (da == null)
+            {
+                da = new DEMOGRAPHIC_ANSWERS();
+            }
+
+            demo.CustomersSupported = da.CustomersSupported;
+            demo.CyberRiskService = da.CyberRiskService;
+            demo.CioExists = da.CIOExists;
+            demo.CisoExists = da.CISOExists;
+            demo.Employees = da.Employees;
+            demo.CyberTrainingProgramExists = da.CyberTrainingProgramExists;
+            demo.GeographicScope = da.GeographicScope;
+            demo.SectorId = da.SectorId;
+            demo.SubSectorId = da.SubSectorId;
+
+
+            // get values from DETAILS_DEMOGRAPHICS (multiple name/value rows per assessment)
+            var demogBiz = new DemographicBusiness(_context, _assessmentUtil);
+            demo.Hb7055 = demogBiz.GetDD(assessmentId, "HB-7055");
+            demo.Hb7055Party = demogBiz.GetDD(assessmentId, "HB-7055-PARTY");
+            demo.InfrastructureItOt = demogBiz.GetDD(assessmentId, "INFRA-IT-OT");
+
+            return demo;
+        }
+
+
+        /// <summary>
         /// Persists data to the ExtendedDemographicAnswer database table.
+        /// Also saves data to DETAILS_DEMOGRAPHICS.
         /// </summary>
         /// <param name="demographics"></param>
         /// <returns></returns>
@@ -194,15 +238,64 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            dbDemog.CyberRiskService = demographics.cyberRiskService;
+            dbDemog.CyberRiskService = demographics.CyberRiskService;
 
             _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();
 
 
+            // save demographic answers that live in DETAILS_DEMOGRAPHICS
+            SaveDD(demographics.AssessmentId, "HB-7055", demographics.Hb7055, null);
+            SaveDD(demographics.AssessmentId, "HB-7055-PARTY", demographics.Hb7055Party, null);
+            SaveDD(demographics.AssessmentId, "INFRA-IT-OT", demographics.InfrastructureItOt, null);
+
+
             _assessmentUtil.TouchAssessment(dbDemog.Assessment_Id);
 
             return dbDemog.Assessment_Id;
+        }
+
+
+        /// <summary>
+        /// Retrieves a DETAILS_DEMOGRAPHICS record for the assessment.
+        /// </summary>
+        /// <returns></returns>
+        public string GetDD(int assessmentId, string key)
+        {
+            var dd = _context.DETAILS_DEMOGRAPHICS
+               .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == key).FirstOrDefault();
+
+            if (dd != null)
+            {
+                return dd.StringValue;
+            }
+
+            return null;
+        }
+
+
+        /// <summary>
+        /// Persists a DETAILS_DEMOGRAPHICS record for the assessment.
+        /// Replaces an existing record; does not create another one with the same name.
+        /// TODO:  implement a datatype option.
+        /// </summary>
+        public void SaveDD(int assessmentId, string key, string value, string dataType)
+        {
+            var dd = _context.DETAILS_DEMOGRAPHICS
+               .Where(x => x.Assessment_Id == assessmentId && x.DataItemName == key).FirstOrDefault();
+
+            if (dd == null)
+            {
+                dd = new DETAILS_DEMOGRAPHICS
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = key
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(dd);
+            }
+
+            dd.StringValue = value;
+            _context.SaveChanges();
         }
     }
 }

@@ -235,9 +235,11 @@
                 <div
                     [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
                 </div>
-                <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
-                <div
-                    [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
+                <div *ngIf="!seperateGuidanceFromApproach()">
+                    <hr *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
+                    <div
+                        [innerHTML]="tab?.requirementsData?.examinationApproach ? (tab?.requirementsData?.examinationApproach | linebreak | safe: 'html') : ''">
+                    </div>
                 </div>
 
                 <!-- "pieces" -->                
