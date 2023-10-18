@@ -36,6 +36,7 @@ import { EditableUser } from "../../../../models/editable-user.model";
 import { ContactItemComponent } from "./contact-item/contact-item.component";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { LayoutService } from "../../../../services/layout.service";
+import { TranslocoService } from "@ngneat/transloco";
 
 @Component({
   selector: "app-assessment-contacts",
@@ -63,7 +64,8 @@ export class AssessmentContactsComponent implements OnInit {
     private emailSvc: EmailService,
     private auth: AuthenticationService,
     private dialog: MatDialog,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
@@ -180,11 +182,13 @@ export class AssessmentContactsComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
-      "Are you sure you want to remove " +
-      contact.firstName +
-      " " +
-      contact.lastName +
-      " from this assessment?";
+      // "Are you sure you want to remove " +
+      // contact.firstName +
+      // " " +
+      // contact.lastName +
+      // " from this assessment?";
+
+      this.tSvc.translate('dialogs.remove contact', { firstName: contact.firstName, lastName: contact.lastName });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
