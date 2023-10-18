@@ -396,6 +396,8 @@ export class AssessmentService {
         this.getAssessmentDetail().subscribe(data => {
           this.assessment = data;
 
+          this.applicationMode = this.assessment.applicationMode;
+
           if (this.assessment.baselineAssessmentId) {
             localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
           } else {

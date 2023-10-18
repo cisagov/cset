@@ -20,6 +20,7 @@
         "showCriticalService": true,
         "showExportOnReports": false,
         "showFeedback": false,
-        "showDisclaimer": false
+        "showDisclaimer": false,
+        "independentSuppGuidance": true
     }
 }

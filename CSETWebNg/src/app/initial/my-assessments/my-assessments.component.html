@@ -241,7 +241,7 @@
                             <button tabindex="0"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="removeAssessment(assessment, i)"
-                                matTooltip="Permanently remove this assessment.">
+                                matTooltip="{{ t('tooltip.remove assessment') }}">
                                 <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
@@ -250,7 +250,7 @@
                             <button tabindex="0" id="assess-{{i}}-export"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
@@ -259,7 +259,7 @@
                             <button tabindex="0"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                                matTooltip="View the analytics for this assessment.">
+                                matTooltip="{{ t('tooltip.analytics') }}">
                                 <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
                             </button>
