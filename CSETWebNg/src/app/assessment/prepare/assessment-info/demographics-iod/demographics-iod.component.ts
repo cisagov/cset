@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { saveAs } from 'file-saver';
 import isValidFilename from 'valid-filename';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -24,7 +26,8 @@ export class DemographicsIodComponent implements OnInit {
   demographicData: DemographicsIod = {};
 
   constructor(public demoSvc: DemographicIodService, 
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog
     ) {}
 
   /**
@@ -72,8 +75,10 @@ export class DemographicsIodComponent implements OnInit {
             }
           
         } else {
-            if(confirm("Organization name required to export")){
-          }
+          const msg2 = 'Name of organization required before export';
+          const titleComplete = 'Organization Name Required'
+          const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+          dlgOkay.componentInstance.hasHeader = true;
         }
         
       }
