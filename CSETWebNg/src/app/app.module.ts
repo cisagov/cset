@@ -607,6 +607,8 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { FooterService } from './services/footer.service';
+import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 
 
 
@@ -1171,6 +1173,7 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
         UserLanguageComponent,
+        AssessmentConvertCfComponent,
     ],
     providers: [
         TranslocoService,
@@ -1236,7 +1239,8 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
         CmuService,
         Utilities,
         NCUAService,
-        GalleryService
+        GalleryService, 
+        FooterService
     ],
     bootstrap: [AppComponent]
 })

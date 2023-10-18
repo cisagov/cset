@@ -25,7 +25,10 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                {{ 'reports.observations tear-out sheets.observation title' | transloco }}
+                {{ 'reports.observations tear-out sheets.observation title 1' | transloco }}
+            </p>
+            <p class="report-title">
+                {{ 'reports.observations tear-out sheets.observation title 2' | transloco }}
             </p>
         </div>
         <div class="column">
@@ -76,16 +79,16 @@
                     <td colspan="4" class="tint1">{{finding.finding}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">{{ 'reports.observation tear-out sheets.question identifier' | transloco }}:</td>
+                    <td class="tint2">{{ 'reports.observations tear-out sheets.question identifier' | transloco }}:</td>
                     <td colspan="3">{{finding.questionIdentifier}}</td>
                 </tr>
                 <tr>
-                    <td class="tint2">{{ 'reports.observation tear-out sheets.question text' | transloco }}:</td>
+                    <td class="tint2">{{ 'reports.observations tear-out sheets.question text' | transloco }}:</td>
                     <td colspan="3" [innerHTML]="finding.questionText"></td>
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
-                    <td style="width: 25%">{{finding.importance}}</td>
+                    <td style="width: 25%">{{ 'level.' + finding.importance.toLowerCase() | transloco }}</td>
                     <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
                     <td style="width: 25%">{{finding.resolutionDate | date:'dd-MMM-yyyy'}}</td>
                 </tr>

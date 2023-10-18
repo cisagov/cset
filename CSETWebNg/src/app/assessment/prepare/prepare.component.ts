@@ -59,6 +59,13 @@ export class PrepareComponent implements OnInit {
    * If the nav tree is not yet populated, build it.
    */
   ngOnInit() {
+    this.navSvc.disableNext
+    .asObservable()
+    .subscribe(
+      (tgt: boolean) => {
+        this.navSvc.buildTree();
+      }
+    );
     if (this.navTreeSvc.tocControl.dataNodes == null) {
       setTimeout(() => {
         this.navSvc.buildTree();

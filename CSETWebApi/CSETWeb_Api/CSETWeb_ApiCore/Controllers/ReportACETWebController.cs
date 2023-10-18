@@ -66,12 +66,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/reports/acet/getAnsweredQuestions")]
-        public IActionResult GetAnsweredQuestions(string language)
+        public IActionResult GetAnsweredQuestions()
         {
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
-            data.MatAnsweredQuestions = _report.GetAnsweredQuestionList(language);
+            data.MatAnsweredQuestions = _report.GetAnsweredQuestionList();
             data.Information = _report.GetInformation();
             return Ok(data);
         }
