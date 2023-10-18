@@ -67,7 +67,7 @@ public partial class ASSESSMENTS
 
     public bool? ISE_StateLed { get; set; }
 
-    public bool PCII { get; set; }
+    public bool Is_PCII { get; set; }
 
     [StringLength(50)]
     public string PCII_Number { get; set; }
