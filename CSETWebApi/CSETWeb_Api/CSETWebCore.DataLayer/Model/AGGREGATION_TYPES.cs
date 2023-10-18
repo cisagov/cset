@@ -6,23 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of AGGREGATION_TYPES records
+/// </summary>
+public partial class AGGREGATION_TYPES
 {
-    /// <summary>
-    /// A collection of AGGREGATION_TYPES records
-    /// </summary>
-    public partial class AGGREGATION_TYPES
-    {
-        public AGGREGATION_TYPES()
-        {
-            AGGREGATION_INFORMATION = new HashSet<AGGREGATION_INFORMATION>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Aggregation_Mode { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string Aggregation_Mode { get; set; }
-
-        [InverseProperty("Aggregation_ModeNavigation")]
-        public virtual ICollection<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; }
-    }
+    [InverseProperty("Aggregation_ModeNavigation")]
+    public virtual ICollection<AGGREGATION_INFORMATION> AGGREGATION_INFORMATION { get; set; } = new List<AGGREGATION_INFORMATION>();
 }

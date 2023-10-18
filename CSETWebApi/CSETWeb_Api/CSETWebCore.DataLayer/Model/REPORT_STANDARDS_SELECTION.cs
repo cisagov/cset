@@ -6,23 +6,27 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class REPORT_STANDARDS_SELECTION
-    {
-        [Key]
-        public int Assesment_Id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Report_Set_Entity_Name { get; set; }
-        public int Report_Section_Order { get; set; }
-        public bool Is_Selected { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assesment_Id")]
-        [InverseProperty("REPORT_STANDARDS_SELECTION")]
-        public virtual ASSESSMENTS Assesment { get; set; }
-        [ForeignKey("Report_Set_Entity_Name")]
-        [InverseProperty("REPORT_STANDARDS_SELECTION")]
-        public virtual SETS Report_Set_Entity_NameNavigation { get; set; }
-    }
+[PrimaryKey("Assesment_Id", "Report_Set_Entity_Name")]
+public partial class REPORT_STANDARDS_SELECTION
+{
+    [Key]
+    public int Assesment_Id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Report_Set_Entity_Name { get; set; }
+
+    public int Report_Section_Order { get; set; }
+
+    public bool Is_Selected { get; set; }
+
+    [ForeignKey("Assesment_Id")]
+    [InverseProperty("REPORT_STANDARDS_SELECTION")]
+    public virtual ASSESSMENTS Assesment { get; set; }
+
+    [ForeignKey("Report_Set_Entity_Name")]
+    [InverseProperty("REPORT_STANDARDS_SELECTION")]
+    public virtual SETS Report_Set_Entity_NameNavigation { get; set; }
 }

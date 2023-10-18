@@ -6,20 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class GALLERY_LAYOUT
 {
-    public partial class GALLERY_LAYOUT
-    {
-        public GALLERY_LAYOUT()
-        {
-            GALLERY_ROWS = new HashSet<GALLERY_ROWS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Layout_Name { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string Layout_Name { get; set; }
-
-        [InverseProperty("Layout_NameNavigation")]
-        public virtual ICollection<GALLERY_ROWS> GALLERY_ROWS { get; set; }
-    }
+    [InverseProperty("Layout_NameNavigation")]
+    public virtual ICollection<GALLERY_ROWS> GALLERY_ROWS { get; set; } = new List<GALLERY_ROWS>();
 }

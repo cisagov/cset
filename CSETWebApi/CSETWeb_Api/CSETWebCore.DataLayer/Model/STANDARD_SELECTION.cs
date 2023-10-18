@@ -6,58 +6,62 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of STANDARD_SELECTION records
+/// </summary>
+public partial class STANDARD_SELECTION
 {
     /// <summary>
-    /// A collection of STANDARD_SELECTION records
+    /// The Id is used to
     /// </summary>
-    public partial class STANDARD_SELECTION
-    {
-        public STANDARD_SELECTION()
-        {
-            ASSESSMENT_SELECTED_LEVELS = new HashSet<ASSESSMENT_SELECTED_LEVELS>();
-            NIST_SAL_INFO_TYPES = new HashSet<NIST_SAL_INFO_TYPES>();
-            NIST_SAL_QUESTION_ANSWERS = new HashSet<NIST_SAL_QUESTION_ANSWERS>();
-        }
+    [Key]
+    public int Assessment_Id { get; set; }
 
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Assessment_Id { get; set; }
-        /// <summary>
-        /// The Application Mode is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Application_Mode { get; set; }
-        /// <summary>
-        /// The Selected Sal Level is used to
-        /// </summary>
-        [Required]
-        [StringLength(50)]
-        public string Selected_Sal_Level { get; set; }
-        [StringLength(50)]
-        public string Last_Sal_Determination_Type { get; set; }
-        [StringLength(50)]
-        public string Sort_Set_Name { get; set; }
-        public bool Is_Advanced { get; set; }
-        public bool Only_Mode { get; set; }
-        [StringLength(100)]
-        public string Hidden_Screens { get; set; }
+    /// <summary>
+    /// The Application Mode is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Application_Mode { get; set; }
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("STANDARD_SELECTION")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Last_Sal_Determination_Type")]
-        [InverseProperty("STANDARD_SELECTION")]
-        public virtual SAL_DETERMINATION_TYPES Last_Sal_Determination_TypeNavigation { get; set; }
-        public virtual UNIVERSAL_SAL_LEVEL Selected_Sal_LevelNavigation { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<NIST_SAL_INFO_TYPES> NIST_SAL_INFO_TYPES { get; set; }
-        [InverseProperty("Assessment")]
-        public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; }
-    }
+    /// <summary>
+    /// The Selected Sal Level is used to
+    /// </summary>
+    [Required]
+    [StringLength(50)]
+    public string Selected_Sal_Level { get; set; }
+
+    [StringLength(50)]
+    public string Last_Sal_Determination_Type { get; set; }
+
+    [StringLength(50)]
+    public string Sort_Set_Name { get; set; }
+
+    public bool Is_Advanced { get; set; }
+
+    public bool Only_Mode { get; set; }
+
+    [StringLength(100)]
+    public string Hidden_Screens { get; set; }
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; } = new List<ASSESSMENT_SELECTED_LEVELS>();
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("STANDARD_SELECTION")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Last_Sal_Determination_Type")]
+    [InverseProperty("STANDARD_SELECTION")]
+    public virtual SAL_DETERMINATION_TYPES Last_Sal_Determination_TypeNavigation { get; set; }
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<NIST_SAL_INFO_TYPES> NIST_SAL_INFO_TYPES { get; set; } = new List<NIST_SAL_INFO_TYPES>();
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; } = new List<NIST_SAL_QUESTION_ANSWERS>();
+
+    public virtual UNIVERSAL_SAL_LEVEL Selected_Sal_LevelNavigation { get; set; }
 }

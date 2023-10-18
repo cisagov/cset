@@ -6,30 +6,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of STANDARD_CATEGORY records
+/// </summary>
+public partial class STANDARD_CATEGORY
 {
     /// <summary>
-    /// A collection of STANDARD_CATEGORY records
+    /// The Standard Category is used to
     /// </summary>
-    public partial class STANDARD_CATEGORY
-    {
-        public STANDARD_CATEGORY()
-        {
-            NEW_REQUIREMENT = new HashSet<NEW_REQUIREMENT>();
-            STANDARD_CATEGORY_SEQUENCE = new HashSet<STANDARD_CATEGORY_SEQUENCE>();
-        }
+    [Key]
+    [Column("Standard_Category")]
+    [StringLength(250)]
+    public string Standard_Category1 { get; set; }
 
-        /// <summary>
-        /// The Standard Category is used to
-        /// </summary>
-        [Key]
-        [Column("Standard_Category")]
-        [StringLength(250)]
-        public string Standard_Category1 { get; set; }
+    [InverseProperty("Standard_CategoryNavigation")]
+    public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; } = new List<NEW_REQUIREMENT>();
 
-        [InverseProperty("Standard_CategoryNavigation")]
-        public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; }
-        [InverseProperty("Standard_CategoryNavigation")]
-        public virtual ICollection<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; }
-    }
+    [InverseProperty("Standard_CategoryNavigation")]
+    public virtual ICollection<STANDARD_CATEGORY_SEQUENCE> STANDARD_CATEGORY_SEQUENCE { get; set; } = new List<STANDARD_CATEGORY_SEQUENCE>();
 }

@@ -6,23 +6,17 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of ANSWER_QUESTION_TYPES records
+/// </summary>
+public partial class ANSWER_QUESTION_TYPES
 {
-    /// <summary>
-    /// A collection of ANSWER_QUESTION_TYPES records
-    /// </summary>
-    public partial class ANSWER_QUESTION_TYPES
-    {
-        public ANSWER_QUESTION_TYPES()
-        {
-            ANSWER = new HashSet<ANSWER>();
-        }
+    [Key]
+    [StringLength(20)]
+    public string Question_Type { get; set; }
 
-        [Key]
-        [StringLength(20)]
-        public string Question_Type { get; set; }
-
-        [InverseProperty("Question_TypeNavigation")]
-        public virtual ICollection<ANSWER> ANSWER { get; set; }
-    }
+    [InverseProperty("Question_TypeNavigation")]
+    public virtual ICollection<ANSWER> ANSWER { get; set; } = new List<ANSWER>();
 }

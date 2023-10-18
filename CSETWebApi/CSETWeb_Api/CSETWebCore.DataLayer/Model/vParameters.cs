@@ -6,18 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+[Keyless]
+public partial class vParameters
 {
-    [Keyless]
-    public partial class vParameters
-    {
-        public int Parameter_ID { get; set; }
-        [Required]
-        [StringLength(500)]
-        public string Parameter_Name { get; set; }
-        [Required]
-        [StringLength(2000)]
-        public string Default_Value { get; set; }
-        public int? Assessment_ID { get; set; }
-    }
+    public int Parameter_ID { get; set; }
+
+    [Required]
+    [StringLength(500)]
+    public string Parameter_Name { get; set; }
+
+    [Required]
+    [StringLength(2000)]
+    public string Default_Value { get; set; }
+
+    public int? Assessment_ID { get; set; }
 }

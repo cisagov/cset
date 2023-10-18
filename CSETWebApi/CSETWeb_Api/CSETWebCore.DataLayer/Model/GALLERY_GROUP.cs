@@ -6,24 +6,19 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class GALLERY_GROUP
 {
-    public partial class GALLERY_GROUP
-    {
-        public GALLERY_GROUP()
-        {
-            GALLERY_GROUP_DETAILS = new HashSet<GALLERY_GROUP_DETAILS>();
-            GALLERY_ROWS = new HashSet<GALLERY_ROWS>();
-        }
+    [Key]
+    public int Group_Id { get; set; }
 
-        [Key]
-        public int Group_Id { get; set; }
-        [StringLength(50)]
-        public string Group_Title { get; set; }
+    [StringLength(50)]
+    public string Group_Title { get; set; }
 
-        [InverseProperty("Group")]
-        public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; }
-        [InverseProperty("Group")]
-        public virtual ICollection<GALLERY_ROWS> GALLERY_ROWS { get; set; }
-    }
+    [InverseProperty("Group")]
+    public virtual ICollection<GALLERY_GROUP_DETAILS> GALLERY_GROUP_DETAILS { get; set; } = new List<GALLERY_GROUP_DETAILS>();
+
+    [InverseProperty("Group")]
+    public virtual ICollection<GALLERY_ROWS> GALLERY_ROWS { get; set; } = new List<GALLERY_ROWS>();
 }

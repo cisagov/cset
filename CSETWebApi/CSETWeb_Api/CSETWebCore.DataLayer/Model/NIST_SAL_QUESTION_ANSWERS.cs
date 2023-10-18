@@ -6,23 +6,26 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class NIST_SAL_QUESTION_ANSWERS
-    {
-        [Key]
-        public int Assessment_Id { get; set; }
-        [Key]
-        public int Question_Id { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Question_Answer { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("NIST_SAL_QUESTION_ANSWERS")]
-        public virtual STANDARD_SELECTION Assessment { get; set; }
-        [ForeignKey("Question_Id")]
-        [InverseProperty("NIST_SAL_QUESTION_ANSWERS")]
-        public virtual NIST_SAL_QUESTIONS Question { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "Question_Id")]
+public partial class NIST_SAL_QUESTION_ANSWERS
+{
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    [Key]
+    public int Question_Id { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Question_Answer { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("NIST_SAL_QUESTION_ANSWERS")]
+    public virtual STANDARD_SELECTION Assessment { get; set; }
+
+    [ForeignKey("Question_Id")]
+    [InverseProperty("NIST_SAL_QUESTION_ANSWERS")]
+    public virtual NIST_SAL_QUESTIONS Question { get; set; }
 }

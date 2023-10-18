@@ -6,17 +6,18 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of LEVEL_BACKUP_ACET records
+/// </summary>
+[PrimaryKey("requirement_id", "Standard_Level")]
+public partial class LEVEL_BACKUP_ACET
 {
-    /// <summary>
-    /// A collection of LEVEL_BACKUP_ACET records
-    /// </summary>
-    public partial class LEVEL_BACKUP_ACET
-    {
-        [Key]
-        public int requirement_id { get; set; }
-        [Key]
-        [StringLength(50)]
-        public string Standard_Level { get; set; }
-    }
+    [Key]
+    public int requirement_id { get; set; }
+
+    [Key]
+    [StringLength(50)]
+    public string Standard_Level { get; set; }
 }

@@ -6,26 +6,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class METRO_AREA
 {
-    public partial class METRO_AREA
-    {
-        public METRO_AREA()
-        {
-            COUNTY_METRO_AREA = new HashSet<COUNTY_METRO_AREA>();
-            METRO_ANSWERS = new HashSet<METRO_ANSWERS>();
-        }
+    [Required]
+    [StringLength(300)]
+    public string MetropolitanAreaName { get; set; }
 
-        [Required]
-        [StringLength(300)]
-        public string MetropolitanAreaName { get; set; }
-        [Key]
-        [StringLength(10)]
-        public string Metro_FIPS { get; set; }
+    [Key]
+    [StringLength(10)]
+    public string Metro_FIPS { get; set; }
 
-        [InverseProperty("Metro_FIPSNavigation")]
-        public virtual ICollection<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; }
-        [InverseProperty("Metro_FIPSNavigation")]
-        public virtual ICollection<METRO_ANSWERS> METRO_ANSWERS { get; set; }
-    }
+    [InverseProperty("Metro_FIPSNavigation")]
+    public virtual ICollection<COUNTY_METRO_AREA> COUNTY_METRO_AREA { get; set; } = new List<COUNTY_METRO_AREA>();
+
+    [InverseProperty("Metro_FIPSNavigation")]
+    public virtual ICollection<METRO_ANSWERS> METRO_ANSWERS { get; set; } = new List<METRO_ANSWERS>();
 }
