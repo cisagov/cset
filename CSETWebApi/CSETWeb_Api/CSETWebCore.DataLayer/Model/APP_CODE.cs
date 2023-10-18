@@ -6,28 +6,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of APP_CODE records
+/// </summary>
+public partial class APP_CODE
 {
-    /// <summary>
-    /// A collection of APP_CODE records
-    /// </summary>
-    public partial class APP_CODE
-    {
-        public APP_CODE()
-        {
-            DEMOGRAPHICS_ASSET_VALUES = new HashSet<DEMOGRAPHICS_ASSET_VALUES>();
-            MODES_SETS_MATURITY_MODELS = new HashSet<MODES_SETS_MATURITY_MODELS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string AppCode { get; set; }
 
-        [Key]
-        [StringLength(50)]
-        public string AppCode { get; set; }
-        [StringLength(50)]
-        public string Description { get; set; }
+    [StringLength(50)]
+    public string Description { get; set; }
 
-        [InverseProperty("AppCodeNavigation")]
-        public virtual ICollection<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; }
-        [InverseProperty("AppCodeNavigation")]
-        public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; }
-    }
+    [InverseProperty("AppCodeNavigation")]
+    public virtual ICollection<DEMOGRAPHICS_ASSET_VALUES> DEMOGRAPHICS_ASSET_VALUES { get; set; } = new List<DEMOGRAPHICS_ASSET_VALUES>();
+
+    [InverseProperty("AppCodeNavigation")]
+    public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; } = new List<MODES_SETS_MATURITY_MODELS>();
 }

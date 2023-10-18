@@ -6,26 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of LEVEL_NAMES records
+/// </summary>
+public partial class LEVEL_NAMES
 {
     /// <summary>
-    /// A collection of LEVEL_NAMES records
+    /// The Level Name is used to
     /// </summary>
-    public partial class LEVEL_NAMES
-    {
-        public LEVEL_NAMES()
-        {
-            ASSESSMENT_SELECTED_LEVELS = new HashSet<ASSESSMENT_SELECTED_LEVELS>();
-        }
+    [Key]
+    [StringLength(50)]
+    public string Level_Name { get; set; }
 
-        /// <summary>
-        /// The Level Name is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Level_Name { get; set; }
-
-        [InverseProperty("Level_NameNavigation")]
-        public virtual ICollection<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; }
-    }
+    [InverseProperty("Level_NameNavigation")]
+    public virtual ICollection<ASSESSMENT_SELECTED_LEVELS> ASSESSMENT_SELECTED_LEVELS { get; set; } = new List<ASSESSMENT_SELECTED_LEVELS>();
 }

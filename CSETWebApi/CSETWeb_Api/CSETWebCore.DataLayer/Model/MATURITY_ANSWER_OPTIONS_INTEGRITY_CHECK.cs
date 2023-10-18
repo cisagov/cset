@@ -6,20 +6,22 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK
-    {
-        [Key]
-        public int Mat_Option_Id_1 { get; set; }
-        [Key]
-        public int Mat_Option_Id_2 { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Mat_Option_Id_1")]
-        [InverseProperty("MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation")]
-        public virtual MATURITY_ANSWER_OPTIONS Mat_Option_Id_1Navigation { get; set; }
-        [ForeignKey("Mat_Option_Id_2")]
-        [InverseProperty("MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation")]
-        public virtual MATURITY_ANSWER_OPTIONS Mat_Option_Id_2Navigation { get; set; }
-    }
+[PrimaryKey("Mat_Option_Id_1", "Mat_Option_Id_2")]
+public partial class MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK
+{
+    [Key]
+    public int Mat_Option_Id_1 { get; set; }
+
+    [Key]
+    public int Mat_Option_Id_2 { get; set; }
+
+    [ForeignKey("Mat_Option_Id_1")]
+    [InverseProperty("MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_1Navigation")]
+    public virtual MATURITY_ANSWER_OPTIONS Mat_Option_Id_1Navigation { get; set; }
+
+    [ForeignKey("Mat_Option_Id_2")]
+    [InverseProperty("MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECKMat_Option_Id_2Navigation")]
+    public virtual MATURITY_ANSWER_OPTIONS Mat_Option_Id_2Navigation { get; set; }
 }

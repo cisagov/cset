@@ -6,27 +6,28 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of FILE_KEYWORDS records
+/// </summary>
+[PrimaryKey("Gen_File_Id", "Keyword")]
+public partial class FILE_KEYWORDS
 {
     /// <summary>
-    /// A collection of FILE_KEYWORDS records
+    /// The Gen File Id is used to
     /// </summary>
-    public partial class FILE_KEYWORDS
-    {
-        /// <summary>
-        /// The Gen File Id is used to
-        /// </summary>
-        [Key]
-        public int Gen_File_Id { get; set; }
-        /// <summary>
-        /// The Keyword is used to
-        /// </summary>
-        [Key]
-        [StringLength(60)]
-        public string Keyword { get; set; }
+    [Key]
+    public int Gen_File_Id { get; set; }
 
-        [ForeignKey("Gen_File_Id")]
-        [InverseProperty("FILE_KEYWORDS")]
-        public virtual GEN_FILE Gen_File { get; set; }
-    }
+    /// <summary>
+    /// The Keyword is used to
+    /// </summary>
+    [Key]
+    [StringLength(60)]
+    public string Keyword { get; set; }
+
+    [ForeignKey("Gen_File_Id")]
+    [InverseProperty("FILE_KEYWORDS")]
+    public virtual GEN_FILE Gen_File { get; set; }
 }

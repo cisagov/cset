@@ -6,28 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    public partial class GENERAL_SAL
-    {
-        /// <summary>
-        /// The Id is used to
-        /// </summary>
-        [Key]
-        public int Assessment_Id { get; set; }
-        /// <summary>
-        /// The Sal Weight Id is used to
-        /// </summary>
-        [Key]
-        [StringLength(50)]
-        public string Sal_Name { get; set; }
-        public int Slider_Value { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Assessment_Id")]
-        [InverseProperty("GENERAL_SAL")]
-        public virtual ASSESSMENTS Assessment { get; set; }
-        [ForeignKey("Sal_Name")]
-        [InverseProperty("GENERAL_SAL")]
-        public virtual GEN_SAL_NAMES Sal_NameNavigation { get; set; }
-    }
+[PrimaryKey("Assessment_Id", "Sal_Name")]
+public partial class GENERAL_SAL
+{
+    /// <summary>
+    /// The Id is used to
+    /// </summary>
+    [Key]
+    public int Assessment_Id { get; set; }
+
+    /// <summary>
+    /// The Sal Weight Id is used to
+    /// </summary>
+    [Key]
+    [StringLength(50)]
+    public string Sal_Name { get; set; }
+
+    public int Slider_Value { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("GENERAL_SAL")]
+    public virtual ASSESSMENTS Assessment { get; set; }
+
+    [ForeignKey("Sal_Name")]
+    [InverseProperty("GENERAL_SAL")]
+    public virtual GEN_SAL_NAMES Sal_NameNavigation { get; set; }
 }

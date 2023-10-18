@@ -6,24 +6,20 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+public partial class TTP
 {
-    public partial class TTP
-    {
-        public TTP()
-        {
-            TTP_MAT_QUESTION = new HashSet<TTP_MAT_QUESTION>();
-        }
+    [Key]
+    [StringLength(100)]
+    public string TTP_Code { get; set; }
 
-        [Key]
-        [StringLength(100)]
-        public string TTP_Code { get; set; }
-        [StringLength(100)]
-        public string Description { get; set; }
-        [StringLength(100)]
-        public string URL { get; set; }
+    [StringLength(100)]
+    public string URL { get; set; }
 
-        [InverseProperty("TTP_CodeNavigation")]
-        public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; }
-    }
+    [StringLength(100)]
+    public string Description { get; set; }
+
+    [InverseProperty("TTP_CodeNavigation")]
+    public virtual ICollection<TTP_MAT_QUESTION> TTP_MAT_QUESTION { get; set; } = new List<TTP_MAT_QUESTION>();
 }

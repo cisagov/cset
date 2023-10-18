@@ -6,29 +6,31 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
+namespace CSETWebCore.DataLayer.Model;
+
+/// <summary>
+/// A collection of PROCUREMENT_DEPENDENCY records
+/// </summary>
+[PrimaryKey("Procurement_Id", "Dependencies_Id")]
+public partial class PROCUREMENT_DEPENDENCY
 {
     /// <summary>
-    /// A collection of PROCUREMENT_DEPENDENCY records
+    /// The Procurement Id is used to
     /// </summary>
-    public partial class PROCUREMENT_DEPENDENCY
-    {
-        /// <summary>
-        /// The Procurement Id is used to
-        /// </summary>
-        [Key]
-        public int Procurement_Id { get; set; }
-        /// <summary>
-        /// The Dependencies Id is used to
-        /// </summary>
-        [Key]
-        public int Dependencies_Id { get; set; }
+    [Key]
+    public int Procurement_Id { get; set; }
 
-        [ForeignKey("Dependencies_Id")]
-        [InverseProperty("PROCUREMENT_DEPENDENCYDependencies")]
-        public virtual PROCUREMENT_LANGUAGE_DATA Dependencies { get; set; }
-        [ForeignKey("Procurement_Id")]
-        [InverseProperty("PROCUREMENT_DEPENDENCYProcurement")]
-        public virtual PROCUREMENT_LANGUAGE_DATA Procurement { get; set; }
-    }
+    /// <summary>
+    /// The Dependencies Id is used to
+    /// </summary>
+    [Key]
+    public int Dependencies_Id { get; set; }
+
+    [ForeignKey("Dependencies_Id")]
+    [InverseProperty("PROCUREMENT_DEPENDENCYDependencies")]
+    public virtual PROCUREMENT_LANGUAGE_DATA Dependencies { get; set; }
+
+    [ForeignKey("Procurement_Id")]
+    [InverseProperty("PROCUREMENT_DEPENDENCYProcurement")]
+    public virtual PROCUREMENT_LANGUAGE_DATA Procurement { get; set; }
 }

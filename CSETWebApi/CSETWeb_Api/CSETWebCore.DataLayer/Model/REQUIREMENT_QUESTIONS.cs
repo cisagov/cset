@@ -6,23 +6,25 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of REQUIREMENT_QUESTIONS records
-    /// </summary>
-    public partial class REQUIREMENT_QUESTIONS
-    {
-        [Key]
-        public int Question_Id { get; set; }
-        [Key]
-        public int Requirement_Id { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Question_Id")]
-        [InverseProperty("REQUIREMENT_QUESTIONS")]
-        public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey("Requirement_Id")]
-        [InverseProperty("REQUIREMENT_QUESTIONS")]
-        public virtual NEW_REQUIREMENT Requirement { get; set; }
-    }
+/// <summary>
+/// A collection of REQUIREMENT_QUESTIONS records
+/// </summary>
+[PrimaryKey("Question_Id", "Requirement_Id")]
+public partial class REQUIREMENT_QUESTIONS
+{
+    [Key]
+    public int Question_Id { get; set; }
+
+    [Key]
+    public int Requirement_Id { get; set; }
+
+    [ForeignKey("Question_Id")]
+    [InverseProperty("REQUIREMENT_QUESTIONS")]
+    public virtual NEW_QUESTION Question { get; set; }
+
+    [ForeignKey("Requirement_Id")]
+    [InverseProperty("REQUIREMENT_QUESTIONS")]
+    public virtual NEW_REQUIREMENT Requirement { get; set; }
 }

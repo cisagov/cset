@@ -6,25 +6,28 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace CSETWebCore.DataLayer.Model
-{
-    /// <summary>
-    /// A collection of NERC_RISK_RANKING records
-    /// </summary>
-    public partial class NERC_RISK_RANKING
-    {
-        public int? Question_id { get; set; }
-        public int? Requirement_Id { get; set; }
-        [Key]
-        public int Compliance_Risk_Rank { get; set; }
-        [StringLength(50)]
-        public string Violation_Risk_Factor { get; set; }
+namespace CSETWebCore.DataLayer.Model;
 
-        [ForeignKey("Question_id")]
-        [InverseProperty("NERC_RISK_RANKING")]
-        public virtual NEW_QUESTION Question { get; set; }
-        [ForeignKey("Requirement_Id")]
-        [InverseProperty("NERC_RISK_RANKING")]
-        public virtual NEW_REQUIREMENT Requirement { get; set; }
-    }
+/// <summary>
+/// A collection of NERC_RISK_RANKING records
+/// </summary>
+public partial class NERC_RISK_RANKING
+{
+    public int? Question_id { get; set; }
+
+    public int? Requirement_Id { get; set; }
+
+    [Key]
+    public int Compliance_Risk_Rank { get; set; }
+
+    [StringLength(50)]
+    public string Violation_Risk_Factor { get; set; }
+
+    [ForeignKey("Question_id")]
+    [InverseProperty("NERC_RISK_RANKING")]
+    public virtual NEW_QUESTION Question { get; set; }
+
+    [ForeignKey("Requirement_Id")]
+    [InverseProperty("NERC_RISK_RANKING")]
+    public virtual NEW_REQUIREMENT Requirement { get; set; }
 }
