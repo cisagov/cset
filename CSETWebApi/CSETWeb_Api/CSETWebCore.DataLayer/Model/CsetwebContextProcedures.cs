@@ -12,9 +12,6 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class CsetwebContext
     {
-
-        public CsetwebContext() { }
-
         private ICsetwebContextProcedures _procedures;
 
         public virtual ICsetwebContextProcedures Procedures
