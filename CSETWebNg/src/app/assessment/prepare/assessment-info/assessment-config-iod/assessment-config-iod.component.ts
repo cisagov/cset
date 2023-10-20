@@ -17,6 +17,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   demographics: any = {};
   contacts: User[];
   assessment: AssessmentDetail = {};
+  isPCII: boolean = false;
 
   constructor(
     private assessSvc: AssessmentService,
@@ -81,6 +82,10 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   changePointOfContact(evt: any) {
     this.updateDemographics();
+  }
+
+  changeIsPCII(val: boolean) {
+    this.isPCII = val;
   }
 
   updateDemographics() {
