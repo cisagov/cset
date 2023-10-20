@@ -46,6 +46,54 @@
         <mat-datepicker #picker></mat-datepicker>
       </div>
     </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="name" class="mb-1">Is this PCII?</label>
+        <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
+          <label
+            class="btn btn-level btn-rounded form-check-label"
+            [class.active]="isPCII"
+            (change)="changeIsPCII(true)"
+          >
+            <input
+              class="form-check-input"
+              name="standardYes"
+              id="standardYes"
+              type="radio"
+              autocomplete="off"
+              tabindex="0"
+              [checked]="isPCII"
+            />
+            Yes
+          </label>
+          <label
+            class="btn btn-level btn-rounded form-check-label"
+            [class.active]="!isPCII"
+            (change)="changeIsPCII(false)"
+          >
+            <input
+              class="form-check-input"
+              name="standardNo"
+              id="standardNo"
+              type="radio"
+              autocomplete="off"
+              tabindex="0"
+              [checked]="!isPCII"
+            />
+            No
+          </label>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label class="mb-1" for="name">{{t('PCII Number')}}</label>
+        <input type="text" maxlength="100" class="form-control" id="name"
+        name="name" required focusOnInit="true"
+        [(ngModel)]="assessment.assessmentName"
+        (ngModelChange)="assessment.assessmentName" (change)="update($event)"
+        [disabled]="!isPCII"
+        autofocus tabindex="0">
+      </div>
+    </div>
 
     <div class="my-4">
       <h4>{{t('assessment type')}}</h4>
