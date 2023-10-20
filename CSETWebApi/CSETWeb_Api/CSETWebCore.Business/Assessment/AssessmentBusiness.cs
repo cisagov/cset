@@ -642,20 +642,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 _maturityBusiness.ClearMaturityModel(assessmentId);
             }
-
-            /* Update File naming convention
-               [client-assessment type-report type].pcii.[PCII Number].[extension]
-               [client-assessment type - report type].non-pcii.[Date of Assessment].[extension]
-            */
-            if (user != null && user.CisaAssessorWorkflow)
-            {
-                var dateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'-'HH''mm");
-                var shortName = assessment.MaturityModel?.ModelName;
-                var assessmentName = $"{shortName}.non-pcii.{dateTime}";
-                assessment.AssessmentName = assessmentName;
-                //SaveAssessmentDetail(assessment_id, newAssessment);
-            }
-
+            AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
