@@ -29,9 +29,12 @@
       <div class="form-group col-md-6">
 
         <label class="mb-1" for="name">{{t('assessment name')}}</label>
-        <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
-          [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName" (change)="update($event)"
-          [disabled]="isCisaAssessorMode()" autofocus tabindex="0">
+        <input type="text" maxlength="100" class="form-control" id="name"
+        name="name" required focusOnInit="true"
+        disabled="true"
+        [(ngModel)]="assessment.assessmentName"
+        (ngModelChange)="assessment.assessmentName" (change)="update($event)"
+        autofocus tabindex="0">
       </div>
       <div class="form-group col-md-6">
         <label class="mb-1" for="date">{{t('assessment date')}}</label>
@@ -59,11 +62,13 @@
           </label>
         </div>
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-6" *ngIf="isPCII">
         <label class="mb-1" for="name">{{t('PCII Number')}}</label>
-        <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
-          [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName" (change)="update($event)"
-          [disabled]="!isPCII" autofocus tabindex="0">
+        <input type="text" maxlength="100" class="form-control" id="name"
+        name="name" required focusOnInit="true"
+        [(ngModel)]="assessment.pciiNumber"
+        (ngModelChange)="assessment.pciiNumber" (change)="update($event)"        
+        autofocus tabindex="0">
       </div>
     </div>
 
