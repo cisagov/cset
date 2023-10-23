@@ -363,6 +363,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.DiagramImage = result.aa.Diagram_Image;
                 assessment.ISE_StateLed = result.aa.ISE_StateLed;
                 assessment.RegionCode = result.ii.Region_Code;
+                assessment.is_PCII = result.aa.Is_PCII;
+                assessment.PciiNumber = result.aa.PCII_Number;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -597,6 +599,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
             dbAssessment.PCII_Number = assessment.PciiNumber;
+            dbAssessment.Is_PCII = assessment.is_PCII;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();

@@ -17,8 +17,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   demographics: any = {};
   contacts: User[];
   assessment: AssessmentDetail = {};
-  isPCII: boolean = false;
-
+  
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
@@ -37,6 +36,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     });
 
     this.getAssessmentDetail();
+    
   }
 
   /**
@@ -54,6 +54,7 @@ export class AssessmentConfigIodComponent implements OnInit {
       }
     }
 
+    console.log(this.assessment.is_PCII);
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -66,11 +67,14 @@ export class AssessmentConfigIodComponent implements OnInit {
    *
    */
   update(e) {
+    console.log("IN the event");
+    console.log(e);
     // default Assessment Name if it is left empty
     if (this.assessment) {
       if (this.assessment.assessmentName.trim().length === 0) {
         this.assessment.assessmentName = '(Untitled Assessment)';
       }
+     
     }
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
@@ -84,9 +88,13 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.updateDemographics();
   }
 
-  changeIsPCII(val: boolean) {
-    this.isPCII = val;
-  }
+  // changeIsPCII(val: boolean) {
+  //   this.isPCII = val;
+  //   if(this.assessment){
+  //     this.assessment.is_PCII = this.isPCII;
+  //     this.assessSvc.updateAssessmentDetails(this.assessment);
+  //   }
+  // }
 
   isCisaAssessorMode() {
     // IOD means your in CISA Asssessor mode
