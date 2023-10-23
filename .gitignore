@@ -10,6 +10,11 @@ dist
 .vscode
 
 ## Web ##
+/CSETWebApi/CSETWeb_Api/.DS_Store
+/CSETWebApi/.DS_Store
+
+
+## Web ##
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Release
 /CSETWebApi/CSETWeb_Api/DataLayerCore/bin/Debug
 /CSETWebApi/CSETWeb_Api/AddCSETUser/publish
@@ -36,6 +41,7 @@ bin
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base-viewer.min.js
 /CSETWebApi/CSETWeb_Api/CSETWeb_Api/Diagram/etc/build/base.min.js
 /CSETWebApi/CSETWeb_Api/package-lock.json
+
 LOCAL-INSTALLATION
 /CSETWebNg/.snyk
 obj/
