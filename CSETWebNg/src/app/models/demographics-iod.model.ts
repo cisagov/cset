@@ -25,6 +25,7 @@
 
 export interface DemographicsIod {
     assessmentId?: number;
+    version?: number;
     organizationType?: number;
     organizationName?: string;
     businessUnit?: string;
@@ -50,6 +51,7 @@ export interface DemographicsIod {
     /**
      * Lists the orgs
      */
+    
     shareOrgs?: number[];
     shareOther?: string;
 
@@ -68,6 +70,7 @@ export interface DemographicsIod {
     listRegulationTypes?: any[];
     listShareOrgs?: any[];
     listBarriers?: any[];
+    
 }
 
 export interface CisaWorkflowFieldValidationResponse {

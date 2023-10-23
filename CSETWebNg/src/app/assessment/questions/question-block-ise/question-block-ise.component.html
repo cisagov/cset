@@ -149,7 +149,7 @@
 
                     <!-- This is the Parent Question Icons -->
                     <app-question-extras *ngIf="q.parentQuestionId == null" #extrasComponent [myQuestion]="q"
-                        [ncuaDisplay]="true" [iconsToDisplay]="['DETAIL', 'SUPP', 'REVIEWED']"
+                        [ncuaDisplay]="true" [iconsToDisplay]="['SUPP', 'REVIEWED']"
                       class="w-100" (changeExtras)="refreshReviewIndicator()" (changeComponents)="refreshComponentOverrides()">
                     </app-question-extras>
 
