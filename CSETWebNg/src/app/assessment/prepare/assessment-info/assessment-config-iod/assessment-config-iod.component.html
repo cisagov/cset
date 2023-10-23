@@ -29,12 +29,9 @@
       <div class="form-group col-md-6">
 
         <label class="mb-1" for="name">{{t('assessment name')}}</label>
-        <input type="text" maxlength="100" class="form-control" id="name"
-        name="name" required focusOnInit="true"
-        disabled="true"
-        [(ngModel)]="assessment.assessmentName"
-        (ngModelChange)="assessment.assessmentName" (change)="update($event)"
-        autofocus tabindex="0">
+        <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
+          disabled="true" [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
+          (change)="update($event)" autofocus tabindex="0">
       </div>
       <div class="form-group col-md-6">
         <label class="mb-1" for="date">{{t('assessment date')}}</label>
@@ -50,25 +47,21 @@
         <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
             <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-              (ngModelChange)="update($event)"
-              tabindex="0" [(ngModel)]="assessment.is_PCII" />
+              (ngModelChange)="update($event)" value="true" tabindex="0" [(ngModel)]="assessment.is_PCII" />
             Yes
           </label>
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
             <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-              (ngModelChange)="update($event)"
-              tabindex="0" [(ngModel)]="!assessment.is_PCII" />
+              (ngModelChange)="update($event)" value="false" tabindex="0" [(ngModel)]="!assessment.is_PCII" />
             No
           </label>
         </div>
       </div>
       <div class="form-group col-md-6" *ngIf="assessment.is_PCII">
         <label class="mb-1" for="name">{{t('PCII Number')}}</label>
-        <input type="text" maxlength="100" class="form-control" id="name"
-        name="name" required focusOnInit="true"
-        [(ngModel)]="assessment.pciiNumber"
-        (ngModelChange)="assessment.pciiNumber" (change)="update($event)"        
-        autofocus tabindex="0">
+        <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
+          [(ngModel)]="assessment.pciiNumber" (ngModelChange)="assessment.pciiNumber" (change)="update($event)"
+          autofocus tabindex="0">
       </div>
     </div>
 

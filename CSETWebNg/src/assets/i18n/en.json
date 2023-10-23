@@ -26,7 +26,7 @@
     "assessment type": "Assessment Type",
     "demographics": "Demographics",
     "critical service name": "Critical Service Name",
-    "PCII Number": "PCII NUmber",
+    "PCII Number": "PCII Number",
     "critical service description": "Critical Service Description",
     "practices": "Practices",
     "requires review": "Requires Review",
@@ -39,7 +39,6 @@
     "sal intro 1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
     "sal intro 3": "The SAL applies to Standard and Diagram Component question sets.",
-    
     "buttons": {
         "ok": "OK",
         "save": "Save",
@@ -81,12 +80,12 @@
         "standard questions": "Standard Questions",
         "standard requirements": "Standard Requirements",
         "maturity questions": "Maturity Questions",
-        "security practices": "Security Practices",        
+        "security practices": "Security Practices",
         "questions": "Questions",
         "practices": "Practices",
         "statements": "Statements",
         "inherent risk profiles": "Inherent Risk Profiles",
-        "inherent risk profile summary": "Inherent Risk Profile Summary",        
+        "inherent risk profile summary": "Inherent Risk Profile Summary",
         "acet maturity results": "ACET Maturity Results",
         "other remarks": "Other Remarks",
         "imr tutorial": "IMR Tutorial",
@@ -224,7 +223,6 @@
             "description required": "* Description required"
         }
     },
-    
     "tooltip": {
         "mfr-flag": "This control requires further review",
         "category requires review": "One or more controls in this category requires further review",
@@ -257,7 +255,7 @@
         "high": "High",
         "basic": "Basic",
         "incomplete": "Incomplete",
-        "ad hoc" : "Ad Hoc",
+        "ad hoc": "Ad Hoc",
         "baseline": "Baseline",
         "evolving": "Evolving",
         "intermediate": "Intermediate",
@@ -320,7 +318,7 @@
         "show statements with observations": "Show statements with observations",
         "show statements with issues": "Show statements with issues"
     },
-    "dialogs" : {
+    "dialogs": {
         "please confirm": "Please Confirm",
         "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
         "remove assessment": "Are you sure you want to remove {{assessmentName}}?",

@@ -17,7 +17,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   demographics: any = {};
   contacts: User[];
   assessment: AssessmentDetail = {};
-  
+
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
@@ -36,7 +36,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     });
 
     this.getAssessmentDetail();
-    
+
   }
 
   /**
@@ -67,14 +67,11 @@ export class AssessmentConfigIodComponent implements OnInit {
    *
    */
   update(e) {
-    console.log("IN the event");
-    console.log(e);
     // default Assessment Name if it is left empty
     if (this.assessment) {
       if (this.assessment.assessmentName.trim().length === 0) {
         this.assessment.assessmentName = '(Untitled Assessment)';
       }
-     
     }
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
