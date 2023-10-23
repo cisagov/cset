@@ -199,7 +199,11 @@ export class AssessmentService {
         JSON.stringify(payload),
         headers
       )
-      .subscribe();
+      .subscribe(() => {
+        if(this.configSvc.cisaAssessorWorkflow){          
+          this.updateAssessmentName();
+        }
+      });
   }
 
   /**

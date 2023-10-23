@@ -6,6 +6,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
+import { Config } from 'protractor';
+import { ConfigService } from '../../../../services/config.service';
 
 
 @Component({
@@ -27,7 +29,8 @@ export class DemographicsIodComponent implements OnInit {
   constructor(public demoSvc: DemographicIodService, 
     private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private configSvc : ConfigService
     ) {}
 
   /**
@@ -129,11 +132,11 @@ export class DemographicsIodComponent implements OnInit {
   }
 
   update(event: any) {
-    this.updateDemographics();
-    this.assessSvc.updateAssessmentName();
+    this.updateDemographics();    
   }
 
   updateDemographics() {
+    this.configSvc.cisaAssessorWorkflow = true;
     this.demoSvc.updateDemographic(this.demographicData);
   }
 }

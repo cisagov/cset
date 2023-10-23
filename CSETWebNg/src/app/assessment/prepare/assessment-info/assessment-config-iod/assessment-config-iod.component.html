@@ -47,17 +47,19 @@
         <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
             <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-              (ngModelChange)="update($event)" value="true" tabindex="0" [(ngModel)]="assessment.is_PCII" />
+              (change)="changeIsPCII(true)"
+              tabindex="0" [(ngModel)]="assessment.is_PCII" />
             Yes
           </label>
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
             <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-              (ngModelChange)="update($event)" value="false" tabindex="0" [(ngModel)]="!assessment.is_PCII" />
+              (change)="changeIsPCII(false)"
+              tabindex="0" [(ngModel)]="!assessment.is_PCII" />
             No
           </label>
         </div>
       </div>
-      <div class="form-group col-md-6" *ngIf="assessment.is_PCII">
+      <div class="form-group col-md-6" *ngIf="IsPCII">
         <label class="mb-1" for="name">{{t('PCII Number')}}</label>
         <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
           [(ngModel)]="assessment.pciiNumber" (ngModelChange)="assessment.pciiNumber" (change)="update($event)"
