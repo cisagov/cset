@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
@@ -12,6 +13,7 @@ using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
@@ -72,9 +74,11 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult PostExtended2([FromBody] DemographicExt demographics)
         {
             demographics.AssessmentId = _token.AssessmentForUser();
+            var userid = _token.GetCurrentUserId();
 
             var mgr = new DemographicExtBusiness(_context);
-            mgr.SaveDemographics(demographics);
+            mgr.SaveDemographics(demographics,userid??0);
+            
 
             return Ok();
         }

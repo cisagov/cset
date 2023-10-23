@@ -64,6 +64,7 @@ export class ConfigService {
    * will contain an empty string or "none".
    */
   mobileEnvironment = '';
+  cisaAssessorWorkflow: boolean = false;
 
   /**
    * Constructor.
@@ -230,6 +231,7 @@ export class ConfigService {
   }
 
   setCisaAssessorWorkflow(cisaAssessorWorkflowEnabled: boolean) {
+    this.cisaAssessorWorkflow = cisaAssessorWorkflowEnabled;
     return this.http.post(this.apiUrl + 'EnableProtectedFeature/setCisaAssessorWorkflow', cisaAssessorWorkflowEnabled);
   }
 

@@ -9,6 +9,9 @@ using CSETWebCore.Interfaces.Helpers;
 using System.Linq;
 using CSETWebCore.Model.Assessment;
 using System.Collections.Generic;
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Assessment;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWebCore.Business.Demographic
 {
@@ -80,7 +83,7 @@ namespace CSETWebCore.Business.Demographic
         /// <summary>
         /// Persists data to the CIS_CSI_SERVICE_DEMOGRAPHICS table.
         /// </summary
-        public int SaveServiceDemographics(CisServiceDemographics serviceDemographics)
+        public int SaveServiceDemographics(CisServiceDemographics serviceDemographics, int userid)
         {
             var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == serviceDemographics.AssessmentId).FirstOrDefault();
 
@@ -109,9 +112,9 @@ namespace CSETWebCore.Business.Demographic
             _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
             _context.SaveChanges();
             serviceDemographics.AssessmentId = dbServiceDemographics.Assessment_Id;
-
+            AssessmentNaming.ProcessName(_context, userid , serviceDemographics.AssessmentId);
             _assessmentUtil.TouchAssessment(dbServiceDemographics.Assessment_Id);
-
+            
             return serviceDemographics.AssessmentId;
         }
 

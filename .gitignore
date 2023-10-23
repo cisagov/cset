@@ -6,6 +6,9 @@ dist
 ## Mac OS ##
 .DS_Store
 
+## VS Code ##
+.vscode
+
 ## Web ##
 /CSETWebApi/CSETWeb_Api/.DS_Store
 /CSETWebApi/.DS_Store

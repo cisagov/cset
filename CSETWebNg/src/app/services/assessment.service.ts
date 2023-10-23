@@ -199,7 +199,11 @@ export class AssessmentService {
         JSON.stringify(payload),
         headers
       )
-      .subscribe();
+      .subscribe(() => {
+        if(this.configSvc.cisaAssessorWorkflow){          
+          this.updateAssessmentName();
+        }
+      });
   }
 
   /**
@@ -380,6 +384,16 @@ export class AssessmentService {
               'Unable to create new assessment: ' + (<Error>error).message
             )
         );
+    });
+  }
+
+
+  //Call this when the assessment name 
+  //was calculated in the backend and needs
+  //to be updated here
+  updateAssessmentName(){
+    this.getAssessmentDetail().subscribe((data: AssessmentDetail)=> {
+      this.assessment.assessmentName =  data.assessmentName;
     });
   }
 
