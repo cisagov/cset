@@ -24,6 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { CpgService } from '../../../../services/cpg.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-summary',
@@ -36,7 +37,8 @@ export class CpgSummaryComponent implements OnInit {
 
   constructor(
     public cpgSvc: CpgService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
@@ -49,9 +51,10 @@ export class CpgSummaryComponent implements OnInit {
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
-            element.name = 'Unanswered';
+            element.name = this.tSvc.translate('answer-options.labels.U');
           } else {
-            element.name = cpgAnswerOptions?.find(x => x.code == element.name).answerLabel;
+            const key = cpgAnswerOptions?.find(x => x.code == element.name).buttonLabelKey;
+            element.name = this.tSvc.translate(`answer-options.labels.${key}`);
           }
         });
       });
