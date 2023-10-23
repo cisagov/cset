@@ -24,6 +24,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -44,7 +45,8 @@ export class DemographicIodService {
    */
   constructor(
     private http: HttpClient, 
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private assessSvc: AssessmentService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'demographics/ext2';
    }
@@ -73,6 +75,11 @@ export class DemographicIodService {
    */
   updateDemographic(demographic: any) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe();
+    .subscribe(()=>{
+      if(this.configSvc.cisaAssessorWorkflow){
+          console.log("the assessment name update got called");
+          this.assessSvc.updateAssessmentName();
+      }
+    });
   }
 }
