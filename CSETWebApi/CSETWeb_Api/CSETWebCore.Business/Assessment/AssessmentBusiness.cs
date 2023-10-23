@@ -596,6 +596,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
+            dbAssessment.PCII_Number = assessment.PciiNumber;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();

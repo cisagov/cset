@@ -63,6 +63,7 @@ export interface AssessmentDetail {
 
     typeTitle?: string;
     typeDescription?: string;
+    pciiNumber?: string;
 }
 
 export interface MaturityModel {
