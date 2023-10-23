@@ -211,8 +211,7 @@ export class AuthenticationService {
 
           this.tSvc.setActiveLang(user.lang);
 
-          this.isAuthenticated = true;
-
+          this.isAuthenticated = true;          
           return this.configureCisaAssessorWorkflow(user);
         })
       );

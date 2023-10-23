@@ -17,7 +17,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   demographics: any = {};
   contacts: User[];
   assessment: AssessmentDetail = {};
-
+  IsPCII: boolean =false;
+  
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
@@ -44,7 +45,7 @@ export class AssessmentConfigIodComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-
+    this.IsPCII = this.assessment.is_PCII;
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       // RRA install presets the maturity model
@@ -54,7 +55,7 @@ export class AssessmentConfigIodComponent implements OnInit {
       }
     }
 
-    console.log(this.assessment.is_PCII);
+    
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -85,13 +86,15 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.updateDemographics();
   }
 
-  // changeIsPCII(val: boolean) {
-  //   this.isPCII = val;
-  //   if(this.assessment){
-  //     this.assessment.is_PCII = this.isPCII;
-  //     this.assessSvc.updateAssessmentDetails(this.assessment);
-  //   }
-  // }
+  changeIsPCII(val: boolean) {        
+    if(this.assessment){
+      this.IsPCII = val;
+      this.assessment.is_PCII = val;
+      
+      this.configSvc.cisaAssessorWorkflow = true;
+      this.assessSvc.updateAssessmentDetails(this.assessment);
+    }
+  }
 
   isCisaAssessorMode() {
     // IOD means your in CISA Asssessor mode
