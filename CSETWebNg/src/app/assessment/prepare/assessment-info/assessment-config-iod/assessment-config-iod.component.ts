@@ -24,7 +24,7 @@ export class AssessmentConfigIodComponent implements OnInit {
     private demoSvc: DemographicService,
     private iodDemoSvc: DemographicIodService,
     private configSvc: ConfigService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.demoSvc.getDemographic().subscribe((data: any) => {
@@ -86,6 +86,11 @@ export class AssessmentConfigIodComponent implements OnInit {
 
   changeIsPCII(val: boolean) {
     this.isPCII = val;
+  }
+
+  isCisaAssessorMode() {
+    // IOD means your in CISA Asssessor mode
+    return this.configSvc.installationMode == "IOD";
   }
 
   updateDemographics() {
