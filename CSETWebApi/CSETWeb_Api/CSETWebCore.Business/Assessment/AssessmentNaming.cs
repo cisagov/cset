@@ -50,6 +50,8 @@ namespace CSETWebCore.Business.Assessment
                 var OrgName = info.Facility_Name;
                 var shortName = String.Join(',', maturityModels) + String.Join(',', stnds).Trim(',');                
                 var pcii = "non-pcii";
+
+                date = assessment.Is_PCII ? assessment.PCII_Number : date;
                 var assessmentName = $"{OrgName} {shortName}.{pcii}.{date}".Trim();
                 info.Assessment_Name = assessmentName;
                 context.SaveChanges();

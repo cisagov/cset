@@ -3,10 +3,9 @@ import { DemographicIodService } from '../../../../services/demographic-iod.serv
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { saveAs } from 'file-saver';
-import isValidFilename from 'valid-filename';
 import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AssessmentService } from '../../../../services/assessment.service';
 
 
 @Component({
@@ -26,6 +25,7 @@ export class DemographicsIodComponent implements OnInit {
   demographicData: DemographicsIod = {};
 
   constructor(public demoSvc: DemographicIodService, 
+    private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog
     ) {}
@@ -36,8 +36,7 @@ export class DemographicsIodComponent implements OnInit {
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
-    });
-
+    });    
     this.eventsSubscription = this.events.subscribe((importExportFlag) => this.importExport(importExportFlag));
 
   }
@@ -59,17 +58,14 @@ export class DemographicsIodComponent implements OnInit {
         this.demographicData.version = 1;
         
         if (this.demographicData.organizationName){
-
-          if(!(isValidFilename(this.demographicData.organizationName))){
             //File name will be saved with '_' instead of any invalid characters
-            //Could implement functionality that replaces invalid characters manually 
-          }
-            var FileSaver = require('file-saver');
+            //Could implement functionality that replaces invalid characters manually           
+            var FileSaver = require('file-saver');            
             var demoString = JSON.stringify(this.demographicData);
             const blob = new Blob([demoString], { type: 'application/json' });
-            
+            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");            
             try {
-              FileSaver.saveAs(blob, this.demographicData.organizationName + ".json");
+              FileSaver.saveAs(blob, fileName + ".json");
             } catch (error) {
               console.error("Error during file download:", error);
             }
@@ -134,6 +130,7 @@ export class DemographicsIodComponent implements OnInit {
 
   update(event: any) {
     this.updateDemographics();
+    this.assessSvc.updateAssessmentName();
   }
 
   updateDemographics() {

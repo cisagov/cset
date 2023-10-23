@@ -383,6 +383,16 @@ export class AssessmentService {
     });
   }
 
+
+  //Call this when the assessment name 
+  //was calculated in the backend and needs
+  //to be updated here
+  updateAssessmentName(){
+    this.getAssessmentDetail().subscribe((data: AssessmentDetail)=> {
+      this.assessment.assessmentName =  data.assessmentName;
+    });
+  }
+
   /**
    * Requests the assessment detail from the API
    * and resolves the promise so that navigation

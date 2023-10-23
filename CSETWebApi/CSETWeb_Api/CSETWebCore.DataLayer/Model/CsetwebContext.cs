@@ -8,6 +8,9 @@ namespace CSETWebCore.DataLayer.Model;
 
 public partial class CsetwebContext : DbContext
 {
+    public CsetwebContext()
+    {
+    }
     public CsetwebContext(DbContextOptions<CsetwebContext> options)
         : base(options)
     {
