@@ -45,6 +45,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showMenuParameterEditor": true,
+        "showMenuLanguagePicker": false,
         "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
