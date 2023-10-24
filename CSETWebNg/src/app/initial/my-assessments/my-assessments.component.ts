@@ -69,6 +69,7 @@ interface UserAssessment {
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
   questionAlias: string;
+  iseSubmission: boolean;
 }
 
 @Component({
@@ -160,10 +161,24 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-      // NCUA didn't want the primary assessor column
+      
       if (this.ncuaSvc.switchStatus) {
         return false;
       }      
+    }
+
+    if (column == 'analytics') {
+      if (this.ncuaSvc.switchStatus) {
+        return false;
+      }
+    }
+
+    if (column == 'ise-submitted') {
+      if (this.ncuaSvc.switchStatus) {
+        return true;
+      } else {
+        return false;
+      }
     }
     
     return true;
@@ -426,4 +441,5 @@ export class MyAssessmentsComponent implements OnInit {
     this.assessSvc.persistEncryptPreference(this.preventEncrypt);
     this.disabledEncrypt = false;
   }
+
 }
