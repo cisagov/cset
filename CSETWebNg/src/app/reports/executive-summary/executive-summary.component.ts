@@ -27,8 +27,9 @@ import { ReportService } from '../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class ExecutiveSummaryComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     private titleService: Title,
     public acetSvc: ACETService,
+    private assessmentSvc: AssessmentService,
     public configSvc: ConfigService
   ) { }
 
@@ -80,10 +82,10 @@ export class ExecutiveSummaryComponent implements OnInit {
 
 
     this.tempChart = Chart.getChart('canvasComponentTypes');
-    if(this.tempChart){
+    if (this.tempChart) {
       this.tempChart.destroy();
     }
-    
+
     // Component Types (stacked bar chart)
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.componentCount = x.labels.length;
@@ -92,18 +94,20 @@ export class ExecutiveSummaryComponent implements OnInit {
       }, 0);
     });
 
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+      this.acetSvc.getAcetDashboard().subscribe(
+        (data: AcetDashboard) => {
+          this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-        }
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
+          }
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+    }
   }
 
   usesRAC() {
