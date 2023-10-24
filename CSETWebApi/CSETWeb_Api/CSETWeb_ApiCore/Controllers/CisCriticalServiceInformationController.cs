@@ -66,7 +66,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
-            return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics));
+            int userid = _token.GetUserId()??0;
+            return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics,userid));
         }
 
         [HttpGet]

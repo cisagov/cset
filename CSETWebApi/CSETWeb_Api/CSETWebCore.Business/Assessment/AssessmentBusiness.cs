@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -362,6 +363,8 @@ namespace CSETWebCore.Business.Assessment
                 assessment.DiagramImage = result.aa.Diagram_Image;
                 assessment.ISE_StateLed = result.aa.ISE_StateLed;
                 assessment.RegionCode = result.ii.Region_Code;
+                assessment.is_PCII = result.aa.Is_PCII;
+                assessment.PciiNumber = result.aa.PCII_Number;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -595,13 +598,14 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
+            dbAssessment.PCII_Number = assessment.PciiNumber;
+            dbAssessment.Is_PCII = assessment.is_PCII;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();
 
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-
 
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
@@ -642,7 +646,7 @@ namespace CSETWebCore.Business.Assessment
             {
                 _maturityBusiness.ClearMaturityModel(assessmentId);
             }
-
+            AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
