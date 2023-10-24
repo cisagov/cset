@@ -1,5 +1,6 @@
 {
     "behaviors": {
-        "showExportOnReports": false
+        "showExportOnReports": false,
+        "showMenuLanguagePicker": true
     }
 }
