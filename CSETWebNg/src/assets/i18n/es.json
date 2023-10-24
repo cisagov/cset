@@ -472,7 +472,9 @@
         "assessment list": "Lista de Evaluaciones",
         "no conflicts 2": "para seleccionar exámenes diferentes, o",
         "click here": "haga clic aquí",
-        "no conflicts 3": "para proceder con la fusión."
+        "no conflicts 3": "para proceder con la fusión.",
+        "merge": "Fusión",
+        "start merge": "Comenzar a Fusionar"
     },
     "about": {
         "about": "Sobre",
@@ -481,5 +483,20 @@
             "we ensure financial stability": "Garantizamos la estabilidad financiera",
             "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
         }
+    },
+    "errors": {
+        "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",
+        "import unsuported file 2": "Para obtener más información, consulte la sección de importación de la guía del usuario"
+    },
+    "welcome page": {
+        "internet explorer": "Se ha detectado Internet Explorer como su navegador actual. \nAlgunas funciones de CSET no son totalmente compatibles con Internet Explorer. \nSe recomienda encarecidamente utilizar otro navegador como Chrome, Firefox o Edge para mejorar su experiencia.",
+        "welcome to acet": "Bienvenido a La Caja de Herramientas",
+        "welcome to": "Bienvenido a {{appTitle}}",
+        "to get started": "Para comenzar, seleccione una de las siguientes opciones:",
+        "new assessment": "Iniciar una nueva evaluación",
+        "import assessment": "Importar una evaluación existente",
+        "blank assessment": "Evaluación en blanco",
+        "needs review": "Revisión de necesidades",
+        "statements completed": "{{complete}}/{{total}} declaraciones completadas"
     }
 }
