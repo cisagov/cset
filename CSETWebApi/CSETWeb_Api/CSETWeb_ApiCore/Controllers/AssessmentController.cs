@@ -434,5 +434,14 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route("api/updateIseSubmissionStatus")]
+        public IActionResult UpdateSubmissionStatus()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            this._acsetAssessmentBusiness.UpdateIseSubmission(assessmentId);
+            return Ok();
+        }
     }
 }

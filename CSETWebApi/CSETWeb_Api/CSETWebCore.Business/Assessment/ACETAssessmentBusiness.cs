@@ -89,7 +89,7 @@ namespace CSETWebCore.Business.Assessment
         public new AssessmentDetail CreateNewAssessment(int? currentUserId,
             string workflow, GalleryConfig config)
         {
-            var detail =base.CreateNewAssessment(currentUserId, workflow, config);
+            var detail = base.CreateNewAssessment(currentUserId, workflow, config);
             detail.AssessmentName = "ACET 00000 " + DateTime.Now.ToString("MMddyy");
             base.SaveAssessmentDetail(detail.Id, detail);
 
@@ -149,6 +149,17 @@ namespace CSETWebCore.Business.Assessment
                 _context.ASSESSMENT_IRP_HEADER.Add(headerInfo);
             }
 
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
+        /// Updates the INFORMATION table to track ISE Merit Submissions for NCUA
+        /// </summary>
+        public void UpdateIseSubmission(int assessmentId)
+        {
+            INFORMATION information = _context.INFORMATION.FirstOrDefault(a => a.Id == assessmentId);
+            information.Ise_Submitted = true;
             _context.SaveChanges();
         }
 
