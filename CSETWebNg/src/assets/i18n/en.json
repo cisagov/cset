@@ -476,7 +476,9 @@
         "assessment list": "Assessment List",
         "no conflicts 2": "screen to select different examinations, or",
         "click here": "Click Here",
-        "no conflicts 3": "to proceed with the merge."
+        "no conflicts 3": "to proceed with the merge.",
+        "merge": "Merge",
+        "start merge": "Start Merge"
     },
     "about": {
         "about": "About",
@@ -485,5 +487,20 @@
             "we ensure financial stability": "We Ensure Financial Stability",
             "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
         }
+    },
+    "errors": {
+        "import unsuported file 1": "Error: Unsupported file. Only CSET Web files can be imported for enterprise installations.",
+        "import unsuported file 2": "For more information, see the import section of the user guide"
+    },
+    "welcome page": {
+        "internet explorer": "Internet Explorer has been detected as your current browser. \nSome functionality of CSET is not fully supported by Internet Explorer. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
+        "welcome to acet": "Welcome to The Toolbox",
+        "welcome to": "Welcome to {{appTitle}}",
+        "to get started": "To get started, select from one of the options below:",
+        "new assessment": "Start a New Assessment",
+        "import assessment": "Import an Existing Assessment",
+        "blank assessment": "Blank Assessment",
+        "needs review": "Needs Review",
+        "statements completed": "{{complete}}/{{total}} Statement(s) Completed"
     }
 }
