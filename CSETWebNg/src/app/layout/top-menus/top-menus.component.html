@@ -273,7 +273,7 @@
                 <span class="cset-icons-key fs-base mr-2 align-middle"></span>
                 <span>Change Password</span>
             </button>
-            <button mat-menu-item (click)="editLanguage()">
+            <button mat-menu-item *ngIf="showMenuItem('language picker')" (click)="editLanguage()">
                 <span class="fas fa-language fs-base mr-2 align-middle"></span>
                 <span>{{t('user language')}}</span>
             </button>

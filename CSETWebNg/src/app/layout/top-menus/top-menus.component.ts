@@ -247,6 +247,11 @@ export class TopMenusComponent implements OnInit {
       return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true);
     }
 
+    if (item == 'language picker') {
+      return this.configSvc.behaviors?.showMenuLanguagePicker ?? false;
+    }
+
+
     return true;
   }
 
