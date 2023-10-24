@@ -32,6 +32,7 @@ import { ACETService } from '../../services/acet.service';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 import Chart from 'chart.js/auto';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'site-summary',
@@ -79,6 +80,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     public acetSvc: ACETService,
     private sanitizer: DomSanitizer,
     private maturitySvc: MaturityService,
+    private assessmentSvc: AssessmentService
   ) { }
 
   ngOnInit() {
@@ -129,35 +131,37 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+      this.acetSvc.getAcetDashboard().subscribe(
+        (data: AcetDashboard) => {
+          this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-        }
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
+          }
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
 
-    this.acetSvc.getAdminData().subscribe(
-      (data: AdminPageData) => {
-        this.adminPageData = data;
-        this.processAcetAdminData();
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+      this.acetSvc.getAdminData().subscribe(
+        (data: AdminPageData) => {
+          this.adminPageData = data;
+          this.processAcetAdminData();
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+    }
   }
 
   /**
    * 
    */
   ngAfterViewInit() {
-    
+
   }
 
   processAcetAdminData() {
