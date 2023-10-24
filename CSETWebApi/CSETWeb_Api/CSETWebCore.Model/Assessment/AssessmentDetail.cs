@@ -13,6 +13,8 @@ namespace CSETWebCore.Model.Assessment
 {
     public class AssessmentDetail
     {
+        public bool is_PCII { get; set; }
+
         public int Id { get; set; }
         public string AssessmentName { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -73,5 +75,6 @@ namespace CSETWebCore.Model.Assessment
         public string ExecutiveSummary { get; set; }
         public string TypeTitle { get; set; }
         public string TypeDescription { get; set; }
+        public string PciiNumber {  get; set; }
     }
 }

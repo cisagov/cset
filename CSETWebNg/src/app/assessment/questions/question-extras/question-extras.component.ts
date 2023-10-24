@@ -748,7 +748,7 @@ export class QuestionExtrasComponent implements OnInit {
    */
   seperateGuidanceFromApproach() {
     const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
-    return behavior.independentSuppGuidance;
+    return behavior?.independentSuppGuidance;
   }
 
 }
