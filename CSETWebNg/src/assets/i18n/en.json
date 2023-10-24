@@ -270,7 +270,12 @@
         "mil-2": "MIL-2",
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
-        "mil-5": "MIL-5"
+        "mil-5": "MIL-5",
+        "level 1": "Level 1",
+        "level 2": "Level 2",
+        "level 3": "Level 3",
+        "level 4": "Level 4",
+        "level 5": "Level 5"
     },
     "irp": {
         "Inherent Risk": "Inherent Risk",
