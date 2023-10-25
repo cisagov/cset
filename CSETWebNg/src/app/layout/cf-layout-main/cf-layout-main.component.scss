@@ -502,7 +502,8 @@ label[required]::after {
 
 .accordion-header {
   padding-top: 0.2em;
-  margin-bottom:0;
+  margin-bottom: 0;
+  background-color: $primary-color;
 }
 
 .footer .bg-primary {
