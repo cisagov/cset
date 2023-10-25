@@ -91,13 +91,14 @@
                             </label>
                         </div>
 
-                        <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
-                            [disabled]="disabledEncrypt"
-                            matTooltip="{{ t('tooltip.prevent encryption') }}"
-                            style="margin-left: auto; margin-right: 0; border: 2px solid gray">
-                            <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
-                        </mat-checkbox>
-
+                        <div *ngIf="!this.ncuaSvc.switchStatus">
+                            <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
+                                [disabled]="disabledEncrypt"
+                                matTooltip="{{ t('tooltip.prevent encryption') }}"
+                                style="margin-left: auto; margin-right: 0; border: 2px solid gray">
+                                <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
+                            </mat-checkbox>
+                        </div>
                     </div>
                     <div *ngIf="unsupportedImportFile"
                         class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
@@ -188,6 +189,7 @@
                     </th>
                     <th *ngIf="isTSA" style="width: 5%;">Source</th>
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
+                    <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted">{{ t('Submitted') }}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                         style="width:15%;">{{t('primary assessor')}}</th>
@@ -210,9 +212,13 @@
                         <td>{{assessment.type}}</td>
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate)
                             | date:'dd-MMM-yyyy'}}</td>
+                        <td *ngIf="showColumn('ise-submitted')">
+                            <app-progress *ngIf="assessment.iseSubmitted" [value]="100" class="mr-2 ml-2"></app-progress>
+                            <ng-container *ngIf="!assessment.iseSubmitted">-</ng-container>
+                        </td>
                         <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) |
                             date:'medium'}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">
+                        <td *ngIf="showColumn('primary-assessor')">
                             <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                         </td>
                         <td>
