@@ -65,7 +65,6 @@ export class AcetExecutiveComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Executive Report - ACET");
     if (this.tSvc.getActiveLang() == "es") {
       this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
     }
@@ -79,6 +78,7 @@ export class AcetExecutiveComponent implements OnInit {
     this.acetSvc.getAssessmentInformation().subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.acet.executive summary.tab title'));
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
