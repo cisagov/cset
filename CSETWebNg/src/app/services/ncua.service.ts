@@ -609,7 +609,7 @@ let headers = {
     
     this.doesDirectoryExist().subscribe(
       (exists: boolean) => {
-        if (exists === false){
+        if (exists === false) {
           let msg = `<br><p>The Submission Export Path is not accessible.</p>
                          <p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
@@ -617,13 +617,14 @@ let headers = {
                   });
           this.jsonStringReset(); 
         }
-        else if (exists === true){
+        else if (exists === true) {
           this.acetSvc.doesMeritFileExist(fileValue).subscribe(
             (bool: any) => {
               let exists = bool; //true if it exists, false if not
       
               if (!exists) { //and eventually an 'overwrite' boolean or something
                 this.newMeritFileSteps(fileValue);
+                this.updateSubmissionStatus().subscribe(result => {});
               } else {
       
                 let msg = `<br>
@@ -643,7 +644,8 @@ let headers = {
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
-                        this.jsonStringReset(); 
+                        this.jsonStringReset();
+                        this.updateSubmissionStatus().subscribe(result => {});
                       },
                       error => {        
                         let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
@@ -661,7 +663,11 @@ let headers = {
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
-                        this.jsonStringReset(); 
+                        this.jsonStringReset();
+                          
+                        this.updateSubmissionStatus().subscribe(result => {
+                          
+                        });
                       },
                       error => {        
                         let msg = "<br><p>Could not write the file."+error.error+"</p>";
@@ -674,7 +680,7 @@ let headers = {
                   } else {
                     this.jsonStringReset();   
                   }
-                }); 
+                });
               }
       
             }
@@ -756,6 +762,10 @@ let headers = {
     const uncPathCarrier = new MeritFileExport();
     uncPathCarrier.data = newPath;
     return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
+  }
+
+  updateSubmissionStatus() {
+    return this.http.post(this.configSvc.apiUrl + 'updateIseSubmissionStatus', headers);
   }
 
   /**
