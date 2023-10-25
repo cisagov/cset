@@ -28,6 +28,7 @@ import { ConfigService } from '../../services/config.service';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'securityplan',
@@ -53,6 +54,7 @@ export class SecurityplanComponent implements OnInit {
     public analysisSvc: ReportAnalysisService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
+    private assessmentSvc: AssessmentService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -88,18 +90,20 @@ export class SecurityplanComponent implements OnInit {
       this.responseResultsByCategory = x;
     });
 
-    this.acetSvc.getAcetDashboard().subscribe(
-      (data: AcetDashboard) => {
-        this.acetDashboard = data;
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+      this.acetSvc.getAcetDashboard().subscribe(
+        (data: AcetDashboard) => {
+          this.acetDashboard = data;
 
-        for (let i = 0; i < this.acetDashboard.irps.length; i++) {
-          this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
-        }
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+          for (let i = 0; i < this.acetDashboard.irps.length; i++) {
+            this.acetDashboard.irps[i].comment = this.acetSvc.interpretRiskLevel(this.acetDashboard.irps[i].riskLevel);
+          }
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+    }
   }
 
   usesRAC() {
