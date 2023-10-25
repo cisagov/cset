@@ -28,6 +28,7 @@ import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-acet-compensatingcontrols',
@@ -42,15 +43,15 @@ export class AcetCompensatingcontrolsComponent implements OnInit {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
-    private titleService: Title
+    private titleService: Title,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Compensating Controls Report - ACET");
-
     this.reportSvc.getAltList().subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.acet.compensating controls.tab title'));
       },
       error => console.log('Compensating Controls Report Error: ' + (<Error>error).message)
     );
