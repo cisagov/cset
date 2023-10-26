@@ -1,25 +1,12 @@
 ﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Cmu;
-using CSETWebCore.Interfaces.Demographic;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Reports;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Helpers.ReportWidgets;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using System.Linq;
-using System.Collections.Generic;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Helpers;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Reports.Models;
-using CSETWebCore.Api.Models;
-using Newtonsoft.Json;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.AssessmentIO.Export;
+using CSETWebCore.Helpers;
+using System.Linq;
+using System;
+using CSETWebCore.Model.AssessmentIO;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -28,9 +15,11 @@ namespace CSETWebCore.Api.Controllers
     /// </summary>
     public class CRRMController : Controller
     {
-        public CRRMController()
-        {
+        private readonly CSETContext _context;
 
+        public CRRMController(CSETContext context)
+        {
+            _context = context;
         }
 
         [HttpGet]
@@ -38,7 +27,31 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/crrm/exportAllAccessKeyAssessments")]
         public IActionResult GetAssessments()
         {
-            return Ok();
+
+            try
+            {
+                var accessKeyAssessments = _context.ACCESS_KEY_ASSESSMENT.ToList();
+                var assessments = _context.ASSESSMENTS.Where(a => accessKeyAssessments.Any(x => x.Assessment_Id == a.Assessment_Id));
+
+                string fileExt = IOHelper.GetExportFileExtension("CSET");
+
+
+                // export the assessments
+                var exportManager = new AssessmentExportManager(_context);
+                List<AssessmentExportFile> exportFiles = new List<AssessmentExportFile>();
+                foreach (ASSESSMENTS a in assessments) 
+                {
+                    exportFiles.Add(exportManager.ExportAssessment(a.Assessment_Id, fileExt));
+                }
+
+                return File(result, "application/octet-stream", filename);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return StatusCode(500, "There was an issue exporting all access key assessments");
+            }
+
         }
     }
 }

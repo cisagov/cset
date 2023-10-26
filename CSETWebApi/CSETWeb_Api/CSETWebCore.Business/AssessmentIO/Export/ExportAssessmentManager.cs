@@ -490,5 +490,20 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             archiveStream.Seek(0, SeekOrigin.Begin);
             return archiveStream;
         }
+
+        public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "") 
+        {
+            // determine file name
+            var fileName = $"{assessmentId}{fileExtension}";
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            if (!string.IsNullOrEmpty(assessmentName))
+            {
+                fileName = $"{assessmentName}{fileExtension}";
+            }
+
+            // export the assessment
+            Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint);
+            return new AssessmentExportFile(fileName, assessmentFileContents);
+        }
     }
 }
