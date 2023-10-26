@@ -177,6 +177,8 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 Dictionary<int, List<PROCUREMENTLANGUAGEDATA>> dictionaryProcurementLanguageData = new Dictionary<int, List<PROCUREMENTLANGUAGEDATA>>();
 
+                TinyMapper.Bind<PROCUREMENT_LANGUAGE_DATA, PROCUREMENTLANGUAGEDATA>();
+
                 foreach (PROCUREMENT_LANGUAGE_DATA data in dbContext.PROCUREMENT_LANGUAGE_DATA.ToList())
                 {
                     List<PROCUREMENTLANGUAGEDATA> list;
@@ -207,6 +209,8 @@ namespace CSETWebCore.Business.RepositoryLibrary
 
                 Dictionary<int, List<CATALOGRECOMMENDATIONSDATA>> dictionaryCatalogRecommendations = new Dictionary<int, List<CATALOGRECOMMENDATIONSDATA>>();
 
+                TinyMapper.Bind<CATALOG_RECOMMENDATIONS_DATA, CATALOGRECOMMENDATIONSDATA>();
+
                 foreach (CATALOG_RECOMMENDATIONS_DATA data in dbContext.CATALOG_RECOMMENDATIONS_DATA.ToList())
                 {
                     List<CATALOGRECOMMENDATIONSDATA> list;
@@ -231,7 +235,6 @@ namespace CSETWebCore.Business.RepositoryLibrary
                         procHeadingModel.Nodes.Add(procModel);
                     }
                 }
-
             }
             catch (Exception exc)
             {
