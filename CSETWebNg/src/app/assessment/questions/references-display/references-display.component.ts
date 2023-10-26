@@ -101,13 +101,14 @@ export class ReferencesDisplayComponent implements OnInit {
    * Bookmarks to an actual section_Ref are appended to the URL.
    */
   documentUrl(doc: any, bookmark: string) {
-    var link = '';
+    let link = this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark;
 
+    // TODO: figure out how to handle this link
+    //   link = this.configSvc.docUrl + doc.fileName + '#' + bookmark;
     if (doc.isUploaded) {
       link = this.configSvc.apiUrl + 'ReferenceDocument/' + doc.fileId + '#' + bookmark;
-    } else {
-      link = this.configSvc.docUrl + doc.fileName + '#' + bookmark;
     }
+
     return link;
   }
 
