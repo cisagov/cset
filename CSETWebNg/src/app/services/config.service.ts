@@ -33,6 +33,7 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
+  onlineUrl: string;
 
   helpContactEmail: string;
   helpContactPhone: string;
@@ -70,7 +71,7 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {}
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
 
   /**
    *
@@ -149,6 +150,7 @@ export class ConfigService {
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;
     this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
+    this.onlineUrl = this.config.api.onlineUrl;
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
 
@@ -237,74 +239,74 @@ export class ConfigService {
 
   switchConfigsForMode(installationMode) {
     switch (installationMode) {
-    case 'ACET':
-      {
-        var x = this.document.getElementsByClassName('root');
-        if (x.length > 0) {
-          x[0].classList.add('acet-background');
+      case 'ACET':
+        {
+          var x = this.document.getElementsByClassName('root');
+          if (x.length > 0) {
+            x[0].classList.add('acet-background');
+          }
+
+          var x = document.getElementsByClassName('ncua-seal');
+          if (x.length > 0) {
+            x[0].classList.remove('d-none');
+          }
+
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_acet.ico?app=acet1';
+
+          var title = this.document.querySelector('title');
+          title.innerText = 'ACET';
         }
+        break;
+      case 'TSA':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
 
-        var x = document.getElementsByClassName('ncua-seal');
-        if (x.length > 0) {
-          x[0].classList.remove('d-none');
+          var title = this.document.querySelector('title');
+          title.innerText = 'CSET-TSA';
         }
+        break;
+      case 'CF':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_cf.ico?app=cf1';
 
+          var title = this.document.querySelector('title');
+          title.innerText = 'CSET-CF';
+        }
+        break;
+      case 'RRA':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_rra.ico?app=rra1';
+
+          var title = this.document.querySelector('title');
+          title.innerText = 'CISA - Ransomware Readiness';
+        }
+        break;
+      case 'RENEW':
+        {
+          // change favicon and title
+          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+          link.href = 'assets/icons/favicon_renew.ico?app=renew1';
+
+          var title = this.document.querySelector('title');
+          title.innerText = 'CSET Renewables';
+        }
+        break;
+      default: {
         // change favicon and title
         const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_acet.ico?app=acet1';
+        link.href = 'assets/icons/favicon_cset.ico?app=cset';
 
         var title = this.document.querySelector('title');
-        title.innerText = 'ACET';
+        title.innerText = 'CSET';
       }
-      break;
-    case 'TSA':
-      {
-        // change favicon and title
-        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
-
-        var title = this.document.querySelector('title');
-        title.innerText = 'CSET-TSA';
-      }
-      break;
-    case 'CF':
-      {
-        // change favicon and title
-        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_cf.ico?app=cf1';
-
-        var title = this.document.querySelector('title');
-        title.innerText = 'CSET-CF';
-      }
-      break;
-    case 'RRA':
-      {
-        // change favicon and title
-        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_rra.ico?app=rra1';
-
-        var title = this.document.querySelector('title');
-        title.innerText = 'CISA - Ransomware Readiness';
-      }
-      break;
-    case 'RENEW':
-      {
-        // change favicon and title
-        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_renew.ico?app=renew1';
-
-        var title = this.document.querySelector('title');
-        title.innerText = 'CSET Renewables';
-      }
-      break;
-    default: {
-      // change favicon and title
-      const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-      link.href = 'assets/icons/favicon_cset.ico?app=cset';
-
-      var title = this.document.querySelector('title');
-      title.innerText = 'CSET';
-    }
     }
   }
 }

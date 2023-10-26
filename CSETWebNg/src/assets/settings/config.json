@@ -1,7 +1,7 @@
 {
     "NOTENODE": "Casing on config chain matters",
     "currentConfigChain": [
-        "CSET"
+        "ACET"
     ],
     "appCode": "CSET",
     "defaultLang": "en",
@@ -16,7 +16,8 @@
         "url": "localhost",
         "port": "5000",
         "apiIdentifier": "api",
-        "documentsIdentifier": "Documents"
+        "documentsIdentifier": "Documents",
+        "onlineUrl": "https://cset-tsa.inl.gov"
     },
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
@@ -168,7 +169,7 @@
                     "code": "Y",
                     "buttonLabelKey": "Imp-CPG",
                     "buttonCss": "btn-yes"
-                 },
+                },
                 {
                     "code": "I",
                     "buttonLabelKey": "Prog-CPG",
