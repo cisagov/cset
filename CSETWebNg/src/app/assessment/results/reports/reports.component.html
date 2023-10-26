@@ -571,20 +571,16 @@
             </button>
           </div>
 
-
-
-
           <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
             <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack('reports')"
               tabindex="0">Back</button>
-            <button class="btn btn-primary" aria-label="Submit" (click)="ncuaSvc.submitToMerit(this.findings)"
-              tabindex="0" [disabled]="(disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
-          (ncuaSvc.switchStatus && ncuaSvc.creditUnionName == '') ||
-              (ncuaSvc.switchStatus && ncuaSvc.assetsAsNumber == 0) ||
-              ncuaSvc.unassignedIssues ||
-              ncuaSvc.submitInProgress">
+            <button class="btn btn-primary" *ngIf="!this.ncuaSvc.ISE_StateLed" aria-label="Submit" 
+              (click)="ncuaSvc.submitToMerit(findings);" tabindex="0" [disabled]="disableSubmitButton()">
               Submit
             </button>
+          </div>
+          <div *ngIf="assessSvc.isISE() && (!iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted)">
+            <p>This assessment has not been submitted yet. If this assessment is complete, please submit it.</p>
           </div>
         </div>
       </div>
