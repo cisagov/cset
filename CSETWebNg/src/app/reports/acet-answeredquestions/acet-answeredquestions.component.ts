@@ -27,6 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { QuestionsService } from '../../services/questions.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -42,18 +43,20 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
     private titleService: Title,
     public acetSvc: ACETService,
     public configSvc: ConfigService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
-    this.titleService.setTitle("Answered Statements Report - ACET");
-
+    
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.acet.answered statements.tab title'));
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
+    
   }
 
   
