@@ -213,8 +213,8 @@
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate)
                             | date:'dd-MMM-yyyy'}}</td>
                         <td *ngIf="showColumn('ise-submitted')">
-                            <app-progress *ngIf="assessment.iseSubmitted" [value]="100" class="mr-2 ml-2"></app-progress>
-                            <ng-container *ngIf="!assessment.iseSubmitted">-</ng-container>
+                            <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container>
+                            <ng-container *ngIf="!assessment.iseSubmitted" class="ml-2">-</ng-container>
                         </td>
                         <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) |
                             date:'medium'}}</td>
