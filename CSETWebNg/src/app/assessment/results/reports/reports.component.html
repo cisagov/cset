@@ -310,6 +310,16 @@
           </div>
         </div>
 
+        <!-- Add a warning to submit the assessment to their MERIT system if the assessment hasn't already been submitted -->
+        <div *ngIf="assessSvc.isISE() && (!iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted)">
+          <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+            <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
+            <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+              This assessment has not been submitted yet. If this assessment is complete, please submit it.
+            </div>
+          </div>
+        </div>
+
         <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues"
           class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
           <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
@@ -578,9 +588,6 @@
               (click)="ncuaSvc.submitToMerit(findings);" tabindex="0" [disabled]="disableSubmitButton()">
               Submit
             </button>
-          </div>
-          <div *ngIf="assessSvc.isISE() && (!iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted)">
-            <p>This assessment has not been submitted yet. If this assessment is complete, please submit it.</p>
           </div>
         </div>
       </div>

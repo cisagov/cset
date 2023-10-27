@@ -173,6 +173,11 @@ namespace CSETWebCore.Business.Assessment
         public void UpdateIseSubmission(int assessmentId)
         {
             INFORMATION information = _context.INFORMATION.FirstOrDefault(a => a.Id == assessmentId);
+            if (information != null)
+            {
+                information.Ise_Submitted = true;
+                information.Submitted_Date = DateTime.Today;
+            }
             information.Ise_Submitted = true;
             _context.SaveChanges();
         }
