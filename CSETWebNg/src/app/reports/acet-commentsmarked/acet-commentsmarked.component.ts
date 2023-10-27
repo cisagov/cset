@@ -28,6 +28,7 @@ import { QuestionsService } from './../../services/questions.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-acet-commentsmarked',
@@ -45,16 +46,17 @@ export class AcetCommentsmarkedComponent implements OnInit {
     public configSvc: ConfigService,
     private titleService: Title,
     public maturitySvc: MaturityService,
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments Report - ACET");
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.acet.comments and mfr.tab title'));
         this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
