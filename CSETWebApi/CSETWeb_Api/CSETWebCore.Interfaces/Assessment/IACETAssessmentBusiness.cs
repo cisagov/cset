@@ -12,5 +12,6 @@ namespace CSETWebCore.Interfaces.Assessment
     public interface IACETAssessmentBusiness
     {
         int SaveAssessmentDetail(int assessmentId, AssessmentDetail assessmentDetail);
+        void UpdateIseSubmission(int assessmentId);
     }
 }

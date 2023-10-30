@@ -22,5 +22,6 @@ namespace CSETWebCore.DataLayer.Model
         public string SelectedStandards { get; set; }
         public bool? AltTextMissing { get; set; }
         public int? UserId { get; set; }
+        public bool? IseSubmitted { get; set; }
     }
 }
