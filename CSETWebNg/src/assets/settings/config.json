@@ -17,7 +17,7 @@
         "port": "5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents",
-        "onlineUrl": "https://cset-tsa.inl.gov"
+        "onlineUrl": "https://cset.inl.gov"
     },
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
