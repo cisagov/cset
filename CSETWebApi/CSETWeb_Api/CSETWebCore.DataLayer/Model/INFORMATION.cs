@@ -113,6 +113,8 @@ public partial class INFORMATION
 
     public int? Region_Code { get; set; }
 
+    public bool? Ise_Submitted { get; set; }
+
     [ForeignKey("Id")]
     [InverseProperty("INFORMATION")]
     public virtual ASSESSMENTS IdNavigation { get; set; }
