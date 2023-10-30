@@ -248,7 +248,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.Mat_Question_Id, item.Value);
+                    if (!dict.ContainsKey(item.Value.Mat_Question_Id))
+                    {
+                        dict.Add(item.Value.Mat_Question_Id, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -285,7 +288,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.Grouping_Id, item.Value);
+                    if (!dict.ContainsKey(item.Value.Grouping_Id))
+                    {
+                        dict.Add(item.Value.Grouping_Id, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -326,7 +332,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.English_Title, item.Value);
+                    if (!dict.ContainsKey(item.Value.English_Title))
+                    {
+                        dict.Add(item.Value.English_Title, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -365,7 +374,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.IRP_Id, item.Value);
+                    if (!dict.ContainsKey(item.Value.IRP_Id))
+                    {
+                        dict.Add(item.Value.IRP_Id, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -403,7 +415,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.IRP_Header_Id, item.Value);
+                    if (!dict.ContainsKey(item.Value.IRP_Header_Id))
+                    {
+                        dict.Add(item.Value.IRP_Header_Id, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -443,7 +458,10 @@ namespace CSETWebCore.Business.Acet
             {
                 try
                 {
-                    dict.Add(item.Value.EnglishHeader, item.Value);
+                    if (!dict.ContainsKey(item.Value.EnglishHeader))
+                    {
+                        dict.Add(item.Value.EnglishHeader, item.Value);
+                    }
                 }
                 catch (Exception e)
                 {
