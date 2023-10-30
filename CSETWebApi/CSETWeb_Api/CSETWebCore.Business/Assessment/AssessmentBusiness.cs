@@ -79,6 +79,7 @@ namespace CSETWebCore.Business.Assessment
                 ExecutiveSummary = defaultExecSumm,
                 GalleryItemGuid = config.GalleryGuid,
                 ISE_StateLed = false,
+                IseSubmitted = false,
             };
 
 
@@ -365,6 +366,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.RegionCode = result.ii.Region_Code;
                 assessment.is_PCII = result.aa.Is_PCII;
                 assessment.PciiNumber = result.aa.PCII_Number;
+                assessment.IseSubmitted = result.ii.Ise_Submitted;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -632,6 +634,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;
+            dbInformation.Ise_Submitted = assessment.IseSubmitted;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
