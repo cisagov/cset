@@ -49,6 +49,7 @@ export interface LoginResponse {
   exportExtension: string;
   importExtensions: string;
   linkerTime: string;
+  isFirstLogin: boolean;
 }
 
 const headers = {
@@ -115,7 +116,7 @@ export class AuthenticationService {
             this.isLocal = true;
             this.storeUserData(response);
           }
-
+                    
           // if there's a language for the user, set it
           if (!!response?.lang) {
             this.tSvc.setActiveLang(response.lang);
@@ -156,7 +157,7 @@ export class AuthenticationService {
     localStorage.setItem('exportExtension', user.exportExtension);
     localStorage.setItem('importExtensions', user.importExtensions);
     localStorage.setItem('developer', String(false));
-
+    localStorage.setItem('isFirstLogin', String(user.isFirstLogin))
     // schedule the first token refresh event
     this.scheduleTokenRefresh(this.http, user.token);
   }
@@ -359,11 +360,15 @@ export class AuthenticationService {
   lastName() {
     return localStorage.getItem('lastName');
   }
+  isFirstLogin(){
+    return localStorage.getItem('isFirstLogin');
+  }
 
   setUserInfo(info: CreateUser) {
     localStorage.setItem('firstName', info.firstName);
     localStorage.setItem('lastName', info.lastName);
     localStorage.setItem('email', info.primaryEmail);
+    localStorage.setItem('isFirstLogin',info.isFirstLogin?"1":"0");
   }
 
   /**
