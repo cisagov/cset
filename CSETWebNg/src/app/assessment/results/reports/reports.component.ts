@@ -355,6 +355,21 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getSubmitButtonStyle() {
+    // If Disabled
+    if (this.disableSubmitButton()) {
+      return "background-color: gray; color: white;";
+    } else {
+      // If not disabled and also not submitted yet
+      if (!this.iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted) {
+        return "background-color: orange; color: white;";
+      } else {
+        // If not disabled & already submitted, default here
+        return "background-color: #3B68AA; color: white;";
+      }
+    }
+  }
+
 }
 
 @Component({
