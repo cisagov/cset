@@ -3,10 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Helpers;
-using System.Linq;
 using System;
-using CSETWebCore.Model.AssessmentIO;
-using System.Collections.Generic;
+using System.IO;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -30,21 +28,12 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                var accessKeyAssessments = _context.ACCESS_KEY_ASSESSMENT.ToList();
-                var assessments = _context.ASSESSMENTS.Where(a => accessKeyAssessments.Any(x => x.Assessment_Id == a.Assessment_Id));
+                // determine extension (.csetw, .acet)
+                string ext = IOHelper.GetExportFileExtension("CSET");
+                AssessmentExportManager exportManager = new AssessmentExportManager(_context);
+                Stream assessmentsExportArchive = exportManager.ExportAllAccessKeyAssessments(ext);
 
-                string fileExt = IOHelper.GetExportFileExtension("CSET");
-
-
-                // export the assessments
-                var exportManager = new AssessmentExportManager(_context);
-                List<AssessmentExportFile> exportFiles = new List<AssessmentExportFile>();
-                foreach (ASSESSMENTS a in assessments) 
-                {
-                    exportFiles.Add(exportManager.ExportAssessment(a.Assessment_Id, fileExt));
-                }
-
-                return File(result, "application/octet-stream", filename);
+                return File(assessmentsExportArchive, "application/octet-stream", "AccessKeyAssessments.zip");
             }
             catch (Exception exc)
             {
