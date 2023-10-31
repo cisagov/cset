@@ -27,6 +27,7 @@ import { ConfigService } from './config.service';
 import { SelectedTier } from '../models/frameworks.model';
 import { AssessmentService } from './assessment.service';
 import { NavigationService } from './navigation/navigation.service';
+import { AuthenticationService } from './authentication.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -45,7 +46,8 @@ export class GalleryService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService,
-    private navSvc: NavigationService
+    private navSvc: NavigationService, 
+    private authSvc: AuthenticationService
   ) { }
 
 
@@ -72,9 +74,16 @@ export class GalleryService {
         this.testRow = this.rows[1];
 
         ///NOTE THIS runs the default item if there is only one item automatically
-        if (this.rows.length == 1 && this.rows[0].galleryItems.length == 1) {
-          this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
+        if(this.configSvc.installationMode=="CF"){
+          if(this.authSvc.isFirstLogin()){
+            this.assessSvc.clearFirstTime();
+            this.authSvc.setFirstLogin(false);
+            this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
+          }
         }
+        // if (this.rows.length == 1 && this.rows[0].galleryItems.length == 1) {          
+        //   this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
+        // }
 
         // create a plainText property for the elipsis display in case a description has HTML markup
         const dom = document.createElement("div");
@@ -87,7 +96,7 @@ export class GalleryService {
       }
     );
   }
-
+  
   /**
    * Posts the current selected tier to the server.
    */
