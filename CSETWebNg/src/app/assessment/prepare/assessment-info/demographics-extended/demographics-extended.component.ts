@@ -157,7 +157,6 @@ export class DemographicsExtendedComponent implements OnInit {
     this.demoSvc.getDemographics().subscribe(
       (data: Demographic) => {
         this.demographicData = data;
-
         // populate Subsector (industry) dropdown based on Sector
         this.getSubsectors(this.demographicData.sectorId, false);
         this.checkComplete();

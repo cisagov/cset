@@ -66,6 +66,7 @@ export class AssessmentDetailCfComponent implements OnInit {
 
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
+      this.assessSvc.clearFirstTime();
     }
     
     this.assessSvc.isBrandNew = false;
