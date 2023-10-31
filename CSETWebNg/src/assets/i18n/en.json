@@ -142,7 +142,7 @@
         "statements": "Statements"
     },
     "cyberFlorida": {
-        "upgrade message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To Participate in the full Cyber Florida Assessment Click the Upgrade button below.",
+        "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here To Participate in the full Cyber Florida Assessment Click the Upgrade button below.",
         "upgrade confirm 1": "Are you sure you want to upgrade this assessment?  This is a one-way conversion; it cannot be undone.",
         "upgrade confirm 2": "The assessment has been upgradeed.",
         "title upgrade complete":"Upgrade Complete",
@@ -421,13 +421,6 @@
                 "no compensating comment": "No compensating comment or explanation was provided.",
                 "no compensating controls": "There are no compensating controls to display"
             }
-        },
-        "cyberFlorida": {
-            "upgrade message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To Participate in the full Cyber Florida Assessment Click the Upgrade button below.",
-            "upgrade confirm 1": "Are you sure you want to upgrade this assessment?  This is a one-way conversion; it cannot be undone.",
-            "upgrade confirm 2": "The assessment has been upgradeed.",
-            "title upgrade complete":"Upgrade Complete",
-            "upgradeButton":"Upgrade to Full Assessment"
         }
     },
     "observation": {
