@@ -5,6 +5,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using NLog;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -90,13 +91,13 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult ChangeUserActivation(
             [FromQuery] int userId, [FromQuery] bool isActive, [FromQuery] string apiKey)
         {
+            LogManager.GetCurrentClassLogger().Info($"ChangeUserActivation:  changing isActive property to {isActive}");
+
             if (!IsApiKeyValid(apiKey))
             {
                 return Unauthorized();
             }
 
-
-            // set the IsActive flag on the user
             var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
             if (user == null)
             {
@@ -118,6 +119,8 @@ namespace CSETWebCore.Api.Controllers
             // if the user is being activated, send them a new temp password
             if (isActive)
             {
+                LogManager.GetCurrentClassLogger().Info($"ChangeUserActivation:  sending temporary password email to {user.PrimaryEmail}");
+
                 var resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
                 resetter.ResetPassword(user.PrimaryEmail, "Temporary Password", "CSET");
             }
