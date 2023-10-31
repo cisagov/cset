@@ -33,12 +33,17 @@ namespace CSETWebCore.Api.Controllers
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
                 Stream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
 
-                return File(assessmentsExportArchive, "application/octet-stream", "AccessKeyAssessments.zip");
+                if (assessmentsExportArchive == null) 
+                {
+                    return Ok("No assessments exported. Either no assessments with the target GUIDS exist or something else went wrong.");
+                }
+
+                return File(assessmentsExportArchive, "application/octet-stream", "BulkAssessmentExport.zip");
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-                return StatusCode(500, "There was an issue exporting all access key assessments");
+                return StatusCode(500, "There was an issue bulk exporting assessments");
             }
 
         }

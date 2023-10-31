@@ -524,10 +524,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <returns></returns>
         public Stream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension) 
         {
-            if (guids.IsNullOrEmpty()) 
-            {
-                return null;
-            }
 
             var archiveStream = new MemoryStream();
 
