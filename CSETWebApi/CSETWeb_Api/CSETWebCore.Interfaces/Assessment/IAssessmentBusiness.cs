@@ -36,5 +36,6 @@ namespace CSETWebCore.Interfaces.Assessment
 
         string GetOtherRemarks(int assessmentId);
         void SaveOtherRemarks(int assessmentId, string remark);
+        void clearFirstTime(int userid, int assessmentId);
     }
 }

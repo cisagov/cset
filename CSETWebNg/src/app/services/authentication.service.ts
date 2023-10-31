@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -59,6 +59,7 @@ const headers = {
 
 @Injectable()
 export class AuthenticationService {
+  
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
@@ -360,15 +361,22 @@ export class AuthenticationService {
   lastName() {
     return localStorage.getItem('lastName');
   }
-  isFirstLogin(){
-    return localStorage.getItem('isFirstLogin');
+  isFirstLogin():boolean{
+    var tstring = localStorage.getItem('isFirstLogin'); 
+    if(tstring){
+      return Boolean(JSON.parse(tstring));
+    }
+    return false;
+  }
+  setFirstLogin(firstLogin: boolean) {
+    localStorage.setItem('isFirstLogin', String(firstLogin));
   }
 
   setUserInfo(info: CreateUser) {
     localStorage.setItem('firstName', info.firstName);
     localStorage.setItem('lastName', info.lastName);
     localStorage.setItem('email', info.primaryEmail);
-    localStorage.setItem('isFirstLogin',info.isFirstLogin?"1":"0");
+    localStorage.setItem('isFirstLogin', String(info.isFirstLogin));
   }
 
   /**

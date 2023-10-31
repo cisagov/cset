@@ -75,9 +75,10 @@ export class GalleryService {
 
         ///NOTE THIS runs the default item if there is only one item automatically
         if(this.configSvc.installationMode=="CF"){
-          if(this.authSvc.isFirstLogin){
+          if(this.authSvc.isFirstLogin()){
+            this.assessSvc.clearFirstTime();
+            this.authSvc.setFirstLogin(false);
             this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
-            this.clearFirstLogin();
           }
         }
         // if (this.rows.length == 1 && this.rows[0].galleryItems.length == 1) {          
@@ -95,14 +96,7 @@ export class GalleryService {
       }
     );
   }
-  clearFirstLogin() {
-    this.http.get(this.configSvc.apiUrl + 'gallery/clearFirstLogin',headers).subscribe(
-      ()=>{
-        console.log("cleared first login");
-      }
-    );
-  }
-
+  
   /**
    * Posts the current selected tier to the server.
    */

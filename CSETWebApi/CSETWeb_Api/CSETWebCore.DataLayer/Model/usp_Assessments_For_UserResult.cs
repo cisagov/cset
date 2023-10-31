@@ -18,7 +18,6 @@ namespace CSETWebCore.DataLayer.Model
         public bool UseMaturity { get; set; }
         public string workflow { get; set; }
         public string SelectedMaturityModel { get; set; }
-        public bool? iseSubmitted { get; set; }
         public string SelectedStandards { get; set; }
         public bool? AltTextMissing { get; set; }
         public int? UserId { get; set; }
