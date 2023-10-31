@@ -22,8 +22,8 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [ApiKeyAuthorize]
-        [Route("api/crrm/exportAllAccessKeyAssessments")]
-        public IActionResult GetAssessments(Guid[] guidsToExport)
+        [Route("api/crrm/bulkExportAssessments")]
+        public IActionResult BulkExportAssessments(Guid[] guidsToExport)
         {
 
             try
