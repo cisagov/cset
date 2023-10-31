@@ -517,27 +517,6 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         }
 
         /// <summary>
-        /// Export an assessment by its GUID. 
-        /// Can optionally provide a password and password hint that will be used during import process.
-        /// </summary>
-        /// <param name="assessmentId">The ID of the assessment to export</param>
-        /// <param name="fileExtension">The extension of the export file</param>
-        /// <param name="password">If not empty, this password will be required to import the assessment</param>
-        /// <param name="passwordHint">An optional password hint</param>
-        /// <returns>An AssessmentExportFile object containing the file name and the file contents</returns>
-        public AssessmentExportFile ExportAssessment(Guid assessmentGuid, string fileExtension, string password = "", string passwordHint = "") 
-        {
-            var assessment = _context.ASSESSMENTS.Where(a => a.Assessment_GUID == assessmentGuid).FirstOrDefault();
-
-            if (assessment == null) 
-            {
-                return null;
-            }
-
-            return ExportAssessment(assessment.Assessment_Id, fileExtension, password, passwordHint);
-        }
-
-        /// <summary>
         /// Exports access key assessments in the current DB context and returns them in a zip archive.
         /// </summary>
         /// <param name="guids">Array of assessment guids to export</param>
