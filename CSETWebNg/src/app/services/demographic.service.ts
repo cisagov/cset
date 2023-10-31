@@ -73,6 +73,10 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe();
+    .subscribe(()=> {
+      if(this.configSvc.cisaAssessorWorkflow){
+        
+      }
+    });
   }
 }

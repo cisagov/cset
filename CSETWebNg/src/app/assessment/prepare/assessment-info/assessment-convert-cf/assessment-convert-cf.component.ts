@@ -47,9 +47,9 @@ export class AssessmentConvertCfComponent implements OnInit {
    * Reload the assessment.
    */
   convert() {
-    const msg1 = this.tSvc.translate('cyberFlorida.convert confirm 1');
-    const msg2 = this.tSvc.translate('cyberFlorida.convert confirm 2');
-    const titleComplete = this.tSvc.translate('cyberFlorida.title convert complete');
+    const msg1 = this.tSvc.translate('cyberFlorida.upgrade confirm 1');
+    const msg2 = this.tSvc.translate('cyberFlorida.upgrade confirm 2');
+    const titleComplete = this.tSvc.translate('cyberFlorida.title upgrade complete');
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage = msg1;
