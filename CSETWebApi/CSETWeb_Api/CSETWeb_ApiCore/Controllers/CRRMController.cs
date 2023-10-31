@@ -23,7 +23,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [ApiKeyAuthorize]
         [Route("api/crrm/exportAllAccessKeyAssessments")]
-        public IActionResult GetAssessments()
+        public IActionResult GetAssessments(Guid[] guidsToExport)
         {
 
             try
@@ -31,7 +31,7 @@ namespace CSETWebCore.Api.Controllers
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension("CSET");
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
-                Stream assessmentsExportArchive = exportManager.ExportAllAccessKeyAssessments(ext);
+                Stream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
 
                 return File(assessmentsExportArchive, "application/octet-stream", "AccessKeyAssessments.zip");
             }
