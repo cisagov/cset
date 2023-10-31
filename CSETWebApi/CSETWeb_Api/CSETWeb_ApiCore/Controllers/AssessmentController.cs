@@ -443,5 +443,15 @@ namespace CSETWebCore.Api.Controllers
             this._acsetAssessmentBusiness.UpdateIseSubmission(assessmentId);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("api/clearFirstTime")]
+        public IActionResult clearFirstTime()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            int userid = _tokenManager.GetCurrentUserId()??0;
+            this._assessmentBusiness.clearFirstTime(userid,assessmentId);
+            return Ok();
+        }
     }
 }
