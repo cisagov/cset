@@ -35,7 +35,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (assessmentsExportArchive == null) 
                 {
-                    return Ok("No assessments exported. Either no assessments with the target GUIDS exist or something else went wrong.");
+                    return StatusCode(404, "No Assessments with the provided GUIDs were found for export.");
                 }
 
                 return File(assessmentsExportArchive, "application/octet-stream", "BulkAssessmentExport.zip");

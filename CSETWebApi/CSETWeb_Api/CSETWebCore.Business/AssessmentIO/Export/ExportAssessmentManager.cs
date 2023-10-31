@@ -529,6 +529,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             var exportAssessments = _context.ASSESSMENTS.Where(a => guids.Contains(a.Assessment_GUID)).ToList();
 
+            // Assessments with provided guids do not exist.
+            if (exportAssessments.IsNullOrEmpty()) 
+            {
+                return null;
+            }
+
             // Zip all the assessments into one archive
             using (var archive = new ZipFile()) 
             {
