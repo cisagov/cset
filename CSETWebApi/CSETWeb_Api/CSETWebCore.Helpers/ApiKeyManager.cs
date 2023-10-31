@@ -19,7 +19,7 @@ namespace CSETWebCore.Helpers
 
             string configApiKey = _config.GetValue<string>(Constants.Constants.API_KEY_CONFIG_NAME);
 
-            if (configApiKey == null || configApiKey != apiKey) 
+            if (string.IsNullOrEmpty(configApiKey) || configApiKey != apiKey) 
             { 
                 return false;
             }

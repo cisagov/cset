@@ -649,7 +649,12 @@ namespace CSETWebCore.Business.Assessment
             {
                 _maturityBusiness.ClearMaturityModel(assessmentId);
             }
-            AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+
+            // No user is null here if accesskey login is used
+            if (user != null) 
+            { 
+                AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+            }
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;

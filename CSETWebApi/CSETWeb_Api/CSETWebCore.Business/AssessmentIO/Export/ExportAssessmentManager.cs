@@ -382,7 +382,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        public Stream ArchiveStream(int assessmentId, string password, string passwordHint)
+        private Stream ArchiveStream(int assessmentId, string password, string passwordHint)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
@@ -491,6 +491,15 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return archiveStream;
         }
 
+        /// <summary>
+        /// Export an assessment by its ID. 
+        /// Can optionally provide a password and password hint that will be used during import process.
+        /// </summary>
+        /// <param name="assessmentId">The ID of the assessment to export</param>
+        /// <param name="fileExtension">The extension of the export file</param>
+        /// <param name="password">If not empty, this password will be required to import the assessment</param>
+        /// <param name="passwordHint">An optional password hint</param>
+        /// <returns>An AssessmentExportFile object containing the file name and the file contents</returns>
         public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "") 
         {
             // determine file name
@@ -504,6 +513,35 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             // export the assessment
             Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint);
             return new AssessmentExportFile(fileName, assessmentFileContents);
+        }
+
+        /// <summary>
+        /// Exports all access key assessments in the current DB context and returns them in a zip archive.
+        /// </summary>
+        /// <param name="fileExtension">The extension of the export files</param>
+        /// <returns></returns>
+        public Stream ExportAllAccessKeyAssessments(string fileExtension) 
+        {
+            var archiveStream = new MemoryStream();
+
+            var accessKeyAssessments = _context.ACCESS_KEY_ASSESSMENT;
+            var assessments = _context.ASSESSMENTS.Where(a => accessKeyAssessments.Any(x => x.Assessment_Id == a.Assessment_Id)).ToList();
+
+            // Zip all the assessments into one zip archive
+            using (var archive = new ZipFile()) 
+            {
+                // export the assessments
+                foreach (ASSESSMENTS a in assessments)
+                {
+                    AssessmentExportFile exportFile = ExportAssessment(a.Assessment_Id, fileExtension);
+                    archive.AddEntry(exportFile.FileName, exportFile.FileContents);
+                }
+
+                archive.Save(archiveStream);
+            }
+
+            archiveStream.Seek(0, SeekOrigin.Begin);
+            return archiveStream;
         }
     }
 }
