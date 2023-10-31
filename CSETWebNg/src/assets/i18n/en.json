@@ -39,6 +39,8 @@
     "sal intro 1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
     "sal intro 3": "The SAL applies to Standard and Diagram Component question sets.",
+    "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the",
+    "icon": "icon",
     "buttons": {
         "ok": "OK",
         "save": "Save",
@@ -247,7 +249,9 @@
         "export to excel": "Export all assessments to Excel",
         "remove assessment": "Permanently remove this assessment.",
         "export assessment": "Export a copy of this assessment to another location",
-        "analytics": "View the analytics for this assessment."
+        "analytics": "View the analytics for this assessment.",
+        "merged checked exams": "Merge checked examinations",
+        "export all": "Export a copy of all assessments to another location."
     },
     "level": {
         "low": "Low",
@@ -384,7 +388,8 @@
                 "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
                 "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
                 "gaps": "Gaps",
-                "marked for review": "Marked for Review"
+                "marked for review": "Marked for Review",
+                "no deficiencies": "There are no deficiencies to display"
             },
             "comments and mfr": {
                 "tab title": "Comments Report - ACET",
@@ -503,6 +508,7 @@
         "welcome to": "Welcome to {{appTitle}}",
         "to get started": "To get started, select from one of the options below:",
         "new assessment": "Start a New Assessment",
+        "new assessment tooltip": "Select an assessment type and begin a new assessment.",
         "import assessment": "Import an Existing Assessment",
         "blank assessment": "Blank Assessment",
         "needs review": "Needs Review",

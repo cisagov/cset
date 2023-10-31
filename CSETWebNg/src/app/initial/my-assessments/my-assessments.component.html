@@ -54,7 +54,7 @@
                             <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()"
-                                matTooltip="Export a copy of all assessments to another location."
+                                matTooltip="{{ t('tooltip.export all') }}"
                                 [disabled]="exportAllInProgress">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('export all')}}</span>
@@ -125,7 +125,7 @@
                             <button
                                 class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 (click)="clickNewAssessmentButton()"
-                                matTooltip="Select an assessment type and begin a new assessment.">
+                                matTooltip="{{ t('welcome page.new assessment tooltip') }}">
                                 <span *ngIf="configSvc.installationMode !=='ACET'"
                                     class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                                 <span *ngIf="configSvc.installationMode === 'ACET'"
@@ -135,7 +135,7 @@
                             <!-- <hr class="landing my-4"> -->
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                                 class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
                                     {{ t('welcome page.import assessment') }}
@@ -145,7 +145,7 @@
                             </label>
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
                                     {{ t('welcome page.import assessment') }}
@@ -284,12 +284,12 @@
                         <td class="text-nowrap pl-1">
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="removeAssessment(assessment, i)"
-                                matTooltip="Permanently remove this assessment.">
+                                matTooltip="{{ t('tooltip.remove assessment') }}">
                                 <span class="cset-icons-trash-x fs-base-2"></span>
                             </button>
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2"></span>
                             </button>
                         </td>
@@ -330,7 +330,7 @@
                             <br>
                         </div>
                         <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="This assessment contains answers that require further review.">
+                            matTooltip="{{ t('tooltip.assessment requires review') }}">
                             {{ t('welcome page.needs review') }}
                         </span>
                     </td>
@@ -348,7 +348,7 @@
             </table>
             <button *ngIf="this.ncuaSvc.prepForMerge" (click)="this.proceedToMerge()"
                 [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10"
-                class="btn btn-primary" matTooltip="Merge checked examinations"
+                class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
                 style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge examinations.start merge') }}</button>
 
             <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
