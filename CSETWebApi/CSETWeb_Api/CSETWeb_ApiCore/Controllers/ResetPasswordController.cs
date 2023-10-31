@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Api.Models;
+using NLog;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -243,6 +244,8 @@ namespace CSETWebCore.Api.Controllers
 
                 if (beta)
                 {
+                    LogManager.GetCurrentClassLogger().Info("CreateUser - CSET is set to 'online beta' mode - no email sent to new user");
+
                     // create the user but DO NOT send the temp password email (test/beta)
                     var rval = resetter.CreateUser(user, false);
                     if (rval)

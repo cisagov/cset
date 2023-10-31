@@ -105,7 +105,7 @@ export class LoginCfComponent implements OnInit {
   login() {
     this.loading = true;
     this.incorrect = false;
-    this.passwordExpired = false;
+    this.passwordExpired = false;    
 
     this.authenticationService
       .login(this.model.email, this.model.password)

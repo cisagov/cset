@@ -325,8 +325,9 @@ export class NavigationService {
     if (!this.workflow) {
       return false;
     }
-
+    
     let target = this.workflow.getElementById(id);
+    
     if (!target) {
       console.error(`No workflow element found for id ${id}`);
       return false;
