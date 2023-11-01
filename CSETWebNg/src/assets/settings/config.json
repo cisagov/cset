@@ -278,5 +278,10 @@
                 }
             ]
         }
+    ],
+    "languageOptions": [
+        { "value": "en", "name": "English" },
+        { "value": "es", "name": "Español" },
+        { "value": "uk", "name": "українська" }
     ]
 }
