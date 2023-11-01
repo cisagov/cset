@@ -316,7 +316,7 @@
           <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-              This assessment has not been submitted yet. If this assessment is complete, please submit it.
+              This assessment has not been submitted yet. If this assessment is complete, please click submit.
             </div>
           </div>
         </div>
@@ -588,7 +588,7 @@
         </div>
 
           <!-- ISE Merit Buttons -->
-          <div *ngIf="assessSvc.isISE()" style="display: flex; justify-content: space-between;" class="my-5">
+          <div *ngIf="assessSvc.isISE()" class="my-5">
 
             <button class="btn mr-2" style="background-color: #3b68aa; color: white;"
               (click)="navSvc.navBack('reports')" tabindex="0" aria-label="Back">
@@ -602,11 +602,8 @@
             </button>
 
           </div>
-
         </div>
       </div>
-    </div>
-
 
     <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
       [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
