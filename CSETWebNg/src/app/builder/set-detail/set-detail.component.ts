@@ -28,6 +28,8 @@ import { SetDetail } from '../../models/set-builder.model';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
+import { OkayComponent } from '../../dialogs/okay/okay.component';
+import { set } from 'lodash';
 
 @Component({
   selector: 'app-set-detail',
@@ -38,6 +40,7 @@ import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.co
 export class CustomSetComponent implements OnInit {
 
   setDetail: SetDetail = {};
+  setDetailList: SetDetail[];
 
   submitted = false;
 
@@ -72,6 +75,23 @@ export class CustomSetComponent implements OnInit {
    *
    */
   update(e: Event) {
+    if (this.setDetail.setName || this.setDetail.fullName.length > 0) {
+      this.setBuilderSvc.getCustomSetList().subscribe(
+        (response: SetDetail[]) => {
+          this.setDetailList = response;
+        }
+      )
+      for (let s of this.setDetailList) {
+        if (s.fullName == this.setDetail.fullName){
+          const msg2 = 'Module Name already in use';
+          const titleComplete = 'Module Name'
+          const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+          dlgOkay.componentInstance.hasHeader = true;
+          this.setDetail.fullName = ""
+        }
+      }
+      
+    }
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
 
@@ -85,6 +105,7 @@ export class CustomSetComponent implements OnInit {
     if (!this.setDetail.setName) {
       return false;
     }
+    
     if (!this.setDetail.fullName || this.setDetail.fullName.length === 0
       || !this.setDetail.shortName || this.setDetail.shortName.length === 0
       || !this.setDetail.description || this.setDetail.description.length === 0) {
