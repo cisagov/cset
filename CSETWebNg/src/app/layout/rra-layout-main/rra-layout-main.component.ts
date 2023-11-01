@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -40,7 +40,7 @@ import { LayoutService } from '../../services/layout.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
-export class RraLayoutMainComponent implements OnInit, AfterViewInit {
+export class RraLayoutMainComponent {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
@@ -56,14 +56,6 @@ export class RraLayoutMainComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router
   ) { }
-
-  ngOnInit() { }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isFooterOpen();
-    }, 200);
-  }
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
