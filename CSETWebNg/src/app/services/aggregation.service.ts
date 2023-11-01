@@ -161,7 +161,7 @@ export class AggregationService {
 
   saveAssessmentAlias(assessment: any, aliasData: any[]) {
     return this.http.post(this.apiUrl + 'saveassessmentalias',
-      { aliasAssessment: assessment, assessmentList: aliasData });
+      { aliasAssessment: assessment, assessmentList: aliasData }, { responseType: 'text' });
   }
 
   getAnswerTotals(aggId) {
