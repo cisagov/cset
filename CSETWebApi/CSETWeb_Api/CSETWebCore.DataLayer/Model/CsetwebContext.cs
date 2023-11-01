@@ -2720,6 +2720,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
 
             entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsFirstLogin).HasDefaultValueSql("((1))");
             entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
             entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
             entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
