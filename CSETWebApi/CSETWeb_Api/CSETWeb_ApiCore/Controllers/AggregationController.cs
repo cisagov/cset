@@ -141,9 +141,9 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var aggreg = new AggregationBusiness(_context);
-            aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
+            var newAlias = aggreg.SaveAssessmentAlias((int)aggregationID, req.aliasAssessment.AssessmentId, req.aliasAssessment.Alias, req.assessmentList);
 
-            return Ok();
+            return Ok(newAlias);
         }
 
 
