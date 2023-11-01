@@ -60,6 +60,7 @@ export interface CreateUser {
   appCode?: string;
   title?: string;
   phone?: string;
+  isFirstLogin?: boolean;
 }
 
 export interface PotentialQuestions {

@@ -130,7 +130,12 @@ export class AliasAssessmentsComponent implements OnInit {
         alias: assessment.alias
       },
       assessmentList
-    ).subscribe();
+    ).subscribe((newAlias: string) => {
+      const a = this.aliasData.assessments.find(x => x.assessmentId == assessment.assessmentId);
+      if (!!a) {
+        a.alias = newAlias;
+      }
+    });
   }
 
   /**

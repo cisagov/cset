@@ -90,6 +90,7 @@ let headers = {
   creditUnionCharterNumber = "";
 
   ISE_StateLed: boolean = false;
+  iseHasBeenSubmitted: boolean = false;
 
   questions: any = null;
   iseIrps: any = null;
@@ -645,7 +646,11 @@ let headers = {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
                         this.jsonStringReset();
-                        this.updateSubmissionStatus().subscribe(result => {});
+                        this.updateSubmissionStatus().subscribe(result => {
+                          this.getSubmissionStatus().subscribe((result: any) => {
+                            this.iseHasBeenSubmitted = result;
+                          });
+                        });
                       },
                       error => {        
                         let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
@@ -666,7 +671,9 @@ let headers = {
                         this.jsonStringReset();
                           
                         this.updateSubmissionStatus().subscribe(result => {
-                          
+                          this.getSubmissionStatus().subscribe((result: any) => {
+                            this.iseHasBeenSubmitted = result;
+                          });
                         });
                       },
                       error => {        
@@ -709,6 +716,12 @@ let headers = {
                   disableClose: true, data: { title: "Submission Success", messageText: msg }
                 })
         this.jsonStringReset();
+
+        this.updateSubmissionStatus().subscribe(result => {
+          this.getSubmissionStatus().subscribe((result: any) => {
+            this.iseHasBeenSubmitted = result;
+          });
+        });
       },
       error => {        
         console.log(error);
@@ -762,6 +775,10 @@ let headers = {
     const uncPathCarrier = new MeritFileExport();
     uncPathCarrier.data = newPath;
     return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
+  }
+
+  getSubmissionStatus() {
+    return this.http.get(this.configSvc.apiUrl + 'getIseSubmissionStatus');
   }
 
   updateSubmissionStatus() {
