@@ -54,6 +54,9 @@ public partial class USERS
     [StringLength(10)]
     public string Lang { get; set; }
 
+    [Required]
+    public bool? IsFirstLogin { get; set; }
+
     [InverseProperty("AssessmentCreator")]
     public virtual ICollection<ASSESSMENTS> ASSESSMENTS { get; set; } = new List<ASSESSMENTS>();
 

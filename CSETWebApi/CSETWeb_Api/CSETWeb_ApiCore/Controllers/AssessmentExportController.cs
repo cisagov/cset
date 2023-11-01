@@ -8,6 +8,7 @@ using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.AssessmentIO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -42,28 +43,15 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 _token.SetToken(token);
+
                 int assessmentId = _token.AssessmentForUser(token);
 
-
                 // determine extension (.csetw, .acet)
-                string appCode = _token.Payload(Constants.Constants.Token_Scope);
-                string ext = IOHelper.GetExportFileExtension(appCode);
+                string ext = IOHelper.GetExportFileExtension(_token.Payload(Constants.Constants.Token_Scope));
 
+                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint);
 
-                // determine filename
-                var filename = $"{assessmentId}{ext}";
-                var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
-                if (!string.IsNullOrEmpty(assessmentName))
-                {
-                    filename = $"{assessmentName}{ext}";
-                }
-
-
-                // export the assessment
-                var export = new AssessmentExportManager(_context);
-                var result = export.ArchiveStream(assessmentId, password, passwordHint);
-
-                return File(result, "application/octet-stream", filename);
+                return File(result.FileContents, "application/octet-stream", result.FileName);
             }
             catch (Exception exc)
             {

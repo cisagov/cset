@@ -78,7 +78,7 @@ export class AssessmentConfigIodComponent implements OnInit {
   }
 
   changeCriticalService(evt: any) {
-    this.demographics.criticalServiceName = evt.target.value;
+    this.demographics.criticalService = evt.target.value;
     this.updateDemographics();
   }
 

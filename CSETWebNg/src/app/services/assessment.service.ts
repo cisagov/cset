@@ -48,6 +48,7 @@ const headers = {
 
 @Injectable()
 export class AssessmentService {
+  
 
   userRoleId: number;
   roles: Role[];
@@ -117,6 +118,14 @@ export class AssessmentService {
    */
   refreshRoles() {
     return this.http.get(this.apiUrl + 'contacts/allroles');
+  }
+
+  clearFirstTime() {
+    this.http.get(this.apiUrl + 'clearFirstTime').subscribe(
+      ()=>{
+        console.log("first time assessment clearded");
+      }
+    );
   }
 
   /**
