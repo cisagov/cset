@@ -26,7 +26,6 @@ export class UserLanguageComponent implements OnInit {
   langSelection: string;
 
   ngOnInit(): void {
-    //console.log(this.configSvc.config)
     const options = this.configSvc.config.languageOptions;
     if (!!options) {
       this.languageOptions = options;

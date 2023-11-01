@@ -139,7 +139,8 @@
         "assessment factor": "Assessment Factor",
         "component": "Component",
         "components": "Components",
-        "statements": "Statements"
+        "statements": "Statements",
+        "submitted": "Submitted"
     },
     "cyberFlorida": {
         "upgrade message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To Participate in the full Cyber Florida Assessment Click the Upgrade button below.",
