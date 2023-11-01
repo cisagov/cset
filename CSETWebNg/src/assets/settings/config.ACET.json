@@ -23,5 +23,9 @@
         "showFeedback": false,
         "showDisclaimer": false,
         "independentSuppGuidance": true
-    }
+    },
+    "languageOptions": [
+        { "value": "en", "name": "English" },
+        { "value": "es", "name": "Español" }
+    ]
 }

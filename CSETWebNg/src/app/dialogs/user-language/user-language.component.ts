@@ -7,6 +7,7 @@ import { TranslocoService } from '@ngneat/transloco';
 import { Moment } from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
+import { ConfigService } from '../../services/config.service';
 
 
 @Component({
@@ -15,24 +16,34 @@ import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 })
 export class UserLanguageComponent implements OnInit {
 
-  languageOptions = [
-    { value: "en", name: "English" },
-    { value: "es", name: "Español" },
-    { value: "uk", name: "українська" }
-  ];
-
+  languageOptions = [];
 
   constructor(
     private dialog: MatDialogRef<EditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tSvc: TranslocoService,
     private authSvc: AuthenticationService,
-    private dateAdapter: DateAdapter<any>
+    private dateAdapter: DateAdapter<any>,
+    private configSvc: ConfigService
   ) { }
 
   langSelection: string;
 
   ngOnInit(): void {
+    const options = this.configSvc.config.languageOptions;
+    if (!!options) {
+      this.languageOptions = options;
+    }
+
+    // This ACET check is because the config.ACET.json's languageOptions 
+    // isn't being read correctly (as of 10/31/23) and I don't have time to fix it
+    if (this.configSvc.config.installationMode == 'ACET') { 
+      this.languageOptions = [
+        { value: "en", name: "English" },
+        { value: "es", name: "Español" }
+      ];
+    }
+
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
