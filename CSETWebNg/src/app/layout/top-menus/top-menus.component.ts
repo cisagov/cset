@@ -393,7 +393,7 @@ export class TopMenusComponent implements OnInit {
   showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
+    if (this.dialog.openDialogs[0] || doNotShow) {  
       this.exportToExcel();
       return;
     }
@@ -403,6 +403,11 @@ export class TopMenusComponent implements OnInit {
 
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+  }
+  
+
+  exportToExcelNCUA() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
   }
 
   /**
