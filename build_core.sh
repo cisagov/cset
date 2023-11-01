@@ -4,8 +4,8 @@ shopt extglob dotglob nullglob
 
 
 build_ng() {
-    echo 'Angular Build'
-    cd CSETWebNg
+  echo 'Angular Build'
+  cd CSETWebNg
 
 	# Verify Angular CLI installation
 	if ! command -v ng &> /dev/null
@@ -14,33 +14,36 @@ build_ng() {
 		exit 1
 	fi
 
-    echo 'building CSET app'
+  echo 'building CSET app'
 	outputDir="/c/temp/ng-dist_${1}"
-    ng build --configuration production --base-href ./ --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
+  ng build --configuration production --base-href ./ --source-map=false | sed "s/^/APP: /" > ../ng-build.log 2> ../ng-errors.log
 
 	mkdir -p "${outputDir}" && cp -r dist "${outputDir}/."
 	
-    echo 'Angular project built.'
+  echo 'Angular project built.'
 	
-    echo 'PLEASE WAIT'
+  echo 'PLEASE WAIT'
 }
 
 build_api() {
-    cd CSETWebApi/csetweb_api/CSETWeb_ApiCore
+  cd CSETWebApi/csetweb_api/CSETWeb_ApiCore
 
-    echo 'Cleaning Project...'
+  echo 'Cleaning Project...'
 
 	dotnet clean 
 
-    echo 'Publishing project...'
+  echo 'Publishing project...'
 	outputDirApi="/c/temp/api-publish_${1}"
 	dotnet publish --configuration Release -o $outputDirApi -v q
+
+	rm -f ${outputDirApi}/appsettings.development.json
 	
 	mkdir -p ../../../dist/CSETWebApi && cp -r "${outputDirApi}/." ../../../dist/CSETWebApi
 
-    echo 'API project published.'
+
+  echo 'API project published.'
     
-    echo 'PLEASE WAIT'
+  echo 'PLEASE WAIT'
 }
 
 build_electron() {
@@ -67,8 +70,8 @@ date
 
 if [ -d dist ]
 then
-    echo 'Deleting existing dist folder'
-    rm -rf dist
+  echo 'Deleting existing dist folder'
+  rm -rf dist
 fi
 
 ts=$(date +%Y-%m-%d_%H.%M.%S)
