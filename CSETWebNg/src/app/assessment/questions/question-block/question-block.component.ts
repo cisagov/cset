@@ -31,6 +31,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
+import { ConversionService } from '../../../services/conversion.service';
 
 
 /**
@@ -78,7 +79,8 @@ export class QuestionBlockComponent implements OnInit {
     private dialog: MatDialog,
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private convertSvc: ConversionService
     ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
@@ -347,8 +349,9 @@ export class QuestionBlockComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer)
       .subscribe((ansId: number) => {
-        q.answer_Id = ansId;
-      });
+        q.answer_Id = ansId;       
+        }
+      );
   }
 
   /**

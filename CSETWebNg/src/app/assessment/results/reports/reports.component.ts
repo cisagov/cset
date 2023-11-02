@@ -164,7 +164,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.configSvc.installationMode === 'CF') {
       this.isCyberFlorida = true;
       this.demoSvc.getDemoAnswered().subscribe((answered: boolean) => {
-        this.disableEntirePage = !answered;
+        this.disableEntirePage = false;
       });
     } else {
       this.isCyberFlorida = false;

@@ -35,6 +35,7 @@ namespace CSETWebCore.Model.Demographic
         public string CisoExists { get; set; }
         public string CyberTrainingProgramExists { get; set; }
         public string CyberRiskService { get; set; }
+        public string Hb7055Grant { get; set; }
     }
 
 
