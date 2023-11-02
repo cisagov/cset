@@ -4,7 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { NgForm } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
-import { Moment } from 'moment';
+import moment from 'moment';
+import 'moment/min/moment-with-locales.min';
+import 'moment/min/locales.min';
+import 'moment/dist/locale/es';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { ConfigService } from '../../services/config.service';
@@ -47,7 +50,7 @@ export class UserLanguageComponent implements OnInit {
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
-      // Moment.locale(this.langSelection);
+      moment.locale(this.langSelection);
     });
   }
 
@@ -59,7 +62,7 @@ export class UserLanguageComponent implements OnInit {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         this.dateAdapter.setLocale(this.langSelection);
-        // Moment.locale(this.langSelection);
+        moment.locale(this.langSelection);
       });
       // 
     },

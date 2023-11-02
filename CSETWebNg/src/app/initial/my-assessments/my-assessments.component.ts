@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-
+import { DatePipe } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -47,9 +47,14 @@ import { Comparer } from "../../helpers/comparer";
 import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
 import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
 import * as moment from "moment";
+import 'moment/min/moment-with-locales.min';
+import 'moment/min/locales.min';
+import 'moment/dist/locale/es';
 import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import '@angular/common/locales/es';
 
 
 interface UserAssessment {
@@ -119,7 +124,9 @@ export class MyAssessmentsComponent implements OnInit {
     public tSvc: TranslocoService,
     private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public dateAdapter: DateAdapter<any>,
+    public datePipe: DatePipe
   ) { }
 
   ngOnInit() {
@@ -415,7 +422,11 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    let localTime = moment.utc(lastModifiedDate).local().toLocaleString();
+    //let temp = new Date(lastModifiedDate);
+    //console.log(this.dateAdapter.format(temp, 'DD-MM-YYYY'))
+    //moment.locale();
+    let localTime = moment.utc(lastModifiedDate).add(2592000000).local(true);
+    //let localTime = moment.utc(lastModifiedDate).local().toLocaleString();
 
     return localTime;
   }
