@@ -24,6 +24,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -37,7 +39,7 @@ export class ReportService {
   /**
    *
    */
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(private http: HttpClient, private configSvc: ConfigService, private tSvc: TranslocoService) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
       this.initialized = true;
@@ -199,6 +201,11 @@ export class ReportService {
 
   validateCisaAssessorFields() {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
+  }
+  
+  translatedDate(date: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    return moment(date).format('DD-MMM-yyyy');
   }
 
   /**

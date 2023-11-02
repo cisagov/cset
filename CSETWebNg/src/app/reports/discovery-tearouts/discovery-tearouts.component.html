@@ -90,7 +90,7 @@
                     <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
                     <td style="width: 25%">{{ 'level.' + finding.importance.toLowerCase() | transloco }}</td>
                     <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
-                    <td style="width: 25%">{{finding.resolutionDate | date:'dd-MMM-yyyy'}}</td>
+                    <td style="width: 25%">{{reportSvc.translatedDate(finding.resolutionDate)}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('issue') }}:</td>
