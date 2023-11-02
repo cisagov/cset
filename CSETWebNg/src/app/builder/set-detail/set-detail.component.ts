@@ -82,11 +82,22 @@ export class CustomSetComponent implements OnInit {
     if (this.setDetail.fullName || this.setDetail.fullName.length > 0) {
       for (let s of this.setDetailList) {
         if (s.fullName == this.setDetail.fullName) {
-          const msg2 = 'Module Name already in use';
+          const msg2 = 'Module Name Already In Use';
           const titleComplete = 'Module Name'
           const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
           dlgOkay.componentInstance.hasHeader = true;
           this.setDetail.fullName = ""
+        }
+      }
+    }
+    if (this.setDetail.shortName || this.setDetail.shortName.length > 0) {
+      for (let s of this.setDetailList) {
+        if (s.shortName == this.setDetail.shortName) {
+          const msg2 = 'Short Name Already In Use';
+          const titleComplete = 'Short Name'
+          const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+          dlgOkay.componentInstance.hasHeader = true;
+          this.setDetail.shortName = ""
         }
       }
     }
