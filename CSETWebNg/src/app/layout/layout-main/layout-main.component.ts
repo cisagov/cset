@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -43,12 +43,12 @@ import { LayoutService } from '../../services/layout.service';
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })
-export class LayoutMainComponent implements OnInit, AfterViewInit {
+export class LayoutMainComponent {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
   footerClosed: boolean = true;
-  
+
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
@@ -60,16 +60,6 @@ export class LayoutMainComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router
   ) { }
-
-  ngOnInit() {
-    if (this.configSvc.installationMode === 'RRA') {
-
-    }
-  }
-
-  ngAfterViewInit() {
-   
-  }
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
