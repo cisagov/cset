@@ -75,7 +75,7 @@ export class CustomSetComponent implements OnInit {
    *
    */
   update(e: Event) {
-    if (this.setDetail.setName || this.setDetail.fullName.length > 0) {
+    if (this.setDetail.fullName || this.setDetail.fullName.length > 0) {
       this.setBuilderSvc.getCustomSetList().subscribe(
         (response: SetDetail[]) => {
           this.setDetailList = response;
