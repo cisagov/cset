@@ -55,7 +55,6 @@ export class UserLanguageComponent implements OnInit {
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         moment.locale(this.langSelection);
       });
-      // 
     },
       error => console.error('Error updating user langugage: ' + error.message));
     this.dialog.close();
