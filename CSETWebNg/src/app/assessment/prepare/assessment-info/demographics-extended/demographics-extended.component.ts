@@ -224,10 +224,10 @@ export class DemographicsExtendedComponent implements OnInit {
 
   checkComplete(){
     if(this.demoSvc.AreDemographicsComplete(this.demographicData,this.geoGraphics)){
-      this.navSvc.setNextEnabled(true);
+      this.navSvc.setNextEnabled(true);      
     }
     else{
-      this.navSvc.setNextEnabled(false);
+      this.navSvc.setNextEnabled(false);            
     }
   }
 

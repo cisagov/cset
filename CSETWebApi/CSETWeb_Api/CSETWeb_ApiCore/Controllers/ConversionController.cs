@@ -69,5 +69,14 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("api/cf/isComplete")]
+        public IActionResult IsCFComplete()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var biz = new CFBusiness(_context, _assessmentUtil);
+            return Ok(biz.getInitialAnswers(assessmentId));
+        }
     }
 }
