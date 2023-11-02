@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -31,7 +31,6 @@ import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { LayoutService } from '../../services/layout.service';
-import { FooterService } from '../../services/footer.service';
 
 @Component({
   selector: 'cf-layout-main',
@@ -41,7 +40,7 @@ import { FooterService } from '../../services/footer.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 })
-export class CfLayoutMainComponent implements OnInit, AfterViewInit {
+export class CfLayoutMainComponent {
 
   docUrl: string;
   dialogRef: MatDialogRef<any>;
@@ -57,21 +56,8 @@ export class CfLayoutMainComponent implements OnInit, AfterViewInit {
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
-    public router: Router, 
-    private footerSvc: FooterService
+    public router: Router,
   ) { }
-
-  ngOnInit() {
-    if (this.configSvc.installationMode === 'RRA') {
-
-    }
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isFooterOpen();
-    }, 200);
-  }
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
