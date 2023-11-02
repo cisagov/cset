@@ -70,6 +70,7 @@ interface UserAssessment {
   totalAvailableQuestionsCount: number;
   questionAlias: string;
   iseSubmission: boolean;
+  submittedDate?: Date;
 }
 
 @Component({

@@ -75,7 +75,8 @@
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
         "components": "Componentes",
-        "statements": "Declaración"
+        "statements": "Declaración",
+        "submitted": "Enviado"
     },
     "cyberFlorida": {
         "upgrade message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
