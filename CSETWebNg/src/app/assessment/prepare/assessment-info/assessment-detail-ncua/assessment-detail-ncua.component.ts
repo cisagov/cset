@@ -147,7 +147,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-        console.log(this.assessment)
 
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
