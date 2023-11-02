@@ -64,10 +64,7 @@ export class CyberFloridaService {
     return isComplete;
   }
 
-  updateCompleteStatus(answer: Answer) {
-    if((answer.answerText=='U')){
-      return;
-    }
+  updateCompleteStatus(answer: Answer) {  
     //have a list of all the 20 necessary id's
     //then when the list is complete enable the navigation
     this.needArray.forEach(function (value) {

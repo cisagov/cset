@@ -639,7 +639,8 @@ export class AssessmentService {
 
   updateAnswer(answer: Answer) {
     this.floridaSvc.updateCompleteStatus(answer);  
-    if(this.isCyberFloridaComplete()){
+    if(this.isCyberFloridaComplete()){  
+          
       this.assessmentStateChanged.next(124);
     }
       

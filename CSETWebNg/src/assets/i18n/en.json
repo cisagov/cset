@@ -142,11 +142,11 @@
         "statements": "Statements"
     },
     "cyberFlorida": {
-        "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here To Participate in the full Cyber Florida Assessment Click the Upgrade button below.",
-        "upgrade confirm 1": "Are you sure you want to upgrade this assessment?  This is a one-way conversion; it cannot be undone.",
-        "upgrade confirm 2": "The assessment has been upgradeed.",
-        "title upgrade complete":"Upgrade Complete",
-        "upgradeButton":"Upgrade to Full Assessment"
+        "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
+        "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
+        "upgrade confirm 2": "The assessment has been converted.",
+        "title upgrade complete":"Conversion Complete",
+        "upgradeButton":"Convert to Full Assessment"
     },
     "answer-options": {
         "button-labels": {
