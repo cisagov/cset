@@ -55,7 +55,11 @@ export class CustomSetComponent implements OnInit {
    */
   ngOnInit() {
     const setName = localStorage.getItem('setName');
-
+    this.setBuilderSvc.getCustomSetList().subscribe(
+      (response: SetDetail[]) => {
+        this.setDetailList = response;
+      }
+    )
     this.setBuilderSvc.getSetDetail(setName).subscribe((response) => {
       this.setDetail = response;
       this.setDetail.categoryList.sort((a, b) => {
@@ -76,13 +80,8 @@ export class CustomSetComponent implements OnInit {
    */
   update(e: Event) {
     if (this.setDetail.fullName || this.setDetail.fullName.length > 0) {
-      this.setBuilderSvc.getCustomSetList().subscribe(
-        (response: SetDetail[]) => {
-          this.setDetailList = response;
-        }
-      )
       for (let s of this.setDetailList) {
-        if (s.fullName == this.setDetail.fullName){
+        if (s.fullName == this.setDetail.fullName) {
           const msg2 = 'Module Name already in use';
           const titleComplete = 'Module Name'
           const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
@@ -90,7 +89,6 @@ export class CustomSetComponent implements OnInit {
           this.setDetail.fullName = ""
         }
       }
-      
     }
     this.setBuilderSvc.updateSetDetails(this.setDetail).subscribe();
   }
@@ -105,7 +103,7 @@ export class CustomSetComponent implements OnInit {
     if (!this.setDetail.setName) {
       return false;
     }
-    
+
     if (!this.setDetail.fullName || this.setDetail.fullName.length === 0
       || !this.setDetail.shortName || this.setDetail.shortName.length === 0
       || !this.setDetail.description || this.setDetail.description.length === 0) {
