@@ -45,12 +45,14 @@ export interface NavTreeNode {
   expandable: boolean;
   visible: boolean;
   index?: number;
+  enabled?: boolean;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
+  
 
   
 
@@ -98,6 +100,21 @@ export class NavigationService {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
+    this.assessSvc.assessmentStateChanged.subscribe((reloadState)=>{
+      switch(reloadState){
+        case 123:
+          break;
+        case 124:
+          this.buildTree();
+          this.navDirect('dashboard');
+          break;
+        case 125:
+          this.buildTree();
+          this.navDirect('phase-prepare');
+          break;
+      }
+      
+    });
   }
 
   private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
@@ -174,7 +191,13 @@ export class NavigationService {
    */
   beginAssessment(assessmentId: number) {
     this.assessSvc.loadAssessment(assessmentId).then(() => {
-      this.navDirect('phase-prepare');
+      if(this.configSvc.installationMode=="CF"){
+        this.assessSvc.initCyberFlorida(assessmentId);
+      }
+      else{
+        this.navDirect('phase-prepare');
+      }
+      
     });
   }
 
@@ -215,18 +238,56 @@ export class NavigationService {
 
     let target = originPage;
 
-    do {
-      if (target.children.length > 0) {
-        target = <HTMLElement>target.firstElementChild;
-      } else {
-        while (!target.nextElementSibling) {
-          target = <HTMLElement>target.parentElement;
+    try{
+      do {      
+        if (target.children.length > 0) {
+          target = <HTMLElement>target.firstElementChild;
+        } else {
+          while (!target.nextElementSibling) {
+            target = <HTMLElement>target.parentElement;
+          }
+          target = <HTMLElement>target.nextElementSibling;
         }
-        target = <HTMLElement>target.nextElementSibling;
-      }
-    } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
+      } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
+    }catch(e){
+     //TODO:  Check to see if we are in a CF assessment and if so then disable the next button
+     this.setNextEnabled(false);      
+    }
 
     this.routeToTarget(target);
+  }
+
+  isNextEnabled(cur: string): boolean {
+    const originPage = this.workflow.getElementById(cur);
+    if (originPage == null) {      
+      return true;
+    }
+
+    if (originPage.children.length == 0 && originPage.nextElementSibling == null && originPage.parentElement.tagName == 'nav') {
+      // we are at the last page, nothing to do
+      return false;
+    }
+
+    let target = originPage;
+
+    try{
+      do {              
+        if (target.children.length > 0) {
+          target = <HTMLElement>target.firstElementChild;
+        } else {
+          while (!target.nextElementSibling) {
+            target = <HTMLElement>target.parentElement;
+          }
+          target = <HTMLElement>target.nextElementSibling;
+        }
+      } while (!(this.pageVisibliltySvc.canLandOn(target) 
+        && this.pageVisibliltySvc.showPage(target) 
+        && this.pageVisibliltySvc.isEnabled(target)));
+    }catch(e){
+      //TODO:  Check to see if we are in a CF assessment and if so then disable the next button
+      return false;  
+    }
+    return true;
   }
 
   /**

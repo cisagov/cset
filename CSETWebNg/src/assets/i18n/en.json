@@ -9,7 +9,7 @@
     "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
     "last modified": "Last Modified",
     "primary assessor": "Primary Assessor",
-    "prevent encryption": "Prevent Encryption",
+    "prevent encryption": "Turn Off Export Encryption",
     "user language": "User Language",
     "note language change": "Select the desired language",
     "prepare": "Prepare",

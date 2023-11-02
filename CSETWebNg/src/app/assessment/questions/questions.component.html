@@ -23,7 +23,6 @@
 <div *transloco="let t" class="white-panel">
   <div id="top"></div>
   <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a pb-3">
-
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label *ngIf="showQuestionsToggle" class="btn btn-app-mode form-check-label"
         [class.active]="assessSvc.applicationMode == 'Q'" (click)="setMode('Q')"
@@ -77,9 +76,14 @@
     </div>
   </div>
 
-  <p *ngIf="!!categories" class="mb-4">
+ 
+  <p *ngIf="!!categories" class="mb-4">    
     {{ msgUnansweredEqualsNo }}
   </p>
+  <p *ngIf="configSvc.installationMode == 'CF'" style="color:red; font-weight: bold;">    
+    To see your results please answer all 20 entry level questions. 
+  </p>
+
 
 
   <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">

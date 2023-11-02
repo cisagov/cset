@@ -31,9 +31,10 @@ import {
 import { User } from '../models/user.model';
 import { ConfigService } from './config.service';
 import { Router } from '@angular/router';
-import { NavigationService } from './navigation/navigation.service';
-import { Observable } from 'rxjs';
 import { DemographicExtendedService } from './demographic-extended.service';
+import { CyberFloridaService } from './cyberflorida.service';
+import { Answer } from '../models/questions.model';
+import { BehaviorSubject } from 'rxjs';
 
 
 export interface Role {
@@ -49,14 +50,13 @@ const headers = {
 @Injectable()
 export class AssessmentService {
   
-
   userRoleId: number;
   roles: Role[];
   currentTab: string;
   private apiUrl: string;
   private initialized = false;
   public applicationMode: string;
-
+  public assessmentStateChanged = new BehaviorSubject(123);
   /**
    * This is private because we need a setter so that we can do things
    * when the assessment is loaded.
@@ -85,7 +85,8 @@ export class AssessmentService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private router: Router,    
-    private extDemoSvc: DemographicExtendedService
+    private extDemoSvc: DemographicExtendedService,
+    private floridaSvc: CyberFloridaService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -123,9 +124,10 @@ export class AssessmentService {
   clearFirstTime() {
     this.http.get(this.apiUrl + 'clearFirstTime').subscribe(
       ()=>{
-        console.log("first time assessment clearded");
+        console.log("cleared first Time");
       }
     );
+    this.floridaSvc.clearState();
   }
 
   /**
@@ -414,12 +416,12 @@ export class AssessmentService {
    */
   loadAssessment(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getAssessmentToken(id).then(() => {
-
+      this.getAssessmentToken(id).then(() => {            
         this.getAssessmentDetail().subscribe(data => {
           this.assessment = data;
 
           this.applicationMode = this.assessment.applicationMode;
+          //this.floridaSvc.updateStatus(this.assessment.);
 
           if (this.assessment.baselineAssessmentId) {
             localStorage.setItem("baseline", this.assessment.baselineAssessmentId.toString());
@@ -619,4 +621,29 @@ export class AssessmentService {
   getEncryptPreference() {
     return this.http.get(this.apiUrl + 'getPreventEncrypt');
   }
+
+
+  isCyberFloridaComplete(): boolean {
+    if(this.configSvc.installationMode=="CF")
+      return this.floridaSvc.isAssessmentComplete(); 
+    else
+      return true;
+  }
+
+  initCyberFlorida(assessmentId: number) {
+    this.floridaSvc.getInitialState().then(()=>{
+      this.assessmentStateChanged.next(125);
+      }
+    );    
+  }
+
+  updateAnswer(answer: Answer) {
+    this.floridaSvc.updateCompleteStatus(answer);  
+    if(this.isCyberFloridaComplete()){
+      this.assessmentStateChanged.next(124);
+    }
+      
+  }
+
+  
 }
