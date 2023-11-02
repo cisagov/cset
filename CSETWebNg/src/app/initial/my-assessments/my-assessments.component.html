@@ -216,10 +216,8 @@
                             <app-progress *ngIf="assessment.iseSubmitted" [value]="100" class="mr-2 ml-2"></app-progress>
                             <ng-container *ngIf="!assessment.iseSubmitted">-</ng-container>
                         </td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate) |
-                            date:'medium'}}</td>
-                            <!-- <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate) |
-                                date:'medium'}}</td> -->
+                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                            
                         <td *ngIf="showColumn('primary-assessor')">
                             <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                         </td>
