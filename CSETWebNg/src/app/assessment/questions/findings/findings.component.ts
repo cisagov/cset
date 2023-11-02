@@ -151,11 +151,10 @@ export class FindingsComponent implements OnInit {
   }
 
   updateContact(contactid) {
-    this.finding.finding_Contacts.forEach((fc: FindingContact) => {
-      if (fc.assessment_Contact_Id === contactid.assessment_Contact_Id) {
-        fc.selected = contactid.selected;
-      }
-    });
+    const c = this.finding.finding_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
+    if (!!c) {
+      c.selected = contactid.selected;
+    }
   }
 
 }

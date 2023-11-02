@@ -139,7 +139,8 @@
         "assessment factor": "Assessment Factor",
         "component": "Component",
         "components": "Components",
-        "statements": "Statements"
+        "statements": "Statements",
+        "submitted": "Submitted"
     },
     "cyberFlorida": {
         "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",

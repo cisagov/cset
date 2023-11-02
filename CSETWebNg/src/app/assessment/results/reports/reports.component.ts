@@ -72,6 +72,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   numberOfContacts: number = 1;
   isConfigChainEqual: boolean = false;
 
+  iseHasBeenSubmitted: boolean = false;
+
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
   /**
    *
@@ -108,15 +110,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   arraysEqual(a, b) {
-    if (a === b) {return true;}
-    if (a == null || b == null) {return false;}
-    if (a.length !== b.length) {return false;}
+    if (a === b) { return true; }
+    if (a == null || b == null) { return false; }
+    if (a.length !== b.length) { return false; }
 
     // If you don't care about the order of the elements inside
     // the array, you should sort both arrays here.
 
     for (let i = 0; i < a.length; ++i) {
-      if (a[i] !== b[i]) {return false;}
+      if (a[i] !== b[i]) { return false; }
     }
     return true;
   }
@@ -177,6 +179,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       this.lastModifiedTimestamp = data;
     });
+
+    // If this is an ISE, check if the assessment has been submitted or not
+    if (this.assessSvc.isISE()) {
+      this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
+        this.iseHasBeenSubmitted = result;
+      });
+    }
+
   }
 
   /**
@@ -322,6 +332,44 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       window.location.href = url;
     });
   }
+
+  disableSubmitButton() {
+    if (this.disableIseReportLinks) {
+      return true;
+    }
+
+    if (this.ncuaSvc.creditUnionName == '') {
+      return true;
+    }
+
+    if (this.ncuaSvc.assetsAsNumber == 0) {
+      return true;
+    }
+
+    if (this.ncuaSvc.unassignedIssues) {
+      return true;
+    }
+
+    if (this.ncuaSvc.submitInProgress) {
+      return true;
+    }
+  }
+
+  getSubmitButtonStyle() {
+    // If Disabled
+    if (this.disableSubmitButton()) {
+      return "background-color: gray; color: white;";
+    } else {
+      // If not disabled and also not submitted yet
+      if (!this.iseHasBeenSubmitted && !this.ncuaSvc.iseHasBeenSubmitted) {
+        return "background-color: orange; color: white;";
+      } else {
+        // If not disabled & already submitted, default here
+        return "background-color: #3B68AA; color: white;";
+      }
+    }
+  }
+
 }
 
 @Component({
@@ -331,10 +379,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   styles: ['']
 })
 export class PrintSnackComponent implements OnInit {
-  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>, 
+  constructor(public snackBarRef: MatSnackBarRef<PrintSnackComponent>,
     @Inject(MAT_SNACK_BAR_DATA) public data: any,
     public tSvc: TranslocoService
-  ) {}
+  ) { }
 
   printInstructions: string;
 
