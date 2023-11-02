@@ -5,7 +5,7 @@ import { EditUserComponent } from '../edit-user/edit-user.component';
 import { NgForm } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from '../../services/config.service';
-
+import * as moment from "moment";
 
 @Component({
   selector: 'app-user-language',
@@ -42,6 +42,7 @@ export class UserLanguageComponent implements OnInit {
 
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
+      moment.locale(this.langSelection);
     });
   }
 
@@ -52,8 +53,8 @@ export class UserLanguageComponent implements OnInit {
     this.tSvc.load(this.langSelection).toPromise().then(() => {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
-    });
-      // 
+        moment.locale(this.langSelection);
+      });
     },
       error => console.error('Error updating user langugage: ' + error.message));
     this.dialog.close();
