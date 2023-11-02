@@ -20,5 +20,6 @@ namespace CSETWebCore.Model.Authentication
         public string ExportExtension { get; set; }
         public string ImportExtensions { get; set; }
         public string LinkerTime { get; set; }
+        public bool IsFirstLogin { get; set; }
     }
 }

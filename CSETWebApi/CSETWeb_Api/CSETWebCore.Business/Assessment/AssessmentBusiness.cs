@@ -649,7 +649,12 @@ namespace CSETWebCore.Business.Assessment
             {
                 _maturityBusiness.ClearMaturityModel(assessmentId);
             }
-            AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+
+            // No user is null here if accesskey login is used
+            if (user != null) 
+            { 
+                AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+            }
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
@@ -846,6 +851,16 @@ namespace CSETWebCore.Business.Assessment
 
             dd.StringValue = remark;
             _context.SaveChanges();
+        }
+
+        public void clearFirstTime(int userid, int assessment_id)
+        {
+            var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+            if(us != null)
+            {
+                us.IsFirstLogin = false;
+                _context.SaveChanges();
+            }
         }
     }
 }
