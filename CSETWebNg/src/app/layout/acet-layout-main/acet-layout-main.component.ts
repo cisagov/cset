@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
@@ -41,7 +41,7 @@ import { SetBuilderService } from './../../services/set-builder.service';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' }
 })
-export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
+export class AcetLayoutMainComponent {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
@@ -58,15 +58,6 @@ export class AcetLayoutMainComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router
   ) { }
-
-
-  ngOnInit() { }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.isFooterOpen();
-    }, 200);
-  }
 
   /**
    * Indicates if the user is currently within the Module Builder pages.
