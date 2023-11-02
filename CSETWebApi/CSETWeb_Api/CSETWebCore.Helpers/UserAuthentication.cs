@@ -123,7 +123,8 @@ namespace CSETWebCore.Helpers
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+                LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                IsFirstLogin = loginUser.IsFirstLogin??false
             };
 
 
@@ -245,7 +246,8 @@ namespace CSETWebCore.Helpers
                 UserId = userIdSO,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+                LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                IsFirstLogin = user.IsFirstLogin??false
             };
 
 

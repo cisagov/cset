@@ -435,12 +435,31 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Route("api/getIseSubmissionStatus")]
+        public IActionResult GetSubmissionStatus()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            var result = this._acsetAssessmentBusiness.GetIseSubmission(assessmentId);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("api/updateIseSubmissionStatus")]
         public IActionResult UpdateSubmissionStatus()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             this._acsetAssessmentBusiness.UpdateIseSubmission(assessmentId);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/clearFirstTime")]
+        public IActionResult clearFirstTime()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            int userid = _tokenManager.GetCurrentUserId()??0;
+            this._assessmentBusiness.clearFirstTime(userid,assessmentId);
             return Ok();
         }
     }
