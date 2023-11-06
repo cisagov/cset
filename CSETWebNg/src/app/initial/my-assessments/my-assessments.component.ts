@@ -123,7 +123,8 @@ export class MyAssessmentsComponent implements OnInit {
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    public reportSvc: ReportService
   ) { }
 
   ngOnInit() {

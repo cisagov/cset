@@ -34,6 +34,8 @@ import { Router } from '@angular/router';
 import { NavigationService } from './navigation/navigation.service';
 import { Observable } from 'rxjs';
 import { DemographicExtendedService } from './demographic-extended.service';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 export interface Role {
@@ -85,7 +87,8 @@ export class AssessmentService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private router: Router,    
-    private extDemoSvc: DemographicExtendedService
+    private extDemoSvc: DemographicExtendedService,
+    private tSvc: TranslocoService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -618,5 +621,15 @@ export class AssessmentService {
   */
   getEncryptPreference() {
     return this.http.get(this.apiUrl + 'getPreventEncrypt');
+  }
+
+  /**
+   * changes a date into the active Transloco locale format
+   * @param date 
+   * @returns 
+   */
+  translatedDate(date: string, format: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    return moment(date).format(format);
   }
 }
