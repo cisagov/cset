@@ -1,7 +1,7 @@
 {
     "appCode": "ACET",
     "installationMode": "ACET",
-    "galleryLayout": "NCUA",
+    "galleryLayout": "ACET",
     "behaviors": {
         "defaultTitle":"ACET",
         "showModuleBuilder": true,
