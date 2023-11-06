@@ -78,15 +78,15 @@
         <label for="contacts" class="form-label">{{ t('observation.individuals responsible') }}</label>
         <button class="btn-link fs-smaller" (click)="clearMulti()">{{ t('observation.clear selections') }}</button>
       </div>
-     
+
       <div class="pl-3">
-        <div *ngFor="let contact of finding.finding_Contacts" class="indiv-responsible">
-          <input class="checkbox-custom" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
+        <div *ngFor="let contact of finding.finding_Contacts" class="py-1">
+          <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
             [(ngModel)]="contact.selected">
           <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
       </div>
-      <br/><br/>
+      <br /><br />
       <app-assessment-contacts (triggerChange)="refreshContacts()" class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
     </div>
   </mat-dialog-content>
