@@ -38,9 +38,9 @@ namespace CSETWebCore.ExportCSV
         }
 
 
-        public void ProcessAssessment(int assessmentID, MemoryStream stream)
+        public void ProcessAssessment(int assessmentID, MemoryStream stream, string type)
         {
-            DataTable dt = BuildAssessment(assessmentID);
+            DataTable dt = BuildAssessment(assessmentID, type);
 
             // Create an Excel document from the data that has been gathered
             var doc = new CSETtoExcelDocument();
