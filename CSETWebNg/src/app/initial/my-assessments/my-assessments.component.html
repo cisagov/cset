@@ -189,11 +189,11 @@
                     </th>
                     <th *ngIf="isTSA" style="width: 5%;">Source</th>
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
-                    <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted">{{ t('acet.submitted') }}</th>
+                    <th *ngIf="showColumn('ise-submitted')" mat-sort-header="ise-submitted" aria-label="ise-submitted">{{ t('acet.submitted') }}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                         style="width:15%;">{{t('primary assessor')}}</th>
-                    <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
+                    <th aria-label="{{t('status')}}" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
                     <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                     <th aria-label="export assessment" style="width:5%;"></th>
                     <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
@@ -210,10 +210,10 @@
                             'CSET' :
                             'TSA' }}</td>
                         <td>{{assessment.type}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate)
-                            | date:'dd-MMM-yyyy'}}</td>
+                        <td *ngIf="!this.ncuaSvc.switchStatus">{{reportSvc.translatedDate(assessment.lastModifiedDate)}}</td>
                         <td *ngIf="showColumn('ise-submitted')">
-                            <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container>
+                            <!-- <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container> -->
+                            <ng-container *ngIf="assessment.iseSubmitted">{{ assessSvc.translatedDate(assessment.submittedDate, 'l') }}</ng-container>
                         </td>
                         <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
                             
@@ -279,7 +279,7 @@
                                 {{assessment.assessmentName}}
                             </button>
                         </td>
-                        <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
                         <td class="text-nowrap pl-1">
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="removeAssessment(assessment, i)"
@@ -313,7 +313,7 @@
                         </button>
                     </td>
                     <td>{{assessment.type}}</td>
-                    <td>{{assessment.lastModifiedDate | date:'medium'}}</td>
+                    <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
                     <td>
                         <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
                             <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
