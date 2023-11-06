@@ -68,14 +68,14 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/ExcelExportNCUA")]
-        public IActionResult GetExcelExportNCUA(string token)
+        [Route("api/ExcelExportISE")]
+        public IActionResult GetExcelExportISE(string token, string type = "ISE")
         {
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
             string appCode = _token.Payload(Constants.Constants.Token_Scope);
 
-            var stream = _exporter.ExportToExcelNCUA(assessmentId);
+            var stream = _exporter.ExportToExcelISE(assessmentId, type);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
