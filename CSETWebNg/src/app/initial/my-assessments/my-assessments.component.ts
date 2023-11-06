@@ -422,9 +422,8 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    let localDate = moment.utc(lastModifiedDate).local(true).format('ll'); 
-    let localTime = moment.utc(lastModifiedDate).local(true).format('h:mm:ss A');
-    return localDate + ', ' + localTime;
+    let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
+    return localDate;
   }
 
   exportAllAssessments() {
