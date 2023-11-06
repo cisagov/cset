@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-
+import { DatePipe, getLocaleDateFormat } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -50,6 +50,7 @@ import * as moment from "moment";
 import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
+import { DateAdapter } from '@angular/material/core';
 
 
 interface UserAssessment {
@@ -120,10 +121,15 @@ export class MyAssessmentsComponent implements OnInit {
     public tSvc: TranslocoService,
     private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public dateAdapter: DateAdapter<any>,
+    public datePipe: DatePipe,
+    public reportSvc: ReportService
   ) { }
 
   ngOnInit() {
+    // initializes moment locale language to transloco's active language
+    moment.locale(this.tSvc.getActiveLang());
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -416,9 +422,9 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    let localTime = moment.utc(lastModifiedDate).local();
-
-    return localTime;
+    let localDate = moment.utc(lastModifiedDate).local(true).format('ll'); 
+    let localTime = moment.utc(lastModifiedDate).local(true).format('h:mm:ss A');
+    return localDate + ', ' + localTime;
   }
 
   exportAllAssessments() {

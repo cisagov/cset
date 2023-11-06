@@ -76,7 +76,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -609,7 +609,12 @@ import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
-
+import {
+    MAT_MOMENT_DATE_FORMATS,
+    MomentDateAdapter,
+    MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  } from '@angular/material-moment-adapter';
+//   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
 
 @NgModule({
@@ -1201,6 +1206,23 @@ import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-in
             multi: true
         },
         DatePipe,
+        {
+            provide: MAT_DATE_LOCALE, 
+            useFactory: (tSvc: TranslocoService) => {
+                // get the language based on config
+                return tSvc.getActiveLang();
+            },
+            deps: [TranslocoService],
+            multi: true        
+        },
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+        },
+        {
+            provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS
+        },
         AuthGuard,
         AssessGuard,
         AggregationGuard,
