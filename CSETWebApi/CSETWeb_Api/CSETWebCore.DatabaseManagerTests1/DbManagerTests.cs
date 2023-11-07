@@ -81,7 +81,7 @@ namespace CSETWebCore.DatabaseManager.Tests
 
             manager.SetupDb();
 
-            upgrader.UpgradeOnly(new Version("12.1.0.0"), "data source=(localdb)\\mssqllocaldb;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
+            upgrader.UpgradeOnly(new Version("12.1.0.0"), "data source=(localdb)\\inllocaldb2022;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
             
             
         }
@@ -108,7 +108,7 @@ namespace CSETWebCore.DatabaseManager.Tests
 
             DbManager manager = new DbManager(new Version("12.1.0.0"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
-            string conString = "Server=(localdb)\\mssqllocaldb;Integrated Security=true;AttachDbFileName=" + mdf;
+            string conString = "Server=(localdb)\\inllocaldb2022;Integrated Security=true;AttachDbFileName=" + mdf;
             using (SqlConnection conn = new SqlConnection(conString))
             {
                conn.Open();
