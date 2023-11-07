@@ -65,6 +65,7 @@
         "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo."
     },
     "acet": {
+        "empty my assessments page footer text": "La Caja de herramientas de evaluación de ciberseguridad automatizada (ACET®) es un producto de la Administración Nacional de Cooperativas de Crédito (NCUA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de la Administración Nacional de Cooperativas de Crédito por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",
         "credit union": "Unión de crédito",
         "credit union name": "Nombre de la cooperativa de crédito",
         "charter": "Carta",
