@@ -189,7 +189,7 @@
                     </th>
                     <th *ngIf="isTSA" style="width: 5%;">Source</th>
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
-                    <th *ngIf="showColumn('ise-submitted')" mat-sort-header="ise-submitted" aria-label="ise-submitted">{{ t('acet.submitted') }}</th>
+                    <th *ngIf="showColumn('ise-submitted')" mat-sort-header="submitted" aria-label="ise-submitted">{{ t('acet.submitted') }}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                         style="width:15%;">{{t('primary assessor')}}</th>
