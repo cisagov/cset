@@ -208,6 +208,12 @@ export class ReportService {
     return moment(date).format('DD-MMM-yyyy');
   }
 
+  translatedDateGMT(date: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    let currentTime = moment().utc(true);
+    return currentTime.utcOffset(date, true).format('L LTS') + currentTime.utcOffset(date).toString().slice(currentTime.utcOffset(date).toString().lastIndexOf(' '));
+  }
+
   /**
    * Switches that define what to show on Module Content Reports
    */
