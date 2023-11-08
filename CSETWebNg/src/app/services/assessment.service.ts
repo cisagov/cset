@@ -630,6 +630,6 @@ export class AssessmentService {
    */
   translatedDate(date: string, format: string) {
     moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format(format);
+    return moment(date).utc(true).format(format);
   }
 }
