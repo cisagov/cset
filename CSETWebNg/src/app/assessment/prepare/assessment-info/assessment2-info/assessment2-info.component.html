@@ -27,7 +27,7 @@
   <app-assessment-contacts *ngIf="showContacts()" class="mb-5 d-flex justify-content-end flex-00a" (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 
   <div *ngIf="assessSvc.assessment?.origin != 'CF'">
-    <app-assessment-demographics #demographics *ngIf="isDisplayed() && configSvc.installationMode !== 'CYOTE'  && (!this.ncuaSvc.switchStatus)" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
+    <app-assessment-demographics #demographics *ngIf="isDisplayed() && configSvc.installationMode !== 'CYOTE'  && configSvc.installationMode !== 'ACET'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics>
     <app-assessment-demographics-cyote #demographics *ngIf="isDisplayed() && configSvc.installationMode === 'CYOTE'" class="mb-5 d-flex justify-content-end flex-00a"></app-assessment-demographics-cyote>
   </div>
 
