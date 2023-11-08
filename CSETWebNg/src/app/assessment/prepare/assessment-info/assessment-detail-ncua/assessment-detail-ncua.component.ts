@@ -35,6 +35,8 @@ import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 import { ACETService } from '../../../../services/acet.service';
 import { AcetDashboard } from '../../../../models/acet-dashboard.model';
+import { TranslocoService } from '@ngneat/transloco';
+import { DateAdapter } from '@angular/material/core';
 
 
 @Component({
@@ -80,7 +82,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
     public acetSvc: ACETService,
-    public datePipe: DatePipe
+    public datePipe: DatePipe,
+    public dateAdapter: DateAdapter<any>,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
