@@ -210,7 +210,7 @@ export class ReportService {
 
   translatedDateGMT(date: string) {
     moment.locale(this.tSvc.getActiveLang());
-    let currentTime = moment().utc(true);
+    let currentTime = moment(date).utc(true);
     return currentTime.utcOffset(date, true).format('L LTS') + currentTime.utcOffset(date).toString().slice(currentTime.utcOffset(date).toString().lastIndexOf(' '));
   }
 
