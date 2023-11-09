@@ -52,7 +52,10 @@
 <div *ngFor="let doc of sourceDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}:
     <ng-container *ngFor="let b of doc.bookmarks; let l = last">
-        <a href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
+        <span *ngIf="documentUrl(doc, b).length === 0">
+            {{b}}
+        </span>
+        <a *ngIf="documentUrl(doc, b).length > 0" href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
             target="_blank">{{bookmarkDisplay(b)}}</a><ng-container *ngIf="!l">, </ng-container>
     </ng-container>
 </div>
@@ -63,7 +66,10 @@
 <div *ngFor="let doc of additionalDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}<ng-container *ngIf="doc.fileName">:
         <ng-container *ngFor="let b of doc.bookmarks; let l = last">
-            <a href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
+            <span *ngIf="documentUrl(doc, b).length === 0">
+                {{b}}
+            </span>
+            <a *ngIf="documentUrl(doc, b).length > 0" href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
                 target="_blank">{{bookmarkDisplay(b)}}</a><ng-container *ngIf="!l">, </ng-container>
         </ng-container>
     </ng-container>
