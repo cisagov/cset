@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponseBase } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { concat } from 'rxjs';
@@ -38,6 +38,7 @@ export class ConfigService {
   helpContactEmail: string;
   helpContactPhone: string;
 
+  isOnlineUrlLive = false;
   isRunningInElectron: boolean;
   isRunningAnonymous = false;
 
@@ -130,6 +131,11 @@ export class ConfigService {
       });
   }
 
+  checkOnlineUrlStatus() {
+    const docUrl = this.config.api.onlineUrl + '/documents/htmlhelp/i/null.gif'
+    return this.http.get(docUrl);
+  }
+
   /**
    *
    */
@@ -157,6 +163,21 @@ export class ConfigService {
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
     this.behaviors = this.config.behaviors;
+
+    this.checkOnlineUrlStatus().subscribe(
+      (resp: HttpResponseBase) => {
+        console.log('online url status: ' + resp.status);
+        if (resp.status === 200) {
+          this.isOnlineUrlLive = true;
+        } else {
+          this.isOnlineUrlLive = false;
+        }
+      },
+      (err) => {
+        console.log('online url status: ' + err.status + ' ' + err.statusText)
+        this.isOnlineUrlLive = false;
+      }
+    )
 
     this.populateLabelValues();
 
