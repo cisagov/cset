@@ -38,6 +38,7 @@ export class ConfigService {
   helpContactEmail: string;
   helpContactPhone: string;
 
+  isDocUrl = false;
   isOnlineUrlLive = false;
   isRunningInElectron: boolean;
   isRunningAnonymous = false;
@@ -131,9 +132,13 @@ export class ConfigService {
       });
   }
 
-  checkOnlineUrlStatus() {
-    const docUrl = this.config.api.onlineUrl + '/documents/htmlhelp/i/null.gif'
-    return this.http.get(docUrl);
+  checkLocalDocStatus() {
+    return this.http.get(this.docUrl + 'htmlhelp/i/null.gif')
+  }
+
+  checkOnlineDocStatus() {
+    const onlineUrl = this.config.api.onlineUrl + '/documents/htmlhelp/i/null.gif'
+    return this.http.get(onlineUrl);
   }
 
   /**
@@ -169,8 +174,23 @@ export class ConfigService {
   }
 
 
-  checkOnlineStatusFromConfig(){
-    this.checkOnlineUrlStatus().subscribe(
+  checkOnlineStatusFromConfig() {
+    this.checkLocalDocStatus().subscribe(
+      (resp: HttpResponseBase) => {
+        console.log('local doc url status: ' + resp.status);
+        if (resp.status === 200) {
+          this.isDocUrl = true;
+        } else {
+          this.isDocUrl = false;
+        }
+      },
+      (err) => {
+        console.log('local doc url status: ' + err.status + ' ' + err.statusText)
+        this.isDocUrl = false;
+      }
+    )
+
+    this.checkOnlineDocStatus().subscribe(
       (resp: HttpResponseBase) => {
         console.log('online url status: ' + resp.status);
         if (resp.status === 200) {
