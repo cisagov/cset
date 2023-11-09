@@ -1462,14 +1462,12 @@ namespace CSETWebCore.Business.Maturity
                     if (spanishFlag)
                     {
                         var output = new GroupingSpanishRow();
-                        var temp = new GroupingSpanishRow();
                         if (dictionary.TryGetValue(maturityDomain.DomainName, out output))
                         {
                             maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
                             maturityDomain.Assessments.ForEach(
                                 assessment => {
                                     var output = new GroupingSpanishRow();
-                                    var temp = new GroupingSpanishRow();
                                     // test if not finding a match will safely skip
                                     if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
                                     {
@@ -1478,7 +1476,6 @@ namespace CSETWebCore.Business.Maturity
                                         assessment.Components.ForEach(
                                             component => {
                                                 var output = new GroupingSpanishRow();
-                                                var temp = new GroupingSpanishRow();
                                                 // test if not finding a match will safely skip
                                                 if (dictionary.TryGetValue(component.ComponentName, out output))
                                                 {
