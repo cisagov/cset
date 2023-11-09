@@ -247,6 +247,18 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             }
         }
 
+        public static void BulkImportAccessKeyAssessments(Stream bulkZipExport)
+        {
+            using (bulkZipExport)
+            {
+                ZipFile zip = ZipFile.Read(bulkZipExport);
+
+                foreach (ZipEntry entry in zip)
+                {
+                    Console.WriteLine(entry.Info);
+                }
+            }
+        }
 
         /// <summary>
         /// 
