@@ -35,6 +35,8 @@ import { DemographicExtendedService } from './demographic-extended.service';
 import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 export interface Role {
@@ -86,7 +88,8 @@ export class AssessmentService {
     private configSvc: ConfigService,
     private router: Router,    
     private extDemoSvc: DemographicExtendedService,
-    private floridaSvc: CyberFloridaService
+    private floridaSvc: CyberFloridaService,
+    private tSvc: TranslocoService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -647,4 +650,14 @@ export class AssessmentService {
   }
 
   
+
+  /**
+   * changes a date into the active Transloco locale format
+   * @param date 
+   * @returns 
+   */
+  translatedDate(date: string, format: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    return moment(date).utc(true).format(format);
+  }
 }
