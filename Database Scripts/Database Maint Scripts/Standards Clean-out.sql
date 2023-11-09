@@ -17,6 +17,9 @@ delete SETS where Is_Custom = 1
 
 delete NEW_QUESTION_LEVELS where New_Question_Set_Id not in (select new_question_set_id from NEW_QUESTION_SETS)
 
+delete CUSTOM_STANDARD_BASE_STANDARD
+
+DBCC CHECKIDENT ('[CUSTOM_STANDARD_BASE_STANDARD]', RESEED, 1);
 
 -- Identity columns above 1 million are reserved for custom standards
 DBCC CHECKIDENT ('[NEW_REQUIREMENT]', RESEED, 1000000);
