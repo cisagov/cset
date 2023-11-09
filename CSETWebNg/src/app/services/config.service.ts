@@ -163,7 +163,13 @@ export class ConfigService {
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
     this.behaviors = this.config.behaviors;
+    this.checkOnlineStatusFromConfig();
+    this.populateLabelValues();
+    this.initialized = true;
+  }
 
+
+  checkOnlineStatusFromConfig(){
     this.checkOnlineUrlStatus().subscribe(
       (resp: HttpResponseBase) => {
         console.log('online url status: ' + resp.status);
@@ -177,11 +183,7 @@ export class ConfigService {
         console.log('online url status: ' + err.status + ' ' + err.statusText)
         this.isOnlineUrlLive = false;
       }
-    )
-
-    this.populateLabelValues();
-
-    this.initialized = true;
+    );
   }
 
   /**
