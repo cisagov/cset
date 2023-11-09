@@ -51,24 +51,21 @@ export class AcetDashboardComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.loadDashboard();
         this.tSvc.langChanges$.subscribe((event) => {
-            this.loadDashboard();
+            this.sortDomainListKey = [];
             if (this.tSvc.getActiveLang() == "es") {
                 this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
             }
             else {
                 this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
             }
-            this.navSvc.buildTree();
-
+            this.loadDashboard();
         });
     }
 
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
             (data: AcetDashboard) => {
-                console.log(data)
                 this.acetDashboard = data;
 
                 // Checks to remove any ISE irp data from the ACET results
@@ -94,6 +91,9 @@ export class AcetDashboardComponent implements OnInit {
                     })
                 })
                 this.acetDashboard.domains = this.sortedDomainList;
+
+                // clearing the list so it doesn't keep building on old data
+                this.sortedDomainList = [];
 
                 this.acetDashboard.domains.forEach(d => {
                     d.levelDisplay = this.acetSvc.translateMaturity(d.maturity);
