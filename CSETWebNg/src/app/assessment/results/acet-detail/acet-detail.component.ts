@@ -68,12 +68,13 @@ export class AcetDetailComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.tSvc.langChanges$.subscribe((event) => {
+            this.loadMatDetails();
+        });
         this.expand = this.collapseAll;
         this.expanded = true;
-        this.loadMatDetails();
         this.getMatRange();
         this.getOverallIrp();
-        //this.getTargetBand();
     }
 
     loadMatDetails() {
@@ -85,6 +86,7 @@ export class AcetDetailComponent implements OnInit {
         }
         this.acetSvc.getMatDetailList().subscribe(
             (data: any) => {
+                this.domainDataList = [];
                 data.forEach((domain: MaturityDomain) => {
                     var domainData = {
                         domainName: domain.domainName,
@@ -132,6 +134,8 @@ export class AcetDetailComponent implements OnInit {
                 })
                 this.domainDataList = this.sortedDomainList;
 
+                // clearing the list so it doesn't keep building on old data
+                this.sortedDomainList = [];
             },
             error => {
                 console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
