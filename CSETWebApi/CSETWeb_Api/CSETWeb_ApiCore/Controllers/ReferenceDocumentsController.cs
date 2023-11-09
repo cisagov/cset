@@ -4,16 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.StaticFiles;
 
@@ -27,6 +22,21 @@ namespace CSETWebCore.Api.Controllers
         public ReferenceDocumentsController(CSETContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        [Route("api/HasLocalDocuments")]
+        public IActionResult HasLocalDocuments()
+        {
+            var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", "cag.pdf");
+            if (System.IO.File.Exists(docPath))
+            {
+                return Ok(true);
+            }
+            else
+            {
+                return Ok(false);
+            }
         }
 
         /// <summary>
@@ -62,7 +72,7 @@ namespace CSETWebCore.Api.Controllers
                         from ft in tt.DefaultIfEmpty()
                         where (a.Gen_File_Id == id) && (a.Is_Uploaded ?? false)
                         select new { a, ft };
-        
+
             foreach (var f in files.ToList())
             {
                 Stream stream;

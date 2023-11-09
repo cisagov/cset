@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponseBase } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { concat } from 'rxjs';
@@ -133,7 +133,11 @@ export class ConfigService {
   }
 
   checkLocalDocStatus() {
-    return this.http.get(this.docUrl + 'htmlhelp/i/null.gif')
+    const headers = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-binary').set("Access-Control-Allow-Origin", "*"),
+      params: new HttpParams()
+    };
+    return this.http.get(this.apiUrl + 'haslocaldocuments')
   }
 
   checkOnlineDocStatus() {
@@ -176,16 +180,10 @@ export class ConfigService {
 
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
-      (resp: HttpResponseBase) => {
-        console.log('local doc url status: ' + resp.status);
-        if (resp.status === 200) {
-          this.isDocUrl = true;
-        } else {
-          this.isDocUrl = false;
-        }
+      (resp: boolean) => {
+        this.isDocUrl = resp;
       },
-      (err) => {
-        console.log('local doc url status: ' + err.status + ' ' + err.statusText)
+      () => {
         this.isDocUrl = false;
       }
     )
