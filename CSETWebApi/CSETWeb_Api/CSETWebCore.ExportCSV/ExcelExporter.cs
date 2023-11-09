@@ -66,11 +66,11 @@ namespace CSETWebCore.ExportCSV
         /// </summary>
         /// <param name="assessment_id"></param>
         /// <returns></returns>
-        public MemoryStream ExportToExcelNCUA(int assessmentID)
+        public MemoryStream ExportToExcelISE(int assessmentID, string type = "ISE")
         {
             var stream = new MemoryStream();
             CSETtoExcelNCUAMappings export = new CSETtoExcelNCUAMappings(_context, _acet, _maturity);
-            export.ProcessAssessment(assessmentID, stream);
+            export.ProcessAssessment(assessmentID, stream, type);
             return stream;
 
         }
