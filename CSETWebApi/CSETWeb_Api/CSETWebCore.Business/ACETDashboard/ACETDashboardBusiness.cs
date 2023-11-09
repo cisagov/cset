@@ -45,7 +45,6 @@ namespace CSETWebCore.Business.ACETDashboard
 
             result.Domains = new List<DashboardDomain>();
             Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
-            Dictionary<string, GroupingSpanishRow> dictionaryDomain = new Dictionary<string, GroupingSpanishRow>();
 
             List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, spanishFlag);
 
@@ -60,10 +59,8 @@ namespace CSETWebCore.Business.ACETDashboard
             if (spanishFlag)
             {
                 dictionaryIrp = AcetBusiness.buildIRPDashboardDictionary();
-                dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
 
                 var outputIrp = new IRPSpanishRow();
-                var outputGrouping = new GroupingSpanishRow();
 
                 foreach (var irp in result.Irps)
                 {
@@ -72,14 +69,6 @@ namespace CSETWebCore.Business.ACETDashboard
                         irp.HeaderText = dictionaryIrp[irp.HeaderText].SpanishHeader;
                     }
                 }
-                foreach (var domain in result.Domains)
-                {
-                    if (dictionaryDomain.TryGetValue(domain.Name, out outputGrouping))
-                    {
-                        domain.Name = dictionaryDomain[domain.Name].Spanish_Title;
-                    }
-                }
-
             }
 
             return result;

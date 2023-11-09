@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from '../../services/config.service';
 import * as moment from "moment";
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-user-language',
@@ -20,7 +21,8 @@ export class UserLanguageComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private tSvc: TranslocoService,
     private authSvc: AuthenticationService,
-    private configSvc: ConfigService
+    private configSvc: ConfigService,
+    private dateAdapter: DateAdapter<any>
   ) { }
 
   langSelection: string;
@@ -42,6 +44,7 @@ export class UserLanguageComponent implements OnInit {
 
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
+      this.dateAdapter.setLocale(this.langSelection);
       moment.locale(this.langSelection);
     });
   }
@@ -53,6 +56,7 @@ export class UserLanguageComponent implements OnInit {
     this.tSvc.load(this.langSelection).toPromise().then(() => {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
+        this.dateAdapter.setLocale(this.langSelection);
         moment.locale(this.langSelection);
       });
     },

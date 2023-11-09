@@ -106,6 +106,7 @@ let headers = {
       "stateLed": false,
       "examLevel": '',
       "region": 0,
+      "assets": 0,
       "guid": '',
       "acet_version": '',
       "db_version": ''
@@ -588,6 +589,7 @@ let headers = {
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
+      "assets": this.assessmentSvc.assessment.assets,
       "guid": this.questions.assessmentGuid,
       "acet_version": environment.visibleVersion,
       "db_version": this.questions.csetVersion
@@ -745,6 +747,7 @@ let headers = {
         "creationDate": '',
         "examLevel": '',
         "region": 0,
+        "assets": 0,
         "stateLed": false,
         "guid": '',
         "acet_version": '',

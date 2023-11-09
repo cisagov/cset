@@ -238,7 +238,7 @@ namespace CSETWebCore.Helpers
             {
                 Token = token,
                 Email = primaryEmailSO,
-                Lang = user==null? "en": user.Lang ?? "en",
+                Lang = user == null ? "en" : user.Lang ?? "en",
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,
@@ -247,7 +247,7 @@ namespace CSETWebCore.Helpers
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                IsFirstLogin = user.IsFirstLogin??false
+                IsFirstLogin = user?.IsFirstLogin ?? false
             };
 
 
