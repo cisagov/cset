@@ -5,6 +5,7 @@ using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Helpers;
 using System;
 using System.IO;
+using CSETWebCore.Business.AssessmentIO.Import;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -32,6 +33,9 @@ namespace CSETWebCore.Api.Controllers
                 string ext = IOHelper.GetExportFileExtension("CSET");
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
                 Stream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
+
+                // Testing import
+                ImportManager.BulkImportAccessKeyAssessments(assessmentsExportArchive);
 
                 if (assessmentsExportArchive == null) 
                 {
