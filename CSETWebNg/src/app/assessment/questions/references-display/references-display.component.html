@@ -52,7 +52,7 @@
 <div *ngFor="let doc of sourceDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}:
     <ng-container *ngFor="let b of doc.bookmarks; let l = last">
-        <a href="{{documentUrl(doc, b)}}" [class.disabled]="true" rel="noopener noreferrer"
+        <a href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
             target="_blank">{{bookmarkDisplay(b)}}</a><ng-container *ngIf="!l">, </ng-container>
     </ng-container>
 </div>
