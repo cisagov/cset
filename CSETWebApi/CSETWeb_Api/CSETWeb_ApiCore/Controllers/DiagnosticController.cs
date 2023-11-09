@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using CSETWebCore.Interfaces.Notification;
 using NLog;
+using CSETWebCore.DataLayer.Model;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -15,11 +17,15 @@ namespace CSETWebCore.Api.Controllers
     public class DiagnosticController : ControllerBase
     {
         private readonly INotificationBusiness _notification;
+        private readonly CSETContext _context;
 
-        public DiagnosticController(INotificationBusiness notification)
+        public DiagnosticController(INotificationBusiness notification, CSETContext context)
         {
             _notification = notification;
+            _context = context;
         }
+
+
         /// <summary>
         /// Tests connectivity to the SMTP server and sends 
         /// a test email to the designated recipient.
@@ -58,6 +64,14 @@ namespace CSETWebCore.Api.Controllers
             logToFile.Info(text);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/version")]
+        public IActionResult GetCsetVersion()
+        {
+            var dbVersion = _context.CSET_VERSION.FirstOrDefault();
+            return Ok(dbVersion);
         }
     }
 }
