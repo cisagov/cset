@@ -660,4 +660,14 @@ export class AssessmentService {
   }
 
   
+
+  /**
+   * changes a date into the active Transloco locale format
+   * @param date 
+   * @returns 
+   */
+  translatedDate(date: string, format: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    return moment(date).utc(true).format(format);
+  }
 }
