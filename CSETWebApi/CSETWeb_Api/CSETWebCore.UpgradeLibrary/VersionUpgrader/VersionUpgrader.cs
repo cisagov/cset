@@ -101,6 +101,7 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("12.0.2.9", new ConvertDatabase12030(path));
             converters.Add("12.0.3.0", new ConvertDatabase12031(path));
             converters.Add("12.0.3.1", new ConvertDatabase12032(path));
+            converters.Add("12.0.3.2", new ConvertDatabase12100(path));
 
         }
 

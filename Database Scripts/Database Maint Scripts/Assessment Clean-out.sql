@@ -24,4 +24,6 @@ delete from [INSTALLATION]
 delete from [DIAGRAM_CONTAINER]
 
 delete from [NIST_SAL_INFO_TYPES]
+
+delete from [Nlogs]
 GO

@@ -687,6 +687,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public Nullable<Int32> PointOfContact { get; set; }
 
         public Nullable<Boolean> IsScoped { get; set; }
+
+        [MaxLength(100)]
+        public string CriticalService { get; set; }
     }
 
     public class jDETAILS_DEMOGRAPHICS 
@@ -973,6 +976,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
     {
         [Required]
         public int Assessment_Id { get; set; }
+        public int Defining_System_Id { get; set; }
         [StringLength(400)]
         public string Networks_Description { get; set; }
         [StringLength(400)]
