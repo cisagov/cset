@@ -208,13 +208,9 @@ a {
   display: none;
 }
 
-.checkbox-custom,
 .checkbox-custom-label,
-.radio-custom,
 .radio-custom-label {
-  display: inline-block;
   display: flex;
-  display: none;
   vertical-align: middle;
   margin: 5px;
   cursor: pointer;
