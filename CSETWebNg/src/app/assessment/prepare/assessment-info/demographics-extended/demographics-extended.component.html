@@ -73,8 +73,7 @@
     <div class="form-group mb-5">
         <p class="font-italic">
             Are you completing the full assessment (156 questions) as local government submitter in response to
-            <a href="https://www.flsenate.gov/Committees/billsummaries/2022/html/2864" target="_blank">Florida House Bill 7055</a>?
-            <span>(Examples: Collier County Water Division, Broward County Aviation Department, City of Tampa Emergency Management, Bay County Supervisor of Elections) </span>
+            <a href="https://www.flsenate.gov/Committees/billsummaries/2022/html/2864" target="_blank">Florida House Bill 7055</a>?          
         </p>
         <div class="d-flex flex-column ml-3">
             <input class="radio-custom" name="HB7055No" id="HB7055No" type="radio" autocomplete="off" tabindex="1"
@@ -84,10 +83,19 @@
                 (click)="setHb7055('Y')" [checked]="demographicData.hb7055 == 'Y'">
             <label class="radio-custom-label" for="HB7055Yes">Yes</label>
         </div>
-
         <div *ngIf="demographicData.hb7055 == 'Y'" class="ml-5 mt-3">
             <p>
+                Are you intending to apply for the State of Florida Local Cybersecurity Grant Program? The full assessments completes the requirements for house bill 7055?                
+            </p>
+            <input class="radio-custom" name="hb7055GrantNo" id="hb7055GrantNo" type="radio" autocomplete="off" tabindex="1"
+                (click)="sethb7055Grant('N')" [checked]="demographicData.hb7055GrantGrant == 'N'">
+            <label class="radio-custom-label" for="hb7055GrantNo">No</label>
+            <input class="radio-custom" name="hb7055GrantYes" id="hb7055GrantYes" type="radio" autocomplete="off" tabindex="0"
+                (click)="sethb7055Grant('Y')" [checked]="demographicData.hb7055Grant == 'Y'">
+            <label class="radio-custom-label" for="hb7055GrantYes">Yes</label>       
+            <p>
                 What state or local government agency are you completing on behalf of?
+                <span>(Examples: Collier County Water Division, Broward County Aviation Department, City of Tampa Emergency Management, Bay County Supervisor of Elections) </span>
             </p>
             <input type="text" maxlength="100" class="form-control" [(ngModel)]="demographicData.hb7055Party"
                 (blur)="setHb7055Party($event)">
