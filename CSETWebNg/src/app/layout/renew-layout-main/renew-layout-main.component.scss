@@ -221,6 +221,7 @@ a {
 .checkbox-custom,
 .radio-custom {
   opacity: 0;
+  display: none;
 }
 
 .checkbox-custom,
@@ -229,6 +230,7 @@ a {
 .radio-custom-label {
   display: inline-block;
   display: flex;
+  display: none;
   vertical-align: middle;
   margin: 5px;
   cursor: pointer;

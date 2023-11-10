@@ -147,7 +147,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    
+
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
