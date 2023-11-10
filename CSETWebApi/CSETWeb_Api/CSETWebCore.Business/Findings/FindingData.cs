@@ -10,6 +10,8 @@ using CSETWebCore.Model.Findings;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using NLog.Fluent;
+using NLog;
 
 namespace CSETWebCore.Business.Findings
 {
@@ -129,10 +131,16 @@ namespace CSETWebCore.Business.Findings
             {
                 return;
             }
-
-            _dbFinding.FINDING_CONTACT.ToList().ForEach(s => _context.FINDING_CONTACT.Remove(s));
-            _context.FINDING.Remove(_dbFinding);
-            _context.SaveChanges();
+            try
+            {
+                //_dbFinding.FINDING_CONTACT.ToList().ForEach(s => _context.FINDING_CONTACT.Remove(s));
+                _context.FINDING.Remove(_dbFinding);
+                _context.SaveChanges();
+            }catch(Exception ex)
+            {
+                LogManager.GetCurrentClassLogger().Error(ex);
+            }
+            
         }
 
 
