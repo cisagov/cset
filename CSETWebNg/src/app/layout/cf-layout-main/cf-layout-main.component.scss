@@ -208,13 +208,38 @@ a {
 
 .checkbox-custom,
 .radio-custom {
-  opacity: 0;
+  opacity: 0;    
+}
+
+input#cbSelectAll.checkbox-custom{
+  display: none;
+}
+input#cbShowOptionY.checkbox-custom{
+  display: none;
+}
+input#cbShowOptionN.checkbox-custom{
+  display: none;
+}
+input#cbShowU.checkbox-custom{
+  display: none;
+}
+input#cbShowComments.checkbox-custom{
+  display: none;
+}
+input#cbShowFeedback.checkbox-custom{
+  display: none;
+}
+input#cbShowMarked.checkbox-custom{
+  display: none;
+}
+input#cbShowDisc.checkbox-custom{
   display: none;
 }
 
+
 .checkbox-custom-label,
 .radio-custom-label {
-  display: flex;
+  display: flex;  
   vertical-align: middle;
   margin: 5px;
   cursor: pointer;
