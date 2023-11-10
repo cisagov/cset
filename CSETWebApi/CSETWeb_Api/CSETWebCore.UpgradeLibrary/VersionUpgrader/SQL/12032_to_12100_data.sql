@@ -188,6 +188,16 @@ ALTER TABLE [dbo].[ASSESSMENTS] NOCHECK CONSTRAINT [FK_ASSESSMENTS_GALLERY_ITEM]
 PRINT(N'Drop constraint FK_Standard_Source_File_FILE_REF_KEYS from [dbo].[STANDARD_SOURCE_FILE]')
 ALTER TABLE [dbo].[STANDARD_SOURCE_FILE] NOCHECK CONSTRAINT [FK_Standard_Source_File_FILE_REF_KEYS]
 
+---------------------THIS IS OUR MANUAL STUFF---------------
+PRINT(N'Manually removing orphaned rows questions')
+delete NEW_QUESTION_LEVELS from NEW_QUESTION_LEVELS l left join NEW_QUESTION_SETS s on l.New_Question_Set_Id=s.New_Question_Set_Id
+where s.New_Question_Set_Id is null
+PRINT(N'Manually removing orphaned rows requirements')
+delete REQUIREMENT_LEVELS from REQUIREMENT_LEVELS l left join NEW_REQUIREMENT r on l.Requirement_Id=r.Requirement_Id
+where r.Requirement_Id is null
+
+
+
 PRINT(N'Delete rows from [dbo].[MATURITY_REFERENCES]')
 DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 1344 AND [Gen_File_Id] = 5021 AND [Section_Ref] = N''
 DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 1352 AND [Gen_File_Id] = 5021 AND [Section_Ref] = N'PE'
@@ -14664,10 +14674,6 @@ INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (36507, N'NCSF_V2', 30)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (36508, N'NCSF_V2', 31)
 PRINT(N'Operation applied to 121 rows out of 121')
-
-PRINT(N'Manually removing orphaned rows')
-delete NEW_QUESTION_LEVELS from NEW_QUESTION_LEVELS l left join NEW_QUESTION_SETS s on l.New_Question_Set_Id=s.New_Question_Set_Id
-where s.New_Question_Set_Id is null
 
 PRINT(N'Add constraints to [dbo].[REQUIREMENT_SETS]')
 ALTER TABLE [dbo].[REQUIREMENT_SETS] CHECK CONSTRAINT [FK_QUESTION_SETS_SETS]
