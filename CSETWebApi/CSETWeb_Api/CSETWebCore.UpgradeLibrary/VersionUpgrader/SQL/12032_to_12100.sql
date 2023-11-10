@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-        (localdb)\INLLocalDB2022.CSETWeb12032    -  This database will be modified
+        (localdb)\INLLocalDB2022.CSETWeb12032TestUpgrade    -  This database will be modified
 
 to synchronize it with:
 
-        (localdb)\INLLocalDB2022.CSETWeb12100
+        (localdb)\INLLocalDB2022.NCUAWeb12100
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 11/7/2023 1:46:22 PM
+Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 11/10/2023 9:07:08 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF
