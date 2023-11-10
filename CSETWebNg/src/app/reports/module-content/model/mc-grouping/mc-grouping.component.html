@@ -23,8 +23,7 @@
 <div class="mb-4">
     <h5 class="font-weight-bold">{{g.title}}</h5>
 
-    <div *ngIf="g.description?.length > 0" class="alert alert-dark">
-        {{g.description}}
+    <div *ngIf="g.description?.length > 0" class="alert alert-dark" [innerHTML]="g.description">
     </div>
 
     <div class="ml-3">
