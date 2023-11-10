@@ -1,11 +1,11 @@
 /*
 Run this script on:
 
-        (localdb)\INLLocalDB2022.CSETWeb12032TestUpgrade    -  This database will be modified
+        (localdb)\INLLocalDB2022.CSETWeb12032    -  This database will be modified
 
 to synchronize it with:
 
-        (localdb)\INLLocalDB2022.NCUAWeb12100
+        (localdb)\INLLocalDB2022.CSETWeb12100
 
 You are recommended to back up your database before running this script
 
