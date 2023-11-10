@@ -131,7 +131,7 @@
 
         <div class="form-group">
             <label class="mb-1" for="creditUnion">Credit Union Name</label>
-            <span *ngIf="ncuaSvc.creditUnionName === '' || ncuaSvc.creditUnionName === null" style="color:red; font-size: 12px"> (Required)</span>
+            <span *ngIf="(this.assessment.creditUnion === '' || this.assessment.creditUnion === null)" style="color:red; font-size: 12px"> (Required)</span>
             <input type="text" (focus)="$event.target.select()" maxlength="100" class="form-control"
                 id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
                 [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" tabindex="0">
