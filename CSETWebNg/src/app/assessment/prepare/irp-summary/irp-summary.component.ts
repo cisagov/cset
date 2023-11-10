@@ -61,7 +61,9 @@ export class IrpSummaryComponent implements OnInit {
      * 
      */
     ngOnInit() {
-        this.loadDashboard();
+        this.tSvc.langChanges$.subscribe((event) => {
+            this.loadDashboard();
+        });
     }
 
     /**
