@@ -54,6 +54,7 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Title);
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
+            noValue = noValue && !Finding_Contacts.Any(x => x.Selected);
 
             return noValue;
         }
