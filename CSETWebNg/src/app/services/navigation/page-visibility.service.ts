@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
 import { DemographicExtendedService } from '../demographic-extended.service';
+import { NavTreeNode } from './navigation.service';
 
 /**
  * Analyzes assessment
@@ -33,6 +34,7 @@ import { DemographicExtendedService } from '../demographic-extended.service';
   providedIn: 'root'
 })
 export class PageVisibilityService {
+  
 
   constructor(
     private assessSvc: AssessmentService,
@@ -47,7 +49,7 @@ export class PageVisibilityService {
    * as collapsible nodes in the nav tree.
    */
   canLandOn(page: HTMLElement): boolean {
-    // pages without a path can't be landed on/navigated to
+    // pages without a path can't be landed on/navigated to    
     if (!page.hasAttribute('path')) {
       return false;
     }
@@ -56,13 +58,13 @@ export class PageVisibilityService {
   }
 
   /**
-   * Evaluates conditions where a page should be hidden and
+   * Evaluates visible property and disabled property where a page should be hidden and
    * ignored in the TOC and next/back workflow.
    */
   showPage(page: HTMLElement): boolean {     
-    // look for a condition on the current page or its nearest parent
-    let nnnn = page.closest('[condition]');
-    let conditionAttrib = nnnn?.attributes['condition']?.value.trim();
+    // look for a visible on the current page or its nearest parent
+    let nnnn = page.closest('[visible]');
+    let visibleAttrib = nnnn?.attributes['visible']?.value.trim();
 
     // if the assessment wants to hide the page
     const pageId = page.attributes['id']?.value;
@@ -70,18 +72,18 @@ export class PageVisibilityService {
       return false;
     }
 
-    // if no conditions are specified, show the page
-    if (!conditionAttrib || conditionAttrib.length === 0) {
+    // if no visibles are specified, show the page
+    if (!visibleAttrib || visibleAttrib.length === 0) {
       return true;
     }
 
 
-    // Conditions are separated by spaces and a condition cannot contain
-    // any internal spaces.  For the page to show, all conditions must be true.
+    // visibles are separated by spaces and a visible cannot contain
+    // any internal spaces.  For the page to show, all visibles must be true.
     // Start with true and if any fail, result is false.
     let show = true;
-    let conditions = conditionAttrib.toUpperCase().split(' ');
-    conditions.forEach(c => {
+    let visibles = visibleAttrib.toUpperCase().split(' ');
+    visibles.forEach(c => {
 
       // if 'HIDE' is present, this trumps everything else
       if (c == 'HIDE') {
@@ -156,10 +158,39 @@ export class PageVisibilityService {
       if(c == 'CF-DEMOGRAPHICS-COMPLETE'){
         show = show && this.cfDemographicsComplete();
       }
-
     });
 
     return show;
+  }
+
+  isEnabled(page: HTMLElement) {
+    let nnnn = page.closest('[enabled]');
+    let enabledAttrib = nnnn?.attributes['enabled']?.value.trim();
+      // if no enabled conditions are specified, enable the page
+      if (!enabledAttrib || enabledAttrib.length === 0) {
+        return true;
+      }
+  
+  
+      // enables are separated by spaces and a enable condition cannot contain
+      // any internal spaces.  For the page to show, all enables must be true.
+      // Start with true and if any fail, result is false.
+      let enabled = true;
+      let enables = enabledAttrib.toUpperCase().split(' ');
+      enables.forEach(c => {
+  
+        // if 'DISABLED' is present, this trumps everything else
+        if (c == 'DISABLED') {
+          enabled = false;
+        }
+        
+        if(c == 'CF-ASSESSMENT-COMPLETE'){                    
+          enabled = enabled && this.assessSvc.isCyberFloridaComplete();
+        }
+  
+      });
+  
+      return enabled;
   }
 
 
@@ -291,6 +322,18 @@ export class PageVisibilityService {
   }
 
   cfDemographicsComplete() {
+    //if this is CF installation and the demographics are not complete return false
+    //else return true; 
+    if(this.assessSvc.assessment?.origin == "CF"){
+      if(this.demographics.AreDemographicsCompleteNav()){
+        return true;
+      }
+      return false; 
+    }
+    return true;
+  }
+
+  cfEntryAssessmentComplete() {
     //if this is CF installation and the demographics are not complete return false
     //else return true; 
     if(this.assessSvc.assessment?.origin == "CF"){

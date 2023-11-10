@@ -224,10 +224,10 @@ export class DemographicsExtendedComponent implements OnInit {
 
   checkComplete(){
     if(this.demoSvc.AreDemographicsComplete(this.demographicData,this.geoGraphics)){
-      this.navSvc.setNextEnabled(true);
+      this.navSvc.setNextEnabled(true);      
     }
     else{
-      this.navSvc.setNextEnabled(false);
+      this.navSvc.setNextEnabled(false);            
     }
   }
 
@@ -356,7 +356,13 @@ export class DemographicsExtendedComponent implements OnInit {
     this.demographicData.hb7055Party = event.target.value;
     this.updateDemographics();
   }
-
+  sethb7055Grant(value:string){
+    this.demographicData.hb7055Grant = value;
+    if (value !== 'Y') {
+      this.demographicData.hb7055Grant = '';
+    }
+    this.updateDemographics();
+  }
   setInfrastructureItOt(value: string) {
     this.demographicData.infrastructureItOt = value;
     this.updateDemographics();
