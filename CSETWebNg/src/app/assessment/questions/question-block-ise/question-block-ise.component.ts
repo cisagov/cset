@@ -31,10 +31,10 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
-import { Finding } from './../findings/findings.model';
+import { Observation } from '../observations/observations.model';
 import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/findings.service';
 import { IssuesComponent } from '../issues/issues.component';
 import { CompletionService } from '../../../services/completion.service';
 
@@ -106,7 +106,7 @@ export class QuestionBlockIseComponent implements OnInit {
     public completionSvc: CompletionService,
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
-    private findSvc: FindingsService
+    private findSvc: ObservationsService
   ) { 
     
   }
@@ -138,9 +138,9 @@ export class QuestionBlockIseComponent implements OnInit {
               // This is a check for post-merging ISE assessments.
               // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
               if (this.ncuaSvc.questionCheck.get(find.question_Id) !== undefined) {
-                this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+                this.ncuaSvc.issueFindingId.set(find.question_Id, find.observation_Id);
               } else {
-                this.deleteIssue(find.finding_Id, true);
+                this.deleteIssue(find.observation_Id, true);
               }
               
             }
@@ -758,11 +758,11 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
+    const find: Observation = {
       question_Id: parentId,
       questionType: this.myGrouping.questions[0].questionType,
       answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
+      observation_Id: findid,
       summary: '',
       finding_Contacts: null,
       impact: '',
@@ -789,9 +789,9 @@ export class QuestionBlockIseComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       let stringResult = result.toString();
       if (stringResult != 'true') {
-        find.finding_Id = result;
+        find.observation_Id = result;
 
-        this.findSvc.saveDiscovery(find, true).subscribe( (r: any) => {
+        this.findSvc.saveObservation(find, true).subscribe( (r: any) => {
           this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
         });
@@ -802,7 +802,7 @@ export class QuestionBlockIseComponent implements OnInit {
         // if (result == true) {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
 
-          (response: Finding[]) => {
+          (response: Observation[]) => {
             this.extras.findings = response;
             this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
             this.myGrouping.questions[0].answer_Id = find.answer_Id;
@@ -816,7 +816,7 @@ export class QuestionBlockIseComponent implements OnInit {
       
   }
 
-  isIssueEmpty(finding: Finding) {
+  isIssueEmpty(finding: Observation) {
     if ( finding.actionItems == null
     && finding.citations == null
     && finding.description == null
@@ -844,11 +844,11 @@ export class QuestionBlockIseComponent implements OnInit {
         // Used to generate a description for ISE reports even if a user doesn't open the issue.
         desc = data[0]?.description;
 
-        const find: Finding = {
+        const find: Observation = {
           question_Id: parentId,
           questionType: this.myGrouping.questions[0].questionType,
           answer_Id: this.myGrouping.questions[0].answer_Id,
-          finding_Id: findId,
+          observation_Id: findId,
           summary: '',
           finding_Contacts: null,
           impact: '',
@@ -871,13 +871,13 @@ export class QuestionBlockIseComponent implements OnInit {
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);
 
-        this.findSvc.saveDiscovery(find).subscribe(() => {
+        this.findSvc.saveObservation(find).subscribe(() => {
           const answerID = find.answer_Id;
           this.findSvc.getAllDiscoveries(answerID).subscribe(
-            (response: Finding[]) => {
+            (response: Observation[]) => {
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {
-                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].observation_Id);
                 }
               }
               this.extras.findings = response;
@@ -904,11 +904,11 @@ export class QuestionBlockIseComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.deleteIssueMaps(findingId);
-          this.findSvc.deleteFinding(findingId).subscribe();
+          this.findSvc.deleteObservation(findingId).subscribe();
           let deleteIndex = null;
   
           for (let i = 0; i < this.extras.findings.length; i++) {
-            if (this.extras.findings[i].finding_Id === findingId) {
+            if (this.extras.findings[i].observation_Id === findingId) {
               deleteIndex = i;
             }
           }
@@ -917,11 +917,11 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       });
     } else if (autoGenerated === true) {
-        this.findSvc.deleteFinding(findingId).subscribe();
+        this.findSvc.deleteObservation(findingId).subscribe();
         let deleteIndex = null;
   
           for (let i = 0; i < this.extras.findings.length; i++) {
-            if (this.extras.findings[i].finding_Id === findingId) {
+            if (this.extras.findings[i].observation_Id === findingId) {
               deleteIndex = i;
             }
           }

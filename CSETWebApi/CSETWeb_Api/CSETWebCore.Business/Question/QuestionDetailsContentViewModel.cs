@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Findings;
+using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using CSETWebCore.Model.Question;
 
 namespace CSETWebCore.Business.Question
@@ -90,7 +90,7 @@ namespace CSETWebCore.Business.Question
         /// List contains only the title, finding_id and answer id
         /// call finding details for complete finding information
         /// </summary>
-        public List<Finding> Findings { get; private set; }
+        public List<Observation> Findings { get; private set; }
 
 
         /// <summary>
@@ -232,8 +232,8 @@ namespace CSETWebCore.Business.Question
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
-                var fm = new FindingsManager(this._context, assessmentId);
-                this.Findings = fm.AllFindings(newAnswer.Answer_Id);
+                var fm = new ObservationsManager(this._context, assessmentId);
+                this.Findings = fm.AllObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 _document.SetUserAssessmentId(assessmentId);

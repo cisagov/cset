@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace CSETWebCore.Business.Findings
+namespace CSETWebCore.Business.Observations
 {
     public class ActionItemText
     {
@@ -17,6 +17,6 @@ namespace CSETWebCore.Business.Findings
     public class ActionItemTextUpdate
     {
         public List<ActionItemText> actionTextItems { get; set; }
-        public int finding_Id { get; set; }
+        public int observation_Id { get; set; }
 }
 }

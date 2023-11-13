@@ -534,7 +534,7 @@ namespace CSETWebCore.Business.Question
         }
 
         private int findingCount;
-        public int FindingCount
+        public int ObservationCount
         {
             get { return findingCount; }
             set

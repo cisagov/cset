@@ -20,19 +20,62 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
+
+import * as internal from "stream";
+
 ////////////////////////////////
-export interface Individual {
-    Name: string;
-    Discoveries: Discovery[];
+export interface Observation {
+  // ACET fields
+  question_Id: number;
+  questionType: string;
+  answer_Id: number;
+  observation_Id: number;
+  summary: string;
+  issue: string;
+  impact: string;
+  recommendations: string;
+  vulnerabilities: string;
+  resolution_Date: Date;
+  importance_Id: number;
+  // ISE fields
+  title: string;
+  type: string;
+  risk_Area: string;
+  sub_Risk: string;
+  description: string;
+  citations: string;
+  actionItems: string;
+  auto_Generated: number;
+  supp_Guidance: string;
+  // Shared fields
+  importance: Importance;
+  finding_Contacts: FindingContact[];
 }
 
-export interface Discovery {
-    Finding: string;
-    Importance: string;
-    ResolutionDate: string;
-    Issue: string;
-    Impacts: string;
-    Recommendations: string;
-    Vulnerabilities: string;
-    OtherContacts: string;
+export interface SubRiskArea {
+  subRisk_Id: number;
+  value: string;
+  riskArea: string;
+}
+
+export interface Importance {
+  importance_Id: number;
+  value: string;
+}
+
+export interface FindingContact {
+  observation_Id: number;
+  assessment_Contact_Id: number;
+  name: string;
+  selected: boolean;
+}
+
+export interface ActionItemTextUpdate {
+  actionTextItems: ActionItemText[];
+  observation_Id: number;
+}
+
+export interface ActionItemText {
+  Mat_Question_Id: number;
+  ActionItemOverrideText: string;
 }

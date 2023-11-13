@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Findings;
+using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -143,8 +143,8 @@ namespace CSETWebCore.Business.Question
                 LoadData(qp, assessmentId);
 
                 // Get any findings/discoveries for the question
-                FindingsManager fm = new FindingsManager(_context, assessmentId);
-                response.Findings = fm.AllFindings(newAnswer.Answer_Id);
+                ObservationsManager fm = new ObservationsManager(_context, assessmentId);
+                response.Findings = fm.AllObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);

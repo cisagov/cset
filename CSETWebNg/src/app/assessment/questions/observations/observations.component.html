@@ -32,12 +32,12 @@
 
       <div class="form-group">
         <label for="title" class="form-label">{{ t('observation.title') }}</label>
-        <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.summary">
+        <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="observation.summary">
       </div>
 
       <div class="form-group">
         <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
-        <select id="importance" name="importance" class="form-control" [(ngModel)]="finding.importance_Id"
+        <select id="importance" name="importance" class="form-control" [(ngModel)]="observation.importance_Id"
           (change)="updateImportance($event.target.value)">
           <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('level.' + import?.value.toLowerCase()) }}</option>
         </select>
@@ -46,28 +46,28 @@
       <div class="form-group">
         <label for="date" class="form-label">{{ t('observation.resolution date') }}</label>
         <input matInput MatDatepickerInput class="form-control" id="date" name="date"
-          [(ngModel)]="finding.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
+          [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
           (change)="update()">
         <mat-datepicker #picker></mat-datepicker>
       </div>
 
       <div class="form-group">
         <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
-        <textarea id="issue" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.issue"></textarea>
+        <textarea id="issue" autocomplete="off" class="form-control" type="text" [(ngModel)]="observation.issue"></textarea>
       </div>
       <div class="form-group">
         <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
-        <textarea id="impact" autocomplete="off" class="form-control" type="text" [(ngModel)]="finding.impact"></textarea>
+        <textarea id="impact" autocomplete="off" class="form-control" type="text" [(ngModel)]="observation.impact"></textarea>
       </div>
       <div class="form-group">
         <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
         <textarea id="recommendations" autocomplete="off" class="form-control" type="text"
-          [(ngModel)]="finding.recommendations"></textarea>
+          [(ngModel)]="observation.recommendations"></textarea>
       </div>
       <div class="form-group">
         <label for="vulnerabilities" class="form-label">{{ t('observation.vulnerabilities') }}</label>
         <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text"
-          [(ngModel)]="finding.vulnerabilities"></textarea>
+          [(ngModel)]="observation.vulnerabilities"></textarea>
       </div>
     </div>
 
@@ -80,7 +80,7 @@
       </div>
 
       <div class="pl-3">
-        <div *ngFor="let contact of finding.finding_Contacts" class="py-1">
+        <div *ngFor="let contact of observation.finding_Contacts" class="py-1">
           <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
             [(ngModel)]="contact.selected">
           <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>

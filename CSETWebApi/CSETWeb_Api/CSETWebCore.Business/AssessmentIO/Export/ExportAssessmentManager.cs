@@ -218,7 +218,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 
                 foreach (var f in item.FINDING)
                 {
-                    model.jFINDING.Add(TinyMapper.Map<FINDING,jFINDING>(f));
+                    var obs = TinyMapper.Map<FINDING, jFINDING>(f);
+                    model.jFINDING.Add(obs);
+
                     foreach (var fc in f.FINDING_CONTACT)
                     {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<FINDING_CONTACT,jFINDING_CONTACT>(fc));

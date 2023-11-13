@@ -21,21 +21,21 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ActionItemText, ActionItemTextUpdate, Finding } from './../assessment/questions/findings/findings.model';
+import { ActionItemText, ActionItemTextUpdate, Observation } from '../assessment/questions/observations/observations.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
 const headers = {
   headers: new HttpHeaders()
-      .set('Content-Type', 'application/json'),
+    .set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
 @Injectable({
   providedIn: 'root'
 })
-export class FindingsService {
+export class ObservationsService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) {
   }
@@ -50,10 +50,10 @@ export class FindingsService {
     return this.http.get(qstring, headers);
   }
 
-  getFinding(answer_id: number, finding_id: number, question_Id: number, questionType: string) {
-    if (answer_id == null) { answer_id = 0; }
-    const qstring = this.configSvc.apiUrl + 'GetFinding?Answer_Id=' + answer_id
-      + '&Finding_Id=' + finding_id + '&question_Id=' + question_Id+'&questionType=' + questionType;
+  getObservation(answerId: number, observationId: number, questionId: number, questionType: string) {
+    if (answerId == null) { answerId = 0; }
+    const qstring = this.configSvc.apiUrl + 'GetObservation?answerId=' + answerId
+      + '&observationId=' + observationId + '&questionId=' + questionId + '&questionType=' + questionType;
     return this.http.post(qstring, headers);
   }
   /**
@@ -67,27 +67,27 @@ export class FindingsService {
   /**
    * retrieves all the discoveries for an assessment
    */
-   GetAssessmentFindings() {
-    const qstring = 'GetAssessmentFindings';
+  GetAssessmentObservations() {
+    const qstring = 'GetAssessmentObservations';
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
 
-  saveIssueText(actionItem: ActionItemText[], finding_Id: number) {
-    const tmp: ActionItemTextUpdate = {actionTextItems:actionItem, finding_Id:finding_Id};
-    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers );
+  saveIssueText(actionItem: ActionItemText[], observation_Id: number) {
+    const tmp: ActionItemTextUpdate = { actionTextItems: actionItem, observation_Id: observation_Id };
+    return this.http.post(this.configSvc.apiUrl + 'SaveIssueOverrideText', tmp, headers);
   }
 
   /**
    * saves the given discovery
    */
-  saveDiscovery(finding: Finding, cancel ?: boolean) {
+  saveObservation(observation: Observation, cancel?: boolean) {
     if (cancel == null) {
       cancel = false;
     }
-    return this.http.post(this.configSvc.apiUrl + 'AnswerSaveDiscovery?cancel=' + cancel, finding, headers);
+    return this.http.post(this.configSvc.apiUrl + 'AnswerSaveObservation?cancel=' + cancel, observation, headers);
   }
 
-  deleteFinding(findingId: number): any {
-    return this.http.post(this.configSvc.apiUrl + 'DeleteFinding', findingId,  headers);
+  deleteObservation(observationId: number): any {
+    return this.http.post(this.configSvc.apiUrl + 'DeleteObservation', observationId, headers);
   }
 }
