@@ -133,16 +133,12 @@ export class ConfigService {
   }
 
   checkLocalDocStatus() {
-    const headers = {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-binary').set("Access-Control-Allow-Origin", "*"),
-      params: new HttpParams()
-    };
-    return this.http.get(this.apiUrl + 'haslocaldocuments')
+    return this.http.get(this.apiUrl + 'HasLocalDocuments')
   }
 
   checkOnlineDocStatus() {
-    const onlineUrl = this.config.api.onlineUrl + '/documents/htmlhelp/i/null.gif'
-    return this.http.get(onlineUrl);
+    // TODO: temporary return until we get this working in production
+    return this.http.get(this.apiUrl + 'HasLocalDocuments')
   }
 
   /**
@@ -189,16 +185,10 @@ export class ConfigService {
     )
 
     this.checkOnlineDocStatus().subscribe(
-      (resp: HttpResponseBase) => {
-        console.log('online url status: ' + resp.status);
-        if (resp.status === 200) {
-          this.isOnlineUrlLive = true;
-        } else {
-          this.isOnlineUrlLive = false;
-        }
+      (resp: boolean) => {
+        this.isOnlineUrlLive = resp;
       },
-      (err) => {
-        console.log('online url status: ' + err.status + ' ' + err.statusText)
+      () => {
         this.isOnlineUrlLive = false;
       }
     );
