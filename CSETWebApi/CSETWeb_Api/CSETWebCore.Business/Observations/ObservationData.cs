@@ -6,25 +6,24 @@
 //////////////////////////////// 
 using System;
 using System.Linq;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using NLog.Fluent;
 using NLog;
 
-namespace CSETWebCore.Business.Findings
+namespace CSETWebCore.Business.Observations
 {
     /// <summary>
     /// 
     /// </summary>
-    public class FindingData
+    public class ObservationData
     {
+        private int _observationId;
         private CSETContext _context;
-        private int _findingId;
-
-        private FINDING _dbFinding;
-        private Finding _webFinding;
+        private FINDING _dbObservation;
+        private Observation _webObservation;
 
 
 
@@ -34,26 +33,25 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         /// <param name="f">source finding</param>
         /// <param name="context">the data context to work on</param>
-        public FindingData(Finding f, CSETContext context)
+        public ObservationData(Observation f, CSETContext context)
         {
-            _webFinding = f;
+            _webObservation = f;
 
-            if (_webFinding.IsFindingEmpty())
-            {
-                // Commented out because some finding deletions were throwing errors - RKW
-                // return;
-            }
+            //if (_webObservation.IsObservationEmpty())
+            //{
+            //    return;
+            //}
 
             _context = context;
 
-            _dbFinding = context.FINDING
+            _dbObservation = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
-                .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Finding_Id)
+                .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Observation_Id)
                 .FirstOrDefault();
 
-            if (_dbFinding == null)
+            if (_dbObservation == null)
             {
-                var finding = new FINDING
+                var observation = new FINDING
                 {
                     Answer_Id = f.Answer_Id,
                     Summary = f.Summary,
@@ -72,31 +70,31 @@ namespace CSETWebCore.Business.Findings
                     Supp_Guidance = f.Supp_Guidance
                 };
 
-                this._dbFinding = finding;
-                context.FINDING.Add(finding);
+                this._dbObservation = observation;
+                context.FINDING.Add(observation);
             }
 
-            TinyMapper.Bind<Finding, FINDING>();
-            TinyMapper.Map(f, this._dbFinding);
+            TinyMapper.Bind<Observation, FINDING>(config => config.Bind(source => source.Observation_Id, target => target.Finding_Id));
+            TinyMapper.Map(f, this._dbObservation);
 
             int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
-            _dbFinding.Importance = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
+            _dbObservation.Importance = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
-            if (f.Finding_Contacts != null)
+            if (f.Observation_Contacts != null)
             {
-                foreach (FindingContact fc in f.Finding_Contacts)
+                foreach (ObservationContact fc in f.Observation_Contacts)
                 {
                     if (fc.Selected)
                     {
-                        FINDING_CONTACT tmpC = _dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
+                        FINDING_CONTACT tmpC = _dbObservation.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
                         if (tmpC == null)
-                            _dbFinding.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = f.Finding_Id });
+                            _dbObservation.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = f.Observation_Id });
                     }
                     else
                     {
-                        FINDING_CONTACT tmpC = _dbFinding.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
+                        FINDING_CONTACT tmpC = _dbObservation.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
                         if (tmpC != null)
-                            _dbFinding.FINDING_CONTACT.Remove(tmpC);
+                            _dbObservation.FINDING_CONTACT.Remove(tmpC);
                     }
                 }
             }
@@ -105,19 +103,19 @@ namespace CSETWebCore.Business.Findings
 
         /// <summary>
         /// Will not create a new assessment
-        /// if you pass a non-existent finding then it will throw an exception
+        /// if you pass a non-existent Observation then it will throw an exception
         /// </summary>
-        /// <param name="findingId"></param>
+        /// <param name="observationId"></param>
         /// <param name="context"></param>
-        public FindingData(int findingId, CSETContext context)
+        public ObservationData(int observationId, CSETContext context)
         {
-            _findingId = findingId;
+            _observationId = observationId;
             _context = context;
 
-            this._dbFinding = context.FINDING.Where(x => x.Finding_Id == findingId).FirstOrDefault();
-            if (_dbFinding == null)
+            this._dbObservation = context.FINDING.Where(x => x.Finding_Id == observationId).FirstOrDefault();
+            if (_dbObservation == null)
             {
-                throw new ApplicationException("Cannot find finding_id" + findingId);
+                throw new ApplicationException($"Cannot find observation_id: {observationId}");
             }
         }
 
@@ -127,20 +125,20 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         public void Delete()
         {
-            if (_dbFinding == null)
+            if (_dbObservation == null)
             {
                 return;
             }
             try
             {
-                //_dbFinding.FINDING_CONTACT.ToList().ForEach(s => _context.FINDING_CONTACT.Remove(s));
-                _context.FINDING.Remove(_dbFinding);
+                _context.FINDING.Remove(_dbObservation);
                 _context.SaveChanges();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 LogManager.GetCurrentClassLogger().Error(ex);
             }
-            
+
         }
 
 
@@ -150,17 +148,17 @@ namespace CSETWebCore.Business.Findings
         public int Save()
         {
             // safety valve in case this was built without an answerid
-            if (this._webFinding.Answer_Id == 0)
+            if (this._webObservation.Answer_Id == 0)
             {
                 return 0;
             }
 
-            if (this._webFinding.IsFindingEmpty())
+            if (this._webObservation.IsObservationEmpty())
                 return 0;
 
             _context.SaveChanges();
-            _webFinding.Finding_Id = _dbFinding.Finding_Id;
-            return _dbFinding.Finding_Id;
+            _webObservation.Observation_Id = _dbObservation.Finding_Id;
+            return _dbObservation.Finding_Id;
         }
     }
 }

@@ -382,22 +382,22 @@
                         <th style="width:5%;"></th>
                         <th style="width:5%;"></th>
                     </tr>
-                    <tr *ngFor="let find of extras?.findings" style="box-sizing: content-box;height:20px;">
+                    <tr *ngFor="let obs of extras?.findings" style="box-sizing: content-box;height:20px;">
                         <td style="height:20px">
-                            <div>{{find.summary}}</div>
+                            <div>{{obs.summary}}</div>
                         </td>
                         <td>
-                            <div>{{ t('level.' + find.importance?.value.toLowerCase()) }}</div>
+                            <div>{{ t('level.' + obs.importance?.value.toLowerCase()) }}</div>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Edit"
-                                (click)="addEditObservation(find.finding_Id)">
+                                (click)="addEditObservation(obs.observation_Id)">
                                 <span class="mr-1 cset-icons-pencil"></span>
                             </button>
                         </td>
                         <td>
                             <button class="icon-button fs-base cursor-pointer" aria-label="Delete"
-                                (click)="deleteObservation(find)">
+                                (click)="deleteObservation(obs)">
                                 <span class="mr-1 cset-icons-trash-can"></span>
                             </button>
                         </td>

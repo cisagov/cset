@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
 using System;
@@ -13,16 +13,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CSETWebCore.Business.Findings
+namespace CSETWebCore.Business.Observations
 {
-    public class FindingsManager
+    public class ObservationsManager
     {
         private int _assessmentId;
 
         /** I need to get the list of contacts
         *  provide a list of all the available contacts 
         *  allow the user to select from the list
-        *  restrict this to one finding only
+        *  restrict this to one observation only
         */
 
         private CSETContext _context;
@@ -33,28 +33,28 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         /// <param name="context"></param>
         /// <param name="assessmentId"></param>
-        public FindingsManager(CSETContext context, int assessmentId)
+        public ObservationsManager(CSETContext context, int assessmentId)
         {
             _assessmentId = assessmentId;
             _context = context;
 
-            TinyMapper.Bind<FINDING, Finding>();
-            TinyMapper.Bind<FINDING_CONTACT, FindingContact>();
+            TinyMapper.Bind<FINDING, Observation>();
+            TinyMapper.Bind<FINDING_CONTACT, ObservationContact>(config => config.Bind(source => source.Finding_Id, target => target.Observation_Id));
             TinyMapper.Bind<IMPORTANCE, Importance>();
-            TinyMapper.Bind<ASSESSMENT_CONTACTS, FindingContact>();
-            TinyMapper.Bind<Finding, FindingContact>();
-            TinyMapper.Bind<Finding, Finding>();
-            TinyMapper.Bind<FindingContact, FindingContact>();
+            TinyMapper.Bind<ASSESSMENT_CONTACTS, ObservationContact>();
+            TinyMapper.Bind<Observation, ObservationContact>();
+            TinyMapper.Bind<Observation, Observation>();
+            TinyMapper.Bind<ObservationContact, ObservationContact>();
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="finding"></param>
-        public void DeleteFinding(Finding finding)
+        /// <param name="observation"></param>
+        public void DeleteObservation(Observation observation)
         {
-            FindingData fm = new FindingData(finding, _context);
+            ObservationData fm = new ObservationData(observation, _context);
             fm.Delete();
             fm.Save();
         }
@@ -63,24 +63,22 @@ namespace CSETWebCore.Business.Findings
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="finding"></param>
-        public int UpdateFinding(Finding finding)
+        /// <param name="observation"></param>
+        public int UpdateFinding(Observation observation)
         {
-            FindingData fm = new FindingData(finding, _context);
+            ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();
             return id;
         }
 
-        public List<ActionItems> GetActionItems(int parentId, int finding_id)
+        public List<ActionItems> GetActionItems(int parentId, int observation_id)
         {
-            //var actionsOnIssue = _context.MATURITY_QUESTIONS
-            //    .Join(x => x.Mat_Question_Id)
             var actionItems = new List<ActionItems>(
                     
                 );
             var table = from questions in _context.MATURITY_QUESTIONS
                         join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
-                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = finding_id } 
+                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = observation_id } 
                             equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id}                 
                            into overrides from o in overrides.DefaultIfEmpty() 
                         where questions.Parent_Question_Id == parentId
@@ -120,114 +118,116 @@ namespace CSETWebCore.Business.Findings
         /// </summary>
         /// <param name="answerId"></param>
         /// <returns></returns>
-        public List<Finding> AllFindings(int answerId)
+        public List<Observation> AllObservations(int answerId)
         {
-            List<Finding> findings = new List<Finding>();
+            List<Observation> observations = new List<Observation>();
 
-            var xxx = _context.FINDING
+            var observationsForAnswer = _context.FINDING
                 .Where(x => x.Answer_Id == answerId)
                 .Include(i => i.Importance)
                 .Include(k => k.FINDING_CONTACT)
                 .ToList();
 
-            foreach (FINDING f in xxx)
+            foreach (FINDING o in observationsForAnswer)
             {
-                Finding webF = new Finding();
-                webF.Finding_Contacts = new List<FindingContact>();
-                webF.Summary = f.Summary;
-                webF.Finding_Id = f.Finding_Id;
-                webF.Answer_Id = answerId;
-                TinyMapper.Map(f, webF);
-                if (f.Importance == null)
-                    webF.Importance = new Importance()
+                Observation obs = new Observation();
+                obs.Observation_Contacts = new List<ObservationContact>();
+                obs.Summary = o.Summary;
+                obs.Observation_Id = o.Finding_Id;
+                obs.Answer_Id = answerId;
+                TinyMapper.Map(o, obs);
+                if (o.Importance == null)
+                    obs.Importance = new Importance()
                     {
                         Importance_Id = 1,
                         Value = Constants.Constants.SAL_LOW
                     };
                 else
-                    webF.Importance = TinyMapper.Map<IMPORTANCE, Importance>(f.Importance);
+                    obs.Importance = TinyMapper.Map<IMPORTANCE, Importance>(o.Importance);
 
-                foreach (FINDING_CONTACT fc in f.FINDING_CONTACT)
+                foreach (FINDING_CONTACT fc in o.FINDING_CONTACT)
                 {
-                    FindingContact webFc = TinyMapper.Map<FINDING_CONTACT, FindingContact>(fc);
+                    ObservationContact webFc = TinyMapper.Map<FINDING_CONTACT, ObservationContact>(fc);
 
+                    webFc.Observation_Id = fc.Finding_Id;
                     webFc.Selected = (fc != null);
-                    webF.Finding_Contacts.Add(webFc);
+                    obs.Observation_Contacts.Add(webFc);
                 }
-                findings.Add(webF);
+                observations.Add(obs);
             }
-            return findings;
+            return observations;
         }
 
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="findingId"></param>
+        /// <param name="observationId"></param>
         /// <param name="answerId"></param>
         /// <returns></returns>
-        public Finding GetFinding(int findingId, int answerId = 0)
+        public Observation GetObservation(int observationId, int answerId = 0)
         {
-            Finding webF;
+            Observation obs;
 
-            if (findingId != 0)
+            if (observationId != 0)
             {
                 FINDING f = _context.FINDING
-                    .Where(x => x.Finding_Id == findingId)
+                    .Where(x => x.Finding_Id == observationId)
                     .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
                 var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
 
-                webF = TinyMapper.Map<Finding>(f);
-                webF.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
-                webF.Finding_Contacts = new List<FindingContact>();
+                obs = TinyMapper.Map<Observation>(f);
+                obs.Observation_Id = f.Finding_Id;
+                obs.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
+                obs.Observation_Contacts = new List<ObservationContact>();
                 foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
                 {
-                    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
+                    ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
                     webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
                     webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
-                    webF.Finding_Contacts.Add(webContact);
+                    obs.Observation_Contacts.Add(webContact);
                 }
             }
             else
             {
                 var q = _context.ANSWER.Where(x => x.Answer_Id == answerId).FirstOrDefault();
 
-                FINDING f = new FINDING()
+                FINDING o = new FINDING()
                 {
                     Answer_Id = answerId
                 };
 
 
-                _context.FINDING.Add(f);
+                _context.FINDING.Add(o);
                 _context.SaveChanges();
-                webF = TinyMapper.Map<Finding>(f);
-                webF.Finding_Contacts = new List<FindingContact>();
+                obs = TinyMapper.Map<Observation>(o);
+                obs.Observation_Contacts = new List<ObservationContact>();
                 foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
                 {
-                    FindingContact webContact = TinyMapper.Map<FindingContact>(contact);
-                    webContact.Finding_Id = f.Finding_Id;
+                    ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
+                    webContact.Observation_Id = o.Finding_Id;
                     webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
                     webContact.Selected = false;
-                    webF.Finding_Contacts.Add(webContact);
+                    obs.Observation_Contacts.Add(webContact);
                 }
             }
 
-            return webF;
+            return obs;
         }
 
         public void UpdateIssues(ActionItemTextUpdate items)
         {
             foreach(var item in items.actionTextItems)
             {
-                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.finding_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
+                var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.observation_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
                 if (save == null)
                 {
                     _context.ISE_ACTIONS_FINDINGS.Add(new ISE_ACTIONS_FINDINGS()
                     {
                         Mat_Question_Id = item.Mat_Question_Id,
-                        Finding_Id = items.finding_Id,
+                        Finding_Id = items.observation_Id,
                         Action_Items_Override = item.ActionItemOverrideText
                     });
                 }

@@ -1421,7 +1421,7 @@ namespace CSETWebCore.Business.Reports
         /// Returns a list of individuals assigned to findings/observations.
         /// </summary>
         /// <returns></returns>
-        public List<Individual> GetFindingIndividuals()
+        public List<Individual> GetObservationIndividuals()
         {
             var findings = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
@@ -1454,7 +1454,7 @@ namespace CSETWebCore.Business.Reports
                 {
                     individual = new Individual()
                     {
-                        Findings = new List<Findings>(),
+                        Findings = new List<Observations>(),
                         INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
 
@@ -1463,9 +1463,9 @@ namespace CSETWebCore.Business.Reports
                 contactId = f.a.Assessment_Contact_Id;
 
 
-                TinyMapper.Bind<FINDING, Findings>();
-                Findings rfind = TinyMapper.Map<Findings>(f.b);
-                rfind.Finding = f.b.Summary;
+                TinyMapper.Bind<FINDING, Observations>();
+                Observations rfind = TinyMapper.Map<Observations>(f.b);
+                rfind.Observation = f.b.Summary;
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 

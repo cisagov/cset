@@ -33,8 +33,8 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { IRPService } from '../../services/irp.service';
 import { IRPResponse } from '../../models/irp.model';
-import { FindingsService } from '../../services/findings.service';
-import { ActionItemText } from '../questions/findings/findings.model';
+import { ObservationsService } from '../../services/findings.service';
+import { ActionItemText } from '../questions/observations/observations.model';
 import { mapTo } from 'rxjs/operators';
 
 @Component({
@@ -90,7 +90,7 @@ export class MergeExaminationsComponent implements OnInit {
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     public irpSvc: IRPService,
-    public findSvc: FindingsService,
+    public findSvc: ObservationsService,
     private router: Router,
     public datePipe: DatePipe,
   ) { }
@@ -360,7 +360,7 @@ export class MergeExaminationsComponent implements OnInit {
         issue.finding_Id = 0;
         issue.answer_Id = this.newAnswerIds.get(parentKey);
 
-        this.findSvc.saveDiscovery(issue).subscribe((response: any) => {
+        this.findSvc.saveObservation(issue).subscribe((response: any) => {
           this.findSvc.saveIssueText(actionItemsOverride, response).subscribe();
 
           if (index === (issueArray.length - 1)) {

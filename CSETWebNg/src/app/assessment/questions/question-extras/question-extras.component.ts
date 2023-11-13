@@ -30,11 +30,11 @@ import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTab
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/findings.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
-import { FindingsComponent } from './../findings/findings.component';
-import { Finding } from './../findings/findings.model';
+import { ObservationsComponent } from '../observations/observations.component';
+import { Observation } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
 import { MaturityService } from '../../../services/maturity.service';
@@ -81,7 +81,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    private findSvc: FindingsService,
+    private findSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
@@ -325,11 +325,11 @@ export class QuestionExtrasComponent implements OnInit {
     // At some juncture we need to change this to
     // either send the finding to be edited or
     // send an empty one.
-    const find: Finding = {
+    const find: Observation = {
       question_Id: this.myQuestion.questionId,
       questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
-      finding_Id: findid,
+      observation_Id: findid,
       summary: '',
       finding_Contacts: null,
       impact: '',
@@ -350,7 +350,7 @@ export class QuestionExtrasComponent implements OnInit {
       supp_Guidance: null
     };
 
-    this.dialog.open(FindingsComponent, {
+    this.dialog.open(ObservationsComponent, {
       data: find,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
@@ -359,7 +359,7 @@ export class QuestionExtrasComponent implements OnInit {
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
-          (response: Finding[]) => {
+          (response: Observation[]) => {
             this.extras.findings = response;
             this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
@@ -371,17 +371,19 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Deletes a discovery.
-   * @param findingToDelete
+   * @param obsToDelete
    */
-  deleteObservation(findingToDelete) {
+  deleteObservation(obsToDelete) {
+
+    console.log(obsToDelete);
 
     // Build a message whether the observation has a title or not
     let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm')
       + " '"
-      + findingToDelete.summary
+      + obsToDelete.summary
       + "?'";
 
-    if (findingToDelete.summary === null) {
+    if (obsToDelete.summary === null) {
       msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm')
         + "?";
     }
@@ -392,11 +394,11 @@ export class QuestionExtrasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+        this.findSvc.deleteObservation(obsToDelete.observation_Id).subscribe();
         let deleteIndex = null;
 
         for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+          if (this.extras.findings[i].observation_Id === obsToDelete.observation_Id) {
             deleteIndex = i;
           }
         }

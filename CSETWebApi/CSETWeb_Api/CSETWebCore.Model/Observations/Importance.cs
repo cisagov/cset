@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-namespace CSETWebCore.Model.Findings
+namespace CSETWebCore.Model.Observations
 {
     public class Importance
     {

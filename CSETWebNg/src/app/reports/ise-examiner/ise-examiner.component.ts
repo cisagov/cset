@@ -28,7 +28,7 @@ import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
-import { FindingsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/findings.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { QuestionsService } from '../../services/questions.service';
 
@@ -55,7 +55,7 @@ export class IseExaminerComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public findSvc: FindingsService
+    public findSvc: ObservationsService
   ) { }
 
   ngOnInit(): void {

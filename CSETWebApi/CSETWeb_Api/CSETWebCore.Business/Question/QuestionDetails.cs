@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using System.Collections.Generic;
 
 
@@ -54,7 +54,7 @@ namespace CSETWebCore.Business.Question
         /// List contains only the title, finding_id and answer id
         /// call finding details for complete finding information
         /// </summary>
-        public List<Finding> Findings { get; set; }
+        public List<Observation> Findings { get; set; }
 
 
         /// <summary>

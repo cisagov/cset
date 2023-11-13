@@ -27,7 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
-import { FindingsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/findings.service';
 import { QuestionsService } from '../../services/questions.service';
 import { forEach } from 'lodash';
 import { NCUAService } from '../../services/ncua.service';
@@ -85,7 +85,7 @@ export class IseMeritComponent implements OnInit {
 
   constructor(
     public analysisSvc: ReportAnalysisService,
-    public findSvc: FindingsService,
+    public findSvc: ObservationsService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
@@ -155,45 +155,45 @@ export class IseMeritComponent implements OnInit {
           error => console.log('Assessment Information Error: ' + (<Error>error).message)
         )
     
-        this.findSvc.GetAssessmentFindings().subscribe(
+        this.findSvc.GetAssessmentObservations().subscribe(
           (r: any) => {
             this.response = r; 
  
             for(let i = 0; i < this.response?.length; i++) {
               if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
     
-                let finding = this.response[i];
-                this.questionsSvc.getDetails(finding.question.mat_Question_Id, 'Maturity').subscribe(
+                let observation = this.response[i];
+                this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
                   (r: any) => {
                     this.files = r;
 
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if(!this.sourceFilesMap.has(finding.finding.finding_Id)){
+                      if(!this.sourceFilesMap.has(observation.finding.finding_Id)){
               
-                        this.sourceFilesMap.set(finding.finding.finding_Id, [sourceDocList[i]]);
+                        this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
                       } else {
-                        let tempFileArray = this.sourceFilesMap.get(finding.finding.finding_Id);
+                        let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
         
                         tempFileArray.push(sourceDocList[i]);
         
-                        this.sourceFilesMap.set(finding.finding.finding_Id, tempFileArray);
+                        this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
                 );
-                if(finding.finding.type === 'Examiner Finding') {
-                  this.addExaminerFinding(finding.category.title);
+                if(observation.finding.type === 'Examiner Finding') {
+                  this.addExaminerFinding(observation.category.title);
                 }
-                if(finding.finding.type === 'DOR') {
-                  this.addDOR(finding.category.title);
+                if(observation.finding.type === 'DOR') {
+                  this.addDOR(observation.category.title);
                 }
-                if(finding.finding.type === 'Supplemental Fact') {
-                  this.addSupplementalFact(finding.category.title);
+                if(observation.finding.type === 'Supplemental Fact') {
+                  this.addSupplementalFact(observation.category.title);
                 }
-                if(finding.finding.type === 'Non-reportable') {
-                  this.addNonReportable(finding.category.title);
+                if(observation.finding.type === 'Non-reportable') {
+                  this.addNonReportable(observation.category.title);
                 }
                 this.relaventIssues = true;
               }

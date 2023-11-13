@@ -122,7 +122,7 @@ import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.co
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
 import { StandardsComponent } from './assessment/prepare/standards/standards.component';
-import { FindingsComponent } from './assessment/questions/findings/findings.component';
+import { ObservationsComponent } from './assessment/questions/observations/observations.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -191,7 +191,7 @@ import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
-import { FindingsService } from './services/findings.service';
+import { ObservationsService } from './services/findings.service';
 import { FrameworkService } from './services/framework.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
@@ -765,7 +765,7 @@ import {
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        FindingsComponent,
+        ObservationsComponent,
         IssuesComponent,
         MeritCheckComponent,
         SafePipe,
@@ -1236,7 +1236,7 @@ import {
         FrameworkService,
         RequiredDocumentService,
         IRPService,
-        FindingsService,
+        ObservationsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,

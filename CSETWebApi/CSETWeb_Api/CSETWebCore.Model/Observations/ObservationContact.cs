@@ -4,11 +4,11 @@
 // 
 // 
 //////////////////////////////// 
-namespace CSETWebCore.Model.Findings
+namespace CSETWebCore.Model.Observations
 {
-    public class FindingContact
+    public class ObservationContact
     {
-        public int Finding_Id { get; set; }
+        public int Observation_Id { get; set; }
         public int Assessment_Contact_Id { get; set; }
 
         /// <summary>
