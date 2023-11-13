@@ -79,7 +79,8 @@
 
           <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
             [class.current-node]="node?.isCurrent">
-            <button (click)="selectNavItem(node?.value)" [disabled]="isTocLoading(node?.label)" tabindex="0"
+            <!--isNodeDisabled(node?.disabled) ||-->
+            <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
               class="btn btn-link no-underline ta-left">
               <span class="menu-link ws-normal">
                 {{node?.label}}

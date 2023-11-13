@@ -5,6 +5,7 @@ import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 import { TranslocoService } from '@ngneat/transloco';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment-convert-cf',
@@ -23,7 +24,8 @@ export class AssessmentConvertCfComponent implements OnInit {
     private assessSvc: AssessmentService,
     public tSvc: TranslocoService,
     private convertSvc: ConversionService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private navSvc: NavigationService
   ) { }
 
   /**
@@ -62,6 +64,7 @@ export class AssessmentConvertCfComponent implements OnInit {
 
           const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
           dlgOkay.componentInstance.hasHeader = true;
+          this.navSvc.navDirect('standard-questions');
         });
       }
     });
