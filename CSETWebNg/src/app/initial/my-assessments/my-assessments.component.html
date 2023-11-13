@@ -91,14 +91,20 @@
                             </label>
                         </div>
 
+
+                        <!-- Don't show the encryption for ACET/ISE. They don't want it. -->
                         <div *ngIf="!this.ncuaSvc.switchStatus">
-                            <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
-                                [disabled]="disabledEncrypt"
-                                matTooltip="{{ t('tooltip.prevent encryption') }}"
-                                style="margin-left: auto; margin-right: 0; border: 2px solid gray">
-                                <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
-                            </mat-checkbox>
+                            <div *ngIf="this.configSvc.installationMode != 'ACET'">
+                                <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
+                                  [disabled]="disabledEncrypt"
+                                  matTooltip="{{ t('tooltip.prevent encryption') }}"
+                                  style="margin-left: auto; margin-right: 0; border: 2px solid gray">
+                                    <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
+                                </mat-checkbox>
+                            </div>
                         </div>
+
+
                     </div>
                     <div *ngIf="unsupportedImportFile"
                         class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">

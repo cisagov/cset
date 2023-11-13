@@ -31,6 +31,7 @@ export interface ExtendedDemographics {
 
     hb7055?: string;
     hb7055Party?: string;
+    hb7055Grant?: string;
 
     infrastructureItOt?: string;
 
