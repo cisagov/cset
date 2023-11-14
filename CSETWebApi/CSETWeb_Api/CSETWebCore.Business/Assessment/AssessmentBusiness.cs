@@ -855,12 +855,12 @@ namespace CSETWebCore.Business.Assessment
 
         public void clearFirstTime(int userid, int assessment_id)
         {
-            var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
-            if(us != null)
-            {
-                us.IsFirstLogin = false;
-                _context.SaveChanges();
-            }
+            //var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+            //if(us != null)
+            //{
+            //    us.IsFirstLogin = false;
+            //    _context.SaveChanges();
+            //}
         }
     }
 }

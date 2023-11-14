@@ -38,7 +38,7 @@ import { BehaviorSubject } from 'rxjs';
 import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from './conversion.service';
-
+import { NavigationEnabledState } from './navigation-state';
 
 export interface Role {
   assessmentRoleId: number;
@@ -59,7 +59,7 @@ export class AssessmentService {
   private apiUrl: string;
   private initialized = false;
   public applicationMode: string;
-  public assessmentStateChanged = new BehaviorSubject(123);
+  public assessmentStateChanged = new BehaviorSubject(NavigationEnabledState.BrandNew);
   /**
    * This is private because we need a setter so that we can do things
    * when the assessment is loaded.
@@ -648,7 +648,7 @@ export class AssessmentService {
 
   initCyberFlorida(assessmentId: number) {
     this.floridaSvc.getInitialState().then(()=>{
-      this.assessmentStateChanged.next(125);
+      this.assessmentStateChanged.next(NavigationEnabledState.Initialized);
       }
     );    
   }
@@ -658,7 +658,7 @@ export class AssessmentService {
     if(this.isCyberFloridaComplete()){  
       this.convSvc.isEntryCfAssessment().subscribe((data)=>{        
         if(data)
-          this.assessmentStateChanged.next(124);
+          this.assessmentStateChanged.next(NavigationEnabledState.Changed);
       });
     }     
   }
