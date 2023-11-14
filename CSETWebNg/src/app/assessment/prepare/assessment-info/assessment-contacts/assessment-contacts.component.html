@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div *transloco="let t; read: 'contact'">
-  <div *ngIf="contacts">
+  <div *ngIf="contacts && !cyberflorida">
     <h4>{{ t('contacts') }}</h4>
     <div class="list-group">
       <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"

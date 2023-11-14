@@ -357,9 +357,9 @@ export class DemographicsExtendedComponent implements OnInit {
     this.updateDemographics();
   }
   sethb7055Grant(value:string){
-    this.demographicData.hb7055Grant = value;
+    this.demographicData.hb7055Grant = value;   
     if (value !== 'Y') {
-      this.demographicData.hb7055Grant = '';
+      this.demographicData.hb7055Party = '';
     }
     this.updateDemographics();
   }

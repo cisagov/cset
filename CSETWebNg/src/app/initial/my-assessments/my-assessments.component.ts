@@ -51,6 +51,7 @@ import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { Subscription } from "rxjs";
 
 
 interface UserAssessment {
@@ -148,7 +149,8 @@ export class MyAssessmentsComponent implements OnInit {
       default:
         this.isCSET = true;
     }
-
+   
+    
     if (localStorage.getItem("returnPath")) {
     }
     else {
@@ -224,15 +226,22 @@ export class MyAssessmentsComponent implements OnInit {
                   item.questionAlias = 'statements';
                 }
               }
+               
               if (item.useStandard && item.selectedStandards) type += ', ' + item.selectedStandards;
               if (type.length > 0) type = type.substring(2);
               item.type = type;
+              
               let currentAssessmentStats = assessmentsCompletionData.find(x => x.assessmentId === item.assessmentId);
               item.completedQuestionsCount = currentAssessmentStats?.completedCount;
-              item.totalAvailableQuestionsCount =
-                (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
-                (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
+              if(item.selectedStandards === 'Cyber Florida CSF'){
+                item.totalAvailableQuestionsCount = 20;
+                item.type = type.split(',').reverse().join(',');
+              }
+              else
+                item.totalAvailableQuestionsCount =
+                  (currentAssessmentStats?.totalMaturityQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalDiagramQuestionsCount ?? 0) +
+                  (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
             });
             this.sortedAssessments = assessments;
           },
@@ -246,6 +255,11 @@ export class MyAssessmentsComponent implements OnInit {
             }
           )
         ))).subscribe();
+  }
+
+  //
+  private splitAndSwap(){
+
   }
 
   hasPath(rpath: string) {

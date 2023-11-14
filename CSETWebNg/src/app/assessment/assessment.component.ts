@@ -37,6 +37,11 @@ import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { Subscription } from 'rxjs';
+import { ConfigService } from '../services/config.service';
+import { NavigationEnabledState } from '../services/navigation-state';
+import { DemographicExtendedService } from '../services/demographic-extended.service';
+
 
 @Component({
   selector: 'app-assessment',
@@ -82,19 +87,73 @@ export class AssessmentComponent implements OnInit {
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public layoutSvc: LayoutService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private configSvc: ConfigService,
+    private demoSvc: DemographicExtendedService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
     this.setTab('prepare');
     this.navSvc.activeResultsView = null;
   }
-
+  
+  nextMode = true;
+  subscription:Subscription;
+  defaultEnabledStatus = true;
+  defaultAssessmentEnabled = true;
   ngOnInit(): void {
     this.evaluateWindowSize();
-
+   
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
+    });
+    if(this.configSvc.installationMode=='CF')
+        this.cyberFloridaInitialization();
+  }
+
+  cyberFloridaInitialization(){
+    this.navSvc.buildTree();
+    this.defaultEnabledStatus = false;
+    this.defaultAssessmentEnabled = false;
+    if(this.assessSvc.isCyberFloridaComplete()){
+      this.defaultAssessmentEnabled = true;
+      this.defaultEnabledStatus = true;
+    }
+    this.subscription = this.navSvc.disableNext
+    .asObservable()
+    .subscribe(
+      (tgt: boolean) => {
+        console.log(tgt);
+        this.defaultAssessmentEnabled= tgt;
+      }
+    );
+    this.assessSvc.assessmentStateChanged.subscribe((reloadState)=>{      
+      if(this.assessSvc.isCyberFloridaComplete())
+      {
+        this.defaultEnabledStatus = true;
+        this.defaultAssessmentEnabled = true;
+      }
+      else{
+        switch(reloadState){
+          case NavigationEnabledState.BrandNew:          
+            this.defaultEnabledStatus = true;
+            this.defaultAssessmentEnabled = true;
+            break;
+          case NavigationEnabledState.Changed:
+            this.defaultEnabledStatus = true;
+            this.defaultAssessmentEnabled = true;
+            break;
+          case NavigationEnabledState.Initialized:
+            this.defaultEnabledStatus = false;
+            if(this.demoSvc.AreDemographicsCompleteNav()){
+              this.defaultAssessmentEnabled = true;
+            }
+            else{
+              this.defaultAssessmentEnabled = false;
+            }
+            break;
+        }
+      }
     });
   }
 

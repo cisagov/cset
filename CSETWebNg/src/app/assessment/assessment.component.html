@@ -39,7 +39,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('prepare')"
           (click)="setTab('prepare')">
 
-          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"            
             (click)="navSvc.navDirect('phase-prepare')" tabindex="0">
             <span class="tab-icon cset-icons-clipboard-pencil" id="prepareIcon"></span>
             <span class="nav-tab-text ml-2">{{t('titles.prepare')}}</span>
@@ -48,6 +48,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('questions')"
           (click)="setTab('questions')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+            [disabled]="!(defaultEnabledStatus || defaultAssessmentEnabled)"
             (click)="navSvc.navDirect('phase-assessment')" tabindex="0">
             <span class="tab-icon cset-icons-question-mark" id="questionsIcon"></span>
             <span class="nav-tab-text ml-2">{{t('titles.assessment')}}</span>
@@ -56,6 +57,7 @@
         <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('results')"
           (click)="setTab('results')">
           <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
+            [disabled]="!defaultEnabledStatus"
             (click)="navSvc.navDirect('phase-results')" tabindex="0">
             <span class="tab-icon cset-icons-results"></span>
             <span class="nav-tab-text ml-2">{{t('titles.results')}}</span>

@@ -52,7 +52,7 @@ export class AssessmentContactsComponent implements OnInit {
   userRole: any;
   userEmail: string;
   adding: boolean = false;
-
+  cyberflorida: boolean = false;
 
   // all child contact item components
   @ViewChildren(ContactItemComponent) contactItems: ContactItemComponent[];
@@ -69,6 +69,9 @@ export class AssessmentContactsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.configSvc.installationMode=='CF'){
+      this.cyberflorida = true;
+    }
     if (this.assessSvc.id()) {
       this.assessSvc
         .getAssessmentContacts()

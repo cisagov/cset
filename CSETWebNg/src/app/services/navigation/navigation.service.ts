@@ -30,6 +30,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
 import { PageVisibilityService } from '../navigation/page-visibility.service';
 import { NavTreeService } from './nav-tree.service';
+import { NavigationEnabledState } from '../navigation-state';
 
 
 export interface NavTreeNode {
@@ -100,15 +101,15 @@ export class NavigationService {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
-    this.assessSvc.assessmentStateChanged.subscribe((reloadState)=>{
+    this.assessSvc.assessmentStateChanged.subscribe((reloadState)=>{      
       switch(reloadState){
-        case 123:
+        case NavigationEnabledState.BrandNew:          
           break;
-        case 124:
+        case NavigationEnabledState.Changed:
           this.buildTree();
           this.navDirect('dashboard');
           break;
-        case 125:
+        case NavigationEnabledState.Initialized:
           this.buildTree();
           this.navDirect('phase-prepare');
           break;
