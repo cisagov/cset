@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 11/7/2023 1:46:22 PM
+Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 11/10/2023 9:07:08 AM
 
 */
 SET NUMERIC_ROUNDABORT OFF

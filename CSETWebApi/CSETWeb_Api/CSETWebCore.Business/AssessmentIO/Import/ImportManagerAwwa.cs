@@ -47,6 +47,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             this._context = context;
         }
 
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
         public string XXXXXX()
         {
             var x = new ExcelReader(@"\\vmware-host\Shared Folders\Documents\$SHARED\CSET\CSET TSA\VADR Assessment Parameters for Reference Section.xlsx");
@@ -156,13 +157,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 // at this point, CSET assessment answers can be built from the 'mappedAnswers' collection ...
                 var queryAwwaReqQuestions = from r in _context.NEW_REQUIREMENT
-                             from rq in _context.REQUIREMENT_QUESTIONS
-                             where r.Requirement_Id == rq.Requirement_Id
-                             from nq in _context.NEW_QUESTION
-                             where rq.Question_Id == nq.Question_Id
-                             where r.Original_Set_Name == "AWWA"
-                             orderby r.Requirement_Title
-                             select new { r.Requirement_Title, r.Requirement_Id, nq.Question_Id };
+                                            from rq in _context.REQUIREMENT_QUESTIONS
+                                            where r.Requirement_Id == rq.Requirement_Id
+                                            from nq in _context.NEW_QUESTION
+                                            where rq.Question_Id == nq.Question_Id
+                                            where r.Original_Set_Name == "AWWA"
+                                            orderby r.Requirement_Title
+                                            select new { r.Requirement_Title, r.Requirement_Id, nq.Question_Id };
 
                 var listAwwaReqQuestions = queryAwwaReqQuestions.ToList();
 
@@ -462,6 +463,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// Sheet1$
         /// </summary>
         /// <returns></returns>
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
         public DataTable ReadWorksheet(string sheet)
         {
             string conn = string.Empty;

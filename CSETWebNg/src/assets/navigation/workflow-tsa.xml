@@ -15,11 +15,11 @@
 
         <!-- do not show for ACET or TSA -->
         <node displaytext="Maturity Questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" 
-            condition="OPTION:MATURITY MATURITY-NOT:CIS" />
+            visible="OPTION:MATURITY MATURITY-NOT:CIS" />
 
         <!-- condition: if a standard is in play -->
         <node displaytext="Standard Questions" id="questions" path="assessment/{:id}/questions" 
-            condition="OPTION:STANDARD" />
+            visible="OPTION:STANDARD" />
 
         <!-- TODO:  include the CIS question tree.  This is a good argument for breaking it out into its own file -->
     </node>
@@ -30,7 +30,7 @@
     <node displaytext="Results" id="phase-results">
 
         <!-- standards results -->
-        <node displaytext="Standards Results" id="standards-results-node" condition="OPTION:STANDARD">
+        <node displaytext="Standards Results" id="standards-results-node" visible="OPTION:STANDARD">
             <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
             <node displaytext="Control Priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" />
             <node displaytext="Standards Summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" />
@@ -40,7 +40,7 @@
 
 
         <!-- components results -->
-        <node displaytext="Components Results" id="components-results-node" condition="OPTION:DIAGRAM">
+        <node displaytext="Components Results" id="components-results-node" visible="OPTION:DIAGRAM">
             <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" />
             <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" />
             <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" />
@@ -50,9 +50,9 @@
 
 
         <!-- Reports -->
-        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
+        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" visible="SHOW-EXEC-SUMMARY" />
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports"/>
-        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
     </node>
 </nav>

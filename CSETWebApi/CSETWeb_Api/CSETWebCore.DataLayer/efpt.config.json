@@ -1252,6 +1252,10 @@
          "ObjectType": 1
       },
       {
+         "Name": "[dbo].[usp_getCSETQuestionsForCRRM]",
+         "ObjectType": 1
+      },
+      {
          "Name": "[dbo].[usp_getExplodedComponent]",
          "ObjectType": 1
       },

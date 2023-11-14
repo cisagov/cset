@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { QuestionResponse, Category } from '../../models/questions.model';
@@ -41,7 +41,7 @@ import { TranslocoService } from '@ngneat/transloco';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewChecked {
+export class QuestionsComponent implements AfterViewChecked, OnInit {
   @ViewChild('questionBlock') questionBlock;
 
   categories: Category[] = null;
@@ -115,6 +115,9 @@ export class QuestionsComponent implements AfterViewChecked {
       this.loadQuestions();
     });
 
+  }
+  ngOnInit(): void {
+    this.configSvc.checkOnlineStatusFromConfig();
   }
 
   updateComponentsOverride() {
