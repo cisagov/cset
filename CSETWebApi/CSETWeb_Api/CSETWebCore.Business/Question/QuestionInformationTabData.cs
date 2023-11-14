@@ -475,7 +475,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, int userId)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, int? userId, string accessKey)
         {
             try
             {
@@ -503,7 +503,8 @@ namespace CSETWebCore.Business.Question
 
                 //
                 var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-                if (user.Lang == "es")
+                var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+                if (user?.Lang == "es" || ak?.Lang == "es")
                 {
                     Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                     var output = new SpanishQuestionRow();

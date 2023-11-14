@@ -89,6 +89,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_GetComponentsSummaryPageResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getComponentTypesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GetComponentTypesPageResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_getCSETQuestionsForCRRMResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getExplodedComponentResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFinancialQuestionsResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_getFirstPageResult>().HasNoKey().ToView(null);
@@ -2098,6 +2099,33 @@ namespace CSETWebCore.DataLayer.Model
                 parameterreturnValue,
             };
             var _ = await _context.SqlQueryAsync<usp_GetComponentTypesPageResult>("EXEC @returnValue = [dbo].[usp_GetComponentTypesPage] @assessment_id", sqlParameters, cancellationToken);
+
+            returnValue?.SetValue(parameterreturnValue.Value);
+
+            return _;
+        }
+
+        public virtual async Task<List<usp_getCSETQuestionsForCRRMResult>> usp_getCSETQuestionsForCRRMAsync(string setname, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        {
+            var parameterreturnValue = new SqlParameter
+            {
+                ParameterName = "returnValue",
+                Direction = System.Data.ParameterDirection.Output,
+                SqlDbType = System.Data.SqlDbType.Int,
+            };
+
+            var sqlParameters = new []
+            {
+                new SqlParameter
+                {
+                    ParameterName = "setname",
+                    Size = 100,
+                    Value = setname ?? Convert.DBNull,
+                    SqlDbType = System.Data.SqlDbType.VarChar,
+                },
+                parameterreturnValue,
+            };
+            var _ = await _context.SqlQueryAsync<usp_getCSETQuestionsForCRRMResult>("EXEC @returnValue = [dbo].[usp_getCSETQuestionsForCRRM] @setname", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
