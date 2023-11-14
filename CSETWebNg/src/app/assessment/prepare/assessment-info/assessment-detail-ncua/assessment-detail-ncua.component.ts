@@ -283,7 +283,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   updateAssets() {
-   // this.assessment.assets = e.target.value;
+  if (this.assessment.assets != null) {
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
     this.acetDashboard.assets = this.assessment.assets;
 
@@ -292,6 +292,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
+    }
   }
 
   /**
