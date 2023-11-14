@@ -526,21 +526,30 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/contacts/userlang")]
         public IActionResult GetUserLanguage()
         {
-            var currentUserId = _token.GetUserId();
+            int? currentUserId = _token.GetUserId();
+            string currentAccessKey = _token.GetAccessKey();
 
-            var user = _context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault();
-            if (user == null)
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == currentUserId);
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == currentAccessKey);
+
+            if (user == null && ak == null)
             {
-                throw new KeyNotFoundException($"No user found for ID {currentUserId}");
+                throw new KeyNotFoundException($"No user found for ID {(currentUserId != null ? currentUserId : currentAccessKey)}");
             }
 
-            if (user.Lang == null)
+            if (user != null && user.Lang == null)
             {
                 user.Lang = "en";
                 _context.SaveChanges();
             }
 
-            var userLang = new { lang = user.Lang };
+            if (ak != null && ak.Lang == null) 
+            { 
+                ak.Lang = "en";
+                _context.SaveChanges();
+            }
+
+            var userLang = new { lang = user != null ? user.Lang : ak.Lang };
             return Ok(userLang);
         }
 
@@ -554,13 +563,27 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveUserLanguage([FromBody] UserLanguage lang)
         {
             // update the USER
-            var currentUserId = _token.GetUserId();
-            var user = _context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault();
-            if (user == null)
+            int? currentUserId = _token.GetUserId();
+            string currentAccessKey = _token.GetAccessKey();
+
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == currentUserId);
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == currentAccessKey);
+
+            if (user == null && ak == null)
             {
-                throw new KeyNotFoundException($"No user found for ID {currentUserId}");
+                throw new KeyNotFoundException($"No user found for ID {(currentUserId != null ? currentUserId : currentAccessKey)}");
             }
-            user.Lang = lang.Lang;
+
+            if (user != null) 
+            { 
+                user.Lang = lang.Lang;
+            }
+
+            if (ak != null) 
+            {
+                ak.Lang = lang.Lang;
+            }
+
             _context.SaveChanges();
 
             return Ok();

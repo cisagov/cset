@@ -114,9 +114,12 @@ namespace CSETWebCore.Business.Reports
             }
 
             int userId = (int)_tokenManager.GetUserId();
+            string accessKey = _tokenManager.GetAccessKey();
             var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+
             //
-            if (user.Lang == "es")
+            if (user?.Lang == "es" || ak?.Lang == "es")
             {
                 responseList.ForEach(
                    matAns =>
@@ -304,9 +307,11 @@ namespace CSETWebCore.Business.Reports
             Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
             Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
             int userId = (int)_tokenManager.GetUserId();
+            string accessKey = _tokenManager.GetAccessKey();
             var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
 
-            if (user.Lang == "es")
+            if (user?.Lang == "es" || ak?.Lang == "es")
             {
                 allGroupings.ForEach(
                     group => {
@@ -365,7 +370,7 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview
                                 };
 
-                                if (user.Lang == "es")
+                                if (user?.Lang == "es" || ak?.Lang == "es")
                                 {
                                     var output = new SpanishQuestionRow();
                                     var temp = new SpanishQuestionRow();
@@ -1539,7 +1544,8 @@ namespace CSETWebCore.Business.Reports
                     questionText = f.mq.Question_Text;
                     //
                     var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
-                    if (user.Lang == "es")
+                    var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == _tokenManager.GetAccessKey());
+                    if (user?.Lang == "es" || ak?.Lang == "es")
                     {
                         Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                         var output = new SpanishQuestionRow();
