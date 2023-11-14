@@ -137,14 +137,15 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            int userId = (int)_tokenManager.GetUserId();
+            int? userId = _tokenManager.GetUserId();
+            string accessKey = _tokenManager.GetAccessKey();
 
             if (installationMode == "ACET")
             {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId));
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode));
             }
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode));
         }
 
         [HttpGet]

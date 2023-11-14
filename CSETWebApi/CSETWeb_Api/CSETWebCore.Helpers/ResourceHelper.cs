@@ -44,7 +44,7 @@ namespace CSETWebCore.Helpers
                     var rsx = GetEmbeddedResource(formattedResourceName, Assembly.GetCallingAssembly());
                     return rsx;
                 }
-                catch (Exception exc)
+                catch (Exception)
                 {
                     // fallback to "CSET" and try again
                     scope = "CSET";

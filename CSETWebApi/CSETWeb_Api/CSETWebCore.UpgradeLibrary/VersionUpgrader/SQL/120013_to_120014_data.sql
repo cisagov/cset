@@ -366,6 +366,19 @@ UPDATE [dbo].[GALLERY_ITEM] SET [Title]=N'CISA Minimum Viable Resilience Assessm
 UPDATE [dbo].[GALLERY_ITEM] SET [Description]=N'The CPGs are a prioritized subset of IT and operational technology (OT) cybersecurity practices that critical infrastructure owners and operators can implement to meaningfully reduce the likelihood and impact of known risks and adversary techniques. The goals were informed by existing cybersecurity frameworks and guidance, as well as the real-world threats and adversary tactics, techniques, and procedures (TTPs) observed by CISA and its government and industry partners.  This assessment is intended to help organizations determine the extent to which they have implemented the Goals, and to aid in identifying areas for potential future investment.', [Title]=N'CISA Cross-Sector Cybersecurity Performance Goals (CPG)' WHERE [Gallery_Item_Id] = 117
 PRINT(N'Operation applied to 2 rows out of 2')
 
+PRINT(N'Add row to [dbo].[GALLERY_ITEM]') 
+SET IDENTITY_INSERT [dbo].[GALLERY_ITEM] ON 
+if not exists (select * from GALLERY_ITEM where gallery_item_id = 118)
+INSERT INTO [dbo].[GALLERY_ITEM] ([Gallery_Item_Id], [Icon_File_Name_Small], [Icon_File_Name_Large], [Configuration_Setup], [Description], [Configuration_Setup_Client], [Title], [Is_Visible], [CreationDate]) VALUES (118, NULL, NULL, N'{Sets:["Course_401"],SALLevel:"Low",QuestionMode:"Questions"}', N'Evaluation questions used in the DHS 401 ICS System Evaluation and Analysis Course', NULL, N'DHS 401 ICS System Evaluation and Analysis Course Question Set', 1, '2022-11-29 15:18:01.680') 
+SET IDENTITY_INSERT [dbo].[GALLERY_ITEM] OFF 
+ 
+PRINT(N'Add row to [dbo].[SETS]') 
+if not exists (select * from SETS where Set_Name = 'Course_401')
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'Course_401', N'CSET 401', N'CSET 401', 1, 0, NULL, 12, NULL, NULL, NULL, 0, 0, 0, N'This set is used in 401 training for CSET', 0, NULL, 0, NULL, 0, 1) 
+ 
+
+
+
 PRINT(N'Add rows to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
 if not exists (select * from gen_file where gen_file_id = 6109)

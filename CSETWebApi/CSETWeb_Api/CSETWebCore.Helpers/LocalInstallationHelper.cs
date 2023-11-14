@@ -15,9 +15,9 @@ namespace CSETWebCore.Helpers
     {
 
         private bool IsUpgraded = false;
-        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public LocalInstallationHelper(IHostingEnvironment hostingEnvironment)
+        public LocalInstallationHelper(IWebHostEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
         }

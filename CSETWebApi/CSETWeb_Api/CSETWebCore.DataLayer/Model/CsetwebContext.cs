@@ -11,6 +11,7 @@ public partial class CsetwebContext : DbContext
     public CsetwebContext()
     {
     }
+
     public CsetwebContext(DbContextOptions<CsetwebContext> options)
         : base(options)
     {
@@ -506,6 +507,7 @@ public partial class CsetwebContext : DbContext
     {
         modelBuilder.Entity<ACCESS_KEY>(entity =>
         {
+            entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
             entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
         });
 

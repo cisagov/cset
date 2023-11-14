@@ -1,7 +1,7 @@
 {
-    "NOTENODE": "Casing on config chain matters, the only item that should be chagned here is the current ConfigChain value.  Once that is changed everything else should be set",
+    "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
     "currentConfigChain": [
-        "CF"
+        "CSET"
     ],
     "appCode": "CSET",
     "defaultLang": "en",
@@ -16,7 +16,8 @@
         "url": "localhost",
         "port": "5000",
         "apiIdentifier": "api",
-        "documentsIdentifier": "Documents"
+        "documentsIdentifier": "Documents",
+        "onlineUrl": "https://cset.inl.gov"
     },
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
@@ -168,7 +169,7 @@
                     "code": "Y",
                     "buttonLabelKey": "Imp-CPG",
                     "buttonCss": "btn-yes"
-                 },
+                },
                 {
                     "code": "I",
                     "buttonLabelKey": "Prog-CPG",
@@ -280,8 +281,17 @@
         }
     ],
     "languageOptions": [
-        { "value": "en", "name": "English" },
-        { "value": "es", "name": "Español" },
-        { "value": "uk", "name": "українська" }
+        {
+            "value": "en",
+            "name": "English"
+        },
+        {
+            "value": "es",
+            "name": "Español"
+        },
+        {
+            "value": "uk",
+            "name": "українська"
+        }
     ]
 }
