@@ -232,11 +232,12 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int userId = (int)_token.GetUserId();
+            int? userId = _token.GetUserId();
+            string accessKey = _token.GetAccessKey();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = biz.GetMaturityQuestions(assessmentId, userId, "", true, 0);
+            var resp = biz.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
             var dict = biz.GetReferences(assessmentId);
@@ -314,11 +315,12 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int userId = (int)_token.GetUserId();
+            int? userId = _token.GetUserId();
+            string accessKey = _token.GetAccessKey();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, userId, "", true, 0);
+            var resp = mm.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0);
 
             // get all supplemental info for questions, because it is not included in the previous method
             //var dict = mm.GetReferences(assessmentId);

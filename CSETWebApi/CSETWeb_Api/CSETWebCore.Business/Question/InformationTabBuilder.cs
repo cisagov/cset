@@ -117,7 +117,7 @@ namespace CSETWebCore.Business.Question
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
-            tab.BuildMaturityInfoTab(maturityInfoData, (int)_tokenManager.GetUserId());
+            tab.BuildMaturityInfoTab(maturityInfoData, _tokenManager.GetUserId(), _tokenManager.GetAccessKey());
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }
