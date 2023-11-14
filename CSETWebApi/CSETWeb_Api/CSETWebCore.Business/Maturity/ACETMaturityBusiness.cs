@@ -1,16 +1,8 @@
-﻿using CSETWebCore.Business.Acet;
-using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Maturity;
-using CSETWebCore.Model.Question;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -33,7 +25,7 @@ namespace CSETWebCore.Business.Maturity
 
         // -- 
 
-        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, int userId)
+        public override MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode)
         {
             var response = new MaturityResponse();
             var myModel = ProcessModelDefaults(assessmentId, installationMode, 1);
@@ -54,7 +46,7 @@ namespace CSETWebCore.Business.Maturity
                 response.MaturityTargetLevel = response.OverallIRP;
             }
 
-            response = base.GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId);
+            response = base.GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode);
 
             return response;
         }
