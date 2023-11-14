@@ -18,6 +18,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -217,7 +218,8 @@ namespace CSETWebCore.Api.Controllers
             FirstPage rval = null;
 
             var results = new FirstPageMultiResult();
-            _context.Database.AutoTransactionsEnabled = true;
+            _context.Database.AutoTransactionBehavior = AutoTransactionBehavior.Always;
+
             _context.LoadStoredProc("[usp_GetFirstPage]")
               .WithSqlParam("assessment_id", assessmentId)
               .ExecuteStoredProc((handler) =>
