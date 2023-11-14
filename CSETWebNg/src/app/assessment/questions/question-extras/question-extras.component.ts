@@ -752,12 +752,14 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   documentUrl(document: CustomDocument) {
-    var link = '';
+    let link = this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + document.file_Name + '#' + document.section_Ref;
+
+    // TODO: figure out how to handle this link
+    // link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
     if (document.is_Uploaded) {
       link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
     }
+
     return link;
   }
 
