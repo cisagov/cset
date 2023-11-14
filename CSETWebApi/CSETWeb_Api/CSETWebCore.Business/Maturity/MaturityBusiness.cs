@@ -817,7 +817,7 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode = "")
+        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode)
         {
             var response = new MaturityResponse();
             return GetMaturityQuestions(assessmentId, userId, accessKey, installationMode, fill, groupingId, response);
