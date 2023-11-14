@@ -40,6 +40,8 @@ import { ComponentOverrideComponent } from '../../../dialogs/component-override/
 import { MaturityService } from '../../../services/maturity.service';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { title } from 'process';
+
 
 
 @Component({
@@ -354,20 +356,47 @@ export class QuestionExtrasComponent implements OnInit {
       data: find,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-    })
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px', 
+    }
+    
+    )
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
+            for (let i of response){
+              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)){
+                this.deleteEmptyObservation(i)
+              }
+            }
             this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
-      });
+        
+        });
+        
   }
+
+  /**
+   * Deletes a discovery.
+   * @param findingToDelete
+   */
+  deleteEmptyObservation(findingToDelete) {
+        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+        let deleteIndex = null;
+
+        for (let i = 0; i < this.extras.findings.length; i++) {
+          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+            deleteIndex = i;
+          }
+        }
+        this.extras.findings.splice(deleteIndex, 1);
+        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+    };
+  
 
   /**
    * Deletes a discovery.
