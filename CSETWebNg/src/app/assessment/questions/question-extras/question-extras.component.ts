@@ -381,7 +381,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Deletes a discovery.
+   * Deletes an empty discovery.
    * @param findingToDelete
    */
   deleteEmptyObservation(findingToDelete) {
