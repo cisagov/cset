@@ -31,6 +31,7 @@ import { QuestionFilterService } from './filtering/question-filter.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { ACETService } from './acet.service';
+import { NavigationService } from './navigation/navigation.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -160,6 +161,9 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
+    if(this.configSvc.installationMode == 'CF'){      
+      this.processNavigationDisable(answer);      
+    }
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
 
@@ -420,4 +424,11 @@ export class QuestionsService {
       buttonCss: "btn-yes"
     };
   }
+  processNavigationDisable(answer: Answer) {
+    //have a list of all the 20 necessary id's
+    //then when the list is complete enable the navigation
+    this.assessmentSvc.updateAnswer(answer);
+  }
 }
+
+

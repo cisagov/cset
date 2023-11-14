@@ -138,7 +138,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            var userId = _tokenManager.GetUserId();
+            int? userId = _tokenManager.GetUserId();
+            string accessKey = _tokenManager.GetAccessKey();
             List<ACETFilter> filters = new List<ACETFilter>();
 
             //full cross join
@@ -160,7 +161,7 @@ namespace CSETWebCore.Api.Controllers
                                   IsOn = subfilter.IsOn
                               }).ToList();
 
-            if (_context.USERS.Where(x => x.UserId == userId).FirstOrDefault().Lang == "es")
+            if (_context.USERS.Where(x => x.UserId == userId).FirstOrDefault()?.Lang == "es" || _context.ACCESS_KEY.Where(x => x.AccessKey == accessKey).FirstOrDefault()?.Lang == "es")
             {
                 Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
                 var output = new GroupingSpanishRow();
