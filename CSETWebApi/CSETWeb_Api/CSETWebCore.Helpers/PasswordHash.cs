@@ -25,12 +25,12 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public bool ValidatePassword(string password, string hash, string salt)
         {
-            if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(hash) || string.IsNullOrWhiteSpace(salt)) 
+            if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(hash) || string.IsNullOrWhiteSpace(salt))
             {
                 return false;
             }
 
-            var hashArray = Convert.FromBase64String(hash); 
+            var hashArray = Convert.FromBase64String(hash);
             var saltArray = Convert.FromBase64String(salt);
 
             var testHash = GetPbkdf2Bytes(password, saltArray, iterations, hashArray.Length);
@@ -57,7 +57,7 @@ namespace CSETWebCore.Helpers
 
         public byte[] GetPbkdf2Bytes(string password, byte[] salt, int iterations, int outputBytes)
         {
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA512);
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
         }
