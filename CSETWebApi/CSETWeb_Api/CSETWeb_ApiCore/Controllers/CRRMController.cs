@@ -34,9 +34,6 @@ namespace CSETWebCore.Api.Controllers
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
                 Stream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
 
-                // Testing import
-                ImportManager.BulkImportAccessKeyAssessments(assessmentsExportArchive);
-
                 if (assessmentsExportArchive == null) 
                 {
                     return StatusCode(404, "No Assessments with the provided GUIDs were found for export.");
@@ -49,7 +46,6 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
                 return StatusCode(500, "There was an issue bulk exporting assessments");
             }
-
         }
     }
 }

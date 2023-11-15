@@ -535,13 +535,30 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return null;
             }
 
-            // Zip all the assessments into one archive
+            // Zip all the assessments into one archive.
             using (var archive = new ZipFile()) 
             {
                 // export the assessments
                 foreach (ASSESSMENTS a in exportAssessments)
                 {
                     AssessmentExportFile exportFile = ExportAssessment(a.Assessment_Id, fileExtension);
+                    int duplicateCounter = 1;
+
+                    // Handle collision cases where assessments have the same name, zip entries must be different.
+                    while (archive.ContainsEntry(exportFile.FileName)) 
+                    {
+                        if (duplicateCounter == 1)
+                        {
+                            exportFile.FileName = exportFile.FileName.Insert(exportFile.FileName.IndexOf(fileExtension), $" ({duplicateCounter})");
+                        }
+                        else 
+                        {
+                            exportFile.FileName = exportFile.FileName.Replace($"({duplicateCounter - 1}){fileExtension}", $"({duplicateCounter}){fileExtension}");
+                        }
+
+                        duplicateCounter++;
+                    }
+
                     archive.AddEntry(exportFile.FileName, exportFile.FileContents);
                 }
 
