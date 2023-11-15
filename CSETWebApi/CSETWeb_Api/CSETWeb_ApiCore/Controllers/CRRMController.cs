@@ -6,6 +6,8 @@ using CSETWebCore.Helpers;
 using System;
 using System.IO;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Interfaces.Helpers;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,13 +28,12 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/crrm/bulkExportAssessments")]
         public IActionResult BulkExportAssessments(Guid[] guidsToExport)
         {
-
             try
             {
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension("CSET");
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
-                Stream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
+                MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
 
                 if (assessmentsExportArchive == null) 
                 {
