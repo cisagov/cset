@@ -522,7 +522,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <param name="guids">Array of assessment guids to export</param>
         /// <param name="fileExtension">The extension of the export files</param>
         /// <returns></returns>
-        public Stream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension) 
+        public MemoryStream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension) 
         {
 
             var archiveStream = new MemoryStream();

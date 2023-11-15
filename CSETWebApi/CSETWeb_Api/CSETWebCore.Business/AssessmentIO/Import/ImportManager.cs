@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 using Ionic.Zip;
-using CSETWebCore.Business.Assessment;
+using System.Collections.Generic;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
@@ -247,16 +247,28 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             }
         }
 
-        public static void BulkImportAccessKeyAssessments(Stream bulkZipExport)
+        /// <summary>
+        /// Imports all assessments from a zip archive. 
+        /// Each entry in the top level of the archive should be a .csetw file.
+        /// </summary>
+        /// <param name="assessmentsZipArchive"></param>
+        public async Task BulkImportAssessments(Stream assessmentsZipArchive)
         {
-            using (bulkZipExport)
+            using (assessmentsZipArchive)
             {
-                ZipFile zip = ZipFile.Read(bulkZipExport);
+                ZipFile zip = ZipFile.Read(assessmentsZipArchive);
+                List<Task> importTasks = new List<Task>();
 
                 foreach (ZipEntry entry in zip)
                 {
-                    Console.WriteLine(entry.Info);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        entry.Extract(stream);
+                        importTasks.Add(ProcessCSETAssessmentImport(stream.ToArray(), null, null, _context));
+                    }
                 }
+
+                await Task.WhenAll(importTasks);
             }
         }
 
