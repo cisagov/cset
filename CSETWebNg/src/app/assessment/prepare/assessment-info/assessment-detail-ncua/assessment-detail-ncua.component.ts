@@ -35,6 +35,7 @@ import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 import { ACETService } from '../../../../services/acet.service';
 import { AcetDashboard } from '../../../../models/acet-dashboard.model';
+import moment from 'moment';
 
 
 @Component({
@@ -134,7 +135,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       let myArray = data.split(" ");
       this.lastModifiedTimestamp = myArray[1];
-
       // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
@@ -156,6 +156,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
+
+      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).local(true).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
