@@ -32,6 +32,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
+        private IUtilities _utilities;
         private CSETContext _context;
 
 
@@ -39,11 +40,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// 
         /// </summary>
         /// <param name="token"></param>
-        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, CSETContext context)
+        public ImportManager(ITokenManager token, IAssessmentUtil assessmentUtil, IUtilities utilities, CSETContext context)
         {
-            this._token = token;
-            this._assessmentUtil = assessmentUtil;
-            this._context = context;
+            _token = token;
+            _assessmentUtil = assessmentUtil;
+            _utilities = utilities;
+            _context = context;
         }
 
 
@@ -53,7 +55,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "")
+        public async Task ProcessCSETAssessmentImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
@@ -194,9 +196,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     string email = context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault()?.PrimaryEmail ?? "";
 
 
-
-                    Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil);
-                    int newAssessmentId = import.RunImportManualPortion();
+                    Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil, _utilities);
+                    int newAssessmentId = import.RunImportManualPortion(overwriteAssessment);
                     import.RunImportAutomatic(newAssessmentId, jsonObject, context);
 
 
@@ -252,7 +253,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// Each entry in the top level of the archive should be a .csetw file.
         /// </summary>
         /// <param name="assessmentsZipArchive"></param>
-        public async Task BulkImportAssessments(Stream assessmentsZipArchive)
+        public async Task BulkImportAssessments(Stream assessmentsZipArchive, bool overwriteAssessments = false)
         {
             using (assessmentsZipArchive)
             {
@@ -264,7 +265,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     using (MemoryStream stream = new MemoryStream())
                     {
                         entry.Extract(stream);
-                        importTasks.Add(ProcessCSETAssessmentImport(stream.ToArray(), null, null, _context));
+                        importTasks.Add(ProcessCSETAssessmentImport(stream.ToArray(), null, null, _context, overwriteAssessment: overwriteAssessments));
                     }
                 }
 
