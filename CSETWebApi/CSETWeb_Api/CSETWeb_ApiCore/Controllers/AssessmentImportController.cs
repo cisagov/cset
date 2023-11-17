@@ -27,6 +27,7 @@ namespace CSETWebCore.Api.Controllers
         private ITokenManager _tokenManager;
         private CSETContext _context;
         private IAssessmentUtil _assessmentUtil;
+        private IUtilities _utilities;
 
         /// <summary>
         /// Constructor.
@@ -34,11 +35,12 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public AssessmentImportController(ITokenManager token, CSETContext context, IAssessmentUtil assessmentUtil)
+        public AssessmentImportController(ITokenManager token, CSETContext context, IAssessmentUtil assessmentUtil, IUtilities utilities)
         {
             _tokenManager = token;
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _utilities = utilities;
         }
 
         [HttpGet]
@@ -68,7 +70,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
+                var manager = new ImportManager(_tokenManager, _assessmentUtil, _utilities, _context);
                 await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _tokenManager.GetAccessKey(), _context);
             }
             catch (Exception)
@@ -126,7 +128,7 @@ namespace CSETWebCore.Api.Controllers
                     }
 
 
-                    var manager = new ImportManager(_tokenManager, _assessmentUtil, _context);
+                    var manager = new ImportManager(_tokenManager, _assessmentUtil, _utilities, _context);
                     await manager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
                 }
             }
