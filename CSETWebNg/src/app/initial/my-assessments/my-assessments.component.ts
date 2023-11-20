@@ -130,6 +130,16 @@ export class MyAssessmentsComponent implements OnInit {
   ngOnInit() {
     // initializes moment locale language to transloco's active language
     moment.locale(this.tSvc.getActiveLang());
+
+    // checks if language needs to be forced from something else back to English (ISE)
+    // if (this.shouldIForceEnglish()) {
+    //   console.log('in should i force english')
+    //   this.tSvc.setActiveLang('en');
+    //   this.authSvc.setUserLang('en').subscribe(() => {
+    //     this.dateAdapter.setLocale('en');
+    //     moment.locale('en');
+    //   });
+    // }
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
