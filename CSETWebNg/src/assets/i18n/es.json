@@ -85,7 +85,7 @@
         "upgrade message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
         "upgrade confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
         "upgrade confirm 2": "La evaluación se ha convertido.",
-        "title upgrade complete": "Conversión completa",        
+        "title upgrade complete": "Conversión completa",
         "upgradeButton":"Convertir a evaluación completa"
     },
     "titles": {
@@ -107,6 +107,7 @@
         "security practices": "Prácticas de seguridad",
         "questions": "Preguntas",
         "practices": "Prácticas",
+        "requirements": "Requisitos",
         "acet maturity results": "Resultados de madurez de ACET",
         "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
