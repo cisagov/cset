@@ -313,8 +313,8 @@ export class MyAssessmentsComponent implements OnInit {
           return this.comparer.compare(a.type, b.type, isAsc);
         case "status":
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
-        case "submitted":
-          return this.comparer.compare(a.submittedDate, b.submittedDate, isAsc);
+        case "ise-submitted":
+          return this.comparer.compareBool(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
       }
