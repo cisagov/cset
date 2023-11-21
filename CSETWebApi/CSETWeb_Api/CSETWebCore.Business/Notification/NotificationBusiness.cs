@@ -112,7 +112,7 @@ namespace CSETWebCore.Business.Notification
 
 
             MailMessage message = new MailMessage();
-            message.Subject = contact.Subject;
+            message.Subject = "You've been invited to a CSET assessment";
             message.Body = bodyHtml;
             message.IsBodyHtml = true;
             message.To.Add(new MailAddress(contact.PrimaryEmail));
