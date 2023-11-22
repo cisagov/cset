@@ -28,7 +28,7 @@ using System.Collections.Generic;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
 {
-    public class ImportManager
+    public class ImportManager : IImportManager
     {
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;

@@ -1,4 +1,4 @@
-﻿//////////////////////////////// 
+//////////////////////////////// 
 // 
 //   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
@@ -11,14 +11,10 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Net.Http.Headers;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Ionic.Zip;
-using System.Collections.Generic;
-using System.Net.Http;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,8 +22,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private ITokenManager _tokenManager;
         private CSETContext _context;
-        private IAssessmentUtil _assessmentUtil;
-        private IUtilities _utilities;
+        private IImportManager _importManager;
 
         /// <summary>
         /// Constructor.
@@ -35,12 +30,11 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="token"></param>
         /// <param name="context"></param>
         /// <param name="assessmentUtil"></param>
-        public AssessmentImportController(ITokenManager token, CSETContext context, IAssessmentUtil assessmentUtil, IUtilities utilities)
+        public AssessmentImportController(ITokenManager token, CSETContext context, IImportManager importManager)
         {
             _tokenManager = token;
             _context = context;
-            _assessmentUtil = assessmentUtil;
-            _utilities = utilities;
+            _importManager = importManager;
         }
 
         [HttpGet]
@@ -70,8 +64,7 @@ namespace CSETWebCore.Api.Controllers
 
             try
             {
-                var manager = new ImportManager(_tokenManager, _assessmentUtil, _utilities, _context);
-                await manager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _tokenManager.GetAccessKey(), _context);
+                await _importManager.ProcessCSETAssessmentImport(target.ToArray(), _tokenManager.GetUserId(), _tokenManager.GetAccessKey(), _context);
             }
             catch (Exception)
             {
@@ -127,9 +120,7 @@ namespace CSETWebCore.Api.Controllers
                         }
                     }
 
-
-                    var manager = new ImportManager(_tokenManager, _assessmentUtil, _utilities, _context);
-                    await manager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
+                    await _importManager.ProcessCSETAssessmentImport(bytes, currentUserId, accessKey, _context, pwd);
                 }
             }
             catch (Exception e)

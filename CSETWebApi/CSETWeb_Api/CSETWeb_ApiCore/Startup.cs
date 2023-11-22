@@ -75,6 +75,7 @@ using CSETWebCore.Business.Merit;
 using System.Collections.Generic;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
+using CSETWebCore.Business.AssessmentIO.Import;
 
 namespace CSETWeb_ApiCore
 {
@@ -155,6 +156,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
             services.AddTransient<IApiKeyManager, ApiKeyManager>();
+            services.AddTransient<IImportManager, ImportManager>();
             services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();
