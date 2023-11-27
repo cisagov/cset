@@ -28,7 +28,7 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public void TouchAssessment(int assessmentId)
         {
-            DateTime nowUTC = _utilities.LocalToUtc(DateTime.Now);
+            DateTime nowUTC = DateTime.UtcNow;
 
             try
             {
