@@ -131,15 +131,6 @@ export class MyAssessmentsComponent implements OnInit {
     // initializes moment locale language to transloco's active language
     moment.locale(this.tSvc.getActiveLang());
 
-    // checks if language needs to be forced from something else back to English (ISE)
-    // if (this.shouldIForceEnglish()) {
-    //   console.log('in should i force english')
-    //   this.tSvc.setActiveLang('en');
-    //   this.authSvc.setUserLang('en').subscribe(() => {
-    //     this.dateAdapter.setLocale('en');
-    //     moment.locale('en');
-    //   });
-    // }
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -434,7 +425,9 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
+    // moment().utcOffset(300);
+    let localDate = moment(lastModifiedDate).format('ll LTS'); 
+    // let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
     return localDate;
   }
 

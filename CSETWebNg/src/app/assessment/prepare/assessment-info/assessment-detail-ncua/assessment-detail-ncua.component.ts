@@ -156,8 +156,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
-
-      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).local(true).toString();
+      // moment().utcOffset(300);
+      // let temp = new Date(this.lastModifiedTimestamp);
+      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
