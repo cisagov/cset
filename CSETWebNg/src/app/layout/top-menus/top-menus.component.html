@@ -233,16 +233,16 @@
         <mat-menu #legal="matMenu" class="menu-panel">
             <a mat-menu-item target="_blank" href="{{docUrl}}ApplicationDocuments/AccessibilityStatement.pdf">
                 <span class="cset-icons-accessibility-doc fs-base mr-2 align-middle"></span>
-                <span>{{ t('accessibility document') }}</span>
+                <span>{{ 'help.legal.accessibility document' | transloco }}</span>
             </a>
             <button mat-menu-item (click)="advisory()">
                 <span class="cset-icons-advisory fs-base mr-2 align-middle"></span>
-                <span>{{ t('advisory') }}</span>
+                <span>{{ 'help.legal.advisory' | transloco }}</span>
             </button>
 
             <button mat-menu-item (click)="termsOfUse()">
                 <span class="cset-icons-handshake fs-base mr-2 align-middle"></span>
-                <span>{{ t('terms of use') }}</span>
+                <span>{{ 'help.legal.terms of use' | transloco }}</span>
             </button>
         </mat-menu>
     </div>
