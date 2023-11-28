@@ -13,7 +13,6 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 })
 export class AssessmentConvertCfComponent implements OnInit {
 
-  isCfEntry = false;
   dialogRef: MatDialogRef<OkayComponent>;
 
 
@@ -32,12 +31,6 @@ export class AssessmentConvertCfComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    // determine if this assessment is a Cyber Florida "entry" assessment.
-    if (this.assessSvc.assessment.origin == 'CF') {
-      this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
-        this.isCfEntry = resp;
-      });
-    }
   }
 
   /**
@@ -60,7 +53,6 @@ export class AssessmentConvertCfComponent implements OnInit {
       if (confirmed) {
         this.convertSvc.convertCfSub().subscribe(resp => {
           this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
-          this.isCfEntry = false;
 
           const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
           dlgOkay.componentInstance.hasHeader = true;
