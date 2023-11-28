@@ -41,7 +41,8 @@
       <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
     </ul>
   </div>
-  <app-assessment-convert-cf class="mt-4"></app-assessment-convert-cf>
+  <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
+  <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
 
   <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
     All demographics information on the Assessment Information page must be
