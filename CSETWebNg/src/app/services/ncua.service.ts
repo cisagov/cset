@@ -38,6 +38,7 @@ import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
 import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
+import { ReportService } from './report.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -138,7 +139,8 @@ let headers = {
     private assessmentSvc: AssessmentService,
     private authSvc: AuthenticationService,
     private dateAdapter: DateAdapter<any>,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private reportSvc: ReportService
   ) {
     this.init();
   }
@@ -603,7 +605,7 @@ let headers = {
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
-      "creationDate": this.information.assessment_Creation_Date,
+      "creationDate": this.reportSvc.applyOffsetFromJwtToken(this.information.assessment_Creation_Date),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
