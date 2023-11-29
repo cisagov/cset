@@ -233,6 +233,12 @@ export class ReportService {
     return gmtString;
   }
 
+  applyOffsetFromJwtToken(stringDate: string) {
+    const jwt = new JwtParser();
+    const parsedToken = jwt.decodeToken(this.authSvc.userToken());
+    return moment(stringDate).subtract(parsedToken.tzoffset / 60, 'hour').format('L LTS');
+  }
+
   /**
    * Switches that define what to show on Module Content Reports
    */
