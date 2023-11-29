@@ -107,8 +107,8 @@ export class AssessmentComponent implements OnInit {
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
     });
-    if(this.configSvc.installationMode=='CF')
-        this.cyberFloridaInitialization();
+    if(this.configSvc.installationMode=='CF')      
+      this.cyberFloridaInitialization();
   }
 
   cyberFloridaInitialization(){
@@ -136,8 +136,8 @@ export class AssessmentComponent implements OnInit {
       else{
         switch(reloadState){
           case NavigationEnabledState.BrandNew:          
-            this.defaultEnabledStatus = true;
-            this.defaultAssessmentEnabled = true;
+            this.defaultEnabledStatus = false;
+            this.defaultAssessmentEnabled = false;
             break;
           case NavigationEnabledState.Changed:
             this.defaultEnabledStatus = true;
