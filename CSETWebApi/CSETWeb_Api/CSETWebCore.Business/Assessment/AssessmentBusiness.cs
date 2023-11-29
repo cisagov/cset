@@ -326,6 +326,17 @@ namespace CSETWebCore.Business.Assessment
         }
 
         /// <summary>
+        /// Returns the details for the specified Assessments given a GUID.
+        /// </summary>
+        /// <param name="assessmentGuid"></param>
+        /// <returns></returns>
+        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid) 
+        { 
+            int assessmentId = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid).Assessment_Id;
+            return GetAssessmentDetail(assessmentId);
+        }
+
+        /// <summary>
         /// Returns the details for the specified Assessment.
         /// </summary>
         /// <param name="assessmentId"></param>

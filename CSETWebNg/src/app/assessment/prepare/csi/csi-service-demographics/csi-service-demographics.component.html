@@ -95,7 +95,7 @@
           <label ngbButtonLabel class="btn btn-level mb-1" *ngFor="let totalITStaffItem of itIcsStaffCountList"
             [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.itIcsStaffCount"
             [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsStaffCount && showErrors() }">
-            <input ngbButton type="radio" autocomplete="off" name="totalITStaff"
+            <input ngbButton type="radio" autocomplete="off" name="totalITStaff1"
               [(ngModel)]="csiServiceDemographic.itIcsStaffCount" (change)="update()"
               [value]="totalITStaffItem.staff_Count" />
             {{ totalITStaffItem.staff_Count }}
@@ -110,11 +110,10 @@
           Critical Service?</label>
         <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff2" data-toggle="buttons"
           ngbRadioGroup>
-          <label ngbButtonLabel class="btn btn-level mb-1"
-            *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
+          <label ngbButtonLabel class="btn btn-level mb-1" *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
             [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount"
             [ngClass]="{ 'alert-danger': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }">
-            <input ngbButton type="radio" autocomplete="off" name="totalITStaff"
+            <input ngbButton type="radio" autocomplete="off" name="totalITStaff2"
               [(ngModel)]="csiServiceDemographic.cybersecurityItIcsStaffCount" (change)="update()"
               [value]="totalITStaffItem.staff_Count" />
             {{ totalITStaffItem.staff_Count }}
