@@ -231,8 +231,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
       });
       
       this.galleryItemsTmp = set;
-      
-      
     } else {
       this.galleryItemsTmp = [];
     }
