@@ -18,7 +18,8 @@ export class IseWarningsComponent {
   ) {}
 
   isAssessmentPageFilled() {
-    if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null || this.ncuaSvc.assetsAsNumber == 0) {
+    if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null 
+      || this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null) {
       return false;
     }
     return true;
