@@ -648,7 +648,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         public bool? IsAcetOnly { get; set; }
 
+        public bool? Ise_Submitted { get; set; }
 
+        public DateTime? Submitted_Date { get; set; }
     }
 
 
