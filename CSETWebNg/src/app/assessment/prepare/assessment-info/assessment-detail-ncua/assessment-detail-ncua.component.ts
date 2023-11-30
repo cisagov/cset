@@ -139,7 +139,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
     });
-    
+
+    this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
+      this.ncuaSvc.iseHasBeenSubmitted = result;
+    });    
   }
 
   /**
