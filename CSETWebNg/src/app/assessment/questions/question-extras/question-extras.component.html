@@ -346,7 +346,8 @@
                         <td>Section</td>
                     </tr>
                     <tr *ngFor="let reference of tab?.sourceDocumentsList">
-                        <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
+                        <!-- <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0"> -->
+                        <td class="align-top">
                             <a href="{{documentUrl(reference, reference.section_Ref)}}" rel="noopener noreferrer"
                                 target="_blank">{{reference.title}}</a>
                         </td>

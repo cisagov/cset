@@ -131,7 +131,7 @@
 
         <div class="form-group">
             <label class="mb-1" for="creditUnion">Credit Union Name</label>
-            <span *ngIf="ncuaSvc.creditUnionName === '' || ncuaSvc.creditUnionName === null" style="color:red; font-size: 12px"> (Required)</span>
+            <span *ngIf="(this.assessment.creditUnion === '' || this.assessment.creditUnion === null)" style="color:red; font-size: 12px"> (Required)</span>
             <input type="text" (focus)="$event.target.select()" maxlength="100" class="form-control"
                 id="creditUnion" name="creditUnion" [(ngModel)]="assessment.creditUnion"
                 [formControl]="assessmentControl" [matAutocomplete]="auto" (blur)="update($event)" tabindex="0">
@@ -168,7 +168,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <span class="mb-1" for="assets">Assets </span>
-                <span *ngIf="ncuaSvc.assetsAsNumber == 0" style="color:red; font-size: 12px;">(Required)</span>
+                <span *ngIf="ncuaSvc.assetsAsNumber == 0 || assessment.assets == null" style="color:red; font-size: 12px;">(Required)</span>
                 <input type="text" maxlength="21" class="form-control" id="assets" name="assets" tabindex="0"
                 [(ngModel)]="assessment.assets" (blur)="updateAssets()" currencyMask [options]="{ align: 'left', allowNegative: false, precision: 0 }" >
             </div>
