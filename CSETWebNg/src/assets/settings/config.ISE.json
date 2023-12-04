@@ -9,7 +9,7 @@
         "showAggregation": true,
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
-        "showMenuLanguagePicker": true,
+        "showMenuLanguagePicker": false,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splashACET.html",
         "showFacilityName": false,
@@ -25,7 +25,6 @@
         "independentSuppGuidance": true
     },
     "languageOptions": [
-        { "value": "en", "name": "English" },
-        { "value": "es", "name": "Español" }
+        { "value": "en", "name": "English" }
     ]
 }
