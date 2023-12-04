@@ -36,6 +36,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         private CSETContext _context;
         private ITokenManager _token;
         private IAssessmentUtil _assessmentUtil;
+        private IUtilities _utilities;
 
         private AssessmentBusiness _assessmentBiz;
         private MaturityBusiness _mb;
@@ -47,7 +48,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// </summary>
         public Importer(UploadAssessmentModel model,
             int? currentUserId, string primaryEmail, string accessKey,
-            CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil)
+            CSETContext context, ITokenManager token, IAssessmentUtil assessmentUtil,
+            IUtilities utilities)
         {
             _model = model;
             _currentUserId = currentUserId;
@@ -56,10 +58,11 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             _context = context;
             _token = token;
             _assessmentUtil = assessmentUtil;
+            _utilities = utilities;
 
             _mb = new Maturity.MaturityBusiness(_context, null, null);
             _cb = new Contact.ContactBusiness(_context, _assessmentUtil, _token, null, null, null);
-            _assessmentBiz = new AssessmentBusiness(null, _token, null, _cb, null, _mb, _assessmentUtil, null, null, _context);
+            _assessmentBiz = new AssessmentBusiness(null, _token, _utilities, _cb, null, _mb, _assessmentUtil, null, null, _context);
 
 
             //ignore the emass document we are not using it anyway.
@@ -93,25 +96,27 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <summary>
         /// Populates a few principal assessment tables.
         /// </summary>
-        /// <param name="model"></param>
-        /// <param name="currentUserId"></param>
-        /// <param name="primaryEmail"></param>
-        /// <param name="context"></param>
         /// <returns></returns>
-        public int RunImportManualPortion()
+        public int RunImportManualPortion(bool overwriteAssessment)
         {
             //create the new assessment
             //copy each of the items to the table 
             //as the copy occurs change to the current assessment_id
             //update the answer id's             
 
+            Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
+            AssessmentDetail detail;
 
-           
+            if (overwriteAssessment)
+            {
+                detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
+            }
+            else 
+            { 
+                detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
+            }
 
-
-            Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();            
-            AssessmentDetail detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
-            int _assessmentId = detail.Id;
+            int assessmentId = detail.Id;
 
             Dictionary<int, int> oldAnswerId = new Dictionary<int, int>();
             Dictionary<int, ANSWER> oldIdNewAnswer = new Dictionary<int, ANSWER>();
@@ -120,7 +125,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             foreach(var a in _model.jASSESSMENTS)
             {
-                var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (item != null)
                 {
                     item.Diagram_Markup = a.Diagram_Markup;
@@ -139,7 +144,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             foreach (var a in _model.jINFORMATION)
             {
-                var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
+                var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (item != null)
                 {
                     item.Assessment_Date = a.Assessment_Date;
@@ -156,13 +161,13 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 // Don't create another primary contact, but map its ID
                 if (a.PrimaryEmail == _primaryEmail)
                 {
-                    var newPrimaryContact = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == _primaryEmail && x.Assessment_Id == _assessmentId).FirstOrDefault();
+                    var newPrimaryContact = _context.ASSESSMENT_CONTACTS.Where(x => x.PrimaryEmail == _primaryEmail && x.Assessment_Id == assessmentId).FirstOrDefault();
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
                 
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
-                item.Assessment_Id = _assessmentId;
+                item.Assessment_Id = assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
                
                 if (a?.PrimaryEmail != null 
@@ -215,7 +220,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
             }
 
-            return _assessmentId;
+            return assessmentId;
         }
 
 

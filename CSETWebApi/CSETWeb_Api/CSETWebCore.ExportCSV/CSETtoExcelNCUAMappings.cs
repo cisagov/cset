@@ -38,9 +38,9 @@ namespace CSETWebCore.ExportCSV
         }
 
 
-        public void ProcessAssessment(int assessmentID, MemoryStream stream)
+        public void ProcessAssessment(int assessmentID, MemoryStream stream, string type)
         {
-            DataTable dt = BuildAssessment(assessmentID);
+            DataTable dt = BuildAssessment(assessmentID, type);
 
             // Create an Excel document from the data that has been gathered
             var doc = new CSETtoExcelDocument();
@@ -217,7 +217,7 @@ namespace CSETWebCore.ExportCSV
                 { 5, "5 - Most" }
             };
 
-            // Currently the ISE irp's start at ID 46, so this is a hard coded check
+            // Currently the ISE irp's start at ID 46 and there's 9 of them, so this is a hard coded check
             // there's probably a better way to do this. Maybe add a specfic field to the db?
             var irpAnswers = db.ASSESSMENT_IRP
                 .Include(x => x.IRP)
@@ -225,10 +225,23 @@ namespace CSETWebCore.ExportCSV
                 .OrderBy(i => i.IRP.Item_Number)
                 .ToList();
 
-            foreach (var irpAnswer in irpAnswers)
+            // If the user never opens the Exam Profile page
+            if (irpAnswers.Count == 0)
             {
-                export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                for (int i = 1; i < 10; i++)
+                {
+                    export.d["IRP" + i] = "0";
+                }
             }
+            else
+            {
+                foreach (var irpAnswer in irpAnswers)
+                {
+                    export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                }
+            }
+
+            
         }
 
 

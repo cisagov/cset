@@ -4,7 +4,7 @@ delete from [DOCUMENT_FILE]
 delete from [ACCESS_KEY_ASSESSMENT]
 delete from [ACCESS_KEY]
 delete from [ASSESSMENTS]
-
+delete from FINANCIAL_DOMAIN_FILTERS_V2
 DBCC CHECKIDENT ('[ASSESSMENTS]', RESEED, 0);
 GO
 
@@ -24,4 +24,6 @@ delete from [INSTALLATION]
 delete from [DIAGRAM_CONTAINER]
 
 delete from [NIST_SAL_INFO_TYPES]
+
+delete from [Nlogs]
 GO

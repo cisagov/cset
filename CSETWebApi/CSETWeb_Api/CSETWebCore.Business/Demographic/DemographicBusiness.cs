@@ -205,6 +205,7 @@ namespace CSETWebCore.Business.Demographic
             var demogBiz = new DemographicBusiness(_context, _assessmentUtil);
             demo.Hb7055 = demogBiz.GetDD(assessmentId, "HB-7055");
             demo.Hb7055Party = demogBiz.GetDD(assessmentId, "HB-7055-PARTY");
+            demo.Hb7055Grant = demogBiz.GetDD(assessmentId, "HB-7055-GRANT");
             demo.InfrastructureItOt = demogBiz.GetDD(assessmentId, "INFRA-IT-OT");
 
             return demo;
@@ -248,6 +249,7 @@ namespace CSETWebCore.Business.Demographic
             SaveDD(demographics.AssessmentId, "HB-7055", demographics.Hb7055, null);
             SaveDD(demographics.AssessmentId, "HB-7055-PARTY", demographics.Hb7055Party, null);
             SaveDD(demographics.AssessmentId, "INFRA-IT-OT", demographics.InfrastructureItOt, null);
+            SaveDD(demographics.AssessmentId, "HB-7055-GRANT", demographics.Hb7055Grant, null);
 
 
             _assessmentUtil.TouchAssessment(dbDemog.Assessment_Id);

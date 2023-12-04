@@ -40,6 +40,8 @@ import { ComponentOverrideComponent } from '../../../dialogs/component-override/
 import { MaturityService } from '../../../services/maturity.service';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { title } from 'process';
+
 
 
 @Component({
@@ -354,20 +356,47 @@ export class QuestionExtrasComponent implements OnInit {
       data: find,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-    })
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
+    }
+
+    )
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
+            for (let i of response){
+              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)){
+                this.deleteEmptyObservation(i)
+              }
+            }
             this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
-      });
+
+        });
+
   }
+
+  /**
+   * Deletes an empty discovery.
+   * @param findingToDelete
+   */
+  deleteEmptyObservation(findingToDelete) {
+        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+        let deleteIndex = null;
+
+        for (let i = 0; i < this.extras.findings.length; i++) {
+          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+            deleteIndex = i;
+          }
+        }
+        this.extras.findings.splice(deleteIndex, 1);
+        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+    };
+
 
   /**
    * Deletes a discovery.
@@ -722,14 +751,20 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: CustomDocument) {
-    var link = '';
+  documentUrl(document: CustomDocument, bookmark: string) {
     if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
+      return this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + bookmark;
     }
-    return link;
+
+    if (this.configSvc.isDocUrl) {
+      return this.configSvc.docUrl + document.file_Name + '#' + bookmark;
+    }
+
+    if (this.configSvc.isOnlineUrlLive) {
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + document.file_Name + '#' + bookmark;
+    }
+
+    return "";
   }
 
   /**
@@ -739,6 +774,16 @@ export class QuestionExtrasComponent implements OnInit {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
       && (!this.tab?.sourceDocumentsList || this.tab.sourceDocumentsList.length === 0)
       && (!this.tab?.additionalDocumentsList || this.tab.additionalDocumentsList.length === 0)
+  }
+
+  /**
+   * Returns if Supplemental Guidance should be
+   * independent from Examination Approach or not
+   * @returns
+   */
+  seperateGuidanceFromApproach() {
+    const behavior = this.configSvc.config.moduleBehaviors.find(m => m.moduleName == this.assessSvc.assessment.maturityModel?.modelName);
+    return behavior?.independentSuppGuidance;
   }
 
 }

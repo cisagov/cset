@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -23,6 +24,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -58,7 +60,7 @@ namespace CSETWebCore.Business.Assessment
 
         public AssessmentDetail CreateNewAssessment(int? currentUserId, string workflow, GalleryConfig config)
         {
-            DateTime nowUTC = _utilities.UtcToLocal(DateTime.UtcNow);
+            DateTime nowUTC = DateTime.UtcNow;
 
             string defaultExecSumm = "Cyber terrorism is a real and growing threat. Standards and guides have been developed, vetted, and widely accepted" +
                                      " to assist with protection from cyber attacks. The Cyber Security Evaluation Tool (CSET) includes a selectable array of these standards for" +
@@ -77,6 +79,7 @@ namespace CSETWebCore.Business.Assessment
                 ExecutiveSummary = defaultExecSumm,
                 GalleryItemGuid = config.GalleryGuid,
                 ISE_StateLed = false,
+                IseSubmitted = false,
             };
 
 
@@ -171,8 +174,8 @@ namespace CSETWebCore.Business.Assessment
             list.ForEach(x =>
             {
                 x.LastModifiedDate = _utilities.UtcToLocal(x.LastModifiedDate ?? DateTime.UtcNow);
-                x.AssessmentCreatedDate = _utilities.UtcToLocal(x.AssessmentCreatedDate);
-                x.AssessmentDate = _utilities.UtcToLocal(x.AssessmentDate);
+                x.AssessmentCreatedDate = x.AssessmentCreatedDate;
+                x.AssessmentDate = x.AssessmentDate;
 
                 var query = from u in _context.USERS
                             where u.UserId == x.UserId
@@ -309,9 +312,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment = new AnalyticsAssessment()
                 {
                     Alias = result.Alias,
-                    AssessmentCreatedDate = _utilities.UtcToLocal(result.AssessmentCreatedDate),
+                    AssessmentCreatedDate = result.AssessmentCreatedDate,
                     AssessmentCreatorId = tmpGuid.ToString(),
-                    Assessment_Date = _utilities.UtcToLocal(result.Assessment_Date),
+                    Assessment_Date = result.Assessment_Date,
                     Assessment_GUID = result.Assessment_GUID.ToString(),
                     LastModifiedDate = _utilities.UtcToLocal((DateTime)result.LastModifiedDate),
                     Mode = modeResult?.Application_Mode
@@ -320,6 +323,17 @@ namespace CSETWebCore.Business.Assessment
 
             return assessment;
 
+        }
+
+        /// <summary>
+        /// Returns the details for the specified Assessments given a GUID.
+        /// </summary>
+        /// <param name="assessmentGuid"></param>
+        /// <returns></returns>
+        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid) 
+        { 
+            int assessmentId = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid).Assessment_Id;
+            return GetAssessmentDetail(assessmentId);
         }
 
         /// <summary>
@@ -345,7 +359,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.Id = result.aa.Assessment_Id;
                 assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
-                assessment.AssessmentDate = _utilities.UtcToLocal(result.aa.Assessment_Date);
+                assessment.AssessmentDate = result.aa.Assessment_Date;
                 assessment.FacilityName = result.ii.Facility_Name;
                 assessment.CityOrSiteName = result.ii.City_Or_Site_Name;
                 assessment.StateProvRegion = result.ii.State_Province_Or_Region;
@@ -354,13 +368,16 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
-                assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
+                assessment.CreatedDate = result.aa.AssessmentCreatedDate;
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
-                assessment.AssessmentEffectiveDate = _utilities.UtcToLocal(result.aa.AssessmentEffectiveDate ?? DateTime.UtcNow);
+                assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate ?? DateTime.UtcNow;
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
                 assessment.ISE_StateLed = result.aa.ISE_StateLed;
                 assessment.RegionCode = result.ii.Region_Code;
+                assessment.is_PCII = result.aa.Is_PCII;
+                assessment.PciiNumber = result.aa.PCII_Number;
+                assessment.IseSubmitted = result.ii.Ise_Submitted;
 
                 assessment.CreatorName = new User.UserBusiness(_context, null)
                     .GetUserDetail((int)assessment.CreatorId)?.FullName;
@@ -415,10 +432,17 @@ namespace CSETWebCore.Business.Assessment
 
 
                 var ss = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
-                if (ss != null && ss.Hidden_Screens != null)
+                if (ss != null)
                 {
-                    assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                    if (ss.Hidden_Screens != null)
+                    {
+                        assessment.HiddenScreens.AddRange(ss.Hidden_Screens.ToLower().Split(","));
+                    }
+
+                    assessment.ApplicationMode = ss.Application_Mode.Substring(0, 1).ToUpper();
                 }
+
+
 
                 bool defaultAcet = (app_code == "ACET");
                 assessment.IsAcetOnly = result.ii.IsAcetOnly != null ? result.ii.IsAcetOnly : defaultAcet;
@@ -587,13 +611,14 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
             dbAssessment.AnalyzeDiagram = false;
+            dbAssessment.PCII_Number = assessment.PciiNumber;
+            dbAssessment.Is_PCII = assessment.is_PCII;
 
             _context.ASSESSMENTS.Update(dbAssessment);
             _context.SaveChanges();
 
 
             var user = _context.USERS.FirstOrDefault(x => x.UserId == dbAssessment.AssessmentCreatorId);
-
 
             var dbInformation = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
             if (dbInformation == null)
@@ -620,6 +645,7 @@ namespace CSETWebCore.Business.Assessment
             dbInformation.Workflow = assessment.Workflow;
             dbInformation.Origin = assessment.Origin;
             dbInformation.Region_Code = assessment.RegionCode;
+            dbInformation.Ise_Submitted = assessment.IseSubmitted;
 
             _context.INFORMATION.Update(dbInformation);
             _context.SaveChanges();
@@ -635,6 +661,11 @@ namespace CSETWebCore.Business.Assessment
                 _maturityBusiness.ClearMaturityModel(assessmentId);
             }
 
+            // No user is null here if accesskey login is used
+            if (user != null) 
+            { 
+                AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
+            }
             _assessmentUtil.TouchAssessment(assessmentId);
 
             return assessmentId;
@@ -831,6 +862,16 @@ namespace CSETWebCore.Business.Assessment
 
             dd.StringValue = remark;
             _context.SaveChanges();
+        }
+
+        public void clearFirstTime(int userid, int assessment_id)
+        {
+            var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
+            if(us != null)
+            {
+                us.IsFirstLogin = false;
+                _context.SaveChanges();
+            }
         }
     }
 }

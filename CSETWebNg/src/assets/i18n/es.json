@@ -35,9 +35,12 @@
     "sal intro 1": "[ES]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "[ES]For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
     "sal intro 3": "[ES]The SAL applies to Standard and Diagram Component question sets.",
+    "to start an assessment": "Para iniciar una nueva evaluación, haz clic en una tarjeta. Para ver detalles adicionales, haz clic en el icono",
+    "icon": ".",
 
     "contact": {
         "contacts": "Contactos",
+        "contact": "Contacto",
         "add contact": "Agregar Contacto",
         "email contacts": "Mandar E-mail a los Contactos",
 
@@ -62,6 +65,7 @@
         "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo."
     },
     "acet": {
+        "empty my assessments page footer text": "La Caja de herramientas de evaluación de ciberseguridad automatizada (ACET®) es un producto de la Administración Nacional de Cooperativas de Crédito (NCUA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de la Administración Nacional de Cooperativas de Crédito por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",
         "credit union": "Unión de crédito",
         "credit union name": "Nombre de la cooperativa de crédito",
         "charter": "Carta",
@@ -74,13 +78,15 @@
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
         "components": "Componentes",
-        "statements": "Declaración"
+        "statements": "Declaración",
+        "submitted": "Enviado"
     },
     "cyberFlorida": {
-        "convert message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
-        "convert confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
-        "convert confirm 2": "La evaluación se ha convertido.",
-        "title convert complete": "Conversión completa"
+        "upgrade message": "Esta evaluación utiliza un subconjunto de los requisitos del Cybersecurity Framework v1.1 y un subconjunto de la Evaluación de preparación para ransomware. Para convertir esta evaluación para incluir todas las preguntas, haga clic en el botón a continuación.",
+        "upgrade confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
+        "upgrade confirm 2": "La evaluación se ha convertido.",
+        "title upgrade complete": "Conversión completa",
+        "upgradeButton":"Convertir a evaluación completa"
     },
     "titles": {
         "prepare": "Preparar",
@@ -93,6 +99,7 @@
         "critical service information": "Información del servicio crítico",
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
         "standard questions": "Preguntas del estándar",
+        "standard requirements": "Requisitos del estándar",
         "maturity questions": "Preguntas de madurez",
         "statements": "Declaraciones",
         "inherent risk profiles": "Perfil de riesgo inherente",
@@ -100,6 +107,7 @@
         "security practices": "Prácticas de seguridad",
         "questions": "Preguntas",
         "practices": "Prácticas",
+        "requirements": "Requisitos",
         "acet maturity results": "Resultados de madurez de ACET",
         "other remarks": "Otras notas",
         "imr tutorial": "Tutorial de IMR",
@@ -236,7 +244,12 @@
         "validation approach": "Enfoque de validación",
         "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
         "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
-        "export to excel": "Exportar todas las evaluaciones a Excel"
+        "export to excel": "Exportar todas las evaluaciones a Excel",
+        "remove assessment": "Eliminar permanentemente esta evaluación.",
+        "export assessment": "Exportar una copia de esta evaluación a otra ubicación",
+        "analytics": "Ver los análisis de esta evaluación.",
+        "merged checked exams": "Fusiona los exámenes marcados",
+        "export all": "Exporta una copia de todas las evaluaciones a otra ubicación."
     },
     "level": {
         "low": "Pequeño",
@@ -259,7 +272,12 @@
         "mil-2": "MIL-2",
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
-        "mil-5": "MIL-5"
+        "mil-5": "MIL-5",
+        "level 1": "Nivel 1",
+        "level 2": "Nivel 2",
+        "level 3": "Nivel 3",
+        "level 4": "Nivel 4",
+        "level 5": "Nivel 5"
     },
     "irp": {
         "Inherent Risk": "Riesgo inherente",
@@ -309,7 +327,10 @@
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
     "dialogs" : {
-        "please confirm": "Por favor, confirme"
+        "please confirm": "Confirme, por favor",
+        "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
+        "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
+        "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
     },
     "reports": {
         "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
@@ -333,31 +354,32 @@
             "disclaimer section 4": "[ES] The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the CSET Program Office."
         },
         "advisory": {
-            "advisory": "[ES] Advisory",
-            "advisory section 1": "[ES] CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization’s security posture.",
-            "advisory section 2": "[ES] The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET® is not intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
-            "advisory section 3": "[ES] CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
-            "advisory section 4": "[ES] Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity."
+            "advisory": "El asesoramiento",
+            "advisory section 1": "CSET® es solo un componente del panorama general de ciberseguridad y debe complementarse con un programa sólido de ciberseguridad dentro de la organización. Una autoevaluación con CSET® no puede revelar todos los tipos de debilidades de seguridad y no debe ser el único medio para determinar la postura de seguridad de una organización.",
+            "advisory section 2": "La herramienta no proporcionará un análisis arquitectónico detallado de la red ni una revisión detallada de la configuración de hardware/software de la red. No es una herramienta de análisis de riesgos, por lo que no generará una evaluación de riesgos compleja. CSET® no pretende ser un sustituto del análisis en profundidad de las vulnerabilidades del sistema de control realizado por profesionales capacitados. Aún se deben realizar revisiones e inspecciones periódicas en el lugar utilizando un enfoque holístico que incluya recorridos por las instalaciones, entrevistas y observación y examen de las prácticas de la instalación. También se debe considerar la realización de pasos adicionales, como escaneos, pruebas de penetración y ejercicios en sistemas sustitutos, de entrenamiento o no productivos, o en sistemas donde las fallas, las fallas inesperadas u otros resultados inesperados no comprometerán la producción o la seguridad.",
+            "advisory section 3": "Las evaluaciones de CSET® no pueden ser completadas de manera efectiva por un solo individuo. Es esencial contar con un equipo interfuncional compuesto por representantes de áreas operativas, de mantenimiento, tecnología de la información, negocios y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la responsabilidad o el conocimiento suficiente para responder de manera efectiva todas las preguntas.",
+            "advisory section 4": "Los datos e informes generados por la herramienta deben ser gestionados de manera segura y marcados, almacenados y distribuidos de acuerdo a su nivel de sensibilidad."
         },
         "observations tear-out sheets": {
-            "observations tear-out sheets": "Observaciones Hojas",
+            "tab title": "Observaciones hojas - {{defaultTitle}}",
+            "observations tear-out sheets": "Observaciones hojas",
             "observation title 1": "OBSERVACIONES",
             "observation title 2": "HOJAS",
             "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
             "question identifier": "Identificador de pregunta",
-            "question text": "Texto de la pregunta",
-            "marked for review": "Marked for Review"
+            "question text": "Texto de la pregunta"
         },
         "acet": {
             "acet reports": "Los informes de ACET",
             "executive summary": {
                 "executive summary": "Resumen ejecutivo de ACET",
-                "page tab title": "Executive Summary - ACET",
+                "tab title": "Resumen ejecutivo - ACET",
                 "executive summary title 1": "RESUMEN",
                 "executive summary title 2": "EJECUTIVO",
                 "site information": "Información del Sitio"
             },
             "gap report": {
+                "tab title": "Informe de brechas - ACET",
                 "gap report": "Informe de brechas de ACET",
                 "gap report title 1": "INFORME",
                 "gap report title 2": "DE BRECHAS",
@@ -365,23 +387,26 @@
                 "gap disclaimer 2": "A menudo se le conoce como el Informe de Brechas. Este informe tiene la intención de listar las brechas, ayudar a los usuarios del informe a identificar las brechas, priorizar el trabajo y comenzar a elaborar un plan para abordar las brechas mediante la implementación de los controles necesarios para cumplir con la declaración asociada.",
                 "gap disclaimer 3": "El porcentaje de brecha en cada dominio también se muestra y ayudará a determinar la prioridad. ACET es un modelo de madurez acumulativa, lo que significa que los niveles inferiores deben completarse antes de pasar a los niveles superiores. Idealmente, se debe completar la línea base antes de enfocar los esfuerzos en los controles en evolución y así sucesivamente, siguiendo la línea de niveles de madurez.",
                 "gaps": "Brechas",
-                "marked for review": "Marcado para revisión"
+                "marked for review": "Marcado para revisión",
+                "no deficiencies": "No hay deficiencias que mostrar"
             },
             "comments and mfr": {
-                "comments report": "Comentarios y Marcado para Revisión ACET",
-                "comments report title 1": "REVISIÓN DE",
-                "comments report title 2": "COMENTARIOS INFORME",
-                "statements mfr": "Declaraciones Marcadas para Revisión",
+                "tab title": "Informe de comentarios - ACET",
+                "comments report": "Comentarios y marcado para revisión ACET",
+                "comments report title 1": "INFORME DE REVISIÓN",
+                "comments report title 2": "DE COMENTARIOS",
+                "statements mfr": "Declaraciones marcadas para revisión",
                 "statement": "Declaración",
                 "no statements marked": "No hay declaraciones marcadas para revisión",
                 "statement comments": "Comentarios de Declaraciones",
                 "no statements with comments": "No hay declaraciones con comentarios"
             },
             "answered statements": {
+                "tab title": "Informe de declaraciones respondidas - ACET",
                 "answered statements report": "Declaraciones respondidas ACET",
-                "answered statements report title 1": "DECLARACIONES RESPONDIDAS",
-                "answered statements report title 2": "INFORME",
-                "answered statements": "Declaraciones Respondidas",
+                "answered statements report title 1": "INFORME DE",
+                "answered statements report title 2": "DECLARACIONES RESPONDIDAS",
+                "answered statements": "Declaraciones respondidas",
                 "report desc 1": "Este informe incluye todas las declaraciones dentro de su nivel de madurez, sus respuestas y si hay un comentario adjunto a la declaración.",
                 "report desc 2": "El conjunto de declaraciones se determina según su nivel de madurez.",
                 "maturity level key": "Clave de Nivel de Madurez",
@@ -389,10 +414,11 @@
                 "comments": "Comentarios"
             },
             "compensating controls": {
+                "tab title": "Informe de controles compensatorios - ACET",
                 "compensating controls report": "Controles compensatorios ACET",
                 "compensating controls report title 1": "INFORME DE",
                 "compensating controls report title 2": "CONTROLES COMPENSATORIOS",
-                "compensating controls": "Controles Compensatorios",
+                "compensating controls": "Controles compensatorios",
                 "report desc": "Este informe contiene todas las declaraciones que tienen un control compensatorio asociado y el comentario proporcionado.",
                 "compensating comment": "Comentario Compensatorio",
                 "no compensating comment": "No se proporcionó ningún comentario o explicación compensatoria.",
@@ -450,7 +476,7 @@
     },
     "merge examinations": {
         "merge examinations": "Fusionar Exámenes",
-        "assessments processed": "[ES] Assessments Processed",
+        "assessments processed": "Evaluaciones procesadas",
         "cancel merge": "Cancelar Fusión",
         "lead exam": "Liderar Examen",
         "exam": "Examen",
@@ -459,7 +485,32 @@
         "assessment list": "Lista de Evaluaciones",
         "no conflicts 2": "para seleccionar exámenes diferentes, o",
         "click here": "haga clic aquí",
-        "no conflicts 3": "para proceder con la fusión."
-
+        "no conflicts 3": "para proceder con la fusión.",
+        "merge": "Fusión",
+        "start merge": "Comenzar a Fusionar"
+    },
+    "about": {
+        "about": "Sobre",
+        "version": "Versión",
+        "acet": {
+            "we ensure financial stability": "Garantizamos la estabilidad financiera",
+            "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
+        }
+    },
+    "errors": {
+        "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",
+        "import unsuported file 2": "Para obtener más información, consulte la sección de importación de la guía del usuario"
+    },
+    "welcome page": {
+        "internet explorer": "Se ha detectado Internet Explorer como su navegador actual. \nAlgunas funciones de CSET no son totalmente compatibles con Internet Explorer. \nSe recomienda encarecidamente utilizar otro navegador como Chrome, Firefox o Edge para mejorar su experiencia.",
+        "welcome to acet": "Bienvenido a La Caja de Herramientas",
+        "welcome to": "Bienvenido a {{appTitle}}",
+        "to get started": "Para comenzar, seleccione una de las siguientes opciones:",
+        "new assessment": "Iniciar una nueva evaluación",
+        "new assessment tooltip": "Selecciona un tipo de evaluación y comienza una nueva evaluación.",
+        "import assessment": "Importar una evaluación existente",
+        "blank assessment": "Evaluación en blanco",
+        "needs review": "Revisión de necesidades",
+        "statements completed": "{{complete}}/{{total}} declaraciones completadas"
     }
 }

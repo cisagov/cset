@@ -54,6 +54,7 @@ export class EnableProtectedComponent implements OnInit {
     });
 
     this.configSvc.getCisaAssessorWorkflow().subscribe((cisaWorkflowEnabled: boolean) => {
+      this.configSvc.cisaAssessorWorkflow = cisaWorkflowEnabled;
       this.cisaWorkflowEnabled = cisaWorkflowEnabled;
       this.cisaWorkflowStatusLoaded = true;
     });

@@ -8,10 +8,8 @@ namespace CSETWebCore.DataLayer.Model;
 
 public partial class CsetwebContext : DbContext
 {
-    
     public CsetwebContext()
     {
-
     }
 
     public CsetwebContext(DbContextOptions<CsetwebContext> options)
@@ -509,6 +507,7 @@ public partial class CsetwebContext : DbContext
     {
         modelBuilder.Entity<ACCESS_KEY>(entity =>
         {
+            entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
             entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
         });
 
@@ -2723,6 +2722,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
 
             entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsFirstLogin).HasDefaultValueSql("((1))");
             entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
             entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
             entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");

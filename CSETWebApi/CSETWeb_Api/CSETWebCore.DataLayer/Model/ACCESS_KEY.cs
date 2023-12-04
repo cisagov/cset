@@ -21,6 +21,10 @@ public partial class ACCESS_KEY
 
     public bool CisaAssessorWorkflow { get; set; }
 
+    [Required]
+    [StringLength(10)]
+    public string Lang { get; set; }
+
     [InverseProperty("AccessKeyNavigation")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 }

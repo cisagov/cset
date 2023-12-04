@@ -9,7 +9,7 @@
     "completion-statements": "{{complete}}/{{total}} {{qAlias}} statements answered",
     "last modified": "Last Modified",
     "primary assessor": "Primary Assessor",
-    "prevent encryption": "Prevent Encryption",
+    "prevent encryption": "Turn Off Export Encryption",
     "user language": "User Language",
     "note language change": "Select the desired language",
     "prepare": "Prepare",
@@ -26,6 +26,7 @@
     "assessment type": "Assessment Type",
     "demographics": "Demographics",
     "critical service name": "Critical Service Name",
+    "PCII Number": "PCII Number",
     "critical service description": "Critical Service Description",
     "practices": "Practices",
     "requires review": "Requires Review",
@@ -38,7 +39,8 @@
     "sal intro 1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
     "sal intro 3": "The SAL applies to Standard and Diagram Component question sets.",
-    
+    "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the",
+    "icon": "icon.",
     "buttons": {
         "ok": "OK",
         "save": "Save",
@@ -78,13 +80,15 @@
         "critical service information": "Critical Service Information",
         "security assurance level (sal)": "Security Assurance Level (SAL)",
         "standard questions": "Standard Questions",
+        "standard requirements": "Standard Requirements",
         "maturity questions": "Maturity Questions",
-        "security practices": "Security Practices",        
+        "security practices": "Security Practices",
         "questions": "Questions",
         "practices": "Practices",
+        "requirements": "Requirements",
         "statements": "Statements",
         "inherent risk profiles": "Inherent Risk Profiles",
-        "inherent risk profile summary": "Inherent Risk Profile Summary",        
+        "inherent risk profile summary": "Inherent Risk Profile Summary",
         "acet maturity results": "ACET Maturity Results",
         "other remarks": "Other Remarks",
         "imr tutorial": "IMR Tutorial",
@@ -98,6 +102,7 @@
     },
     "contact": {
         "contacts": "Contacts",
+        "contact": "Contact",
         "add contact": "Add Contacts",
         "email contacts": "Email Contacts",
         "assessment owner": "Assessment Owner",
@@ -125,6 +130,7 @@
         "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access."
     },
     "acet": {
+        "empty my assessments page footer text": "The Automated Cybersecurity Evaluation Toolbox (ACET®) is a National Credit Union Administration (NCUA) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of the National Credit Union Administration by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.",
         "credit union": "Credit Union",
         "credit union name": "Credit Union Name",
         "charter": "Charter",
@@ -137,13 +143,15 @@
         "assessment factor": "Assessment Factor",
         "component": "Component",
         "components": "Components",
-        "statements": "Statements"
+        "statements": "Statements",
+        "submitted": "Submitted"
     },
     "cyberFlorida": {
-        "convert message": "This assessment is using a subset of the Cybersecurity Framework v1.1 requirements and a subset of the Ransomware Readiness Assessment. To convert this assessment to include all questions, click the button below.",
-        "convert confirm 1": "Are you sure you want to convert this assessment?  This is a one-way conversion; it cannot be undone.",
-        "convert confirm 2": "The assessment has been converted.",
-        "title convert complete": "Conversion Complete"
+        "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
+        "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
+        "upgrade confirm 2": "The assessment has been converted.",
+        "title upgrade complete":"Conversion Complete",
+        "upgradeButton":"Convert to Full Assessment"
     },
     "answer-options": {
         "button-labels": {
@@ -221,7 +229,6 @@
             "description required": "* Description required"
         }
     },
-    
     "tooltip": {
         "mfr-flag": "This control requires further review",
         "category requires review": "One or more controls in this category requires further review",
@@ -243,7 +250,12 @@
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
         "import": "Import an assessment from an external {{appCode}} file.",
-        "export to excel": "Export all assessments to Excel"
+        "export to excel": "Export all assessments to Excel",
+        "remove assessment": "Permanently remove this assessment.",
+        "export assessment": "Export a copy of this assessment to another location",
+        "analytics": "View the analytics for this assessment.",
+        "merged checked exams": "Merge checked examinations",
+        "export all": "Export a copy of all assessments to another location."
     },
     "level": {
         "low": "Low",
@@ -251,7 +263,7 @@
         "high": "High",
         "basic": "Basic",
         "incomplete": "Incomplete",
-        "ad hoc" : "Ad Hoc",
+        "ad hoc": "Ad Hoc",
         "baseline": "Baseline",
         "evolving": "Evolving",
         "intermediate": "Intermediate",
@@ -266,7 +278,12 @@
         "mil-2": "MIL-2",
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
-        "mil-5": "MIL-5"
+        "mil-5": "MIL-5",
+        "level 1": "Level 1",
+        "level 2": "Level 2",
+        "level 3": "Level 3",
+        "level 4": "Level 4",
+        "level 5": "Level 5"
     },
     "irp": {
         "Inherent Risk": "Inherent Risk",
@@ -314,8 +331,11 @@
         "show statements with observations": "Show statements with observations",
         "show statements with issues": "Show statements with issues"
     },
-    "dialogs" : {
-        "please confirm": "Please Confirm"
+    "dialogs": {
+        "please confirm": "Please Confirm",
+        "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
+        "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+        "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
         "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
@@ -346,6 +366,7 @@
             "advisory section 4": "Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity."
         },
         "observations tear-out sheets": {
+            "tab title": "Observations Tear Out Sheets - {{defaultTitle}}",
             "observations tear-out sheets": "Observations Tear-Out Sheets",
             "observation title 1": "OBSERVATIONS TEAR-",
             "observation title 2": "OUT SHEETS",
@@ -357,12 +378,13 @@
             "acet reports": "ACET Reports",
             "executive summary": {
                 "executive summary": "ACET Executive Summary",
-                "page tab title": "Executive Report - ACET",
+                "tab title": "Executive Report - ACET",
                 "executive summary title 1": "EXECUTIVE",
                 "executive summary title 2": "SUMMARY",
                 "site information": "Site Information"
             },
             "gap report": {
+                "tab title": "Gap Report - ACET",
                 "gap report": "ACET Gap Report",
                 "gap report title 1": "GAP",
                 "gap report title 2": "REPORT",
@@ -370,9 +392,11 @@
                 "gap disclaimer 2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated statement.",
                 "gap disclaimer 3": "The percentage gap in each domain is also listed and will help to determine the priority. ACET is a cumulative maturity model meaning lower levels should be completed before moving to higher levels. Ideally baseline should be completed before focusing efforts on controls in evolving and so forth up the line of maturity levels.",
                 "gaps": "Gaps",
-                "marked for review": "Marked for Review"
+                "marked for review": "Marked for Review",
+                "no deficiencies": "There are no deficiencies to display"
             },
             "comments and mfr": {
+                "tab title": "Comments Report - ACET",
                 "comments report": "ACET Comments and Marked for Review",
                 "comments report title 1": "COMMENTS REVIEW",
                 "comments report title 2": "REPORT",
@@ -383,6 +407,7 @@
                 "no statements with comments": "There are no statements with comments"
             },
             "answered statements": {
+                "tab title": "Answered Statements Report - ACET",
                 "answered statements report": "ACET Answered Statements",
                 "answered statements report title 1": "ANSWERED STATEMENTS",
                 "answered statements report title 2": "REPORT",
@@ -394,6 +419,7 @@
                 "comments": "Comments"
             },
             "compensating controls": {
+                "tab title": "Compensating Controls Report - ACET",
                 "compensating controls report": "ACET Compensating Controls",
                 "compensating controls report title 1": "COMPENSATING CONTROLS",
                 "compensating controls report title 2": "REPORT",
@@ -464,6 +490,32 @@
         "assessment list": "Assessment List",
         "no conflicts 2": "screen to select different examinations, or",
         "click here": "Click Here",
-        "no conflicts 3": "to proceed with the merge."
+        "no conflicts 3": "to proceed with the merge.",
+        "merge": "Merge",
+        "start merge": "Start Merge"
+    },
+    "about": {
+        "about": "About",
+        "version": "Version",
+        "acet": {
+            "we ensure financial stability": "We Ensure Financial Stability",
+            "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
+        }
+    },
+    "errors": {
+        "import unsuported file 1": "Error: Unsupported file. Only CSET Web files can be imported for enterprise installations.",
+        "import unsuported file 2": "For more information, see the import section of the user guide"
+    },
+    "welcome page": {
+        "internet explorer": "Internet Explorer has been detected as your current browser. \nSome functionality of CSET is not fully supported by Internet Explorer. \nUsing another browser such as Chrome, Firefox or Edge is strongly recommended to improve your experience.",
+        "welcome to acet": "Welcome to The Toolbox",
+        "welcome to": "Welcome to {{appTitle}}",
+        "to get started": "To get started, select from one of the options below:",
+        "new assessment": "Start a New Assessment",
+        "new assessment tooltip": "Select an assessment type and begin a new assessment.",
+        "import assessment": "Import an Existing Assessment",
+        "blank assessment": "Blank Assessment",
+        "needs review": "Needs Review",
+        "statements completed": "{{complete}}/{{total}} Statement(s) Completed"
     }
 }

@@ -25,6 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
+import { TranslocoService } from '@ngneat/transloco';
 // import { SecurityPlanResponse } from '../models/requirement-control.model';
 // import { Discovery, Individual } from '../models/discoveries.model';
 
@@ -45,15 +46,15 @@ export class DiscoveryTearoutsComponent implements OnInit {
   public constructor(
     private titleService: Title,
     public reportSvc: ReportService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Observations Tear Out Sheets - " + this.configSvc.behaviors.defaultTitle);
-
     this.reportSvc.getReport('discoveries').subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle }));
       },
       error => console.log('Discoveries Tear Out Sheets report load Error: ' + (<Error>error).message)
     );

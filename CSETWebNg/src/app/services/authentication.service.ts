@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -49,6 +49,7 @@ export interface LoginResponse {
   exportExtension: string;
   importExtensions: string;
   linkerTime: string;
+  isFirstLogin: boolean;
 }
 
 const headers = {
@@ -58,6 +59,7 @@ const headers = {
 
 @Injectable()
 export class AuthenticationService {
+  
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
@@ -115,7 +117,7 @@ export class AuthenticationService {
             this.isLocal = true;
             this.storeUserData(response);
           }
-
+                    
           // if there's a language for the user, set it
           if (!!response?.lang) {
             this.tSvc.setActiveLang(response.lang);
@@ -156,7 +158,7 @@ export class AuthenticationService {
     localStorage.setItem('exportExtension', user.exportExtension);
     localStorage.setItem('importExtensions', user.importExtensions);
     localStorage.setItem('developer', String(false));
-
+    localStorage.setItem('isFirstLogin', String(user.isFirstLogin))
     // schedule the first token refresh event
     this.scheduleTokenRefresh(this.http, user.token);
   }
@@ -211,8 +213,7 @@ export class AuthenticationService {
 
           this.tSvc.setActiveLang(user.lang);
 
-          this.isAuthenticated = true;
-
+          this.isAuthenticated = true;          
           return this.configureCisaAssessorWorkflow(user);
         })
       );
@@ -360,11 +361,22 @@ export class AuthenticationService {
   lastName() {
     return localStorage.getItem('lastName');
   }
+  isFirstLogin():boolean{
+    var tstring = localStorage.getItem('isFirstLogin'); 
+    if(tstring){
+      return Boolean(JSON.parse(tstring));
+    }
+    return false;
+  }
+  setFirstLogin(firstLogin: boolean) {
+    localStorage.setItem('isFirstLogin', String(firstLogin));
+  }
 
   setUserInfo(info: CreateUser) {
     localStorage.setItem('firstName', info.firstName);
     localStorage.setItem('lastName', info.lastName);
     localStorage.setItem('email', info.primaryEmail);
+    localStorage.setItem('isFirstLogin', String(info.isFirstLogin));
   }
 
   /**

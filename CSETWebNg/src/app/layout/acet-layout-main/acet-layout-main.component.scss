@@ -197,14 +197,11 @@ a {
 .checkbox-custom,
 .radio-custom {
   opacity: 0;
-  position: absolute;
+  display: none;
 }
 
-.checkbox-custom,
 .checkbox-custom-label,
-.radio-custom,
 .radio-custom-label {
-  display: inline-block;
   display: flex;
   vertical-align: middle;
   margin: 5px;
@@ -490,6 +487,7 @@ label[required]::after {
 
 .accordion-header {
   padding: 0.2em;
+  background-color: $primary-900;
 }
 
 .footer .bg-primary {

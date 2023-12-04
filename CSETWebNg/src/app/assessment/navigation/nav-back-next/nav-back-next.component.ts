@@ -21,8 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nav-back-next',
@@ -41,9 +42,9 @@ export class NavBackNextComponent implements OnInit {
   }
 
   nextMode = true;
-
+  subscription:Subscription; 
   ngOnInit(): void {
-    this.navSvc.disableNext
+    this.subscription = this.navSvc.disableNext
     .asObservable()
     .subscribe(
       (tgt: boolean) => {
@@ -55,6 +56,10 @@ export class NavBackNextComponent implements OnInit {
     if (isFirstVisible) {
       this.hide = 'back';
     }
+    this.nextMode = this.navSvc.isNextEnabled(this.page);
+    
   }
-
+  ngOnDestroy(): void{
+    this.subscription.unsubscribe();
+  }
 }

@@ -208,16 +208,38 @@ a {
 
 .checkbox-custom,
 .radio-custom {
-  opacity: 0;
-  position: absolute;
+  opacity: 0;    
 }
 
-.checkbox-custom,
+input#cbSelectAll.checkbox-custom{
+  display: none;
+}
+input#cbShowOptionY.checkbox-custom{
+  display: none;
+}
+input#cbShowOptionN.checkbox-custom{
+  display: none;
+}
+input#cbShowU.checkbox-custom{
+  display: none;
+}
+input#cbShowComments.checkbox-custom{
+  display: none;
+}
+input#cbShowFeedback.checkbox-custom{
+  display: none;
+}
+input#cbShowMarked.checkbox-custom{
+  display: none;
+}
+input#cbShowDisc.checkbox-custom{
+  display: none;
+}
+
+
 .checkbox-custom-label,
-.radio-custom,
 .radio-custom-label {
-  display: inline-block;
-  display: flex;
+  display: flex;  
   vertical-align: middle;
   margin: 5px;
   cursor: pointer;
@@ -502,7 +524,8 @@ label[required]::after {
 
 .accordion-header {
   padding-top: 0.2em;
-  margin-bottom:0;
+  margin-bottom: 0;
+  background-color: $primary-color;
 }
 
 .footer .bg-primary {

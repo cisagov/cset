@@ -5,6 +5,7 @@ import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
 import { TranslocoService } from '@ngneat/transloco';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment-convert-cf',
@@ -12,7 +13,6 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class AssessmentConvertCfComponent implements OnInit {
 
-  isCfEntry = false;
   dialogRef: MatDialogRef<OkayComponent>;
 
 
@@ -23,19 +23,14 @@ export class AssessmentConvertCfComponent implements OnInit {
     private assessSvc: AssessmentService,
     public tSvc: TranslocoService,
     private convertSvc: ConversionService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private navSvc: NavigationService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    // determine if this assessment is a Cyber Florida "entry" assessment.
-    if (this.assessSvc.assessment.origin == 'CF') {
-      this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
-        this.isCfEntry = resp;
-      });
-    }
   }
 
   /**
@@ -47,9 +42,9 @@ export class AssessmentConvertCfComponent implements OnInit {
    * Reload the assessment.
    */
   convert() {
-    const msg1 = this.tSvc.translate('cyberFlorida.convert confirm 1');
-    const msg2 = this.tSvc.translate('cyberFlorida.convert confirm 2');
-    const titleComplete = this.tSvc.translate('cyberFlorida.title convert complete');
+    const msg1 = this.tSvc.translate('cyberFlorida.upgrade confirm 1');
+    const msg2 = this.tSvc.translate('cyberFlorida.upgrade confirm 2');
+    const titleComplete = this.tSvc.translate('cyberFlorida.title upgrade complete');
 
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage = msg1;
@@ -58,10 +53,10 @@ export class AssessmentConvertCfComponent implements OnInit {
       if (confirmed) {
         this.convertSvc.convertCfSub().subscribe(resp => {
           this.assessSvc.loadAssessment(this.assessSvc.assessment.id);
-          this.isCfEntry = false;
 
           const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
           dlgOkay.componentInstance.hasHeader = true;
+          this.navSvc.navDirect('standard-questions');
         });
       }
     });

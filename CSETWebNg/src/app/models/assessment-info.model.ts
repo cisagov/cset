@@ -59,8 +59,12 @@ export interface AssessmentDetail {
     // A list of selected standards
     standards?: string[];
 
+    applicationMode?: string;
+
     typeTitle?: string;
     typeDescription?: string;
+    pciiNumber?: string;
+    is_PCII?: boolean;
 }
 
 export interface MaturityModel {

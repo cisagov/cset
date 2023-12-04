@@ -61,6 +61,19 @@
     </Column>
   </Table>
   
+  <Table name="DETAILS_DEMOGRAPHICS" />
+
+  <Table name="CIS_CSI_SERVICE_COMPOSITION"/>
+  
+  <Table name="CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS"/>
+  
+  <Table name="CIS_CSI_ORGANIZATION_DEMOGRAPHICS"/>
+  
+  <Table name="CIS_CSI_SERVICE_DEMOGRAPHICS"/>
+  
+  
+  
+  
   <Table name="DOCUMENT_FILE">
     <Column name="CreatedTimestamp">
       <Rule action="defaultDatetime" />

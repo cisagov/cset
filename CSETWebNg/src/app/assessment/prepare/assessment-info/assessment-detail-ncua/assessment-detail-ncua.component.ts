@@ -35,6 +35,7 @@ import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 import { ACETService } from '../../../../services/acet.service';
 import { AcetDashboard } from '../../../../models/acet-dashboard.model';
+import moment from 'moment';
 
 
 @Component({
@@ -134,12 +135,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       let myArray = data.split(" ");
       this.lastModifiedTimestamp = myArray[1];
-
       // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
     });
-    
+
+    this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
+      this.ncuaSvc.iseHasBeenSubmitted = result;
+    });    
   }
 
   /**
@@ -147,7 +150,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    
+
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       //this.assessSvc.setNcuaDefaults(); <-- legacy from check boxes. Breaks gallery cards.
@@ -156,6 +159,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
+      // moment().utcOffset(300);
+      // let temp = new Date(this.lastModifiedTimestamp);
+      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
@@ -283,7 +289,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   updateAssets() {
-   // this.assessment.assets = e.target.value;
+  if (this.assessment.assets != null) {
     this.ncuaSvc.updateAssetSize(this.assessment.assets);
     this.acetDashboard.assets = this.assessment.assets;
 
@@ -292,6 +298,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     }
 
     this.assessSvc.updateAssessmentDetails(this.assessment);
+    }
   }
 
   /**

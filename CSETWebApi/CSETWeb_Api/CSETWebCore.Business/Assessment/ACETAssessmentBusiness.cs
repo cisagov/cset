@@ -4,8 +4,10 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Contact;
@@ -89,7 +91,7 @@ namespace CSETWebCore.Business.Assessment
         public new AssessmentDetail CreateNewAssessment(int? currentUserId,
             string workflow, GalleryConfig config)
         {
-            var detail =base.CreateNewAssessment(currentUserId, workflow, config);
+            var detail = base.CreateNewAssessment(currentUserId, workflow, config);
             detail.AssessmentName = "ACET 00000 " + DateTime.Now.ToString("MMddyy");
             base.SaveAssessmentDetail(detail.Id, detail);
 
@@ -149,6 +151,34 @@ namespace CSETWebCore.Business.Assessment
                 _context.ASSESSMENT_IRP_HEADER.Add(headerInfo);
             }
 
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Returns the ISE Merit submission status
+        /// </summary>
+        public Boolean? GetIseSubmission(int assessmentId)
+        {
+            var query = from i in _context.INFORMATION
+                        where i.Id == assessmentId
+                        select i.Ise_Submitted;
+
+            var result = query.ToList().FirstOrDefault();
+            return result;
+        }
+
+        /// <summary>
+        /// Updates the INFORMATION table to track ISE Merit Submissions for NCUA
+        /// </summary>
+        public void UpdateIseSubmission(int assessmentId)
+        {
+            INFORMATION information = _context.INFORMATION.FirstOrDefault(a => a.Id == assessmentId);
+            if (information != null)
+            {
+                information.Ise_Submitted = true;
+                information.Submitted_Date = DateTime.Today;
+            }
+            information.Ise_Submitted = true;
             _context.SaveChanges();
         }
 

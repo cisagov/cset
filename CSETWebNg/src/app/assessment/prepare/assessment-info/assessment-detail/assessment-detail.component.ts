@@ -40,7 +40,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 })
 export class AssessmentDetailComponent implements OnInit {
 
-  assessment: AssessmentDetail = {};
+  assessment: AssessmentDetail = {
+    assessmentName:''
+  };
 
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
   isAwwa = false;

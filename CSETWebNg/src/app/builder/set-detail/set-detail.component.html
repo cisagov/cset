@@ -52,7 +52,7 @@
     <form #f="ngForm" name="form">
       <div class="form-group p-0 col-md-12">
         <label required for="fullname">Module Name</label>
-        <input type="text" maxlength="250" class="form-control" id="fullname" name="fullname" required #fullname="ngModel"
+        <input type="text" maxlength="100" class="form-control" id="fullname" name="fullname" required #fullname="ngModel"
           focusOnInit="true" [(ngModel)]="setDetail.fullName" (ngModelChange)="setDetail.fullName"
           (change)="update($event)">
         <div *ngIf="f.submitted && !fullname.valid" class="m-0 mt-2 alert alert-danger">Full Name is required</div>

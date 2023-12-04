@@ -24,6 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'excel-export',
@@ -38,8 +39,10 @@ export class ExcelExportComponent {
   /**
    * Constructor.
    */
-  constructor(private dialog: MatDialogRef<ExcelExportComponent>,
+  constructor(
+    private dialog: MatDialogRef<ExcelExportComponent>,
     public configSvc: ConfigService,
+    public assessSvc: AssessmentService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
         dialog.beforeClosed().subscribe(() => dialog.close());
         var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
@@ -51,8 +54,13 @@ export class ExcelExportComponent {
   }
 
   exportToExcel() {
-    window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-    this.close();
+    if (this.assessSvc.isISE()) {
+      window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
+    } else {
+      window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+    }
+
+    this.dialog.close();
   }
 
   setDoNotShow(){
