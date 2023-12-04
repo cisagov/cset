@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Aggregation;
+using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -192,10 +195,11 @@ namespace CSETWebCore.Business.Demographic
         /// 
         /// </summary>
         /// <param name="demographic"></param>
-        public void SaveDemographics(DemographicExt demographic)
+        public void SaveDemographics(DemographicExt demographic, int userid)
         {
             var info = _context.INFORMATION.Where(x => x.Id == demographic.AssessmentId).FirstOrDefault();
             info.Facility_Name = demographic.OrganizationName;
+            
 
 
             //  Clean out any existing detail records for demographics
@@ -235,10 +239,11 @@ namespace CSETWebCore.Business.Demographic
             SaveDemoRecord(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther);
             SaveDemoRecord(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
             SaveDemoRecord(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
-
             SaveDemoRecord(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
 
+            AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
             _context.SaveChanges();
+            
         }
 
 

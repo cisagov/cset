@@ -1,7 +1,7 @@
 {
     "appCode": "ACET",
     "installationMode": "ACET",
-    "galleryLayout": "NCUA",
+    "galleryLayout": "ACET",
     "behaviors": {
         "defaultTitle":"ACET",
         "showModuleBuilder": true,
@@ -9,6 +9,7 @@
         "showAggregation": true,
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
+        "showMenuLanguagePicker": true,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splashACET.html",
         "showFacilityName": false,
@@ -20,6 +21,11 @@
         "showCriticalService": true,
         "showExportOnReports": false,
         "showFeedback": false,
-        "showDisclaimer": false
-    }
+        "showDisclaimer": false,
+        "independentSuppGuidance": true
+    },
+    "languageOptions": [
+        { "value": "en", "name": "English" },
+        { "value": "es", "name": "Español" }
+    ]
 }

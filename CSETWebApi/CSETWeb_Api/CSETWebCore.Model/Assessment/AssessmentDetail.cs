@@ -13,6 +13,8 @@ namespace CSETWebCore.Model.Assessment
 {
     public class AssessmentDetail
     {
+        public bool is_PCII { get; set; }
+
         public int Id { get; set; }
         public string AssessmentName { get; set; }
         public DateTime CreatedDate { get; set; }
@@ -38,6 +40,7 @@ namespace CSETWebCore.Model.Assessment
         public bool UseDiagram { get; set; }
         public bool UseMaturity { get; set; }
         public bool? IsAcetOnly { get; set; }
+        public bool? IseSubmitted { get; set; }
         public bool? ISE_StateLed { get; set; }
 
         public List<string> HiddenScreens { get; set; } = new List<string>();
@@ -58,6 +61,8 @@ namespace CSETWebCore.Model.Assessment
 
         public List<string> Standards { get; set; }
 
+        public string ApplicationMode { get; set; }
+
         public QuestionRequirementCounts QuestionRequirementCounts { get; set; }
 
 
@@ -71,5 +76,6 @@ namespace CSETWebCore.Model.Assessment
         public string ExecutiveSummary { get; set; }
         public string TypeTitle { get; set; }
         public string TypeDescription { get; set; }
+        public string PciiNumber {  get; set; }
     }
 }

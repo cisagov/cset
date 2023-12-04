@@ -817,10 +817,10 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId)
+        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode)
         {
             var response = new MaturityResponse();
-            return GetMaturityQuestions(assessmentId, userId, installationMode, fill, groupingId, response);
+            return GetMaturityQuestions(assessmentId, userId, accessKey, installationMode, fill, groupingId, response);
         }
 
 
@@ -828,7 +828,7 @@ namespace CSETWebCore.Business.Maturity
         /// Assembles a response consisting of maturity questions for the assessment.
         /// </summary>
         /// <returns></returns>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, int userId, string installationMode, bool fill, int groupingId, MaturityResponse response)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, string installationMode, bool fill, int groupingId, MaturityResponse response)
         {
             if (fill)
             {
@@ -895,7 +895,8 @@ namespace CSETWebCore.Business.Maturity
 
             //
             var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            if (user.Lang == "es")
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+            if (user?.Lang == "es" || ak?.Lang == "es")
             {
                 Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                 questions.ForEach(
@@ -926,7 +927,7 @@ namespace CSETWebCore.Business.Maturity
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             //
-            if (user.Lang == "es")
+            if (user?.Lang == "es" || ak?.Lang == "es")
             {
                 Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
                 allGroupings.ForEach(
@@ -1462,14 +1463,12 @@ namespace CSETWebCore.Business.Maturity
                     if (spanishFlag)
                     {
                         var output = new GroupingSpanishRow();
-                        var temp = new GroupingSpanishRow();
                         if (dictionary.TryGetValue(maturityDomain.DomainName, out output))
                         {
                             maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
                             maturityDomain.Assessments.ForEach(
                                 assessment => {
                                     var output = new GroupingSpanishRow();
-                                    var temp = new GroupingSpanishRow();
                                     // test if not finding a match will safely skip
                                     if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
                                     {
@@ -1478,7 +1477,6 @@ namespace CSETWebCore.Business.Maturity
                                         assessment.Components.ForEach(
                                             component => {
                                                 var output = new GroupingSpanishRow();
-                                                var temp = new GroupingSpanishRow();
                                                 // test if not finding a match will safely skip
                                                 if (dictionary.TryGetValue(component.ComponentName, out output))
                                                 {

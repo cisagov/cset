@@ -35,7 +35,7 @@ namespace CSETWebCore.Helpers
         private CSETContext _context;
 
         public UserAuthentication(IPasswordHash password, IUserBusiness userBusiness,
-            ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity, 
+            ILocalInstallationHelper localInstallationHelper, ITokenManager transactionSecurity,
             INotificationBusiness notificationBusiness, IConfiguration configuration,
             CSETContext context)
         {
@@ -77,12 +77,15 @@ namespace CSETWebCore.Helpers
             bool passwordIsValid = _password.ValidatePassword(login.Password, loginUser.Password, loginUser.Salt);
 
             string tempPasswordUsed = null;
-            // Validate against the user's temp passwords as well in case they forgot password and need to reset it
+
+            // Validate against the user's temp passwords as well in case they forgot password and need to reset it.
             if (!passwordIsValid)
             {
                 foreach (PASSWORD_HISTORY tempPassword in tempPasswords)
                 {
-                    if (_password.ValidatePassword(login.Password, tempPassword.Password, tempPassword.Salt))
+                    // Include a trimmed alternative in case they accidentally copied a trailing space/linefeed from the temp password email.
+                    if (_password.ValidatePassword(login.Password, tempPassword.Password, tempPassword.Salt) ||
+                        _password.ValidatePassword(login.Password.TrimEnd((Environment.NewLine + " ").ToCharArray()), tempPassword.Password, tempPassword.Salt))
                     {
                         passwordIsValid = true;
                         tempPasswordUsed = tempPassword.Password;
@@ -96,12 +99,12 @@ namespace CSETWebCore.Helpers
                     return null;
                 }
             }
-            else 
+            else
             {
                 // We never require a password reset if the user is able to login with their official password that is stored in the USERS table
                 loginUser.PasswordResetRequired = false;
 
-                if (tempPasswords.Count > 0) 
+                if (tempPasswords.Count > 0)
                 {
                     UserAccountSecurityManager accountSecurityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
 
@@ -123,7 +126,8 @@ namespace CSETWebCore.Helpers
                 ResetRequired = loginUser.PasswordResetRequired ?? true,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+                LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                IsFirstLogin = loginUser.IsFirstLogin ?? false
             };
 
 
@@ -237,7 +241,7 @@ namespace CSETWebCore.Helpers
             {
                 Token = token,
                 Email = primaryEmailSO,
-                Lang = user==null? "en": user.Lang ?? "en",
+                Lang = user == null ? "en" : user.Lang ?? "en",
                 UserFirstName = name,
                 UserLastName = "",
                 IsSuperUser = false,
@@ -245,7 +249,8 @@ namespace CSETWebCore.Helpers
                 UserId = userIdSO,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                LinkerTime = new BuildNumberHelper().GetLinkerTime()
+                LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                IsFirstLogin = user?.IsFirstLogin ?? false
             };
 
 

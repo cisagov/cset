@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { QuestionResponse, Category } from '../../models/questions.model';
@@ -41,7 +41,7 @@ import { TranslocoService } from '@ngneat/transloco';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewChecked {
+export class QuestionsComponent implements AfterViewChecked, OnInit {
   @ViewChild('questionBlock') questionBlock;
 
   categories: Category[] = null;
@@ -116,6 +116,9 @@ export class QuestionsComponent implements AfterViewChecked {
     });
 
   }
+  ngOnInit(): void {
+    this.configSvc.checkOnlineStatusFromConfig();
+  }
 
   updateComponentsOverride() {
     //divide the component override processing
@@ -170,9 +173,10 @@ export class QuestionsComponent implements AfterViewChecked {
    * Changes the application mode of the assessment
    */
   setMode(mode: string) {
+    this.assessSvc.applicationMode = mode;
     this.questionsSvc.setMode(mode).subscribe(() => {
       this.loadQuestions();
-      this.navSvc.setQuestionsTree();
+      this.navSvc.buildTree();
     });
     localStorage.setItem("questionSet", mode == 'R' ? "Requirement" : "Question");
   }

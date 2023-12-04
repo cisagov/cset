@@ -48,6 +48,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { SetBuilderService } from './../../services/set-builder.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { UserLanguageComponent } from '../../dialogs/user-language/user-language.component';
+import { translate } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-top-menus',
@@ -133,10 +134,9 @@ export class TopMenusComponent implements OnInit {
     this._hotkeysService.add(
       new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
         const dialogRef = this.dialog.open(ConfirmComponent);
-        dialogRef.componentInstance.confirmMessage = 'Are you sure you want to create a new assessment? ';
+        dialogRef.componentInstance.confirmMessage = translate('dialogs.confirm create new assessment');
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            //this.assessSvc.newAssessment();
             this.router.navigate(['/landing-page-tabs'], {
               queryParams: {
                 'tab': 'newAssessment'
@@ -246,6 +246,11 @@ export class TopMenusComponent implements OnInit {
     if (item == 'compare') {
       return !this.configSvc.isMobile() && (this.configSvc.behaviors?.showCompare ?? true);
     }
+
+    if (item == 'language picker') {
+      return this.configSvc.behaviors?.showMenuLanguagePicker ?? false;
+    }
+
 
     return true;
   }
@@ -388,7 +393,7 @@ export class TopMenusComponent implements OnInit {
   showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {
+    if (this.dialog.openDialogs[0] || doNotShow) {  
       this.exportToExcel();
       return;
     }
@@ -398,6 +403,11 @@ export class TopMenusComponent implements OnInit {
 
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
+  }
+  
+
+  exportToExcelNCUA() {
+    window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
   }
 
   /**

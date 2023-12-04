@@ -25,10 +25,7 @@
         <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
 
             <div *ngIf="browserIsIE" class="alert alert-danger text-left">
-                Internet Explorer has been detected as your current browser.
-                Some functionality of CSET is not fully supported by Internet Explorer.
-                Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
-                your experience.
+                {{ t('welcome page.internet explorer') }}
             </div>
 
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
@@ -57,7 +54,7 @@
                             <button *ngIf="configSvc.showExportAllButton()" tabindex="0"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"
                                 (click)="exportAllAssessments()"
-                                matTooltip="Export a copy of all assessments to another location."
+                                matTooltip="{{ t('tooltip.export all') }}"
                                 [disabled]="exportAllInProgress">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('export all')}}</span>
@@ -94,66 +91,70 @@
                             </label>
                         </div>
 
-                        <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
-                            [disabled]="disabledEncrypt"
-                            matTooltip="{{ t('tooltip.prevent encryption') }}"
-                            style="margin-left: auto; margin-right: 0; border: 2px solid gray">
-                            <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
-                        </mat-checkbox>
+
+                        <!-- Don't show the encryption for ACET/ISE. They don't want it. -->
+                        <div *ngIf="!this.ncuaSvc.switchStatus">
+                            <div *ngIf="this.configSvc.installationMode != 'ACET'">
+                                <mat-checkbox color="primary" [(ngModel)]="preventEncrypt" (change)="updateEncryptPreference()"
+                                  [disabled]="disabledEncrypt"
+                                  matTooltip="{{ t('tooltip.prevent encryption') }}"
+                                  style="margin-left: auto; margin-right: 0; border: 2px solid gray">
+                                    <label style="margin-top: 15px; padding-right: 10px;">{{t('prevent encryption')}}</label>
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
 
                     </div>
                     <div *ngIf="unsupportedImportFile"
                         class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-00a">
                         <span class="p-2 fs-large cset-icons-exclamation-triangle"></span>
                         <div class="p-2 d-flex flex-column justify-content-center flex-01a">
-                            <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                                imported for enterprise installations.</span>
+                            <span class="fs-base-3">{{ t('errors.import unsuported file 1') }}</span>
                             <span class="fs-base-1"><a
                                     href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
-                                    tabindex="0" rel="noopener noreferrer">For more information, see the
-                                    import section
-                                    of the user
-                                    guide</a></span>
+                                    tabindex="0" rel="noopener noreferrer">
+                                    {{ t('errors.import unsuported file 2') }}</a></span>
                         </div>
                     </div>
                 </div>
             </ng-container>
             <ng-template #noAssessmentsElseBlock>
                 <h2 class="mt-0" *ngIf="sortedAssessments?.length == 0">
-                    <div *ngIf="appTitle == 'ACET'">Welcome to The Toolbox</div>
-                    <div *ngIf="appTitle != 'ACET'">Welcome to {{ appTitle }}</div>
+                    <div *ngIf="appTitle == 'ACET'">{{ t('welcome page.welcome to acet') }}</div>
+                    <div *ngIf="appTitle != 'ACET'">{{ t('welcome page.welcome to', { appTitle:appTitle }) }}</div>
                 </h2>
-                <p>To get started, select from one of the options below:</p>
+                <p>{{ t('welcome page.to get started') }}</p>
                 <div class="mt-3 mb-4 flex-column d-flex justify-content-between flex-11a">
                     <div class="flex-row d-flex flex-00a">
                         <div class="d-flex flex-wrap justify-content-between flex-11a">
                             <button
                                 class="m-0 p-3 mr-sm-2 mr-md-3 mr-lg-4 btn btn-primary d-flex align-items-center flex-11a lp-btn-mw-lg"
                                 (click)="clickNewAssessmentButton()"
-                                matTooltip="Select an assessment type and begin a new assessment.">
+                                matTooltip="{{ t('welcome page.new assessment tooltip') }}">
                                 <span *ngIf="configSvc.installationMode !=='ACET'"
                                     class="mr-3 landing-icon landing-icon-sm cset-icons-cset-lock"></span>
                                 <span *ngIf="configSvc.installationMode === 'ACET'"
                                     class="mr-3 landing-icon landing-icon-sm cset2-icons-acet-shield"></span>
-                                <span class="landing-button-text landing-button-text-sm">Start a New Assessment</span>
+                                <span class="landing-button-text landing-button-text-sm">{{ t('welcome page.new assessment') }}</span>
                             </button>
                             <!-- <hr class="landing my-4"> -->
                             <label *ngIf="authSvc.isLocal && configSvc.showImportButton()"
                                 class="mt-3 mt-sm-3 mt-md-0 p-3 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
-                                    Import an Existing Assessment
+                                    {{ t('welcome page.import assessment') }}
                                 </label>
                                 <input type="file" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
                             </label>
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="p-3 m-0 mt-3 mt-sm-0 c-gray-900 btn btn-secondary d-flex align-items-center flex-11a lp-btn-mw-lg"
-                                matTooltip="Import an assessment from an external {{appCode}} file. ({{ importExtensions }})">
+                                matTooltip="{{ t('tooltip.import', { appCode: appCode }) }} ({{ importExtensions }})">
                                 <span class="mr-3 landing-icon landing-icon-sm cset-icons-import"></span>
                                 <label for="importFile" class="m-0 landing-button-text landing-button-text-sm">
-                                    Import an Existing Assessment
+                                    {{ t('welcome page.import assessment') }}
                                 </label>
                                 <input type="file" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }}" (change)="importAssessmentFile($event)">
@@ -164,12 +165,10 @@
                         class="alert-danger my-4 d-flex flex-row justify-content-center align-items-center flex-11a">
                         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
                         <div class="p-md-3 p-2 d-flex flex-column justify-content-center flex-01a">
-                            <span class="fs-base-3">Error: Unsupported file. Only CSET Web files can be
-                                imported for enterprise installations.</span>
+                            <span class="fs-base-3">{{ t('errors.import unsuported file 1') }}</span>
                             <span class="fs-base-1 mt-2"><a
                                     href="{{this.configSvc.docUrl}}htmlhelp/importing_a__cset_file.htm" target="_blank"
-                                    rel="noopener noreferrer">For
-                                    more information, see the import section of the user guide</a></span>
+                                    rel="noopener noreferrer">{{ t('errors.import unsuported file 2') }}</a></span>
                         </div>
                     </div>
                 </div>
@@ -196,10 +195,11 @@
                     </th>
                     <th *ngIf="isTSA" style="width: 5%;">Source</th>
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
+                    <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">{{ t('acet.submitted') }}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                         style="width:15%;">{{t('primary assessor')}}</th>
-                    <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
+                    <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
                     <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                     <th aria-label="export assessment" style="width:5%;"></th>
                     <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
@@ -216,11 +216,14 @@
                             'CSET' :
                             'TSA' }}</td>
                         <td>{{assessment.type}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate)
-                            | date:'dd-MMM-yyyy'}}</td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{this.systemTimeTranslator(assessment.lastModifiedDate) |
-                            date:'medium'}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus && showColumn('primary-assessor')">
+                        <td *ngIf="!this.ncuaSvc.switchStatus">{{reportSvc.translatedDate(assessment.lastModifiedDate)}}</td>
+                        <td *ngIf="showColumn('ise-submitted')">
+                            <!-- <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container> -->
+                            <ng-container *ngIf="assessment.iseSubmitted">{{ assessSvc.translatedDate(assessment.submittedDate, 'l') }}</ng-container>
+                        </td>
+                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                            
+                        <td *ngIf="showColumn('primary-assessor')">
                             <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
                         </td>
                         <td>
@@ -229,7 +232,7 @@
                                     {{ { c: assessment.completedQuestionsCount, t: assessment.totalAvailableQuestionsCount, qa: this.assessment.questionAlias, l: tSvc.getActiveLang() } | completionCount }}
                                 </span>
                                 <ng-template #blankAssessment>
-                                    Blank Assessment
+                                    {{ t('welcome page.blank assessment') }}
                                 </ng-template>
                                 <br>
                             </div>
@@ -241,7 +244,7 @@
                             <button tabindex="0"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="removeAssessment(assessment, i)"
-                                matTooltip="Permanently remove this assessment.">
+                                matTooltip="{{ t('tooltip.remove assessment') }}">
                                 <span class="cset-icons-trash-x fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
@@ -250,7 +253,7 @@
                             <button tabindex="0" id="assess-{{i}}-export"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
@@ -259,7 +262,7 @@
                             <button tabindex="0"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
-                                matTooltip="View the analytics for this assessment.">
+                                matTooltip="{{ t('tooltip.analytics') }}">
                                 <span class="cset-icons-bar-chart-vertical fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.analytics')}}</span>
                             </button>
@@ -270,9 +273,9 @@
                 <!-- table for handset portrait -->
                 <table *ngIf="layoutSvc.hp" role="presentation" aria-label="assessments" matSort
                     (matSortChange)="sortData($event)" class="assessment-summary" style="overflow-x:auto">
-                    <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name
+                    <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment name') }}
                     </th>
-                    <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
+                    <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
                     <th aria-label="Actions" style="width: 5%" *ngIf="layoutSvc.hp"></th>
                     <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                         <td>
@@ -282,16 +285,16 @@
                                 {{assessment.assessmentName}}
                             </button>
                         </td>
-                        <td>{{assessment.lastModifiedDate | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
                         <td class="text-nowrap pl-1">
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="removeAssessment(assessment, i)"
-                                matTooltip="Permanently remove this assessment.">
+                                matTooltip="{{ t('tooltip.remove assessment') }}">
                                 <span class="cset-icons-trash-x fs-base-2"></span>
                             </button>
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
-                                matTooltip="Export a copy of this assessment to another location ({{ exportExtension }}).">
+                                matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2"></span>
                             </button>
                         </td>
@@ -302,10 +305,10 @@
             <table *ngIf="(this.ncuaSvc.switchStatus && this.ncuaSvc.prepForMerge)" role="presentation"
                 aria-label="assessments" matSort (matSortChange)="sortData($event)" class="assessment-summary"
                 style="overflow-x:auto">
-                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">Assessment Name</th>
-                <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">Assessment Type</th>
-                <th aria-label="date" mat-sort-header="date" style="width:15%;">Last Modified</th>
-                <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
+                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment name') }}</th>
+                <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">{{ t('assessment type') }}</th>
+                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
+                <th aria-label="status" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
                 <th aria-label="merge assessment" style="width:5%;"></th>
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>
@@ -316,21 +319,24 @@
                         </button>
                     </td>
                     <td>{{assessment.type}}</td>
-                    <td>{{assessment.lastModifiedDate | date:'medium'}}</td>
+                    <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
                     <td>
                         <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
                             <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
-                                {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
-                                Statement(s) Completed
+                                {{ t('welcome page.statements completed', 
+                                { complete: assessment.completedQuestionsCount
+                                , total: assessment.totalAvailableQuestionsCount }) }}
+                                <!-- {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
+                                Statement(s) Completed -->
                             </span>
                             <ng-template #blankAssessment>
-                                Blank Assessment
+                                {{ t('welcome page.blank assessment') }}
                             </ng-template>
                             <br>
                         </div>
                         <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
-                            matTooltip="This assessment contains answers that require further review.">Needs
-                            Review
+                            matTooltip="{{ t('tooltip.assessment requires review') }}">
+                            {{ t('welcome page.needs review') }}
                         </span>
                     </td>
                     <td>
@@ -339,7 +345,7 @@
                                 class="checkbox-custom mt-1" (change)="this.ncuaSvc.modifyMergeList(assessment, $event)"
                                 [checked]="">
                             <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
-                                Merge
+                                {{ t('merge examinations.merge') }}
                             </label>
                         </div>
                     </td>
@@ -347,8 +353,8 @@
             </table>
             <button *ngIf="this.ncuaSvc.prepForMerge" (click)="this.proceedToMerge()"
                 [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10"
-                class="btn btn-primary" matTooltip="Merge checked examinations"
-                style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">Start Merge</button>
+                class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
+                style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge examinations.start merge') }}</button>
 
             <!-- <div *ngIf="sortedAssessments?.length == 0" class="mt-3 mb-4">
             <p>There are no assessments available.</p>

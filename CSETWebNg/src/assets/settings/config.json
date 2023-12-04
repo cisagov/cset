@@ -1,5 +1,5 @@
 {
-    "NOTENODE": "Casing on config chain matters",
+    "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
     "currentConfigChain": [
         "CSET"
     ],
@@ -16,7 +16,8 @@
         "url": "localhost",
         "port": "5000",
         "apiIdentifier": "api",
-        "documentsIdentifier": "Documents"
+        "documentsIdentifier": "Documents",
+        "onlineUrl": "https://cset.inl.gov"
     },
     "helpContactEmail": "cset@cisa.dhs.gov",
     "helpContactPhone": "",
@@ -45,6 +46,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showMenuParameterEditor": true,
+        "showMenuLanguagePicker": false,
         "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
@@ -167,7 +169,7 @@
                     "code": "Y",
                     "buttonLabelKey": "Imp-CPG",
                     "buttonCss": "btn-yes"
-                 },
+                },
                 {
                     "code": "I",
                     "buttonLabelKey": "Prog-CPG",
@@ -215,6 +217,7 @@
         },
         {
             "moduleName": "ACET",
+            "independentSuppGuidance": true,
             "answerOptions": [
                 {
                     "skin": "ACET",
@@ -275,6 +278,20 @@
                     "buttonCss": "btn-alt"
                 }
             ]
+        }
+    ],
+    "languageOptions": [
+        {
+            "value": "en",
+            "name": "English"
+        },
+        {
+            "value": "es",
+            "name": "Español"
+        },
+        {
+            "value": "uk",
+            "name": "українська"
         }
     ]
 }

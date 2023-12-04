@@ -121,15 +121,13 @@ export class NavTreeService {
           value: workflowNode.id ?? 0,
           children: [],
           expandable: true,
-          visible: true
-        };
-
-
-        // TODO
+          visible: true,
+          enabled: true   
+        };        
         navNode.visible = this.pageVisibliltySvc.showPage(workflowNode);
-
-
-
+        if(navNode.visible){
+          navNode.enabled = this.pageVisibliltySvc.isEnabled(workflowNode);
+        }
         // the node might need tweaking based on certain factors
         this.adjustNavNode(navNode);
 
@@ -157,6 +155,16 @@ export class NavTreeService {
         node.label = this.tSvc.translate(`titles.${alias}`);
       }
     }
+
+    if (node.value == 'standard-questions') {
+      const mode = this.assessSvc.applicationMode?.toLowerCase();
+      if (mode == 'q') {
+        node.label = this.tSvc.translate('titles.standard questions');
+      }
+      if (mode == 'r') {
+        node.label = this.tSvc.translate('titles.standard requirements');
+      }
+    }    
   }
 
   /**
@@ -215,25 +223,6 @@ export class NavTreeService {
     return node.children?.length > 0;
   }
 
-  /**
-   *
-   */
-  parseTocData(tree): NavTreeNode[] {
-    let navTree: NavTreeNode[] = [];
-    for (let i = 0; i < tree.length; i++) {
-      let p = tree[i];
-
-      const node: NavTreeNode = {
-        label: p.label,
-        value: p.value,
-        children: p.children,
-        expandable: p.expandable,
-        visible: p.visible
-      };
-      navTree.push(node);
-    }
-    return navTree;
-  }
 
   /**
   * Clear any current page and mark the new one.

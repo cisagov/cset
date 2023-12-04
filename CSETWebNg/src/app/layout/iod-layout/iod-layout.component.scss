@@ -198,14 +198,11 @@ a {
 .checkbox-custom,
 .radio-custom {
   opacity: 0;
-  position: absolute;
+  display: none;
 }
 
-.checkbox-custom,
 .checkbox-custom-label,
-.radio-custom,
 .radio-custom-label {
-  display: inline-block;
   display: flex;
   vertical-align: middle;
   margin: 5px;
@@ -496,11 +493,11 @@ label[required]::after {
 .accordion-header {
   padding-top: 0.2em;
   margin-bottom: 0;
-
+  background-color: $primary-color;
 }
 
 .footer .bg-primary {
-  background-color: $primary-900  !important;
+  background-color: $primary-color  !important;
 }
 
 .footer .card-header:first-child {

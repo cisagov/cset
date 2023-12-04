@@ -4,41 +4,41 @@
         <node displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" />
         <node displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" />
         <node displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal"
-            condition="OPTION-ANY(STANDARD,DIAGRAM)" />
+            visible="OPTION-ANY(STANDARD,DIAGRAM)" />
 
         <!-- Standards selection screen -->
-        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" condition="OPTION:STANDARD" />
+        <node displaytext="Cybersecurity Standards Selection" id="standards" path="assessment/{:id}/prepare/standards" visible="OPTION:STANDARD" />
 
         <!-- ACET-specifi screens -->
-        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" condition="MATURITY:ACET" />
-        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summar" condition="MATURITY:ACET" />
+        <node displaytext="Inherent Risk Profiles" id="irp" path="assessment/{:id}/prepare/irp" visible="MATURITY:ACET" />
+        <node displaytext="Inherent Risk Profile Summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summar" visible="MATURITY:ACET" />
 
 
         <!-- Diagram -->
-        <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" condition="OPTION:DIAGRAM" />
+        <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" visible="OPTION:DIAGRAM" />
     </node>
 
 
 
     <!-- Assessment Phase -->
     <node displaytext="Assessment" id="phase-assessment">
-        <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" condition="OPTION:DIAGRAM" />
+        <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" visible="OPTION:DIAGRAM" />
     </node>
 
 
 
     <!-- Results - Components -->
     <node displaytext="Results" id="phase-results">
-        <node displaytext="Components Results" id="components-results-node" condition="OPTION:DIAGRAM"/>
-        <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" condition="OPTION:DIAGRAM" />
-        <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" condition="OPTION:DIAGRAM" />
-        <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" condition="OPTION:DIAGRAM" />
-        <node displaytext="Answers By Component Type" id="components-types" path="assessment/{:id}/results/components-types" condition="OPTION:DIAGRAM" />
-        <node displaytext="Network Warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" condition="OPTION:DIAGRAM" />
+        <node displaytext="Components Results" id="components-results-node" visible="OPTION:DIAGRAM"/>
+        <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" visible="OPTION:DIAGRAM" />
+        <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" visible="OPTION:DIAGRAM" />
+        <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" visible="OPTION:DIAGRAM" />
+        <node displaytext="Answers By Component Type" id="components-types" path="assessment/{:id}/results/components-types" visible="OPTION:DIAGRAM" />
+        <node displaytext="Network Warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" visible="OPTION:DIAGRAM" />
 
-        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" condition="SHOW-EXEC-SUMMARY" />
+        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" visible="SHOW-EXEC-SUMMARY" />
         <node displaytext="Reports" id="reports" path="assessment/{:id}/results/reports" />
 
-        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" condition="INSTALL-MODE:TSA" />
+        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
     </node>
 </nav>

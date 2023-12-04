@@ -53,11 +53,10 @@ export class AcetDeficencyComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.titleService.setTitle("Gap Report - ACET");
-
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
+        this.titleService.setTitle(this.tSvc.translate('reports.acet.gap report.tab title'));
         this.loading = false;
       },
       error => console.log('Gap Report Error: ' + (<Error>error).message)

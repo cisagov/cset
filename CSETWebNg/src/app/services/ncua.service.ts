@@ -34,6 +34,11 @@ import { IRPService } from './irp.service';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 import { Answer } from '../models/questions.model';
 import { environment } from '../../../src/environments/environment';
+import { AuthenticationService } from './authentication.service';
+import { DateAdapter } from '@angular/material/core';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
+import { ReportService } from './report.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -90,6 +95,7 @@ let headers = {
   creditUnionCharterNumber = "";
 
   ISE_StateLed: boolean = false;
+  iseHasBeenSubmitted: boolean = false;
 
   questions: any = null;
   iseIrps: any = null;
@@ -105,6 +111,7 @@ let headers = {
       "stateLed": false,
       "examLevel": '',
       "region": 0,
+      "assets": 0,
       "guid": '',
       "acet_version": '',
       "db_version": ''
@@ -129,7 +136,11 @@ let headers = {
     private maturitySvc: MaturityService,
     private acetSvc: ACETService,
     private irpSvc: IRPService,
-    private assessmentSvc: AssessmentService
+    private assessmentSvc: AssessmentService,
+    private authSvc: AuthenticationService,
+    private dateAdapter: DateAdapter<any>,
+    private tSvc: TranslocoService,
+    private reportSvc: ReportService
   ) {
     this.init();
   }
@@ -146,6 +157,17 @@ let headers = {
       response: boolean) => {
         if (this.configSvc.installationMode === 'ACET') {
           this.switchStatus = response;
+          /// ISE doesn't want any language options for their installation, so this makes sure the language is set to english.
+          /// Prevents the case where 1.'ACET' is installed, 2.the language is changed to spanish, 
+          /// and then 3.'ISE' is installed and uses the same database (so the existing 'es' language stays and can't be switched)
+          if (this.switchStatus == true) {
+            let defaultLang = this.configSvc.config.defaultLang;
+            this.tSvc.setActiveLang(defaultLang);
+            this.authSvc.setUserLang(defaultLang).subscribe(() => {
+              this.dateAdapter.setLocale(defaultLang);
+              moment.locale(defaultLang);
+            });
+          }
         }
       }
     );
@@ -583,10 +605,11 @@ let headers = {
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
-      "creationDate": this.information.assessment_Creation_Date,
+      "creationDate": this.reportSvc.applyOffsetFromJwtToken(this.information.assessment_Creation_Date),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
+      "assets": this.assessmentSvc.assessment.assets,
       "guid": this.questions.assessmentGuid,
       "acet_version": environment.visibleVersion,
       "db_version": this.questions.csetVersion
@@ -609,7 +632,7 @@ let headers = {
     
     this.doesDirectoryExist().subscribe(
       (exists: boolean) => {
-        if (exists === false){
+        if (exists === false) {
           let msg = `<br><p>The Submission Export Path is not accessible.</p>
                          <p>Please make sure the directory exists and is viewable.</p>`;
                   this.dialog.open(MeritCheckComponent, {
@@ -617,13 +640,14 @@ let headers = {
                   });
           this.jsonStringReset(); 
         }
-        else if (exists === true){
+        else if (exists === true) {
           this.acetSvc.doesMeritFileExist(fileValue).subscribe(
             (bool: any) => {
               let exists = bool; //true if it exists, false if not
       
               if (!exists) { //and eventually an 'overwrite' boolean or something
                 this.newMeritFileSteps(fileValue);
+                this.updateSubmissionStatus().subscribe(result => {});
               } else {
       
                 let msg = `<br>
@@ -643,7 +667,12 @@ let headers = {
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
-                        this.jsonStringReset(); 
+                        this.jsonStringReset();
+                        this.updateSubmissionStatus().subscribe(result => {
+                          this.getSubmissionStatus().subscribe((result: any) => {
+                            this.iseHasBeenSubmitted = result;
+                          });
+                        });
                       },
                       error => {        
                         let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
@@ -661,7 +690,13 @@ let headers = {
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
-                        this.jsonStringReset(); 
+                        this.jsonStringReset();
+                          
+                        this.updateSubmissionStatus().subscribe(result => {
+                          this.getSubmissionStatus().subscribe((result: any) => {
+                            this.iseHasBeenSubmitted = result;
+                          });
+                        });
                       },
                       error => {        
                         let msg = "<br><p>Could not write the file."+error.error+"</p>";
@@ -674,7 +709,7 @@ let headers = {
                   } else {
                     this.jsonStringReset();   
                   }
-                }); 
+                });
               }
       
             }
@@ -703,6 +738,12 @@ let headers = {
                   disableClose: true, data: { title: "Submission Success", messageText: msg }
                 })
         this.jsonStringReset();
+
+        this.updateSubmissionStatus().subscribe(result => {
+          this.getSubmissionStatus().subscribe((result: any) => {
+            this.iseHasBeenSubmitted = result;
+          });
+        });
       },
       error => {        
         console.log(error);
@@ -726,6 +767,7 @@ let headers = {
         "creationDate": '',
         "examLevel": '',
         "region": 0,
+        "assets": 0,
         "stateLed": false,
         "guid": '',
         "acet_version": '',
@@ -756,6 +798,14 @@ let headers = {
     const uncPathCarrier = new MeritFileExport();
     uncPathCarrier.data = newPath;
     return this.http.post(this.configSvc.apiUrl + 'saveUncPath', uncPathCarrier, headers);
+  }
+
+  getSubmissionStatus() {
+    return this.http.get(this.configSvc.apiUrl + 'getIseSubmissionStatus');
+  }
+
+  updateSubmissionStatus() {
+    return this.http.post(this.configSvc.apiUrl + 'updateIseSubmissionStatus', headers);
   }
 
   /**

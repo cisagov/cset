@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-
+import { DatePipe, getLocaleDateFormat } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -50,6 +50,7 @@ import * as moment from "moment";
 import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
+import { DateAdapter } from '@angular/material/core';
 
 
 interface UserAssessment {
@@ -69,6 +70,8 @@ interface UserAssessment {
   completedQuestionsCount: number;
   totalAvailableQuestionsCount: number;
   questionAlias: string;
+  iseSubmission: boolean;
+  submittedDate?: Date;
 }
 
 @Component({
@@ -118,10 +121,16 @@ export class MyAssessmentsComponent implements OnInit {
     public tSvc: TranslocoService,
     private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public dateAdapter: DateAdapter<any>,
+    public datePipe: DatePipe,
+    public reportSvc: ReportService
   ) { }
 
   ngOnInit() {
+    // initializes moment locale language to transloco's active language
+    moment.locale(this.tSvc.getActiveLang());
+
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -160,10 +169,24 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-      // NCUA didn't want the primary assessor column
+      
       if (this.ncuaSvc.switchStatus) {
         return false;
       }      
+    }
+
+    if (column == 'analytics') {
+      if (this.ncuaSvc.switchStatus) {
+        return false;
+      }
+    }
+
+    if (column == 'ise-submitted') {
+      if (this.ncuaSvc.switchStatus) {
+        return true;
+      } else {
+        return false;
+      }
     }
     
     return true;
@@ -251,9 +274,10 @@ export class MyAssessmentsComponent implements OnInit {
         // if it's legal, see if they really want to
         const dialogRef = this.dialog.open(ConfirmComponent);
         dialogRef.componentInstance.confirmMessage =
-          "Are you sure you want to remove '" +
-          assessment.assessmentName +
-          "'?";
+          // "Are you sure you want to remove '" +
+          // assessment.assessmentName +
+          // "'?";
+          this.tSvc.translate('dialogs.remove assessment', { assessmentName: assessment.assessmentName });
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.assessSvc.removeMyContact(assessment.assessmentId).subscribe(
@@ -290,6 +314,8 @@ export class MyAssessmentsComponent implements OnInit {
           return this.comparer.compare(a.type, b.type, isAsc);
         case "status":
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
+        case "ise-submitted":
+          return this.comparer.compareBool(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
       }
@@ -399,9 +425,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    let localTime = moment.utc(lastModifiedDate).local();
-
-    return localTime;
+    // moment().utcOffset(300);
+    let localDate = moment(lastModifiedDate).format('ll LTS'); 
+    // let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
+    return localDate;
   }
 
   exportAllAssessments() {
@@ -425,4 +452,5 @@ export class MyAssessmentsComponent implements OnInit {
     this.assessSvc.persistEncryptPreference(this.preventEncrypt);
     this.disabledEncrypt = false;
   }
+
 }

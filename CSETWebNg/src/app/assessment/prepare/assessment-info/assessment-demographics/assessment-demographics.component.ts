@@ -181,8 +181,9 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     changeOrgName(event: any) {
-        this.demographicData.organizationName = event.target.value;
+        this.demographicData.organizationName = event.target.value;        
         this.updateDemographics();
+
     }
 
     changeOrgPointOfContact(event: any) {

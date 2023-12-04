@@ -78,6 +78,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_GetComponentsSummaryPageResult>> usp_GetComponentsSummaryPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getComponentTypesResult>> usp_getComponentTypesAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_GetComponentTypesPageResult>> usp_GetComponentTypesPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<List<usp_getCSETQuestionsForCRRMResult>> usp_getCSETQuestionsForCRRMAsync(string setname, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getExplodedComponentResult>> usp_getExplodedComponentAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getFinancialQuestionsResult>> usp_getFinancialQuestionsAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_getFirstPageResult>> usp_getFirstPageAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);

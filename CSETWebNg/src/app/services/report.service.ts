@@ -24,6 +24,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
+import { AuthenticationService } from './authentication.service';
+import { JwtParser } from '../helpers/jwt-parser';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -37,7 +41,8 @@ export class ReportService {
   /**
    *
    */
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(private http: HttpClient, private configSvc: ConfigService, private tSvc: TranslocoService
+    , private authSvc: AuthenticationService) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
       this.initialized = true;
@@ -199,6 +204,39 @@ export class ReportService {
 
   validateCisaAssessorFields() {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
+  }
+  
+  translatedDate(date: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    return moment(date).format('DD-MMM-yyyy');
+  }
+
+  translatedDateGMT(date: string) {
+    moment.locale(this.tSvc.getActiveLang());
+    // below is commented out for now in order to replace Moment's timezone offset with our collected offset from the JWT
+    
+    // let currentTime = moment(date).utc(true);
+    //return currentTime.utcOffset(date, true).format('L LTS') + currentTime.utcOffset(date).toString().slice(currentTime.utcOffset(date).toString().lastIndexOf(' '));
+    
+    return moment(date).format('L LTS') + ' GMT-' + this.getOffsetFromJwtToken();
+  }
+
+  getOffsetFromJwtToken() {
+    const jwt = new JwtParser();
+    const parsedToken = jwt.decodeToken(this.authSvc.userToken());
+    let offset = (parsedToken.tzoffset / 60)*100;
+    let gmtString = offset.toString();
+
+    if (gmtString.length < 4) {
+      gmtString = '0' + gmtString;
+    }
+    return gmtString;
+  }
+
+  applyOffsetFromJwtToken(stringDate: string) {
+    const jwt = new JwtParser();
+    const parsedToken = jwt.decodeToken(this.authSvc.userToken());
+    return moment(stringDate).subtract(parsedToken.tzoffset / 60, 'hour').format('L LTS');
   }
 
   /**

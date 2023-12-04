@@ -45,6 +45,7 @@ import { AggregationService } from './services/aggregation.service';
 import { LocalStoreManager } from './services/storage.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { FooterService } from './services/footer.service';
+import { translate } from '@ngneat/transloco';
 
 
 declare var $: any;
@@ -297,8 +298,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     // New Assessment
     this._hotkeysService.add(new Hotkey('alt+n', (event: KeyboardEvent): boolean => {
       const dialogRef = this.dialog.open(ConfirmComponent);
-      dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to create a new assessment? ";
+      dialogRef.componentInstance.confirmMessage = translate('dialogs.confirm create new assessment');
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           //this.assessSvc.newAssessment();
@@ -318,11 +319,6 @@ export class AppComponent implements OnInit, AfterViewInit {
       window.open(this.docUrl + "cdDocs/UserGuide.pdf", "_blank");
       return false; // Prevent bubbling
     }));
-
-    // Questionnaires
-    // this._hotkeysService.add(new Hotkey('alt+q', (event: KeyboardEvent): boolean => {
-    //   return false; // Prevent bubbling
-    // }));
 
     // Protected Features
     this._hotkeysService.add(new Hotkey('alt+r', (event: KeyboardEvent): boolean => {

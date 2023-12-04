@@ -23,7 +23,6 @@
 <div *transloco="let t" class="white-panel">
   <div id="top"></div>
   <div class="d-flex flex-row flex-wrap sticky-sal justify-content-between align-items-start flex-11a pb-3">
-
     <div class="btn-group btn-group-toggle" data-toggle="buttons">
       <label *ngIf="showQuestionsToggle" class="btn btn-app-mode form-check-label"
         [class.active]="assessSvc.applicationMode == 'Q'" (click)="setMode('Q')"
@@ -67,7 +66,8 @@
     </div>
   </div>
 
-  <h2>{{t('titles.standard questions')}}</h2>
+  <h2 *ngIf="this.assessSvc.applicationMode == 'Q'">{{t('titles.standard questions')}}</h2>
+  <h2 *ngIf="this.assessSvc.applicationMode == 'R'">{{t('titles.standard requirements')}}</h2>
   <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
 
   <div *ngIf="!categories" class="w-100">
@@ -76,9 +76,15 @@
     </div>
   </div>
 
-  <p *ngIf="!!categories" class="mb-4">
+ 
+  <p *ngIf="!!categories" class="mb-4">    
     {{ msgUnansweredEqualsNo }}
   </p>
+  <p *ngIf="configSvc.installationMode == 'CF' && assessSvc.usesStandard('Florida_NCSF_V1')" style="color:red; font-weight: bold;">    
+    To see your results please answer all 20 entry level questions. 
+    For previously started assessments any work you may have done is automatically transfered and will be available when you upgrade to a full assessment.
+  </p>
+
 
 
   <div *ngFor="let c of categories" [class.display-none]="!c.visible" class="w-100">
@@ -103,6 +109,6 @@
     </span>
   </div>
 
-  <app-nav-back-next [page]="'questions'"></app-nav-back-next>
+  <app-nav-back-next [page]="'standard-questions'"></app-nav-back-next>
 
 </div>

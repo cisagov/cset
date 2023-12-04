@@ -1,25 +1,13 @@
 ﻿using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Cmu;
-using CSETWebCore.Interfaces.Demographic;
-using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Interfaces.Reports;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using CSETWebCore.Helpers.ReportWidgets;
-using System.Xml.Linq;
-using System.Xml.XPath;
-using System.Linq;
-using System.Collections.Generic;
-using CSETWebCore.Business.Maturity;
-using CSETWebCore.Helpers;
-using CSETWebCore.Business.Reports;
-using CSETWebCore.Reports.Models;
-using CSETWebCore.Api.Models;
-using Newtonsoft.Json;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Business.Authorization;
+using CSETWebCore.Business.AssessmentIO.Export;
+using CSETWebCore.Helpers;
+using System;
+using System.IO;
+using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Interfaces.Helpers;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -28,17 +16,37 @@ namespace CSETWebCore.Api.Controllers
     /// </summary>
     public class CRRMController : Controller
     {
-        public CRRMController()
-        {
+        private readonly CSETContext _context;
 
+        public CRRMController(CSETContext context)
+        {
+            _context = context;
         }
 
         [HttpGet]
         [ApiKeyAuthorize]
-        [Route("api/crrm/exportAllAccessKeyAssessments")]
-        public IActionResult GetAssessments()
+        [Route("api/crrm/bulkExportAssessments")]
+        public IActionResult BulkExportAssessments(Guid[] guidsToExport)
         {
-            return Ok();
+            try
+            {
+                // determine extension (.csetw, .acet)
+                string ext = IOHelper.GetExportFileExtension("CSET");
+                AssessmentExportManager exportManager = new AssessmentExportManager(_context);
+                MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
+
+                if (assessmentsExportArchive == null) 
+                {
+                    return StatusCode(404, "No Assessments with the provided GUIDs were found for export.");
+                }
+
+                return File(assessmentsExportArchive, "application/octet-stream", "BulkAssessmentExport.zip");
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return StatusCode(500, "There was an issue bulk exporting assessments");
+            }
         }
     }
 }
