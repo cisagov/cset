@@ -902,7 +902,7 @@ namespace CSETWebCore.DataLayer.Model
                 {
                     myrval = handler.ReadToList<Get_Assess_Detail_Filter_DataResult>();
                 });
-            return myrval;
+            return myrval.OrderBy(x => x.Detail_Id).ToList();
         }
 
         public virtual IList<GetChildrenAnswersResult>Get_Children_Answers(int parentId, int assessId) {
