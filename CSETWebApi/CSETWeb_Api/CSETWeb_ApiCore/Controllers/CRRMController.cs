@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Controllers
                     return StatusCode(404, "No Assessments with the provided GUIDs were found for export.");
                 }
 
-                return File(assessmentsExportArchive, "application/octet-stream", "BulkAssessmentExport.zip");
+                return File(assessmentsExportArchive, "application/zip", "BulkAssessmentExport.zip");
             }
             catch (Exception exc)
             {
