@@ -40,10 +40,13 @@ interface UserAssessment {
   selector: 'app-select-assessments',
   templateUrl: './select-assessments.component.html'
 })
-export class SelectAssessmentsComponent implements OnInit, OnChanges {
+export class SelectAssessmentsComponent implements OnInit {
 
   assessments: UserAssessment[];
   aggregation: any = {};
+  found: boolean = false;
+  maturity: boolean = false;
+  standard: boolean = false;
 
   /**
    * CTOR
@@ -57,18 +60,14 @@ export class SelectAssessmentsComponent implements OnInit, OnChanges {
     public aggregationSvc: AggregationService
   ) { }
 
-  ngOnChanges() {
-    console.log("Changes made")
-  }
-
   ngOnInit() {
     // get my assessment list
     this.getAssessmentsForUser();
   }
 
 
-
   getAssessmentsForUser() {
+
     this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
       this.assessments = resp;
 
@@ -79,8 +78,38 @@ export class SelectAssessmentsComponent implements OnInit, OnChanges {
 
         resp2.assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.assessmentId === selectedAssess.assessmentId).selected = true;
-
         });
+
+        
+
+        for (let element of this.assessments) {
+          if (element.selected === true) {
+            this.found = true;
+            if (element.useMaturity === true) this.maturity = true;
+            if (element.useMaturity === false) this.standard = true;
+            break;
+          }
+        }
+        
+        
+
+        if (this.found === true) {
+          let new_assessments = []
+          for (let element of this.assessments) {
+            if (this.maturity === true) {
+              if (element.useMaturity === true) {
+                new_assessments.push(element)
+              } 
+            } else if (this.standard === true){
+              if (element.useMaturity === false){
+                new_assessments.push(element)
+              }
+            }
+          }
+          this.assessments = new_assessments
+        }
+
+
       });
     },
       error =>
@@ -101,30 +130,48 @@ export class SelectAssessmentsComponent implements OnInit, OnChanges {
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });
-    if (event.target.checked === true){
-    let new_assessments = []
-    if (assessment.useMaturity === true) {
-      for (let element of this.assessments){
-        if (element.useMaturity === true){
-          new_assessments.push(element)
-        }
+    this.hideAssessments(event, assessment)
+  }
+
+  hideAssessments(event, assessment) {
+
+    this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
+      let count = 0
+      resp2.assessments.forEach(selectedAssess => {
+        count += 1
+      })
+      if (count === 0) {
+        this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
+          this.assessments = resp;
+        })
       }
-      
-    } else {
-        for (let element of this.assessments){
-          if (element.useMaturity === false){
+    })
+
+    if (event.target.checked === true) {
+      let new_assessments = []
+      if (assessment.useMaturity === true) {
+        for (let element of this.assessments) {
+          if (element.useMaturity === true) {
+            new_assessments.push(element)
+          }
+        }
+
+      } else {
+        for (let element of this.assessments) {
+          if (element.useMaturity === false) {
             new_assessments.push(element)
           }
         }
       }
-    this.assessments = new_assessments
+
+      this.assessments = new_assessments
     }
   }
   /**
    *
    */
   close() {
-    
+
     return this.dialog.close();
   }
 
