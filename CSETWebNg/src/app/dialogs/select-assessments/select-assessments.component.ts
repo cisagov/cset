@@ -21,24 +21,26 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { forEach, remove } from 'lodash';
 
 interface UserAssessment {
   assessmentId: number;
   assessmentName: string;
   assessmentCreatedDate: string;
   selected: boolean;
+  useMaturity: boolean;
 }
 
 @Component({
   selector: 'app-select-assessments',
   templateUrl: './select-assessments.component.html'
 })
-export class SelectAssessmentsComponent implements OnInit {
+export class SelectAssessmentsComponent implements OnInit, OnChanges {
 
   assessments: UserAssessment[];
   aggregation: any = {};
@@ -55,20 +57,29 @@ export class SelectAssessmentsComponent implements OnInit {
     public aggregationSvc: AggregationService
   ) { }
 
+  ngOnChanges() {
+    console.log("Changes made")
+  }
+
   ngOnInit() {
     // get my assessment list
     this.getAssessmentsForUser();
   }
 
+
+
   getAssessmentsForUser() {
     this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
       this.assessments = resp;
 
+
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         this.aggregation = resp2.aggregation;
 
+
         resp2.assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.assessmentId === selectedAssess.assessmentId).selected = true;
+
         });
       });
     },
@@ -90,12 +101,30 @@ export class SelectAssessmentsComponent implements OnInit {
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });
+    if (event.target.checked === true){
+    let new_assessments = []
+    if (assessment.useMaturity === true) {
+      for (let element of this.assessments){
+        if (element.useMaturity === true){
+          new_assessments.push(element)
+        }
+      }
+      
+    } else {
+        for (let element of this.assessments){
+          if (element.useMaturity === false){
+            new_assessments.push(element)
+          }
+        }
+      }
+    this.assessments = new_assessments
+    }
   }
-
   /**
    *
    */
   close() {
+    
     return this.dialog.close();
   }
 
