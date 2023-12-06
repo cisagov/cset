@@ -94,7 +94,7 @@ export class ExecutiveSummaryComponent implements OnInit {
       }, 0);
     });
 
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
         (data: AcetDashboard) => {
           this.acetDashboard = data;
