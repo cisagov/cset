@@ -148,16 +148,13 @@ export class SelectAssessmentsComponent implements OnInit {
    */
   hideAssessments(event, assessment) {
     this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
-      let count = 0
-      resp2.assessments.forEach(selectedAssess => {
-        count += 1
-      })
-      if (count === 0) {
+      if (resp2.assessments.length === 0) {
         this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
           this.assessments = resp;
         })
       }
     })
+    
     if (event.target.checked === true) {
       let new_assessments = []
       if (assessment.useMaturity === true) {
