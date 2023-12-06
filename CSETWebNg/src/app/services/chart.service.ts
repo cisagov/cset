@@ -460,7 +460,7 @@ export class ChartService {
   * @param x
   */
   calcHbcHeightPixels(x): string {
-    // calculate the number of bars in the graph
+    // calculate the number of bars in the chart
     let maxDatasetLength = x.datasets[0].data.length;
     // calculate a good height for the chart's container
     let h = maxDatasetLength * x.datasets.length * 20;

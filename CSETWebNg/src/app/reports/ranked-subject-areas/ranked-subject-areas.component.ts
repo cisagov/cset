@@ -32,6 +32,7 @@ import Chart from 'chart.js/auto';
 })
 export class RankedSubjectAreasComponent implements OnInit {
 
+  showChart = false;
   chartRankedSubjectAreas: Chart;
 
   constructor(
@@ -39,9 +40,10 @@ export class RankedSubjectAreasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Ranked Subject Areas
+    // Ranked Categories
     this.chartRankedSubjectAreas = null;
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
+      this.showChart = x.data.some(x => x > 0);
       setTimeout(() => {
         this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
       }, 0);
