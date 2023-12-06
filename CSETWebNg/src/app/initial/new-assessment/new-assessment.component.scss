@@ -21,11 +21,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. 
 
 */
-.card-image-parent{
+.card-image-parent {
   position: absolute;
   clip-path: inset(0);
   right: 0px;
-  top:0;
+  top: 0;
   width: 200px;
   height: 200px;
   z-index: 0;
@@ -40,5 +40,7 @@ SOFTWARE.
   opacity: 20%;
 }
 
-
-
+.swiper-button-prev.swiper-button-disabled,
+.swiper-button-next.swiper-button-disabled {
+  opacity: 0;
+}
