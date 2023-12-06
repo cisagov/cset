@@ -21,17 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { NumberSymbol } from '@angular/common';
-import { AfterViewInit, Component, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import SwiperCore, { SwiperOptions, Navigation, Pagination, Virtual } from 'swiper';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState
-} from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
@@ -111,7 +106,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     let swiperPrev = document.getElementsByClassName('swiper-button-prev');
     let swiperNext = document.getElementsByClassName('swiper-button-next');
     if (window.innerWidth < 620) {
-
       if (swiperPrev != null && swiperNext != null) {
         for (var i = 0; i < swiperPrev.length; i++) {
           swiperPrev[i].setAttribute('style', 'display:none');
