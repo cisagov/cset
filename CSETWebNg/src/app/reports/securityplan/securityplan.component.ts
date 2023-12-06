@@ -90,7 +90,7 @@ export class SecurityplanComponent implements OnInit {
       this.responseResultsByCategory = x;
     });
 
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
         (data: AcetDashboard) => {
           this.acetDashboard = data;

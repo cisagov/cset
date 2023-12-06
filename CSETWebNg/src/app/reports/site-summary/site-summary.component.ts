@@ -131,7 +131,7 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
         (data: AcetDashboard) => {
           this.acetDashboard = data;
