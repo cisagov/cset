@@ -23,9 +23,10 @@
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "allowDiagram":false,
-        "showPrivacyWarning":true,
-        "showTheUpgradeButton":true
+        "allowDiagram": false,
+        "showPrivacyWarning": true,
+        "showTheUpgradeButton": true,
+        "showCisaAssessorWorkflowSwitch": false
     }
 }
 
