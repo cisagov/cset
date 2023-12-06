@@ -28,13 +28,11 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         [Required]
         public string AccessKey { get; set; }
     }
+
     public class jCSET_VERSION
     {
         [Required]
         public Int32 Id { get; set; }
-
-        [Required]
-        public string Version_Id { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -42,8 +40,8 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
 
         [MaxLength(500)]
         public String Build_Number { get; set; }
-
     }
+
     public class jACCESS_KEY_ASSESSMENT
     {
         [Required]

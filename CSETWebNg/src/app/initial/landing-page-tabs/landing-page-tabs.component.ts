@@ -28,7 +28,6 @@ import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { AssessmentService } from '../../services/assessment.service';
 
 
 @Component({
@@ -40,8 +39,8 @@ import { AssessmentService } from '../../services/assessment.service';
 export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
   currentTab: string;
-  isSearch: boolean= false;
-  searchString:string="";
+  isSearch: boolean = false;
+  searchString: string = "";
   @ViewChild('tabs') tabsElementRef: ElementRef;
 
   constructor(
@@ -49,7 +48,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     private router: Router,
     public authSvc: AuthenticationService,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.setTab('myAssessments');
@@ -65,7 +64,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (!!this.tabsElementRef) { 
+    if (!!this.tabsElementRef) {
       const tabsEl = this.tabsElementRef.nativeElement;
       tabsEl.classList.add('sticky-tabs');
       if (this.authSvc.isLocal) {
@@ -84,12 +83,12 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     return this.currentTab === tab;
   }
 
-  changeToSearch(val){
+  changeToSearch(val) {
     this.isSearch = true;
     this.searchString = val;
   }
 
-  cancelSearch(){
+  cancelSearch() {
     this.isSearch = false;
     this.searchString = '';
   }
