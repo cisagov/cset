@@ -40,7 +40,7 @@ namespace CSETWebCore.Business.Merit
             long minimumFileSize = 28000; // hardcoded value, change if file changes size (sorry)
             if (!DoesDirectoryExist(uncPath))
             {
-                throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
+                throw new ApplicationException("the directory Path is not available or does not exist");
             }
             var pathToCreate = Path.Combine(uncPath, filename);
             File.WriteAllText(pathToCreate, data);
@@ -97,7 +97,7 @@ namespace CSETWebCore.Business.Merit
             }
             if (!DoesDirectoryExist(uncPath.Property_Value))
             {
-                var excp = new MERITApplicationException("Directory does not exist or is unavailable:"+ uncPath.Property_Value); 
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable."); 
                 excp.Path = uncPath.Property_Value;
                 throw excp;
             }
@@ -108,7 +108,7 @@ namespace CSETWebCore.Business.Merit
         {
             if (!DoesDirectoryExist(uncPath))
             {
-                var excp = new MERITApplicationException("Directory does not exist or is unavailable:" + uncPath);
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable.");
                 excp.Path = uncPath;
                 throw excp;
             }
