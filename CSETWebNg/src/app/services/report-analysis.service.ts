@@ -448,10 +448,12 @@ export class ReportAnalysisService {
   * @param canvasId
   */
   buildComponentTypes(canvasId: string, x: any) {
+
     let tempChart = Chart.getChart(canvasId);
     if (tempChart) {
       tempChart.destroy();
     }
+
     return new Chart(canvasId,
       {
         type: 'bar',

@@ -190,7 +190,7 @@ export class AnalysisService {
           title: {
             display: false,
             font: { size: 20 },
-            text: 'Top Ranked Categories'
+            text: 'Ranked Categories'
           },
           tooltip: {
             callbacks: {
