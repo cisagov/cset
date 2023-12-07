@@ -236,23 +236,26 @@ namespace CSETWebCore.DatabaseManager
 
         private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo) 
         {
-            if (LocalDb2019Installed || LocalDb2012Installed) 
+            if (!ApplicationCode.Equals("ACET"))
             {
-                var result = ExecuteScalarQuery("SELECT [Property_Value] FROM [GLOBAL_PROPERTIES] WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
-                
-                if (result != null && ((string)result).ToLower().Equals("false")) 
+                if (LocalDb2019Installed || LocalDb2012Installed)
                 {
-                    string oldLocalDbInstalledMessage = $"{(LocalDb2012Installed && LocalDb2019Installed ? "Old versions" : "An old version")} of SQL Server LocalDB " +
-                        $"{(LocalDb2012Installed && LocalDb2019Installed ? "are" : "is")} still installed. {ApplicationCode} uses the latest version of LocalDB (2022); however, " +
-                        $"{ApplicationCode} does not uninstall previous versions automatically. " +
-                        "If you would like to remove an old version of LocalDB, you will have to do so manually: \r\n \r\n" +
-                        $"{(LocalDb2019Installed ? LOCALDB_2019_REGISTRY_DISPLAY_NAME + "\r\n" : "")}" +
-                        $"{(LocalDb2012Installed ? LOCALDB_2012_REGISTRY_DISPLAY_NAME : "")}";
+                    var result = ExecuteScalarQuery("SELECT [Property_Value] FROM [GLOBAL_PROPERTIES] WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
 
-                    _logger.Info(oldLocalDbInstalledMessage);
-                    Console.WriteLine(oldLocalDbInstalledMessage);
+                    if (result != null && ((string)result).ToLower().Equals("false"))
+                    {
+                        string oldLocalDbInstalledMessage = $"{(LocalDb2012Installed && LocalDb2019Installed ? "Old versions" : "An old version")} of SQL Server LocalDB " +
+                            $"{(LocalDb2012Installed && LocalDb2019Installed ? "are" : "is")} still installed. {ApplicationCode} uses the latest version of LocalDB (2022); however, " +
+                            $"{ApplicationCode} does not uninstall previous versions automatically. " +
+                            "If you would like to remove an old version of LocalDB, you will have to do so manually: \r\n \r\n" +
+                            $"{(LocalDb2019Installed ? LOCALDB_2019_REGISTRY_DISPLAY_NAME + "\r\n" : "")}" +
+                            $"{(LocalDb2012Installed ? LOCALDB_2012_REGISTRY_DISPLAY_NAME : "")}";
 
-                    ExecuteNonQuery("UPDATE [GLOBAL_PROPERTIES] SET [Property_Value] = 'True' WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
+                        _logger.Info(oldLocalDbInstalledMessage);
+                        Console.WriteLine(oldLocalDbInstalledMessage);
+
+                        ExecuteNonQuery("UPDATE [GLOBAL_PROPERTIES] SET [Property_Value] = 'True' WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
+                    }
                 }
             }
         }
