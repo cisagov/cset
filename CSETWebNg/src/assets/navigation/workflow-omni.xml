@@ -15,7 +15,7 @@
 
         <!-- vanilla prepare pages -->
         <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD)" />
-        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:ISE" />
+        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:10" />
 
         <node d="assessment configuration" displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
         <node d="assessment information" displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
