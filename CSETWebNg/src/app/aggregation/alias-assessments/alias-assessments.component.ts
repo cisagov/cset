@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -41,6 +41,8 @@ export class AliasAssessmentsComponent implements OnInit {
   dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
   trendNameError: boolean = true;
+  @ViewChild('abc') abcd;
+  maturity: boolean; 
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -97,6 +99,7 @@ export class AliasAssessmentsComponent implements OnInit {
     });
     this.dialogRefSelect.afterClosed().subscribe(() => {
       this.getRelatedAssessments();
+      this.abcd.refresh();
     });
   }
 

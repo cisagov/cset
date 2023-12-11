@@ -21,12 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { AggregationService } from '../../services/aggregation.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { forEach, remove } from 'lodash';
+
 
 interface UserAssessment {
   assessmentId: number;
@@ -34,6 +35,7 @@ interface UserAssessment {
   assessmentCreatedDate: string;
   selected: boolean;
   useMaturity: boolean;
+  selectedMaturityModel: string;
 }
 
 @Component({
@@ -44,6 +46,8 @@ export class SelectAssessmentsComponent implements OnInit {
 
   assessments: UserAssessment[];
   aggregation: any = {};
+  maturity: boolean = false;
+  @ViewChild('abc') abcd;
 
   /**
    * CTOR
@@ -71,6 +75,7 @@ export class SelectAssessmentsComponent implements OnInit {
 
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         this.aggregation = resp2.aggregation;
+        
 
 
         resp2.assessments.forEach(selectedAssess => {
@@ -94,13 +99,14 @@ export class SelectAssessmentsComponent implements OnInit {
   
 
   /**
-   * Return results of currently selected assessments: [true,true] for maturity models, [true, false] for standard models 
+   * Return results of currently selected assessments: [true,true, pre-selected assessment] for maturity models, [true, false] for standard models 
    */
   assessmentTypeCheck() {
     for (let element of this.assessments) {
       if (element.selected === true) {
         if (element.useMaturity === true) {
-          return [true, true];
+          this.maturity = true;
+          return [true, true, element];
         } else {
           return [true, false];
         }
@@ -117,7 +123,7 @@ export class SelectAssessmentsComponent implements OnInit {
       let new_assessments = []
       for (let element of this.assessments) {
         if (result[1] === true) {
-          if (element.useMaturity === true) {
+          if (element.selectedMaturityModel === result[2].selectedMaturityModel) {
             new_assessments.push(element)
           }
         } else if (result[1] === false) {
@@ -139,6 +145,7 @@ export class SelectAssessmentsComponent implements OnInit {
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });
+    
     this.hideAssessments(event, assessment)
   }
 
@@ -158,8 +165,9 @@ export class SelectAssessmentsComponent implements OnInit {
     if (event.target.checked === true) {
       let new_assessments = []
       if (assessment.useMaturity === true) {
+        this.maturity = true; 
         for (let element of this.assessments) {
-          if (element.useMaturity === true) {
+          if (element.selectedMaturityModel === assessment.selectedMaturityModel) {
             new_assessments.push(element)
           }
         }
@@ -172,6 +180,7 @@ export class SelectAssessmentsComponent implements OnInit {
         }
       }
       this.assessments = new_assessments
+      this.abcd.refresh();
     }
   }
 
@@ -179,7 +188,7 @@ export class SelectAssessmentsComponent implements OnInit {
    *
    */
   close() {
-
+    
     return this.dialog.close();
   }
 
