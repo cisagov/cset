@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
-const fs = require('fs');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
