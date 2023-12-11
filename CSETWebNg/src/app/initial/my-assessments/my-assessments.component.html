@@ -27,7 +27,6 @@
             <div *ngIf="browserIsIE" class="alert alert-danger text-left">
                 {{ t('welcome page.internet explorer') }}
             </div>
-            <button (click)="temp()">hydro cleanup</button>
 
             <ng-container *ngIf="sortedAssessments?.length > 0; else noAssessmentsElseBlock">
                 <h3 class="mt-0" *ngIf="sortedAssessments?.length > 0">{{ t('my assessments') }}</h3>

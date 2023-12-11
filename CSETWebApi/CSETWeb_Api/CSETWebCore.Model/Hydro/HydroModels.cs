@@ -28,7 +28,7 @@ namespace CSETWebCore.Model.Hydro
     {
         public MATURITY_QUESTIONS Question { get; set; }
         public MATURITY_ANSWER_OPTIONS AnswerOption { get; set; }
-        public ISE_ACTIONS Actions { get; set; }
+        public HYDRO_DATA Actions { get; set; }
         //public ANSWER Answer { get; set; }
     }
 

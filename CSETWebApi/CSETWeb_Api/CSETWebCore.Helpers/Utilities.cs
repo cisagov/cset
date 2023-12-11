@@ -105,6 +105,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
         {
+            /*
             var actionsToMove = context.ISE_ACTIONS.Where(x => x.Mat_Option_Id != null).ToList();
             var hydroActions = context.HYDRO_DATA.ToList();
 
@@ -124,6 +125,7 @@ namespace CSETWebCore.Helpers
                     }
                 }
             }
+            */
            
         }
     }
