@@ -286,7 +286,7 @@ function createWindow() {
 
       // Setup external links in child windows
       childWindow.webContents.setWindowOpenHandler(details => {
-        if (!details.url.startsWith('file:///')) {
+        if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
           shell.openExternal(details.url);
           return {action: 'deny'};
         }
@@ -306,7 +306,7 @@ function createWindow() {
 
         // Setup external links in child windows
         childWindow.webContents.setWindowOpenHandler(details => {
-          if (!details.url.startsWith('file:///')) {
+          if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
             shell.openExternal(details.url);
             return {action: 'deny'};
           } else {
@@ -317,8 +317,8 @@ function createWindow() {
 
       return { action: 'deny' };
 
-    // Navigating to external url if not using file protocol; open in web browser
-    } else if (!details.url.startsWith('file:///')) {
+    // Navigating to external url if not using file protocol or localhost; open in web browser
+    } else if (!details.url.startsWith('file:///') && !details.url.startsWith('http://localhost')) {
       shell.openExternal(details.url);
       return {action: 'deny'};
     }
