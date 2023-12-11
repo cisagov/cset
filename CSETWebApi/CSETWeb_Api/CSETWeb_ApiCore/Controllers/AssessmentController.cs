@@ -24,6 +24,9 @@ using NodaTime;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Question;
+using CSETWebCore.Business.Aggregation;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -460,6 +463,15 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _tokenManager.AssessmentForUser();
             int userid = _tokenManager.GetCurrentUserId()??0;
             this._assessmentBusiness.clearFirstTime(userid,assessmentId);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/moveHydroActionsOutOfIseActions")]
+        public IActionResult MoveHydroActionsOutOfIseActions()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            this._assessmentBusiness.MoveHydroActionsOutOfIseActions();
             return Ok();
         }
     }

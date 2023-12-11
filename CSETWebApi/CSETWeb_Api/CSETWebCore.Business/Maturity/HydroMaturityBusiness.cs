@@ -52,7 +52,7 @@ namespace CSETWebCore.Business.Maturity
             var result = from subGrouping in _context.MATURITY_GROUPINGS
                          join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
                          join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join action in _context.HYDRO_DATA on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
                          where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
                               && answer.Mat_Option_Id == action.Mat_Option_Id
@@ -132,7 +132,7 @@ namespace CSETWebCore.Business.Maturity
             var result = from subGrouping in _context.MATURITY_GROUPINGS
                          join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
                          join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join action in _context.HYDRO_DATA on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
                          where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
                               && answer.Mat_Option_Id == action.Mat_Option_Id

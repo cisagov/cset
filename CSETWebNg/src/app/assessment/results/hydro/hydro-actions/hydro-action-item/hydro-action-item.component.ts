@@ -34,6 +34,7 @@ export class HydroActionItemComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.item)
     this.progressId = this.item.actionData.progress_Id;
     this.progressText = this.progressArray[this.progressId - 1].progress_Text;
     this.answer = this.item.actionData.answer;
