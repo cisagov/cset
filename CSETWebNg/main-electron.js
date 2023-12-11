@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, MenuItem, shell, session, dialog } = require('electron');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 const child = require('child_process').execFile;
 const request = require('request');
 const log = require('electron-log');
@@ -213,6 +214,11 @@ function createWindow() {
     let apiUrl = config.api.url;
     assignPort(apiPort, null, apiUrl).then(assignedApiPort => {
       log.info('API launching on port', assignedApiPort);
+
+      // Update config file with new port
+      config.api.port = assignedPort;
+      fs.writeFileSync('./dist/assets/settings/config.json', JSON.stringify(config))
+
       launchAPI(rootDir + '/Website', 'CSETWebCore.Api.exe', assignedApiPort, mainWindow);
       return assignedApiPort;
     }).then(assignedApiPort => {
