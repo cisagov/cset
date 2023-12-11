@@ -24,8 +24,7 @@
 
   <div class="flex-container">
     <div class="column mt-3">
-      <p
-        class="report-title">
+      <p class="report-title">
         MULTIPLE ASSESSMENT COMPARISON REPORT
       </p>
     </div>
@@ -157,11 +156,11 @@
         <th>Title</th>
         <th>File Name</th>
       </tr>
-      <tr *ngFor="let doc of response?.DocumentLibraryTable">
-        <td>{{doc.documenttitle}}</td>
-        <td>{{doc.FileName}}</td>
+      <tr *ngFor="let doc of response?.documentLibraryTable">
+        <td>{{doc.documentTitle}}</td>
+        <td>{{doc.fileName}}</td>
       </tr>
-      <tr *ngIf="(response?.DocumentLibraryTable?.length ?? 0) === 0">
+      <tr *ngIf="(response?.documentLibraryTable?.length ?? 0) === 0">
         <td></td>
         <td>There are no documents to display</td>
       </tr>
