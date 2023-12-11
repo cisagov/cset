@@ -73,7 +73,7 @@
       </tr>
       <tr *ngFor="let a of response?.salList">
         <td>{{a.alias}}</td>
-        <td>{{a.oSV}}</td>
+        <td>{{a.osv}}</td>
         <td>{{a.q_CV}}</td>
         <td>{{a.q_IV}}</td>
         <td>{{a.q_AV}}</td>
@@ -106,7 +106,7 @@
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.nA }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.na }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
         </tr>
@@ -152,7 +152,7 @@
         <th>File Name</th>
       </tr>
       <tr *ngFor="let doc of response?.documentLibraryTable">
-        <td>{{doc.documenttitle}}</td>
+        <td>{{doc.documentTitle}}</td>
         <td>{{doc.fileName}}</td>
       </tr>
       <tr *ngIf="response?.documentLibraryTable.length === 0">
