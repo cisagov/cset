@@ -27,14 +27,8 @@
   </div>
 
   <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
-    <div>
-      Selected Assessments Questions Compatibility: <span
-        class="font-weight-bold">{{ aggregation.questionsCompatibility | percent : '0.3' }}</span>
-    </div>
-    <div>
-      Selected Assessments Requirements Compatibilty: <span
-        class="font-weight-bold">{{ aggregation.requirementsCompatibility | percent : '0.3' }}</span>
-    </div>
+    
+    <app-trend-compare-compatibility #abc> </app-trend-compare-compatibility>
   </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm">
