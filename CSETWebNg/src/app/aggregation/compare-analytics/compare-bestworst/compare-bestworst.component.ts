@@ -63,7 +63,7 @@ export class CompareBestworstComponent implements OnInit {
   public selectCategory(cat: any) {
     this.currentCategory = cat;
 
-    // create graph data skeleton
+    // create chart data skeleton
     const x = {
       labels: [],
       datasets: [
@@ -86,7 +86,7 @@ export class CompareBestworstComponent implements OnInit {
       }
     };
 
-    // populate graph data object 
+    // populate chart data object 
     cat.assessments.forEach(a => {
       x.labels.push(a.assessmentName);
 

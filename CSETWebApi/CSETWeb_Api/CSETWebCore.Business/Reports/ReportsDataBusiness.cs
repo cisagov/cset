@@ -1243,11 +1243,18 @@ namespace CSETWebCore.Business.Reports
                        select a;
             foreach (var doc in docs)
             {
-                list.Add(new DocumentLibraryTable()
+                var dlt = new DocumentLibraryTable()
                 {
                     DocumentTitle = doc.Title,
                     FileName = doc.Path
-                });
+                };
+
+                if (dlt.DocumentTitle == "click to edit title")
+                {
+                    dlt.DocumentTitle = "(untitled)";
+                }
+
+                list.Add(dlt);
             }
 
             return list;

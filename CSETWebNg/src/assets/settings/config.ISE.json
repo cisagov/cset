@@ -9,7 +9,7 @@
         "showAggregation": true,
         "showAnalytics": false,
         "showAnalyticsAtTheEnd": false,
-        "showMenuLanguagePicker": true,
+        "showMenuLanguagePicker": false,
         "showAnalyticsColumnOnLanding": false,
         "splashPageHTML": "dist/assets/splashACET.html",
         "showFacilityName": false,
@@ -22,10 +22,10 @@
         "showExportOnReports": false,
         "showFeedback": false,
         "showDisclaimer": false,
-        "independentSuppGuidance": true
+        "independentSuppGuidance": true,
+        "showCisaAssessorWorkflowSwitch": false
     },
     "languageOptions": [
-        { "value": "en", "name": "English" },
-        { "value": "es", "name": "Español" }
+        { "value": "en", "name": "English" }
     ]
 }

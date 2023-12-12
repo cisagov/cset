@@ -297,6 +297,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 var oInfo = TinyMapper.Map<INFORMATION,jINFORMATION>(item);
                 oInfo.Assessment_Date = assessmentDate;
                 oInfo.Baseline_Assessment_Id = null;
+                oInfo.Submitted_Date = item.Submitted_Date;
+                oInfo.Ise_Submitted = item.Ise_Submitted;
                 model.jINFORMATION.Add(oInfo);
             }
 

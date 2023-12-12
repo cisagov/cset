@@ -58,8 +58,9 @@ export class ExcelExportComponent {
       window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');
     } else {
       window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
-      this.close();
     }
+
+    this.dialog.close();
   }
 
   setDoNotShow(){

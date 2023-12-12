@@ -34,6 +34,11 @@ import { IRPService } from './irp.service';
 import { MeritCheckComponent } from '../dialogs/ise-merit/merit-check.component';
 import { Answer } from '../models/questions.model';
 import { environment } from '../../../src/environments/environment';
+import { AuthenticationService } from './authentication.service';
+import { DateAdapter } from '@angular/material/core';
+import moment from 'moment';
+import { TranslocoService } from '@ngneat/transloco';
+import { ReportService } from './report.service';
 
 let headers = {
     headers: new HttpHeaders()
@@ -131,7 +136,11 @@ let headers = {
     private maturitySvc: MaturityService,
     private acetSvc: ACETService,
     private irpSvc: IRPService,
-    private assessmentSvc: AssessmentService
+    private assessmentSvc: AssessmentService,
+    private authSvc: AuthenticationService,
+    private dateAdapter: DateAdapter<any>,
+    private tSvc: TranslocoService,
+    private reportSvc: ReportService
   ) {
     this.init();
   }
@@ -148,6 +157,17 @@ let headers = {
       response: boolean) => {
         if (this.configSvc.installationMode === 'ACET') {
           this.switchStatus = response;
+          /// ISE doesn't want any language options for their installation, so this makes sure the language is set to english.
+          /// Prevents the case where 1.'ACET' is installed, 2.the language is changed to spanish, 
+          /// and then 3.'ISE' is installed and uses the same database (so the existing 'es' language stays and can't be switched)
+          if (this.switchStatus == true) {
+            let defaultLang = this.configSvc.config.defaultLang;
+            this.tSvc.setActiveLang(defaultLang);
+            this.authSvc.setUserLang(defaultLang).subscribe(() => {
+              this.dateAdapter.setLocale(defaultLang);
+              moment.locale(defaultLang);
+            });
+          }
         }
       }
     );
@@ -585,7 +605,7 @@ let headers = {
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
-      "creationDate": this.information.assessment_Creation_Date,
+      "creationDate": this.reportSvc.applyOffsetFromJwtToken(this.information.assessment_Creation_Date),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
