@@ -41,7 +41,7 @@ export class AliasAssessmentsComponent implements OnInit {
   dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
   trendNameError: boolean = true;
-  @ViewChild('abc') abcd;
+  @ViewChild('refreshComponent') refreshComponent;
   maturity: boolean; 
 
   constructor(
@@ -99,7 +99,7 @@ export class AliasAssessmentsComponent implements OnInit {
     });
     this.dialogRefSelect.afterClosed().subscribe(() => {
       this.getRelatedAssessments();
-      this.abcd.refresh();
+      this.refreshComponent.refresh();
     });
   }
 
