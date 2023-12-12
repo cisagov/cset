@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 12/7/2023 12:50:27 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 12/12/2023 1:42:20 PM
 
 */
 		
@@ -826,14 +826,14 @@ UPDATE [dbo].[MATURITY_MODELS] SET [Model_Name]=N'SD02 Owner' WHERE [Maturity_Mo
 PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Update rows in [dbo].[GEN_FILE]')
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-11' WHERE [Gen_File_Id] = 6088
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 06-CU-07' WHERE [Gen_File_Id] = 6092
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-21' WHERE [Gen_File_Id] = 6095
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 08-CU-01' WHERE [Gen_File_Id] = 6097
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 03-CU-14' WHERE [Gen_File_Id] = 6099
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-20' WHERE [Gen_File_Id] = 6118
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-11: Electronic Data Security Overview' WHERE [Gen_File_Id] = 6088
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU - 06-CU-07: IT Security Compliance Guide for Credit Unions' WHERE [Gen_File_Id] = 6092
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU - 01-CU-21: Diaster Recovery and Business Resumption' WHERE [Gen_File_Id] = 6095
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 08-CU-01: Pandemic Planning' WHERE [Gen_File_Id] = 6097
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 03-CU-14: Computer Software Patch Management' WHERE [Gen_File_Id] = 6099
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 01-CU-20: Due Diligence Over Third Parties' WHERE [Gen_File_Id] = 6118
 UPDATE [dbo].[GEN_FILE] SET [File_Type_Id]=31, [File_Name]=N'ACET Workbook Guide.pdf', [File_Size]=831488 WHERE [Gen_File_Id] = 7071
-UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 23-CU-07' WHERE [Gen_File_Id] = 7073
+UPDATE [dbo].[GEN_FILE] SET [Title]=N'LTCU 23-CU-07: Cyber Incident Notification Requirements' WHERE [Gen_File_Id] = 7073
 PRINT(N'Operation applied to 8 rows out of 8')
 
 PRINT(N'Update row in [dbo].[GALLERY_ITEM]')
