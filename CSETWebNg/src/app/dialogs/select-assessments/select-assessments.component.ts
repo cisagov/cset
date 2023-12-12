@@ -47,7 +47,7 @@ export class SelectAssessmentsComponent implements OnInit {
   assessments: UserAssessment[];
   aggregation: any = {};
   maturity: boolean = false;
-  @ViewChild('abc') abcd;
+  @ViewChild('refreshComponent') refreshComponent;
 
   /**
    * CTOR
@@ -119,6 +119,7 @@ export class SelectAssessmentsComponent implements OnInit {
    * Hides assessments of incompatible types when dialog opens and assessments have been pre-selected 
    */
   filterAssessments(result) {
+    if (result){
     if (result[0] === true) {
       let new_assessments = []
       for (let element of this.assessments) {
@@ -134,7 +135,7 @@ export class SelectAssessmentsComponent implements OnInit {
       }
       this.assessments = new_assessments
     }
-  }
+  }}
 
   /**
    * Call the API to manage connections between aggregation and assessment.
@@ -158,6 +159,7 @@ export class SelectAssessmentsComponent implements OnInit {
       if (resp2.assessments.length === 0) {
         this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
           this.assessments = resp;
+          this.refreshComponent.refresh();
         })
       }
     })
@@ -180,7 +182,7 @@ export class SelectAssessmentsComponent implements OnInit {
         }
       }
       this.assessments = new_assessments
-      this.abcd.refresh();
+      this.refreshComponent.refresh();
     }
   }
 

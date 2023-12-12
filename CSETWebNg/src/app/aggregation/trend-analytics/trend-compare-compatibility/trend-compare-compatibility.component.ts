@@ -45,7 +45,7 @@ export class TrendCompareCompatibilityComponent implements OnInit {
   
   assessments: UserAssessment[];
   aggregation: any = {};
-  message: string = 'Assessment compatibility or maturity model title will show once selection is made';
+  message: string = 'Standard assessment compatibility or maturity model will show once selection is made';
   maturity: boolean; 
 
   /**
@@ -59,9 +59,13 @@ export class TrendCompareCompatibilityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let answer = this.getAssessmentsForUser()
+    this.getAssessmentsForUser()
   }
 
+
+  /**
+   * Call API to get selected assessments 
+   */
   getAssessmentsForUser() {
 
     this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
@@ -70,20 +74,25 @@ export class TrendCompareCompatibilityComponent implements OnInit {
 
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         this.aggregation = resp2.aggregation;
-        
-
 
         resp2.assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.assessmentId === selectedAssess.assessmentId).selected = true;
         });
 
-        let result = this.assessmentTypeCheck()
-        return result; 
+        this.assessmentTypeCheck()
 
+        if(resp2.assessments.length === 0){
+          this.message = 'Standard assessment compatibility or maturity model will show once selection is made';
+          this.maturity = true; 
+        }
+         
       });
     })
   }
 
+  /**
+   * Set variables for type of assessment selected (Standard vs. Maturity Model)
+   */
   assessmentTypeCheck() {
     for (let element of this.assessments) {
       if (element.selected === true) {
@@ -98,6 +107,9 @@ export class TrendCompareCompatibilityComponent implements OnInit {
     }
   }
 
+  /**
+   * Method to refresh component when selection is made 
+   */
   refresh(){
     this.getAssessmentsForUser()
   }
