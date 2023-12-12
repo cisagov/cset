@@ -25,11 +25,11 @@ export class IseWarningsComponent {
 
   getMissingFields() {
     if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null) {
-      this.missingFields.push("Credit Union name");
+      this.missingFields.push("Credit union name");
     }
 
     if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null) {
-      this.missingFields.push("Credit Union asset value");
+      this.missingFields.push("Assets");
     }
   }
 
