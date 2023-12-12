@@ -356,9 +356,9 @@ export class QuestionExtrasComponent implements OnInit {
       data: find,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px', 
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
     }
-    
+
     )
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
@@ -375,9 +375,9 @@ export class QuestionExtrasComponent implements OnInit {
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
-        
+
         });
-        
+
   }
 
   /**
@@ -396,7 +396,7 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras.findings.splice(deleteIndex, 1);
         this.myQuestion.hasObservations = (this.extras.findings.length > 0);
     };
-  
+
 
   /**
    * Deletes a discovery.
@@ -751,16 +751,20 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: CustomDocument) {
-    let link = this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + document.file_Name + '#' + document.section_Ref;
-
-    // TODO: figure out how to handle this link
-    // link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
+  documentUrl(document: CustomDocument, bookmark: string) {
     if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
+      return this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + bookmark;
     }
 
-    return link;
+    if (this.configSvc.isDocUrl) {
+      return this.configSvc.docUrl + document.file_Name + '#' + bookmark;
+    }
+
+    if (this.configSvc.isOnlineUrlLive) {
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + document.file_Name + '#' + bookmark;
+    }
+
+    return "";
   }
 
   /**
@@ -773,7 +777,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns if Supplemental Guidance should be 
+   * Returns if Supplemental Guidance should be
    * independent from Examination Approach or not
    * @returns
    */

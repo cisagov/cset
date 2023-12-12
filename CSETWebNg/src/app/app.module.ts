@@ -614,6 +614,7 @@ import {
     MomentDateAdapter,
     MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   } from '@angular/material-moment-adapter';
+import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 
@@ -1180,6 +1181,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         CmuOtherRemarksComponent,
         UserLanguageComponent,
         AssessmentConvertCfComponent,
+        IseWarningsComponent,
         TrendAnalyticsComponent
     ],
     providers: [

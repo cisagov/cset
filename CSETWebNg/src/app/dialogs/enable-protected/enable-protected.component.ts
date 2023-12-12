@@ -74,6 +74,10 @@ export class EnableProtectedComponent implements OnInit {
     return (this.modulesList && this.modulesList.length > 0 && this.modulesList.every(m => m.unlocked));
   }
 
+  showCisaAssessorWorkflowSwitch() {
+    return this.configSvc.behaviors.showCisaAssessorWorkflowSwitch;
+  }
+
   /**
    *
    */

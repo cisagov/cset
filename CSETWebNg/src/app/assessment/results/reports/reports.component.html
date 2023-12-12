@@ -41,7 +41,8 @@
       <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
     </ul>
   </div>
-  <app-assessment-convert-cf class="mt-4"></app-assessment-convert-cf>
+  <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
+  <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
 
   <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
     All demographics information on the Assessment Information page must be
@@ -295,93 +296,12 @@
     </div>
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <div *ngIf="assessSvc.isISE() && !isMobile"
-        class="d-flex flex-column justify-content-start align-items-start mb-4">
+      <!-- <div *ngIf="assessSvc.isISE() && !isMobile"
+        class="d-flex flex-column justify-content-start align-items-start mb-4"> -->
         <h4>ISE Reports</h4>
 
-        <!-- Don't submit to MERIT without a Credit Union name or asset value above $0 -->
-        <div *ngIf="ncuaSvc.creditUnionName == '' || ncuaSvc.creditUnionName === null || ncuaSvc.assetsAsNumber == 0">
-          <div
-            class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
-            <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-            <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-              "Submit" button is disabled until all required fields on the 'Assessment Configuration' page have been
-              specified.
-            </div>
-          </div>
-        </div>
-
-        <!-- Add a warning to submit the assessment to their MERIT system if the assessment hasn't already been submitted -->
-        <div *ngIf="(!iseHasBeenSubmitted && !ncuaSvc.iseHasBeenSubmitted) && (!ncuaSvc.ISE_StateLed)">
-          <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
-            <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-            <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-              This assessment has not been submitted yet. If this assessment is complete, please click submit.
-            </div>
-          </div>
-        </div>
-
-        <div *ngIf="disableIseReportLinks || ncuaSvc.unassignedIssues"
-          class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
-          <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
-          <span *ngIf="
-            disableIseReportLinks &&
-            !assessSvc.assessment.isE_StateLed &&
-            !ncuaSvc.unassignedIssues
-          " class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-            "Submit" button and some reports are disabled until all statements
-            have been answered.
-          </span>
-          <span *ngIf="
-            disableIseReportLinks &&
-            assessSvc.assessment.isE_StateLed &&
-            !ncuaSvc.unassignedIssues
-          " class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-            There are unanswered statements. Some domains will be incomplete.
-          </span>
-          <span *ngIf="!disableIseReportLinks && ncuaSvc.unassignedIssues"
-            class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-            <br /><br />"Submit" button and some reports are disabled until all
-            Issues have an Issue Type assigned.<br /><br />
-            <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
-              Please assign an "Issue Type" to the following issue which was
-              generated:
-            </span>
-            <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
-              Please assign an "Issue Type" to the following issues which were
-              generated: </span><br />
-            <span *ngFor="
-              let title of this.ncuaSvc.unassignedIssueTitles;
-              let i = index
-            " style="padding-left: 40px">
-              {{ title }} </span><br />
-          </span>
-          <span *ngIf="disableIseReportLinks && ncuaSvc.unassignedIssues"
-            class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br />
-            <span *ngIf="!assessSvc.assessment.isE_StateLed">
-              "Submit" button and some reports are disabled until all statements
-              have been answered and all Issues have an Issue Type assigned.<br /><br />
-            </span>
-            <span *ngIf="assessSvc.assessment.isE_StateLed">
-              There are unanswered statements. Some domains will be incomplete.
-              <br /><br /><br />
-              "Submit" button and some reports are disabled until all Issues have
-              an Issue Type assigned.<br /><br />
-            </span>
-            <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length == 1">
-              Please assign an "Issue Type" to the following issue which was
-              generated:
-            </span>
-            <span *ngIf="this.ncuaSvc.unassignedIssueTitles.length > 1">
-              Please assign an "Issue Type" to the following issues which were
-              generated: </span><br />
-            <span *ngFor="
-              let title of this.ncuaSvc.unassignedIssueTitles;
-              let i = index
-            " style="padding-left: 40px">
-              {{ title }} </span><br />
-          </span>
-        </div>
+        <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted" [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
+        
         <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
           [disabled]="
           (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
@@ -407,7 +327,7 @@
         <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px"></div>
         </div>
-      </div>
+      <!-- </div> -->
     </div>
 
     <div *ngIf="
