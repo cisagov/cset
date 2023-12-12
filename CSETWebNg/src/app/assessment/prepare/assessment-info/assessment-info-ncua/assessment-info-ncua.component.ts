@@ -22,23 +22,25 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AssessmentService } from '../../../services/assessment.service';
-import { ConfigService } from '../../../services/config.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NCUAService } from '../../../services/ncua.service';
-import { ACETService } from '../../../services/acet.service';
+import { AssessmentService } from '../../../../services/assessment.service';
+import { ConfigService } from '../../../../services/config.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { NCUAService } from '../../../../services/ncua.service';
+import { ACETService } from '../../../../services/acet.service';
 
 @Component({
-  selector: 'app-assessment-info',
-  templateUrl: './assessment-info.component.html',
+  selector: 'app-assessment-info-ncua',
+  templateUrl: './assessment-info-ncua.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AssessmentInfoComponent {
+export class AssessmentInfoNcuaComponent {
 
   constructor(
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService
     ) { }
 }
