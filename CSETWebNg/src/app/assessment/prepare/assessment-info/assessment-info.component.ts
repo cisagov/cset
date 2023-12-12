@@ -40,7 +40,5 @@ export class AssessmentInfoComponent {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
-    public ncuaSvc: NCUAService,
-    public acetSvc: ACETService
     ) { }
 }

@@ -12,10 +12,26 @@ export class IseWarningsComponent {
   @Input() iseHasBeenSubmitted;
   @Input() disableIseReportLinks;
 
+  missingFields = [];
+
   constructor(
     public assessSvc: AssessmentService,
     public ncuaSvc: NCUAService
   ) {}
+
+  ngOnInit() {
+    this.getMissingFields();
+  }
+
+  getMissingFields() {
+    if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null) {
+      this.missingFields.push("Credit Union name");
+    }
+
+    if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null) {
+      this.missingFields.push("Credit Union asset value");
+    }
+  }
 
   isAssessmentPageFilled() {
     if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null 
