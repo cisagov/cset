@@ -1,8 +1,9 @@
 
 
 
-CREATE PROCEDURE [dbo].[usp_Assessments_Completion_For_User]
-@User_Id int
+
+CREATE PROCEDURE [dbo].[usp_Assessments_Completion_For_Access_Key]
+@accessKey varchar(20)
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -19,59 +20,54 @@ BEGIN
 	declare @ParentMatIds table(Id INT)
 	insert into @ParentMatIds select Parent_Question_Id from MATURITY_QUESTIONS where Parent_Question_Id is not null
 
-	IF OBJECT_ID('tempdb..#AvailableMatQuestions') IS NOT NULL drop table #availableMatQuestions
 	--Creating temp tables to hold applicable questions for each type of question
 	select a.Assessment_Id, mq.Mat_Question_Id into #AvailableMatQuestions
 		from MATURITY_QUESTIONS mq
 		join AVAILABLE_MATURITY_MODELS amm on amm.model_id = mq.Maturity_Model_Id
 			join MATURITY_MODELS mm on amm.model_id = mm.Maturity_Model_Id
 			join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseMaturity = 1 and mm.Maturity_Level_Usage_Type = 'Static'
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseMaturity = 1 and mm.Maturity_Level_Usage_Type = 'Static'
 			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
 
-	IF OBJECT_ID('tempdb..#AvailableMatQuestionsWithLevels') IS NOT NULL drop table #AvailableMatQuestionsWithLevels
+
 	select a.Assessment_Id, mq.Mat_Question_Id, mq.Maturity_Level_Id into #AvailableMatQuestionsWithLevels
 		from MATURITY_QUESTIONS mq
 			join AVAILABLE_MATURITY_MODELS amm on amm.model_id = mq.Maturity_Model_Id
 			join MATURITY_MODELS mm on amm.model_id = mm.Maturity_Model_Id
 			join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
 			join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id
 			join MATURITY_LEVELS ml on ml.Maturity_Level_Id = mq.Maturity_Level_Id
-			where u.UserId = @User_Id and a.UseMaturity = 1
+			where a.UseMaturity = 1
 			and asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level >= ml.Level and mm.Maturity_Level_Usage_Type = 'User_Selected'
 			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
+
     
 	-- special case for ISE
-	IF OBJECT_ID('tempdb..#AvailableMatQuestionsForIse') IS NOT NULL drop table #AvailableMatQuestionsForIse
-		select a.Assessment_Id, mq.Mat_Question_Id, mq.Maturity_Level_Id into #AvailableMatQuestionsForIse	
+	select a.Assessment_Id, mq.Mat_Question_Id, mq.Maturity_Level_Id into #AvailableMatQuestionsForIse
 		from MATURITY_QUESTIONS mq
 			join AVAILABLE_MATURITY_MODELS amm on amm.model_id = mq.Maturity_Model_Id
 			join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
 			join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id and asl.Level_Name = 'Maturity_Level'
 			join MATURITY_LEVELS ml on ml.Maturity_Level_Id = mq.Maturity_Level_Id
-			where u.UserId = @User_Id and a.UseMaturity = 1
+			where a.UseMaturity = 1
 			and amm.model_id = 10 AND ml.Maturity_Level_Id = mq.Maturity_Level_Id AND ml.level = asl.Standard_Specific_Sal_Level
 			and mq.Mat_Question_Id not in (select Id from @ParentMatIds)
 
+
 	-- special case for VADR
-	IF OBJECT_ID('tempdb..#AvailableMatQuestionsForVadr') IS NOT NULL drop table #availableMatQuestionsForVadr
 	select a.Assessment_Id, mq.Mat_Question_Id into #AvailableMatQuestionsForVadr
 		from MATURITY_QUESTIONS mq
 		join AVAILABLE_MATURITY_MODELS amm on amm.model_id = mq.Maturity_Model_Id
 			join ASSESSMENTS a on a.Assessment_Id = amm.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseMaturity = 1 and amm.model_id = 7
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseMaturity = 1 and amm.model_id = 7
 			and mq.Parent_Question_Id is null
 
-	IF OBJECT_ID('tempdb..#AvailableQuestionBasedStandard') IS NOT NULL drop table #AvailableQuestionBasedStandard		
-	select a.Assessment_Id, q.question_Id, ss.Selected_Sal_Level into #AvailableQuestionBasedStandard
+
+	select a.Assessment_Id, q.question_Id into #AvailableQuestionBasedStandard
 		from NEW_QUESTION q
 			join NEW_QUESTION_SETS qs on q.Question_Id = qs.Question_Id
 			join NEW_QUESTION_LEVELS nql on qs.New_Question_Set_Id = nql.New_Question_Set_Id
@@ -82,11 +78,10 @@ BEGIN
 			join ASSESSMENTS a on a.Assessment_Id = stand.Assessment_Id
 			join STANDARD_SELECTION ss on ss.Assessment_Id = stand.Assessment_Id and Application_Mode = 'Questions Based'
 			join UNIVERSAL_SAL_LEVEL usl on ss.Selected_Sal_Level = usl.Full_Name_Sal
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseStandard = 1 and stand.Selected = 1 and nql.Universal_Sal_Level = usl.Universal_Sal_Level 
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseStandard = 1 and stand.Selected = 1 and nql.Universal_Sal_Level = usl.Universal_Sal_Level
 
-	IF OBJECT_ID('tempdb..#AvailableRequirementBasedStandard') IS NOT NULL drop table #AvailableRequirementBasedStandard		
+
 	select a.Assessment_Id, r.Requirement_Id into #AvailableRequirementBasedStandard
 		from REQUIREMENT_SETS rs
 			join AVAILABLE_STANDARDS stand on stand.Set_Name = rs.Set_Name and stand.Selected = 1
@@ -95,11 +90,10 @@ BEGIN
 			join STANDARD_SELECTION ss on ss.Assessment_Id = a.assessment_Id and Application_Mode = 'Requirements Based'
 			join UNIVERSAL_SAL_LEVEL usl on usl.Full_Name_Sal = ss.Selected_Sal_Level
 			join REQUIREMENT_LEVELS rl on rl.Requirement_Id = r.Requirement_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseStandard = 1 and rl.Standard_Level = usl.Universal_Sal_Level
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseStandard = 1 and rl.Standard_Level = usl.Universal_Sal_Level
 
-	IF OBJECT_ID('tempdb..#AvailableDiagramQuestions') IS NOT NULL drop table #AvailableDiagramQuestions		
+
 	select a.Assessment_Id, q.Question_Id into #AvailableDiagramQuestions
 		from STANDARD_SELECTION ss
 			join 
@@ -118,9 +112,8 @@ BEGIN
 			join UNIVERSAL_SUB_CATEGORY_HEADINGS usch on usch.Heading_Pair_Id = h.Heading_Pair_Id		    
 			join Answer_Components ac on f.Question_Id = ac.Question_Or_Requirement_Id and f.assessment_id = ac.assessment_id
 			join ASSESSMENTS a on a.Assessment_Id = ss.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseDiagram = 1
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseDiagram = 1
 
 
 	insert into @AssessmentCompletedQuestions
@@ -129,48 +122,46 @@ BEGIN
 		CompletedCount = COUNT(DISTINCT(ans.Answer_Id))
 		from ASSESSMENTS a 
 			join ANSWER ans on ans.Assessment_Id = a.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and ans.Answer_Text != 'U'
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where ans.Answer_Text != 'U' 
 			and --This ensures the completed question counts are accurate even if users switch assessments types later on
-			(ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestions avq 
-												where avq.Assessment_Id = a.Assessment_Id)
+			(ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestions amq
+												where amq.Assessment_Id = a.Assessment_Id)
 			or
 			ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestionsWithLevels amql
 												join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id 
 												join MATURITY_LEVELS ml on ml.Maturity_Level_Id = amql.Maturity_Level_Id 
 												where asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level >= ml.Level)
 			or
-			ans.Question_Or_Requirement_Id in (select aqbs.Question_Id from #AvailableQuestionBasedStandard aqbs
+			ans.Question_Or_Requirement_Id in (select Question_Id from #AvailableQuestionBasedStandard aqbs
 												where aqbs.Assessment_Id = a.Assessment_Id)
 			or
-			ans.Question_Or_Requirement_Id in (select Requirement_Id from #AvailableRequirementBasedStandard arbs 
+			ans.Question_Or_Requirement_Id in (select Requirement_Id from #AvailableRequirementBasedStandard arbs
 												where arbs.Assessment_Id = a.Assessment_Id)
 			or
-			ans.Question_Or_Requirement_Id in (select Question_Id from #AvailableDiagramQuestions adq
-												where adq.Assessment_Id = a.Assessment_Id)
-			or
+			ans.Question_Or_Requirement_Id in (select Question_Id from #AvailableDiagramQuestions ads
+												where ads.Assessment_Id = a.Assessment_Id)
+			OR
             ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestionsForIse amqi
 												join ASSESSMENT_SELECTED_LEVELS asl on asl.Assessment_Id = a.Assessment_Id 
 												join MATURITY_LEVELS ml on ml.Maturity_Level_Id = amqi.Maturity_Level_Id 
 												where asl.Level_Name = 'Maturity_Level' and asl.Standard_Specific_Sal_Level = ml.Level)
-			or 
+			or
 			ans.Question_Or_Requirement_Id in (select Mat_Question_Id from #AvailableMatQuestionsForVadr amqv 
-												where amqv.Assessment_Id = a.Assessment_Id)
-			)
+												where amqv.Assessment_Id = a.Assessment_Id))
 			group by a.Assessment_Id
 
 
 	--Place 0 in completed questions count for assessments that have no answers yet
 	insert into @AssessmentCompletedQuestions
 	select
-		AssessmentId = Assessment_Id,
+		AssessmentId = a.Assessment_Id,
 		CompletedCount = 0
-		from ASSESSMENTS where Assessment_Id 
+		from ASSESSMENTS a
+		join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+		WHERE a.Assessment_Id 
 		not in (select AssessmentId from @AssessmentCompletedQuestions)
-		and 
-		AssessmentCreatorId = @User_Id
-	
+		
 
 	--Maturity questions count (For maturity models with level selection) available to answer
 	insert into @AssessmentTotalMaturityQuestionsCount
@@ -233,12 +224,10 @@ BEGIN
 		TotalDiagramQuestionsCount = COUNT(ans.Answer_Id)
 		from ANSWER ans
 			join ASSESSMENTS a on a.Assessment_Id = ans.Assessment_Id
-			join USERS u on a.AssessmentCreatorId = u.UserId
-			join ASSESSMENT_CONTACTS c on a.Assessment_Id = c.Assessment_Id and c.UserId = @User_Id
-			where u.UserId = @User_Id and a.UseDiagram = 1 and ans.Question_Type = 'Component'
+			join ACCESS_KEY_ASSESSMENT aka on a.Assessment_Id = aka.Assessment_Id and aka.AccessKey = @accessKey
+			where a.UseDiagram = 1 and ans.Question_Type = 'Component'
 			group by a.Assessment_Id
 	
-
 	select
 		AssessmentId = acq.AssessmentId,
 		CompletedCount = acq.CompletedCount,
@@ -249,5 +238,4 @@ BEGIN
 			full join @AssessmentTotalMaturityQuestionsCount atmq on atmq.AssessmentId = acq.AssessmentId
 			full join @AssessmentTotalStandardQuestionsCount atsq on atsq.AssessmentId = acq.AssessmentId
 			full join @AssessmentTotalDiagramQuestionsCount atdq on atdq.AssessmentId = acq.AssessmentId
-
 END	
