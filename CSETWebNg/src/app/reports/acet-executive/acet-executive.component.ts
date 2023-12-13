@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { MatDetailResponse, MaturityDomain, MaturityComponent, MaturityAssessment } from '../../models/mat-detail.model';
@@ -69,7 +69,7 @@ export class AcetExecutiveComponent implements OnInit {
       this.sortDomainListKey = this.acetSvc.spanishSortDomainListKey;
     }
     else {
-        this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
+      this.sortDomainListKey = this.acetSvc.englishSortDomainListKey;
     }
     //this.titleService.setTitle(this.tSvc.translate('reports.acet.executive summary.page tab title'));
 
@@ -125,7 +125,7 @@ export class AcetExecutiveComponent implements OnInit {
                 "name": component.componentName,
                 "data": sectionData,
                 "assessedMaturityLevel": this.updateMaturity(component.assessedMaturityLevel),
-                "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(component.assessedMaturityLevel)), 
+                "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(component.assessedMaturityLevel)),
               }
               assesmentData.sections.push(sectonInfo);
             })

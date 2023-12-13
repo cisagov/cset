@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { identity } from 'rxjs';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
@@ -43,7 +42,7 @@ export class CrrHeatmapComponent implements OnChanges {
    */
   constructor(
     public maturitySvc: MaturityService
-  ) {  }
+  ) { }
 
   /**
    *
