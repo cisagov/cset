@@ -37,7 +37,7 @@ export class TutorialCmmcComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     public layoutSvc: LayoutService
-    ) { }
+  ) { }
 
   documentURL(documentName: string) {
     return this.configSvc.docUrl + documentName;

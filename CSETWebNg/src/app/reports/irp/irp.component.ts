@@ -26,12 +26,11 @@ import { Component, Input, OnInit, AfterViewChecked, AfterViewInit } from '@angu
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
-import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
 
 @Component({
   selector: 'app-irp-section',
-  templateUrl: './irp.component.html', 
+  templateUrl: './irp.component.html',
   styleUrls: ['../reports.scss']
 })
 export class IrpSectionComponent implements OnInit, AfterViewInit, AfterViewChecked {
@@ -46,7 +45,7 @@ export class IrpSectionComponent implements OnInit, AfterViewInit, AfterViewChec
   ) { }
 
   ngOnInit() {
-    
+
   }
 
   /**
