@@ -4,14 +4,17 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CSETWebCore.Business.Question
@@ -115,6 +118,26 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
+            LanguageRequirements langPack = new LanguageRequirements();
+
+            // get the user's language
+            var userId = _tokenManager.GetCurrentUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            var accessKey = _tokenManager.GetAccessKey();
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+
+            var lang = user?.Lang ?? ak?.Lang ?? "en";
+
+
+            if (lang != "en")
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
+
+                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<LanguageRequirements>(json);
+            }
+
+
             var response = new QuestionResponse();
 
             foreach (var req in requirements.OrderBy(x => x.SetShortName).ToList())
@@ -188,6 +211,13 @@ namespace CSETWebCore.Business.Question
                     Is_Requirement = answer?.a.Is_Requirement ?? true,
                     QuestionType = answer?.a.Question_Type
                 };
+
+
+                var l = langPack.Requirements.FirstOrDefault(x => x.RequirementId == qa.QuestionId);
+                if (l != null)
+                {
+                    qa.QuestionText = l.RequirementText;               
+                }
 
                 if (string.IsNullOrEmpty(qa.QuestionType))
                 {
