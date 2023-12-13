@@ -30,7 +30,7 @@ import { ConfigService } from '../../services/config.service';
   selector: 'app-about',
   templateUrl: './about.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AboutComponent {
   version = environment.visibleVersion;
