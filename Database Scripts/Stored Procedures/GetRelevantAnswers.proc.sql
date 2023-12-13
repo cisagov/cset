@@ -21,10 +21,15 @@ BEGIN
 	-- get currently selected sets
 	IF OBJECT_ID('tempdb..#mySets') IS NOT NULL DROP TABLE #mySets
 	select set_name into #mySets from AVAILABLE_STANDARDS where Assessment_Id = @assessment_Id and Selected = 1
+
+	IF OBJECT_ID('tempdb..#relevantAnswers') IS NOT NULL DROP TABLE #relevantAnswers
+	CREATE TABLE #relevantAnswers (assessment_id int, answer_id int, is_requirement bit, question_or_requirement_id int, mark_for_review bit, 
+	comment ntext, alternate_justification ntext, question_number int, answer_text nvarchar(50), 
+	component_guid nvarchar(36), is_component bit, custom_question_guid nvarchar(50), is_framework bit, old_answer_id int, reviewed bit)
 	
 	if(@ApplicationMode = 'Questions Based')	
 	begin
-		
+		insert into #relevantAnswers
 		select distinct a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id, a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
@@ -46,7 +51,7 @@ BEGIN
 	end
 	else
 	begin		
-
+		insert into #relevantAnswers
 		select distinct a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id,a.mark_for_review, 
 			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
 			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
@@ -61,6 +66,17 @@ BEGIN
 			where rs.Set_Name in (select set_name from #mySets)
 			and a.Assessment_Id = @assessment_id
 			and rl.Standard_Level = u.Universal_Sal_Level 	
-
 	end
+	-- Get all of the component questions. The questions available are not currently filtered by SAL level, so just get them all.
+	insert into #relevantAnswers
+	select distinct a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id,a.mark_for_review, 
+			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
+			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
+			from ANSWER a
+			where a.Assessment_Id = @assessment_id and a.Question_Type = 'Component'
+
+	select a.assessment_id, a.answer_id, a.is_requirement, a.question_or_requirement_id,a.mark_for_review, 
+			a.comment, a.alternate_justification, a.question_number, a.answer_text, 
+			a.component_guid, a.is_component, a.custom_question_guid, a.is_framework, a.old_answer_id, a.reviewed
+			from #relevantAnswers a
 END
