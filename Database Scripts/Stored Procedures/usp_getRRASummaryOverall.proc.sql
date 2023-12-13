@@ -1,16 +1,9 @@
-USE [CSETWeb]
-GO
-/****** Object:  StoredProcedure [dbo].[usp_getRRASummaryOverall]    Script Date: 10/11/2023 8:19:56 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-ALTER PROCEDURE [dbo].[usp_getRRASummaryOverall]
+CREATE PROCEDURE [dbo].[usp_getRRASummaryOverall]
 @assessment_id int
 AS
 BEGIN
