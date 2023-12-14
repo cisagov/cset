@@ -21,17 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-cset-origin',
   templateUrl: './cset-origin.component.html'
 })
-export class CsetOriginComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+export class CsetOriginComponent {
 
 }

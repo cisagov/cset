@@ -91,7 +91,7 @@ export class CsiServiceDemographicsComponent implements OnInit {
 
   demographics: any = {};
 
-  constructor(private csiSvc: CsiService, private demoSvc: DemographicService, private configSvc: ConfigService) {}
+  constructor(private csiSvc: CsiService, private demoSvc: DemographicService, private configSvc: ConfigService) { }
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiBudgetBases().subscribe(

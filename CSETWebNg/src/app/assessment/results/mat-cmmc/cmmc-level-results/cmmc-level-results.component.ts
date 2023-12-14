@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
 
 @Component({
