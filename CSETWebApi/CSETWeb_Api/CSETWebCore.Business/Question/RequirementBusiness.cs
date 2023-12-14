@@ -118,7 +118,6 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-            var xxx = new LanguageOverlay();
 
             // get the user's language
             var userId = _tokenManager.GetCurrentUserId();
@@ -128,8 +127,7 @@ namespace CSETWebCore.Business.Question
 
             var lang = user?.Lang ?? ak?.Lang ?? "en";
 
-
-            
+            var xxx = new LanguageOverlay();
 
 
             var response = new QuestionResponse();
@@ -155,6 +153,13 @@ namespace CSETWebCore.Business.Question
                 }
 
 
+                // translate the Category
+                var translatedCategory = xxx.GetCat(dbR.Standard_Category, lang);
+                if (translatedCategory != null)
+                {
+                    dbR.Standard_Category = translatedCategory.Category;
+                }
+
 
                 // find or create the category
                 var category = response.Categories.Where(cat => cat.SetName == req.SetName && cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
@@ -166,7 +171,16 @@ namespace CSETWebCore.Business.Question
                         SetName = req.SetName,
                         StandardShortName = req.SetShortName
                     };
-                    response.Categories.Add(category);
+
+                    response.Categories.Add(category);                
+                }
+
+
+                // translate the Subcategory using the CATEGORIES translation object
+                var translatedSubcategory = xxx.GetCat(dbR.Standard_Sub_Category, lang);
+                if (translatedSubcategory != null)
+                {
+                    dbR.Standard_Sub_Category = translatedSubcategory.Category;
                 }
 
 

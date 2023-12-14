@@ -1,0 +1,32 @@
+{
+  "categories": [
+    {
+      "categoryEn": "Identify",
+      "category": "Ідентифікувати"
+    },
+    {
+      "categoryEn": "Asset Management",
+      "category": "Управління активами"
+    },
+    {
+      "categoryEn": "Business Environment",
+      "category": "Бізнес середовище"
+    },
+    {
+      "categoryEn": "Governance",
+      "category": "Управління"
+    },
+    {
+      "categoryEn": "Risk Assessment",
+      "category": "Оцінка ризику"
+    },
+    {
+      "categoryEn": "Risk Management",
+      "category": "Управління ризиками"
+    },
+    {
+      "categoryEn": "Risk Management Strategy",
+      "category": "Стратегія управління ризиками"
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 ﻿using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Pkcs;
 using System;
@@ -17,7 +18,8 @@ namespace CSETWebCore.Helpers
     /// </summary>
     public class LanguageOverlay
     {
-        private Dictionary<string, LanguageRequirements> dict = new Dictionary<string, LanguageRequirements>();
+        private Dictionary<string, LanguageRequirements> dictReq = new Dictionary<string, LanguageRequirements>();
+        private Dictionary<string, LanguageCategories> dictCat = new Dictionary<string, LanguageCategories>();
 
 
         public LanguageOverlay()
@@ -25,8 +27,35 @@ namespace CSETWebCore.Helpers
         }
 
 
+        public LanguageCategory GetCat(string category, string lang)
+        {
+            LanguageCategories langPack = null;
+
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            if (!dictCat.ContainsKey(lang))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "CATEGORIES.json"));
+
+                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<LanguageCategories>(json);
+
+                dictCat.Add(lang, langPack);
+            }
+            else
+            {
+                langPack = dictCat[lang];
+            }
+
+            return langPack.Categories.FirstOrDefault(x => x.CategoryEn.ToLower() == category.ToLower());
+        }
+
+
         /// <summary>
-        /// 
+        /// Gets the overlay requirement object for the language.
         /// </summary>
         /// <returns></returns>
         public LanguageRequirement GetReq(int requirementId, string lang)
@@ -38,18 +67,18 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            if (!dict.ContainsKey(lang))
+            if (!dictReq.ContainsKey(lang))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
 
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<LanguageRequirements>(json);
 
-                dict.Add(lang, langPack);
+                dictReq.Add(lang, langPack);
             }
             else
             {
-                langPack = dict[lang];
+                langPack = dictReq[lang];
             }
 
             return langPack.Requirements.FirstOrDefault(x => x.RequirementId == requirementId);
