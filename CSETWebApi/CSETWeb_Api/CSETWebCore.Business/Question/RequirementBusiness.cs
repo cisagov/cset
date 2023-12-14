@@ -118,7 +118,7 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
-            LanguageRequirements langPack = new LanguageRequirements();
+            var xxx = new LanguageOverlay();
 
             // get the user's language
             var userId = _tokenManager.GetCurrentUserId();
@@ -129,13 +129,7 @@ namespace CSETWebCore.Business.Question
             var lang = user?.Lang ?? ak?.Lang ?? "en";
 
 
-            if (lang != "en")
-            {
-                var rh = new ResourceHelper();
-                var json = rh.GetCopiedResource(Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
-
-                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<LanguageRequirements>(json);
-            }
+            
 
 
             var response = new QuestionResponse();
@@ -213,10 +207,10 @@ namespace CSETWebCore.Business.Question
                 };
 
 
-                var l = langPack.Requirements.FirstOrDefault(x => x.RequirementId == qa.QuestionId);
-                if (l != null)
+                var translatedReq = xxx.GetReq(dbR.Requirement_Id, lang);
+                if (translatedReq != null)
                 {
-                    qa.QuestionText = l.RequirementText;               
+                    qa.QuestionText = translatedReq.RequirementText;               
                 }
 
                 if (string.IsNullOrEmpty(qa.QuestionType))
