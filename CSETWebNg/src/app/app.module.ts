@@ -337,8 +337,8 @@ import { RelationshipFormationComponent } from './assessment/results/edm/relatio
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
-import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
-import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component';
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component';
 import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component';
 import { EDMFrameworkSummary } from './reports/edm/edm-framework-summ/edm-framework-summ.component';
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
@@ -613,7 +613,7 @@ import {
     MAT_MOMENT_DATE_FORMATS,
     MomentDateAdapter,
     MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  } from '@angular/material-moment-adapter';
+} from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -1209,13 +1209,13 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         },
         DatePipe,
         {
-            provide: MAT_DATE_LOCALE, 
+            provide: MAT_DATE_LOCALE,
             useFactory: (tSvc: TranslocoService) => {
                 // get the language based on config
                 return tSvc.getActiveLang();
             },
             deps: [TranslocoService],
-            multi: true        
+            multi: true
         },
         {
             provide: DateAdapter,
@@ -1263,7 +1263,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         CmuService,
         Utilities,
         NCUAService,
-        GalleryService, 
+        GalleryService,
         FooterService
     ],
     bootstrap: [AppComponent]

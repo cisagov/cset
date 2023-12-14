@@ -11,7 +11,7 @@ export class SiteInformationComponent {
   @Input()
   response: any;
 
-  constructor (
+  constructor(
     public reportSvc: ReportService
   ) { }
 }

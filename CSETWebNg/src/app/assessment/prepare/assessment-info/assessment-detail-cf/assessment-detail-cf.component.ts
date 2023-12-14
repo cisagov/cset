@@ -68,7 +68,7 @@ export class AssessmentDetailCfComponent implements OnInit {
     if (this.assessSvc.isBrandNew) {
       this.assessSvc.clearFirstTime();
     }
-    
+
     this.assessSvc.isBrandNew = false;
 
 
