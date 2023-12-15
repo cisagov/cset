@@ -104,7 +104,7 @@ export class ReferencesDisplayComponent implements OnInit {
    * Bookmarks to an actual section_Ref are appended to the URL.
    */
   documentUrl(doc: CustomDocument, bookmark: string) {
-    this.resourceLibSvc.documentUrl(doc, bookmark);
+    return this.resourceLibSvc.documentUrl(doc, bookmark);
   }
 
   /**
