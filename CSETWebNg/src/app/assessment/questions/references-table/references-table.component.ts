@@ -65,7 +65,7 @@ export class ReferencesTableComponent {
   /**
    *
    */
-  documentUrl(document: CustomDocument) {
-    return this.resourceLibSvc.documentUrl(document);
+  documentUrl(document: CustomDocument, bookmark: string) {
+    return this.resourceLibSvc.documentUrl(document, bookmark);
   }
 }
