@@ -235,7 +235,7 @@ namespace CSETWebCore.Business.Question
 
 
 
-            var xxx = new LanguageOverlay();
+            var overlay = new TranslationOverlay();
 
             // get the user's language
             var userId = _tokenManager.GetCurrentUserId();
@@ -245,7 +245,7 @@ namespace CSETWebCore.Business.Question
 
             var lang = user?.Lang ?? ak?.Lang ?? "en";
 
-            var translatedReq = xxx.GetReq(tabData.RequirementID, lang);
+            var translatedReq = overlay.GetReq(tabData.RequirementID, lang);
             if (translatedReq != null)
             {
                 tabData.SupplementalInfo = FormatSupplementalInfo(translatedReq.SupplementalInfo);
@@ -255,7 +255,6 @@ namespace CSETWebCore.Business.Question
 
             RequirementsData = tabData;
             int requirement_id = requirement.Requirement_Id;
-            // var questions = requirement.NEW_QUESTION;
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {

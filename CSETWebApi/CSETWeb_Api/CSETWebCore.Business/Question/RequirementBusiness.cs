@@ -127,7 +127,7 @@ namespace CSETWebCore.Business.Question
 
             var lang = user?.Lang ?? ak?.Lang ?? "en";
 
-            var xxx = new LanguageOverlay();
+            var overlay = new TranslationOverlay();
 
 
             var response = new QuestionResponse();
@@ -154,10 +154,10 @@ namespace CSETWebCore.Business.Question
 
 
                 // translate the Category
-                var translatedCategory = xxx.GetCat(dbR.Standard_Category, lang);
+                var translatedCategory = overlay.GetCat(dbR.Standard_Category, lang);
                 if (translatedCategory != null)
                 {
-                    dbR.Standard_Category = translatedCategory.Category;
+                    dbR.Standard_Category = translatedCategory.Value;
                 }
 
 
@@ -177,10 +177,10 @@ namespace CSETWebCore.Business.Question
 
 
                 // translate the Subcategory using the CATEGORIES translation object
-                var translatedSubcategory = xxx.GetCat(dbR.Standard_Sub_Category, lang);
+                var translatedSubcategory = overlay.GetCat(dbR.Standard_Sub_Category, lang);
                 if (translatedSubcategory != null)
                 {
-                    dbR.Standard_Sub_Category = translatedSubcategory.Category;
+                    dbR.Standard_Sub_Category = translatedSubcategory.Value;
                 }
 
 
@@ -221,7 +221,7 @@ namespace CSETWebCore.Business.Question
                 };
 
 
-                var translatedReq = xxx.GetReq(dbR.Requirement_Id, lang);
+                var translatedReq = overlay.GetReq(dbR.Requirement_Id, lang);
                 if (translatedReq != null)
                 {
                     qa.QuestionText = translatedReq.RequirementText;               
