@@ -3603,7 +3603,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	function addButton(url, libs, title, tooltip, select, imgUrl, infoObj, onClick, preview, noImg, clibs, xml)
 	{
 		var elt = document.createElement('div');
-		elt.className = 'geTemplate geAdaptiveAsset randy';
+		elt.className = 'geTemplate geAdaptiveAsset';
 		elt.style.position = 'relative';
 		elt.style.height = h + 'px';
 		elt.style.width = w + 'px';
@@ -3624,7 +3624,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		var elt2 = document.createElement('div');
 		elt2.style.textAlign = 'center';
 
-		// thumbnail label
+		// label/title for template thumbnail
 		var lbl = document.createElement('div');
 		lbl.style.fontSize = '.75rem';
 		lbl.innerText = title;
@@ -3632,6 +3632,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		lbl.style.top = '120px';
 		lbl.style.left = 0;
 		lbl.style.width = '100%';
+		lbl.className = 'template-label';
 
 		// crop container
 		var crop = document.createElement('div');
