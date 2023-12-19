@@ -3639,7 +3639,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		crop.style.position = 'absolute';
 		crop.style.top = 0;
 		crop.style.left = 0;
-		crop.style.clip = 'rect(0px,140px,120px,0px)';
+		crop.style.clipPath = 'inset(0 0 20px 0)';
 
 
 		
