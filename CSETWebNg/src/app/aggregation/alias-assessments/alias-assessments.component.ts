@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
@@ -63,14 +63,13 @@ export class AliasAssessmentsComponent implements OnInit {
 
   updateAggregation() {
     this.checkTrendName();
-    if(this.trendNameError){
+    if (this.trendNameError) {
       this.aggregationSvc.updateAggregation().subscribe();
     }
   }
 
-  validateNext(){
-    if(this.aliasData != null)
-    {
+  validateNext() {
+    if (this.aliasData != null) {
       var checkNext = this.aliasData.assessments.length < 2 || !this.checkTrendName();
       return checkNext;
     }
@@ -106,8 +105,8 @@ export class AliasAssessmentsComponent implements OnInit {
   /**
    * Check trend name empty 
    */
-  checkTrendName(){
-    this.trendNameError =  this.aggregationSvc.currentAggregation.aggregationName.length > 0;
+  checkTrendName() {
+    this.trendNameError = this.aggregationSvc.currentAggregation.aggregationName.length > 0;
     return this.trendNameError;
   }
 

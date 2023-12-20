@@ -24,7 +24,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Answer, Question, Option, InconsistentOption } from '../../../../../models/questions.model';
+import { Answer, Question, Option } from '../../../../../models/questions.model';
 import { CisService } from '../../../../../services/cis.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { LayoutService } from '../../../../../services/layout.service';
@@ -107,7 +107,7 @@ export class OptionBlockNestedComponent implements OnInit {
 
     if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName) && o.selected == true) {
       o.selected = false;
-      
+
       answers.push(this.makeAnswer(o));
 
       siblingOptions = this.q.options;

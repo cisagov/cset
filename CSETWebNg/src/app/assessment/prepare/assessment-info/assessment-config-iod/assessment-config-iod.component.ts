@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { AssessmentContactsResponse, AssessmentDetail } from '../../../../models/assessment-info.model';
+import { DemographicsIod } from '../../../../models/demographics-iod.model';
+import { User } from '../../../../models/user.model';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { DemographicService } from '../../../../services/demographic.service';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicIodService } from '../../../../services/demographic-iod.service';
-import { DemographicsIod } from '../../../../models/demographics-iod.model';
-import { AssessmentContactsResponse, AssessmentDetail } from '../../../../models/assessment-info.model';
-import { User } from '../../../../models/user.model';
+import { DemographicService } from '../../../../services/demographic.service';
 
 @Component({
   selector: 'app-assessment-config-iod',
@@ -17,8 +17,8 @@ export class AssessmentConfigIodComponent implements OnInit {
   demographics: any = {};
   contacts: User[];
   assessment: AssessmentDetail = {};
-  IsPCII: boolean =false;
-  
+  IsPCII: boolean = false;
+
   constructor(
     private assessSvc: AssessmentService,
     private demoSvc: DemographicService,
@@ -55,7 +55,7 @@ export class AssessmentConfigIodComponent implements OnInit {
       }
     }
 
-    
+
     this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
@@ -86,11 +86,11 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.updateDemographics();
   }
 
-  changeIsPCII(val: boolean) {        
-    if(this.assessment){
+  changeIsPCII(val: boolean) {
+    if (this.assessment) {
       this.IsPCII = val;
       this.assessment.is_PCII = val;
-      
+
       this.configSvc.cisaAssessorWorkflow = true;
       this.assessSvc.updateAssessmentDetails(this.assessment);
     }

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Inject, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
@@ -87,15 +87,15 @@ export class QuestionFiltersComponent implements OnInit {
   refreshAnswerOptions() {
     this.answerOptions = [];
     this.filterSvc.answerOptions.filter(x => x != 'U').forEach(o => {
-      if(this.assessSvc.isISE()) {
-        this.answerOptions.push({ 
-          value: o, 
-          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o) 
+      if (this.assessSvc.isISE()) {
+        this.answerOptions.push({
+          value: o,
+          text: this.questionsSvc.answerButtonLabel(this.filterSvc.maturityModelName, o)
         });
       } else {
-        this.answerOptions.push({ 
-          value: o, 
-          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o) 
+        this.answerOptions.push({
+          value: o,
+          text: this.questionsSvc.answerDisplayLabel(this.filterSvc.maturityModelName, o)
         });
       }
     });
