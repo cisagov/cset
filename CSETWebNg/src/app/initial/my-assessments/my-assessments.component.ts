@@ -51,6 +51,7 @@ import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { HydroService } from "../../services/hydro.service";
 
 
 interface UserAssessment {
@@ -124,7 +125,8 @@ export class MyAssessmentsComponent implements OnInit {
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public datePipe: DatePipe,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private hydroSvc: HydroService
   ) { }
 
   ngOnInit() {
@@ -451,6 +453,10 @@ export class MyAssessmentsComponent implements OnInit {
     this.disabledEncrypt = true;
     this.assessSvc.persistEncryptPreference(this.preventEncrypt);
     this.disabledEncrypt = false;
+  }
+
+  malcolmTest() {
+    this.hydroSvc.getMalcolmTest().subscribe();
   }
 
 }

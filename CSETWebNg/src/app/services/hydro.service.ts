@@ -63,6 +63,10 @@ export class HydroService {
   getHydroActionItems(): any {
     return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
   }
+
+  getMalcolmTest(): any {
+    return this.http.get(this.configSvc.apiUrl + 'malcolm');
+  }
 }
 
 export class HydroProgressComment {
