@@ -24,8 +24,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { AdminSaveData, AdminPageData, HoursOverride, AdminTableData, AttributePair,
-    AdminSaveResponse } from '../../../models/admin-save.model';
+import {
+    AdminSaveData, AdminPageData, HoursOverride, AdminTableData, AttributePair,
+    AdminSaveResponse
+} from '../../../models/admin-save.model';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 
@@ -141,37 +143,37 @@ export class AdminComponent implements OnInit {
         }
     }
 
-    test(stdata: string){        
-        if(stdata=="-"){
+    test(stdata: string) {
+        if (stdata == "-") {
             return false;
         }
         let data = Number(stdata);
-        if(isNaN(data)){
+        if (isNaN(data)) {
             this.error = "Must be a number";
             return true;
         }
-        let rval = ((data>10000)||(data<-10));        
-        if(rval){
-            if(data>10000){
+        let rval = ((data > 10000) || (data < -10));
+        if (rval) {
+            if (data > 10000) {
                 this.error = "Must be < 10000";
             }
-            if(data<-10){
+            if (data < -10) {
                 this.error = "Must be > -10";
             }
         }
-        return rval; 
+        return rval;
     }
     /**
      *
      */
     saveData(data: AdminTableData, type: string) {
-         if((data.documentationHours>1000)||(data.documentationHours<-10) 
-            || isNaN(data.documentationHours)){
-             data.documentationHours = 0;
+        if ((data.documentationHours > 1000) || (data.documentationHours < -10)
+            || isNaN(data.documentationHours)) {
+            data.documentationHours = 0;
             return;
         }
-        if((data.interviewHours>1000)||(data.interviewHours<-10)
-        || isNaN(data.interviewHours)){
+        if ((data.interviewHours > 1000) || (data.interviewHours < -10)
+            || isNaN(data.interviewHours)) {
             data.interviewHours = 0;
             return;
         }

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
@@ -80,16 +80,16 @@ export class DashboardComponent implements OnInit {
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
     this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
 
-    
+
     // Assessment Compliance
-    if(this.assessComplChart){
+    if (this.assessComplChart) {
       this.assessComplChart.destroy();
     }
     this.assessComplChart = this.analysisSvc.buildPercentComplianceChart('canvasAssessmentCompliance', x);
 
 
     // Top Categories (only show the top 5 entries for dashboard)
-    if(this.topCategChart){
+    if (this.topCategChart) {
       this.topCategChart.destroy();
     }
     this.analysisSvc.getTopCategories(5).subscribe((resp: any) => {
@@ -99,9 +99,9 @@ export class DashboardComponent implements OnInit {
       this.showTopCategChart = resp.data.some(x => x > 0);
     });
 
-    
+
     // Standards Summary
-    if(this.stdsSummChart){
+    if (this.stdsSummChart) {
       this.stdsSummChart.destroy();
     }
     this.analysisSvc.getStandardsSummary().subscribe(resp => {
@@ -110,7 +110,7 @@ export class DashboardComponent implements OnInit {
 
 
     // Component Summary
-    if(this.compSummChart){
+    if (this.compSummChart) {
       this.compSummChart.destroy();
     }
     this.analysisSvc.getComponentsSummary().subscribe(resp => {
@@ -124,7 +124,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.initialized = true;
-    setTimeout(function(){
+    setTimeout(function () {
       document.getElementById("analysisDiv").scrollIntoView();
     }, 250);
   }

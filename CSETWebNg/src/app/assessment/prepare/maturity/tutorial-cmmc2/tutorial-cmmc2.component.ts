@@ -24,23 +24,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
+import { ResourceLibraryService } from '../../../../services/resource-library.service';
 
 
 @Component({
   selector: 'app-tutorial-cmmc2',
   templateUrl: './tutorial-cmmc2.component.html'
 })
-export class TutorialCmmc2Component implements OnInit {
+export class TutorialCmmc2Component {
 
   constructor(
     public configSvc: ConfigService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private resourceLibSvc: ResourceLibraryService
   ) { }
 
-  ngOnInit(): void {
-  }
-
   documentURL(documentName: string) {
-    return this.configSvc.docUrl + documentName;
+    return this.resourceLibSvc.documentUrlByName(documentName);
   }
 }

@@ -21,11 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
-import * as _ from 'lodash';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Finding, ActionItemText, FindingContact, Importance, SubRiskArea } from '../findings/findings.model';
+import { Finding, ActionItemText } from '../findings/findings.model';
 import { FindingsService } from '../../../services/findings.service';
 import { QuestionsService } from '../../../services/questions.service';
 
@@ -34,7 +33,7 @@ import { QuestionsService } from '../../../services/questions.service';
   templateUrl: './issues.component.html',
   styleUrls: ['./issues.component.scss']
 })
- 
+
 export class IssuesComponent implements OnInit {
   assessmentId: any;
   finding: Finding;
@@ -55,7 +54,7 @@ export class IssuesComponent implements OnInit {
 
   // Per client request: "Just make them static for now"
   risk: string = "Transaction";
-  subRisk: string = "Information Systems & Technology Controls";  
+  subRisk: string = "Information Systems & Technology Controls";
   updatedActionText: string[] = [];
   ActionItemList = new Map();
 
@@ -75,7 +74,7 @@ export class IssuesComponent implements OnInit {
     this.finding.risk_Area = this.risk;
     this.finding.sub_Risk = this.subRisk;
   }
-  
+
   ngOnInit() {
     this.loading = true;
 
@@ -83,22 +82,22 @@ export class IssuesComponent implements OnInit {
     let questionType = localStorage.getItem('questionSet');
 
     this.dialog.backdropClick()
-    .subscribe(() => {
-      this.update();
-    });
+      .subscribe(() => {
+        this.update();
+      });
 
     this.questionsSvc.getChildAnswers(this.questionID, this.assessmentId).subscribe(
       (data: any) => {
         this.questionData = data;
-    });
+      });
 
     this.questionsSvc.getDetails(this.questionID, questionType).subscribe((details) => {
-      this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);  
+      this.suppGuidance = this.cleanText(details.listTabs[0].requirementsData.supplementalFact);
     });
 
     // Grab the finding from the db if there is one.
     this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, questionType).subscribe((response: Finding) => {
-      
+
       this.finding = response;
 
       this.questionsSvc.getActionItems(this.questionID, this.finding.finding_Id).subscribe(
@@ -158,16 +157,16 @@ export class IssuesComponent implements OnInit {
     text = text.replace(/&#10;/g, ' ');
     text = text.replace(/&#8217;/g, '\'');
     text = text.replace(/&#160;/g, '');
-    text = text.replace (/&#8221;/g, '');
+    text = text.replace(/&#8221;/g, '');
     text = text.replace(/&#34;/g, '\'');
     text = text.replace(/&#167;/g, '');
     text = text.replace(/&#183;/g, '');
     text = text.replace(/&nbsp;/g, '');
     text = text.replace('ISE Reference', '');
     text = text.replace('/\s/g', ' ');
-    
+
     return (text);
-    }
+  }
 
   updateRiskArea(riskArea: string) {
     this.risk = riskArea;
@@ -177,18 +176,18 @@ export class IssuesComponent implements OnInit {
     this.subRisk = subRisk;
   }
 
-  updateActionText(e: any, q: any) {    
-    const item: ActionItemText = {Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value};
+  updateActionText(e: any, q: any) {
+    const item: ActionItemText = { Mat_Question_Id: q.mat_Question_Id, ActionItemOverrideText: e.target.value };
     this.ActionItemList.set(q.mat_Question_Id, item);
   }
 
   update() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-    
+
     let mapToArray = Array.from(this.ActionItemList.values());
     this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
-    
+
     if (this.finding.type !== null) {
       this.findSvc.saveDiscovery(this.finding).subscribe(() => {
         this.dialog.close(true);
@@ -203,10 +202,10 @@ export class IssuesComponent implements OnInit {
   openIssue() {
     this.finding.answer_Id = this.answerID;
     this.finding.question_Id = this.questionID;
-    
+
     //let mapToArray = Array.from(this.ActionItemList.values());
     //this.findSvc.saveIssueText(mapToArray, this.finding.finding_Id).subscribe();
-    
+
     // if (this.finding.auto_Generated == 0) {
     //   this.isIssueEmpty();
     // }
@@ -229,11 +228,11 @@ export class IssuesComponent implements OnInit {
   }
 
   isIssueEmpty() {
-    if ( this.finding.actionItems == null
-    && this.finding.citations == null
-    && this.finding.description == null
-    && this.finding.issue == null
-    && this.finding.type == null) {
+    if (this.finding.actionItems == null
+      && this.finding.citations == null
+      && this.finding.description == null
+      && this.finding.issue == null
+      && this.finding.type == null) {
       return true;
     }
     return false;

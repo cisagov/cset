@@ -1,3 +1,4 @@
+import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
 //   Copyright 2023 Battelle Energy Alliance, LLC
@@ -37,10 +38,8 @@ import { FindingsComponent } from './../findings/findings.component';
 import { Finding } from './../findings/findings.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
-import { MaturityService } from '../../../services/maturity.service';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@ngneat/transloco';
-import { title } from 'process';
 
 
 
@@ -89,9 +88,9 @@ export class QuestionExtrasComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
-    private maturitySvc: MaturityService,
     public layoutSvc: LayoutService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private resourceLibSvc: ResourceLibraryService
   ) {
   }
 
@@ -365,8 +364,8 @@ export class QuestionExtrasComponent implements OnInit {
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Finding[]) => {
             this.extras.findings = response;
-            for (let i of response){
-              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)){
+            for (let i of response) {
+              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)) {
                 this.deleteEmptyObservation(i)
               }
             }
@@ -376,7 +375,7 @@ export class QuestionExtrasComponent implements OnInit {
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
 
-        });
+      });
 
   }
 
@@ -385,17 +384,17 @@ export class QuestionExtrasComponent implements OnInit {
    * @param findingToDelete
    */
   deleteEmptyObservation(findingToDelete) {
-        this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
-        let deleteIndex = null;
+    this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+    let deleteIndex = null;
 
-        for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
-            deleteIndex = i;
-          }
-        }
-        this.extras.findings.splice(deleteIndex, 1);
-        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
-    };
+    for (let i = 0; i < this.extras.findings.length; i++) {
+      if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+        deleteIndex = i;
+      }
+    }
+    this.extras.findings.splice(deleteIndex, 1);
+    this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+  };
 
 
   /**
@@ -752,19 +751,7 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   documentUrl(document: CustomDocument, bookmark: string) {
-    if (document.is_Uploaded) {
-      return this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + bookmark;
-    }
-
-    if (this.configSvc.isDocUrl) {
-      return this.configSvc.docUrl + document.file_Name + '#' + bookmark;
-    }
-
-    if (this.configSvc.isOnlineUrlLive) {
-      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + document.file_Name + '#' + bookmark;
-    }
-
-    return "";
+    return this.resourceLibSvc.documentUrl(document, bookmark);
   }
 
   /**
