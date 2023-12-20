@@ -616,7 +616,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
+import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 
 @NgModule({
     imports: [
@@ -852,6 +852,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         SecurityplanComponent,
         SiteSummaryComponent,
         TrendReportComponent,
+        TrendCompareCompatibilityComponent,
         CompareReportComponent,
         Assessment2InfoComponent,
         ModelSelectComponent,
@@ -1181,6 +1182,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         UserLanguageComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
+        TrendAnalyticsComponent
     ],
     providers: [
         TranslocoService,
