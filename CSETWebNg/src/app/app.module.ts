@@ -111,6 +111,7 @@ import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
+import { AssessmentInfoNcuaComponent } from './assessment/prepare/assessment-info/assessment-info-ncua/assessment-info-ncua.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -731,6 +732,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
+        AssessmentInfoNcuaComponent,
         AssessmentDetailNcuaComponent,
         ResultsComponent,
         SalSimpleComponent,
