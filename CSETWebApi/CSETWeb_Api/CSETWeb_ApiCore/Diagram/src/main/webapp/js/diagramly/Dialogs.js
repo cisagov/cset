@@ -2936,7 +2936,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		//smallSize: Reduce template button size to fit 4 in a row
 		if (smallSize != null)
 		{
-			w = h = smallSize? 135 : 140;
+			w = smallSize ? 135 : 140;
+			h = smallSize ? 135 : 150;
 		}
 		
 		var first = true;
@@ -2946,7 +2947,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			while (i0 < templates.length && (first || mxUtils.mod(i0, 19) != 0))
 			{
 				var tmp = templates[i0++];
-				//var btn = addButton();
+
 				var btn = addButton(tmp.url, tmp.libs, tmp.title, tmp.tooltip? tmp.tooltip : tmp.title,
 					tmp.select, tmp.imgUrl, tmp.info, tmp.onClick, tmp.preview, tmp.noImg, tmp.clibs, tmp.xml);
 				
@@ -3604,8 +3605,8 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		var elt = document.createElement('div');
 		elt.className = 'geTemplate geAdaptiveAsset';
 		elt.style.position = 'relative';
-		elt.style.height = w + 'px';
-		elt.style.width = h + 'px';
+		elt.style.height = h + 'px';
+		elt.style.width = w + 'px';
 		elt.style.border = '1px solid transparent';
 		var xmlData = xml, realUrl = url;
 		
@@ -3617,6 +3618,31 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 		{
 			elt.setAttribute('title', tooltip);
 		}
+
+
+		// inner div to crop bottom of image
+		var elt2 = document.createElement('div');
+		elt2.style.textAlign = 'center';
+
+		// label/title for template thumbnail
+		var lbl = document.createElement('div');
+		lbl.style.fontSize = '.75rem';
+		lbl.innerText = title;
+		lbl.style.position = 'absolute';
+		lbl.style.top = '120px';
+		lbl.style.left = 0;
+		lbl.style.width = '100%';
+		lbl.className = 'template-label';
+
+		// crop container
+		var crop = document.createElement('div');
+		crop.className = 'crop';
+		crop.style.position = 'absolute';
+		crop.style.top = 0;
+		crop.style.left = 0;
+		crop.style.clipPath = 'inset(0 0 20px 0)';
+
+
 		
 		function loadXmlData(url, callback)
 		{
@@ -3703,23 +3729,17 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			extImg = img;
 			
 			var fallbackImgUrl = imgUrl.replace('.drawio.xml', '').replace('.drawio', '').replace('.xml', '');
-			elt.appendChild(img);
+
+
+			crop.appendChild(img);
+			elt2.appendChild(crop);
+			elt2.appendChild(lbl);
+			elt.appendChild(elt2);
 			
 			img.onerror = function()
 			{
 				console.log('Image error: ');
 				console.log(imgUrl);
-				// if anything is replaced in imgUrl, do the below code. If not, skip the below code
-
-				//if (this.src != fallbackImgUrl)
-				//{
-				//	this.src = fallbackImgUrl;
-				//}
-				//else
-				//{
-				//	this.src = Editor.errorImage;
-				//	this.onerror = null;
-				//}
 			};
 			
 			mxEvent.addGestureListeners(elt, mxUtils.bind(this, function(evt)

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { EjectionComponent } from '../../dialogs/ejection/ejection.component';
@@ -59,7 +59,7 @@ export class LoginAcetComponent implements OnInit {
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);

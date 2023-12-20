@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Hotkey, HotkeysService } from 'angular2-hotkeys';
 import { AboutComponent } from './dialogs/about/about.component';
 import { AdvisoryComponent } from './dialogs/advisory/advisory.component';
@@ -73,7 +73,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     public router: Router,
     private _hotkeysService: HotkeysService,
-    private footerSvc:FooterService,
+    private footerSvc: FooterService,
     storageManager: LocalStoreManager
   ) {
     storageManager.initialiseStorageSyncListener();
@@ -103,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       localStorage.removeItem("returnPath");
       const qParams = this.processParams(rpath);
       rpath = rpath.split('?')[0];
-      this.router.navigate([rpath], {queryParams: qParams, queryParamsHandling: 'merge' });
+      this.router.navigate([rpath], { queryParams: qParams, queryParamsHandling: 'merge' });
     }
   }
 
@@ -266,7 +266,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // Accessibility Features
     this._hotkeysService.add(new Hotkey('alt+c', (event: KeyboardEvent): boolean => {
-      switch(this.configSvc.installationMode || '') {
+      switch (this.configSvc.installationMode || '') {
         case "ACET":
           window.open(this.docUrl + "AccessibilityFeatures/index_acet.htm", "_blank");
           break;
@@ -277,7 +277,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     }));
     // User Guide
     this._hotkeysService.add(new Hotkey('alt+g', (event: KeyboardEvent): boolean => {
-      switch(this.configSvc.installationMode || '') {
+      switch (this.configSvc.installationMode || '') {
         case "ACET":
           window.open(this.docUrl + "htmlhelp_acet/index.htm", "_blank");
           break;
