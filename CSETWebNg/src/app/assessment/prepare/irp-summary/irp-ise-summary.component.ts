@@ -65,7 +65,7 @@ export class ExamProfileSummaryComponent implements OnInit {
      */
     loadDashboard() {
         this.acetSvc.getAcetDashboard().subscribe(
-            (data: AcetDashboard) => {           
+            (data: AcetDashboard) => {
                 this.acetDashboard = data;
 
                 if (this.ncuaSvc.switchStatus && this.assessSvc.usesMaturityModel('ISE')) {

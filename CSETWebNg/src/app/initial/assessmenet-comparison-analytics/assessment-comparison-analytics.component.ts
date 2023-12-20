@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { DemographicService } from "../../services/demographic.service";
 import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
 import { TsaService } from "../../services/tsa.service";
@@ -32,7 +32,6 @@ import {
 } from "../../models/assessment-info.model";
 import { Chart } from "chart.js";
 import { ReportAnalysisService } from "../../services/report-analysis.service";
-import { User } from "../../models/user.model";
 
 interface DemographicsAssetValue {
   demographicsAssetId: number;

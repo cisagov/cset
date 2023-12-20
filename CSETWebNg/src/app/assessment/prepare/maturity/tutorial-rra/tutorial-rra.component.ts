@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
 
 @Component({

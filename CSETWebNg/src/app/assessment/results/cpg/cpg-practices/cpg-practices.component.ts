@@ -21,18 +21,15 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-cpg-practices',
   templateUrl: './cpg-practices.component.html',
   styleUrls: ['./cpg-practices.component.scss']
 })
-export class CpgPracticesComponent implements OnInit {
+export class CpgPracticesComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
