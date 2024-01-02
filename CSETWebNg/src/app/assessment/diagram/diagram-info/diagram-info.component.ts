@@ -30,6 +30,7 @@ import { ConfigService } from '../../../services/config.service';
 import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
+import { HydroService } from '../../../services/hydro.service';
 
 @Component({
     selector: 'app-info',
@@ -47,6 +48,7 @@ export class DiagramInfoComponent implements OnInit {
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
+        public hydroSvc: HydroService,
         private location: Location
     ) { }
     tree: NavTreeNode[] = [];
@@ -110,5 +112,21 @@ export class DiagramInfoComponent implements OnInit {
             '&c=' + client +
             '&l=' + this.authSvc.isLocal +
             '&a=' + localStorage.getItem('assessmentId');
+    }
+
+    malcolmTest(e: any) {
+        if (e.target.files[0].name.endsWith(".json")) {
+            let fileList = [];
+            for (let file of e.target.files) {
+                console.log(e.target.value)
+                fileList.push(file.name);
+            };
+            this.hydroSvc.getMalcolmTest(fileList).subscribe(
+                (result: any) => {
+                    console.log(result)
+                }
+            );
+        }
+        
     }
 }

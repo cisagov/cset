@@ -8,8 +8,9 @@ namespace CSETWebCore.Model.Malcolm
 {
     public class Values
     {
-        public List<Buckets> Buckets { get; set; }
-        public int DocCountErrorUpperBound { get; set; }
-        public int SumOtherDocCount { get; set; }
+        //public Dictionary<string, Buckets> Buckets { get; set; } = new Dictionary<string, Buckets>();
+        public List<Buckets> Buckets { get; set; } = new List<Buckets>();
+        public int Doc_Count_Error_Upper_Bound { get; set; }
+        public int Sum_Other_Doc_Count { get; set; }
     }
 }

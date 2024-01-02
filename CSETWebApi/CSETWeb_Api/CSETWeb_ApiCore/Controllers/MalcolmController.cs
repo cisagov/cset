@@ -4,22 +4,17 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.AssessmentIO;
+using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NPOI.XSSF.UserModel;
-using NuGet.Protocol;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -30,6 +25,8 @@ namespace CSETWebCore.Api.Controllers
         private IHttpContextAccessor _http;
         private IJSONFileExport _json;
         private TextWriter jsonWriter;
+        private IMalcolmBusiness _malcolm;
+
 
 
         /// <summary>
@@ -40,46 +37,39 @@ namespace CSETWebCore.Api.Controllers
             _token = token;
             _context = context;
             _http = http;
+            //_malcolm = malcolm;
         }
 
 
         [HttpGet]
         [Route("api/malcolm")]
-        public IActionResult MapSourceToDestinationData()
+        public IActionResult MapSourceToDestinationData([FromQuery] string files)
         {
+            string[] fileList = files.Split(',');
+            //fileList = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
+            var malcolmDataList = new List<GenericInput>();
+
             try
             {
-                //string text = System.IO.File.ReadAllText("C:\\Users\\WINSMR\\Downloads\\source_to_destination_ip.json");
-                
-                //GenericInput json = JsonConvert.DeserializeObject<GenericInput>(text);
-
-                string[] files = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-                var malcolmDataList = new List<GenericInput>();
-
-                try
+                foreach (string file in fileList)
                 {
-                    foreach (string file in files)
+                    if (System.IO.File.Exists(file))
                     {
                         string jsonString = System.IO.File.ReadAllText(file);
                         var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
-                        //weatherData = model.AladinModel.ToList();
 
                         malcolmDataList.Add(malcolmData);
                     }
                 }
-                catch (Exception exc)
-                {
-                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-                }
-                
-                return Ok();
+
+                return Ok(malcolmDataList);
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null;
+            return null; 
         }
     }
 }
