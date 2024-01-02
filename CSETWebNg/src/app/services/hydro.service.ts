@@ -64,9 +64,14 @@ export class HydroService {
     return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
   }
 
-  getMalcolmTest(fileList: any) {
-    console.log(fileList.toString())
-    return this.http.get(this.configSvc.apiUrl + 'malcolm?files=' + fileList.toString(), headers);
+  uploadMalcolmFiles(files: File[]) {
+    let formData: FormData = new FormData();
+    
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i]);
+    }
+
+    return this.http.post(this.configSvc.apiUrl + 'malcolm?', formData);
   }
 }
 
