@@ -11,7 +11,9 @@ using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,35 +43,37 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/malcolm")]
-        public IActionResult MapSourceToDestinationData([FromQuery] string files)
+        public IActionResult MapSourceToDestinationData()
         {
-            string[] fileList = files.Split(',');
-            //fileList = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-            var malcolmDataList = new List<GenericInput>();
+            var formFiles = HttpContext.Request.Form.Files;
+            String fileName = "";
+            String fileExtension = "";
 
-            try
-            {
-                foreach (string file in fileList)
+            foreach (FormFile file in formFiles)
+            {       
+                try
                 {
-                    if (System.IO.File.Exists(file))
+                    using (var stream = new MemoryStream())
                     {
-                        string jsonString = System.IO.File.ReadAllText(file);
-                        var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
+                        fileName = file.FileName;
+                        fileExtension = System.IO.Path.GetExtension(fileName);
 
-                        malcolmDataList.Add(malcolmData);
+                        if (fileExtension == ".json")
+                        {
+                            
+                        }
                     }
+                } catch (Exception ex)
+                {
+                    return BadRequest(ex);
                 }
-
-                return Ok(malcolmDataList);
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null; 
+            return Ok();
         }
     }
+
+
 }

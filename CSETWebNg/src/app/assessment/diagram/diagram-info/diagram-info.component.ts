@@ -43,6 +43,9 @@ export class DiagramInfoComponent implements OnInit {
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
 
+    malcolmFiles: File[];
+
+
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
@@ -114,19 +117,15 @@ export class DiagramInfoComponent implements OnInit {
             '&a=' + localStorage.getItem('assessmentId');
     }
 
-    malcolmTest(e: any) {
-        if (e.target.files[0].name.endsWith(".json")) {
-            let fileList = [];
-            for (let file of e.target.files) {
-                console.log(e.target.value)
-                fileList.push(file.name);
-            };
-            this.hydroSvc.getMalcolmTest(fileList).subscribe(
-                (result: any) => {
-                    console.log(result)
-                }
-            );
+    uploadMalcolmData(event: any) {
+        this.malcolmFiles = event.target.files;
+
+        if (this.malcolmFiles) {
+            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe((result: any) => {
+                console.log("SUCCESS... MAYBE!?");
+            });
         }
-        
     }
+
+
 }
