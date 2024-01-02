@@ -64,8 +64,9 @@ export class HydroService {
     return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
   }
 
-  getMalcolmTest(): any {
-    return this.http.get(this.configSvc.apiUrl + 'malcolm');
+  getMalcolmTest(fileList: any) {
+    console.log(fileList.toString())
+    return this.http.get(this.configSvc.apiUrl + 'malcolm?files=' + fileList.toString(), headers);
   }
 }
 

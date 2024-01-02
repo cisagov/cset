@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Model.Malcolm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace CSETWebCore.Interfaces.Malcolm
 {
     public interface IMalcolmBusiness
     {
-
+        public IEnumerable<GenericInput> GetMalcolmJsonData();
     }
 }

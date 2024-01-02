@@ -41,7 +41,6 @@
                                 <input type="file" tabindex="0" class="display-none" id="importFile" multiple
                                     accept="{{ importExtensions }},.cset" (change)="importAssessmentFile($event)">
                             </label>
-                            <button (click)="malcolmTest()">malcolm</button>
 
                             <label *ngIf="!authSvc.isLocal && configSvc.showImportButton()"
                                 class="m-0 btn btn-secondary d-flex align-items-center flex-00a"

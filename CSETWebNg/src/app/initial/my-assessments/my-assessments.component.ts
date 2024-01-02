@@ -455,8 +455,4 @@ export class MyAssessmentsComponent implements OnInit {
     this.disabledEncrypt = false;
   }
 
-  malcolmTest() {
-    this.hydroSvc.getMalcolmTest().subscribe();
-  }
-
 }
