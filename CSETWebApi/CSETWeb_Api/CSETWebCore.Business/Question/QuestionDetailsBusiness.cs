@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.Question
                 foreach (var item in stuff.ToList())
                 {
                     ComponentTypeSalData salData;
-                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
+               
                     if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
                     {
                         salData.SALLevels.Add(item.Sal_Level_Order);
