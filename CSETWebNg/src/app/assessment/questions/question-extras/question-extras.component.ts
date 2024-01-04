@@ -104,7 +104,10 @@ export class QuestionExtrasComponent implements OnInit {
       }
 
       this.showMfr = this.myOptions.showMfr;
+      
     }
+
+    
   }
 
   /**
@@ -112,9 +115,6 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
-      height: '800px',
       data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -161,17 +161,23 @@ export class QuestionExtrasComponent implements OnInit {
       //this.scrollToExtras();
       return;
     }
+    
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
       (details) => {
         this.extras = details;
+        if (details.is_Component === true){
+          this.myQuestion.is_Component = true;
+        }
+        
         this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
         //this.scrollToExtras()
-
+        
+        
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
           if (this.tab) {
