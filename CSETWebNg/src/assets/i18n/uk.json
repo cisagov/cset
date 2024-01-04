@@ -90,8 +90,8 @@
         "button-labels": {
             "Yes": "Так",
             "No": "Ні",
-            "N/A": "Н/Д",
-            "Alt": "заміщення",
+            "N/A": "N/A",
+            "Alt": "Альт",
             "Unanswered": "Unanswered",
             "Inc": "Неповний",
             "Issue(N)": "Issue(N)",
