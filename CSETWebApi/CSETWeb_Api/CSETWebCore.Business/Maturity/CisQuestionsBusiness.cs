@@ -100,7 +100,7 @@ namespace CSETWebCore.Business.Maturity
             dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
             dbAnswer.Question_Type = answer.QuestionType;
             dbAnswer.Question_Number = 0;
-            dbAnswer.Mat_Option_Id = answer.OptionId;   // this is the selected option
+            dbAnswer.Mat_Option_Id = null;
             dbAnswer.Answer_Text = answer.AnswerText;
             dbAnswer.Alternate_Justification = answer.AltAnswerText;
             dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
