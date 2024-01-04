@@ -219,6 +219,25 @@ namespace CSETWebCore.Model.Nested
         public decimal? Weight { get; set; }
     }
 
+    /// <summary>
+    /// Defines a period of time in hours and whether shorter
+    /// or longer times are better.  
+    /// 
+    ///  - For recovery/failover questions, shorter is better.
+    ///  - For time to impact questions, longer is better.
+    /// </summary>
+    public class DurationThreshold
+    {
+        public double DurationHours { get; set; }
+        public bool ShorterIsBetter { get; set; }
+
+        public DurationThreshold(double hours, bool shorterIsBetter)
+        {
+            DurationHours = hours;
+            ShorterIsBetter = shorterIsBetter;
+        }
+    }
+
     public class CisAssessmentsResponse
     {
         public int? BaselineAssessmentId { get; set; }

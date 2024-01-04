@@ -58,6 +58,9 @@ namespace CSETWebCore.Business.Maturity
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.FirstOrDefault(x => x.Mat_Option_Id == answer.OptionId);
             if (dbOption == null)
             {
+                // this is an answer to a question that does not have options.  Store it.
+                StoreAnswerNoOption(answer);
+
                 return;
             }
 
@@ -75,6 +78,42 @@ namespace CSETWebCore.Business.Maturity
 
 
         /// <summary>
+        /// Stores an answer not defined by an option.  This is the case
+        /// with "duration" questions in CIS.
+        /// </summary>
+        /// <param name="answer"></param>
+        private void StoreAnswerNoOption(Model.Question.Answer answer)
+        {
+            var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == answer.QuestionId).FirstOrDefault();
+
+            ANSWER dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId
+                && x.Question_Or_Requirement_Id == dbQuestion.Mat_Question_Id
+                && x.Question_Type == answer.QuestionType).FirstOrDefault();
+
+            if (dbAnswer == null)
+            {
+                dbAnswer = new ANSWER();
+            }
+
+
+            dbAnswer.Assessment_Id = _assessmentId;
+            dbAnswer.Question_Or_Requirement_Id = dbQuestion.Mat_Question_Id;
+            dbAnswer.Question_Type = answer.QuestionType;
+            dbAnswer.Question_Number = 0;
+            dbAnswer.Mat_Option_Id = answer.OptionId;   // this is the selected option
+            dbAnswer.Answer_Text = answer.AnswerText;
+            dbAnswer.Alternate_Justification = answer.AltAnswerText;
+            dbAnswer.Free_Response_Answer = answer.FreeResponseAnswer;
+            dbAnswer.Component_Guid = answer.ComponentGuid;
+
+            _context.ANSWER.Update(dbAnswer);
+            _context.SaveChanges();
+
+            _assessmentUtil.TouchAssessment(_assessmentId);
+        }
+
+
+        /// <summary>
         /// Stores a "Radio" option answer.  Because radio buttons are
         /// single select, only one ANSWER record is stored for the question with the
         /// selected option's ID.
@@ -84,13 +123,6 @@ namespace CSETWebCore.Business.Maturity
         /// <exception cref="Exception"></exception>
         private void StoreAnswerRadio(Model.Question.Answer answer)
         {
-            // If this is an unselected radio, do nothing.
-            // This method only acts on 
-            //if (answer.AnswerText == "")
-            //{
-            //    return;
-            //}
-
             // Find the Maturity Question
             var dbOption = _context.MATURITY_ANSWER_OPTIONS.Where(o => o.Mat_Option_Id == answer.OptionId).FirstOrDefault();
             var dbQuestion = _context.MATURITY_QUESTIONS.Where(q => q.Mat_Question_Id == dbOption.Mat_Question_Id).FirstOrDefault();
