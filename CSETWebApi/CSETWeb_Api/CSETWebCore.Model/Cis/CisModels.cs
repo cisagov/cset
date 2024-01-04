@@ -195,25 +195,47 @@ namespace CSETWebCore.Model.Nested
         public bool HasChildren { get; set; } = false;
     }
 
-    public class FlatQuestion
+    public class FlatOption
     {
+        public int QuestionId { get; set; }
         public string QuestionText { get; set; }
+        public int? OptionId { get; set; }
+        public string? OptionText { get; set; }
         public decimal? Weight { get; set; }
         public bool Selected { get; set; }
         public string Type { get; set; }
         public int? ThreatType { get; set; }
     }
 
-    public class GroupedQuestions
+    public class GroupedOptions
     {
         public string QuestionText { get; set; }
-        public List<FlatQuestion> OptionQuestions { get; set; }
+        public List<FlatOption> OptionQuestions { get; set; }
     }
 
     public class RollupOptions
     {
         public string Type { get; set; }
         public decimal? Weight { get; set; }
+    }
+
+    /// <summary>
+    /// Defines a period of time in hours and whether shorter
+    /// or longer times are better.  
+    /// 
+    ///  - For recovery/failover questions, shorter is better.
+    ///  - For time to impact questions, longer is better.
+    /// </summary>
+    public class DurationThreshold
+    {
+        public double DurationHours { get; set; }
+        public bool ShorterIsBetter { get; set; }
+
+        public DurationThreshold(double hours, bool shorterIsBetter)
+        {
+            DurationHours = hours;
+            ShorterIsBetter = shorterIsBetter;
+        }
     }
 
     public class CisAssessmentsResponse
