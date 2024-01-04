@@ -154,7 +154,7 @@ namespace CSETWebCore.ExportCSV
             export.d["Assets"] = acetDashboard.Assets;
 
             // Build different Excel columns for ACET/ISE
-            if (type == "ACET")
+            if (type == "ACET" || type == "")
             {
                 ProcessIRP(assessmentID, acetDashboard, ref export, assessName);
                 ProcessMaturity(acetDashboard, maturityDomains, ref export);
@@ -187,7 +187,8 @@ namespace CSETWebCore.ExportCSV
                 { 5, "5 - Most" }
             };
 
-            for (int i = 0; i < acetDashboard.Irps.Count; i++)
+            // gather IRPC 0 - 4 (5 is ISE specific)
+            for (int i = 0; i < acetDashboard.Irps.Count - 1; i++)
             {
                 export.d["IRPC" + (i + 1)] = riskLevelDescription[acetDashboard.Irps[i].RiskLevel];
             }
@@ -197,10 +198,20 @@ namespace CSETWebCore.ExportCSV
                 .Where(x => x.Assessment_Id == assessmentID)
                 .OrderBy(i => i.IRP.Item_Number)
                 .ToList();
-
-            foreach (var irpAnswer in irpAnswers)
+            // If the user never opens the Exam Profile page
+            if (irpAnswers.Count == 0)
             {
-                export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                for (int i = 1; i < 40; i++)
+                {
+                    export.d["IRP" + i] = "0";
+                }
+            }
+            else
+            {
+                foreach (var irpAnswer in irpAnswers)
+                {
+                    export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                }
             }
         }
 
@@ -251,10 +262,10 @@ namespace CSETWebCore.ExportCSV
         /// <param name="export"></param>
         private void ProcessMaturity(ACETDashboard acetDashboard, List<MaturityDomain> maturityDomains, ref SingleRowExport export)
         {
-            // gather Domain Maturity 1 - 5
-            for (int i = 0; i < acetDashboard.Domains.Count; i++)
+            // gather Domain Maturity 1 - 5 (0 is ISE specific)
+            for (int i = 1; i < acetDashboard.Domains.Count; i++)
             {
-                export.d["Dom Mat " + (i + 1)] = acetDashboard.Domains[i].Maturity;
+                export.d["Dom Mat " + i] = acetDashboard.Domains[i].Maturity;
             }
 
             // gather the maturity levels for all factors and components
