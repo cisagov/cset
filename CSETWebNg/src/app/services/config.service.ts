@@ -73,7 +73,7 @@ export class ConfigService {
    * Constructor.
    * @param http
    */
-  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) { }
+  constructor(private http: HttpClient, @Inject(DOCUMENT) private document: Document) {}
 
   /**
    *
@@ -108,7 +108,7 @@ export class ConfigService {
                 .toPromise()
                 .then((cisaAssessorWorkflowEnabled) => {
                   if (cisaAssessorWorkflowEnabled) {
-                    return this.enableCisaAssessorWorkflow()
+                    return this.enableCisaAssessorWorkflow();
                   }
 
                   localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
@@ -133,12 +133,12 @@ export class ConfigService {
   }
 
   checkLocalDocStatus() {
-    return this.http.get(this.apiUrl + 'HasLocalDocuments')
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
   checkOnlineDocStatus() {
     // TODO: temporary return until we get this working in production
-    return this.http.get(this.apiUrl + 'HasLocalDocuments')
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
   /**
@@ -155,12 +155,13 @@ export class ConfigService {
     const appProtocol = this.config.app.protocol + '://';
     if (localStorage.getItem('apiUrl') != null) {
       this.apiUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.documentsIdentifier + '/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;
-    this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     this.onlineUrl = this.config.api.onlineUrl;
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
@@ -173,7 +174,6 @@ export class ConfigService {
     this.initialized = true;
   }
 
-
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
       (resp: boolean) => {
@@ -182,7 +182,7 @@ export class ConfigService {
       () => {
         this.isDocUrl = false;
       }
-    )
+    );
 
     this.checkOnlineDocStatus().subscribe(
       (resp: boolean) => {
@@ -270,74 +270,74 @@ export class ConfigService {
 
   switchConfigsForMode(installationMode) {
     switch (installationMode) {
-      case 'ACET':
-        {
-          var x = this.document.getElementsByClassName('root');
-          if (x.length > 0) {
-            x[0].classList.add('acet-background');
-          }
-
-          var x = document.getElementsByClassName('ncua-seal');
-          if (x.length > 0) {
-            x[0].classList.remove('d-none');
-          }
-
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_acet.ico?app=acet1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'ACET';
+    case 'ACET':
+      {
+        var x = this.document.getElementsByClassName('root');
+        if (x.length > 0) {
+          x[0].classList.add('acet-background');
         }
-        break;
-      case 'TSA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
 
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET-TSA';
+        var x = document.getElementsByClassName('ncua-seal');
+        if (x.length > 0) {
+          x[0].classList.remove('d-none');
         }
-        break;
-      case 'CF':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_cf.ico?app=cf1';
 
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET-CF';
-        }
-        break;
-      case 'RRA':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_rra.ico?app=rra1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CISA - Ransomware Readiness';
-        }
-        break;
-      case 'RENEW':
-        {
-          // change favicon and title
-          const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-          link.href = 'assets/icons/favicon_renew.ico?app=renew1';
-
-          var title = this.document.querySelector('title');
-          title.innerText = 'CSET Renewables';
-        }
-        break;
-      default: {
         // change favicon and title
         const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
-        link.href = 'assets/icons/favicon_cset.ico?app=cset';
+        link.href = 'assets/icons/favicon_acet.ico?app=acet1';
 
         var title = this.document.querySelector('title');
-        title.innerText = 'CSET';
+        title.innerText = 'ACET';
       }
+      break;
+    case 'TSA':
+      {
+        // change favicon and title
+        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+        link.href = 'assets/icons/favicon_tsa.ico?app=tsa1';
+
+        var title = this.document.querySelector('title');
+        title.innerText = 'CSET-TSA';
+      }
+      break;
+    case 'CF':
+      {
+        // change favicon and title
+        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+        link.href = 'assets/icons/favicon_cf.ico?app=cf1';
+
+        var title = this.document.querySelector('title');
+        title.innerText = 'CSET-CF';
+      }
+      break;
+    case 'RRA':
+      {
+        // change favicon and title
+        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+        link.href = 'assets/icons/favicon_rra.ico?app=rra1';
+
+        var title = this.document.querySelector('title');
+        title.innerText = 'CISA - Ransomware Readiness';
+      }
+      break;
+    case 'RENEW':
+      {
+        // change favicon and title
+        const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+        link.href = 'assets/icons/favicon_renew.ico?app=renew1';
+
+        var title = this.document.querySelector('title');
+        title.innerText = 'CSET Renewables';
+      }
+      break;
+    default: {
+      // change favicon and title
+      const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+      link.href = 'assets/icons/favicon_cset.ico?app=cset';
+
+      var title = this.document.querySelector('title');
+      title.innerText = 'CSET';
+    }
     }
   }
 }

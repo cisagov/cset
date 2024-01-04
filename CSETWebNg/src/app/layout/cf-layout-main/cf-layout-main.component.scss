@@ -285,6 +285,21 @@ input#cbShowDisc.checkbox-custom{
   box-shadow: 0 0 3pt 2pt #8bb4f8;
 }
 
+.checkbox-custom:disabled+.checkbox-custom-label,
+.radio-custom:disabled+.radio-custom-label {
+  cursor: unset;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  border-color: lighten($secondary-color, 35%);
+}
+
+.checkbox-custom:disabled:checked+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  background-color: lighten($secondary-color, 35%);
+}
+
 //////////////////////////////////////////////////////////////////
 
 input[type="checkbox"]:focus {

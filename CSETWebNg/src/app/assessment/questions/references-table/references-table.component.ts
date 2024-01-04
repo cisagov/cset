@@ -24,12 +24,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CustomDocument } from '../../../models/question-extras.model';
 import { ConfigService } from '../../../services/config.service';
+import { ResourceLibraryService } from '../../../services/resource-library.service';
 
 /**
- * This is the original references display where each 
+ * This is the original references display where each
  * bookmark is rendered as a full row with the entire document
  * name as a hyperlink in one column and the bookmark
- * (if there is one) in another column.  
+ * (if there is one) in another column.
  * This is being deprecated because it is really cumbersome
  * to read when there are a lot of references, like
  * in 800-53.
@@ -39,26 +40,21 @@ import { ConfigService } from '../../../services/config.service';
   templateUrl: './references-table.component.html',
   styleUrls: ['./references-table.component.scss']
 })
-export class ReferencesTableComponent implements OnInit {
+export class ReferencesTableComponent {
 
   @Input()
   tab: any;
 
   /**
-   * 
+   *
    */
   constructor(
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    private resourceLibSvc: ResourceLibraryService
   ) { }
 
   /**
-   * 
-   */
-  ngOnInit(): void {
-  }
-
-  /**
-   * 
+   *
    */
   areNoReferenceDocumentsAvailable() {
     return (!this.tab?.referenceTextList || this.tab.referenceTextList.length === 0)
@@ -69,13 +65,7 @@ export class ReferencesTableComponent implements OnInit {
   /**
    *
    */
-  documentUrl(document: CustomDocument) {
-    var link = '';
-    if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
-    }
-    return link;
+  documentUrl(document: CustomDocument, bookmark: string) {
+    return this.resourceLibSvc.documentUrl(document, bookmark);
   }
 }

@@ -83,6 +83,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
             TinyMapper.Bind<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>();
+            TinyMapper.Bind<ISE_ACTIONS_FINDINGS, jISE_ACTIONS_FINDINGS>();
             TinyMapper.Bind<INFORMATION, jINFORMATION>();
             TinyMapper.Bind<METRO_ANSWERS, jMETRO_ANSWERS>();
             TinyMapper.Bind<NETWORK_WARNINGS, jNETWORK_WARNINGS>();

@@ -30,10 +30,19 @@
         If state-led, we don't care because submit button is hidden -->
     <span *ngIf="!isAssessmentPageFilled()" 
         class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-        <span *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
-            "Submit" button is disabled until all required fields on the 
-            <br/>"Assessment Configuration" page have been specified.
+        
+        <span class="mt-2 mr-4" *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
+            "Submit" button is disabled until all required fields on <br>the 
+            "Demographics" page have been specified.
+            <br><br>
+            <span>The following required fields are missing from the "Demographics" page:</span>
+            <ul class="list-type">
+                <span *ngFor="let field of missingFields; let i = index">
+                    <li>{{ field }}</li>
+                </span>
+            </ul>
         </span>
+
         <span *ngIf="disableIseReportLinks">
             <!-- have all 3 types of warnings -->
             <span *ngIf="ncuaSvc.unassignedIssues"><br/>
@@ -41,9 +50,16 @@
                 <span *ngIf="!assessSvc.assessment.isE_StateLed">
                     "Submit" button and some reports are disabled until 
                     <ul class="list-type">
-                        <li>all required fields on the "Assessment Configuration" page have been specified,</li>
+                        <li>all required fields on the "Demographics" page have been specified,</li>
                         <li>all statements have been answered, and</li> 
                         <li>all Issues have an "Issue Type" assigned.</li>
+                    </ul>
+                    <br>
+                    <span>The following required fields are missing from the "Demographics" page:</span>
+                    <ul class="list-type">
+                        <span *ngFor="let field of missingFields; let i = index">
+                            <li>{{ field }}</li>
+                        </span>
                     </ul>
                 </span>
                 <!-- state-led -->
@@ -56,12 +72,12 @@
 
                 <!-- singular -->
                 <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-                    Please assign an "Issue Type" to the following issue which was 
+                    Assign an "Issue Type" to the following issue which was 
                     <br/>generated on the "Statements" page:
                 </span>
                 <!-- plural -->
                 <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-                    Please assign an "Issue Type" to the following issues which were 
+                    Assign an "Issue Type" to the following issues which were 
                     <br/>generated on the "Statements" page: 
                 </span>
         
@@ -77,8 +93,15 @@
                 <span *ngIf="!assessSvc.assessment.isE_StateLed">
                     <br/>"Submit" button and some reports are disabled until 
                     <ul class="list-type">
-                        <li>all required fields on the "Assessment Configuration" page have been specified and</li>
+                        <li>all required fields on the "Demographics" page have been specified and</li>
                         <li>all statements have been answered.</li>
+                    </ul>
+                    <br>
+                    <span>The following required fields are missing from the "Demographics" page:</span>
+                    <ul class="list-type">
+                        <span *ngFor="let field of missingFields; let i = index">
+                            <li>{{ field }}</li>
+                        </span>
                     </ul>
                 </span>
                 <!-- state-led -->
@@ -121,12 +144,12 @@
         </span>
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Please assign an "Issue Type" to the following issue which was 
+            Assign an "Issue Type" to the following issue which was 
             <br/>generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Please assign an "Issue Type" to the following issues which were 
+            Assign an "Issue Type" to the following issues which were 
             <br/>generated on the "Statements" page: 
         </span>
         <ul class="list-type">
@@ -158,12 +181,12 @@
 
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Please assign an "Issue Type" to the following issue which was 
+            Assign an "Issue Type" to the following issue which was 
             <br/>generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Please assign an "Issue Type" to the following issues which were 
+            Assign an "Issue Type" to the following issues which were 
             <br/>generated on the "Statements" page:
         </span>
 
@@ -181,25 +204,33 @@
         <span *ngIf="!assessSvc.assessment.isE_StateLed">
             "Submit" button and some reports are disabled until 
             <ul class="list-type">
-                <li>all required fields on the "Assessment Configuration" page have been specified and</li>
+                <li>all required fields on the "Demographics" page have been specified and</li>
                 <li>all Issues have an "Issue Type" assigned.</li>
             </ul>
+            <br>
+            <span>The following required fields are missing from the "Demographics" page:</span>
+            <ul class="list-type">
+                <span *ngFor="let field of missingFields; let i = index">
+                    <li>{{ field }}</li>
+                </span>
+            </ul>
+            <br>
         </span>
 
         <!-- Unanswered and Issue Type for state-led -->
         <span *ngIf="assessSvc.assessment.isE_StateLed">
             Some reports are disabled until all Issues have
-            an "Issue Type" assigned.<br /><br />
+            an "Issue Type" assigned<br /><br />
         </span>
 
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Please assign an "Issue Type" to the following issue which was 
+            Assign an "Issue Type" to the following issue which was 
             <br/>generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Please assign an "Issue Type" to the following issues which were 
+            Assign an "Issue Type" to the following issues which were 
             <br/>generated on the "Statements" page:
         </span>
 

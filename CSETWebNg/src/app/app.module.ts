@@ -111,6 +111,7 @@ import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
+import { AssessmentInfoNcuaComponent } from './assessment/prepare/assessment-info/assessment-info-ncua/assessment-info-ncua.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -616,7 +617,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
+import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 
 @NgModule({
     imports: [
@@ -731,6 +732,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
+        AssessmentInfoNcuaComponent,
         AssessmentDetailNcuaComponent,
         ResultsComponent,
         SalSimpleComponent,
@@ -852,6 +854,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         SecurityplanComponent,
         SiteSummaryComponent,
         TrendReportComponent,
+        TrendCompareCompatibilityComponent,
         CompareReportComponent,
         Assessment2InfoComponent,
         ModelSelectComponent,
@@ -1181,6 +1184,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         UserLanguageComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
+        TrendAnalyticsComponent
     ],
     providers: [
         TranslocoService,

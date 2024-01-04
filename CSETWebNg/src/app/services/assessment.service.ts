@@ -154,7 +154,7 @@ export class AssessmentService {
   getAssessments() {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
-
+  
   getAssessmentsCompletion() {
     return this.http.get(this.apiUrl + 'assessmentsCompletionForUser');
   }
