@@ -293,10 +293,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (answer.Is_Maturity)
                 {
-                    if (answer.OptionId != null)
-                    {
-                        cisBiz.StoreAnswer(answer);                        
-                    }
+                    cisBiz.StoreAnswer(answer);
                 }
             }
 
