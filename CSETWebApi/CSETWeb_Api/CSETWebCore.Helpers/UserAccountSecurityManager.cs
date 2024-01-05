@@ -63,7 +63,7 @@ namespace CSETWebCore.Helpers
         /// <param name="sendEmail">Indicates if the temp password email should be sent immediately</param>
         /// <returns></returns>
         public bool CreateUser(CreateUser info, bool sendEmail)
-         {
+        {
             try
             {
                 // Create the USER and USER_DETAIL_INFORMATION records for this new user
@@ -353,6 +353,21 @@ namespace CSETWebCore.Helpers
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool EmailIsAllowed(string email)
+        {
+            if (email.ToLower().EndsWith("@xyz.comm"))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

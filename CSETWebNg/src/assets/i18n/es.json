@@ -37,6 +37,11 @@
     "sal intro 3": "[ES]The SAL applies to Standard and Diagram Component question sets.",
     "to start an assessment": "Para iniciar una nueva evaluación, haz clic en una tarjeta. Para ver detalles adicionales, haz clic en el icono",
     "icon": ".",
+    "missing email": "Se requiere la dirección de correo electrónico",
+    "invalid email format": "Formato de correo inválido",
+    "account already exists": "Ya existe una cuenta para la dirección de correo electrónico",
+    "emails do not match": "Los correos electrónicos no coinciden",
+    "email not allowed": "El correo electrónico especificado no está permitido en esta instalación de CSET",
 
     "contact": {
         "contacts": "Contactos",
