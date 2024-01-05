@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
+<div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a component-override-dialog">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a" >
     <span>Component Question Overrides</span>
   </div>
@@ -47,8 +47,7 @@
         <div class="row">
           <div class="col-12">
             <table class="assessment-summary">
-              <th>Specific Component Name</th>
-              <th></th>
+              <th colspan="2">Specific Component Name</th>
               <tr *ngFor="let q of questions; let i = index">
                 <td>{{q.componentName}}</td>
                 <td>
