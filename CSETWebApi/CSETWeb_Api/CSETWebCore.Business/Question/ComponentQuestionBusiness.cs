@@ -409,11 +409,6 @@ namespace CSETWebCore.Business.Question
                 answerId = dbAnswer.Answer_Id;
             }
 
-            if (answer.QuestionNumber == null)
-            {
-                answer.QuestionNumber = "1";
-            }
-
             dbAnswer.Answer_Id = answerId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
             dbAnswer.Question_Number = int.Parse(answer.QuestionNumber);
