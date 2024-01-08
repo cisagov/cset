@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { QuestionsService } from '../../../../services/questions.service';
@@ -29,12 +29,12 @@ export class HydroActionsComponent implements OnInit {
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
     public hydroSvc: HydroService
-  ) {}
+  ) { }
 
   ngOnInit() {
 
     this.reportSvc.getHydroActionItemsReport().subscribe(
-      (r: any) => {    
+      (r: any) => {
         if (r.length > 0) {
           let sortedArray = this.sortActionItems(r);
 
@@ -55,16 +55,16 @@ export class HydroActionsComponent implements OnInit {
               }
 
               this.actionItemData.push(progressArray);
-              this.loadingCounter ++;
+              this.loadingCounter++;
             }
           );
-        } 
+        }
         else {
           this.actionItemData = [];
-          this.loadingCounter ++;
+          this.loadingCounter++;
         }
-        
-        this.loadingCounter ++;
+
+        this.loadingCounter++;
       }
     )
   }
@@ -96,7 +96,7 @@ export class HydroActionsComponent implements OnInit {
     for (let domain of this.actionItemData) {
       domain.actionsQuestions.sort((a, b) => (
         a.action.severity < b.action.severity ? -1 : 1
-        ));      
+      ));
     }
   }
 

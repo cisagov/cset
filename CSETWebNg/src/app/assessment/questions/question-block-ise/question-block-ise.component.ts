@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
@@ -57,7 +57,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
   private _timeoutId: NodeJS.Timeout;
   extras: QuestionDetailsContentViewModel;
-  dialogRef: MatDialogRef <any>;
+  dialogRef: MatDialogRef<any>;
 
   percentAnswered = 0;
   answerOptions = [];
@@ -67,19 +67,19 @@ export class QuestionBlockIseComponent implements OnInit {
   altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
   textForSummary = "Statement Summary (insert summary)";
   summaryCommentCopy = "";
-  summaryEditedCheck = false; 
+  summaryEditedCheck = false;
 
   contactInitials = "";
   altAnswerSegment = "";
   convoBuffer = '\n- - End of Note - -\n';
   summaryConvoBuffer = '\n\n- - End of Statement Summary - -\n';
   summaryBoxMax = 800;
-    
+
   // Used to place buttons/text boxes at the bottom of each subcategory
-  finalScuepQuestion = new Set ([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
-  finalCoreQuestion = new Set ([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
-  finalCorePlusQuestion = new Set ([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7755, 7771, 7779, 7790, 7802, 7821, 7830, 7838, 7851]);
-  finalExtraQuestion = new Set ([7867, 7873, 7889, 7900, 7910, 7917, 7946, 7965, 8001]);
+  finalScuepQuestion = new Set([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
+  finalCoreQuestion = new Set([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
+  finalCorePlusQuestion = new Set([7706, 7710, 7718, 7730, 7736, 7739, 7746, 7755, 7771, 7779, 7790, 7802, 7821, 7830, 7838, 7851]);
+  finalExtraQuestion = new Set([7867, 7873, 7889, 7900, 7910, 7917, 7946, 7965, 8001]);
 
   showQuestionIds = false;
 
@@ -91,7 +91,7 @@ export class QuestionBlockIseComponent implements OnInit {
   autoGenerateInProgress: boolean = false;
   maturityModelId: number;
   maturityModelName: string;
-  
+
 
   /**
    * Constructor.
@@ -107,8 +107,8 @@ export class QuestionBlockIseComponent implements OnInit {
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
     private findSvc: FindingsService
-  ) { 
-    
+  ) {
+
   }
 
   /**
@@ -116,7 +116,7 @@ export class QuestionBlockIseComponent implements OnInit {
   */
   ngOnInit(): void {
     this.setIssueMap();
-    
+
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
@@ -134,7 +134,7 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras.findings.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
-              
+
               // This is a check for post-merging ISE assessments.
               // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
               if (this.ncuaSvc.questionCheck.get(find.question_Id) !== undefined) {
@@ -142,12 +142,12 @@ export class QuestionBlockIseComponent implements OnInit {
               } else {
                 this.deleteIssue(find.finding_Id, true);
               }
-              
+
             }
           });
-          
+
           this.ncuaSvc.issuesFinishedLoading = true;
-      });
+        });
 
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
@@ -250,7 +250,7 @@ export class QuestionBlockIseComponent implements OnInit {
   shouldIShow(q: Question) {
     let visible = false;
 
-    if (q.visible || q.isParentQuestion) { 
+    if (q.visible || q.isParentQuestion) {
       visible = true;
     }
 
@@ -269,7 +269,7 @@ export class QuestionBlockIseComponent implements OnInit {
         }
         // For all level 3 (CORE+) questions, check to see if we want to see them
       } else if (q.maturityLevel === 3) {
-        if (q.questionId < 7852 && this.showCorePlus === true) { 
+        if (q.questionId < 7852 && this.showCorePlus === true) {
           if (visible) {
             this.refreshPercentAnswered();
             return true;
@@ -325,9 +325,9 @@ export class QuestionBlockIseComponent implements OnInit {
     this.refreshPercentAnswered();
 
     this.questionsSvc.storeAnswer(answer).subscribe
-    (result => {
-      this.checkForIssues(q, oldAnswerValue);
-    });
+      (result => {
+        this.checkForIssues(q, oldAnswerValue);
+      });
   }
 
   checkForIssues(q: Question, oldAnswerValue: string) {
@@ -403,10 +403,10 @@ export class QuestionBlockIseComponent implements OnInit {
       }
       if (q.visible && q.maturityLevel != 3) {
 
-          totalCount++;
-          if (q.answer && q.answer !== "U") {
-            answeredCount++;
-          }
+        totalCount++;
+        if (q.answer && q.answer !== "U") {
+          answeredCount++;
+        }
 
       }
     });
@@ -444,10 +444,10 @@ export class QuestionBlockIseComponent implements OnInit {
             let previousContactInitials = q.comment.substring(q.comment.lastIndexOf('[') + 1, q.comment.lastIndexOf(']'));
             let endOfLastBuffer = q.comment.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
             if (previousContactInitials !== this.contactInitials) {
-                let oldComments = q.comment.substring(0, endOfLastBuffer);
-                let newComment = q.comment.substring(oldComments.length);
+              let oldComments = q.comment.substring(0, endOfLastBuffer);
+              let newComment = q.comment.substring(oldComments.length);
 
-                q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
             }
           }
         }
@@ -498,7 +498,7 @@ export class QuestionBlockIseComponent implements OnInit {
    * @param q
    */
   hasComment(q: Question) {
-    if(q.comment === null || q.comment === '') {
+    if (q.comment === null || q.comment === '') {
       return false;
     }
     return true;
@@ -525,10 +525,10 @@ export class QuestionBlockIseComponent implements OnInit {
             let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
             if (previousContactInitials !== this.contactInitials) {
               // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
-                let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
-                let newComment = q.altAnswerText.substring(oldComments.length);
+              let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
+              let newComment = q.altAnswerText.substring(oldComments.length);
 
-                q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+              q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
               // }
             }
           }
@@ -572,7 +572,7 @@ export class QuestionBlockIseComponent implements OnInit {
     this.autoResize(id);
 
     this.summaryCommentCopy = e.target.value;
-    this.summaryEditedCheck = true;    
+    this.summaryEditedCheck = true;
 
     let summarySegment = '';
     // this.summaryCommentCopy = q.comment;
@@ -590,10 +590,10 @@ export class QuestionBlockIseComponent implements OnInit {
             let previousContactInitials = this.summaryCommentCopy.substring(this.summaryCommentCopy.lastIndexOf('[') + 1, this.summaryCommentCopy.lastIndexOf(']'));
             let endOfLastBuffer = this.summaryCommentCopy.lastIndexOf(this.summaryConvoBuffer) + this.summaryConvoBuffer.length;
             if (previousContactInitials !== this.contactInitials) {
-                let oldComments = this.summaryCommentCopy.substring(0, endOfLastBuffer);
-                let newComment = this.summaryCommentCopy.substring(oldComments.length);
+              let oldComments = this.summaryCommentCopy.substring(0, endOfLastBuffer);
+              let newComment = this.summaryCommentCopy.substring(oldComments.length);
 
-                this.summaryCommentCopy = oldComments + bracketContact + ' ' + newComment + this.summaryConvoBuffer;
+              this.summaryCommentCopy = oldComments + bracketContact + ' ' + newComment + this.summaryConvoBuffer;
             }
           }
         }
@@ -618,11 +618,11 @@ export class QuestionBlockIseComponent implements OnInit {
         is_Maturity: q.is_Maturity,
         componentGuid: q.componentGuid
       };
-  
-    this.refreshReviewIndicator();
-  
-    this.questionsSvc.storeAnswer(answer)
-      .subscribe();
+
+      this.refreshReviewIndicator();
+
+      this.questionsSvc.storeAnswer(answer)
+        .subscribe();
     }, 500);
 
   }
@@ -638,7 +638,7 @@ export class QuestionBlockIseComponent implements OnInit {
           comment = this.summaryCommentCopy;
           return comment;
         }
-        if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true){
+        if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true) {
           comment = this.summaryCommentCopy;
           return comment;
         }
@@ -659,7 +659,7 @@ export class QuestionBlockIseComponent implements OnInit {
     if (textArea.scrollHeight > this.summaryBoxMax) {
       textArea.style.height = this.summaryBoxMax + 'px';
       textArea.style.overflowY = 'scroll';
-      
+
     }
   }
 
@@ -670,7 +670,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
     if (this.iseExamLevel === 'CORE') {
       if (!this.showCorePlus && this.finalCoreQuestion.has(id)) {
-          return true;
+        return true;
       } else if (this.showCorePlus && this.finalCorePlusQuestion.has(id)) {
         return true;
       }
@@ -687,7 +687,7 @@ export class QuestionBlockIseComponent implements OnInit {
     // SCUEP only shows SCUEP.
     if (this.iseExamLevel !== 'SCUEP') {
       // if (this.isFinalQuestion(id)) {
-        return true;
+      return true;
       // }
     }
     return false;
@@ -791,11 +791,11 @@ export class QuestionBlockIseComponent implements OnInit {
       if (stringResult != 'true') {
         find.finding_Id = result;
 
-        this.findSvc.saveDiscovery(find, true).subscribe( (r: any) => {
+        this.findSvc.saveDiscovery(find, true).subscribe((r: any) => {
           this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
         });
-        
+
       }
       else {
         const answerID = find.answer_Id;
@@ -808,20 +808,20 @@ export class QuestionBlockIseComponent implements OnInit {
             this.myGrouping.questions[0].answer_Id = find.answer_Id;
           }
         ),
-              
-              
+
+
           error => console.log('Error updating findings | ' + (<Error>error).message)
       }
     });
-      
+
   }
 
   isIssueEmpty(finding: Finding) {
-    if ( finding.actionItems == null
-    && finding.citations == null
-    && finding.description == null
-    && finding.issue == null
-    && finding.type == null) {
+    if (finding.actionItems == null
+      && finding.citations == null
+      && finding.description == null
+      && finding.issue == null
+      && finding.type == null) {
       return true;
     }
     return false;
@@ -839,7 +839,7 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    this.questionsSvc.getActionItems(parentId,findId).subscribe(
+    this.questionsSvc.getActionItems(parentId, findId).subscribe(
       (data: any) => {
         // Used to generate a description for ISE reports even if a user doesn't open the issue.
         desc = data[0]?.description;
@@ -887,26 +887,26 @@ export class QuestionBlockIseComponent implements OnInit {
             error => console.log('Error updating findings | ' + (<Error>error).message)
           );
         });
-    });
+      });
   }
-  
+
   /**
   * Deletes a discovery.
   * @param findingToDelete
   */
   deleteIssue(findingId, autoGenerated: boolean) {
     let msg = "Are you sure you want to delete this issue?";
-    
+
     if (autoGenerated === false) {
       const dialogRef = this.dialog.open(ConfirmComponent);
       dialogRef.componentInstance.confirmMessage = msg;
-  
+
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.deleteIssueMaps(findingId);
           this.findSvc.deleteFinding(findingId).subscribe();
           let deleteIndex = null;
-  
+
           for (let i = 0; i < this.extras.findings.length; i++) {
             if (this.extras.findings[i].finding_Id === findingId) {
               deleteIndex = i;
@@ -917,17 +917,17 @@ export class QuestionBlockIseComponent implements OnInit {
         }
       });
     } else if (autoGenerated === true) {
-        this.findSvc.deleteFinding(findingId).subscribe();
-        let deleteIndex = null;
-  
-          for (let i = 0; i < this.extras.findings.length; i++) {
-            if (this.extras.findings[i].finding_Id === findingId) {
-              deleteIndex = i;
-            }
-          }
-        this.extras.findings.splice(deleteIndex, 1);
-        this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+      this.findSvc.deleteFinding(findingId).subscribe();
+      let deleteIndex = null;
+
+      for (let i = 0; i < this.extras.findings.length; i++) {
+        if (this.extras.findings[i].finding_Id === findingId) {
+          deleteIndex = i;
+        }
       }
+      this.extras.findings.splice(deleteIndex, 1);
+      this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+    }
   }
 
 
@@ -938,7 +938,7 @@ export class QuestionBlockIseComponent implements OnInit {
   checkKeyPress(event: any, q: Question, buttonType: string, answer: string = "") {
     if (event) {
       if (event.key === "Enter") {
-        
+
         // For "Yes"/"No" buttons
         if (buttonType == "answer" && answer != "") {
           this.storeAnswer(q, answer);
@@ -957,5 +957,5 @@ export class QuestionBlockIseComponent implements OnInit {
     }
   }
 
-  
+
 }

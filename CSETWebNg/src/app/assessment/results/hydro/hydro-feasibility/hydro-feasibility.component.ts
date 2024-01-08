@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { QuestionsService } from '../../../../services/questions.service';
@@ -13,7 +13,7 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class HydroFeasibilityComponent implements OnInit {
 
-  feasibilityData: any[] =[];
+  feasibilityData: any[] = [];
 
   feasibilityColors = {
     domain: ['#B4EDD2', '#7FB685', '#426A5A']
@@ -32,7 +32,7 @@ export class HydroFeasibilityComponent implements OnInit {
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
     public hydroSvc: HydroService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.maturitySvc.getHydroResults().subscribe(
@@ -47,17 +47,17 @@ export class HydroFeasibilityComponent implements OnInit {
             domain.feasibilityTotals.hard
           ];
 
-          if (domain.parentSequence > i+1) {
-            while (this.feasibilityData.length < domain.parentSequence-1) {
-              this.feasibilityData.push([0,0,0]); // this fills the beginning domains (with no data) with blank data
+          if (domain.parentSequence > i + 1) {
+            while (this.feasibilityData.length < domain.parentSequence - 1) {
+              this.feasibilityData.push([0, 0, 0]); // this fills the beginning domains (with no data) with blank data
             }
           }
-         
+
           this.feasibilityData.push(feasibilityArray);
         }
 
         while (this.feasibilityData.length != this.domainGroupNames.length) {
-          this.feasibilityData.push([0,0,0]); // this fills the beginning domains (with no data) with blank data
+          this.feasibilityData.push([0, 0, 0]); // this fills the beginning domains (with no data) with blank data
         }
         console.log(this.feasibilityData)
 

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ElementRef, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterContentInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../../../services/maturity.service';

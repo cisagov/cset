@@ -216,7 +216,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     }
 
 
-                    // ignore any columns that we are supposed to ignore
+                    // process custom rules
                     var ruleCustom = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='custom']", tableName, colName));
                     if (ruleCustom != null)
                     {
