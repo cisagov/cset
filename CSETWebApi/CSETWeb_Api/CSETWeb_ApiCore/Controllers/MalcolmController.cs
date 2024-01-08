@@ -48,8 +48,9 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult MapSourceToDestinationData()
         {
             var formFiles = HttpContext.Request.Form.Files;
-            String fileName = "";
-            String fileExtension = "";
+            string fileName = "";
+            string fileExtension = "";
+            string output = "";
 
             foreach (FormFile file in formFiles)
             {       
@@ -59,10 +60,15 @@ namespace CSETWebCore.Api.Controllers
                     {
                         fileName = file.FileName;
                         fileExtension = System.IO.Path.GetExtension(fileName);
+                        MalcolmData data = new MalcolmData();
 
                         if (fileExtension == ".json")
                         {
-                            
+                            file.CopyTo(stream);
+                            stream.Seek(0, SeekOrigin.Begin);
+                            StreamReader sr = new StreamReader(stream);
+                            string jsonString = sr.ReadToEnd();
+                            data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                         }
                     }
                 } catch (Exception ex)

@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Model.Malcolm
 {
-    public class GenericInput
+    public class MalcolmData
     {
         public List<string> Fields { get; set; } = new List<string>();
         public Filters Filter { get; set; }
