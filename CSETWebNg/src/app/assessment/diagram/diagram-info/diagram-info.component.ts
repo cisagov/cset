@@ -21,18 +21,17 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NavTreeNode } from '../../../services/navigation/navigation.service';
-import { ConfigService } from '../../../services/config.service';
-import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
 import { HydroService } from '../../../services/hydro.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
+import { ConfigService } from '../../../services/config.service';
+import { NavTreeNode, NavigationService } from '../../../services/navigation/navigation.service';
 
 @Component({
     selector: 'app-info',
@@ -76,20 +75,20 @@ export class DiagramInfoComponent implements OnInit {
         this.navSvc.buildTree();
     }
 
-    private checkForDiagram(){
+    private checkForDiagram() {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.hasDiagram = resp;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
     }
 
-    private async delayCheckForDiagram(ms){
+    private async delayCheckForDiagram(ms) {
         await this.delay(ms)
         this.checkForDiagram();
     }
 
-    private delay(ms: number){
-        return new Promise(resolve => setTimeout(resolve,ms));
+    private delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     navToDiagram(which: string) {
@@ -102,9 +101,9 @@ export class DiagramInfoComponent implements OnInit {
 
         let client;
         if (window.location.protocol === 'file:') {
-          client = window.location.href.substring(0, window.location.href.lastIndexOf('/dist') + 5);
+            client = window.location.href.substring(0, window.location.href.lastIndexOf('/dist') + 5);
         } else {
-          client = window.location.origin;
+            client = window.location.origin;
         }
 
         let folder = 'diagram';

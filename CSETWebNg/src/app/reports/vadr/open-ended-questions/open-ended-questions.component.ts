@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 //import { data } from 'jquery';
 import { ConfigService } from "../../../services/config.service";
@@ -30,8 +30,7 @@ import { ReportAnalysisService } from "../../../services/report-analysis.service
 import { ReportService } from "../../../services/report.service";
 import {
   QuestionGrouping,
-  MaturityQuestionResponse,
-  Domain,
+  MaturityQuestionResponse
 } from "../../../models/questions.model";
 import { NavigationService } from "../../../services/navigation/navigation.service";
 import { QuestionFilterService } from "../../../services/filtering/question-filter.service";
@@ -52,7 +51,7 @@ import { ngxCsv } from "ngx-csv/ngx-csv";
 export class OpenEndedQuestionsComponent implements OnInit {
   groupings: QuestionGrouping[];
   // subgroup: any [];
-  noData:boolean=false;
+  noData: boolean = false;
   openEndedQuestion = false;
   onlyOpenQuestionData = [];
   response: any;
@@ -91,7 +90,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
     public filterSvc: QuestionFilterService,
     public maturityFilteringSvc: MaturityFilteringService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadQuestions();
@@ -135,8 +134,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
             });
             if (myArray.length >= 1) {
               this.data2.push({ title, myArray });
-            }else if(this.data2.length===0){
-              this.noData=true;
+            } else if (this.data2.length === 0) {
+              this.noData = true;
             }
           });
 
@@ -144,8 +143,8 @@ export class OpenEndedQuestionsComponent implements OnInit {
         (error) => {
           console.log(
             "Error getting questions: " +
-              (<Error>error).name +
-              (<Error>error).message
+            (<Error>error).name +
+            (<Error>error).message
           );
           console.log("Error getting questions: " + (<Error>error).stack);
         }
@@ -155,7 +154,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
     this.openEndedQuestion = !this.openEndedQuestion;
   }
   convertTocSvOnlyAnswered() {
-    const  dataOnlyAnswered=[];
+    const dataOnlyAnswered = [];
     this.data2.forEach((e) => {
       const title = e.title;
       dataOnlyAnswered.push({ title });
@@ -195,7 +194,7 @@ export class OpenEndedQuestionsComponent implements OnInit {
     });
     new ngxCsv(dataOnlyAnswered, "Open Ended questions report only answered questions", this.options);
   }
-  convertTocSvAll(){
+  convertTocSvAll() {
     const data1 = [];
     this.onlyOpenQuestionData.forEach((e) => {
 

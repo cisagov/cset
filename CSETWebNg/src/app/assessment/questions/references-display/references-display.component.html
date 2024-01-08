@@ -64,7 +64,7 @@
 <div *ngIf="additionalDocuments.length > 0" class="sub-header-1">{{'references.additional documents' | transloco }}
 </div>
 <div *ngFor="let doc of additionalDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
-    {{doc.title}}<ng-container *ngIf="doc.fileName">:
+    {{doc.title}}<ng-container *ngIf="doc.file_Name">:
         <ng-container *ngFor="let b of doc.bookmarks; let l = last">
             <span *ngIf="documentUrl(doc, b).length === 0">
                 {{b}}
