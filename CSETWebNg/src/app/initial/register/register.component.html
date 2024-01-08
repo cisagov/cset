@@ -119,9 +119,9 @@
           process.</p>
       </div>
     </div>
-    <div *ngIf="receivedError" class="mb-3">
+    <div *ngIf="validationError" class="mb-3">
       <div class="alert alert-danger">
-        <p>{{errorMessage}}</p>
+        {{errorMessage}}
       </div>
     </div>
   </form>
