@@ -15,7 +15,7 @@ using static CSETWebCore.Business.Malcolm.Graph;
 
 namespace CSETWebCore.Business.Malcolm
 {
-    public class MalcolmBusiness
+    public class MalcolmBusiness : IMalcolmBusiness
     {
         private CSETContext _context;
 
