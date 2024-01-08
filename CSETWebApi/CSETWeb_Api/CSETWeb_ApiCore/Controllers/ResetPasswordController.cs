@@ -24,6 +24,7 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Api.Models;
 using NLog;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -40,10 +41,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHost;
 
         public ResetPasswordController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
              IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
-             IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration)
+             IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration, IWebHostEnvironment webHost)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
@@ -54,6 +56,7 @@ namespace CSETWebCore.Api.Controllers
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
+            _webHost = webHost;
         }
 
 
@@ -246,7 +249,7 @@ namespace CSETWebCore.Api.Controllers
 
                 // Validate the email against an allowlist (if defined by the host)
                 var securityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                if (!securityManager.EmailIsAllowed(user.PrimaryEmail))
+                if (!securityManager.EmailIsAllowed(user.PrimaryEmail, _webHost))
                 {
                     return BadRequest("email not allowed");
                 }
@@ -306,7 +309,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (!_userBusiness.GetUserDetail(answer.PrimaryEmail).IsActive)
                 {
-                    return BadRequest("user-inactive");
+                    return BadRequest("user inactive");
                 }
 
                 if (IsSecurityAnswerCorrect(answer))
@@ -369,7 +372,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (!user.IsActive.GetValueOrDefault(true))
                 {
-                    return BadRequest("user-inactive");
+                    return BadRequest("user inactive");
                 }
 
 

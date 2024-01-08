@@ -46,6 +46,9 @@
     "account already exists": "An account already exists for the email address",
     "emails do not match": "Emails do not match",
     "email not allowed": "The specified email is not allowed by this CSET installation",
+    "unknown error": "Unknown error",
+    "user inactive": "User is inactive",
+
     "buttons": {
         "ok": "OK",
         "save": "Save",
