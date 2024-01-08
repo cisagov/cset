@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -51,6 +52,7 @@ namespace CSETWebCore.Api.Controllers
             string fileName = "";
             string fileExtension = "";
             string output = "";
+            List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
 
             foreach (FormFile file in formFiles)
             {       
@@ -69,15 +71,27 @@ namespace CSETWebCore.Api.Controllers
                             StreamReader sr = new StreamReader(stream);
                             string jsonString = sr.ReadToEnd();
                             data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
+                        } else
+                        {
+                            MalcolmUploadError error = new MalcolmUploadError(fileName, 415, "files of type " + fileExtension + " are unsupported.");
+                            errors.Add(error);
                         }
                     }
                 } catch (Exception ex)
                 {
-                    return BadRequest(ex);
+                    MalcolmUploadError error = new MalcolmUploadError(fileName, 400, ex.Message);
+                    errors.Add(error);
                 }
             }
 
-            return Ok();
+            if (errors.Count > 0)
+            {
+                return Ok(errors);
+            }
+            else
+            {
+                return Ok();
+            }
         }
     }
 

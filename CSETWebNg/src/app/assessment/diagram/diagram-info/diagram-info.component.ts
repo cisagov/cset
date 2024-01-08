@@ -31,6 +31,8 @@ import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
 import { HydroService } from '../../../services/hydro.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
 
 @Component({
     selector: 'app-info',
@@ -52,7 +54,8 @@ export class DiagramInfoComponent implements OnInit {
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
         public hydroSvc: HydroService,
-        private location: Location
+        private location: Location,
+        private dialog: MatDialog
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
@@ -121,11 +124,23 @@ export class DiagramInfoComponent implements OnInit {
         this.malcolmFiles = event.target.files;
 
         if (this.malcolmFiles) {
-            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe((result: any) => {
-                console.log("SUCCESS... MAYBE!?");
+            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
+                (result) => {
+                    if (result != null) {
+                        this.openUploadErrorDialog(result);
+                    }
             });
         }
     }
 
+    openUploadErrorDialog(errorData: any) {
+        let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
+            minHeight: '300px',
+            minWidth: '400px',
+            data: {
+                error: errorData
+            }
+        });
+    }
 
 }
