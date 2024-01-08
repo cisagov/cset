@@ -63,6 +63,9 @@
   </ItemGroup>
 	
   <ItemGroup>
+  	<None Update="ALLOWLIST.txt">
+  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
   	<None Update="IISUrlRewrite.xml">
   		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
   	</None>
