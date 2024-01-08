@@ -40,6 +40,7 @@ export class Buckets {
 export class ValuePairs {
     docCount: number;
     key: string;
+    distance: number;
 }
 
 export class Filters {

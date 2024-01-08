@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -15,6 +16,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -25,7 +27,6 @@ namespace CSETWebCore.Api.Controllers
         private IHttpContextAccessor _http;
         private IJSONFileExport _json;
         private TextWriter jsonWriter;
-        private IMalcolmBusiness _malcolm;
 
 
 
@@ -37,7 +38,6 @@ namespace CSETWebCore.Api.Controllers
             _token = token;
             _context = context;
             _http = http;
-            //_malcolm = malcolm;
         }
 
 
@@ -45,31 +45,51 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/malcolm")]
         public IActionResult MapSourceToDestinationData([FromQuery] string files)
         {
-            string[] fileList = files.Split(',');
-            //fileList = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-            var malcolmDataList = new List<GenericInput>();
+            return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData());
+            //return Ok(GetMalcolmJsonData());
+        }
 
+        public IEnumerable<GenericInput> GetMalcolmJsonData()
+        {
+            string[] files = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
+            var malcolmDataList = new List<GenericInput>();
+            //var dict = new Dictionary<string, int>();
             try
             {
-                foreach (string file in fileList)
+                foreach (string file in files)
                 {
-                    if (System.IO.File.Exists(file))
-                    {
-                        string jsonString = System.IO.File.ReadAllText(file);
-                        var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
+                    string jsonString = System.IO.File.ReadAllText(file);
+                    var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
 
-                        malcolmDataList.Add(malcolmData);
-                    }
+                    var dict = new Dictionary<string, int>();
+                    dict = CreateDictionary(malcolmData.Values.Buckets, dict);
+                    dict.OrderBy(a => a.Value);
+
+                    malcolmDataList.Add(malcolmData);
                 }
 
-                return Ok(malcolmDataList);
+                return malcolmDataList;
             }
             catch (Exception exc)
             {
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null; 
+            return null;
+        }
+
+        public Dictionary<string, int> CreateDictionary(List<Buckets> buckets, Dictionary<string, int> dict)
+        {
+            foreach (Buckets bucket in buckets)
+            {
+                if (bucket.Values != null)
+                {
+                    dict.TryAdd(bucket.Key, bucket.Values.Buckets.Count);
+                    dict = CreateDictionary(bucket.Values.Buckets, dict);
+                }
+            }
+
+            return dict;
         }
     }
 }
