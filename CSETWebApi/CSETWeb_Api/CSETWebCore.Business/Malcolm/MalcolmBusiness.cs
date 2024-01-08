@@ -14,17 +14,17 @@ namespace CSETWebCore.Business.Malcolm
     {
         //public MalcolmBusiness() { }
 
-        public IEnumerable<GenericInput> GetMalcolmJsonData()
+        public IEnumerable<MalcolmData> GetMalcolmJsonData()
         {
             string[] files = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-            var malcolmDataList = new List<GenericInput>();
+            var malcolmDataList = new List<MalcolmData>();
 
             try
             {
                 foreach (string file in files)
                 {
                     string jsonString = File.ReadAllText(file);
-                    var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
+                    var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
 
                     malcolmDataList.Add(malcolmData);
                 }

@@ -15,6 +15,6 @@ namespace CSETWebCore.Interfaces.Malcolm
 {
     public interface IMalcolmBusiness
     {
-        public IEnumerable<GenericInput> GetMalcolmJsonData();
+        public IEnumerable<MalcolmData> GetMalcolmJsonData();
     }
 }
