@@ -1,0 +1,26 @@
+
+
+# This file can be populated with a list of email patterns that are permitted
+# to sign up for CSET accounts.  
+
+# An asterisk can be used as a wildcard character in the pattern.
+# If there are no email patterns defined, all emails will be allowed. 
+# If this file does not exist, all emails will be allowed.
+
+
+# Lines beginning with a hashtag/pound sign are comments.
+-- This is also a comment.
+
+
+# The general pattern is expected to be:  *@domain1.com
+# Specific email addresses can also be defined:  user1@domain1.com
+# Define one pattern per line
+
+
+# Uncomment and customize the following examples to engage allowlisting...
+
+--   *@domain1.com
+--   *@domain2.com
+--   *@domain3.com
+
+--   john@domain4.com

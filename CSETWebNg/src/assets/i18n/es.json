@@ -42,6 +42,8 @@
     "account already exists": "Ya existe una cuenta para la dirección de correo electrónico",
     "emails do not match": "Los correos electrónicos no coinciden",
     "email not allowed": "El correo electrónico especificado no está permitido en esta instalación de CSET",
+    "unknown error": "Error desconocido",
+    "user inactive": "Usuario está inactivo",
 
     "contact": {
         "contacts": "Contactos",

@@ -38,6 +38,8 @@
     "account already exists": "[UK]An account already exists for the email address",
     "emails do not match": "[UK]Emails do not match",
     "email not allowed": "[UK]The specified email is not allowed by this CSET installation",
+    "unknown error": "[UK]Unknown error",
+    "user inactive": "[UK]User is inactive",
 
     "titles": {
         "prepare": "Приготуйте",
