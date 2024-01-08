@@ -69,7 +69,7 @@ export class CisService {
   /**
    *
    */
-   getCisSectionScoring() {
+  getCisSectionScoring() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/cis/sectionscoring');
   }
 
@@ -94,7 +94,7 @@ export class CisService {
     var b = +baselineId;
     this.baselineAssessmentId = b;
     var baseline = Number.isNaN(b) ? "0" : b.toString();
-    localStorage.setItem("baseline", baseline );
+    localStorage.setItem("baseline", baseline);
     return this.http.post(this.configSvc.apiUrl + 'maturity/cis/baseline', b);
   }
 
@@ -102,16 +102,18 @@ export class CisService {
   /**
    * Sends a single answer to the API to be persisted.
    */
-  storeAnswer(answer: Answer) {
+  storeAnswer(answer: Answer, sectionId: number) {
     answer.questionType = localStorage.getItem('questionSet');
-    return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
+    const answers = [];
+    answers.push(answer);
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId=' + sectionId, answers, headers);
   }
 
   /**
    * Sends a group of answers to the API to be persisted.
    */
-  storeAnswers(answers: Answer[], sectionId:number) {
-    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId='+sectionId, answers, headers);
+  storeAnswers(answers: Answer[], sectionId: number) {
+    return this.http.post(this.configSvc.apiUrl + 'answerquestions?sectionId=' + sectionId, answers, headers);
   }
 
 
@@ -126,8 +128,7 @@ export class CisService {
    */
   hasBaseline(): boolean {
     let baseline = localStorage.getItem("baseline");
-    if(baseline && baseline != "0")
-    {
+    if (baseline && baseline != "0") {
       return true;
     }
     return false;

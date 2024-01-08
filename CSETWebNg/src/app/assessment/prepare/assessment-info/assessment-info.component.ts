@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
@@ -40,5 +40,7 @@ export class AssessmentInfoComponent {
     public assessSvc: AssessmentService,
     public configSvc: ConfigService,
     public navSvc: NavigationService,
-    ) { }
+    public ncuaSvc: NCUAService,
+    public acetSvc: ACETService
+  ) { }
 }

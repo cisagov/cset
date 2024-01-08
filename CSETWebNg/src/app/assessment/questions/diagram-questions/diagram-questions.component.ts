@@ -22,8 +22,8 @@ import { CompletionService } from './../../../services/completion.service';
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Category, Domain } from '../../../models/questions.model';
+import { Component, OnInit } from '@angular/core';
+import { Category } from '../../../models/questions.model';
 import { QuestionResponse } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';

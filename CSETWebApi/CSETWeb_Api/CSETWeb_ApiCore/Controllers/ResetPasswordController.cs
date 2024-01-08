@@ -24,6 +24,7 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Model.Auth;
 using CSETWebCore.Api.Models;
 using NLog;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -40,10 +41,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IUserBusiness _userBusiness;
         private readonly INotificationBusiness _notificationBusiness;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _webHost;
 
         public ResetPasswordController(IUserAuthentication userAuthentication, ITokenManager tokenManager, CSETContext context,
              IAssessmentUtil assessmentUtil, IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports,
-             IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration)
+             IUserBusiness userBusiness, INotificationBusiness notificationBusiness, IConfiguration configuration, IWebHostEnvironment webHost)
         {
             _userAuthentication = userAuthentication;
             _tokenManager = tokenManager;
@@ -54,6 +56,7 @@ namespace CSETWebCore.Api.Controllers
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
+            _webHost = webHost;
         }
 
 
@@ -218,23 +221,37 @@ namespace CSETWebCore.Api.Controllers
                 {
                     return BadRequest("Invalid Model State");
                 }
+
                 if (String.IsNullOrWhiteSpace(user.PrimaryEmail))
-                    return BadRequest("Invalid PrimaryEmail");
+                {
+                    return BadRequest("missing email");
+                }
 
                 if (!emailvalidator.IsMatch(user.PrimaryEmail))
                 {
-                    return BadRequest("Invalid PrimaryEmail");
+                    return BadRequest("invalid email format");
                 }
+
                 if (!emailvalidator.IsMatch(user.ConfirmEmail.Trim()))
                 {
-                    return BadRequest("Invalid PrimaryEmail");
+                    return BadRequest("invalid email format");
                 }
+
                 if (user.PrimaryEmail != user.ConfirmEmail)
-                    return BadRequest("Invalid PrimaryEmail");
+                {
+                    return BadRequest("emails do not match");
+                }
 
                 if (_userBusiness.GetUserDetail(user.PrimaryEmail) != null)
                 {
-                    return BadRequest("An account already exists for that email address");
+                    return BadRequest("account already exists");
+                }
+
+                // Validate the email against an allowlist (if defined by the host)
+                var securityManager = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
+                if (!securityManager.EmailIsAllowed(user.PrimaryEmail, _webHost))
+                {
+                    return BadRequest("email not allowed");
                 }
 
                 var resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
@@ -292,7 +309,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (!_userBusiness.GetUserDetail(answer.PrimaryEmail).IsActive)
                 {
-                    return BadRequest("user-inactive");
+                    return BadRequest("user inactive");
                 }
 
                 if (IsSecurityAnswerCorrect(answer))
@@ -355,7 +372,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (!user.IsActive.GetValueOrDefault(true))
                 {
-                    return BadRequest("user-inactive");
+                    return BadRequest("user inactive");
                 }
 
 

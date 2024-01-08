@@ -21,9 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { group } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
-import { MaturityDomain } from '../../../models/mat-detail.model';
 import { MaturityDomainRemarks, QuestionGrouping } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';

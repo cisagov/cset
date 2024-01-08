@@ -73,8 +73,8 @@ export class RequiredDocsComponent implements OnInit {
     commentToggle(id: number) {
         this.commentShow[id] = !this.commentShow[id];
     }
-    has(doc: RequiredDocument) {        
-        return (doc.comment && doc.comment.length > 0) ? 'inline' : 'none';            
+    has(doc: RequiredDocument) {
+        return (doc.comment && doc.comment.length > 0) ? 'inline' : 'none';
     }
 
     submit(doc: RequiredDocument, answer: string = null) {

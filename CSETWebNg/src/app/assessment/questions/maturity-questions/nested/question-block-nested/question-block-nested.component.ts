@@ -30,6 +30,7 @@ import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { LayoutService } from '../../../../../services/layout.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -53,19 +54,24 @@ export class QuestionBlockNestedComponent implements OnInit {
   // temporary debug aid
   showIdTag = false;
 
+  sectionId = 0;
+
   constructor(
     public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private route: ActivatedRoute
   ) { }
 
   /**
    *
    */
   ngOnInit(): void {
+    this.sectionId = +this.route.snapshot.params['sec'];
+
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }
@@ -202,7 +208,9 @@ export class QuestionBlockNestedComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
-    this.cisSvc.storeAnswer(answer).subscribe(x => {
+    this.cisSvc.storeAnswer(answer, this.sectionId).subscribe((x: any) => {
+      let score = x.groupingScore;
+      this.cisSvc.changeScore(score);
     });
   }
 
