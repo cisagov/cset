@@ -46,8 +46,11 @@
           </option>
         </select>
       </td>
-      <td style="padding-left: 20px"><input type="checkbox" name="{{ component.label }}" class="mt-1"
-          [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions"> </td>
+      <td style="padding-left: 20px">
+        <input type="checkbox" name="{{ component.label }}" id="{{ component.label }}" class="checkbox-custom mt-1"
+          [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions">
+          <label for="{{ component.label }}" class="checkbox-custom-label"></label> 
+        </td>
       <td>{{component.sal}}</td>
       <td>{{component.criticality}}</td>
       <!-- <td>{{component.layerName}}</td> -->

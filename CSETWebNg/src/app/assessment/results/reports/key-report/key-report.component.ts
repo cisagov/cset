@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { ConfigService } from '../../../../services/config.service';
@@ -7,11 +7,9 @@ import { Demographic } from '../../../../models/assessment-info.model';
 
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import htmlToPdfmake from 'html-to-pdfmake';
 import { DemographicService } from '../../../../services/demographic.service';
-import { Console } from 'console';
 import { ActivatedRoute } from '@angular/router';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-key-report',
@@ -30,7 +28,7 @@ export class KeyReportComponent {
     public configSvc: ConfigService,
     private demoSvc: DemographicService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.contactCount = 1;
@@ -528,9 +526,9 @@ export class KeyReportComponent {
       },
       pageSize: 'A4',
       pageOrientation: 'landscape'
-    };    
-    
-    pdfMake.createPdf(documentDefinition).open({},window);
+    };
+
+    pdfMake.createPdf(documentDefinition).open({}, window);
   }
   // Helper function to check if two arrays are equal
   arraysEqual(a, b) {

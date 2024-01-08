@@ -24,7 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
-import { Answer, Question } from '../../models/questions.model';
+import { Answer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
@@ -60,10 +60,10 @@ export class ComponentOverrideComponent {
       });
   }
 
-    /**
-   * 
-   * @param ans 
-   */
+  /**
+ * 
+ * @param ans 
+ */
   showThisOption(ans: string) {
     if (!this.questionsSvc.questions) {
       return true;

@@ -5,6 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Malcolm;
+using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -12,7 +13,9 @@ using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,69 +30,77 @@ namespace CSETWebCore.Api.Controllers
         private IHttpContextAccessor _http;
         private IJSONFileExport _json;
         private TextWriter jsonWriter;
+        private IMalcolmBusiness _malcolm;
 
 
 
         /// <summary>
         /// Controller
         /// </summary>
-        public MalcolmController(ITokenManager token, CSETContext context, IHttpContextAccessor http)
+        public MalcolmController(ITokenManager token, CSETContext context, IHttpContextAccessor http, IMalcolmBusiness malcolm)
         {
             _token = token;
             _context = context;
             _http = http;
+            _malcolm = malcolm;
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/malcolm")]
-        public IActionResult MapSourceToDestinationData([FromQuery] string files)
+        public IActionResult MapSourceToDestinationData()
         {
-            return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData());
-            //return Ok(GetMalcolmJsonData());
-        }
+            var formFiles = HttpContext.Request.Form.Files;
+            string fileName = "";
+            string fileExtension = "";
+            string output = "";
+            List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+            List<MalcolmData> dataList = new List<MalcolmData>();
 
-        public IEnumerable<GenericInput> GetMalcolmJsonData()
-        {
-            string[] files = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-            var malcolmDataList = new List<GenericInput>();
-            //var dict = new Dictionary<string, int>();
-            try
-            {
-                foreach (string file in files)
+            foreach (FormFile file in formFiles)
+            {       
+                try
                 {
-                    string jsonString = System.IO.File.ReadAllText(file);
-                    var malcolmData = JsonConvert.DeserializeObject<GenericInput>(jsonString);
+                    using (var stream = new MemoryStream())
+                    {
+                        fileName = file.FileName;
+                        fileExtension = System.IO.Path.GetExtension(fileName);
+                        MalcolmData data = new MalcolmData();
 
-                    var dict = new Dictionary<string, int>();
-                    dict = CreateDictionary(malcolmData.Values.Buckets, dict);
-                    dict.OrderBy(a => a.Value);
-
-                    malcolmDataList.Add(malcolmData);
+                        if (fileExtension == ".json")
+                        {
+                            file.CopyTo(stream);
+                            stream.Seek(0, SeekOrigin.Begin);
+                            StreamReader sr = new StreamReader(stream);
+                            string jsonString = sr.ReadToEnd();
+                            data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
+                            dataList.Add(data);
+                        } else
+                        {
+                            MalcolmUploadError error = new MalcolmUploadError(fileName, 415, "files of type " + fileExtension + " are unsupported.");
+                            errors.Add(error);
+                        }
+                    }
+                } catch (Exception ex)
+                {
+                    MalcolmUploadError error = new MalcolmUploadError(fileName, 400, ex.Message);
+                    errors.Add(error);
                 }
 
-                return malcolmDataList;
+                
             }
-            catch (Exception exc)
+
+
+            if (errors.Count > 0)
             {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+                return Ok(errors);
             }
-
-            return null;
-        }
-
-        public Dictionary<string, int> CreateDictionary(List<Buckets> buckets, Dictionary<string, int> dict)
-        {
-            foreach (Buckets bucket in buckets)
+            else
             {
-                if (bucket.Values != null)
-                {
-                    dict.TryAdd(bucket.Key, bucket.Values.Buckets.Count);
-                    dict = CreateDictionary(bucket.Values.Buckets, dict);
-                }
+                return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData());
             }
-
-            return dict;
         }
     }
+
+
 }

@@ -41,6 +41,14 @@
     "sal intro 3": "The SAL applies to Standard and Diagram Component question sets.",
     "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the",
     "icon": "icon.",
+    "missing email": "Email address is required",
+    "invalid email format": "Invalid email format",
+    "account already exists": "An account already exists for the email address",
+    "emails do not match": "Emails do not match",
+    "email not allowed": "The specified email is not allowed by this CSET installation",
+    "unknown error": "Unknown error",
+    "user inactive": "User is inactive",
+
     "buttons": {
         "ok": "OK",
         "save": "Save",
