@@ -15,7 +15,6 @@ The enterprise installation can be automated through the use of a provided Power
 
 ![](img/figES1.png)
 
-
 3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
  ```cd C:\users\%USER%\Desktop\CSETv%VERSION%_Enterprise_Binaries```.
 
