@@ -1,0 +1,98 @@
+{
+  "fields": [
+    "source.segment.name",
+    "destination.segment.name",
+    "network.protocol"
+  ],
+  "filter": {
+    "tags": "cross_segment"
+  },
+  "range": [
+    1544805569,
+    1702571969
+  ],
+  "urls": [
+    "/dashboards/app/dashboards#/view/abdd7550-2c7c-40dc-947e-f6d186a158c4?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2018-12-14T16:39:29.245668Z',to:'2023-12-14T16:39:29.249354Z'))"
+  ],
+  "values": {
+    "buckets": [
+      {
+        "doc_count": 28,
+        "key": "Battery Network",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 25,
+              "key": "Combined Cycle BOP",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "Solar Panel Network",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 20,
+        "key": "Combined Cycle BOP",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 11,
+              "key": "Battery Network",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 9,
+              "key": "Solar Panel Network",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "Solar Panel Network",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Combined Cycle BOP",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      }
+    ],
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0
+  }
+}
