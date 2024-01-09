@@ -21,6 +21,9 @@ How Do I Use CSET?
 [Older Versions of CSET For Windows](https://github.com/cisagov/cset/releases/)
 
 
+## Documentation
+See the [**CSET documentation**](docs/README.md).
+
 
 ## License
 
@@ -71,7 +74,6 @@ Other Items of Note:
 available from the Windows Update web site to ensure the best compatibility and security.
 
 
-## Documentation
-See the [**CSET documentation**](docs/README.md).
+
 
 
