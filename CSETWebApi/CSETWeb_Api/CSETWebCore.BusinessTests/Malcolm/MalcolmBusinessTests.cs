@@ -96,16 +96,46 @@ namespace CSETWebCore.Business.Malcolm.Tests
             var root = new TempNode("10.10.30.1");
             tree.WalkTree(null, root, data[0].Graphs["10.10.30.1"]);
 
-            printTree(root);
+            printTree(root,0);
 
         }
-        private void printTree(TempNode node)
+
+        [TestMethod()]
+        public void TestPreconstructedGraph()
         {
-            Trace.WriteLine(node.Key);
-            foreach(var c in node.Children)
+            TempNode node3 = new TempNode("3");
+            TempNode node6 = new TempNode("6");
+            TempNode node8 = new TempNode("8");
+            TempNode node255 = new TempNode("255");
+            node3.Children.Add(node6);
+            node3.Children.Add(node8);
+            node6.Children.Add(node3);
+            node8.Children.Add(node3);
+            node6.Children.Add(node255);
+            node255.Children.Add(node6);
+            node8.Children.Add(node255);
+            node255.Children.Add(node8);
+
+
+            MalcolmTree tree = new MalcolmTree();
+            TempNode root = new TempNode("3");
+            tree.WalkTree(null, root, node3);
+
+            printTree(root,0);
+
+        }
+
+        private void printTree(TempNode node, int indent)
+        {
+            string tkey = node.Key; 
+            if(indent > 0)
             {
-                Trace.Write("->");
-                printTree(c);
+                tkey = "->" + tkey;
+            }
+            Trace.WriteLine(tkey.PadLeft(tkey.Length+ (2*indent)));
+            foreach(var c in node.Children)
+            {                
+                printTree(c,(++indent));                
             }
         }
 
