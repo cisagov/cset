@@ -16,6 +16,8 @@ namespace CSETWebCore.Model.Malcolm
         public List<string> Urls { get; set; } = new List<string>();
         //public JArray Buckets { get; set; }
         public Values Values { get; set; }
-        public TmpNode netNode { get; set; }
+        public Dictionary<string, TempNode> Graphs { get; set; }
+        public List<TempNode> Trees { get; set; }
+        
     }
 }

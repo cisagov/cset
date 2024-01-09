@@ -11,59 +11,76 @@ namespace CSETWebCore.Business.Malcolm
     {
         private CSETContext _context;
 
-        private Dictionary<string, Node> treeDictionary = new Dictionary<string, Node>();
-        private Dictionary<string, TmpNode> networkOfNodes = new Dictionary<string, TmpNode>();
-        private HashSet<string> alreadySeenList = new HashSet<string>();
+
+        private Dictionary<string, TempNode> networkOfNodes = new Dictionary<string, TempNode>();
 
 
-        public MalcolmBusiness(CSETContext context) 
+
+        public MalcolmBusiness(CSETContext context)
         {
             _context = context;
         }
 
-        public Dictionary<string,TmpNode> RunTest(List<MalcolmData> datalist)
-        {
-            GetMalcolmJsonData(datalist);
-            return networkOfNodes;
-        }
+        public List<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
+        {   
+            foreach (MalcolmData malcolmData in datalist)
+            {
+                if (malcolmData != null)
+                {
+                    foreach (var bucket in malcolmData.Values.Buckets)
+                    {
+                        if (!networkOfNodes.ContainsKey(bucket.Key))
+                        {
+                            var buckets = new List<Buckets>() { bucket };
+                            BuildNetwork(null, buckets);
+                        }
+                    }
+                    malcolmData.Graphs = networkOfNodes;
+                    networkOfNodes = new Dictionary<string, TempNode>();                    
+                }
+            }
+            return datalist;
 
-        public IEnumerable<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
-        { 
-            var malcolmDataList = new List<MalcolmData>();
-            var tmp = new TmpNode("this is the root");
+        }
+        public List<MalcolmData> GetTreesFromMalcolmData(List<MalcolmData> datalist)
+        {
+            var malcolmDataList = new List<MalcolmData>();            
             foreach (MalcolmData malcolmData in datalist)
             {
                 if (malcolmData != null)
                 {   
-                    BuildNetwork(tmp, malcolmData.Values.Buckets) ;
-                }             
+                    MalcolmTree trees = new MalcolmTree();
+                    trees.StartTheTreeWalk(malcolmData.Graphs);
+                    malcolmData.Trees = trees.RootNodes;
+                    malcolmDataList.Add(malcolmData);
+                }
             }
-
             return malcolmDataList;
-            
+
         }
 
-        private void BuildNetwork(TmpNode parent, List<Buckets>buckets)
-        {   
+        private void BuildNetwork(TempNode parent, List<Buckets> buckets)
+        {
             foreach (var bucket in buckets)
             {
-                TmpNode tnode;
+                TempNode tnode;
                 if (String.IsNullOrEmpty(bucket.Key))
                 {
                     continue;
                 }
-                if(networkOfNodes.TryGetValue(bucket.Key, out tnode))
-                {   
-                    parent.Children.Add(tnode);
+                if (networkOfNodes.TryGetValue(bucket.Key, out tnode))
+                {
+                    parent.AddChildGraphOnly(tnode);                    
                 }
                 else
                 {
-                    tnode = new TmpNode(bucket.Key);
+                    tnode = new TempNode(bucket.Key);
+                    if (parent == null)
+                        parent = tnode;
                     networkOfNodes.Add(bucket.Key, tnode);
-                    parent.Children.Add(tnode);
-
+                    parent.AddChildGraphOnly(tnode);
                 }
-                if(bucket.Values != null)
+                if (bucket.Values != null)
                 {
                     BuildNetwork(tnode, bucket.Values.Buckets);
                 }
@@ -72,7 +89,7 @@ namespace CSETWebCore.Business.Malcolm
 
 
 
-        public Dictionary<string, int> CreateDictionary (List<Buckets> buckets, Dictionary<string, int> childrenDict)
+        public Dictionary<string, int> CreateDictionary(List<Buckets> buckets, Dictionary<string, int> childrenDict)
         {
             foreach (Buckets bucket in buckets)
             {
@@ -133,36 +150,7 @@ namespace CSETWebCore.Business.Malcolm
         }
 
 
-        public void StartTheTreeWalk(Dictionary<string, int> childrenDict, Node topLevelNodeHolder)
-        {
-            //get the root node
-            //var tree = new Dictionary<string, Node>(); //this is the empty tree
-            WalkTree(topLevelNodeHolder);
-        }
 
-
-        public void WalkTree(Node node)
-        {
-            if (alreadySeenList.Contains(node.key))
-            {
-                return;
-            }
-            alreadySeenList.Add(node.key);
-
-            var children = node.GetChildren();
-            //var organizedChildren = ;
-            foreach (var child in children)
-            {
-                treeDictionary.TryAdd(child.key, child);
-                WalkTree(child);
-
-            }
-
-            //treeDictionary.TryAdd(child.key, child);
-
-
-            //return tree;
-        }
 
 
         // a modified version of BFS that 
@@ -255,7 +243,7 @@ namespace CSETWebCore.Business.Malcolm
                 children.AddRange(childrenToAdd);
             }
 
-            public void AddEdge(string src,string dest)
+            public void AddEdge(string src, string dest)
             {
                 Edge edge = new Edge();
                 edge.dest = dest;
@@ -306,7 +294,7 @@ namespace CSETWebCore.Business.Malcolm
 
 
     public class Graph
-    { 
+    {
         public int V, E;
         public Edge[] edge;
 
@@ -335,7 +323,7 @@ namespace CSETWebCore.Business.Malcolm
         // path compression technique)
         int find(Subset[] subsets, int i)
         {
-            if(i > subsets.Length)
+            if (i > subsets.Length)
             {
                 if (subsets[i].parent != i)
                     subsets[i].parent

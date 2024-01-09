@@ -61,6 +61,9 @@
     <None Update="MalcolmJson\source_to_destination_ip.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="MalcolmJson\TestHarness.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
