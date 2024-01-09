@@ -31,17 +31,18 @@ namespace CSETWebCore.Business.Malcolm.Tests
             Dictionary<string,TmpNode> nodesList= tst.RunTest(datalist);
             foreach(TmpNode node in nodesList.Values)
             {
+                Trace.WriteLine("");
                 Trace.WriteLine("node");
                 Trace.WriteLine(node.Key);
                 Trace.WriteLine(node.PrintChildrenList());
                 
-                foreach(var n in node.Children)
-                    PrintChildren(n);
+                //foreach(var n in node.Children)
+                //    PrintChildren(n);
             }
         }
         private void PrintChildren(TmpNode node)
         {
-            Trace.Write(node.Key);
+            Trace.WriteLine(node.Key);
             foreach (TmpNode c in node.Children)
             {
                 Trace.WriteLine("->" + c.Key);
