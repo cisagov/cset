@@ -1,16 +1,8 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Model.Malcolm;
-using Newtonsoft.Json;
-using NPOI.POIFS.Properties;
-using NPOI.SS.Formula.Functions;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static CSETWebCore.Business.Malcolm.Graph;
 
 namespace CSETWebCore.Business.Malcolm
@@ -20,6 +12,7 @@ namespace CSETWebCore.Business.Malcolm
         private CSETContext _context;
 
         private Dictionary<string, Node> treeDictionary = new Dictionary<string, Node>();
+        private Dictionary<string, TmpNode> networkOfNodes = new Dictionary<string, TmpNode>();
         private HashSet<string> alreadySeenList = new HashSet<string>();
 
 
@@ -28,54 +21,55 @@ namespace CSETWebCore.Business.Malcolm
             _context = context;
         }
 
-        public IEnumerable<MalcolmData> GetMalcolmJsonData()
+        public Dictionary<string,TmpNode> RunTest(List<MalcolmData> datalist)
         {
-            string[] files = Directory.GetFiles("C:\\Users\\WINSMR\\Documents\\MalcolmJson");
-            var malcolmDataList = new List<MalcolmData>();
-
-            try
-            {
-                foreach (string file in files)
-                {
-                    string jsonString = File.ReadAllText(file);
-                    var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
-                    var dict = new Dictionary<string, int>();
-                    var edgeList = new List<Edge>();
-
-                    dict = CreateDictionary(malcolmData.Values.Buckets, dict);
-                    //edgeList = GoThroughEdges(malcolmData.Values.Buckets, edgeList, "");
-                    Node topLevelNodeHolder = GoThroughEdges(malcolmData.Values.Buckets, "");
-                    List<Node> topLevelNodes = topLevelNodeHolder.GetChildren();
-                    List<Edge> topLevelEdges = topLevelNodeHolder.GetEdges();
-
-                    treeDictionary.Clear();
-                    StartTheTreeWalk(dict, topLevelNodeHolder);
-                    //Dictionary<string, Node> minimalSpanningTree_v1 = StartTheTreeWalk(dict, topLevelNodeHolder);
-
-                    // Adjacency list for storing which vertices are connected
-                    List<List<int>> adj = new List<List<int>>(dict.Count());
-
-                    for (int i = 0; i < dict.Count(); i++)
-                    {
-                        adj.Add(new List<int>());
-                    }
-
-                    //List<Node> minimalSpanningTree_v2 = 
-                    //Graph graph = new Graph(dict.Count, edgeList.Count, edgeList.ToArray());
-
-                    malcolmDataList.Add(malcolmData);
-                    
-                }
-
-                return malcolmDataList;
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-            }
-
-            return null;
+            GetMalcolmJsonData(datalist);
+            return networkOfNodes;
         }
+
+        public IEnumerable<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
+        { 
+            var malcolmDataList = new List<MalcolmData>();
+            var tmp = new TmpNode("this is the root");
+            foreach (MalcolmData malcolmData in datalist)
+            {
+                if (malcolmData != null)
+                {   
+                    BuildNetwork(tmp, malcolmData.Values.Buckets) ;
+                }             
+            }
+
+            return malcolmDataList;
+            
+        }
+
+        private void BuildNetwork(TmpNode parent, List<Buckets>buckets)
+        {   
+            foreach (var bucket in buckets)
+            {
+                TmpNode tnode;
+                if (String.IsNullOrEmpty(bucket.Key))
+                {
+                    continue;
+                }
+                if(networkOfNodes.TryGetValue(bucket.Key, out tnode))
+                {   
+                    parent.listChildren.Add(tnode);
+                }
+                else
+                {
+                    tnode = new TmpNode(bucket.Key);
+                    networkOfNodes.Add(bucket.Key, tnode);
+                    parent.listChildren.Add(tnode);
+
+                }
+                if(bucket.Values != null)
+                {
+                    BuildNetwork(tnode, bucket.Values.Buckets);
+                }
+            }
+        }
+
 
 
         public Dictionary<string, int> CreateDictionary (List<Buckets> buckets, Dictionary<string, int> childrenDict)

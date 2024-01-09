@@ -39,6 +39,28 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CSETWebCore.Business\CSETWebCore.Business.csproj" />
+    <ProjectReference Include="..\CSETWebCore.Model\CSETWebCore.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MalcolmJson\all_detected_software.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MalcolmJson\all_network_protocols.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MalcolmJson\cross_segment_traffic.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MalcolmJson\direction_source_destination_protocol.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MalcolmJson\source_destination_protocol_inbound_only.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MalcolmJson\source_to_destination_ip.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
