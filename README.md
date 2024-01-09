@@ -1,5 +1,5 @@
 
-#What is CSET?
+# What is CSET?
 The Cybersecurity Evaluation Tool (CSET) is a free software tool that helps users identify vulnerabilities in an organization's enterprise and industrial control cyber systems. CSET uses a hybrid risk and standards-based approach to evaluate the cybersecurity of a system and provide recommendations for improvement. 
 
 CSET runs in Windows on a laptop or desktop computer.  It can also be configured to run in a client-server architecture. 
@@ -12,7 +12,7 @@ How Do I Use CSET?
 [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU)
 
 
-##Download
+## Download
 To Download the Latest CSET Release click here https://cset-download.inl.gov/
 
 Download CSET For Windows:
