@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Model.Malcolm;
+using Lucene.Net.Util;
 using NPOI.POIFS.Properties;
 using System;
 using System.Collections.Generic;
@@ -42,12 +43,12 @@ namespace CSETWebCore.Business.Malcolm
                 return;
             }
             alreadySeenList.Add(treeNode.Key);
-            if(parent!=null)
-                parent.Children.Add(treeNode);
+            
             foreach (var child in graph.Children)
-            {   
-                WalkTree(treeNode,new TempNode(child.Key),child);
-                
+            {
+                if (parent != null)
+                    parent.Children.Add(treeNode);
+                WalkTree(treeNode, new TempNode(child.Key), child);
             }
         }
     }
