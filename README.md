@@ -1,9 +1,9 @@
-To Download the Latest CSET Release click here https://cset-download.inl.gov/
 
-# CSET 11.x.x
- 
-Download CSET For Windows:
-[CSET 11.X.X Standalone Installer](https://cset-download.inl.gov/)
+#What is CSET?
+The Cybersecurity Evaluation Tool (CSET) is a free software tool that helps users identify vulnerabilities in an organization's enterprise and industrial control cyber systems. CSET uses a hybrid risk and standards-based approach to evaluate the cybersecurity of a system and provide recommendations for improvement. 
+
+CSET runs in Windows on a laptop or desktop computer.  It can also be configured to run in a client-server architecture. 
+
 
 What is CSET?
 [CSET Overview](https://www.youtube.com/watch?v=B3xAh4iSRO0)
@@ -11,11 +11,16 @@ What is CSET?
 How Do I Use CSET?
 [CSET Detailed Video](https://www.youtube.com/watch?v=ELbvQTl4xmU)
 
+
+##Download
+To Download the Latest CSET Release click here https://cset-download.inl.gov/
+
+Download CSET For Windows:
+[CSET 11.X.X Standalone Installer](https://cset-download.inl.gov/)
+
+
 Older Versions of CSET For Windows:
 [CSET 11.X.X Standalone Installer](https://github.com/cisagov/cset/releases/)
-
-
-# Please note we do not use java and are not vulnerable to the log4j vulnerability.
 
 -------------------------------------------------------------------------
 
