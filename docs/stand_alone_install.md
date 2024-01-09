@@ -1,6 +1,7 @@
-# Using the CSET Stand-alone Installer
+# Using the CSET Standalone Installer
 
-The installer will add everything needed to run CSET on a self-contained Windows computer.
+The installer will add everything needed to run CSET on a self-contained Windows computer.  The front- and back-end components
+and database are all installed on the local machine.
 
 ## Install Process
 Double-click on the CSETStandAlone program.
@@ -88,7 +89,3 @@ Figure 11: Local Install Landing Page
 [fig9]: img/fig9.png
 [fig10]: img/fig10.png
 [fig11]: img/fig11.png
-
-<style>
-img { width: 60% }
-</style>
