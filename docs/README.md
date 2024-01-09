@@ -1,4 +1,6 @@
 
+# CSET Installation Options
+
 CSET can be installed in one of several configurations.  
 For a client-server thing, we call that "Enterprise".
 For a self-contained application running on a personal computer, we call that "stand alone."
