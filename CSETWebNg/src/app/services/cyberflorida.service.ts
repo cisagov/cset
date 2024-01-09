@@ -13,7 +13,6 @@ const headers = {
 })
 export class CyberFloridaService {
   clearState() {
-    console.log("reset array");
     this.needArray = [
       { id: 12297, answer: null },
       { id: 12314, answer: null },
@@ -37,7 +36,6 @@ export class CyberFloridaService {
       { id: 1939, answer: null }
     ];  
   }
-
 
 
   needArray = [];

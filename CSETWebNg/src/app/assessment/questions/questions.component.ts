@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, AfterViewChecked, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { QuestionFiltersComponent } from "../../dialogs/question-filters/question-filters.component";
 import { QuestionResponse, Category } from '../../models/questions.model';
@@ -31,7 +31,6 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
-import { ɵNullViewportScroller } from '@angular/common';
 import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -41,7 +40,7 @@ import { TranslocoService } from '@ngneat/transloco';
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' }
 })
-export class QuestionsComponent implements AfterViewChecked {
+export class QuestionsComponent implements AfterViewChecked, OnInit {
   @ViewChild('questionBlock') questionBlock;
 
   categories: Category[] = null;
@@ -115,6 +114,9 @@ export class QuestionsComponent implements AfterViewChecked {
       this.loadQuestions();
     });
 
+  }
+  ngOnInit(): void {
+    this.configSvc.checkOnlineStatusFromConfig();
   }
 
   updateComponentsOverride() {
@@ -238,7 +240,7 @@ export class QuestionsComponent implements AfterViewChecked {
    */
   loadQuestions() {
     // set the message with the current "no" answer value
-    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', {'no-ans': this.questionsSvc.answerButtonLabel('', 'N')});
+    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(

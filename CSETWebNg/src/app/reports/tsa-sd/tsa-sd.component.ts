@@ -8,14 +8,14 @@ import { MaturityService } from '../../services/maturity.service';
   templateUrl: './tsa-sd.component.html',
   styleUrls: ['./tsa-sd.component.scss', '../reports.scss']
 })
-export class TsaSdComponent implements OnInit{
+export class TsaSdComponent implements OnInit {
 
   domains: any[] = [];
 
   loading = false;
 
-  responseU:any; 
-  responseS:any;
+  responseU: any;
+  responseS: any;
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -40,7 +40,7 @@ export class TsaSdComponent implements OnInit{
       this.assessorName = assessmentDetail.creatorName;
       this.facilityName = assessmentDetail.facilityName;
     });
-    
+
     this.maturitySvc.getMaturityDeficiencySd().subscribe(
       (r: any) => {
         console.log(r);
@@ -49,5 +49,5 @@ export class TsaSdComponent implements OnInit{
         this.responseS = r.no;
       });
   }
-  
+
 }

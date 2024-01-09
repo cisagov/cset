@@ -77,7 +77,6 @@ export class DemographicIodService {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
     .subscribe(()=>{
       if(this.configSvc.cisaAssessorWorkflow){
-          console.log("the assessment name update got called");
           this.assessSvc.updateAssessmentName();
       }
     });

@@ -31,6 +31,15 @@
     "sal intro 1": "[UK]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "[UK]For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
     "sal intro 3": "[UK]The SAL applies to Standard and Diagram Component question sets.",
+    "to start an assessment": "[UK]To start a new assessment, click on a card.  To view additional details click the",
+    "icon": "[UK]icon.",
+    "missing email": "[UK]Email address is required",
+    "invalid email format": "[UK]Invalid email format",
+    "account already exists": "[UK]An account already exists for the email address",
+    "emails do not match": "[UK]Emails do not match",
+    "email not allowed": "[UK]The specified email is not allowed by this CSET installation",
+    "unknown error": "[UK]Unknown error",
+    "user inactive": "[UK]User is inactive",
 
     "titles": {
         "prepare": "Приготуйте",
@@ -48,6 +57,7 @@
         "security practices": "Security Practices",
         "questions": "Questions",
         "practices": "Практики",
+        "requirements": "Вимоги",
         "other remarks": "Other Remarks",
         "imr tutorial": "IMR Tutorial",
         "cmmc tutorial": "CMMC Tutorial",
@@ -57,7 +67,7 @@
         "rra tutorial": "Посібник із готовності до програм-вимагачів",
         "reports": "Звіти"
     },
-    
+
     "buttons": {
         "ok": "OK",
         "save": "Зберегти",
@@ -93,18 +103,18 @@
             "Inc": "Неповний",
             "Issue(N)": "Issue(N)",
             "S": "S",
-    
+
             "Fully-MVRA": "Повністю",
             "Not-MVRA": "ні",
             "Partial-MVRA": "Частковий",
-    
+
             "Alt-ACET": "Yes(C)",
-    
+
             "Imp-CPG": "[UK] Imp",
             "Prog-CPG": "[UK] Prog",
             "Scoped-CPG": "[UK] Scoped",
             "Not-CPG": "[UK] Not",
-    
+
             "FI-C2M2": "FI",
             "LI-C2M2": "LI",
             "PI-C2M2": "PI",
@@ -125,12 +135,12 @@
             "Partial-MVRA": "Частковий",
 
             "Alt-ACET": "[UK] Yes(C)",
-    
+
             "Imp-CPG": "[UK] Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
             "Prog-CPG": "[UK] In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
             "Scoped-CPG": "[UK] Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
             "Not-CPG": "[UK] Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
-          
+
             "FI-C2M2": "[UK] Fully Implemented - Complete",
             "LI-C2M2": "[UK] Largely Implemented - Complete, but with a recognized opportunity for improvement",
             "PI-C2M2": "[UK] Partially Implemented - Incomplete; there are multiple opportunities for improvement",
@@ -160,8 +170,8 @@
         }
     },
 
-   
-    
+
+
     "tooltip": {
         "mfr-flag": "Цей контроль потребує додаткового перегляду",
         "category requires review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки",

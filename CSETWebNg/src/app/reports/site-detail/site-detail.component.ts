@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -117,7 +117,7 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
         console.log('Error getting all documents: ' + (<Error>error).stack);
       });
 
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
         (data: AcetDashboard) => {
           this.acetDashboard = data;

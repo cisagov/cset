@@ -137,7 +137,6 @@ WHERE
     ((a.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (a.Answer_Text != h.Answer_Text)) OR
     ((a.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (a.Answer_Text != i.Answer_Text)) OR
     ((a.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (a.Answer_Text != j.Answer_Text)) OR
-    (a.Answer_Text = 'A') OR (a.Comment != NULL) OR
 
     -- Compare Exam 2 (b) to all other exams being merged
     ((b.Answer_Text != 'U' AND c.Answer_Text != 'U') AND (b.Answer_Text != c.Answer_Text)) OR
@@ -148,17 +147,15 @@ WHERE
     ((b.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (b.Answer_Text != h.Answer_Text)) OR
     ((b.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (b.Answer_Text != i.Answer_Text)) OR
     ((b.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (b.Answer_Text != j.Answer_Text)) OR
-    (b.Answer_Text = 'A') OR (b.Comment != NULL) OR
 
     -- Compare Exam 3 (c)
     ((c.Answer_Text != 'U' AND d.Answer_Text != 'U') AND (c.Answer_Text != d.Answer_Text)) OR
     ((c.Answer_Text != 'U' AND e.Answer_Text != 'U') AND (c.Answer_Text != e.Answer_Text)) OR
     ((c.Answer_Text != 'U' AND f.Answer_Text != 'U') AND (c.Answer_Text != f.Answer_Text)) OR
-   ((c.Answer_Text != 'U' AND g.Answer_Text != 'U') AND (c.Answer_Text != g.Answer_Text)) OR
+    ((c.Answer_Text != 'U' AND g.Answer_Text != 'U') AND (c.Answer_Text != g.Answer_Text)) OR
     ((c.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (c.Answer_Text != h.Answer_Text)) OR
     ((c.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (c.Answer_Text != i.Answer_Text)) OR
     ((c.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (c.Answer_Text != j.Answer_Text)) OR
-    (c.Answer_Text = 'A') OR (c.Comment != 'NULL') OR
 
     -- Compare Exam 4 (d)
     ((d.Answer_Text != 'U' AND e.Answer_Text != 'U') AND (d.Answer_Text != e.Answer_Text)) OR
@@ -167,7 +164,6 @@ WHERE
     ((d.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (d.Answer_Text != h.Answer_Text)) OR
     ((d.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (d.Answer_Text != i.Answer_Text)) OR
     ((d.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (d.Answer_Text != j.Answer_Text)) OR
-    (d.Answer_Text = 'A') OR (d.Comment != 'NULL') OR
 
     -- Compare Exam 5 (e)
     ((e.Answer_Text != 'U' AND f.Answer_Text != 'U') AND (e.Answer_Text != f.Answer_Text)) OR
@@ -175,30 +171,25 @@ WHERE
     ((e.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (e.Answer_Text != h.Answer_Text)) OR
     ((e.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (e.Answer_Text != i.Answer_Text)) OR
     ((e.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (e.Answer_Text != j.Answer_Text)) OR
-    (e.Answer_Text = 'A') OR (e.Comment != 'NULL') OR
 
     -- Compare Exam 6 (f)
     ((f.Answer_Text != 'U' AND g.Answer_Text != 'U') AND (f.Answer_Text != g.Answer_Text)) OR
     ((f.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (f.Answer_Text != h.Answer_Text)) OR
     ((f.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (f.Answer_Text != i.Answer_Text)) OR
     ((f.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (f.Answer_Text != j.Answer_Text)) OR
-    (f.Answer_Text = 'A') OR (f.Comment != 'NULL') OR
 
     -- Compare Exam 7 (g)
     ((g.Answer_Text != 'U' AND g.Answer_Text != 'U') AND (g.Answer_Text != g.Answer_Text)) OR
     ((g.Answer_Text != 'U' AND h.Answer_Text != 'U') AND (g.Answer_Text != h.Answer_Text)) OR
     ((g.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (g.Answer_Text != i.Answer_Text)) OR
     ((g.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (g.Answer_Text != j.Answer_Text)) OR
-    (g.Answer_Text = 'A') OR (g.Comment != 'NULL') OR
 
     -- Compare Exam 8 (h)
     ((h.Answer_Text != 'U' AND i.Answer_Text != 'U') AND (h.Answer_Text != i.Answer_Text)) OR
     ((h.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (h.Answer_Text != j.Answer_Text)) OR
-    (h.Answer_Text = 'A') OR (h.Comment != 'NULL') OR
 
     -- Compare Exam 9 (i)
-    ((i.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (i.Answer_Text != j.Answer_Text)) OR
-    (i.Answer_Text = 'A') OR (i.Comment != 'NULL')
+    ((i.Answer_Text != 'U' AND j.Answer_Text != 'U') AND (i.Answer_Text != j.Answer_Text))
 
 
 END

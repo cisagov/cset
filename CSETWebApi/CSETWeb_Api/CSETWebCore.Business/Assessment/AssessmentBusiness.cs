@@ -174,8 +174,8 @@ namespace CSETWebCore.Business.Assessment
             list.ForEach(x =>
             {
                 x.LastModifiedDate = _utilities.UtcToLocal(x.LastModifiedDate ?? DateTime.UtcNow);
-                x.AssessmentCreatedDate = _utilities.UtcToLocal(x.AssessmentCreatedDate);
-                x.AssessmentDate = _utilities.UtcToLocal(x.AssessmentDate);
+                x.AssessmentCreatedDate = x.AssessmentCreatedDate;
+                x.AssessmentDate = x.AssessmentDate;
 
                 var query = from u in _context.USERS
                             where u.UserId == x.UserId
@@ -312,9 +312,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment = new AnalyticsAssessment()
                 {
                     Alias = result.Alias,
-                    AssessmentCreatedDate = _utilities.UtcToLocal(result.AssessmentCreatedDate),
+                    AssessmentCreatedDate = result.AssessmentCreatedDate,
                     AssessmentCreatorId = tmpGuid.ToString(),
-                    Assessment_Date = _utilities.UtcToLocal(result.Assessment_Date),
+                    Assessment_Date = result.Assessment_Date,
                     Assessment_GUID = result.Assessment_GUID.ToString(),
                     LastModifiedDate = _utilities.UtcToLocal((DateTime)result.LastModifiedDate),
                     Mode = modeResult?.Application_Mode
@@ -323,6 +323,17 @@ namespace CSETWebCore.Business.Assessment
 
             return assessment;
 
+        }
+
+        /// <summary>
+        /// Returns the details for the specified Assessments given a GUID.
+        /// </summary>
+        /// <param name="assessmentGuid"></param>
+        /// <returns></returns>
+        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid) 
+        { 
+            int assessmentId = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid).Assessment_Id;
+            return GetAssessmentDetail(assessmentId);
         }
 
         /// <summary>
@@ -348,7 +359,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.Id = result.aa.Assessment_Id;
                 assessment.GalleryItemGuid = result.aa.GalleryItemGuid;
                 assessment.AssessmentName = result.ii.Assessment_Name;
-                assessment.AssessmentDate = _utilities.UtcToLocal(result.aa.Assessment_Date);
+                assessment.AssessmentDate = result.aa.Assessment_Date;
                 assessment.FacilityName = result.ii.Facility_Name;
                 assessment.CityOrSiteName = result.ii.City_Or_Site_Name;
                 assessment.StateProvRegion = result.ii.State_Province_Or_Region;
@@ -357,9 +368,9 @@ namespace CSETWebCore.Business.Assessment
                 assessment.AssessmentDescription = result.ii.Assessment_Description;
                 assessment.AdditionalNotesAndComments = result.ii.Additional_Notes_And_Comments;
                 assessment.CreatorId = result.aa.AssessmentCreatorId ?? 0;
-                assessment.CreatedDate = _utilities.UtcToLocal(result.aa.AssessmentCreatedDate);
+                assessment.CreatedDate = result.aa.AssessmentCreatedDate;
                 assessment.LastModifiedDate = _utilities.UtcToLocal((DateTime)result.aa.LastModifiedDate);
-                assessment.AssessmentEffectiveDate = _utilities.UtcToLocal(result.aa.AssessmentEffectiveDate ?? DateTime.UtcNow);
+                assessment.AssessmentEffectiveDate = result.aa.AssessmentEffectiveDate ?? DateTime.UtcNow;
                 assessment.DiagramMarkup = result.aa.Diagram_Markup;
                 assessment.DiagramImage = result.aa.Diagram_Image;
                 assessment.ISE_StateLed = result.aa.ISE_StateLed;

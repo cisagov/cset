@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentDetail } from '../../../../models/assessment-info.model';
@@ -35,6 +34,7 @@ import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 import { ACETService } from '../../../../services/acet.service';
 import { AcetDashboard } from '../../../../models/acet-dashboard.model';
+import moment from 'moment';
 
 
 @Component({
@@ -54,7 +54,7 @@ import { AcetDashboard } from '../../../../models/acet-dashboard.model';
 export class AssessmentDetailNcuaComponent implements OnInit {
 
   assessment: AssessmentDetail = {};
-  
+
   // Adding a date property here to avoid breaking any other assessments. Will probably update later.
   assessmentEffectiveDate: Date = new Date();
 
@@ -65,7 +65,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   assessmentCharterControl = new UntypedFormControl('');
   creditUnionOptions: CreditUnionDetails[] = [];
   filteredOptions: Observable<CreditUnionDetails[]>;
-  
+
   acetDashboard: AcetDashboard;
   examOverride: string = "";
 
@@ -98,7 +98,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       });
 
     this.navSvc.setCurrentPage('info1');
-    
+
     if (this.assessSvc.id()) {
       this.getAssessmentDetail();
     }
@@ -119,10 +119,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.filteredOptions = this.assessmentControl.valueChanges.pipe(
         startWith(''), map(value => {
           let tval = "";
-          if(typeof value === 'string'){
+          if (typeof value === 'string') {
             tval = value;
-          } 
-          else{
+          }
+          else {
             //tval= value.name;
           }
           const name = tval;
@@ -134,12 +134,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.assessSvc.getLastModified().subscribe((data: string) => {
       let myArray = data.split(" ");
       this.lastModifiedTimestamp = myArray[1];
-
       // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
     });
-    
+
+    this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
+      this.ncuaSvc.iseHasBeenSubmitted = result;
+    });
   }
 
   /**
@@ -156,6 +158,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
+      // moment().utcOffset(300);
+      // let temp = new Date(this.lastModifiedTimestamp);
+      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
@@ -169,7 +174,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         }
       }
     }
-    
+
     this.assessSvc.isBrandNew = false;
 
     this.setCharterPad();
@@ -192,14 +197,14 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   /**
    * 
    */
-  displayOptions (creditUnion: CreditUnionDetails): string {
+  displayOptions(creditUnion: CreditUnionDetails): string {
     return creditUnion.name && creditUnion.name ? creditUnion.name : '';
   }
 
   /**
    * 
    */
-  filter (name: string): CreditUnionDetails[] {
+  filter(name: string): CreditUnionDetails[] {
     const filterValue = name.toLowerCase();
     return this.creditUnionOptions.filter(option => option.name.toLowerCase().includes(filterValue));
   }
@@ -233,7 +238,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (e.target.value.padStart(5, '0') === '00000') {
       this.clearAssessmentFields();
     }
-    
+
     this.createAssessmentName();
     this.setCharterPad();
 
@@ -283,15 +288,16 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   updateAssets() {
-   // this.assessment.assets = e.target.value;
-    this.ncuaSvc.updateAssetSize(this.assessment.assets);
-    this.acetDashboard.assets = this.assessment.assets;
+    if (this.assessment.assets != null) {
+      this.ncuaSvc.updateAssetSize(this.assessment.assets);
+      this.acetDashboard.assets = this.assessment.assets;
 
-    if (this.ncuaSvc.assetsAsNumber > 50000000) {
-      this.updateOverride("No Override");
+      if (this.ncuaSvc.assetsAsNumber > 50000000) {
+        this.updateOverride("No Override");
+      }
+
+      this.assessSvc.updateAssessmentDetails(this.assessment);
     }
-
-    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   /**
@@ -350,7 +356,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       if (this.assessment.assessmentName.includes("merged") || this.assessment.assessmentName.includes("Merged")) {
         return;
       }
-      
+
       this.assessment.assessmentName = "ISE";
     } else {
       this.assessment.assessmentName = "ACET";
@@ -360,11 +366,11 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     if (this.assessment.charter) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.charter;
     }
-    
+
     if (this.assessment.creditUnion) {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.assessment.creditUnion;
     }
-    
+
     if (this.assessment.assessmentDate) {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
@@ -392,7 +398,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   regionTranslator(regionCode: number) {
-    switch(regionCode) {
+    switch (regionCode) {
       case 1:
         return 'Eastern';
       case 2:

@@ -83,6 +83,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
             TinyMapper.Bind<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>();
+            TinyMapper.Bind<ISE_ACTIONS_FINDINGS, jISE_ACTIONS_FINDINGS>();
             TinyMapper.Bind<INFORMATION, jINFORMATION>();
             TinyMapper.Bind<METRO_ANSWERS, jMETRO_ANSWERS>();
             TinyMapper.Bind<NETWORK_WARNINGS, jNETWORK_WARNINGS>();
@@ -299,6 +300,8 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 var oInfo = TinyMapper.Map<INFORMATION,jINFORMATION>(item);
                 oInfo.Assessment_Date = assessmentDate;
                 oInfo.Baseline_Assessment_Id = null;
+                oInfo.Submitted_Date = item.Submitted_Date;
+                oInfo.Ise_Submitted = item.Ise_Submitted;
                 model.jINFORMATION.Add(oInfo);
             }
 
@@ -524,7 +527,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <param name="guids">Array of assessment guids to export</param>
         /// <param name="fileExtension">The extension of the export files</param>
         /// <returns></returns>
-        public Stream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension) 
+        public MemoryStream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension) 
         {
 
             var archiveStream = new MemoryStream();
@@ -537,13 +540,30 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 return null;
             }
 
-            // Zip all the assessments into one archive
+            // Zip all the assessments into one archive.
             using (var archive = new ZipFile()) 
             {
                 // export the assessments
                 foreach (ASSESSMENTS a in exportAssessments)
                 {
                     AssessmentExportFile exportFile = ExportAssessment(a.Assessment_Id, fileExtension);
+                    int duplicateCounter = 1;
+
+                    // Handle collision cases where assessments have the same name, zip entries must be different.
+                    while (archive.ContainsEntry(exportFile.FileName)) 
+                    {
+                        if (duplicateCounter == 1)
+                        {
+                            exportFile.FileName = exportFile.FileName.Insert(exportFile.FileName.IndexOf(fileExtension), $" ({duplicateCounter})");
+                        }
+                        else 
+                        {
+                            exportFile.FileName = exportFile.FileName.Replace($"({duplicateCounter - 1}){fileExtension}", $"({duplicateCounter}){fileExtension}");
+                        }
+
+                        duplicateCounter++;
+                    }
+
                     archive.AddEntry(exportFile.FileName, exportFile.FileContents);
                 }
 

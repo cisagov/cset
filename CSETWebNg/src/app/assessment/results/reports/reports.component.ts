@@ -39,6 +39,7 @@ import { NCUAService } from '../../../services/ncua.service';
 import { ObservationsService } from '../../../services/findings.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConversionService } from '../../../services/conversion.service';
 
 @Component({
   selector: 'app-reports',
@@ -75,6 +76,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   iseHasBeenSubmitted: boolean = false;
 
   cisaAssessorWorkflowFieldValidation: CisaWorkflowFieldValidationResponse;
+  isCfEntry: boolean = false;
+
   /**
    *
    */
@@ -93,6 +96,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public demoSvc: DemographicExtendedService,
     private cdr: ChangeDetectorRef,
     private reportSvc: ReportService,
+    private convertSvc: ConversionService,
     public dialog: MatDialog
   ) {
     if (this.assessSvc.assessment == null) {
@@ -184,6 +188,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.assessSvc.isISE()) {
       this.ncuaSvc.getSubmissionStatus().subscribe((result: any) => {
         this.iseHasBeenSubmitted = result;
+      });
+    }
+
+    // Moved this from the assessment-convert-cf component
+    // determine if this assessment is a Cyber Florida "entry" assessment.
+    if (this.assessSvc.assessment.origin == 'CF') {
+      this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
+        this.isCfEntry = resp;
       });
     }
 

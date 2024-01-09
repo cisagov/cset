@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreateUser, PotentialQuestions } from '../../models/user.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
@@ -29,19 +29,20 @@ import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangeDetectorRef } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 
 export class RegisterComponent implements OnInit {
   model: CreateUser = {};
   SecurityQuestions: PotentialQuestions[];
   loading = false;
-  receivedError = false;
+  validationError = false;
   emailSent = false;
   waitingForApproval = false;
   errorMessage: any;
@@ -50,7 +51,8 @@ export class RegisterComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private auth: AuthenticationService,
     private emailSvc: EmailService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public tSvc: TranslocoService
   ) { }
 
   /**
@@ -64,48 +66,52 @@ export class RegisterComponent implements OnInit {
    * Compiles the user details and posts them to the create endpoint.
    */
   signup() {
-    this.receivedError = false;
+    this.validationError = false;
 
     // don't send email if they have not provided everything
     if ((!this.model.firstName || this.model.firstName.length === 0)
       || (!this.model.lastName || this.model.lastName.length === 0)
-      || (!this.model.primaryEmail || this.model.primaryEmail.length === 0) ) {
+      || (!this.model.primaryEmail || this.model.primaryEmail.length === 0)) {
       this.errorMessage = "* fields are required";
-      this.receivedError = true;
+      this.validationError = true;
       return;
     }
-    // save a reference to the dialog - it disappears on error
-    const dialogRef = this.dialog;
 
-    // tell the API which app we are, for emailing purposes.
-    this.model.appCode = environment.appCode;
+     // save a reference to the dialog - it disappears on error
+     const dialogRef = this.dialog;
 
-    this.emailSvc.sendCreateUserEmail(this.model).subscribe(
-      data => {
-        this.loading = false;
-        this.receivedError = false;
-        
-        if (data == 'created-and-email-sent') {
-          this.emailSent = true;
-        }
-        if (data == 'waiting-for-approval') {
-          this.waitingForApproval = true;
-        }
-      },
-      error => {
-        this.emailSent = false;
-        this.waitingForApproval = false;
-        this.receivedError = true;
-        this.loading = false;
-        this.errorMessage = error.error;
-        // display the error
-        this.dialog = dialogRef;
-        this.dialog.open(AlertComponent, {
-          data: { messageText: this.errorMessage }
-        })
-          .afterClosed().subscribe();
-        console.log('Error Creating User Account: ' + error.message);
-      });
+     // tell the API which app we are, for emailing purposes.
+     this.model.appCode = environment.appCode;
+ 
+     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
+       data => {
+         this.loading = false;
+         this.validationError = false;
+         
+         if (data == 'created-and-email-sent') {
+           this.emailSent = true;
+         }
+         if (data == 'waiting-for-approval') {
+           this.waitingForApproval = true;
+         }
+       },
+       error => {
+         this.emailSent = false;
+         this.waitingForApproval = false;
+         this.validationError = true;
+         this.loading = false;
+
+         // translate the error message key
+         this.errorMessage = this.tSvc.translate(error.error);
+
+         // display the error
+         this.dialog = dialogRef;
+         this.dialog.open(AlertComponent, {
+           data: { messageText: this.errorMessage }
+         })
+           .afterClosed().subscribe();
+         console.log('Error Creating User Account: ' + error.message);
+       });
   }
 
   /**

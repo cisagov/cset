@@ -81,7 +81,7 @@ export class QuestionBlockComponent implements OnInit {
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
     private convertSvc: ConversionService
-    ) {
+  ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
     this.matLevelMap.set("Int", "Intermediate");
@@ -349,8 +349,8 @@ export class QuestionBlockComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer)
       .subscribe((ansId: number) => {
-        q.answer_Id = ansId;       
-        }
+        q.answer_Id = ansId;
+      }
       );
   }
 

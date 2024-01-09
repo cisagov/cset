@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponseBase } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { concat } from 'rxjs';
@@ -33,10 +33,13 @@ export class ConfigService {
   apiUrl: string;
   appUrl: string;
   docUrl: string;
+  onlineUrl: string;
 
   helpContactEmail: string;
   helpContactPhone: string;
 
+  isDocUrl = false;
+  isOnlineUrlLive = false;
   isRunningInElectron: boolean;
   isRunningAnonymous = false;
 
@@ -105,7 +108,7 @@ export class ConfigService {
                 .toPromise()
                 .then((cisaAssessorWorkflowEnabled) => {
                   if (cisaAssessorWorkflowEnabled) {
-                    return this.enableCisaAssessorWorkflow()
+                    return this.enableCisaAssessorWorkflow();
                   }
 
                   localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
@@ -129,6 +132,15 @@ export class ConfigService {
       });
   }
 
+  checkLocalDocStatus() {
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
+  }
+
+  checkOnlineDocStatus() {
+    // TODO: temporary return until we get this working in production
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
+  }
+
   /**
    *
    */
@@ -143,22 +155,43 @@ export class ConfigService {
     const appProtocol = this.config.app.protocol + '://';
     if (localStorage.getItem('apiUrl') != null) {
       this.apiUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.documentsIdentifier + '/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;
-    this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
+    this.onlineUrl = this.config.api.onlineUrl;
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
 
     this.galleryLayout = this.config.galleryLayout?.toString() || 'CSET';
     this.mobileEnvironment = this.config.mobileEnvironment;
     this.behaviors = this.config.behaviors;
-
+    this.checkOnlineStatusFromConfig();
     this.populateLabelValues();
-
     this.initialized = true;
+  }
+
+  checkOnlineStatusFromConfig() {
+    this.checkLocalDocStatus().subscribe(
+      (resp: boolean) => {
+        this.isDocUrl = resp;
+      },
+      () => {
+        this.isDocUrl = false;
+      }
+    );
+
+    this.checkOnlineDocStatus().subscribe(
+      (resp: boolean) => {
+        this.isOnlineUrlLive = resp;
+      },
+      () => {
+        this.isOnlineUrlLive = false;
+      }
+    );
   }
 
   /**
