@@ -395,8 +395,11 @@ namespace CSETWebCore.Business.Question
 
             if (dbAnswer == null)
             {
-                dbAnswer = new ANSWER();                
+                dbAnswer = new ANSWER();
                 dbAnswer.Assessment_Id = assessmentId;
+                dbAnswer.Answer_Text = "U";
+                dbAnswer.Question_Type = "Component";
+                
                 _context.ANSWER.Add(dbAnswer);
                 _context.SaveChanges();
                 answerId = dbAnswer.Answer_Id;
@@ -405,7 +408,6 @@ namespace CSETWebCore.Business.Question
             {
                 answerId = dbAnswer.Answer_Id;
             }
-
 
             dbAnswer.Answer_Id = answerId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;
