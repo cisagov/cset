@@ -1,5 +1,7 @@
 ## Using the CSET Stand-alone Installer
 
+The installer will add everything needed 
+
 Double-click on the CSETStandAlone program.
 
 The User Account Control dialog will appear (Fig.1). Select &quot;Yes&quot;.
