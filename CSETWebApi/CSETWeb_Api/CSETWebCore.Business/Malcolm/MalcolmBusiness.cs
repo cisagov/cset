@@ -54,13 +54,13 @@ namespace CSETWebCore.Business.Malcolm
                 }
                 if(networkOfNodes.TryGetValue(bucket.Key, out tnode))
                 {   
-                    parent.listChildren.Add(tnode);
+                    parent.Children.Add(tnode);
                 }
                 else
                 {
                     tnode = new TmpNode(bucket.Key);
                     networkOfNodes.Add(bucket.Key, tnode);
-                    parent.listChildren.Add(tnode);
+                    parent.Children.Add(tnode);
 
                 }
                 if(bucket.Values != null)
