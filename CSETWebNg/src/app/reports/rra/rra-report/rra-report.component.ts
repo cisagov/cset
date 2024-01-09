@@ -21,14 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
 import { RraDataService } from '../../../services/rra-data.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
@@ -236,8 +236,8 @@ export class RraReportComponent implements OnInit {
    */
   zeroDeficiencies(): boolean {
     return this.questionReferenceTable
-    && this.questionReferenceTable.length > 0
-    && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
+      && this.questionReferenceTable.length > 0
+      && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
   }
 
   /**

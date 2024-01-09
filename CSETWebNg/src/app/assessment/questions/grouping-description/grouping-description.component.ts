@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ElementRef, Injector, Input, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, Renderer2, ViewChild, AfterViewInit } from '@angular/core';
 import { GlossaryService } from '../../../services/glossary.service';
 import { GlossaryTermComponent } from '../question-text/glossary-term/glossary-term.component';
 
@@ -29,7 +29,7 @@ import { GlossaryTermComponent } from '../question-text/glossary-term/glossary-t
   selector: 'app-grouping-description',
   templateUrl: './grouping-description.component.html'
 })
-export class GroupingDescriptionComponent implements OnInit, AfterViewInit {
+export class GroupingDescriptionComponent implements AfterViewInit {
 
   @Input()
   text: string;
@@ -44,9 +44,6 @@ export class GroupingDescriptionComponent implements OnInit, AfterViewInit {
     private renderer: Renderer2,
     private glossarySvc: GlossaryService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   /**
    * 

@@ -195,11 +195,11 @@
                     </th>
                     <th *ngIf="isTSA" style="width: 5%;">Source</th>
                     <th aria-label="{{ t('assessment type')}}" mat-sort-header="type" style="width:15%;">{{ t('assessment type')}}</th>
-                    <th *ngIf="showColumn('ise-submitted')" mat-sort-header="submitted" aria-label="ise-submitted">{{ t('acet.submitted') }}</th>
+                    <th *ngIf="showColumn('ise-submitted')" aria-label="ise-submitted" mat-sort-header="ise-submitted">{{ t('acet.submitted') }}</th>
                     <th aria-label="{{ t('last modified')}}" mat-sort-header="date" style="width:15%;">{{ t('last modified')}}</th>
                     <th *ngIf="showColumn('primary-assessor')" aria-label="assessor" mat-sort-header="assessor"
                         style="width:15%;">{{t('primary assessor')}}</th>
-                    <th aria-label="{{t('status')}}" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
+                    <th aria-label="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
                     <th aria-label="delete assessment" style="width:5%; min-width:25px;"></th>
                     <th aria-label="export assessment" style="width:5%;"></th>
                     <th aria-label="Analytics" style="width:5%;" *ngIf="showColumn('analytics')"></th>
@@ -308,7 +308,7 @@
                 <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment name') }}</th>
                 <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">{{ t('assessment type') }}</th>
                 <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
-                <th aria-label="{{t('status')}}" mat-sort-header="{{t('status')}}" style="width:15%;">{{t('status')}}</th>
+                <th aria-label="status" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
                 <th aria-label="merge assessment" style="width:5%;"></th>
                 <tr *ngFor="let assessment of sortedAssessments;  let i = index">
                     <td>

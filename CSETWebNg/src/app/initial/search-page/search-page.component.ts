@@ -50,7 +50,11 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
   fuseResults: any[];
   options = {
     includeScore: true,
-    keys: ["title", "descriptions"]
+    includeMatches: true,
+    distance: 150,
+    threshold: 0.6,
+    keys: ['description', 'title'], 
+    shouldSort: true
   };
 
   saveOldgalleryData: any[];
@@ -146,6 +150,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           })
         }
         );
+        
         this.fuse = new Fuse(this.galleryItemsTmp, this.options)
         this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index) => ({
           item,
@@ -217,7 +222,6 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
 
     if (this.searchQuery) {
       this.galleryItemsTmp = this.fuse.search(this.searchQuery);
-
       // de-dupe
       const set = [];
       this.galleryItemsTmp.forEach(x => {
@@ -225,10 +229,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           set.push(x);
         }
       });
+      
       this.galleryItemsTmp = set;
     } else {
       this.galleryItemsTmp = [];
     }
+   
 
     this.shuffleCards(this.cardsPerView);
   }

@@ -14,8 +14,8 @@
 
 
         <!-- vanilla prepare pages -->
-        <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD)" />
-        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:ISE" />
+        <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NOT:10" />
+        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:10" />
 
         <node d="assessment configuration" displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
         <node d="assessment information" displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
@@ -30,15 +30,17 @@
 
         <!-- Critical Service -->
         <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
-        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD MATURITY-ANY(4,8,3,5,15,11,9)" />
+        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
 
 
-        <node d="security assurance level (sal)" displaytext="Security Assurance Level (SAL)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
+        <node d="security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
 
         <!-- ACET/ISE-specific screens -->
         <node d="inherent risk profiles" id="irp" path="assessment/{:id}/prepare/irp" visible="MATURITY:1" />
         <node d="inherent risk profile summary" id="irp-summary" path="assessment/{:id}/prepare/irp-summary" visible="MATURITY:1" />
+
+        <node displaytext="Demographics" id="demo" path="assessment/{:id}/prepare/demographics" visible="MATURITY:10" />
         <node displaytext="Exam Profile" id="irp-ise" path="assessment/{:id}/prepare/exam-profile" visible="MATURITY:10" />
 
 

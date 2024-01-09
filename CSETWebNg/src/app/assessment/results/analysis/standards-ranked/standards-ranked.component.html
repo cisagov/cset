@@ -19,35 +19,42 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
   <h3>Ranked Categories</h3>
-      <p>This graph shows the top areas of concern ranked.  These are calculated from a weighted risk score based on the difficulty of attack.  The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.</p>
-  <div id="chart" class="mb-3">
-    <canvas id="canvasStandardRank">{{chart}}</canvas>
-  </div>
-  <div *ngIf="!initialized">
-    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+  <p class="font-italic" [class.d-none]="showChart">
+    Ranking information cannot be determined for the current question set.  The Ranked Categories chart cannot be displayed.
+  </p>
+  <div [class.d-none]="!showChart">
+    <p>This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the
+      difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to
+      attack.</p>
+    <div id="chart" class="mb-3">
+      <canvas id="canvasStandardRank">{{chart}}</canvas>
+    </div>
+    <div *ngIf="!initialized">
+      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+    <div class="data" [hidden]="!initialized">
+      <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">
+        <th style="width: 50%">Category</th>
+        <th>Rank</th>
+        <th class="align-right">Failed</th>
+        <th class="align-right">Total</th>
+        <th class="align-right">Percent</th>
+        <tr *ngFor="let row of dataRows">
+          <td>{{row.title}}</td>
+          <td>{{row.rank}}</td>
+          <td class="align-right">{{row.failed}}</td>
+          <td class="align-right">{{row.total}}</td>
+          <td class="align-right">{{row.percent}}%</td>
+        </tr>
+      </table>
     </div>
   </div>
-  <div class="data" [hidden]="!initialized">
-    <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">
-      <th style="width: 50%">Category</th>
-      <th>Rank</th>
-      <th class="align-right">Failed</th>
-      <th class="align-right">Total</th>
-      <th class="align-right">Percent</th>
-      <tr *ngFor="let row of dataRows">
-        <td>{{row.title}}</td>
-        <td>{{row.rank}}</td>
-        <td class="align-right">{{row.failed}}</td>
-        <td class="align-right">{{row.total}}</td>
-        <td class="align-right">{{row.percent}}%</td>
-      </tr>
-    </table>
-  </div>
-  
+
   <app-nav-back-next [page]="'standards-ranked'"></app-nav-back-next>
-  
+
 </div>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <AssemblyVersion>12.1.0.0</AssemblyVersion>
+    <AssemblyVersion>12.1.2.1</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'CSETWeb_ApiCore' " />
@@ -63,6 +63,9 @@
   </ItemGroup>
 	
   <ItemGroup>
+  	<None Update="ALLOWLIST.txt">
+  	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  	</None>
   	<None Update="IISUrlRewrite.xml">
   		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
   	</None>

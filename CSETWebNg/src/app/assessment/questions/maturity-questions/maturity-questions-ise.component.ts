@@ -36,7 +36,6 @@ import { MaturityFilteringService } from '../../../services/filtering/maturity-f
 import { CisService } from '../../../services/cis.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { ACETService } from '../../../services/acet.service';
-import { AcetDashboard } from '../../../models/acet-dashboard.model';
 import { CompletionService } from '../../../services/completion.service';
 
 

@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject, AfterViewInit, ViewChildren } from '@angular/core';
+import { Component, OnInit, Inject, ViewChildren } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { QuestionsService } from '../../services/questions.service';
 import { DefaultParameter } from '../../models/questions.model';
@@ -30,7 +30,7 @@ import { DefaultParameter } from '../../models/questions.model';
   selector: 'app-global-parameters',
   templateUrl: './global-parameters.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class GlobalParametersComponent implements OnInit {
 

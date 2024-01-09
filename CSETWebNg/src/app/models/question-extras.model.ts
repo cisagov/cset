@@ -28,12 +28,17 @@ export interface QuestionExtrasResponse {
   ListTabs: QuestionInformationTabData[];
 }
 
+/**
+ * Custom documents can ne paired to a single section_Ref or have
+ * all of its applicable section_refs grouped in a bookmarks array.
+ */
 export interface CustomDocument {
   file_Id: number;
   title: string;
   file_Name: string;
-  section_Ref: string;
   is_Uploaded: boolean;
+  section_Ref?: string;
+  bookmarks?: string[];
 }
 
 /**
@@ -91,25 +96,6 @@ export interface RequirementTabData {
   supplementalInfo: String;
   set_Name: string;
   examinationApproach: String;
-}
-
-export class CustomDocument {
-  constructor(public configSvc: ConfigService) {}
-
-  title: string;
-  file_Name: string;
-  section_Ref: string;
-  is_Uploaded: boolean;
-  get url(): string {
-    return (
-      (this.is_Uploaded
-        ? this.configSvc.apiUrl + 'ReferenceDocument/'
-        : this.configSvc.docUrl) +
-      this.file_Name +
-      '#' +
-      this.section_Ref
-    );
-  }
 }
 
 export interface ComponentOverrideLinkInfo {

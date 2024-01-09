@@ -1,3 +1,4 @@
+import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
 //   Copyright 2023 Battelle Energy Alliance, LLC
@@ -37,9 +38,9 @@ import { ObservationsComponent } from '../observations/observations.component';
 import { Observation } from '../observations/observations.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ComponentOverrideComponent } from '../../../dialogs/component-override/component-override.component';
-import { MaturityService } from '../../../services/maturity.service';
 import { LayoutService } from '../../../services/layout.service';
 import { TranslocoService } from '@ngneat/transloco';
+
 
 
 @Component({
@@ -87,9 +88,9 @@ export class QuestionExtrasComponent implements OnInit {
     public configSvc: ConfigService,
     public authSvc: AuthenticationService,
     public assessSvc: AssessmentService,
-    private maturitySvc: MaturityService,
     public layoutSvc: LayoutService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private resourceLibSvc: ResourceLibraryService
   ) {
   }
 
@@ -103,7 +104,10 @@ export class QuestionExtrasComponent implements OnInit {
       }
 
       this.showMfr = this.myOptions.showMfr;
+      
     }
+
+    
   }
 
   /**
@@ -111,9 +115,6 @@ export class QuestionExtrasComponent implements OnInit {
    */
   showOverrideDialog(componentType: any): void {
     const dialogRef = this.dialog.open(ComponentOverrideComponent, {
-      width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
-      height: '800px',
       data: { componentType: componentType, component_Symbol_Id: componentType.component_Symbol_Id, myQuestion: this.myQuestion },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -160,17 +161,21 @@ export class QuestionExtrasComponent implements OnInit {
       //this.scrollToExtras();
       return;
     }
+    
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
       (details) => {
         this.extras = details;
+        if (details.is_Component === true){
+          this.myQuestion.is_Component = true;
+        }
+        
         this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-        //this.scrollToExtras()
-
+        
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
           if (this.tab) {
@@ -354,20 +359,47 @@ export class QuestionExtrasComponent implements OnInit {
       data: find,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
-      maxWidth: this.layoutSvc.hp ? '90%' : '600px'
-    })
+      maxWidth: this.layoutSvc.hp ? '90%' : '600px',
+    }
+
+    )
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
         this.findSvc.getAllDiscoveries(answerID).subscribe(
           (response: Observation[]) => {
             this.extras.findings = response;
+            for (let i of response) {
+              if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)) {
+                this.deleteEmptyObservation(i)
+              }
+            }
             this.myQuestion.hasObservations = (this.extras.findings.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
           error => console.log('Error updating findings | ' + (<Error>error).message)
         );
+
       });
+
   }
+
+  /**
+   * Deletes an empty discovery.
+   * @param findingToDelete
+   */
+  deleteEmptyObservation(findingToDelete) {
+    this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+    let deleteIndex = null;
+
+    for (let i = 0; i < this.extras.findings.length; i++) {
+      if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+        deleteIndex = i;
+      }
+    }
+    this.extras.findings.splice(deleteIndex, 1);
+    this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+  };
+
 
   /**
    * Deletes a discovery.
@@ -724,14 +756,8 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: CustomDocument) {
-    var link = '';
-    if (document.is_Uploaded) {
-      link = this.configSvc.apiUrl + 'ReferenceDocument/' + document.file_Id + '#' + document.section_Ref;
-    } else {
-      link = this.configSvc.docUrl + document.file_Name + '#' + document.section_Ref;
-    }
-    return link;
+  documentUrl(document: CustomDocument, bookmark: string) {
+    return this.resourceLibSvc.documentUrl(document, bookmark);
   }
 
   /**
@@ -744,7 +770,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Returns if Supplemental Guidance should be 
+   * Returns if Supplemental Guidance should be
    * independent from Examination Approach or not
    * @returns
    */

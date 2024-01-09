@@ -508,9 +508,7 @@ table.td-padding-half-rem td {
   vertical-align: top;
   font-weight: bold;
   font-size: 130%;
-  color: #777676;
   padding-right: .5em;
-  font-family: 'Courier New', Courier, monospace;
 }
 
 .concern-list tr>td {
@@ -625,7 +623,7 @@ table.td-padding-half-rem td {
 }
 
 /**
-  *Maturity Model graph Styleing
+  *Maturity Model chart styling
   */
 .step-graph-chart {
   transform: translate(-38px, -216px);
@@ -2188,6 +2186,21 @@ $secondary-color: #777;
 .radio-custom:focus+.radio-custom-label {
   // outline: 3px solid #8bb4f8; /* focus style */
   box-shadow: 0 0 3pt 2pt #8bb4f8;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label,
+.radio-custom:disabled+.radio-custom-label {
+  cursor: unset;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  border-color: lighten($secondary-color, 35%);
+}
+
+.checkbox-custom:disabled:checked+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  background-color: lighten($secondary-color, 35%);
 }
 
 //////////////////////////////////////////////////////////////////

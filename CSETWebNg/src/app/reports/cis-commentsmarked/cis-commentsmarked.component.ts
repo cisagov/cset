@@ -21,11 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title, DomSanitizer } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 
 @Component({
@@ -38,13 +38,13 @@ export class CisCommentsmarkedComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-  public analysisSvc: ReportAnalysisService,
-  public reportSvc: ReportService,
-  public configSvc: ConfigService,
-  private titleService: Title,
-  public maturitySvc: MaturityService,
-  private sanitizer: DomSanitizer
-  ){}
+    public analysisSvc: ReportAnalysisService,
+    public reportSvc: ReportService,
+    public configSvc: ConfigService,
+    private titleService: Title,
+    public maturitySvc: MaturityService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;

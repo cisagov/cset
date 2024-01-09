@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../../../services/report.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { QuestionsService } from '../../../../services/questions.service';
@@ -31,7 +31,7 @@ export class HydroDeficiencyComponent implements OnInit {
   donutData: any[] = [];
   domainWeightData: any[] = [];
   domainWeightTotals: any[] = []
-  weightData: any[] =[];
+  weightData: any[] = [];
   loading: boolean = true;
 
 
@@ -53,7 +53,7 @@ export class HydroDeficiencyComponent implements OnInit {
     public maturitySvc: MaturityService,
     public cisSvc: CisService,
     public hydroSvc: HydroService
-  ) {}
+  ) { }
 
   ngOnInit() {
     let masterSubCatArray: string[] = [];
@@ -108,9 +108,9 @@ export class HydroDeficiencyComponent implements OnInit {
             let groupCount = [];
             let subCatNames = [];
             let subCatWeights = [];
-            let groupWeightTotals = [0,0,0,0]; // [highWeight, mediumWeight, lowWeight, unimplemented]
+            let groupWeightTotals = [0, 0, 0, 0]; // [highWeight, mediumWeight, lowWeight, unimplemented]
 
-            for (let i = 0; i < result.length; i++ ) {
+            for (let i = 0; i < result.length; i++) {
               let groupInfo = result[i];
               let groupDonutWeight = [];
 
@@ -123,7 +123,7 @@ export class HydroDeficiencyComponent implements OnInit {
                   this.domainWeightTotals.push(groupWeightTotals);
                   this.subCatWeightsByCat.push(subCatWeights);
                   this.subCatNamesByCat.push(subCatNames);
-                  groupWeightTotals = [0,0,0,0];
+                  groupWeightTotals = [0, 0, 0, 0];
                   subCatWeights = [];
                   this.weightData = [];
                 }
@@ -133,7 +133,7 @@ export class HydroDeficiencyComponent implements OnInit {
                 subCatNames = [];
               }
               subCatNames.push(groupInfo.questionsWithAnswers[0].question.sub_Category);
-                
+
               groupCount.push(groupInfo.questionsWithAnswers.length);
 
               let highWeightGroupTotal = 0;
@@ -162,16 +162,16 @@ export class HydroDeficiencyComponent implements OnInit {
                     }
                   }
                 }
-                
+
                 highWeightGroupTotal += highWeightQuestionTotal;
                 mediumWeightGroupTotal += mediumWeightQuestionTotal;
                 lowWeightGroupTotal += lowWeightQuestionTotal;
               }
-              
+
               groupDonutWeight.push(this.roundAndCheckForEdgeCase(highWeightGroupTotal));
               groupDonutWeight.push(this.roundAndCheckForEdgeCase(mediumWeightGroupTotal));
               groupDonutWeight.push(this.roundAndCheckForEdgeCase(lowWeightGroupTotal));
-              groupDonutWeight.push( 100 - (groupDonutWeight[0] + groupDonutWeight[1] + groupDonutWeight[2]));
+              groupDonutWeight.push(100 - (groupDonutWeight[0] + groupDonutWeight[1] + groupDonutWeight[2]));
               subCatWeights.push(groupDonutWeight);
 
               if (i > 3) {
@@ -185,7 +185,7 @@ export class HydroDeficiencyComponent implements OnInit {
                 groupWeightTotals[2] += this.roundAndAdjust(groupDonutWeight[2], 0, 1);
               }
 
-              groupWeightTotals[3] = 100 - (groupWeightTotals[0]+groupWeightTotals[1]+groupWeightTotals[2]);
+              groupWeightTotals[3] = 100 - (groupWeightTotals[0] + groupWeightTotals[1] + groupWeightTotals[2]);
 
             }
 
@@ -197,16 +197,16 @@ export class HydroDeficiencyComponent implements OnInit {
             this.domainWeightData.push(this.weightData);
             this.subCatWeightsByCat.push(subCatWeights);
             this.subCatNamesByCat.push(subCatNames);
-            
+
             this.toggleCategory(""); //sets all to false
 
             this.loading = false;
-        });
+          });
       }
     );
 
-    
-    
+
+
   }
 
   toggleCategory(catName: string) {
@@ -223,17 +223,17 @@ export class HydroDeficiencyComponent implements OnInit {
   }
 
   roundAndAdjust(weight: number, subGroupingsInDomain: number, magic: number) {
-    
+
     if (magic != 0) {
       weight *= magic;
-      return weight/1 + Math.round(weight)%1*0.01;
+      return weight / 1 + Math.round(weight) % 1 * 0.01;
     }
 
-    return weight/subGroupingsInDomain + Math.round(weight)%subGroupingsInDomain*0.01;
+    return weight / subGroupingsInDomain + Math.round(weight) % subGroupingsInDomain * 0.01;
   }
 
   roundAndCheckForEdgeCase(weight: number) {
-    let roundedValue = weight/1 + Math.round(weight%1*0.01);
+    let roundedValue = weight / 1 + Math.round(weight % 1 * 0.01);
 
     if (roundedValue == 99.99 || roundedValue > 100) {
       return 100;

@@ -22,12 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
@@ -46,7 +44,7 @@ export class ComponentsTypesComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     //private router: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.analysisSvc.getComponentTypes().subscribe(x => {

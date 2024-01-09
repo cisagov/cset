@@ -37,6 +37,7 @@ import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
 import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConversionService } from './conversion.service';
 
 
 export interface Role {
@@ -89,7 +90,8 @@ export class AssessmentService {
     private router: Router,    
     private extDemoSvc: DemographicExtendedService,
     private floridaSvc: CyberFloridaService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private convSvc: ConversionService
   ) {
     if (!this.initialized) {
       this.apiUrl = this.configSvc.apiUrl;
@@ -152,7 +154,7 @@ export class AssessmentService {
   getAssessments() {
     return this.http.get(this.apiUrl + 'assessmentsforuser');
   }
-
+  
   getAssessmentsCompletion() {
     return this.http.get(this.apiUrl + 'assessmentsCompletionForUser');
   }
@@ -632,13 +634,14 @@ export class AssessmentService {
    */
   translatedDate(date: string, format: string) {
     moment.locale(this.tSvc.getActiveLang());
-    return moment(date).utc(true).format(format);
+    return moment(date).format(format);
   }
 
 
   isCyberFloridaComplete(): boolean {
-    if(this.configSvc.installationMode=="CF")
+    if(this.configSvc.installationMode=="CF"){      
       return this.floridaSvc.isAssessmentComplete(); 
+    }
     else
       return true;
   }
@@ -653,9 +656,10 @@ export class AssessmentService {
   updateAnswer(answer: Answer) {
     this.floridaSvc.updateCompleteStatus(answer);  
     if(this.isCyberFloridaComplete()){  
-          
-      this.assessmentStateChanged.next(124);
-    }
-      
+      this.convSvc.isEntryCfAssessment().subscribe((data)=>{        
+        if(data)
+          this.assessmentStateChanged.next(124);
+      });
+    }     
   }
 }
