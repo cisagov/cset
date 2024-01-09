@@ -1,7 +1,8 @@
-## Using the CSET Stand-alone Installer
+# Using the CSET Stand-alone Installer
 
-The installer will add everything needed 
+The installer will add everything needed to run CSET on a self-contained Windows computer.
 
+## Install Process
 Double-click on the CSETStandAlone program.
 
 The User Account Control dialog will appear (Fig.1). Select &quot;Yes&quot;.
@@ -88,3 +89,6 @@ Figure 11: Local Install Landing Page
 [fig10]: img/fig10.png
 [fig11]: img/fig11.png
 
+<style>
+img { width: 60% }
+</style>

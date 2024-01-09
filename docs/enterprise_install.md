@@ -1,11 +1,11 @@
-## CSET Enterprise Installation Instructions
+# CSET Enterprise Installation Instructions
 
-### Introduction
+## Introduction
 This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition for use on Windows Server. 
 Here users will find step-by-step directions for installation, configuration, and setup, as well as links to 
 various resources to assist in this process.
 
-### Using the Provided Setup Script
+## Using the Provided Setup Script
 The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` 
 (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
 
@@ -45,9 +45,9 @@ The enterprise installation can be automated through the use of a provided Power
 ![](img/figES6.PNG)
 <br/>
 
-### Manual Setup
+## Manual Setup
 
-### Prerequisites & Necessary Files
+## Prerequisites & Necessary Files
 1.	Download the CSET Enterprise Files from the [CSET® releases page](https://github.com/cisagov/cset/releases). Click the "CSETvXXXX_Enterprise_Binaries.zip" file to download it. Once the download is complete, you will need to unzip the folder. This folder includes the CSET® application binaries, as well as the required installation packages listed in prerequsites 2-4.
 
 2.	We will be using Microsoft SQL Server 2022 for this setup. If you need to, you can download the [Express version from Microsoft directly](https://www.microsoft.com/en-us/download/details.aspx?id=101064).
@@ -59,7 +59,7 @@ The enterprise installation can be automated through the use of a provided Power
 5.	If you are using a SQL Server, download and install Microsoft [SQL Server Management Studio (SSMS)](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15).
 
 
-### Installing IIS
+## Installing IIS
 1.	On your Windows Server, open the “Server Manager” application.
 
 ![](img/figE1.PNG) 
@@ -83,7 +83,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 ![](img/figE3.PNG)<br/>
 
-### SQL Server Installation
+## SQL Server Installation
 1.	To begin the process of installing a new SQL Server on your machine (see below): 
   * Open Microsoft’s “SQL Server Installation Center” 
   * On the left, select “Installation” 
@@ -107,7 +107,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 2. Once your server is up and running, you will need to install the URL Rewrite Module and the .NET 7 Runtimes. Simply download the installation media files from Microsoft (see Page 2 links or above hyperlink) and run them to install the necessary patches.
 
-### Firewall Configuration
+## Firewall Configuration
 1. Open Windows Defender Firewall
 
 ![](img/figE7.PNG)
@@ -126,7 +126,7 @@ The enterprise installation can be automated through the use of a provided Power
   * Profile – Choose what type of networks you wish to allow connections from. If you are unsure, leave them all checked. Click “Next.”
   * Name – The final step is to create a name and description for this new rule. Once you’ve done this, click “Finish.”
 
-### Database Setup
+## Database Setup
 1.	Open the CSET® Enterprise Binaries folder that you downloaded earlier and navigate to the “database” subfolder. Inside this folder you will find two files called “CSETWebXXXX” and “CSETWebXXXX_log.” Copy these two files to your server.
 
 2.	Open Microsoft SQL Server Management Studio (see below) and connect to the SQL Server that we setup previously. 
@@ -151,7 +151,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   ![](img/figE14.PNG)
 
-### Create Database User
+## Create Database User
 1. Peviously we created our SQL Server account. We will now need to create an account that has access to the database. Continuing in the Object Explorer, right-click on the folder named Security, hover over New (see below) and then click “Login.”
 
 ![](img/figE15.PNG)
@@ -190,7 +190,7 @@ The enterprise installation can be automated through the use of a provided Power
 
   ![](img/figE23.PNG)
 
-### CSET Installation
+## CSET Installation
 1.	Re-open Windows Server Manager (see below). Double-click on “IIS” on the left. Then, right-click on the server name and click “Internet Information Services (IIS) Manager.”
 
 ![](img/figE24.PNG)
@@ -207,7 +207,7 @@ The enterprise installation can be automated through the use of a provided Power
 
 ![](img/figE31.PNG)
 
-### CSET Configuration
+## CSET Configuration
 1.	Locate the "appsettings.json" file that should now be inside the “wwwroot\CSETWebApi” folder. Open this file using a text editor such as notepad.
 
 ![](img/figE26.PNG)
@@ -231,7 +231,7 @@ The enterprise installation can be automated through the use of a provided Power
   * If you receive an error stating that you do not have permissions to save the appsettings.json file, find the file inside the wwwroot folder and right-click on it. Select properties and go into the security tab. Click on the edit button and make sure that all users have “Full Control” over the file.
   * Go back to the “Internet Information Services (IIS) Manager” and on the right, make sure the server is running. You may now browse to your Enterprise CSET® Installation!
 
-### Other Steps (Optional)
+## Other Steps (Optional)
 ### Creating CSET User
 There are two ways to add a new user to your freshly created CSET® Stand-Alone. The first way is to register for a new account inside the CSET® application itself. This will require a valid mail host as user’s will be required to enter their email address and receive a confirmation email on your network.
 
@@ -255,7 +255,7 @@ The second way to add a new user to your CSET® Application is to use the “Add
   * Enter the required information and click “Save.”
   * If you’ve connected with the server properly, you will see small green text at the bottom-left of the box that says, “Added Successfully”. You may now login to CSET® using that user account.
 
-### Mail Host Configuration
+## Mail Host Configuration
 1.	Inside “wwwroot\CSETWebApi”, open the appsettings.json file.
   * Inside the config file, you will need to locate the “SMTP Host”, and “Sender Email” portions.
 
