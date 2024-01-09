@@ -17,6 +17,8 @@ using System.Text.RegularExpressions;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Model.Auth;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CSETWebCore.Helpers
 {
@@ -33,6 +35,7 @@ namespace CSETWebCore.Helpers
 
         // The number of old passwords that cannot be reused
         public readonly int NumberOfHistoricalPasswords = 24;
+
 
         /// <summary>
         /// 
@@ -63,7 +66,7 @@ namespace CSETWebCore.Helpers
         /// <param name="sendEmail">Indicates if the temp password email should be sent immediately</param>
         /// <returns></returns>
         public bool CreateUser(CreateUser info, bool sendEmail)
-         {
+        {
             try
             {
                 // Create the USER and USER_DETAIL_INFORMATION records for this new user
@@ -353,6 +356,59 @@ namespace CSETWebCore.Helpers
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Checks the proposed email address against an "allowlist" file.
+        /// - If the file does not exist, all email addresses are approved.
+        /// - The only wildcard character supported is an asterisk (*).
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool EmailIsAllowed(string email, IWebHostEnvironment _hostingEnvironment)
+        {
+            var allowPath = Path.Combine(_hostingEnvironment.ContentRootPath, "ALLOWLIST.txt");
+
+            // no allowlist file exists - all emails are allowed
+            if (!File.Exists(allowPath))
+            {
+                return true;
+            }
+
+            var patternDefined = false;
+
+            var allowlist = File.ReadAllLines(allowPath).ToList<string>();
+            foreach (var line in allowlist)
+            {
+                var l = line.Trim().ToLower();
+
+                // blank lines and comment lines are ignored
+                if (l == "" || l.StartsWith("#") || l.StartsWith("--"))
+                {
+                    continue;
+                }
+
+                patternDefined = true;
+
+                // Convert the email pattern for regex comparison
+                l = l.Replace(".", @"\.").Replace("*", ".+");
+
+                if (Regex.IsMatch(email.ToLower(), l))
+                {
+                    return true;
+                }
+            }
+
+            // We matched none of the defined patterns
+            if (patternDefined)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Info($"Signup rejected - allowlist prohibited signup for {email}");
+                return false;
+            }
+
+            // no patterns were defined
+            return true;
         }
     }
 }
