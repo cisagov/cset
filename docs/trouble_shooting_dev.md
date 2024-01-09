@@ -1,8 +1,8 @@
-## Troubleshooting during Development
+# Troubleshooting During Development
 
 Here are a few issues that may present themselves to developers.
 
-### Issues running `ng serve`
+## Issues running `ng serve`
 
 1. Delete `node_modules`
 2. clear cache `npm cache clear --force`
@@ -31,13 +31,13 @@ SyntaxError: Unexpected token 'if'
 
 Here the issue is with the package seen: `lodash`
 
-To fix this simply run `npm install --save lodash`
+To fix this simply run: `npm install --save lodash`
 
-After installing, rerun server `ng serve`
+After installing, rerun server: `ng serve`
 
 To run production locally:
 
-Copy values from:
+Copy values from
 
 ```bash
 ../cset/CSETWebNg/src/environments/environment.ts
@@ -54,7 +54,7 @@ with `production: true`
 then run `ng serve --prod`
 
 
-### Error within compiling server
+## Error within compiling server
 
 Mousetrap Error:
 
@@ -83,27 +83,37 @@ to
 mousetrap: Mousetrap.MousetrapInstance;
 ```
 
-### Issues Running CSETWebApi
+## Issues Running CSETWebApi
 
 CSETWebApi not building.
 
-On right side of Visual Studio, check under resorces for missing and un updated packages. 
+In the Visual Studio Solution Explorer, check under References for missing and out-of-date packages. 
 
-![](img/figTr1.png) 
-![](img/figTr2.png) 
+<img src="img/figTr1.png" width="40%">
+<br>
+<br>
+
+<img src="img/figTr2.png" width="60%">
+<br>
+<br>
+
 ![](img/figTr3.png) 
+<br>
+<br>
+
 ![](img/figTr4.png) 
+<br>
+<br>
 
 Reimport and update packages as needed.
 Recompile as needed. 
 
 
-### CSETWebApi runs but cannot connect to DB
+## CSETWebApi runs but cannot connect to DB
 
 Within `ConnectionStrings` in `appsettings.json` check if credentials are set correctly. For local db, the connection string would look as follows.
 
 ```config
-{
   "ConnectionStrings": {
     "CSET_DB": "data source=localhost;user id=user;password=password;initial catalog=CSETWeb;persist security info=True;MultipleActiveResultSets=True;"
   }
