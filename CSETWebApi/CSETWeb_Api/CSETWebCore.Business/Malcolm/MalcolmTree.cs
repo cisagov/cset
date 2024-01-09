@@ -43,11 +43,10 @@ namespace CSETWebCore.Business.Malcolm
                 return;
             }
             alreadySeenList.Add(treeNode.Key);
-            
+            if(parent!=null)
+                parent.Children.Add(treeNode);
             foreach (var child in graph.Children)
             {
-                if (parent != null)
-                    parent.Children.Add(treeNode);
                 WalkTree(treeNode, new TempNode(child.Key), child);
             }
         }
