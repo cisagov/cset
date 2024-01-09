@@ -97,7 +97,7 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData());
+                return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData(dataList));
             }
         }
     }
