@@ -111,4 +111,4 @@ Within `ConnectionStrings` in `appsettings.json` check if credentials are set co
 
 These settings will connect to a SQL DB running on `localhost` with created user: `user` with password: `password`. 
 
-Double check [CSET Configuration](../enterprise_install.md#cset-configuration) for configuration.
+Double check [CSET Configuration](enterprise_install.md#cset-configuration) for configuration.

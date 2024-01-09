@@ -14,7 +14,7 @@ The enterprise installation can be automated through the use of a provided Power
 2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
 
 ![](img/figES1.png)
-<img src="img/figES1.png" width="60%"/>
+
 
 3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
  ```cd C:\users\%USER%\Desktop\CSETv%VERSION%_Enterprise_Binaries```.
@@ -87,7 +87,7 @@ The enterprise installation can be automated through the use of a provided Power
 1.	To begin the process of installing a new SQL Server on your machine (see below): 
   * Open Microsoft’s “SQL Server Installation Center” 
   * On the left, select “Installation” 
-  * Click “New SQL Server stand-alone installation” 
+  * Click “New SQL Server standalone installation” 
 
   ![](img/figE4.PNG)<br/>
 
