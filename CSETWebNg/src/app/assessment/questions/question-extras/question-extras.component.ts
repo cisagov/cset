@@ -175,8 +175,6 @@ export class QuestionExtrasComponent implements OnInit {
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
-        //this.scrollToExtras()
-        
         
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
