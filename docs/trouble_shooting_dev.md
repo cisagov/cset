@@ -1,4 +1,6 @@
-## Trouble shooting Dev installation
+## Troubleshooting during Development
+
+Here are a few issues that may present themselves to developers.
 
 ### Issues running `ng serve`
 
@@ -9,7 +11,7 @@
 
 Package issues when running `ng serve`
 
-Example: When Atampting to run the server, there is a issue that presents such as:
+Example: When attempting to run the server, there is a issue that presents such as:
 
 ```bash
 SyntaxError: Unexpected token 'if'
@@ -29,7 +31,7 @@ SyntaxError: Unexpected token 'if'
 
 Here the issue is with the package seen: `lodash`
 
-To fix this simplie run `npm install --save lodash`
+To fix this simply run `npm install --save lodash`
 
 After installing, rerun server `ng serve`
 
@@ -51,9 +53,10 @@ with `production: true`
 
 then run `ng serve --prod`
 
+
 ### Error within compiling server
 
-Moustrap Error:
+Mousetrap Error:
 
 When compiling, an error shows:
 
@@ -91,12 +94,13 @@ On right side of Visual Studio, check under resorces for missing and un updated 
 ![](img/figTr3.png) 
 ![](img/figTr4.png) 
 
-reimport and updarte packages as needed.
-recompile as needed. 
+Reimport and update packages as needed.
+Recompile as needed. 
+
 
 ### CSETWebApi runs but cannot connect to DB
 
-Within `ConnectionStrings` in `appsettings.json` check if creds are set correctly, for local db, the connetion string would look as follows.
+Within `ConnectionStrings` in `appsettings.json` check if credentials are set correctly. For local db, the connection string would look as follows.
 
 ```config
 {
@@ -107,4 +111,4 @@ Within `ConnectionStrings` in `appsettings.json` check if creds are set correctl
 
 These settings will connect to a SQL DB running on `localhost` with created user: `user` with password: `password`. 
 
-Double check [CSET Configuration](https://github.com/cisagov/cset#cset-configuration) above for configuration.
+Double check [CSET Configuration](../enterprise_install.md#cset-configuration) for configuration.
