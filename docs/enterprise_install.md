@@ -1,17 +1,19 @@
 ## CSET Enterprise Installation Instructions
 
 ### Introduction
-This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition for use on Windows Server. Here users will find step-by-step directions for installation, configuration, and setup, as well as links to various resources to assist in this process.
+This documentation is provided to assist users in navigating the basics of the CSET® Enterprise Edition for use on Windows Server. 
+Here users will find step-by-step directions for installation, configuration, and setup, as well as links to 
+various resources to assist in this process.
 
 ### Using the Provided Setup Script
-The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` (as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
+The enterprise installation can be automated through the use of a provided PowerShell script named ```setup_enterprise.ps1``` 
+(as of CSET release v11.0.1.2). This script is located in the root of the enterprise binaries zip folder.
 
 1. Extract the CSET enterprise binaries to a desired location on your computer.
 
 2. Search for PowerShell from the Windows Start menu. Right-click on Windows Powershell then click "Run as administrator."
 
-![](img/figES1.PNG) 
-<br/>
+<img src="img/figES1.png" width="60%"/>
 
 3. Navigate to the extracted CSET binaries folder. In this example, the folder is located on the user desktop. The PowerShell command to navigate to the desktop directory would be: <br/>
  ```cd C:\users\%USER%\Desktop\CSETv%VERSION%_Enterprise_Binaries```.
