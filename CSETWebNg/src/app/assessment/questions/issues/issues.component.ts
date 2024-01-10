@@ -62,7 +62,7 @@ export class IssuesComponent implements OnInit {
     private dialog: MatDialogRef<IssuesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Observation,
     public assessSvc: AssessmentService,
-    private findSvc: ObservationsService,
+    private observationSvc: ObservationsService,
     public questionsSvc: QuestionsService,
 
   ) {
@@ -96,7 +96,7 @@ export class IssuesComponent implements OnInit {
     });
 
     // Grab the finding from the db if there is one.
-    this.findSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
+    this.observationSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, questionType).subscribe((response: Observation) => {
 
       this.observation = response;
 
@@ -186,10 +186,10 @@ export class IssuesComponent implements OnInit {
     this.observation.question_Id = this.questionID;
 
     let mapToArray = Array.from(this.ActionItemList.values());
-    this.findSvc.saveIssueText(mapToArray, this.observation.observation_Id).subscribe();
+    this.observationSvc.saveIssueText(mapToArray, this.observation.observation_Id).subscribe();
 
     if (this.observation.type !== null) {
-      this.findSvc.saveObservation(this.observation).subscribe(() => {
+      this.observationSvc.saveObservation(this.observation).subscribe(() => {
         this.dialog.close(true);
       });
     } else {

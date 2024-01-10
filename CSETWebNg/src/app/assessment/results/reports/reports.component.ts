@@ -282,7 +282,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
    */
   getAssessmentObservations() {
     this.ncuaSvc.unassignedIssueTitles = [];
-    this.observationsSvc.GetAssessmentObservations().subscribe(
+    this.observationsSvc.getAssessmentObservations().subscribe(
       (r: any) => {
         this.observations = r;
         let title = '';

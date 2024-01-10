@@ -83,7 +83,7 @@ export class IseMeritComponent implements OnInit {
 
   constructor(
     public analysisSvc: ReportAnalysisService,
-    public findSvc: ObservationsService,
+    public observationSvc: ObservationsService,
     public reportSvc: ReportService,
     public configSvc: ConfigService,
     public acetSvc: ACETService,
@@ -153,7 +153,7 @@ export class IseMeritComponent implements OnInit {
           error => console.log('Assessment Information Error: ' + (<Error>error).message)
         )
     
-        this.findSvc.GetAssessmentObservations().subscribe(
+        this.observationSvc.getAssessmentObservations().subscribe(
           (r: any) => {
             this.response = r; 
  

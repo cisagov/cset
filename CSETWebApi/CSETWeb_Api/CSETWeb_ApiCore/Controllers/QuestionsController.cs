@@ -372,8 +372,8 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="Answer_Id"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/AnswerAllDiscoveries")]
-        public IActionResult AllDiscoveries([FromQuery] int Answer_Id)
+        [Route("api/AnswerAllObservations")]
+        public IActionResult AllObservations([FromQuery] int Answer_Id)
         {
             int assessmentId = _token.AssessmentForUser();
 

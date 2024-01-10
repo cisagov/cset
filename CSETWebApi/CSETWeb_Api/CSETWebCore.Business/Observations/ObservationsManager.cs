@@ -49,75 +49,8 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        /// 
+        /// Returns a list of Observations (FINDING databse records) for an answer
         /// </summary>
-        /// <param name="observation"></param>
-        public void DeleteObservation(Observation observation)
-        {
-            ObservationData fm = new ObservationData(observation, _context);
-            fm.Delete();
-            fm.Save();
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="observation"></param>
-        public int UpdateObservation(Observation observation)
-        {
-            ObservationData fm = new ObservationData(observation, _context);
-            int id = fm.Save();
-            return id;
-        }
-
-        public List<ActionItems> GetActionItems(int parentId, int observation_id)
-        {
-            var actionItems = new List<ActionItems>(
-                    
-                );
-            var table = from questions in _context.MATURITY_QUESTIONS
-                        join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
-                        join o in _context.ISE_ACTIONS_FINDINGS on  new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = observation_id } 
-                            equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id}                 
-                           into overrides from o in overrides.DefaultIfEmpty() 
-                        where questions.Parent_Question_Id == parentId
-                        select new { actions = actions, overrides = o };
-            foreach(var row in table.ToList())
-            {
-                actionItems.Add(
-                    new ActionItems()
-                    {
-                        Question_Id = row.actions.Mat_Question_Id,
-                        Description = row.actions.Description,
-                        Action_Items = row.overrides==null
-                        ?row.actions.Action_Items:row.overrides.Action_Items_Override,
-                        Regulatory_Citation = row.actions.Regulatory_Citation
-                    }
-                );
-            }
-            return actionItems;
-        }
-
-        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id, int examLevel)
-        {
-            int additionalExamLevel = 17; //initialized as SCUEP
-            if(examLevel == 18) //if CORE, include CORE+ in the stored proc
-            {
-                additionalExamLevel = 19; //CORE+
-            }
-
-            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id, examLevel, additionalExamLevel);
-            return data;
-
-        }
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="answerId"></param>
-        /// <returns></returns>
         public List<Observation> AllObservations(int answerId)
         {
             List<Observation> observations = new List<Observation>();
@@ -162,61 +95,124 @@ namespace CSETWebCore.Business.Observations
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="observationId"></param>
-        /// <param name="answerId"></param>
-        /// <returns></returns>
         public Observation GetObservation(int observationId, int answerId = 0)
         {
-            Observation obs;
-
-            if (observationId != 0)
-            {
-                FINDING f = _context.FINDING
+            // look for an existing FINDING record.  If not, create one.
+            FINDING f = _context.FINDING
                     .Where(x => x.Finding_Id == observationId)
                     .Include(fc => fc.FINDING_CONTACT)
                     .FirstOrDefault();
 
-                var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
-
-                obs = TinyMapper.Map<Observation>(f);
-                obs.Observation_Id = f.Finding_Id;
-                obs.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
-                obs.Observation_Contacts = new List<ObservationContact>();
-                foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
-                {
-                    ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
-                    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
-                    webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
-                    obs.Observation_Contacts.Add(webContact);
-                }
-            }
-            else
+            if (f == null)
             {
-                var q = _context.ANSWER.Where(x => x.Answer_Id == answerId).FirstOrDefault();
-
-                FINDING o = new FINDING()
+                f = new FINDING()
                 {
                     Answer_Id = answerId
                 };
 
-
-                _context.FINDING.Add(o);
+                _context.FINDING.Add(f);
                 _context.SaveChanges();
-                obs = TinyMapper.Map<Observation>(o);
-                obs.Observation_Contacts = new List<ObservationContact>();
-                foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
-                {
-                    ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
-                    webContact.Observation_Id = o.Finding_Id;
-                    webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
-                    webContact.Selected = false;
-                    obs.Observation_Contacts.Add(webContact);
-                }
             }
 
-            return obs;
+
+            // Create an Observation object from the FINDING and joined tables
+            Observation obs;
+            var q = _context.ANSWER.Where(x => x.Answer_Id == f.Answer_Id).FirstOrDefault();
+
+            obs = TinyMapper.Map<Observation>(f);
+            obs.Observation_Id = f.Finding_Id;
+            obs.Question_Id = q != null ? q.Question_Or_Requirement_Id : 0;
+
+            obs.Observation_Contacts = new List<ObservationContact>();
+            foreach (var contact in _context.ASSESSMENT_CONTACTS.Where(x => x.Assessment_Id == _assessmentId))
+            {
+                ObservationContact webContact = TinyMapper.Map<ObservationContact>(contact);
+                webContact.Name = contact.PrimaryEmail + " -- " + contact.FirstName + " " + contact.LastName;
+                webContact.Selected = (f.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == contact.Assessment_Contact_Id).FirstOrDefault() != null);
+                obs.Observation_Contacts.Add(webContact);
+            }
+
+            return obs;           
         }
 
+
+        /// <summary>
+        /// Deletes an Observation (FINDING record)
+        /// </summary>
+        /// <param name="observation"></param>
+        public void DeleteObservation(Observation observation)
+        {
+            ObservationData fm = new ObservationData(observation, _context);
+            fm.Delete();
+            fm.Save();
+        }
+
+
+        /// <summary>
+        /// Updates an Observation in its FINDING database record
+        /// </summary>
+        /// <param name="observation"></param>
+        public int UpdateObservation(Observation observation)
+        {
+            ObservationData fm = new ObservationData(observation, _context);
+            int id = fm.Save();
+            return id;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<ActionItems> GetActionItems(int parentId, int observation_id)
+        {
+            var actionItems = new List<ActionItems>(
+
+                );
+            var table = from questions in _context.MATURITY_QUESTIONS
+                        join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
+                        join o in _context.ISE_ACTIONS_FINDINGS on new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = observation_id }
+                            equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id }
+                           into overrides
+                        from o in overrides.DefaultIfEmpty()
+                        where questions.Parent_Question_Id == parentId
+                        select new { actions = actions, overrides = o };
+            foreach (var row in table.ToList())
+            {
+                actionItems.Add(
+                    new ActionItems()
+                    {
+                        Question_Id = row.actions.Mat_Question_Id,
+                        Description = row.actions.Description,
+                        Action_Items = row.overrides == null
+                        ? row.actions.Action_Items : row.overrides.Action_Items_Override,
+                        Regulatory_Citation = row.actions.Regulatory_Citation
+                    }
+                );
+            }
+            return actionItems;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public async Task<List<Acet_GetActionItemsForReportResult>> GetActionItemsReport(int assessment_id, int examLevel)
+        {
+            int additionalExamLevel = 17; //initialized as SCUEP
+            if (examLevel == 18) //if CORE, include CORE+ in the stored proc
+            {
+                additionalExamLevel = 19; //CORE+
+            }
+
+            var data = await _context.Procedures.Acet_GetActionItemsForReportAsync(assessment_id, examLevel, additionalExamLevel);
+            return data;
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void UpdateIssues(ActionItemTextUpdate items)
         {
             foreach(var item in items.actionTextItems)

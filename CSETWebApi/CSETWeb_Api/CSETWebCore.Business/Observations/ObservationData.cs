@@ -37,11 +37,6 @@ namespace CSETWebCore.Business.Observations
         {
             _webObservation = obs;
 
-            //if (_webObservation.IsObservationEmpty())
-            //{
-            //    return;
-            //}
-
             _context = context;
 
             _dbObservation = context.FINDING

@@ -55,7 +55,7 @@ export class IseExaminerComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public findSvc: ObservationsService
+    public observationSvc: ObservationsService
   ) { }
 
   ngOnInit(): void {

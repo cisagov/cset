@@ -800,7 +800,7 @@ export class QuestionBlockIseComponent implements OnInit {
       else {
         const answerID = find.answer_Id;
         // if (result == true) {
-        this.observationSvc.getAllDiscoveries(answerID).subscribe(
+        this.observationSvc.getAllObservations(answerID).subscribe(
 
           (response: Observation[]) => {
             this.extras.observations = response;
@@ -873,7 +873,7 @@ export class QuestionBlockIseComponent implements OnInit {
 
         this.observationSvc.saveObservation(find).subscribe(() => {
           const answerID = find.answer_Id;
-          this.observationSvc.getAllDiscoveries(answerID).subscribe(
+          this.observationSvc.getAllObservations(answerID).subscribe(
             (response: Observation[]) => {
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {

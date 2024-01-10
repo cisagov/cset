@@ -330,7 +330,7 @@ export class QuestionExtrasComponent implements OnInit {
     // At some juncture we need to change this to
     // either send the observation to be edited or
     // send an empty one.
-    const find: Observation = {
+    const obs: Observation = {
       question_Id: this.myQuestion.questionId,
       questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
@@ -356,7 +356,7 @@ export class QuestionExtrasComponent implements OnInit {
     };
 
     this.dialog.open(ObservationsComponent, {
-      data: find,
+      data: obs,
       disableClose: true,
       width: this.layoutSvc.hp ? '90%' : '600px',
       maxWidth: this.layoutSvc.hp ? '90%' : '600px',
@@ -364,8 +364,8 @@ export class QuestionExtrasComponent implements OnInit {
 
     )
       .afterClosed().subscribe(result => {
-        const answerID = find.answer_Id;
-        this.observationSvc.getAllDiscoveries(answerID).subscribe(
+        const answerID = obs.answer_Id;
+        this.observationSvc.getAllObservations(answerID).subscribe(
           (response: Observation[]) => {
             this.extras.observations = response;
             for (let i of response) {
@@ -374,7 +374,7 @@ export class QuestionExtrasComponent implements OnInit {
               }
             }
             this.myQuestion.hasObservations = (this.extras.observations.length > 0);
-            this.myQuestion.answer_Id = find.answer_Id;
+            this.myQuestion.answer_Id = obs.answer_Id;
           },
           error => console.log('Error updating observations | ' + (<Error>error).message)
         );
@@ -406,9 +406,6 @@ export class QuestionExtrasComponent implements OnInit {
    * @param obsToDelete
    */
   deleteObservation(obsToDelete) {
-
-    console.log(obsToDelete);
-
     // Build a message whether the observation has a title or not
     let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm')
       + " '"
@@ -436,7 +433,6 @@ export class QuestionExtrasComponent implements OnInit {
         }
         this.extras.observations.splice(deleteIndex, 1);
         this.myQuestion.hasObservations = (this.extras.observations.length > 0);
-
       }
     });
   }

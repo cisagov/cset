@@ -56,18 +56,19 @@ export class ObservationsService {
       + '&observationId=' + observationId + '&questionId=' + questionId + '&questionType=' + questionType;
     return this.http.post(qstring, headers);
   }
+
   /**
-   * retrieves all the discoveries
+   * retrieves all the Observations
    */
-  getAllDiscoveries(answer_id: number) {
-    const qstring = 'AnswerAllDiscoveries?Answer_Id=' + answer_id;
+  getAllObservations(answer_id: number) {
+    const qstring = 'AnswerAllObservations?Answer_Id=' + answer_id;
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
 
   /**
-   * retrieves all the discoveries for an assessment
+   * retrieves all the observations for an assessment
    */
-  GetAssessmentObservations() {
+  getAssessmentObservations() {
     const qstring = 'GetAssessmentObservations';
     return this.http.post(this.configSvc.apiUrl + qstring, headers);
   }
