@@ -26,15 +26,13 @@ import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../services/config.service';
 import { ReportService } from '../../services/report.service';
 import { TranslocoService } from '@ngneat/transloco';
-// import { SecurityPlanResponse } from '../models/requirement-control.model';
-// import { Discovery, Individual } from '../models/discoveries.model';
 
 @Component({
-  selector: 'discoveries',
-  templateUrl: './discovery-tearouts.component.html',
+  selector: 'observations',
+  templateUrl: './observation-tearouts.component.html',
   styleUrls: ['../reports.scss']
 })
-export class DiscoveryTearoutsComponent implements OnInit {
+export class ObservationTearoutsComponent implements OnInit {
 
   response: any;
 
@@ -51,12 +49,12 @@ export class DiscoveryTearoutsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.reportSvc.getReport('discoveries').subscribe(
+    this.reportSvc.getReport('observations').subscribe(
       (r: any) => {
         this.response = r;
         this.titleService.setTitle(this.tSvc.translate('reports.observations tear-out sheets.tab title', { defaultTitle: this.configSvc.behaviors.defaultTitle }));
       },
-      error => console.log('Discoveries Tear Out Sheets report load Error: ' + (<Error>error).message)
+      error => console.log('Observation Tear Out Sheets report load Error: ' + (<Error>error).message)
     );
   }
 

@@ -67,7 +67,7 @@ export class QuestionExtrasComponent implements OnInit {
   extras: QuestionDetailsContentViewModel;
   tab: QuestionInformationTabData;
   expanded = false;
-  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'DISC', 'FDBK'.
+  mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
@@ -290,7 +290,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * Returns a boolean indicating if there are comments, documents or discoveries present
+   * Returns a boolean indicating if there are comments, documents or observations present
    * on the answer.
    * @param mode
    */
@@ -309,14 +309,12 @@ export class QuestionExtrasComponent implements OnInit {
         }
         return (this.extras && this.extras.documents && this.extras.documents.length > 0) ? 'inline' : 'none';
 
-      case 'DISC':
+      case 'OBSV':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.observations == null) {
-          return (this.myQuestion.hasObservations || this.myQuestion.hasDiscovery) ? 'inline' : 'none';
+          return (this.myQuestion.hasObservations) ? 'inline' : 'none';
         }
         return (this.extras && this.extras.observations && this.extras.observations.length > 0) ? 'inline' : 'none';
-
-
     }
   }
 
@@ -384,7 +382,7 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
-   * Deletes an empty discovery.
+   * Deletes an empty observation.
    * @param observationToDelete
    */
   deleteEmptyObservation(observationToDelete) {
@@ -402,7 +400,7 @@ export class QuestionExtrasComponent implements OnInit {
 
 
   /**
-   * Deletes a discovery.
+   * Deletes an Observation.
    * @param obsToDelete
    */
   deleteObservation(obsToDelete) {
@@ -661,7 +659,7 @@ export class QuestionExtrasComponent implements OnInit {
       return behavior?.questionIcons?.showReferences ?? true;
     }
 
-    if (mode == 'DISC') {
+    if (mode == 'OBSV') {
       return behavior?.questionIcons?.showObservations ?? true;
     }
 
