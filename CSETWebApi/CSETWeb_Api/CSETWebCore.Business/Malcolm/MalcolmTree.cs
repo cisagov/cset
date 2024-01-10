@@ -48,20 +48,23 @@ namespace CSETWebCore.Business.Malcolm
             visited.Add(parent.Key);
             visited.Add(graphNode.Key);
             Trace.WriteLine("W: "+parent.Key+ "G: "+graphNode.Key);
+
+            Dictionary<TempNode, bool> children = new Dictionary<TempNode, bool>();
             foreach (var c in graphNode.Children)
             {
+
                 TempNode cnode;
                 if (listOfAll.TryGetValue(c.Key, out cnode))
                 {
                     if (graphNode.AlreadyWalked(cnode,visited))
                     {
-                        c.NeedsProcessed = false;
+                        children.TryAdd(c, false);
                     }
                     else
                     {
                         visited.Add(cnode.Key);
                         AddNode(parent, cnode);
-                        c.NeedsProcessed = true;
+                        children.TryAdd(c, true);
                     }
                     
                 }
@@ -70,18 +73,19 @@ namespace CSETWebCore.Business.Malcolm
                     var newT = new TempNode(c.Key);
                     if (graphNode.AlreadyWalked(newT, visited))
                     {
-                        c.NeedsProcessed=false;
+                        children.TryAdd(c, false);
                     }
                     else
                     {
                         visited.Add(newT.Key);
                         listOfAll.TryAdd(newT.Key, newT);
                         AddNode(parent, newT);
-                        c.NeedsProcessed = true;
+                        children.TryAdd(c, true);
                     }
                 }
             }
-            foreach (var c in graphNode.Children.Where(x=> x.NeedsProcessed))
+            List<TempNode> childrenToWalk = children.Where(x => x.Value).Select(x=> x.Key).ToList();
+            foreach (var c in childrenToWalk)
             {
                 TempNode cnode;
                 if (listOfAll.TryGetValue(c.Key, out cnode))

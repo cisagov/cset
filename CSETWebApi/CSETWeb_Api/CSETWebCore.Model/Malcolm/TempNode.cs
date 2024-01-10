@@ -7,17 +7,27 @@ using System.Text;
 
 namespace CSETWebCore.Model.Malcolm
 {
+
+    public class StatusTempNode { 
+        public StatusTempNode() {
+            NeedsProcessed = true;
+        }
+        public TempNode Node {  get; set; }
+        public bool NeedsProcessed { get; set; }
+    }
+
+
     public class TempNode
     {
         public HashSet<TempNode> Children {  get; set; }
         public string Key {  get; set; }
-        public bool NeedsProcessed { get; set; }
+        
         private HashSet<string> alreadySeenList = new HashSet<string>();
 
         public TempNode(string key) {
             this.Key = key;
             this.Children = new HashSet<TempNode>();
-            NeedsProcessed = true;
+        
         }
         
         public void AddChildGraphOnly(TempNode child)
