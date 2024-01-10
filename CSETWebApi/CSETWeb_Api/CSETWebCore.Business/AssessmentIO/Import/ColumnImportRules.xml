@@ -11,7 +11,7 @@
       <Rule action="ignore" />
     </Column>
 	<Column name="Assessment_GUID">
-	  <Rule action="ignore" />
+	  <Rule action="ignoreIfExists" />
 	</Column>
   </Table>
 
