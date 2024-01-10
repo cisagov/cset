@@ -29,16 +29,11 @@ import { IRPResponse } from '../../models/irp.model';
 import { Answer, MaturityQuestionResponse } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
-import { FindingsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/observations.service';
 import { IRPService } from '../../services/irp.service';
 import { MaturityService } from '../../services/maturity.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
-import { Router } from '@angular/router';
-import { DatePipe } from '@angular/common';
-import { IRPService } from '../../services/irp.service';
-import { IRPResponse } from '../../models/irp.model';
-import { ObservationsService } from '../../services/findings.service';
 import { ActionItemText } from '../questions/observations/observations.model';
 import { mapTo } from 'rxjs/operators';
 

@@ -74,43 +74,43 @@
                 style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.individualfullname}}
             </div>
 
-            <table class="finding-table" *ngFor="let finding of individual.findings">
+            <table class="finding-table" *ngFor="let obs of individual.observations">
                 <tr>
-                    <td colspan="4" class="tint1">{{finding.finding}}</td>
+                    <td colspan="4" class="tint1">{{obs.finding}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'reports.observations tear-out sheets.question identifier' | transloco }}:</td>
-                    <td colspan="3">{{finding.questionIdentifier}}</td>
+                    <td colspan="3">{{obs.questionIdentifier}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'reports.observations tear-out sheets.question text' | transloco }}:</td>
-                    <td colspan="3" [innerHTML]="finding.questionText"></td>
+                    <td colspan="3" [innerHTML]="obs.questionText"></td>
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
-                    <td style="width: 25%">{{ 'level.' + finding.importance.toLowerCase() | transloco }}</td>
+                    <td style="width: 25%">{{ 'level.' + obs.importance.toLowerCase() | transloco }}</td>
                     <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
-                    <td style="width: 25%">{{reportSvc.translatedDate(finding.resolutionDate)}}</td>
+                    <td style="width: 25%">{{reportSvc.translatedDate(obs.resolutionDate)}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('issue') }}:</td>
-                    <td colspan="3">{{finding.issue}}</td>
+                    <td colspan="3">{{obs.issue}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('impacts') }}:</td>
-                    <td colspan="3">{{finding.impact}}</td>
+                    <td colspan="3">{{obs.impact}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('recommendations') }}:</td>
-                    <td colspan="3">{{finding.recommendations}}</td>
+                    <td colspan="3">{{obs.recommendations}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('vulnerabilities') }}:</td>
-                    <td colspan="3">{{finding.vulnerabilities}}</td>
+                    <td colspan="3">{{obs.vulnerabilities}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'contact.contacts' | transloco }}:</td>
-                    <td colspan="3">{{finding.otherContacts.replace(',',', ')}}</td>
+                    <td colspan="3">{{obs.otherContacts.replace(',',', ')}}</td>
                 </tr>
             </table>
         </div>

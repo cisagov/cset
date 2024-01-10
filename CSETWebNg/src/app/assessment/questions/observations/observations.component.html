@@ -80,7 +80,7 @@
       </div>
 
       <div class="pl-3">
-        <div *ngFor="let contact of observation.finding_Contacts" class="py-1">
+        <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
           <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
             [(ngModel)]="contact.selected">
           <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>

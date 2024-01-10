@@ -27,7 +27,7 @@ import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { ACETService } from '../../services/acet.service';
-import { ObservationsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/observations.service';
 import { QuestionsService } from '../../services/questions.service';
 import { NCUAService } from '../../services/ncua.service';
 

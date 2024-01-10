@@ -36,7 +36,7 @@ import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/materi
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { NCUAService } from '../../../services/ncua.service';
-import { ObservationsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';

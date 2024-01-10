@@ -29,7 +29,7 @@ import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
-import { ObservationsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 
 @Component({

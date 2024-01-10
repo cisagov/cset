@@ -376,14 +376,14 @@
 
         <div *ngIf=" !!extras && mode === 'DISC'">
             <div *ngIf="!this.assessSvc.isISE()">
-                <table class="table" *ngIf="tab != null && extras?.findings.length > 0">
+                <table class="table" *ngIf="tab != null && extras?.observations.length > 0">
                     <tr>
                         <th>{{ t('observation.observation title') }}</th>
                         <th>{{ t('observation.importance') }}</th>
                         <th style="width:5%;"></th>
                         <th style="width:5%;"></th>
                     </tr>
-                    <tr *ngFor="let obs of extras?.findings" style="box-sizing: content-box;height:20px;">
+                    <tr *ngFor="let obs of extras?.observations" style="box-sizing: content-box;height:20px;">
                         <td style="height:20px">
                             <div>{{obs.summary}}</div>
                         </td>

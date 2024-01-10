@@ -64,7 +64,7 @@ namespace CSETWebCore.Business.Observations
         /// 
         /// </summary>
         /// <param name="observation"></param>
-        public int UpdateFinding(Observation observation)
+        public int UpdateObservation(Observation observation)
         {
             ObservationData fm = new ObservationData(observation, _context);
             int id = fm.Save();

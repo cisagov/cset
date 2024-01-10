@@ -48,7 +48,7 @@ export interface Observation {
   supp_Guidance: string;
   // Shared fields
   importance: Importance;
-  finding_Contacts: FindingContact[];
+  observation_Contacts: ObservationContact[];
 }
 
 export interface SubRiskArea {
@@ -62,7 +62,7 @@ export interface Importance {
   value: string;
 }
 
-export interface FindingContact {
+export interface ObservationContact {
   observation_Id: number;
   assessment_Contact_Id: number;
   name: string;
