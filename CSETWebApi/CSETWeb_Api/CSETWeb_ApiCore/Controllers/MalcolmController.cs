@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Api.Error;
+using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -50,6 +51,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/malcolm")]
         public IActionResult MapSourceToDestinationData()
         {
+            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var formFiles = HttpContext.Request.Form.Files;
             string fileName = "";
             string fileExtension = "";
@@ -75,6 +77,9 @@ namespace CSETWebCore.Api.Controllers
                             string jsonString = sr.ReadToEnd();
                             data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                             dataList.Add(data);
+
+                            DiagramManager diagramManager = new DiagramManager(_context);
+                            diagramManager.CreateMalcolmDiagram(assessmentId);
                         } else
                         {
                             MalcolmUploadError error = new MalcolmUploadError(fileName, 415, "files of type " + fileExtension + " are unsupported.");

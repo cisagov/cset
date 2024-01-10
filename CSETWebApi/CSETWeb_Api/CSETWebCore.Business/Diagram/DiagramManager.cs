@@ -4,10 +4,13 @@
 // 
 // 
 ////////////////////////////////
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
+using DocumentFormat.OpenXml.Drawing.Diagrams;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Namotion.Reflection;
 using Newtonsoft.Json;
@@ -1189,6 +1192,58 @@ namespace CSETWebCore.Business.Diagram
             }
 
             _context.SaveChanges();
+        }
+
+        public void CreateMalcolmDiagram(int? assessmentId)
+        {
+            // Create an empty Network diagram
+            string xmlStart = "<mxGraphModel>\r\n<root>\r\n<mxCell id=\"0\" />\r\n<mxCell id=\"1\" parent=\"0\" />\r\n";
+            string xmlBody = "";
+            string xmlEnd = "</root>\r\n</mxGraphModel>";
+
+            int row = 1;
+            int column = 1;
+
+            // Check how many nodes we need
+            int nodeCount = 100;
+
+
+            // Generate Diagram/XML objects
+            for (int i = 0; i < nodeCount; i++)
+            {
+                // Get a unique Guid for each node
+                string guid = Guid.NewGuid().ToString();
+                
+                // Increment the label
+                string label = "UN-" + (i+1).ToString();
+
+                // Update node position
+                int x = 120 + (column * 90);
+                int y = 120 + (row * 90);
+                
+                row++;
+
+                int breakpoint = (nodeCount >= 500 ? 26 : 11);
+                if (row % breakpoint == 0)
+                {
+                    row = 1;
+                    column++;
+                }
+
+                // Build the XML string
+                xmlBody += "<UserObject ComponentGuid=\"" + guid + "\" Criticality=\"Low\" label=\"" + label + "\" internalLabel=\"" + label + "\">\r\n <mxCell style=\"aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/unknown.svg\" vertex=\"1\" parent=\"1\">\r\n <mxGeometry x=\"" + x + "\" y=\"" + y + "\" width=\"50\" height=\"50\" as=\"geometry\" />\r\n </mxCell>\r\n </UserObject>";
+            }
+
+            // Combine the pieces
+            string xmlDoc = xmlStart + xmlBody + xmlEnd;
+
+            // Save that XML to the Assessments table -- Diagram Markup.
+            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            if (assessment != null)
+            {
+                assessment.Diagram_Markup = xmlDoc;
+                _context.SaveChanges();
+            }
         }
     }
 }

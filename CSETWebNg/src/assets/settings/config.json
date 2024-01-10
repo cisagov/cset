@@ -1,7 +1,7 @@
 {
     "NOTENODE": "Casing on config chain matters, the only item that should be changed here is the current ConfigChain value.  Once that is changed everything else should be set",
     "currentConfigChain": [
-        "CSET"
+        "RENEW"
     ],
     "appCode": "CSET",
     "defaultLang": "en",
@@ -14,7 +14,7 @@
     "api": {
         "protocol": "http",
         "url": "localhost",
-        "port": "5000",
+        "port": "5005",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents",
         "onlineUrl": "https://cset.inl.gov"
