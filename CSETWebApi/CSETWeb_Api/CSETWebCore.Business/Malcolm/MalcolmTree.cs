@@ -31,8 +31,7 @@ namespace CSETWebCore.Business.Malcolm
                     listOfAll.Add(root.Key, root);
                     RootNodes.Add(root);
                     HashSet<string> seen = new HashSet<string>() { root.Key };
-                    WalkTree(root,t,seen);
-                    break;
+                    WalkTree(root,t,seen);                    
                 }
                     
             }
@@ -47,7 +46,7 @@ namespace CSETWebCore.Business.Malcolm
             HashSet<string> visited = new HashSet<string>(alreadySeen);
             visited.Add(parent.Key);
             visited.Add(graphNode.Key);
-            Trace.WriteLine("W: "+parent.Key+ "G: "+graphNode.Key);
+            //Trace.WriteLine("W: "+parent.Key+ "G: "+graphNode.Key);
 
             Dictionary<TempNode, bool> children = new Dictionary<TempNode, bool>();
             foreach (var c in graphNode.Children)
@@ -91,14 +90,14 @@ namespace CSETWebCore.Business.Malcolm
                 if (listOfAll.TryGetValue(c.Key, out cnode))
                 {
                     WalkTree(cnode,  c,visited);
-                    Trace.WriteLine("rf:" + parent.Key + "-" + graphNode.Key);
+                    //Trace.WriteLine("rf:" + parent.Key + "-" + graphNode.Key);
                 }
                 else
                 {
                     var newT= new TempNode(c.Key);
                     listOfAll.Add(c.Key, newT);
                     WalkTree(newT, c, visited);
-                    Trace.WriteLine("rn:" + parent.Key + "-" + graphNode.Key);
+                    //Trace.WriteLine("rn:" + parent.Key + "-" + graphNode.Key);
                 }
             }
             
@@ -118,7 +117,7 @@ namespace CSETWebCore.Business.Malcolm
             {
                 return true;
             }
-            Trace.WriteLine("Adding: " + parent.Key+" ->" +treeNode.Key);
+            //Trace.WriteLine("Adding: " + parent.Key+" ->" +treeNode.Key);
             parent.Children.Add(treeNode);
             alreadySeenList.Add(treeNode.Key);
             alreadySeenList.Add(parent.Key);
