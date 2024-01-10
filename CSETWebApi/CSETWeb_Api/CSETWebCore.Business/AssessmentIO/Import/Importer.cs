@@ -99,19 +99,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public int RunImportManualPortion(bool overwriteAssessment)
         {
-            //create the new assessment
+            //create the new assessment / get existing assessment if overwrite is true
             //copy each of the items to the table 
             //as the copy occurs change to the current assessment_id
             //update the answer id's             
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
-            AssessmentDetail detail;
+            AssessmentDetail detail = null;
 
             if (overwriteAssessment)
             {
                 detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
             }
-            else 
+            
+            if (detail == null)
             { 
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
             }
