@@ -22,10 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
-import { ObservationsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observation, Importance, FindingContact } from './observations.model';
+import { Observation, Importance, ObservationContact } from './observations.model';
 import * as _ from 'lodash';
 import { ConfigService } from '../../../services/config.service';
 
@@ -62,7 +62,7 @@ export class ObservationsComponent implements OnInit {
         this.update();
       });
 
-    // send the finding to the server
+    // send the observation to the server
     // if it is empty or new let the server
     // worry about it
     this.observationsSvc.getImportance().subscribe((result: Importance[]) => {
@@ -72,7 +72,7 @@ export class ObservationsComponent implements OnInit {
           this.observation = response;
           this.answerId = this.observation.answer_Id;
           this.questionId = this.observation.question_Id;
-          this.contactsModel = _.map(_.filter(this.observation.finding_Contacts,
+          this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
             { 'selected': true }),
             'Assessment_Contact_Id');
           this.data.answer_Id = this.answerId;
@@ -98,7 +98,7 @@ export class ObservationsComponent implements OnInit {
     this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
       .subscribe((response: Observation) => {
         this.observation = response;
-        this.contactsModel = _.map(_.filter(this.observation.finding_Contacts,
+        this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
           { 'selected': true }),
           'Assessment_Contact_Id');
       });
@@ -108,7 +108,7 @@ export class ObservationsComponent implements OnInit {
    * 
    */
   clearMulti() {
-    this.observation.finding_Contacts.forEach(c => {
+    this.observation.observation_Contacts.forEach(c => {
       c.selected = false;
     });
   }
@@ -151,7 +151,7 @@ export class ObservationsComponent implements OnInit {
   }
 
   updateContact(contactid) {
-    const c = this.observation.finding_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
+    const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
     if (!!c) {
       c.selected = contactid.selected;
     }

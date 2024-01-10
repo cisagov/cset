@@ -142,9 +142,9 @@ namespace CSETWebCore.Business.Question
 
                 LoadData(qp, assessmentId);
 
-                // Get any findings/discoveries for the question
-                ObservationsManager fm = new ObservationsManager(_context, assessmentId);
-                response.Findings = fm.AllObservations(newAnswer.Answer_Id);
+                // Get any observations for the question
+                ObservationsManager obsMan = new(_context, assessmentId);
+                response.Observations = obsMan.AllObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);

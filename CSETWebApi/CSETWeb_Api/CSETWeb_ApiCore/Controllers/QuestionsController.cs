@@ -384,9 +384,6 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="answerId"></param>
-        /// <param name="Finding_id"></param>
-        /// <param name="Question_Id"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("api/GetObservation")]
@@ -494,7 +491,7 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
 
-            var id = fm.UpdateFinding(obs);
+            var id = fm.UpdateObservation(obs);
 
             return Ok(id);
         }

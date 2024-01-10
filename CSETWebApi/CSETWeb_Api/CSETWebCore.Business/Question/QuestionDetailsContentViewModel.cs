@@ -88,9 +88,9 @@ namespace CSETWebCore.Business.Question
 
         /// <summary>
         /// List contains only the title, finding_id and answer id
-        /// call finding details for complete finding information
+        /// call finding details for complete observation information
         /// </summary>
-        public List<Observation> Findings { get; private set; }
+        public List<Observation> Observations { get; private set; }
 
 
         /// <summary>
@@ -231,9 +231,9 @@ namespace CSETWebCore.Business.Question
 
                 LoadData(qp, assessmentId);
 
-                // Get any findings/discoveries for the question
+                // Get any observations for the question
                 var fm = new ObservationsManager(this._context, assessmentId);
-                this.Findings = fm.AllObservations(newAnswer.Answer_Id);
+                this.Observations = fm.AllObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 _document.SetUserAssessmentId(assessmentId);

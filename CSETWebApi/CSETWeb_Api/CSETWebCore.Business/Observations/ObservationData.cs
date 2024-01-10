@@ -28,14 +28,14 @@ namespace CSETWebCore.Business.Observations
 
 
         /// <summary>
-        ///  The passed in finding is the source, if the ID does not exist it will create it. 
+        ///  The passed-in Observation is the source, if the ID does not exist it will create it. 
         ///  this will also push the data to the database and retrieve any auto identity id's 
         /// </summary>
-        /// <param name="f">source finding</param>
+        /// <param name="obs">source observation</param>
         /// <param name="context">the data context to work on</param>
-        public ObservationData(Observation f, CSETContext context)
+        public ObservationData(Observation obs, CSETContext context)
         {
-            _webObservation = f;
+            _webObservation = obs;
 
             //if (_webObservation.IsObservationEmpty())
             //{
@@ -46,28 +46,28 @@ namespace CSETWebCore.Business.Observations
 
             _dbObservation = context.FINDING
                 .Include(x => x.FINDING_CONTACT)
-                .Where(x => x.Answer_Id == f.Answer_Id && x.Finding_Id == f.Observation_Id)
+                .Where(x => x.Answer_Id == obs.Answer_Id && x.Finding_Id == obs.Observation_Id)
                 .FirstOrDefault();
 
             if (_dbObservation == null)
             {
                 var observation = new FINDING
                 {
-                    Answer_Id = f.Answer_Id,
-                    Summary = f.Summary,
-                    Impact = f.Impact,
-                    Issue = f.Issue,
-                    Recommendations = f.Recommendations,
-                    Vulnerabilities = f.Vulnerabilities,
-                    Resolution_Date = f.Resolution_Date,
-                    Title = f.Title,
-                    Type = f.Type,
-                    Risk_Area = f.Risk_Area,
-                    Sub_Risk = f.Sub_Risk,
-                    Description = f.Description,
-                    Citations = f.Citations,
-                    ActionItems = f.ActionItems,
-                    Supp_Guidance = f.Supp_Guidance
+                    Answer_Id = obs.Answer_Id,
+                    Summary = obs.Summary,
+                    Impact = obs.Impact,
+                    Issue = obs.Issue,
+                    Recommendations = obs.Recommendations,
+                    Vulnerabilities = obs.Vulnerabilities,
+                    Resolution_Date = obs.Resolution_Date,
+                    Title = obs.Title,
+                    Type = obs.Type,
+                    Risk_Area = obs.Risk_Area,
+                    Sub_Risk = obs.Sub_Risk,
+                    Description = obs.Description,
+                    Citations = obs.Citations,
+                    ActionItems = obs.ActionItems,
+                    Supp_Guidance = obs.Supp_Guidance
                 };
 
                 this._dbObservation = observation;
@@ -75,20 +75,20 @@ namespace CSETWebCore.Business.Observations
             }
 
             TinyMapper.Bind<Observation, FINDING>(config => config.Bind(source => source.Observation_Id, target => target.Finding_Id));
-            TinyMapper.Map(f, this._dbObservation);
+            TinyMapper.Map(obs, this._dbObservation);
 
-            int importid = (f.Importance_Id == null) ? 1 : (int)f.Importance_Id;
+            int importid = (obs.Importance_Id == null) ? 1 : (int)obs.Importance_Id;
             _dbObservation.Importance = context.IMPORTANCE.Where(x => x.Importance_Id == importid).FirstOrDefault();//note that 1 is the id of a low importance
 
-            if (f.Observation_Contacts != null)
+            if (obs.Observation_Contacts != null)
             {
-                foreach (ObservationContact fc in f.Observation_Contacts)
+                foreach (ObservationContact fc in obs.Observation_Contacts)
                 {
                     if (fc.Selected)
                     {
                         FINDING_CONTACT tmpC = _dbObservation.FINDING_CONTACT.Where(x => x.Assessment_Contact_Id == fc.Assessment_Contact_Id).FirstOrDefault();
                         if (tmpC == null)
-                            _dbObservation.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = f.Observation_Id });
+                            _dbObservation.FINDING_CONTACT.Add(new FINDING_CONTACT() { Assessment_Contact_Id = fc.Assessment_Contact_Id, Finding_Id = obs.Observation_Id });
                     }
                     else
                     {

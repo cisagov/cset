@@ -192,7 +192,7 @@ import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
-import { ObservationsService } from './services/findings.service';
+import { ObservationsService } from './services/observations.service';
 import { FrameworkService } from './services/framework.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';

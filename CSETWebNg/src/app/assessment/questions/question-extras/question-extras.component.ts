@@ -31,7 +31,7 @@ import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTab
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
-import { ObservationsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { ObservationsComponent } from '../observations/observations.component';
@@ -82,7 +82,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   constructor(
     public questionsSvc: QuestionsService,
-    private findSvc: ObservationsService,
+    private observationSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
     public dialog: MatDialog,
     public configSvc: ConfigService,
@@ -311,10 +311,10 @@ export class QuestionExtrasComponent implements OnInit {
 
       case 'DISC':
         // if the extras have not been pulled, get the indicator from the question list JSON
-        if (this.extras == null || this.extras.findings == null) {
+        if (this.extras == null || this.extras.observations == null) {
           return (this.myQuestion.hasObservations || this.myQuestion.hasDiscovery) ? 'inline' : 'none';
         }
-        return (this.extras && this.extras.findings && this.extras.findings.length > 0) ? 'inline' : 'none';
+        return (this.extras && this.extras.observations && this.extras.observations.length > 0) ? 'inline' : 'none';
 
 
     }
@@ -322,21 +322,21 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    *
-   * @param findid
+   * @param observationId
    */
-  addEditObservation(findid) {
+  addEditObservation(observationId) {
 
     // TODO Always send an empty one for now.
     // At some juncture we need to change this to
-    // either send the finding to be edited or
+    // either send the observation to be edited or
     // send an empty one.
     const find: Observation = {
       question_Id: this.myQuestion.questionId,
       questionType: this.myQuestion.questionType,
       answer_Id: this.myQuestion.answer_Id,
-      observation_Id: findid,
+      observation_Id: observationId,
       summary: '',
-      finding_Contacts: null,
+      observation_Contacts: null,
       impact: '',
       importance: null,
       importance_Id: 1,
@@ -365,18 +365,18 @@ export class QuestionExtrasComponent implements OnInit {
     )
       .afterClosed().subscribe(result => {
         const answerID = find.answer_Id;
-        this.findSvc.getAllDiscoveries(answerID).subscribe(
+        this.observationSvc.getAllDiscoveries(answerID).subscribe(
           (response: Observation[]) => {
-            this.extras.findings = response;
+            this.extras.observations = response;
             for (let i of response) {
               if ((!i.summary) && (!i.resolution_Date) && (!i.issue) && (!i.impact) && (!i.recommendations) && (!i.vulnerabilities)) {
                 this.deleteEmptyObservation(i)
               }
             }
-            this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+            this.myQuestion.hasObservations = (this.extras.observations.length > 0);
             this.myQuestion.answer_Id = find.answer_Id;
           },
-          error => console.log('Error updating findings | ' + (<Error>error).message)
+          error => console.log('Error updating observations | ' + (<Error>error).message)
         );
 
       });
@@ -385,19 +385,19 @@ export class QuestionExtrasComponent implements OnInit {
 
   /**
    * Deletes an empty discovery.
-   * @param findingToDelete
+   * @param observationToDelete
    */
-  deleteEmptyObservation(findingToDelete) {
-    this.findSvc.deleteFinding(findingToDelete.finding_Id).subscribe();
+  deleteEmptyObservation(observationToDelete) {
+    this.observationSvc.deleteObservation(observationToDelete.observation_Id).subscribe();
     let deleteIndex = null;
 
-    for (let i = 0; i < this.extras.findings.length; i++) {
-      if (this.extras.findings[i].finding_Id === findingToDelete.finding_Id) {
+    for (let i = 0; i < this.extras.observations.length; i++) {
+      if (this.extras.observations[i].observation_Id === observationToDelete.observation_Id) {
         deleteIndex = i;
       }
     }
-    this.extras.findings.splice(deleteIndex, 1);
-    this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+    this.extras.observations.splice(deleteIndex, 1);
+    this.myQuestion.hasObservations = (this.extras.observations.length > 0);
   };
 
 
@@ -426,16 +426,16 @@ export class QuestionExtrasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.findSvc.deleteObservation(obsToDelete.observation_Id).subscribe();
+        this.observationSvc.deleteObservation(obsToDelete.observation_Id).subscribe();
         let deleteIndex = null;
 
-        for (let i = 0; i < this.extras.findings.length; i++) {
-          if (this.extras.findings[i].observation_Id === obsToDelete.observation_Id) {
+        for (let i = 0; i < this.extras.observations.length; i++) {
+          if (this.extras.observations[i].observation_Id === obsToDelete.observation_Id) {
             deleteIndex = i;
           }
         }
-        this.extras.findings.splice(deleteIndex, 1);
-        this.myQuestion.hasObservations = (this.extras.findings.length > 0);
+        this.extras.observations.splice(deleteIndex, 1);
+        this.myQuestion.hasObservations = (this.extras.observations.length > 0);
 
       }
     });

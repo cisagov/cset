@@ -60,7 +60,7 @@ export interface QuestionDetailsContentViewModel {
   isNoQuestion: boolean;
   selectedTabIndex: number;
   listTabs: QuestionInformationTabData[];
-  findings: Observation[];
+  observations: Observation[];
   documents: QuestionDocument[];
 }
 
