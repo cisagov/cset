@@ -91,13 +91,11 @@ namespace CSETWebCore.Business.Malcolm.Tests
             }
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             
-            List<MalcolmData> data =  tst.GetMalcolmJsonData(datalist);
+            tst.GetMalcolmJsonData(datalist);
             MalcolmTree tree = new MalcolmTree();
-            var root = new TempNode("10.10.30.1");
-            tree.WalkTree(null, root, data[0].Graphs["10.10.30.1"]);
-
-            printTree(root,0);
-
+            Assert.IsTrue(datalist[0].Graphs.ContainsKey("10.10.10.10"));
+            foreach (TempNode node in tree.StartTheTreeWalk(datalist[0].Graphs))
+                printTree(node, 0);
         }
 
         [TestMethod()]
@@ -107,6 +105,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             TempNode node6 = new TempNode("6");
             TempNode node8 = new TempNode("8");
             TempNode node255 = new TempNode("255");
+            TempNode nodeLeaf = new TempNode("Leaf");
             node3.Children.Add(node6);
             node3.Children.Add(node8);
             node6.Children.Add(node3);
@@ -115,13 +114,19 @@ namespace CSETWebCore.Business.Malcolm.Tests
             node255.Children.Add(node6);
             node8.Children.Add(node255);
             node255.Children.Add(node8);
+            node255.Children.Add(nodeLeaf);
 
 
             MalcolmTree tree = new MalcolmTree();
-            TempNode root = new TempNode("3");
-            tree.WalkTree(null, root, node3);
+            
+            Dictionary<string,TempNode> graph = new Dictionary<string, TempNode>();
+            graph.Add(node3.Key, node3);
+            graph.Add(node6.Key, node6);
+            graph.Add(node8.Key, node8);
+            graph.Add(node255.Key, node255);
 
-            printTree(root,0);
+            foreach(TempNode node in tree.StartTheTreeWalk(graph))
+                printTree(node,0);
 
         }
 
@@ -132,10 +137,12 @@ namespace CSETWebCore.Business.Malcolm.Tests
             {
                 tkey = "->" + tkey;
             }
+            
             Trace.WriteLine(tkey.PadLeft(tkey.Length+ (2*indent)));
-            foreach(var c in node.Children)
+            indent = ++indent;
+            foreach (var c in node.Children)
             {                
-                printTree(c,(++indent));                
+                printTree(c,indent);                
             }
         }
 
