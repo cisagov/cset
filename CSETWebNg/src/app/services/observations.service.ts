@@ -79,7 +79,7 @@ export class ObservationsService {
   }
 
   /**
-   * saves the given discovery
+   * saves the given observation
    */
   saveObservation(observation: Observation, cancel?: boolean) {
     if (cancel == null) {

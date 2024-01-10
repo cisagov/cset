@@ -58,7 +58,7 @@ export class MaturityFilteringService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
@@ -70,14 +70,14 @@ export class MaturityFilteringService {
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
-   *   Discoveries (Observations) - D
+   *   Observations - O
    */
   public showFilters: string[] = [];
 
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -338,7 +338,7 @@ export class MaturityFilteringService {
         q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('D') && q.hasObservations) {
+      if (filterSvc.showFilters.includes('O') && q.hasObservations) {
         q.visible = true;
       }
 

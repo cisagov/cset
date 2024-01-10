@@ -259,7 +259,7 @@ import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
-import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
@@ -848,7 +848,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         AcetLayoutMainComponent,
         ReportTestComponent,
         SiteDetailComponent,
-        DiscoveryTearoutsComponent,
+        ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,
         ExecutiveSummaryComponent,
         SecurityplanComponent,
