@@ -90,7 +90,7 @@ export class MergeExaminationsComponent implements OnInit {
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     public irpSvc: IRPService,
-    public findSvc: ObservationsService,
+    public observationSvc: ObservationsService,
     private router: Router,
     public datePipe: DatePipe,
   ) { }
@@ -360,8 +360,8 @@ export class MergeExaminationsComponent implements OnInit {
         issue.finding_Id = 0;
         issue.answer_Id = this.newAnswerIds.get(parentKey);
 
-        this.findSvc.saveObservation(issue).subscribe((response: any) => {
-          this.findSvc.saveIssueText(actionItemsOverride, response).subscribe();
+        this.observationSvc.saveObservation(issue).subscribe((response: any) => {
+          this.observationSvc.saveIssueText(actionItemsOverride, response).subscribe();
 
           if (index === (issueArray.length - 1)) {
             this.navToHome();

@@ -90,7 +90,7 @@ export class IseExaminationComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public findSvc: ObservationsService
+    public observationSvc: ObservationsService
   ) { }
 
   ngOnInit(): void {
@@ -179,7 +179,7 @@ export class IseExaminationComponent implements OnInit {
         });
 
 
-        this.findSvc.GetAssessmentObservations().subscribe(
+        this.observationSvc.getAssessmentObservations().subscribe(
           (f: any) => {
             this.findingsResponse = f;  
     
