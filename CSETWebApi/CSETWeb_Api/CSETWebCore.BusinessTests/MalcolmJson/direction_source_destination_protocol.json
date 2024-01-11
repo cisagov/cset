@@ -1,0 +1,3177 @@
+{
+  "fields": [
+    "network.direction",
+    "source.ip",
+    "destination.ip",
+    "network.protocol"
+  ],
+  "filter": {
+    "network.direction": [
+      "inbound",
+      "outbound",
+      "internal"
+    ]
+  },
+  "range": [
+    1544805209,
+    1702571609
+  ],
+  "urls": [
+    "/dashboards/app/dashboards#/view/abdd7550-2c7c-40dc-947e-f6d186a158c4?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2018-12-14T16:33:29.784244Z',to:'2023-12-14T16:33:29.787930Z'))"
+  ],
+  "values": {
+    "buckets": [
+      {
+        "doc_count": 165803,
+        "key": "internal",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 36797,
+              "key": "10.10.20.3",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 34031,
+                    "key": "10.10.20.8",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 27347,
+                          "key": "cip"
+                        },
+                        {
+                          "doc_count": 6684,
+                          "key": "enip"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2765,
+                    "key": "10.10.20.6",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1446,
+                          "key": "cip"
+                        },
+                        {
+                          "doc_count": 1319,
+                          "key": "enip"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 35399,
+              "key": "10.10.10.3",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 8150,
+                    "key": "10.10.10.68",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 8150,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 5900,
+                    "key": "10.10.10.64",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 5900,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4075,
+                    "key": "10.10.10.69",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4075,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4072,
+                    "key": "10.10.10.63",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4072,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4072,
+                    "key": "10.10.10.65",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4072,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4072,
+                    "key": "10.10.10.66",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4072,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4072,
+                    "key": "10.10.10.67",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4072,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 344,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 343,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 327,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 327,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 285,
+                    "key": "10.10.10.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 284,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 20,
+                    "key": "10.10.10.55",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 20,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 34441,
+              "key": "10.10.20.8",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 34039,
+                    "key": "10.10.20.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 27353,
+                          "key": "cip"
+                        },
+                        {
+                          "doc_count": 6684,
+                          "key": "enip"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 300,
+                    "key": "10.10.20.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 239,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 32,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 16,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 3,
+                          "key": "dce_rpc"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 85,
+                    "key": "10.10.20.10",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 72,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 24,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 12,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 11,
+                    "key": "10.10.20.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 6,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "ntlm"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "enip"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "10.10.20.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 14624,
+              "key": "10.10.10.12",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 14621,
+                    "key": "10.10.10.14",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 14513,
+                          "key": "modbus"
+                        },
+                        {
+                          "doc_count": 64,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 32,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 16,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 8,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 12774,
+              "key": "10.10.20.5",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 7083,
+                    "key": "10.10.20.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1492,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 62,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 53,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 31,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 13,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 3,
+                          "key": "rdp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 5534,
+                    "key": "10.10.20.10",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 87,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 28,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 14,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 123,
+                    "key": "10.10.20.8",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 67,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 58,
+                          "key": "ntlm"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 11,
+                    "key": "10.10.10.10",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 9,
+                    "key": "192.168.0.11",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 5413,
+              "key": "10.10.10.14",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 5406,
+                    "key": "10.10.10.12",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4837,
+                          "key": "modbus"
+                        },
+                        {
+                          "doc_count": 550,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 26,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 13,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 5,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2782,
+              "key": "10.10.20.6",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2769,
+                    "key": "10.10.20.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1447,
+                          "key": "cip"
+                        },
+                        {
+                          "doc_count": 1322,
+                          "key": "enip"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "10.10.20.255",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2726,
+              "key": "10.10.10.68",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2716,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2716,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2111,
+              "key": "192.168.0.11",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1552,
+                    "key": "192.168.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 871,
+                          "key": "cotp"
+                        },
+                        {
+                          "doc_count": 697,
+                          "key": "s7comm"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 267,
+                    "key": "192.168.0.255",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 252,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 267,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 267,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 10,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 7,
+                    "key": "192.168.0.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 3,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 7,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2087,
+              "key": "10.10.10.11",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1848,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1577,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 380,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 191,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 62,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 7,
+                          "key": "dce_rpc"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 125,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 80,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 12,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 6,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 6,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 3,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 3,
+                          "key": "rdp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 111,
+                    "key": "10.10.10.55",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 91,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 30,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 15,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1972,
+              "key": "10.10.10.64",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1966,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1966,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1818,
+              "key": "10.10.10.5",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1445,
+                    "key": "10.10.10.10",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1402,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 22,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 16,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 11,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 342,
+                    "key": "10.10.10.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 342,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 12,
+                    "key": "10.10.20.8",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 12,
+                    "key": "10.10.20.11",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "192.168.0.11",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.20.10",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1368,
+              "key": "10.10.10.69",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1358,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1358,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1367,
+              "key": "10.10.10.67",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1357,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1357,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1363,
+              "key": "10.10.10.63",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1357,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1357,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1363,
+              "key": "10.10.10.65",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1357,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1357,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1363,
+              "key": "10.10.10.66",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1357,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1357,
+                          "key": "modbus"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1307,
+              "key": "192.168.0.5",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1301,
+                    "key": "192.168.0.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1204,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 54,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 27,
+                          "key": "gssapi"
+                        },
+                        {
+                          "doc_count": 20,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.20.11",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1130,
+              "key": "192.168.0.1",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1127,
+                    "key": "192.168.0.11",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 685,
+                          "key": "s7comm"
+                        },
+                        {
+                          "doc_count": 435,
+                          "key": "cotp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 1071,
+              "key": "10.10.30.5",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1070,
+                    "key": "10.10.30.33",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1047,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 12,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 10,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 371,
+              "key": "10.10.30.1",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 159,
+                    "key": "224.0.0.251",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 159,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 120,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 120,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 68,
+                    "key": "10.10.255.255",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 68,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 24,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 331,
+              "key": "fe80::b528:b15f:1681:3e2",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 329,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 329,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 290,
+              "key": "fe80::31c6:f934:59d4:3744",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 270,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 270,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 6,
+                    "key": "fe80::21de:6a5d:c2fa:e4ac",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 5,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "ff02::16",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 279,
+              "key": "fe80::4956:29e0:d069:b432",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 155,
+                    "key": "ff02::fb",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 155,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 120,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 120,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 147,
+              "key": "10.0.0.128",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 145,
+                    "key": "10.0.0.131",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 145,
+                          "key": "tds"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.0.0.129",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1,
+                          "key": "ftp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 134,
+              "key": "10.10.30.130",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 104,
+                    "key": "10.10.30.128",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 84,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 12,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 1,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 15,
+                    "key": "10.10.30.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 15,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 14,
+                    "key": "10.10.30.129",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 14,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 101,
+              "key": "192.168.95.128",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 80,
+                    "key": "192.168.95.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 80,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 21,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 21,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 90,
+              "key": "10.10.30.33",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 89,
+                    "key": "10.10.30.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 85,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 69,
+              "key": "192.168.95.133",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 67,
+                    "key": "192.168.95.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 67,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 59,
+              "key": "10.0.0.133",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 59,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 59,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 56,
+              "key": "192.168.0.129",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 55,
+                    "key": "192.168.0.128",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 50,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 5,
+                          "key": "dce_rpc"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "ntlm"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 46,
+              "key": "192.168.95.134",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 44,
+                    "key": "192.168.95.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 44,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 45,
+              "key": "10.10.10.55",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 17,
+                    "key": "10.10.10.3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 16,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 16,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 14,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "ntlm"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "10.10.10.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 37,
+              "key": "192.168.95.135",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 35,
+                    "key": "192.168.95.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 35,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 34,
+              "key": "10.10.20.11",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 25,
+                    "key": "10.10.20.8",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 7,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "rdp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 8,
+                    "key": "10.10.20.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        },
+                        {
+                          "doc_count": 1,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 32,
+              "key": "10.0.0.131",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 30,
+                    "key": "10.0.0.128",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 26,
+                          "key": "smb"
+                        },
+                        {
+                          "doc_count": 4,
+                          "key": "ntlm"
+                        },
+                        {
+                          "doc_count": 2,
+                          "key": "gssapi"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.0.0.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 24,
+              "key": "10.0.0.40",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 16,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 16,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 5,
+                    "key": "10.0.0.120",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 22,
+              "key": "192.168.95.132",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 20,
+                    "key": "192.168.95.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 20,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 20,
+              "key": "10.10.30.129",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 18,
+                    "key": "10.10.30.131",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 18,
+                          "key": "http"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 19,
+              "key": "10.10.100.50",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 12,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 12,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "10.10.100.121",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "telnet"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.100.100",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.100.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 19,
+              "key": "192.168.95.1",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 15,
+                    "key": "192.168.95.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 15,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "224.0.0.251",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 15,
+              "key": "10.0.0.120",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 6,
+                    "key": "10.0.0.40",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 5,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 5,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "224.0.0.252",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "10.0.0.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 13,
+              "key": "fe80::21de:6a5d:c2fa:e4ac",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 10,
+                    "key": "fe80::31c6:f934:59d4:3744",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 6,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 11,
+              "key": "10.0.0.5",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 10,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 6,
+                          "key": "rfb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 11,
+              "key": "192.168.0.128",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 10,
+                    "key": "192.168.0.129",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 8,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 10,
+              "key": "10.0.0.1",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "239.255.255.250",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "10.0.0.40",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "10.0.0.120",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "255.255.255.255",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 10,
+              "key": "10.0.0.134",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 10,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 10,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 9,
+              "key": "10.0.0.130",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 7,
+                    "key": "10.0.0.1",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 7,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "10.0.0.254",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dhcp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 9,
+              "key": "10.10.10.10",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 8,
+                    "key": "10.10.10.5",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 8,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 9,
+              "key": "fe80::166:8730:f79f:e4c1",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 6,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 6,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::16",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 6,
+              "key": "fe80::2cf2:f3d:b0d6:6c21",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "fe80::806b:8e56:5bb3:1ad9",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "fe80::d0c1:8550:8ba9:3d76",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 5,
+              "key": "fe80::806b:8e56:5bb3:1ad9",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "fe80::2cf2:f3d:b0d6:6c21",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::1:3",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 2,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 4,
+              "key": "fe80::c17a:b794:2299:da9c",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "ff02::fb",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::16",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 4,
+              "key": "fe80::dc98:23c:afc5:b198",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "ff02::fb",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::16",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "10.10.30.131",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "10.10.100.121",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "10.10.100.50",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "192.168.1.2",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 3,
+                    "key": "224.0.0.251",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 3,
+                          "key": "dns"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::95e:e70e:a1ac:c4cc",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::317b:81bc:808e:bbd",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::4de2:5638:38ad:df4f",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::606f:6bdd:4f3f:219d",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::753b:8bbb:1f74:54f7",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::84e6:6909:17d9:1d6e",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 3,
+              "key": "fe80::a1c3:301e:931d:eebf",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "ff02::1:2",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2,
+              "key": "::",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::1:ffd4:3744",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2,
+              "key": "10.0.0.129",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1,
+                    "key": "10.0.0.128",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1,
+                          "key": "ftp"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2,
+              "key": "10.10.20.10",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.20.8",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2,
+              "key": "10.10.30.128",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 1,
+                    "key": "10.10.30.130",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 1,
+                          "key": "smb"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2,
+              "key": "fe80::bca4:a139:486c:2f95",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2,
+                    "key": "ff02::c",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      }
+    ],
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0
+  }
+}
