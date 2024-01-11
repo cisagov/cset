@@ -85,7 +85,7 @@ import { ReportTestComponent } from './reports/report-test/report-test.component
 import { LayoutSwitcherComponent } from './layout/layout-switcher/layout-switcher.component';
 import { LayoutBlankComponent } from './layout/layout-blank/layout-blank.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
-import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { ExecutiveCMMCComponent } from './reports/cmmc/executive-cmmc/executive-cmmc.component';
 import { SitesummaryCMMCComponent } from './reports/cmmc/sitesummary-cmmc/sitesummary-cmmc.component';
@@ -453,7 +453,7 @@ const appRoutes: Routes = [
   {
     path: 'report', component: LayoutBlankComponent, children: [
       { path: 'detail', component: SiteDetailComponent },
-      { path: 'discoveries', component: DiscoveryTearoutsComponent },
+      { path: 'observations', component: ObservationTearoutsComponent },
       { path: 'executive', component: ExecutiveSummaryComponent },
       { path: 'securityplan', component: SecurityplanComponent },
       { path: 'sitesummary', component: SiteSummaryComponent },

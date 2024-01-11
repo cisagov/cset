@@ -51,7 +51,7 @@ namespace CSETWebCore.Interfaces.Reports
         List<BasicReportData.CNSSSALJustificationsTable> GetNistInfoTypes();
         BasicReportData.OverallSALTable GetSals();
         BasicReportData.INFORMATION GetInformation();
-        List<Individual> GetFindingIndividuals();
+        List<Individual> GetObservationIndividuals();
         GenSALTable GetGenSals();
         MaturityReportData.MaturityModel GetBasicMaturityModel();
         List<MaturityReportData.MaturityModel> GetMaturityModelData();

@@ -8,13 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CSETWebCore.Model.Findings
+namespace CSETWebCore.Model.Observations
 {
-    public class Finding
+    public class Observation
     {
         public int Question_Id { get; set; }
         public int Answer_Id { get; set; }
-        public int Finding_Id { get; set; }
+        public int Observation_Id { get; set; }
         public string Summary { get; set; }
         public string Issue { get; set; }
         public string Impact { get; set; }
@@ -32,9 +32,9 @@ namespace CSETWebCore.Model.Findings
         public string ActionItems { get; set; }
         public int Auto_Generated { get; set; }
         public string Supp_Guidance { get; set; }
-        public List<FindingContact> Finding_Contacts { get; set; }
+        public List<ObservationContact> Observation_Contacts { get; set; }
 
-        public bool IsFindingEmpty(bool cancel = false)
+        public bool IsObservationEmpty(bool cancel = false)
         {
             bool noValue = true;
 
@@ -44,7 +44,6 @@ namespace CSETWebCore.Model.Findings
             }
 
             noValue = noValue && String.IsNullOrWhiteSpace(Impact);
-            //hasValues = hasValues && webFinding.Importance
             noValue = noValue && String.IsNullOrWhiteSpace(Issue);
             noValue = noValue && String.IsNullOrWhiteSpace(Recommendations);
             noValue = noValue && String.IsNullOrWhiteSpace(Impact);
@@ -54,7 +53,7 @@ namespace CSETWebCore.Model.Findings
             noValue = noValue && String.IsNullOrWhiteSpace(Title);
             noValue = noValue && Type == null;
             noValue = noValue && String.IsNullOrWhiteSpace(Description);
-            noValue = noValue && !Finding_Contacts.Any(x => x.Selected);
+            noValue = noValue && !Observation_Contacts.Any(x => x.Selected);
 
             return noValue;
         }

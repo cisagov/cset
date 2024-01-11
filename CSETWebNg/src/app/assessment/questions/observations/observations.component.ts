@@ -22,38 +22,38 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Inject } from '@angular/core';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Finding, Importance } from './findings.model';
+import { Observation, Importance, ObservationContact } from './observations.model';
 import * as _ from 'lodash';
 import { ConfigService } from '../../../services/config.service';
 
 @Component({
-  selector: 'app-findings',
-  templateUrl: './findings.component.html',
+  selector: 'app-observations',
+  templateUrl: './observations.component.html',
   host: {
     'style': 'max-width: 100%'
   }
 })
-export class FindingsComponent implements OnInit {
+export class ObservationsComponent implements OnInit {
 
-  finding: Finding;
+  observation: Observation;
   importances: Importance[];
-  contactsmodel: any[];
-  answerID: number;
-  questionID: number;
+  contactsModel: any[];
+  answerId: number;
+  questionId: number;
 
   constructor(
-    private findSvc: FindingsService,
+    private observationsSvc: ObservationsService,
     private configSvc: ConfigService,
-    private dialog: MatDialogRef<FindingsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Finding,
+    private dialog: MatDialogRef<ObservationsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Observation,
     public assessSvc: AssessmentService
   ) {
-    this.finding = data;
-    this.answerID = data.answer_Id;
-    this.questionID = data.question_Id;
+    this.observation = data;
+    this.answerId = data.answer_Id;
+    this.questionId = data.question_Id;
   }
 
   ngOnInit() {
@@ -62,20 +62,20 @@ export class FindingsComponent implements OnInit {
         this.update();
       });
 
-    // send the finding to the server
+    // send the observation to the server
     // if it is empty or new let the server
     // worry about it
-    this.findSvc.getImportance().subscribe((result: Importance[]) => {
+    this.observationsSvc.getImportance().subscribe((result: Importance[]) => {
       this.importances = result;
-      this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, this.finding.questionType)
-        .subscribe((response: Finding) => {
-          this.finding = response;
-          this.answerID = this.finding.answer_Id;
-          this.questionID = this.finding.question_Id;
-          this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
+      this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
+        .subscribe((response: Observation) => {
+          this.observation = response;
+          this.answerId = this.observation.answer_Id;
+          this.questionId = this.observation.question_Id;
+          this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
             { 'selected': true }),
             'Assessment_Contact_Id');
-          this.data.answer_Id = this.answerID;
+          this.data.answer_Id = this.answerId;
         });
     });
   }
@@ -95,10 +95,10 @@ export class FindingsComponent implements OnInit {
    * 
    */
   refreshContacts(): void {
-    this.findSvc.getFinding(this.finding.answer_Id, this.finding.finding_Id, this.finding.question_Id, this.finding.questionType)
-      .subscribe((response: Finding) => {
-        this.finding = response;
-        this.contactsmodel = _.map(_.filter(this.finding.finding_Contacts,
+    this.observationsSvc.getObservation(this.observation.answer_Id, this.observation.observation_Id, this.observation.question_Id, this.observation.questionType)
+      .subscribe((response: Observation) => {
+        this.observation = response;
+        this.contactsModel = _.map(_.filter(this.observation.observation_Contacts,
           { 'selected': true }),
           'Assessment_Contact_Id');
       });
@@ -108,50 +108,50 @@ export class FindingsComponent implements OnInit {
    * 
    */
   clearMulti() {
-    this.finding.finding_Contacts.forEach(c => {
+    this.observation.observation_Contacts.forEach(c => {
       c.selected = false;
     });
   }
 
   /**
    * 
-   * @param finding 
+   * @param obs 
    * @returns 
    */
-  checkFinding(finding: Finding) {
+  checkObservation(obs: Observation) {
     // and a bunch of fields together
     // if they are all null then false
     // else true;
-    let findingCompleted = true;
+    let observationCompleted = true;
 
-    findingCompleted = (finding.impact == null);
-    findingCompleted = (finding.importance == null) && (findingCompleted);
-    findingCompleted = (finding.issue == null) && (findingCompleted);
-    findingCompleted = (finding.recommendations == null) && (findingCompleted);
-    findingCompleted = (finding.resolution_Date == null) && (findingCompleted);
-    findingCompleted = (finding.summary == null) && (findingCompleted);
-    findingCompleted = (finding.vulnerabilities == null) && (findingCompleted);
+    observationCompleted = (obs.impact == null);
+    observationCompleted = (obs.importance == null) && (observationCompleted);
+    observationCompleted = (obs.issue == null) && (observationCompleted);
+    observationCompleted = (obs.recommendations == null) && (observationCompleted);
+    observationCompleted = (obs.resolution_Date == null) && (observationCompleted);
+    observationCompleted = (obs.summary == null) && (observationCompleted);
+    observationCompleted = (obs.vulnerabilities == null) && (observationCompleted);
 
-    return !finding;
+    return !obs;
   }
 
   /**
    * 
    */
   update() {
-    this.finding.answer_Id = this.answerID;
-    this.finding.question_Id = this.questionID;
-    this.findSvc.saveDiscovery(this.finding).subscribe(() => {
+    this.observation.answer_Id = this.answerId;
+    this.observation.question_Id = this.questionId;
+    this.observationsSvc.saveObservation(this.observation).subscribe(() => {
       this.dialog.close(true);
     });
   }
 
   updateImportance(importid) {
-    this.finding.importance_Id = importid;
+    this.observation.importance_Id = importid;
   }
 
   updateContact(contactid) {
-    const c = this.finding.finding_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
+    const c = this.observation.observation_Contacts.find(x => x.assessment_Contact_Id == contactid.assessment_Contact_Id);
     if (!!c) {
       c.selected = contactid.selected;
     }

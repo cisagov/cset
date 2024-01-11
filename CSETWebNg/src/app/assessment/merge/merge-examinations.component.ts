@@ -29,12 +29,13 @@ import { IRPResponse } from '../../models/irp.model';
 import { Answer, MaturityQuestionResponse } from '../../models/questions.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { ConfigService } from '../../services/config.service';
-import { FindingsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/observations.service';
 import { IRPService } from '../../services/irp.service';
 import { MaturityService } from '../../services/maturity.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
-import { ActionItemText } from '../questions/findings/findings.model';
+import { ActionItemText } from '../questions/observations/observations.model';
+import { mapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'merge-examinations',
@@ -89,7 +90,7 @@ export class MergeExaminationsComponent implements OnInit {
     public questionSvc: QuestionsService,
     public configSvc: ConfigService,
     public irpSvc: IRPService,
-    public findSvc: FindingsService,
+    public observationSvc: ObservationsService,
     private router: Router,
     public datePipe: DatePipe,
   ) { }
@@ -359,8 +360,8 @@ export class MergeExaminationsComponent implements OnInit {
         issue.finding_Id = 0;
         issue.answer_Id = this.newAnswerIds.get(parentKey);
 
-        this.findSvc.saveDiscovery(issue).subscribe((response: any) => {
-          this.findSvc.saveIssueText(actionItemsOverride, response).subscribe();
+        this.observationSvc.saveObservation(issue).subscribe((response: any) => {
+          this.observationSvc.saveIssueText(actionItemsOverride, response).subscribe();
 
           if (index === (issueArray.length - 1)) {
             this.navToHome();

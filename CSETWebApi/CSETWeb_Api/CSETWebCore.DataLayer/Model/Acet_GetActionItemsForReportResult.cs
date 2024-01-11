@@ -9,7 +9,7 @@ namespace CSETWebCore.DataLayer.Model
     {
         public int? Parent_Question_Id { get; set; }
         public int Mat_Question_Id { get; set; }
-        public int Finding_Id { get; set; }
+        public int Observation_Id { get; set; }
         public string Question_Title { get; set; }
         public string answer_text { get; set; }
         public string Regulatory_Citation { get; set; }
