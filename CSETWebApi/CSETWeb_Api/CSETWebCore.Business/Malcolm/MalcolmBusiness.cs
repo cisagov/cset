@@ -35,9 +35,10 @@ namespace CSETWebCore.Business.Malcolm
                         //}
                     }
                     malcolmData.Graphs = networkOfNodes;
-                    networkOfNodes = new Dictionary<string, TempNode>();                    
+                    networkOfNodes = new Dictionary<string, TempNode>();           
                 }
             }
+            datalist = GetTreesFromMalcolmData(datalist);
             return datalist;
 
         }

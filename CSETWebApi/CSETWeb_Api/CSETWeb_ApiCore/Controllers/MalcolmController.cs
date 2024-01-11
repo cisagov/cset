@@ -74,9 +74,6 @@ namespace CSETWebCore.Api.Controllers
                             string jsonString = sr.ReadToEnd();
                             data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                             dataList.Add(data);
-
-                            DiagramManager diagramManager = new DiagramManager(_context);
-                            diagramManager.CreateMalcolmDiagram(assessmentId);
                         } else
                         {
                             MalcolmUploadError error = new MalcolmUploadError(fileName, 415, "files of type " + fileExtension + " are unsupported.");
@@ -99,7 +96,10 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData(dataList));
+                DiagramManager diagramManager = new DiagramManager(_context);
+                List<MalcolmData> processedData = new MalcolmBusiness(_context).GetMalcolmJsonData(dataList);
+                diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
+                return Ok();
             }
         }
     }

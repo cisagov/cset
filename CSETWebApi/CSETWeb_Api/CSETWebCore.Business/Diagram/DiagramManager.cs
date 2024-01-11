@@ -10,6 +10,7 @@ using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
+using CSETWebCore.Model.Malcolm;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Namotion.Reflection;
@@ -1194,9 +1195,10 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
         }
 
-        public void CreateMalcolmDiagram(int? assessmentId)
+        public void CreateMalcolmDiagram(int? assessmentId, List<MalcolmData> processedData)
         {
             // Create an empty Network diagram
+            XmlDocument xml = new XmlDocument();
             string xmlStart = "<mxGraphModel>\r\n<root>\r\n<mxCell id=\"0\" />\r\n<mxCell id=\"1\" parent=\"0\" />\r\n";
             string xmlBody = "";
             string xmlEnd = "</root>\r\n</mxGraphModel>";
@@ -1205,14 +1207,14 @@ namespace CSETWebCore.Business.Diagram
             int column = 1;
 
             // Check how many nodes we need
-            int nodeCount = 100;
-
+            int nodeCount = processedData[0].Graphs.Count;
 
             // Generate Diagram/XML objects
             for (int i = 0; i < nodeCount; i++)
             {
                 // Get a unique Guid for each node
                 string guid = Guid.NewGuid().ToString();
+                string id = i.ToString();
                 
                 // Increment the label
                 string label = "UN-" + (i+1).ToString();
@@ -1231,7 +1233,7 @@ namespace CSETWebCore.Business.Diagram
                 }
 
                 // Build the XML string
-                xmlBody += "<UserObject ComponentGuid=\"" + guid + "\" Criticality=\"Low\" label=\"" + label + "\" internalLabel=\"" + label + "\">\r\n <mxCell style=\"aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/unknown.svg\" vertex=\"1\" parent=\"1\">\r\n <mxGeometry x=\"" + x + "\" y=\"" + y + "\" width=\"50\" height=\"50\" as=\"geometry\" />\r\n </mxCell>\r\n </UserObject>";
+                xmlBody += "<UserObject ComponentGuid=\"" + guid + "\" Criticality=\"Low\" label=\"" + label + "\" internalLabel=\"" + label + "\" id=\"" + id + "\">\r\n <mxCell style=\"aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/unknown.svg\" vertex=\"1\" parent=\"1\">\r\n <mxGeometry x=\"" + x + "\" y=\"" + y + "\" width=\"50\" height=\"50\" as=\"geometry\" />\r\n </mxCell>\r\n </UserObject>";
             }
 
             // Combine the pieces
