@@ -1,0 +1,276 @@
+{
+  "fields": [
+    "network.type",
+    "network.transport",
+    "network.protocol",
+    "network.protocol_version"
+  ],
+  "filter": {
+    "network.direction": [
+      "inbound",
+      "outbound",
+      "internal"
+    ]
+  },
+  "range": [
+    1544805334,
+    1702571734
+  ],
+  "urls": [
+    "/dashboards/app/dashboards#/view/abdd7550-2c7c-40dc-947e-f6d186a158c4?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2018-12-14T16:35:34.070664Z',to:'2023-12-14T16:35:34.074320Z'))"
+  ],
+  "values": {
+    "buckets": [
+      {
+        "doc_count": 164833,
+        "key": "ipv4",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 23236,
+              "key": "tcp",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 7180,
+                    "key": "smb",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 4224,
+                          "key": "1"
+                        },
+                        {
+                          "doc_count": 1438,
+                          "key": "2"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1383,
+                    "key": "s7comm",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1307,
+                    "key": "cotp",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1280,
+                    "key": "dce_rpc",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 688,
+                    "key": "http",
+                    "values": {
+                      "buckets": [
+                        {
+                          "doc_count": 151,
+                          "key": "1.0"
+                        },
+                        {
+                          "doc_count": 133,
+                          "key": "1.1"
+                        }
+                      ],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 410,
+                    "key": "ntlm",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 361,
+                    "key": "gssapi",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 146,
+                    "key": "tds",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 19,
+                    "key": "modbus",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 6,
+                    "key": "rdp",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "enip",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 4,
+                    "key": "rfb",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 3,
+                    "key": "ftp",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 2,
+                    "key": "telnet",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 2276,
+              "key": "udp",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 2095,
+                    "key": "dns",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 48,
+                    "key": "dhcp",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  },
+                  {
+                    "doc_count": 1,
+                    "key": "enip",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 20,
+              "key": "icmp",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 970,
+        "key": "ipv6",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 955,
+              "key": "udp",
+              "values": {
+                "buckets": [
+                  {
+                    "doc_count": 908,
+                    "key": "dns",
+                    "values": {
+                      "buckets": [],
+                      "doc_count_error_upper_bound": 0,
+                      "sum_other_doc_count": 0
+                    }
+                  }
+                ],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            },
+            {
+              "doc_count": 15,
+              "key": "icmp",
+              "values": {
+                "buckets": [],
+                "doc_count_error_upper_bound": 0,
+                "sum_other_doc_count": 0
+              }
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      }
+    ],
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0
+  }
+}

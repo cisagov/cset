@@ -26,6 +26,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
+import { HydroService } from '../../../services/hydro.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
 import { ConfigService } from '../../../services/config.service';
 import { NavTreeNode, NavigationService } from '../../../services/navigation/navigation.service';
 
@@ -40,12 +44,17 @@ export class DiagramInfoComponent implements OnInit {
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
 
+    malcolmFiles: File[];
+
+
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
-        private location: Location
+        public hydroSvc: HydroService,
+        private location: Location,
+        private dialog: MatDialog
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
@@ -109,4 +118,28 @@ export class DiagramInfoComponent implements OnInit {
             '&l=' + this.authSvc.isLocal +
             '&a=' + localStorage.getItem('assessmentId');
     }
+
+    uploadMalcolmData(event: any) {
+        this.malcolmFiles = event.target.files;
+
+        if (this.malcolmFiles) {
+            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
+                (result) => {
+                    if (result != null) {
+                        this.openUploadErrorDialog(result);
+                    }
+            });
+        }
+    }
+
+    openUploadErrorDialog(errorData: any) {
+        let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
+            minHeight: '300px',
+            minWidth: '400px',
+            data: {
+                error: errorData
+            }
+        });
+    }
+
 }

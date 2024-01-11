@@ -1,0 +1,256 @@
+{
+  "fields": [
+    "zeek.software.name",
+    "zeek.software.unparsed_version"
+  ],
+  "filter": null,
+  "range": [
+    1544805405,
+    1702571805
+  ],
+  "urls": [
+    "/dashboards/app/dashboards#/view/87d990cc-9e0b-41e5-b8fe-b10ae1da0c85?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2018-12-14T16:36:45.503184Z',to:'2023-12-14T16:36:45.506891Z'))"
+  ],
+  "values": {
+    "buckets": [
+      {
+        "doc_count": 6,
+        "key": "Nmap-SSH",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 3,
+              "key": "Nmap-SSH1-Hostkey"
+            },
+            {
+              "doc_count": 3,
+              "key": "Nmap-SSH2-Hostkey"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 3,
+        "key": "MSIE",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 10.0; Win64; x64; Trident/7.0; .NET4.0C; .NET4.0E)"
+            },
+            {
+              "doc_count": 1,
+              "key": "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"
+            },
+            {
+              "doc_count": 1,
+              "key": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 3,
+        "key": "NmapNSE",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 3,
+              "key": "NmapNSE_1.0"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "<unknown browser>",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "Firefox",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "Microsoft-Windows",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "Microsoft-Windows/6.1 UPnP/1.0 Windows-Media-Player-DMS/12.0.7601.17514 DLNADOC/1.50"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "Microsoft-Windows-NT",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "Microsoft-Windows-NT/5.1 UPnP/1.0 UPnP-Device-Host/1.0 Microsoft-HTTPAPI/2.0"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "SimpleHTTP",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "SimpleHTTP/0.6 Python/2.7.17"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 2,
+        "key": "Windows-Media-Player-DMS",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 2,
+              "key": "Windows-Media-Player-DMS/12.0.7601.17514"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "ClearSCADA",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "ClearSCADA/6.72.4644.1"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "GoAhead-Webs",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "GoAhead-Webs"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "MSFT",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "MSFT 5.0"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "Microsoft-IIS",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Microsoft-IIS/7.5"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "Microsoft-WebDAV-MiniRedir",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Microsoft-WebDAV-MiniRedir/6.1.7601"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "Python-urllib",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Python-urllib/2.7"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      },
+      {
+        "doc_count": 1,
+        "key": "Version",
+        "values": {
+          "buckets": [
+            {
+              "doc_count": 1,
+              "key": "Version_1.0"
+            }
+          ],
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0
+        }
+      }
+    ],
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0
+  }
+}
