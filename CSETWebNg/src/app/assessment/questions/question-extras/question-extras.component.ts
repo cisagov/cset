@@ -312,7 +312,7 @@ export class QuestionExtrasComponent implements OnInit {
       case 'OBSV':
         // if the extras have not been pulled, get the indicator from the question list JSON
         if (this.extras == null || this.extras.observations == null) {
-          return (this.myQuestion.hasObservations) ? 'inline' : 'none';
+          return (this.myQuestion.hasObservation) ? 'inline' : 'none';
         }
         return (this.extras && this.extras.observations && this.extras.observations.length > 0) ? 'inline' : 'none';
     }
@@ -371,7 +371,7 @@ export class QuestionExtrasComponent implements OnInit {
                 this.deleteEmptyObservation(i)
               }
             }
-            this.myQuestion.hasObservations = (this.extras.observations.length > 0);
+            this.myQuestion.hasObservation = (this.extras.observations.length > 0);
             this.myQuestion.answer_Id = obs.answer_Id;
           },
           error => console.log('Error updating observations | ' + (<Error>error).message)
@@ -395,7 +395,7 @@ export class QuestionExtrasComponent implements OnInit {
       }
     }
     this.extras.observations.splice(deleteIndex, 1);
-    this.myQuestion.hasObservations = (this.extras.observations.length > 0);
+    this.myQuestion.hasObservation = (this.extras.observations.length > 0);
   };
 
 
@@ -430,7 +430,7 @@ export class QuestionExtrasComponent implements OnInit {
           }
         }
         this.extras.observations.splice(deleteIndex, 1);
-        this.myQuestion.hasObservations = (this.extras.observations.length > 0);
+        this.myQuestion.hasObservation = (this.extras.observations.length > 0);
       }
     });
   }
