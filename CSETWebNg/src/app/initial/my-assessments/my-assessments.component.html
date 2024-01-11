@@ -258,7 +258,7 @@
                                 <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
                             </button>
                         </td>
-                        <td *ngIf="showColumn('analytics')">
+                        <td style="display:none;" *ngIf="showColumn('analytics')">
                             <button tabindex="0"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="this.analyticsSvc.loadAssessment(assessment.assessmentId)"
