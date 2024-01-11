@@ -1,11 +1,8 @@
 ﻿using CSETWebCore.Model.Malcolm;
-using Lucene.Net.Util;
-using NPOI.POIFS.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Malcolm
 {
@@ -14,41 +11,119 @@ namespace CSETWebCore.Business.Malcolm
         
         private HashSet<string> alreadySeenList = new HashSet<string>();
 
-        public List<TempNode> RootNodes { get; set; }
+        
 
         public MalcolmTree()
         {
-            RootNodes = new List<TempNode>();
+            
         }
 
-        public void StartTheTreeWalk(Dictionary<string, TempNode> childrenDict)
-        {   
+        private Dictionary<string, TempNode> listOfAll = new Dictionary<string, TempNode>();
+
+        public List<TempNode> StartTheTreeWalk(Dictionary<string, TempNode> childrenDict) 
+        { 
+            List<TempNode> RootNodes = new List<TempNode>();
             foreach (TempNode t in childrenDict.Values)
-            {  
-                TempNode root = new TempNode(t.Key);
-                if (!alreadySeenList.Contains(root.Key))
-                {   
-                    WalkTree(null,root,t);
+            {
+                if (!alreadySeenList.Contains(t.Key))
+                {
+                    TempNode root = new TempNode(t.Key);
+                    listOfAll.Add(root.Key, root);
                     RootNodes.Add(root);
+                    HashSet<string> seen = new HashSet<string>() { root.Key };
+                    WalkTree(root,t,seen);                    
+                }
+                    
+            }
+            return RootNodes;
+        }
+
+        private void WalkTree(TempNode parent, TempNode graphNode, HashSet<string> alreadySeen)
+        {   
+            //trying to do breadth first
+            //add all the children to the parent
+            //then recurse down the children
+            HashSet<string> visited = new HashSet<string>(alreadySeen);
+            visited.Add(parent.Key);
+            visited.Add(graphNode.Key);
+            //Trace.WriteLine("W: "+parent.Key+ "G: "+graphNode.Key);
+
+            Dictionary<TempNode, bool> children = new Dictionary<TempNode, bool>();
+            foreach (var c in graphNode.Children)
+            {
+
+                TempNode cnode;
+                if (listOfAll.TryGetValue(c.Key, out cnode))
+                {
+                    if (graphNode.AlreadyWalked(cnode,visited))
+                    {
+                        children.TryAdd(c, false);
+                    }
+                    else
+                    {
+                        visited.Add(cnode.Key);
+                        AddNode(parent, cnode);
+                        children.TryAdd(c, true);
+                    }
+                    
+                }
+                else
+                {
+                    var newT = new TempNode(c.Key);
+                    if (graphNode.AlreadyWalked(newT, visited))
+                    {
+                        children.TryAdd(c, false);
+                    }
+                    else
+                    {
+                        visited.Add(newT.Key);
+                        listOfAll.TryAdd(newT.Key, newT);
+                        AddNode(parent, newT);
+                        children.TryAdd(c, true);
+                    }
                 }
             }
-
+            List<TempNode> childrenToWalk = children.Where(x => x.Value).Select(x=> x.Key).ToList();
+            foreach (var c in childrenToWalk)
+            {
+                TempNode cnode;
+                if (listOfAll.TryGetValue(c.Key, out cnode))
+                {
+                    WalkTree(cnode,  c,visited);
+                    //Trace.WriteLine("rf:" + parent.Key + "-" + graphNode.Key);
+                }
+                else
+                {
+                    var newT= new TempNode(c.Key);
+                    listOfAll.Add(c.Key, newT);
+                    WalkTree(newT, c, visited);
+                    //Trace.WriteLine("rn:" + parent.Key + "-" + graphNode.Key);
+                }
+            }
+            
         }
 
 
-        public void WalkTree(TempNode parent, TempNode treeNode, TempNode graph)
-        {
-            if (alreadySeenList.Contains(treeNode.Key))
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="treeNode"></param>
+        /// <param name="graph"></param>
+        /// <returns>true if needs processed false if not</returns>
+        private bool AddNode(TempNode parent, TempNode treeNode)
+        {   
+            if(alreadySeenList.Contains(treeNode.Key) && alreadySeenList.Contains(parent.Key))
             {
-                return;
+                return true;
             }
+            //Trace.WriteLine("Adding: " + parent.Key+" ->" +treeNode.Key);
+            parent.Children.Add(treeNode);
             alreadySeenList.Add(treeNode.Key);
-            if(parent!=null)
-                parent.Children.Add(treeNode);
-            foreach (var child in graph.Children)
-            {
-                WalkTree(treeNode, new TempNode(child.Key), child);
-            }
+            alreadySeenList.Add(parent.Key);
+            return true;
+            
+
         }
     }
 }

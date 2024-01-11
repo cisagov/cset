@@ -28,9 +28,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private ITokenManager _token;
         private CSETContext _context;
-        private IHttpContextAccessor _http;
-        private IJSONFileExport _json;
-        private TextWriter jsonWriter;
+        private IHttpContextAccessor _http;                
         private IMalcolmBusiness _malcolm;
 
 
@@ -54,8 +52,7 @@ namespace CSETWebCore.Api.Controllers
             var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var formFiles = HttpContext.Request.Form.Files;
             string fileName = "";
-            string fileExtension = "";
-            string output = "";
+            string fileExtension = "";            
             List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
             List<MalcolmData> dataList = new List<MalcolmData>();
 
