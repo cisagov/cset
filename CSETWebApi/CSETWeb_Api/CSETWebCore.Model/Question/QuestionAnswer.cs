@@ -53,11 +53,12 @@ namespace CSETWebCore.Model.Question
         /// This field was added for NCUA/ACET support.
         /// </summary>
         public bool Reviewed { get; set; }
+
         public bool HasComment { get; set; }
         public bool HasDocument { get; set; }
         public bool HasFeedback { get; set; }
         public int DocNum { get; set; }
-        public bool HasDiscovery { get; set; }
+        public bool HasObservation { get; set; }
         public int ObservationNum { get; set; }
         public int? Answer_Id { get; set; }
 

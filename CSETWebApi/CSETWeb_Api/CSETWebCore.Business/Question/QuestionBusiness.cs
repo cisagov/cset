@@ -394,6 +394,7 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);

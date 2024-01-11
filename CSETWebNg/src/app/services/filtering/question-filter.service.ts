@@ -264,7 +264,7 @@ export class QuestionFilterService {
               q.visible = true;
             }
 
-            if (this.showFilters.includes('O') && q.hasObservations) {
+            if (this.showFilters.includes('O') && q.hasObservation) {
               q.visible = true;
             }
 
