@@ -237,6 +237,17 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         continue;
                     }
 
+                    // ignore importing any specified columns if they already have matching value in database
+                    var ruleIgnoreIfExists = xTable.SelectSingleNode(string.Format("Column[@name='{1}']/Rule[@action='ignoreIfExists']", tableName, colName));
+                    if (ruleIgnoreIfExists != null)
+                    {
+                        bool columnValueExists = CheckColumnValueExistence(colName, tableName, jRow, dbio);
+                        if (columnValueExists) 
+                        {
+                            continue;
+                        }
+                    }
+
 
                     // handle null values as needed
                     if (prop.Value.Type == JTokenType.Null)
@@ -313,6 +324,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 errors.Add(exc.Message);
             }
             return new Tuple<int, int>(oldIdentity, newIdentity);
+        }
+
+        private bool CheckColumnValueExistence(string colName, string tableName, JToken jObj, DBIO dbio)
+        {
+            string query = "SELECT [{0}]" +
+            "  FROM [{1}]" +
+            " where {0} = '{2}'";
+            DataTable dt = dbio.Select(string.Format(query, colName, tableName, jObj[colName]), null);
+
+            if (dt.Rows.Count > 0) 
+            { 
+                return true;
+            }
+
+            return false;
         }
 
 
