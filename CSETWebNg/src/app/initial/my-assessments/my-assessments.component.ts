@@ -49,6 +49,7 @@ import * as moment from "moment";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { HydroService } from "../../services/hydro.service";
 
 
 interface UserAssessment {
@@ -122,7 +123,8 @@ export class MyAssessmentsComponent implements OnInit {
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public datePipe: DatePipe,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private hydroSvc: HydroService
   ) { }
 
   ngOnInit() {

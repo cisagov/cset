@@ -1,0 +1,24 @@
+{
+  "fields": [
+    "source.ip",
+    "destination.ip",
+    "network.protocol"
+  ],
+  "filter": {
+    "network.direction": [
+      "inbound"
+    ]
+  },
+  "range": [
+    1544805256,
+    1702571656
+  ],
+  "urls": [
+    "/dashboards/app/dashboards#/view/abdd7550-2c7c-40dc-947e-f6d186a158c4?_g=(filters:!(),refreshInterval:(pause:!t,value:0),time:(from:'2018-12-14T16:34:16.174056Z',to:'2023-12-14T16:34:16.177746Z'))"
+  ],
+  "values": {
+    "buckets": [],
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 0
+  }
+}

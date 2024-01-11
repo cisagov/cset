@@ -608,6 +608,7 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 import {
@@ -1182,6 +1183,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
         UserLanguageComponent,
+        MalcolmUploadErrorComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
         TrendAnalyticsComponent
