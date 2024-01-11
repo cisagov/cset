@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Authorization;
-using CSETWebCore.Business.Findings;
+using CSETWebCore.Business.Observations;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.DataLayer.Model;
@@ -18,7 +18,7 @@ using CSETWebCore.Interfaces.Notification;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Interfaces.User;
 using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using CSETWebCore.Business.Assessment;
 using Microsoft.AspNetCore.Mvc;
 using Nelibur.ObjectMapper;
@@ -146,7 +146,7 @@ namespace CSETWebCore.Api.Controllers
         public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery]int finding_id)
         {
             int assessId = _token.AssessmentForUser();
-            FindingsManager fm = new FindingsManager(_context, assessId);
+            ObservationsManager fm = new ObservationsManager(_context, assessId);
             return fm.GetActionItems(parentId,finding_id);
         }
 
@@ -372,41 +372,38 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="Answer_Id"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/AnswerAllDiscoveries")]
-        public IActionResult AllDiscoveries([FromQuery] int Answer_Id)
+        [Route("api/AnswerAllObservations")]
+        public IActionResult AllObservations([FromQuery] int Answer_Id)
         {
             int assessmentId = _token.AssessmentForUser();
 
-            var fm = new FindingsManager(_context, assessmentId);
-            return Ok(fm.AllFindings(Answer_Id));
+            var fm = new ObservationsManager(_context, assessmentId);
+            return Ok(fm.AllObservations(Answer_Id));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="Answer_Id"></param>
-        /// <param name="Finding_id"></param>
-        /// <param name="Question_Id"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/GetFinding")]
-        public IActionResult GetFinding([FromQuery] int Answer_Id, [FromQuery] int Finding_id, [FromQuery] int Question_Id, [FromQuery] string QuestionType)
+        [Route("api/GetObservation")]
+        public IActionResult GetObservation([FromQuery] int answerId, [FromQuery] int observationId, [FromQuery] int questionId, [FromQuery] string questionType)
         {
             int assessmentId = _token.AssessmentForUser();
 
-            if (Answer_Id == 0)
+            if (answerId == 0)
             {
                 _questionRequirement.AssessmentId = assessmentId;
-                Answer_Id = _questionRequirement.StoreAnswer(new Answer()
+                answerId = _questionRequirement.StoreAnswer(new Answer()
                 {
-                    QuestionId = Question_Id,
+                    QuestionId = questionId,
                     MarkForReview = false,
-                    QuestionType = QuestionType
+                    QuestionType = questionType
                 });
             }
 
-            var fm2 = new FindingsManager(_context, assessmentId);
-            return Ok(fm2.GetFinding(Finding_id, Answer_Id));
+            var fm2 = new ObservationsManager(_context, assessmentId);
+            return Ok(fm2.GetObservation(observationId, answerId));
         }
 
 
@@ -415,8 +412,8 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/GetAssessmentFindings")]
-        public IActionResult GetAssessmentFindings()
+        [Route("api/GetAssessmentObservations")]
+        public IActionResult GetAssessmentObservations()
         {
             int assessmentId = _token.AssessmentForUser();
 
@@ -427,11 +424,6 @@ namespace CSETWebCore.Api.Controllers
                             on answer.Question_Or_Requirement_Id equals question.Mat_Question_Id
                          join category in _context.MATURITY_GROUPINGS
                             on question.Grouping_Id equals category.Grouping_Id
-
-                         //join filesBridge in _context.MATURITY_SOURCE_FILES
-                         //   on question.Mat_Question_Id equals filesBridge.Mat_Question_Id
-                         //join files in _context.GEN_FILE
-                         //   on filesBridge.Gen_File_Id equals files.Gen_File_Id
 
                          // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
                          where answer.Assessment_Id == assessmentId
@@ -467,16 +459,16 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="finding_Id"></param>
+        /// <param name="observationId"></param>
         [HttpPost]
-        [Route("api/DeleteFinding")]
-        public IActionResult DeleteFinding([FromBody] int finding_Id)
+        [Route("api/DeleteObservation")]
+        public IActionResult DeleteObservation([FromBody] int observationId)
         {
             int assessmentId = _token.AssessmentForUser();
-            var fm = new FindingsManager(_context, assessmentId);
+            var fm = new ObservationsManager(_context, assessmentId);
 
-            var f = fm.GetFinding(finding_Id);
-            fm.DeleteFinding(f);
+            var f = fm.GetObservation(observationId);
+            fm.DeleteObservation(f);
             return Ok();
         }
 
@@ -484,22 +476,23 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="finding"></param>
+        /// <param name="obs"></param>
         [HttpPost]
-        [Route("api/AnswerSaveDiscovery")]
-        public IActionResult SaveDiscovery([FromBody] Finding finding, [FromQuery] bool cancel = false)
+        [Route("api/AnswerSaveObservation")]
+        public IActionResult SaveObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
         {
             int assessmentId = _token.AssessmentForUser();
-            var fm = new FindingsManager(_context, assessmentId);
+            var fm = new ObservationsManager(_context, assessmentId);
             
 
-            if (finding.IsFindingEmpty(cancel))
+            if (obs.IsObservationEmpty(cancel))
             {
-                fm.DeleteFinding(finding);
+                fm.DeleteObservation(obs);
                 return Ok();
             }
 
-            var id = fm.UpdateFinding(finding);
+            var id = fm.UpdateObservation(obs);
+
             return Ok(id);
         }
 
@@ -512,7 +505,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
         {
             int assessmentId = _token.AssessmentForUser();            
-            var fm = new FindingsManager(_context, assessmentId);
+            var fm = new ObservationsManager(_context, assessmentId);
             fm.UpdateIssues(item);
             return Ok();
         }

@@ -465,7 +465,7 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            //Get All the Findings and issues with the findings. 
+            //Get All the Observations and issues with the Observations. 
 
 
             // Recursively build the grouping/question hierarchy
@@ -588,7 +588,7 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            //Get All the Findings and issues with the findings. 
+            //Get All the Observations and issues with the Observations. 
 
 
             // Recursively build the grouping/question hierarchy
@@ -1430,12 +1430,12 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
-        /// Returns a list of individuals assigned to findings/observations.
+        /// Returns a list of individuals assigned to observations.
         /// </summary>
         /// <returns></returns>
-        public List<Individual> GetFindingIndividuals()
+        public List<Individual> GetObservationIndividuals()
         {
-            var findings = (from a in _context.FINDING_CONTACT
+            var observations = (from a in _context.FINDING_CONTACT
                             join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
                             join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
                             join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
@@ -1460,13 +1460,13 @@ namespace CSETWebCore.Business.Reports
             int contactId = 0;
             Individual individual = null;
 
-            foreach (var f in findings)
+            foreach (var f in observations)
             {
                 if (contactId != f.a.Assessment_Contact_Id)
                 {
                     individual = new Individual()
                     {
-                        Findings = new List<Findings>(),
+                        Observations = new List<Observations>(),
                         INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
 
@@ -1475,9 +1475,9 @@ namespace CSETWebCore.Business.Reports
                 contactId = f.a.Assessment_Contact_Id;
 
 
-                TinyMapper.Bind<FINDING, Findings>();
-                Findings rfind = TinyMapper.Map<Findings>(f.b);
-                rfind.Finding = f.b.Summary;
+                TinyMapper.Bind<FINDING, Observations>();
+                Observations rfind = TinyMapper.Map<Observations>(f.b);
+                rfind.Observation = f.b.Summary;
                 rfind.ResolutionDate = f.b.Resolution_Date.ToString();
                 rfind.Importance = f.Value;
 
@@ -1494,7 +1494,7 @@ namespace CSETWebCore.Business.Reports
                                   select FormatName(b.FirstName, b.LastName)).ToList();
                 rfind.OtherContacts = string.Join(",", othersList);
 
-                individual.Findings.Add(rfind);
+                individual.Observations.Add(rfind);
             }
             return individualList;
         }

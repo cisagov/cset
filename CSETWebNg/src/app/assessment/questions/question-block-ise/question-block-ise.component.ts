@@ -31,10 +31,10 @@ import { GroupingDescriptionComponent } from '../grouping-description/grouping-d
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { NCUAService } from '../../../services/ncua.service';
 import { LayoutService } from '../../../services/layout.service';
-import { Finding } from './../findings/findings.model';
+import { Observation } from '../observations/observations.model';
 import { QuestionDetailsContentViewModel } from '../../../models/question-extras.model';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { IssuesComponent } from '../issues/issues.component';
 import { CompletionService } from '../../../services/completion.service';
 
@@ -106,7 +106,7 @@ export class QuestionBlockIseComponent implements OnInit {
     public completionSvc: CompletionService,
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
-    private findSvc: FindingsService
+    private observationSvc: ObservationsService
   ) {
 
   }
@@ -131,16 +131,16 @@ export class QuestionBlockIseComponent implements OnInit {
           this.extras = details;
           this.extras.questionId = this.myGrouping.questions[0].questionId;
 
-          this.extras.findings.forEach(find => {
+          this.extras.observations.forEach(find => {
             if (find.auto_Generated === 1) {
               find.question_Id = this.myGrouping.questions[0].questionId;
 
               // This is a check for post-merging ISE assessments.
               // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
               if (this.ncuaSvc.questionCheck.get(find.question_Id) !== undefined) {
-                this.ncuaSvc.issueFindingId.set(find.question_Id, find.finding_Id);
+                this.ncuaSvc.issueFindingId.set(find.question_Id, find.observation_Id);
               } else {
-                this.deleteIssue(find.finding_Id, true);
+                this.deleteIssue(find.observation_Id, true);
               }
 
             }
@@ -727,10 +727,10 @@ export class QuestionBlockIseComponent implements OnInit {
 
   getIssuesButtonText() {
     if (this.showIssues === false) {
-      if (this.extras?.findings.length === 1) {
+      if (this.extras?.observations.length === 1) {
         return ('Show 1 Issue');
-      } else if (this.extras?.findings.length > 1) {
-        return ('Show ' + this.extras.findings.length + ' Issues');
+      } else if (this.extras?.observations.length > 1) {
+        return ('Show ' + this.extras.observations.length + ' Issues');
       } else {
         return ('Show Issues');
       }
@@ -758,13 +758,13 @@ export class QuestionBlockIseComponent implements OnInit {
       name = ("Cybersecurity Controls, " + this.myGrouping.title);
     }
 
-    const find: Finding = {
+    const find: Observation = {
       question_Id: parentId,
       questionType: this.myGrouping.questions[0].questionType,
       answer_Id: this.myGrouping.questions[0].answer_Id,
-      finding_Id: findid,
+      observation_Id: findid,
       summary: '',
-      finding_Contacts: null,
+      observation_Contacts: null,
       impact: '',
       importance: null,
       importance_Id: 1,
@@ -789,10 +789,10 @@ export class QuestionBlockIseComponent implements OnInit {
     }).afterClosed().subscribe(result => {
       let stringResult = result.toString();
       if (stringResult != 'true') {
-        find.finding_Id = result;
+        find.observation_Id = result;
 
-        this.findSvc.saveDiscovery(find, true).subscribe((r: any) => {
-          this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+        this.observationSvc.saveObservation(find, true).subscribe((r: any) => {
+          this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
           this.myGrouping.questions[0].answer_Id = find.answer_Id;
         });
 
@@ -800,23 +800,23 @@ export class QuestionBlockIseComponent implements OnInit {
       else {
         const answerID = find.answer_Id;
         // if (result == true) {
-        this.findSvc.getAllDiscoveries(answerID).subscribe(
+        this.observationSvc.getAllObservations(answerID).subscribe(
 
-          (response: Finding[]) => {
-            this.extras.findings = response;
-            this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+          (response: Observation[]) => {
+            this.extras.observations = response;
+            this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
             this.myGrouping.questions[0].answer_Id = find.answer_Id;
           }
         ),
 
 
-          error => console.log('Error updating findings | ' + (<Error>error).message)
+          error => console.log('Error updating observations | ' + (<Error>error).message)
       }
     });
 
   }
 
-  isIssueEmpty(finding: Finding) {
+  isIssueEmpty(finding: Observation) {
     if (finding.actionItems == null
       && finding.citations == null
       && finding.description == null
@@ -844,13 +844,13 @@ export class QuestionBlockIseComponent implements OnInit {
         // Used to generate a description for ISE reports even if a user doesn't open the issue.
         desc = data[0]?.description;
 
-        const find: Finding = {
+        const find: Observation = {
           question_Id: parentId,
           questionType: this.myGrouping.questions[0].questionType,
           answer_Id: this.myGrouping.questions[0].answer_Id,
-          finding_Id: findId,
+          observation_Id: findId,
           summary: '',
-          finding_Contacts: null,
+          observation_Contacts: null,
           impact: '',
           importance: null,
           importance_Id: 1,
@@ -871,30 +871,29 @@ export class QuestionBlockIseComponent implements OnInit {
 
         this.ncuaSvc.issueFindingId.set(parentId, findId);
 
-        this.findSvc.saveDiscovery(find).subscribe(() => {
+        this.observationSvc.saveObservation(find).subscribe(() => {
           const answerID = find.answer_Id;
-          this.findSvc.getAllDiscoveries(answerID).subscribe(
-            (response: Finding[]) => {
+          this.observationSvc.getAllObservations(answerID).subscribe(
+            (response: Observation[]) => {
               for (let i = 0; i < response.length; i++) {
                 if (response[i].auto_Generated === 1) {
-                  this.ncuaSvc.issueFindingId.set(parentId, response[i].finding_Id);
+                  this.ncuaSvc.issueFindingId.set(parentId, response[i].observation_Id);
                 }
               }
-              this.extras.findings = response;
-              this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+              this.extras.observations = response;
+              this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
               this.myGrouping.questions[0].answer_Id = find.answer_Id;
             },
-            error => console.log('Error updating findings | ' + (<Error>error).message)
+            error => console.log('Error updating observations | ' + (<Error>error).message)
           );
         });
       });
   }
 
   /**
-  * Deletes a discovery.
-  * @param findingToDelete
+  * Deletes an Observation.
   */
-  deleteIssue(findingId, autoGenerated: boolean) {
+  deleteIssue(observationId, autoGenerated: boolean) {
     let msg = "Are you sure you want to delete this issue?";
 
     if (autoGenerated === false) {
@@ -903,33 +902,32 @@ export class QuestionBlockIseComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.deleteIssueMaps(findingId);
-          this.findSvc.deleteFinding(findingId).subscribe();
+          this.deleteIssueMaps(observationId);
+          this.observationSvc.deleteObservation(observationId).subscribe();
           let deleteIndex = null;
 
-          for (let i = 0; i < this.extras.findings.length; i++) {
-            if (this.extras.findings[i].finding_Id === findingId) {
+          for (let i = 0; i < this.extras.observations.length; i++) {
+            if (this.extras.observations[i].observation_Id === observationId) {
               deleteIndex = i;
             }
           }
-          this.extras.findings.splice(deleteIndex, 1);
-          this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+          this.extras.observations.splice(deleteIndex, 1);
+          this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
         }
       });
     } else if (autoGenerated === true) {
-      this.findSvc.deleteFinding(findingId).subscribe();
+      this.observationSvc.deleteObservation(observationId).subscribe();
       let deleteIndex = null;
 
-      for (let i = 0; i < this.extras.findings.length; i++) {
-        if (this.extras.findings[i].finding_Id === findingId) {
+      for (let i = 0; i < this.extras.observations.length; i++) {
+        if (this.extras.observations[i].observation_Id === observationId) {
           deleteIndex = i;
         }
       }
-      this.extras.findings.splice(deleteIndex, 1);
-      this.myGrouping.questions[0].hasObservations = (this.extras.findings.length > 0);
+      this.extras.observations.splice(deleteIndex, 1);
+      this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
     }
   }
-
 
   /* This function is used for 508 compliance. 
   * It allows the user to select the "Yes"/"No", "Comment" and "Mark for review" buttons
@@ -956,6 +954,4 @@ export class QuestionBlockIseComponent implements OnInit {
       }
     }
   }
-
-
 }

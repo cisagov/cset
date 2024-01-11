@@ -77,9 +77,8 @@ namespace CSETWebCore.Business.Question
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
 
-            //this.questions = query.Distinct().ToList();
             this.Answers = answers.ToList();
 
             AddResponse(resp, list2, "Component Defaults");
