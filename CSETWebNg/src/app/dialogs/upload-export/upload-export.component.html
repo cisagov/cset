@@ -29,7 +29,7 @@
       <mat-list class="pt-1">
         <mat-list-item *ngFor="let file of files; let i = index">
           <label mat-line class="mt-1 fs-base-5">{{file.name}}</label>
-          <ng-container *ngIf="configSvc.installationMode != 'ACET' || !ncuaSvc.switchStatus">
+          <ng-container *ngIf="(configSvc.installationMode !== 'ACET' || !ncuaSvc.switchStatus) && getAssessmentHint(file.name)">
             <label mat-line class="ml-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
           </ng-container>
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
@@ -41,7 +41,7 @@
   </mat-dialog-content>
   <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
     <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
-  
+
     <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
       <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
       <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
