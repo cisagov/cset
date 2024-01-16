@@ -75,6 +75,8 @@ export class QuestionExtrasComponent implements OnInit {
 
   showQuestionIds = false;
 
+  toggleComponent = false; 
+
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
    */
@@ -169,12 +171,20 @@ export class QuestionExtrasComponent implements OnInit {
         this.extras = details;
         if (details.is_Component === true){
           this.myQuestion.is_Component = true;
+          this.toggleComponent = true; 
         }
         
         this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
+
+        
+        // Component detail toggle 
+        if (this.toggleComponent ==  true){
+          this.toggleExtras('COMPONENT')
+          this.toggleComponent = false; 
+        }
         
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
