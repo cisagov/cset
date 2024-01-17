@@ -24,7 +24,7 @@ namespace CSETWebCore.Business
         {
         }
 
-        protected NodeNotFound(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected NodeNotFound(SerializationInfo info, StreamingContext context)
         {
         }
     }
