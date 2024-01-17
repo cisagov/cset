@@ -105,6 +105,8 @@
         "service demographics": "Demografía del servicio",
         "critical service information": "Información del servicio crítico",
         "security assurance level (sal)": "Nivel de garantía de seguridad (SAL)",
+        "network diagram": "Diagrama de red",
+        "diagram component questions": "Preguntas del diagrama",
         "standard questions": "Preguntas del estándar",
         "standard requirements": "Requisitos del estándar",
         "maturity questions": "Preguntas de madurez",

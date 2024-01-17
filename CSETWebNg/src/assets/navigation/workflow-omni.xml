@@ -45,7 +45,7 @@
 
 
         <!-- Diagram -->
-        <node displaytext="Network Diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" visible="OPTION:DIAGRAM" />
+        <node d="network diagram" id="diagram" path="assessment/{:id}/prepare/diagram/info" visible="OPTION:DIAGRAM" />
 
         <!-- target level selection -->
         <node displaytext="CMMC Target Level Selection" id="cmmc-levels" path="assessment/{:id}/prepare/cmmc-levels" visible="MATURITY-ANY(2,6)" />
@@ -217,7 +217,7 @@
         <node d="other remarks" id="other-remarks" path="assessment/{:id}/other-remarks" visible="MATURITY-ANY(15)" />
 
         <!-- Diagram questions -->
-        <node displaytext="Diagram Component Questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" visible="OPTION:DIAGRAM" />
+        <node d="diagram component questions" id="diagram-questions" path="assessment/{:id}/diagram-questions" visible="OPTION:DIAGRAM" />
     </node>
 
 
