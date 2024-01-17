@@ -4,14 +4,17 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CSETWebCore.Business.Question
@@ -115,6 +118,18 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
+
+            // get the user's language
+            var userId = _tokenManager.GetCurrentUserId();
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+            var accessKey = _tokenManager.GetAccessKey();
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+
+            var lang = user?.Lang ?? ak?.Lang ?? "en";
+
+            var overlay = new TranslationOverlay();
+
+
             var response = new QuestionResponse();
 
             foreach (var req in requirements.OrderBy(x => x.SetShortName).ToList())
@@ -138,6 +153,13 @@ namespace CSETWebCore.Business.Question
                 }
 
 
+                // translate the Category
+                var translatedCategory = overlay.GetCat(dbR.Standard_Category, lang);
+                if (translatedCategory != null)
+                {
+                    dbR.Standard_Category = translatedCategory.Value;
+                }
+
 
                 // find or create the category
                 var category = response.Categories.Where(cat => cat.SetName == req.SetName && cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
@@ -149,7 +171,16 @@ namespace CSETWebCore.Business.Question
                         SetName = req.SetName,
                         StandardShortName = req.SetShortName
                     };
-                    response.Categories.Add(category);
+
+                    response.Categories.Add(category);                
+                }
+
+
+                // translate the Subcategory using the CATEGORIES translation object
+                var translatedSubcategory = overlay.GetCat(dbR.Standard_Sub_Category, lang);
+                if (translatedSubcategory != null)
+                {
+                    dbR.Standard_Sub_Category = translatedSubcategory.Value;
                 }
 
 
@@ -188,6 +219,13 @@ namespace CSETWebCore.Business.Question
                     Is_Requirement = answer?.a.Is_Requirement ?? true,
                     QuestionType = answer?.a.Question_Type
                 };
+
+
+                var translatedReq = overlay.GetReq(dbR.Requirement_Id, lang);
+                if (translatedReq != null)
+                {
+                    qa.QuestionText = translatedReq.RequirementText;               
+                }
 
                 if (string.IsNullOrEmpty(qa.QuestionType))
                 {

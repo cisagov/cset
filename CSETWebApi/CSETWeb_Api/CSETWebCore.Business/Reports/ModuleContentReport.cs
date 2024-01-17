@@ -24,12 +24,27 @@ namespace CSETWebCore.Business.Reports
         private readonly IQuestionRequirementManager _question;
         private readonly IGalleryEditor _gallery;
 
+        /// <summary>
+        /// The user's language
+        /// </summary>
+        private string _lang;
+
 
         public ModuleContentReport(CSETContext context, IQuestionRequirementManager question, IGalleryEditor gallery)
         {
             _context = context;
             _question = question;
             _gallery = gallery;
+            _lang = "en";
+        }
+
+        /// <summary>
+        /// Sets the user language for the report.
+        /// </summary>
+        /// <param name="lang"></param>
+        public void SetLanguage(string lang)
+        {
+            _lang = lang;
         }
 
 
@@ -39,6 +54,7 @@ namespace CSETWebCore.Business.Reports
         public ModuleResponse GetResponse(string set)
         {
             var mbb = new ModuleBuilderBusiness(_context, _question, _gallery);
+            mbb.SetLanguage(_lang);
             var resp = mbb.GetModuleStructure(set);
 
             IncludeSourceFiles(resp, set);

@@ -89,6 +89,8 @@
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
         "security assurance level (sal)": "Security Assurance Level (SAL)",
+        "network diagram": "Network Diagram",
+        "diagram component questions": "Diagram Component Questions",
         "standard questions": "Standard Questions",
         "standard requirements": "Standard Requirements",
         "maturity questions": "Maturity Questions",
