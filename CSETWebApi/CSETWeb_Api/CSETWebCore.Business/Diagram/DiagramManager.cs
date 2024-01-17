@@ -11,10 +11,15 @@ using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Malcolm;
+using DocumentFormat.OpenXml.Bibliography;
 using DocumentFormat.OpenXml.Drawing.Diagrams;
+using DocumentFormat.OpenXml.Office.Word;
+using DocumentFormat.OpenXml.Office2010.Word;
 using DocumentFormat.OpenXml.Spreadsheet;
+using LogicExtensions;
 using Namotion.Reflection;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1195,56 +1200,312 @@ namespace CSETWebCore.Business.Diagram
             _context.SaveChanges();
         }
 
+
+        public XmlDocument xml = new XmlDocument();
+        public int incrementalId = 0;
+        public List<Geometry> nodeLocations = new List<Geometry>();
+        //public int row = 1;
+        //public int column = 1;
+
+
         public void CreateMalcolmDiagram(int? assessmentId, List<MalcolmData> processedData)
         {
-            // Create an empty Network diagram
-            XmlDocument xml = new XmlDocument();
-            string xmlStart = "<mxGraphModel>\r\n<root>\r\n<mxCell id=\"0\" />\r\n<mxCell id=\"1\" parent=\"0\" />\r\n";
-            string xmlBody = "";
-            string xmlEnd = "</root>\r\n</mxGraphModel>";
+            xml = new XmlDocument();
+            incrementalId = 0;
+            nodeLocations = new List<Geometry>();
+            //row = 1;
+            //column = 1;
 
-            int row = 1;
-            int column = 1;
+            XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
+            newMxGraphModel.SetAttribute("dx", "1050");
+            newMxGraphModel.SetAttribute("yx", "610");
+            newMxGraphModel.SetAttribute("grid", "1");
+            newMxGraphModel.SetAttribute("gridSize", "10");
+            newMxGraphModel.SetAttribute("guides", "1");
+            newMxGraphModel.SetAttribute("tooltips", "1");
+            newMxGraphModel.SetAttribute("connect", "1");
+            newMxGraphModel.SetAttribute("arrows", "1");
+            newMxGraphModel.SetAttribute("fold", "1");
+            newMxGraphModel.SetAttribute("page", "0");
+            newMxGraphModel.SetAttribute("pageScale", "1");
+            newMxGraphModel.SetAttribute("pageWidth", "850");
+            newMxGraphModel.SetAttribute("pageHeight", "1100");
+            newMxGraphModel.SetAttribute("math", "0");
+            newMxGraphModel.SetAttribute("shadow", "0");
+
+            // Create an empty Network diagram
+            XmlElement root = xml.CreateElement("root", null);
+            
+            XmlElement parentOfMainLayer = xml.CreateElement("mxCell");
+            parentOfMainLayer.SetAttribute("id", "0");
+
+            XmlElement mainLayer = xml.CreateElement("mxCell");
+            mainLayer.SetAttribute("id", "1");
+            mainLayer.SetAttribute("value", "Main Layer");
+            mainLayer.SetAttribute("parent", "0");
+
+            root.AppendChild(parentOfMainLayer);
+            root.AppendChild(mainLayer);
+
+            newMxGraphModel.AppendChild(root);
+            xml.AppendChild(newMxGraphModel);
 
             // Check how many nodes we need
             int nodeCount = processedData[0].Graphs.Count;
 
             // Generate Diagram/XML objects
-            for (int i = 0; i < nodeCount; i++)
-            {
-                // Get a unique Guid for each node
-                string guid = Guid.NewGuid().ToString();
-                string id = i.ToString();
-                
-                // Increment the label
-                string label = "UN-" + (i+1).ToString();
-
-                // Update node position
-                int x = 120 + (column * 90);
-                int y = 120 + (row * 90);
-                
-                row++;
-
-                int breakpoint = (nodeCount >= 500 ? 26 : 11);
-                if (row % breakpoint == 0)
-                {
-                    row = 1;
-                    column++;
-                }
-
-                // Build the XML string
-                xmlBody += "<UserObject ComponentGuid=\"" + guid + "\" Criticality=\"Low\" label=\"" + label + "\" internalLabel=\"" + label + "\" id=\"" + id + "\">\r\n <mxCell style=\"aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/unknown.svg\" vertex=\"1\" parent=\"1\">\r\n <mxGeometry x=\"" + x + "\" y=\"" + y + "\" width=\"50\" height=\"50\" as=\"geometry\" />\r\n </mxCell>\r\n </UserObject>";
-            }
-
-            // Combine the pieces
-            string xmlDoc = xmlStart + xmlBody + xmlEnd;
+            WalkDownTree(processedData[0].Trees[0], "");
 
             // Save that XML to the Assessments table -- Diagram Markup.
             ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment != null)
             {
-                assessment.Diagram_Markup = xmlDoc;
+                assessment.Diagram_Markup = xml.OuterXml;
                 _context.SaveChanges();
+            }
+        }
+
+        public void WalkDownTree (TempNode node, string parentId)
+        {
+            // Get a unique Guid for each node
+            string guid = Guid.NewGuid().ToString();
+            string id = "component-" + incrementalId;
+            incrementalId++;
+
+            // ste thew label to include the node's key (IP address)
+            string label = "UN-" + node.Key;
+
+            var userObject = xml.CreateElement("UserObject");
+            userObject.SetAttribute("label", label);
+            userObject.SetAttribute("internalLabel", label);
+            userObject.SetAttribute("ComponentGuid", guid);
+            userObject.SetAttribute("HasUniqueQuestions", "");
+            userObject.SetAttribute("IPAddress", node.Key);
+            userObject.SetAttribute("Description", "");
+            userObject.SetAttribute("Criticality", "");
+            userObject.SetAttribute("HostName", "");
+            //userObject.SetAttribute("parent", parent);
+            userObject.SetAttribute("id", id);
+
+            /*
+            // Update node position
+            int x = 120 + (column * 90);
+            int y = 120 + (row * 90);
+
+            row++;
+            //int breakpoint = (incrementalId >= 500 ? 26 : 11);
+            int breakpoint = (incrementalId >= 500 ? 26 : 11);
+            if (row % breakpoint == 0)
+            {
+                row = 1;
+                column++;
+            }
+            */
+            Geometry geometry = AssignCoordinates(parentId);
+            userObject.AppendChild(CreateMxCellAndGeometry(geometry.x.ToString(), geometry.y.ToString()));
+            XmlElement root = (XmlElement)xml.SelectSingleNode("//root");
+
+            root.AppendChild(userObject);
+
+            if (parentId != "")
+            {
+                root.AppendChild(CreateEdge(parentId, id, "1")); // the only layer is the main layer for now
+            }
+
+            if (node.Children != null && node.Children.Count > 0)
+            {
+                foreach (TempNode childNode in node.Children)
+                {
+                    WalkDownTree(childNode, id);
+                }
+            }
+
+            return;
+        }
+
+        public XmlElement CreateMxCellAndGeometry(string x, string y)
+        {
+            string role = "unknown"; //assuming all are unknown for now
+
+            XmlElement mxCell = xml.CreateElement("mxCell");
+            mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + role + ".svg");
+            mxCell.SetAttribute("vertex", "1");
+            mxCell.SetAttribute("parent", "1");
+
+            XmlElement mxGeometry = xml.CreateElement("mxGeometry");
+            mxGeometry.SetAttribute("x", x);
+            mxGeometry.SetAttribute("y", y);
+            mxGeometry.SetAttribute("width", "50");
+            mxGeometry.SetAttribute("height", "50");
+            mxGeometry.SetAttribute("as", "geometry");
+
+            mxCell.AppendChild(mxGeometry);
+
+            return mxCell;
+        }
+
+        public XmlElement CreateEdge(string source, string target, string parentLayer)
+        {
+            XmlElement edge = xml.CreateElement("mxCell");
+            edge.SetAttribute("style", "rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;");
+            edge.SetAttribute("parent", parentLayer);
+            edge.SetAttribute("source", source);
+            edge.SetAttribute("target", target);
+            edge.SetAttribute("edge", "1");
+
+            XmlElement geometry = xml.CreateElement("mxGeometry");
+            geometry.SetAttribute("relative", "1");
+            geometry.SetAttribute("as", "geometry");
+
+            edge.AppendChild(geometry);
+
+
+            return edge;
+        }
+
+        public Geometry AssignCoordinates(string parentId)
+        {
+            int x = 0;
+            int y = 0;
+            XmlElement parentNode = (XmlElement)xml.SelectSingleNode($"//UserObject[@id='{parentId}']");
+            Geometry geometry = new Geometry();
+
+            if (parentNode == null)
+            {
+                geometry.x = x;
+                geometry.y = y;
+
+                return geometry;
+            }
+
+            int i = 0;
+            int revolution = 1;
+            Geometry parentCoordinates = ParseCoordinates(parentNode);
+            Geometry newCoordinatesToTry = new Geometry();
+            do
+            {
+                newCoordinatesToTry = CircleAroundParent(parentCoordinates, i, revolution);
+                i++;
+                if (i == 8)
+                {
+                    i = 0;
+                    revolution++;
+                }
+            }
+            while (AreCoordinatesOverlapping(newCoordinatesToTry));
+
+            geometry.x = newCoordinatesToTry.x;
+            geometry.y = newCoordinatesToTry.y;
+            geometry.w = newCoordinatesToTry.w;
+            geometry.h = newCoordinatesToTry.h;
+            nodeLocations.Add(geometry);
+            return geometry;
+        }
+
+        public bool AreCoordinatesOverlapping(Geometry newCoords)
+        {
+            // grab the parent info
+            //Geometry parent = new Geometry(parentCoords.x, parentCoords.y, parentCoords.w, parentCoords.h);
+            foreach (Geometry currentNode in nodeLocations)
+            {
+                int parentEndX = currentNode.x + currentNode.w;
+                int parentEndY = currentNode.y + currentNode.h;
+                int childEndX = newCoords.x + newCoords.w;
+                int childEndY = newCoords.y + newCoords.h;
+
+                // check for x and y overlaps
+                bool xOverlapping = currentNode.x <= newCoords.x && childEndX <= parentEndX;
+                bool yOverlapping = currentNode.y <= newCoords.y && childEndY <= parentEndY;
+
+                if (xOverlapping && yOverlapping)
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        public Geometry ParseCoordinates(XmlElement node)
+        {
+            var mxGeometry = node.FirstChild.FirstChild;
+            string x = mxGeometry.Attributes["x"].Value;
+            string y = mxGeometry.Attributes["y"].Value;
+            string width = mxGeometry.Attributes["width"].Value;
+            string height = mxGeometry.Attributes["height"].Value;
+
+            int xInt, yInt, wInt, hInt;
+
+            if (!int.TryParse(x, out xInt)
+                || !int.TryParse(y, out yInt)
+                || !int.TryParse(width, out wInt)
+                || !int.TryParse(height, out hInt))
+            {
+                throw new Exception("Coordinates or width/height couldn't be found.");
+            }
+
+            return new Geometry(xInt, yInt, wInt, hInt);
+        }
+
+        public Geometry CircleAroundParent(Geometry geo, int i, int revolution)
+        {
+            int changeAmount = 120 * revolution;
+            Geometry parent = new Geometry(geo.x, geo.y, geo.w, geo.h);
+            ///     3   2   1
+            ///     4       0
+            ///     5   6   7
+            switch (i % 8)
+            {
+                case 0:
+                    parent.x += changeAmount;
+                    return parent;
+                case 7:
+                    parent.x += changeAmount;
+                    parent.y += changeAmount;
+                    return parent;
+                case 6:
+                    parent.y += changeAmount;
+                    return parent;
+                case 5:
+                    parent.x -= changeAmount;
+                    parent.y += changeAmount;
+                    return parent;
+                case 4:
+                    parent.x -= changeAmount;
+                    return parent;
+                case 3:
+                    parent.x -= changeAmount;
+                    parent.y -= changeAmount;
+                    return parent;
+                case 2:
+                    parent.y -= changeAmount;
+                    return parent;
+                case 1:
+                    parent.x += changeAmount;
+                    parent.y -= changeAmount;
+                    return parent;
+                default: 
+                    return parent;
+            }
+        }
+
+        public class Geometry
+        {
+            public int x = 0;
+            public int y = 0;
+            public int w = 0;
+            public int h = 0;
+
+            public Geometry(int x, int y, int w, int h)
+            {
+                this.x = x;
+                this.y = y;
+                this.w = w;
+                this.h = h;
+            }
+            public Geometry()
+            {
+
             }
         }
     }

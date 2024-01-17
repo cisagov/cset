@@ -50,7 +50,7 @@ namespace CSETWebCore.Business.Malcolm
                 if (malcolmData != null)
                 {   
                     MalcolmTree trees = new MalcolmTree();
-                    malcolmData.Trees  =trees.StartTheTreeWalk(malcolmData.Graphs);
+                    malcolmData.Trees = trees.StartTheTreeWalk(malcolmData.Graphs);
                     malcolmDataList.Add(malcolmData);
                 }
             }
