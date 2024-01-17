@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Finding } from "../assessment/questions/findings/findings.model";
+import { Observation } from "../assessment/questions/observations/observations.model";
 import { ConfigService } from "../services/config.service";
 
 export interface QuestionExtrasResponse {
@@ -60,7 +60,7 @@ export interface QuestionDetailsContentViewModel {
   isNoQuestion: boolean;
   selectedTabIndex: number;
   listTabs: QuestionInformationTabData[];
-  findings: Finding[];
+  observations: Observation[];
   documents: QuestionDocument[];
 }
 

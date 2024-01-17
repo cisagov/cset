@@ -472,7 +472,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
-            data.Individuals = _report.GetFindingIndividuals();
+            data.Individuals = _report.GetObservationIndividuals();
             return Ok(data);
         }
 

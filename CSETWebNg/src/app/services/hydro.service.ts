@@ -63,6 +63,16 @@ export class HydroService {
   getHydroActionItems(): any {
     return this.http.get(this.configSvc.apiUrl + 'reports/getHydroActionItems');
   }
+
+  uploadMalcolmFiles(files: File[]) {
+    let formData: FormData = new FormData();
+    
+    for (let i = 0; i < files.length; i++) {
+      formData.append('file', files[i]);
+    }
+
+    return this.http.post(this.configSvc.apiUrl + 'malcolm?', formData);
+  }
 }
 
 export class HydroProgressComment {
