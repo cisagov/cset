@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using CSETWebCore.Business.Findings;
+using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using System.Linq;
 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetActionItemsReport([FromQuery] int Exam_Level)
         {
             int assessId = _token.AssessmentForUser();
-            FindingsManager fm = new FindingsManager(_context, assessId);
+            ObservationsManager fm = new ObservationsManager(_context, assessId);
 
             return Ok(fm.GetActionItemsReport(assessId, Exam_Level).Result);
         }

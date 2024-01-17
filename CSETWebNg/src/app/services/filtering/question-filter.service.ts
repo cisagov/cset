@@ -37,7 +37,7 @@ export class QuestionFilterService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
 
   /**
@@ -46,14 +46,14 @@ export class QuestionFilterService {
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
-   *   Discoveries (Observations) - D
+   *   Observations - O
    */
   public showFilters: string[];
 
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'D', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'I', 'S', 'U', 'C', 'M', 'O', 'FB', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -264,7 +264,7 @@ export class QuestionFilterService {
               q.visible = true;
             }
 
-            if (this.showFilters.includes('D') && q.hasObservations) {
+            if (this.showFilters.includes('O') && q.hasObservation) {
               q.visible = true;
             }
 

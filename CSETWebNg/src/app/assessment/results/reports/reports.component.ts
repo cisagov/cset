@@ -36,7 +36,7 @@ import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/materi
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { NCUAService } from '../../../services/ncua.service';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';
@@ -69,7 +69,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   dialogRef: MatDialogRef<any>;
   isCyberFlorida: boolean = false;
 
-  findings: any = null;
+  observations: any = null;
   numberOfContacts: number = 1;
   isConfigChainEqual: boolean = false;
 
@@ -87,7 +87,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     private acetSvc: ACETService,
     private ncuaSvc: NCUAService,
-    public findSvc: FindingsService,
+    public observationsSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
     public authSvc: AuthenticationService,
     private router: Router,
@@ -151,7 +151,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       if (this.assessSvc.isISE()) {
         this.checkIseDisabledStatus();
 
-        this.getAssessmentFindings();
+        this.getAssessmentObservations();
       } else {
         this.checkAcetDisabledStatus();
       }
@@ -277,24 +277,24 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Gets all ISE Findings/Issues,
+   * Gets all ISE Observations/Issues,
    * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
    */
-  getAssessmentFindings() {
+  getAssessmentObservations() {
     this.ncuaSvc.unassignedIssueTitles = [];
-    this.findSvc.GetAssessmentFindings().subscribe(
+    this.observationsSvc.getAssessmentObservations().subscribe(
       (r: any) => {
-        this.findings = r;
+        this.observations = r;
         let title = '';
 
-        for (let i = 0; i < this.findings?.length; i++) {
+        for (let i = 0; i < this.observations?.length; i++) {
           // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
           if (
-            this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) ==
+            this.ncuaSvc.translateExamLevel(this.observations[i]?.question?.maturity_Level_Id).substring(0, 4) ==
             this.ncuaSvc.getExamLevel().substring(0, 4)
           ) {
-            if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
-              title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
+            if (this.observations[i]?.finding?.type == null || this.observations[i]?.finding?.type == '') {
+              title = this.observations[i]?.category?.title + ', ' + this.observations[i]?.question?.question_Title;
               this.ncuaSvc.unassignedIssueTitles.push(title);
             }
           }
@@ -305,7 +305,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           this.ncuaSvc.unassignedIssues = true;
         }
       },
-      (error) => console.log('Findings Error: ' + (<Error>error).message)
+      (error) => console.log('Observations Error: ' + (<Error>error).message)
     );
   }
 
