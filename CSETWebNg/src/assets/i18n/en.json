@@ -128,7 +128,8 @@
         "filter": "Filter",
         "reviewed": "Reviewed",
         "questions mode": "Questions Mode",
-        "requirements mode": "Requirements Mode"
+        "requirements mode": "Requirements Mode",
+        "add document": "Add a document"
     },
 
     "contact": {
@@ -262,17 +263,22 @@
         }
     },
     "tooltip": {
-        "mfr-flag": "This control requires further review",
-        "category requires review": "One or more controls in this category requires further review",
-        "assessment requires review": "This assessment contains answers that require further review",
+        "details standard": "Details/Standard",
         "supplemental guidance": "Supplemental Guidance",
-        "details/standard": "Details/Standard",
-        "exam step": "Exam Step",
         "comment": "Comment",
-        "comments with content": "Comments with content",
+        "artifacts documents": "Artifacts/Documents",
+        "artifacts documents with content": "Artifacts/Documents with Content",
         "references": "References",
         "observations": "Observations",
         "observations with content": "Observations with content",
+        "feedback": "Feedback",
+        "feedback with content": "Feedback with Content",
+        "mfr-flag": "This control requires further review",
+        "category requires review": "One or more controls in this category requires further review",
+        "assessment requires review": "This assessment contains answers that require further review",
+        "details/standard": "Details/Standard",
+        "exam step": "Exam Step",
+        "comments with content": "Comments with content",
         "issues": "Issues",
         "issues with content": "Issues with content",
         "answered count": "Indicates the number of answered questions out of the total for this page",
@@ -483,9 +489,12 @@
         "delete observation confirm": "Are you sure you want to delete observation",
         "delete this observation confirm": "Are you sure you want to delete this observation"
     },
-    "references": {
+    "extras": {
+        "artifact title": "Artifact/Document Title",
+        "file name": "File Name",
         "source documents": "Source Documents",
         "additional documents": "Additional Documents",
+        "section": "Section",
         "no reference documents available": "no reference documents available"
     },
     "tools": {
