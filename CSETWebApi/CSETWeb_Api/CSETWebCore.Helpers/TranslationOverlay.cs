@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Interfaces.Helpers;
+using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,50 @@ namespace CSETWebCore.Helpers
     {
         private Dictionary<string, RequirementTranslations> dReq = new Dictionary<string, RequirementTranslations>();
         private Dictionary<string, CategoryTranslation> dCat = new Dictionary<string, CategoryTranslation>();
+
+        private Dictionary<string, GenericTranslation> dKVP = new Dictionary<string, GenericTranslation>();
+
+
+        /// <summary>
+        /// Generically gets a value for the specified key and collection.
+        /// Collection indicates the name of the JSON file.
+        /// </summary>
+        public Model.Question.KeyValuePair GetValue(string collection, string key, string lang)
+        {
+            GenericTranslation langPack = null;
+
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            lang = lang.ToLower();
+            collection = collection.ToLower();
+
+            var kvpKey = $"{lang}|{collection}";
+
+            if (!dKVP.ContainsKey(kvpKey))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
+
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<GenericTranslation>(json);
+
+                dKVP.Add(kvpKey, langPack);
+            }
+            else
+            {
+                langPack = dKVP[kvpKey];
+            }
+
+            
+            return langPack.Pairs.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
+        }
 
 
         /// <summary>

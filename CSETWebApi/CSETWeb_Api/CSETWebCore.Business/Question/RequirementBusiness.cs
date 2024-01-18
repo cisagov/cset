@@ -120,12 +120,7 @@ namespace CSETWebCore.Business.Question
         {
 
             // get the user's language
-            var userId = _tokenManager.GetCurrentUserId();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var accessKey = _tokenManager.GetAccessKey();
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-
-            var lang = user?.Lang ?? ak?.Lang ?? "en";
+            var lang = _tokenManager.GetCurrentLanguage();
 
             var overlay = new TranslationOverlay();
 

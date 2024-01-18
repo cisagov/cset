@@ -34,7 +34,7 @@
 
         <button *ngIf="displayIcon('DETAIL') && !myQuestion.is_Component" class="extras-button cursor-pointer"
             [class.active]="mode == 'DETAIL'" (click)="toggleExtras('DETAIL')"
-            [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? t('tooltip.exam step') : t('tooltip.details/standard')"
+            [matTooltip]="checkForApproach(tab?.RequirementsData?.ExaminationApproach) ? t('tooltip.exam step') : t('tooltip.details standard')"
             matTooltipPosition="above">
             <svg viewBox="0 0 32 32"
                 style="height: 31px; width: 31px; margin: auto; margin-left: 2px; margin-top: 4px;">
@@ -83,7 +83,7 @@
 
         <button *ngIf="displayIcon('DOCS')" class="extras-button cursor-pointer" [class.active]="mode == 'DOCS'"
             (click)="toggleExtras('DOCS')"
-            [matTooltip]="has('DOCS')==='inline'? 'Artifacts / Documents with content':'Artifacts / Documents'"
+            [matTooltip]="has('DOCS')==='inline'? t('tooltip.artifacts documents with content'):t('tooltip.artifacts documents')"
             matTooltipPosition="above">
             <svg viewBox="0 0 25 30" style="height: 31px; width: 31px; margin: auto; margin-top: 4px;">
                 <path fill="#044" stroke="transparent" stroke-width="0" transform="scale(.7)"
@@ -115,7 +115,7 @@
         </button>
 
         <button *ngIf="displayIcon('FDBK')" class="extras-button cursor-pointer" [class.active]="mode == 'FDBK'"
-            (click)="toggleExtras('FDBK')" [matTooltip]="has('FDBK')==='inline'?'Feedback with content':'Feedback'"
+            (click)="toggleExtras('FDBK')" [matTooltip]="has('FDBK')==='inline'?t('tooltip.feedback with content'):t('tooltip.feedback')"
             matTooltipPosition="above">
             <svg style="height: 31px; width: 31px; margin: auto; margin-left: -4px; margin-top: -1px;"
                 viewBox="44 44 33 33">
@@ -285,8 +285,8 @@
         <div *ngIf=" !!extras && mode === 'DOCS'">
             <table class="reference-table">
                 <tr>
-                    <th>Artifact / Document Title</th>
-                    <th>File Name</th>
+                    <th>{{t('extras.artifact title')}}</th>
+                    <th>{{t('extras.file name')}}</th>
                     <th></th>
                 </tr>
                 <tr *ngFor="let doc of extras?.documents" style="box-sizing: content-box;height:20px;">
@@ -328,7 +328,7 @@
                     </td>
                 </tr>
             </table>
-            <button class="btn btn-primary add" (click)="openFileBrowser($event)">Add a document</button>
+            <button class="btn btn-primary add" (click)="openFileBrowser($event)">{{t('buttons.add document')}}</button>
             <input type="hidden" [value]="myQuestion.questionId">
             <input id="docUpload_q{{ myQuestion.questionId }}" type="file" (change)="fileSelect($event)"
                 class="display-none">
@@ -343,7 +343,7 @@
                     </tr>
                     <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
                         <td>{{ documentLabel('Source Documents') }}</td>
-                        <td>Section</td>
+                        <td>{{'extras.section' | transloco}}</td>
                     </tr>
                     <tr *ngFor="let reference of tab?.sourceDocumentsList">
                         <!-- <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0"> -->
@@ -355,7 +355,7 @@
                     </tr>
                     <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
                         <td>{{ documentLabel('Additional Documents') }}</td>
-                        <td>Section</td>
+                        <td>{{'extras.section' | transloco}}</td>
                     </tr>
                     <tr *ngFor="let reference of tab?.additionalDocumentsList">
                         <td class="align-top">
