@@ -33,10 +33,10 @@
         <table class="resource-table w-100">
             <tr *ngIf="sourceDocs.length > 0">
                 <td class="w-75">
-                    <strong>Source Documents</strong>
+                    <strong>{{'extras.source documents' | transloco}}</strong>
                 </td>
                 <td class="pl-3">
-                    <strong>Section</strong>
+                    <strong>{{'extras.section' | transloco}}</strong>
                 </td>
             </tr>
             <tr *ngFor="let d of sourceDocs">
@@ -49,10 +49,10 @@
             </tr>
             <tr *ngIf="additionalDocs.length > 0">
                 <td class="w-75" [class.pt-4]="sourceDocs.length > 0">
-                    <strong>Additional Documents</strong>
+                    <strong>{{'additional documents' | transloco}}</strong>
                 </td>
                 <td class="pl-3" [class.pt-4]="sourceDocs.length > 0">
-                    <strong>Section</strong>
+                    <strong>{{'extras.section' | transloco}}</strong>
                 </td>
             </tr>
             <tr *ngFor="let d of additionalDocs">

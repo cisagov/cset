@@ -36,6 +36,16 @@ namespace CSETWebCore.Model.Question
 
 
     /// <summary>
+    /// Tracks translation overlays for generic pairs
+    /// </summary>
+    public class GenericTranslation
+    {
+        public string Comment { get; set; }
+        public List<KeyValuePair> Pairs { get; set; } = new List<KeyValuePair> { };
+    }
+
+
+    /// <summary>
     /// Translation info for a single Category
     /// </summary>
     public class KeyValuePair

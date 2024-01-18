@@ -700,12 +700,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/modulecontent")]
         public IActionResult ModuleContentReport([FromQuery] string set)
         {
-            // get the user's language
-            var userId = _token.GetCurrentUserId();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var accessKey = _token.GetAccessKey();
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-            var lang = user?.Lang ?? ak?.Lang ?? "en";
+            var lang = _token.GetCurrentLanguage();
 
             var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
             report.SetLanguage(lang);

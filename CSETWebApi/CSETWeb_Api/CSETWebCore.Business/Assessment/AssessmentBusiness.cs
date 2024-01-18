@@ -39,6 +39,9 @@ namespace CSETWebCore.Business.Assessment
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
 
+        private readonly TranslationOverlay _overlay;
+
+
         private CSETContext _context;
 
         public AssessmentBusiness(IHttpContextAccessor httpContext, ITokenManager authentication,
@@ -55,6 +58,7 @@ namespace CSETWebCore.Business.Assessment
             _standardsBusiness = standardsBusiness;
             _context = context;
             _diagramManager = new Diagram.DiagramManager(context);
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -688,10 +692,23 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
         {
-            var orgType = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
-            orgType = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            var list = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
+            list = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
 
-            return orgType;
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OrganizationTypeId.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.OrganizationType = val;
+                    }
+                });
+            }
+
+            return list;
         }
 
         /// <summary>
