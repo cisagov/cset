@@ -171,7 +171,8 @@
         "filter": "Filtro",
         "reviewed": "Revisado",
         "questions mode": "Modo preguntas",
-        "requirements mode": "Modo requisitos"
+        "requirements mode": "Modo requisitos",
+        "add document": "Agregar documento"
     },
     "answer-options": {
         "button-labels": {
@@ -251,17 +252,22 @@
     },
 
     "tooltip": {
-        "mfr-flag": "Este control requiere una revisión adicional",
-        "category requires review": "Una o más controles en esta categoría requieren una revisión adicional",
-        "assessment requires review": "Esta evaluación contiene respuestas que requieren una revisión adicional",
+        "details standard": "Detalles/Estándar",
         "supplemental guidance": "Orientación complementaria",
-        "details/standard": "Detalles/Examen",
-        "exam step": "Estándar paso",
         "comment": "Comentario",
-        "comments with content": "Comentarios con contenido",
+        "artifacts documents": "[ES]Artifacts/Documents",
+        "artifacts documents with content": "[ES]Artifacts/Documents with Content",
         "references": "Referencias",
         "observations": "Observaciones",
         "observations with content": "Observaciones con contenido",
+        "feedback": "[ES]Feedback",
+        "feedback with content": "[ES]Feedback with Content",
+        "mfr-flag": "Este control requiere una revisión adicional",
+        "category requires review": "Una o más controles en esta categoría requieren una revisión adicional",
+        "assessment requires review": "Esta evaluación contiene respuestas que requieren una revisión adicional",
+        "details/standard": "Detalles/Examen",
+        "exam step": "Estándar paso",
+        "comments with content": "Comentarios con contenido",
         "issues": "Problemas",
         "issues with content": "Problemas con contenido",
         "answered count": "Indica el número de preguntas respondidas del total de esta página",
@@ -473,9 +479,12 @@
         "delete observation confirm": "¿Está seguro de que desea eliminar la observación",
         "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación"
     },
-    "references": {
+    "extras": {
+        "artifact title": "[ES]Artifact/Document Title",
+        "file name": "[ES]File Name",
         "source documents": "Documentos Fuente",
         "additional documents": "Documentos Adicionales",
+        "section": "Sección",
         "no reference documents available": "no hay documentos de referencia disponibles"
     },
     "tools": {

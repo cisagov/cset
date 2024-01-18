@@ -45,7 +45,7 @@
     "critical service description": "Critical Service Description",
     "requires review": "Потребує перегляду",
     "no search results": "Не знайдено елементів, що відповідають пошуковому запиту.",
-    "auto load guidance": "Автоматичне завантаження вказівок",
+    "auto load guidance": "Автоматичне завантаження",
     "unanswered equals no": "Питання без відповіді обчислюються як відповідь '{{no-ans}}'",
     "sal intro 1": "[UK]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
     "sal intro 2": "[UK]For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
@@ -69,10 +69,10 @@
         "assessment information": "Інформація про оцінку",
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
-        "security assurance level (sal)": "Рівень безпеки (SAL)",
+        "security assurance level (sal)": "Гарантований рівень безпеки (SAL)",
         "network diagram": "мережева схема",
         "diagram component questions": "Питання компонентів діаграми",
-        "standard questions": "[UK]Standard Questions",
+        "standard questions": "Стандартні запитання",
         "standard requirements": "[UK]Standard Requirements",
         "maturity questions": "[UK]Maturity Questions",
         "security practices": "[UK]Security Practices",
@@ -113,7 +113,8 @@
         "filter": "фільтр",
         "reviewed": "Переглянуто",
         "questions mode": "Режим питань",
-        "requirements mode": "Режим вимог"
+        "requirements mode": "Режим вимог",
+        "add document": "Додайте документ"
     },
 
     "contact": {
@@ -222,10 +223,18 @@
             "NI-C2M2": "[UK] Not Implemented (NI)"
         }
     },
-
-
-
+    
     "tooltip": {
+        "details standard": "Деталі/Стандарт",
+        "supplemental guidance": "Додаткові вказівки",
+        "comment": "[UK]Comment",
+        "artifacts documents": "[UK]Artifacts/Documents",
+        "artifacts documents with content": "[UK]Artifacts/Documents with Content",
+        "references": "Список літератури",
+        "observations": "[UK]Observations",
+        "observations with content": "[UK]Observations with Content",
+        "feedback": "[UK]Feedback",
+        "feedback with content": "[UK]Feedback with Content",
         "mfr-flag": "Цей контроль потребує додаткового перегляду",
         "category requires review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки",
         "assessment requires review": "[UK] Ця оцінка містить відповіді, які потребують додаткового перегляду",
@@ -255,5 +264,13 @@
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
         "mil-5": "MIL-5"
+    },
+    "extras": {
+        "artifact title": "Назва артефакту/документа",
+        "file name": "Ім'я файлу",
+        "source documents": "Вихідні документи",
+        "additional documents": "Додаткові документи",
+        "section": "Розділ",
+        "no reference documents available": "відсутні довідкові документи"
     }
 }
