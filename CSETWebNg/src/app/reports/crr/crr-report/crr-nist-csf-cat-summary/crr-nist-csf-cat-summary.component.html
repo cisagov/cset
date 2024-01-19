@@ -28,7 +28,7 @@
       <div class="col-6 tinytext" [innerHtml]="legend | safe">
       </div>
   </div>
-  <div *ngFor="let e of bodyData" class="mb-3">
+  <div *ngFor="let e of bodyData?.funcs" class="mb-3">
       <table class="domain-function" style="height: 90%; border: none">
           <tbody>
               <tr style="width: 100%; border: none;">
@@ -79,7 +79,7 @@
                       </table>
                   </td>
               </tr>
-              <div *ngIf="e.function.Function.code != 'RC'" class="break"></div>
+              <div *ngIf="e.function.Function.code !== 'RC'" class="break"></div>
           </tbody>
       </table>
   </div>
