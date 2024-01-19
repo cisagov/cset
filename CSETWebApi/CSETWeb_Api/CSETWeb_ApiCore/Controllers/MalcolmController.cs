@@ -49,7 +49,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/malcolm")]
         public IActionResult MapSourceToDestinationData()
         {
-            var assessmentId = _token.PayloadInt(Constants.Constants.Token_AssessmentId);
+            int assessmentId = (int)_token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var formFiles = HttpContext.Request.Form.Files;
             string fileName = "";
             string fileExtension = "";            
@@ -85,10 +85,7 @@ namespace CSETWebCore.Api.Controllers
                     MalcolmUploadError error = new MalcolmUploadError(fileName, 400, ex.Message);
                     errors.Add(error);
                 }
-
-                
             }
-
 
             if (errors.Count > 0)
             {
