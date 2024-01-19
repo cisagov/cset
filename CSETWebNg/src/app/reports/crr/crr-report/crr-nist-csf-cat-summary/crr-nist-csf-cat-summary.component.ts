@@ -36,7 +36,7 @@ export class CrrNistCsfCatSummaryComponent implements OnInit {
 
   @Input() moduleName: string;
 
-  bodyData: any[] = [];
+  bodyData: any = null;
   legend: string = '';
 
   constructor(private crrSvc: CrrService) { }
