@@ -93,11 +93,6 @@ export class MaturityQuestionsComponent implements OnInit {
       }
     });
 
-    this.tSvc.langChanges$.subscribe((event) => {
-      this.load();
-    });
-
-
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
@@ -110,20 +105,19 @@ export class MaturityQuestionsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    this.load();
-
     // refresh the page in case of language change
-    this.tSvc.langChanges$.subscribe((event) => {
+    // NOTE: langChanges$ will emit the active language on subscription,
+    // so load() will always fire on initial page load
+    this.tSvc.langChanges$.subscribe(() => {
       this.load();
     });
-
   }
 
   /**
-   * 
+   *
    */
   load() {
     // determine whether displaying a grouping or all questions for the model
