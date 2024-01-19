@@ -1204,17 +1204,14 @@ namespace CSETWebCore.Business.Diagram
         public XmlDocument xml = new XmlDocument();
         public int incrementalId = 0;
         public List<Geometry> nodeLocations = new List<Geometry>();
-        //public int row = 1;
-        //public int column = 1;
 
-
-        public void CreateMalcolmDiagram(int? assessmentId, List<MalcolmData> processedData)
+        public void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData)
         {
+            /*
             xml = new XmlDocument();
             incrementalId = 0;
             nodeLocations = new List<Geometry>();
-            //row = 1;
-            //column = 1;
+            */
 
             XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
             newMxGraphModel.SetAttribute("dx", "1050");
@@ -1253,16 +1250,11 @@ namespace CSETWebCore.Business.Diagram
             // Check how many nodes we need
             int nodeCount = processedData[0].Graphs.Count;
 
-            // Generate Diagram/XML objects
+            // Generate the actual Diagram/XML objects
             WalkDownTree(processedData[0].Trees[0], "");
 
             // Save that XML to the Assessments table -- Diagram Markup.
-            ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
-            if (assessment != null)
-            {
-                assessment.Diagram_Markup = xml.OuterXml;
-                _context.SaveChanges();
-            }
+            SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
         }
 
         public void WalkDownTree (TempNode node, string parentId)
@@ -1287,20 +1279,6 @@ namespace CSETWebCore.Business.Diagram
             //userObject.SetAttribute("parent", parent);
             userObject.SetAttribute("id", id);
 
-            /*
-            // Update node position
-            int x = 120 + (column * 90);
-            int y = 120 + (row * 90);
-
-            row++;
-            //int breakpoint = (incrementalId >= 500 ? 26 : 11);
-            int breakpoint = (incrementalId >= 500 ? 26 : 11);
-            if (row % breakpoint == 0)
-            {
-                row = 1;
-                column++;
-            }
-            */
             Geometry geometry = AssignCoordinates(parentId);
             userObject.AppendChild(CreateMxCellAndGeometry(geometry.x.ToString(), geometry.y.ToString()));
             XmlElement root = (XmlElement)xml.SelectSingleNode("//root");
@@ -1309,7 +1287,7 @@ namespace CSETWebCore.Business.Diagram
 
             if (parentId != "")
             {
-                root.AppendChild(CreateEdge(parentId, id, "1")); // the only layer is the main layer for now
+                root.AppendChild(CreateEdge(parentId, id, "1")); // "1" because the only layer is the main layer for now
             }
 
             if (node.Children != null && node.Children.Count > 0)
@@ -1375,6 +1353,7 @@ namespace CSETWebCore.Business.Diagram
                 geometry.x = x;
                 geometry.y = y;
 
+                nodeLocations.Add(geometry);
                 return geometry;
             }
 
@@ -1386,6 +1365,7 @@ namespace CSETWebCore.Business.Diagram
             {
                 newCoordinatesToTry = CircleAroundParent(parentCoordinates, i, revolution);
                 i++;
+
                 if (i == 8)
                 {
                     i = 0;
@@ -1414,8 +1394,8 @@ namespace CSETWebCore.Business.Diagram
                 int childEndY = newCoords.y + newCoords.h;
 
                 // check for x and y overlaps
-                bool xOverlapping = currentNode.x <= newCoords.x && childEndX <= parentEndX;
-                bool yOverlapping = currentNode.y <= newCoords.y && childEndY <= parentEndY;
+                bool xOverlapping = (currentNode.x <= newCoords.x && childEndX <= parentEndX);
+                bool yOverlapping = (currentNode.y <= newCoords.y && childEndY <= parentEndY);
 
                 if (xOverlapping && yOverlapping)
                 {
