@@ -58,7 +58,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 double pct = (double)d.AnswerCounts[i] / (double)maxAnswerCount;
                 double barHeight = barSectionHeight * pct;                
                 // don't render a zero-height bar; provide some minimal color
-                if (barHeight < 1)
+                if (barHeight < 1 || !double.IsFinite(barHeight))
                 {
                     barHeight = 1;
                 }
