@@ -47,7 +47,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
             for (int i = 0; i < d.AnswerCounts.Count; i++)
             {
-                if (d.AnswerCounts[i] < 0)
+                if (d.AnswerCounts[i] < 0 || !double.IsFinite(d.AnswerCounts[i]))
                 {
                     d.AnswerCounts[i] = 0;
                 }
@@ -107,6 +107,12 @@ namespace CSETWebCore.Helpers.ReportWidgets
 
                 var percentage = ((double)d.AnswerCounts[0] / (double)d.AnswerCounts.Sum()) * 100;
                 var value = (percentage >= 99 && percentage < 100 ? 99 : Math.Round(percentage, 0, MidpointRounding.AwayFromZero));
+
+                if (!double.IsFinite(value)) 
+                {
+                    value = 0;
+                }
+
                 xText.Value = $"{value}%".ToString();
                 xText.SetAttributeValue("class", "text-normal");
             }
