@@ -15,7 +15,6 @@ using CSETWebCore.Reports.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,7 +27,7 @@ namespace CSETWebCore.Helpers
     /// <summary>
     /// 
     /// </summary>
-    public class ICmuScoringHelper : Interfaces.Cmu.ICmuScoringHelper
+    public class CmuScoringHelper : Interfaces.Cmu.ICmuScoringHelper
     {
         private readonly CSETContext _context;
 
@@ -55,7 +54,7 @@ namespace CSETWebCore.Helpers
         /// Constructor.
         /// </summary>
         /// <param name="context"></param>
-        public ICmuScoringHelper(CSETContext context)
+        public CmuScoringHelper(CSETContext context)
         {
             this._context = context;
         }
