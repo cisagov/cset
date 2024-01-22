@@ -14,7 +14,7 @@
     "api": {
         "protocol": "http",
         "url": "localhost",
-        "port": "5005",
+        "port": "5000",
         "apiIdentifier": "api",
         "documentsIdentifier": "Documents",
         "onlineUrl": "https://cset.inl.gov"
