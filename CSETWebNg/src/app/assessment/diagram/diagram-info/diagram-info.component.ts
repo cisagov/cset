@@ -127,6 +127,8 @@ export class DiagramInfoComponent implements OnInit {
                 (result) => {
                     if (result != null) {
                         this.openUploadErrorDialog(result);
+                    } else {
+                        location.reload();
                     }
             });
         }

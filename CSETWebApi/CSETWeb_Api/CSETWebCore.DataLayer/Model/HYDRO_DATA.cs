@@ -32,4 +32,14 @@ public partial class HYDRO_DATA
     [ForeignKey("Mat_Question_Id")]
     [InverseProperty("HYDRO_DATA")]
     public virtual MATURITY_QUESTIONS Mat_Question { get; set; }
+
+    [StringLength(1000)]
+    public string? Action_Item_Description { get; set; }
+
+    [StringLength(1000)]
+    public string? Action_Items { get; set; }
+
+    public int? Severity { get; set; }
+
+    public int? Sequence { get; set; }
 }

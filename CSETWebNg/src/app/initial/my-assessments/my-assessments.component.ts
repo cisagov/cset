@@ -453,4 +453,8 @@ export class MyAssessmentsComponent implements OnInit {
     this.disabledEncrypt = false;
   }
 
+  temp() {
+    this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
+  }
+
 }
