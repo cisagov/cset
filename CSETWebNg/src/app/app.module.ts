@@ -123,7 +123,7 @@ import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.co
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
 import { StandardsComponent } from './assessment/prepare/standards/standards.component';
-import { FindingsComponent } from './assessment/questions/findings/findings.component';
+import { ObservationsComponent } from './assessment/questions/observations/observations.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -192,7 +192,7 @@ import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
-import { FindingsService } from './services/findings.service';
+import { ObservationsService } from './services/observations.service';
 import { FrameworkService } from './services/framework.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
@@ -259,7 +259,7 @@ import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
-import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
@@ -769,7 +769,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        FindingsComponent,
+        ObservationsComponent,
         IssuesComponent,
         MeritCheckComponent,
         SafePipe,
@@ -849,7 +849,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         AcetLayoutMainComponent,
         ReportTestComponent,
         SiteDetailComponent,
-        DiscoveryTearoutsComponent,
+        ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,
         ExecutiveSummaryComponent,
         SecurityplanComponent,
@@ -1244,7 +1244,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
         FrameworkService,
         RequiredDocumentService,
         IRPService,
-        FindingsService,
+        ObservationsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,

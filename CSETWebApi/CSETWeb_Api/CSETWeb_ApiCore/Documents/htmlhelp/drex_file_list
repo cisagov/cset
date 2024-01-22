@@ -65,9 +65,6 @@ i\blocks\interface-icons\interface-icons-sprite.png
 i\null.gif
 i\blocks\tree
 i\blocks\search
-i\blocks\interface-icons
-i\blocks
-i
 cset_revision_history_print.htm
 cset_revision_history.htm
 frequently_asked_questions__faqs__print.htm
@@ -737,6 +734,8 @@ importing_a__csetw_file_print.htm
 importing_a__csetw_file.htm
 import_export_a_cset_assessment_print.htm
 import_export_a_cset_assessment.htm
+restricting_signups_with_an_allowlist_print.htm
+restricting_signups_with_an_allowlist.htm
 drex_evaluation_preparation_custom_2.png
 drex_evaluation_preparation_custom.png
 evaluation_preparation_print.htm

@@ -14,5 +14,7 @@ namespace CSETWebCore.DataLayer.Model
         public string Heading { get; set; }
         public string SubHeading { get; set; }
         public string SetName { get; set; }
+        public bool IsComplete { get; set; }
+        public int SourceId { get; set; }
     }
 }

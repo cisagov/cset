@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
   
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
@@ -115,7 +115,7 @@
       </div>
       <table class="builder-requirement-docs">
         <tr>
-          <th class="pr-4">Source Documents</th>
+          <th class="pr-4">{{t('source documents')}}</th>
           <th>Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.sourceDocs">
@@ -153,7 +153,7 @@
           </td>
         </tr>
         <tr>
-          <th class="pt-2 pr-4">Additional Documents</th>
+          <th class="pt-2 pr-4">{{t('additional documents')}}</th>
           <th class="pt-2">Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.additionalDocs">

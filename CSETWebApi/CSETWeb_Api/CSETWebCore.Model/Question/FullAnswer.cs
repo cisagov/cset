@@ -28,6 +28,6 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// 
         /// </summary>
-        public bool FindingsExist { get; set; }
+        public bool ObservationsExist { get; set; }
     }
 }
