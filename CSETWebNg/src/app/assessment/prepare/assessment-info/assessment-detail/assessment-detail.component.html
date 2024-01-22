@@ -24,7 +24,7 @@
 <h4>{{t('organization details')}}</h4>
 <form #f="ngForm">
     <div class="form-row">
-        <p *ngIf="showAssessmentNameDisclaimer()">Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)</p>
+        <p *ngIf="showAssessmentNameDisclaimer()">{{t('no pii in name')}}</p>
         <div class="form-group col-md-6">
             
             <label class="mb-1" for="name">{{t('assessment name')}}</label>

@@ -21,14 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit, ViewChild } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { GroupingDescriptionComponent } from '../../assessment/questions/grouping-description/grouping-description.component';
-import { FindingsService } from '../../services/findings.service';
+import { ObservationsService } from '../../services/observations.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { environment } from '../../../environments/environment';
 
@@ -59,7 +59,7 @@ export class IseDataComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public ncuaSvc: NCUAService,
-    public findSvc: FindingsService
+    public observationSvc: ObservationsService
   ) { }
 
   ngOnInit(): void {
@@ -69,16 +69,16 @@ export class IseDataComponent implements OnInit {
       (r: any) => {
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
-        if(this.examLevel === 'CORE') {
-          for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+        if (this.examLevel === 'CORE') {
+          for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
             let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
             // goes through subcategories
-            for(let j = 0; j < domain.components?.length; j++) {
+            for (let j = 0; j < domain.components?.length; j++) {
               let subcat = domain?.components[j];
               // goes through questions
-              for(let k = 0; k < subcat?.questions?.length; k++) {
+              for (let k = 0; k < subcat?.questions?.length; k++) {
                 let question = subcat?.questions[k];
-  
+
                 if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                   this.examLevel = 'CORE+';
                 }
@@ -96,16 +96,16 @@ export class IseDataComponent implements OnInit {
     // used in checking if the section / question should be expanded or collapsed 
     this.expandedOptions
       .set('Stmt 1', true)
-      .set('Stmt 2', true)                             .set('Stmt 3', true)
-      .set('Stmt 4', true)                             .set('Stmt 5', true)
-      .set('Stmt 6', true)                             .set('Stmt 7', true)
-      .set('Stmt 8', true)                             .set('Stmt 9', true)
-      .set('Stmt 10', true)                            .set('Stmt 11', true)
-      .set('Stmt 12', true)                            .set('Stmt 13', true)
-      .set('Stmt 14', true)                            .set('Stmt 15', true)
-      .set('Stmt 16', true)                            .set('Stmt 17', true)
-      .set('Stmt 18', true)                            .set('Stmt 19', true)
-      .set('Stmt 20', true)                            .set('Stmt 21', true)
+      .set('Stmt 2', true).set('Stmt 3', true)
+      .set('Stmt 4', true).set('Stmt 5', true)
+      .set('Stmt 6', true).set('Stmt 7', true)
+      .set('Stmt 8', true).set('Stmt 9', true)
+      .set('Stmt 10', true).set('Stmt 11', true)
+      .set('Stmt 12', true).set('Stmt 13', true)
+      .set('Stmt 14', true).set('Stmt 15', true)
+      .set('Stmt 16', true).set('Stmt 17', true)
+      .set('Stmt 18', true).set('Stmt 19', true)
+      .set('Stmt 20', true).set('Stmt 21', true)
       .set('Stmt 22', true);
 
   }
@@ -122,49 +122,49 @@ export class IseDataComponent implements OnInit {
    * checks if section should expand by checking the boolean value attached to the 'title'
    */
   shouldExpand(title: string) {
-    if(this.expandedOptions.get(title)) {
+    if (this.expandedOptions.get(title)) {
       return true;
     }
     return false;
   }
   /**
    * checks if q is a parent question
-   */ 
+   */
   isParentQuestion(q: any) {
-    if ( q.title == 'Stmt 1' 
-    ||   q.title == 'Stmt 2'
-    ||   q.title == 'Stmt 3'
-    ||   q.title == 'Stmt 4'
-    ||   q.title == 'Stmt 5'
-    ||   q.title == 'Stmt 6'
-    ||   q.title == 'Stmt 7'
-    ||   q.title == 'Stmt 8'
-    ||   q.title == 'Stmt 9'
-    ||   q.title == 'Stmt 10'
-    ||   q.title == 'Stmt 11'
-    ||   q.title == 'Stmt 12'
-    ||   q.title == 'Stmt 13'
-    ||   q.title == 'Stmt 14'
-    ||   q.title == 'Stmt 15'
-    ||   q.title == 'Stmt 16'
-    ||   q.title == 'Stmt 17'
-    ||   q.title == 'Stmt 18'
-    ||   q.title == 'Stmt 19'
-    ||   q.title == 'Stmt 20'
-    ||   q.title == 'Stmt 21'
-    ||   q.title == 'Stmt 22') {
+    if (q.title == 'Stmt 1'
+      || q.title == 'Stmt 2'
+      || q.title == 'Stmt 3'
+      || q.title == 'Stmt 4'
+      || q.title == 'Stmt 5'
+      || q.title == 'Stmt 6'
+      || q.title == 'Stmt 7'
+      || q.title == 'Stmt 8'
+      || q.title == 'Stmt 9'
+      || q.title == 'Stmt 10'
+      || q.title == 'Stmt 11'
+      || q.title == 'Stmt 12'
+      || q.title == 'Stmt 13'
+      || q.title == 'Stmt 14'
+      || q.title == 'Stmt 15'
+      || q.title == 'Stmt 16'
+      || q.title == 'Stmt 17'
+      || q.title == 'Stmt 18'
+      || q.title == 'Stmt 19'
+      || q.title == 'Stmt 20'
+      || q.title == 'Stmt 21'
+      || q.title == 'Stmt 22') {
       return true;
-    } 
+    }
     return false;
   }
   /**
    * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
-   */ 
+   */
   getParentQuestionTitle(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if (!this.isParentQuestion(title)) {
       let endOfTitle = 6;
       // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
-      if(title.charAt(6) != '.'){
+      if (title.charAt(6) != '.') {
         endOfTitle = endOfTitle + 1;
       }
       return title.substring(0, endOfTitle);
@@ -172,14 +172,14 @@ export class IseDataComponent implements OnInit {
   }
   /**
    * translates the answer to the numerical format wanted in the CSV
-   */ 
+   */
   answerToNumber(answerText: string) {
-    switch(answerText) {
-      case('N'):
+    switch (answerText) {
+      case ('N'):
         return 0;
-      case('Y'):
+      case ('Y'):
         return 1;
-      case('U'):
+      case ('U'):
         return 2;
     }
   }

@@ -21,8 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, OnDestroy, ContentChild, Input, Output, Inject, EventEmitter,
-        TemplateRef, ElementRef, Renderer2, PLATFORM_ID } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, ContentChild, Input, Output, Inject, EventEmitter,
+  TemplateRef, ElementRef, Renderer2, PLATFORM_ID
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 /**

@@ -1,10 +1,3 @@
-USE [CSETWeb]
-GO
-/****** Object:  UserDefinedFunction [dbo].[func_AM]    Script Date: 10/11/2023 8:17:35 AM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Author:		Randy Woods
 -- Create date: 10-OCT-2023
@@ -13,7 +6,7 @@ GO
 --              for the sub model are returned.  Otherwise all maturity answers
 --              are returned for the assessment.
 -- =============================================
-ALTER FUNCTION [dbo].[func_AM]
+CREATE FUNCTION [dbo].[func_AM]
 (	
 	@assessmentId int
 )

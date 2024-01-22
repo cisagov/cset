@@ -77,9 +77,8 @@ namespace CSETWebCore.Business.Question
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
 
-            //this.questions = query.Distinct().ToList();
             this.Answers = answers.ToList();
 
             AddResponse(resp, list2, "Component Defaults");
@@ -395,8 +394,11 @@ namespace CSETWebCore.Business.Question
 
             if (dbAnswer == null)
             {
-                dbAnswer = new ANSWER();                
+                dbAnswer = new ANSWER();
                 dbAnswer.Assessment_Id = assessmentId;
+                dbAnswer.Answer_Text = "U";
+                dbAnswer.Question_Type = "Component";
+                
                 _context.ANSWER.Add(dbAnswer);
                 _context.SaveChanges();
                 answerId = dbAnswer.Answer_Id;
@@ -405,7 +407,6 @@ namespace CSETWebCore.Business.Question
             {
                 answerId = dbAnswer.Answer_Id;
             }
-
 
             dbAnswer.Answer_Id = answerId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;

@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Directive, ElementRef, Input, HostListener } from '@angular/core';
-import { NgControl, ValidationErrors } from '@angular/forms';
+import { Directive, ElementRef, HostListener } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 /*
  * Directive to format zip codes on FormControl.

@@ -83,6 +83,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             TinyMapper.Bind<FRAMEWORK_TIER_TYPE_ANSWER, jFRAMEWORK_TIER_TYPE_ANSWER>();
             TinyMapper.Bind<GENERAL_SAL, jGENERAL_SAL>();
             TinyMapper.Bind<HYDRO_DATA_ACTIONS, jHYDRO_DATA_ACTIONS>();
+            TinyMapper.Bind<ISE_ACTIONS_FINDINGS, jISE_ACTIONS_FINDINGS>();
             TinyMapper.Bind<INFORMATION, jINFORMATION>();
             TinyMapper.Bind<METRO_ANSWERS, jMETRO_ANSWERS>();
             TinyMapper.Bind<NETWORK_WARNINGS, jNETWORK_WARNINGS>();
@@ -218,7 +219,9 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 
                 foreach (var f in item.FINDING)
                 {
-                    model.jFINDING.Add(TinyMapper.Map<FINDING,jFINDING>(f));
+                    var obs = TinyMapper.Map<FINDING, jFINDING>(f);
+                    model.jFINDING.Add(obs);
+
                     foreach (var fc in f.FINDING_CONTACT)
                     {
                         model.jFINDING_CONTACT.Add(TinyMapper.Map<FINDING_CONTACT,jFINDING_CONTACT>(fc));

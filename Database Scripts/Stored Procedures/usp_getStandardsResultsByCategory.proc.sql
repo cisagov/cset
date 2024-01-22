@@ -10,6 +10,9 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
+
+	SET TRANSACTION ISOLATION LEVEL read uncommitted
+
 	/*
 TODO this needs to take into account requirements vs questions
 get the question set then for all the questions take the total risk (in this set only)

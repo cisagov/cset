@@ -69,13 +69,13 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
-using System.Text.Json;
 using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Merit;
-using System.Collections.Generic;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Interfaces.Malcolm;
+using CSETWebCore.Business.Malcolm;
+using CSETWebCore.Interfaces.Cmu;
 
 namespace CSETWeb_ApiCore
 {
@@ -155,6 +155,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<ICmuScoringHelper, CmuScoringHelper>();
             services.AddTransient<IApiKeyManager, ApiKeyManager>();
             services.AddTransient<IImportManager, ImportManager>();
             services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
@@ -174,7 +175,8 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
-            services.AddTransient<IJSONFileExport, JSONFileExport>();
+            services.AddTransient<IJSONFileExport, JSONFileExport>(); 
+            services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
 
 
             services.AddSwaggerGen(c =>

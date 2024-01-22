@@ -81,7 +81,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * Returns the Value property for the domain and level
    */
   getNgModel(level: any) {
-    var tmp = this.acetFilteringSvc.domainFilters?.find(d => d.domainName == this.domainName)?.tiers.find( t=>  t.financial_Level_Id == level.level); 
+    var tmp = this.acetFilteringSvc.domainFilters?.find(d => d.domainName == this.domainName)?.tiers.find(t => t.financial_Level_Id == level.level);
     return tmp?.isOn ?? false;
   }
 
@@ -100,7 +100,7 @@ export class DomainMaturityFilterComponent implements OnInit {
    * @param level 
    */
   isFilterActive(level: any) {
-    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find( t=> t.financial_Level_Id == level.level);
+    const filterForDomain = this.acetFilteringSvc.domainFilters.find(f => f.domainName == this.domain.title)?.tiers.find(t => t.financial_Level_Id == level.level);
     if (!filterForDomain) {
       return false;
     }
@@ -108,13 +108,13 @@ export class DomainMaturityFilterComponent implements OnInit {
   }
 
   determineIseFilter() {
-    if (this.ncuaSvc.proposedExamLevel === 'SCUEP' || 
+    if (this.ncuaSvc.proposedExamLevel === 'SCUEP' ||
       this.ncuaSvc.chosenOverrideLevel === "No Override" ||
       this.ncuaSvc.chosenOverrideLevel === 'SCUEP') {
-        this.maturityLevels = [{"level": "1", "label": "SCUEP", "applicable": true}];
-      } else {
-        this.maturityLevels = [{"level": "2", "label": "CORE", "applicable": true}];
-      }
+      this.maturityLevels = [{ "level": "1", "label": "SCUEP", "applicable": true }];
+    } else {
+      this.maturityLevels = [{ "level": "2", "label": "CORE", "applicable": true }];
+    }
   }
 
   checkFilterKeydown(level: any, event: any) {

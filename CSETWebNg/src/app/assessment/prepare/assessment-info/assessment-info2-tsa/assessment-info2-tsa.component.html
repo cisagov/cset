@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex justify-content-start flex-column flex-11a">
-  <h3 class="mb-3">Assessment Information</h3>
+<div class="white-panel d-flex justify-content-start flex-column flex-11a" *transloco="let t">
+  <h3 class="mb-3">{{t('titles.assessment information')}}</h3>
 
   <app-assessment-contacts *ngIf="showContacts()" class="mb-5 d-flex justify-content-end flex-00a" (triggerChange)="contactsUpdated()"></app-assessment-contacts>
 

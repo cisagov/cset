@@ -112,9 +112,9 @@ namespace CSETWebCore.Business.Reports
         }
     }
 
-    public class Findings
+    public class Observations
     {
-        public string Finding { get; set; }
+        public string Observation { get; set; }
         public string QuestionIdentifier { get; set; }
         public string QuestionText { get; set; }
         public string Importance { get; set; }
@@ -243,7 +243,7 @@ namespace CSETWebCore.Business.Reports
     public class Individual
     {
         public string INDIVIDUALFULLNAME { get; set; }
-        public List<Findings> Findings { get; set; }
+        public List<Observations> Observations { get; set; }
     }
 
     public class QuestionsWithAltJust

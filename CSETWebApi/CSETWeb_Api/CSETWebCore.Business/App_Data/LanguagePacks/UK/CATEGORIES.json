@@ -1,0 +1,144 @@
+{
+  "categories": [
+    {
+      "key": "Detect",
+      "value": "Виявляти",
+      "category1": "[UK]Detect"
+    },
+    {
+      "key": "Govern",
+      "value": "Керувати",
+      "category1": "[UK]Govern"
+    },
+    {
+      "key": "Identify",
+      "value": "Ідентифікувати",
+      "category1": "[UK]Identify"
+    },
+    {
+      "key": "Protect",
+      "value": "Захищати",
+      "category1": "[UK]Protect"
+    },
+    {
+      "key": "Recover",
+      "value": "Відновити",
+      "category1": "[UK]Recover"
+    },
+    {
+      "key": "Respond",
+      "value": "Відповісти",
+      "category1": "[UK]Respond"
+    },
+    {
+      "key": "Access Control",
+      "value": "Управління доступом",
+      "category1": "[UK]Access Control"
+    },
+    {
+      "key": "Analysis",
+      "value": "Аналіз",
+      "category1": "[UK]Analysis"
+    },
+    {
+      "key": "Anomalies and Events",
+      "value": "Аномалії та події",
+      "category1": "[UK]Anomalies and Events"
+    },
+    {
+      "key": "Asset Management",
+      "value": "Управління активами",
+      "category1": "[UK]Asset Management"
+    },
+    {
+      "key": "Awareness and Training",
+      "value": "Обізнаність і навчання",
+      "category1": "[UK]Awareness and Training"
+    },
+    {
+      "key": "Business Environment",
+      "value": "Бізнес середовище",
+      "category1": "[UK]Business Environment"
+    },
+    {
+      "key": "Data Security",
+      "value": "Безпека даних",
+      "category1": "[UK]Data Security"
+    },
+    {
+      "key": "Detection Processes",
+      "value": "Процеси виявлення",
+      "category1": "[UK]Detection Processes"
+    },
+    {
+      "key": "Governance",
+      "value": "Управління",
+      "category1": "[UK]Governance"
+    },
+    {
+      "key": "Improvements",
+      "value": "Покращення",
+      "category1": "[UK]Improvements"
+    },
+    {
+      "key": "Information Protection Processes and Procedures",
+      "value": "Процеси та процедури захисту інформації",
+      "category1": "[UK]Information Protection Processes and Procedures"
+    },
+    {
+      "key": "Maintenance",
+      "value": "Технічне обслуговування",
+      "category1": "[UK]Maintenance"
+    },
+    {
+      "key": "Mitigation",
+      "value": "Пом'якшення",
+      "category1": "[UK]Mitigation"
+    },
+    {
+      "key": "Protective Technology",
+      "value": "Захисна техніка",
+      "category1": "[UK]Protective Technology"
+    },
+    {
+      "key": "Recovery Communications",
+      "value": "Відновлення комунікацій",
+      "category1": "[UK]Recovery Communications"
+    },
+    {
+      "key": "Recovery Planning",
+      "value": "Планування відновлення",
+      "category1": "[UK]Recovery Planning"
+    },
+    {
+      "key": "Response Communications",
+      "value": "Комунікації у відповідь",
+      "category1": "[UK]Response Communications"
+    },
+    {
+      "key": "Response Planning",
+      "value": "Планування реагування",
+      "category1": "[UK]Response Planning"
+    },
+    {
+      "key": "Risk Assessment",
+      "value": "Оцінка ризиків",
+      "category1": "[UK]Risk Assessment"
+    },
+    {
+      "key": "Risk Management",
+      "value": "Управління ризиками",
+      "category1": "[UK]Risk Management"
+    },
+    {
+      "key": "Risk Management Strategy",
+      "value": "Стратегія управління ризиками",
+      "category1": "[UK]Risk Management Strategy"
+    },
+    {
+      "key": "Security Continuous Monitoring",
+      "value": "Постійний моніторинг безпеки",
+      "category1": "[UK]Security Continuous Monitoring"
+    }
+  ]
+}

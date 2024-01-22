@@ -15,9 +15,8 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
 using Microsoft.EntityFrameworkCore;
-using Nelibur.ObjectMapper;
+using CSETWebCore.Helpers;
 
-using Microsoft.AspNetCore.Authorization;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -29,6 +28,12 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
+        private readonly TranslationOverlay _overlay;
+
+
+        /// <summary>
+        /// CTOR
+        /// </summary>
         public DemographicsController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, CSETContext context)
         {
@@ -36,8 +41,14 @@ namespace CSETWebCore.Api.Controllers
             _assessment = assessment;
             _demographic = demographic;
             _context = context;
+
+            _overlay = new TranslationOverlay();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/demographics")]
         public IActionResult Get()
@@ -50,8 +61,6 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="demographics"></param>
-        /// <returns></returns>
         [HttpPost]
         [Route("api/demographics")]
         public IActionResult Post([FromBody] Demographics demographics)
@@ -64,7 +73,6 @@ namespace CSETWebCore.Api.Controllers
         /// <summary>
         /// Get organization types
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [Route("api/getOrganizationTypes")]
         public IActionResult GetOrganizationTypes()
@@ -73,12 +81,15 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        // GET: api/SECTORs
+        /// <summary>
+        /// Get SECTOR list applicable to scope (base or IOD)
+        /// </summary>
         [HttpGet]
         [Route("api/Demographics/Sectors")]
         public async Task<IActionResult> GetSECTORs()
         {
             string scope = _token.Payload("scope");
+
 
             var list = await _context.SECTOR.ToListAsync<SECTOR>();
 
@@ -90,11 +101,11 @@ namespace CSETWebCore.Api.Controllers
             if (scope == "IOD")
             {
                 list.RemoveAll(x => !x.Is_NIPP);
-            } else
+            }
+            else
             {
                 list.RemoveAll(x => x.Is_NIPP);
             }
-
 
             var otherItems = list.Where(x => x.SectorName.Equals("other", System.StringComparison.CurrentCultureIgnoreCase)).ToList();
             foreach (var o in otherItems)
@@ -103,13 +114,31 @@ namespace CSETWebCore.Api.Controllers
                 list.Add(o);
             }
 
+
+            // translate if not running in english.  
+            var lang = _token.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("SECTORS", x.SectorId.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.SectorName = val;
+                    }
+                });
+            }
+
+
             return Ok(list.Select(s => new Sector { SectorId = s.SectorId, SectorName = s.SectorName }).ToList());
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry")]
-        // GET: api/SECTOR_INDUSTRY
         public IActionResult GetSECTOR_INDUSTRY()
         {
             var list = _context.SECTOR_INDUSTRY;
@@ -117,7 +146,9 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        // GET: api/SECTOR_INDUSTRY/5
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/Demographics/Sectors_Industry/{id}")]
         public async Task<IActionResult> GetSECTOR_INDUSTRY(int id)
@@ -132,10 +163,28 @@ namespace CSETWebCore.Api.Controllers
                 list.Add(o);
             }
 
+
+            // translate if not running in english.  
+            var lang = _token.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("SECTOR_INDUSTRY", x.IndustryId.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.IndustryName = val;
+                    }
+                });
+            }
+
             return Ok(list.Select(x => new Industry() { IndustryId = x.IndustryId, IndustryName = x.IndustryName, SectorId = x.SectorId }).ToList());
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/Demographics/AssetValues")]
         public async Task<IActionResult> GetAssetValues()
@@ -151,11 +200,31 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpGet]
         [Route("api/Demographics/Size")]
         public async Task<IActionResult> GetSize()
         {
             List<DEMOGRAPHICS_SIZE> assetValues = await _context.DEMOGRAPHICS_SIZE.ToListAsync();
+
+
+            // translate if not running in english
+            var lang = _token.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                assetValues.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("DEMOGRAPHICS_SIZE", x.DemographicId.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.Description = val;
+                    }
+                });
+            }
+
+
             return Ok(assetValues.OrderBy(a => a.ValueOrder).Select(s => new AssessmentSize() { DemographicId = s.DemographicId, Description = s.Description, Size = s.Size }).ToList());
         }
     }

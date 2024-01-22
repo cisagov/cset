@@ -23,7 +23,6 @@
 ////////////////////////////////
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-export-password',
@@ -32,7 +31,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ExportPasswordComponent {
 
-  constructor(public dialogRef: MatDialogRef<ExportPasswordComponent>) { 
+  constructor(public dialogRef: MatDialogRef<ExportPasswordComponent>) {
     dialogRef.disableClose = true;
   }
 
@@ -52,6 +51,10 @@ export class ExportPasswordComponent {
     this.encryptionData.hint = this.passwordHint;
 
     this.dialogRef.close(this.encryptionData);
+  }
+
+  cancel() {
+    this.dialogRef.close();
   }
 
   togglePasswordVisibility() {

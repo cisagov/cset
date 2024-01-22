@@ -534,16 +534,17 @@ table.assessment-summary th:nth-child(1) {
   padding-left: 12px;
 }
 
-table.assessment-summary td,
-table.assessment-summary th {
-  padding: 0.5em 0.4em 0.5em 0;
+table.assessment-summary td {
+  padding: 0.2rem 0.5rem;
 }
 
 table.assessment-summary th {
   background-color: $secondary-color;
   color: $gray-50;
   font-weight: 500;
+  padding: .5rem;
 }
+
 @media only screen and (max-width: 767px) {
   .navbar-collapse.collapse.show {
     background-color: $primary-color;
@@ -1836,7 +1837,7 @@ input[type="checkbox"] + label {
   margin-left: 0.5em;
 }
 
-// Findings
+// Observations
 ///////////////////////////////////////////////////////////////////////
 .bigitem {
   /* This will be twice as */
@@ -2463,6 +2464,14 @@ mat-sidenav {
 
 .component-override article {
   max-width: 600px;
+}
+
+.component-override-dialog {
+  max-width: 600px;
+
+  @media screen and (max-width: 800px) {
+    max-width: 90vw;
+  }
 }
 
 // Terms

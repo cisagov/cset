@@ -1,11 +1,9 @@
 ﻿using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Assessment;
-using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CSETWebCore.Helpers.ReportWidgets;
 using System.Xml.Linq;
@@ -13,11 +11,11 @@ using System.Xml.XPath;
 using System.Linq;
 using System.Collections.Generic;
 using CSETWebCore.Business.Maturity;
-using CSETWebCore.Helpers;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Reports.Models;
 using CSETWebCore.Api.Models;
 using Newtonsoft.Json;
+using CSETWebCore.Interfaces.Cmu;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -29,7 +27,7 @@ namespace CSETWebCore.Api.Controllers
     public class CmuController : Controller
     {
         private readonly ITokenManager _token;
-        private readonly Helpers.ICmuScoringHelper _scoring;
+        private readonly ICmuScoringHelper _scoring;
         private readonly IAssessmentBusiness _assessment;
         private readonly IDemographicBusiness _demographic;
         private readonly IAssessmentUtil _assessmentUtil;
@@ -39,7 +37,8 @@ namespace CSETWebCore.Api.Controllers
 
         public CmuController(ITokenManager token, IAssessmentBusiness assessment,
           IDemographicBusiness demographic, IReportsDataBusiness report,
-          IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
+          IAssessmentUtil assessmentUtil, IAdminTabBusiness admin,
+          ICmuScoringHelper cmuScoringHelper, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
@@ -48,9 +47,7 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = admin;
             _context = context;
-
-
-            _scoring = new Helpers.ICmuScoringHelper(context);
+            _scoring = cmuScoringHelper;
         }
 
     
@@ -470,11 +467,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         var mappedQs = subcat.Element("References").Elements().ToList();
                         var block = new NistDomainBlock(mappedQs, false);
-                        List<string> subCatHeatMaps = new List<string>();
-                        foreach (string heatmap in block.HeatmapList)
-                        {
-                            subCatHeatMaps.Add(heatmap);
-                        }
+                        List<string> subCatHeatMaps = [.. block.HeatmapList];
                         subCats.Add(new { HeatMaps = subCatHeatMaps, SubCat = JsonConvert.DeserializeObject(Helpers.CustomJsonWriter.Serialize(subcat)) });
                     }
 

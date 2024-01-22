@@ -33,6 +33,7 @@ import { AuthenticationService } from "../../../../../services/authentication.se
 import { ConfigService } from "../../../../../services/config.service";
 import { EmailService } from "../../../../../services/email.service";
 import { LayoutService } from "../../../../../services/layout.service";
+import { TranslocoService } from "@ngneat/transloco";
 
 @Component({
   selector: "app-contact-item",
@@ -74,7 +75,8 @@ export class ContactItemComponent implements OnInit {
     public auth: AuthenticationService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public tSvc: TranslocoService
   ) {
     this.editMode = true;
   }
@@ -82,8 +84,8 @@ export class ContactItemComponent implements OnInit {
   ngOnInit() {
     if (this.roles == null) {
       this.assessSvc.refreshRoles().subscribe((response: Role[]) => {
-        response.find(x => x.assessmentRoleId == 1).assessmentRole = 'Participant';
-        response.find(x => x.assessmentRoleId == 2).assessmentRole = 'Facilitator';
+        response.find(x => x.assessmentRoleId == 1).assessmentRole = this.tSvc.translate('contact.participant');
+        response.find(x => x.assessmentRoleId == 2).assessmentRole = this.tSvc.translate('contact.facilitator');
         this.assessSvc.roles = response;
         this.roles = response;
         this.contact.roles = response;

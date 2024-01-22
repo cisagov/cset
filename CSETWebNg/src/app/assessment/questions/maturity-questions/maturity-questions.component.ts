@@ -21,12 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { QuestionGrouping, MaturityQuestionResponse, Domain } from '../../../models/questions.model';
+import { QuestionGrouping, MaturityQuestionResponse } from '../../../models/questions.model';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { QuestionFiltersComponent } from '../../../dialogs/question-filters/question-filters.component';
 import { QuestionFilterService } from '../../../services/filtering/question-filter.service';
@@ -37,7 +37,6 @@ import { CisService } from '../../../services/cis.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { CompletionService } from '../../../services/completion.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -94,11 +93,6 @@ export class MaturityQuestionsComponent implements OnInit {
       }
     });
 
-    this.tSvc.langChanges$.subscribe((event) => {
-      this.load();
-    });
-
-
     if (this.assessSvc.assessment == null) {
       this.assessSvc.getAssessmentDetail().subscribe(
         (data: any) => {
@@ -111,20 +105,19 @@ export class MaturityQuestionsComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
-    this.load();
-
     // refresh the page in case of language change
-    this.tSvc.langChanges$.subscribe((event) => {
+    // NOTE: langChanges$ will emit the active language on subscription,
+    // so load() will always fire on initial page load
+    this.tSvc.langChanges$.subscribe(() => {
       this.load();
     });
-
   }
 
   /**
-   * 
+   *
    */
   load() {
     // determine whether displaying a grouping or all questions for the model

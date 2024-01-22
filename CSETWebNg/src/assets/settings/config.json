@@ -67,6 +67,7 @@
         "showComments": true,
         "showFeedback": true,
         "showEnableProtectedFeatures": true,
+        "showCisaAssessorWorkflowSwitch": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
         "additionalUserGuides": []
