@@ -53,6 +53,10 @@ export class ExportPasswordComponent {
     this.dialogRef.close(this.encryptionData);
   }
 
+  cancel() {
+    this.dialogRef.close();
+  }
+
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

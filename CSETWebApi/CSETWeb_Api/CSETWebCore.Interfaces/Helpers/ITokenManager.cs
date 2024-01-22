@@ -27,6 +27,7 @@ namespace CSETWebCore.Interfaces.Helpers
         void AuthorizeUserForAssessment(int assessmentId);
         void ValidateTokenForAssessment(int assessmentId);
         int? GetCurrentUserId();
+        string GetCurrentLanguage();
         void GenerateSecret();
         string GetSecret();
         int? GetUserId();

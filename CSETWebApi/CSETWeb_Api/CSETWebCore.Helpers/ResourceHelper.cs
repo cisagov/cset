@@ -106,5 +106,22 @@ namespace CSETWebCore.Helpers
         {
             return assembly.GetName().Name + "." + resourceName.Replace(" ", "_").Replace("\\", ".").Replace("/", ".");
         }
+
+
+        /// <summary>
+        /// Gets a resource that is not embedded, but is "Copy Always" or "Copy if Newer"
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <returns></returns>
+        public string GetCopiedResource(string resourceName)
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, resourceName);
+            if (File.Exists(path))
+            {
+                return File.ReadAllText(path);
+            }
+
+            return null;
+        }
     }
 }
