@@ -897,5 +897,10 @@ namespace CSETWebCore.Business.Assessment
                 _context.SaveChanges();
             }
         }
+
+        public void MoveHydroActionsOutOfIseActions()
+        {
+            _utilities.MoveActionItemsFrom_IseActions_To_HydroData(_context);
+        }
     }
 }

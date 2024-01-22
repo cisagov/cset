@@ -6,8 +6,11 @@
 //////////////////////////////// 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using Microsoft.AspNetCore.Http;
+using NPOI.SS.Formula.Functions;
 
 namespace CSETWebCore.Helpers
 {
@@ -92,6 +95,38 @@ namespace CSETWebCore.Helpers
 
             var h = new Uri(referrer, UriKind.RelativeOrAbsolute);            
             return h.GetLeftPart(UriPartial.Authority);
+        }
+
+
+        /// <summary>
+        /// One-time use function that moves Hydro-specific action items 
+        /// out of the ISE_ACTIONS table and into the HYDRO_DATA table
+        /// </summary>
+        /// <returns></returns>
+        public void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context)
+        {
+            /*
+            var actionsToMove = context.ISE_ACTIONS.Where(x => x.Mat_Option_Id != null).ToList();
+            var hydroActions = context.HYDRO_DATA.ToList();
+
+            foreach ( var iseAction in actionsToMove )
+            {
+                if ( iseAction != null )
+                {
+                    var hydroRow = hydroActions.Where(x => x.Mat_Option_Id == iseAction.Mat_Option_Id).FirstOrDefault();
+                    if ( hydroRow != null )
+                    {
+                        hydroRow.Action_Item_Description = iseAction.Description;
+                        hydroRow.Action_Items = iseAction.Action_Items;
+                        hydroRow.Severity = iseAction.Severity;
+                        hydroRow.Sequence = iseAction.Sequence;
+
+                        context.SaveChanges();
+                    }
+                }
+            }
+            */
+           
         }
     }
 }

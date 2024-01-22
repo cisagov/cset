@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace CSETWebCore.Interfaces.Helpers
         DateTime UtcToLocal(DateTime dt);
         DateTime LocalToUtc(DateTime dt);
         string GetClientHost();
+        void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context);
     }
 }
