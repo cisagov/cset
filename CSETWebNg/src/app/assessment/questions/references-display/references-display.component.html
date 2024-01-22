@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <div *ngIf="areNoReferenceDocumentsAvailable()" class="mb-4">
-    ({{ 'references.no reference documents available' | transloco }})
+    ({{ 'extras.no reference documents available' | transloco }})
 </div>
 
 <div *ngIf="question?.csfMappings?.length > 0" class="mb-4">
@@ -48,7 +48,7 @@
 </div>
 
 
-<div *ngIf="sourceDocuments.length > 0" class="sub-header-1">{{ 'references.source documents' | transloco }}</div>
+<div *ngIf="sourceDocuments.length > 0" class="sub-header-1">{{ 'extras.source documents' | transloco }}</div>
 <div *ngFor="let doc of sourceDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
     {{doc.title}}:
     <ng-container *ngFor="let b of doc.bookmarks; let l = last">
@@ -61,10 +61,10 @@
 </div>
 
 
-<div *ngIf="additionalDocuments.length > 0" class="sub-header-1">{{'references.additional documents' | transloco }}
+<div *ngIf="additionalDocuments.length > 0" class="sub-header-1">{{'extras.additional documents' | transloco }}
 </div>
 <div *ngFor="let doc of additionalDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
-    {{doc.title}}<ng-container *ngIf="doc.fileName">:
+    {{doc.title}}<ng-container *ngIf="doc.file_Name">:
         <ng-container *ngFor="let b of doc.bookmarks; let l = last">
             <span *ngIf="documentUrl(doc, b).length === 0">
                 {{b}}

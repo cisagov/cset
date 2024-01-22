@@ -21,7 +21,7 @@
   SOFTWARE.
 -------------------------->
 <input type="file" #file style="display: none" (change)="onFilesAdded()" />
-<div class="upload-export d-flex flex-column flex-11a">
+<div *transloco="let t" class="upload-export d-flex flex-column flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">{{ appCode }} File Import</div>
   <h4 style="position: sticky; top: 0; padding-top: 15px; padding-left: 15px;" class="mb-2 c-primary">Uploading Files</h4>
   <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-00a">
@@ -29,7 +29,7 @@
       <mat-list class="pt-1">
         <mat-list-item *ngFor="let file of files; let i = index">
           <label mat-line class="mt-1 fs-base-5">{{file.name}}</label>
-          <ng-container *ngIf="configSvc.installationMode != 'ACET' || !ncuaSvc.switchStatus">
+          <ng-container *ngIf="(configSvc.installationMode !== 'ACET' || !ncuaSvc.switchStatus) && getAssessmentHint(file.name)">
             <label mat-line class="ml-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
           </ng-container>
           <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%" mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
@@ -41,14 +41,14 @@
   </mat-dialog-content>
   <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
     <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
-  
+
     <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
       <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
       <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
       <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
-              [disabled]="canBeClosed">Cancel</button>
-      <button class="btn btn-secondary" *ngIf="canBeClosed" (click)="closeDialog()">Cancel</button>
-      <button class="btn btn-primary" *ngIf="passwordRequired" (click)="enterPassword()">Enter Password</button>
+              [disabled]="canBeClosed">{{ t('buttons.cancel') }}</button>
+      <button class="btn btn-secondary" *ngIf="canBeClosed" (click)="closeDialog()">{{ t('buttons.cancel') }}</button>
+      <button class="btn btn-primary" *ngIf="passwordRequired" (click)="enterPassword()">{{ t('buttons.enter password') }}</button>
     </mat-dialog-actions>
   </div>
 </div>

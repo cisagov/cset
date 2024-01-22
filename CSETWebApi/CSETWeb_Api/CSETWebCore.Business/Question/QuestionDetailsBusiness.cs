@@ -4,7 +4,7 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Findings;
+using CSETWebCore.Business.Observations;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Enum;
 using CSETWebCore.Enum.EnumHelper;
@@ -142,9 +142,9 @@ namespace CSETWebCore.Business.Question
 
                 LoadData(qp, assessmentId);
 
-                // Get any findings/discoveries for the question
-                FindingsManager fm = new FindingsManager(_context, assessmentId);
-                response.Findings = fm.AllFindings(newAnswer.Answer_Id);
+                // Get any observations for the question
+                ObservationsManager obsMan = new(_context, assessmentId);
+                response.Observations = obsMan.AllObservations(newAnswer.Answer_Id);
 
                 // Get any documents attached to the question
                 response.Documents = _documentBusiness.GetDocumentsForAnswer(newAnswer.Answer_Id);
@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.Question
                 foreach (var item in stuff.ToList())
                 {
                     ComponentTypeSalData salData;
-                    if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
+               
                     if (dictionaryComponentTypes.TryGetValue(item.Component_Symbol_Id, out salData))
                     {
                         salData.SALLevels.Add(item.Sal_Level_Order);

@@ -28,11 +28,27 @@ namespace CSETWebCore.Business.ModuleBuilder
         private CSETContext _context;
         private readonly IQuestionRequirementManager _question;
         private readonly IGalleryEditor _galleryEditor;
+        private string _lang;
+        private readonly TranslationOverlay _overlay;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ModuleBuilderBusiness(CSETContext context, IQuestionRequirementManager question, IGalleryEditor galleryEditor)
         {
             _context = context;
             _question = question;
             _galleryEditor = galleryEditor;
+            _lang = "en";
+
+            _overlay = new TranslationOverlay();
+        }
+
+
+        public void SetLanguage(string lang)
+        {
+            _lang = lang;
         }
 
 
@@ -1244,6 +1260,19 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             foreach (NEW_REQUIREMENT rq in reqs)
             {
+                // overlay
+                var translatedCategory = _overlay.GetCat(rq.Standard_Category, _lang);
+                if (translatedCategory != null)
+                {
+                    rq.Standard_Category = translatedCategory.Value;
+                }
+
+                var translatedSubcat = _overlay.GetCat(rq.Standard_Sub_Category, _lang);
+                if (translatedSubcat != null)
+                {
+                    rq.Standard_Sub_Category = translatedSubcat.Value;
+                }
+
                 Requirement r = new Requirement()
                 {
                     RequirementID = rq.Requirement_Id,
@@ -1251,6 +1280,14 @@ namespace CSETWebCore.Business.ModuleBuilder
                     RequirementText = rq.Requirement_Text,
                     SupplementalInfo = rq.Supplemental_Info
                 };
+
+                // overlay
+                var translatedReq = _overlay.GetReq(r.RequirementID, _lang);
+                if (translatedReq != null)
+                {
+                    r.RequirementText = translatedReq.RequirementText;
+                    r.SupplementalInfo = translatedReq.SupplementalInfo;
+                }
 
                 // Get the SAL levels for this requirement
                 var sals = _context.REQUIREMENT_LEVELS.Where(l => l.Requirement_Id == rq.Requirement_Id).ToList();

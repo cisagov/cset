@@ -25,11 +25,9 @@ import { AlertComponent } from './../../dialogs/alert/alert.component';
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
-import { Router } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
 import { OkayComponent } from '../../dialogs/okay/okay.component';
-import { set } from 'lodash';
 
 @Component({
   selector: 'app-set-detail',

@@ -135,7 +135,7 @@ namespace CSETWebCore.Business.Question
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Question")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
 
             this.questions = query.Distinct().ToList();
             this.Answers = answers.ToList();
@@ -218,7 +218,7 @@ namespace CSETWebCore.Business.Question
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _questionRequirement.AssessmentId && x.Question_Type == "Question")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
 
             this.questions = query.Distinct().ToList();
             this.Answers = answers.ToList();
@@ -394,6 +394,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);

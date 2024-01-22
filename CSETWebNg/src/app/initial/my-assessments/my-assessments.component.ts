@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-import { DatePipe, getLocaleDateFormat } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -38,19 +38,18 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { concatMap, delay, map } from "rxjs/operators";
+import { concatMap, map } from "rxjs/operators";
 import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
-import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
 import * as moment from "moment";
-import { forEach } from "lodash";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { HydroService } from "../../services/hydro.service";
 
 
 interface UserAssessment {
@@ -124,7 +123,8 @@ export class MyAssessmentsComponent implements OnInit {
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public datePipe: DatePipe,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private hydroSvc: HydroService
   ) { }
 
   ngOnInit() {
@@ -169,10 +169,10 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-      
+
       if (this.ncuaSvc.switchStatus) {
         return false;
-      }      
+      }
     }
 
     if (column == 'analytics') {
@@ -188,7 +188,7 @@ export class MyAssessmentsComponent implements OnInit {
         return false;
       }
     }
-    
+
     return true;
   }
 
@@ -407,7 +407,7 @@ export class MyAssessmentsComponent implements OnInit {
         assessments: this.sortedAssessments
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
@@ -426,7 +426,7 @@ export class MyAssessmentsComponent implements OnInit {
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
     // moment().utcOffset(300);
-    let localDate = moment(lastModifiedDate).format('ll LTS'); 
+    let localDate = moment(lastModifiedDate).format('ll LTS');
     // let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
     return localDate;
   }

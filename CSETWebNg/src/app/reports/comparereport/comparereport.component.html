@@ -24,8 +24,7 @@
 
   <div class="flex-container">
     <div class="column mt-3">
-      <p
-        class="report-title">
+      <p class="report-title">
         MULTIPLE ASSESSMENT COMPARISON REPORT
       </p>
     </div>
@@ -56,16 +55,13 @@
 
   <div class="page-break">
     <h1>Summary Percent Compliance</h1>
-    <div class="chart d-flex flex-column flex-00a mb-5">
-      <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-        <div>SUMMARY PERCENT COMPLIANCE</div>
-        <div *ngIf="chartOverallAverage == null">
-          <div class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
+    <div style="margin: 0 auto 2em auto; display: block;">
+      <div *ngIf="chartOverallAverage == null">
+        <div class="spinner-container" style="margin: 2em auto">
+          <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
-        <canvas id="canvasOverallAverage"> {{ chartOverallAverage }} </canvas>
       </div>
+      <canvas id="canvasOverallAverage"> {{ chartOverallAverage }} </canvas>
     </div>
   </div>
 
@@ -157,11 +153,11 @@
         <th>Title</th>
         <th>File Name</th>
       </tr>
-      <tr *ngFor="let doc of response?.DocumentLibraryTable">
-        <td>{{doc.documenttitle}}</td>
-        <td>{{doc.FileName}}</td>
+      <tr *ngFor="let doc of response?.documentLibraryTable">
+        <td>{{doc.documentTitle}}</td>
+        <td>{{doc.fileName}}</td>
       </tr>
-      <tr *ngIf="(response?.DocumentLibraryTable?.length ?? 0) === 0">
+      <tr *ngIf="(response?.documentLibraryTable?.length ?? 0) === 0">
         <td></td>
         <td>There are no documents to display</td>
       </tr>

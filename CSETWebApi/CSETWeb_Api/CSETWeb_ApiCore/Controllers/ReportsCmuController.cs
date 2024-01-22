@@ -12,10 +12,7 @@ using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
-using System.Linq;
-using System.Collections.Generic;
-using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Cmu;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -36,7 +33,8 @@ namespace CSETWebCore.Api.Controllers
 
         public ReportsCmuController(ITokenManager token, IAssessmentBusiness assessment,
             IDemographicBusiness demographic, IReportsDataBusiness report,
-            IAssessmentUtil assessmentUtil, IAdminTabBusiness admin, CSETContext context)
+            IAssessmentUtil assessmentUtil, IAdminTabBusiness admin,
+            ICmuScoringHelper cmuScoringHelper, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
@@ -44,9 +42,8 @@ namespace CSETWebCore.Api.Controllers
             _report = report;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = admin;
+            _scoring = cmuScoringHelper;
             _context = context;
-
-            _scoring = new ICmuScoringHelper(context);
         }        
     }
 }

@@ -13,6 +13,8 @@ using CSETWebCore.Business.Acet;
 using CSETWebCore.Constants;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
 
 
@@ -23,6 +25,9 @@ namespace CSETWebCore.Business.Question
     {
         private readonly CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter _converter;
         private readonly CSETContext _context;
+
+        private readonly ITokenManager _tokenManager;
+
 
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -90,7 +95,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="converter"></param>
         /// <param name="context"></param>
-        public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context)
+        public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context, ITokenManager token)
         {
             SourceDocumentsList = new List<CustomDocument>();
             this.ComponentVisibility = false;
@@ -98,6 +103,7 @@ namespace CSETWebCore.Business.Question
             this.FrameworkQuestions = new ObservableCollection<FrameworkQuestionItem>();
             _converter = converter;
             _context = context;
+            _tokenManager = token;
         }
 
 
@@ -227,9 +233,23 @@ namespace CSETWebCore.Business.Question
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
+
+
+            var overlay = new TranslationOverlay();
+
+            // get the user's language
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var translatedReq = overlay.GetReq(tabData.RequirementID, lang);
+            if (translatedReq != null)
+            {
+                tabData.SupplementalInfo = FormatSupplementalInfo(translatedReq.SupplementalInfo);
+            }
+
+
+
             RequirementsData = tabData;
             int requirement_id = requirement.Requirement_Id;
-            // var questions = requirement.NEW_QUESTION;
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {

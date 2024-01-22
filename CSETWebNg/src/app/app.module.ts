@@ -111,6 +111,7 @@ import { AssessmentDetailComponent } from './assessment/prepare/assessment-info/
 import { AssessmentInfoComponent } from './assessment/prepare/assessment-info/assessment-info.component';
 import { Assessment2InfoComponent } from './assessment/prepare/assessment-info/assessment2-info/assessment2-info.component';
 import { AssessmentInfoTsaComponent } from './assessment/prepare/assessment-info/assessment-info-tsa/assessment-info-tsa.component';
+import { AssessmentInfoNcuaComponent } from './assessment/prepare/assessment-info/assessment-info-ncua/assessment-info-ncua.component';
 import { AssessmentConfigComponent } from './assessment/prepare/assessment-info/assessment-config/assessment-config.component';
 import { FrameworkComponent } from './assessment/prepare/framework/framework.component';
 import { RequiredDocsComponent } from './assessment/prepare/required/required.component';
@@ -122,7 +123,7 @@ import { SalNistComponent } from './assessment/prepare/sals/sal-nist/sal-nist.co
 import { SalSimpleComponent } from './assessment/prepare/sals/sal-simple/sal-simple.component';
 import { SalsComponent } from './assessment/prepare/sals/sals.component';
 import { StandardsComponent } from './assessment/prepare/standards/standards.component';
-import { FindingsComponent } from './assessment/questions/findings/findings.component';
+import { ObservationsComponent } from './assessment/questions/observations/observations.component';
 import { QuestionBlockComponent } from './assessment/questions/question-block/question-block.component';
 import { QuestionExtrasComponent } from './assessment/questions/question-extras/question-extras.component';
 import { QuestionsComponent } from './assessment/questions/questions.component';
@@ -191,7 +192,7 @@ import { DemographicService } from './services/demographic.service';
 import { EmailService } from './services/email.service';
 import { EnableFeatureService } from './services/enable-feature.service';
 import { FileUploadClientService } from './services/file-client.service';
-import { FindingsService } from './services/findings.service';
+import { ObservationsService } from './services/observations.service';
 import { FrameworkService } from './services/framework.service';
 import { NavigationService } from './services/navigation/navigation.service';
 import { QuestionsService } from './services/questions.service';
@@ -258,7 +259,7 @@ import { RraLayoutMainComponent } from './layout/rra-layout-main/rra-layout-main
 import { IodLayoutComponent } from './layout/iod-layout/iod-layout.component';
 import { ReportTestComponent } from './reports/report-test/report-test.component';
 import { SiteDetailComponent } from './reports/site-detail/site-detail.component';
-import { DiscoveryTearoutsComponent } from './reports/discovery-tearouts/discovery-tearouts.component';
+import { ObservationTearoutsComponent } from './reports/observation-tearouts/observation-tearouts.component';
 import { EvalAgainstStandardsComponent } from './reports/eval-against-standards/eval-against-standards.component';
 import { ExecutiveSummaryComponent } from './reports/executive-summary/executive-summary.component';
 import { SecurityplanComponent } from './reports/securityplan/securityplan.component';
@@ -337,8 +338,8 @@ import { RelationshipFormationComponent } from './assessment/results/edm/relatio
 import { RelationshipManagementComponent } from './assessment/results/edm/relationship-management/relationship-management.component';
 import { ServiceProtectionComponent } from './assessment/results/edm/service-protection/service-protection.component';
 import { MaturityIndicatorLevelsComponent } from './assessment/results/edm/maturity-indicator-levels/maturity-indicator-levels.component';
-import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component'
-import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component'
+import { EDMHorizontalBarChart } from './reports/edm/horizontal-bar-chart/horizontal-bar-chart.component';
+import { EDMTripleBarChart } from './reports/edm/triple-bar-chart/triple-bar-chart.component';
 import { EDMBarChartLegend } from './reports/edm/edm-bar-chart-legend/edm-bar-chart-legend.component';
 import { EDMFrameworkSummary } from './reports/edm/edm-framework-summ/edm-framework-summ.component';
 import { ModuleAddCloneComponent } from './builder/module-add-clone/module-add-clone.component';
@@ -607,16 +608,17 @@ import { CmuOtherRemarksComponent } from './reports/cmu/cmu-other-remarks/cmu-ot
 import { TranslocoRootModule } from './transloco-root.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { UserLanguageComponent } from './dialogs/user-language/user-language.component';
+import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
 import {
     MAT_MOMENT_DATE_FORMATS,
     MomentDateAdapter,
     MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-  } from '@angular/material-moment-adapter';
+} from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
+import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 
 @NgModule({
     imports: [
@@ -731,6 +733,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         AssessmentDetailComponent,
         AssessmentContactsComponent,
         AssessmentDemographicsComponent,
+        AssessmentInfoNcuaComponent,
         AssessmentDetailNcuaComponent,
         ResultsComponent,
         SalSimpleComponent,
@@ -766,7 +769,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         QuestionExtrasComponent,
         ResourceLibraryComponent,
         OkayComponent,
-        FindingsComponent,
+        ObservationsComponent,
         IssuesComponent,
         MeritCheckComponent,
         SafePipe,
@@ -846,12 +849,13 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         AcetLayoutMainComponent,
         ReportTestComponent,
         SiteDetailComponent,
-        DiscoveryTearoutsComponent,
+        ObservationTearoutsComponent,
         EvalAgainstStandardsComponent,
         ExecutiveSummaryComponent,
         SecurityplanComponent,
         SiteSummaryComponent,
         TrendReportComponent,
+        TrendCompareCompatibilityComponent,
         CompareReportComponent,
         Assessment2InfoComponent,
         ModelSelectComponent,
@@ -1179,8 +1183,10 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         OtherRemarksComponent,
         CmuOtherRemarksComponent,
         UserLanguageComponent,
+        MalcolmUploadErrorComponent,
         AssessmentConvertCfComponent,
         IseWarningsComponent,
+        TrendAnalyticsComponent
     ],
     providers: [
         TranslocoService,
@@ -1209,13 +1215,13 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         },
         DatePipe,
         {
-            provide: MAT_DATE_LOCALE, 
+            provide: MAT_DATE_LOCALE,
             useFactory: (tSvc: TranslocoService) => {
                 // get the language based on config
                 return tSvc.getActiveLang();
             },
             deps: [TranslocoService],
-            multi: true        
+            multi: true
         },
         {
             provide: DateAdapter,
@@ -1238,7 +1244,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         FrameworkService,
         RequiredDocumentService,
         IRPService,
-        FindingsService,
+        ObservationsService,
         NavigationService,
         FileUploadClientService,
         AnalysisService,
@@ -1263,7 +1269,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
         CmuService,
         Utilities,
         NCUAService,
-        GalleryService, 
+        GalleryService,
         FooterService
     ],
     bootstrap: [AppComponent]

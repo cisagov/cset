@@ -37,7 +37,7 @@ export class CsiServiceCompositionComponent implements OnInit {
   serviceComposition: CsiServiceComposition = {};
   definingSystemsList: CsiDefiningSystem[] = [];
 
-  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService, private configSvc: ConfigService) {}
+  constructor(private csiSvc: CsiService, private assessSvc: AssessmentService, private configSvc: ConfigService) { }
 
   ngOnInit(): void {
     this.csiSvc.getAllCsiDefiningSystems().subscribe(

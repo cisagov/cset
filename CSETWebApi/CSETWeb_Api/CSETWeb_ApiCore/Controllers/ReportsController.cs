@@ -11,6 +11,7 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Helpers;
@@ -471,7 +472,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
-            data.Individuals = _report.GetFindingIndividuals();
+            data.Individuals = _report.GetObservationIndividuals();
             return Ok(data);
         }
 
@@ -699,7 +700,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/modulecontent")]
         public IActionResult ModuleContentReport([FromQuery] string set)
         {
+            var lang = _token.GetCurrentLanguage();
+
             var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
+            report.SetLanguage(lang);
             var resp = report.GetResponse(set);
             return Ok(resp);
         }

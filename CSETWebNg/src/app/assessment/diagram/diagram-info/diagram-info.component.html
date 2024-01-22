@@ -41,11 +41,17 @@
 
         </div>
     </div>
-    <div class="mt-3 mb-5">
-        <button class="btn btn-primary" (click)="navToDiagram('')"><i
+    <div class="mt-3 mb-5" style="display: flex; justify-content: space-between;">
+            <button class="btn btn-primary" (click)="navToDiagram('')"><i
                 class="fas fa-project-diagram mr-2"></i>{{buttonText}}</button>
-        <!-- <button class="btn btn-primary" (click)="navToDiagram('orig')"><i
-                class="fas fa-project-diagram mr-2"></i>{{buttonText}} ORIG</button> -->
+                
+            <span *ngIf="configSvc.installationMode == 'RENEW'">
+                <label for="importFile" class="btn btn-primary cset-icons-import">
+                    Import Malcolm
+                </label>
+                <input type="file" class="display-none" id="importFile" multiple
+                    accept=".json" (change)="uploadMalcolmData($event)">
+            </span>
     </div>
 
     <app-nav-back-next [page]="'diagram'"></app-nav-back-next>

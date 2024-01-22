@@ -22,8 +22,7 @@
 //
 ////////////////////////////////
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
-} from '../../../../node_modules/@angular/router';
+import { Router, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 

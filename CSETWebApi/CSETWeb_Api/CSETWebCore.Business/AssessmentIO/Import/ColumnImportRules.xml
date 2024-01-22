@@ -10,6 +10,9 @@
     <Column name="AssessmentCreatorId">
       <Rule action="ignore" />
     </Column>
+	<Column name="Assessment_GUID">
+	  <Rule action="ignoreIfExists" />
+	</Column>
   </Table>
 
   <Table name="INFORMATION">

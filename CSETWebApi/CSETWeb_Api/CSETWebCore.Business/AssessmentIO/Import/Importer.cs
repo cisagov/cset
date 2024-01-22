@@ -79,17 +79,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
              {
                  config.Ignore(x => x.Finding_Id);
              });
-            //copy the incoming information to an intermediary
-            //then copy from the intermediary to destination
-            //and permit updates.
-
-            // RKW 22-MAR-19 - this was crashing with a StackOverflowException.  
-            //TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
-            //{
-            //    config.Ignore(x => x.Id);
-            //    config.Ignore(x => x.IdNavigation);
-            //    config.Ignore(x => x.ASSESSMENT);
-            //});
         }
 
 
@@ -99,19 +88,20 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public int RunImportManualPortion(bool overwriteAssessment)
         {
-            //create the new assessment
+            //create the new assessment / get existing assessment if overwrite is true
             //copy each of the items to the table 
             //as the copy occurs change to the current assessment_id
             //update the answer id's             
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
-            AssessmentDetail detail;
+            AssessmentDetail detail = null;
 
             if (overwriteAssessment)
             {
                 detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
             }
-            else 
+            
+            if (detail == null)
             { 
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
             }

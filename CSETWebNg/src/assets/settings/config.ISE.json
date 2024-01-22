@@ -22,7 +22,8 @@
         "showExportOnReports": false,
         "showFeedback": false,
         "showDisclaimer": false,
-        "independentSuppGuidance": true
+        "independentSuppGuidance": true,
+        "showCisaAssessorWorkflowSwitch": false
     },
     "languageOptions": [
         { "value": "en", "name": "English" }

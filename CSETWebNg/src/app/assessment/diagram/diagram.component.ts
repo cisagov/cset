@@ -23,11 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AssessmentService } from '../../services/assessment.service';
-import { NavigationService } from '../../services/navigation/navigation.service';
-import { ConfigService } from '../../services/config.service';
-import { AuthenticationService } from '../../services/authentication.service';
 import { AssessmentDetail } from '../../models/assessment-info.model';
+import { AssessmentService } from '../../services/assessment.service';
+import { AuthenticationService } from '../../services/authentication.service';
+import { ConfigService } from '../../services/config.service';
+import { NavigationService } from '../../services/navigation/navigation.service';
 
 @Component({
     selector: 'app-diagram',
