@@ -6,6 +6,7 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Api.Error;
+using CSETWebCore.Business.Diagram;
 using CSETWebCore.Business.Merit;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
@@ -48,6 +49,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/malcolm")]
         public IActionResult MapSourceToDestinationData()
         {
+            int assessmentId = (int)_token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var formFiles = HttpContext.Request.Form.Files;
             string fileName = "";
             string fileExtension = "";            
@@ -83,10 +85,7 @@ namespace CSETWebCore.Api.Controllers
                     MalcolmUploadError error = new MalcolmUploadError(fileName, 400, ex.Message);
                     errors.Add(error);
                 }
-
-                
             }
-
 
             if (errors.Count > 0)
             {
@@ -94,7 +93,10 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                return Ok(new MalcolmBusiness(_context).GetMalcolmJsonData(dataList));
+                DiagramManager diagramManager = new DiagramManager(_context);
+                List<MalcolmData> processedData = new MalcolmBusiness(_context).GetMalcolmJsonData(dataList);
+                diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
+                return Ok();
             }
         }
     }
