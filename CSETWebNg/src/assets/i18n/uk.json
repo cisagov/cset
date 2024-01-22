@@ -59,6 +59,8 @@
     "email not allowed": "[UK]The specified email is not allowed by this CSET installation",
     "unknown error": "[UK]Unknown error",
     "user inactive": "[UK]User is inactive",
+    "control priorities intro1": "Інформацію про рейтинг можна знайти в <a href=\"",
+    "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">посібнику користувача</a>.",
 
     "titles": {
         "prepare": "Приготуйте",
@@ -69,7 +71,26 @@
         "assessment information": "Інформація про оцінку",
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
-        "security assurance level (sal)": "Гарантований рівень безпеки (SAL)",
+        "sal": {
+            "security assurance level (sal)": "Гарантований рівень безпеки (SAL)",
+            "current level": "Поточний рівень",
+            "choose methodology": "Виберіть одну з трьох наведених нижче методологій SAL, щоб визначити правильний рівень для вашого оцінювання.",
+            "overall": "Загалом",
+            "overall sal": "Загальний SAL",
+            "confidentiality": "Конфіденційність",
+            "confidentiality text": "[UK]This value relates to the importance of protecting information from unauthorized access. The more important it is that unauthorized users do not have access to the information the higher your SAL level.",
+            "integrity": "Цілісність",
+            "integrity text": "[UK]This value relates to the the importance of the accuracy of information. The more important it is that information is kept consistent, accurate, and only changed by those authorized the higher your SAL level.",
+            "availability": "Доступність",
+            "availability text": "[UK]This value relates to the importance of information being readily available. The more important it is to have your information available for use the higher your SAL level.",
+            "simple": "просто",
+            "general risk based": "Загальний ризик",
+            "nist 60 fips 199": "NIST-60 / FIPS-199",
+            "low": "Низький",
+            "moderate": "Помірний",
+            "high": "Високий",
+            "very high": "Дуже високо"
+        },
         "network diagram": "мережева схема",
         "diagram component questions": "Питання компонентів діаграми",
         "standard questions": "Стандартні запитання",
@@ -86,7 +107,15 @@
         "edm tutorial": "EDM Tutorial",
         "crr tutorial": "CRR Tutorial",
         "rra tutorial": "Посібник із готовності до програм-вимагачів",
-        "reports": "Звіти"
+        "analysis dashboard": "Інформаційна панель аналізу",
+        "standard results": "Стандартні результати",
+        "control priorities": "Пріоритети контролю",
+        "standards summary": "Стандартне резюме",
+        "ranked categories": "Рейтингові категорії",
+        "results by category": "Результати за категоріями",
+        "high level desc exec sec comments": "Опис оцінювання високого рівня, резюме та коментарі",
+        "reports": "Звіти",
+        "assessment complete": "Оцінювання завершено"
     },
 
     "buttons": {
@@ -264,6 +293,16 @@
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
         "mil-5": "MIL-5"
+    },
+    "reports": {
+        "standard": "Стандартний",
+        "category": "Категорія",
+        "answer": "Відповідь",
+        "rank": "ранг",
+        "question": "Питання",
+        "reference number": "Посилання №",
+        "high level assessment desc": "Опис оцінювання високого рівня",
+        "high level assessment desc text": "Введіть опис процесу оцінки та виконаної роботи для вищого керівництва. Ця інформація буде включена до звітів. Це не призначено для аналізу результатів оцінювання, як зазначено в резюме."
     },
     "extras": {
         "artifact title": "Назва артефакту/документа",

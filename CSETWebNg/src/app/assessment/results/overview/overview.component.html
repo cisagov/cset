@@ -20,13 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 class="d-flex flex-column flex-00a">High-Level Assessment Description</h3>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3 class="d-flex flex-column flex-00a">{{t('reports.high level assessment desc')}}</h3>
   <div class="d-flex flex-column flex-00a">
-    Enter a description of the assessment process and work performed for
-    senior management. This information will be included in the reports. 
-    This is not intended to be analysis of the assessment results as
-    requested in the executive summary.
+    {{t('reports.high level assessment desc text')}}
     <textarea maxlength="4000" class="overview-textarea-height" name="overview" id="overview"
       placeholder="Please provide a description of the assessment process and work performed."
       [(ngModel)]="o.assessmentDescription" (change)="update($event)"></textarea>
