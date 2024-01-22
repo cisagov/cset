@@ -1212,7 +1212,6 @@ namespace CSETWebCore.Business.Diagram
             incrementalId = 0;
             nodeLocations = new List<Geometry>();
             */
-
             XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
             newMxGraphModel.SetAttribute("dx", "1050");
             newMxGraphModel.SetAttribute("yx", "610");
@@ -1251,7 +1250,7 @@ namespace CSETWebCore.Business.Diagram
             int nodeCount = processedData[0].Graphs.Count;
 
             // Generate the actual Diagram/XML objects
-            WalkDownTree(processedData[0].Trees[0], "");
+            WalkDownTree(processedData[0].Trees[2], "");
 
             // Save that XML to the Assessments table -- Diagram Markup.
             SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
@@ -1264,8 +1263,32 @@ namespace CSETWebCore.Business.Diagram
             string id = "component-" + incrementalId;
             incrementalId++;
 
-            // ste thew label to include the node's key (IP address)
-            string label = "UN-" + node.Key;
+            // set the label to include the node's key (IP address)
+            string label = "";
+            var symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == node.Role).FirstOrDefault();
+            if (symbol == null)
+            {
+                symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Abbreviation == node.Role).FirstOrDefault();
+                if (symbol == null && node.Role != null)
+                {
+                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Malcolm_Role == node.Role).FirstOrDefault();
+                    if (symbol == null)
+                    {
+                        symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
+                    }
+                    label = node.Role;
+                }
+                else
+                {
+                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
+                    label = "UN-" + node.Key;
+                }
+            } 
+            else
+            {
+                label = symbol.Symbol_Name;
+            }
+
 
             var userObject = xml.CreateElement("UserObject");
             userObject.SetAttribute("label", label);
@@ -1279,8 +1302,9 @@ namespace CSETWebCore.Business.Diagram
             //userObject.SetAttribute("parent", parent);
             userObject.SetAttribute("id", id);
 
-            Geometry geometry = AssignCoordinates(parentId);
-            userObject.AppendChild(CreateMxCellAndGeometry(geometry.x.ToString(), geometry.y.ToString()));
+            Geometry geometry = AssignCoordinates(parentId, symbol.Width, symbol.Height);
+            userObject.AppendChild(CreateMxCellAndGeometry(geometry.x.ToString(), geometry.y.ToString()
+                , symbol.File_Name, symbol.Width.ToString(), symbol.Height.ToString()));
             XmlElement root = (XmlElement)xml.SelectSingleNode("//root");
 
             root.AppendChild(userObject);
@@ -1301,20 +1325,20 @@ namespace CSETWebCore.Business.Diagram
             return;
         }
 
-        public XmlElement CreateMxCellAndGeometry(string x, string y)
+        public XmlElement CreateMxCellAndGeometry(string x, string y, string fileName, string w, string h)
         {
-            string role = "unknown"; //assuming all are unknown for now
+            //string role = "unknown"; //assuming all are unknown for now
 
             XmlElement mxCell = xml.CreateElement("mxCell");
-            mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + role + ".svg");
+            mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + fileName);
             mxCell.SetAttribute("vertex", "1");
             mxCell.SetAttribute("parent", "1");
 
             XmlElement mxGeometry = xml.CreateElement("mxGeometry");
             mxGeometry.SetAttribute("x", x);
             mxGeometry.SetAttribute("y", y);
-            mxGeometry.SetAttribute("width", "50");
-            mxGeometry.SetAttribute("height", "50");
+            mxGeometry.SetAttribute("width", w);
+            mxGeometry.SetAttribute("height", h);
             mxGeometry.SetAttribute("as", "geometry");
 
             mxCell.AppendChild(mxGeometry);
@@ -1341,7 +1365,7 @@ namespace CSETWebCore.Business.Diagram
             return edge;
         }
 
-        public Geometry AssignCoordinates(string parentId)
+        public Geometry AssignCoordinates(string parentId, int w, int h)
         {
             int x = 0;
             int y = 0;
@@ -1352,6 +1376,8 @@ namespace CSETWebCore.Business.Diagram
             {
                 geometry.x = x;
                 geometry.y = y;
+                geometry.w = w;
+                geometry.h = h;
 
                 nodeLocations.Add(geometry);
                 return geometry;
@@ -1361,11 +1387,14 @@ namespace CSETWebCore.Business.Diagram
             int revolution = 1;
             Geometry parentCoordinates = ParseCoordinates(parentNode);
             Geometry newCoordinatesToTry = new Geometry();
+            newCoordinatesToTry.w = w;
+            newCoordinatesToTry.h = h;
             do
             {
                 newCoordinatesToTry = CircleAroundParent(parentCoordinates, i, revolution);
                 i++;
-
+                newCoordinatesToTry.w = w;
+                newCoordinatesToTry.h = h;
                 if (i == 8)
                 {
                     i = 0;
@@ -1388,14 +1417,14 @@ namespace CSETWebCore.Business.Diagram
             //Geometry parent = new Geometry(parentCoords.x, parentCoords.y, parentCoords.w, parentCoords.h);
             foreach (Geometry currentNode in nodeLocations)
             {
-                int parentEndX = currentNode.x + currentNode.w;
-                int parentEndY = currentNode.y + currentNode.h;
-                int childEndX = newCoords.x + newCoords.w;
-                int childEndY = newCoords.y + newCoords.h;
+                int currentEndX = currentNode.x + currentNode.w;
+                int currentEndY = currentNode.y + currentNode.h;
+                int newCoordsEndX = newCoords.x + newCoords.w;
+                int newCoordsEndY = newCoords.y + newCoords.h;
 
                 // check for x and y overlaps
-                bool xOverlapping = (currentNode.x <= newCoords.x && childEndX <= parentEndX);
-                bool yOverlapping = (currentNode.y <= newCoords.y && childEndY <= parentEndY);
+                bool xOverlapping = (currentNode.x <= newCoords.x && newCoordsEndX <= currentEndX) || (currentNode.x >= newCoords.x && newCoordsEndX >= currentEndX);
+                bool yOverlapping = (currentNode.y <= newCoords.y && newCoordsEndY <= currentEndY) || (currentNode.y >= newCoords.y && newCoordsEndY >= currentEndY);
 
                 if (xOverlapping && yOverlapping)
                 {
@@ -1431,9 +1460,9 @@ namespace CSETWebCore.Business.Diagram
         {
             int changeAmount = 120 * revolution;
             Geometry parent = new Geometry(geo.x, geo.y, geo.w, geo.h);
-            ///     3   2   1
-            ///     4       0
             ///     5   6   7
+            ///     4       0
+            ///     3   2   1
             switch (i % 8)
             {
                 case 0:

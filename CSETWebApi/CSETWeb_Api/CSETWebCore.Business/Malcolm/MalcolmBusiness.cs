@@ -74,6 +74,14 @@ namespace CSETWebCore.Business.Malcolm
                 }
                 else
                 {
+                    // checking for role
+                    if (!bucket.Key.Contains('.') && !bucket.Key.Contains(':'))
+                    {
+                        parent.Role = bucket.Key;
+                        if (bucket.Values != null)
+                            BuildNetwork(parent, bucket.Values.Buckets);
+                        return;
+                    }
                     tnode = new TempNode(bucket.Key);
                     networkOfNodes.TryAdd(bucket.Key, tnode);
                     if (parent != null)
