@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -22,7 +22,7 @@ namespace CSETWebCore.Business.Authorization
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            if (SkipAuthorization(context)) 
+            if (SkipAuthorization(context))
             {
                 return;
             }
@@ -49,7 +49,7 @@ namespace CSETWebCore.Business.Authorization
             {
                 tokenString = authHeaderValue[0];
             }
-   
+
             if (string.IsNullOrEmpty(tokenString) || !token.IsTokenValid(tokenString))
             {
                 context.Result = new UnauthorizedResult();

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -56,7 +56,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 xSvg.Add(xRect);
 
                 double pct = (double)d.AnswerCounts[i] / (double)maxAnswerCount;
-                double barHeight = barSectionHeight * pct;                
+                double barHeight = barSectionHeight * pct;
                 // don't render a zero-height bar; provide some minimal color
                 if (barHeight < 1 || !double.IsFinite(barHeight))
                 {
@@ -108,7 +108,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 var percentage = ((double)d.AnswerCounts[0] / (double)d.AnswerCounts.Sum()) * 100;
                 var value = (percentage >= 99 && percentage < 100 ? 99 : Math.Round(percentage, 0, MidpointRounding.AwayFromZero));
 
-                if (!double.IsFinite(value)) 
+                if (!double.IsFinite(value))
                 {
                     value = 0;
                 }

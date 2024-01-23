@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -135,7 +135,7 @@ namespace CSETWebCore.Business.Aggregation
             }
 
             // Restructure the data into chart.js format
-            
+
             foreach (var m in modelList)
             {
                 var c = new BarChartX();
@@ -145,7 +145,8 @@ namespace CSETWebCore.Business.Aggregation
                 c.Labels = m.Categories.Select(x => x.CategoryTitle).ToList();
 
                 // sort assessment datasets by alias
-                assessments.OrderBy(x => x.Alias).ToList().ForEach(a => {
+                assessments.OrderBy(x => x.Alias).ToList().ForEach(a =>
+                {
                     if (datasetDict.ContainsKey($"{m.ModelName} {a.Assessment_Id}"))
                     {
                         c.Datasets.Add(datasetDict[$"{m.ModelName} {a.Assessment_Id}"]);
@@ -260,5 +261,5 @@ namespace CSETWebCore.Business.Aggregation
 
 
 
-    
+
 }

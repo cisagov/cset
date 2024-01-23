@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.GalleryParser.Tests
                 null,
                 null,
                 null);
-            foreach(var i in gallery.GetUnused("CF"))
+            foreach (var i in gallery.GetUnused("CF"))
             {
                 Console.WriteLine(i.Gallery_Item_Guid);
             }

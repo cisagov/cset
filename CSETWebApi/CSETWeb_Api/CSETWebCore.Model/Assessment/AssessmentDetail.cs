@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -76,6 +76,6 @@ namespace CSETWebCore.Model.Assessment
         public string ExecutiveSummary { get; set; }
         public string TypeTitle { get; set; }
         public string TypeDescription { get; set; }
-        public string PciiNumber {  get; set; }
+        public string PciiNumber { get; set; }
     }
 }

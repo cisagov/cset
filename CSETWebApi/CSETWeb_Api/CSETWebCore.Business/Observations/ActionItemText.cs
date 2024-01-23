@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,5 +18,5 @@ namespace CSETWebCore.Business.Observations
     {
         public List<ActionItemText> actionTextItems { get; set; }
         public int observation_Id { get; set; }
-}
+    }
 }

@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -38,7 +38,7 @@ namespace CSETWebCore.Business
                     break;
                 case "id":
                     this.ID = value;
-                    break;                
+                    break;
                 case "zone":
                     this.Component_Symbol_Id = Constants.Constants.ZONE;// 121;
                     break;

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -75,7 +75,7 @@ namespace CSETWebCore.Reports.Models
             foreach (CrrMaturityDomainModel domain in CrrDomains)
             {
                 domain.WidthValpx = mil1Width * domain.DomainScore;
-                
+
                 if (domain.DomainScore > 1)
                 {
                     // reset to MIL-1 complete ...
