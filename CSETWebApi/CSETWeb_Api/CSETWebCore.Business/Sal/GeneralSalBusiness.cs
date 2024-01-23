@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Sal
             //currently selected items can be retrieved from the database
             double weight = 0;
             foreach (GEN_SAL_WEIGHTS mapping in weights)
-            { 
+            {
                 weight += (double)mapping.Weight;
             }
 

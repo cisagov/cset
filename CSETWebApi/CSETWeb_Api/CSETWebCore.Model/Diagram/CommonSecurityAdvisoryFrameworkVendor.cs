@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -17,7 +17,7 @@ namespace CSETWebCore.Model.Diagram
     {
         public CommonSecurityAdvisoryFrameworkVendor() { }
 
-        public CommonSecurityAdvisoryFrameworkVendor(CommonSecurityAdvisoryFrameworkObject csafObj) 
+        public CommonSecurityAdvisoryFrameworkVendor(CommonSecurityAdvisoryFrameworkObject csafObj)
         {
             Name = csafObj.Product_Tree.Branches[0].Name;
             Products = new List<CommonSecurityAdvisoryFrameworkProduct>();

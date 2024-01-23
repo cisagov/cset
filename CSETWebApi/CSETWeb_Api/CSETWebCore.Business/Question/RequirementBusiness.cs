@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -167,7 +167,7 @@ namespace CSETWebCore.Business.Question
                         StandardShortName = req.SetShortName
                     };
 
-                    response.Categories.Add(category);                
+                    response.Categories.Add(category);
                 }
 
 
@@ -219,7 +219,7 @@ namespace CSETWebCore.Business.Question
                 var translatedReq = overlay.GetReq(dbR.Requirement_Id, lang);
                 if (translatedReq != null)
                 {
-                    qa.QuestionText = translatedReq.RequirementText;               
+                    qa.QuestionText = translatedReq.RequirementText;
                 }
 
                 if (string.IsNullOrEmpty(qa.QuestionType))

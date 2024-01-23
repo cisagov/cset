@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -124,29 +124,31 @@ namespace CSETWebCore.Business.GalleryParser
             //plus max column number +1
 
             TinyMapper.Bind<GALLERY_GROUP, GALLERY_GROUP>(
-                config => {
-                config.Ignore(source => source.Group_Id);
+                config =>
+                {
+                    config.Ignore(source => source.Group_Id);
                 }
             );
             TinyMapper.Bind<GALLERY_GROUP_DETAILS, GALLERY_GROUP_DETAILS>(
-              config => {
+              config =>
+              {
                   config.Ignore(source => source.Group_Id);
                   config.Ignore(source => source.Group_Detail_Id);
               }
           );
 
             //clone the group and the details
-            var oldGroup =  _context.GALLERY_GROUP.Where(x => x.Group_Id == group_to_clone).FirstOrDefault();
+            var oldGroup = _context.GALLERY_GROUP.Where(x => x.Group_Id == group_to_clone).FirstOrDefault();
             var newGroup = TinyMapper.Map<GALLERY_GROUP>(oldGroup);
             _context.GALLERY_GROUP.Add(newGroup);
             _context.SaveChanges();
-            var nextRow =  _context.GALLERY_ROWS.Where(x => x.Layout_Name == layout).Max(x => x.Row_Index);
-            _context.GALLERY_ROWS.Add(new GALLERY_ROWS() {Group_Id = newGroup.Group_Id,Layout_Name=layout,  Group = newGroup, Row_Index = (++nextRow) });
+            var nextRow = _context.GALLERY_ROWS.Where(x => x.Layout_Name == layout).Max(x => x.Row_Index);
+            _context.GALLERY_ROWS.Add(new GALLERY_ROWS() { Group_Id = newGroup.Group_Id, Layout_Name = layout, Group = newGroup, Row_Index = (++nextRow) });
 
-            foreach(var item in _context.GALLERY_GROUP_DETAILS.Where(x=>x.Group_Id == oldGroup.Group_Id))
+            foreach (var item in _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id == oldGroup.Group_Id))
             {
                 //make a copy and add it to the new group
-                var newItem = new GALLERY_GROUP_DETAILS() { Group_Id = newGroup.Group_Id, Column_Index = item.Column_Index, Gallery_Item_Guid = item.Gallery_Item_Guid };                
+                var newItem = new GALLERY_GROUP_DETAILS() { Group_Id = newGroup.Group_Id, Column_Index = item.Column_Index, Gallery_Item_Guid = item.Gallery_Item_Guid };
                 newGroup.GALLERY_GROUP_DETAILS.Add(newItem);
             }
             _context.SaveChanges();
@@ -242,7 +244,7 @@ namespace CSETWebCore.Business.GalleryParser
             var newGroupId = newGroup.Group_Id;
             var newRowIndex = 0;
 
-            
+
 
             GALLERY_ROWS newRow = new GALLERY_ROWS()
             {
@@ -259,7 +261,7 @@ namespace CSETWebCore.Business.GalleryParser
             }
             _context.SaveChanges();
             _context.GALLERY_ROWS.Add(newRow);
-            
+
             _context.SaveChanges();
 
             return newGroupId;
@@ -411,37 +413,53 @@ namespace CSETWebCore.Business.GalleryParser
                                join g in _context.GALLERY_GROUP on d.Group_Id equals g.Group_Id
                                join r in _context.GALLERY_ROWS on g.Group_Id equals r.Group_Id
                                where r.Layout_Name == layout_Name
-                               select new GalleryItem() { 
+                               select new GalleryItem()
+                               {
                                    Gallery_Item_Guid = i.Gallery_Item_Guid
-                                   , Title = i.Title
-                                   , Description = i.Description
-                                   , Configuration_Setup = i.Configuration_Setup
-                                   , Configuration_Setup_Client = i.Configuration_Setup_Client
-                                   , Icon_File_Name_Large = i.Icon_File_Name_Large
-                                   , Icon_File_Name_Small = i.Icon_File_Name_Small
-                                   , Is_Visible = i.Is_Visible
+                                   ,
+                                   Title = i.Title
+                                   ,
+                                   Description = i.Description
+                                   ,
+                                   Configuration_Setup = i.Configuration_Setup
+                                   ,
+                                   Configuration_Setup_Client = i.Configuration_Setup_Client
+                                   ,
+                                   Icon_File_Name_Large = i.Icon_File_Name_Large
+                                   ,
+                                   Icon_File_Name_Small = i.Icon_File_Name_Small
+                                   ,
+                                   Is_Visible = i.Is_Visible
                                }).Distinct().ToList();
 
             var query = (from i in _context.GALLERY_ITEM
-                         select new GalleryItem() {
+                         select new GalleryItem()
+                         {
                              Gallery_Item_Guid = i.Gallery_Item_Guid
-                             , Title = i.Title
-                             , Description = i.Description
-                             , Configuration_Setup = i.Configuration_Setup
-                             , Configuration_Setup_Client = i.Configuration_Setup_Client
-                             , Icon_File_Name_Large = i.Icon_File_Name_Large
-                             , Icon_File_Name_Small = i.Icon_File_Name_Small
-                             , Is_Visible = i.Is_Visible
+                             ,
+                             Title = i.Title
+                             ,
+                             Description = i.Description
+                             ,
+                             Configuration_Setup = i.Configuration_Setup
+                             ,
+                             Configuration_Setup_Client = i.Configuration_Setup_Client
+                             ,
+                             Icon_File_Name_Large = i.Icon_File_Name_Large
+                             ,
+                             Icon_File_Name_Small = i.Icon_File_Name_Small
+                             ,
+                             Is_Visible = i.Is_Visible
                          }).ToList();
-                       
-                        
+
+
             return query.Except(queryExcept.ToList(), new GalleryItemComparer()).ToArray();
         }
 
         public List<GalleryLayout> GetLayouts()
         {
             List<GalleryLayout> layouts = new List<GalleryLayout>();
-            foreach(var g in _context.GALLERY_LAYOUT)
+            foreach (var g in _context.GALLERY_LAYOUT)
             {
                 layouts.Add(new GalleryLayout() { LayoutName = g.Layout_Name });
             }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,16 +12,16 @@ namespace CSETWebCore.Business.Diagram
 {
     public class DiagramDifferences
     {
-        public Dictionary<Guid,NetworkComponent> AddedNodes { get; set; }
-        public Dictionary<Guid,NetworkComponent> DeletedNodes { get; set; }
-        public Dictionary<string, NetworkLayer> AddedContainers { get; set; }        
+        public Dictionary<Guid, NetworkComponent> AddedNodes { get; set; }
+        public Dictionary<Guid, NetworkComponent> DeletedNodes { get; set; }
+        public Dictionary<string, NetworkLayer> AddedContainers { get; set; }
         public Dictionary<string, NetworkLayer> DeletedLayers { get; set; }
         public Dictionary<string, NetworkZone> DeletedZones { get; set; }
 
         public DiagramDifferences()
         {
-            AddedNodes = new Dictionary<Guid,NetworkComponent>();
-            DeletedNodes = new Dictionary<Guid,NetworkComponent>();
+            AddedNodes = new Dictionary<Guid, NetworkComponent>();
+            DeletedNodes = new Dictionary<Guid, NetworkComponent>();
         }
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace CSETWebCore.Business.Diagram
         /// <param name="oldDiagram"></param>
         public void processComparison(Diagram newDiagram, Diagram oldDiagram)
         {
-            
+
             this.AddedNodes = lookupValue(newDiagram.NetworkComponents, oldDiagram.NetworkComponents);
             this.DeletedNodes = lookupValue(oldDiagram.NetworkComponents, newDiagram.NetworkComponents);
-            this.AddedContainers = processLayers(newDiagram.Layers,oldDiagram.Layers);
-            this.DeletedLayers = processLayers(oldDiagram.Layers, newDiagram.Layers);            
+            this.AddedContainers = processLayers(newDiagram.Layers, oldDiagram.Layers);
+            this.DeletedLayers = processLayers(oldDiagram.Layers, newDiagram.Layers);
             this.DeletedZones = processZones(oldDiagram.Zones, newDiagram.Zones);
         }
 
@@ -67,10 +67,10 @@ namespace CSETWebCore.Business.Diagram
             return differences;
         }
 
-        private Dictionary<Guid,NetworkComponent> lookupValue(Dictionary<Guid,NetworkComponent> sourcedictionary, Dictionary<Guid,NetworkComponent> destinationDictionary)
+        private Dictionary<Guid, NetworkComponent> lookupValue(Dictionary<Guid, NetworkComponent> sourcedictionary, Dictionary<Guid, NetworkComponent> destinationDictionary)
         {
             Dictionary<Guid, NetworkComponent> differences = new Dictionary<Guid, NetworkComponent>();
-            foreach (KeyValuePair<Guid,NetworkComponent> g in sourcedictionary)
+            foreach (KeyValuePair<Guid, NetworkComponent> g in sourcedictionary)
             {
                 NetworkComponent ignoreme = null;
                 if (!destinationDictionary.TryGetValue(g.Key, out ignoreme))

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -31,7 +31,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IStandardsBusiness _standard;
         private readonly IStandardSpecficLevelRepository _standardRepo;
 
-        public SalController(CSETContext context, ITokenManager token, IAssessmentModeData assessment, 
+        public SalController(CSETContext context, ITokenManager token, IAssessmentModeData assessment,
             IStandardsBusiness standard, IAssessmentUtil assessmentUtil, IStandardSpecficLevelRepository standardRepo)
         {
             _context = context;
@@ -83,7 +83,7 @@ namespace CSETWebCore.Api.Controllers
 
                 LevelManager lm = new LevelManager(asssessmentId, _context);
                 lm.RetrieveOtherLevels(rsal);
-                StandardRepository sr = new StandardRepository(_standard,_assessment,_context,_assessmentUtil, _standardRepo);
+                StandardRepository sr = new StandardRepository(_standard, _assessment, _context, _assessmentUtil, _standardRepo);
                 sr.InitializeStandardRepository(asssessmentId);
                 sr.Confidence_Level = rsal.CLevel;
                 sr.Integrity_Level = rsal.ILevel;

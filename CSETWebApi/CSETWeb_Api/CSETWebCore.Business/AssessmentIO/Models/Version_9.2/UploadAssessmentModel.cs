@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -31,7 +31,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_9_2
         public List<jFRAMEWORK_TIER_TYPE_ANSWER> jFRAMEWORK_TIER_TYPE_ANSWER { get; set; }
         public List<jSUB_CATEGORY_ANSWERS> jSUB_CATEGORY_ANSWERS { get; set; }
         public List<jASSESSMENT_CONTACTS> jASSESSMENT_CONTACTS { get; set; }
-        
+
         public List<jFINDING> jFINDING { get; set; }
         public List<jANSWER> jANSWER { get; set; }
         public List<jNIST_SAL_INFO_TYPES> jNIST_SAL_INFO_TYPES { get; set; }
@@ -42,9 +42,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_9_2
         public List<jDEMOGRAPHICS> jDEMOGRAPHICS { get; set; }
         public List<jPARAMETER_VALUES> jPARAMETER_VALUES { get; set; }
         public List<jPARAMETER_ASSESSMENT> jPARAMETER_ASSESSMENTs { get; set; }
-        
+
         public List<jFINDING_CONTACT> jFINDING_CONTACT { get; set; }
-		public List<jUSER_DETAIL_INFORMATION> jUSER_DETAIL_INFORMATION {get;set;}
+        public List<jUSER_DETAIL_INFORMATION> jUSER_DETAIL_INFORMATION { get; set; }
 
         public List<jFINANCIAL_HOURS> jFINANCIAL_HOURS { get; set; }
         public List<jFINANCIAL_ASSESSMENT_VALUES> jFINANCIAL_ASSESSMENT_VALUES { get; set; }
@@ -92,7 +92,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_9_2
             this.jPARAMETER_ASSESSMENTs = new List<jPARAMETER_ASSESSMENT>();
             this.jSTANDARD_SELECTION = new List<jSTANDARD_SELECTION>();
             this.jSUB_CATEGORY_ANSWERS = new List<jSUB_CATEGORY_ANSWERS>();
-			this.jUSER_DETAIL_INFORMATION = new List<jUSER_DETAIL_INFORMATION>();
+            this.jUSER_DETAIL_INFORMATION = new List<jUSER_DETAIL_INFORMATION>();
             this.CustomStandardDocs = new List<string>();
             this.CustomStandards = new List<string>();
         }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,7 +19,7 @@ namespace UpgradeLibrary.Upgrade
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ConvertDatabase1001(string path):base(path)
+        public ConvertDatabase1001(string path) : base(path)
         {
             // Figure out where this program is running            
             myVersion = new Version("10.0.1");
@@ -38,7 +38,7 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1000_to_1001_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 10.0.0 file to 10.0.1: " + e.Message);
             }
