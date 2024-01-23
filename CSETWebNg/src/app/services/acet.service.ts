@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ export class ACETService {
         "Controles de Ciberseguridad",
         "Gestión de Dependencia Externa",
         "Gestión de Incidentes Cibernéticos y Resiliencia"];
-    
+
     apiUrl: string;
     constructor(
         private http: HttpClient,
@@ -110,7 +110,7 @@ export class ACETService {
     /**
     * Returns the maturity details.
     */
-     getIseMatDetailList() {
+    getIseMatDetailList() {
         return this.http.get(this.apiUrl + 'getIseMaturityResults');
         // return this.http.get(this.configSvc.apiUrl + 'getMaturityResults/' + this.authSvc.userId());
     }
@@ -140,12 +140,12 @@ export class ACETService {
     * Return the overall IRP score
     */
     getOverallIrp() {
-        return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', {responseType: 'text'});
+        return this.http.get(this.apiUrl + 'getOverallIrpForMaturity', { responseType: 'text' });
     }
 
-    getActionItemsReport(examLevel: number) {        
+    getActionItemsReport(examLevel: number) {
         const qstring = 'reports/acet/GetActionItemsReport?Exam_Level=' + examLevel;
-        return this.http.get(this.configSvc.apiUrl + qstring,  headers);
+        return this.http.get(this.configSvc.apiUrl + qstring, headers);
     }
     /*
     * Get target band
@@ -291,16 +291,16 @@ export class ACETService {
      */
     getAbbrev(level: string) {
         switch (level) {
-        case 'Baseline':
-            return 'B';
-        case 'Evolving':
-            return 'E';
-        case 'Intermediate':
-            return 'INT';
-        case 'Advanced':
-            return 'ADV';
-        case 'Innovative':
-            return 'INN';
+            case 'Baseline':
+                return 'B';
+            case 'Evolving':
+                return 'E';
+            case 'Intermediate':
+                return 'INT';
+            case 'Advanced':
+                return 'ADV';
+            case 'Innovative':
+                return 'INN';
         }
 
         return level;

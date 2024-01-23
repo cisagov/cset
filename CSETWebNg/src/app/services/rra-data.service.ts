@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,9 +38,9 @@ const headers = {
 })
 export class RraDataService {
   apiUrl: string;
-  constructor(public cmmcSvc:CmmcStyleService,private http: HttpClient, private configSvc: ConfigService) {
+  constructor(public cmmcSvc: CmmcStyleService, private http: HttpClient, private configSvc: ConfigService) {
     this.apiUrl = this.configSvc.apiUrl + 'reports';
-    
+
   }
 
   response: any;
@@ -56,10 +56,10 @@ export class RraDataService {
   gridColumnCount = 10
   gridColumns = new Array(this.gridColumnCount);
 
-  public getRRADetail(){
+  public getRRADetail() {
     return this.http.get(this.apiUrl + '/rradetail')
   }
-  
+
   public getRRAQuestions() {
     return this.http.get(this.apiUrl + '/rraquestions')
   }

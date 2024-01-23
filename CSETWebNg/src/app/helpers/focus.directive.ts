@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,19 @@
 import { Directive, Input, OnChanges, ElementRef } from '@angular/core';
 
 @Directive({
-    // eslint-disable-next-line @angular-eslint/directive-selector
-    selector: '[focusOnInit]'
-  })
-  export class FocusDirective implements OnChanges {
+  // eslint-disable-next-line @angular-eslint/directive-selector
+  selector: '[focusOnInit]'
+})
+export class FocusDirective implements OnChanges {
 
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    @Input('focusOnInit') focus: boolean;
+  // eslint-disable-next-line @angular-eslint/no-input-rename
+  @Input('focusOnInit') focus: boolean;
 
-    constructor(private elementRef: ElementRef) { }
+  constructor(private elementRef: ElementRef) { }
 
-    ngOnChanges() {
-      if (this.focus) {
-        this.elementRef.nativeElement.focus();
-      }
+  ngOnChanges() {
+    if (this.focus) {
+      this.elementRef.nativeElement.focus();
     }
   }
+}

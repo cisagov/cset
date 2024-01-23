@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MaturityService } from '../../../services/maturity.service';
 import { EDMBarChartModel } from '../edm-bar-chart.model';
 
@@ -113,7 +113,7 @@ export class EdmPerfMil1Component implements OnInit {
   /**
    * Constructs an answer distribution 'grand total' object
    */
-   buildHeaderTripleBarChart() {
+  buildHeaderTripleBarChart() {
     const chart = new EDMBarChartModel();
     chart.title = 'EDM MIL-1 Summary';
     chart.green = 0;

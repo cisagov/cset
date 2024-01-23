@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,43 +29,43 @@ export class XmlFormattingEditProvider implements
   languages.DocumentFormattingEditProvider,
   languages.DocumentRangeFormattingEditProvider {
 
-    provideDocumentRangeFormattingEdits(
-          model: editor.ITextModel,
-          range: Range,
-          options: languages.FormattingOptions,
-          token: CancellationToken
-        ):  languages.TextEdit[]
-          | PromiseLike<languages.TextEdit[]> {
-        let xml = model.getValueInRange(range);
+  provideDocumentRangeFormattingEdits(
+    model: editor.ITextModel,
+    range: Range,
+    options: languages.FormattingOptions,
+    token: CancellationToken
+  ): languages.TextEdit[]
+    | PromiseLike<languages.TextEdit[]> {
+    let xml = model.getValueInRange(range);
 
-        xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, model));
+    xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, model));
 
-        return [ {range: range, text: xml} ];
-    }
-    provideDocumentFormattingEdits(model: editor.ITextModel,
-        options: languages.FormattingOptions, token: CancellationToken
-      ): languages.TextEdit[] | PromiseLike<languages.TextEdit[]> {
-        const documentRange = model.getFullModelRange();
-        return this.provideDocumentRangeFormattingEdits(model, documentRange, options, token);
-    }
-    constructor(
-        public xmlFormatter: XmlFormatter
-    ) { }
+    return [{ range: range, text: xml }];
+  }
+  provideDocumentFormattingEdits(model: editor.ITextModel,
+    options: languages.FormattingOptions, token: CancellationToken
+  ): languages.TextEdit[] | PromiseLike<languages.TextEdit[]> {
+    const documentRange = model.getFullModelRange();
+    return this.provideDocumentRangeFormattingEdits(model, documentRange, options, token);
+  }
+  constructor(
+    public xmlFormatter: XmlFormatter
+  ) { }
 
-    // provideDocumentFormattingEdits(document: TextDocument,
-    // options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
-    //     const lastLine = document.lineAt(document.lineCount - 1);
-    //     const documentRange = new Range(document.positionAt(0), lastLine.range.end);
+  // provideDocumentFormattingEdits(document: TextDocument,
+  // options: FormattingOptions, token: CancellationToken): ProviderResult<TextEdit[]> {
+  //     const lastLine = document.lineAt(document.lineCount - 1);
+  //     const documentRange = new Range(document.positionAt(0), lastLine.range.end);
 
-    //     return this.provideDocumentRangeFormattingEdits(document, documentRange, options, token);
-    // }
+  //     return this.provideDocumentRangeFormattingEdits(document, documentRange, options, token);
+  // }
 
-    // provideDocumentRangeFormattingEdits(document: TextDocument, range: Range, options: FormattingOptions, token: CancellationToken):
-    //  ProviderResult<TextEdit[]> {
-    //     let xml = document.getText(range);
+  // provideDocumentRangeFormattingEdits(document: TextDocument, range: Range, options: FormattingOptions, token: CancellationToken):
+  //  ProviderResult<TextEdit[]> {
+  //     let xml = document.getText(range);
 
-    //     xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, document));
+  //     xml = this.xmlFormatter.formatXml(xml, XmlFormattingOptionsFactory.getXmlFormattingOptions(options, document));
 
-    //     return [ TextEdit.replace(range, xml) ];
-    // }
+  //     return [ TextEdit.replace(range, xml) ];
+  // }
 }
