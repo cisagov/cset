@@ -548,8 +548,22 @@ table.assessment-summary th {
 @media only screen and (max-width: 767px) {
   .navbar-collapse.collapse.show {
     background-color: $primary-color;
-    z-index: 10000;
+    z-index: 99999;
     padding: 10px;
+    border-radius: 4px;
+    position: absolute;
+    right: 10px;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)
+  }
+
+  .navbar-collapse.collapsing {
+    background-color: $primary-color;
+    z-index: 99999;
+    position: absolute;
+    padding: 10px;
+    border-radius: 4px;
+    right: 10px;
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)
   }
 }
 /*

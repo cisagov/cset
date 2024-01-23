@@ -28,7 +28,7 @@
           *ngIf="auth.isLocal">
           <span class="col-sm-12">Local Installation</span>
         </div>
-  
+
         <!-- Navbar -->
         <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
           *ngIf="auth.userToken() && auth.userToken() !== 'null'">
@@ -41,42 +41,42 @@
               <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
             </div>
           </span>
-  
+
           <!-- Navbar Toggler Button -->
-          <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
+          <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse" data-target="#csetNavbarCollapse">
             <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
           </button>
           <!-- Menus -->
         <app-top-menus class="w-100"></app-top-menus>
         </nav>
       </div>
-  
+
       <!-- Body -->
       <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
         <div class="p-0 d-flex col-xl-12 bgc-gray-50">
           <router-outlet></router-outlet>
         </div>
       </div>
-  
+
       <!-- Footer -->
       <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
-         
+
             <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
               [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
               <ng-template ngbPanelContent>
-                <div class="footer-section-2 p-2">              
-                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">                
+                <div class="footer-section-2 p-2">
+                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
                     Agency cybersecurity information, exempt pursuant to Florida Statute Chapter 119 Section 119.0725
                     <span class="mr-2 ml-2">|</span>
                     <a target="_blank" rel="noopener noreferrer" href="https://cyberflorida.org/">Cyber Florida</a>
                     <span class="mr-2 ml-2">|</span>
-                    <a href="mailto:secureflorida@cyberflorida.org">Contact Cyber Florida at: secureflorida@cyberflorida.org</a>                
+                    <a href="mailto:secureflorida@cyberflorida.org">Contact Cyber Florida at: secureflorida@cyberflorida.org</a>
                   </div>
                 </div>
               </ng-template>
@@ -85,8 +85,8 @@
         </div>
       </div>
     </div>
-  
+
     <div class="bgc-white dhs-seal-background"
       *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
   </div>
-  
+

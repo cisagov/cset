@@ -34,8 +34,8 @@
         <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
         <span
-          [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
-          (click)="this.router.url!='/resource-library' && goHome()">
+          [ngClass]="{'btn btn-link navbar-brand': this.router.url!=='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
+          (click)="this.router.url!=='/resource-library' && goHome()">
           <!-- CSET Lock Logo -->
           <div class="d-flex justify-content-start align-items-center flex-00a">
             <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
@@ -43,7 +43,7 @@
         </span>
 
         <!-- Navbar Toggler Button -->
-        <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse"
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse"
           data-target="#csetNavbarCollapse">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
@@ -64,13 +64,11 @@
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
-         
             <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
               [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
             <div ngbAccordionBody>
-           
             <ng-template >
               <div class="footer-section-2 p-2">
                 <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
