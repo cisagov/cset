@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2023 Battelle Energy Alliance, LLC  
+  Copyright 2024 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -23,8 +23,8 @@ SOFTWARE.
 */
 @font-face {
   font-family: "cset2-icons";
-  src:url("fonts/cset2-icons.eot");
-  src:url("fonts/cset2-icons.eot?#iefix") format("embedded-opentype"),
+  src: url("fonts/cset2-icons.eot");
+  src: url("fonts/cset2-icons.eot?#iefix") format("embedded-opentype"),
     url("fonts/cset2-icons.woff") format("woff"),
     url("fonts/cset2-icons.ttf") format("truetype"),
     url("fonts/cset2-icons.svg#cset2-icons") format("svg");
@@ -50,24 +50,31 @@ SOFTWARE.
 .cset2-icons-acet-logo:before {
   content: "\61";
 }
+
 .cset2-icons-acet-shield:before {
   content: "\62";
 }
+
 .cset2-icons-compare:before {
   content: "\63";
 }
+
 .cset2-icons-q:before {
   content: "\64";
 }
+
 .cset2-icons-merge1:before {
   content: "\65";
 }
+
 .cset2-icons-trend:before {
   content: "\66";
 }
+
 .cset2-icons-merge2:before {
   content: "\67";
 }
+
 .cset2-icons-hexbug2:before {
   content: "\68";
 }
