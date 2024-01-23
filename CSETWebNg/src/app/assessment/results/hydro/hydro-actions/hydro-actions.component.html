@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,7 +25,7 @@
         <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
 </div>
-  
+
 <div *ngIf="loadingCounter == 2" class="d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
         <div class="mb-3">
@@ -41,14 +41,15 @@
                 <div>
                     <h4>{{progressLevels[progressLevel[0].actionData.progress_Id - 1].progress_Text}}</h4>
                 </div>
-                <div *ngFor="let item of progressLevel" class="mb-4 d-flex flex-column justify-content-between flex-00a" >
+                <div *ngFor="let item of progressLevel"
+                    class="mb-4 d-flex flex-column justify-content-between flex-00a">
                     <app-hydro-action-item [item]="item" [progressArray]="progressLevels"></app-hydro-action-item>
                 </div>
                 <br>
             </div>
         </div>
-    
+
         <app-nav-back-next [page]="'hydro-actions'"></app-nav-back-next>
-    
+
     </div>
 </div>

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -27,23 +27,10 @@
 </div>
 
 <div *ngIf="!loading">
-  <ngx-charts-bar-horizontal
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="data"
-    [gradient]="false"
-    [noBarWhenZero]="false"
-    [roundEdges]="false"
-    [barPadding]="28"
-    [xAxis]="true"
-    [yAxis]="true"
-    [legend]="false"
-    [xScaleMin]="0"
-    [xScaleMax]="3"
-    [xAxisTicks]="[0, 1, 2, 3]"
-    [xAxisTickFormatting]="xAxisTickFormatting"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true">
+  <ngx-charts-bar-horizontal [view]="view" [scheme]="colorScheme" [results]="data" [gradient]="false"
+    [noBarWhenZero]="false" [roundEdges]="false" [barPadding]="28" [xAxis]="true" [yAxis]="true" [legend]="false"
+    [xScaleMin]="0" [xScaleMax]="3" [xAxisTicks]="[0, 1, 2, 3]" [xAxisTickFormatting]="xAxisTickFormatting"
+    [showXAxisLabel]="true" [showYAxisLabel]="true">
     <ng-template #tooltipTemplate let-model="model">
       <div>
         {{ model.name }}<br>

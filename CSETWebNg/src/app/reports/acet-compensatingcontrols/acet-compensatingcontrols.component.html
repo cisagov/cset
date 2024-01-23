@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,12 +24,10 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 {{ t('compensating controls report title 1') }}
             </p>
-            <p
-                class="report-title">
+            <p class="report-title">
                 {{ t('compensating controls report title 2') }}
             </p>
         </div>
@@ -51,7 +49,8 @@
                                 ">
 
                     <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                    <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}</div>
+                    <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}
+                    </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                     <div class="title-page-content">{{response?.information?.assets | currency}}</div>
                 </div>
@@ -65,15 +64,16 @@
                     <h1 class="page-title">{{ t('compensating controls') }}</h1>
                     <p>{{ t('report desc') }}</p>
                 </div>
-                <p style="color: #de761c;text-align: right;">{{ 'reports.marked for review' | transloco }} - <img class="MarkedFlag"
-                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+                <p style="color: #de761c;text-align: right;">{{ 'reports.marked for review' | transloco }} - <img
+                        class="MarkedFlag" src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
             <div>
                 <table role="presentation">
                     <ng-template ngFor let-s [ngForOf]="response?.maturityQuestionsWithAlt">
                         <tr>
-                            <td class="deficiencies-list-item"><b>{{ 'reports.statement' | transloco }} {{s.mat.sequence}}:</b></td>
+                            <td class="deficiencies-list-item"><b>{{ 'reports.statement' | transloco }}
+                                    {{s.mat.sequence}}:</b></td>
                             <td class="deficiencies-list-comment">{{s.mat.question_Text}}</td>
                             <td style="padding-top: 1rem; padding-left: 5rem; vertical-align: top; color: #555555">
                                 {{questionsSvc.answerDisplayLabel('ACET', s.answer.answer_Text)}}</td>

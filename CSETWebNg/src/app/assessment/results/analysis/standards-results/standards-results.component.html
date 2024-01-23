@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel d-flex flex-column justify-content-start flex-11a">
   <h3>Results By Category</h3>
-  <p>This chart shows the individual scores for each of the categories from a positive perspective.  
+  <p>This chart shows the individual scores for each of the categories from a positive perspective.
     High scores on this chart show areas of strength.</p>
   <div id="chart" class="mb-3">
     <canvas id="canvasStandardResult">{{chart}}</canvas>
@@ -34,7 +34,8 @@
   </div>
   <div class="data" *ngFor="let ds of dataSets" [hidden]="!initialized">
     <h4 style="display: flex; flex-direction: row;">
-      <div style="width: .8em; height: .8em; margin: 4px 10px 4px 0px;" [style.backgroundColor]="ds.backgroundColor"></div>
+      <div style="width: .8em; height: .8em; margin: 4px 10px 4px 0px;" [style.backgroundColor]="ds.backgroundColor">
+      </div>
       {{ds.label}}
     </h4>
     <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">

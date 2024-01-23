@@ -1,7 +1,6 @@
-
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -55,47 +54,47 @@
             </div>
             <div class="row header" style="border-top: 1px solid black; padding: 0;">
                 <div style="width: 60%;">
-                        <b>MIL-1 Performed</b>
-                        <br />
-                        Domain practices are being performed.
+                    <b>MIL-1 Performed</b>
+                    <br />
+                    Domain practices are being performed.
                 </div>
                 <div style="width: 9%; padding-right: 1rem;">
-                        <b>MIL-2 Planned</b>
-                        <br />
-                        Domain practices
-                        are supported by
-                        planning, policy,
-                        stakeholders, and
-                        standards.
+                    <b>MIL-2 Planned</b>
+                    <br />
+                    Domain practices
+                    are supported by
+                    planning, policy,
+                    stakeholders, and
+                    standards.
                 </div>
                 <div style="width: 10%; padding-right: 1rem;">
-                        <b>MIL-3 Managed</b>
-                        <br />
-                        Domain practices
-                        are supported by
-                        governance and
-                        adequate
-                        resources.
+                    <b>MIL-3 Managed</b>
+                    <br />
+                    Domain practices
+                    are supported by
+                    governance and
+                    adequate
+                    resources.
                 </div>
                 <div style="width: 10%; padding-right: 1rem;">
-                        <b>MIL-4 Measured</b>
-                        <br />
-                        Domain practices
-                        are supported by
-                        measurement,
-                        monitoring, and
-                        executive
-                        oversight.
+                    <b>MIL-4 Measured</b>
+                    <br />
+                    Domain practices
+                    are supported by
+                    measurement,
+                    monitoring, and
+                    executive
+                    oversight.
                 </div>
                 <div style="width: 10%;">
-                        <b>MIL-5 Defined</b>
-                        <br />
-                        Domain practices
-                        are supported by
-                        enterprise
-                        standardization
-                        and analysis of.
-                        lessons learned.
+                    <b>MIL-5 Defined</b>
+                    <br />
+                    Domain practices
+                    are supported by
+                    enterprise
+                    standardization
+                    and analysis of.
+                    lessons learned.
                 </div>
             </div>
         </div>
@@ -108,7 +107,8 @@
             MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
         </div>
     </div>
-    <div  *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row" style="border-top: 0.5px solid black;">
+    <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row"
+        style="border-top: 0.5px solid black;">
         <div class="col-1" style="width: 15%; padding: 0 2rem 0 1rem;">
             <div class="row">
                 <div style="font-size: 0.7rem; font-weight: bold;">
@@ -121,8 +121,8 @@
             </div>
         </div>
         <div class="col-10" style="display: flex; width: 85%; padding: 0;">
-            <div *ngFor="let heatMap of bodyData[i].heatMaps; let j = index" style="padding: 0.1rem;" [innerHtml]="heatMap | safe"
-            [style.width]="j === 0 ? '62%' : '10%'">
+            <div *ngFor="let heatMap of bodyData[i].heatMaps; let j = index" style="padding: 0.1rem;"
+                [innerHtml]="heatMap | safe" [style.width]="j === 0 ? '62%' : '10%'">
             </div>
         </div>
     </div>

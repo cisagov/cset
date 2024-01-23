@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,61 +22,61 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <div class="max-1200">
-  <h3 class="mb-4">Trend Analytics</h3>
+    <h3 class="mb-4">Trend Analytics</h3>
 
-  <div class="analytics-wrapper">
-    <div class="chart d-flex flex-column flex-00a mb-5">
-      <h3>
-        Overall Percent Compliance Score
-      </h3>
-      <div *ngIf="chartOverallCompl == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
+    <div class="analytics-wrapper">
+      <div class="chart d-flex flex-column flex-00a mb-5">
+        <h3>
+          Overall Percent Compliance Score
+        </h3>
+        <div *ngIf="chartOverallCompl == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+        <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
+      </div>
+
+      <div class=" chart d-flex flex-column flex-00a mb-5">
+        <h3>
+          Top 5 Most Improved Areas
+        </h3>
+        <div *ngIf="chartTop5 == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+        <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
+      </div>
+
+      <div class=" chart d-flex flex-column flex-00a mb-5">
+        <h3>
+          Top 5 Areas of Concern
+        </h3>
+        <div *ngIf="chartBottom5 == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+        <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
+      </div>
+
+      <div class=" chart d-flex flex-column flex-00a mb-5">
+        <h3>Category Percent Comparisons</h3>
+        <div *ngIf="chartCategoryPercent == null">
+          <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+          </div>
+        </div>
+        <div class="chart-container" style="position: relative; height:80vh; width: 100%">
+          <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
         </div>
       </div>
-      <canvas id="canvasOverallCompliance">{{ chartOverallCompl }}</canvas>
     </div>
 
-    <div class=" chart d-flex flex-column flex-00a mb-5">
-      <h3>
-        Top 5 Most Improved Areas
-      </h3>
-      <div *ngIf="chartTop5 == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-      </div>
-      <canvas id="canvasTop5">{{ chartTop5 }}</canvas>
-    </div>
-
-    <div class=" chart d-flex flex-column flex-00a mb-5">
-      <h3>
-        Top 5 Areas of Concern
-      </h3>
-      <div *ngIf="chartBottom5 == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-      </div>
-      <canvas id="canvasBottom5">{{ chartBottom5 }}</canvas>
-    </div>
-
-    <div class=" chart d-flex flex-column flex-00a mb-5">
-      <h3>Category Percent Comparisons</h3>
-      <div *ngIf="chartCategoryPercent == null">
-        <div class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
-      </div>
-      <div class="chart-container" style="position: relative; height:80vh; width: 100%">
-        <canvas id="canvasCategoryPercent">{{ chartCategoryPercent }}</canvas>
-      </div>
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navAggSvc.navBack('trend-analytics')">Back</button>
+      <button class="btn btn-primary" (click)="generateReport('trendreport')">Generate Trend Report</button>
     </div>
   </div>
-
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navAggSvc.navBack('trend-analytics')">Back</button>
-    <button class="btn btn-primary" (click)="generateReport('trendreport')">Generate Trend Report</button>
-  </div>
-</div>
 </div>

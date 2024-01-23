@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,34 +25,37 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="mb-1" for="sector">Sector</label>
-            <select class="form-control" id="sector" name="sector" tabindex="0" (change)="onSelectSector($event.target.value)"
-                [(ngModel)]="demographicData.sectorId">
+            <select class="form-control" id="sector" name="sector" tabindex="0"
+                (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
                 <option [ngValue]="null">-- Select Sector --</option>
                 <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}</option>
             </select>
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="industry">Industry</label>
-            <select class="form-control" id="industry" name="industry" tabindex="0" [(ngModel)]="demographicData.industryId"
-                (change)="update($event)">
+            <select class="form-control" id="industry" name="industry" tabindex="0"
+                [(ngModel)]="demographicData.industryId" (change)="update($event)">
                 <option [ngValue]="null">-- Select Industry --</option>
-                <option *ngFor="let industry of industryList" [value]="industry.industryId">{{industry.industryName}}</option>
+                <option *ngFor="let industry of industryList" [value]="industry.industryId">{{industry.industryName}}
+                </option>
             </select>
         </div>
     </div>
 
     <div class="form-group">
         <label for="edmOrganizationType">Organization Type</label>
-        <select *ngIf="isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
-          <option [ngValue]="null">-- Select Type --</option>
-          <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
-      </select>
-      <select *ngIf="!isSLTT"  class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType" (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
-        <option [ngValue]="null">-- Select Type --</option>
-        <ng-container *ngFor="let t of orgTypes">
-          <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}</option>
-        </ng-container>
-    </select>
+        <select *ngIf="isSLTT" class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+            (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+            <option [ngValue]="null">-- Select Type --</option>
+            <option *ngFor="let t of orgTypes" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+        </select>
+        <select *ngIf="!isSLTT" class="form-control" id="edmOrganizationType" tabindex="0" name="edmOrganizationType"
+            (change)="changeOrgType($event)" [(ngModel)]="demographicData.organizationType">
+            <option [ngValue]="null">-- Select Type --</option>
+            <ng-container *ngFor="let t of orgTypes">
+                <option *ngIf="t.organizationTypeId!==3" [value]="t.organizationTypeId">{{t.organizationType}}</option>
+            </ng-container>
+        </select>
     </div>
 
 </form>

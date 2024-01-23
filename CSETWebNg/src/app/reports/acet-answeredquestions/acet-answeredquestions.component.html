@@ -1,5 +1,5 @@
 <!----------------------
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -22,12 +22,10 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 {{ t('answered statements report title 1') }}
             </p>
-            <p
-                class="report-title">
+            <p class="report-title">
                 {{ t('answered statements report title 2') }}
             </p>
         </div>
@@ -51,7 +49,8 @@
                         ">
 
                 <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}</div>
+                <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}
+                </div>
                 <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                 <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
@@ -94,16 +93,19 @@
                 </tr>
                 <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                     <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - {{ 'reports.domain' | transloco }}</td>
+                        <td colspan="5" class="background-1 h4 color-white">{{d.title}} - {{ 'reports.domain' |
+                            transloco }}</td>
                     </tr>
                     <ng-container *ngFor="let f of d.assessmentFactors">
                         <tr>
-                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - {{ 'reports.assessment factor' | transloco }}
+                            <td colspan="5" class="background-2 font-weight-bold pl-4">{{f.title}} - {{
+                                'reports.assessment factor' | transloco }}
                             </td>
                         </tr>
                         <ng-container *ngFor="let c of f.components">
                             <tr>
-                                <td colspan="5" class="background-3 pl-5">{{c.title}} - {{ 'reports.component' | transloco }}</td>
+                                <td colspan="5" class="background-3 pl-5">{{c.title}} - {{ 'reports.component' |
+                                    transloco }}</td>
                             </tr>
                             <ng-container *ngFor="let q of c.questions">
                                 <tr>
