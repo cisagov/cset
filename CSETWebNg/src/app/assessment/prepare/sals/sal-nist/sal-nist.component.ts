@@ -69,7 +69,7 @@ export class SalNistComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'NIST';
+    this.salsSvc.selectedSAL.methodology = 'NIST';
     switch (ltype) {
       case 'C': {
         this.salsSvc.selectedSAL.selectedSALOverride = false;
