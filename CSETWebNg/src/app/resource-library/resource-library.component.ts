@@ -56,6 +56,7 @@ interface LibrarySearchResponse {
 @Component({
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
+  styleUrls: ['./resource-library.component.scss'],
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a w-100' }
 })
@@ -88,7 +89,7 @@ export class ResourceLibraryComponent implements OnInit {
     this.docUrl = this.configSvc.docUrl;
 
     this.titleSvc.setTitle(this.configSvc.behaviors.defaultTitle);
-    
+
     // Debounce filter changes so the first few letters typed
     // don't have a long noticeable delay as each letter refilters the
     // tree.
