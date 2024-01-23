@@ -1,12 +1,12 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 
 namespace CSETWebCore.Business.AssessmentIO.Import
-{ 
+{
     internal class CSET_09_2_1_to_09_2_2_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>

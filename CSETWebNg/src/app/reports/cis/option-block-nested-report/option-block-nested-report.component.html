@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,8 @@
 
     <div>
         <div *ngIf="o.hasAnswerText" [innerHTML]="o.answerText" class="form-control my-2"></div>
-        <div *ngIf="o.hasAnswerText && cisSvc.hasBaseline() && o.baselineAnswerText?.length > 0" class="d-flex flex-row mt-1 mb-2">
+        <div *ngIf="o.hasAnswerText && cisSvc.hasBaseline() && o.baselineAnswerText?.length > 0"
+            class="d-flex flex-row mt-1 mb-2">
             <div class="form-control w-100" [innerHTML]="o.baselineAnswerText"></div>
             <i class="fa fa-star ml-1"></i>
         </div>

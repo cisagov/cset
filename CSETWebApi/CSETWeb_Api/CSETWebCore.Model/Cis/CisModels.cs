@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -67,14 +67,14 @@ namespace CSETWebCore.Model.Nested
         public string QuestionType { get; set; }
 
         public int Sequence { get; set; }
-        public int MaturityLevel { get; set; }  
+        public int MaturityLevel { get; set; }
         public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
-        public string AltAnswerText { get; set;  }
+        public string AltAnswerText { get; set; }
 
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
@@ -147,7 +147,7 @@ namespace CSETWebCore.Model.Nested
     }
 
 
-    public class IntegrityCheckOption 
+    public class IntegrityCheckOption
     {
         public int OptionId { get; set; }
         public bool Selected { get; set; }

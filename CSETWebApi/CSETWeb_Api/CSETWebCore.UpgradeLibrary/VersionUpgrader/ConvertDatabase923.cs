@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -33,7 +33,7 @@ namespace UpgradeLibrary.Upgrade
         {
             try
             {
-                
+
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\922_to_923_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }

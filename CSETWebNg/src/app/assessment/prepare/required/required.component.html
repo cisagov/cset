@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@
             The Document Request List (DRL) screen provides users a way to indicate which documents they are able to
             provide. For each individual document select "Yes", "No", or "NA". If you need to make a comment select the
             comment icon.
-        </div>       
+        </div>
         <hr>
     </div>
     <div *ngFor="let dHeader of documents?.headerList" class="mb-3">
@@ -38,18 +38,21 @@
                     <td class="cell-desc align-top"><span>{{ doc.number }}. {{ doc.document_Description }}</span></td>
                     <td class="cell-btn align-top d-flex flex-column align-items-end">
                         <div class="d-flex flex-row flex-nowrap">
-                            <button class="req-answer btn btn-yes" tabindex="0" [ngClass]="{'answer-selected': doc.answer=='Y'}"
+                            <button class="req-answer btn btn-yes" tabindex="0"
+                                [ngClass]="{'answer-selected': doc.answer=='Y'}"
                                 (click)="doc.answer = 'Y';submit(doc, 'Y')">Yes</button>
-                            <button class="req-answer btn btn-no mx-1" tabindex="0" [ngClass]="{'answer-selected': doc.answer=='N'}"
+                            <button class="req-answer btn btn-no mx-1" tabindex="0"
+                                [ngClass]="{'answer-selected': doc.answer=='N'}"
                                 (click)="doc.answer = 'N';submit(doc, 'N')">No</button>
                             <button class="req-answer btn btn-na" [ngClass]="{'answer-selected': doc.answer=='NA'}"
                                 (click)="doc.answer = 'NA';submit(doc, 'NA')">NA</button>
-                            <button class="extras-button cursor-pointer req-answer" tabindex="0" (click)="commentToggle(doc.docId)"
-                                matTooltip="Comment" matTooltipPosition="above">
-                                <svg style="height: 31px; width: 37px; vertical-align: middle; margin-right: -12px">                                     
+                            <button class="extras-button cursor-pointer req-answer" tabindex="0"
+                                (click)="commentToggle(doc.docId)" matTooltip="Comment" matTooltipPosition="above">
+                                <svg style="height: 31px; width: 37px; vertical-align: middle; margin-right: -12px">
                                     <path fill="#0f3c7a" stroke="transparent" stroke-width="0" transform="scale(.8)"
-                                        d="M5.523,11.864C5.523,10.271 6.6,9.151 8.173,9.151 9.746,9.151 10.869,10.271 10.869,11.864 10.869,13.413 9.79,14.576 8.219,14.576 6.556,14.576 5.523,13.413 5.523,11.864 M14.827,11.864C14.827,10.271 15.905,9.151 17.478,9.151 19.05,9.151 20.174,10.271 20.174,11.864 20.174,13.413 19.094,14.576 17.523,14.576 15.861,14.576 14.827,13.413 14.827,11.864 M24.132,11.864C24.132,10.271 25.209,9.151 26.782,9.151 28.355,9.151 29.478,10.271 29.478,11.864 29.478,13.413 28.399,14.576 26.828,14.576 25.165,14.576 24.132,13.413 24.132,11.864 M0,3.332L0,20.394C0,22.227,1.565,23.726,3.477,23.726L7.42,23.726 7.42,33 15.455,23.726 31.524,23.726C33.436,23.726,35,22.227,35,20.394L35,3.332C35,1.499,33.436,0,31.524,0L3.477,0C1.565,0,0,1.499,0,3.332" />                                        
-                                    <circle cx="29" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900" [style.display]="has(doc)" />
+                                        d="M5.523,11.864C5.523,10.271 6.6,9.151 8.173,9.151 9.746,9.151 10.869,10.271 10.869,11.864 10.869,13.413 9.79,14.576 8.219,14.576 6.556,14.576 5.523,13.413 5.523,11.864 M14.827,11.864C14.827,10.271 15.905,9.151 17.478,9.151 19.05,9.151 20.174,10.271 20.174,11.864 20.174,13.413 19.094,14.576 17.523,14.576 15.861,14.576 14.827,13.413 14.827,11.864 M24.132,11.864C24.132,10.271 25.209,9.151 26.782,9.151 28.355,9.151 29.478,10.271 29.478,11.864 29.478,13.413 28.399,14.576 26.828,14.576 25.165,14.576 24.132,13.413 24.132,11.864 M0,3.332L0,20.394C0,22.227,1.565,23.726,3.477,23.726L7.42,23.726 7.42,33 15.455,23.726 31.524,23.726C33.436,23.726,35,22.227,35,20.394L35,3.332C35,1.499,33.436,0,31.524,0L3.477,0C1.565,0,0,1.499,0,3.332" />
+                                    <circle cx="29" cy="7" r="6" stroke="#fff" stroke-width="1" fill="#900"
+                                        [style.display]="has(doc)" />
                                 </svg>
                             </button>
                         </div>
@@ -59,8 +62,7 @@
                     <td colspan="2" class="pb-4 w-100">
                         <div [hidden]="!doc.comment && !commentShow[doc.docId]">
                             <textarea type="text" tabindex="0" maxlength="1024" appAutoSize [(ngModel)]="doc.comment"
-                                (blur)="submit(doc)" class="form-control"
-                                placeholder="Add a comment."></textarea>
+                                (blur)="submit(doc)" class="form-control" placeholder="Add a comment."></textarea>
                         </div>
                     </td>
                 </tr>
@@ -69,5 +71,5 @@
     </div>
 
     <app-nav-back-next [page]="'acet-drl'"></app-nav-back-next>
-    
+
 </div>

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@
 </div>
 
 <div *ngFor="let g of grouping.groupings" class="ml-3 mb-4">
-    <app-grouping-block-nested-report [grouping]="g"></app-grouping-block-nested-report>
+  <app-grouping-block-nested-report [grouping]="g"></app-grouping-block-nested-report>
 </div>
 <div>
   <app-question-block-nested-report #questionBlock [grouping]="grouping">

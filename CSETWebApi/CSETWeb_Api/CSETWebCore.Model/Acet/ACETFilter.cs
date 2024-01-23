@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,7 +14,7 @@ namespace CSETWebCore.Model.Acet
     {
         public String DomainName { get; set; }
         public int DomainId { get; set; }
-        
+
         public List<ACETDomainTiers> Tiers { get; set; }
     }
 

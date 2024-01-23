@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,45 +21,50 @@
   SOFTWARE.
 -------------------------->
 <div class="b-secondary br-standard d-flex flex-column justify-content-between flex-00a o-hidden">
-<!-- Row 1 -->
+    <!-- Row 1 -->
     <div class="p-3 bgc-primary-50 c-gray-900 d-flex justify-content-between flex-11a">
-    <!-- Col 1  -->
+        <!-- Col 1  -->
         <div class="d-flex flex-column justify-content-start flex-11a">
             <div class="mb-2 d-flex justify-content-start flex-11a">
-                <label id="rq-standard-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Domain:</label>
+                <label id="rq-standard-label" for="rq-category-text"
+                    class="rq-label-min-width m-0 mr-2 fs-base fw-600">Domain:</label>
                 <span id="rq-category-text" class="fs-base">{{item.question.category}}</span>
             </div>
             <div class="mb-2 d-flex justify-content-start flex-11a">
-                <label id="rq-category-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Category:</label>
+                <label id="rq-category-label" for="rq-category-text"
+                    class="rq-label-min-width m-0 mr-2 fs-base fw-600">Category:</label>
                 <span id="rq-category-text" class="fs-base">{{item.question.sub_Category}}</span>
             </div>
             <div class="d-flex justify-content-start flex-11a">
-                <label id="rq-answer-label" for="rq-answer-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Question:</label>
+                <label id="rq-answer-label" for="rq-answer-text"
+                    class="rq-label-min-width m-0 mr-2 fs-base fw-600">Question:</label>
                 <span id="rq-answer-text" name="rq-answer-text" class="fs-base">{{item.question.question_Text}}</span>
             </div>
         </div>
 
-    <!-- Col 2 -->
+        <!-- Col 2 -->
         <div class="px-3 d-flex flex-column justify-content-center align-items-center flex-00a">
             <label id="m-0 rq-rank-label" for="rq-rank-text" class="mb-2 fs-base fw-600">Impact</label>
             <span id="rq-rank-text" class="fs-base-6 fw-600">{{hydroSvc.impactTranslator(item.action.severity)}}</span>
         </div>
     </div>
 
-<!-- Row 2 -->
+    <!-- Row 2 -->
     <div class="bgc-primary-100 c-gray-900 d-flex justify-content-start flex-11a">
         <div class="px-3 py-4 d-flex flex-column justify-content-start flex-11a w-100">
             <div class="d-flex justify-content-between flex-11a">
-                <label id="rq-question-label" for="rq-question-group-text" class="rq-label-min-width m-0 mb-1 fs-base fw-600">Action Item:</label>
+                <label id="rq-question-label" for="rq-question-group-text"
+                    class="rq-label-min-width m-0 mb-1 fs-base fw-600">Action Item:</label>
             </div>
             <span id="rq-question-text" class="fs-base w-100" [innerHTML]="item.action.action_Items"></span>
             <br>
             <div class="d-flex justify-content-between flex-11a">
-                <label id="rq-question-label" for="rq-question-group-text" class="rq-label-min-width m-0 mb-1 fs-base fw-600">Comment:</label>
+                <label id="rq-question-label" for="rq-question-group-text"
+                    class="rq-label-min-width m-0 mb-1 fs-base fw-600">Comment:</label>
             </div>
             <div style="padding:16px; padding-top: 8px;">
-                <textarea #commentBox appAutoSize class="form-control" type="text" placeholder="Write a new comment..." style="width:100%"
-                    (change)="saveChanges(commentBox.value)" value="{{comment}}"></textarea>
+                <textarea #commentBox appAutoSize class="form-control" type="text" placeholder="Write a new comment..."
+                    style="width:100%" (change)="saveChanges(commentBox.value)" value="{{comment}}"></textarea>
             </div>
             <div class="d-flex" style="padding:16px; padding-top: 8px;">
                 <button [class]="classArray[progressId-1]" (click)="toggleProgressSelector()">
@@ -70,7 +75,8 @@
                 <div *ngIf="showProgressButtons" style="padding:16px; padding-top: 8px;" class="d-flex">
                     <div *ngFor="let progress of progressArray">
                         <div *ngIf="progress.progress_Id != progressId" class="d-inline-flex">
-                            <button [class]="classArray[progress.progress_Id-1]" (click)="selectNewProgress(progress, commentBox.value)" style="width:122px; margin:4px">
+                            <button [class]="classArray[progress.progress_Id-1]"
+                                (click)="selectNewProgress(progress, commentBox.value)" style="width:122px; margin:4px">
                                 {{progress.progress_Text}}
                             </button>
                         </div>

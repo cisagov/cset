@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,9 +30,9 @@ import { MaturityService } from '../../../../services/maturity.service';
 })
 export class MvraSummaryComponent implements OnInit {
 
-  model:any = [];
-  flattenedModel:any = [];
-  initialized:boolean = false;
+  model: any = [];
+  flattenedModel: any = [];
+  initialized: boolean = false;
   errors: boolean = false;
 
   /**
@@ -54,20 +54,20 @@ export class MvraSummaryComponent implements OnInit {
         this.errors = true;
         console.log('Mvra Gaps load Error: ' + (<Error>error).message);
       }
-      ),
+    ),
       (finish) => {
-    };
+      };
   }
 
-  flattenData(){
+  flattenData() {
     let m = [];
     this.model.forEach(element => {
-      var goal = { title: element.title, credit:'', totalPassed:'', totalTiers:'', function: true };
+      var goal = { title: element.title, credit: '', totalPassed: '', totalTiers: '', function: true };
       this.flattenedModel.push(goal);
       m.push(goal);
-      element.levelScores.forEach(level=>{
+      element.levelScores.forEach(level => {
         let credit = level.totalTiers > 0 ? level.credit + '%' : 'N/A';
-        var dGoal = {title: level.level, credit: credit, totalPassed: level.totalPassed, totalTiers: level.totalTiers, function: false }
+        var dGoal = { title: level.level, credit: credit, totalPassed: level.totalPassed, totalTiers: level.totalTiers, function: false }
         m.push(dGoal)
       })
     });

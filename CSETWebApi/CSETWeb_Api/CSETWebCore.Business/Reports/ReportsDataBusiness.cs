@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -144,7 +144,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (myModel.model_id == 5) 
+            if (myModel.model_id == 5)
             {
                 selectedLevel = 3;
             }
@@ -314,7 +314,8 @@ namespace CSETWebCore.Business.Reports
             if (user?.Lang == "es" || ak?.Lang == "es")
             {
                 allGroupings.ForEach(
-                    group => {
+                    group =>
+                    {
                         var output = new GroupingSpanishRow();
                         var temp = new GroupingSpanishRow();
                         if (dictionaryGrouping.TryGetValue(group.Grouping_Id, out output))
@@ -789,7 +790,7 @@ namespace CSETWebCore.Business.Reports
             string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
 
             List<ControlRow> controlRows = new List<ControlRow>();
-            
+
             if (applicationMode == CSETWebCore.Business.Assessment.AssessmentMode.QUESTIONS_BASED_APPLICATION_MODE)
             {
                 var qQ = (from rs in _context.REQUIREMENT_SETS
@@ -807,7 +808,8 @@ namespace CSETWebCore.Business.Reports
 
                 foreach (var q in qQ)
                 {
-                    controlRows.Add(new ControlRow() { 
+                    controlRows.Add(new ControlRow()
+                    {
                         Requirement_Id = q.r.Requirement_Id,
                         Requirement_Text = q.r.Requirement_Text,
                         Answer_Text = q.a.Answer_Text,
@@ -1436,18 +1438,18 @@ namespace CSETWebCore.Business.Reports
         public List<Individual> GetObservationIndividuals()
         {
             var observations = (from a in _context.FINDING_CONTACT
-                            join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
-                            join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
-                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
-                            from mq in mq1.DefaultIfEmpty()
-                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
-                            from r in r1.DefaultIfEmpty()
-                            join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
-                            from i in i1.DefaultIfEmpty()
-                            where c.Assessment_Id == _assessmentId
-                            orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                            select new { a, b, c, mq, r, d, i.Value }).ToList();
+                                join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
+                                join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
+                                join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+                                from mq in mq1.DefaultIfEmpty()
+                                join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
+                                from r in r1.DefaultIfEmpty()
+                                join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
+                                join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
+                                from i in i1.DefaultIfEmpty()
+                                where c.Assessment_Id == _assessmentId
+                                orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
+                                select new { a, b, c, mq, r, d, i.Value }).ToList();
 
 
             // Get any associated questions to get their display reference
@@ -1603,7 +1605,7 @@ namespace CSETWebCore.Business.Reports
         {
             var query = (
                 from amm in _context.AVAILABLE_MATURITY_MODELS
-                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id                
+                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 where amm.Assessment_Id == _assessmentId
                 select new { amm, mm }
                 ).FirstOrDefault();
@@ -1731,7 +1733,7 @@ namespace CSETWebCore.Business.Reports
             return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
         }
 
-        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list) 
+        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list)
         {
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             foreach (MatRelevantAnswers a in list)
@@ -1741,14 +1743,14 @@ namespace CSETWebCore.Business.Reports
                 a.Mat.InverseParent_Question = null;
                 a.Mat.Parent_Question = null;
 
-                if (a.Mat.Grouping != null) 
-                { 
+                if (a.Mat.Grouping != null)
+                {
                     a.Mat.Grouping.Maturity_Model = null;
                     a.Mat.Grouping.MATURITY_QUESTIONS = null;
                     a.Mat.Grouping.Type = null;
                 }
 
-                if (a.Mat.Maturity_Level != null) 
+                if (a.Mat.Maturity_Level != null)
                 {
                     a.Mat.Maturity_Level.MATURITY_QUESTIONS = null;
                     a.Mat.Maturity_Level.Maturity_Model = null;
@@ -1760,13 +1762,13 @@ namespace CSETWebCore.Business.Reports
         {
 
             var data = (from g in _context.GEN_FILE
-                       join a in _context.MATURITY_SOURCE_FILES
-                           on g.Gen_File_Id equals a.Gen_File_Id
-                       join q in _context.MATURITY_QUESTIONS 
-                            on a.Mat_Question_Id equals q.Mat_Question_Id
-                      
-                       where q.Maturity_Model_Id == 10
-                       select new { a, q, g }).ToList();
+                        join a in _context.MATURITY_SOURCE_FILES
+                            on g.Gen_File_Id equals a.Gen_File_Id
+                        join q in _context.MATURITY_QUESTIONS
+                             on a.Mat_Question_Id equals q.Mat_Question_Id
+
+                        where q.Maturity_Model_Id == 10
+                        select new { a, q, g }).ToList();
 
             List<SourceFiles> result = new List<SourceFiles>();
             SourceFiles file = new SourceFiles();
@@ -1777,13 +1779,13 @@ namespace CSETWebCore.Business.Reports
                     file.Mat_Question_Id = item.q.Mat_Question_Id;
                     file.Gen_File_Id = item.g.Gen_File_Id;
                     file.Title = item.g.Title;
-                } 
-                catch 
-                { 
-                
+                }
+                catch
+                {
+
                 }
                 result.Add(file);
-               
+
             }
 
             return result;

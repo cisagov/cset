@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -40,9 +40,10 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 Console.WriteLine("Reading the path test");
-                if(System.IO.File.Exists(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"))){
+                if (System.IO.File.Exists(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html")))
+                {
                     Console.WriteLine(Path.Combine(_webHost.ContentRootPath, "WebApp/index.html"));
-                    
+
                     //process this as if we are running internally else do what ever used to be the case
                     //in this case they are running together and we can just replace the config document. 
                     var jd = processUpdatedJson(HttpContext.Request);
@@ -66,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
             try
             {
                 string currDirectory = Directory.GetCurrentDirectory();
-                string appSettingsPath = currDirectory+ "\\appsettings.json";
+                string appSettingsPath = currDirectory + "\\appsettings.json";
 
                 if (System.IO.File.Exists(appSettingsPath))
                 {
@@ -78,7 +79,7 @@ namespace CSETWebCore.Api.Controllers
                     document["ConnectionStrings"].Replace(element);
 
                     System.IO.File.WriteAllText(appSettingsPath, document.ToString());
-                    
+
                     return previousConnString;
                 }
                 else
@@ -88,7 +89,7 @@ namespace CSETWebCore.Api.Controllers
             }
             catch (Exception ex)
             {
-                return "Error: something went wrong with changing the connection string in \"appsettings.json\". "+ex.Message;
+                return "Error: something went wrong with changing the connection string in \"appsettings.json\". " + ex.Message;
             }
         }
 
@@ -127,8 +128,8 @@ namespace CSETWebCore.Api.Controllers
             if (!webpath.Contains("WebApp"))
             {
                 webpath = Path.Combine(_webHost.ContentRootPath, "WebApp");
-            }                
-            
+            }
+
             var path = Path.Combine(webpath, "assets", "settings", "config.json");
             //if the files are there then assume we are running together
             //replace and return it. 
@@ -143,7 +144,7 @@ namespace CSETWebCore.Api.Controllers
 
                 element["url"] = context.Host.Host;
                 if (String.IsNullOrWhiteSpace(context.Headers["X-Forwarded-Proto"]))
-                {   
+                {
                     element["protocol"] = context.Scheme;
                     string port = "443";
                     if ((context.Host.Port == 80) || (context.Host.Port == 443))
@@ -167,7 +168,7 @@ namespace CSETWebCore.Api.Controllers
                     if ((context.Host.Port == 80) || (context.Host.Port == 443))
                         port = "";
                     else
-                        port = (context.Host.Port==null)?"":context.Host.Port.ToString();
+                        port = (context.Host.Port == null) ? "" : context.Host.Port.ToString();
                     element["port"] = port;
                 }
                 else
@@ -182,7 +183,7 @@ namespace CSETWebCore.Api.Controllers
             throw new Exception("Cannot Find config file" + path);
         }
 
-        
+
 
 
         private JsonElement processConfig(HostString newBase, string scheme)
@@ -192,14 +193,14 @@ namespace CSETWebCore.Api.Controllers
             if (System.IO.File.Exists(path))
             {
                 string contents = System.IO.File.ReadAllText(path);
-                using (MemoryStream memoryStream = new MemoryStream()) 
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream)) 
+                    using (Utf8JsonWriter writer = new Utf8JsonWriter(memoryStream))
                     {
                         using (JsonDocument jDoc = JsonDocument.Parse(contents))
                         {
                             JsonElement root = jDoc.RootElement.Clone();
-                            
+
                             JsonElement overrideVal;
                             if (root.TryGetProperty("override", out overrideVal) != false)
                                 if (overrideVal.ToString().Equals("true", StringComparison.CurrentCultureIgnoreCase))
@@ -237,8 +238,8 @@ namespace CSETWebCore.Api.Controllers
                                 {
                                     element.WriteTo(writer);
                                 }
-                            }                           
-                            writer.WriteEndObject();    
+                            }
+                            writer.WriteEndObject();
                         }
                         // create new JsonDocument with edited values
                         writer.Flush();
@@ -252,7 +253,7 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        private Uri newUri(HostString newBase,string scheme, string oldUri)
+        private Uri newUri(HostString newBase, string scheme, string oldUri)
         {
             //set the hostname and port to the same as the new base return the new uri
             UriBuilder tmp = new UriBuilder(oldUri);
@@ -260,7 +261,7 @@ namespace CSETWebCore.Api.Controllers
             if ((newBase.Port == 80) || (newBase.Port == 443))
                 tmp.Port = -1;
             else
-                tmp.Port = newBase.Port??80;
+                tmp.Port = newBase.Port ?? 80;
             tmp.Scheme = scheme;
 
             return tmp.Uri;

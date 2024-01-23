@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,9 +22,12 @@
 -------------------------->
 <div class="edm-horizontal-bar-chart">
     <div class="edm-hzbc-bar">
-        <div *ngIf='bar_chart_data.green' [ngStyle]="getWidth(bar_chart_data.green)" class="edm-hzbc-green green-score">{{bar_chart_data.green}}</div>
-        <div *ngIf='bar_chart_data.yellow' [ngStyle]="getWidth(bar_chart_data.yellow)" class="edm-hzbc-yellow yellow-score">{{bar_chart_data.yellow}}</div>
-        <div *ngIf='bar_chart_data.red' [ngStyle]="getWidth(bar_chart_data.red)" class="edm-hzbc-red red-score">{{bar_chart_data.red}}</div>
+        <div *ngIf='bar_chart_data.green' [ngStyle]="getWidth(bar_chart_data.green)" class="edm-hzbc-green green-score">
+            {{bar_chart_data.green}}</div>
+        <div *ngIf='bar_chart_data.yellow' [ngStyle]="getWidth(bar_chart_data.yellow)"
+            class="edm-hzbc-yellow yellow-score">{{bar_chart_data.yellow}}</div>
+        <div *ngIf='bar_chart_data.red' [ngStyle]="getWidth(bar_chart_data.red)" class="edm-hzbc-red red-score">
+            {{bar_chart_data.red}}</div>
         <div *ngIf='not_applicable' style="flex-basis:100%" class="edm-hzbc-na default-score">Not Applicable</div>
     </div>
 </div>

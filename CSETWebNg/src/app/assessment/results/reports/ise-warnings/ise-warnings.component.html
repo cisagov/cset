@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,11 +28,10 @@
 
     <!-- Don't submit to MERIT without a Credit Union name or asset value above $0
         If state-led, we don't care because submit button is hidden -->
-    <span *ngIf="!isAssessmentPageFilled()" 
-        class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-        
+    <span *ngIf="!isAssessmentPageFilled()" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+
         <span class="mt-2 mr-4" *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
-            "Submit" button is disabled until all required fields on <br>the 
+            "Submit" button is disabled until all required fields on <br>the
             "Demographics" page have been specified.
             <br><br>
             <span>The following required fields are missing from the "Demographics" page:</span>
@@ -45,13 +44,13 @@
 
         <span *ngIf="disableIseReportLinks">
             <!-- have all 3 types of warnings -->
-            <span *ngIf="ncuaSvc.unassignedIssues"><br/>
+            <span *ngIf="ncuaSvc.unassignedIssues"><br />
                 <!-- non-state-led -->
                 <span *ngIf="!assessSvc.assessment.isE_StateLed">
-                    "Submit" button and some reports are disabled until 
+                    "Submit" button and some reports are disabled until
                     <ul class="list-type">
                         <li>all required fields on the "Demographics" page have been specified,</li>
-                        <li>all statements have been answered, and</li> 
+                        <li>all statements have been answered, and</li>
                         <li>all Issues have an "Issue Type" assigned.</li>
                     </ul>
                     <br>
@@ -72,15 +71,15 @@
 
                 <!-- singular -->
                 <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-                    Assign an "Issue Type" to the following issue which was 
-                    <br/>generated on the "Statements" page:
+                    Assign an "Issue Type" to the following issue which was
+                    <br />generated on the "Statements" page:
                 </span>
                 <!-- plural -->
                 <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-                    Assign an "Issue Type" to the following issues which were 
-                    <br/>generated on the "Statements" page: 
+                    Assign an "Issue Type" to the following issues which were
+                    <br />generated on the "Statements" page:
                 </span>
-        
+
                 <ul class="list-type">
                     <span *ngFor="let title of ncuaSvc.unassignedIssueTitles; let i = index">
                         <li>{{ title }}</li>
@@ -91,7 +90,7 @@
             <span *ngIf="!ncuaSvc.unassignedIssues">
                 <!-- non-state-led -->
                 <span *ngIf="!assessSvc.assessment.isE_StateLed">
-                    <br/>"Submit" button and some reports are disabled until 
+                    <br />"Submit" button and some reports are disabled until
                     <ul class="list-type">
                         <li>all required fields on the "Demographics" page have been specified and</li>
                         <li>all statements have been answered.</li>
@@ -109,25 +108,25 @@
                     There are unanswered statements. Some domains will be incomplete.
                 </span>
             </span>
-            
+
         </span>
     </span>
 
     <span *ngIf="disableIseReportLinks && !ncuaSvc.unassignedIssues && isAssessmentPageFilled()">
         <!-- Submit and reports disabled because unanswered statements -->
-        <span *ngIf="!assessSvc.assessment.isE_StateLed && isAssessmentPageFilled(); else stateLedUnanswered" 
+        <span *ngIf="!assessSvc.assessment.isE_StateLed && isAssessmentPageFilled(); else stateLedUnanswered"
             class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
             "Submit" button and some reports are disabled until all statements have been answered.
         </span>
-       
+
         <!-- can get here in the case it's state-led and isAssessmentPageFilled() is false, but we don't care 
         about isAssessmentPageFilled() if it's state-led, so the below section can be skipped -->
-        <span *ngIf="assessSvc.assessment.isE_StateLed" 
+        <span *ngIf="assessSvc.assessment.isE_StateLed"
             class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
             There are unanswered statements. Some domains will be incomplete.
         </span>
     </span>
-        
+
 
     <!-- only Issue Type warning -->
     <span *ngIf="(!disableIseReportLinks && ncuaSvc.unassignedIssues) && isAssessmentPageFilled()"
@@ -144,13 +143,13 @@
         </span>
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Assign an "Issue Type" to the following issue which was 
-            <br/>generated on the "Statements" page:
+            Assign an "Issue Type" to the following issue which was
+            <br />generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Assign an "Issue Type" to the following issues which were 
-            <br/>generated on the "Statements" page: 
+            Assign an "Issue Type" to the following issues which were
+            <br />generated on the "Statements" page:
         </span>
         <ul class="list-type">
             <span *ngFor="let title of ncuaSvc.unassignedIssueTitles; let i = index">
@@ -164,7 +163,7 @@
         class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br />
         <!-- Unanswered and Issue Type for non-state-led -->
         <span *ngIf="!assessSvc.assessment.isE_StateLed">
-            "Submit" button and some reports are disabled until 
+            "Submit" button and some reports are disabled until
             <ul class="list-type">
                 <li>all statements have been answered and</li>
                 <li>all Issues have an "Issue Type" assigned.</li>
@@ -181,13 +180,13 @@
 
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Assign an "Issue Type" to the following issue which was 
-            <br/>generated on the "Statements" page:
+            Assign an "Issue Type" to the following issue which was
+            <br />generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Assign an "Issue Type" to the following issues which were 
-            <br/>generated on the "Statements" page:
+            Assign an "Issue Type" to the following issues which were
+            <br />generated on the "Statements" page:
         </span>
 
         <ul class="list-type">
@@ -202,7 +201,7 @@
         class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a"><br />
         <!-- Assessment Config and Issue Type for non-state-led -->
         <span *ngIf="!assessSvc.assessment.isE_StateLed">
-            "Submit" button and some reports are disabled until 
+            "Submit" button and some reports are disabled until
             <ul class="list-type">
                 <li>all required fields on the "Demographics" page have been specified and</li>
                 <li>all Issues have an "Issue Type" assigned.</li>
@@ -225,13 +224,13 @@
 
         <!-- singular -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length == 1">
-            Assign an "Issue Type" to the following issue which was 
-            <br/>generated on the "Statements" page:
+            Assign an "Issue Type" to the following issue which was
+            <br />generated on the "Statements" page:
         </span>
         <!-- plural -->
         <span *ngIf="ncuaSvc.unassignedIssueTitles.length > 1">
-            Assign an "Issue Type" to the following issues which were 
-            <br/>generated on the "Statements" page:
+            Assign an "Issue Type" to the following issues which were
+            <br />generated on the "Statements" page:
         </span>
 
         <ul class="list-type">
@@ -247,7 +246,7 @@
     (or if it's state-led and doesn't need a reminder to submit) -->
 <ng-template #readyToSubmit>
     <div *ngIf="(!iseHasBeenSubmitted && !ncuaSvc.iseHasBeenSubmitted) && !ncuaSvc.ISE_StateLed"
-     class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
+        class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
         <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
         <div class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
             This assessment has not been submitted yet. If this assessment is complete, please click submit.

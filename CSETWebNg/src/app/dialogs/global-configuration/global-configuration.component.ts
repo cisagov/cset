@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,9 +45,9 @@ export class GlobalConfigurationComponent implements OnInit {
   ngOnInit() {
     this.ncuaSvc.getUncPath().subscribe(
       (uncPath: any) => {
-        this.uncPath = uncPath.data;        
+        this.uncPath = uncPath.data;
       },
-      error => {        
+      error => {
         var stuff: string[] = error.error.split(':');
         this.errorMessage = stuff[0];
         this.uncPath = stuff[1];
@@ -68,7 +68,7 @@ export class GlobalConfigurationComponent implements OnInit {
       (r: any) => {
         this.close();
       },
-      error => {        
+      error => {
         var stuff: string[] = error.error.split(':');
         this.errorMessage = stuff[0];
         this.uncPath = stuff[1];

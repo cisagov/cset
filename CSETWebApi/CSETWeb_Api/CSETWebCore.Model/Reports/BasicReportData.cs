@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Reports
         public string ApplicationMode { get; set; }
         public List<usp_GetOverallRankedCategoriesPage_Result> top5Categories;
 
-        public INFORMATION information { get; set; }      
+        public INFORMATION information { get; set; }
 
         public OverallSALTable salTable { get; set; }
         public GenSALTable genSalTable { get; set; }
@@ -211,7 +211,7 @@ namespace CSETWebCore.Business.Reports
         public bool Reviewed { get; set; }
 
 
-       
+
 
         /// <summary>
         /// Constructor
@@ -229,14 +229,14 @@ namespace CSETWebCore.Business.Reports
         {
             List<RelevantAnswers> answers = new List<RelevantAnswers>();
 
-                context.LoadStoredProc("[RelevantAnswers]")
-                    .WithSqlParam("assessment_id", assessmentID)
-                    .ExecuteStoredProc((handler) =>
-                    {
-                        answers = handler.ReadToList<RelevantAnswers>().ToList();
-                    });
+            context.LoadStoredProc("[RelevantAnswers]")
+                .WithSqlParam("assessment_id", assessmentID)
+                .ExecuteStoredProc((handler) =>
+                {
+                    answers = handler.ReadToList<RelevantAnswers>().ToList();
+                });
 
-                return answers;                       
+            return answers;
         }
     }
 

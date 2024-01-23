@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -27,8 +27,8 @@ namespace CSETWeb_Api.Versioning
         public static string GetCurrentVersionString()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);            
-            return fileVersionInfo.FileVersion;            
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            return fileVersionInfo.FileVersion;
         }
 
         public static System.Version NormalizeVersion(System.Version v)
@@ -58,10 +58,10 @@ namespace CSETWeb_Api.Versioning
                 }
             }
 
-            
+
             if (int.TryParse(v, out int version))
             {
-                return NormalizeVersion( new System.Version(version, 0));
+                return NormalizeVersion(new System.Version(version, 0));
             }
             return NormalizeVersion(new System.Version(v));
         }
@@ -110,7 +110,7 @@ namespace CSETWeb_Api.Versioning
                 return versionText;
 
             }
-            catch 
+            catch
             {
                 //CSETLogger.Error("Failed to show version.", ex);
                 return "";

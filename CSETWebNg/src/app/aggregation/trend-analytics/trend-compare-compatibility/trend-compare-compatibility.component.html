@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -23,17 +23,15 @@
 
 <div *ngIf="maturity===false; then thenBlock else elseBlock"></div>
 
-<ng-template #thenBlock> 
+<ng-template #thenBlock>
   <div>Selected Assessments Questions Compatibility:
-    <span
-    class="font-weight-bold"> {{ aggregation.questionsCompatibility | percent : '0.3' }}
+    <span class="font-weight-bold"> {{ aggregation.questionsCompatibility | percent : '0.3' }}
     </span>
   </div>
   <div>Selected Assessments Requirements Compatibility:
-    <span
-    class="font-weight-bold">{{ aggregation.requirementsCompatibility | percent : '0.3' }}
+    <span class="font-weight-bold">{{ aggregation.requirementsCompatibility | percent : '0.3' }}
     </span>
   </div>
 </ng-template>
-  
+
 <ng-template #elseBlock>{{message}}</ng-template>

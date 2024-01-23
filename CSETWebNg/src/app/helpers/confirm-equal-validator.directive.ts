@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,13 +35,13 @@ import { AbstractControl, NG_VALIDATORS, Validator } from '@angular/forms';
 export class ConfirmEqualValidatorDirective implements Validator {
     @Input() appConfirmEqualValidator: string;
 
-    validate(control: AbstractControl): {[key: string]: any} | null {
+    validate(control: AbstractControl): { [key: string]: any } | null {
         const controlToCompare = control.parent.get(this.appConfirmEqualValidator);
         if (!(!!controlToCompare.value && !!control.value)) {
-             return { 'notEqual' : true };
+            return { 'notEqual': true };
         }
         if (controlToCompare && controlToCompare.value !== control.value) {
-            return { 'notEqual' : true };
+            return { 'notEqual': true };
         }
 
         return null;

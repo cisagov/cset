@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,198 +22,200 @@
 -------------------------->
 <div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
   <div class="max-1200">
-  <app-builder-breadcrumbs></app-builder-breadcrumbs>
+    <app-builder-breadcrumbs></app-builder-breadcrumbs>
 
-  <h3 *ngIf="!!setBuilderSvc.activeRequirement">
-    Add Question to Requirement
-  </h3>
-  <h3 *ngIf="!setBuilderSvc.activeRequirement">
-    Add Question
-  </h3>
-  <div *ngIf="!!(setBuilderSvc.activeRequirement)" class="card d-block p-3 mb-3">
-    <h5>
-      {{setBuilderSvc.activeRequirement.title}}
-    </h5>
-    <p class="font-italic">{{setBuilderSvc.activeRequirement.requirementText}}</p>
-  </div>
-
-  <div class="mb-3 p-3 b-primary-200 br-standard">
-
-    <h5>Write New Question</h5>
-    <p>
-      If you wish to add a custom question to the set, enter it here.
-    </p>
-
-    <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
-      type="text"></textarea>
-    <div *ngIf="isCustomQuestionEmpty">
-      <div class="alert alert-danger">Question text is required</div>
-    </div>
-    <div *ngIf="isDupeQuestion">
-      <div class="alert alert-danger">The question text duplicates an existing question. Search for and use the
-        existing question.</div>
+    <h3 *ngIf="!!setBuilderSvc.activeRequirement">
+      Add Question to Requirement
+    </h3>
+    <h3 *ngIf="!setBuilderSvc.activeRequirement">
+      Add Question
+    </h3>
+    <div *ngIf="!!(setBuilderSvc.activeRequirement)" class="card d-block p-3 mb-3">
+      <h5>
+        {{setBuilderSvc.activeRequirement.title}}
+      </h5>
+      <p class="font-italic">{{setBuilderSvc.activeRequirement.requirementText}}</p>
     </div>
 
-    <h5>Categorization</h5>
-    <div class="d-flex flex-row">
-      <div class="form-group mr-2">
-        <label>Question Group Heading
-          <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
-            <option value="0">--Select Heading--</option>
-            <option *ngFor="let groupheading of groupheadings" [value]="groupheading.id">{{groupheading.text}}</option>
-          </select>
-        </label>
+    <div class="mb-3 p-3 b-primary-200 br-standard">
+
+      <h5>Write New Question</h5>
+      <p>
+        If you wish to add a custom question to the set, enter it here.
+      </p>
+
+      <textarea appAutoSize id="txtCustomQuestionEntry" [(ngModel)]="customQuestionText" class="form-control mb-3 h-4"
+        type="text"></textarea>
+      <div *ngIf="isCustomQuestionEmpty">
+        <div class="alert alert-danger">Question text is required</div>
+      </div>
+      <div *ngIf="isDupeQuestion">
+        <div class="alert alert-danger">The question text duplicates an existing question. Search for and use the
+          existing question.</div>
       </div>
 
-      <div class="form-group">
-        <label>Subcategory
-          <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions"
-            class="form-control" />
-          <datalist id="subcatoptions">
-            <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
-              [value]="subcategory.text"></option>
-          </datalist>
-        </label>
-      </div>
-    </div>
-    <div *ngIf="isCatOrSubcatEmpty">
-      <div class="alert alert-danger">Question Group Heading and Subcategory are required</div>
-    </div>
-    <div class="mb-3">
-      <h5>Security Assurance Level</h5>
-      <p>Select all applicable levels.</p>
-      <div class="btn-group btn-group-toggle">
-        <label class="btn btn-level btn-rounded" [class.active]="customSalL">
-          <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
-            (click)="customSalL = !customSalL" data-toggle="toggle" />Low</label>
-        <label class="btn btn-level btn-rounded" [class.active]="customSalM">
-          <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
-            (click)="customSalM = !customSalM" data-toggle="toggle" />Moderate</label>
-        <label class="btn btn-level btn-rounded" [class.active]="customSalH">
-          <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
-            (click)="customSalH = !customSalH" data-toggle="toggle" />High</label>
-        <label class="btn btn-level btn-rounded" [class.active]="customSalVH">
-          <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
-            (click)="customSalVH = !customSalVH" data-toggle="toggle" />Very High</label>
-      </div>
-      <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
-    </div>
-    <button class="btn btn-primary" (click)="addCustomQuestion()">Add New Question</button>
-  </div>
+      <h5>Categorization</h5>
+      <div class="d-flex flex-row">
+        <div class="form-group mr-2">
+          <label>Question Group Heading
+            <select class="form-control" id="category" name="category" [(ngModel)]="selectedGHId">
+              <option value="0">--Select Heading--</option>
+              <option *ngFor="let groupheading of groupheadings" [value]="groupheading.id">{{groupheading.text}}
+              </option>
+            </select>
+          </label>
+        </div>
 
-  <div class="mb-3 p-3 b-primary-200 br-standard">
-    <h5>
-      Search for Existing Questions
-    </h5>
-    <p>
-      Enter keywords to locate candidate questions. If suitable candidate questions
-      are available, select the + button next to each candidate. Make sure the SAL levels
-      for each question are correct, then click 'Add Selected Questions' to include them
-      in your Module or Requirement.
-    </p>
-    <p>
-      Note that the search will not return any questions that are already being used
-      in the Module.
-    </p>
-
-    <div class="d-flex flex-row mb-3">
-      <div class="d-flex flex-column w-100">
-        <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
-          [(ngModel)]="searchTerms" (keydown.enter)="search()">
-        <div *ngIf="searchError && searchTerms.trim().length === 0" class="alert alert-danger">Enter search keywords
+        <div class="form-group">
+          <label>Subcategory
+            <input type="text" id="subcategory" name="subcategory" [(ngModel)]="subcatText" list="subcatoptions"
+              class="form-control" />
+            <datalist id="subcatoptions">
+              <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
+                [value]="subcategory.text"></option>
+            </datalist>
+          </label>
         </div>
       </div>
-      <div>
-        <button type="submit"
-          class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
-          matTooltip="Search questions" (click)="search()">
-          <mat-icon class="mr-1">search</mat-icon>Search
-        </button>
+      <div *ngIf="isCatOrSubcatEmpty">
+        <div class="alert alert-danger">Question Group Heading and Subcategory are required</div>
       </div>
+      <div class="mb-3">
+        <h5>Security Assurance Level</h5>
+        <p>Select all applicable levels.</p>
+        <div class="btn-group btn-group-toggle">
+          <label class="btn btn-level btn-rounded" [class.active]="customSalL">
+            <input type="checkbox" id="SAL-L-NEW" name="SAL-L-NEW" [checked]="customSalL"
+              (click)="customSalL = !customSalL" data-toggle="toggle" />Low</label>
+          <label class="btn btn-level btn-rounded" [class.active]="customSalM">
+            <input type="checkbox" id="SAL-M-NEW" name="SAL-M-NEW" [checked]="customSalM"
+              (click)="customSalM = !customSalM" data-toggle="toggle" />Moderate</label>
+          <label class="btn btn-level btn-rounded" [class.active]="customSalH">
+            <input type="checkbox" id="SAL-H-NEW" name="SAL-H-NEW" [checked]="customSalH"
+              (click)="customSalH = !customSalH" data-toggle="toggle" />High</label>
+          <label class="btn btn-level btn-rounded" [class.active]="customSalVH">
+            <input type="checkbox" id="SAL-VH-NEW" name="SAL-VH-NEW" [checked]="customSalVH"
+              (click)="customSalVH = !customSalVH" data-toggle="toggle" />Very High</label>
+        </div>
+        <div *ngIf="isSalSelectionEmpty" class="alert alert-danger">At least one SAL level is required</div>
+      </div>
+      <button class="btn btn-primary" (click)="addCustomQuestion()">Add New Question</button>
     </div>
 
-    <div *ngIf="searching">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+    <div class="mb-3 p-3 b-primary-200 br-standard">
+      <h5>
+        Search for Existing Questions
+      </h5>
+      <p>
+        Enter keywords to locate candidate questions. If suitable candidate questions
+        are available, select the + button next to each candidate. Make sure the SAL levels
+        for each question are correct, then click 'Add Selected Questions' to include them
+        in your Module or Requirement.
+      </p>
+      <p>
+        Note that the search will not return any questions that are already being used
+        in the Module.
+      </p>
+
+      <div class="d-flex flex-row mb-3">
+        <div class="d-flex flex-column w-100">
+          <input id="txtSearchQuestionText" class="form-control" type="text" name="searchTerms" id="searchTerms"
+            [(ngModel)]="searchTerms" (keydown.enter)="search()">
+          <div *ngIf="searchError && searchTerms.trim().length === 0" class="alert alert-danger">Enter search keywords
+          </div>
+        </div>
+        <div>
+          <button type="submit"
+            class="btn btn-primary search-btn ml-2 d-flex justify-content-start align-items-center flex-00a"
+            matTooltip="Search questions" (click)="search()">
+            <mat-icon class="mr-1">search</mat-icon>Search
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="searchPerformed && !searching">
-
-      <div *ngIf="searchHits.length > 0" class="text-right">
-        <button class="btn btn-primary" [disabled]="selectedQuestionIds.length === 0"
-          (click)="addSelectedQuestions()">Add Selected Questions</button>
+      <div *ngIf="searching">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+          <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
       </div>
 
+      <div *ngIf="searchPerformed && !searching">
 
-      <div class="alert alert-info m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found</div>
-      <div class="alert alert-info m-2" *ngIf="searchHits.length === 1">1 question was found</div>
+        <div *ngIf="searchHits.length > 0" class="text-right">
+          <button class="btn btn-primary" [disabled]="selectedQuestionIds.length === 0"
+            (click)="addSelectedQuestions()">Add Selected Questions</button>
+        </div>
 
-      <hr *ngIf="searchHits.length > 0" class="hr-sal" />
 
-      <div *ngFor="let q of searchHits; let i = index">
-        <div class="d-flex flex-row justify-content-between">
-          <div class="ml-2 mr-3 w-100">
-            <div [innerHTML]="q.questionText" class="mt-2 mb-4">
-            </div>
-            <div>
-              <strong>Group Heading:</strong> {{q.questionGroupHeading}}
-            </div>
-            <div>
-              <strong>Subcategory:</strong> {{q.subcategory}}
-            </div>
+        <div class="alert alert-info m-2" *ngIf="searchHits.length !== 1">{{searchHits.length}} questions were found
+        </div>
+        <div class="alert alert-info m-2" *ngIf="searchHits.length === 1">1 question was found</div>
 
-            <h6 class="mt-3 font-weight-bold">
-              Security Assurance Level
-            </h6>
-            <p>Select all applicable levels.</p>
-            <div class="w-100">
-              <div class="btn-group btn-group-toggle">
-                <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
-                  <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
-                    [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
-                <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
-                  <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}"
-                    [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M', $event)"
-                    data-toggle="toggle" />Moderate</label>
-                <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
-                  <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}"
-                    [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
-                <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
-                  <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}"
-                    [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very
-                  High</label>
+        <hr *ngIf="searchHits.length > 0" class="hr-sal" />
+
+        <div *ngFor="let q of searchHits; let i = index">
+          <div class="d-flex flex-row justify-content-between">
+            <div class="ml-2 mr-3 w-100">
+              <div [innerHTML]="q.questionText" class="mt-2 mb-4">
               </div>
-              <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
-            </div>
-          </div>
-          <div>
-            <div class="btn-group btn-group-toggle mt-2">
-              <label class="btn btn-level btn-rounded" [class.active]="isQuestionSelected(q)">
-                <input type="checkbox" id="Q-SELECTED-{{q.questionID}}" name="Q-SELECTED-{{q.questionID}}"
-                  [checked]="isQuestionSelected(q)" (click)="markSelected(q, $event)" data-toggle="toggle" />+</label>
-            </div>
-          </div>
-        </div>
+              <div>
+                <strong>Group Heading:</strong> {{q.questionGroupHeading}}
+              </div>
+              <div>
+                <strong>Subcategory:</strong> {{q.subcategory}}
+              </div>
 
-        <hr *ngIf="i < searchHits.length - 1" class="hr-sal" />
+              <h6 class="mt-3 font-weight-bold">
+                Security Assurance Level
+              </h6>
+              <p>Select all applicable levels.</p>
+              <div class="w-100">
+                <div class="btn-group btn-group-toggle">
+                  <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
+                    <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
+                      [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
+                  <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
+                    <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}"
+                      [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M', $event)"
+                      data-toggle="toggle" />Moderate</label>
+                  <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
+                    <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}"
+                      [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
+                  <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
+                    <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}"
+                      [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very
+                    High</label>
+                </div>
+                <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
+              </div>
+            </div>
+            <div>
+              <div class="btn-group btn-group-toggle mt-2">
+                <label class="btn btn-level btn-rounded" [class.active]="isQuestionSelected(q)">
+                  <input type="checkbox" id="Q-SELECTED-{{q.questionID}}" name="Q-SELECTED-{{q.questionID}}"
+                    [checked]="isQuestionSelected(q)" (click)="markSelected(q, $event)" data-toggle="toggle" />+</label>
+              </div>
+            </div>
+          </div>
+
+          <hr *ngIf="i < searchHits.length - 1" class="hr-sal" />
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="d-flex flex-row mt-3 mb-3">
-    <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
-      (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.requirementID)">
-      &laquo; Back to Requirement
-    </button>
-    <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
-      (click)="setBuilderSvc.navQuestionList()" style="margin-right:auto">
-      &laquo; Back to Question List
-    </button>
+    <div class="d-flex flex-row mt-3 mb-3">
+      <button *ngIf="!!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
+        (click)="setBuilderSvc.navRequirementDetail(setBuilderSvc.activeRequirement.requirementID)">
+        &laquo; Back to Requirement
+      </button>
+      <button *ngIf="!(setBuilderSvc.activeRequirement)" class="btn btn-link mr-3"
+        (click)="setBuilderSvc.navQuestionList()" style="margin-right:auto">
+        &laquo; Back to Question List
+      </button>
+    </div>
+    <div *ngIf="searchHits.length > 0" class="text-right" id="add-qcomp-bottom-button">
+      <button class="btn btn-primary" style="float:right;position:relative; bottom: 55px;"
+        [disabled]="selectedQuestionIds.length === 0" (click)="addSelectedQuestions()">Add Selected Questions</button>
+    </div>
   </div>
-  <div *ngIf="searchHits.length > 0" class="text-right" id="add-qcomp-bottom-button">
-    <button class="btn btn-primary" style="float:right;position:relative; bottom: 55px;" [disabled]="selectedQuestionIds.length === 0"
-      (click)="addSelectedQuestions()">Add Selected Questions</button>
-  </div>
-</div>
 </div>

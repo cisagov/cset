@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Http;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -105,7 +106,7 @@ namespace CSETWebCore.Api.Controllers
 
                 var contentDisposition = new ContentDispositionHeaderValue("inline");
                 contentDisposition.FileName = filename;
-                Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+                Response.Headers.Append("Content-Disposition", contentDisposition.ToString());
 
                 return File(stream, contentType);
             }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -132,7 +132,7 @@ namespace CSETWebCore.Business.Observations
                 obs.Observation_Contacts.Add(webContact);
             }
 
-            return obs;           
+            return obs;
         }
 
 
@@ -215,7 +215,7 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public void UpdateIssues(ActionItemTextUpdate items)
         {
-            foreach(var item in items.actionTextItems)
+            foreach (var item in items.actionTextItems)
             {
                 var save = _context.ISE_ACTIONS_FINDINGS.Where(x => x.Finding_Id == items.observation_Id && x.Mat_Question_Id == item.Mat_Question_Id).FirstOrDefault();
                 if (save == null)

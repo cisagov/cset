@@ -28,6 +28,7 @@ namespace CSETWebCore.Business.Malcolm
                 if (!alreadySeenList.Contains(t.Key))
                 {
                     TempNode root = new TempNode(t.Key);
+                    root.Role = t.Role;
                     listOfAll.Add(root.Key, root);
                     RootNodes.Add(root);
                     HashSet<string> seen = new HashSet<string>() { root.Key };
@@ -70,6 +71,7 @@ namespace CSETWebCore.Business.Malcolm
                 else
                 {
                     var newT = new TempNode(c.Key);
+                    newT.Role = c.Role;
                     if (graphNode.AlreadyWalked(newT, visited))
                     {
                         children.TryAdd(c, false);
@@ -95,6 +97,7 @@ namespace CSETWebCore.Business.Malcolm
                 else
                 {
                     var newT= new TempNode(c.Key);
+                    newT.Role = c.Role;
                     listOfAll.Add(c.Key, newT);
                     WalkTree(newT, c, visited);
                     //Trace.WriteLine("rn:" + parent.Key + "-" + graphNode.Key);

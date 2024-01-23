@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -60,7 +60,7 @@ namespace CSETWebCore.Api.Controllers
             reportData.AlternateList = reportData.AddMissingParentsTo(reportData.AlternateList);
 
             var viewModel = new ReportVM(detail, reportData);
-            
+
             return Ok(viewModel);
         }
     }

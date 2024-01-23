@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -94,8 +94,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
         private static Regex controlParse = new Regex("([A-Z]{2,3}-[0-9]{1,2})(.+)");
-        
-        
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -109,7 +109,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             if (this.MustParse)
             {
                 Match m = controlParse.Match(controltmpId);
-                if(m.Success)
+                if (m.Success)
                     return m.Groups[1].Value;
                 return null;
             }

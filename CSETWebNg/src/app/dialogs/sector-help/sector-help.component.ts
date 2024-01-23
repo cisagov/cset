@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +42,7 @@ export class SectorHelpComponent implements OnInit {
   }
 
   scrollTo(id: any) {
-    (document.getElementById(id) as HTMLElement).scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+    (document.getElementById(id) as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
   }
 
   close(): void {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -56,26 +56,26 @@ export class MalcolmUploadErrorComponent implements OnInit {
   checkErrors() {
     // Check each error we got back, and save the file name
     this.errors.forEach(error => {
-        if (error.statusCode == 400) {
-            this.errorCode400Files.push(error.file);
-        }
-        if (error.statusCode == 415) {
-            this.errorCode415Files.push(error.file);
-        }
+      if (error.statusCode == 400) {
+        this.errorCode400Files.push(error.file);
+      }
+      if (error.statusCode == 415) {
+        this.errorCode415Files.push(error.file);
+      }
     });
 
     // Show the files that caused HTTP code 400
     if (this.errorCode400Files.length > 0) {
-        this.have400errors = true;
+      this.have400errors = true;
     } else {
-        this.have400errors = false;
+      this.have400errors = false;
     }
 
     // Show the files that caused HTTP code 415
     if (this.errorCode415Files.length > 0) {
-        this.have415errors = true;
+      this.have415errors = true;
     } else {
-        this.have415errors = false;
+      this.have415errors = false;
     }
 
   }

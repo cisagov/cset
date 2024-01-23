@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -161,7 +161,7 @@ namespace CSETWebCore.Helpers
 
                 var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
                 xGrouping.SetAttributeValue("remarks", remark != null ? remark.DomainRemarks : "");
-                
+
 
 
                 // are there any questions that belong to this grouping?
@@ -213,7 +213,7 @@ namespace CSETWebCore.Helpers
 
 
                         xQuestion.SetAttributeValue("referencetext",
-                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);        
+                            myQ.MATURITY_REFERENCE_TEXT.FirstOrDefault()?.Reference_Text);
                     }
 
                     foreach (var prop in myQ.MATURITY_QUESTION_PROPS)

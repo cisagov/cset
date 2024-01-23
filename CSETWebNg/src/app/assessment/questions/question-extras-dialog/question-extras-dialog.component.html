@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -23,9 +23,7 @@
 <mat-dialog-content>
     <div class="p-2">
         <div class="my-4" [innerHTML]="q.questionText"></div>
-        <app-question-extras #extrasComponent 
-            [myQuestion]="q" 
-            [myOptions]="options">
+        <app-question-extras #extrasComponent [myQuestion]="q" [myOptions]="options">
         </app-question-extras>
     </div>
 </mat-dialog-content>

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -27,13 +27,14 @@
   </div>
 
   <div class="p-3 pb-0 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
-    <mat-dialog-content class="p-0 pr-3 d-flex flex-column flex-11a text-center"
-    [innerHtml]="confirmMessage | safe">
+    <mat-dialog-content class="p-0 pr-3 d-flex flex-column flex-11a text-center" [innerHtml]="confirmMessage | safe">
     </mat-dialog-content>
   </div>
 
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-start flex-00a">
-      <button class=" btn btn-primary m-0 mr-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.Yes') }}</button>
-      <button class="btn btn-secondary" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.No') }}</button>
-    </mat-dialog-actions>
+    <button class=" btn btn-primary m-0 mr-2" (click)="dialogRef.close(true)">{{ t('answer-options.button-labels.Yes')
+      }}</button>
+    <button class="btn btn-secondary" (click)="dialogRef.close(false)">{{ t('answer-options.button-labels.No')
+      }}</button>
+  </mat-dialog-actions>
 </div>

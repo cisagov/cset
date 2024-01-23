@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
-export class AuthGuard  {
+export class AuthGuard {
   private parser = new JwtParser();
   private holdItForAMoment = localStorage.getItem('isAPI_together_With_Web');
 

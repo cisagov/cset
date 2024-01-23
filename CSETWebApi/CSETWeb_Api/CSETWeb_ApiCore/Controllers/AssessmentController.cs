@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,6 +24,9 @@ using NodaTime;
 //using static System.Runtime.InteropServices.JavaScript.JSType;
 using CSETWebCore.Business.GalleryParser;
 using CSETWebCore.Business.Demographic;
+using CSETWebCore.Business.Question;
+using CSETWebCore.Business.Aggregation;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -42,7 +45,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IGalleryEditor _galleryEditor;
 
         public AssessmentController(IAssessmentBusiness assessmentBusiness,
-            IACETAssessmentBusiness acetAssessmentBusiness, 
+            IACETAssessmentBusiness acetAssessmentBusiness,
             ITokenManager tokenManager, IDocumentBusiness documentBusiness, CSETContext context,
             IStandardsBusiness standards, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IGalleryEditor galleryEditor)
@@ -71,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult CreateAssessment([FromQuery] string workflow, [FromQuery] Guid galleryGuid, [FromQuery] string csn = null)
         {
             var currentUserId = _tokenManager.GetUserId();
-            
+
             // read the 'recipe' for the assessment
             GalleryConfig config = null;
             var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == galleryGuid);
@@ -95,12 +98,12 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness) _assessmentBusiness;
+            ICreateAssessmentBusiness assessmentBusiness = (ICreateAssessmentBusiness)_assessmentBusiness;
             switch (config.Model?.ModelName)
             {
                 case "ACET":
                 case "ISE":
-                    assessmentBusiness = (ICreateAssessmentBusiness) _acsetAssessmentBusiness;
+                    assessmentBusiness = (ICreateAssessmentBusiness)_acsetAssessmentBusiness;
                     break;
             }
 
@@ -195,7 +198,7 @@ namespace CSETWebCore.Api.Controllers
                 assessment.UseDiagram = true;
             }
 
-            
+
             // Origin
             if (config.Origin != null)
             {
@@ -345,13 +348,13 @@ namespace CSETWebCore.Api.Controllers
             return Ok(dtLocal.ToString("MM/dd/yyyy hh:mm:ss tt zzz"));
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>
         [HttpGet]
         [Route("api/getMergeNames")]
-        public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3, 
+        public IActionResult GetMergeNames([FromQuery] int id1, [FromQuery] int id2, [FromQuery] int id3,
                                            [FromQuery] int id4, [FromQuery] int id5, [FromQuery] int id6,
                                            [FromQuery] int id7, [FromQuery] int id8, [FromQuery] int id9, [FromQuery] int id10)
         {
@@ -370,13 +373,13 @@ namespace CSETWebCore.Api.Controllers
             var ak = _tokenManager.GetAccessKey();
 
             IQueryable<bool?> query = null;
-            if (userId != null) 
+            if (userId != null)
             {
                 query = from u in _context.USERS
                         where u.UserId == userId
                         select u.PreventEncrypt;
             }
-            else if (ak != null) 
+            else if (ak != null)
             {
                 query = from a in _context.ACCESS_KEY
                         where a.AccessKey == ak
@@ -384,7 +387,7 @@ namespace CSETWebCore.Api.Controllers
             }
 
             var result = query.ToList().FirstOrDefault();
-            
+
             return Ok(result);
         }
 
@@ -402,7 +405,7 @@ namespace CSETWebCore.Api.Controllers
                 user.PreventEncrypt = status;
                 _context.SaveChanges();
             }
-            else if (ak != null) 
+            else if (ak != null)
             {
                 var accessKey = _context.ACCESS_KEY.Where(x => x.AccessKey == ak).FirstOrDefault();
 
@@ -458,8 +461,17 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult clearFirstTime()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            int userid = _tokenManager.GetCurrentUserId()??0;
-            this._assessmentBusiness.clearFirstTime(userid,assessmentId);
+            int userid = _tokenManager.GetCurrentUserId() ?? 0;
+            this._assessmentBusiness.clearFirstTime(userid, assessmentId);
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/moveHydroActionsOutOfIseActions")]
+        public IActionResult MoveHydroActionsOutOfIseActions()
+        {
+            int assessmentId = _tokenManager.AssessmentForUser();
+            this._assessmentBusiness.MoveHydroActionsOutOfIseActions();
             return Ok();
         }
     }
