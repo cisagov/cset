@@ -42,7 +42,7 @@
           </div>
         </span>
         <!-- Navbar Toggler Button -->
-        <button class="navbar-toggler c-gray-150 ml-auto" type="button"
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" type="button"
           *ngIf="auth.userToken() && auth.userToken() !== 'null'" data-toggle="collapse"
           data-target="#csetNavbarCollapse" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
@@ -65,7 +65,7 @@
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
-         
+
             <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
               [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
