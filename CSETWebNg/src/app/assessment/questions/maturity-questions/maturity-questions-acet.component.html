@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,13 +26,15 @@
         <div class="d-flex flex-column align-items-end flex-00a w-100 mb-3">
             <div class="d-flex align-items-start flex-11a">
                 <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')"><i class="fas fa-compress-alt"></i></button>
-                <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" [matTooltip]="t('buttons.expand all')"
-                    [aria-label]="t('buttons.expand all')">
+                    [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')"><i
+                        class="fas fa-compress-alt"></i></button>
+                <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)"
+                    [matTooltip]="t('buttons.expand all')" [aria-label]="t('buttons.expand all')">
                     <i class="fas fa-expand-alt"></i>
                 </button>
                 <button class="btn btn-primary m-0 questions-header-filter-button-radius" (click)="showFilterDialog()">
-                    <i class="cset-icons-filter" [matTooltip]="t('buttons.filter')" [aria-label]="t('buttons.filter')"></i>
+                    <i class="cset-icons-filter" [matTooltip]="t('buttons.filter')"
+                        [aria-label]="t('buttons.filter')"></i>
                 </button>
             </div>
         </div>

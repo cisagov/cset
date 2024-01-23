@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,14 +25,16 @@
     <h4>{{ t('contacts') }}</h4>
     <div class="list-group">
       <app-contact-item [contact]="contact" [contactsList]="contacts" *ngFor="let contact of contacts; let i = index"
-        (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)" (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)">
+        (startEditEvent)="startEdit()" (abandonEditEvent)="abandonEdit()" (edit)="editContact(contact)"
+        (create)="saveNewContact(contact)" (remove)="removeContact(contact, i)">
       </app-contact-item>
       <span class="mt-2 btn-group" *ngIf="showControls()">
         <button class="btn btn-group d-flex align-items-center flex-00a" (click)="newContact()" [disabled]="adding==1">
-            <span class="cset-icons-plus fs-base mr-2"></span>
-            <span>{{ t('add contact') }}</span>
+          <span class="cset-icons-plus fs-base mr-2"></span>
+          <span>{{ t('add contact') }}</span>
         </button>
-        <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email contacts') }}</button>
+        <button *ngIf="false" class="btn btn-group cset-icons-envelope" (click)="openEmailDialog()">{{ t('email
+          contacts') }}</button>
       </span>
       <div *ngIf="!showControls()" class="text-info small">
         <p>{{ t('not authorized message') }}</p>

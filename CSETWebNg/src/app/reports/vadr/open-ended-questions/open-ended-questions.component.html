@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,127 +23,145 @@
 <div class="report-body mb-5">
 
   <div class="flex-container">
-      <div class="column mt-3">
-          <p
-              class="report-title">
-              OPEN ENDED QUESTIONS REPORT
-          </p>
-          <p
-              class="report-title" style="font-size: 36px">
-              Validated Architecture Design Review (VADR)
-          </p>
-      </div>
-      <div class="column">
-          <p style="text-align: center">
-              <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
-          </p>
-      </div>
+    <div class="column mt-3">
+      <p class="report-title">
+        OPEN ENDED QUESTIONS REPORT
+      </p>
+      <p class="report-title" style="font-size: 36px">
+        Validated Architecture Design Review (VADR)
+      </p>
+    </div>
+    <div class="column">
+      <p style="text-align: center">
+        <img width="471" height="529" src="assets/images/ExecutiveFiles/image002.jpg">
+      </p>
+    </div>
 
-      <div class="cover-page-bottom">
-        <app-logo-for-reports></app-logo-for-reports>
-        <app-info-block [response]="response"/>
-      </div>
+    <div class="cover-page-bottom">
+      <app-logo-for-reports></app-logo-for-reports>
+      <app-info-block [response]="response" />
+    </div>
   </div>
   <div class="page-break">
 
-      <div class="disclaimer-blurb m-4">
-          <p class="text-start"> The “Open Ended Questions” report lists the current assessment’s questions and provides users with 2 options: </p>
-          <span>
-            <ul class="mb-2">
-              <li> Only “Open Ended” questions to which answers had been provided (Default)</li>
-              <li> All questions and answers in the current assessment</li>
-             </ul>
-          </span>
-          <p class="text-start">
-            The report shows the category, the “Primary” question and answer (either Yes, No, Unanswered or Alternate) as well as the “Secondary” open ended question and answer, if provided. </p>
-          <p class="text-start">
-            This report will help to collate all answers and comments relating to answered “Secondary” or “open ended” questions in the assessment.
-            </p>
-      </div>
+    <div class="disclaimer-blurb m-4">
+      <p class="text-start"> The “Open Ended Questions” report lists the current assessment’s questions and provides
+        users with 2 options: </p>
+      <span>
+        <ul class="mb-2">
+          <li> Only “Open Ended” questions to which answers had been provided (Default)</li>
+          <li> All questions and answers in the current assessment</li>
+        </ul>
+      </span>
+      <p class="text-start">
+        The report shows the category, the “Primary” question and answer (either Yes, No, Unanswered or Alternate) as
+        well as the “Secondary” open ended question and answer, if provided. </p>
+      <p class="text-start">
+        This report will help to collate all answers and comments relating to answered “Secondary” or “open ended”
+        questions in the assessment.
+      </p>
+    </div>
 
 
 
-      <div class="d-flex flex-row justify-content-between align-items-end">
+    <div class="d-flex flex-row justify-content-between align-items-end">
 
-          <h1 *ngIf="openEndedQuestion &&!noData" class="page-title">Open Ended Questions (All questions and answers)</h1>
-          <h1 *ngIf="!openEndedQuestion &&!noData" class="page-title">Open Ended Questions (Only answered questions)</h1>
-      </div>
-      <hr class="page-line m-0">
+      <h1 *ngIf="openEndedQuestion &&!noData" class="page-title">Open Ended Questions (All questions and answers)</h1>
+      <h1 *ngIf="!openEndedQuestion &&!noData" class="page-title">Open Ended Questions (Only answered questions)</h1>
+    </div>
+    <hr class="page-line m-0">
 
-      <div class="row mt-3">
-        <div class="d-grid gap-2 col-6 mx-auto text-center">
-          <div (click)="toggleShow()" type="checkbox" >
-             <button  class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip" title="Lists only “Open ended” questions to which answers had been provided." *ngIf="openEndedQuestion &&!noData"> Only Answered Questions</button>
-              <button class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip" title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion &&!noData">    Show ALL    </button>
-            </div>
-         </div>
-        <div class="d-grid gap-2 col-6 mx-auto text-center">
-         <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvAll()"> <i class="far fa-file-excel"></i> Export to Excel</button>
-          <button *ngIf="!openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"  data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment" (click)="convertTocSvOnlyAnswered()"> <i class="far fa-file-excel"></i>  Export to Excel</button>
+    <div class="row mt-3">
+      <div class="d-grid gap-2 col-6 mx-auto text-center">
+        <div (click)="toggleShow()" type="checkbox">
+          <button class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip"
+            title="Lists only “Open ended” questions to which answers had been provided."
+            *ngIf="openEndedQuestion &&!noData"> Only Answered Questions</button>
+          <button class="btn btn-outline-secondary btn-button exportBtb noprint" data-bs-toggle="tooltip"
+            title="Lists all questions and answers within the assessment" *ngIf="!openEndedQuestion &&!noData"> Show ALL
+          </button>
         </div>
-
-        <div *ngIf="noData"> Please answer some questions in order to see some data on this report </div>
       </div>
-      <div *ngIf="openEndedQuestion" class=""  id="divshow" >
+      <div class="d-grid gap-2 col-6 mx-auto text-center">
+        <button *ngIf="openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"
+          data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment"
+          (click)="convertTocSvAll()"> <i class="far fa-file-excel"></i> Export to Excel</button>
+        <button *ngIf="!openEndedQuestion &&!noData" class="btn btn-outline-secondary btn-button exportBtb noprint"
+          data-bs-toggle="tooltip" title="Export only the Open Questions answered on the assessment"
+          (click)="convertTocSvOnlyAnswered()"> <i class="far fa-file-excel"></i> Export to Excel</button>
+      </div>
 
-      <ng-template ngFor let-onlyOpenQuestionData [ngForOf]="onlyOpenQuestionData" >
-        <h2 class="m-3 subcat-header"  *ngIf="onlyOpenQuestionData.questions.length>1">{{onlyOpenQuestionData.title}}</h2>
+      <div *ngIf="noData"> Please answer some questions in order to see some data on this report </div>
+    </div>
+    <div *ngIf="openEndedQuestion" class="" id="divshow">
+
+      <ng-template ngFor let-onlyOpenQuestionData [ngForOf]="onlyOpenQuestionData">
+        <h2 class="m-3 subcat-header" *ngIf="onlyOpenQuestionData.questions.length>1">{{onlyOpenQuestionData.title}}
+        </h2>
         <div *ngFor="let q of onlyOpenQuestionData.questions">
 
-          <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId" >
+          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId"
+            [class.border-bottom]="!!q.parentQuestionId">
             <!-- [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion"> -->
             <div class="col-sm-2 ml-4">
-             {{q.displayNumber}}
-           </div>
-           <div class="col-sm-8" >
-            <div>
-             {{q.questionText}}
-               <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer:  <span *ngIf="q.answer=='Y'">Yes</span>
-                <span *ngIf="q.answer=='N'">No</span>
-                <span *ngIf="q.answer=='U'">Unanswered</span>
-                <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12" >{{q.altAnswerText}}</p></span>
-              </p>
-
-
+              {{q.displayNumber}}
             </div>
-            <div class="mt-3" [class.d-none]="!q.parentQuestionId"><h6 >Your Answer:</h6>
-             <p class="overflow-auto pl-0 col-12"><span *ngIf="q.freeResponseAnswer">{{q.freeResponseAnswer}}</span> <span *ngIf="!q.freeResponseAnswer">Unanswered</span> </p>
-           </div>
-           </div>
-         </div>
-        </div>
-    </ng-template>
+            <div class="col-sm-8">
+              <div>
+                {{q.questionText}}
+                <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer: <span *ngIf="q.answer=='Y'">Yes</span>
+                  <span *ngIf="q.answer=='N'">No</span>
+                  <span *ngIf="q.answer=='U'">Unanswered</span>
+                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12">
+                      {{q.altAnswerText}}</p></span>
+                </p>
 
-        </div>
-        <div *ngIf="!openEndedQuestion" class=""  id="divshow" >
-          <ng-template ngFor let-data2 [ngForOf]="data2" >
-            <h2 class="m-3 subcat-header">{{data2.title}}</h2>
-            <div *ngFor="let q of data2.myArray">
 
-              <div class="row"[class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId" [class.border-bottom]="!!q.parentQuestionId"   [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
-                <div class="col-sm-2 ml-4">
-                 {{q.displayNumber}}
-               </div>
-               <div class="col-sm-8" >
-                <div>
-                 {{q.questionText}}
-
-                   <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer:   <span *ngIf="q.answer=='Y'">Yes</span>
-                    <span *ngIf="q.answer=='N'">No</span>
-                    <span *ngIf="q.answer=='U'">Unanswered</span>
-                    <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12" [class.d-none]="!q.altAnswerText" >{{q.altAnswerText}}</p></span>
-                  </p>
-
-                </div>
-                <div class="mt-3" [class.d-none]="!q.parentQuestionId"><h6 >Your Answer:</h6>
-                 <p class="overflow-auto pl-0 col-12">{{q.freeResponseAnswer}}</p>
-               </div>
-               </div>
-             </div>
+              </div>
+              <div class="mt-3" [class.d-none]="!q.parentQuestionId">
+                <h6>Your Answer:</h6>
+                <p class="overflow-auto pl-0 col-12"><span *ngIf="q.freeResponseAnswer">{{q.freeResponseAnswer}}</span>
+                  <span *ngIf="!q.freeResponseAnswer">Unanswered</span> </p>
+              </div>
             </div>
-        </ng-template>
           </div>
-  <!-- <mat-tab-group mat-align-tabs>
+        </div>
+      </ng-template>
+
+    </div>
+    <div *ngIf="!openEndedQuestion" class="" id="divshow">
+      <ng-template ngFor let-data2 [ngForOf]="data2">
+        <h2 class="m-3 subcat-header">{{data2.title}}</h2>
+        <div *ngFor="let q of data2.myArray">
+
+          <div class="row" [class.mt-3]="!q.parentQuestionId" [class.ml-3.mb-2]="!!q.parentQuestionId"
+            [class.border-bottom]="!!q.parentQuestionId"
+            [class.d-none]="q.parentQuestionId==null && !q.isParentQuestion">
+            <div class="col-sm-2 ml-4">
+              {{q.displayNumber}}
+            </div>
+            <div class="col-sm-8">
+              <div>
+                {{q.questionText}}
+
+                <p class="m-2" *ngIf="!q.parentQuestionId ">Your Answer: <span *ngIf="q.answer=='Y'">Yes</span>
+                  <span *ngIf="q.answer=='N'">No</span>
+                  <span *ngIf="q.answer=='U'">Unanswered</span>
+                  <span *ngIf="!q.parentQuestionId && q.answer=='A'"> Alternate <p class="overflow-auto pl-0 col-12"
+                      [class.d-none]="!q.altAnswerText">{{q.altAnswerText}}</p></span>
+                </p>
+
+              </div>
+              <div class="mt-3" [class.d-none]="!q.parentQuestionId">
+                <h6>Your Answer:</h6>
+                <p class="overflow-auto pl-0 col-12">{{q.freeResponseAnswer}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <!-- <mat-tab-group mat-align-tabs>
     <mat-tab label=" Only Questions with Answer">
       <ng-template ngFor let-data2 [ngForOf]="data2" >
         <h2 class="m-3 subcat-header">{{data2.title}}</h2>

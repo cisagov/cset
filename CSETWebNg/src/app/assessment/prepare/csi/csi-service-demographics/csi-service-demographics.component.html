@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -110,7 +110,8 @@
           Critical Service?</label>
         <div class="btn-group btn-group-toggle d-block button-container" id="totalITStaff2" data-toggle="buttons"
           ngbRadioGroup>
-          <label ngbButtonLabel class="btn btn-level mb-1" *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
+          <label ngbButtonLabel class="btn btn-level mb-1"
+            *ngFor="let totalITStaffItem of cyberSecurityItIcsStaffCountList"
             [class.active]="totalITStaffItem.staff_Count === csiServiceDemographic.cybersecurityItIcsStaffCount"
             [ngClass]="{ 'alert-danger': !csiServiceDemographic.cybersecurityItIcsStaffCount && showErrors() }">
             <input ngbButton type="radio" autocomplete="off" name="totalITStaff2"

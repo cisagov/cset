@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,13 +29,17 @@
 <div *ngIf="!loading">
   <h1>4. Detailed Self-Evaluation Results</h1>
   <p>
-    This section provides the level of implementation (i.e., Fully Implemented, Largely Implemented, Partially Implemented,
-    and Not Implemented) input to the self-evaluation tool for each C2M2 practice by domain, objective, and MIL. See Section
-    2.3 Maturity Indicator Level Scoring for a detailed explanation of the scoring process and Section 5 Using the Model for
+    This section provides the level of implementation (i.e., Fully Implemented, Largely Implemented, Partially
+    Implemented,
+    and Not Implemented) input to the self-evaluation tool for each C2M2 practice by domain, objective, and MIL. See
+    Section
+    2.3 Maturity Indicator Level Scoring for a detailed explanation of the scoring process and Section 5 Using the Model
+    for
     further detail regarding self-evaluation results.
   </p>
 
-  <div *ngFor="let domain of donutData; let i = index" [id]="'toc-' + domain.shortTitle" style="scroll-margin-top: 2rem;">
+  <div *ngFor="let domain of donutData; let i = index" [id]="'toc-' + domain.shortTitle"
+    style="scroll-margin-top: 2rem;">
     <h1>4.{{domain.sequence}} Domain: {{domain.title}} ({{domain.shortTitle}})</h1>
     <p>
       {{domain.description}}
@@ -74,7 +78,8 @@
       <div class="d-flex" style="padding: 2px; margin-bottom: -1px; justify-content: space-evenly;
         text-align: center; align-items: top;">
 
-        <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top" style="max-width: 150px; align-items: center;">
+        <div *ngFor="let objective of domain.objectives" class="d-flex flex-column justify-content-top"
+          style="max-width: 150px; align-items: center;">
 
           <!-- supplying the donuts with question info -->
           <app-c2m2-donut [questionDistribution]="objective"></app-c2m2-donut>
@@ -92,9 +97,9 @@
           <td class="heatmap-mil-column">{{ removeHyphen(row.title) }}</td>
           <td class="heatmap-answer-column" *ngFor="let practice of row.practices"
             [ngStyle]="{'background-color': getHeatMapColor(practice.answer)}">
-              <div [ngStyle]="{'color': getHeapMapTextColor(practice.answer)}">
-                {{ practice.number }}
-              </div>
+            <div [ngStyle]="{'color': getHeapMapTextColor(practice.answer)}">
+              {{ practice.number }}
+            </div>
           </td>
         </tr>
       </table>

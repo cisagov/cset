@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,52 +22,55 @@
 -------------------------->
 <div class="white-panel max-1200 m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
   <div class="max-1200">
-  <app-builder-breadcrumbs></app-builder-breadcrumbs>
-  <h3>
-    Standard And Question Set Builder
-  </h3>
-  <p>
-    This tool allows you to define your own custom standard or question set.  
-  </p>
-  <div>
-    <button class="btn btn-primary" (click)="setBuilderSvc.newCustomSet()">
-      <span class="cset-icons-plus fs-base mr-2"></span>
-      Create Module
-    </button>
-  </div>
+    <app-builder-breadcrumbs></app-builder-breadcrumbs>
+    <h3>
+      Standard And Question Set Builder
+    </h3>
+    <p>
+      This tool allows you to define your own custom standard or question set.
+    </p>
+    <div>
+      <button class="btn btn-primary" (click)="setBuilderSvc.newCustomSet()">
+        <span class="cset-icons-plus fs-base mr-2"></span>
+        Create Module
+      </button>
+    </div>
 
-  <div *ngIf="!setDetailList">
-    <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
-      <div class="spinner-size-50"></div>
+    <div *ngIf="!setDetailList">
+      <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
+        <div class="spinner-size-50"></div>
+      </div>
+    </div>
+    <div *ngIf="setDetailList?.length > 0" class="row">
+      <div class="col-12">
+        <table class="w-100">
+          <tr *ngFor="let s of setDetailList">
+            <td class="w-100">
+              <button style="white-space: normal; text-align:left;" class="btn btn-link"
+                (click)="setBuilderSvc.navSetDetail2(s.setName)">
+                {{s.fullName}}
+              </button>
+            </td>
+            <td>
+              <button type="button" class="p-0 mr-3 btn icon-button d-flex flex-column align-items-center flex-00a"
+                (click)="this.cloneSet(s.setName)">
+                <span class="fa fa-clone fs-base-2"></span>
+                <span class="d-none d-md-flex fs-smaller">Clone</span>
+              </button>
+            </td>
+            <td *ngIf="canDeleteCustomModules">
+              <button type="button" *ngIf="s.isCustom"
+                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.deleteSet(s)">
+                <span class="cset-icons-trash-can fs-base-2"></span>
+                <span class="d-none d-md-flex fs-smaller">Delete</span>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="setDetailList?.length === 0" class="alert alert-info mt-3 mb-4">
+      <p>There are no custom sets available.</p>
     </div>
   </div>
-  <div *ngIf="setDetailList?.length > 0" class="row">
-    <div class="col-12">
-    <table class="w-100">
-      <tr *ngFor="let s of setDetailList">
-        <td class="w-100">
-          <button style="white-space: normal; text-align:left;" class="btn btn-link" (click)="setBuilderSvc.navSetDetail2(s.setName)">
-            {{s.fullName}}
-          </button>
-        </td>
-        <td>
-          <button type="button" class="p-0 mr-3 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.cloneSet(s.setName)">
-              <span class="fa fa-clone fs-base-2"></span>
-              <span class="d-none d-md-flex fs-smaller">Clone</span>
-            </button>
-        </td>
-        <td *ngIf="canDeleteCustomModules">
-          <button type="button" *ngIf="s.isCustom" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" (click)="this.deleteSet(s)">
-            <span class="cset-icons-trash-can fs-base-2"></span>
-            <span class="d-none d-md-flex fs-smaller">Delete</span>
-          </button>
-        </td>
-      </tr>
-    </table>
-  </div>
-  </div>
-  <div *ngIf="setDetailList?.length === 0" class="alert alert-info mt-3 mb-4">
-    <p>There are no custom sets available.</p>
-  </div>
-</div>
 </div>

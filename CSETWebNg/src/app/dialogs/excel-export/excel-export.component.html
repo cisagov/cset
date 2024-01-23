@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -32,12 +32,12 @@
                 <div class="col-12 m-4">
                     This excel export is for simple data analysis. Excel data cannot be reimported.
                 </div>
-            
+
             </div>
             <div class="row">
                 <div class="col-12 ml-4 mb-2">
-                    <input type="checkbox" name="doNotShowAgain" class="mt-1" autocomplete="off" (change)="setDoNotShow()" [(ngModel)]="doNotShow"
-                    [checked]="doNotShow" >
+                    <input type="checkbox" name="doNotShowAgain" class="mt-1" autocomplete="off"
+                        (change)="setDoNotShow()" [(ngModel)]="doNotShow" [checked]="doNotShow">
                     <label for="doNotShowAgain">&nbsp;Do not show this message again</label>
                 </div>
             </div>
@@ -46,6 +46,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
-<button class="btn btn-primary" (click)="exportToExcel()">Export</button>
-<button class="btn btn-secondary" (click)="close()">Cancel</button>
+    <button class="btn btn-primary" (click)="exportToExcel()">Export</button>
+    <button class="btn btn-secondary" (click)="close()">Cancel</button>
 </mat-dialog-actions>

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -26,7 +26,7 @@
         <br>
         <hr>
     </div>
-    
+
     <div *ngFor="let iHeader of irps?.headerList">
         <div *ngIf="(iHeader.header === 'Activities / Services / Products')">
             <h4 class="irp-header"> {{ iHeader.header }}</h4>
@@ -36,10 +36,10 @@
             <div *ngIf="(irp.risk_Type === 'ISE')">
                 <div class="lead mb-3">{{ irp.item_Number }}. {{ irp.description }}</div>
 
-                <div class="mb-4">    
+                <div class="mb-4">
                     <ng-container *ngIf="irp.risk_1_Description !== ''">
                         <div (click)="setResponse(irp, 1);" (keyup.enter)="setResponse(irp, 1);" tabindex="0"
-                             class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==1}">
+                            class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==1}">
                             <div class="row">
                                 <div class="col-2">
                                     <h3 *ngIf="irp.response !== 1">&#x2610;</h3>
@@ -49,10 +49,10 @@
                             </div>
                         </div>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="irp.risk_2_Description !== ''">
                         <div (click)="setResponse(irp, 2);" (keyup.enter)="setResponse(irp, 2);" tabindex="0"
-                              class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==2}">
+                            class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==2}">
                             <div class="row">
                                 <div class="col-2">
                                     <h3 *ngIf="irp.response !== 2">&#x2610;</h3>
@@ -62,10 +62,10 @@
                             </div>
                         </div>
                     </ng-container>
-                        
+
                     <ng-container *ngIf="irp.risk_3_Description !== ''">
                         <div (click)="setResponse(irp, 3);" (keyup.enter)="setResponse(irp, 3);" tabindex="0"
-                              class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==3}">
+                            class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==3}">
                             <div class="row">
                                 <div class="col-2">
                                     <h3 *ngIf="irp.response !== 3">&#x2610;</h3>
@@ -75,10 +75,10 @@
                             </div>
                         </div>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="irp.risk_4_Description !== ''">
                         <div (click)="setResponse(irp, 4);" (keyup.enter)="setResponse(irp, 4);" tabindex="0"
-                              class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==4}">
+                            class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==4}">
                             <div class="row">
                                 <div class="col-2">
                                     <h3 *ngIf="irp.response !== 4">&#x2610;</h3>
@@ -91,7 +91,7 @@
 
                     <ng-container *ngIf="irp.risk_5_Description !== ''">
                         <div (click)="setResponse(irp, 5);" (keyup.enter)="setResponse(irp, 5);" tabindex="0"
-                              class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==5}">
+                            class="irp-risk cursor-pointer" [ngClass]="{'irp-selected': irp.response==5}">
                             <div class="row">
                                 <div class="col-2">
                                     <h3 *ngIf="irp.response !== 5">&#x2610;</h3>

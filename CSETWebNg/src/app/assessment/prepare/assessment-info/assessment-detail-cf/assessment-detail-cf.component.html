@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,22 +26,24 @@
         <div class="form-group col-md-6">
             <label class="mb-1" for="name">Assessment Name</label>
             <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
-                [(ngModel)]="assessment.assessmentName"
-                (ngModelChange)="assessment.assessmentName" (change)="update($event)" autofocus tabindex="0">            
+                [(ngModel)]="assessment.assessmentName" (ngModelChange)="assessment.assessmentName"
+                (change)="update($event)" autofocus tabindex="0">
         </div>
         <div class="form-group col-md-6">
             <label class="mb-1" for="date">Assessment Date</label>
-            <input matInput MatDatepickerInput class="form-control" id="date" name="date" [(ngModel)]="assessment.assessmentDate"
-                [matDatepicker]="picker" (focus)="picker.open()" (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
+            <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+                [(ngModel)]="assessment.assessmentDate" [matDatepicker]="picker" (focus)="picker.open()"
+                (blur)="update($event)" (click)="picker.open()" (ngModelChange)="update($event)" tabindex="0">
             <mat-datepicker #picker></mat-datepicker>
         </div>
-    </div>   
+    </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <h5>Organization Location</h5>
-            <p class="font-italic">Please enter the Zip Code for the primary address/headquarters of your organization (required)</p>
-            <input type="text" maxlength="10" class="form-control cf" id="postalCode" name="postalCode" [(ngModel)]="assessment.postalCode"
-                (change)="update($event)" tabindex="0" required zipCode>
+            <p class="font-italic">Please enter the Zip Code for the primary address/headquarters of your organization
+                (required)</p>
+            <input type="text" maxlength="10" class="form-control cf" id="postalCode" name="postalCode"
+                [(ngModel)]="assessment.postalCode" (change)="update($event)" tabindex="0" required zipCode>
         </div>
         <div class="form-group col-md-6">
         </div>
@@ -51,5 +53,6 @@
 <div class="mt-4">
     <h4>Assessment Type</h4>
     <h5>{{ assessment.typeTitle || 'Blank Assessment' }}</h5>
-    <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription" [innerHtml]="assessment.typeDescription | safe"></p>
+    <p *ngIf="assessment.typeDescription && assessment.typeTitle != assessment.typeDescription"
+        [innerHtml]="assessment.typeDescription | safe"></p>
 </div>

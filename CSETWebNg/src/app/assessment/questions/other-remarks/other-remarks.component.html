@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,11 +21,11 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="white-panel d-flex flex-column justify-content-start flex-11a">
-    <h3 class="mb-3">{{t('titles.other remarks')}}</h3>
+  <h3 class="mb-3">{{t('titles.other remarks')}}</h3>
 
-    <label>Enter any general remarks or observations for the assessment</label>
-    <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
+  <label>Enter any general remarks or observations for the assessment</label>
+  <textarea [(ngModel)]="remark" appAutoSize class="form-control" (blur)="saveRemark($event)"></textarea>
 
-    <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>
+  <app-nav-back-next [page]="'other-remarks'"></app-nav-back-next>
 
 </div>

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,84 +24,81 @@
     <h3 class="depiction-title" style="margin-left: -15px; margin-bottom: 5px;">CRR Performance Summary</h3>
 
     <div class="row header crr-performance">
-      <div style="width: 9%; padding: 0;">
-          <p class="header"><b>Domain Summary</b></p>
-      </div>
-      <div style="width: 27%; padding: 0;">
-          <p>
-              <b>MIL-1 Performed</b>
-              <br />
-              Domain Practices are being performed
-          </p>
-      </div>
-      <div style="width: 18%; padding: 0;">
-          <p>
-              <b>MIL-2 Planned</b>
-              <br />
-              Domain practices are supported by planning, policy, stakeholders, and standards.
-          </p>
-      </div>
-      <div style="width: 18%; padding: 0;">
-          <p>
-              <b>MIL-3 Managed</b>
-              <br />
-              Domain practices are supported by governance and adequate resources.
-          </p>
-      </div>
-      <div style="width: 14%; padding: 0;">
-          <p>
-              <b>MIL-4 Measured</b>
-              <br />
-              Domain practices are supported by measurement, monitoring, and executive oversight.
-          </p>
-      </div>
-      <div style="width: 14%; padding: 0;">
-          <p>
-              <b>MIL-5 Defined</b>
-              <br />
-              Domain practices are supported by enterprise standardization and analysis of lessons learned.
-          </p>
-      </div>
+        <div style="width: 9%; padding: 0;">
+            <p class="header"><b>Domain Summary</b></p>
+        </div>
+        <div style="width: 27%; padding: 0;">
+            <p>
+                <b>MIL-1 Performed</b>
+                <br />
+                Domain Practices are being performed
+            </p>
+        </div>
+        <div style="width: 18%; padding: 0;">
+            <p>
+                <b>MIL-2 Planned</b>
+                <br />
+                Domain practices are supported by planning, policy, stakeholders, and standards.
+            </p>
+        </div>
+        <div style="width: 18%; padding: 0;">
+            <p>
+                <b>MIL-3 Managed</b>
+                <br />
+                Domain practices are supported by governance and adequate resources.
+            </p>
+        </div>
+        <div style="width: 14%; padding: 0;">
+            <p>
+                <b>MIL-4 Measured</b>
+                <br />
+                Domain practices are supported by measurement, monitoring, and executive oversight.
+            </p>
+        </div>
+        <div style="width: 14%; padding: 0;">
+            <p>
+                <b>MIL-5 Defined</b>
+                <br />
+                Domain practices are supported by enterprise standardization and analysis of lessons learned.
+            </p>
+        </div>
     </div>
 
 
     <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row domain">
-      <div class="domain-label" style="width: 9%; padding: 0;">{{  domain.title  }}</div>
-          <div *ngFor="let chart of charts[i]; let j = index" style="padding: 0"
-          [style.width]="j == 0 ? '27%' : (j == 4 || j == 3 ? '14%' : '18%')"
-          [innerHtml]="getChart(i, j) | safe">
-          </div>
+        <div class="domain-label" style="width: 9%; padding: 0;">{{ domain.title }}</div>
+        <div *ngFor="let chart of charts[i]; let j = index" style="padding: 0"
+            [style.width]="j == 0 ? '27%' : (j == 4 || j == 3 ? '14%' : '18%')" [innerHtml]="getChart(i, j) | safe">
+        </div>
     </div>
 </div>
 
 <div class="row" style="padding: 0.25rem; margin-left: 15px" [innerHtml]="legend | safe"></div>
 
 <style>
-
-  @media print {
-    @page {
-        size: A4 landscape
-      }
+    @media print {
+        @page {
+            size: A4 landscape
+        }
     }
 
-  .header {
-    padding: 0.5rem 0;
-  }
+    .header {
+        padding: 0.5rem 0;
+    }
 
-  .domain-label {
-    font-size: 0.5rem;
-      font-weight: bold;
-  }
+    .domain-label {
+        font-size: 0.5rem;
+        font-weight: bold;
+    }
 
-  div p {
-      font-size: 10px;
-      padding: 0;
-      /*margin: 0;*/
-  }
+    div p {
+        font-size: 10px;
+        padding: 0;
+        /*margin: 0;*/
+    }
 
-  .domain {
-      border-top: 1px solid black;
-      padding: 0.25rem 0;
-  }
+    .domain {
+        border-top: 1px solid black;
+        padding: 0.25rem 0;
+    }
 </style>
-

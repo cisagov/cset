@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -49,44 +49,64 @@
         <ng-container *ngIf="this.mergeConflicts.length > 0 && this.pageLoading === false">
 
             <button class="btn btn-primary" matTooltip="Cancel merging and return to the assessment screen"
-              style="margin-top: -3rem; margin-left: auto; margin-right: 0; margin-bottom: 1.50rem"
-              (click)="navToHome()">Cancel Merge
+                style="margin-top: -3rem; margin-left: auto; margin-right: 0; margin-bottom: 1.50rem"
+                (click)="navToHome()">Cancel Merge
             </button>
 
-        <div style="max-height: 450px; width: 94vw; margin: auto; overflow-y: scroll;">
-            <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
-                <tr>
-                    <th>Statements</th>
-                    <th *ngFor="let assessment of this.ncuaSvc.assessmentsToMerge; let i = index"
-                    [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Exam' : 'Exam ' + (i+1) }}</th>
-                    <th>YES</th>
-                    <th>NO</th>
-                </tr>
-                <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
-                    <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{ this.mergeConflicts[i].question_Text }}</td>
-                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text1))">{{ getDisplayText(this.mergeConflicts[i].answer_Text1) }}</td>
-                    <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text2))">{{ getDisplayText(this.mergeConflicts[i].answer_Text2) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text3))">{{ getDisplayText(this.mergeConflicts[i].answer_Text3) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text4))">{{ getDisplayText(this.mergeConflicts[i].answer_Text4) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text5))">{{ getDisplayText(this.mergeConflicts[i].answer_Text5) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text6))">{{ getDisplayText(this.mergeConflicts[i].answer_Text6) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text7))">{{ getDisplayText(this.mergeConflicts[i].answer_Text7) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text8))">{{ getDisplayText(this.mergeConflicts[i].answer_Text8) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text9))">{{ getDisplayText(this.mergeConflicts[i].answer_Text9) }}</td>
-                    <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 10" [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text10))">{{ getDisplayText(this.mergeConflicts[i].answer_Text10) }}</td>
-                    <td>
-                        <input type="radio" id="yes" name="option{{i}}" value="yes"
-                        (change)="updateAnswers(i, $event.target.value)">
-                    </td>
-                    <td>
-                        <input type="radio" id="no" name="option{{i}}" value="no"
-                        (change)="updateAnswers(i, $event.target.value)">
-                    </td>
-                </tr>
-            </table>
-        </div>
+            <div style="max-height: 450px; width: 94vw; margin: auto; overflow-y: scroll;">
+                <table role="presentation" aria-label="assessments" class="assessment-summary" style="overflow-x:auto">
+                    <tr>
+                        <th>Statements</th>
+                        <th *ngFor="let assessment of this.ncuaSvc.assessmentsToMerge; let i = index"
+                            [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Exam'
+                            : 'Exam ' + (i+1) }}</th>
+                        <th>YES</th>
+                        <th>NO</th>
+                    </tr>
+                    <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
+                        <td style="text-align: left; padding-left: 0.5rem; width: 50%">{{
+                            this.mergeConflicts[i].question_Text }}</td>
+                        <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text1))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text1) }}</td>
+                        <td [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text2))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text2) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 3"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text3))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text3) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 4"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text4))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text4) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 5"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text5))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text5) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 6"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text6))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text6) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 7"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text7))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text7) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 8"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text8))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text8) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 9"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text9))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text9) }}</td>
+                        <td *ngIf="this.ncuaSvc.assessmentsToMerge.length >= 10"
+                            [matTooltip]="(this.getAltText(this.mergeConflicts[i].alt_Text10))">{{
+                            getDisplayText(this.mergeConflicts[i].answer_Text10) }}</td>
+                        <td>
+                            <input type="radio" id="yes" name="option{{i}}" value="yes"
+                                (change)="updateAnswers(i, $event.target.value)">
+                        </td>
+                        <td>
+                            <input type="radio" id="no" name="option{{i}}" value="no"
+                                (change)="updateAnswers(i, $event.target.value)">
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-        <button class="btn btn-primary" matTooltip="Merge checked examinations"
+            <button class="btn btn-primary" matTooltip="Merge checked examinations"
                 style="width: 15%; margin-top: 1.50rem; margin-left: auto; margin-right: 0"
                 [disabled]="(this.mergeRadioSelections.length !== this.mergeConflicts.length) || (this.attemptingToMerge === true)"
                 (click)="createMergedAssessment()">Merge Examinations</button>
@@ -94,13 +114,17 @@
 
         <ng-container *ngIf="this.mergeConflicts.length === 0">
             <ng-container *ngIf="this.pageLoading === false && this.attemptingToMerge === false">
-                <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">        
-                    <div class="alert-success mt-4 mb-4 p-4 d-flex flex-row justify-content-center align-items-center flex-11a">
-                        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle" aria-label="Caution no questions"></span>
+                <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
+                    <div
+                        class="alert-success mt-4 mb-4 p-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+                        <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"
+                            aria-label="Caution no questions"></span>
                         <span class="fs-base-3 p-2 justify-content-center flex-11a">
                             There are no conflicting answers within the chosen examinations.
-                            Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()" tabindex="0">Assessment List</a> 
-                            screen to select different examinations, or <a class="btn-link cursor-pointer" (click)="createMergedAssessment()" tabindex="0">Click Here</a> 
+                            Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()"
+                                tabindex="0">Assessment List</a>
+                            screen to select different examinations, or <a class="btn-link cursor-pointer"
+                                (click)="createMergedAssessment()" tabindex="0">Click Here</a>
                             to proceed with the merge.
                         </span>
                     </div>

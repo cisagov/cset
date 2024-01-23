@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -29,14 +29,14 @@
         matTooltip="{{t('tooltip.questions mode')}}">
         <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
           [checked]="assessSvc.applicationMode == 'Q'">
-          {{t('buttons.questions mode')}}
+        {{t('buttons.questions mode')}}
       </label>
       <label *ngIf="showRequirementsToggle" class="btn btn-app-mode form-check-label"
         [class.active]="assessSvc.applicationMode == 'R'" (click)="setMode('R')"
         matTooltip="{{t('tooltip.requirements mode')}}">
         <input name="app_mode" class="form-check-input" type="radio" autocomplete="off"
           [checked]="assessSvc.applicationMode == 'R'">
-          {{t('buttons.requirements mode')}}
+        {{t('buttons.requirements mode')}}
       </label>
     </div>
 
@@ -47,7 +47,8 @@
       <div class="d-flex flex-column align-items-start flex-00a">
         <div class="d-flex align-items-start flex-11a">
           <button class="btn btn-primary m-0 questions-header-collapse-button-radius" (click)="expandAll(false)"
-            [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')"><i class="fas fa-compress-alt"></i></button>
+            [matTooltip]="t('buttons.collapse all')" [aria-label]="t('buttons.collapse all')"><i
+              class="fas fa-compress-alt"></i></button>
           <button class="btn btn-primary m-0 br-0" (click)="expandAll(true)" [matTooltip]="t('buttons.expand all')"
             [aria-label]="t('buttons.expand all')">
             <i class="fas fa-expand-alt"></i>
@@ -60,7 +61,8 @@
         <div *ngIf="!browserIsIE() && !usesRAC()" class="mt-2">
           <input type="checkbox" id="auto_load_supp" name="auto_load_supp" class="checkbox-custom"
             [(ngModel)]="autoLoadSupplementalInfo" (change)="persistAutoLoadSetting()">
-          <label for="auto_load_supp" class="checkbox-custom-label" style="margin: 0 5px;">{{t('auto load guidance')}}</label>
+          <label for="auto_load_supp" class="checkbox-custom-label" style="margin: 0 5px;">{{t('auto load
+            guidance')}}</label>
         </div>
       </div>
     </div>
@@ -76,13 +78,15 @@
     </div>
   </div>
 
- 
-  <p *ngIf="!!categories" class="mb-4">    
+
+  <p *ngIf="!!categories" class="mb-4">
     {{ msgUnansweredEqualsNo }}
   </p>
-  <p *ngIf="configSvc.installationMode == 'CF' && assessSvc.usesStandard('Florida_NCSF_V1')" style="color:red; font-weight: bold;">    
-    To see your results please answer all 20 entry level questions. 
-    For previously started assessments any work you may have done is automatically transfered and will be available when you upgrade to a full assessment.
+  <p *ngIf="configSvc.installationMode == 'CF' && assessSvc.usesStandard('Florida_NCSF_V1')"
+    style="color:red; font-weight: bold;">
+    To see your results please answer all 20 entry level questions.
+    For previously started assessments any work you may have done is automatically transfered and will be available when
+    you upgrade to a full assessment.
   </p>
 
 
