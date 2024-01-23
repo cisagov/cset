@@ -25,7 +25,7 @@ export class Sal {
     assessmentName: string;
     application_Mode: string;
     selected_Sal_Level: string;
-    last_Sal_Determination_Type: string;
+    methodology: string;
     sort_Set_Name: string;
     cLevel: string;
     iLevel: string;

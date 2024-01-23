@@ -52,7 +52,7 @@ export class SalSimpleComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'Simple';
+    this.salsSvc.selectedSAL.methodology = 'Simple';
     switch (ltype) {
       case 'C': {
         this.salsSvc.selectedSAL.cLevel = level;
