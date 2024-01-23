@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,23 +22,17 @@
 -------------------------->
 <div *ngIf="loading">
   <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div style="max-width: 50px; max-height: 50px;"></div>
   </div>
 </div>
 
 <div *ngIf="!loading">
   <div style="position: relative; padding: 0px;">
-    <ngx-charts-pie-chart #pieChart
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="data"
-    [gradient]="false"
-    [doughnut]="true"
-    [labels]="false"
-    [animations]="false"
-    [arcWidth]="0.65">
+    <ngx-charts-pie-chart #pieChart [view]="view" [scheme]="colorScheme" [results]="data" [gradient]="false"
+      [doughnut]="true" [labels]="false" [animations]="false" [arcWidth]="0.65">
     </ngx-charts-pie-chart>
-    <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 39px" [style.left]="totalQuestionsCount > 9 ? '28px' : '32px'">
+    <svg width="30" height="30" viewBox="0 0 30 30" style="position: absolute; top: 39px"
+      [style.left]="totalQuestionsCount > 9 ? '28px' : '32px'">
       <text x="15" y="15" style="font-size: 12px;">{{ totalQuestionsCount }}</text>
     </svg>
   </div>

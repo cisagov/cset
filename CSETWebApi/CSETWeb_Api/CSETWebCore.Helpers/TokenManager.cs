@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -303,7 +303,7 @@ namespace CSETWebCore.Helpers
 
                 return false;
             }
-          
+
 
 
             // see if the token has expired (we aren't really concerned with expiration on local installations)

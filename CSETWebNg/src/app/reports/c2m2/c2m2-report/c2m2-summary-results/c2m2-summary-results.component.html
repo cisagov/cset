@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -43,13 +43,17 @@
 
   <h1 id="toc-practice-implementation-by-domain">3.2 Practice Implementation by Domain</h1>
   <p>
-    Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved for
-    each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all preceding
+    Figure 3 shows summarized implementation level responses for each C2M2 practice, grouped by domain. The MIL achieved
+    for
+    each domain is listed at the bottom of the figure. A MIL is achieved when all practices in that MIL and all
+    preceding
     MILs receive responses of Fully Implemented or Largely Implemented. A high-level understanding of the organization’s
-    self-evaluation results can be gained from this figure and may be useful when evaluating areas for future improvement.
+    self-evaluation results can be gained from this figure and may be useful when evaluating areas for future
+    improvement.
   </p>
   <p>
-    The number in the center of each donut chart represents the cumulative number of practices in that MIL for that domain.
+    The number in the center of each donut chart represents the cumulative number of practices in that MIL for that
+    domain.
     Refer to Section 4.2 of the C2M2 V2.1 model document for a description of how MIL achievement is determined.
   </p>
 
@@ -70,15 +74,13 @@
           <div *ngIf="j == 0 && i != milData.length - 1" class="donut-grid-mil-box">
             MIL{{milNumberFlip(i)}}
           </div>
-          <div *ngIf="j == 0 && i == milData.length - 1" class="donut-grid-mil-box"
-            style="height: 70px;">
+          <div *ngIf="j == 0 && i == milData.length - 1" class="donut-grid-mil-box" style="height: 70px;">
             {{ dataRow[j] }}
           </div>
           <div *ngIf="j > 0 && i != milData.length - 1" class="donut-grid-chart-box">
             <app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>
           </div>
-          <div *ngIf="j > 0 && i == milData.length - 1" class="donut-grid-chart-box"
-            style="height: 70px;">
+          <div *ngIf="j > 0 && i == milData.length - 1" class="donut-grid-chart-box" style="height: 70px;">
             {{ dataRow[j] }}
           </div>
         </div>
@@ -119,9 +121,12 @@
     The final objective of each C2M2 domain includes practices focused on cybersecurity management activities. These
     practices focus on the extent to which cybersecurity practices are institutionalized, or ingrained, in the
     organization's operations. The more deeply ingrained an activity, the more likely it is that the organization will
-    continue to perform the activity over time; the activity will be retained under times of stress; and the outcomes of the
-    activity will be consistent, repeatable, and of high quality. Table 2 provides a high-level overview of implementation
-    of the Management Activities practices from two perspectives: 1) implementation of all Management Activities within each
+    continue to perform the activity over time; the activity will be retained under times of stress; and the outcomes of
+    the
+    activity will be consistent, repeatable, and of high quality. Table 2 provides a high-level overview of
+    implementation
+    of the Management Activities practices from two perspectives: 1) implementation of all Management Activities within
+    each
     domain and 2) implementation of each Management Activities practice across the ten C2M2 domains.
   </p>
 
@@ -136,11 +141,11 @@
       <td style="padding-left: 5px; padding-bottom: 3px;">
         {{ question.questionText }}
       </td>
-      <td style="border: 1px solid rgb(179, 179, 179);" *ngFor="let answer of question.domainAnswers" 
-          [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
-          <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
-            {{ answer.answer !== null ? answer.answer : 'U' }}
-          </div>
+      <td style="border: 1px solid rgb(179, 179, 179);" *ngFor="let answer of question.domainAnswers"
+        [ngStyle]="{'background-color': getBackgroundColor(answer.answer)}">
+        <div style="text-align: center;" [ngStyle]="{'color': getTextColor(answer.answer)}">
+          {{ answer.answer !== null ? answer.answer : 'U' }}
+        </div>
       </td>
     </tr>
     <caption style="caption-side: bottom; text-align: center; color: #265B94">Table 2: Management Activities</caption>

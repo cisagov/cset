@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,22 +38,22 @@ export class AboutRenewComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
-    linkerTime: string = null;
-      /**
-       * 
-       */
-      ngOnInit() {
-        if (this.configSvc.config.debug.showBuildTime ?? false) {
-          this.linkerTime = localStorage.getItem('cset.linkerDate');
-        }
-        
-      }
-    version = environment.visibleVersion;
-    helpContactEmail = this.configSvc.helpContactEmail;
-    helpContactPhone = this.configSvc.helpContactPhone;
-
-    close() {
-      return this.dialog.close();
+  linkerTime: string = null;
+  /**
+   * 
+   */
+  ngOnInit() {
+    if (this.configSvc.config.debug.showBuildTime ?? false) {
+      this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
-  
+
   }
+  version = environment.visibleVersion;
+  helpContactEmail = this.configSvc.helpContactEmail;
+  helpContactPhone = this.configSvc.helpContactPhone;
+
+  close() {
+    return this.dialog.close();
+  }
+
+}

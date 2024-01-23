@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -26,7 +26,8 @@
             <div class="col-8" style="padding-left:0;">
                 <h3>{{ t('acet.maturity results') }}</h3>
             </div>
-            <div class="col-4"><button class="btn btn-primary float-right" (click)="checkExpand()">{{ t('buttons.' + expand.toLowerCase()) }}</button>
+            <div class="col-4"><button class="btn btn-primary float-right" (click)="checkExpand()">{{ t('buttons.' +
+                    expand.toLowerCase()) }}</button>
             </div>
         </div>
         <!-- <div *ngIf="true">
@@ -45,7 +46,8 @@
             <div class="d-table-row">
                 <div class="d-table-cell pr-3 label-cell">{{ t('acet.target maturity range') }}:</div>
                 <!-- <div class="d-table-cell">{{matRangeString}}</div> -->
-                <div *ngIf="matRangeStartString" class="d-table-cell">{{ t('level.' + matRangeStartString) + ' - ' + t('level.' + matRangeEndString) }}</div>
+                <div *ngIf="matRangeStartString" class="d-table-cell">{{ t('level.' + matRangeStartString) + ' - ' +
+                    t('level.' + matRangeEndString) }}</div>
             </div>
         </div>
 
@@ -107,7 +109,8 @@
                                                 [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
                                                 style="width:125px;height:41px; margin-top:15px; padding:.5rem .25rem">
                                                 {{
-                                                t('level.' + acetSvc.translateMaturity(factor.domainMaturity).toLowerCase()) }}</div>
+                                                t('level.' +
+                                                acetSvc.translateMaturity(factor.domainMaturity).toLowerCase()) }}</div>
                                         </mat-panel-description>
                                     </mat-expansion-panel-header>
 
@@ -117,7 +120,8 @@
                                             <div class="alert"
                                                 [ngClass]="acetSvc.maturityClasses(factor.domainMaturity)"
                                                 style="width:125px;height:41px; margin-top:15px; padding:.5rem .25rem">
-                                                {{ t('level.' + acetSvc.translateMaturity(factor.domainMaturity).toLowerCase()) }}</div>
+                                                {{ t('level.' +
+                                                acetSvc.translateMaturity(factor.domainMaturity).toLowerCase()) }}</div>
                                         </div>
 
                                     </mat-expansion-panel-header>
@@ -138,11 +142,14 @@
                                                                 [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
                                                                 style="width:125px; height:41px; padding:.5rem .25rem; margin-right:23px; float:right;margin-top: 1rem">
                                                                 {{
-                                                                t('level.' + acetSvc.translateMaturity(comp.assessedMaturityLevel).toLowerCase()) }}
+                                                                t('level.' +
+                                                                acetSvc.translateMaturity(comp.assessedMaturityLevel).toLowerCase())
+                                                                }}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div *ngIf="layoutSvc.hp" class="d-flex flex-column align-items-center">
+                                                    <div *ngIf="layoutSvc.hp"
+                                                        class="d-flex flex-column align-items-center">
                                                         <div class="pt-2">
                                                             <h1 class="item-title" style="text-indent: 0">{{comp.name}}
                                                             </h1>
@@ -151,7 +158,9 @@
                                                             <div class="alert py-2 px-1"
                                                                 [ngClass]="acetSvc.maturityClasses(comp.assessedMaturityLevel)"
                                                                 style="width:125px; height:41px;">{{
-                                                                    t('level.' + acetSvc.translateMaturity(comp.assessedMaturityLevel).toLowerCase()) }}
+                                                                t('level.' +
+                                                                acetSvc.translateMaturity(comp.assessedMaturityLevel).toLowerCase())
+                                                                }}
                                                             </div>
                                                         </div>
                                                     </div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -96,7 +96,7 @@ namespace ProcViewSerializer
             string fileName = Path.Combine(filePath, procName + "." + fileType + ".sql");
             Directory.CreateDirectory(filePath);
 
-            File.WriteAllLines(fileName, lines);            
+            File.WriteAllLines(fileName, lines);
         }
     }
 }

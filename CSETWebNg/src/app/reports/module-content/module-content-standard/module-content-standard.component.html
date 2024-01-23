@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -35,9 +35,11 @@
 
             <div [innerHTML]="req.requirementText" class="mb-4"></div>
 
-            <app-guidance-block [supplementalInfo]="req.supplementalInfo" *ngIf="reportSvc.showGuidance"></app-guidance-block>
+            <app-guidance-block [supplementalInfo]="req.supplementalInfo"
+                *ngIf="reportSvc.showGuidance"></app-guidance-block>
 
-            <app-references-block [sourceDocs]="req.sourceDocs" [additionalDocs]="req.additionalDocs" *ngIf="reportSvc.showReferences"></app-references-block>            
+            <app-references-block [sourceDocs]="req.sourceDocs" [additionalDocs]="req.additionalDocs"
+                *ngIf="reportSvc.showReferences"></app-references-block>
 
             <app-related-q-block [questions]="req.questions" *ngIf="reportSvc.showQuestions"></app-related-q-block>
         </div>

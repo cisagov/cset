@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,49 +28,49 @@
     </div>
   </div>
 
-    <div class="row mt-3">
-      <div class="col">
-        <h1 class="text-capitalize report-title">CYBER RESILIENCE REVIEW</h1>
-        <h1 class="text-capitalize report-title">COMMENTS AND MARKED FOR REVIEW</h1>
+  <div class="row mt-3">
+    <div class="col">
+      <h1 class="text-capitalize report-title">CYBER RESILIENCE REVIEW</h1>
+      <h1 class="text-capitalize report-title">COMMENTS AND MARKED FOR REVIEW</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <img src="assets/images/ExecutiveFiles/image002.jpg" style="width: 500; height: 600;">
+    </div>
+  </div>
+  <div class="row justify-content-between">
+    <app-logo-for-reports />
+    <app-info-block [response]="crrModel?.reportData"></app-info-block>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="row justify-content-center">
+    <div class="col-10 border rounded-3 text-left" style="background-color: #f2f2f2;">
+      <div style="padding: 5rem 1rem">
+        <p>
+          This report contains two lists of questions. The first list
+          indicates questions that have been commented on.
+          The second list indicates questions that have been marked for review.
+        </p>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-            <img src="assets/images/ExecutiveFiles/image002.jpg" style="width: 500; height: 600;">
-          </div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="row justify-content-center my-5">
+    <div class="col">
+
+      <div class="mx-3">
+        <div class="d-flex flex-row justify-content-between align-items-end">
+          <h1 class="report-section-title">Practice Comments</h1>
+          <p style="color: #de761c; text-align: right;">
+            Marked for Review - <span><img src="assets/images/icons/MarkedFlag.png" class="marked-flag"></span>
+          </p>
         </div>
-        <div class="row justify-content-between">
-          <app-logo-for-reports />
-          <app-info-block [response]="crrModel?.reportData"></app-info-block>
-        </div>
-
-        <div class="page-break"></div>
-
-        <div class="row justify-content-center">
-          <div class="col-10 border rounded-3 text-left" style="background-color: #f2f2f2;">
-            <div style="padding: 5rem 1rem">
-              <p>
-                This report contains two lists of questions.  The first list
-                indicates questions that have been commented on.
-                The second list indicates questions that have been marked for review.
-              </p>
-            </div>
-          </div>
-        </div>
-
-          <div class="page-break"></div>
-
-    <div class="row justify-content-center my-5">
-      <div class="col">
-
-        <div class="mx-3">
-          <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="report-section-title">Practice Comments</h1>
-            <p style="color: #de761c; text-align: right;">
-              Marked for Review - <span><img src="assets/images/icons/MarkedFlag.png" class="marked-flag"></span>
-            </p>
-          </div>
-        </div>
+      </div>
 
       <hr class="page-line m-0" />
 
@@ -89,46 +89,47 @@
           {{ comment.cat }}
         </div>
         <div *ngFor="let matAnswer of comment.matAnswers" class="mat-section row"
-        style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
-        <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
           style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
-          <div class="row mat-section m-0 p-0">
-            <div class="col-3 text-left">
-              <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{ matAnswer.mat.question_Title }}</h3>
+          <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
+            style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+            <div class="row mat-section m-0 p-0">
+              <div class="col-3 text-left">
+                <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{
+                  matAnswer.mat.question_Title }}</h3>
+              </div>
+              <div class="col-6 text-left">
+                <p>
+                  {{ matAnswer.mat.question_Text }}
+                </p>
+              </div>
+              <div class="col-2 text-left">
+                <p *ngIf="!matAnswer.isParentWithChildren">
+                  {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
+                </p>
+              </div>
+              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+                <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
+              </div>
             </div>
-            <div class="col-6 text-left">
-              <p>
-                {{ matAnswer.mat.question_Text }}
-              </p>
-            </div>
-            <div class="col-2 text-left">
-              <p *ngIf="!matAnswer.isParentWithChildren">
-                {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
-              </p>
-            </div>
-            <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
-              <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
-            </div>
-          </div>
-          <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
+            <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
               <div class="col-3 text-start">
                 <h4 class="small">Justification:</h4>
               </div>
               <div class="col-9 text-start">
                 <p>{{ matAnswer.answer.alternate_Justification }}</p>
               </div>
-          </div>
-          <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
-            <div class="col-3 text-left">
-              <h4 class="small">Comment:</h4>
             </div>
-            <div class="col-9 text-left">
-              <p>{{ matAnswer.answer.comment }}</p>
+            <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
+              <div class="col-3 text-left">
+                <h4 class="small">Comment:</h4>
+              </div>
+              <div class="col-9 text-left">
+                <p>{{ matAnswer.answer.comment }}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
 
 
       <div class="page-break"></div>
@@ -160,55 +161,57 @@
           {{ mfr.cat }}
         </div>
         <div *ngFor="let matAnswer of mfr.matAnswers" class="mat-section row"
-        style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
-        <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
           style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
-          <div class="row mat-section m-0 p-0">
-            <div class="col-3 text-left">
-              <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{ matAnswer.mat.question_Title }}</h3>
+          <div class="col m-2 p-3" [ngClass]="matAnswer.isFollowedByChild ? '' : 'border-bottom'"
+            style="page-break-inside: avoid; page-break-before: auto; page-break-after: auto;">
+            <div class="row mat-section m-0 p-0">
+              <div class="col-3 text-left">
+                <h3 *ngIf="matAnswer.mat.parent_Question_Id == null" class="small d-inline">Practice {{
+                  matAnswer.mat.question_Title }}</h3>
+              </div>
+              <div class="col-6 text-left">
+                <p>
+                  {{ matAnswer.mat.question_Text }}
+                </p>
+              </div>
+              <div class="col-2 text-left">
+                <p *ngIf="!matAnswer.isParentWithChildren">
+                  {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
+                </p>
+              </div>
+              <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
+                <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
+              </div>
             </div>
-            <div class="col-6 text-left">
-              <p>
-                {{ matAnswer.mat.question_Text }}
-              </p>
-            </div>
-            <div class="col-2 text-left">
-              <p *ngIf="!matAnswer.isParentWithChildren">
-                {{ getFullAnswerText(matAnswer.answer.answer_Text) }}
-              </p>
-            </div>
-            <div *ngIf="matAnswer.answer.mark_For_Review === true" class="col text-right">
-              <img src="assets/images/icons/MarkedFlag.png" class="marked-flag">
-            </div>
-          </div>
-          <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
+            <div *ngIf="matAnswer.showAlt" class="row m-0 p-0 pb-3">
               <div class="col-3 text-left">
                 <h4 class="small">Justification:</h4>
               </div>
               <div class="col-9 text-left">
                 <p>{{ matAnswer.answer.alternate_Justification }}</p>
               </div>
-          </div>
-          <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
-            <div class="col-3 text-left">
-              <h4 class="small">Comment:</h4>
             </div>
-            <div class="col-9 text-left">
-              <p>{{ matAnswer.answer.comment }}</p>
+            <div *ngIf="!matAnswer.mat.parent_Question_Id" class="row m-0 p-0">
+              <div class="col-3 text-left">
+                <h4 class="small">Comment:</h4>
+              </div>
+              <div class="col-9 text-left">
+                <p>{{ matAnswer.answer.comment }}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </div>
   </div>
-</div>
 
-<style>
-  div {
-    page-break-inside: avoid !important;
-  }
+  <style>
+    div {
+      page-break-inside: avoid !important;
+    }
 
-  h3, h4 {
-    font-weight: 500;
-  }
-</style>
+    h3,
+    h4 {
+      font-weight: 500;
+    }
+  </style>

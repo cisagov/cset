@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -59,12 +59,12 @@ export class LoginCsetComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public  configSvc: ConfigService,
+    public configSvc: ConfigService,
     private authenticationService: AuthenticationService,
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -172,9 +172,9 @@ export class LoginCsetComponent implements OnInit {
       if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
         this.isEjectDialogOpen = true;
         this.dialog
-        .open(EjectionComponent)
-        .afterClosed()
-        .subscribe(() => (this.isEjectDialogOpen = false));
+          .open(EjectionComponent)
+          .afterClosed()
+          .subscribe(() => (this.isEjectDialogOpen = false));
       }
     }
   }

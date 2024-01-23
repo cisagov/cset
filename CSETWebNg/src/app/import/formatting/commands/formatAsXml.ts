@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,9 +39,9 @@ export function formatAsXml(editor: editor.ICodeEditor, edit: editor.ISingleEdit
         edits = xmlFormattingEditProvider.provideDocumentRangeFormattingEdits(
             editor.getModel(),
             new monaco.Range(selection.selectionStartLineNumber,
-              selection.selectionStartColumn,
-              selection.endLineNumber,
-              selection.endColumn),
+                selection.selectionStartColumn,
+                selection.endLineNumber,
+                selection.endColumn),
             formattingOptions,
             null);
     } else {

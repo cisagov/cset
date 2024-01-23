@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,12 @@
         <h2 class="mt-3">Module Content Report</h2>
 
         <p>
-            This report illustrates the structure and question content of a CSET module, e.g., an industry standard 
+            This report illustrates the structure and question content of a CSET module, e.g., an industry standard
             or maturity or best practices model.
         </p>
         <p>
             The generated report has controls to show or hide the guidance and References
-            for each question.  
+            for each question.
         </p>
 
         <h5>Select a Standard</h5>
@@ -38,7 +38,8 @@
             <select class="form-control mb-3" tabindex="0" [(ngModel)]="selectedStandard">
                 <option *ngFor="let s of standards" [value]="s.setName">{{s.fullName}}</option>
             </select>
-            <button class="btn btn-primary text-nowrap ml-3" (click)="launchStandardReport()" [disabled]="!selectedStandard">Launch Report</button>
+            <button class="btn btn-primary text-nowrap ml-3" (click)="launchStandardReport()"
+                [disabled]="!selectedStandard">Launch Report</button>
         </div>
 
         <h5>Select a Model</h5>
@@ -47,7 +48,8 @@
                 <option *ngFor="let m of models" [value]="m.modelId">{{m.modelTitle}}</option>
             </select>
 
-            <button class="btn btn-primary text-nowrap ml-3" (click)="launchModelReport()" [disabled]="!selectedModel">Launch Report</button>
+            <button class="btn btn-primary text-nowrap ml-3" (click)="launchModelReport()"
+                [disabled]="!selectedModel">Launch Report</button>
         </div>
 
     </div>

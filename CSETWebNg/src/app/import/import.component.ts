@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -308,7 +308,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(this.uploader===undefined) {
+    if (this.uploader === undefined) {
       this.initializeUploader();
     };
   }
@@ -317,7 +317,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  private initializeUploader(){
+  private initializeUploader() {
     this.referenceUrl = this.configSvc.apiUrl + 'ReferenceDocument';
 
     this.uploader = new FileUploader({
@@ -395,7 +395,7 @@ export class ImportComponent implements OnInit, OnDestroy {
     });
   }
 
-  public showError(){
-    return this.state!='Processing'&&editor&&editor.getModelMarkers({}).length|| this.errors.length;
+  public showError() {
+    return this.state != 'Processing' && editor && editor.getModelMarkers({}).length || this.errors.length;
   }
 }

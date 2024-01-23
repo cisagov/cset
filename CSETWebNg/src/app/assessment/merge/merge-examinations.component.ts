@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,6 @@ import { MaturityService } from '../../services/maturity.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
 import { ActionItemText } from '../questions/observations/observations.model';
-import { mapTo } from 'rxjs/operators';
 
 @Component({
   selector: 'merge-examinations',

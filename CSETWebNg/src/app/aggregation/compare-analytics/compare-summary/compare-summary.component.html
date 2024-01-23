@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -30,7 +30,8 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasOverallAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartOverallAverage }}</canvas>
+  <canvas id="canvasOverallAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartOverallAverage
+    }}</canvas>
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5">
@@ -42,7 +43,8 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasStandardsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartStandardsPie }}</canvas>
+  <canvas id="canvasStandardsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartStandardsPie
+    }}</canvas>
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5">
@@ -56,10 +58,10 @@
   </div>
   <div *ngFor="let i of chartsMaturityCompliance" class="my-4">
     <h5>{{i.chartName}}</h5>
-    <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}" 
-    style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
+    <canvas id="{{ 'canvasMaturityBars-' + i.chartName }}"
+      style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ i }}</canvas>
   </div>
-  
+
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5">
@@ -71,7 +73,8 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasComponentsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartComponentsPie }}</canvas>
+  <canvas id="canvasComponentsPie" style="min-width: 400px; max-width: 400px; margin: 0 auto;">{{ chartComponentsPie
+    }}</canvas>
 </div>
 
 <div class="chart d-flex flex-column flex-00a mb-5" style="min-height: 200px">
@@ -83,5 +86,6 @@
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <canvas id="canvasCategoryAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartCategoryAverage }}</canvas>
+  <canvas id="canvasCategoryAverage" style="min-width: 800px; max-width: 800px; margin: 0 auto;">{{ chartCategoryAverage
+    }}</canvas>
 </div>

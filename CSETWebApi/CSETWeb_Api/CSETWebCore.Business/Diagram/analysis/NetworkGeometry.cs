@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
 {
     public class NetworkGeometry
     {
-        
+
         public Point point { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -25,14 +25,14 @@ namespace CSETWebCore.Business.Diagram.Analysis
             }
 
             int x = 0;
-            int y = 0; 
+            int y = 0;
             int.TryParse(node.Attributes["x"]?.Value, out x);
             int.TryParse(node.Attributes["y"]?.Value, out y);
 
-            point = new Point(x,y);
+            point = new Point(x, y);
             int width, height;
 
-            if(int.TryParse(node.Attributes["width"]?.Value, out width))
+            if (int.TryParse(node.Attributes["width"]?.Value, out width))
             {
                 Width = width;
             }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ export class CrrReportComponent implements OnInit {
   crrModel: CrrReportModel;
   securityLevel: string = '';
 
-  constructor(private crrSvc: CrrService, private titleSvc: Title, public configSvc: ConfigService) {}
+  constructor(private crrSvc: CrrService, private titleSvc: Title, public configSvc: ConfigService) { }
 
   ngOnInit(): void {
     const securityLevel = localStorage.getItem('report-confidentiality');

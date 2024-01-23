@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,13 +26,13 @@ namespace CSETWebCore.Api.Controllers
         private IGalleryState _stateManager;
 
         public GalleryStateController(CSETContext context,
-            ITokenManager tokenManager, 
-            IGalleryState parser            
+            ITokenManager tokenManager,
+            IGalleryState parser
            )
         {
             _context = context;
             _tokenManager = tokenManager;
-            _stateManager = parser;          
+            _stateManager = parser;
         }
 
 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetBoard(string Layout_Name)
         {
             try
-            {   
+            {
                 return Ok(_stateManager.GetGalleryBoard(Layout_Name));
             }
             catch (Exception e)
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
                                 && g.Group_Id == n.Group_Id
                                 && g.Gallery_Item_Guid == i.Gallery_Item_Guid
                             orderby g.Group_Id, g.Gallery_Item_Guid ascending
-                            select new GalleryItem(i,n.Group_Id)
+                            select new GalleryItem(i, n.Group_Id)
                             {
                             };
 

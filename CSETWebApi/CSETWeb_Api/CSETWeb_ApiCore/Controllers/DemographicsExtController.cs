@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -77,8 +77,8 @@ namespace CSETWebCore.Api.Controllers
             var userid = _token.GetCurrentUserId();
 
             var mgr = new DemographicExtBusiness(_context);
-            mgr.SaveDemographics(demographics,userid??0);
-            
+            mgr.SaveDemographics(demographics, userid ?? 0);
+
 
             return Ok();
         }

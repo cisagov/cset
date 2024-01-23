@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -49,20 +49,15 @@
             <div class="sal-slider-label">On Site {{slider?.offSite?.values[0]}}</div>
             <div class="sal-slider-label">On Site {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}</div>
             <ngx-slider [(value)]="slider.onSite.slider_Value"
-                (valueChange)="valueChange($event, slider.onSite.sal_Name)"
-                [options]="slider.onSite.options"
-                [pointer-type]=""
-                class="mx-1 mb-4"
-                [attr.csetid]="slider.onSite.sal_Name">
-                </ngx-slider>
-            
-                <div class="sal-slider-label">Off Site {{slider?.onSite?.values[0]}}</div>
-                <div class="sal-slider-label">Off Site {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}</div>
+                (valueChange)="valueChange($event, slider.onSite.sal_Name)" [options]="slider.onSite.options"
+                [pointer-type]="" class="mx-1 mb-4" [attr.csetid]="slider.onSite.sal_Name">
+            </ngx-slider>
+
+            <div class="sal-slider-label">Off Site {{slider?.onSite?.values[0]}}</div>
+            <div class="sal-slider-label">Off Site {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}</div>
             <ngx-slider [(value)]="slider.offSite.slider_Value"
-                (valueChange)="valueChange($event, slider.offSite.sal_Name)" 
-                [options]="slider.offSite.options"
-                class="mx-1 mb-4"
-                [attr.csetid]="slider.offSite.sal_Name">
+                (valueChange)="valueChange($event, slider.offSite.sal_Name)" [options]="slider.offSite.options"
+                class="mx-1 mb-4" [attr.csetid]="slider.offSite.sal_Name">
             </ngx-slider>
         </div>
         <!-- fw-500 fs-base-2 bgc-gray-100 -->

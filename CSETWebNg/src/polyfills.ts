@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -70,14 +70,14 @@
  * user can disable parts of macroTask/DomEvents patch by setting following flags
  */
 
- // (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
- // (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
- // (window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
+// (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame
+// (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick
+// (window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames
 
- /*
- * in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js
- * with the following flag, it will bypass `zone.js` patch for IE/Edge
- */
+/*
+* in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js
+* with the following flag, it will bypass `zone.js` patch for IE/Edge
+*/
 // (window as any).__Zone_enable_cross_context_check = true;
 
 /***************************************************************************************************
@@ -92,35 +92,35 @@
  */
 
 import 'intersection-observer/intersection-observer.js';
-Promise.all = function(values: any): Promise<any> {
-    let resolve: (v: any) => void;
-    let reject: (v: any) => void;
-    const promise = new this((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-    let count = 0;
-    let index = 0;
-    const resolvedValues: any[] = [];
-    for (let value of values) {
-      if (!(value && value.then)) {
-        value = this.resolve(value);
-      }
-      value.then(
-        (idx => (val: any) => {
-          resolvedValues[idx] = val;
-          count--;
-          if (!count) {
-            resolve(resolvedValues);
-          }
-        })(index),
-        reject
-      );
-      count++;
-      index++;
+Promise.all = function (values: any): Promise<any> {
+  let resolve: (v: any) => void;
+  let reject: (v: any) => void;
+  const promise = new this((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  let count = 0;
+  let index = 0;
+  const resolvedValues: any[] = [];
+  for (let value of values) {
+    if (!(value && value.then)) {
+      value = this.resolve(value);
     }
-    if (!count) {
-      resolve(resolvedValues);
-    }
-    return promise;
-  };
+    value.then(
+      (idx => (val: any) => {
+        resolvedValues[idx] = val;
+        count--;
+        if (!count) {
+          resolve(resolvedValues);
+        }
+      })(index),
+      reject
+    );
+    count++;
+    index++;
+  }
+  if (!count) {
+    resolve(resolvedValues);
+  }
+  return promise;
+};

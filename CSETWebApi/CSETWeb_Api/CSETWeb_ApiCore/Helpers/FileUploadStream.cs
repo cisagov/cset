@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -35,31 +35,31 @@ namespace CSETWebCore.Helpers
             foreach (FormFile ctnt in request.Request.Form.Files)
             {
                 // You would get hold of the inner memory stream here              
-              
-                    string filename = ctnt.FileName.Trim("\"".ToCharArray());
-                    var provider = new FileExtensionContentTypeProvider();
-                    string contentType;
-                    if (!provider.TryGetContentType(filename, out contentType))
-                    {
-                        contentType = "application/octet-stream";
-                    }
-                    var target = new MemoryStream();
-                    ctnt.CopyTo(target);
 
-                    var bytes = target.ToArray();
-                    // Hash the file so that we can determine if it is already attached to another question
+                string filename = ctnt.FileName.Trim("\"".ToCharArray());
+                var provider = new FileExtensionContentTypeProvider();
+                string contentType;
+                if (!provider.TryGetContentType(filename, out contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+                var target = new MemoryStream();
+                ctnt.CopyTo(target);
 
-                    using (var md5 = MD5.Create())
+                var bytes = target.ToArray();
+                // Hash the file so that we can determine if it is already attached to another question
+
+                using (var md5 = MD5.Create())
+                {
+                    var hash = md5.ComputeHash(bytes);
+                    result.FileResultList.Add(new FileUploadResult()
                     {
-                        var hash = md5.ComputeHash(bytes);
-                        result.FileResultList.Add(new FileUploadResult()
-                        {
-                            FileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(),
-                            FileBytes = bytes,
-                            FileName = filename,
-                            ContentType = contentType
-                        });
-                    }
+                        FileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(),
+                        FileBytes = bytes,
+                        FileName = filename,
+                        ContentType = contentType
+                    });
+                }
             }
 
             List<string> keys = formKeys.Keys.ToList();
@@ -74,7 +74,7 @@ namespace CSETWebCore.Helpers
             }
 
             //if (result.ErrorsList.Count > 0)
-                //throw new UploadFormException("Could not find required form variables.  See errorlist for details.");
+            //throw new UploadFormException("Could not find required form variables.  See errorlist for details.");
             return result;
 
         }

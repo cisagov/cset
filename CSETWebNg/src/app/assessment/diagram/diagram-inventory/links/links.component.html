@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,26 @@
   SOFTWARE.
 -------------------------->
 <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="label">Label</th>
-    <th mat-sort-header="subnetName" style="width:15%;">Subnet Name(s)</th>
-    <th mat-sort-header="linkType" style="width:15%;">LinkType</th>
-    <th mat-sort-header="security" style="width:20%;">Security</th>
-    <th mat-sort-header="layer">Layer</th>
-    <th mat-sort-header="visible">Visible</th>
+  <th mat-sort-header="label">Label</th>
+  <th mat-sort-header="subnetName" style="width:15%;">Subnet Name(s)</th>
+  <th mat-sort-header="linkType" style="width:15%;">LinkType</th>
+  <th mat-sort-header="security" style="width:20%;">Security</th>
+  <th mat-sort-header="layer">Layer</th>
+  <th mat-sort-header="visible">Visible</th>
 
-    <tr *ngFor="let link of links; let i = index">
-        <td>{{link.label}}</td>
-        <td>{{link.subnetName}}</td>
-        <td>{{link.linkType}}</td>
-        <td>{{link.security}}</td>
-        <td>{{link.layerName}}</td>
-        <td>
-            <input type="checkbox" name="{{ link.visibleField }}" class="mt-1" [(ngModel)]="link.visible"
-              [checked]="link.visible" [disabled]="true" >
-         </td>
-    </tr>
+  <tr *ngFor="let link of links; let i = index">
+    <td>{{link.label}}</td>
+    <td>{{link.subnetName}}</td>
+    <td>{{link.linkType}}</td>
+    <td>{{link.security}}</td>
+    <td>{{link.layerName}}</td>
+    <td>
+      <input type="checkbox" name="{{ link.visibleField }}" class="mt-1" [(ngModel)]="link.visible"
+        [checked]="link.visible" [disabled]="true">
+    </td>
+  </tr>
 
-    <tr *ngIf="links.length == 0">
-      <td colspan="6" style="text-align: center;">There are no links in this Network Diagram.</td>
-    </tr>
+  <tr *ngIf="links.length == 0">
+    <td colspan="6" style="text-align: center;">There are no links in this Network Diagram.</td>
+  </tr>
 </table>

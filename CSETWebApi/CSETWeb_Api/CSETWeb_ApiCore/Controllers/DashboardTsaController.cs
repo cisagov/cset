@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -52,7 +52,7 @@ namespace CSETWebCore.Api.Controllers
             _analytics = analytics;
             _demographic = demographic;
         }
-        
+
         // [HttpGet]
         // [Route("api/TSA/getSectors")]
         // public async Task<IActionResult> GetSectors()
@@ -70,28 +70,28 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/TSA/analyticsMaturityDashboard")]
-        public IActionResult analyticsMaturityDashboard(int maturity_model_id,int? sectorId, int? industryId)
+        public IActionResult analyticsMaturityDashboard(int maturity_model_id, int? sectorId, int? industryId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
 
             ChartDataTSA chartData = new ChartDataTSA();
-            
-            var data = _analytics.getMaturityDashboardData(maturity_model_id,sectorId, industryId);
+
+            var data = _analytics.getMaturityDashboardData(maturity_model_id, sectorId, industryId);
             var percentage = _analytics
                 .GetMaturityGroupsForAssessment(assessmentId, maturity_model_id).ToList();
             chartData.DataRowsMaturity = data;
             chartData.data = (from a in percentage
-                select (double) a.Percentage).ToList();
+                              select (double)a.Percentage).ToList();
 
-            
+
             chartData.Labels = (from an in data
                                 orderby an.Question_Group_Heading
                                 select an.Question_Group_Heading).Distinct().ToList();
-            foreach(var item in data)
+            foreach (var item in data)
             {
                 chartData.data.Add(item.average);
             }
-                                        
+
 
             return Ok(chartData);
         }
@@ -106,25 +106,25 @@ namespace CSETWebCore.Api.Controllers
         }
         [HttpGet]
         [Route("api/TSA/getSectorIndustryStandardsTSA")]
-        public IActionResult GetStandardsResultsByCategory1( int? sectorId, int? industryId)
+        public IActionResult GetStandardsResultsByCategory1(int? sectorId, int? industryId)
         {
-            
+
             int assessmentId = _tokenManager.AssessmentForUser();
             var standardList = _analytics.GetStandardList(assessmentId);
             // var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,"TSA2018", sectorId=null, industryId=null);
             ChartDataTSA[] chartDatas = new ChartDataTSA[standardList.Count()];
-            int i = 0; 
+            int i = 0;
             foreach (var setname in standardList)
             {
-                ChartDataTSA chartData = new ChartDataTSA(); 
-            
-                var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId,setname.Set_Name,  sectorId, industryId);
-                var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
-           
-                chartData.data = (from a in standardsingleaverage
-                    select  a.average).ToList();
+                ChartDataTSA chartData = new ChartDataTSA();
 
-            
+                var standardMinMaxAvg = _analytics.GetStandardMinMaxAvg(assessmentId, setname.Set_Name, sectorId, industryId);
+                var standardsingleaverage = _analytics.GetStandardSingleAvg(assessmentId, setname.Set_Name);
+
+                chartData.data = (from a in standardsingleaverage
+                                  select a.average).ToList();
+
+
                 chartData.DataRowsStandard = standardMinMaxAvg;
                 chartData.StandardList = standardList;
                 chartData.label = setname.Short_Name;
@@ -132,7 +132,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     chartData.Labels.Add(c.QUESTION_GROUP_HEADING);
                 }
-            
+
                 chartDatas[i++] = chartData;
             }
             return Ok(chartDatas);
@@ -144,7 +144,7 @@ namespace CSETWebCore.Api.Controllers
             demographics.AssessmentId = _tokenManager.AssessmentForUser();
             return Ok(_demographic.SaveDemographics(demographics));
         }
-        
+
     }
 }
 

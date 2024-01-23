@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { AssessmentDetail } from '../../../models/assessment-info.model';
@@ -31,7 +31,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class OverviewComponent implements OnInit {
 

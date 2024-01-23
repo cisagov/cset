@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,93 +21,96 @@
   SOFTWARE. 
 -------------------------->
 <style>
-  @media only screen and (max-width: 900px) {
-      .side-toc {
-          display: none;
-      }
-  }
+    @media only screen and (max-width: 900px) {
+        .side-toc {
+            display: none;
+        }
+    }
 
-  @media print {
-      .side-toc {
-          display: none;
-      }
-  }
+    @media print {
+        .side-toc {
+            display: none;
+        }
+    }
 
-  .side-toc {
-      background-color: #fff;
-      box-sizing: border-box;
-      border-right: solid 1px #E5E4E2;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-      position: fixed;
-      left: 0;
-      top: 60px;
-      height: 100vh;
-      padding: 0.75rem;
-      overflow-y: auto;
-      width: 15vw;
-      min-width: 250px;
-      z-index: 100;
-  }
+    .side-toc {
+        background-color: #fff;
+        box-sizing: border-box;
+        border-right: solid 1px #E5E4E2;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        position: fixed;
+        left: 0;
+        top: 60px;
+        height: 100vh;
+        padding: 0.75rem;
+        overflow-y: auto;
+        width: 15vw;
+        min-width: 250px;
+        z-index: 100;
+    }
 
-  .side-toc a {
-      font-size: 12px;
-      word-break: break-word;
-      text-decoration: none;
-  }
+    .side-toc a {
+        font-size: 12px;
+        word-break: break-word;
+        text-decoration: none;
+    }
 
-  .side-toc div {
-      margin: 10px;
-  }
+    .side-toc div {
+        margin: 10px;
+    }
 
-  a:hover {
-      cursor:pointer;
-  }
+    a:hover {
+        cursor: pointer;
+    }
 </style>
 
 <div class="side-toc">
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-top')">Top</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-intro')">Introduction</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-mil1-ps')">CRR MIL-1 Performance Summary</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-crr-ps')">CRR Performance Summary</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-nist-csf')">NIST Cybersecurity Framework Summary</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-mil1-performance')">CRR MIL-1 Performance</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-summary-results')">Summary of Results</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-percentage-practices')">Percentage of Practices Completed by Domain</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-domain-detail')">Question Detail</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-resources-referenced')">Resource Reference List</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-contact-information')">Questions Contact Information</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-additional-views')">Appendix A: Additional Data Views</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-crr-performance-app-a')">Appendix A: CRR Performance</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-nist-framework-summary-app-a')">Appendix A: NIST Cybersecurity Framework Category Summary</a>
-  </div>
-  <div>
-      <a class="link-primary" (click)="scrollToElement('toc-nist-framework-performance-app-a')">Appendix A: NIST Cybersecurity Framework Category Performance</a>
-  </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-top')">Top</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-intro')">Introduction</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-mil1-ps')">CRR MIL-1 Performance Summary</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-crr-ps')">CRR Performance Summary</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-nist-csf')">NIST Cybersecurity Framework Summary</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-mil1-performance')">CRR MIL-1 Performance</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-summary-results')">Summary of Results</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-percentage-practices')">Percentage of Practices Completed
+            by Domain</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-domain-detail')">Question Detail</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-resources-referenced')">Resource Reference List</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-contact-information')">Questions Contact Information</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-additional-views')">Appendix A: Additional Data Views</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-crr-performance-app-a')">Appendix A: CRR Performance</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-summary-app-a')">Appendix A: NIST
+            Cybersecurity Framework Category Summary</a>
+    </div>
+    <div>
+        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-performance-app-a')">Appendix A: NIST
+            Cybersecurity Framework Category Performance</a>
+    </div>
 </div>

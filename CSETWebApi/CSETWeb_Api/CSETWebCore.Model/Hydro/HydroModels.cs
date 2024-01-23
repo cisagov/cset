@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Model.Hydro
         public HYDRO_DATA_ACTIONS ActionData { get; set; }
     }
 
-    public class HydroGroupingInfo 
+    public class HydroGroupingInfo
     {
         public List<QuestionWithAnswers> QuestionsWithAnswers { get; set; }
         public int GroupingId { get; set; }
@@ -111,7 +111,7 @@ namespace CSETWebCore.Model.Hydro
         public int QuestionId { get; set; }
         public string QuestionType { get; set; }
         public int Sequence { get; set; }
-        public int MaturityLevel { get; set; }  
+        public int MaturityLevel { get; set; }
         public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
@@ -119,7 +119,7 @@ namespace CSETWebCore.Model.Hydro
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
-        public string AltAnswerText { get; set;  }
+        public string AltAnswerText { get; set; }
 
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
@@ -187,7 +187,7 @@ namespace CSETWebCore.Model.Hydro
     }
 
 
-    public class IntegrityCheckOption 
+    public class IntegrityCheckOption
     {
         public int OptionId { get; set; }
         public bool Selected { get; set; }

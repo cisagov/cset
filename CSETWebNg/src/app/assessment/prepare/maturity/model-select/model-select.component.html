@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -88,8 +88,8 @@
   <h4 class="wrap-text">Best Practices and Critical Infrastructure/Industry</h4>
   <hr class="w-100 mt-0 mb-3 hr-sal">
 
-  <mat-card appearance="outlined" *ngIf="!isTSA" class="maturity-model-card mb-5" (click)="changeSelection($event, 'CIS')"
-    (keydown.enter)="changeSelection($event, 'CIS')" tabindex="0"
+  <mat-card appearance="outlined" *ngIf="!isTSA" class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'CIS')" (keydown.enter)="changeSelection($event, 'CIS')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('CIS') }">
     <h4>{{getModelTitle('CIS')}}</h4>
     <div class="d-flex flex-row">
@@ -125,8 +125,8 @@
   </mat-card>
 
 
-  <mat-card appearance="outlined" *ngIf="false" class="maturity-model-card mb-5" (click)="changeSelection($event, 'VADR')"
-    (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
+  <mat-card appearance="outlined" *ngIf="false" class="maturity-model-card mb-5"
+    (click)="changeSelection($event, 'VADR')" (keydown.enter)="changeSelection($event, 'VADR')" tabindex="0"
     [ngClass]="{ 'mat-elevation-z8': getSelection('VADR') }">
     <h4>{{getModelTitle('VADR')}}</h4>
     <div [innerHTML]="getModelDescription('VADR') | safe"></div>

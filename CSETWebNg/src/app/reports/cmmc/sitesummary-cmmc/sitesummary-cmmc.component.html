@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,7 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 SITE SUMMARY REPORT CMMC
             </p>
         </div>
@@ -36,8 +35,8 @@
         </div>
 
         <div class="cover-page-bottom mb-4">
-          <app-logo-for-reports></app-logo-for-reports>
-          <app-info-block [response]="response" />
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
         </div>
     </div>
 
@@ -179,8 +178,7 @@
         <h1 class="pageHeader">CMMC Processes and Practices Explained</h1>
         <div class="column">
             <p style="text-align: center">
-                <img alt="graphic steps" style="height: 25rem"
-                    src="assets/images/CMMC/CMMCGraphicSteps.svg">
+                <img alt="graphic steps" style="height: 25rem" src="assets/images/CMMC/CMMCGraphicSteps.svg">
                 <!-- <svg width="471" height="529" src="assets/images/CMMC/CMMCGraphicSteps.svg"></svg> -->
             </p>
         </div>
@@ -260,7 +258,8 @@
 
     <!-- Excutive Summary, Basic Level Progress Bar Chart, Pie Charts Page -->
     <div class="page-break">
-        <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description</h1>
+        <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description
+        </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.Assessment_Description)">
         </p>
 

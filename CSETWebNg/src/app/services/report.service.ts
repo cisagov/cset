@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -205,7 +205,7 @@ export class ReportService {
   validateCisaAssessorFields() {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
   }
-  
+
   translatedDate(date: string) {
     moment.locale(this.tSvc.getActiveLang());
     return moment(date).format('DD-MMM-yyyy');
@@ -214,17 +214,17 @@ export class ReportService {
   translatedDateGMT(date: string) {
     moment.locale(this.tSvc.getActiveLang());
     // below is commented out for now in order to replace Moment's timezone offset with our collected offset from the JWT
-    
+
     // let currentTime = moment(date).utc(true);
     //return currentTime.utcOffset(date, true).format('L LTS') + currentTime.utcOffset(date).toString().slice(currentTime.utcOffset(date).toString().lastIndexOf(' '));
-    
+
     return moment(date).format('L LTS') + ' GMT-' + this.getOffsetFromJwtToken();
   }
 
   getOffsetFromJwtToken() {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    let offset = (parsedToken.tzoffset / 60)*100;
+    let offset = (parsedToken.tzoffset / 60) * 100;
     let gmtString = offset.toString();
 
     if (gmtString.length < 4) {

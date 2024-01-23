@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -71,7 +71,7 @@ export class CmuPerformanceComponent implements OnInit {
     return this.heatMaps?.find(c => c.title === goalTitle).chart;
   }
 
-    // This function splits strings like
+  // This function splits strings like
   // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
   // and
   // "Goal 3-Risks are identified."

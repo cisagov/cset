@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,21 +22,21 @@
 -------------------------->
 
 <div class="assess-component d-flex flex-column justify-content-start flex-11a">
-    <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-        <div class="my-5">
-          <div *ngIf="!summaryResultLoaded" class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
-            <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
-        </div>
-
-        <div class="my-5">
-          <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
-          <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
-            <div style="max-width: 50px; max-height: 50px;"></div>
-          </div>
-        </div>
-
-        <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
+  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+    <div class="my-5">
+      <div *ngIf="!summaryResultLoaded" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+      <app-crr-results-summary *ngIf="summaryResultLoaded" [model]="crrModel"></app-crr-results-summary>
     </div>
+
+    <div class="my-5">
+      <app-crr-percentage-of-practices [model]="crrModel"></app-crr-percentage-of-practices>
+      <div *ngIf="!chartLoaded" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
+    </div>
+
+    <app-nav-back-next [page]="'crr-summary-results'"></app-nav-back-next>
+  </div>
 </div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -61,7 +61,7 @@ namespace CSETWebCore.DatabaseManager
 
                 if (LocalDb2022Installed)
                 {
-                    using (SqlLocalDbApi localDb = new SqlLocalDbApi()) 
+                    using (SqlLocalDbApi localDb = new SqlLocalDbApi())
                     {
 
                         // Create and start our custom localdb instance
@@ -72,7 +72,7 @@ namespace CSETWebCore.DatabaseManager
                         {
                             manager.Start();
                         }
-                    } 
+                    }
 
                     InitialDbInfo localDb2022Info = new InitialDbInfo(LocalDb2022ConnectionString, DatabaseCode);
                     InitialDbInfo localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
@@ -234,7 +234,7 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo) 
+        private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo)
         {
             if (!ApplicationCode.Equals("ACET"))
             {
@@ -526,7 +526,7 @@ namespace CSETWebCore.DatabaseManager
                 {
                     return ApplicationCode + "Web";
                 }
-                else if (ApplicationCode.Equals("CSET Renewables")) 
+                else if (ApplicationCode.Equals("CSET Renewables"))
                 {
                     return "RENEWWeb";
                 }
@@ -545,7 +545,7 @@ namespace CSETWebCore.DatabaseManager
             // "INLLocalDb2022" is our custom localdb 2022 instance name, so we need to build it "custom".
             get { return @$"data source=(LocalDB)\{LOCALDB_2022_CUSTOM_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
         }
-        
+
         public string LocalDb2019ConnectionString
         {
             // "MSSQLLocalDB" is the default instance name for localdb2019
@@ -557,7 +557,7 @@ namespace CSETWebCore.DatabaseManager
             // "v11.0" is the default instance name for localdb2012
             get { return @$"data source=(LocalDB)\{LOCALDB_2012_DEFAULT_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
-        
+
         public string DatabaseFileName
         {
             get { return $"{DatabaseCode}{DB_EXTENSION}"; }
