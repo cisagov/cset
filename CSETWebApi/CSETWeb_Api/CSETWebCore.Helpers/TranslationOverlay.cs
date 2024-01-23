@@ -87,6 +87,13 @@ namespace CSETWebCore.Helpers
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "CATEGORIES.json"));
 
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
+
+
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryTranslation>(json);
 
                 dCat.Add(lang, langPack);
@@ -117,6 +124,12 @@ namespace CSETWebCore.Helpers
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
+
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
 
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<RequirementTranslations>(json);
 

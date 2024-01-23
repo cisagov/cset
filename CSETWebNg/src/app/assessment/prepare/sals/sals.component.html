@@ -34,34 +34,36 @@
       </div>
 
       <span class="mt-3 mb-1 fw-600">{{t('titles.sal.current level')}}</span>
-      <div class="d-flex flex-wrap flex-00a sticky-sal">
+      <div class="d-flex flex-wrap flex-00a sticky-sal" *ngIf="!!this.salsSvc.selectedSAL">
         <div class="d-flex flex-11a">
           <div class="mb-2 p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">{{t('titles.sal.overall')}}</div>
             <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center align-items-center flex-11a">
-              {{
-                t('titles.sal.' + this.salsSvc.selectedSAL.selected_Sal_Level?.toLowerCase()) }}</div>
+              {{ salsSvc.selectedSAL?.selected_Sal_Level != null ? t('titles.sal.' + salsSvc.selectedSAL?.selected_Sal_Level.toLowerCase()) : '' }}
+            </div>
           </div>
         </div>
-        <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedSal != 'GENERAL'">
+        <div class="d-flex flex-nowrap justify-content-center flex-11a mb-2" *ngIf="selectedMethodology != 'GENERAL'">
+
           <div [class.ml-2]="!layoutSvc.hp"
             class="p-2 quick-info-container d-flex justify-content-center flex-column flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center flex-11a">{{t('titles.sal.confidentiality')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">{{
-              t('titles.sal.' + this.salsSvc.selectedSAL.cLevel?.toLowerCase()) }}</div>
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+              {{ salsSvc.selectedSAL?.cLevel != null ? t('titles.sal.' + salsSvc.selectedSAL.cLevel.toLowerCase()) : '' }}</div>
           </div>
 
           <div class="ml-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.integrity')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">{{
-              t('titles.sal.' + this.salsSvc.selectedSAL.iLevel?.toLowerCase()) }}</div>
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+              {{ salsSvc.selectedSAL?.iLevel != null ? t('titles.sal.' + salsSvc.selectedSAL.iLevel.toLowerCase()) : '' }}</div>
           </div>
 
           <div class="ml-2 p-2 quick-info-container d-flex flex-column justify-content-center flex-11a">
             <div class="ws-no-wrap d-flex justify-content-center align-items-center">{{t('titles.sal.availability')}}</div>
-            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">{{
-              t('titles.sal.' + this.salsSvc.selectedSAL.aLevel?.toLowerCase()) }}</div>
+            <div class="p-2 quick-info-stats-container mt-1 d-flex justify-content-center flex-11a">
+              {{ salsSvc.selectedSAL?.aLevel != null ? t('titles.sal.' + salsSvc.selectedSAL.aLevel.toLowerCase()) : '' }}</div>
           </div>
+
         </div>
       </div>
 
@@ -70,27 +72,27 @@
       </div>
       <div class="btn-group-toggle" data-toggle="buttons">
         <label csetid="SimpleSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
-          [class.active]="selectedSal === 'Simple'" (click)="changeState('Simple')">
+          [class.active]="selectedMethodology === 'Simple'" (click)="changeMethodology('Simple')">
           <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedSal === 'Simple'">{{t('titles.sal.simple')}}
+            [checked]="selectedMethodology === 'Simple'">{{t('titles.sal.simple')}}
         </label>
 
         <label csetid="GeneralRiskSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
-          [class.active]="selectedSal === 'GENERAL'" (click)="changeState('GENERAL')">
+          [class.active]="selectedMethodology === 'GENERAL'" (click)="changeMethodology('GENERAL')">
           <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedSal === 'GENERAL'">{{t('titles.sal.general risk based')}}
+            [checked]="selectedMethodology === 'GENERAL'">{{t('titles.sal.general risk based')}}
         </label>
 
         <label csetid="NistSalLevelSelector" class="btn btn-sal-select btn-rounded form-check-label"
-          [class.active]="selectedSal === 'NIST'" (click)="changeState('NIST')">
+          [class.active]="selectedMethodology === 'NIST'" (click)="changeMethodology('NIST')">
           <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-            [checked]="selectedSal === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
+            [checked]="selectedMethodology === 'NIST'">{{t('titles.sal.nist 60 fips 199')}}
         </label>
       </div>
       <hr class="w-100 hr-sal mt-1 mb-5" />
 
       <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
-        <div [ngSwitch]="selectedSal" class="d-flex flex-column justify-content-start flex-00a">
+        <div [ngSwitch]="selectedMethodology" class="d-flex flex-column justify-content-start flex-00a">
           <app-sal-simple *ngSwitchCase="'Simple'"></app-sal-simple>
           <app-sal-gen *ngSwitchCase="'GENERAL'"></app-sal-gen>
           <app-sal-nist *ngSwitchCase="'NIST'"></app-sal-nist>
