@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,7 @@ import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
-import { Answer, MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
-import { BehaviorSubject } from 'rxjs';
+import { MaturityDomainRemarks } from '../models/questions.model';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -107,7 +106,7 @@ export class MaturityService {
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
-  
+
   /**
    * Posts the current selections to the server.
    */
@@ -228,7 +227,7 @@ export class MaturityService {
    * Asks the API for one grouping's worth of questions/answers.
    */
   getGroupingQuestions(groupingId: Number) {
-    return this.http.get(this.configSvc.apiUrl 
+    return this.http.get(this.configSvc.apiUrl
       + 'maturity/questions/grouping?groupingId=' + groupingId);
   }
 
@@ -262,7 +261,7 @@ export class MaturityService {
    * Someday this could be set in the MATURITY_MODELS table as a profile item
    * for each model that uses the nested questions structure.
    */
-   showChartOnNestedQPage(): boolean {
+  showChartOnNestedQPage(): boolean {
     if (this.assessSvc.assessment.maturityModel.modelName == "CIS") {
       return true;
     }
@@ -277,11 +276,11 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
 
-  getMaturityDeficiencySd(){
+  getMaturityDeficiencySd() {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyListSd');
   }
 
-  getMaturityOpenEndedQuestions(maturityModel){
+  getMaturityOpenEndedQuestions(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityOpenEndedQList?maturity=' + maturityModel);
   }
   /**
@@ -349,8 +348,8 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
 
-  getMvraScoring(){
-    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
+  getMvraScoring() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring');
   }
 
   getHydroResults() {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CharterMismatchComponent } from '../dialogs/charter-mistmatch/charter-mismatch.component';
 import { AcetFilteringService } from './filtering/maturity-filtering/acet-filtering.service';
 import { AssessmentService } from './assessment.service';
@@ -41,20 +41,20 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
 
 let headers = {
-    headers: new HttpHeaders()
-        .set('Content-Type', 'application/json'),
-    params: new HttpParams()
+  headers: new HttpHeaders()
+    .set('Content-Type', 'application/json'),
+  params: new HttpParams()
 };
 
 /**
  * A service that checks for the NCUA examiner's installation switch,
  * and manages various ISE examination variables.
  */
- @Injectable({
-    providedIn: 'root'
-  })
+@Injectable({
+  providedIn: 'root'
+})
 
- export class NCUAService {
+export class NCUAService {
 
   // used to determine whether this is an NCUA installation or not
   apiUrl: string;
@@ -155,21 +155,21 @@ let headers = {
   getSwitchStatus() {
     this.http.get(this.configSvc.apiUrl + 'isExaminersModule', headers).subscribe((
       response: boolean) => {
-        if (this.configSvc.installationMode === 'ACET') {
-          this.switchStatus = response;
-          /// ISE doesn't want any language options for their installation, so this makes sure the language is set to english.
-          /// Prevents the case where 1.'ACET' is installed, 2.the language is changed to spanish, 
-          /// and then 3.'ISE' is installed and uses the same database (so the existing 'es' language stays and can't be switched)
-          if (this.switchStatus == true) {
-            let defaultLang = this.configSvc.config.defaultLang;
-            this.tSvc.setActiveLang(defaultLang);
-            this.authSvc.setUserLang(defaultLang).subscribe(() => {
-              this.dateAdapter.setLocale(defaultLang);
-              moment.locale(defaultLang);
-            });
-          }
+      if (this.configSvc.installationMode === 'ACET') {
+        this.switchStatus = response;
+        /// ISE doesn't want any language options for their installation, so this makes sure the language is set to english.
+        /// Prevents the case where 1.'ACET' is installed, 2.the language is changed to spanish, 
+        /// and then 3.'ISE' is installed and uses the same database (so the existing 'es' language stays and can't be switched)
+        if (this.switchStatus == true) {
+          let defaultLang = this.configSvc.config.defaultLang;
+          this.tSvc.setActiveLang(defaultLang);
+          this.authSvc.setUserLang(defaultLang).subscribe(() => {
+            this.dateAdapter.setLocale(defaultLang);
+            moment.locale(defaultLang);
+          });
         }
       }
+    }
     );
   }
 
@@ -262,7 +262,7 @@ let headers = {
     let id10 = (this.assessmentsToMerge[9] !== undefined ? this.assessmentsToMerge[9] : 0);
 
     headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
-    .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
+      .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.configSvc.apiUrl + 'getMergeData', headers)
   }
@@ -280,7 +280,7 @@ let headers = {
     let id10 = (this.assessmentsToMerge[9] !== undefined ? this.assessmentsToMerge[9] : 0);
 
     headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
-    .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
+      .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
 
     return this.http.get(this.configSvc.apiUrl + 'getMergeNames', headers);
   }
@@ -313,14 +313,14 @@ let headers = {
   }
 
   regionCodeTranslator(regionCode: number) {
-    switch(regionCode) {
-      case(1):
+    switch (regionCode) {
+      case (1):
         return '1 - Eastern';
-      case(2):
+      case (2):
         return '2 - Southern';
-      case(3):
+      case (3):
         return '3 - Western';
-      case(8):
+      case (8):
         return '8 - ONES';
     }
   }
@@ -409,7 +409,7 @@ let headers = {
 
   // translates the maturity_Level_Id into the maturity_Level
   translateExamLevel(matLevelId: number) {
-    if(matLevelId === 17) {
+    if (matLevelId === 17) {
       return 'SCUE';
     } else if (matLevelId === 18 || matLevelId === 19) {
       return 'CORE';
@@ -418,7 +418,7 @@ let headers = {
 
   // translates the maturity_Level_Id into the maturity_Level
   translateExamLevelToInt(matLevelString: string) {
-    if(matLevelString === 'SCUE') { //SCUEP, but cut off because the substring(0, 4)
+    if (matLevelString === 'SCUE') { //SCUEP, but cut off because the substring(0, 4)
       return 17;
     } else if (matLevelString === 'CORE') {
       return 18;
@@ -426,7 +426,7 @@ let headers = {
   }
 
   isParentQuestion(title: string) {
-    if ( title.toString().includes('.') ) {
+    if (title.toString().includes('.')) {
       return false;
     }
     return true;
@@ -455,12 +455,12 @@ let headers = {
 
   /**
    * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
-   */ 
+   */
   getParentQuestionTitle(title: string) {
-    if(!this.isParentQuestion(title)) {
+    if (!this.isParentQuestion(title)) {
       let endOfTitle = 6;
       // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
-      if(title.charAt(6) != '.'){
+      if (title.charAt(6) != '.') {
         endOfTitle = endOfTitle + 1;
       }
       return title.substring(0, endOfTitle);
@@ -469,9 +469,9 @@ let headers = {
 
   /**
    * trims the child number 'Stmt ' off the given 'title', leaving what the statement number the 'title' is from
-   */ 
-   getParentQuestionTitleNumber(title: string) {
-    if(this.isParentQuestion(title)) {
+   */
+  getParentQuestionTitleNumber(title: string) {
+    if (this.isParentQuestion(title)) {
       let spaceIndex = title.indexOf(' ') + 1;
       let number = Number.parseInt(title.substring(spaceIndex));
       return number;
@@ -484,9 +484,9 @@ let headers = {
         this.questions = r;
         this.information = this.questions.information;
         this.examLevel = this.getExamLevel();
-        
+
         // goes through domains
-        for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+        for (let i = 0; i < this.questions?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.questions?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
@@ -496,14 +496,14 @@ let headers = {
               "parentNumber": this.getParentQuestionTitleNumber(subcat?.questions[0].title),
               "category": subcat?.title,
               "examLevel": '',
-              "issues": 
-                {
-                  "dors": 0,
-                  "examinerFindings": 0,
-                  "supplementalFacts": 0,
-                  "nonReportables": 0
-                },
-              "children":[]
+              "issues":
+              {
+                "dors": 0,
+                "examinerFindings": 0,
+                "supplementalFacts": 0,
+                "nonReportables": 0
+              },
+              "children": []
             };
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
@@ -515,7 +515,7 @@ let headers = {
                 if (this.examLevel === 'SCUEP' && question.maturityLevel !== 'SCUEP') {
                   question.answerText = 'U';
                 }
-                
+
                 else if (this.examLevel === 'CORE' || this.examLevel === 'CORE+') {
                   if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
                     this.examLevel = 'CORE+';
@@ -525,13 +525,15 @@ let headers = {
                   }
                 }
 
-                childResponses.children.push({"examLevel":question.maturityLevel, "title":question.title, 
-                                              "response": this.answerTextToNumber(question.answerText)});
+                childResponses.children.push({
+                  "examLevel": question.maturityLevel, "title": question.title,
+                  "response": this.answerTextToNumber(question.answerText)
+                });
               } else { //if it's a parent question, deal with possible issues
                 for (let m = 0; m < findings?.length; m++) {
                   if (findings[m]?.question?.mat_Question_Id == question.matQuestionId
                     && this.translateExamLevel(findings[m]?.question?.maturity_Level_Id) == this.examLevel.substring(0, 4)
-                    ) {
+                  ) {
                     switch (findings[m]?.finding?.type) {
                       case "DOR":
                         childResponses.issues.dors++;
@@ -563,13 +565,13 @@ let headers = {
 
         this.metaDataBuilder();
       },
-      error => {        
-          console.log(error);
-          let msg = "<br><p>Error"+error+"}}</p>";
-          this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "MERIT Error", messageText: msg }
-          });
-          this.jsonStringReset();         
+      error => {
+        console.log(error);
+        let msg = "<br><p>Error" + error + "}}</p>";
+        this.dialog.open(MeritCheckComponent, {
+          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+        });
+        this.jsonStringReset();
       }
     );
   }
@@ -582,23 +584,23 @@ let headers = {
         for (let i = 0; i < this.iseIrps?.irpList?.length; i++) {
           let currentIrp = this.iseIrps?.irpList[i];
 
-          let irpResponse = {"examProfileNumber": currentIrp.item_Number, "response": currentIrp.response};
+          let irpResponse = { "examProfileNumber": currentIrp.item_Number, "response": currentIrp.response };
           this.jsonString.examProfileData.push(irpResponse);
         }
 
       },
-      error => {        
-          console.log(error);
-          let msg = "<br><p>Error"+error+"}}</p>";
-          this.dialog.open(MeritCheckComponent, {
-            disableClose: true, data: { title: "MERIT Error", messageText: msg }
-          });
-          this.jsonStringReset();         
+      error => {
+        console.log(error);
+        let msg = "<br><p>Error" + error + "}}</p>";
+        this.dialog.open(MeritCheckComponent, {
+          disableClose: true, data: { title: "MERIT Error", messageText: msg }
+        });
+        this.jsonStringReset();
       }
     );
   }
 
-  metaDataBuilder() { 
+  metaDataBuilder() {
     let metaDataInfo = {
       "assessmentName": this.information.assessment_Name,
       "creditUnionName": this.information.credit_Union_Name,
@@ -622,42 +624,42 @@ let headers = {
     //               ' ' + metaDataInfo.creationDate;
 
     this.saveToJsonFile(JSON.stringify(this.jsonString), this.jsonString.metaData.guid);
-    
+
   }
 
-  saveToJsonFile(data: string, guid: string){
+  saveToJsonFile(data: string, guid: string) {
     const fileValue = new MeritFileExport();
     fileValue.data = data;
     fileValue.guid = guid;
-    
+
     this.doesDirectoryExist().subscribe(
       (exists: boolean) => {
         if (exists === false) {
           let msg = `<br><p>The Submission Export Path is not accessible.</p>
                          <p>Please make sure the directory exists and is viewable.</p>`;
-                  this.dialog.open(MeritCheckComponent, {
-                    disableClose: true, data: { title: "Submission Error", messageText: msg }
-                  });
-          this.jsonStringReset(); 
+          this.dialog.open(MeritCheckComponent, {
+            disableClose: true, data: { title: "Submission Error", messageText: msg }
+          });
+          this.jsonStringReset();
         }
         else if (exists === true) {
           this.acetSvc.doesMeritFileExist(fileValue).subscribe(
             (bool: any) => {
               let exists = bool; //true if it exists, false if not
-      
+
               if (!exists) { //and eventually an 'overwrite' boolean or something
                 this.newMeritFileSteps(fileValue);
-                this.updateSubmissionStatus().subscribe(result => {});
+                this.updateSubmissionStatus().subscribe(result => { });
               } else {
-      
+
                 let msg = `<br>
                   <p>This examination has been previously submitted.</p>
                   <br>
                   <p>Would you like to <strong>overwrite</strong> the previous submission data?</p>`;
-      
+
                 this.dialog.open(MeritCheckComponent, {
                   disableClose: true, data: { title: "Submission Warning", messageText: msg }
-      
+
                 }).afterClosed().subscribe(overrideChoice => {
                   if (overrideChoice == 'new') {
                     fileValue.overwrite = false;
@@ -674,12 +676,12 @@ let headers = {
                           });
                         });
                       },
-                      error => {        
-                        let msg = "<br><p>Could not overwrite the file.  "+error.error+"</p>";
+                      error => {
+                        let msg = "<br><p>Could not overwrite the file.  " + error.error + "</p>";
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Error", messageText: msg }
                         });
-                        this.jsonStringReset();         
+                        this.jsonStringReset();
                       }
                     );
                   } else if (overrideChoice == 'overwrite') {
@@ -691,52 +693,52 @@ let headers = {
                           disableClose: true, data: { title: "Submission Success", messageText: msg }
                         })
                         this.jsonStringReset();
-                          
+
                         this.updateSubmissionStatus().subscribe(result => {
                           this.getSubmissionStatus().subscribe((result: any) => {
                             this.iseHasBeenSubmitted = result;
                           });
                         });
                       },
-                      error => {        
-                        let msg = "<br><p>Could not write the file."+error.error+"</p>";
+                      error => {
+                        let msg = "<br><p>Could not write the file." + error.error + "</p>";
                         this.dialog.open(MeritCheckComponent, {
                           disableClose: true, data: { title: "Submission Error", messageText: msg }
                         });
-                        this.jsonStringReset();         
+                        this.jsonStringReset();
                       }
                     );
                   } else {
-                    this.jsonStringReset();   
+                    this.jsonStringReset();
                   }
                 });
               }
-      
+
             }
           )
         }
       },
-      error => {        
+      error => {
         console.log(error);
-        let msg = "<br><p>"+error.error+"</p>";
+        let msg = "<br><p>" + error.error + "</p>";
         this.dialog.open(MeritCheckComponent, {
           disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
-        this.jsonStringReset();     
+        this.jsonStringReset();
       }
     )
   }
 
-  newMeritFileSteps (fileValue: MeritFileExport) {
-    
+  newMeritFileSteps(fileValue: MeritFileExport) {
+
     //fileValue.data = JSON.stringify(this.jsonString);
 
     this.acetSvc.newMeritFile(fileValue).subscribe(
       (r: any) => {
         let msg = `<br><p>The file '<strong>` + fileValue.guid + `.json</strong>' was successfully created.</p>`;
-                this.dialog.open(MeritCheckComponent, {
-                  disableClose: true, data: { title: "Submission Success", messageText: msg }
-                })
+        this.dialog.open(MeritCheckComponent, {
+          disableClose: true, data: { title: "Submission Success", messageText: msg }
+        })
         this.jsonStringReset();
 
         this.updateSubmissionStatus().subscribe(result => {
@@ -745,9 +747,9 @@ let headers = {
           });
         });
       },
-      error => {        
+      error => {
         console.log(error);
-        let msg = "<br><p>Error:"+error.error+"</p>";
+        let msg = "<br><p>Error:" + error.error + "</p>";
         this.dialog.open(MeritCheckComponent, {
           disableClose: true, data: { title: "Submission Error", messageText: msg }
         });
@@ -756,7 +758,7 @@ let headers = {
     );
   }
 
-  jsonStringReset () {
+  jsonStringReset() {
     this.jsonString = { // resets the string to blank values
       "metaData": {
         "assessmentName": '',
@@ -781,7 +783,7 @@ let headers = {
       },
       "examProfileData": [],
       "questionData": []
-    }; 
+    };
 
     this.submitInProgress = false;
   }
@@ -814,7 +816,7 @@ let headers = {
   answerAllQuestionsYes() {
     let answerList: Answer[] = [];
 
-   // for
+    // for
   }
 
 }

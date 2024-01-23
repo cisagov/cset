@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -122,10 +122,10 @@ export class NavTreeService {
           children: [],
           expandable: true,
           visible: true,
-          enabled: true   
-        };        
+          enabled: true
+        };
         navNode.visible = this.pageVisibliltySvc.showPage(workflowNode);
-        if(navNode.visible){
+        if (navNode.visible) {
           navNode.enabled = this.pageVisibliltySvc.isEnabled(workflowNode);
         }
         // the node might need tweaking based on certain factors
@@ -164,7 +164,7 @@ export class NavTreeService {
       if (mode == 'r') {
         node.label = this.tSvc.translate('titles.standard requirements');
       }
-    }    
+    }
   }
 
   /**

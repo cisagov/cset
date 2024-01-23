@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -65,10 +65,10 @@ export class FeatureOptionNcuaComponent implements OnInit {
 
   ngOnInit(): void {
     // special code -- unselect 'maturity' if ACET or ISE are selected
-    if (this.feature.code === 'maturity' && 
-    (this.assessSvc.usesMaturityModel('ACET') || 
-    this.assessSvc.usesMaturityModel('ISE')
-    )) {
+    if (this.feature.code === 'maturity' &&
+      (this.assessSvc.usesMaturityModel('ACET') ||
+        this.assessSvc.usesMaturityModel('ISE')
+      )) {
       this.feature.selected = false;
     }
   }
@@ -112,7 +112,7 @@ export class FeatureOptionNcuaComponent implements OnInit {
           default:
             this.assessSvc.assessment.maturityModel = this.maturitySvc.getModel("CRR");
         }
-      }      
+      }
 
 
       // ACET and ISE features should set the maturity model here and now, rather than on the model-select screen

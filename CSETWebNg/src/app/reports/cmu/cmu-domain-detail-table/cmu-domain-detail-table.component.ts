@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Question } from '../../../models/questions.model';
 import { QuestionsService } from '../../../services/questions.service';
 import { ConfigService } from '../../../services/config.service';
@@ -111,18 +111,18 @@ export class CmuResultsDetailComponent implements OnChanges {
 
     // try the displaytext and parse off the "Qx" at the end
     dot = q.displayNumber?.lastIndexOf('.');
-    if (dot > 0) {        
+    if (dot > 0) {
       return q.displayNumber.trim().substring(dot + 1);
     }
 
     // failing that, assume the question text leads with a number and a dot
     if (!!q.questionText) {
       dot = q.questionText.trim().indexOf('.');
-    } 
+    }
     if (dot > 0) {
       return "Q" + q.questionText.trim().substring(0, dot);
     }
-    
+
     return "Q";
   }
 

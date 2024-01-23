@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,53 +24,53 @@
 
 
 export interface DemographicsIod {
-    assessmentId?: number;
-    version?: number;
-    organizationType?: number;
-    organizationName?: string;
-    businessUnit?: string;
-    sector?: number;
-    subsector?: number;
-    numberEmployeesTotal?: number;
-    numberEmployeesUnit?: number;
-    annualRevenue?: number;
-    criticalServiceRevenuePercent?: number;
-    criticalDependencyIncidentResponseSupport?: string;
-    numberPeopleServedByCritSvc?: number;
-    disruptedSector1?: number;
-    disruptedSector2?: number;
-    usesStandard?: boolean;
-    standard1?: string;
-    standard2?: string;
-    requiredToComply?: boolean;
-    regulationType1?: number;
-    reg1Other?: string;
-    regulationType2?: number;
-    reg2Other?: string;
+  assessmentId?: number;
+  version?: number;
+  organizationType?: number;
+  organizationName?: string;
+  businessUnit?: string;
+  sector?: number;
+  subsector?: number;
+  numberEmployeesTotal?: number;
+  numberEmployeesUnit?: number;
+  annualRevenue?: number;
+  criticalServiceRevenuePercent?: number;
+  criticalDependencyIncidentResponseSupport?: string;
+  numberPeopleServedByCritSvc?: number;
+  disruptedSector1?: number;
+  disruptedSector2?: number;
+  usesStandard?: boolean;
+  standard1?: string;
+  standard2?: string;
+  requiredToComply?: boolean;
+  regulationType1?: number;
+  reg1Other?: string;
+  regulationType2?: number;
+  reg2Other?: string;
 
-    /**
-     * Lists the orgs
-     */
-    
-    shareOrgs?: number[];
-    shareOther?: string;
+  /**
+   * Lists the orgs
+   */
 
-    barrier1?: number;
-    barrier2?: number;
+  shareOrgs?: number[];
+  shareOther?: string;
 
-    listOrgTypes?: any[];
-    listSectors?: any[];
-    listSubsectors?: any[];
-    listNumberEmployeeTotal?: any[];
-    listNumberEmployeeUnit?: any[];
-    listRevenueAmounts?: any[];
-    listRevenuePercentages?: any[];
-    listNumberPeopleServed?: any[];
-    listCISectors?: any[];
-    listRegulationTypes?: any[];
-    listShareOrgs?: any[];
-    listBarriers?: any[];
-    
+  barrier1?: number;
+  barrier2?: number;
+
+  listOrgTypes?: any[];
+  listSectors?: any[];
+  listSubsectors?: any[];
+  listNumberEmployeeTotal?: any[];
+  listNumberEmployeeUnit?: any[];
+  listRevenueAmounts?: any[];
+  listRevenuePercentages?: any[];
+  listNumberPeopleServed?: any[];
+  listCISectors?: any[];
+  listRegulationTypes?: any[];
+  listShareOrgs?: any[];
+  listBarriers?: any[];
+
 }
 
 export interface CisaWorkflowFieldValidationResponse {
