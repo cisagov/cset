@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,20 +21,19 @@
   SOFTWARE.
 -------------------------->
 <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="label">Label</th>
-    <th mat-sort-header="layer">Layer</th>
-    <th mat-sort-header="visible">Visible</th>
-    <tr *ngFor="let text of texts; let i = index">
-        <td>{{text.value}}</td>
-        <td>{{text.layerName}}</td>
-        <td>
-            <input type="checkbox" name="{{ text.visible }}" class="mt-1" [(ngModel)]="text.visible"
-              [checked]="text.visible" [disabled]="true" >
-         </td>
-    </tr>
+  <th mat-sort-header="label">Label</th>
+  <th mat-sort-header="layer">Layer</th>
+  <th mat-sort-header="visible">Visible</th>
+  <tr *ngFor="let text of texts; let i = index">
+    <td>{{text.value}}</td>
+    <td>{{text.layerName}}</td>
+    <td>
+      <input type="checkbox" name="{{ text.visible }}" class="mt-1" [(ngModel)]="text.visible" [checked]="text.visible"
+        [disabled]="true">
+    </td>
+  </tr>
 
-    <tr *ngIf="texts.length == 0">
-      <td colspan="3" style="text-align: center;">There are no text objects in this Network Diagram.</td>
-    </tr>
+  <tr *ngIf="texts.length == 0">
+    <td colspan="3" style="text-align: center;">There are no text objects in this Network Diagram.</td>
+  </tr>
 </table>
-

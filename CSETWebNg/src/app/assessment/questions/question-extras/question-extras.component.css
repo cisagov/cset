@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2023 Battelle Energy Alliance, LLC  
+  Copyright 2024 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 .supplemental *:not(font) {
-  /* font-size: 95%;
+    /* font-size: 95%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
 }
 
@@ -39,7 +39,7 @@ SOFTWARE.
 }
 
 .supplemental table td ol {
-  padding-left: 1em;
+    padding-left: 1em;
 }
 
 .supplemental .brown {

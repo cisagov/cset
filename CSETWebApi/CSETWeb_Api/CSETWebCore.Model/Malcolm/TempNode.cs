@@ -21,6 +21,7 @@ namespace CSETWebCore.Model.Malcolm
     {
         public HashSet<TempNode> Children {  get; set; }
         public string Key {  get; set; }
+        public string Role { get; set; }
         
         private HashSet<string> alreadySeenList = new HashSet<string>();
 

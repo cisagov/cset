@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -68,7 +68,7 @@ namespace CSETWebCore.Model.Diagram
         private string visibleField { get; set; }
 
         private string vendorNameField { get; set; }
-        
+
         private string productNameField { get; set; }
 
 

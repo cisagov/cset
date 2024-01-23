@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
 {
     public abstract class DiagramAnalysisBaseMessage
     {
-   
+
         public HashSet<String> SetMessages { get; set; }
 
         public DiagramAnalysisBaseMessage()
@@ -20,8 +20,8 @@ namespace CSETWebCore.Business.Diagram.Analysis
         }
 
         public void AddMessage(String message)
-        {         
-                SetMessages.Add( message);           
+        {
+            SetMessages.Add(message);
         }
 
         public String GetMessage()

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,9 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse, HttpEventType, HttpRequest, HttpResponseBase, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { ImportPasswordComponent } from '../dialogs/assessment-encryption/import-password/import-password.component';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -44,7 +42,7 @@ export class ImportAssessmentService {
   hintMap = new Map();
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private configSvc: ConfigService) {
   }
 
@@ -55,24 +53,27 @@ export class ImportAssessmentService {
     files.forEach(file => {
       // create a new multipart-form for every file
       const formData: FormData = new FormData();
-      formData.append('file', file, file.name, );
+      formData.append('file', file, file.name,);
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
       let req = null;
-      let tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
+      let tmpheader = new HttpHeaders({ 'Authorization': localStorage.getItem('userToken') });
       tmpheader.append('Authorization', localStorage.getItem('userToken'));
       tmpheader = tmpheader.append('pwd', password);
-      
+
       if (isNormalLoad) {
         req = new HttpRequest('POST', this.apiAssessmentImport, formData,
-          { headers: tmpheader,
-            reportProgress: true }
+          {
+            headers: tmpheader,
+            reportProgress: true
+          }
         )
 
       } else {
         req = new HttpRequest('POST', this.apiLegacyAssessmentImport, formData,
-          { headers: tmpheader,
+          {
+            headers: tmpheader,
             reportProgress: true,
           }
         );
@@ -117,13 +118,13 @@ export class ImportAssessmentService {
           }
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
-          else progress.complete();   
+          else progress.complete();
         }
 
       },
-      (error) => {
-        this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
-      }
+        (error) => {
+          this.hintMap.set(file.name, this.extractAssessmentHint(error.error));
+        }
       );
     })
 

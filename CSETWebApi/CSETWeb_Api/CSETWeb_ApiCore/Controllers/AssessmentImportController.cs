@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -129,7 +129,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
                 {
-                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.FileName;                    
+                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.FileName;
                     return StatusCode(423, returnMessage);
                 }
                 else if (e.Message == "The password did not match.")
@@ -143,7 +143,8 @@ namespace CSETWebCore.Api.Controllers
                 }
             }
 
-            var response = new {
+            var response = new
+            {
                 Message = "Assessment was successfully imported"
             };
 
@@ -175,7 +176,7 @@ namespace CSETWebCore.Api.Controllers
                     if (!file.FileName.EndsWith(".xlsx")
                             && file.FileName.EndsWith(".xls"))
                     {
-                        return Ok(new 
+                        return Ok(new
                         {
                             Message = "Only Microsoft Excel spreadsheets can be uploaded."
                         });

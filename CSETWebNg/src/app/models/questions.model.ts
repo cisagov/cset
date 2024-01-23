@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -211,15 +211,15 @@ export interface Option {
 }
 
 export interface IntegrityCheckOption {
-  optionId: number;
-  selected: boolean;
-  parentQuestionText: string;
-  inconsistentOptions: InconsistentOption[];
+    optionId: number;
+    selected: boolean;
+    parentQuestionText: string;
+    inconsistentOptions: InconsistentOption[];
 }
 
 export interface InconsistentOption {
-  optionId: number;
-  parentQuestionText: string;
+    optionId: number;
+    parentQuestionText: string;
 }
 
 export class SubToken {

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,8 +10,8 @@ using CSETWebCore.DataLayer.Manual;
 
 namespace CSETWebCore.Model.Dashboard
 {
-	public class ChartDataTSA
-	{
+    public class ChartDataTSA
+    {
         //this is hokey sorry
         //but check this list if it is not empty then use this
         //list otherwise user the rest of the data
@@ -28,10 +28,10 @@ namespace CSETWebCore.Model.Dashboard
         public int ComponentCount { get; set; }
         public List<DataRowsAnalytics> DataRows { get; set; }
         public List<AnalyticsMinMaxAvgMedianByGroup> DataRowsMaturity { get; set; }
-        public List <AnalyticsStandardMinMaxAvg> DataRowsStandard { get; set; }
+        public List<AnalyticsStandardMinMaxAvg> DataRowsStandard { get; set; }
         //public List<DataRowsPie> DataRowsPie { get; set; }
         public List<string> Colors { get; set; }
-        public List <SetStandard> StandardList { get; set; }
+        public List<SetStandard> StandardList { get; set; }
         public ChartDataTSA()
         {
             data = new List<double>();

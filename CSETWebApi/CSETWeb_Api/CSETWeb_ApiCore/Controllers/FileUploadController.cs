@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
 
             int answerId;
             if (!int.TryParse(result.FormNameValues[key_answerId], out answerId))
-            {                
+            {
                 var answerObj = new ANSWER();
 
                 // if no answerId was provided, try to find an answer for this assessment/question
@@ -112,7 +112,7 @@ namespace CSETWebCore.Api.Controllers
 
                     // 
                     if (questionType.ToLower() == "maturity")
-                    {                        
+                    {
                         answerId = _maturityBusiness.StoreAnswer(assessmentId, answer);
                     }
                     else

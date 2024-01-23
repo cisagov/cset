@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,8 +9,8 @@ using System.Security.Cryptography;
 
 namespace CSETWebCore.CryptoBuffer
 {
-    public class DecryptionBuffer
-    {
+	public class DecryptionBuffer
+	{
 		private readonly ByteBuffer _outBuffer = new ByteBuffer();
 		private readonly ByteBuffer _restBuffer = new ByteBuffer();
 		private ICryptoTransform _ic;

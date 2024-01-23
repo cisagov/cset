@@ -1,6 +1,6 @@
 ﻿/* 
 
-  Copyright 2023 Battelle Energy Alliance, LLC  
+  Copyright 2024 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -46,9 +46,9 @@ tr.topLinkRow a:visited {
     border-bottom-color: transparent;
 }
 
-    .m-workZone_seeAlso_itemContent .b-breadCrumbs__link:hover {
-        border-bottom-color: #23527c;
-    }
+.m-workZone_seeAlso_itemContent .b-breadCrumbs__link:hover {
+    border-bottom-color: #23527c;
+}
 
 
 
@@ -81,10 +81,10 @@ tr.topLinkRow a:visited {
     box-shadow: none;
 }
 
-    .b-button:hover {
-        background-color: #45859e;
-        border-color: #30565f;
-    }
+.b-button:hover {
+    background-color: #45859e;
+    border-color: #30565f;
+}
 
 
 .no-js .b-button {
@@ -134,20 +134,20 @@ tr.topLinkRow a:visited {
     background-color: #285464;
 }
 
-    .b-article,
-    .b-article:before,
-    .b-article__wrapper {
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
-    }
+.b-article,
+.b-article:before,
+.b-article__wrapper {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
 
-        .b-article::before {
-            webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            -ms-box-shadow: none;
-            box-shadow: none;
-        }
+.b-article::before {
+    webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+}
 
 .b-article__wrapper {
     -webkit-box-shadow: none;
@@ -179,9 +179,9 @@ html[dir="rtl"] .m-controlButtons__item__next .b-controlButtons__link_icon:after
     color: #fff;
 }
 
-    .b-breadCrumbs__item:before {
-        content: "\a0\203a\a0\a0";
-    }
+.b-breadCrumbs__item:before {
+    content: "\a0\203a\a0\a0";
+}
 
 html[dir="rtl"] .b-breadCrumbs__item:before {
     content: "\a0\2039\a0\a0";
@@ -271,7 +271,8 @@ html[dir="rtl"] .m-search__workZone .b-search__inputTextIcon {
     padding-left: 10px;
 }
 
-.b-tabs__selectorItems, .b-tabs__selectorContent {
+.b-tabs__selectorItems,
+.b-tabs__selectorContent {
     height: inherit;
 }
 
@@ -302,7 +303,8 @@ html[dir="rtl"] .m-search__workZone .b-search__inputTextIcon {
     border-top: 2px transparent solid;
 }
 
-.b-tabs__selectorContent:before, .b-tabs__wrapperItem:before {
+.b-tabs__selectorContent:before,
+.b-tabs__wrapperItem:before {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     -ms-box-shadow: none;
@@ -331,8 +333,8 @@ html[dir="rtl"] .m-search__workZone .b-search__inputTextIcon {
     border: none;
 }
 
-.m-search__tabs ~ .b-tabs__wrapperItemInner,
-.m-search__tabs ~ .b-tabs__wrapperItemInner .b-tree {
+.m-search__tabs~.b-tabs__wrapperItemInner,
+.m-search__tabs~.b-tabs__wrapperItemInner .b-tree {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -366,7 +368,10 @@ html[dir="rtl"] .b-tabs__selectorItem:after {
     background-color: #F9CE15;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     color: #0A5278;
 }
 
@@ -399,8 +404,8 @@ h1, h2, h3, h4 {
     background-image: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
 

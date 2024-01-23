@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,7 +24,7 @@ namespace CSETWebCore.Interfaces.Assessment
         void GetMaturityModelDetails(ref AssessmentDetail assessment);
         void GetSelectedStandards(ref AssessmentDetail assessment);
         void SetFeaturesOnAssessmentRecord(int assessmentId);
-        
+
         List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes();
         bool IsCurrentUserOnAssessment(int assessmentId);
         ASSESSMENTS GetAssessmentById(int assessmentId);
@@ -37,5 +37,7 @@ namespace CSETWebCore.Interfaces.Assessment
         string GetOtherRemarks(int assessmentId);
         void SaveOtherRemarks(int assessmentId, string remark);
         void clearFirstTime(int userid, int assessmentId);
+
+        void MoveHydroActionsOutOfIseActions();
     }
 }

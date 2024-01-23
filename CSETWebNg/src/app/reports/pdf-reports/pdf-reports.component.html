@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,79 +21,54 @@
   SOFTWARE.
 -------------------------->
 <div *ngIf="!loading">
-<button (click)="startPdf(false)" [disabled]="disabled">View PDF</button>
-<br><br>
-<button (click)="startPdf(true)" [disabled]="disabled">Download PDF</button>
+  <button (click)="startPdf(false)" [disabled]="disabled">View PDF</button>
+  <br><br>
+  <button (click)="startPdf(true)" [disabled]="disabled">Download PDF</button>
 
-<div style="overflow: hidden; z-index: -100; position: fixed;">
+  <div style="overflow: hidden; z-index: -100; position: fixed;">
 
-  <div style="margin-left: 30px; visibility: hidden" id="figureTwo" #figureTwo>
-    <ngx-charts-bar-horizontal
-      [view]="[400, 500]"
-      [scheme]="figureTwoColorScheme"
-      [results]="figureTwoData"
-      [gradient]="false"
-      [noBarWhenZero]="false"
-      [roundEdges]="false"
-      [barPadding]="28"
-      [xAxis]="true"
-      [yAxis]="true"
-      [legend]="false"
-      [xScaleMin]="0"
-      [xScaleMax]="3"
-      [xAxisTicks]="[0, 1, 2, 3]"
-      [xAxisTickFormatting]="xAxisTickFormatting"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true">
-    </ngx-charts-bar-horizontal>
-  </div>
+    <div style="margin-left: 30px; visibility: hidden" id="figureTwo" #figureTwo>
+      <ngx-charts-bar-horizontal [view]="[400, 500]" [scheme]="figureTwoColorScheme" [results]="figureTwoData"
+        [gradient]="false" [noBarWhenZero]="false" [roundEdges]="false" [barPadding]="28" [xAxis]="true" [yAxis]="true"
+        [legend]="false" [xScaleMin]="0" [xScaleMax]="3" [xAxisTicks]="[0, 1, 2, 3]"
+        [xAxisTickFormatting]="xAxisTickFormatting" [showXAxisLabel]="true" [showYAxisLabel]="true">
+      </ngx-charts-bar-horizontal>
+    </div>
 
-  <div style="visibility: hidden">
-    <div *ngFor="let data of overallMilData; let i = index;">
-      <div id="{{'overallMilDonut' + i}}">
-        <!--<app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>-->
-        <ngx-charts-pie-chart #overallMilPieChart
-        [view]="[72, 72]"
-        [scheme]="donutColorScheme"
-        [results]="overallMilData[i]"
-        [gradient]="false"
-        [doughnut]="true"
-        [labels]="false"
-        [animations]="false"
-        [arcWidth]="0.65">
-        </ngx-charts-pie-chart>
-        <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
-          <text x="15" y="15" style="font-size: 12px;">{{ overallMilQuestionCounts[i] }}</text>
-        </svg>
+    <div style="visibility: hidden">
+      <div *ngFor="let data of overallMilData; let i = index;">
+        <div id="{{'overallMilDonut' + i}}">
+          <!--<app-c2m2-donut [questionDistribution]="data"></app-c2m2-donut>-->
+          <ngx-charts-pie-chart #overallMilPieChart [view]="[72, 72]" [scheme]="donutColorScheme"
+            [results]="overallMilData[i]" [gradient]="false" [doughnut]="true" [labels]="false" [animations]="false"
+            [arcWidth]="0.65">
+          </ngx-charts-pie-chart>
+          <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
+            <text x="15" y="15" style="font-size: 12px;">{{ overallMilQuestionCounts[i] }}</text>
+          </svg>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div style="visibility: hidden;">
-    <div *ngFor="let objective of breakdownMilData; let i = index;">
-      <div id="{{'donutChart' + i}}">
-        <ngx-charts-pie-chart #individualMilPieChart
-          [view]="[100, 100]"
-          [scheme]="donutColorScheme"
-          [results]="breakdownMilData[i]"
-          [gradient]="false"
-          [doughnut]="true"
-          [labels]="false"
-          [animations]="false"
-          [arcWidth]="0.65">
-        </ngx-charts-pie-chart>
-        <ng-container *ngIf="breakdownMilQuestionCounts[i] > 9">
-          <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
-            <text x="43" y="-46" style="font-size: 12px;">{{ breakdownMilQuestionCounts[i] }}</text>
-          </svg>
-        </ng-container>
-        <ng-container *ngIf="breakdownMilQuestionCounts[i] <= 9">
-          <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
-            <text x="68" y="-46" style="font-size: 12px;">{{ breakdownMilQuestionCounts[i] }}</text>
-          </svg>
-        </ng-container>
+    <div style="visibility: hidden;">
+      <div *ngFor="let objective of breakdownMilData; let i = index;">
+        <div id="{{'donutChart' + i}}">
+          <ngx-charts-pie-chart #individualMilPieChart [view]="[100, 100]" [scheme]="donutColorScheme"
+            [results]="breakdownMilData[i]" [gradient]="false" [doughnut]="true" [labels]="false" [animations]="false"
+            [arcWidth]="0.65">
+          </ngx-charts-pie-chart>
+          <ng-container *ngIf="breakdownMilQuestionCounts[i] > 9">
+            <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
+              <text x="43" y="-46" style="font-size: 12px;">{{ breakdownMilQuestionCounts[i] }}</text>
+            </svg>
+          </ng-container>
+          <ng-container *ngIf="breakdownMilQuestionCounts[i] <= 9">
+            <svg width="30" height="30" viewBox="0 0 30 30" overflow="visible">
+              <text x="68" y="-46" style="font-size: 12px;">{{ breakdownMilQuestionCounts[i] }}</text>
+            </svg>
+          </ng-container>
+        </div>
       </div>
     </div>
+
   </div>
-  
-</div>

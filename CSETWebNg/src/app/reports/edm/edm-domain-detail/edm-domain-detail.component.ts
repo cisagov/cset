@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -52,7 +52,7 @@ export class EdmDomainDetailComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() { 
+  ngOnInit() {
   }
 
   /**
@@ -85,8 +85,7 @@ export class EdmDomainDetailComponent implements OnInit {
    * we'll parse them from the question text.
    * @param q 
    */
-  getQuestionNumber(q: any)
-  {
+  getQuestionNumber(q: any) {
     const dot = q.questionText.trim().indexOf('.');
     if (dot < 0) {
       return "Q";
@@ -113,8 +112,7 @@ export class EdmDomainDetailComponent implements OnInit {
    * @returns 
    */
   getDomainRemark() {
-    if (!!this.domain && !!this.domain.domainRemark)
-    {
+    if (!!this.domain && !!this.domain.domainRemark) {
       return this.reportSvc.formatLinebreaks(this.domain.domainRemark);
     }
 

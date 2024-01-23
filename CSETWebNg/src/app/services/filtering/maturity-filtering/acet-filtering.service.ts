@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,8 @@
 import { Question } from "../../../models/questions.model";
 import { ConfigService } from "../../config.service";
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
-import { ACETDomain, Domain, QuestionGrouping } from '../../../models/questions.model';
+import { ACETDomain } from '../../../models/questions.model';
 import { Injectable, Output, EventEmitter } from "@angular/core";
-import { QuestionFilterService } from "../question-filter.service";
 import { AssessmentService } from "../../assessment.service";
 import { TranslocoService } from "@ngneat/transloco";
 

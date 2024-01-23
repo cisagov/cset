@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -36,8 +36,7 @@
         <div class="d-flex flex-row" *ngFor="let l of response">
             <!-- pie charts for compliance at each level -->
             <div class="mr-5 d-flex" style="align-items: center; justify-content: center;">
-                <div 
-                    style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
+                <div style="border-radius: .5rem; padding: 1.5rem; text-align: center; font-weight: bold"
                     [class]="'cmmc2-level-' + l.levelValue">
                     {{l.name}}
                 </div>

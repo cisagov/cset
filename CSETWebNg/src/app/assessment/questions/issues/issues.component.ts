@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
-import { Observation, ActionItemText, ObservationContact, Importance, SubRiskArea } from '../observations/observations.model';
+import { Observation, ActionItemText } from '../observations/observations.model';
 import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 

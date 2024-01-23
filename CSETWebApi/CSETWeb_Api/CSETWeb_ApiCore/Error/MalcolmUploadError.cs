@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,8 +12,8 @@ namespace CSETWebCore.Api.Error
 {
     public class MalcolmUploadError
     {
-        public MalcolmUploadError(string file, int statusCodes, string message) 
-        { 
+        public MalcolmUploadError(string file, int statusCodes, string message)
+        {
             File = file;
             StatusCode = statusCodes;
             Message = message;

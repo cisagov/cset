@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,7 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 DEFICIENCY REPORT CISA EDM
             </p>
         </div>
@@ -36,8 +35,8 @@
         </div>
 
         <div class="cover-page-bottom">
-          <app-logo-for-reports></app-logo-for-reports>
-          <app-info-block [response]="response"/>
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
         </div>
     </div>
     <div class="page-break">
@@ -59,47 +58,47 @@
         </div>
 
         <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
+            <div style="max-width: 50px; max-height: 50px;"></div>
         </div>
 
         <ng-template #mainContent>
-          <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">Deficiencies</h1>
-            <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
-                    src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
-          </div>
-          <hr class="page-line m-0">
-          <table role="presentation">
-              <ng-template ngFor let-s [ngForOf]="response?.deficienciesList">
-                  <tr>
-                      <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
-                      <td class="deficiencies-list-comment"
-                          [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
-                      <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                          <div style="width: 7rem">
-                              {{questionsSvc.answerDisplayLabel(3, s.answer.answer_Text)}}
-                          </div>
-                      </td>
-                      <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
-                          src="assets/images/icons/MarkedFlag.png"></td>
-                  </tr>
-                  <tr *ngIf="s.answer.comment">
-                      <td></td>
-                      <td colspan="4">
-                          <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td colspan="4">
-                          <hr class="my-2">
-                      </td>
-                  </tr>
-              </ng-template>
-          </table>
+            <div class="d-flex flex-row justify-content-between align-items-end">
+                <h1 class="page-title">Deficiencies</h1>
+                <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+                        src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+            </div>
+            <hr class="page-line m-0">
+            <table role="presentation">
+                <ng-template ngFor let-s [ngForOf]="response?.deficienciesList">
+                    <tr>
+                        <td class="deficiencies-list-item"><b>Practice {{s.mat.question_Title}}</b></td>
+                        <td class="deficiencies-list-comment"
+                            [innerHTML]="getQuestion(reportSvc.scrubGlossaryMarkup(s.mat.question_Text))"></td>
+                        <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                            <div style="width: 7rem">
+                                {{questionsSvc.answerDisplayLabel(3, s.answer.answer_Text)}}
+                            </div>
+                        </td>
+                        <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
+                                src="assets/images/icons/MarkedFlag.png"></td>
+                    </tr>
+                    <tr *ngIf="s.answer.comment">
+                        <td></td>
+                        <td colspan="4">
+                            <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <hr class="my-2">
+                        </td>
+                    </tr>
+                </ng-template>
+            </table>
 
-          <div *ngIf="!response?.deficienciesList || response?.deficienciesList.length == 0" class="mt-3">
-              There are no deficiencies to display
-          </div>
+            <div *ngIf="!response?.deficienciesList || response?.deficienciesList.length == 0" class="mt-3">
+                There are no deficiencies to display
+            </div>
         </ng-template>
     </div>
 </div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -225,7 +225,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 dbDemog = new DEMOGRAPHIC_ANSWERS()
                 {
-                    Assessment_Id = demographics.AssessmentId                               
+                    Assessment_Id = demographics.AssessmentId
                 };
                 _context.DEMOGRAPHIC_ANSWERS.Add(dbDemog);
                 _context.SaveChanges();

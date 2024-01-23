@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,10 +30,10 @@ import { MaturityService } from '../../../../services/maturity.service';
   templateUrl: './section-scoring.component.html'
 })
 export class SectionScoringComponent implements OnInit {
-  
+
   baselineAssessmentName: string;
   myModel: any;
-  loading:boolean = true;
+  loading: boolean = true;
 
   constructor(
     public maturitySvc: MaturityService,

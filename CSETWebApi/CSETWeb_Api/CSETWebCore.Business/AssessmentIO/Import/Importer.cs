@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -100,9 +100,9 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             {
                 detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
             }
-            
+
             if (detail == null)
-            { 
+            {
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
             }
 
@@ -113,7 +113,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             Dictionary<string, int> oldUserNewUser = _context.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
 
-            foreach(var a in _model.jASSESSMENTS)
+            foreach (var a in _model.jASSESSMENTS)
             {
                 var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (item != null)
@@ -155,12 +155,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
-                
+
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
-               
-                if (a?.PrimaryEmail != null 
+
+                if (a?.PrimaryEmail != null
                     && oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
                 {
                     item.UserId = userid;

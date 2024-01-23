@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -68,7 +68,7 @@ namespace CSETWebCore.Business.Maturity
                     from a in _context.ASSESSMENTS
                     join gii in _context.GALLERY_ITEM on a.GalleryItemGuid equals gii.Gallery_Item_Guid into gig
                     from gi in gig.DefaultIfEmpty()
-                    where amm.model_id == mm.Maturity_Model_Id 
+                    where amm.model_id == mm.Maturity_Model_Id
                         && amm.Assessment_Id == assessmentId && a.Assessment_Id == assessmentId
 
 
@@ -603,14 +603,15 @@ namespace CSETWebCore.Business.Maturity
             // is more complex to allow for the different types of SALs
             // as well as the user's selection(s).
 
-            lock (myLock) {
+            lock (myLock)
+            {
                 var result = _context.ASSESSMENT_SELECTED_LEVELS
                     .Where(x => x.Assessment_Id == assessmentId && x.Level_Name == Constants.Constants.MaturityLevel);
                 if (result.Any())
                 {
                     _context.ASSESSMENT_SELECTED_LEVELS.RemoveRange(result);
                     _context.SaveChanges();
-                }             
+                }
                 _context.ASSESSMENT_SELECTED_LEVELS.Add(new ASSESSMENT_SELECTED_LEVELS()
                 {
                     Assessment_Id = assessmentId,
@@ -900,7 +901,8 @@ namespace CSETWebCore.Business.Maturity
             {
                 Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                 questions.ForEach(
-                    question => {
+                    question =>
+                    {
                         var output = new SpanishQuestionRow();
                         var temp = new SpanishQuestionRow();
                         // test if not finding a match will safely skip
@@ -931,7 +933,8 @@ namespace CSETWebCore.Business.Maturity
             {
                 Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
                 allGroupings.ForEach(
-                    group => {
+                    group =>
+                    {
                         var output = new GroupingSpanishRow();
                         var temp = new GroupingSpanishRow();
                         if (dictionary.TryGetValue(group.Grouping_Id, out output))
@@ -1296,7 +1299,7 @@ namespace CSETWebCore.Business.Maturity
 
                             };
 
-                            
+
                             var baseline = new SalAnswers
                             {
                                 UnAnswered = !maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).Complete,
@@ -1318,7 +1321,7 @@ namespace CSETWebCore.Business.Maturity
                                 CompAT += totalAnswered;
                             }
 
-                            
+
                             var evolving = new SalAnswers
                             {
 
@@ -1341,7 +1344,7 @@ namespace CSETWebCore.Business.Maturity
                                 CompAT += totalAnswered;
                             }
 
-                            
+
                             var intermediate = new SalAnswers
                             {
 
@@ -1364,7 +1367,7 @@ namespace CSETWebCore.Business.Maturity
                                 CompAT += totalAnswered;
                             }
 
-                            
+
                             var advanced = new SalAnswers
                             {
 
@@ -1387,7 +1390,7 @@ namespace CSETWebCore.Business.Maturity
                                 CompAT += totalAnswered;
                             }
 
-                            
+
                             var innovative = new SalAnswers
                             {
 
@@ -1467,7 +1470,8 @@ namespace CSETWebCore.Business.Maturity
                         {
                             maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
                             maturityDomain.Assessments.ForEach(
-                                assessment => {
+                                assessment =>
+                                {
                                     var output = new GroupingSpanishRow();
                                     // test if not finding a match will safely skip
                                     if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
@@ -1475,7 +1479,8 @@ namespace CSETWebCore.Business.Maturity
                                         assessment.AssessmentFactor = dictionary[assessment.AssessmentFactor].Spanish_Title;
 
                                         assessment.Components.ForEach(
-                                            component => {
+                                            component =>
+                                            {
                                                 var output = new GroupingSpanishRow();
                                                 // test if not finding a match will safely skip
                                                 if (dictionary.TryGetValue(component.ComponentName, out output))
@@ -2233,7 +2238,7 @@ namespace CSETWebCore.Business.Maturity
                 _context.SaveChanges();
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
-        }       
+        }
 
 
         /// <summary>

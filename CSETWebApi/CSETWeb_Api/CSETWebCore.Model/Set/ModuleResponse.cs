@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ namespace CSETWebCore.Model.Set
     {
         public string SetFullName { get; set; }
         public string SetShortName { get; set; }
-        public string SetDescription { get; set;  }
+        public string SetDescription { get; set; }
         public List<RequirementListCategory> Categories { get; set; } = new List<RequirementListCategory>();
     }
 }

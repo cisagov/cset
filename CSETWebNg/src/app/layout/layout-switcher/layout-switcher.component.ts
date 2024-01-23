@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,17 +25,17 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ConfigService } from '../../services/config.service';
 
 @Component({
-    selector: 'layout-switcher',
-    templateUrl: './layout-switcher.component.html',
-    encapsulation: ViewEncapsulation.None,
-    // eslint-disable-next-line
-    host: { class: 'h-100' }
+  selector: 'layout-switcher',
+  templateUrl: './layout-switcher.component.html',
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line
+  host: { class: 'h-100' }
 })
 
 export class LayoutSwitcherComponent implements OnInit {
   installationMode: string;
 
-  constructor(private configSvc: ConfigService) {}
+  constructor(private configSvc: ConfigService) { }
 
   ngOnInit() {
     this.installationMode = this.configSvc.installationMode;

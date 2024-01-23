@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -242,7 +242,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     if (ruleIgnoreIfExists != null)
                     {
                         bool columnValueExists = CheckColumnValueExistence(colName, tableName, jRow, dbio);
-                        if (columnValueExists) 
+                        if (columnValueExists)
                         {
                             continue;
                         }
@@ -333,8 +333,8 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             " where {0} = '{2}'";
             DataTable dt = dbio.Select(string.Format(query, colName, tableName, jObj[colName]), null);
 
-            if (dt.Rows.Count > 0) 
-            { 
+            if (dt.Rows.Count > 0)
+            {
                 return true;
             }
 

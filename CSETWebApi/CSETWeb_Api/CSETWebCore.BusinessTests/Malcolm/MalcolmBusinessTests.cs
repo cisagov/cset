@@ -91,7 +91,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
             }
             MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             
-            tst.GetMalcolmJsonData(datalist);
+            datalist = tst.GetMalcolmJsonData(datalist);
             MalcolmTree tree = new MalcolmTree();
             Assert.IsTrue(datalist[0].Graphs.ContainsKey("10.10.10.10"));
             foreach (TempNode node in tree.StartTheTreeWalk(datalist[0].Graphs))

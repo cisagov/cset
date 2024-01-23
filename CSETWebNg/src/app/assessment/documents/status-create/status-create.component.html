@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,36 +19,34 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<form [formGroup]='statusCreateForm' #statusNgForm='ngForm' (submit)='handleSubmit($event, statusNgForm, statusCreateForm)'>
+-------------------------->
+<form [formGroup]='statusCreateForm' #statusNgForm='ngForm'
+    (submit)='handleSubmit($event, statusNgForm, statusCreateForm)'>
 
-  <div class="form-control">
-      <label for="file">Choose File</label>
-          <input #myInput type="file"
-                 id="file"
-                 (change)="handleFileInput($event.target.files)">
-  </div>
+    <div class="form-control">
+        <label for="file">Choose File</label>
+        <input #myInput type="file" id="file" (change)="handleFileInput($event.target.files)">
+    </div>
 
-  <textarea id='fileDescription' name='fileDescription' formControlName='fileDescription'></textarea>
+    <textarea id='fileDescription' name='fileDescription' formControlName='fileDescription'></textarea>
 
-  <div *ngIf='fileDescription.invalid && (fileDescription.dirty || fileDescription.touched)'>
-      <div *ngIf='fileDescription.errors.required'>
-          Content is required.
-      </div>
-      <div *ngIf='fileDescription.errors.maxlength'>
-          Max length is 280
-      </div>
-      <div *ngIf='fileDescription.errors.minlength'>
-          Min length is 4
-      </div>
-  </div>
+    <div *ngIf='fileDescription.invalid && (fileDescription.dirty || fileDescription.touched)'>
+        <div *ngIf='fileDescription.errors.required'>
+            Content is required.
+        </div>
+        <div *ngIf='fileDescription.errors.maxlength'>
+            Max length is 280
+        </div>
+        <div *ngIf='fileDescription.errors.minlength'>
+            Min length is 4
+        </div>
+    </div>
 
 
-  <button type='submit' class='btn btn-secondary' [disabled]='statusCreateForm.invalid'>Submit</button>
-  <button type='button' class='btn btn-secondary' (click)='statusNgForm.resetForm({})'>Reset</button>
+    <button type='submit' class='btn btn-secondary' [disabled]='statusCreateForm.invalid'>Submit</button>
+    <button type='button' class='btn btn-secondary' (click)='statusNgForm.resetForm({})'>Reset</button>
 </form>
 
 
 Progress:
 <div class="status-create-upload-progress"><span *ngIf='uploadProgress > 25'>%</span></div>
-

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,7 +28,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
         private void printNode(NetworkComponent top, int indent)
         {
             Trace.Write(new String('\t', indent));
-            Trace.WriteLine("-->" + top.ID + ":"+ top.ComponentName);
+            Trace.WriteLine("-->" + top.ID + ":" + top.ComponentName);
             int nextIndent = indent + 1;
             alreadySeenNodes.Add(top);
             foreach (FullNode f in top.FullyConnectedConnections)
@@ -63,7 +63,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
 
         internal NetworkLink FindNodeEdge(NetworkNode component1, NetworkNode component2)
         {
-            
+
             //printNode((NetworkComponent)component1, 0);
             alreadySeenNodes.Clear();
             return findNode((NetworkComponent)component1, (NetworkComponent)component2);
@@ -83,7 +83,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
                     var node = findNode(f.Target, target);
                     if (node != null)
                         return node;
-                }                    
+                }
             }
             return null;
         }

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -41,8 +41,7 @@
     <div *ngIf="!!supplementalInfo && supplementalInfo.length > 0"
         [innerHTML]="supplementalInfo | linebreak | safe: 'html'"></div>
 
-    <div *ngIf="!supplementalInfo || supplementalInfo.length === 0"
-        style="font-style: italic">
+    <div *ngIf="!supplementalInfo || supplementalInfo.length === 0" style="font-style: italic">
         (No guidance defined)
     </div>
 </div>
