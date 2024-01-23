@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -35,7 +35,7 @@
             <div class="d-table-row mb-3">
                 <div class="d-table-cell mp-3 label-cell">{{ t('acet.assets') }}:</div>
                 <div class="d-table-cell">{{ acetDashboard?.assets | currency:'USD':'symbol':'1.0' }}</div>
-            </div>        
+            </div>
         </div>
         <div class="mt-3 mb-3">
             <h4>{{ t('irp.inherent risk profiles') }}</h4>
@@ -44,10 +44,11 @@
             <div class="d-table w-100">
                 <div class="d-table-row">
                     <div class="d-table-cell pb-3 pl-3">
-                        {{ t('irp.overall risk level is') }} 
+                        {{ t('irp.overall risk level is') }}
                         <span class="blue-text font-weight-bold">
-                            {{ overrideLabel.includes('-') ? overrideLabel.substring(0, 4) + 
-                            t('irp.' + overrideLabel.substring(4).toLowerCase()) : t('irp.' + overrideLabel.toLowerCase()) }}
+                            {{ overrideLabel.includes('-') ? overrideLabel.substring(0, 4) +
+                            t('irp.' + overrideLabel.substring(4).toLowerCase()) : t('irp.' +
+                            overrideLabel.toLowerCase()) }}
                         </span>
                     </div>
                 </div>
@@ -55,17 +56,18 @@
                     <div class="d-table-cell pl-3 align-top">
                         {{ t('irp.override risk level is') }}
                         <span class="blue-text font-weight-bold">
-                            {{ overriddenLabel.includes('-') ? overriddenLabel.substring(0, 4) + 
-                            t('irp.' + overriddenLabel.substring(4).toLowerCase()) : t('irp.' + overriddenLabel.toLowerCase()) }}                        
+                            {{ overriddenLabel.includes('-') ? overriddenLabel.substring(0, 4) +
+                            t('irp.' + overriddenLabel.substring(4).toLowerCase()) : t('irp.' +
+                            overriddenLabel.toLowerCase()) }}
                         </span>
                     </div>
-                    
+
                 </div>
                 <div class="d-table-row"
                     *ngIf="!!acetDashboard?.override && acetDashboard?.override != '' && acetDashboard?.override !== 0">
                     <div class="d-table-cell pl-3 align-top">
                         {{ t('irp.override reason') }}: <span>{{acetDashboard.overrideReason}}</span>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +82,8 @@
                     <td>{{ t('domain') }} {{ i + 1 }}: {{ domain.name }}</td>
                     <td class="mid-align">
                         <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.maturity)"
-                            style="width:150px; margin-top: 10px;">{{ t('level.' + domain.levelDisplay.toLowerCase()) }}</div>
+                            style="width:150px; margin-top: 10px;">{{ t('level.' + domain.levelDisplay.toLowerCase()) }}
+                        </div>
                     </td>
                 </tr>
             </table>

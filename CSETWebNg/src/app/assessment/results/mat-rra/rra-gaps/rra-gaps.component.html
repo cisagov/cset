@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,7 +22,7 @@
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
     <h3>Goal Performance</h3>
-    
+
     <div *ngIf="!initialized">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
             <div style="max-width: 50px; max-height: 50px;"></div>
@@ -34,7 +34,7 @@
             <div class="row mb-5">
                 <div class="col-12">
                     <h5>RRA Performance by Goal</h5>
-                    <p>This chart shows your positive assessment results.  High scores on this chart are desirable.</p>
+                    <p>This chart shows your positive assessment results. High scores on this chart are desirable.</p>
                     <app-rra-answer-compliance></app-rra-answer-compliance>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                 </div>
             </div>
         </div>
-        
+
         <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
 
     </div>

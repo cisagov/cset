@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -53,7 +53,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
     includeMatches: true,
     distance: 150,
     threshold: 0.6,
-    keys: ['description', 'title'], 
+    keys: ['description', 'title'],
     shouldSort: true
   };
 
@@ -150,7 +150,7 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           })
         }
         );
-        
+
         this.fuse = new Fuse(this.galleryItemsTmp, this.options)
         this.galleryItemsTmp = map(this.galleryItemsTmp, (item, index) => ({
           item,
@@ -229,12 +229,12 @@ export class SearchPageComponent implements OnInit, AfterViewInit {
           set.push(x);
         }
       });
-      
+
       this.galleryItemsTmp = set;
     } else {
       this.galleryItemsTmp = [];
     }
-   
+
 
     this.shuffleCards(this.cardsPerView);
   }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -457,7 +457,7 @@ namespace CSETWebCore.Business.Question
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
-                refBuilder.BuildReferenceDocuments(reqid, 
+                refBuilder.BuildReferenceDocuments(reqid,
                     out List<CustomDocument> sourceDocList,
                     out List<CustomDocument> additionalDocList);
                 SourceDocumentsList = sourceDocList;

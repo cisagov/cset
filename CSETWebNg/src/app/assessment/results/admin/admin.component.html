@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -32,19 +32,21 @@
         <tr *ngFor="let comp of components">
             <td>{{comp.component}}
                 <div>
-                    <textarea maxlength="512" *ngIf="comp.hasSpecifyField" class="form-control" type="text" appAutoSize [(ngModel)]="comp.otherSpecifyValue"
-                        (change)="saveData(comp, 'other')"></textarea>
+                    <textarea maxlength="512" *ngIf="comp.hasSpecifyField" class="form-control" type="text" appAutoSize
+                        [(ngModel)]="comp.otherSpecifyValue" (change)="saveData(comp, 'other')"></textarea>
                 </div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.documentationHours"
-                    (change)="saveData(comp, 'doc')">
-                    <div *ngIf="test(comp.documentationHours)" class="alert-danger">{{error}}</div>
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
+                    [maxlength]="6" [(ngModel)]="comp.documentationHours" (change)="saveData(comp, 'doc')">
+                <div *ngIf="test(comp.documentationHours)" class="alert-danger">{{error}}</div>
             </td>
-            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1" [maxlength]="6" [(ngModel)]="comp.interviewHours"
-                    (change)="saveData(comp, 'int')">
-                    <div *ngIf="test(comp.interviewHours)" class="alert-danger">{{error}}</div>
-                </td>
-            <td class="text-right"><div [hidden]="hideStatementsReviewed(comp.component)">{{comp.statementsReviewed}}</div></td>
+            <td><input class="form-control text-right float-right w-5rem" type="number" max="1000" min="-10" step="0.1"
+                    [maxlength]="6" [(ngModel)]="comp.interviewHours" (change)="saveData(comp, 'int')">
+                <div *ngIf="test(comp.interviewHours)" class="alert-danger">{{error}}</div>
+            </td>
+            <td class="text-right">
+                <div [hidden]="hideStatementsReviewed(comp.component)">{{comp.statementsReviewed}}</div>
+            </td>
         </tr>
         <tr class="total-row">
             <td>Total Review Hours</td>
@@ -73,5 +75,5 @@
     </div>
 
     <app-nav-back-next [page]="'admin'"></app-nav-back-next>
-    
+
 </div>

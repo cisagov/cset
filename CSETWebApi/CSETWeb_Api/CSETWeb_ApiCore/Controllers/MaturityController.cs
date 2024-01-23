@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -36,9 +36,9 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
-        private readonly ICrrScoringHelper _crr;        
+        private readonly ICrrScoringHelper _crr;
 
-        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, 
+        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
             IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
         {
             _tokenManager = tokenManager;
@@ -342,7 +342,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetGrouping([FromQuery] int groupingId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            
+
             var grouping = _context.MATURITY_GROUPINGS.FirstOrDefault(x => x.Grouping_Id == groupingId);
             if (grouping == null)
             {
@@ -455,7 +455,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/maturity/cis/integritycheck")]
-        public IActionResult GetIntegrityCheckOptions() 
+        public IActionResult GetIntegrityCheckOptions()
         {
             var assessmentId = _tokenManager.AssessmentForUser();
 
@@ -672,17 +672,17 @@ namespace CSETWebCore.Api.Controllers
             List<Grouping> filteredGroupingsS = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
-            {   
+            {
                 var questionsU = new List<Question>();
                 var questionsS = new List<Question>();
                 foreach (var q in b.Questions)
                 {
-                    
+
                     var question = new Question();
                     if (q.AnswerText == "U")
                     {
                         if (q.Options.Any(x => x.OptionType.ToLower() == "radio"))
-                        {                    
+                        {
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -699,7 +699,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         if (q.Options.Any(x =>
                                 x.Selected && x.OptionText == "No" && x.OptionType.ToLower() == "radio"))
-                        {   
+                        {
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -712,7 +712,7 @@ namespace CSETWebCore.Api.Controllers
                         }
                     }
                 }
-                
+
                 if (questionsU.Any())
                 {
                     filteredGroupingsU.Add(new Grouping
@@ -733,8 +733,8 @@ namespace CSETWebCore.Api.Controllers
                 questionsU = new List<Question>();
                 questionsS = new List<Question>();
             }
-            
-            return Ok(new {no=filteredGroupingsS, unanswered=filteredGroupingsU});
+
+            return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
 
         /// <summary>
@@ -767,10 +767,10 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
-            
 
-           data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
-           data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+
+            data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+            data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -899,14 +899,14 @@ namespace CSETWebCore.Api.Controllers
             var scoring = maturity.GetMvraScoring(model);
             return Ok(scoring);
         }
-        
+
         [HttpGet]
         [Route("api/maturity/mvra/mvraTree")]
         public IActionResult GetMvraTree([FromQuery] int id)
         {
             //int assessemntId = _tokenManager.AssessmentForUser();
             //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-           
+
             var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var model = maturity.GetMaturityStructureForModel(9, id);
             //var scoring = maturity.GetMvraScoring(model);

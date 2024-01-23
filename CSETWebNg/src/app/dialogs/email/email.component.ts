@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import { EmailService } from '../../services/email.service';
   selector: 'app-email',
   templateUrl: './email.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class EmailComponent implements OnInit {
   showContacts = true;
@@ -57,7 +57,7 @@ export class EmailComponent implements OnInit {
     this.contacts = this.data.contacts;
     this.subject = this.data.subject;
     this.body = this.data.body;
-    this.from = {firstName: this.auth.firstName(), lastName: this.auth.lastName(), primaryEmail: this.auth.email(), isPrimaryPoc: false, isSiteParticipant: false};
+    this.from = { firstName: this.auth.firstName(), lastName: this.auth.lastName(), primaryEmail: this.auth.email(), isPrimaryPoc: false, isSiteParticipant: false };
 
     for (const c of this.contacts) {
       this.textList += c.primaryEmail;
@@ -83,13 +83,13 @@ export class EmailComponent implements OnInit {
   }
 
   testEmails(evt) {
-      switch (evt.keyCode) {
-        case 32:
-        case 186:
-        case 13:
-          this.textList = this.emailSvc.makeEmailList(this.textList) + ' ';
-          break;
-      }
+    switch (evt.keyCode) {
+      case 32:
+      case 186:
+      case 13:
+        this.textList = this.emailSvc.makeEmailList(this.textList) + ' ';
+        break;
+    }
   }
 
   close() {

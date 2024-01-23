@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ using Microsoft.Data.SqlClient;
 using CSETWebCore.DataLayer.Model;
 
 namespace CSETWebCore.Helpers
-{ 
+{
     /// <summary>
     /// Database helper class.
     /// </summary>
@@ -69,10 +69,11 @@ namespace CSETWebCore.Helpers
         {
             var connStr = _context.ConnectionString;
 
-            using (SqlConnection connection = new SqlConnection(connStr)) {
-                var transaction =  connection.BeginTransaction();
+            using (SqlConnection connection = new SqlConnection(connStr))
+            {
+                var transaction = connection.BeginTransaction();
                 SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.TableLock | SqlBulkCopyOptions.FireTriggers | SqlBulkCopyOptions.UseInternalTransaction
-                    ,transaction);
+                    , transaction);
 
                 // set the destination table name
                 bulkCopy.DestinationTableName = tableName;
@@ -134,7 +135,7 @@ namespace CSETWebCore.Helpers
                                 }
                                 break;
                         }
-                        
+
                         cmd.Parameters.Add(parm);
                     }
 

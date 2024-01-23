@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -47,9 +47,9 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public List<jDETAILS_DEMOGRAPHICS> jDETAILS_DEMOGRAPHICS { get; set; }
         public List<jPARAMETER_VALUES> jPARAMETER_VALUES { get; set; }
         public List<jPARAMETER_ASSESSMENT> jPARAMETER_ASSESSMENTs { get; set; }
-        
+
         public List<jFINDING_CONTACT> jFINDING_CONTACT { get; set; }
-		public List<jUSER_DETAIL_INFORMATION> jUSER_DETAIL_INFORMATION {get;set;}
+        public List<jUSER_DETAIL_INFORMATION> jUSER_DETAIL_INFORMATION { get; set; }
 
         public List<jFINANCIAL_HOURS> jFINANCIAL_HOURS { get; set; }
         public List<jFINANCIAL_ASSESSMENT_VALUES> jFINANCIAL_ASSESSMENT_VALUES { get; set; }
@@ -133,7 +133,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
             this.jPARAMETER_ASSESSMENTs = new List<jPARAMETER_ASSESSMENT>();
             this.jSTANDARD_SELECTION = new List<jSTANDARD_SELECTION>();
             this.jSUB_CATEGORY_ANSWERS = new List<jSUB_CATEGORY_ANSWERS>();
-			this.jUSER_DETAIL_INFORMATION = new List<jUSER_DETAIL_INFORMATION>();
+            this.jUSER_DETAIL_INFORMATION = new List<jUSER_DETAIL_INFORMATION>();
             this.CustomStandardDocs = new List<string>();
             this.CustomStandards = new List<string>();
         }

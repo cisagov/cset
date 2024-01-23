@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,73 +21,76 @@
   SOFTWARE.
 -------------------------->
 <div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
-    <div class="p-0 d-flex flex-column flex-10a w-100">
+  <div class="p-0 d-flex flex-column flex-10a w-100">
 
-      <!-- CSET Logo and Name -->
-      <div class="m-4 d-flex justify-content-start flex-00a">
-        <app-logo-cset logoHeight="50"></app-logo-cset>
-      </div>
+    <!-- CSET Logo and Name -->
+    <div class="m-4 d-flex justify-content-start flex-00a">
+      <app-logo-cset logoHeight="50"></app-logo-cset>
+    </div>
 
-      <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white mb-lg-4">
-        <div *ngIf="mode === 'LOCAL'">
-          CSET is running locally. No login is required.
-        </div>
-        <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-          An error was encountered while running CSET.
-        </div>
-        <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
-          Enter your email address and password to login.
-        </div>
-        <div *ngIf="mode === 'SIGNUP'">
-          Enter your name and email address to register a new Cyber Florida CSET account.
-        </div>
-      </div>
-
+    <div [ngClass]="isRunningInElectron ? 'bgc-validation' : 'bgc-secondary'" class="mr-4 ml-4 p-3 c-white mb-lg-4">
       <div *ngIf="mode === 'LOCAL'">
-        <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
-          <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
-            <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
-            <div class="spinner-container" *ngIf="loading">
-              <div style="max-width: 30px; max-height: 30px;"></div>
-            </div>
-          </div>
-        </form>
+        CSET is running locally. No login is required.
       </div>
-
-      <!-- If we reach the login page while running in electron, we can assume there was an error getting
-      the standalone status from the API; prompt for exiting the application -->
       <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
-        <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
-          <div class="d-flex flex-nowrap">
-            <button type="submit" class="btn btn-primary btn-lg">Exit</button>
-          </div>
-        </form>
+        An error was encountered while running CSET.
       </div>
+      <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
+        Enter your email address and password to login.
+      </div>
+      <div *ngIf="mode === 'SIGNUP'">
+        Enter your name and email address to register a new Cyber Florida CSET account.
+      </div>
+    </div>
 
-      <div class="m-4 d-flex flex-column flex-lg-row justify-content-center flex-00a ml-lg-auto mr-lg-auto" *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">        
-        <div class="float-left ml-3">
-            <img class="mt-4 mr-4" src="./assets/images/CF/CyberSecureFlorida_logo_color-1.png" width="auto" height="125" alt="Cyber Florida">
+    <div *ngIf="mode === 'LOCAL'">
+      <form name="form" (ngSubmit)="refreshWindow()" #f="ngForm" novalidate>
+        <div class="d-flex flex-nowrap pl-3 pr-3 ml-2 mt-2">
+          <button type="submit" [disabled]="loading" class="btn btn-primary btn-lg">Continue</button>
+          <div class="spinner-container" *ngIf="loading">
+            <div style="max-width: 30px; max-height: 30px;"></div>
+          </div>
         </div>
-        <div>
+      </form>
+    </div>
+
+    <!-- If we reach the login page while running in electron, we can assume there was an error getting
+      the standalone status from the API; prompt for exiting the application -->
+    <div *ngIf="mode === 'LOGIN' && isRunningInElectron">
+      <form name="form" (ngSubmit)="exit()" #f="ngForm" class="mr-4 ml-2 p-3" novalidate>
+        <div class="d-flex flex-nowrap">
+          <button type="submit" class="btn btn-primary btn-lg">Exit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="m-4 d-flex flex-column flex-lg-row justify-content-center flex-00a ml-lg-auto mr-lg-auto"
+      *ngIf="(mode === 'LOGIN' || mode === 'REGISTERED') && !isRunningInElectron">
+      <div class="float-left ml-3">
+        <img class="mt-4 mr-4" src="./assets/images/CF/CyberSecureFlorida_logo_color-1.png" width="auto" height="125"
+          alt="Cyber Florida">
+      </div>
+      <div>
         <form name="form" (ngSubmit)="email.valid && f.form.valid && login()" #f="ngForm" novalidate
           class="d-flex flex-column justify-content-between flex-00a mt-3 mt-lg-0 ml-3">
           <div *ngIf="incorrect">
             <div class="alert alert-danger">Incorrect Username or Password</div>
           </div>
           <div *ngIf="passwordExpired">
-            <div class="alert alert-danger">Password is expired.  Click 'Reset Password'</div>
+            <div class="alert alert-danger">Password is expired. Click 'Reset Password'</div>
           </div>
           <label for="email">
             Enter your email address and password to login.
           </label>
           <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
             #email="ngModel" required email focusOnInit="true" />
-          <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required</div>
+          <div *ngIf="f.submitted && !email.valid" class="alert alert-danger mt-1">A valid email address is required
+          </div>
           <div class="input-container">
             <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2" name="password"
               placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
-            <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Show password"
-              [matTooltipPosition]="'right'">
+            <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
+              matTooltip="Show password" [matTooltipPosition]="'right'">
               <i class="fas fa-eye"></i>
             </div>
             <div *ngIf="showPassword" class="input-icon" (click)="togglePasswordVisibility()" matTooltip="Hide password"
@@ -105,44 +108,49 @@
             </div>
             <div class="d-flex flex-column flex-00a">
               <a class="btn-link-dark" [routerLink]="['/home','reset-pass']" tabindex="0">Reset Password</a>
-              <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0"   >Register New User Account</a>
+              <a class="btn-link-dark" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
+                tabindex="0">Register New User Account</a>
             </div>
           </div>
         </form>
-        </div>
       </div>
-
-      <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
-        <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
-      </div>
-
-      <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
-        <p class="c-gray-600 m-5 w-70" style=" max-width:1200px">
-            Thank you for participating in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort will be essential to helping Florida’s elected leaders determine how best to allocate resources and enact appropriate legislation to create a more secure Sunshine State! CyberSecureFlorida is open to all public- and private-sector critical infrastructure entities, and we encourage any and all critical infrastructure entities to lend their voice to this important undertaking.
-        </p>
-
-        
-
-        <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
-          Internet Explorer has been detected as your current browser.
-          Some functionality of CSET is not fully supported by Internet Explorer.
-          Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
-          your experience.
-        </div>
-      </div>
-
     </div>
-    <div class="d-flex flex-column justify-content-start align-items-center">
-      <p class="c-gray-600 w-70">
-        Cyber Florida Cyber Security Evaluation Tool (CSET) Instructional Video (9:25)
+
+    <div *ngIf="mode === 'SIGNUP'" class="d-flex flex-column flex-00a">
+      <app-register (modeChanged)="setMode($event)" class="d-flex flex-column flex-00a"></app-register>
+    </div>
+
+    <div class="mt-4 mb-4 mr-4 ml-4 d-flex flex-column justify-content-start align-items-center flex-11a">
+      <p class="c-gray-600 m-5 w-70" style=" max-width:1200px">
+        Thank you for participating in the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the
+        cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered
+        through this effort will be essential to helping Florida’s elected leaders determine how best to allocate
+        resources and enact appropriate legislation to create a more secure Sunshine State! CyberSecureFlorida is open
+        to all public- and private-sector critical infrastructure entities, and we encourage any and all critical
+        infrastructure entities to lend their voice to this important undertaking.
       </p>
-      <script src="https://player.vimeo.com/api/player.js">
-        </script>       
-        <iframe style="position:relative;width: 500px; height: 300px;"
-        src="https://player.vimeo.com/video/776696317?h=2c74a61bf3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-        
-        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Cyber Florida CSET.mp4">
-        </iframe>               
-      <!-- <a href="./assets/CyberFlorida_CSET.mp4"><img src="./assets/images/CF/CyberFloridaVideo.PNG" alt="Video Link"></a> -->
+
+
+
+      <div *ngIf="browserIsIE" class="alert alert-danger text-left w-100 mt-3">
+        Internet Explorer has been detected as your current browser.
+        Some functionality of CSET is not fully supported by Internet Explorer.
+        Using another browser such as Chrome, Firefox or Edge is strongly recommended to improve
+        your experience.
+      </div>
     </div>
+
   </div>
+  <div class="d-flex flex-column justify-content-start align-items-center">
+    <p class="c-gray-600 w-70">
+      Cyber Florida Cyber Security Evaluation Tool (CSET) Instructional Video (9:25)
+    </p>
+    <script src="https://player.vimeo.com/api/player.js">
+    </script>
+    <iframe style="position:relative;width: 500px; height: 300px;"
+      src="https://player.vimeo.com/video/776696317?h=2c74a61bf3&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+      frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Cyber Florida CSET.mp4">
+    </iframe>
+    <!-- <a href="./assets/CyberFlorida_CSET.mp4"><img src="./assets/images/CF/CyberFloridaVideo.PNG" alt="Video Link"></a> -->
+  </div>
+</div>

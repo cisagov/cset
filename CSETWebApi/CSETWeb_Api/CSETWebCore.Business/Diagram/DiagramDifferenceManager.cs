@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -193,7 +193,7 @@ namespace CSETWebCore.Business.Diagram
                     z.Universal_Sal_Level = zone.Value.SAL;
                     z.Name = zone.Value.ComponentName;
                 }
-            }            
+            }
             context.SaveChanges();
 
             LayerManager layers = new LayerManager(context, assessment_id);
@@ -225,7 +225,7 @@ namespace CSETWebCore.Business.Diagram
                         Zone_Id = null
                     };
                     context.ASSESSMENT_DIAGRAM_COMPONENTS.Add(adc);
-                }                
+                }
             }
             context.SaveChanges();
 
@@ -234,10 +234,11 @@ namespace CSETWebCore.Business.Diagram
             //save all containers, layers, and nodes
             //then go find and assign zone and layer
             var updateList = from a in context.ASSESSMENT_DIAGRAM_COMPONENTS select a;
-                             //join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
-                             //select new { a, b };
+            //join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
+            //select new { a, b };
             var updateListPair = from a in updateList.ToList()
-                join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key select new { a, b };
+                                 join b in newDiagram.NetworkComponents on a.Component_Guid equals b.Key
+                                 select new { a, b };
             foreach (var pair in updateListPair.ToList())
             {
                 pair.a.Component_Symbol_Id = pair.b.Value.Component_Symbol_Id;
@@ -415,7 +416,7 @@ namespace CSETWebCore.Business.Diagram
                         throw new Exception("Unrecognized component: " + cell.OuterXml);
                     }
                     NetworkComponent tmp;
-                    if(nodesList.TryGetValue(cn.ComponentGuid, out tmp))
+                    if (nodesList.TryGetValue(cn.ComponentGuid, out tmp))
                     {
                         if (cn.Equals(tmp))
                         {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@ export class SelectAssessmentsComponent implements OnInit {
 
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         this.aggregation = resp2.aggregation;
-        
+
 
 
         resp2.assessments.forEach(selectedAssess => {
@@ -96,7 +96,7 @@ export class SelectAssessmentsComponent implements OnInit {
           (<Error>error).message
         ));
   }
-  
+
 
   /**
    * Return results of currently selected assessments: [true,true, pre-selected assessment] for maturity models, [true, false] for standard models 
@@ -119,23 +119,24 @@ export class SelectAssessmentsComponent implements OnInit {
    * Hides assessments of incompatible types when dialog opens and assessments have been pre-selected 
    */
   filterAssessments(result) {
-    if (result){
-    if (result[0] === true) {
-      let new_assessments = []
-      for (let element of this.assessments) {
-        if (result[1] === true) {
-          if (element.selectedMaturityModel === result[2].selectedMaturityModel) {
-            new_assessments.push(element)
-          }
-        } else if (result[1] === false) {
-          if (element.useMaturity === false) {
-            new_assessments.push(element)
+    if (result) {
+      if (result[0] === true) {
+        let new_assessments = []
+        for (let element of this.assessments) {
+          if (result[1] === true) {
+            if (element.selectedMaturityModel === result[2].selectedMaturityModel) {
+              new_assessments.push(element)
+            }
+          } else if (result[1] === false) {
+            if (element.useMaturity === false) {
+              new_assessments.push(element)
+            }
           }
         }
+        this.assessments = new_assessments
       }
-      this.assessments = new_assessments
     }
-  }}
+  }
 
   /**
    * Call the API to manage connections between aggregation and assessment.
@@ -146,7 +147,7 @@ export class SelectAssessmentsComponent implements OnInit {
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
     });
-    
+
     this.hideAssessments(event, assessment)
   }
 
@@ -163,11 +164,11 @@ export class SelectAssessmentsComponent implements OnInit {
         })
       }
     })
-    
+
     if (event.target.checked === true) {
       let new_assessments = []
       if (assessment.useMaturity === true) {
-        this.maturity = true; 
+        this.maturity = true;
         for (let element of this.assessments) {
           if (element.selectedMaturityModel === assessment.selectedMaturityModel) {
             new_assessments.push(element)
@@ -190,7 +191,7 @@ export class SelectAssessmentsComponent implements OnInit {
    *
    */
   close() {
-    
+
     return this.dialog.close();
   }
 

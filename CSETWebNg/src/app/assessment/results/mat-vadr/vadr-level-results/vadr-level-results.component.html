@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,33 +21,33 @@
   SOFTWARE.
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Assessment Tiers</h3>
+    <h3>Assessment Tiers</h3>
 
-  <div class="d-flex flex-column flex-11a">
+    <div class="d-flex flex-column flex-11a">
 
-      <div clas="container">
-          <div class="row">
-              <div class="col-12">
-                  <h5>VADR Assessment Tiers</h5>
-                  <app-vadr-levels></app-vadr-levels>
-              </div>
-          </div>
-          <div class="row mb-5">
-              <div class="col-12">
-                  <h5>Practices Answered Per Tier</h5>
-                  <app-vadr-answer-counts></app-vadr-answer-counts>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-12">
-                  <h5>Practices Distribution Per Tier</h5>
-                  <app-vadr-answer-distribution></app-vadr-answer-distribution>
-              </div>
-          </div>
-      </div>
+        <div clas="container">
+            <div class="row">
+                <div class="col-12">
+                    <h5>VADR Assessment Tiers</h5>
+                    <app-vadr-levels></app-vadr-levels>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>Practices Answered Per Tier</h5>
+                    <app-vadr-answer-counts></app-vadr-answer-counts>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>Practices Distribution Per Tier</h5>
+                    <app-vadr-answer-distribution></app-vadr-answer-distribution>
+                </div>
+            </div>
+        </div>
 
 
-      <app-nav-back-next [page]="'rra-level-results'"></app-nav-back-next>
+        <app-nav-back-next [page]="'rra-level-results'"></app-nav-back-next>
 
-  </div>
+    </div>
 </div>

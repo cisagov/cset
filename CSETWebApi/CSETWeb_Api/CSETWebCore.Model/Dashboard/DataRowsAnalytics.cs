@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -27,7 +27,7 @@ namespace CSETWebCore.Model.Dashboard
         public double maximum { get; set; }
 
         public double average { get; set; }
-        
+
         // the following fields are used for component type data display
         public int? yes { get; set; }
         public int? no { get; set; }

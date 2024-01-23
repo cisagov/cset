@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -86,7 +86,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             int questionLegend_x = 35;
             int questionLegend_y = 40;
             var questionLegend = new XElement("text",
-            CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null)            
+            CreateElement("Q1 = Question Number", questionLegend_x, questionLegend_y, null)
             );
 
             if (includeGoal)

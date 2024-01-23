@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -152,14 +152,14 @@ export class IseMeritComponent implements OnInit {
           },
           error => console.log('Assessment Information Error: ' + (<Error>error).message)
         )
-    
+
         this.observationSvc.getAssessmentObservations().subscribe(
           (r: any) => {
-            this.response = r; 
- 
-            for(let i = 0; i < this.response?.length; i++) {
-              if(this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
-    
+            this.response = r;
+
+            for (let i = 0; i < this.response?.length; i++) {
+              if (this.ncuaSvc.translateExamLevel(this.response[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+
                 let observation = this.response[i];
                 this.questionsSvc.getDetails(observation.question.mat_Question_Id, 'Maturity').subscribe(
                   (r: any) => {
@@ -168,29 +168,29 @@ export class IseMeritComponent implements OnInit {
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if(!this.sourceFilesMap.has(observation.finding.finding_Id)){
-              
+                      if (!this.sourceFilesMap.has(observation.finding.finding_Id)) {
+
                         this.sourceFilesMap.set(observation.finding.finding_Id, [sourceDocList[i]]);
                       } else {
                         let tempFileArray = this.sourceFilesMap.get(observation.finding.finding_Id);
-        
+
                         tempFileArray.push(sourceDocList[i]);
-        
+
                         this.sourceFilesMap.set(observation.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
                 );
-                if(observation.finding.type === 'Examiner Finding') {
+                if (observation.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(observation.category.title);
                 }
-                if(observation.finding.type === 'DOR') {
+                if (observation.finding.type === 'DOR') {
                   this.addDOR(observation.category.title);
                 }
-                if(observation.finding.type === 'Supplemental Fact') {
+                if (observation.finding.type === 'Supplemental Fact') {
                   this.addSupplementalFact(observation.category.title);
                 }
-                if(observation.finding.type === 'Non-reportable') {
+                if (observation.finding.type === 'Non-reportable') {
                   this.addNonReportable(observation.category.title);
                 }
                 this.relaventIssues = true;

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,20 +25,20 @@
         <div>
             {{cmmcStyleSvc.complianceLevelAcheivedData?.questionsAnsweredWithinLevel}}/{{cmmcStyleSvc.complianceLevelAcheivedData?.questionsTotalWithinLevel}}
             Total Practices Satisfied for
-            {{cmmcStyleSvc.complianceLevelAcheivedData?.questionsAnsweredWithinLevel / cmmcStyleSvc.complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}
+            {{cmmcStyleSvc.complianceLevelAcheivedData?.questionsAnsweredWithinLevel /
+            cmmcStyleSvc.complianceLevelAcheivedData?.questionsTotalWithinLevel | percent:'1.0-2'}}
         </div>
         <div> Compliance for Target Level {{cmmcStyleSvc.complianceLevelAcheivedData?.targetLevel}}</div>
         <div> Achieved Level {{cmmcStyleSvc.complianceLevelAcheivedData?.acheivedLevel}}</div>
     </div>
     <div class="stackedBarChartBody">
-        <div *ngFor="let dataColumn of cmmcStyleSvc.stackBarChartData; let i = index"
-            class="stackedBarChartColumn">
+        <div *ngFor="let dataColumn of cmmcStyleSvc.stackBarChartData; let i = index" class="stackedBarChartColumn">
             <div class="barHeader">
                 <div class="mainHeader"> LEVEL {{i + 1}}</div>
                 <div class="secondaryHeader"> {{cmmcStyleSvc.stackedChartHeaderLabels[i + 1]}}</div>
             </div>
-            <div *ngFor="let barSection of dataColumn"
-                [ngStyle]="cmmcStyleSvc.getStackedChartSectionStyle(barSection)" class="barSection">
+            <div *ngFor="let barSection of dataColumn" [ngStyle]="cmmcStyleSvc.getStackedChartSectionStyle(barSection)"
+                class="barSection">
                 <div *ngIf="
                 (barSection.totalForLevel / 2 ) < barSection.count
                 &&
@@ -56,15 +56,13 @@
     <div class="stackedBarChartBase">
     </div>
     <div class="stackedBarChartBottomLabels">
-        <div *ngFor="let dataColumn of cmmcStyleSvc.statsByLevel; let i = index"
-            class="stackedBarChartBottomLabel">
+        <div *ngFor="let dataColumn of cmmcStyleSvc.statsByLevel; let i = index" class="stackedBarChartBottomLabel">
             <div *ngIf="cmmcStyleSvc.cmmcModel?.targetLevel > dataColumn.modelLevel || cmmcStyleSvc.cmmcModel?.targetLevel == dataColumn.modelLevel"
                 class="bottomLabel">
                 <div>Total</div>
                 <div class="bottomLabelNumbers">
                     <div>{{dataColumn.totalAnsweredCount}}</div>
-                    <div
-                        *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">
+                    <div *ngIf="!(dataColumn.totalAnsweredCount == dataColumn.questionCountAggregateForLevelAndBelow)">
                         /{{dataColumn?.questionCountAggregateForLevelAndBelow}}</div>
                 </div>
             </div>

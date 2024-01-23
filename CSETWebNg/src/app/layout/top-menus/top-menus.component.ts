@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -61,7 +61,7 @@ export class TopMenusComponent implements OnInit {
   showFullAccessKey = false;
 
   @Input()
-    skin: string;
+  skin: string;
 
   constructor(
     public auth: AuthenticationService,
@@ -74,7 +74,7 @@ export class TopMenusComponent implements OnInit {
     public router: Router,
     private _hotkeysService: HotkeysService,
     private gallerySvc: GalleryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     ChangeDetectionStrategy.OnPush;
@@ -366,8 +366,7 @@ export class TopMenusComponent implements OnInit {
       // Case 1: cisaWorkflow switch is now on but localStorage still has non IOD installation mode.
       // Case 2: cisaWorkflowSwitch is now off but localStorage still has IOD installation mode.
       if ((results.cisaWorkflowEnabled && localStorage.getItem('installationMode') != 'IOD') ||
-          (!results.cisaWorkflowEnabled && localStorage.getItem('installationMode') == 'IOD') )
-      {
+        (!results.cisaWorkflowEnabled && localStorage.getItem('installationMode') == 'IOD')) {
         this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
           this.goHome();
           window.location.reload();
@@ -393,7 +392,7 @@ export class TopMenusComponent implements OnInit {
   showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
-    if (this.dialog.openDialogs[0] || doNotShow) {  
+    if (this.dialog.openDialogs[0] || doNotShow) {
       this.exportToExcel();
       return;
     }
@@ -404,7 +403,7 @@ export class TopMenusComponent implements OnInit {
   exportToExcel() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExport?token=' + localStorage.getItem('userToken');
   }
-  
+
 
   exportToExcelNCUA() {
     window.location.href = this.configSvc.apiUrl + 'ExcelExportISE?token=' + localStorage.getItem('userToken');

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -68,8 +68,8 @@
   <!-- Content -->
   <div class="side-nav-container p-0 d-flex flex-column justify-content-start flex-11a">
     <mat-sidenav-container id="sidenav-container" class="d-flex flex-column flex-11a">
-      <mat-sidenav #sNav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav"
-        (scroll)="handleScroll('sidenav')" (openedChange)="openStateChange($event)">
+      <mat-sidenav #sNav [mode]="sidenavMode()" [opened]="expandNav" id="sidenav" (scroll)="handleScroll('sidenav')"
+        (openedChange)="openStateChange($event)">
 
         <button class="btn btn-home" (click)="goHome()" [matTooltip]="'View assessment list'">
           <i class="fas fa-home"></i>
@@ -89,7 +89,7 @@
           </mat-tree-node>
 
           <mat-nested-tree-node *matTreeNodeDef="let node; when: navTreeSvc?.hasNestedChild" [hidden]="!node.visible">
-            <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle  tabindex="0">
+            <button class="btn btn-trans btn-link no-underline" matTreeNodeToggle tabindex="0">
               <div class="menu-link d-flex">
                 <mat-icon style="position: relative; top: -.1rem;">
                   {{navTreeSvc?.tocControl?.isExpanded(node) ? 'expand_more' : 'chevron_right'}}

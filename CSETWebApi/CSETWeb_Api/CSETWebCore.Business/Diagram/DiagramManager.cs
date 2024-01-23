@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 ////////////////////////////////
@@ -59,7 +59,7 @@ namespace CSETWebCore.Business.Diagram
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/UserObject").Count;
-            
+
             if (cellCount == 2 && objectCount == 0)
             {
                 // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
@@ -336,7 +336,7 @@ namespace CSETWebCore.Business.Diagram
         public StringReader GetDiagramXml(int assessmentId)
         {
             var diagram = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId)?.Diagram_Markup;
-            
+
             if (diagram != null)
             {
                 // updates the previous version's 'object' to 'UserObject' if needed (Draw.IO v21.0.2 uses 'UserObject' instead)
@@ -403,7 +403,7 @@ namespace CSETWebCore.Business.Diagram
                             }
                         //}
                         */
-                        
+
                         var addLayerVisible = (mxGraphModelRootObject)item;
                         //var addLayerVisible = (mxGraphModelRootMxCell)item;
 
@@ -418,7 +418,7 @@ namespace CSETWebCore.Business.Diagram
 
                             vertices.Add(addLayerVisible);
                         }
-                        
+
                     }
                 }
             }
@@ -498,7 +498,7 @@ namespace CSETWebCore.Business.Diagram
             return edges;
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -1231,7 +1231,7 @@ namespace CSETWebCore.Business.Diagram
 
             // Create an empty Network diagram
             XmlElement root = xml.CreateElement("root", null);
-            
+
             XmlElement parentOfMainLayer = xml.CreateElement("mxCell");
             parentOfMainLayer.SetAttribute("id", "0");
 
@@ -1256,7 +1256,7 @@ namespace CSETWebCore.Business.Diagram
             SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
         }
 
-        public void WalkDownTree (TempNode node, string parentId)
+        public void WalkDownTree(TempNode node, string parentId)
         {
             // Get a unique Guid for each node
             string guid = Guid.NewGuid().ToString();
@@ -1283,7 +1283,7 @@ namespace CSETWebCore.Business.Diagram
                     symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
                     label = "UN-" + node.Key;
                 }
-            } 
+            }
             else
             {
                 label = symbol.Symbol_Name;
@@ -1431,7 +1431,7 @@ namespace CSETWebCore.Business.Diagram
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -1493,7 +1493,7 @@ namespace CSETWebCore.Business.Diagram
                     parent.x += changeAmount;
                     parent.y -= changeAmount;
                     return parent;
-                default: 
+                default:
                     return parent;
             }
         }

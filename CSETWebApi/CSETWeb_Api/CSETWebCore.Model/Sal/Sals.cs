@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,6 +14,6 @@ namespace CSETWebCore.Model.Sal
         public string CLevel { get; set; }
         public string ILevel { get; set; }
         public string ALevel { get; set; }
-        public bool SelectedSALOverride { get; set; }       
+        public bool SelectedSALOverride { get; set; }
     }
 }

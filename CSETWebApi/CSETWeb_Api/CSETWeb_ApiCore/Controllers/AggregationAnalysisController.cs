@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -37,7 +37,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/aggregation/analysis/overallcompliancescore")]
         public IActionResult OverallComplianceScore([FromBody] AggBody body)
         {
-            int aggregationID = body.AggregationID;   
+            int aggregationID = body.AggregationID;
             var assessmentList = _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationID)
                 .Include(x => x.Assessment)
                 .Include(x => x.Assessment.STANDARD_SELECTION)

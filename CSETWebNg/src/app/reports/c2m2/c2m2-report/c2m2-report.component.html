@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,13 +22,14 @@
 -------------------------->
 <div *ngIf="loading">
   <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div style="max-width: 50px; max-height: 50px;"></div>
   </div>
 </div>
 
 <div *ngIf="!loading">
   <div class="c2m2-report-background">
-    <app-c2m2-side-toc [domainData]="donutData" [assessmentInfo]="assessmentInfo" [donutData]="donutData" [tableData]="tableData"></app-c2m2-side-toc>
+    <app-c2m2-side-toc [domainData]="donutData" [assessmentInfo]="assessmentInfo" [donutData]="donutData"
+      [tableData]="tableData"></app-c2m2-side-toc>
     <div class="report-body pb-5 pt-5">
 
       <div class="d-flex justify-content-center">
@@ -60,10 +61,10 @@
       </div>
 
       <div class="page-break" id="toc-list-of-pi-and-ni-practices">
-        <app-c2m2-list-of-partially-implemented-and-not-implemented-practices [tableData]="tableData"></app-c2m2-list-of-partially-implemented-and-not-implemented-practices>
+        <app-c2m2-list-of-partially-implemented-and-not-implemented-practices
+          [tableData]="tableData"></app-c2m2-list-of-partially-implemented-and-not-implemented-practices>
       </div>
 
     </div>
   </div>
 </div>
-

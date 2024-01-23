@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NgbTimepickerI18nDefault } from '@ng-bootstrap/ng-bootstrap/timepicker/timepicker-i18n';
 
 
 interface UserAssessment {
@@ -42,11 +41,11 @@ interface UserAssessment {
   templateUrl: './trend-compare-compatibility.component.html'
 })
 export class TrendCompareCompatibilityComponent implements OnInit {
-  
+
   assessments: UserAssessment[];
   aggregation: any = {};
   message: string = 'Standard assessment compatibility or maturity model will show once selection is made';
-  maturity: boolean; 
+  maturity: boolean;
 
   /**
    * CTOR
@@ -81,11 +80,11 @@ export class TrendCompareCompatibilityComponent implements OnInit {
 
         this.assessmentTypeCheck()
 
-        if(resp2.assessments.length === 0){
+        if (resp2.assessments.length === 0) {
           this.message = 'Standard assessment compatibility or maturity model will show once selection is made';
-          this.maturity = true; 
+          this.maturity = true;
         }
-         
+
       });
     })
   }
@@ -110,7 +109,7 @@ export class TrendCompareCompatibilityComponent implements OnInit {
   /**
    * Method to refresh component when selection is made 
    */
-  refresh(){
+  refresh() {
     this.getAssessmentsForUser()
   }
 }
