@@ -1,6 +1,6 @@
 /* 
 
-  Copyright 2023 Battelle Energy Alliance, LLC  
+  Copyright 2024 Battelle Energy Alliance, LLC  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy 
 of this software and associated documentation files (the "Software"), to deal 
@@ -23,8 +23,8 @@ SOFTWARE.
 */
 @font-face {
   font-family: "cset-icons";
-  src:url("fonts/cset-icons.eot");
-  src:url("sass/fonts/cset-icons.eot?#iefix") format("embedded-opentype"),
+  src: url("fonts/cset-icons.eot");
+  src: url("sass/fonts/cset-icons.eot?#iefix") format("embedded-opentype"),
     url("sass/fonts/cset-icons.woff") format("woff"),
     url("sass/fonts/cset-icons.ttf") format("truetype"),
     url("sass/fonts/cset-icons.svg#cset-icons") format("svg");
@@ -62,228 +62,303 @@ SOFTWARE.
 .cset-icons-accessibility:before {
   content: "\61";
 }
+
 .cset-icons-bar-chart-vertical:before {
   content: "\64";
 }
+
 .cset-icons-book-bookmark:before {
   content: "\65";
 }
+
 .cset-icons-book-open:before {
   content: "\66";
 }
+
 .cset-icons-books:before {
   content: "\67";
 }
+
 .cset-icons-books-stack-1:before {
   content: "\68";
 }
+
 .cset-icons-books-stack-2:before {
   content: "\69";
 }
+
 .cset-icons-chevron-down:before {
   content: "\6a";
 }
+
 .cset-icons-chevron-left:before {
   content: "\6b";
 }
+
 .cset-icons-chevron-right:before {
   content: "\6c";
 }
+
 .cset-icons-chevron-up:before {
   content: "\6d";
 }
+
 .cset-icons-cog:before {
   content: "\70";
 }
+
 .cset-icons-comment:before {
   content: "\71";
 }
+
 .cset-icons-cset-logo:before {
   content: "\73";
 }
+
 .cset-icons-dhs-seal:before {
   content: "\74";
 }
+
 .cset-icons-document:before {
   content: "\75";
 }
+
 .cset-icons-export-excel:before {
   content: "\76";
 }
+
 .cset-icons-floppy-disk:before {
   content: "\77";
 }
+
 .cset-icons-gauge-high:before {
   content: "\78";
 }
+
 .cset-icons-gauge-low:before {
   content: "\79";
 }
+
 .cset-icons-gauge-max:before {
   content: "\7a";
 }
+
 .cset-icons-gauge-med:before {
   content: "\41";
 }
+
 .cset-icons-handshake:before {
   content: "\42";
 }
+
 .cset-icons-help:before {
   content: "\43";
 }
+
 .cset-icons-help-dark:before {
   content: "\44";
 }
+
 .cset-icons-house:before {
   content: "\45";
 }
+
 .cset-icons-import:before {
   content: "\46";
 }
+
 .cset-icons-import-doc:before {
   content: "\47";
 }
+
 .cset-icons-info-circle:before {
   content: "\48";
 }
+
 .cset-icons-key:before {
   content: "\49";
 }
+
 .cset-icons-key-shield:before {
   content: "\4a";
 }
+
 .cset-icons-keyboard-shortcuts-board:before {
   content: "\4b";
 }
+
 .cset-icons-keyboard-shortcuts-key:before {
   content: "\4c";
 }
+
 .cset-icons-library:before {
   content: "\4d";
 }
+
 .cset-icons-tools:before {
   content: "\4e";
 }
+
 .cset-icons-library-simple:before {
   content: "\50";
 }
+
 .cset-icons-trash-can:before {
   content: "\51";
 }
+
 .cset-icons-light-bulb:before {
   content: "\52";
 }
+
 .cset-icons-logout:before {
   content: "\53";
 }
+
 .cset-icons-module:before {
   content: "\54";
 }
+
 .cset-icons-page:before {
   content: "\55";
 }
+
 .cset-icons-pages:before {
   content: "\56";
 }
+
 .cset-icons-profile:before {
   content: "\58";
 }
+
 .cset-icons-puzzle:before {
   content: "\59";
 }
+
 .cset-icons-question-mark:before {
   content: "\5a";
 }
+
 .cset-icons-question-circle-outline:before {
   content: "\30";
 }
+
 .cset-icons-pdf-doc:before {
   content: "\57";
 }
+
 .cset-icons-cset-lock:before {
   content: "\72";
 }
+
 .cset-icons-advisory:before {
   content: "\63";
 }
+
 .cset-icons-accessibility-doc:before {
   content: "\62";
 }
+
 .cset-icons-clipboard-check:before {
   content: "\6e";
 }
+
 .cset-icons-clipboard-pencil:before {
   content: "\6f";
 }
+
 .cset-icons-results:before {
   content: "\4f";
 }
+
 .cset-icons-browse:before {
   content: "\31";
 }
+
 .cset-icons-check-box:before {
   content: "\32";
 }
+
 .cset-icons-envelope:before {
   content: "\33";
 }
+
 .cset-icons-export:before {
   content: "\34";
 }
+
 .cset-icons-filter:before {
   content: "\35";
 }
+
 .cset-icons-pencil:before {
   content: "\36";
 }
+
 .cset-icons-phone:before {
   content: "\37";
 }
+
 .cset-icons-plus:before {
   content: "\38";
 }
+
 .cset-icons-question-mark-circle:before {
   content: "\39";
 }
+
 .cset-icons-magnify-glass:before {
   content: "\21";
 }
+
 .cset-icons-trash-x:before {
   content: "\22";
 }
+
 .cset-icons-resize-full:before {
   content: "\23";
 }
+
 .cset-icons-resize-small:before {
   content: "\24";
 }
+
 .cset-icons-check-circle:before {
   content: "\25";
 }
+
 .cset-icons-close-x:before {
   content: "\26";
 }
+
 .cset-icons-exclamation-triangle:before {
   content: "\27";
 }
+
 .cset-icons-export-up:before {
   content: "\28";
 }
+
 .cset-icons-review:before {
   content: "\29";
 }
+
 .cset-icons-copy:before {
   content: "\2a";
 }
+
 .cset-icons-hamburger:before {
   content: "\2b";
 }
+
 .cset-icons-bell:before {
   content: "\2c";
 }
+
 .cset-icons-flag-light:before {
   content: "\2d";
 }
+
 .cset-icons-flag-dark:before {
   content: "\2e";
 }
