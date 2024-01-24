@@ -21,13 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentContactsResponse } from "../../../../models/assessment-info.model";
 import { User } from '../../../../models/user.model';
 import { ConfigService } from '../../../../services/config.service';
+import { Observable } from 'rxjs';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 interface DemographicsAssetValue {
@@ -52,6 +55,10 @@ interface AssessmentSize {
     description: string;
 }
 
+interface ImportExportData {
+    data: any; 
+  }
+
 @Component({
     selector: 'app-assessment-demographics',
     templateUrl: './assessment-demographics.component.html',
@@ -59,6 +66,11 @@ interface AssessmentSize {
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDemographicsComponent implements OnInit {
+
+    @Input() events: Observable<void>;
+
+    private eventsSubscription: any;
+
     sectorsList: Sector[];
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
@@ -73,7 +85,8 @@ export class AssessmentDemographicsComponent implements OnInit {
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
-        public configSvc: ConfigService
+        public configSvc: ConfigService, 
+        public dialog: MatDialog,
     ) { }
 
     ngOnInit() {
@@ -110,6 +123,55 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.getOrganizationTypes();
 
         this.showAsterisk = this.showAsterisks();
+        
+      
+
+    }
+
+
+    importClick($event){
+        const fileReader = new FileReader();
+        const text = fileReader.readAsText($event.target.files[0], "UTF-8");
+        fileReader.onload = () => {
+            const text = fileReader.result;
+            console.log(text)
+            const data = JSON.parse(String(text))
+            console.log(data)
+            this.demographicData = data;
+            this.populateIndustryOptions(this.demographicData.sectorId)
+            
+            this.updateDemographics();
+            this.populateAssetValues(data.assetValue);
+          };
+        
+          fileReader.onerror = () => {
+            console.log(fileReader.error);
+          };
+        
+        
+    }
+
+    exportClick(){
+        // this.demographicData.version = 1;
+        if (this.demographicData.organizationName){
+            //File name will be saved with '_' instead of any invalid characters
+            //Could implement functionality that replaces invalid characters manually           
+            var FileSaver = require('file-saver');            
+            var demoString = JSON.stringify(this.demographicData);
+            const blob = new Blob([demoString], { type: 'application/json' });
+            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");            
+            try {
+            FileSaver.saveAs(blob, fileName + ".json");
+            } catch (error) {
+            console.error("Error during file download:", error);
+            }
+        
+        } else {
+        const msg2 = 'Name of organization required before export';
+        const titleComplete = 'Organization Name Required'
+        const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+        dlgOkay.componentInstance.hasHeader = true;
+        }
     }
 
     onSelectSector(sectorId: number) {
@@ -131,6 +193,7 @@ export class AssessmentDemographicsComponent implements OnInit {
             },
             error => console.log('Demographic load Error: ' + (<Error>error).message)
         );
+        
     }
 
     getOrganizationTypes() {
@@ -163,6 +226,20 @@ export class AssessmentDemographicsComponent implements OnInit {
                 console.log('Error Getting Industry: ' + (<Error>error).name + (<Error>error).message);
                 console.log('Error Getting Industry (cont): ' + (<Error>error).stack);
             });
+    }
+
+    populateAssetValues(assetValue) {
+        this.demoSvc.getAllAssetValues().subscribe(
+            (data: DemographicsAssetValue[]) => {
+                this.assetValues = data;
+                
+            },
+            error => {
+                console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
+                console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
+            });
+        this.demographicData.assetValue = assetValue;
+        // this.updateDemographics();
     }
 
     changeAssetValue(event: any) {
