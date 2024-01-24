@@ -35,9 +35,10 @@ namespace CSETWebCore.Business.Malcolm
                         //}
                     }
                     malcolmData.Graphs = networkOfNodes;
-                    networkOfNodes = new Dictionary<string, TempNode>();                    
+                    networkOfNodes = new Dictionary<string, TempNode>();           
                 }
             }
+            datalist = GetTreesFromMalcolmData(datalist);
             return datalist;
 
         }
@@ -49,7 +50,7 @@ namespace CSETWebCore.Business.Malcolm
                 if (malcolmData != null)
                 {   
                     MalcolmTree trees = new MalcolmTree();
-                    malcolmData.Trees  =trees.StartTheTreeWalk(malcolmData.Graphs);
+                    malcolmData.Trees = trees.StartTheTreeWalk(malcolmData.Graphs);
                     malcolmDataList.Add(malcolmData);
                 }
             }
@@ -73,6 +74,14 @@ namespace CSETWebCore.Business.Malcolm
                 }
                 else
                 {
+                    // checking for role
+                    if (!bucket.Key.Contains('.') && !bucket.Key.Contains(':'))
+                    {
+                        parent.Role = bucket.Key;
+                        if (bucket.Values != null)
+                            BuildNetwork(parent, bucket.Values.Buckets);
+                        return;
+                    }
                     tnode = new TempNode(bucket.Key);
                     networkOfNodes.TryAdd(bucket.Key, tnode);
                     if (parent != null)

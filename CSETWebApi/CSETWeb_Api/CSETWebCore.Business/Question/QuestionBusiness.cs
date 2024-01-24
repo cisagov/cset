@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -550,21 +550,21 @@ namespace CSETWebCore.Business.Question
             List<int> distinctParentGroupingIdList = parentGroupingIdList.Distinct().ToList();
 
             var ansResults = from q in _context.MATURITY_QUESTIONS.Where(g => g.Maturity_Model_Id == modelId && groupingIdList.Contains((int)g.Grouping_Id))
-                                  join a in _context.ANSWER on q.Mat_Question_Id equals a.Question_Or_Requirement_Id
-                                  where a.Assessment_Id == assessmentId
+                             join a in _context.ANSWER on q.Mat_Question_Id equals a.Question_Or_Requirement_Id
+                             where a.Assessment_Id == assessmentId
                              select new { a };
 
-            List < MATURITY_QUESTIONS > questionList = _context.MATURITY_QUESTIONS.Where(g => g.Maturity_Model_Id == modelId && groupingIdList.Contains((int)g.Grouping_Id)).ToList();
+            List<MATURITY_QUESTIONS> questionList = _context.MATURITY_QUESTIONS.Where(g => g.Maturity_Model_Id == modelId && groupingIdList.Contains((int)g.Grouping_Id)).ToList();
 
             List<HydroGroupingInfo> info = new List<HydroGroupingInfo>();
 
-            for (int i = 0; i < groupingIdList.Count; i++) 
+            for (int i = 0; i < groupingIdList.Count; i++)
             {
                 List<MATURITY_QUESTIONS> questionsInGroup = questionList.FindAll(q => q.Grouping_Id == groupingIdList[i]);
 
                 List<QuestionWithAnswers> questionWithAnswers = new List<QuestionWithAnswers>();
 
-                foreach(MATURITY_QUESTIONS question in questionsInGroup)
+                foreach (MATURITY_QUESTIONS question in questionsInGroup)
                 {
                     QuestionWithAnswers questionAnswers = new QuestionWithAnswers();
                     List<ANSWER> answerListPerQuestion = _context.ANSWER.Where(a => a.Question_Or_Requirement_Id == question.Mat_Question_Id && a.Answer_Text == "S" && a.Assessment_Id == assessmentId).ToList();
@@ -604,7 +604,7 @@ namespace CSETWebCore.Business.Question
                     Progress_Id = progressId,
                     Comment = comment
                 });
-            } 
+            }
             catch (Exception)
             {
                 //TODO: It is a big pet peeve of mine to have empty try catches

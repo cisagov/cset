@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { SelectedTier } from '../models/frameworks.model';
 import { AssessmentService } from './assessment.service';
 import { NavigationService } from './navigation/navigation.service';
 import { AuthenticationService } from './authentication.service';
@@ -46,7 +45,7 @@ export class GalleryService {
     private http: HttpClient,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService,
-    private navSvc: NavigationService, 
+    private navSvc: NavigationService,
     private authSvc: AuthenticationService
   ) { }
 
@@ -74,8 +73,8 @@ export class GalleryService {
         this.testRow = this.rows[1];
 
         ///NOTE THIS runs the default item if there is only one item automatically
-        if(this.configSvc.installationMode=="CF"){
-          if(this.authSvc.isFirstLogin()){
+        if (this.configSvc.installationMode == "CF") {
+          if (this.authSvc.isFirstLogin()) {
             this.assessSvc.clearFirstTime();
             this.authSvc.setFirstLogin(false);
             this.navSvc.beginNewAssessmentGallery(this.rows[0].galleryItems[0]);
@@ -96,7 +95,7 @@ export class GalleryService {
       }
     );
   }
-  
+
   /**
    * Posts the current selected tier to the server.
    */

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,7 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 EXECUTIVE SUMMARY CMMC
             </p>
         </div>
@@ -36,8 +35,8 @@
         </div>
 
         <div class="cover-page-bottom">
-          <app-logo-for-reports></app-logo-for-reports>
-          <app-info-block [response]="response"/>
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
         </div>
     </div>
 
@@ -46,11 +45,13 @@
     </div>
 
     <div class="page-break">
-       <app-report-advisory></app-report-advisory>
+        <app-report-advisory></app-report-advisory>
     </div>
 
-    <div class="page-break" *ngIf="response?.information.assessment_Description || response?.information?.executive_Summary">
-        <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description</h1>
+    <div class="page-break"
+        *ngIf="response?.information.assessment_Description || response?.information?.executive_Summary">
+        <h1 class="pageHeader" *ngIf="response?.information.assessment_Description">High-Level Assessment Description
+        </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
         </p>
 

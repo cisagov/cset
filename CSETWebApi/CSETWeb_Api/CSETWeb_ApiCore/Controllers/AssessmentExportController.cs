@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/assessment/export")]
         public IActionResult ExportAssessment([FromQuery] string token, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
-        { 
+        {
             try
             {
                 _token.SetToken(token);
@@ -58,7 +58,7 @@ namespace CSETWebCore.Api.Controllers
                 NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
             }
 
-            return null;           
+            return null;
         }
 
     }

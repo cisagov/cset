@@ -1,5 +1,5 @@
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Title } from "@angular/platform-browser";
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { ConfigService } from '../services/config.service';
 import { NavTreeNode } from '../services/navigation/navigation.service';
 import { OkayComponent } from '../dialogs/okay/okay.component';
@@ -35,7 +35,7 @@ const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
-​
+
 interface LibrarySearchResponse {
   nodes: LibrarySearchResponse[];
   id: number;
@@ -52,7 +52,7 @@ interface LibrarySearchResponse {
   isExpanded: boolean;
   children?: LibrarySearchResponse[];
 }
-​
+
 @Component({
   selector: 'app-resource-library',
   templateUrl: './resource-library.component.html',
@@ -63,18 +63,18 @@ interface LibrarySearchResponse {
 export class ResourceLibraryComponent implements OnInit {
   results: LibrarySearchResponse[];
   searchTerm: string;
-  searchString:string;
+  searchString: string;
   apiUrl: string;
   docUrl: string;
   selectedPane = 'search';
   dialogRef: MatDialogRef<OkayComponent>;
   isLoading: boolean;
   isexpanded: boolean;
-  selected:boolean;
+  selected: boolean;
   children?: LibrarySearchResponse[];
-  filter:string = '';
+  filter: string = '';
   setFilterDebounced = new Subject<string>();
-​
+
   constructor(private configSvc: ConfigService,
     private http: HttpClient,
     public navSvc: NavigationService,
@@ -82,9 +82,9 @@ export class ResourceLibraryComponent implements OnInit {
     public dialog: MatDialog,
     public titleSvc: Title) {
   }
-​
+
   ngOnInit() {
-    this.isexpanded=true;
+    this.isexpanded = true;
     this.apiUrl = this.configSvc.apiUrl;
     this.docUrl = this.configSvc.docUrl;
 
@@ -99,7 +99,7 @@ export class ResourceLibraryComponent implements OnInit {
       .subscribe(value => {
         this.setFilter(value);
       });
-​
+
     const timeout = setTimeout(() => { this.isLoading = true; }, 1000);
     this.http.get(this.apiUrl + 'ResourceLibrary/tree').subscribe(
       (response: NavTreeNode[]) => {
@@ -109,8 +109,8 @@ export class ResourceLibraryComponent implements OnInit {
       }
     );
   }
-​
-​
+
+
   setFilter(filter: string) {
     this.filter = filter ?? '';
     let nodes = this.navTreeSvc?.dataSource.data;
@@ -123,13 +123,13 @@ export class ResourceLibraryComponent implements OnInit {
     nodes.forEach(node => {
       this.filterDepthMatch(node, filterLowerCaseTrimmed);
     });
-​
+
     this.navTreeSvc.dataChange.next(nodes);
   }
-​
-  filterDepthMatch(node: any, filterLowerCaseTrimmed: string)  {
+
+  filterDepthMatch(node: any, filterLowerCaseTrimmed: string) {
     // Is this a leaf?  Check its label and heading
-    if(
+    if (
       (node.children ?? []).length === 0
     ) {
       node.visible =
@@ -145,7 +145,7 @@ export class ResourceLibraryComponent implements OnInit {
       // Default to hidden (unless filter string is empty)
       node.visible = (filterLowerCaseTrimmed == '');
       node.children.forEach(child => {
-        if(this.filterDepthMatch(child, filterLowerCaseTrimmed)) {
+        if (this.filterDepthMatch(child, filterLowerCaseTrimmed)) {
           // Make this parent visible since a child is visibile
           node.visible = true;
           // we do not want to return immediately, because
@@ -159,7 +159,7 @@ export class ResourceLibraryComponent implements OnInit {
     // will mark itself visible too, so all ancestors will be visible.
     return node.visible;
   }
-​
+
   search(term: string) {
     this.http.post(
       this.apiUrl + 'ResourceLibrary',
@@ -173,14 +173,15 @@ export class ResourceLibraryComponent implements OnInit {
       .subscribe(
         (response: LibrarySearchResponse[]) => {
           this.results = response;
-​
+
           // Cull out any entries whose HeadingTitle is null
 
-          while (this.results.findIndex(r => r.headingText === null) >= 0) {  this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
+          while (this.results.findIndex(r => r.headingText === null) >= 0) {
+            this.results.splice(this.results.findIndex(r => r.headingText === null), 1);
           }
         });
   }
-​
+
   isProcurementOrCatalog(result: any) {
     let path = result.PathDoc;
     if (!path)
@@ -191,7 +192,7 @@ export class ResourceLibraryComponent implements OnInit {
     }
     return false;
   }
-​
+
   /**
    * Displays the HTML content of the document.  This method displays
    * the content in a modal dialog.  This could be refactored to
@@ -201,17 +202,17 @@ export class ResourceLibraryComponent implements OnInit {
   displayDocumentContent(parms: string) {
     let docType: string;
     let id: string;
-​
+
     if (parms.indexOf('procurement:') === 0) {
       docType = 'proc';
       id = parms.substr(parms.indexOf(":") + 1);
     }
-​
+
     if (parms.indexOf('catalog:') === 0) {
       docType = 'cat';
       id = parms.substr(parms.indexOf(":") + 1);
     }
-​
+
     this.http.get(
       this.apiUrl + 'ResourceLibrary/doc?type=' + docType + '&id=' + id,
       headers)

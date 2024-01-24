@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -113,8 +113,8 @@ namespace CSETWebCore.Business.ACETDashboard
         public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-            
-           
+
+
             // now just properties on an Assessment
             ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment == null) { return null; }
@@ -192,7 +192,7 @@ namespace CSETWebCore.Business.ACETDashboard
             {
                 _maturity.PersistMaturityLevel(assessmentId, result.SumRiskLevel);
             }
-            else 
+            else
             {
                 _maturity.PersistMaturityLevel(assessmentId, result.Override);
             }

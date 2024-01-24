@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ import { ConfigService } from '../../services/config.service';
   selector: 'app-about-cset',
   templateUrl: './about-cset.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AboutCsetComponent implements OnInit {
   version = environment.visibleVersion;
@@ -41,14 +41,14 @@ export class AboutCsetComponent implements OnInit {
 
   constructor(private dialog: MatDialogRef<AboutCsetComponent>,
     public configSvc: ConfigService,
-    @Inject(MAT_DIALOG_DATA) public data: any) {  }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-    /**
-     * 
-     */
-    ngOnInit() {
-      if (this.configSvc.config.debug.showBuildTime ?? false) {
-        this.linkerTime = localStorage.getItem('cset.linkerDate');
-      }
+  /**
+   * 
+   */
+  ngOnInit() {
+    if (this.configSvc.config.debug.showBuildTime ?? false) {
+      this.linkerTime = localStorage.getItem('cset.linkerDate');
     }
+  }
 }

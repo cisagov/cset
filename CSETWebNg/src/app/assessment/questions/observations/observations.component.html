@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -39,25 +39,28 @@
         <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
         <select id="importance" name="importance" class="form-control" [(ngModel)]="observation.importance_Id"
           (change)="updateImportance($event.target.value)">
-          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('level.' + import?.value.toLowerCase()) }}</option>
+          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('level.' +
+            import?.value.toLowerCase()) }}</option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="date" class="form-label">{{ t('observation.resolution date') }}</label>
         <input matInput MatDatepickerInput class="form-control" id="date" name="date"
-          [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()" (click)="picker.open()"
-          (change)="update()">
+          [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()"
+          (click)="picker.open()" (change)="update()">
         <mat-datepicker #picker></mat-datepicker>
       </div>
 
       <div class="form-group">
         <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
-        <textarea id="issue" autocomplete="off" class="form-control" type="text" [(ngModel)]="observation.issue"></textarea>
+        <textarea id="issue" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.issue"></textarea>
       </div>
       <div class="form-group">
         <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
-        <textarea id="impact" autocomplete="off" class="form-control" type="text" [(ngModel)]="observation.impact"></textarea>
+        <textarea id="impact" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.impact"></textarea>
       </div>
       <div class="form-group">
         <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
@@ -81,13 +84,14 @@
 
       <div class="pl-3">
         <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
-          <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}" (change)="updateContact(contact)"
-            [(ngModel)]="contact.selected">
+          <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}"
+            (change)="updateContact(contact)" [(ngModel)]="contact.selected">
           <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
         </div>
       </div>
       <br /><br />
-      <app-assessment-contacts (triggerChange)="refreshContacts()" class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+      <app-assessment-contacts (triggerChange)="refreshContacts()"
+        class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
     </div>
   </mat-dialog-content>
 

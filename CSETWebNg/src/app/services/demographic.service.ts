@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { Demographic } from '../models/assessment-info.model';
-import { ExtendedDemographics } from '../models/demographics-extended.model';
 
 
 const headers = {
@@ -73,10 +72,10 @@ export class DemographicService {
    */
   updateDemographic(demographic: Demographic) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe(()=> {
-      if(this.configSvc.cisaAssessorWorkflow){
-        
-      }
-    });
+      .subscribe(() => {
+        if (this.configSvc.cisaAssessorWorkflow) {
+
+        }
+      });
   }
 }

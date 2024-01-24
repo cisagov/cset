@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -120,7 +120,7 @@ namespace CSETWebCore.Business.RepositoryLibrary
                         listResourceDocuments.Add(resDoc);
                     }
                 }
-                
+
                 return listResourceDocuments.OrderBy(x => x.HeadingTitle).OrderByDescending(x => x.DatePublished).OrderByDescending(x => x.Score).ToList();
             }
             catch (Exception exc)

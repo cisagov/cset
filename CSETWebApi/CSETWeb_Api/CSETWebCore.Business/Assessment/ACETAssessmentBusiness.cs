@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -95,7 +95,7 @@ namespace CSETWebCore.Business.Assessment
             detail.AssessmentName = "ACET 00000 " + DateTime.Now.ToString("MMddyy");
             base.SaveAssessmentDetail(detail.Id, detail);
 
-            if(UsesIRP(config.Model.ModelName))
+            if (UsesIRP(config.Model.ModelName))
             {
                 CreateIrpHeaders(detail.Id);
             }
@@ -126,7 +126,7 @@ namespace CSETWebCore.Business.Assessment
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
-                summary.HeaderText = header.Header;               
+                summary.HeaderText = header.Header;
                 summary.RiskLevel = 0;
 
                 ASSESSMENT_IRP_HEADER headerInfo = new ASSESSMENT_IRP_HEADER()
@@ -134,7 +134,7 @@ namespace CSETWebCore.Business.Assessment
                     RISK_LEVEL = 0,
                     IRP_HEADER = header
                 };
-                headerInfo.ASSESSMENT_ID = assessmentId;                
+                headerInfo.ASSESSMENT_ID = assessmentId;
                 if (_context.ASSESSMENT_IRP_HEADER.Count() == 0)
                 {
                     headerInfo.HEADER_RISK_LEVEL_ID = header.IRP_Header_Id;

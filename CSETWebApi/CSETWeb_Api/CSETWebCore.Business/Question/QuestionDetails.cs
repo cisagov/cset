@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -30,10 +30,10 @@ namespace CSETWebCore.Business.Question
 
 
         private bool isDetailAndInfo { get; set; }
-        
+
 
         public bool IsNoQuestion { get; set; }
-        
+
 
         private int selectedTabIndex { get; set; }
 

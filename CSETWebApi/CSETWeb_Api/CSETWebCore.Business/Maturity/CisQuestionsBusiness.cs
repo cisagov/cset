@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -407,7 +407,7 @@ namespace CSETWebCore.Business.Maturity
         /// Get all of the integrity check options.
         /// </summary>
         /// <returns>The list of all options applicable to an integrity check</returns>
-        public List<IntegrityCheckOption> GetIntegrityCheckOptions() 
+        public List<IntegrityCheckOption> GetIntegrityCheckOptions()
         {
             List<IntegrityCheckOption> integrityCheckOptions = new List<IntegrityCheckOption>();
 
@@ -415,7 +415,7 @@ namespace CSETWebCore.Business.Maturity
             var myAnswers = _context.ANSWER.Where(a => a.Assessment_Id == _assessmentId).ToList();
             var cisQuestions = _context.MATURITY_QUESTIONS.Where(q => q.Maturity_Model_Id == _cisModelId).ToList();
 
-            foreach (var pair in integrityCheckDbPairs) 
+            foreach (var pair in integrityCheckDbPairs)
             {
                 // Add the first integrity check option of the pair.
                 ProcessIntegrityCheckOption(pair.Mat_Option_Id_1, integrityCheckOptions, integrityCheckDbPairs, myAnswers, cisQuestions);
@@ -427,8 +427,8 @@ namespace CSETWebCore.Business.Maturity
             return integrityCheckOptions;
         }
 
-        private void ProcessIntegrityCheckOption(int pairOptionId, List<IntegrityCheckOption> integrityCheckOptions, 
-            List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> integrityCheckDbPairs, List<ANSWER> myAnswers, List<MATURITY_QUESTIONS> cisQuestions) 
+        private void ProcessIntegrityCheckOption(int pairOptionId, List<IntegrityCheckOption> integrityCheckOptions,
+            List<MATURITY_ANSWER_OPTIONS_INTEGRITY_CHECK> integrityCheckDbPairs, List<ANSWER> myAnswers, List<MATURITY_QUESTIONS> cisQuestions)
         {
 
             var query = from mq in _context.MATURITY_QUESTIONS
@@ -437,7 +437,7 @@ namespace CSETWebCore.Business.Maturity
 
             if (!integrityCheckOptions.Exists(opt => opt.OptionId == pairOptionId))
             {
-                IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pairOptionId};
+                IntegrityCheckOption newOption = new IntegrityCheckOption { OptionId = pairOptionId };
                 newOption.Selected = myAnswers.Find(a => a.Mat_Option_Id == newOption.OptionId)?.Answer_Text == "S";
 
                 foreach (var p in integrityCheckDbPairs)

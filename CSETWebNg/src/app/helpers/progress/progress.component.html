@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,17 +19,14 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <svg width="2em" height="2em" viewBox="0 0 40 40" class="progress-svg">
   <circle [attr.r]="radius" cx="20" cy="20" stroke-width="5" class="progress-meter" />
-  <circle [style.strokeDasharray]="circumference" [style.strokeDashoffset]="dashoffset" [attr.r]="radius" cx="20" cy="20" stroke-width="5"
-    class="progress-value" />
+  <circle [style.strokeDasharray]="circumference" [style.strokeDashoffset]="dashoffset" [attr.r]="radius" cx="20"
+    cy="20" stroke-width="5" class="progress-value" />
 
   <circle [attr.r]="radius" cx="20" cy="20" stroke-width="20" class="progress-complete" *ngIf="value === 100" />
   <path *ngIf="value === 100"
-     d="M 7.329664,92.631569 49.071542,134.28055 139.20911,44.21687 122.03725,26.811109 50.103141,98.935959 25.354402,74.187222"
-     fill="#ffffff" transform="rotate(90) scale(.2) translate(30, -175)" />
+    d="M 7.329664,92.631569 49.071542,134.28055 139.20911,44.21687 122.03725,26.811109 50.103141,98.935959 25.354402,74.187222"
+    fill="#ffffff" transform="rotate(90) scale(.2) translate(30, -175)" />
 </svg>
-
-
-

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   domainList: any[] = [];
   rowspanList: any[] = []; // 10 objects (all 10 domains)
   answerTextList: any[] = [];
-  mils: string[]=['MIL-1', 'MIL-2', 'MIL-3'];
+  mils: string[] = ['MIL-1', 'MIL-2', 'MIL-3'];
   milSortedDomainList: any[] = [];
   loading: boolean = true;
 
@@ -99,7 +99,7 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
     let lengthOfMil = 0;
     for (let i = 0; i < domainMilGroup.length; i++) {
       if (i > 0) {
-        lengthOfMil += domainMilGroup[i-1];
+        lengthOfMil += domainMilGroup[i - 1];
 
         if (lengthOfMil == currentIndex) { // if true, the currentIndex has caught up 
           return true;                     // with the current rowspan length, and a new one is needed
@@ -118,15 +118,15 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
         lengthOfMil = domainMilGroup[i];
         if (lengthOfMil > 0) {
           // for some reason, the rowspan subtracts the number of different answerTexts in this MIL, so the function counters that
-          return this.howManyDifferentAnswersInMil(domainNumber, i)+lengthOfMil;
+          return this.howManyDifferentAnswersInMil(domainNumber, i) + lengthOfMil;
         }
-      } 
+      }
       else {
         if (i > 0) {
-          lengthOfMil += domainMilGroup[i-1]; // increments to try and match up with the currentIndex
+          lengthOfMil += domainMilGroup[i - 1]; // increments to try and match up with the currentIndex
 
           if (lengthOfMil > 0 && lengthOfMil == currentIndex) {
-            return this.howManyDifferentAnswersInMil(domainNumber, i)+domainMilGroup[i];
+            return this.howManyDifferentAnswersInMil(domainNumber, i) + domainMilGroup[i];
           }
         }
       }
@@ -134,11 +134,11 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   }
 
   checkIfNewAnswerSection(domainMilGroup: any[], currentMil: number, currentIndex: number) {
-    let sectionGroup = domainMilGroup[currentMil-1]; // '-1' to start the array at index 0
+    let sectionGroup = domainMilGroup[currentMil - 1]; // '-1' to start the array at index 0
 
     let previousRowspans = 0;
 
-    for (let i = 0; i < currentMil-1; i++) {
+    for (let i = 0; i < currentMil - 1; i++) {
       let previousSectionGroup = domainMilGroup[i];
       for (let j = 0; j < previousSectionGroup.length; j++) {
         previousRowspans += previousSectionGroup[j];
@@ -149,17 +149,17 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
 
     // automatically assumes it needs a new rowspan if it's the first index
     // (assuming the DOM handles 100% empty domains, so this shouldn't cause an error on blank domains)
-    if (currentIndex == 0) { 
+    if (currentIndex == 0) {
       return true;
-    } 
+    }
 
     for (let i = 0; i < sectionGroup.length; i++) {
-      if (lengthOfSection == currentIndex && i==0) { // if true, the currentIndex has reached the end of the current rowspan
+      if (lengthOfSection == currentIndex && i == 0) { // if true, the currentIndex has reached the end of the current rowspan
         return true;
       }
       let sectionValue = sectionGroup[i];
       lengthOfSection += sectionValue; // increments to try and match up with the currentIndex
-      
+
       if (lengthOfSection == currentIndex) { // if true, the currentIndex has reached the end of the current rowspan
         return true;
       }
@@ -169,11 +169,11 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   }
 
   getNewAnswerSection(domainMilGroup: any[], currentMil: number, currentIndex: number) {
-    let sectionGroup = domainMilGroup[currentMil-1];
+    let sectionGroup = domainMilGroup[currentMil - 1];
 
     let previousIndexes = 0;
 
-    for (let i = 0; i < currentMil-1; i++) {
+    for (let i = 0; i < currentMil - 1; i++) {
       let previousSectionGroup = domainMilGroup[i];
       for (let j = 0; j < previousSectionGroup.length; j++) {
         previousIndexes += previousSectionGroup[j];
@@ -183,7 +183,7 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
     let lengthOfSection = previousIndexes; //lets lengthOfSection have context of what the previous rowspans were
 
     for (let i = 0; i < sectionGroup.length; i++) {
-      if (lengthOfSection == currentIndex && currentIndex != 0 && sectionGroup[i] !=0) { // when there's a match, get the next rowspan's length         
+      if (lengthOfSection == currentIndex && currentIndex != 0 && sectionGroup[i] != 0) { // when there's a match, get the next rowspan's length         
         return sectionGroup[i];
       }
       let sectionValue = sectionGroup[i];
@@ -194,8 +194,8 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
         }
       }
 
-      if (lengthOfSection == currentIndex && currentIndex > 0 && sectionGroup[i+1] !=0) { // when there's a match, get the next rowspan's length
-        return sectionGroup[i+1];
+      if (lengthOfSection == currentIndex && currentIndex > 0 && sectionGroup[i + 1] != 0) { // when there's a match, get the next rowspan's length
+        return sectionGroup[i + 1];
       }
     }
   }
@@ -236,41 +236,41 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
           if (practice.answerText != 'FI' && practice.answerText != 'LI') {
             newPracticeArray.push(practice);
 
-            let milNumber = +practice.mil.charAt(practice.mil.indexOf('-')+1);
+            let milNumber = +practice.mil.charAt(practice.mil.indexOf('-') + 1);
             let answerText = this.nullReplaceWithU(practice.answerText);
-            if(milNumber == 1) {
+            if (milNumber == 1) {
               mil1Counter++;
-              if(answerText == 'PI') {
+              if (answerText == 'PI') {
                 mil1PICounter++;
               }
-              if(answerText == 'NI') {
+              if (answerText == 'NI') {
                 mil1NICounter++;
               }
-              if(answerText == 'U') {
+              if (answerText == 'U') {
                 mil1UCounter++;
               }
             }
-            if(milNumber == 2) {
+            if (milNumber == 2) {
               mil2Counter++;
-              if(answerText == 'PI') {
+              if (answerText == 'PI') {
                 mil2PICounter++;
               }
-              if(answerText == 'NI') {
+              if (answerText == 'NI') {
                 mil2NICounter++;
               }
-              if(answerText == 'U') {
+              if (answerText == 'U') {
                 mil2UCounter++;
               }
             }
-            if(milNumber == 3) {
+            if (milNumber == 3) {
               mil3Counter++;
-              if(answerText == 'PI') {
+              if (answerText == 'PI') {
                 mil3PICounter++;
               }
-              if(answerText == 'NI') {
+              if (answerText == 'NI') {
                 mil3NICounter++;
               }
-              if(answerText == 'U') {
+              if (answerText == 'U') {
                 mil3UCounter++;
               }
             }
@@ -295,8 +295,8 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
       newMil3AnswerArray.push(mil3UCounter);
 
       newPracticeArray.sort((prac1, prac2) => {
-        let prac1Mil = +prac1.mil.charAt(prac1.mil.indexOf('-')+1);
-        let prac2Mil = +prac2.mil.charAt(prac2.mil.indexOf('-')+1);
+        let prac1Mil = +prac1.mil.charAt(prac1.mil.indexOf('-') + 1);
+        let prac2Mil = +prac2.mil.charAt(prac2.mil.indexOf('-') + 1);
 
         if (prac1Mil > prac2Mil) { //prac1's MIL is larger than prac2's
           return 1;
@@ -329,13 +329,13 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
   }
 
   answerToValue(answerText: string) {
-    if(answerText == 'PI') {
+    if (answerText == 'PI') {
       return 1;
     }
-    if(answerText == 'NI') {
+    if (answerText == 'NI') {
       return 2;
     }
-    if(answerText == null || answerText=='U') { // 'U'
+    if (answerText == null || answerText == 'U') { // 'U'
       return 3;
     }
   }
@@ -345,12 +345,12 @@ export class C2m2ListOfPartiallyImplementedAndNotImplementedPracticesComponent i
     let answerGroups = this.answerTextList[domain]; // this is the 3x3 group (3 possible answers [PI,NI,U], 3 possible MILs) for the wanted domain
     let milAnswerGroup = answerGroups[mil];
     let count = 0;
-    for(let value of milAnswerGroup) {
+    for (let value of milAnswerGroup) {
       if (value != 0) {
         count++;
       }
     }
-    return count+1;
+    return count + 1;
   }
 
 }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,7 +24,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
 
         private void AllConnections(List<NetworkComponent> connectors)
         {
-            
+
             foreach (var connector in connectors)
             {
                 if (connector.IsLinkConnector)
@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
         }
 
         public ExtractLeafSpanningTree(NetworkComponent nc)
-        {   
+        {
             AllConnections(nc.Connections);
             ProcessedAlreadyConnections.Add(nc);
         }

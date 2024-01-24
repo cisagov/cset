@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -33,61 +33,72 @@
 
     <ul>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-intro')">1. Introduction</a>
+        <a class="link-primary" (click)="scrollToElement('toc-intro')">1. Introduction</a>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-model-architecture')">2. Model Architecture</a>
-          <ul>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-domains-objectives-practices')">2.1 Domains, Objectives, and Practices</a>
-            </li>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-levels')">2.2 Maturity Indicator Levels</a>
-            </li>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-level-scoring')">2.3 Maturity Indicator Level Scoring</a>
-            </li>
-          </ul>
+        <a class="link-primary" (click)="scrollToElement('toc-model-architecture')">2. Model Architecture</a>
+        <ul>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-domains-objectives-practices')">2.1 Domains,
+              Objectives, and Practices</a>
+          </li>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-levels')">2.2 Maturity Indicator
+              Levels</a>
+          </li>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-maturity-indicator-level-scoring')">2.3 Maturity
+              Indicator Level Scoring</a>
+          </li>
+        </ul>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-summary-results')">3. Summary of Self-Evaluation Results</a>
-          <ul>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-mil-achievement-by-domain')">3.1 MIL Achievement by Domain</a>
-            </li>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-practice-implementation-by-domain')">3.2 Practice Implementation by Domain</a>
-            </li>
-            <li>
-              <a class="link-primary" (click)="scrollToElement('toc-implementation-of-management-activities')">3.3 Implementation of Management Activities across Domains</a>
-            </li>
-          </ul>
+        <a class="link-primary" (click)="scrollToElement('toc-summary-results')">3. Summary of Self-Evaluation
+          Results</a>
+        <ul>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-mil-achievement-by-domain')">3.1 MIL Achievement by
+              Domain</a>
+          </li>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-practice-implementation-by-domain')">3.2 Practice
+              Implementation by Domain</a>
+          </li>
+          <li>
+            <a class="link-primary" (click)="scrollToElement('toc-implementation-of-management-activities')">3.3
+              Implementation of Management Activities across Domains</a>
+          </li>
+        </ul>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-detailed-results')">4. Detailed Self-Evaluation Results</a>
-          <ul>
-            <li *ngFor="let domain of domainData; let i = index">
-              <a class="link-primary" (click)="scrollToElement('toc-' + domain.shortTitle)">4.{{ i + 1 }} {{ domain.title }} ({{ domain.shortTitle }})</a>
-            </li>
-          </ul>
+        <a class="link-primary" (click)="scrollToElement('toc-detailed-results')">4. Detailed Self-Evaluation
+          Results</a>
+        <ul>
+          <li *ngFor="let domain of domainData; let i = index">
+            <a class="link-primary" (click)="scrollToElement('toc-' + domain.shortTitle)">4.{{ i + 1 }} {{ domain.title
+              }} ({{ domain.shortTitle }})</a>
+          </li>
+        </ul>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-using-results')">5. Using the Self-Evaluation Results</a>
+        <a class="link-primary" (click)="scrollToElement('toc-using-results')">5. Using the Self-Evaluation Results</a>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-self-eval-notes')">6. Self-Evaluation Notes</a>
+        <a class="link-primary" (click)="scrollToElement('toc-self-eval-notes')">6. Self-Evaluation Notes</a>
       </li>
       <li>
-          <a class="link-primary" (click)="scrollToElement('toc-list-of-pi-and-ni-practices')">7. List of Partially Implemented and Not Implemented Practices</a>
+        <a class="link-primary" (click)="scrollToElement('toc-list-of-pi-and-ni-practices')">7. List of Partially
+          Implemented and Not Implemented Practices</a>
       </li>
     </ul>
-    
+
     <br>
     <hr>
     <h5>PDF Options:</h5>
     <ol>
       <li>
-        <app-pdf-reports [assessmentInfo]="assessmentInfo" [donutData]="donutData" [tableData]="tableData"></app-pdf-reports>
+        <app-pdf-reports [assessmentInfo]="assessmentInfo" [donutData]="donutData"
+          [tableData]="tableData"></app-pdf-reports>
       </li>
     </ol>
 

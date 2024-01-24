@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ import { AuthenticationService } from '../../services/authentication.service';
   selector: 'app-assessment-documents',
   templateUrl: './assessment-documents.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDocumentsComponent implements OnInit {
 
@@ -53,10 +53,10 @@ export class AssessmentDocumentsComponent implements OnInit {
   download(doc: any) {
     // get short-term JWT from API
     this.authSvc.getShortLivedToken().subscribe((response: any) => {
-        const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
-        window.location.href = url;
+      const url = this.fileSvc.downloadUrl + doc.document_Id + "?token=" + response.token;
+      window.location.href = url;
     });
-}
+  }
 
   close() {
     return this.dialog.close();

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,46 +21,51 @@
   SOFTWARE. 
 -------------------------->
 <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-    <span class="mr-3 fs-base-6 cset-icons-cset-lock"></span>
-    <span>About</span>
-  </div>
-  <mat-dialog-content class="p-4 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
-      <article class="mb-4 d-flex flex-column flex-11a w-100">
-        <div class="d-flex flex-column justify-content-start flex-00a">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            style="height: 30px; width: 210px;">
-            <path class="fill-primary" stroke="transparent" stroke-width="0" transform="scale(.75)"
-              d="M254.64,29.7L255.106,29.7C255.65,29.7 256.09,29.517 256.09,29.077 256.09,28.689 255.805,28.43 255.183,28.43 254.924,28.43 254.743,28.457 254.64,28.483z M254.614,32.083L253.63,32.083 253.63,27.834C254.019,27.783 254.563,27.705 255.261,27.705 256.064,27.705 256.426,27.834 256.711,28.043 256.971,28.223 257.152,28.534 257.152,28.948 257.152,29.467 256.763,29.803 256.273,29.959L256.273,30.011C256.686,30.14 256.893,30.476 257.022,31.046 257.152,31.694 257.256,31.927 257.333,32.083L256.297,32.083C256.167,31.927 256.09,31.565 255.961,31.046 255.882,30.605 255.623,30.399 255.079,30.399L254.614,30.399z M251.997,29.882C251.997,31.771 253.422,33.273 255.313,33.273 257.152,33.3 258.55,31.771 258.55,29.906 258.55,28.016 257.152,26.488 255.261,26.488 253.422,26.488 251.997,28.016 251.997,29.882 M259.639,29.882C259.639,32.264 257.721,34.154 255.287,34.154 252.853,34.154 250.91,32.264 250.91,29.882 250.91,27.499 252.853,25.634 255.313,25.634 257.721,25.634 259.639,27.499 259.639,29.882 M210,0L271,0 271,8 244,8 244,38 237,38 237,8 210,8z M147,23L147,30 201,30 201,38 140,38 140,0 201,0 201,8 147,8 147,16 175,16 175,23z M125.078,38L70,38 70,30.316 122.721,30.199C123.334,30.199 123.641,29.894 123.755,29.277 123.792,29.162 123.937,29.066 123.937,28.99L124,23.226 124,23 70,23 70,6.457C70,3.806 70.951,1.883 73.104,0.806 74.028,0.308 74.959,0 76.152,0L131,0 131,7.724 78.448,7.668C77.833,7.668 77.323,7.955 77.205,8.531 77.166,8.648 77,8.744 77,8.82L77,16 131,16 131,31.467C131,34.158 130.153,36.107 128.039,37.181 127.078,37.681 126.229,38 125.078,38 M8,28.875C8,29.566 8.115,29.898 8.729,30.013 8.807,30.053 8.69,30 8.765,30L61,30 61,38 6.115,38C3.543,38 1.818,36.857 0.666,34.705 0.127,33.705 0,32.525 0,31.295L0,6.457C0,3.806 0.935,1.883 3.087,0.806 4.009,0.308 4.923,0 6.115,0L62,0 62,8 8.996,8C8.075,8,8,8.207,8,9.281z" />
-          </svg>
-          <hr class="hr-logo">
-          <span class="mb-1">CYBER SECURITY EVALUATION TOOL</span>
-          <span class="mb-1">Version: {{version}}</span>
-          <div *ngIf="!!linkerTime">Build Date: {{linkerTime}}</div>          
-        </div>
-        <hr>
-        <div class="d-flex justify-content-center flex-00a mb-2">
-          <img src="./assets/images/CF/cfl-logo-600.png" style="width: 15rem;">
-        </div>
-        <div class="c-primary d-flex flex-column text-left flex-00a">
-            Welcome to the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort will be critical to helping Florida’s elected leaders determine how best to allocate resources and enact appropriate legislation to create a more secure Sunshine State!
-        </div>        
-      </article>
-      <article class="mb-4 d-flex flex-column flex-11a w-100">
-        <h3 class="wrap-text">CSET Training Resources</h3>
-        <p class="wrap-text">CSET training is available through the following resources:</p>
-        <h5 class="fw-600"><a target="_blank" rel="noopener noreferrer"
-            href="{{this.configSvc.docUrl}}htmlhelp/index.htm">User Guide</a></h5>
-  
-        <h5 class="fw-600">Video Tutorials</h5>
-        <a class="wrap-text" target="_blank" rel="noopener noreferrer"
-          href="https://www.youtube.com/c/CSETCyberSecurityEvaluationTool">https://www.youtube.com/c/CSETCyberSecurityEvaluationTool</a>
-  
-          <h3 class="mt-4">Contact</h3>
-          <p class="mb-3 wrap-text">
-            To learn more about Cyber Florida, visit  <a target="_blank" rel="noopener noreferrer" href="https://cyberflorida.org/">Cyber Florida</a> or contact            
-            <a class="wrap-text mailto" *ngIf="helpContactEmail?.trim().length > 0" href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a> {{helpContactPhone}}            
-          </p>
-      </article>
-    </section>
-  </mat-dialog-content>
+  <span class="mr-3 fs-base-6 cset-icons-cset-lock"></span>
+  <span>About</span>
+</div>
+<mat-dialog-content class="p-4 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+  <section class="pr-4 d-flex flex-11a flex-row flex-wrap">
+    <article class="mb-4 d-flex flex-column flex-11a w-100">
+      <div class="d-flex flex-column justify-content-start flex-00a">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          style="height: 30px; width: 210px;">
+          <path class="fill-primary" stroke="transparent" stroke-width="0" transform="scale(.75)"
+            d="M254.64,29.7L255.106,29.7C255.65,29.7 256.09,29.517 256.09,29.077 256.09,28.689 255.805,28.43 255.183,28.43 254.924,28.43 254.743,28.457 254.64,28.483z M254.614,32.083L253.63,32.083 253.63,27.834C254.019,27.783 254.563,27.705 255.261,27.705 256.064,27.705 256.426,27.834 256.711,28.043 256.971,28.223 257.152,28.534 257.152,28.948 257.152,29.467 256.763,29.803 256.273,29.959L256.273,30.011C256.686,30.14 256.893,30.476 257.022,31.046 257.152,31.694 257.256,31.927 257.333,32.083L256.297,32.083C256.167,31.927 256.09,31.565 255.961,31.046 255.882,30.605 255.623,30.399 255.079,30.399L254.614,30.399z M251.997,29.882C251.997,31.771 253.422,33.273 255.313,33.273 257.152,33.3 258.55,31.771 258.55,29.906 258.55,28.016 257.152,26.488 255.261,26.488 253.422,26.488 251.997,28.016 251.997,29.882 M259.639,29.882C259.639,32.264 257.721,34.154 255.287,34.154 252.853,34.154 250.91,32.264 250.91,29.882 250.91,27.499 252.853,25.634 255.313,25.634 257.721,25.634 259.639,27.499 259.639,29.882 M210,0L271,0 271,8 244,8 244,38 237,38 237,8 210,8z M147,23L147,30 201,30 201,38 140,38 140,0 201,0 201,8 147,8 147,16 175,16 175,23z M125.078,38L70,38 70,30.316 122.721,30.199C123.334,30.199 123.641,29.894 123.755,29.277 123.792,29.162 123.937,29.066 123.937,28.99L124,23.226 124,23 70,23 70,6.457C70,3.806 70.951,1.883 73.104,0.806 74.028,0.308 74.959,0 76.152,0L131,0 131,7.724 78.448,7.668C77.833,7.668 77.323,7.955 77.205,8.531 77.166,8.648 77,8.744 77,8.82L77,16 131,16 131,31.467C131,34.158 130.153,36.107 128.039,37.181 127.078,37.681 126.229,38 125.078,38 M8,28.875C8,29.566 8.115,29.898 8.729,30.013 8.807,30.053 8.69,30 8.765,30L61,30 61,38 6.115,38C3.543,38 1.818,36.857 0.666,34.705 0.127,33.705 0,32.525 0,31.295L0,6.457C0,3.806 0.935,1.883 3.087,0.806 4.009,0.308 4.923,0 6.115,0L62,0 62,8 8.996,8C8.075,8,8,8.207,8,9.281z" />
+        </svg>
+        <hr class="hr-logo">
+        <span class="mb-1">CYBER SECURITY EVALUATION TOOL</span>
+        <span class="mb-1">Version: {{version}}</span>
+        <div *ngIf="!!linkerTime">Build Date: {{linkerTime}}</div>
+      </div>
+      <hr>
+      <div class="d-flex justify-content-center flex-00a mb-2">
+        <img src="./assets/images/CF/cfl-logo-600.png" style="width: 15rem;">
+      </div>
+      <div class="c-primary d-flex flex-column text-left flex-00a">
+        Welcome to the CyberSecureFlorida initiative, a first-of-its-kind effort to assess the cybersecurity strengths
+        and weaknesses of Florida’s collective critical infrastructure. The information gathered through this effort
+        will be critical to helping Florida’s elected leaders determine how best to allocate resources and enact
+        appropriate legislation to create a more secure Sunshine State!
+      </div>
+    </article>
+    <article class="mb-4 d-flex flex-column flex-11a w-100">
+      <h3 class="wrap-text">CSET Training Resources</h3>
+      <p class="wrap-text">CSET training is available through the following resources:</p>
+      <h5 class="fw-600"><a target="_blank" rel="noopener noreferrer"
+          href="{{this.configSvc.docUrl}}htmlhelp/index.htm">User Guide</a></h5>
+
+      <h5 class="fw-600">Video Tutorials</h5>
+      <a class="wrap-text" target="_blank" rel="noopener noreferrer"
+        href="https://www.youtube.com/c/CSETCyberSecurityEvaluationTool">https://www.youtube.com/c/CSETCyberSecurityEvaluationTool</a>
+
+      <h3 class="mt-4">Contact</h3>
+      <p class="mb-3 wrap-text">
+        To learn more about Cyber Florida, visit <a target="_blank" rel="noopener noreferrer"
+          href="https://cyberflorida.org/">Cyber Florida</a> or contact
+        <a class="wrap-text mailto" *ngIf="helpContactEmail?.trim().length > 0"
+          href="mailto:{{helpContactEmail}}">{{helpContactEmail}}</a> {{helpContactPhone}}
+      </p>
+    </article>
+  </section>
+</mat-dialog-content>

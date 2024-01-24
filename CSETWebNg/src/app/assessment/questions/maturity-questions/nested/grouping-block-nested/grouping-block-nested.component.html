@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,13 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="pt-3 pb-2 bgc-gray-50" [class.sticky-description]="shouldDescriptionBeSticky()" style="margin-left: -1rem; padding-left: 1rem;">
+<div class="pt-3 pb-2 bgc-gray-50" [class.sticky-description]="shouldDescriptionBeSticky()"
+  style="margin-left: -1rem; padding-left: 1rem;">
   <h4 class="mb-3">{{title}}</h4>
-  <div class="alert alert-dark" role="alert" *ngIf="grouping.description?.length > 0" [innerHTML]="grouping.description"></div>
+  <div class="alert alert-dark" role="alert" *ngIf="grouping.description?.length > 0"
+    [innerHTML]="grouping.description"></div>
 </div>
 
 <div *ngFor="let g of grouping.groupings" class="pl-3 mb-5">
-    <app-grouping-block-nested [grouping]="g"></app-grouping-block-nested>
+  <app-grouping-block-nested [grouping]="g"></app-grouping-block-nested>
 </div>
 <div>
   <app-question-block-nested #questionBlock [grouping]="grouping">

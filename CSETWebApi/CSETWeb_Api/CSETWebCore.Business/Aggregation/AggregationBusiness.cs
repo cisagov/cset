@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -68,7 +68,7 @@ namespace CSETWebCore.Business.Aggregation
                 myAllowedAggregIDs.Add(agg.AggregationID);
             }
 
-                return l.OrderBy(x => x.AggregationDate).ToList();
+            return l.OrderBy(x => x.AggregationDate).ToList();
         }
 
 
@@ -169,9 +169,9 @@ namespace CSETWebCore.Business.Aggregation
         /// <param name="aggregationId"></param>
         public void DeleteAggregation(int aggregationId)
         {
-           _context.AGGREGATION_ASSESSMENT.RemoveRange(
-                _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
-                );
+            _context.AGGREGATION_ASSESSMENT.RemoveRange(
+                 _context.AGGREGATION_ASSESSMENT.Where(x => x.Aggregation_Id == aggregationId)
+                 );
 
             _context.AGGREGATION_INFORMATION.RemoveRange(
                 _context.AGGREGATION_INFORMATION.Where(x => x.AggregationID == aggregationId)
