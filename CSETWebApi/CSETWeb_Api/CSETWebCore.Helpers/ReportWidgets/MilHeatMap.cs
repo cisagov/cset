@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -140,7 +140,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 return;
             }
 
-            attrTransform.Value += $" scale({scale})";      
+            attrTransform.Value += $" scale({scale})";
         }
 
 

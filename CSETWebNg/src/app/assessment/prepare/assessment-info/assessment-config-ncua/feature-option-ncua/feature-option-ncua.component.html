@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -25,18 +25,15 @@
         <input type="checkbox" tabindex="0" id="{{feature.code}}" name="{{feature.code}}" class="checkbox-custom mt-1"
             [disabled]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus)
             || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
-            || isDisabled"
-            (change)="submit(feature, $event)" [checked]="feature.selected">
-        <label for="{{feature.code}}" 
-            class="checkbox-custom-label"
-            [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus) 
+            || isDisabled" (change)="submit(feature, $event)" [checked]="feature.selected">
+        <label for="{{feature.code}}" class="checkbox-custom-label" [class.o65]="assessSvc.assessment?.isAcetOnly && feature.code == 'standard' && !(this.ncuaSvc.switchStatus) 
             || assessSvc.assessment?.isAcetOnly && feature.code == 'diagram' && !(this.ncuaSvc.switchStatus)
             || isDisabled">
             {{feature.label}}
         </label>
     </div>
-    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
-        tabindex="0"></i>
+    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()"
+        (keyup.enter)="toggleExpansion()" tabindex="0"></i>
 </div>
 <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc"
     [innerHTML]="feature.description | safe">
@@ -53,9 +50,11 @@
             </label>
         </div>
         <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedAcet" (click)="toggleExpansionAcet()"
-        (keyup.enter)="toggleExpansionAcet()" tabindex="0"></i>
+            (keyup.enter)="toggleExpansionAcet()" tabindex="0"></i>
     </div>
-    <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedAcet" [class.closed-desc]="!expandedAcet">
-        The ACET Only mode is selected by default for ACET users. When selected you will see ACET-specific functionality.
+    <div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedAcet"
+        [class.closed-desc]="!expandedAcet">
+        The ACET Only mode is selected by default for ACET users. When selected you will see ACET-specific
+        functionality.
     </div>
 </div>

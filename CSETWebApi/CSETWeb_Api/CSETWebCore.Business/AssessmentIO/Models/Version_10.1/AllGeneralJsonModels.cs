@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -692,7 +692,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public string CriticalService { get; set; }
     }
 
-    public class jDETAILS_DEMOGRAPHICS 
+    public class jDETAILS_DEMOGRAPHICS
     {
         [Required]
         public Int32 Assessment_Id { get; set; }
@@ -1028,7 +1028,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         [Required]
         public int Assessment_Id { get; set; }
         [Required]
-        public string County_FIPS{ get; set;}
+        public string County_FIPS { get; set; }
 
     }
     public class jCSAF_FILE
@@ -1073,7 +1073,7 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public int Assessment_Id { get; set; }
         [Required]
         public int Id { get; set; }
-       
+
         public string WarningText { get; set; }
     }
     public class jREGION_ANSWERS

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ import { ConfigService } from './config.service';
 
 const headers = {
   headers: new HttpHeaders()
-      .set('Content-Type', 'application/json'),
+    .set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -49,18 +49,18 @@ export class CrrService {
 
   constructor(private http: HttpClient, private configSvc: ConfigService) { }
 
-  getCrrModel(){
+  getCrrModel() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrModel');
   }
 
   getMil1FullAnswerDistribWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1FullAnswerDistrib',
-    { responseType: 'text' });
+      { responseType: 'text' });
   }
 
   getMil1PerformanceSummaryLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getMil1PerformanceSummaryBodyCharts() {
@@ -73,12 +73,12 @@ export class CrrService {
 
   getCrrPerformanceSummaryLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/performanceLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getNistCsfSummaryChartWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/nistCsfSummaryChart',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getNistCsfSummaryReportBodyData() {
@@ -87,7 +87,7 @@ export class CrrService {
 
   getMil1PerformanceLegendWidget() {
     return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
-    { responseType: 'text'});
+      { responseType: 'text' });
   }
 
   getMil1PerformanceBodyCharts() {

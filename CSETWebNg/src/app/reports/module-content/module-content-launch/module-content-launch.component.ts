@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../../services/set-builder.service';
 import { AssessmentService } from '../../../services/assessment.service';
 
@@ -54,19 +54,19 @@ export class ModuleContentLaunchComponent implements OnInit {
   ngOnInit(): void {
     this.setBuilderSvc.getAllSetList().subscribe((x: any[]) => {
       this.standards = x.filter(s => s.isDisplayed);
-      this.standards.sort((a, b) => { 
-        if (a.fullName < b.fullName) { return -1; } 
+      this.standards.sort((a, b) => {
+        if (a.fullName < b.fullName) { return -1; }
         if (a.fullName > b.fullName) { return 1; }
-        return 0; 
+        return 0;
       });
     });
 
     this.models = AssessmentService.allMaturityModels;
     this.models?.sort((a, b) => {
-      if (a.modelTitle < b.modelTitle) { return -1; } 
+      if (a.modelTitle < b.modelTitle) { return -1; }
       if (a.modelTitle > b.modelTitle) { return 1; }
-      return 0; 
-      });
+      return 0;
+    });
   }
 
   /**

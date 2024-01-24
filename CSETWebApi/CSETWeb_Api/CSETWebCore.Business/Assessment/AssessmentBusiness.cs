@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -335,11 +335,11 @@ namespace CSETWebCore.Business.Assessment
         /// </summary>
         /// <param name="assessmentGuid"></param>
         /// <returns></returns>
-        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid) 
-        { 
+        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid)
+        {
             var assessment = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid);
-        
-            if (assessment == null) 
+
+            if (assessment == null)
             {
                 return null;
             }
@@ -617,7 +617,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
 
-            dbAssessment.Charter = "00000";            
+            dbAssessment.Charter = "00000";
             dbAssessment.Assets = assessment.Assets.ToString();
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
@@ -673,8 +673,8 @@ namespace CSETWebCore.Business.Assessment
             }
 
             // No user is null here if accesskey login is used
-            if (user != null) 
-            { 
+            if (user != null)
+            {
                 AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
             }
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -683,7 +683,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-     
+
 
         /// <summary>
         /// Get all organization types
@@ -891,11 +891,16 @@ namespace CSETWebCore.Business.Assessment
         public void clearFirstTime(int userid, int assessment_id)
         {
             var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
-            if(us != null)
+            if (us != null)
             {
                 us.IsFirstLogin = false;
                 _context.SaveChanges();
             }
+        }
+
+        public void MoveHydroActionsOutOfIseActions()
+        {
+            _utilities.MoveActionItemsFrom_IseActions_To_HydroData(_context);
         }
     }
 }

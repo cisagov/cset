@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,90 +21,91 @@
   SOFTWARE. 
 -------------------------->
 <div class="edm-appendix-a-header-graph-examples" style="width:100%">
-    <div>
-      <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
-        Legend
+  <div>
+    <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
+      Legend
+    </div>
+    <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text">
+      (example responses)
+    </div>
+    <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text">
+      <div class="edm-top-descriptor-arrow">
       </div>
-      <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text">
-        (example responses)
-      </div>
-      <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text">
-        <div class="edm-top-descriptor-arrow">              
-        </div>
-        <div class="edm-top-descriptor-text">
+      <div class="edm-top-descriptor-text">
         number of practice questions
-        </div>
-      </div>
-    </div>
-    <div class="edm-appendix-a-header-legend" style="width:100%">
-      <div class="edm-aa-header-legend-label">
-        Legend
-      </div>
-      <div class="edm-aa-header-legend-bar green-score">
-        7
-      </div>
-      <div class="edm-aa-header-legend-bar yellow-score">
-        7
-      </div>
-      <div class="edm-aa-header-legend-bar red-score" >
-        7
-      </div>
-    </div>
-
-    <div>
-      <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
-        Legend
-      </div>
-      <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text-bottom">
-        <div class="edm-bottom-descriptor-arrow">              
-        </div>
-        <div class="edm-bottom-descriptor-text" style="width:1em;">
-          practices performed
-        </div>
-      </div>
-      <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text-bottom">
-        <div class="edm-bottom-descriptor-arrow">              
-        </div>
-        <div class="edm-bottom-descriptor-text">
-          practices incompletely performed
-        </div>
-      </div>
-      <div style="flex-basis: 100%; width: 8em" class="edm-aa-header-legend-small-text-bottom">
-        <div class="edm-bottom-descriptor-arrow">              
-        </div>
-        <div class="edm-bottom-descriptor-text">
-          practices not performed
-        </div>
-      </div>
-    </div>
-
-
-    <div *ngIf="display_na_bar" class="edm-appendix-a-header-legend" style="width:100%">
-      <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
-        Legend
-      </div>
-      <div class="edm-aa-header-legend-bar default-score" style="flex-basis:100%">
-        Not applicable
-      </div>
-    </div>
-    
-    <div>
-      <div  class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
-        Legend
-      </div>
-      <div *ngIf='full_info_text' style="flex-basis: 100%;" class="edm-bottom-info-text-container">
-        <div class="edm-bottom-info-text">
-          The External Dependencies Management Assessment (EDM) has as its focus external dependency risk (aka
-          supply chain risk), and as such is not designed to directly map to all of the Cybersecurity Framework (CSF)
-          categories or sub-categories.
-          A companion product, the Cyber Resilience Review (CRR) which is intended as a comprehensive cybersecurity
-          assessment tool, does map to all of the CSF.
-        </div>
-      </div>
-      <div *ngIf='!suppressNcsfFooter && !full_info_text' style="flex-basis: 100%;" class="edm-bottom-info-text-container">
-        <div class="edm-bottom-info-text">
-          Please see legend of the NIST Cybersecurity Framework Summary page.
-        </div>
       </div>
     </div>
   </div>
+  <div class="edm-appendix-a-header-legend" style="width:100%">
+    <div class="edm-aa-header-legend-label">
+      Legend
+    </div>
+    <div class="edm-aa-header-legend-bar green-score">
+      7
+    </div>
+    <div class="edm-aa-header-legend-bar yellow-score">
+      7
+    </div>
+    <div class="edm-aa-header-legend-bar red-score">
+      7
+    </div>
+  </div>
+
+  <div>
+    <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
+      Legend
+    </div>
+    <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text-bottom">
+      <div class="edm-bottom-descriptor-arrow">
+      </div>
+      <div class="edm-bottom-descriptor-text" style="width:1em;">
+        practices performed
+      </div>
+    </div>
+    <div style="flex-basis: 100%;" class="edm-aa-header-legend-small-text-bottom">
+      <div class="edm-bottom-descriptor-arrow">
+      </div>
+      <div class="edm-bottom-descriptor-text">
+        practices incompletely performed
+      </div>
+    </div>
+    <div style="flex-basis: 100%; width: 8em" class="edm-aa-header-legend-small-text-bottom">
+      <div class="edm-bottom-descriptor-arrow">
+      </div>
+      <div class="edm-bottom-descriptor-text">
+        practices not performed
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="display_na_bar" class="edm-appendix-a-header-legend" style="width:100%">
+    <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
+      Legend
+    </div>
+    <div class="edm-aa-header-legend-bar default-score" style="flex-basis:100%">
+      Not applicable
+    </div>
+  </div>
+
+  <div>
+    <div class="edm-aa-header-legend-label transparent-label-spacer" style="color: rgba(0,0,0,0)">
+      Legend
+    </div>
+    <div *ngIf='full_info_text' style="flex-basis: 100%;" class="edm-bottom-info-text-container">
+      <div class="edm-bottom-info-text">
+        The External Dependencies Management Assessment (EDM) has as its focus external dependency risk (aka
+        supply chain risk), and as such is not designed to directly map to all of the Cybersecurity Framework (CSF)
+        categories or sub-categories.
+        A companion product, the Cyber Resilience Review (CRR) which is intended as a comprehensive cybersecurity
+        assessment tool, does map to all of the CSF.
+      </div>
+    </div>
+    <div *ngIf='!suppressNcsfFooter && !full_info_text' style="flex-basis: 100%;"
+      class="edm-bottom-info-text-container">
+      <div class="edm-bottom-info-text">
+        Please see legend of the NIST Cybersecurity Framework Summary page.
+      </div>
+    </div>
+  </div>
+</div>

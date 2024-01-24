@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@ import { Injectable } from '@angular/core';
 import { AssessmentService } from '../assessment.service';
 import { ConfigService } from '../config.service';
 import { DemographicExtendedService } from '../demographic-extended.service';
-import { NavTreeNode } from './navigation.service';
 
 /**
  * Analyzes assessment
@@ -34,7 +33,7 @@ import { NavTreeNode } from './navigation.service';
   providedIn: 'root'
 })
 export class PageVisibilityService {
-  
+
 
   constructor(
     private assessSvc: AssessmentService,
@@ -61,7 +60,7 @@ export class PageVisibilityService {
    * Evaluates visible property and disabled property where a page should be hidden and
    * ignored in the TOC and next/back workflow.
    */
-  showPage(page: HTMLElement): boolean {     
+  showPage(page: HTMLElement): boolean {
     // look for a visible on the current page or its nearest parent
     let nnnn = page.closest('[visible]');
     let visibleAttrib = nnnn?.attributes['visible']?.value.trim();
@@ -155,7 +154,7 @@ export class PageVisibilityService {
       if (c == 'SHOW-EXEC-SUMMARY') {
         show = show && this.showExecSummaryPage();
       }
-      if(c == 'CF-DEMOGRAPHICS-COMPLETE'){
+      if (c == 'CF-DEMOGRAPHICS-COMPLETE') {
         show = show && this.cfDemographicsComplete();
       }
     });
@@ -166,31 +165,31 @@ export class PageVisibilityService {
   isEnabled(page: HTMLElement) {
     let nnnn = page.closest('[enabled]');
     let enabledAttrib = nnnn?.attributes['enabled']?.value.trim();
-      // if no enabled conditions are specified, enable the page
-      if (!enabledAttrib || enabledAttrib.length === 0) {
-        return true;
+    // if no enabled conditions are specified, enable the page
+    if (!enabledAttrib || enabledAttrib.length === 0) {
+      return true;
+    }
+
+
+    // enables are separated by spaces and a enable condition cannot contain
+    // any internal spaces.  For the page to show, all enables must be true.
+    // Start with true and if any fail, result is false.
+    let enabled = true;
+    let enables = enabledAttrib.toUpperCase().split(' ');
+    enables.forEach(c => {
+
+      // if 'DISABLED' is present, this trumps everything else
+      if (c == 'DISABLED') {
+        enabled = false;
       }
-  
-  
-      // enables are separated by spaces and a enable condition cannot contain
-      // any internal spaces.  For the page to show, all enables must be true.
-      // Start with true and if any fail, result is false.
-      let enabled = true;
-      let enables = enabledAttrib.toUpperCase().split(' ');
-      enables.forEach(c => {
-  
-        // if 'DISABLED' is present, this trumps everything else
-        if (c == 'DISABLED') {
-          enabled = false;
-        }
-        
-        if(c == 'CF-ASSESSMENT-COMPLETE'){                    
-          enabled = enabled && this.assessSvc.isCyberFloridaComplete();
-        }
-  
-      });
-  
-      return enabled;
+
+      if (c == 'CF-ASSESSMENT-COMPLETE') {
+        enabled = enabled && this.assessSvc.isCyberFloridaComplete();
+      }
+
+    });
+
+    return enabled;
   }
 
 
@@ -260,7 +259,7 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has ||
-      (this.assessSvc.assessment?.origin == t.trim())
+        (this.assessSvc.assessment?.origin == t.trim())
     });
     return has;
   }
@@ -275,22 +274,22 @@ export class PageVisibilityService {
     let has = false;
     targets.forEach((t: string) => {
       has = has ||
-      (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())))
+        (this.assessSvc.assessment?.useMaturity && this.assessSvc.usesMaturityModelId(Number.parseInt(t.trim())))
     });
     return has;
   }
 
-    /**
-   *
-   * @param rule
-   * @returns
-   */
+  /**
+ *
+ * @param rule
+ * @returns
+ */
   standardAny(rule: string): boolean {
     let targets = this.getTargets(rule);
     let has = false;
     targets.forEach((t: string) => {
       has = has ||
-      (this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard(t.trim()));
+        (this.assessSvc.assessment?.useStandard && this.assessSvc.usesStandard(t.trim()));
     });
     return has;
   }
@@ -324,11 +323,11 @@ export class PageVisibilityService {
   cfDemographicsComplete() {
     //if this is CF installation and the demographics are not complete return false
     //else return true; 
-    if(this.assessSvc.assessment?.origin == "CF"){
-      if(this.demographics.AreDemographicsCompleteNav()){
+    if (this.assessSvc.assessment?.origin == "CF") {
+      if (this.demographics.AreDemographicsCompleteNav()) {
         return true;
       }
-      return false; 
+      return false;
     }
     return true;
   }
@@ -336,11 +335,11 @@ export class PageVisibilityService {
   cfEntryAssessmentComplete() {
     //if this is CF installation and the demographics are not complete return false
     //else return true; 
-    if(this.assessSvc.assessment?.origin == "CF"){
-      if(this.demographics.AreDemographicsCompleteNav()){
+    if (this.assessSvc.assessment?.origin == "CF") {
+      if (this.demographics.AreDemographicsCompleteNav()) {
         return true;
       }
-      return false; 
+      return false;
     }
     return true;
   }

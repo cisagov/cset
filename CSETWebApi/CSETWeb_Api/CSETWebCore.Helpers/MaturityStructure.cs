@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -179,8 +179,8 @@ namespace CSETWebCore.Helpers
 
                     var question = new Model.Maturity.CPG.Question();
                     question.QuestionId = myQ.Mat_Question_Id;
-                    question.ParentQuestionId  = myQ.Parent_Question_Id;
-                    question.Sequence  = myQ.Sequence;
+                    question.ParentQuestionId = myQ.Parent_Question_Id;
+                    question.Sequence = myQ.Sequence;
                     question.DisplayNumber = myQ.Question_Title;
                     question.Answer = answer?.a.Answer_Text ?? "";
                     question.Comment = answer?.a.Comment ?? "";
@@ -199,8 +199,8 @@ namespace CSETWebCore.Helpers
                         question.Practice = cpgPractice.FirstOrDefault()?.Html();
 
 
-                        question.Supplemental  = myQ.Supplemental_Info;
-                        
+                        question.Supplemental = myQ.Supplemental_Info;
+
                         question.Scope = myQ.Scope;
                         question.RecommendedAction = myQ.Recommend_Action;
                         question.Services = myQ.Services;

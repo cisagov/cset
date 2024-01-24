@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -615,11 +615,11 @@ export class Utilities {
     public static debounce(func: (...args) => any, wait: number, immediate?: boolean) {
         let timeout;
 
-        return function() {
+        return function () {
             const context = this;
             const args_ = arguments;
 
-            const later = function() {
+            const later = function () {
                 timeout = null;
                 if (!immediate) {
                     func.apply(context, args_);
@@ -637,13 +637,13 @@ export class Utilities {
         };
     }
 
-    public static getValueAtIndexOrDefault(value, index, defaultValue){
+    public static getValueAtIndexOrDefault(value, index, defaultValue) {
         let isArray = false;
         if (Array.isArray(value)) {
-			isArray = true;
-		}
+            isArray = true;
+        }
 
-        if(isArray){
+        if (isArray) {
             return typeof value[index] === 'undefined' ? defaultValue : value[index];
         }
         return typeof value === 'undefined' ? defaultValue : value;
@@ -657,9 +657,9 @@ export class Utilities {
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var charactersLength = characters.length;
         for (var i = 0; i < length; i++) {
-          result += characters.charAt(Math.floor(Math.random() *
-            charactersLength));
+            result += characters.charAt(Math.floor(Math.random() *
+                charactersLength));
         }
         return result;
-      }
+    }
 }

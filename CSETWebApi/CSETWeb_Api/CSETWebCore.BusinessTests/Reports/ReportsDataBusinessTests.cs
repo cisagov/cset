@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Merit.Tests
         }
         //private String GetProperty(String name)
         //{
-             
+
         //    var query = _context.GLOBAL_PROPERTIES.Where(x => x.Property == name);
         //    if (query.ToList().Count > 0)
         //    {
@@ -39,8 +39,8 @@ namespace CSETWebCore.Business.Merit.Tests
         //    }
 
 
-             
-            
+
+
         //}
     }
 }

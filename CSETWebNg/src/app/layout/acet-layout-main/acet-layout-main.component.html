@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,6 @@
       <div class="d-flex justify-content-start align-items-center flex-00a mt-1">
         <img height="28" src="{{configSvc.assetsUrl}}images/NCUA/logo.svg" tabindex="0" alt="acet" />
       </div>
-    </span>
 
     <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
     <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
@@ -57,16 +56,16 @@
   </nav>
   </div>
 
-  <!-- Body -->
-  <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-    <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
+    <!-- Body -->
+    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+      <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
       <div class="p-0 d-flex col-xl-12 bgc-gray-50">
-      <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
+      </div>
     </div>
-  </div>
 
-  <!-- Footer -->
-  <!-- Commenting out. Removing per client request during demo, but they might change their minds. 11/21/2022
+    <!-- Footer -->
+    <!-- Commenting out. Removing per client request during demo, but they might change their minds. 11/21/2022
 
   <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header sticky-footer"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
@@ -135,4 +134,4 @@
       </ng-template>
     </ngb-panel>
   </ngb-accordion>-->
-</div>
+  </div>

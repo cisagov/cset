@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -72,35 +72,37 @@
               [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                <div class="footer-section-2 p-2">
-                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                    <ng-container *ngIf="isRunningAnonymous()">
-                      <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                        (click)="showDisclaimer()">INL Privacy & Accessibility</a>
-                      <span class="mr-2 ml-2">|</span>
-                      <a target="_blank" rel="noopener noreferrer"
-                        href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                      <span class="mr-2 ml-2">|</span>
-                    </ng-container>
+          <div ngbAccordionBody>
+            <ng-template>
+              <div class="footer-section-2 p-2">
+                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                  <ng-container *ngIf="isRunningAnonymous()">
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                      href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
+                      (click)="showDisclaimer()">INL Privacy & Accessibility</a>
                     <span class="mr-2 ml-2">|</span>
-                    <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                      href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+                    <a target="_blank" rel="noopener noreferrer"
+                      href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
                     <span class="mr-2 ml-2">|</span>
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov/accessibility">Accessibility</a>
-                  </div>
-                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
-                    <span style="padding: 2px">is part of the</span>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
-                  </div>
+                  </ng-container>
+                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
+                  <span class="mr-2 ml-2">|</span>
+                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+                  <span class="mr-2 ml-2">|</span>
+                  <a target="_blank" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/accessibility">Accessibility</a>
                 </div>
-              </ng-template>
-            </div>
+                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                  <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
+                  <span style="padding: 2px">is part of the</span>
+                  <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland
+                    Security</a>
+                </div>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
+    </div>
   </div>

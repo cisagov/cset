@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AggregationService } from '../../../services/aggregation.service';
-import { Chart } from 'chart.js'
 import { ChartService } from '../../../services/chart.service';
 import { ColorService } from '../../../services/color.service';
-import { deepStrictEqual } from 'assert';
 
 @Component({
   selector: 'app-compare-summary',
@@ -130,7 +128,7 @@ export class CompareSummaryComponent implements OnInit {
         resp = [{
           chartName: '',
           labels: ['No Maturity Models Selected'],
-          datasets: [{data: 0}],
+          datasets: [{ data: 0 }],
           chart: null
         }];
       }

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,17 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div style="position: relative; padding: 0px;">
-    <ngx-charts-bar-horizontal-stacked #barChart
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="data"
-    [gradient]="false"
-    [xAxis]="xAxis"
-    [yAxis]="true"
-    [legend]="false"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"    
-    [roundDomains]="true"
-    [showDataLabel]="dataLabel">
-    </ngx-charts-bar-horizontal-stacked>
+  <ngx-charts-bar-horizontal-stacked #barChart [view]="view" [scheme]="colorScheme" [results]="data" [gradient]="false"
+    [xAxis]="xAxis" [yAxis]="true" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+    [roundDomains]="true" [showDataLabel]="dataLabel">
+  </ngx-charts-bar-horizontal-stacked>
 </div>

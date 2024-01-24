@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -72,19 +72,23 @@
       <div *ngFor="let a of sals" class="d-table-cell border-bottom">{{ a.alias }}</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">Very High</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Very High'">Very
+        High</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">High</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'High'">High
+      </div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">Moderate</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Moderate'">
+        Moderate</div>
     </div>
     <div class="d-table-row">
       <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'Low'">Low</div>
     </div>
     <div class="d-table-row">
-      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">None</div>
+      <div *ngFor="let a of sals" class="d-table-cell sal-inactive" [class.sal-active]="a.salLevel === 'None'">None
+      </div>
     </div>
   </div>
 </div>

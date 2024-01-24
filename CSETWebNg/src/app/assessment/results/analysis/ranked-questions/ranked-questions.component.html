@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,40 +21,42 @@
   SOFTWARE. 
 -------------------------->
 
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 class="mb-2 flex-00a">Control Priorities</h3>
-  <p class="mb-3 w-100">
-    Information on ranking can be found in the <a href="{{docUrl}}htmlhelp/results_ranked_questions_screen.htm"
-      target="blank">User Guide</a>.
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3 class="mb-2 flex-00a">{{t('titles.control priorities')}}</h3>
+  <p class="mb-3 w-100" [innerHTML]="t('control priorities intro1') + docUrl + t('control priorities intro2')">
   </p>
   <div *ngIf="!initialized" class="d-flex flex-11a w-100">
     <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
       <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
   </div>
-  <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized" *ngFor="let row of this.dataRows">
+  <div class="mb-4 d-flex flex-column justify-content-between flex-00a" [hidden]="!initialized"
+    *ngFor="let row of this.dataRows">
     <div class="b-secondary br-standard d-flex flex-column justify-content-between flex-00a o-hidden">
       <!-- Row 1 -->
       <div class="p-3 bgc-primary-50 c-gray-900 d-flex justify-content-between flex-11a">
         <!-- Col 1  -->
         <div class="d-flex flex-column justify-content-start flex-11a">
           <div class="mb-2 d-flex justify-content-start flex-11a">
-            <label id="rq-standard-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Standard:</label>
+            <label id="rq-standard-label" for="rq-category-text"
+              class="rq-label-min-width m-0 mr-2 fs-base fw-600">{{t('reports.standard')}}:</label>
             <span id="rq-category-text" class="fs-base">{{row.standard}}</span>
           </div>
           <div class="mb-2 d-flex justify-content-start flex-11a">
-            <label id="rq-category-label" for="rq-category-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Category:</label>
+            <label id="rq-category-label" for="rq-category-text"
+              class="rq-label-min-width m-0 mr-2 fs-base fw-600">{{t('reports.category')}}:</label>
             <span id="rq-category-text" class="fs-base">{{row.category}}</span>
           </div>
           <div class="d-flex justify-content-start flex-11a">
-            <label id="rq-answer-label" for="rq-answer-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Answer:</label>
+            <label id="rq-answer-label" for="rq-answer-text"
+              class="rq-label-min-width m-0 mr-2 fs-base fw-600">{{t('reports.answer')}}:</label>
             <span id="rq-answer-text" name="rq-answer-text" class="fs-base">{{row.displayAnswer}}</span>
           </div>
         </div>
 
         <!-- Col 2 -->
         <div class="px-3 d-flex flex-column justify-content-center align-items-center flex-00a">
-          <label id="m-0 rq-rank-label" for="rq-rank-text" class="mb-2 fs-base fw-600">Rank</label>
+          <label id="m-0 rq-rank-label" for="rq-rank-text" class="mb-2 fs-base fw-600">{{t('reports.rank')}}</label>
           <span id="rq-rank-text" class="fs-base-8 fw-600">{{row.rank}}</span>
         </div>
       </div>
@@ -63,11 +65,13 @@
       <div class="bgc-primary-100 c-gray-900 d-flex justify-content-start flex-11a">
         <div class="px-3 py-4 d-flex flex-column justify-content-start flex-11a w-100">
           <div class="d-flex justify-content-between flex-11a">
-            <label id="rq-question-label" for="rq-question-group-text" class="rq-label-min-width m-0 mb-1 fs-base fw-600">Question</label>
+            <label id="rq-question-label" for="rq-question-group-text"
+              class="rq-label-min-width m-0 mb-1 fs-base fw-600">{{t('reports.question')}}:</label>
             <div class="mb-2 d-flex justify-content-start flex-00a">
-              <label id="rq-question-reference-label" for="rq-question-reference-text" class="rq-label-min-width m-0 mr-2 fs-base fw-600">Reference
-                #</label>
-              <span id="rq-question-reference-text" name="rq-question-reference-text" class="fs-base">{{row.questionRef}}</span>
+              <label id="rq-question-reference-label" for="rq-question-reference-text"
+                class="rq-label-min-width m-0 mr-2 fs-base fw-600">{{t('reports.reference number')}}</label>
+              <span id="rq-question-reference-text" name="rq-question-reference-text"
+                class="fs-base">{{row.questionRef}}</span>
             </div>
           </div>
           <span id="rq-question-text" class="fs-base w-100" [innerHTML]="row.questionText | safe"></span>
@@ -77,5 +81,5 @@
   </div>
 
   <app-nav-back-next [page]="'ranked-questions'"></app-nav-back-next>
-  
+
 </div>

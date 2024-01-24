@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,29 +22,28 @@
 -------------------------->
 <div class="d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
-      <div class="mb-3">
-        <h3>Scorecard - Security Directive Pipeline 2021-02C</h3>
-        <p>
-            This screen indicates how each question of the Security Directive Pipeline was answered 
-            by checking the boxes that were selected.
-        </p>
-        <div *ngIf="loading">
-            <div class="spinner-container" style="margin: 2em auto">
-                <div style="max-width: 50px; max-height: 50px;"></div>
+        <div class="mb-3">
+            <h3>Scorecard - Security Directive Pipeline 2021-02C</h3>
+            <p>
+                This screen indicates how each question of the Security Directive Pipeline was answered
+                by checking the boxes that were selected.
+            </p>
+            <div *ngIf="loading">
+                <div class="spinner-container" style="margin: 2em auto">
+                    <div style="max-width: 50px; max-height: 50px;"></div>
+                </div>
             </div>
-        </div>
 
-        <div *ngIf="!loading">
-            <div *ngFor="let section of domains">
-                <div *ngIf="!!section" class="w-100">
-                    <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
+            <div *ngIf="!loading">
+                <div *ngFor="let section of domains">
+                    <div *ngIf="!!section" class="w-100">
+                        <app-grouping-block-nested-report [grouping]="section"></app-grouping-block-nested-report>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-     
-      <app-nav-back-next [page]="'sd-answer-summary'"></app-nav-back-next>
-      
-    </div>
-  </div>
 
+        <app-nav-back-next [page]="'sd-answer-summary'"></app-nav-back-next>
+
+    </div>
+</div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -123,7 +123,7 @@ namespace CSETWeb_ApiCore
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    
+
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
@@ -175,7 +175,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
-            services.AddTransient<IJSONFileExport, JSONFileExport>(); 
+            services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
 
 
@@ -232,19 +232,19 @@ namespace CSETWeb_ApiCore
             {
                 var options = new RewriteOptions()
                     .AddIISUrlRewrite(iisUrlRewriteStreamReader);
-                 app.UseRewriter(options);
+                app.UseRewriter(options);
             }
 
             // Serve up index.html from webapp when root url is hit
             app.UseRewriter(new RewriteOptions().AddRewrite("^$", "index.html", true));
- 
+
             //app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Diagram")),
                 RequestPath = "/Diagram"
-            });            
+            });
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(

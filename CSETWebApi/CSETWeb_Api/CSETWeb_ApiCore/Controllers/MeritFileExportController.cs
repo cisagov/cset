@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -59,7 +59,8 @@ namespace CSETWebCore.Api.Controllers
                 };
 
                 return Ok(uncCarrier);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -75,7 +76,8 @@ namespace CSETWebCore.Api.Controllers
                 _json.SaveUncPath(uncPathCarrier.data, _context);
 
                 return Ok();
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -91,9 +93,10 @@ namespace CSETWebCore.Api.Controllers
                 string uncPathString = _json.GetUncPath(_context);
 
                 return Ok(_json.DoesDirectoryExist(uncPathString));
-            }catch(Exception ex)
-            { 
-                return BadRequest(ex.Message); 
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
@@ -143,27 +146,29 @@ namespace CSETWebCore.Api.Controllers
                 _json.SendFileToMerit(filename, data, uncPathString);
 
                 return Ok();
-            }catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 return BadRequest(ex.Message);
             }
             /// check for existance
             /// 
             /// if doesn't exist:
-                /// brandNewMerit
-                /// check for existance (again for safety)
-                /// if doesn't exist, write to a new file (with the original guid as the file name)
-                /// 
+            /// brandNewMerit
+            /// check for existance (again for safety)
+            /// if doesn't exist, write to a new file (with the original guid as the file name)
+            /// 
 
             /// else if does exists:
-                /// prompt user if they want to duplicateMerit or overwriteMerit (or cancel)
-                    /// duplicateMerit
-                        /// generate a new guid, set the db's AssessmentGUID to the new one, 
-                        /// and write to a new file (with the new guid as the file name)
-                        /// return new guid back to client
-                    /// overwriteMerit
-                        /// overwrite file (no need to check for existance)
-                    /// cancel
-                        /// don't do anything
+            /// prompt user if they want to duplicateMerit or overwriteMerit (or cancel)
+            /// duplicateMerit
+            /// generate a new guid, set the db's AssessmentGUID to the new one, 
+            /// and write to a new file (with the new guid as the file name)
+            /// return new guid back to client
+            /// overwriteMerit
+            /// overwrite file (no need to check for existance)
+            /// cancel
+            /// don't do anything
 
         }
 
@@ -179,7 +184,7 @@ namespace CSETWebCore.Api.Controllers
             string guid = jsonData.guid;
 
             //generate a new guid and change the AssessmentGUID in the db to the new one
-            if (jsonData.overwrite == false) 
+            if (jsonData.overwrite == false)
             {
                 Guid oldGuid = _json.GetAssessmentGuid(assessmentId, _context);
                 Guid newGuid = Guid.NewGuid();

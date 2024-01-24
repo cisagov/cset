@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -23,7 +23,7 @@ namespace UpgradeLibrary.Upgrade
         {
             myVersion = new Version("10.1.0");
         }
-        
+
 
         /// <summary>
         /// Runs the database update script
@@ -35,10 +35,10 @@ namespace UpgradeLibrary.Upgrade
             {
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1001_to_101.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1001_to_101_data.sql"), conn);
-                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1001_to_101_data2.sql"), conn);                
+                RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1001_to_101_data2.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 10.0.1 file to 10.1.0: " + e.Message);
             }

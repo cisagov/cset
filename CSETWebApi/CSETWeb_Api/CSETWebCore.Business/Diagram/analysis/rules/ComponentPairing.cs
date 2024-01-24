@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace CSETWebCore.Business.Diagram.analysis.rules
 {
-    public class ComponentPairing: IEquatable<ComponentPairing>
+    public class ComponentPairing : IEquatable<ComponentPairing>
     {
         public Guid Source { get; set; }
         public Guid Target { get; set; }
@@ -51,12 +51,12 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
             {
                 return true;
             }
-            
-            
+
+
             return ((this.Source == other.Source) && (this.Target == other.Target))
                 || ((this.Source == other.Target) && (this.Target == other.Source));
-            
-            
+
+
         }
 
         public override bool Equals(object obj)

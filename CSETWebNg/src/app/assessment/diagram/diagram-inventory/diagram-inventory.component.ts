@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { DiagramService } from '../../../services/diagram.service';
 import { ConfigService } from '../../../services/config.service';
 import { saveAs } from "file-saver";
-import { FileUploadClientService } from '../../../services/file-client.service';
 import { UploadExportComponent } from './../../../dialogs/upload-export/upload-export.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Vendor } from '../../../models/diagram-vulnerabilities.model';
@@ -45,15 +44,15 @@ export class DiagramInventoryComponent implements OnInit {
    *
    */
   constructor(public diagramSvc: DiagramService,
-     private dialog: MatDialog,
-     private assessSvc: AssessmentService,
-     private configSvc: ConfigService
-    ) { }
+    private dialog: MatDialog,
+    private assessSvc: AssessmentService,
+    private configSvc: ConfigService
+  ) { }
 
   /**
    *
    */
-  ngOnInit() { 
+  ngOnInit() {
     if (this.assessSvc.hasDiagram()) {
       this.componentsExist = true;
     }
@@ -102,13 +101,13 @@ export class DiagramInventoryComponent implements OnInit {
   fileSelect(e) {
     if (e.target.files.length > 0) {
       this.dialog.open(UploadExportComponent, { data: { files: e.target.files, isCsafUpload: true } })
-      .afterClosed()
-      .subscribe(() => {
-        // Get the updated list of vendors after upload.
-        this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
-          this.diagramSvc.csafVendors = vendors;
+        .afterClosed()
+        .subscribe(() => {
+          // Get the updated list of vendors after upload.
+          this.diagramSvc.getVulnerabilities().subscribe((vendors: Vendor[]) => {
+            this.diagramSvc.csafVendors = vendors;
+          });
         });
-      });
     }
   }
 

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -35,8 +35,8 @@
 
       <div class="form-group">
         <label for="category">Category</label>
-        <input required #editCat #cat="ngModel" type="text" maxlength="250" class="form-control" id="category" name="category" list="catoptions"
-          [(ngModel)]="model.category">
+        <input required #editCat #cat="ngModel" type="text" maxlength="250" class="form-control" id="category"
+          name="category" list="catoptions" [(ngModel)]="model.category">
         <datalist id="catoptions">
           <option *ngFor="let category of categories" [attr.data-value]="category.id" [value]="category.text"></option>
         </datalist>
@@ -45,8 +45,8 @@
 
       <div class="form-group">
         <label for="subcategory">Question Group Heading</label>
-        <select required #groupheading="ngModel" id="groupheading" name="groupheading" [(ngModel)]="model.questionGroupHeadingID"
-          class="form-control">
+        <select required #groupheading="ngModel" id="groupheading" name="groupheading"
+          [(ngModel)]="model.questionGroupHeadingID" class="form-control">
           <option *ngFor="let heading of groupHeadings" [value]="heading.id">{{ heading.text }}</option>
         </select>
         <div *ngIf="submitted && !groupheading.valid" class="m-0 mt-2 alert alert-danger">Question Group Heading is
@@ -55,10 +55,11 @@
 
       <div class="form-group">
         <label for="subcategory">Subcategory</label>
-        <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory" [(ngModel)]="model.subcategory"
-          list="subcatoptions" class="form-control" />
+        <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory"
+          [(ngModel)]="model.subcategory" list="subcatoptions" class="form-control" />
         <datalist id="subcatoptions">
-          <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id" [value]="subcategory.text"></option>
+          <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
+            [value]="subcategory.text"></option>
         </datalist>
         <div *ngIf="submitted && !subcat.valid" class="m-0 mt-2 alert alert-danger">Subcategory is required</div>
       </div>

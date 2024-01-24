@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -26,41 +26,46 @@
         <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
 </div>
-  
+
 <div *ngIf="!loading" class="d-flex flex-column justify-content-start flex-11a">
     <div class="d-flex">
         <div class="d-inline-flex" style="width: 40%">
             <p>
-                Impact category is the classification of where a particular impact 
-                may happen if a cyber attack were to occur. The breakdown of the 
-                chart is by domain, with different categories that we have defined 
-                as most applicable to this assessment: Economic, Environmental, 
-                Operational, and Safety. {{facilityName}} can see the breakdown of how 
-                the answers of the assessment relate to what potential impacts the 
+                Impact category is the classification of where a particular impact
+                may happen if a cyber attack were to occur. The breakdown of the
+                chart is by domain, with different categories that we have defined
+                as most applicable to this assessment: Economic, Environmental,
+                Operational, and Safety. {{facilityName}} can see the breakdown of how
+                the answers of the assessment relate to what potential impacts the
                 facility may have in case of a cyberattack.
             </p>
         </div>
         <div class="d-inline-flex" style="width: 60%; align-items: center;">
             <div style="width: fit-content">
                 <div class="d-inline-flex" style="padding-left: 8px;">
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #67B7DC;"></span>
                         <span class="color-word">Economic</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #6794DC;"></span>
                         <span class="color-word">Environmental</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #6771DC;"></span>
                         <span class="color-word">Operational</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #8067DC;"></span>
                         <span class="color-word">Safety</span>
                     </div>
                 </div>
-                <app-hydro-bar-vertical [barData]="impactData" [subCatNames]="domainGroupNames" [colorScheme]="impactColors" [view]="view"></app-hydro-bar-vertical>
+                <app-hydro-bar-vertical [barData]="impactData" [subCatNames]="domainGroupNames"
+                    [colorScheme]="impactColors" [view]="view"></app-hydro-bar-vertical>
             </div>
         </div>
     </div>
