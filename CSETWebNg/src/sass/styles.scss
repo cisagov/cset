@@ -364,66 +364,6 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 99999;
-    padding: 10px;
-    border-radius: 4px;
-    position: absolute;
-    right: 10px;
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)
-  }
-
-  .navbar-collapse.collapsing {
-    background-color: $primary-color;
-    z-index: 99999;
-    position: absolute;
-    padding: 10px;
-    border-radius: 4px;
-    right: 10px;
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12)
-  }
-}
-
-/*
-@media only screen and (max-width: 1200px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 992px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 767px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(4),
-  table.assessment-summary th:nth-child(4) {
-    display: none;
-  }
-}*/
-
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
@@ -1244,10 +1184,6 @@ ul.nav-tabs li.active button .tab-icon {
   align-items: center;
   flex: 0 0 auto;
   padding: 5px;
-}
-
-#csetNavbarCollapse {
-  margin-top: 4px;
 }
 
 .navbar-toggler-icon:before {
