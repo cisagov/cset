@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -50,7 +50,7 @@ export class LoginCfComponent implements OnInit {
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
-  
+
   loading = false;
   incorrect = false;
   passwordExpired = false;
@@ -67,7 +67,7 @@ export class LoginCfComponent implements OnInit {
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -105,7 +105,7 @@ export class LoginCfComponent implements OnInit {
   login() {
     this.loading = true;
     this.incorrect = false;
-    this.passwordExpired = false;    
+    this.passwordExpired = false;
 
     this.authenticationService
       .login(this.model.email, this.model.password)
@@ -171,9 +171,9 @@ export class LoginCfComponent implements OnInit {
       if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
         this.isEjectDialogOpen = true;
         this.dialog
-        .open(EjectionComponent)
-        .afterClosed()
-        .subscribe(() => (this.isEjectDialogOpen = false));
+          .open(EjectionComponent)
+          .afterClosed()
+          .subscribe(() => (this.isEjectDialogOpen = false));
       }
     }
   }

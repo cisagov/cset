@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ObservationsService } from '../../../services/observations.service';
 import { AssessmentService } from '../../../services/assessment.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observation, Importance, ObservationContact } from './observations.model';
+import { Observation, Importance } from './observations.model';
 import * as _ from 'lodash';
 import { ConfigService } from '../../../services/config.service';
 

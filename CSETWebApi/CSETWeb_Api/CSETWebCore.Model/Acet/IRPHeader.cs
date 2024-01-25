@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -17,8 +17,9 @@ namespace CSETWebCore.Model.Acet
         /// <summary>
         /// Constructor.
         /// </summary>
-        public IRPHeader() { 
-            irpList = new List<IRPModel>(); 
+        public IRPHeader()
+        {
+            irpList = new List<IRPModel>();
         }
     }
 }

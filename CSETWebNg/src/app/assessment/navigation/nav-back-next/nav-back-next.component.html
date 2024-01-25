@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,7 +22,9 @@
 -------------------------->
 <ng-container *transloco="let t">
   <div style="display: flex; justify-content: space-between;" class="my-5">
-      <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)" [class.display-hidden]="hide == 'back'" tabindex="0">{{ t('buttons.back') }}</button>
-      <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)"  [disabled]="!nextMode"  [class.display-hidden]="hide == 'next'" tabindex="0">{{ t('buttons.next') }}</button>
+    <button class="btn btn-primary" aria-label="Back" (click)="navSvc.navBack(page)"
+      [class.display-hidden]="hide == 'back'" tabindex="0">{{ t('buttons.back') }}</button>
+    <button class="btn btn-primary" aria-label="Next" (click)="navSvc.navNext(page)" [disabled]="!nextMode"
+      [class.display-hidden]="hide == 'next'" tabindex="0">{{ t('buttons.next') }}</button>
   </div>
 </ng-container>

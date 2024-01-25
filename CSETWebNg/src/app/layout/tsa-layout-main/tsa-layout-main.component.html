@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -40,15 +40,18 @@
             <app-logo-tsa style="max-height: 3rem"></app-logo-tsa>
           </div>
         </span>
-        <!-- Navbar Toggler Button -->
-        <button class="navbar-toggler c-gray-150 ml-auto" type="button"
-          *ngIf="auth.userToken() && auth.userToken() !== 'null'" data-toggle="collapse"
-          data-target="#csetNavbarCollapse" tabindex="0">
+
+        <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
+          *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
-
-        <!-- Menus -->
-        <app-top-menus class="w-100"></app-top-menus>
+        <!-- Menus contained in the navbar-toggler submenu -->
+        <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
+            <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+        </mat-menu>
+        <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
+        <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
       </nav>
     </div>
 
@@ -64,40 +67,42 @@
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
-         
+
             <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
               [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-              <ng-template>
-                <div class="footer-section-2 p-2">
-                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                    <ng-container *ngIf="isRunningAnonymous()">
-                      <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                        (click)="showDisclaimer()">INL Privacy & Accessibility</a>
-                      <span class="mr-2 ml-2">|</span>
-                      <a target="_blank" rel="noopener noreferrer"
-                        href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
-                      <span class="mr-2 ml-2">|</span>
-                    </ng-container>
+          <div ngbAccordionBody>
+            <ng-template>
+              <div class="footer-section-2 p-2">
+                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                  <ng-container *ngIf="isRunningAnonymous()">
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                      href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
+                      (click)="showDisclaimer()">INL Privacy & Accessibility</a>
                     <span class="mr-2 ml-2">|</span>
-                    <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                      href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+                    <a target="_blank" rel="noopener noreferrer"
+                      href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
                     <span class="mr-2 ml-2">|</span>
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov/accessibility">Accessibility</a>
-                  </div>
-                  <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                    <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
-                    <span style="padding: 2px">is part of the</span>
-                    <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
-                  </div>
+                  </ng-container>
+                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/travel/frequently-asked-questions">FAQ</a>
+                  <span class="mr-2 ml-2">|</span>
+                  <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/privacy-policy">Privacy &amp; Use</a>
+                  <span class="mr-2 ml-2">|</span>
+                  <a target="_blank" rel="noopener noreferrer"
+                    href="https://www.tsa.gov/accessibility">Accessibility</a>
                 </div>
-              </ng-template>
-            </div>
+                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
+                  <a target="_blank" rel="noopener noreferrer" href="https://www.tsa.gov">TSA</a>
+                  <span style="padding: 2px">is part of the</span>
+                  <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland
+                    Security</a>
+                </div>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
+    </div>
   </div>

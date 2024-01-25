@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@
   </div>
 
   <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
-    
+
     <app-trend-compare-compatibility #refreshComponent> </app-trend-compare-compatibility>
   </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -38,7 +38,8 @@
             <td>
               <input type="checkbox" [id]="'assess-' + a.assessmentId" class="checkbox-custom mr-2"
                 (change)="toggleSelection($event, a)" [checked]="a.selected">
-                <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pr-5">{{ a.assessmentName }}</label>
+              <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pr-5">{{ a.assessmentName
+                }}</label>
             </td>
             <td>
               {{ a.assessmentDate | date:'dd-MMM-yyyy' }}

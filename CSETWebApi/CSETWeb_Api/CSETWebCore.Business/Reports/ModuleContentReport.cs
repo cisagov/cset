@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -67,11 +67,11 @@ namespace CSETWebCore.Business.Reports
         private void IncludeSourceFiles(ModuleResponse module, string set)
         {
             var q = from nr in _context.NEW_REQUIREMENT
-            join rsf in _context.REQUIREMENT_SOURCE_FILES on nr.Requirement_Id equals rsf.Requirement_Id
-            join rqs in _context.REQUIREMENT_QUESTIONS_SETS on nr.Requirement_Id equals rqs.Requirement_Id
-            join gf in _context.GEN_FILE on rsf.Gen_File_Id equals gf.Gen_File_Id
-            where rqs.Set_Name == set
-            select new { rsf, gf };
+                    join rsf in _context.REQUIREMENT_SOURCE_FILES on nr.Requirement_Id equals rsf.Requirement_Id
+                    join rqs in _context.REQUIREMENT_QUESTIONS_SETS on nr.Requirement_Id equals rqs.Requirement_Id
+                    join gf in _context.GEN_FILE on rsf.Gen_File_Id equals gf.Gen_File_Id
+                    where rqs.Set_Name == set
+                    select new { rsf, gf };
 
             var gggg = q.Distinct().ToList();
 

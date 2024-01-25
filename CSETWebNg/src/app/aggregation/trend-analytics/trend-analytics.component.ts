@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { AggregationService } from '../../services/aggregation.service';
 import { ChartService } from '../../services/chart.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ConfigService } from '../../services/config.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-trend-analytics',
@@ -89,7 +89,7 @@ export class TrendAnalyticsComponent implements OnInit {
   }
 
   generateReport(reportType: string) {
-    const url = '/index.html?returnPath=report/'+reportType;
+    const url = '/index.html?returnPath=report/' + reportType;
     window.open(url, "_blank");
   };
 }

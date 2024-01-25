@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -80,22 +80,22 @@ export class EmailService {
     /* Get each word from the text, split by spaces, end line, semicolon, quotes, commas, colons, parens,
        and brackets.
     */
-   if (text == null) { return; }
-   const words = text.split(/[\s\n;"',;:()<>[\]\\]+/);
-   const emails = [];
-   let  distinct_emails;
+    if (text == null) { return; }
+    const words = text.split(/[\s\n;"',;:()<>[\]\\]+/);
+    const emails = [];
+    let distinct_emails;
 
-     // Regex for identifying an email address.
+    // Regex for identifying an email address.
 
 
-   // For each of the words, add to the array of emails if the word matches the email regex.
-   for (const key in words) {
-     if (words[key].match(this.regex)) { emails.push(words[key].toLowerCase()); }
-   }
+    // For each of the words, add to the array of emails if the word matches the email regex.
+    for (const key in words) {
+      if (words[key].match(this.regex)) { emails.push(words[key].toLowerCase()); }
+    }
 
-   // Remove duplicate entries from the emails array.
-   distinct_emails = this.removeDuplicateElement(emails);
-   return distinct_emails;
+    // Remove duplicate entries from the emails array.
+    distinct_emails = this.removeDuplicateElement(emails);
+    return distinct_emails;
 
   }
 

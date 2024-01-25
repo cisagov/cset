@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, Input } from '@angular/core';
-import { EDMBarChartModel } from '../edm-bar-chart.model'
+import { EDMBarChartModel } from '../edm-bar-chart.model';
 
 
 @Component({
@@ -36,26 +36,26 @@ export class EDMHorizontalBarChart implements OnInit {
   total_count: number;
   not_applicable: boolean = false;
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
   ngOnInit(): void {
-    if( 
-      !this.bar_chart_data.green && 
+    if (
+      !this.bar_chart_data.green &&
       !this.bar_chart_data.yellow &&
-      !this.bar_chart_data.red 
-      ) {
-        this.not_applicable = true;
-      } else {
-        this.total_count = 
-            this.bar_chart_data.red + 
-            this.bar_chart_data.yellow + 
-            this.bar_chart_data.green
-      }
+      !this.bar_chart_data.red
+    ) {
+      this.not_applicable = true;
+    } else {
+      this.total_count =
+        this.bar_chart_data.red +
+        this.bar_chart_data.yellow +
+        this.bar_chart_data.green
+    }
   }
 
-  getWidth(input){
+  getWidth(input) {
     let width = input / this.total_count * 100
     let val = {
       'flex-basis': `${width}%`

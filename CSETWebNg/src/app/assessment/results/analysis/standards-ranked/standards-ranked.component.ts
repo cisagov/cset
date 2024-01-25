@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -57,7 +57,7 @@ export class StandardsRankedComponent implements OnInit {
     // only show the chart if there is some non-zero data to show
     this.showChart = x.data.some(x => x > 0);
 
-    if(this.chart){
+    if (this.chart) {
       this.chart.destroy();
     }
     this.initialized = false;
@@ -66,7 +66,7 @@ export class StandardsRankedComponent implements OnInit {
       r.percent = parseFloat(r.percent).toFixed();
     });
     let tempChart = Chart.getChart('canvasStandardRank');
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     this.chart = new Chart('canvasStandardRank', {
@@ -87,14 +87,14 @@ export class StandardsRankedComponent implements OnInit {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },
           title: {
             display: false,
-            font: {size: 20},
+            font: { size: 20 },
             text: 'Ranked Categories'
           },
           legend: {

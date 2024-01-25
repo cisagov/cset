@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,9 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AggregationService } from  '../../../app/services/aggregation.service';
+import { AggregationService } from '../../../app/services/aggregation.service';
 import { ChartService } from '../../../app/services/chart.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 
 
@@ -75,26 +75,26 @@ export class TrendReportComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.titleService.setTitle("Trend Report - " + this.configSvc.behaviors.defaultTitle);
-    var aggId:number = +localStorage.getItem("aggregationId");
+    var aggId: number = +localStorage.getItem("aggregationId");
     this.reportSvc.getAggReport('trendreport', aggId).subscribe(
       (r: any) => {
         this.response = r;
 
-      // Break out any CIA special factors now - can't do a find in the template
-      let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
-      if (!!v) {
-        this.nistSalC = v.justification;
-      }
-      v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
-      if (!!v) {
-        this.nistSalI = v.justification;
-      }
-      v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
-      if (!!v) {
-        this.nistSalA = v.justification;
-      }
-    },
-    error => console.log('Trend report load Error: ' + (<Error>error).message)
+        // Break out any CIA special factors now - can't do a find in the template
+        let v: any = this.response.nistTypes.find(x => x.cia_Type === 'Confidentiality');
+        if (!!v) {
+          this.nistSalC = v.justification;
+        }
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Integrity');
+        if (!!v) {
+          this.nistSalI = v.justification;
+        }
+        v = this.response.nistTypes.find(x => x.cia_Type === 'Availability');
+        if (!!v) {
+          this.nistSalA = v.justification;
+        }
+      },
+      error => console.log('Trend report load Error: ' + (<Error>error).message)
     );
 
     // Populate charts

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,40 +25,45 @@
         <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
 </div>
-  
+
 <div *ngIf="!loading" class="d-flex flex-column justify-content-start flex-11a">
     <div class="white-panel d-flex flex-column justify-content-start flex-11a">
         <div class="mb-3">
             <h3>Impact</h3>
             <p>
-                The impact category of each control that is poorly implemented is displayed. 
+                The impact category of each control that is poorly implemented is displayed.
                 This plot displays impact category relevant to each control and is sorted by subdomain.
             </p>
             <br>
             <div style="width: fit-content">
                 <div class="d-inline-flex" style="padding-left: 8px;">
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #67B7DC;"></span>
                         <span class="color-word">Economic</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #6794DC;"></span>
                         <span class="color-word">Environmental</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #6771DC;"></span>
                         <span class="color-word">Operational</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: #8067DC;"></span>
                         <span class="color-word">Safety</span>
                     </div>
                 </div>
-                <app-hydro-bar-vertical [barData]="impactData" [subCatNames]="domainGroupNames" [colorScheme]="impactColors" [view]="view"></app-hydro-bar-vertical>
+                <app-hydro-bar-vertical [barData]="impactData" [subCatNames]="domainGroupNames"
+                    [colorScheme]="impactColors" [view]="view"></app-hydro-bar-vertical>
             </div>
 
-        </div>  
+        </div>
         <app-nav-back-next [page]="'hydro-impact'"></app-nav-back-next>
-      
+
     </div>
 </div>

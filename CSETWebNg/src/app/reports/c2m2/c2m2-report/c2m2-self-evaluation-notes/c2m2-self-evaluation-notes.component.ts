@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
     practiceText: string, // "IT and OT assets that are important to..."
     response: string, // "Fully Implemented (FI)"
     comment: string // "My comment!"
-  } [] = [];
+  }[] = [];
 
 
   ngOnInit(): void {
@@ -76,10 +76,10 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
             this.hasComments.set(modifiedCategory, true);
 
             this.commentTableData.push({
-              "id": myData.title, 
-              "mil": (myData.mil = myData.mil.split('-')[1]), 
-              "practiceText": myData.questionText, 
-              "response": (myData.answerText != null ? myData.answerText : 'U'), 
+              "id": myData.title,
+              "mil": (myData.mil = myData.mil.split('-')[1]),
+              "practiceText": myData.questionText,
+              "response": (myData.answerText != null ? myData.answerText : 'U'),
               "comment": myData.comment
             });
           }
@@ -129,7 +129,7 @@ export class C2m2SelfEvaluationNotesComponent implements OnInit {
       return true;
     } else {
       return false;
-    } 
+    }
   }
 
   fullNameTranslate(answerText: string) {

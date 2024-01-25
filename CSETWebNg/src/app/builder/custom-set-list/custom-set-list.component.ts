@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -123,21 +123,21 @@ export class SetListComponent implements OnInit {
     //   }
 
 
-      // confirm deletion
-      const dialogRef = this.dialog.open(ConfirmComponent);
-      dialogRef.componentInstance.confirmMessage =
-        "Are you sure you want to delete '" + s.fullName + "?'";
+    // confirm deletion
+    const dialogRef = this.dialog.open(ConfirmComponent);
+    dialogRef.componentInstance.confirmMessage =
+      "Are you sure you want to delete '" + s.fullName + "?'";
 
-      if (this.setsInUseList.find(x => x.setName === s.setName)) {
-        dialogRef.componentInstance.confirmMessage +=
-          "<div class=\"d-flex justify-content-center mt-2\"><span class=\"mr-3 fs-base-6 cset-icons-exclamation-triangle\" style=\"color: #856404\"></span>This module is currently in use in one or more assessments.<br/> All assessment data pertaining to the module will be lost.</div>";
+    if (this.setsInUseList.find(x => x.setName === s.setName)) {
+      dialogRef.componentInstance.confirmMessage +=
+        "<div class=\"d-flex justify-content-center mt-2\"><span class=\"mr-3 fs-base-6 cset-icons-exclamation-triangle\" style=\"color: #856404\"></span>This module is currently in use in one or more assessments.<br/> All assessment data pertaining to the module will be lost.</div>";
+    }
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dropSet(s.setName);
       }
-
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.dropSet(s.setName);
-        }
-      });
+    });
 
     //});
   }

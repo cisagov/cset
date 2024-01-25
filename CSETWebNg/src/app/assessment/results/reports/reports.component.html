@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -298,35 +298,36 @@
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <!-- <div *ngIf="assessSvc.isISE() && !isMobile"
         class="d-flex flex-column justify-content-start align-items-start mb-4"> -->
-        <h4>ISE Reports</h4>
+      <h4>ISE Reports</h4>
 
-        <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted" [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
-        
-        <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-          [disabled]="
+      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted"
+        [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
+
+      <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="
           (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
           this.ncuaSvc.unassignedIssues
         ">
-          ISE MERIT SCOPE REPORT (copy paste to Execution Result)
-        </button>
-        <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-          [disabled]="
+        ISE MERIT SCOPE REPORT (copy paste to Execution Result)
+      </button>
+      <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
+        [disabled]="
           (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
           this.ncuaSvc.unassignedIssues
         ">
-          ISE EXAMINATION REPORT (attach as Document in Scope Task)
-        </button>
-        <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-          class="btn btn-link btn-link-dark text-left">
-          ISE Answered Statements
-        </button>
-        <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-          ISE Examiner Notes
-        </button>
+        ISE EXAMINATION REPORT (attach as Document in Scope Task)
+      </button>
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
+        ISE Answered Statements
+      </button>
+      <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+        ISE Examiner Notes
+      </button>
 
-        <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px"></div>
-        </div>
+      <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
+        <div style="max-width: 50px; max-height: 50px"></div>
+      </div>
       <!-- </div> -->
     </div>
 
@@ -403,7 +404,7 @@
         </div>
       </div>
 
-      
+
       <div *ngIf="
           !!assessSvc.assessment &&
           assessSvc.usesMaturityModel('CPG') &&
@@ -422,7 +423,7 @@
           </button>
         </div>
       </div>
-      
+
 
       <div *ngIf="
           !!assessSvc.assessment &&
@@ -507,23 +508,23 @@
           </button>
         </div>
 
-          <!-- ISE Merit Buttons -->
-          <div *ngIf="assessSvc.isISE()" class="my-5">
+        <!-- ISE Merit Buttons -->
+        <div *ngIf="assessSvc.isISE()" class="my-5">
 
-            <button class="btn mr-2" style="background-color: #3b68aa; color: white;"
-              (click)="navSvc.navBack('reports')" tabindex="0" aria-label="Back">
-              Back
-            </button>
+          <button class="btn mr-2" style="background-color: #3b68aa; color: white;" (click)="navSvc.navBack('reports')"
+            tabindex="0" aria-label="Back">
+            Back
+          </button>
 
-            <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
-              [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(findings);" 
-              [disabled]="disableSubmitButton()">
-                Submit
-            </button>
+          <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
+            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(findings);"
+            [disabled]="disableSubmitButton()">
+            Submit
+          </button>
 
-          </div>
         </div>
       </div>
+    </div>
 
     <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
       [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>

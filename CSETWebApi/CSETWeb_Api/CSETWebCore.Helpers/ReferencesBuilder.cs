@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -96,7 +96,7 @@ namespace CSETWebCore.Helpers
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
                 .OrderBy(s => s.Sequence)
                 .Select(s => new CustomDocument { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded ?? false, Sequence = s.Sequence });
-            
+
             additionalDocList = SortList(q2, onboardRefDocs);
         }
 

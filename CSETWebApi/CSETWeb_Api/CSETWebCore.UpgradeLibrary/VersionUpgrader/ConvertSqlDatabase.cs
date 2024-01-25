@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -60,7 +60,7 @@ namespace UpgradeLibrary.Upgrade
         /// <param name="conn"></param>
         public virtual void RunFile(String file, SqlConnection conn)
         {
-            String[] splits = new string[] { "\r\nGO","\n\nGO","\nGO\n","\nGO" };
+            String[] splits = new string[] { "\r\nGO", "\n\nGO", "\nGO\n", "\nGO" };
             String stringCommands = "";
             using (StreamReader sr = new StreamReader(file))
             {
@@ -134,7 +134,7 @@ namespace UpgradeLibrary.Upgrade
             decimal major = v.Major;
             string parseString = "." + v.Minor.ToString("0") + (v.Build != -1 ? v.Build.ToString("0") : "") + (v.Revision != -1 ? v.Revision.ToString("0") : "");
             var decimalPortion = decimal.Parse(parseString);
-            
+
             return major + decimalPortion;
         }
     }

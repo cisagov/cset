@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,8 @@
             </div>
             <div class="row" style="height: 50px;">
                 <div class="col-1" style="position: relative; padding: 0;">
-                    <div style="position: absolute; padding: 0; width: 110px;" [innerHtml]="mil1FullAnswerDistribChart | safe">
+                    <div style="position: absolute; padding: 0; width: 110px;"
+                        [innerHtml]="mil1FullAnswerDistribChart | safe">
                     </div>
                 </div>
             </div>
@@ -50,7 +51,8 @@
             <div class="col-6" style="padding: 0; position: absolute; bottom: 0;">
                 <h3 class="depiction-title" style="padding-bottom: 1rem;">CRR MIL-1 Performance</h3>
             </div>
-            <div class="col-6" style="padding: 0; position: absolute; bottom: 0; left: 47%;" [innerHtml]="legend | safe">
+            <div class="col-6" style="padding: 0; position: absolute; bottom: 0; left: 47%;"
+                [innerHtml]="legend | safe">
             </div>
         </div>
     </div>
@@ -62,7 +64,8 @@
             MIL-1 PRACTICE LEVEL PERFORMANCE SUMMARY
         </div>
     </div>
-    <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row" style="border-top: 1px solid black;">
+    <div *ngFor="let domain of model?.structure.Model.Domain; let i = index" class="row"
+        style="border-top: 1px solid black;">
         <div class="col-1" style="width: 15%; padding: 0 1.5rem 0 1rem;">
             <div class="row">
                 <div style="font-size: 0.7rem; font-weight: bold;">
@@ -73,51 +76,58 @@
             </div>
         </div>
         <div class="col-1" style="width: 85%;  padding: 0 0 0 0.75rem;">
-            <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow" style="margin-right: 0.05rem"
-            [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
-                <div class="col-1" style="font-size: 8px; width: 36px; padding: 0;"><div class="goalrow-text"><b>Goal {{ j + 1 }} -</b></div></div>
-                <div class="col-5" style="font-size: 8px; padding: 0;"><div class="goalrow-text">{{ stringSplitter(goal.title) }}</div></div>
-                <div class="col-6" style="padding: 0.1rem;"><p class="goalrow-text" [innerHtml]="getHeatMap(goal.title) | safe"></p></div>
+            <div *ngFor="let goal of filterMilDomainGoals(domain.Goal); let j = index" class="row goalrow"
+                style="margin-right: 0.05rem"
+                [style.border-bottom]="j + 1 != filterMilDomainGoals(domain.Goal).length ? '0.5px solid black' : '0px'">
+                <div class="col-1" style="font-size: 8px; width: 36px; padding: 0;">
+                    <div class="goalrow-text"><b>Goal {{ j + 1 }} -</b></div>
+                </div>
+                <div class="col-5" style="font-size: 8px; padding: 0;">
+                    <div class="goalrow-text">{{ stringSplitter(goal.title) }}</div>
+                </div>
+                <div class="col-6" style="padding: 0.1rem;">
+                    <p class="goalrow-text" [innerHtml]="getHeatMap(goal.title) | safe"></p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-    <style>
-        .depiction-title {
-            font-family: Arial;
-            font-size: 18pt;
-            line-height: 90%;
-            margin: 0;
-        }
+<style>
+    .depiction-title {
+        font-family: Arial;
+        font-size: 18pt;
+        line-height: 90%;
+        margin: 0;
+    }
 
-        .goalrow {
-            padding: 0 0 0 0.25rem;
-            height: auto;
-            display: flex;
-        }
+    .goalrow {
+        padding: 0 0 0 0.25rem;
+        height: auto;
+        display: flex;
+    }
 
-        .goalrow-text {
-            margin: 0;
-            font-size: 8px;
-        }
+    .goalrow-text {
+        margin: 0;
+        font-size: 8px;
+    }
 
-        .tinytext {
-            font-size: 8px;
-        }
+    .tinytext {
+        font-size: 8px;
+    }
 
-        .divided-box {
-            border-top: 1px solid black;
-        }
+    .divided-box {
+        border-top: 1px solid black;
+    }
 
-        p {
-            /*margin: 0;*/
-            padding: 0;
-        }
+    p {
+        /*margin: 0;*/
+        padding: 0;
+    }
 
-        .appendix-label {
-            font-size: 0.7rem;
-            font-weight: bold;
-            margin: 0;
-        }
-    </style>
+    .appendix-label {
+        font-size: 0.7rem;
+        font-weight: bold;
+        margin: 0;
+    }
+</style>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,7 +15,7 @@ namespace CSETWebCore.Helpers
     {
         public override void OnActionExecuting(ActionExecutingContext actionContext)
         {
-            
+
             if (!MultipartRequestHelper.IsMultipartContentType(actionContext.HttpContext.Request.ContentType))
             {
                 throw new Exception(HttpStatusCode.UnsupportedMediaType.ToString());

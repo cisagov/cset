@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -35,7 +35,7 @@ namespace CSETWebCore.Business.IRP
             IRPResponse response = new IRPResponse();
             Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
             Dictionary<int, IRPSpanishRow> dictionaryHeaders = new Dictionary<int, IRPSpanishRow>();
-            if (spanishFlag) 
+            if (spanishFlag)
             {
                 dictionary = AcetBusiness.buildIRPDictionary();
                 dictionaryHeaders = AcetBusiness.buildIRPHeaderDictionary();
@@ -117,7 +117,7 @@ namespace CSETWebCore.Business.IRP
                 _assessmentUtil.TouchAssessment(assessmentId);
             }
 
-            
+
             return response;
         }
 

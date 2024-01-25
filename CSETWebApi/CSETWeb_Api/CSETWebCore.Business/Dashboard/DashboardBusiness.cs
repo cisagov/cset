@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -29,7 +29,7 @@ namespace CSETWebCore.Business.Dashboard
         private const string IndustryAverageName = "Industry Average";
         private const string SectorAverageName = "Sector Average";
         private const string MyAssesmentAverageName = "Assessment Average";
-        public  int sectorId;
+        public int sectorId;
         private readonly CSETContext _context;
 
         public DashboardBusiness(CSETContext context)
@@ -40,20 +40,20 @@ namespace CSETWebCore.Business.Dashboard
         public List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id, int? sectorId, int? industryId)
         {
             var minMax = _context.analytics_Compute_MaturityAll(maturity_model_id, sectorId, industryId);
-            var median = from a in minMax 
-                join b in _context.analytics_Compute_MaturityAll_Median(maturity_model_id)
-                    on a.Question_Group_Heading equals b.Question_Group_Heading
-                select new AnalyticsMinMaxAvgMedianByGroup() { min=a.min, max=a.max, avg=a.avg,median=b.median, Question_Group_Heading=a.Question_Group_Heading };
-            return median.ToList();           
-            
-            
+            var median = from a in minMax
+                         join b in _context.analytics_Compute_MaturityAll_Median(maturity_model_id)
+                             on a.Question_Group_Heading equals b.Question_Group_Heading
+                         select new AnalyticsMinMaxAvgMedianByGroup() { min = a.min, max = a.max, avg = a.avg, median = b.median, Question_Group_Heading = a.Question_Group_Heading };
+            return median.ToList();
+
+
 
         }
-    
+
         private Series GetSectorAnalytics(int sector_id)
         {
             var assessments = (from a in _context.ASSESSMENTS.AsQueryable()
-                               join  dd in _context.DEMOGRAPHICS.AsQueryable() on a.Assessment_Id equals dd.Assessment_Id
+                               join dd in _context.DEMOGRAPHICS.AsQueryable() on a.Assessment_Id equals dd.Assessment_Id
                                where dd.SectorId == sector_id
                                select a).ToList();
             var query = (from a in assessments.AsQueryable()
@@ -187,14 +187,14 @@ namespace CSETWebCore.Business.Dashboard
         public async Task<List<SectorIndustryVM>> GetSectors()
         {
 
-           
+
 
             var List = new List<SectorIndustryVM>();
             var result = await _context.SECTOR.ToListAsync();
             //var query = from sector in _context.SECTOR
             //            select sector;
 
-            foreach(var sector in result)
+            foreach (var sector in result)
             {
                 var sectorindustryList = new SectorIndustryVM();
                 //this.sectorId = sector.SectorId;
@@ -208,16 +208,16 @@ namespace CSETWebCore.Business.Dashboard
                 }
                 List.Add(sectorindustryList);
             }
-           
+
 
             return List;
         }
-         
+
         public void GetSelectedIndustryList(ref SectorIndustryVM sectorindustryList)
         {
             var id = sectorindustryList.SectorId;
-           var industryList = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id).ToList();
-          
+            var industryList = _context.SECTOR_INDUSTRY.Where(x => x.SectorId == id).ToList();
+
             foreach (var s in industryList)
             {
                 sectorindustryList.Industries.Add(s.IndustryName);
@@ -248,7 +248,7 @@ namespace CSETWebCore.Business.Dashboard
         public DashboardGraphData GetDashboardData(string selectedSector)
         {
             var getMedian = _context.analytics_getMedianOverall().ToList();
-            var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15,67);
+            var sectorIndustryMinMax = _context.analytics_getMinMaxAverageForSectorIndustryGroup(15, 67);
             var rawdata = _context.usp_GetRawCountsForEachAssessment_Standards().ToList();
             //var myAssessmentsdata = rawdata.Find(x => x.Assessment_Id == int.Parse(assessmentId));
             var sectorIndustry = selectedSector.Split('|');
@@ -260,7 +260,7 @@ namespace CSETWebCore.Business.Dashboard
             graphData.Min = new List<ScatterPlot>();
             graphData.Max = new List<ScatterPlot>();
             graphData.Median = new List<MedianScatterPlot>();
-            
+
             foreach (var a in rawdata)
             {
 
@@ -269,25 +269,25 @@ namespace CSETWebCore.Business.Dashboard
                 statistics.Add(new CategoryStatistics
                 {
                     AssessmentId = a.Assessment_Id.ToString(),
-                    CategoryName =a.Question_Group_Heading,
-                    AnsweredYes=a.Answer_Count,
-                    NormalizedYes= a.Percentage,
-                    Total= categoryList.Count()
-                }) ;
+                    CategoryName = a.Question_Group_Heading,
+                    AnsweredYes = a.Answer_Count,
+                    NormalizedYes = a.Percentage,
+                    Total = categoryList.Count()
+                });
 
                 graphData.BarData.Values.Add(a.Percentage);
                 graphData.Max.Add(new ScatterPlot { x = 100, y = a.ToString() });
                 graphData.Min.Add(new ScatterPlot { x = 0, y = a.Answer_Text.ToString() });
                 //graphData.BarData.Labels.Add(a.Question_Group_Heading);
             }
-           
+
             var organizelist = categoryList.Distinct();
             graphData.sampleSize = assessments.Distinct().Count();
 
             foreach (var c in organizelist)
             {
                 graphData.BarData.Labels.Add(c);
-               
+
                 //var statByCat = statistics.Where(x => x.CategoryName == c).ToList();
                 //var min = statByCat.MinBy(x => x.NormalizedYes).Take(1);
                 ////graphData.Min.Add(new ScatterPlot { x = min.NormalizedYes, y = c });
@@ -295,13 +295,13 @@ namespace CSETWebCore.Business.Dashboard
                 //{ x = Math.Round(GetMedian(statByCat.Select(x => x.NormalizedYes).ToList()), 1), y = c });
 
             }
-            foreach(var m in getMedian)
+            foreach (var m in getMedian)
             {
-                graphData.Median.Add(new MedianScatterPlot { x= m.Median , y=m.Percentage.ToString()});
-              
+                graphData.Median.Add(new MedianScatterPlot { x = m.Median, y = m.Percentage.ToString() });
+
                 //graphData.BarData.Values.Add(new MedianScatterPlot { x = m.Mediam, y = m.Percentage.ToString() });
             }
-          
+
             return graphData;
         }
 
@@ -318,7 +318,7 @@ namespace CSETWebCore.Business.Dashboard
             return median;
         }
 
-        
+
     }
 
     internal class QuickSum

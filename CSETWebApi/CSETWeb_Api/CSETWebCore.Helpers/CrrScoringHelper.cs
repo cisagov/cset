@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -137,8 +137,8 @@ namespace CSETWebCore.Helpers
                 xGrouping.SetAttributeValue("groupingid", sg.Grouping_Id.ToString());
                 xGrouping.SetAttributeValue("title", sg.Title);
                 xGrouping.SetAttributeValue("description", sg.Description);
-                if (domainRemark != null) 
-                { 
+                if (domainRemark != null)
+                {
                     xGrouping.SetAttributeValue("remark", domainRemark.DomainRemarks);
                 }
 
