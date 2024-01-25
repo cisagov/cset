@@ -119,6 +119,7 @@
                 "tooltip c": "Clicking this will overwrite the Confidentiality Special Factor",
                 "tooltip i": "Clicking this will overwrite the Integrity Special Factor",
                 "tooltip a": "Clicking this will overwrite the Availabilty Special Factor",
+                "confirmation": "This will overwrite the current {cia} special factor text.  Do you want to continue?",
                 "low": "LOW",
                 "mod": "MOD",
                 "high": "HIGH",

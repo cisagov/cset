@@ -125,9 +125,9 @@
         <tr>
           <th style="width:5%"></th>
           <th style="width: 50%">{{t('type')}}</th>
-          <th style="width: 15%">C</th>
-          <th style="width: 15%">I</th>
-          <th style="width: 15%">A</th>
+          <th style="width: 15%" class="text-center">C</th>
+          <th style="width: 15%" class="text-center">I</th>
+          <th style="width: 15%" class="text-center">A</th>
         </tr>
         <tr *ngFor="let model of topModel?.models">
           <td>
@@ -138,7 +138,7 @@
             <label for="{{model.nIST_Number}}">
               {{model.type_Value}} : {{model.nIST_Number}}</label>
           </td>
-          <td>
+          <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorC' + model.type_Value" class="special-factors-link"
               tabindex="0" *ngIf='model.confidentiality_Special_Factor; else basicC'
               matTooltip="{{t('titles.sal.nist.tooltip c')}}"
@@ -147,7 +147,7 @@
             </a>
             <ng-template #basicC>{{salsSvc.getDisplayLevel(model.confidentiality_Value)}}</ng-template>
           </td>
-          <td>
+          <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorI' + model.type_Value" class="special-factors-link"
               tabindex="0" *ngIf='model.integrity_Special_Factor; else basicI'
               matTooltip="{{t('titles.sal.nist.tooltip i')}}"
@@ -156,7 +156,7 @@
             </a>
             <ng-template #basicI>{{salsSvc.getDisplayLevel(model.integrity_Value)}}</ng-template>
           </td>
-          <td>
+          <td class="text-center">
             <a [attr.csetid]="'ConfidentialitySpecialFactorA' + model.type_Value" class="special-factors-link"
               tabindex="0" *ngIf='model.availability_Special_Factor; else basicA'
               matTooltip="{{t('titles.sal.nist.tooltip a')}}"

@@ -113,11 +113,12 @@
                 "tooltip c": "[UK]Clicking this will overwrite the Confidentiality Special Factor",
                 "tooltip i": "[UK]Clicking this will overwrite the Integrity Special Factor",
                 "tooltip a": "[UK]Clicking this will overwrite the Availabilty Special Factor",
-                "low": "LLL",
-                "mod": "MMM",
-                "high": "HHH",
-                "none": "NONE!",
-                "answer questions": "[UK]Answer Questions",
+                "confirmation": "Це перезапише поточний текст особливого фактора {cia}. Бажаєте продовжити?",
+                "low": "НИЗЬК",
+                "mod": "СЕР",
+                "high": "ВИЩ",
+                "none": "ВІДСУТ",
+                "answer questions": "Питання",
                 "yes": "Так",
                 "no": "Ні"
             },
@@ -328,6 +329,12 @@
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
         "mil-5": "MIL-5"
+    },
+    "dialogs": {
+        "please confirm": "Підтвердження",
+        "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
+        "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
+        "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
         "standard": "Стандартний",
