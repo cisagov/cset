@@ -29,6 +29,7 @@ import { SalService } from '../../../../services/sal.service';
 import { ConfigService } from '../../../../services/config.service';
 import { Sal } from '../../../../models/sal.model';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-sal-nist',
@@ -46,7 +47,9 @@ export class SalNistComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     public salsSvc: SalService,
     public configSvc: ConfigService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public tSvc: TranslocoService
+  ) { }
 
   ngOnInit() {
     // retrieve the existing sal_selection for this assessment
@@ -109,10 +112,10 @@ export class SalNistComponent implements OnInit {
 
     // confirm that they want to overwrite the special factor text
     this.dialogRef = this.dialog.open(ConfirmComponent, { disableClose: false });
-    this.dialogRef.componentInstance.confirmMessage =
-      'This will overwrite the current '
-      + cToFullType[ciaType]
-      + ' special factor text.  Do you want to continue?';
+
+    let msg = this.tSvc.translate('titles.sal.nist.confirmation');
+    msg = msg.replace('{cia}', this.tSvc.translate('titles.sal.' + cToFullType[ciaType].toLowerCase()));
+    this.dialogRef.componentInstance.confirmMessage = msg
 
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -158,10 +161,12 @@ export class SalNistComponent implements OnInit {
       salName: this.salsSvc.selectedSAL.iLevel,
       salValue: 0
     };
+
     this.topModel.specialFactors.availability_Value = {
       salName: this.salsSvc.selectedSAL.aLevel,
       salValue: 0
     };
+
     this.salsSvc.updateNistSpecialFactors(this.topModel.specialFactors)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
