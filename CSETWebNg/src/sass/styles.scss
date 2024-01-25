@@ -364,52 +364,6 @@ table.assessment-summary th {
   padding: .5rem;
 }
 
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 10000;
-    padding: 10px;
-  }
-}
-
-/*
-@media only screen and (max-width: 1200px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 992px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 767px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(4),
-  table.assessment-summary th:nth-child(4) {
-    display: none;
-  }
-}*/
-
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
   padding: 0 15px 10px;
@@ -1230,10 +1184,6 @@ ul.nav-tabs li.active button .tab-icon {
   align-items: center;
   flex: 0 0 auto;
   padding: 5px;
-}
-
-#csetNavbarCollapse {
-  margin-top: 4px;
 }
 
 .navbar-toggler-icon:before {

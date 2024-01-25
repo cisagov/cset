@@ -400,7 +400,7 @@ label[required]::after {
 /* --- header --- */
 .cset-header {
   background-color: $primary-color;
-  height: 62px;
+  height: 62.4px;
 }
 
 .sticky-navbar {
@@ -641,14 +641,6 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
   padding: .5rem;
-}
-
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 10000;
-    padding: 10px;
-  }
 }
 
 /*
@@ -1625,11 +1617,6 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0 auto;
   padding: 5px;
 }
-
-#csetNavbarCollapse {
-  margin-top: 4px;
-}
-
 .navbar-toggler-icon:before {
   content: "\e5d2";
 }

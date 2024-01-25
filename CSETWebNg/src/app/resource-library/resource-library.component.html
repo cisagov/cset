@@ -22,23 +22,21 @@
 -------------------------->
 <div class="rl d-flex flex-column flex-11a">
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs d-flex flex-00a">
-    <li [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'"
-      class="d-flex align-items-center flex-00a">
-      <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Search the resource library">
-        <span class="mr-2 fs-base-6 cset-icons-magnify-glass"></span>
-        <span class="nav-tab-text ml-1">Search</span>
-      </button>
-    </li>
-    <li [class.active]="selectedPane === 'browse'" (click)="selectedPane = 'browse'"
-      class="d-flex align-items-center flex-00a">
-      <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Browse the resource library">
-        <span class="mr-2 fs-base-6 cset-icons-browse"></span>
-        <span class="nav-tab-text ml-1">Browse</span>
-      </button>
-    </li>
-  </ul>
+    <!-- Tabs -->
+    <ul class="nav nav-tabs d-flex flex-00a">
+      <li style="margin-left: 45px;" [class.active]="selectedPane === 'search'" (click)="selectedPane = 'search'" class="d-flex align-items-center flex-00a">
+        <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Search the resource library">
+          <span class="mr-2 fs-base-6 cset-icons-magnify-glass"></span>
+          <span class="nav-tab-text ml-1">Search</span>
+        </button>
+      </li>
+      <li [class.active]="selectedPane === 'browse'" (click)="selectedPane = 'browse'" class="d-flex align-items-center flex-00a">
+        <button class="btn bgc-trans d-flex align-items-center flex-11a" matTooltip="Browse the resource library">
+          <span class="mr-2 fs-base-6 cset-icons-browse"></span>
+          <span class="nav-tab-text ml-1">Browse</span>
+        </button>
+      </li>
+    </ul>
   ​
   <!-- Tree -->
   <div class="bgc-gray-50 d-flex flex-11a w-100">

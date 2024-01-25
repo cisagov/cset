@@ -20,9 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div *transloco="let t" class="collapse navbar-collapse" id="csetNavbarCollapse">
-
-    <div *ngIf="showMenuStrip()">
+<ng-container *transloco="let t">
+    <ng-container *ngIf="showMenuStrip()">
         <button mat-button [matMenuTriggerFor]="tools" #toolsTrigger="matMenuTrigger"
             class="dropdown-toggle navbar-menu-header" (keyup.arrowdown)="toolsTrigger.openMenu()"
             *ngIf="configSvc.installationMode !== 'RRA'">
@@ -84,12 +83,12 @@
                 <span>{{ t('tools.compare') }}</span>
             </button>
         </mat-menu>
-    </div>
+    </ng-container>
 
 
     <div *ngIf="showResourceLibraryLink()">
-        <a mat-button class="navbar-menu-header ws-no-wrap" href="index.html?returnPath=resource-library"
-            target="csetResourceLibrary">
+        <a mat-button class="navbar-menu-header ws-no-wrap"
+            href="index.html?returnPath=resource-library" target="_blank">
             <span class="cset-icons-library fs-base-4 mr-2 align-middle"></span>
             <span>{{t('resource library')}}</span>
         </a>
@@ -312,5 +311,4 @@
             </button>
         </mat-menu>
     </div>
-
-</div>
+</ng-container>
