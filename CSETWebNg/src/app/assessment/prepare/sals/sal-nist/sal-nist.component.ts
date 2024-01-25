@@ -58,6 +58,7 @@ export class SalNistComponent implements OnInit {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error Getting all standards: ' + (<Error>error).stack);
       });
+
     this.salsSvc.getInformationTypes().subscribe(
       (data: NistModel) => {
         this.topModel = data;

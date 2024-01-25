@@ -206,7 +206,7 @@ namespace CSETWebCore.Api.Controllers
         public NistModel GetNistData()
         {
             int assessmentId = _token.AssessmentForUser();
-            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
+            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             NistModel rvalue = new NistModel()
             {
                 models = nistSal.GetInformationTypes(assessmentId),
@@ -222,7 +222,7 @@ namespace CSETWebCore.Api.Controllers
         public Sals PostNistData([FromBody] NistSalModel updateValue)
         {
             int assessmentId = _token.AssessmentForUser();
-            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
+            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             return nistSal.UpdateSalValue(updateValue, assessmentId);
 
 
@@ -233,7 +233,7 @@ namespace CSETWebCore.Api.Controllers
         public Sals PostNistDataQuestions([FromBody] NistQuestionsAnswers updateValue)
         {
             int assessmentId = _token.AssessmentForUser();
-            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
+            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             return nistSal.SaveNistQuestions(assessmentId, updateValue);
         }
 
@@ -242,7 +242,7 @@ namespace CSETWebCore.Api.Controllers
         public Sals PostNistDataSpecialFactor([FromBody] NistSpecialFactor updateValue)
         {
             int assessmentId = _token.AssessmentForUser();
-            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil);
+            NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             return nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
         }
 
