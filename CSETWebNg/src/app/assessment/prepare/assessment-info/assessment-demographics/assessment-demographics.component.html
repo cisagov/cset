@@ -22,9 +22,8 @@
 -------------------------->
 
 <ng-container *transloco="let t">
-<<<<<<< HEAD
-<h4>{{t('demographics')}}</h4>
-<div
+    <h4>{{t('demographics')}}</h4>
+    <div
   class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
    
@@ -51,23 +50,8 @@
       
     </div>
 
-    <!-- <app-demographics-iod [events]="eventImportExport.asObservable()"></app-demographics-iod>
-
-    <app-nav-back-next [page]="'info-demog-iod'"></app-nav-back-next> -->
   </div>
 </div>
-   
- 
-<form>
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label class="mb-1" for="sector">{{t('sector')}}<span *ngIf="showAsterisk"> *</span></label>
-            <select class="form-control" id="sector" name="sector" tabindex="0"
-                (change)="onSelectSector($event.target.value)" [(ngModel)]="demographicData.sectorId">
-                <option [ngValue]="null">-- {{ t('select sector') }} --</option>
-                <option *ngFor="let sector of sectorsList" [value]="sector.sectorId">{{sector.sectorName}}</option>
-=======
-    <h4>{{t('demographics')}}</h4>
     <form>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -96,7 +80,6 @@
                 <option selected disabled>{{t('not selected')}}</option>
                 <option *ngFor="let asset of assetValues" [value]="asset.demographicsAssetId"
                     [selected]="asset.demographicsAssetId === demographicData.assetValue">{{asset.assetValue}}</option>
->>>>>>> develop
             </select>
         </div>
 
