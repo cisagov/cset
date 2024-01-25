@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,13 +24,13 @@
     <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
     <h2 style="color: white;">{{dialogTitle}}</h2>
 </div>
-  
+
 <mat-dialog-content class="mb-2">
     <div *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
-        
+
     </div>
 </mat-dialog-content>
-  
+
 <mat-dialog-actions class="p-3 mb-0" align="end">
     <div *ngIf="dialogTitle == 'Submission Warning'">
         <!--<button mat-button class="btn btn-primary" (click)="submit('new')">New Submission</button>-->

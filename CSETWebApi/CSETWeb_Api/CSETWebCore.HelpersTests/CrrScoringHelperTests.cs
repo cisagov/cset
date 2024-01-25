@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -157,7 +157,7 @@ namespace CSETWebCore.Helpers.Tests
             // Answer AM MIL-1 all YES
             var amMil1Questions = context.MATURITY_QUESTIONS
                 .Where(q => q.Question_Title.StartsWith("AM:G")).Select(x => x.Mat_Question_Id).ToList();
-            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId 
+            myAnswers = context.ANSWER.Where(a => a.Assessment_Id == assessmentId
                 && amMil1Questions.Contains(a.Question_Or_Requirement_Id)).ToList();
             foreach (var ans in myAnswers)
             {

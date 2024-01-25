@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +23,7 @@
   SOFTWARE.
 -------------------------->
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -29,6 +31,7 @@
 
     {{inline-stylesheet}}
 </head>
+
 <body>
     <table class="email-wrapper" style="width: 100%" cellpadding="0" cellspacing="0">
         <tr>
@@ -47,11 +50,13 @@
                                         <p>{{name}}</p>
                                         <p>
                                             You have been invited to participate in a CSET assessment.
-                                            <div>
-                                                {{body}}
-                                            </div>
+                                        <div>
+                                            {{body}}
+                                        </div>
                                         </p>
-                                        <p class="cset-app-link"><a href="{{rootUrl}}/index.html?assessment_id={{id}}">Click here to view your CSET assessment</a></p>
+                                        <p class="cset-app-link"><a
+                                                href="{{rootUrl}}/index.html?assessment_id={{id}}">Click here to view
+                                                your CSET assessment</a></p>
                                         <p>
                                             Thanks,
                                             <br />The CSET Team
@@ -60,7 +65,7 @@
                                 </tr>
                             </table>
                         </td>
-                    </tr>                   
+                    </tr>
                 </table>
 
                 {{email-footer-CF}}
@@ -69,4 +74,5 @@
         </tr>
     </table>
 </body>
+
 </html>

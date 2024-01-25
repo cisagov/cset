@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -111,7 +111,7 @@ export class EdmSummaryResultsComponent implements OnInit {
    * @returns 
    */
   getBarWidth(input) {
-    let width =  (Number.parseFloat(input.percentageCountRight) / Number.parseFloat(input.percentageTotalCount)) * 92;
+    let width = (Number.parseFloat(input.percentageCountRight) / Number.parseFloat(input.percentageTotalCount)) * 92;
 
     const widthStyle = {
       'width': `${width}%`

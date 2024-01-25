@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -67,11 +67,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 if (password == "" || password == null)
                 {
                     e.Extract(ms);
-                } else
+                }
+                else
                 {
                     e.ExtractWithPassword(ms, password);
                 }
-                
+
                 ms.Position = 0;
                 StreamReader sr = new StreamReader(ms);
                 string jsonObject = sr.ReadToEnd();

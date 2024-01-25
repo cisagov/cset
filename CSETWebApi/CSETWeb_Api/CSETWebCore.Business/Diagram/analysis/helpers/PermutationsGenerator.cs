@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
 {
     public class CombinationsGenerator
     {
-        
+
         /// <summary>        
         /// Generating combinations is exponentially horrific do not
         /// REPEAT do not do this for a large number (ie greater than 10)
@@ -38,5 +38,5 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
         }
     }
 
-   
+
 }

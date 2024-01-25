@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace CSETWebCore.Helpers
 {
-    public static class FileStreamingHelper
+	public static class FileStreamingHelper
 	{
 		private static readonly FormOptions _defaultFormOptions = new FormOptions();
 
@@ -100,12 +100,12 @@ namespace CSETWebCore.Helpers
 		{
 			MediaTypeHeaderValue mediaType;
 			var hasMediaTypeHeader = MediaTypeHeaderValue.TryParse(section.ContentType, out mediaType);
-            // UTF-7 is insecure and should not be honored. UTF-8 will succeed in 
-            // most cases.
+			// UTF-7 is insecure and should not be honored. UTF-8 will succeed in 
+			// most cases.
 #pragma warning disable SYSLIB0001 // Type or member is obsolete
-            if (!hasMediaTypeHeader || Encoding.UTF7.Equals(mediaType.Encoding))
+			if (!hasMediaTypeHeader || Encoding.UTF7.Equals(mediaType.Encoding))
 #pragma warning restore SYSLIB0001 // Type or member is obsolete
-            {
+			{
 				return Encoding.UTF8;
 			}
 			return mediaType.Encoding;

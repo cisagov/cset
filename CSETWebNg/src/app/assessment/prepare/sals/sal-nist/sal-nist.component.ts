@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,7 +34,7 @@ import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component'
   selector: 'app-sal-nist',
   templateUrl: './sal-nist.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class SalNistComponent implements OnInit {
 
@@ -69,7 +69,7 @@ export class SalNistComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'NIST';
+    this.salsSvc.selectedSAL.methodology = 'NIST';
     switch (ltype) {
       case 'C': {
         this.salsSvc.selectedSAL.selectedSALOverride = false;

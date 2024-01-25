@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ElementRef, Input, OnInit, AfterViewInit, ViewChild} from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-c2m2-donut',
@@ -112,7 +112,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
       const value = this.data[i].value;
       let color = 'black';
       // sets white text only for the FI slice
-      if(this.data[i].name == "Fully Implemented"){
+      if (this.data[i].name == "Fully Implemented") {
         color = 'white';
       }
 
@@ -120,7 +120,7 @@ export class C2m2DonutComponent implements OnInit, AfterViewInit {
       for (let j = 0; j < i; j++) {
         startingValue += (this.data[j].value / this.totalQuestionsCount * 100);
       }
-      
+
       const text = this.generateText(value, maxX - minX, startingValue, color);
       svg.append(text);
     }

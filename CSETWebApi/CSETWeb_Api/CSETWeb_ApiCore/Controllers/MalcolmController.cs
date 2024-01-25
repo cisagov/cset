@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,7 +28,7 @@ namespace CSETWebCore.Api.Controllers
     {
         private ITokenManager _token;
         private CSETContext _context;
-        private IHttpContextAccessor _http;                
+        private IHttpContextAccessor _http;
         private IMalcolmBusiness _malcolm;
 
 
@@ -52,12 +52,12 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = (int)_token.PayloadInt(Constants.Constants.Token_AssessmentId);
             var formFiles = HttpContext.Request.Form.Files;
             string fileName = "";
-            string fileExtension = "";            
+            string fileExtension = "";
             List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
             List<MalcolmData> dataList = new List<MalcolmData>();
 
             foreach (FormFile file in formFiles)
-            {       
+            {
                 try
                 {
                     using (var stream = new MemoryStream())
@@ -74,13 +74,15 @@ namespace CSETWebCore.Api.Controllers
                             string jsonString = sr.ReadToEnd();
                             data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                             dataList.Add(data);
-                        } else
+                        }
+                        else
                         {
                             MalcolmUploadError error = new MalcolmUploadError(fileName, 415, "files of type " + fileExtension + " are unsupported.");
                             errors.Add(error);
                         }
                     }
-                } catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MalcolmUploadError error = new MalcolmUploadError(fileName, 400, ex.Message);
                     errors.Add(error);

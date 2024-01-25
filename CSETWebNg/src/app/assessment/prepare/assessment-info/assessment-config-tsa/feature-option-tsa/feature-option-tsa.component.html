@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,25 @@
   SOFTWARE.
 -------------------------->
 <div>
-  <div *ngIf="feature.name=='TSA2018'" class="mt-2"><p><strong>Standards</strong></p> </div>
-  <div *ngIf="feature.name=='VADR'" class="mt-2"><p><strong>Maturity Model (Select One)</strong></p> </div>
+  <div *ngIf="feature.name=='TSA2018'" class="mt-2">
+    <p><strong>Standards</strong></p>
+  </div>
+  <div *ngIf="feature.name=='VADR'" class="mt-2">
+    <p><strong>Maturity Model (Select One)</strong></p>
+  </div>
 </div>
 <div class="standard-item d-flex justify-content-between flex-11a">
-    <div>
-        <input type="checkbox" tabindex="0" id="{{feature.name}}" name="{{feature.name}}" class="checkbox-custom mt-1"
-             (change)="submittsa(feature, $event)" [(ngModel)]="feature.selected">
-        <label for="{{feature.name}}" class="checkbox-custom-label">
-            {{feature.full_Name}}
-        </label>
-    </div>
-    <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()" (keyup.enter)="toggleExpansion()"
-        tabindex="0"></i>
+  <div>
+    <input type="checkbox" tabindex="0" id="{{feature.name}}" name="{{feature.name}}" class="checkbox-custom mt-1"
+      (change)="submittsa(feature, $event)" [(ngModel)]="feature.selected">
+    <label for="{{feature.name}}" class="checkbox-custom-label">
+      {{feature.full_Name}}
+    </label>
+  </div>
+  <i class="cset-icons-chevron-down expand" [class.expand-flip]="expandedDesc" (click)="toggleExpansion()"
+    (keyup.enter)="toggleExpansion()" tabindex="0"></i>
 </div>
-<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc" [innerHtml]="feature.model_Description">
-   
-</div>
+<div class="b-primary-200 br-standard fst-italic" [class.open-desc]="expandedDesc" [class.closed-desc]="!expandedDesc"
+  [innerHtml]="feature.model_Description">
 
+</div>

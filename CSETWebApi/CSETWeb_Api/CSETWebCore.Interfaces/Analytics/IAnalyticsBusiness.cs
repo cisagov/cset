@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -12,7 +12,7 @@ namespace CSETWebCore.Interfaces.Analytics
 {
     public interface IAnalyticsBusiness
     {
-        List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id,int? sectorId, int? industryId);
+        List<AnalyticsMinMaxAvgMedianByGroup> getMaturityDashboardData(int maturity_model_id, int? sectorId, int? industryId);
         List<AnalyticsgetMedianOverall> GetMaturityGroupsForAssessment(int assessmentId, int maturity_model_id);
         List<SetStandard> GetStandardList(int assessmentId);
         List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(int assessmentId, string setname, int? sectorId, int? industryId);

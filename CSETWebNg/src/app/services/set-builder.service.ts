@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfigService } from './config.service';
-import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc, SetGalleryDetails } from '../models/set-builder.model';
+import { SetDetail, QuestionSearch, Question, Requirement, ReferenceDoc } from '../models/set-builder.model';
 
 const headers = {
     headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -35,32 +35,32 @@ const headers = {
 @Injectable()
 export class SetBuilderService {
 
-  public navXml: Document;
-  activeRequirement: Requirement;
-  activeQuestion: Question;
-  navOrigin: string;
-  standardDocumentsNavOrigin: string;
-  standardDocumentsNavOriginID: string;
-  moduleBuilderPaths: string[] = [];
+    public navXml: Document;
+    activeRequirement: Requirement;
+    activeQuestion: Question;
+    navOrigin: string;
+    standardDocumentsNavOrigin: string;
+    standardDocumentsNavOriginID: string;
+    moduleBuilderPaths: string[] = [];
 
-  private apiUrl: string;
+    private apiUrl: string;
 
 
-  constructor(
-      private http: HttpClient,
-      private configSvc: ConfigService,
-      private router: Router
-  ) {
-      this.apiUrl = this.configSvc.apiUrl;
-      this.readBreadcrumbXml().subscribe((x: any) => {
-        const oParser = new DOMParser();
-        this.navXml = oParser.parseFromString(x, 'application/xml');
-        let htmlElements: HTMLCollection = this.navXml.getElementsByTagName('Page');
-        for (let i = 0; i < htmlElements.length; i++) {
-          this.moduleBuilderPaths.push(htmlElements[i].attributes.getNamedItem('navpath').value);
-        }
-      });
-  }
+    constructor(
+        private http: HttpClient,
+        private configSvc: ConfigService,
+        private router: Router
+    ) {
+        this.apiUrl = this.configSvc.apiUrl;
+        this.readBreadcrumbXml().subscribe((x: any) => {
+            const oParser = new DOMParser();
+            this.navXml = oParser.parseFromString(x, 'application/xml');
+            let htmlElements: HTMLCollection = this.navXml.getElementsByTagName('Page');
+            for (let i = 0; i < htmlElements.length; i++) {
+                this.moduleBuilderPaths.push(htmlElements[i].attributes.getNamedItem('navpath').value);
+            }
+        });
+    }
 
     /**
      * Converts linebreak characters to HTML <br> tag.
@@ -83,7 +83,7 @@ export class SetBuilderService {
     /**
      * Returns a collection of all standards.
      */
-     getAllSetList() {
+    getAllSetList() {
         return this.http.get(this.apiUrl + 'builder/getAllSets');
     }
 
@@ -92,7 +92,7 @@ export class SetBuilderService {
      * Returns a collection of all standards that are currently being used in an assessment.
      */
     getSetsInUseList() {
-      return this.http.get(this.apiUrl + 'builder/getSetsInUse');
+        return this.http.get(this.apiUrl + 'builder/getSetsInUse');
     }
 
 

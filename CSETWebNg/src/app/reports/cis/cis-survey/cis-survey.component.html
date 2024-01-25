@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,8 @@
 <div class="report-body mb-5">
 
     <app-cover-sheet-a [title]="'CISA CYBER INFRASTRUCTURE SURVEY (CIS)'" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName" [facilityName]="facilityName"></app-cover-sheet-a>
+        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+        [facilityName]="facilityName"></app-cover-sheet-a>
 
     <div class="page-break">
         <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
@@ -38,7 +39,7 @@
         This report indicates how each question of the Cyber Infrastructure Survey
         was answered by checking the boxes that were selected.
         <span *ngIf="baselineAssessmentId != null"><strong>
-            This survey was compared against a baseline survey: "{{baselineAssessmentName}}."</strong>
+                This survey was compared against a baseline survey: "{{baselineAssessmentName}}."</strong>
             Baseline responses are denoted by a star (<i class="fa fa-star"></i>)
             in the current assessment report.
             Questions may not have an associated star if they were not addressed in the baseline.

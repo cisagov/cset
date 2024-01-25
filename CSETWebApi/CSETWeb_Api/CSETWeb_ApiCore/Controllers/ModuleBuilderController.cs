@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -82,7 +82,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/GetBaseSets")]
         public IActionResult GetBaseSets(string setName)
         {
-           return Ok(_module.GetBaseSets(setName));
+            return Ok(_module.GetBaseSets(setName));
         }
 
 
@@ -137,8 +137,8 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/builder/BaseToCustomDelete")]
         public IActionResult BaseToCustomDelete(string setName)
         {
-           _module.DeleteCopyToSet(setName);
-           return Ok();
+            _module.DeleteCopyToSet(setName);
+            return Ok();
         }
 
         /// <summary>

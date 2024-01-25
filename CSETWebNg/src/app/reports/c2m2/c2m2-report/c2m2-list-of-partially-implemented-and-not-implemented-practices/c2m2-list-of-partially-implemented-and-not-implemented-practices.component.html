@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -30,25 +30,29 @@
   <h1>7. List of Partially Implemented and Not Implemented Practices</h1>
   <p>
     Practices that received a response of Partially Implemented or Not Implemented are consolidated in this section and
-    shown with any notes captured during the self-evaluation. If an organization is targeting a MIL in a specific domain,
+    shown with any notes captured during the self-evaluation. If an organization is targeting a MIL in a specific
+    domain,
     these tables will highlight the practices the organization must prioritize to achieve the target MIL.
   </p>
   <p>
-    The tables in this section are ordered first by MIL, then further ordered by the implementation response for practices
-    at that MIL, with Partially Implemented practices followed by Not Implemented practices. This highlights the practices
+    The tables in this section are ordered first by MIL, then further ordered by the implementation response for
+    practices
+    at that MIL, with Partially Implemented practices followed by Not Implemented practices. This highlights the
+    practices
     that may be the focus of improvement efforts to reach a MIL target in each domain.
   </p>
 
   <div *ngFor="let domain of domainList; let i = index">
-    <h1>Domain: {{domain.title}} ({{domain.objectives[0].practices[0].title.substring(0, domain.objectives[0].practices[0].title.indexOf('-'))}})</h1>
+    <h1>Domain: {{domain.title}} ({{domain.objectives[0].practices[0].title.substring(0,
+      domain.objectives[0].practices[0].title.indexOf('-'))}})</h1>
 
     <table class="table-responsive td-align-top td-padding-half-rem">
       <tr class="table-header" style="width: 800px;">
-          <td class="mil-column">MIL</td>
-          <td class="response-column">Response</td>
-          <td class="id-column">ID</td>
-          <td class="practice-column">Practice</td>
-          <td class="note-column">Self-Evaluation Notes</td>
+        <td class="mil-column">MIL</td>
+        <td class="response-column">Response</td>
+        <td class="id-column">ID</td>
+        <td class="practice-column">Practice</td>
+        <td class="note-column">Self-Evaluation Notes</td>
       </tr>
 
       <ng-container *ngIf="milSortedDomainList[i].length == 0">
@@ -62,14 +66,18 @@
       <ng-container *ngFor="let practice of milSortedDomainList[i]; let j = index;">
         <ng-container *ngIf="checkIfNewMilSection(rowspanList[i], j)">
           <tr>
-            <td [attr.rowspan]="getNewMilSection(rowspanList[i], j, i)" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
+            <td [attr.rowspan]="getNewMilSection(rowspanList[i], j, i)"
+              style="border: 1px solid rgb(179, 179, 179);text-align: center;">
               {{practice.mil.charAt(practice.mil.indexOf('-')+1)}}
             </td>
           </tr>
         </ng-container>
-        <ng-container *ngIf="checkIfNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)">
+        <ng-container
+          *ngIf="checkIfNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)">
           <tr>
-            <td [ngClass]="styleSwitcher(practice.answerText)" [attr.rowspan]="getNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)+1" style="border: 1px solid rgb(179, 179, 179);text-align: center;">
+            <td [ngClass]="styleSwitcher(practice.answerText)"
+              [attr.rowspan]="getNewAnswerSection(answerTextList[i], (+practice.mil.charAt(practice.mil.indexOf('-')+1)), j)+1"
+              style="border: 1px solid rgb(179, 179, 179);text-align: center;">
               {{fullNameTranslate(nullReplaceWithU(practice.answerText))}}
             </td>
           </tr>
@@ -80,7 +88,7 @@
           <td style="border: 1px solid rgb(179, 179, 179);">{{practice.questionText}}</td>
           <td style="border: 1px solid rgb(179, 179, 179);">{{nullReplaceWithEmpty(practice.comment)}}</td>
         </tr>
-        
+
       </ng-container>
     </table>
   </div>

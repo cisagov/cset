@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Helpers.ReportWidgets
             xSvg.SetAttributeValue("width", "100%");
             xSvg.SetAttributeValue("height", d.Height.ToString());
 
-            if (d.AnswerCounts.All(x => x == 0))                
+            if (d.AnswerCounts.All(x => x == 0))
             {
                 _isNA = true;
 
@@ -110,6 +110,6 @@ namespace CSETWebCore.Helpers.ReportWidgets
                 return "";
             }
             return xDoc.ToString();
-        }   
+        }
     }
 }

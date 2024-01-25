@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
 //
 ////////////////////////////////
 import { CmuService } from '../../../services/cmu.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { CmuReportModel } from '../../../models/reports.model';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cmu-nist-csf-summary',
@@ -33,7 +32,7 @@ import { CmuReportModel } from '../../../models/reports.model';
 export class CmuNistCsfSummaryComponent implements OnInit {
 
   model: any;
-  
+
   chartAll: string = '';
   legend: string = '';
   csfData: any;

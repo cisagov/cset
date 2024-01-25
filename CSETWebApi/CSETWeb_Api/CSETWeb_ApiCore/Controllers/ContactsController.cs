@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -346,7 +346,7 @@ namespace CSETWebCore.Api.Controllers
                         LastName = userBeingUpdated.LastName,
                         IsSuperUser = false,
                         PasswordResetRequired = true
-                    };            
+                    };
 
                     var uuu = _user.CreateUser(userDetail, _context);
                     userBeingUpdated.UserId = uuu.UserId;
@@ -388,7 +388,7 @@ namespace CSETWebCore.Api.Controllers
                     // If there is already a user with the same email as the newly updated email, use that existing user's id to connect them
                     // to the assessment after editing a contact
                     var existingUser = _context.USERS.Where(x => x.PrimaryEmail == userBeingUpdated.PrimaryEmail).FirstOrDefault();
-                    if (existingUser != null) 
+                    if (existingUser != null)
                     {
                         newUserId = existingUser.UserId;
                     }
@@ -543,8 +543,8 @@ namespace CSETWebCore.Api.Controllers
                 _context.SaveChanges();
             }
 
-            if (ak != null && ak.Lang == null) 
-            { 
+            if (ak != null && ak.Lang == null)
+            {
                 ak.Lang = "en";
                 _context.SaveChanges();
             }
@@ -574,12 +574,12 @@ namespace CSETWebCore.Api.Controllers
                 throw new KeyNotFoundException($"No user found for ID {(currentUserId != null ? currentUserId : currentAccessKey)}");
             }
 
-            if (user != null) 
-            { 
+            if (user != null)
+            {
                 user.Lang = lang.Lang;
             }
 
-            if (ak != null) 
+            if (ak != null)
             {
                 ak.Lang = lang.Lang;
             }

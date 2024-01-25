@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,11 +23,10 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
-      <div
-        class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
-    *ngIf="auth.isLocal">
-    <span class="col-sm-12">Local Installation</span>
-  </div>
+      <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+        *ngIf="auth.isLocal">
+        <span class="col-sm-12">Local Installation</span>
+      </div>
 
   <!-- Navbar -->
   <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header"
@@ -37,31 +36,36 @@
       [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
       (click)="this.router.url!='/resource-library' && goHome()">
       <!-- CSET Lock Logo -->
-      <div class="d-flex justify-content-start align-items-center flex-00a">
+      <div class="d-flex justify-content-start align-items-center flex-00a mt-1">
         <img height="28" src="{{configSvc.assetsUrl}}images/NCUA/logo.svg" tabindex="0" alt="acet" />
       </div>
-    </span>
 
-    <!-- Navbar Toggler Button -->
-    <button class="navbar-toggler c-gray-150 ml-auto" type="button" *ngIf="auth.userToken() && auth.userToken() !== 'null'"
-      data-toggle="collapse" data-target="#csetNavbarCollapse" tabindex="0">
+    <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
+    <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
+      *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
       <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
     </button>
-     <!-- Menus -->
-      <app-top-menus class="w-100"></app-top-menus>
-  </nav>
-    </div>
 
-  <!-- Body -->
-  <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-    <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
-      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
-      <router-outlet></router-outlet>
-    </div>
+    <!-- Menus contained in the navbar-toggler submenu -->
+    <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
+        <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+    </mat-menu>
+
+    <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
+    <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+  </nav>
   </div>
 
-  <!-- Footer -->
-  <!-- Commenting out. Removing per client request during demo, but they might change their minds. 11/21/2022
+    <!-- Body -->
+    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+      <!-- [ngClass]="(this.router.url=='/home/login' || this.router.url=='/home/reset-pass') ? 'c' : 'col-md-12 col-lg-8'" -->
+      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- Commenting out. Removing per client request during demo, but they might change their minds. 11/21/2022
 
   <ngb-accordion #acc="ngbAccordion" type="primary" class="footer row no-gutters ncua-header sticky-footer"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
@@ -130,4 +134,4 @@
       </ng-template>
     </ngb-panel>
   </ngb-accordion>-->
-</div>
+  </div>

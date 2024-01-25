@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,48 +22,48 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a trend-table-width">
   <div class="max-1200">
-  <h3 class="mb-4">Compare Assessments</h3>
+    <h3 class="mb-4">Compare Assessments</h3>
 
-  <div class="btn-group-toggle mt-3" data-toggle="buttons">
-    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'SUMMARY'"
-      (click)="changeState('SUMMARY')">
-      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-        [checked]="tab === 'SUMMARY'">Overall Summary
-    </label>
+    <div class="btn-group-toggle mt-3" data-toggle="buttons">
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'SUMMARY'"
+        (click)="changeState('SUMMARY')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'SUMMARY'">Overall Summary
+      </label>
 
-    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
-      (click)="changeState('MISSED')">
-      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-        [checked]="tab === 'MISSED'">Commonly Missed Questions
-    </label>
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'MISSED'"
+        (click)="changeState('MISSED')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'MISSED'">Commonly Missed Questions
+      </label>
 
-    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
-      (click)="changeState('INDIVIDUAL')">
-      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-        [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
-    </label>
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'INDIVIDUAL'"
+        (click)="changeState('INDIVIDUAL')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'INDIVIDUAL'">Individual Assessment Comparison
+      </label>
 
-    <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
-      (click)="changeState('BESTWORST')">
-      <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
-        [checked]="tab === 'BESTWORST'">Best to Worst
-    </label>
+      <label class="btn btn-sal-select btn-rounded form-check-label" [class.active]="tab === 'BESTWORST'"
+        (click)="changeState('BESTWORST')">
+        <input class="form-check-input" type="radio" autocomplete="off" name="sal_type_selector"
+          [checked]="tab === 'BESTWORST'">Best to Worst
+      </label>
 
-    <hr class="w-100 hr-sal mt-1" />
+      <hr class="w-100 hr-sal mt-1" />
 
-    <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
-      <div [ngSwitch]="tab" class="d-flex flex-column justify-content-start flex-00a">
-        <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>
-        <app-compare-missed *ngSwitchCase="'MISSED'"></app-compare-missed>
-        <app-compare-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual>
-        <app-compare-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-bestworst>
+      <div class="mt-0 mr-0 d-flex flex-column justify-content-start flex-11a">
+        <div [ngSwitch]="tab" class="d-flex flex-column justify-content-start flex-00a">
+          <app-compare-summary *ngSwitchCase="'SUMMARY'"></app-compare-summary>
+          <app-compare-missed *ngSwitchCase="'MISSED'"></app-compare-missed>
+          <app-compare-individual *ngSwitchCase="'INDIVIDUAL'"></app-compare-individual>
+          <app-compare-bestworst *ngSwitchCase="'BESTWORST'"></app-compare-bestworst>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">Back</button>
-    <button class="btn btn-primary" (click)="generateReport('comparereport')">Generate Compare Report</button>
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navAggSvc.navBack('compare-analytics')">Back</button>
+      <button class="btn btn-primary" (click)="generateReport('comparereport')">Generate Compare Report</button>
+    </div>
   </div>
-</div>
 </div>

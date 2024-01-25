@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import { DiagramService } from '../../../../services/diagram.service';
 import { Sort } from "@angular/material/sort";
 import { Comparer } from '../../../../helpers/comparer';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-diagram-components',
@@ -103,7 +103,7 @@ export class DiagramComponentsComponent implements OnInit {
     let newType = evt.target.value;
 
     let newLabel = this.diagramSvc.applyComponentSuffix(newType, this.diagramComponentList);
-    
+
     const dialogRef = this.dialog.open(ConfirmComponent);
     dialogRef.componentInstance.confirmMessage =
       "Would you like to change the label of the component '" + label + "' to '" +
@@ -121,10 +121,9 @@ export class DiagramComponentsComponent implements OnInit {
       }
 
       this.diagramSvc.updateAssetType(componentGuid, newType, newLabel).subscribe(
-        (r: any) =>
-          {
-            this.getComponents();
-          }
+        (r: any) => {
+          this.getComponents();
+        }
       );
     });
 
