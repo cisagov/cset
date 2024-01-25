@@ -1,0 +1,36 @@
+{
+  "pairs": [
+    {
+      "key": "16338",
+      "value": "[UK]Does aggregation of information on this system reveal sensitive patterns and plans, or facilitate access to sensitive or critical systems?"
+    },
+    {
+      "key": "16342",
+      "value": "[UK]Does/could access to this system result in some form of access to other more sensitive or critical systems (e.g., over a network)?"
+    },
+    {
+      "key": "16346",
+      "value": "[UK]Are there extenuating circumstances such as: The system provides critical process flow or security capability, the public visibility of the system, the sheer number of other systems reliant on its operation, or the overall cost of the systems replacement?"
+    },
+    {
+      "key": "16350",
+      "value": "[UK]Would unauthorized modification or destruction of information affecting external communications (e.g., web pages, electronic mail) adversely affect operations or seriously damage mission function and/or public confidence?"
+    },
+    {
+      "key": "16354",
+      "value": "[UK]Would either physical or logical destruction of the system result in very large expenditures to restore the system and/or require a long period of time for recovery?"
+    },
+    {
+      "key": "16358",
+      "value": "[UK]Does the mission served by the system, or the information that the system processes, affect the security of critical infrastructures and key resources?"
+    },
+    {
+      "key": "16362",
+      "value": "[UK]Does the system store, communicate, or process any privacy act information?"
+    },
+    {
+      "key": "16366",
+      "value": "[UK]Does the systems store, communicate, or process any trade secrets information?"
+    }
+  ]
+}
