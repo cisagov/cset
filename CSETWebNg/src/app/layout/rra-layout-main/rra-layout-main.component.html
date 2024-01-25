@@ -21,11 +21,20 @@
   SOFTWARE.
 -------------------------->
 <div class="bgc-page d-flex flex-column flex-11a w-100">
-  <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
-    <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
-      *ngIf="auth.isLocal">
-      <span class="col-sm-12">Local Installation</span>
-    </div>
+    <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
+      <div
+        class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
+        *ngIf="auth.isLocal">
+        <span class="col-sm-12">Local Installation</span>
+      </div>
+
+      <!-- Navbar -->
+      <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
+        *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+        <!-- Brand (BASE) -->
+        <span
+          [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'nnnnnavbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder()) }"
+          (click)="this.router.url!='/resource-library' && goHome()">
 
     <!-- Navbar -->
     <nav class="row px-4 no-gutters navbar cset-header navbar-expand-md"
@@ -37,17 +46,14 @@
 
 
 
-        <!-- CSET Lock Logo -->
-        <div class="d-flex justify-content-start align-items-center flex-00a">
+            <img src="/assets/images/RRA/hex_bug1.png" />
+            <svg height="3rem"
+            viewBox="0 0 60.228893 24.136656" version="1.1" id="svg8" inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+            sodipodi:docname="rra_text.svg">
 
-          <img src="/assets/images/RRA/hex_bug1.png" />
-          <svg height="3rem" viewBox="0 0 60.228893 24.136656" version="1.1" id="svg8"
-            inkscape:version="0.92.4 (5da689c313, 2019-01-14)" sodipodi:docname="rra_text.svg">
-
-            <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1"
-              transform="translate(-75.228335,-58.624733)">
+            <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(-75.228335,-58.624733)">
               <g aria-label="Ransomware Readiness Assessment"
-                style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.80000001;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+              style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.80000001;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fff;fill-opacity:1;stroke:none;stroke-width:0.26458332"
                 id="text12">
                 <path
                   d="m 77.915509,62.872536 -0.470255,2.80603 h -1.581299 l 1.178223,-7.053833 h 2.60966 q 0.987019,0 1.519287,0.217041 0.537434,0.211874 0.842325,0.733806 0.310059,0.516764 0.310059,1.090372 0,0.61495 -0.37207,1.173055 -0.366903,0.558106 -1.214396,0.780314 l 0.878499,3.059245 h -1.643311 l -0.74414,-2.80603 z m 0.475424,-3.012736 -0.299724,1.788004 h 1.043864 q 0.604614,0 0.888835,-0.07751 0.289388,-0.08268 0.470255,-0.310059 0.186036,-0.232544 0.186036,-0.568441 0,-0.439249 -0.284221,-0.63562 -0.279053,-0.19637 -0.935343,-0.19637 z"
@@ -168,43 +174,37 @@
               </g>
             </g>
           </svg>
+        </span>
 
+        <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger" tabindex="0">
+          <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+        </button>
 
+        <!-- Menus contained in the navbar-toggler submenu -->
+        <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
+            <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+        </mat-menu>
+
+        <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
+        <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+      </nav>
+
+      <!-- Body -->
+      <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
+        <div class="p-0 d-flex col-xl-12 bgc-gray-50">
+          <router-outlet></router-outlet>
         </div>
-
-
-
-
-
-
-      </span>
-
-      <!-- Navbar Toggler Button -->
-      <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse"
-        data-target="#csetNavbarCollapse">
-        <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
-      </button>
-
-      <!-- Menus -->
-      <app-top-menus class="w-100"></app-top-menus>
-    </nav>
-
-    <!-- Body -->
-    <div class="row no-gutters d-flex flex-nowrap justify-content-between flex-11a w-100">
-      <div class="p-0 d-flex col-xl-12 bgc-gray-50">
-        <router-outlet></router-outlet>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
+      <!-- Footer -->
+      <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
 
-          <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button"
-            (click)="isFooterOpen()"
-            [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
+            <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
+              [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
           <div ngbAccordionBody>
@@ -235,8 +235,7 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="bgc-white dhs-seal-background"
-    *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
-</div>
+    <div class="bgc-white dhs-seal-background"
+      *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')">
+    </div>
