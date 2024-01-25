@@ -28,32 +28,33 @@
         <span class="col-sm-12">Local Installation</span>
       </div>
 
-  <!-- Navbar -->
-  <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header"
-    *ngIf="auth.userToken() && auth.userToken() !== 'null'">
-    <!-- Brand (ACET) -->
-    <span
-      [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
-      (click)="this.router.url!='/resource-library' && goHome()">
-      <!-- CSET Lock Logo -->
-      <div class="d-flex justify-content-start align-items-center flex-00a mt-1">
-        <img height="28" src="{{configSvc.assetsUrl}}images/NCUA/logo.svg" tabindex="0" alt="acet" />
-      </div>
+    <!-- Navbar -->
+    <nav class="row px-4 no-gutters navbar navbar-expand-md ncua-header"
+      *ngIf="auth.userToken() && auth.userToken() !== 'null'">
+      <!-- Brand (ACET) -->
+      <span
+        [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': this.router.url=='/resource-library' }"
+        (click)="this.router.url!='/resource-library' && goHome()">
+        <!-- CSET Lock Logo -->
+        <div class="d-flex justify-content-start align-items-center flex-00a mt-1">
+          <img height="28" src="{{configSvc.assetsUrl}}images/NCUA/logo.svg" tabindex="0" alt="acet" />
+        </div>
+      </span>
 
-    <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
-    <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
-      *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
-      <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
-    </button>
+      <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
+      <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger"
+        *ngIf="auth.userToken() && auth.userToken() !== 'null'" tabindex="0">
+        <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
+      </button>
 
-    <!-- Menus contained in the navbar-toggler submenu -->
-    <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
-        <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
-    </mat-menu>
+      <!-- Menus contained in the navbar-toggler submenu -->
+      <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
+          <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+      </mat-menu>
 
-    <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
-    <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
-  </nav>
+      <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
+      <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+    </nav>
   </div>
 
     <!-- Body -->
