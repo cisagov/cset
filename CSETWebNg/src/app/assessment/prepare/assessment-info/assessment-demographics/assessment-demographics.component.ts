@@ -81,6 +81,7 @@ export class AssessmentDemographicsComponent implements OnInit {
     orgTypes: any[];
 
     showAsterisk = false;
+    assetValueTemp: number; 
 
     constructor(
         private demoSvc: DemographicService,
@@ -134,20 +135,22 @@ export class AssessmentDemographicsComponent implements OnInit {
         const text = fileReader.readAsText($event.target.files[0], "UTF-8");
         fileReader.onload = () => {
             const text = fileReader.result;
-            console.log(text)
+            // console.log(text)
             const data = JSON.parse(String(text))
-            console.log(data)
+            // console.log(data)
             this.demographicData = data;
+            data.assetValue = this.assetValueTemp
             this.populateIndustryOptions(this.demographicData.sectorId)
-            
+            // this.demographicData.assetValue = data.asset
             this.updateDemographics();
-            this.populateAssetValues(data.assetValue);
+            
           };
         
           fileReader.onerror = () => {
             console.log(fileReader.error);
           };
-        
+          this.populateAssetValues(this.assetValueTemp);
+
         
     }
 
