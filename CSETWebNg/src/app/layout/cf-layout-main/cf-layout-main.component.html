@@ -46,12 +46,12 @@
           <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus" #topMenusTrigger="matMenuTrigger" tabindex="0">
             <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
           </button>
-        
+
           <!-- Menus contained in the navbar-toggler submenu -->
           <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
               <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
           </mat-menu>
-        
+
           <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
           <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
         </nav>
@@ -85,7 +85,6 @@
                     <a href="mailto:secureflorida@cyberflorida.org">Contact Cyber Florida at: secureflorida@cyberflorida.org</a>
                   </div>
                 </div>
-              </div>
             </ng-template>
           </div>
         </div>
