@@ -257,7 +257,7 @@ export class MaturityService {
 
   /**
    * Indicates whether to show the scoring bar chart
-   * on MaturityQuestionsNested.  
+   * on MaturityQuestionsNested.
    * Someday this could be set in the MATURITY_MODELS table as a profile item
    * for each model that uses the nested questions structure.
    */
@@ -336,13 +336,13 @@ export class MaturityService {
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
+    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
       { responseType: 'text' }
     );
   }
 
   /**
-   * 
+   *
    */
   getGroupingTitles(modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);

@@ -30,19 +30,18 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-nist-csf-cat-summary.component.scss']
 })
 export class CmuNistCsfCatSummaryComponent implements OnInit {
-
   csfData: any;
   legend: string = '';
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
     this.cmuSvc.getCsfCatSummary().subscribe((resp: any) => {
       this.csfData = resp;
-    })
+    });
 
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget("2").subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget('2').subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
   }
 }

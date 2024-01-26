@@ -23,10 +23,10 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { CrrReportModel } from '../../../models/reports.model';
+import { CmuReportModel } from '../../../models/reports.model';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
-import { CrrService } from './../../../services/crr.service';
+import { CmuService } from './../../../services/cmu.service';
 
 @Component({
   selector: 'app-crr-deficiency',
@@ -34,8 +34,7 @@ import { CrrService } from './../../../services/crr.service';
   styleUrls: ['./../crr-report/crr-report.component.scss']
 })
 export class CrrDeficiencyComponent implements OnInit {
-
-  crrModel: CrrReportModel;
+  crrModel: CmuReportModel;
   loading: boolean = false;
   keyToCategory: any;
 
@@ -44,26 +43,25 @@ export class CrrDeficiencyComponent implements OnInit {
   constructor(
     public configSvc: ConfigService,
     private titleService: Title,
-    private crrSvc: CrrService,
+    private cmuSvc: CmuService,
     public questionsSvc: QuestionsService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loading = true;
-    this.titleService.setTitle("Deficiency Report - CRR");
-    this.keyToCategory = this.crrSvc.keyToCategory;
-    let appCode = this.configSvc.installationMode;
+    this.titleService.setTitle('Deficiency Report - CRR');
+    this.keyToCategory = this.cmuSvc.keyToCategory;
+    const appCode = this.configSvc.installationMode;
 
-
-    this.crrSvc.getCrrModel().subscribe(
-      (r: CrrReportModel) => {
+    this.cmuSvc.getCmuModel().subscribe(
+      (r: CmuReportModel) => {
         this.crrModel = r;
-        let categories = [];
+        const categories = [];
 
         // Build up deficiencies list
-        this.crrModel.reportData.deficienciesList.forEach(matAns => {
+        this.crrModel.reportData.deficienciesList.forEach((matAns) => {
           const domain = matAns.mat.question_Title.split(':')[0];
-          const dElement = categories.find(e => e.cat === this.keyToCategory[domain]);
+          const dElement = categories.find((e) => e.cat === this.keyToCategory[domain]);
           if (!dElement) {
             categories.push({ cat: this.keyToCategory[domain], matAnswers: [matAns] });
           } else {
@@ -72,26 +70,29 @@ export class CrrDeficiencyComponent implements OnInit {
         });
 
         // We want the report to have the categories in a particular order, so manually add them in order
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['AM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['CM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['CCM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['VM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['IM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['SCM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['RM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['EDM']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['TA']));
-        this.pushDeficiencyCategory(categories.find(e => e.cat === this.keyToCategory['SA']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['AM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['CM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['CCM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['VM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['IM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['SCM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['RM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['EDM']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['TA']));
+        this.pushDeficiencyCategory(categories.find((e) => e.cat === this.keyToCategory['SA']));
 
         // Sort the list
-        this.deficienciesList.forEach(e => {
+        this.deficienciesList.forEach((e) => {
           e.matAnswers.sort((a, b) => {
-            return a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) || a.mat.question_Text.localeCompare(b.mat.question_Text);;
+            return (
+              a.mat.question_Title.split('-')[0].localeCompare(b.mat.question_Title.split('-')[0]) ||
+              a.mat.question_Text.localeCompare(b.mat.question_Text)
+            );
           });
         });
 
         // mark questions followed by a child for border display
-        this.deficienciesList.forEach(e => {
+        this.deficienciesList.forEach((e) => {
           for (let i = 0; i < e.matAnswers.length; i++) {
             if (e.matAnswers[i + 1]?.mat.parent_Question_Id != null) {
               e.matAnswers[i].isFollowedByChild = true;
@@ -101,7 +102,7 @@ export class CrrDeficiencyComponent implements OnInit {
 
         this.loading = false;
       },
-      error => console.log('CRR Deficiency Report Error: ' + (<Error>error).message)
+      (error) => console.log('CRR Deficiency Report Error: ' + (<Error>error).message)
     );
   }
 

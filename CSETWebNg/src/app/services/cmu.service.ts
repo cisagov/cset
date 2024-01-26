@@ -26,14 +26,12 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
 
 const headers = {
-  headers: new HttpHeaders()
-    .set('Content-Type', 'application/json'),
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
 @Injectable()
 export class CmuService {
-
   keyToCategory = {
     AM: 'Asset Management',
     CM: 'Controls Management',
@@ -47,10 +45,14 @@ export class CmuService {
     SA: 'Situational Awareness'
   };
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) { }
+  constructor(private http: HttpClient, private configSvc: ConfigService) {}
+
+  getCmuModel() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/model');
+  }
 
   /**
-   * 
+   *
    */
   getDomainCompliance() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/domaincompliance');
@@ -60,8 +62,7 @@ export class CmuService {
    * Get the entire answer distribution for the whole assessment
    */
   getFullAnswerDistribWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib',
-      { responseType: 'text' });
+    return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib', { responseType: 'text' });
   }
 
   /**
@@ -72,40 +73,41 @@ export class CmuService {
   }
 
   /**
-  * Goal Performance individual question heat maps
-  */
+   * Goal Performance individual question heat maps
+   */
   getPerformance() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/performance');
   }
 
   getMil1PerformanceSummaryLegendWidget(configuration = '') {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceSummaryLegend?configuration=' + configuration,
-      { responseType: 'text' });
+    return this.http.get(
+      this.configSvc.apiUrl + 'cmu/mil1PerformanceSummaryLegend?configuration=' + configuration,
+      { responseType: 'text' }
+    );
   }
 
-
-  getCrrPerformanceSummaryBodyCharts() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceSummaryBodyCharts');
+  getPerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/getPerformanceSummaryBodyCharts');
   }
 
   getBlockLegendWidget(includeGoal: boolean) {
-    return this.http.get(this.configSvc.apiUrl + `cmu/widget/blocklegend?includeGoal=${includeGoal}`,
-      { responseType: 'text' });
+    return this.http.get(this.configSvc.apiUrl + `cmu/blocklegend?includeGoal=${includeGoal}`, {
+      responseType: 'text'
+    });
   }
 
   getNistCsfSummaryChartWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/csfsummarywidget',
-      { responseType: 'text' });
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfsummarywidget', { responseType: 'text' });
   }
 
   /**
- * Returns SVG markup for the the specified domain abbreviation.
- * Scaling the SVG to 1.5 gives a nice readable chart.
- */
+   * Returns SVG markup for the the specified domain abbreviation.
+   * Scaling the SVG to 1.5 gives a nice readable chart.
+   */
   getDomainHeatmapWidget(domain: string) {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&scale=1.5',
-      { responseType: 'text' }
-    );
+    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&scale=1.5', {
+      responseType: 'text'
+    });
   }
 
   getCsf() {
@@ -117,20 +119,38 @@ export class CmuService {
   }
 
   getMil1PerformanceLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/mil1PerformanceLegend',
-      { responseType: 'text' });
+    return this.http.get(this.configSvc.apiUrl + 'cmu/mil1PerformanceLegend', { responseType: 'text' });
   }
 
   getMil1PerformanceBodyCharts() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrMil1PerformanceBodyCharts');
-  }
-
-  getCrrPerformanceAppendixABodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/getCrrPerformanceAppendixABodyData');
+    return this.http.get(this.configSvc.apiUrl + 'cmu/goalperformance');
   }
 
   getCsfCatPerf() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatperf');
   }
 
+  getMil1FullAnswerDistribWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib', { responseType: 'text' });
+  }
+
+  getMil1PerformanceSummaryBodyCharts() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/getMil1PerformanceSummaryBodyCharts');
+  }
+
+  getPerformanceSummaryLegendWidget() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/performanceLegend', { responseType: 'text' });
+  }
+
+  getNistCsfCatSummaryBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
+  }
+
+  getNistCsfCatPerformanceBodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/getNistCsfCatPerformanceBodyData');
+  }
+
+  getPerformanceAppendixABodyData() {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/getCrrPerformanceAppendixABodyData');
+  }
 }
