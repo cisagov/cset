@@ -548,6 +548,47 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new { funcs, _scoring.CsfFunctionColors });
         }
 
+        /// <summary>
+        /// Gets the heatmaps for Performance Summary a returns them in a list of raw HTML strings.
+        /// these are returned as a list of lists, (10 lists, one for each domain, each containing five heatmaps).
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/getPerformanceSummaryBodyCharts")]
+        public IActionResult GetCrrPerformanceSummaryBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var XDocument = _scoring.XDoc;
+
+            List<List<object>> charts = new List<List<object>>();
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                List<object> chartList = new List<object>();
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    XElement mil = domain.Descendants("Mil").FirstOrDefault(el => el.Attribute("label") != null &&
+                    el.Attribute("label").Value == "MIL-" + i);
+
+
+                    if (i == 1)
+                    {
+                        chartList.Add(new GoalsHeatMap(mil, 26).ToString());
+                    }
+                    else
+                    {
+                        var milGoals = mil.Descendants("Goal").FirstOrDefault();
+                        chartList.Add(new QuestionsHeatMap(milGoals, true, 26).ToString());
+                    }
+                }
+
+                charts.Add(chartList);
+            }
+
+            return Ok(charts);
+        }
+
 
         [HttpGet]
         [Route("api/cmu/getCrrPerformanceAppendixABodyData")]

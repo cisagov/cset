@@ -38,7 +38,7 @@ export class CrrNistCsfCatPerformanceComponent implements OnInit {
   constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.cmuSvc.getNistCsfCatPerformanceBodyData().subscribe((resp: any[]) => {
+    this.cmuSvc.getCsfCatPerf().subscribe((resp: any[]) => {
       this.bodyData = resp;
     });
   }
