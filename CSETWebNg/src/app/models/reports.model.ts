@@ -38,10 +38,10 @@ export interface MaturityBasicReportData {
  */
 export interface CmuReportModel {
   structure?: any;
-  crrResultsData?: CrrResultsModel;
+  cmuResultsData?: CmuResultsModel;
   assessmentDetails?: AssessmentDetail;
   parentScores?: EdmScoreParent[];
-  crrScores?: CrrScoringHelper;
+  cmuScores?: CmuScoringHelper;
   reportChart?: CrrReportChart;
   criticalService?: string;
   reportData?: MaturityBasicReportData;
@@ -49,44 +49,31 @@ export interface CmuReportModel {
   includeResultsStylesheet?: boolean;
 }
 
-export interface CrrReportModel {
-  structure: any;
-  crrResultsData: CrrResultsModel;
-  assessmentDetails: AssessmentDetail;
-  parentScores: EdmScoreParent[];
-  crrScores: CrrScoringHelper;
-  reportChart: CrrReportChart;
-  criticalService: string;
-  reportData: MaturityBasicReportData;
-  pageNumbers: { [key: string]: number };
-  includeResultsStylesheet: boolean;
+export interface CmuResultsModel {
+  crrDomains: CmuMaturityDomainModel[];
 }
 
-export interface CrrResultsModel {
-  crrDomains: CrrMaturityDomainModel[];
-}
-
-export interface CrrMaturityDomainModel {
+export interface CmuMaturityDomainModel {
   domainName: string;
   acheivedLevel: number;
   domainScore: number;
   widthValpx: number;
-  statsByLevel: CrrMaturityLevelStats[];
+  statsByLevel: CmuMaturityLevelStats[];
 }
 
-export interface CrrMaturityLevelStats {
+export interface CmuMaturityLevelStats {
   level: number;
   questionCount: number;
   questionsAnswered: number;
   percentAnswered: number;
 }
 
-export interface CrrScoringHelper {
+export interface CmuScoringHelper {
   assessmentId: number;
-  crrModelId: number;
+  cmuModelId: number;
   xDoc: any;
   xCsf: any;
-  csfFunctionColors: { [key: string]: string; };
+  csfFunctionColors: { [key: string]: string };
 }
 
 export interface EDMScore {
@@ -105,11 +92,10 @@ export interface CrrReportChart {
   values: number[];
 }
 
-
 /**
  * Intended to be a generic model that
  * supports the CMU models: EDM, CRR and IMR
  */
 export interface CmuReport {
-  domains: CrrMaturityDomainModel[];
+  domains: CmuMaturityDomainModel[];
 }
