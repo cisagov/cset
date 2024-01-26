@@ -39,7 +39,7 @@ export class CrrPerformanceSummaryComponent implements OnInit {
   constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.cmuSvc.getPerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getBlockLegendWidget(false).subscribe((resp: string) => {
       this.legend = resp;
     });
 

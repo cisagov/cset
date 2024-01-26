@@ -138,16 +138,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'cmu/getMil1PerformanceSummaryBodyCharts');
   }
 
-  getPerformanceSummaryLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/performanceLegend', { responseType: 'text' });
-  }
-
   getNistCsfCatSummaryBodyData() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
-  }
-
-  getNistCsfCatPerformanceBodyData() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/getNistCsfCatPerformanceBodyData');
   }
 
   getPerformanceAppendixABodyData() {
