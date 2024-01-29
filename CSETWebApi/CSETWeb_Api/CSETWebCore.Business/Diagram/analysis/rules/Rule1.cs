@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
                             if (!allowToConnect.Contains(child.Component_Symbol_Id))
                             {
                                 String text = String.Format(rule1, node.ComponentName, child.ComponentName).Replace("\n", " ");
-                                SetLineMessage(node, child, text);
+                                SetLineMessage(node, child, text, 1); // 1 because Rule1 was violated
                             }
                         }
                     }

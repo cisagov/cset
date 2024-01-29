@@ -1,4 +1,4 @@
-//////////////////////////////// 
+﻿//////////////////////////////// 
 // 
 //   Copyright 2023 Battelle Energy Alliance, LLC  
 // 
@@ -15,18 +15,17 @@ using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
 
-namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
+namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
-    class Rule2 : AbstractRule, IRuleEvaluate
+    class Rule8 : AbstractRule, IRuleEvaluate
     {
 
-        private String rule2 = "The subnet should have an IDS (Intrusion Detection System) or " +
-            "IPS (Intrusion Prevention System) inline to confirm that the configuration of firewall, " +
-            "{0}, is correct and that malware has not been able to penetrate past the firewall.";
+        private String rule8 = "The subnet should have an IPS (Intrusion Prevention System) inline to " +
+            "provide a swift response if malicious traffic penetrates the firewall.";
 
         private SimplifiedNetwork network;
 
-        public Rule2(SimplifiedNetwork simplifiedNetwork)
+        public Rule8(SimplifiedNetwork simplifiedNetwork)
         {
             this.network = simplifiedNetwork;
         }
@@ -37,7 +36,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             foreach (var firewall in firewalls)
             {
                 Visited.Clear();
-                CheckRule2(firewall);
+                CheckRule8(firewall);
             }
             return this.Messages;
         }
@@ -49,10 +48,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         /// </summary>
         /// <param name="multiServiceComponent"></param>
         /// <param name="visitedNodes"></param>
-        private void CheckRule2(NetworkComponent firewall)
+        private void CheckRule8(NetworkComponent firewall)
         {
-            // This code is here because component can be a multiple service component that is IDS and IPS
-            if (firewall.IsIDSOrIPS)
+            // This code is here because component can be a multiple service component that is IPS
+            if (firewall.IsIPS)
             {
                 return;
             }
@@ -63,7 +62,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             {
                 if (child.IsInSameZone(firewall))
                 {
-                    if (child.IsIDSOrIPS)
+                    if (child.IsIPS)
                     {
                         return;
                     }
@@ -80,20 +79,20 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 componentName = firewall.ComponentName;
             }
 
-            String text = String.Format(rule2, componentName).Replace("\n", " ");
-            SetNodeMessage(firewall, text, 2); // 2 because rule2 was violated
+            String text = String.Format(rule8, componentName).Replace("\n", " ");
+            SetNodeMessage(firewall, text, 8); // 8 because rule8 was violated
         }
 
         private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
         {
             foreach (NetworkComponent child in itemToCheck.Connections)
-            {   
+            {
                 if (Visited.Add(child.ID))
                 {
                     //Trace.WriteLine("->" + child.ComponentName + ":" + firewall.ComponentName);
                     if (child.IsInSameZone(firewall))
                     {
-                        if (child.IsIDSOrIPS)
+                        if (child.IsIPS)
                         {
                             //Trace.WriteLine("Found it");
                             return true;
