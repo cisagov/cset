@@ -65,7 +65,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     }
 
                     String text = String.Format(rule6, headName, tailName).Replace("\n", " ");
-                    SetLineMessage(headComponent, tailComponent, text);
+                    SetLineMessage(headComponent,tailComponent, text, 6); // 6 because rule6 was violated
                 }
             }
         }

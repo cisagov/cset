@@ -25,6 +25,7 @@ using Nelibur.ObjectMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Malcolm;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -104,10 +105,15 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/ComponentQuestionList")]
-        public IActionResult GetComponentQuestionsList(string group)
+        public IActionResult GetComponentQuestionsList([FromQuery] string skin, string group)
         {
+            if (skin == "RENEW")
+            {
+                new MalcolmBusiness(_context, _token).VerificationAndValidation();
+            }
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();
+            
             return Ok(resp);
         }
 
