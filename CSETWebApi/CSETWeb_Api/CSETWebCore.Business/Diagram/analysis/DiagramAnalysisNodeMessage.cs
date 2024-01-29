@@ -30,6 +30,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
         
         public HashSet<String> SetMessages { get; set; }
         public int MessageIdentifier { get; set; }
+        public int Rule_Violated { get; set; }
 
         public DiagramAnalysisNodeMessage()
         {
