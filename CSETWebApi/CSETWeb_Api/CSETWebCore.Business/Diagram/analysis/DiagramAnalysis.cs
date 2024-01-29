@@ -12,6 +12,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
 using CSETWebCore.Business.Diagram.Analysis;
@@ -89,7 +90,8 @@ namespace CSETWebCore.Business.Diagram.Analysis
                 {
                     Assessment_Id = assessment_id,
                     Id = m.Number,
-                    WarningText = sb.ToString()
+                    WarningText = sb.ToString(),
+                    Rule_Violated = m.Rule_Violated
                 });
             });
 
@@ -98,6 +100,66 @@ namespace CSETWebCore.Business.Diagram.Analysis
 
 
             return msgs;
+        }
+
+        // will return a list of the violated rule numbers
+        public List<int> PerformMalcolmAnalysis(XmlDocument xDoc)
+        {
+            String sal = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == assessment_id).First().Selected_Sal_Level;
+            SimplifiedNetwork network = new SimplifiedNetwork(this.imageToTypePath, sal);
+            network.ExtractNetworkFromXml(xDoc);
+
+            List<int> rulesViolated = MalcolmAnalyzeNetwork(network);
+            return rulesViolated;
+        }
+
+        private List<int> MalcolmAnalyzeNetwork(SimplifiedNetwork network)
+        {
+            List<IRuleEvaluate> rules = new List<IRuleEvaluate>();
+            rules.Add(new Rule8(network));
+            
+            //NetworkWalk walk = new NetworkWalk();
+            //walk.printGraphSimple(network.Nodes.Values.ToList());
+            List<int> rulesViolated = new List<int>();
+            List<IDiagramAnalysisNodeMessage> msgs = new List<IDiagramAnalysisNodeMessage>();
+            foreach (IRuleEvaluate rule in rules)
+            {
+                msgs.AddRange(rule.Evaluate());
+            }
+            foreach (IDiagramAnalysisNodeMessage message in msgs)
+            {
+                rulesViolated.Add(message.Rule_Violated);
+            }
+            // number and persist warning messages
+
+            //var oldWarnings = _context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_id).ToList();
+            //_context.NETWORK_WARNINGS.RemoveRange(oldWarnings);
+            //_context.SaveChanges();
+
+            //int n = 0;
+            //msgs.ForEach(m =>
+            //{
+            //    StringBuilder sb = new StringBuilder();
+            //    m.SetMessages.ToList().ForEach(m2 =>
+            //    {
+            //        sb.AppendLine(m2);
+            //    });
+
+            //    m.Number = ++n;
+            //    _context.NETWORK_WARNINGS.Add(new NETWORK_WARNINGS
+            //    {
+            //        Assessment_Id = assessment_id,
+            //        Id = m.Number,
+            //        WarningText = sb.ToString(),
+            //        Rule_Violated = m.Rule_Violated
+            //    });
+            //});
+
+
+            //_context.SaveChanges();
+
+
+            return rulesViolated;
         }
     }
 }

@@ -38,6 +38,14 @@ namespace CSETWebCore.Business
             get
             {
                 return this.Component_Symbol_Id == Constants.Constants.IDS_TYPE || this.Component_Symbol_Id == Constants.Constants.IPS_TYPE;
+            }
+        }
+
+        public bool IsIPS
+        {
+            get
+            {
+                return this.Component_Symbol_Id == Constants.Constants.IPS_TYPE;
 
             }
         }

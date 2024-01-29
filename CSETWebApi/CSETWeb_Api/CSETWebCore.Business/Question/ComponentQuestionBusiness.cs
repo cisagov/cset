@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
@@ -59,6 +60,8 @@ namespace CSETWebCore.Business.Question
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var resp = new QuestionResponse();
+            var mb = new MalcolmBusiness(_context, _tokenManager);
+            mb.VerificationAndValidation();
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?
