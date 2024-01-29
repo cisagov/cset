@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -75,7 +75,7 @@ namespace CSETWebCore.Business.Contact
         {
             // Delete the "CF RRA" submodel record.  This will have the effect of looking
             // at the entire RRA model.
-            var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x => 
+            var cfRraRecord = _context.DETAILS_DEMOGRAPHICS.FirstOrDefault(x =>
                 x.Assessment_Id == assessmentId && x.DataItemName == "MATURITY-SUBMODEL" && x.StringValue == "RRA CF");
             if (cfRraRecord != null)
             {
@@ -92,11 +92,11 @@ namespace CSETWebCore.Business.Contact
                 _context.AVAILABLE_STANDARDS.Remove(availStandard);
 
 
-                var newAvailStandard = new AVAILABLE_STANDARDS() 
+                var newAvailStandard = new AVAILABLE_STANDARDS()
                 {
                     Assessment_Id = assessmentId,
                     Selected = true,
-                    Set_Name = CF_SetName                    
+                    Set_Name = CF_SetName
                 };
 
                 _context.AVAILABLE_STANDARDS.Add(newAvailStandard);
@@ -110,6 +110,6 @@ namespace CSETWebCore.Business.Contact
             _context.SaveChanges();
 
             _assessmentUtil.TouchAssessment(assessmentId);
-        }        
+        }
     }
 }

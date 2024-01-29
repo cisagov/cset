@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -33,7 +33,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
             var partenerVendorWeb = network.Nodes.Values.Where(x => x.IsPartnerVendorOrWeb).ToList();
-            foreach(var pvw in partenerVendorWeb)
+            foreach (var pvw in partenerVendorWeb)
             {
                 CheckRule5(pvw);
             }

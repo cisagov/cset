@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -26,13 +26,13 @@
             display: none;
         }
     }
-  
+
     @media print {
         .side-toc {
             display: none;
         }
     }
-  
+
     .side-toc {
         background-color: #fff;
         box-sizing: border-box;
@@ -48,23 +48,23 @@
         min-width: 250px;
         z-index: 100;
     }
-  
+
     .side-toc a {
         font-size: 12px;
         word-break: break-word;
         text-decoration: none;
     }
-  
+
     .side-toc div {
         margin: 10px;
     }
-  
+
     a:hover {
-        cursor:pointer;
+        cursor: pointer;
     }
-  </style>
-  
-  <div class="side-toc">
+</style>
+
+<div class="side-toc">
     <div>
         <a class="link-primary" (click)="scrollToElement('toc-top')">Top</a>
     </div>
@@ -90,16 +90,19 @@
         <a class="link-primary" (click)="scrollToElement('toc-other-remarks')">Other Remarks</a>
     </div>
     <div>
-        <a class="link-primary" (click)="scrollToElement('toc-resources-referenced')">Appendix A: Resource Reference List</a>
+        <a class="link-primary" (click)="scrollToElement('toc-resources-referenced')">Appendix A: Resource Reference
+            List</a>
     </div>
     <div>
-        <a class="link-primary" (click)="scrollToElement('toc-contact-information')">Appendix A: Questions Contact Information</a>
+        <a class="link-primary" (click)="scrollToElement('toc-contact-information')">Appendix A: Questions Contact
+            Information</a>
     </div>
     <div>
-        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-summary-app-a')">Appendix B: NIST Cybersecurity Framework Category Summary</a>
+        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-summary-app-a')">Appendix B: NIST
+            Cybersecurity Framework Category Summary</a>
     </div>
     <div>
-        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-performance-app-a')">Appendix B: NIST Cybersecurity Framework Category Performance</a>
+        <a class="link-primary" (click)="scrollToElement('toc-nist-framework-performance-app-a')">Appendix B: NIST
+            Cybersecurity Framework Category Performance</a>
     </div>
-  </div>
-  
+</div>

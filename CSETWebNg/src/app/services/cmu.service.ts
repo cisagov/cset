@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -98,15 +98,15 @@ export class CmuService {
       { responseType: 'text' });
   }
 
-    /**
-   * Returns SVG markup for the the specified domain abbreviation.
-   * Scaling the SVG to 1.5 gives a nice readable chart.
-   */
-    getDomainHeatmapWidget(domain: string) {
-      return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&scale=1.5',
-        { responseType: 'text' }
-      );
-    }
+  /**
+ * Returns SVG markup for the the specified domain abbreviation.
+ * Scaling the SVG to 1.5 gives a nice readable chart.
+ */
+  getDomainHeatmapWidget(domain: string) {
+    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&scale=1.5',
+      { responseType: 'text' }
+    );
+  }
 
   getCsf() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csf');

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -130,7 +130,7 @@ export class RraDeficiencyComponent implements OnInit {
   /**
    * Builds the answer distribution broken into goals.
    */
-   createAnswerDistribByGoal(r: any) {
+  createAnswerDistribByGoal(r: any) {
     let goalList = [];
     r.rraSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
@@ -157,7 +157,7 @@ export class RraDeficiencyComponent implements OnInit {
    * Must build answerDistribByGoal before calling this function.
    * @param r
    */
-   createTopRankedGoals(r: any) {
+  createTopRankedGoals(r: any) {
     let goalList = [];
     this.answerDistribByGoal.forEach(element => {
       var yesPercent = element.series.find(x => x.name == 'Yes').value;

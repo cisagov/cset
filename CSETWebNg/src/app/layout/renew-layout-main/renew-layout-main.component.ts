@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -46,7 +46,7 @@ export class RenewLayoutMainComponent {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
-  footerClosed:boolean = true;
+  footerClosed: boolean = true;
 
   constructor(
     public auth: AuthenticationService,
@@ -84,7 +84,7 @@ export class RenewLayoutMainComponent {
     return this.footerClosed = false;
   }
 
-    isRunningAnonymous() {
+  isRunningAnonymous() {
     return this.configSvc.isRunningAnonymous;
   }
 

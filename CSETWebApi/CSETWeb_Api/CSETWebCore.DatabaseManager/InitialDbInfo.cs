@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -33,7 +33,7 @@ namespace CSETWebCore.DatabaseManager
                 {
                     conn.Open();
                     SqlCommand cmd = conn.CreateCommand();
-                    cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode+"'";
+                    cmd.CommandText = "SELECT type_desc AS FileType, Physical_Name AS Location FROM sys.master_files mf INNER JOIN sys.databases db ON db.database_id = mf.database_id where db.name = '" + DatabaseCode + "'";
 
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -54,11 +54,11 @@ namespace CSETWebCore.DatabaseManager
                     reader.Close();
 
                     if (MDF == null || LDF == null)
-                    { 
+                    {
                         Exists = false;
-                    } 
+                    }
                     else if (!File.Exists(MDF) || !File.Exists(LDF))
-                    { 
+                    {
                         cmd.CommandText = "EXEC sp_detach_db '" + DatabaseCode + "', 'true'";
                         cmd.ExecuteNonQuery();
                         Exists = false;
@@ -110,11 +110,11 @@ namespace CSETWebCore.DatabaseManager
                     return v;
                 }
             }
-            catch 
+            catch
             {
                 return null;
             }
-            
+
         }
 
         private Version GetDBVersion(SqlConnection conn)
@@ -128,7 +128,7 @@ namespace CSETWebCore.DatabaseManager
         }
 
         public string MDF { get; }
-        public string LDF { get; }    
+        public string LDF { get; }
         public string MasterConnectionString { get; }
         public string ConnectionString { get; }
         public string DatabaseCode { get; }

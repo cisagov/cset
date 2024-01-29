@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2023 Battelle Energy Alliance, LLC
+  Copyright 2024 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -411,7 +411,7 @@ label[required]::after {
 /* --- header --- */
 .cset-header {
   background-color: $primary-color;
-  height: 62px;
+  height: 62.4px;
 }
 
 .sticky-navbar {
@@ -648,14 +648,6 @@ table.assessment-summary th {
   color: $gray-50;
   font-weight: 500;
   padding: .5rem;
-}
-
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 10000;
-    padding: 10px;
-  }
 }
 
 /*
@@ -1620,10 +1612,6 @@ ul.nav-tabs li.active button .tab-icon {
   align-items: center;
   flex: 0 0 auto;
   padding: 5px;
-}
-
-#csetNavbarCollapse {
-  margin-top: 4px;
 }
 
 .navbar-toggler-icon:before {

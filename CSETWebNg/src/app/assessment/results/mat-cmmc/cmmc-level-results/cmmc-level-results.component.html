@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,137 +21,132 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Target and Achieved Levels</h3>
+    <h3>Target and Achieved Levels</h3>
 
-  <div *ngIf="!initialized">
-    <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
     </div>
-  </div>
-  
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-    
-    <div *ngIf="initialized && !dataError" class="targetAndAchievedLevels">
-      <div class="level-indicator-container pyramidGraphLevelIndicator">
-        <div class="roundedBox">
-            <div class="rbTitle">
-                Target Level
-            </div>
-            <div class="rbLevel">
-                {{cmmcModel?.targetLevel}}
-            </div>
-        </div>                    
-      </div>
-      <div class="level-indicator-container pyramidGraphLevelIndicator">
-        <div class="roundedBox">
-            <div class="rbTitle">
-                Achieved Level
-            </div>
-            <div class="rbLevel">
-                {{cmmcModel?.acheivedLevel}}
-            </div>
-        </div>                    
-      </div>
-    </div>
-    <div *ngIf="initialized && !dataError" class="pyramidGraphContainer">        
-        <div class="pyramidGraph">
-            <div class="arrowContainer">
-                <div class="topHalfArrowMask">
-                    <div class="corners triangle-topright"></div>
-                    <div class="corners triangle-topleft"></div>
-                </div>
-                <div class="bottomHalfArrowMask">
-                    <div class="arrowBaseMask arrowBaseLeft"></div>
-                    <div class="arrowBaseCenter">
-                        <div>
-                            PRACTICES
-                        </div>
-                        <div>
-                            PROCESSES
-                        </div>
+
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+
+        <div *ngIf="initialized && !dataError" class="targetAndAchievedLevels">
+            <div class="level-indicator-container pyramidGraphLevelIndicator">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Target Level
                     </div>
-                    <div class="arrowBaseMask arrowBaseRight"></div>
-                </div>
-            </div>
-            <div class="pyramidLevel levelOne"
-            [ngStyle]="getPyramidRowColor(5)" >            
-                <div class="pyramidRowItem">
-                    Advanced/Progressive
-                </div>
-                <div class="pyramidRowItem">
-                    Optimizing
-                </div>
-                <div style="flex-basis:0"> 
-                    <div class="pyramidRowLabel">
-                        Level Five
+                    <div class="rbLevel">
+                        {{cmmcModel?.targetLevel}}
                     </div>
                 </div>
             </div>
-            <div class="pyramidLevel levelTwo"
-            [ngStyle]="getPyramidRowColor(4)" >            
-                <div class="pyramidRowItem">
-                    Proactive
-                </div>
-                <div class="pyramidRowItem">
-                    Reviewed
-                </div>
-                <div style="flex-basis:0"> 
-                    <div class="pyramidRowLabel">
-                        Level Four
+            <div class="level-indicator-container pyramidGraphLevelIndicator">
+                <div class="roundedBox">
+                    <div class="rbTitle">
+                        Achieved Level
                     </div>
-                </div>
-            </div>
-            <div class="pyramidLevel levelThree "
-            [ngStyle]="getPyramidRowColor(3)" >           
-                <div class="pyramidRowItem">
-                    Good Cyber Hygiene
-                </div>
-                <div class="pyramidRowItem">
-                    Managed
-                </div><div style="flex-basis:0"> 
-                    <div class="pyramidRowLabel">
-                        Level Three
-                    </div>
-                </div>
-            </div>
-            <div class="pyramidLevel levelFour"
-            [ngStyle]="getPyramidRowColor(2)" >       
-                <div class="pyramidRowItem">
-                    Intermediate Cyber Hygiene
-                </div>
-                <div class="pyramidRowItem">
-                    Documented
-                </div>
-                <div style="flex-basis:0"> 
-                    <div class="pyramidRowLabel">
-                        Level Two
-                    </div>
-                </div>
-                
-            </div>
-            <div class="pyramidLevel levelFive"
-                [ngStyle]="getPyramidRowColor(1)"    
-            >            
-                <div class="pyramidRowItem">
-                    Basic Cyber Hygiene
-                </div>
-                <div class="pyramidRowItem">
-                    Performed
-                </div>
-                <div style="flex-basis:0"> 
-                    <div class="pyramidRowLabel">
-                        Level One
+                    <div class="rbLevel">
+                        {{cmmcModel?.acheivedLevel}}
                     </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="initialized && !dataError" class="pyramidGraphContainer">
+            <div class="pyramidGraph">
+                <div class="arrowContainer">
+                    <div class="topHalfArrowMask">
+                        <div class="corners triangle-topright"></div>
+                        <div class="corners triangle-topleft"></div>
+                    </div>
+                    <div class="bottomHalfArrowMask">
+                        <div class="arrowBaseMask arrowBaseLeft"></div>
+                        <div class="arrowBaseCenter">
+                            <div>
+                                PRACTICES
+                            </div>
+                            <div>
+                                PROCESSES
+                            </div>
+                        </div>
+                        <div class="arrowBaseMask arrowBaseRight"></div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelOne" [ngStyle]="getPyramidRowColor(5)">
+                    <div class="pyramidRowItem">
+                        Advanced/Progressive
+                    </div>
+                    <div class="pyramidRowItem">
+                        Optimizing
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel">
+                            Level Five
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelTwo" [ngStyle]="getPyramidRowColor(4)">
+                    <div class="pyramidRowItem">
+                        Proactive
+                    </div>
+                    <div class="pyramidRowItem">
+                        Reviewed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel">
+                            Level Four
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelThree " [ngStyle]="getPyramidRowColor(3)">
+                    <div class="pyramidRowItem">
+                        Good Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Managed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel">
+                            Level Three
+                        </div>
+                    </div>
+                </div>
+                <div class="pyramidLevel levelFour" [ngStyle]="getPyramidRowColor(2)">
+                    <div class="pyramidRowItem">
+                        Intermediate Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Documented
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel">
+                            Level Two
+                        </div>
+                    </div>
+
+                </div>
+                <div class="pyramidLevel levelFive" [ngStyle]="getPyramidRowColor(1)">
+                    <div class="pyramidRowItem">
+                        Basic Cyber Hygiene
+                    </div>
+                    <div class="pyramidRowItem">
+                        Performed
+                    </div>
+                    <div style="flex-basis:0">
+                        <div class="pyramidRowLabel">
+                            Level One
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="initialized && dataError">
+            <h1>Error Loading Data</h1>
+            <p>There was an error retreiving the data for this page. Please reload the page.</p>
+        </div>
+
+        <app-nav-back-next [page]="'cmmc-level-results'"></app-nav-back-next>
+
     </div>
-    <div *ngIf="initialized && dataError">
-      <h1>Error Loading Data</h1>
-      <p>There was an error retreiving the data for this page. Please reload the page.</p>
-    </div>
-    
-    <app-nav-back-next [page]="'cmmc-level-results'"></app-nav-back-next>
-    
-  </div>
 </div>

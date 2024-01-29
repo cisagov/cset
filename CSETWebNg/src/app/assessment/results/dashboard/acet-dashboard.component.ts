@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -74,7 +74,7 @@ export class AcetDashboardComponent implements OnInit {
                 let acetRisk = this.acetDashboard.sumRisk;
                 let result = acetRisk.map((item, index) => item - iseRisk[index]);
                 this.acetDashboard.sumRisk = result;
-                
+
                 let highest = Math.max(...this.acetDashboard.sumRisk);
                 let index = this.acetDashboard.sumRisk.indexOf(highest);
                 this.acetDashboard.sumRiskLevel = (index + 1);
@@ -122,12 +122,12 @@ export class AcetDashboardComponent implements OnInit {
             this.acetDashboard.overrideReason = '';
         }
 
-        this.acetSvc.postSelection(this.acetDashboard).subscribe((data:any)=>{
+        this.acetSvc.postSelection(this.acetDashboard).subscribe((data: any) => {
             this.loadDashboard();
-        }, 
-        error => {
-            console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-            console.log('Error getting all documents: ' + (<Error>error).stack);
-        });
+        },
+            error => {
+                console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+                console.log('Error getting all documents: ' + (<Error>error).stack);
+            });
     }
 }

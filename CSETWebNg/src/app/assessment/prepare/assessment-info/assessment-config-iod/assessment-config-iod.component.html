@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -47,14 +47,12 @@
         <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
             <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off"
-              (change)="changeIsPCII(true)"
-              tabindex="0" [(ngModel)]="assessment.is_PCII" />
+              (change)="changeIsPCII(true)" tabindex="0" [(ngModel)]="assessment.is_PCII" />
             Yes
           </label>
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="!assessment.is_PCII">
             <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off"
-              (change)="changeIsPCII(false)"
-              tabindex="0" [(ngModel)]="!assessment.is_PCII" />
+              (change)="changeIsPCII(false)" tabindex="0" [(ngModel)]="!assessment.is_PCII" />
             No
           </label>
         </div>

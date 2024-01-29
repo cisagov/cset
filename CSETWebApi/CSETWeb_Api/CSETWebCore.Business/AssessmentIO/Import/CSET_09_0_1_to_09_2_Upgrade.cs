@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,7 +8,7 @@ using System;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
-{ 
+{
     internal class CSET_09_0_1_to_09_2_Upgrade : ICSETJSONFileUpgrade
     {
         /// <summary>

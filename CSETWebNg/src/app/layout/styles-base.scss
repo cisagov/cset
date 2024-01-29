@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2023 Battelle Energy Alliance, LLC
+  Copyright 2024 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -538,51 +538,6 @@ table.assessment-summary th {
   font-weight: 500;
   padding: .5rem;
 }
-
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 10000;
-    padding: 10px;
-  }
-}
-/*
-@media only screen and (max-width: 1200px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 992px) {
-  table.assessment-summary td > button > span {
-    display: none;
-  }
-}
-@media only screen and (max-width: 767px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  table.assessment-summary td:nth-child(2),
-  table.assessment-summary th:nth-child(2) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(3),
-  table.assessment-summary th:nth-child(3) {
-    display: none;
-  }
-  table.assessment-summary td:nth-child(4),
-  table.assessment-summary th:nth-child(4) {
-    display: none;
-  }
-}*/
 
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
@@ -1429,10 +1384,6 @@ ul.nav-tabs li.active button .tab-icon {
   align-items: center;
   flex: 0 0 auto;
   padding: 5px;
-}
-
-#csetNavbarCollapse {
-  margin-top: 4px;
 }
 
 .navbar-toggler-icon:before {

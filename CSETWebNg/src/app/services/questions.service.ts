@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // eslint-disable-next-line max-len
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { ACETService } from './acet.service';
-import { NavigationService } from './navigation/navigation.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -161,8 +159,8 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    if(this.configSvc.installationMode == 'CF'){      
-      this.processNavigationDisable(answer);      
+    if (this.configSvc.installationMode == 'CF') {
+      this.processNavigationDisable(answer);
     }
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }

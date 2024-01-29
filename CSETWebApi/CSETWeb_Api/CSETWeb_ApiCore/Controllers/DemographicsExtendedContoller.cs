@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -353,11 +353,11 @@ namespace CSETWebCore.Api.Controllers
                 demo = new DEMOGRAPHIC_ANSWERS();
             }
 
-            if (demo.SectorId == null 
+            if (demo.SectorId == null
                 || demo.SubSectorId == null
                 || demo.Employees == null
                 || demo.CustomersSupported == null
-                || demo.CIOExists == null 
+                || demo.CIOExists == null
                 || demo.CISOExists == null
                 || demo.CyberTrainingProgramExists == null
                 || demo.GeographicScope == null)

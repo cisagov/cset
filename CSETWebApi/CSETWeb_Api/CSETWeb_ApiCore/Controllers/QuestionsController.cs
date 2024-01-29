@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -149,11 +149,11 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/GetActionItems")]
-        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery]int finding_id)
+        public IList<ActionItems> GetActionItems([FromQuery] int parentId, [FromQuery] int finding_id)
         {
             int assessId = _token.AssessmentForUser();
             ObservationsManager fm = new ObservationsManager(_context, assessId);
-            return fm.GetActionItems(parentId,finding_id);
+            return fm.GetActionItems(parentId, finding_id);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace CSETWebCore.Api.Controllers
                 var mb = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
                 mb.StoreAnswer(assessmentId, answer);
             }
-            
+
             return Ok();
         }
 
@@ -433,7 +433,7 @@ namespace CSETWebCore.Api.Controllers
 
                          // the custom order is 'DOR', 'Examiner Finding', 'Supplemental Guidance', 'Non-reportable', and then in order by question number
                          where answer.Assessment_Id == assessmentId
-                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"), 
+                         orderby finding.Type.StartsWith("Non"), finding.Type.StartsWith("Supplemental"),
                             finding.Type.StartsWith("Examiner"), finding.Type.StartsWith("DOR"), question.Mat_Question_Id
                          select new { finding, answer, question, category };
 
@@ -489,7 +489,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
-            
+
 
             if (obs.IsObservationEmpty(cancel))
             {
@@ -510,7 +510,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/SaveIssueOverrideText")]
         public IActionResult SaveOverrideIssueText([FromBody] ActionItemTextUpdate item)
         {
-            int assessmentId = _token.AssessmentForUser();            
+            int assessmentId = _token.AssessmentForUser();
             var fm = new ObservationsManager(_context, assessmentId);
             fm.UpdateIssues(item);
             return Ok();
@@ -683,7 +683,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             var qb = new QuestionBusiness(_token, _document, _htmlConverter, _questionRequirement, _assessmentUtil, _context);
-            
+
             return Ok(qb.SaveHydroComment(hda.Answer, hda.Answer_Id, hda.Progress_Id, hda.Comment));
         }
     }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -40,14 +40,14 @@ export class EdmCommentsmarkedComponent implements OnInit {
   loading: boolean = false;
 
   constructor(
-  public analysisSvc: ReportAnalysisService,
-  public reportSvc: ReportService,
-  public questionsSvc: QuestionsService,
-  public configSvc: ConfigService,
-  private titleService: Title,
-  public maturitySvc: MaturityService,
-  private sanitizer: DomSanitizer
-  ){}
+    public analysisSvc: ReportAnalysisService,
+    public reportSvc: ReportService,
+    public questionsSvc: QuestionsService,
+    public configSvc: ConfigService,
+    private titleService: Title,
+    public maturitySvc: MaturityService,
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
@@ -61,7 +61,7 @@ export class EdmCommentsmarkedComponent implements OnInit {
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
     );
   }
-  getQuestion(q){
+  getQuestion(q) {
     return q.split(/(?<=^\S+)\s/)[1];
   }
 }

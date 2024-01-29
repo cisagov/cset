@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -31,15 +31,15 @@ namespace UpgradeLibrary.Upgrade
         {
             ConvertDatabase901 convertDb901 = new ConvertDatabase901(path);
             converters.Add("9.0.0.0", convertDb901);
-            converters.Add("9.0.1.0", new ConvertDatabase92(path));            
-                //internal versions
-                converters.Add("9.0.2.0", new ConvertDatabase92(path));                      
-                converters.Add("9.0.3.0", new ConvertDatabase904(path));           
+            converters.Add("9.0.1.0", new ConvertDatabase92(path));
+            //internal versions
+            converters.Add("9.0.2.0", new ConvertDatabase92(path));
+            converters.Add("9.0.3.0", new ConvertDatabase904(path));
             converters.Add("9.0.4.0", new ConvertDatabase904NCUA(path));
             converters.Add("9.2.0.0", new ConvertDatabase921(path));
             converters.Add("9.2.1.0", new ConvertDatabase922(path));
             converters.Add("9.2.2.0", new ConvertDatabase923(path));
-            converters.Add("9.2.3.0", new ConvertDatabase1000(path));            
+            converters.Add("9.2.3.0", new ConvertDatabase1000(path));
             converters.Add("10.0.0.0", new ConvertDatabase1001(path));
             converters.Add("10.0.1.0", new ConvertDatabase101(path));
             converters.Add("10.1.0.0", new ConvertDatabase1011(path));
@@ -126,7 +126,8 @@ namespace UpgradeLibrary.Upgrade
             }
         }
 
-        private void upgradeDB(Version currentVersion, string localDBConnectionString) { 
+        private void upgradeDB(Version currentVersion, string localDBConnectionString)
+        {
             Version dbVersion;
             using (SqlConnection conn = new SqlConnection(localDBConnectionString))
             {

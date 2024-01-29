@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,15 +21,15 @@
   SOFTWARE. 
 -------------------------->
 <div *ngFor="let d of model?.domains">
-    <div class="cpg-domain-bar page-break" 
-        [style.color]="textColor(d.groupingId)"
+    <div class="cpg-domain-bar page-break" [style.color]="textColor(d.groupingId)"
         [style.background-color]="backgroundColor(d.groupingId)">
         {{d.title}}
     </div>
 
     <table *ngFor="let q of d.questions" class="cpg-table">
         <tr>
-            <th style="width: 45%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
+            <th style="width: 45%" [style.color]="textColor(d.groupingId)"
+                [style.background-color]="backgroundColor(d.groupingId)">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row">
                         <div class="mr-2 font-weight-bold">
@@ -46,17 +46,18 @@
                     </div>
                 </div>
             </th>
-            <th style="width: 25%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
+            <th style="width: 25%" [style.color]="textColor(d.groupingId)"
+                [style.background-color]="backgroundColor(d.groupingId)">
                 CURRENT ASSESSMENT
             </th>
-            <th style="width: 30%" [style.color]="textColor(d.groupingId)" [style.background-color]="backgroundColor(d.groupingId)">
+            <th style="width: 30%" [style.color]="textColor(d.groupingId)"
+                [style.background-color]="backgroundColor(d.groupingId)">
                 NOTES
             </th>
         </tr>
         <tr>
             <td>
-                <app-cpg-cost-impact-complexity 
-                    [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">                    
+                <app-cpg-cost-impact-complexity [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">
                 </app-cpg-cost-impact-complexity>
 
                 <div class="mb-3">
@@ -66,7 +67,7 @@
                             {{t}}
                         </li>
                     </ul>
-                    
+
                     <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
                     </div>
                 </div>
@@ -78,26 +79,22 @@
             </td>
             <td>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
-                    <i class="far fa-lg" 
-                        [class.fa-check-square]="q.answer == 'Y'"
+                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'Y'"
                         [class.fa-square]="q.answer != 'Y'"></i>
                     IMPLEMENTED
                 </div>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'I'">
-                    <i class="far fa-lg" 
-                        [class.fa-check-square]="q.answer == 'I'"
+                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'I'"
                         [class.fa-square]="q.answer != 'I'"></i>
                     IN PROGRESS
                 </div>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'S'">
-                    <i class="far fa-lg" 
-                        [class.fa-check-square]="q.answer == 'S'"
+                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'S'"
                         [class.fa-square]="q.answer != 'S'"></i>
                     SCOPED
                 </div>
                 <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
-                    <i class="far fa-lg" 
-                        [class.fa-check-square]="q.answer == 'N'"
+                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'N'"
                         [class.fa-square]="q.answer != 'N'"></i>
                     NOT STARTED
                 </div>

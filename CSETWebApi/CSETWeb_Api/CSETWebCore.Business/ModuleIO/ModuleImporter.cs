@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -103,7 +103,7 @@ namespace CSETWebCore.Business.ModuleIO
             {
                 set.Standard_ToolTip = $"{category.Set_Category_Name} - {set.Standard_ToolTip}";
             }
-            else 
+            else
             {
                 set.Standard_ToolTip = $"{category.Set_Category_Name}";
             }

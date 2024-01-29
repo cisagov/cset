@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,13 @@
 -------------------------->
 <div class="report-body mb-5">
 
-    <app-cover-sheet-a [title]="'DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)'" [assessmentName]="assessmentName"
-        [assessmentDate]="assessmentDate" [assessorName]="assessorName" [facilityName]="facilityName"></app-cover-sheet-a>
+    <app-cover-sheet-a [title]="'DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)'"
+        [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+        [facilityName]="facilityName"></app-cover-sheet-a>
 
     <div class="disclaimer-blurb mt-4">
         <p>
-            This deficiency report lists the practices that are "Not Implemented"  or unanswered.
+            This deficiency report lists the practices that are "Not Implemented" or unanswered.
         </p>
         <p>
             This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
@@ -48,7 +49,8 @@
         <table role="presentation">
             <ng-template ngFor let-s [ngForOf]="def">
                 <tr>
-                    <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}</td>
+                    <td class="deficiencies-list-item" style="font-weight: bold; width: 50px;">{{s.mat.question_Title}}
+                    </td>
                     <td class="deficiencies-list-comment">{{parseQuestionText(s.mat.question_Text)}}</td>
                     <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
                         <div style="width: 9rem; font-weight: bold;">
@@ -57,12 +59,12 @@
                         </div>
                     </td>
                     <td class="deficiencies-list-flag"><img class="MarkedFlag ml-2" *ngIf="s.answer.mark_For_Review"
-                        src="assets/images/icons/MarkedFlag.png"></td>
+                            src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
 
                 <tr *ngIf="s.answer.comment">
                     <td></td>
-                    <td >
+                    <td>
                         <app-mat-comments [comment]="s.answer.comment"></app-mat-comments>
                     </td>
                 </tr>
@@ -73,7 +75,7 @@
                 </tr>
 
             </ng-template>
-            
+
         </table>
         <div *ngIf="def.length == 0">
             There are no deficiencies to display.
