@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
 import { AssessmentService } from '../../../../services/assessment.service';
@@ -66,6 +66,7 @@ interface ImportExportData {
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDemographicsComponent implements OnInit {
+    @ViewChild('assetValueSelect') assetValueSelect: ElementRef;
 
     @Input() events: Observable<void>;
 
@@ -129,40 +130,44 @@ export class AssessmentDemographicsComponent implements OnInit {
 
     }
 
-
+    // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
     importClick($event){
         const fileReader = new FileReader();
         const text = fileReader.readAsText($event.target.files[0], "UTF-8");
         fileReader.onload = () => {
             const text = fileReader.result;
-            // console.log(text)
             const data = JSON.parse(String(text))
-            // console.log(data)
             this.demographicData = data;
-            data.assetValue = this.assetValueTemp
-            this.populateIndustryOptions(this.demographicData.sectorId)
-            // this.demographicData.assetValue = data.asset
+            this.populateIndustryOptions(this.demographicData.sectorId);
+            this.setAssetValue(this.demographicData.assetValue)
             this.updateDemographics();
-            
           };
         
           fileReader.onerror = () => {
             console.log(fileReader.error);
           };
-          this.populateAssetValues(this.assetValueTemp);
-
-        
     }
 
+
+    //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
     exportClick(){
-        // this.demographicData.version = 1;
         if (this.demographicData.organizationName){
-            //File name will be saved with '_' instead of any invalid characters
-            //Could implement functionality that replaces invalid characters manually           
+            //Replace organization point of contact, facilitator, and critical service point of contact w/ null 
+            let tempOrgPOC = this.demographicData.orgPointOfContact
+            let tempFacil = this.demographicData.facilitator
+            let tempCritPOC = this.demographicData.pointOfContact
+            this.demographicData.orgPointOfContact = null; 
+            this.demographicData.facilitator = null; 
+            this.demographicData.pointOfContact = null; 
+
+            //File name will be saved with '_' instead of any invalid characters         
             var FileSaver = require('file-saver');            
             var demoString = JSON.stringify(this.demographicData);
             const blob = new Blob([demoString], { type: 'application/json' });
-            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");            
+            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");
+            this.demographicData.orgPointOfContact = tempOrgPOC
+            this.demographicData.facilitator = tempFacil
+            this.demographicData.pointOfContact = tempCritPOC           
             try {
             FileSaver.saveAs(blob, fileName + ".json");
             } catch (error) {
@@ -176,6 +181,7 @@ export class AssessmentDemographicsComponent implements OnInit {
         dlgOkay.componentInstance.hasHeader = true;
         }
     }
+
 
     onSelectSector(sectorId: number) {
         this.populateIndustryOptions(sectorId);
@@ -231,23 +237,9 @@ export class AssessmentDemographicsComponent implements OnInit {
             });
     }
 
-    populateAssetValues(assetValue) {
-        this.demoSvc.getAllAssetValues().subscribe(
-            (data: DemographicsAssetValue[]) => {
-                this.assetValues = data;
-                
-            },
-            error => {
-                console.log('Error Getting all asset values: ' + (<Error>error).name + (<Error>error).message);
-                console.log('Error Getting all asset values (cont): ' + (<Error>error).stack);
-            });
-        this.demographicData.assetValue = assetValue;
-        // this.updateDemographics();
-    }
-
-    changeAssetValue(event: any) {
-        this.demographicData.assetValue = event.target.value;
-        this.updateDemographics();
+    // Select asset value after import 
+    setAssetValue(selectedValue: any): void {
+        this.assetValueSelect.nativeElement.value = selectedValue;
     }
 
     changeOrgType(event: any) {
