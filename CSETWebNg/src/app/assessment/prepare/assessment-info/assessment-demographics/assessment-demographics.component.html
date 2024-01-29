@@ -25,7 +25,7 @@
     <h4>{{t('demographics')}}</h4>
     <div
   class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
-  <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+  
    
 
     <div class="button-container">
@@ -50,7 +50,7 @@
       
     </div>
 
-  </div>
+  
 </div>
     <form>
         <div class="form-row">
@@ -75,7 +75,7 @@
         </div>
         <div class="form-group">
             <label for="assetValue">{{t('asset gross value')}}<span *ngIf="showAsterisk"> *</span></label>
-            <select class="form-control" id="assetValue" tabindex="0" name="assetValue"
+            <select #assetValueSelect class="form-control" id="assetValue" tabindex="0" name="assetValue"
                 (change)="changeAssetValue($event)">
                 <option selected disabled>{{t('not selected')}}</option>
                 <option *ngFor="let asset of assetValues" [value]="asset.demographicsAssetId"
