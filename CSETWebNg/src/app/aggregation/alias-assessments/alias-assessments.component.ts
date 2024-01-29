@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
@@ -42,7 +42,7 @@ export class AliasAssessmentsComponent implements OnInit {
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
   trendNameError: boolean = true;
   @ViewChild('refreshComponent') refreshComponent;
-  maturity: boolean; 
+  maturity: boolean;
 
   constructor(
     public aggregationSvc: AggregationService,

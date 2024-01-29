@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -59,7 +59,7 @@ const headers = {
 
 @Injectable()
 export class AuthenticationService {
-  
+
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
@@ -117,7 +117,7 @@ export class AuthenticationService {
             this.isLocal = true;
             this.storeUserData(response);
           }
-                    
+
           // if there's a language for the user, set it
           if (!!response?.lang) {
             this.tSvc.setActiveLang(response.lang);
@@ -213,7 +213,7 @@ export class AuthenticationService {
 
           this.tSvc.setActiveLang(user.lang);
 
-          this.isAuthenticated = true;          
+          this.isAuthenticated = true;
           return this.configureCisaAssessorWorkflow(user);
         })
       );
@@ -361,9 +361,9 @@ export class AuthenticationService {
   lastName() {
     return localStorage.getItem('lastName');
   }
-  isFirstLogin():boolean{
-    var tstring = localStorage.getItem('isFirstLogin'); 
-    if(tstring){
+  isFirstLogin(): boolean {
+    var tstring = localStorage.getItem('isFirstLogin');
+    if (tstring) {
       return Boolean(JSON.parse(tstring));
     }
     return false;

@@ -33,7 +33,7 @@
         <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
 
 
-        <node d="security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
+        <node d="sal.security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
 
 
         <!-- ACET/ISE-specific screens -->
@@ -224,12 +224,12 @@
     <!-- Results Phase -->
     <node d="results" id="phase-results" visible="CF-DEMOGRAPHICS-COMPLETE" enabled="CF-ASSESSMENT-COMPLETE">
         <!-- Results - Standards -->
-        <node displaytext="Standard Results" visible="OPTION:STANDARD">
-            <node displaytext="Analysis Dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
-            <node displaytext="Control Priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" />
-            <node displaytext="Standards Summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" />
-            <node displaytext="Ranked Categories" id="standards-ranked" path="assessment/{:id}/results/standards-ranked" />
-            <node displaytext="Results By Category" id="standards-results" path="assessment/{:id}/results/standards-results" />
+        <node d="standard results" visible="OPTION:STANDARD">
+            <node d="analysis dashboard" id="dashboard" path="assessment/{:id}/results/dashboard" />
+            <node d="control priorities" id="ranked-questions" path="assessment/{:id}/results/ranked-questions" />
+            <node d="standards summary" id="standards-summary" path="assessment/{:id}/results/standards-summary" />
+            <node d="ranked categories" id="standards-ranked" path="assessment/{:id}/results/standards-ranked" />
+            <node d="results by category" id="standards-results" path="assessment/{:id}/results/standards-results" />
         </node>
 
 
@@ -315,7 +315,7 @@
         </node>
 
 
-        <node displaytext="High-Level Assessment Description Executive Summary &amp; Comments" id="overview" path="assessment/{:id}/results/overview" visible="SHOW-EXEC-SUMMARY" />
+        <node d="high level desc exec sec comments" id="overview" path="assessment/{:id}/results/overview" visible="SHOW-EXEC-SUMMARY" />
 
         <node d="reports" id="reports" path="assessment/{:id}/results/reports" />
 
@@ -323,7 +323,7 @@
 
         <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE:CSET SHOW-FEEDBACK" />
 
-        <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
+        <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
     </node>
 

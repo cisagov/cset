@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,12 +20,12 @@ namespace CSETWebCore.Model.Diagram
 
         public CommonSecurityAdvisoryFrameworkObject() { }
 
-        public CommonSecurityAdvisoryFrameworkObject(CommonSecurityAdvisoryFrameworkVendor vendor) 
+        public CommonSecurityAdvisoryFrameworkObject(CommonSecurityAdvisoryFrameworkVendor vendor)
         {
             Product_Tree = new ProductTree();
             Product_Tree.Branches = new List<Branch> { new Branch { Name = vendor.Name } };
-            foreach (var product in vendor.Products) 
-            { 
+            foreach (var product in vendor.Products)
+            {
                 Product_Tree.Branches[0].Branches.Add(new Branch { Name = product.Name });
             }
         }

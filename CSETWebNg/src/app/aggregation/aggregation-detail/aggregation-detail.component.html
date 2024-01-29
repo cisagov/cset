@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,18 +22,19 @@
 -------------------------->
 <div class="white-panel d-flex justify-content-start flex-column flex-11a">
   <div class="max-1200">
-  <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Information</h3>
+    <h3>{{ this.aggregationSvc?.modeDisplay(false) }} Information</h3>
 
-  <div class="w-100">
-    <div class="form-group">
-      <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name</label>
-      <input type="text" class="form-control" maxlength="100" [(ngModel)]="aggregationSvc.currentAggregation.aggregationName" (change)="updateAggregation()" />
+    <div class="w-100">
+      <div class="form-group">
+        <label>{{ this.aggregationSvc?.modeDisplay(false) }} Name</label>
+        <input type="text" class="form-control" maxlength="100"
+          [(ngModel)]="aggregationSvc.currentAggregation.aggregationName" (change)="updateAggregation()" />
+      </div>
+    </div>
+
+    <div class="mt-3 d-flex justify-content-between flex-00a">
+      <button class="btn btn-primary" (click)="navAggSvc.navBack('aggregation-detail')">Back</button>
+      <button class="btn btn-primary" (click)="navAggSvc.navNext('aggregation-detail')">Next</button>
     </div>
   </div>
-
-  <div class="mt-3 d-flex justify-content-between flex-00a">
-    <button class="btn btn-primary" (click)="navAggSvc.navBack('aggregation-detail')">Back</button>
-    <button class="btn btn-primary" (click)="navAggSvc.navNext('aggregation-detail')">Next</button>
-  </div>
-</div>
 </div>

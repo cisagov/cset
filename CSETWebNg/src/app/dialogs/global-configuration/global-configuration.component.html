@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,24 +21,24 @@
   SOFTWARE.
 -------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a" style="min-width: 300px;">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-      <span class="cset-icons-cog fs-base-6 mr-3"></span>
-      <span>Submission Export Path</span>
-    </div>
-    <div class="m-2" style="color:red;" >{{errorMessage}} </div>
-    <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
-        UNC Path: 
-        <textarea [(ngModel)]='uncPath'>
-            
-        </textarea>
-  
-      
-  
-    </mat-dialog-content>
-
-    <mat-dialog-actions class="p-3 pt-0 mb-0" style="display: flex; justify-content: space-between;">
-        <button class="btn btn-secondary" (click)="close()">Close</button>
-
-        <button class="btn btn-primary" (click)="savePath()">Save Path</button>
-    </mat-dialog-actions>
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="cset-icons-cog fs-base-6 mr-3"></span>
+    <span>Submission Export Path</span>
   </div>
+  <div class="m-2" style="color:red;">{{errorMessage}} </div>
+  <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a">
+    UNC Path:
+    <textarea [(ngModel)]='uncPath'>
+
+        </textarea>
+
+
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 pt-0 mb-0" style="display: flex; justify-content: space-between;">
+    <button class="btn btn-secondary" (click)="close()">Close</button>
+
+    <button class="btn btn-primary" (click)="savePath()">Save Path</button>
+  </mat-dialog-actions>
+</div>

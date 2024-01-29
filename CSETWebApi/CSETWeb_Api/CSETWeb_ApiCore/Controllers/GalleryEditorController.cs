@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,8 +19,8 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class GalleryEditorController : ControllerBase
     {
-        
-        private readonly ITokenManager _token;        
+
+        private readonly ITokenManager _token;
         private CSETContext _context;
         private IGalleryEditor _galleryEditor;
 
@@ -67,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                Guid Item_To_Clone_Guid= Guid.Parse(Item_To_Clone);
+                Guid Item_To_Clone_Guid = Guid.Parse(Item_To_Clone);
                 _galleryEditor.CloneGalleryItem(Item_To_Clone_Guid, Group_Id, New_Id);
                 return Ok();
             }
@@ -181,7 +181,7 @@ namespace CSETWebCore.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
+
         [HttpGet]
         [Route("api/gallery/getlayouts")]
         public IActionResult GetLayouts()
@@ -192,7 +192,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                
+
                 return Ok(_galleryEditor.GetLayouts());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace CSETWebCore.Api.Controllers
             }
             try
             {
-                
+
                 var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == item.Gallery_Item_Guid).FirstOrDefault();
                 if (galleryItem == null) return BadRequest();
 
@@ -284,7 +284,7 @@ namespace CSETWebCore.Api.Controllers
                 galleryItem.Is_Visible = item.Is_Visible;
 
                 _context.SaveChanges();
-                
+
 
                 return Ok();
             }

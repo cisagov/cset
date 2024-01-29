@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -36,7 +36,7 @@ namespace UpgradeLibrary.Upgrade
                 // apply update scripts                
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 9.2.1 file to 9.2.2: " + e.Message);
             }

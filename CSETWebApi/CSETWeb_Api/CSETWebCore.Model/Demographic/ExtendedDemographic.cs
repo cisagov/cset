@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,8 +19,8 @@ namespace CSETWebCore.Model.Demographic
         public int? SectorId { get; set; }
         public int? SubSectorId { get; set; }
 
-        public string Hb7055 {  get; set; }
-        public string Hb7055Party {  get; set; }
+        public string Hb7055 { get; set; }
+        public string Hb7055Party { get; set; }
 
         /// <summary>
         /// Is the primary infrastructure IT or OT?

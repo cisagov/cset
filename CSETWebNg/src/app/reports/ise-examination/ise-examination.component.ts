@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -96,17 +96,17 @@ export class IseExaminationComponent implements OnInit {
   ngOnInit(): void {
     this.titleService.setTitle("Examination Report - ISE");
 
-    
+
     this.acetSvc.getIseAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
         this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
-        for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+        for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
-          for(let j = 0; j < domain.components?.length; j++) {
+          for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
 
             // initializing all assessment factors / categories / parent questions to true (expanded)
@@ -119,7 +119,7 @@ export class IseExaminationComponent implements OnInit {
             }
 
             // goes through questions
-            for(let k = 0; k < subcat?.questions?.length; k++) {
+            for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
               if (k === 0) {
@@ -151,21 +151,21 @@ export class IseExaminationComponent implements OnInit {
 
                 this.resultsOfReviewForCopy += issueText;
               }
-              this.loadingCounter ++;
+              this.loadingCounter++;
             }
           }
         }
 
         let examLevelString = this.examLevel.substring(0, 4);
 
-        this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any)=>{       
+        this.acetSvc.getActionItemsReport(this.ncuaSvc.translateExamLevelToInt(examLevelString)).subscribe((findingData: any) => {
           this.actionData = findingData;
-          for(let i = 0; i<this.actionData?.length; i++){
+          for (let i = 0; i < this.actionData?.length; i++) {
             let actionItemRow = this.actionData[i];
 
-            if(actionItemRow.action_Items != ''){ //filters out 'deleted' action items
-              if(!this.masterActionItemsMap.has(actionItemRow.finding_Id)){
-                
+            if (actionItemRow.action_Items != '') { //filters out 'deleted' action items
+              if (!this.masterActionItemsMap.has(actionItemRow.finding_Id)) {
+
                 this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
               } else {
                 let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
@@ -181,10 +181,10 @@ export class IseExaminationComponent implements OnInit {
 
         this.observationSvc.getAssessmentObservations().subscribe(
           (f: any) => {
-            this.findingsResponse = f;  
-    
-            for(let i = 0; i < this.findingsResponse?.length; i++) {
-              if(this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
+            this.findingsResponse = f;
+
+            for (let i = 0; i < this.findingsResponse?.length; i++) {
+              if (this.ncuaSvc.translateExamLevel(this.findingsResponse[i]?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)) {
                 let finding = this.findingsResponse[i];
                 this.questionsSvc.getDetails(finding.question.mat_Question_Id, 'Maturity').subscribe(
                   (r: any) => {
@@ -194,52 +194,52 @@ export class IseExaminationComponent implements OnInit {
                     let sourceDocList = this.files?.listTabs[0]?.sourceDocumentsList;
 
                     for (let i = 0; i < sourceDocList?.length; i++) {
-                      if(!this.sourceFilesMap.has(finding.finding.finding_Id)){
-              
+                      if (!this.sourceFilesMap.has(finding.finding.finding_Id)) {
+
                         this.sourceFilesMap.set(finding.finding.finding_Id, [sourceDocList[i]]);
                       } else {
                         let tempFileArray = this.sourceFilesMap.get(finding.finding.finding_Id);
-        
+
                         tempFileArray.push(sourceDocList[i]);
-        
+
                         this.sourceFilesMap.set(finding.finding.finding_Id, tempFileArray);
                       }
                     }
                   }
                 );
-                if(finding.finding.type === 'Examiner Finding') {
+                if (finding.finding.type === 'Examiner Finding') {
                   this.addExaminerFinding(finding.category.title);
                 }
-                if(finding.finding.type === 'DOR') {
+                if (finding.finding.type === 'DOR') {
                   this.addDOR(finding.category.title);
                 }
-                if(finding.finding.type === 'Supplemental Fact') {
+                if (finding.finding.type === 'Supplemental Fact') {
                   this.addSupplementalFact(finding.category.title);
                 }
-                if(finding.finding.type === 'Non-reportable') {
+                if (finding.finding.type === 'Non-reportable') {
                   this.addNonReportable(finding.category.title);
                 }
                 this.relaventIssues = true;
               }
             }
-            if(this.relaventIssues){
+            if (this.relaventIssues) {
 
               this.summaryForCopy += this.inCatStringBuilder(this.dorsTotal, this.dors?.length, 'DOR');
               this.categoryBuilder(this.dors);
-    
+
               this.summaryForCopy += this.inCatStringBuilder(this.examinerFindingsTotal, this.examinerFindings?.length, 'Examiner Finding');
               this.categoryBuilder(this.examinerFindings);
-    
-    
+
+
               this.summaryForCopy += this.inCatStringBuilder(this.supplementalFactsTotal, this.supplementalFacts?.length, 'Supplemental Fact');
               this.categoryBuilder(this.supplementalFacts);
-    
+
               this.summaryForCopy += this.inCatStringBuilder(this.nonReportablesTotal, this.nonReportables?.length, 'Non-reportable');
               this.categoryBuilder(this.nonReportables);
             } else {
               this.summaryForCopy += 'No Issues were noted.';
             }
-            
+
             this.loadingCounter++;
           },
           error => console.log('Findings Error: ' + (<Error>error).message)
@@ -264,20 +264,20 @@ export class IseExaminationComponent implements OnInit {
    * checks if section should expand by checking the boolean value attached to the 'title'
    */
   shouldExpand(title: string) {
-    if(this.expandedOptions.get(title)) {
+    if (this.expandedOptions.get(title)) {
       return true;
     }
     return false;
   }
-  
+
   /**
    * trims the child number '.#' off the given 'title', leaving what the parent 'title' should be
-   */ 
+   */
   getParentQuestionTitle(title: string) {
-    if(!this.ncuaSvc.isParentQuestion(title)) {
+    if (!this.ncuaSvc.isParentQuestion(title)) {
       let endOfTitle = 6;
       // checks if the title is double digits ('Stmt 10' through 'Stmt 22')
-      if(title.charAt(6) != '.'){
+      if (title.charAt(6) != '.') {
         endOfTitle = endOfTitle + 1;
       }
       return title.substring(0, endOfTitle);
@@ -285,7 +285,7 @@ export class IseExaminationComponent implements OnInit {
   }
   /**
    * checks if the question needs to appear
-   */ 
+   */
   requiredQuestion(q: any) {
     if (this.questionsSvc.answerButtonLabel('ISE', q.answerText) == 'Unanswered' && q.maturityLevel == 'CORE+') {
       return false;
@@ -297,7 +297,7 @@ export class IseExaminationComponent implements OnInit {
     if (!this.examinerFindings.includes(title)) {
       this.examinerFindings.push(title);
     }
-    this.examinerFindingsTotal ++;
+    this.examinerFindingsTotal++;
   }
 
   addDOR(title: any) {
@@ -311,14 +311,14 @@ export class IseExaminationComponent implements OnInit {
     if (!this.supplementalFacts.includes(title)) {
       this.supplementalFacts.push(title);
     }
-    this.supplementalFactsTotal ++;
+    this.supplementalFactsTotal++;
   }
 
   addNonReportable(title: any) {
     if (!this.nonReportables.includes(title)) {
       this.nonReportables.push(title);
     }
-    this.nonReportablesTotal ++;
+    this.nonReportablesTotal++;
   }
 
   inCatStringBuilder(total: number, length: number, findingName: string) {
@@ -326,16 +326,16 @@ export class IseExaminationComponent implements OnInit {
     if (total === 1) {
       inCategory = total + ' ' + findingName + ' was drafted in the following category:';
     } else if (total > 1 && length === 1) {
-      inCategory = total +  ' ' + findingName + 's were drafted in the following category:';
+      inCategory = total + ' ' + findingName + 's were drafted in the following category:';
     } else if (total > 1 && length > 1) {
-      inCategory = total +  ' ' + findingName + 's were drafted in the following categories:';
+      inCategory = total + ' ' + findingName + 's were drafted in the following categories:';
     }
 
     return inCategory;
   }
 
   categoryBuilder(categories: string[]) {
-    for(let i = 0; i < categories.length; i++) {
+    for (let i = 0; i < categories.length; i++) {
       this.summaryForCopy += '\n\t ' + categories[i];
     }
     this.summaryForCopy += '\n\n';
@@ -346,7 +346,7 @@ export class IseExaminationComponent implements OnInit {
   }
 
   getChildQuestionNumber(title: string) {
-    if(!this.ncuaSvc.isParentQuestion(title)) {
+    if (!this.ncuaSvc.isParentQuestion(title)) {
       let startOfNumber = title.indexOf('.') + 1;
       return title.substring(startOfNumber);
     }
@@ -354,10 +354,10 @@ export class IseExaminationComponent implements OnInit {
 
   checkShowActionItemMap(title: string, actionNum: number) {
     let array = this.showActionItemsMap.get(title);
-    if(array.includes(actionNum.toString())){
+    if (array.includes(actionNum.toString())) {
       return true;
     }
     return false;
   }
-  
+
 }

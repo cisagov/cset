@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,7 +19,7 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-envelope"></span>
@@ -34,32 +34,34 @@
 
       <div class="mt-3">
         <label>To:</label>
-        <div class="p-1 email-to-box" >
+        <div class="p-1 email-to-box">
           <div>
             {{recipientList}}
           </div>
           <div *ngIf="recipientList.length === 0">
             All associated individuals have been invited
-          </div>          
+          </div>
         </div>
       </div>
 
       <div class="mt-3 d-flex flex-column flex-11a">
         <label for="subj">Subject:</label>
-        <input type="text" maxlength="250" name="subj" id="subj" placeholder="Subject" [(ngModel)]="subject" class="pl-2 d-flex flex-11a" style="min-width: 50vw">
+        <input type="text" maxlength="250" name="subj" id="subj" placeholder="Subject" [(ngModel)]="subject"
+          class="pl-2 d-flex flex-11a" style="min-width: 50vw">
       </div>
 
       <div class="mt-3">
         <label for="emailBody">Message:</label>
         <div>
-          <textarea name="emailBody" id="emailBody" placeholder="Message Text" [value]="body" [(ngModel)]="body" style="width: 100%;height: 50%"
-            rows=6></textarea>
+          <textarea name="emailBody" id="emailBody" placeholder="Message Text" [value]="body" [(ngModel)]="body"
+            style="width: 100%;height: 50%" rows=6></textarea>
         </div>
       </div>
     </mat-dialog-content>
   </form>
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
-    <button type="button" class="m-0 btn btn-primary" (click)="send()" [disabled]="recipientList.length === 0">Send</button>
+    <button type="button" class="m-0 btn btn-primary" (click)="send()"
+      [disabled]="recipientList.length === 0">Send</button>
     <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
   </mat-dialog-actions>
 </div>

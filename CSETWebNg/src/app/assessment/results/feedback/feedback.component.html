@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -83,5 +83,6 @@
     <div #divtoView class="copytxt" [innerHTML]="feedbackBody"></div>
   </div>
 
-  <app-nav-back-next [page]="'feedback'" [hide]="navSvc.isLastVisiblePage('feedback') ? 'next' : ''"></app-nav-back-next>
+  <app-nav-back-next [page]="'feedback'"
+    [hide]="navSvc.isLastVisiblePage('feedback') ? 'next' : ''"></app-nav-back-next>
 </div>

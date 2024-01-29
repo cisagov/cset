@@ -1,7 +1,7 @@
 import { ResourceLibraryService } from './../../../services/resource-library.service';
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@ export class QuestionExtrasComponent implements OnInit {
 
   showQuestionIds = false;
 
-  toggleComponent = false; 
+  toggleComponent = false;
 
   /**
    * Stores the original document title, in case the user escapes out of an unwanted change
@@ -106,10 +106,10 @@ export class QuestionExtrasComponent implements OnInit {
       }
 
       this.showMfr = this.myOptions.showMfr;
-      
+
     }
 
-    
+
   }
 
   /**
@@ -163,29 +163,29 @@ export class QuestionExtrasComponent implements OnInit {
       //this.scrollToExtras();
       return;
     }
-    
+
 
     // Call the API for content
     this.questionsSvc.getDetails(this.myQuestion.questionId, this.myQuestion.questionType).subscribe(
       (details) => {
         this.extras = details;
-        if (details.is_Component === true){
+        if (details.is_Component === true) {
           this.myQuestion.is_Component = true;
-          this.toggleComponent = true; 
+          this.toggleComponent = true;
         }
-        
+
         this.extras.questionId = this.myQuestion.questionId;
 
         // populate my details with the first "non-null" tab
         this.tab = this.extras.listTabs?.find(t => t.requirementFrameworkTitle != null) ?? this.extras.listTabs[0];
 
-        
+
         // Component detail toggle 
-        if (this.toggleComponent ==  true){
+        if (this.toggleComponent == true) {
           this.toggleExtras('COMPONENT')
-          this.toggleComponent = false; 
+          this.toggleComponent = false;
         }
-        
+
         // add questionIDs to related questions for debug if configured to do so
         if (this.showQuestionIds) {
           if (this.tab) {

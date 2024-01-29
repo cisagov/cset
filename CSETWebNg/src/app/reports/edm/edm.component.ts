@@ -1,7 +1,6 @@
-import { performanceLegend, relationshipFormationG1, relationshipFormationG2, relationshipFormationG3, relationshipFormationG4, relationshipFormationG5, relationshipFormationG6, performanceLegend2, relationshipFormationSummary } from './data';
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +21,13 @@ import { performanceLegend, relationshipFormationG1, relationshipFormationG2, re
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { ACETService } from '../../services/acet.service';
 import { DemographicService } from '../../services/demographic.service';
 import { MaturityQuestionResponse } from '../../models/questions.model';
 import { Demographic } from '../../models/assessment-info.model';
-import { EDMBarChartModel } from './edm-bar-chart.model'
-import { ActivatedRoute } from '@angular/router';
 import { ReportService } from '../../services/report.service';
 import { saveAs } from "file-saver";
 
@@ -41,7 +38,7 @@ import { saveAs } from "file-saver";
 })
 export class EdmComponent implements OnInit, AfterContentInit {
 
-  @ViewChild('edm') el : ElementRef;
+  @ViewChild('edm') el: ElementRef;
 
   orgName: string;
   displayName = '...';
@@ -90,7 +87,7 @@ export class EdmComponent implements OnInit, AfterContentInit {
     }
   }
 
-  getReportPdf(){
+  getReportPdf() {
     //this.reportSvc.getPdf(this.el.nativeElement.innerHTML);
     this.reportSvc.getPdf(this.el.nativeElement.innerHTML, "None").subscribe(data => {
       saveAs(data, "edm.pdf");

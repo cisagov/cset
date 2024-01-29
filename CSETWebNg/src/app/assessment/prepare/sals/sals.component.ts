@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ export class SalsComponent implements OnInit {
     public salsSvc: SalService,
     public navSvc: NavigationService,
     public layoutSvc: LayoutService
-    ) {
+  ) {
   }
 
   ngOnInit() {
@@ -53,14 +53,14 @@ export class SalsComponent implements OnInit {
       (data: Sal) => {
         this.salsSvc.selectedSAL = data;
         this.sal_Levels = data;
-        if (data.last_Sal_Determination_Type.toLowerCase() === 'simple') {
-          data.last_Sal_Determination_Type = 'Simple';
+        if (data.methodology.toLowerCase() === 'simple') {
+          data.methodology = 'Simple';
         }
-        if (!data.last_Sal_Determination_Type) {
-          data.last_Sal_Determination_Type = 'Simple';
+        if (!data.methodology) {
+          data.methodology = 'Simple';
         }
 
-        this.selectedSal = data.last_Sal_Determination_Type;
+        this.selectedSal = data.methodology;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);

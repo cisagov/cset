@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -34,84 +34,84 @@ import { FileUploadClientService } from '../../../services/file-client.service';
 })
 export class StatusCreateComponent implements OnInit, OnDestroy {
   statusCreateForm: UntypedFormGroup;
-    fileDescription: UntypedFormControl;
-    fileToUpload: File  = null;
-    uploadProgress: number = 0;
-    uploadComplete: boolean = false;
-    uploadingProgressing: boolean = false;
-    fileUploadSub: any;
-    serverResponse: any;
+  fileDescription: UntypedFormControl;
+  fileToUpload: File = null;
+  uploadProgress: number = 0;
+  uploadComplete: boolean = false;
+  uploadingProgressing: boolean = false;
+  fileUploadSub: any;
+  serverResponse: any;
 
-    @ViewChild('myInput')
-    myFileInput: any;
+  @ViewChild('myInput')
+  myFileInput: any;
 
 
-    constructor(
-        private fileUploadService: FileUploadClientService
-    ) {}
+  constructor(
+    private fileUploadService: FileUploadClientService
+  ) { }
 
-    ngOnInit() {
-        /* initilize the form and/or extra form fields
-            Do not initialize the file field
-        */
-      this.fileDescription  = new UntypedFormControl('', [
-              Validators.required,
-              Validators.minLength(4),
-              Validators.maxLength(280)
-         ]);
-      this.statusCreateForm = new UntypedFormGroup({
-          'description': this.fileDescription,
-      });
+  ngOnInit() {
+    /* initilize the form and/or extra form fields
+        Do not initialize the file field
+    */
+    this.fileDescription = new UntypedFormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+      Validators.maxLength(280)
+    ]);
+    this.statusCreateForm = new UntypedFormGroup({
+      'description': this.fileDescription,
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.fileUploadSub) {
+      this.fileUploadSub.unsubscribe();
     }
+  }
 
-    ngOnDestroy() {
-        if (this.fileUploadSub) {
-            this.fileUploadSub.unsubscribe();
-        }
-    }
-
-    handleProgress(event) {
+  handleProgress(event) {
     if (event.type === HttpEventType.DownloadProgress) {
-        this.uploadingProgressing = true;
-        this.uploadProgress = Math.round(100 * event.loaded / event.total);
-      }
-
-      if (event.type === HttpEventType.UploadProgress) {
-        this.uploadingProgressing = true;
-        this.uploadProgress = Math.round(100 * event.loaded / event.total);
-      }
-
-      if (event.type === HttpEventType.Response) {
-        this.uploadComplete = true;
-        this.serverResponse = event.body;
-      }
+      this.uploadingProgressing = true;
+      this.uploadProgress = Math.round(100 * event.loaded / event.total);
     }
-    handleSubmit(event: any, statusNgForm: NgForm, statusFormGroup: UntypedFormGroup) {
-      event.preventDefault();
-      if (statusNgForm.submitted) {
 
-          const submittedData = statusFormGroup.value;
+    if (event.type === HttpEventType.UploadProgress) {
+      this.uploadingProgressing = true;
+      this.uploadProgress = Math.round(100 * event.loaded / event.total);
+    }
 
-          this.fileUploadSub = this.fileUploadService.fileUpload(
-                this.fileToUpload,
-                submittedData).subscribe(
-                    event2 => this.handleProgress(event2),
-                    () => {
-                    console.log('Server error');
-                  });
+    if (event.type === HttpEventType.Response) {
+      this.uploadComplete = true;
+      this.serverResponse = event.body;
+    }
+  }
+  handleSubmit(event: any, statusNgForm: NgForm, statusFormGroup: UntypedFormGroup) {
+    event.preventDefault();
+    if (statusNgForm.submitted) {
 
-          statusNgForm.resetForm({});
-      }
+      const submittedData = statusFormGroup.value;
+
+      this.fileUploadSub = this.fileUploadService.fileUpload(
+        this.fileToUpload,
+        submittedData).subscribe(
+          event2 => this.handleProgress(event2),
+          () => {
+            console.log('Server error');
+          });
+
+      statusNgForm.resetForm({});
+    }
   }
 
 
-    handleFileInput(files: FileList) {
-        const fileItem = files.item(0);
-        this.fileToUpload = fileItem;
-    }
+  handleFileInput(files: FileList) {
+    const fileItem = files.item(0);
+    this.fileToUpload = fileItem;
+  }
 
-    resetFileInput() {
-        this.myFileInput.nativeElement.value = '';
-    }
+  resetFileInput() {
+    this.myFileInput.nativeElement.value = '';
+  }
 
 }

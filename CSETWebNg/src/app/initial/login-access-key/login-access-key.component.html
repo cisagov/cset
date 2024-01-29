@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,7 @@
     <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
 
         <!-- Logo and Name -->
-        <div *ngIf="skin === 'CSET'"
-            class="my-4 d-flex align-items-end flex-00a flex-nowrap">
+        <div *ngIf="skin === 'CSET'" class="my-4 d-flex align-items-end flex-00a flex-nowrap">
             <app-logo-cset logoHeight="60"></app-logo-cset>
             <span class="align-bottom ml-3 font-italic"
                 style="font-size: 37px; margin-bottom: -.5rem; color: #666">Online</span>
@@ -49,7 +48,8 @@
             <div class="mb-3 d-flex flex-row">
                 <div class="mr-3 container">
                     <label>
-                        If you have used <em>{{ title1[skin] }}</em> before and already have an Access Key, enter it here and
+                        If you have used <em>{{ title1[skin] }}</em> before and already have an Access Key, enter it
+                        here and
                         click Login.
                     </label>
                     <div class="input-group mb-2">
@@ -64,12 +64,14 @@
 
                 <div class="container">
                     <label class="mr-3">
-                        If it is your first time using <em>{{ title1[skin] }}</em> click this button to generate a new Access
+                        If it is your first time using <em>{{ title1[skin] }}</em> click this button to generate a new
+                        Access
                         Key.
                     </label>
 
                     <div class="d-flex flex-row">
-                        <button class="btn btn-primary" (click)="generateKey()" [disabled]="isKeyGenerated">Create Access Key</button>
+                        <button class="btn btn-primary" (click)="generateKey()" [disabled]="isKeyGenerated">Create
+                            Access Key</button>
 
                         <div class="spinner-container" *ngIf="isGenerating">
                             <div style="max-width: 30px; max-height: 30px;"></div>
@@ -105,8 +107,9 @@
 
             <div class="pii-disclaimer">
                 <p>
-                    <strong>Attention:</strong> Do not enter any personal or sensitive information into <em>{{ title1[skin]
-                    }}</em>.
+                    <strong>Attention:</strong> Do not enter any personal or sensitive information into <em>{{
+                        title1[skin]
+                        }}</em>.
                 </p>
                 <p>
                     This includes information about a natural person or entity that is readily identifiable to that
@@ -114,7 +117,8 @@
                     individual names, addresses, emails and phone numbers.
                 </p>
                 <p class="red-text">
-                    If you choose to provide personal or sensitive information in any field within <em>{{ title1[skin] }}</em>,
+                    If you choose to provide personal or sensitive information in any field within <em>{{ title1[skin]
+                        }}</em>,
                     that information will be stored in <em>{{ title2[skin] }}</em> and will be publicly disclosed.
                 </p>
             </div>

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -28,15 +28,8 @@
 
   <div class="form-group mb-4">
     <label for="orgType">Organization Type</label>
-    <select
-      [ngClass]="{ 'alert-danger' : !demographicData.organizationType }"
-      class="form-control"
-      id="orgType"
-      tabindex="0"
-      name="orgType"
-      (change)="update($event)"
-      [(ngModel)]="demographicData.organizationType"
-    >
+    <select [ngClass]="{ 'alert-danger' : !demographicData.organizationType }" class="form-control" id="orgType"
+      tabindex="0" name="orgType" (change)="update($event)" [(ngModel)]="demographicData.organizationType">
       <option [ngValue]="null">-- Select Type --</option>
       <option *ngFor="let t of demographicData.listOrgTypes" [ngValue]="t.optionValue">
         {{ t.optionText }}
@@ -46,56 +39,26 @@
 
   <div class="form-group mb-4">
     <label for="orgName">Name of Organization</label>
-    <input
-      [ngClass]="{ 'alert-danger' : !demographicData.organizationName }"
-      class="form-control"
-      autocomplete="off"
-      tabindex="0"
-      type="text"
-      maxlength="150"
-      name="orgName"
-      id="orgName"
-      [(ngModel)]="demographicData.organizationName"
-      placeholder="Name of Organization"
-      (blur)="update($event)"
-    />
+    <input [ngClass]="{ 'alert-danger' : !demographicData.organizationName }" class="form-control" autocomplete="off"
+      tabindex="0" type="text" maxlength="150" name="orgName" id="orgName"
+      [(ngModel)]="demographicData.organizationName" placeholder="Name of Organization" (blur)="update($event)" />
   </div>
 
   <div class="form-group">
     <label for="businessUnit">Business Unit</label>
-    <input
-      [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }"
-      class="form-control"
-      autocomplete="off"
-      tabindex="0"
-      type="text"
-      maxlength="150"
-      name="businessUnit"
-      id="businessUnit"
-      [(ngModel)]="demographicData.businessUnit"
-      placeholder="Business Unit/Agency"
-      (blur)="update($event)"
-    />
+    <input [ngClass]="{ 'alert-danger' : !demographicData.businessUnit }" class="form-control" autocomplete="off"
+      tabindex="0" type="text" maxlength="150" name="businessUnit" id="businessUnit"
+      [(ngModel)]="demographicData.businessUnit" placeholder="Business Unit/Agency" (blur)="update($event)" />
   </div>
 
   <div class="d-flex flex-row">
     <div class="form-group mb-4 col-6 pl-0">
       <label for="sector">Sector</label>
-      <select
-        [ngClass]="{ 'alert-danger' : !demographicData.sector}"
-        class="form-control"
-        id="sector"
-        tabindex="0"
-        name="sector"
-        [(ngModel)]="demographicData.sector"
-        (change)="onChangeSector($event)"
-      >
+      <select [ngClass]="{ 'alert-danger' : !demographicData.sector}" class="form-control" id="sector" tabindex="0"
+        name="sector" [(ngModel)]="demographicData.sector" (change)="onChangeSector($event)">
         <option [ngValue]="null">-- Select Sector --</option>
-        <option
-          *ngFor="let i of demographicData.listSectors"
-          [ngValue]="i.optionValue"
-          [selected]="i.optionValue === demographicData?.sector"
-        >
+        <option *ngFor="let i of demographicData.listSectors" [ngValue]="i.optionValue"
+          [selected]="i.optionValue === demographicData?.sector">
           {{ i.optionText }}
         </option>
       </select>
@@ -103,21 +66,11 @@
 
     <div class="form-group mb-4 col-6 pr-0">
       <label for="subsector">Sub-Sector</label>
-      <select
-        [ngClass]="{ 'alert-danger' : !demographicData.subsector }"
-        class="form-control"
-        id="subsector"
-        tabindex="0"
-        name="subsector"
-        [(ngModel)]="demographicData.subsector"
-        (change)="update($event)"
-      >
+      <select [ngClass]="{ 'alert-danger' : !demographicData.subsector }" class="form-control" id="subsector"
+        tabindex="0" name="subsector" [(ngModel)]="demographicData.subsector" (change)="update($event)">
         <option [ngValue]="null">-- Select --</option>
-        <option
-          *ngFor="let i of demographicData.listSubsectors"
-          [ngValue]="i.optionValue"
-          [selected]="i.optionValue === demographicData?.subsector"
-        >
+        <option *ngFor="let i of demographicData.listSubsectors" [ngValue]="i.optionValue"
+          [selected]="i.optionValue === demographicData?.subsector">
           {{ i.optionText }}
         </option>
       </select>
@@ -132,15 +85,9 @@
     <label for="numberEmployees" *ngIf="demographicData.organizationType !== 1">
       Number of employees in the government agency?
     </label>
-    <select
-      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }"
-      class="form-control"
-      id="numberEmployeesTotal"
-      tabindex="0"
-      name="numberEmployeesTotal"
-      [(ngModel)]="demographicData.numberEmployeesTotal"
-      (change)="update($event)"
-    >
+    <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesTotal }" class="form-control"
+      id="numberEmployeesTotal" tabindex="0" name="numberEmployeesTotal"
+      [(ngModel)]="demographicData.numberEmployeesTotal" (change)="update($event)">
       <option [ngValue]="null">-- Select --</option>
       <option *ngFor="let i of demographicData.listNumberEmployeeTotal" [ngValue]="i.optionValue">
         {{ i.optionText }}
@@ -160,21 +107,12 @@
       <label for="numberEmployeesUnit"> Number of employees in the department? </label>
       <div class="font-italic my-2">Please select N/A if the department and the overall organization are the same.</div>
     </ng-container>
-    <select
-      [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }"
-      class="form-control"
-      id="numberEmployeesUnit"
-      tabindex="0"
-      name="numberEmployeesUnit"
-      [(ngModel)]="demographicData.numberEmployeesUnit"
-      (change)="update($event)"
-    >
+    <select [ngClass]="{ 'alert-danger' : !demographicData.numberEmployeesUnit }" class="form-control"
+      id="numberEmployeesUnit" tabindex="0" name="numberEmployeesUnit" [(ngModel)]="demographicData.numberEmployeesUnit"
+      (change)="update($event)">
       <option [ngValue]="null">-- Select --</option>
-      <option
-        *ngFor="let i of demographicData.listNumberEmployeeUnit"
-        [ngValue]="i.optionValue"
-        [selected]="i.optionValue === demographicData.numberEmployeesUnit"
-      >
+      <option *ngFor="let i of demographicData.listNumberEmployeeUnit" [ngValue]="i.optionValue"
+        [selected]="i.optionValue === demographicData.numberEmployeesUnit">
         {{ i.optionText }}
       </option>
     </select>
@@ -190,21 +128,11 @@
         What is the total annual funding for your governmental organization or agency?
       </label>
     </ng-container>
-    <select
-      [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }"
-      class="form-control"
-      id="totalAnnualRevenue"
-      tabindex="0"
-      name="totalAnnualRevenue"
-      [(ngModel)]="demographicData.annualRevenue"
-      (change)="update($event)"
-    >
+    <select [ngClass]="{ 'alert-danger' : !demographicData.annualRevenue }" class="form-control" id="totalAnnualRevenue"
+      tabindex="0" name="totalAnnualRevenue" [(ngModel)]="demographicData.annualRevenue" (change)="update($event)">
       <option [ngValue]="null">-- Select --</option>
-      <option
-        *ngFor="let i of demographicData.listRevenueAmounts"
-        [ngValue]="i.optionValue"
-        [selected]="i.optionValue === demographicData.annualRevenue"
-      >
+      <option *ngFor="let i of demographicData.listRevenueAmounts" [ngValue]="i.optionValue"
+        [selected]="i.optionValue === demographicData.annualRevenue">
         {{ i.optionText }}
       </option>
     </select>
@@ -217,42 +145,22 @@
 
   <!-- #7 -->
   <div class="form-group mb-5">
-    <label for="assetValue" class="col-8"
-      >Does your organization use a body of practice, industry standard, or similar resource to support or inform its
+    <label for="assetValue" class="col-8">Does your organization use a body of practice, industry standard, or similar
+      resource to support or inform its
       cybersecurity efforts?
     </label>
 
     <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
-      <label
-        class="btn btn-level btn-rounded form-check-label"
-        [class.active]="demographicData.usesStandard"
-        (change)="changeUsesStandard(true)"
-      >
-        <input
-          class="form-check-input"
-          name="standardYes"
-          id="standardYes"
-          type="radio"
-          autocomplete="off"
-          tabindex="0"
-          [checked]="demographicData.usesStandard"
-        />
+      <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.usesStandard"
+        (change)="changeUsesStandard(true)">
+        <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off" tabindex="0"
+          [checked]="demographicData.usesStandard" />
         Yes
       </label>
-      <label
-        class="btn btn-level btn-rounded form-check-label"
-        [class.active]="!demographicData.usesStandard"
-        (change)="changeUsesStandard(false)"
-      >
-        <input
-          class="form-check-input"
-          name="standardNo"
-          id="standardNo"
-          type="radio"
-          autocomplete="off"
-          tabindex="0"
-          [checked]="!demographicData.usesStandard"
-        />
+      <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.usesStandard"
+        (change)="changeUsesStandard(false)">
+        <input class="form-check-input" name="standardNo" id="standardNo" type="radio" autocomplete="off" tabindex="0"
+          [checked]="!demographicData.usesStandard" />
         No
       </label>
     </div>
@@ -265,79 +173,40 @@
 
       <div>
         <label for="standard1">Most important:</label>
-        <input
-          [ngClass]="{ 'alert-danger' : !demographicData.standard1 }"
-          type="text"
-          maxlength="250"
-          class="form-control mb-3"
-          id="standard1"
-          name="standard1"
-          list="listStandards"
-          [(ngModel)]="demographicData.standard1"
-          (blur)="update($event)"
-        />
+        <input [ngClass]="{ 'alert-danger' : !demographicData.standard1 }" type="text" maxlength="250"
+          class="form-control mb-3" id="standard1" name="standard1" list="listStandards"
+          [(ngModel)]="demographicData.standard1" (blur)="update($event)" />
       </div>
       <div>
         <label for="standard2">Second most important:</label>
-        <input
-          [ngClass]="{ 'alert-danger' : !demographicData.standard2 }"
-          type="text"
-          maxlength="250"
-          class="form-control mb-3"
-          id="standard2"
-          name="standard2"
-          list="listStandards"
-          [(ngModel)]="demographicData.standard2"
-          (blur)="update($event)"
-        />
+        <input [ngClass]="{ 'alert-danger' : !demographicData.standard2 }" type="text" maxlength="250"
+          class="form-control mb-3" id="standard2" name="standard2" list="listStandards"
+          [(ngModel)]="demographicData.standard2" (blur)="update($event)" />
       </div>
       <datalist id="listStandards">
-        <option
-          *ngFor="let standard of demographicData.listStandards"
-          [attr.data-value]="standard.optionValue"
-          [value]="standard.optionText"
-        ></option>
+        <option *ngFor="let standard of demographicData.listStandards" [attr.data-value]="standard.optionValue"
+          [value]="standard.optionText"></option>
       </datalist>
     </div>
   </div>
 
   <!-- #8 -->
   <div class="form-group mb-5">
-    <label class="col-8" for="assetValue"
-      >Is your organization required to comply with mandatory, cybersecurity-related regulation?
+    <label class="col-8" for="assetValue">Is your organization required to comply with mandatory, cybersecurity-related
+      regulation?
     </label>
 
     <div class="btn-group btn-group-toggle col-4" data-toggle="buttons">
-      <label
-        class="btn btn-level btn-rounded form-check-label"
-        [class.active]="demographicData.requiredToComply"
-        (change)="setRequireComply(true)"
-      >
-        <input
-          class="form-check-input"
-          name="complyYes"
-          id="complyYes"
-          type="radio"
-          autocomplete="off"
-          tabindex="0"
-          [checked]="demographicData.requiredToComply"
-        />
+      <label class="btn btn-level btn-rounded form-check-label" [class.active]="demographicData.requiredToComply"
+        (change)="setRequireComply(true)">
+        <input class="form-check-input" name="complyYes" id="complyYes" type="radio" autocomplete="off" tabindex="0"
+          [checked]="demographicData.requiredToComply" />
         Yes
       </label>
-      <label
-        class="btn btn-level btn-rounded form-check-label"
-        [class.active]="!demographicData.requiredToComply"
-        (change)="setRequireComply(false)"
-      >
-        <input
-          class="form-check-input"
-          name="complyNo"
-          id="complyNo"
-          type="radio"
-          autocomplete="off"
-          tabindex="0"
-          [checked]="!demographicData.requiredToComply"
-        />
+      <label class="btn btn-level btn-rounded form-check-label" [class.active]="!demographicData.requiredToComply"
+        (change)="setRequireComply(false)">
+        <input class="form-check-input" name="complyNo" id="complyNo" type="radio" autocomplete="off" tabindex="0"
+          [checked]="!demographicData.requiredToComply" />
         No
       </label>
     </div>
@@ -352,56 +221,32 @@
         <div class="mb-3">
           <div>Regulation Type 1:</div>
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-            <input
-              class="radio-custom"
-              name="regtype1"
-              [id]="'regtype1-' + reg.optionValue"
-              type="radio"
-              autocomplete="off"
-              tabindex="0"
-              (click)="changeRegType1(reg, $event)"
-              [checked]="demographicData.regulationType1 === reg.optionValue"
-            />
+            <input class="radio-custom" name="regtype1" [id]="'regtype1-' + reg.optionValue" type="radio"
+              autocomplete="off" tabindex="0" (click)="changeRegType1(reg, $event)"
+              [checked]="demographicData.regulationType1 === reg.optionValue" />
             <label class="radio-custom-label" [for]="'regtype1-' + reg.optionValue">{{ reg.optionText }}</label>
           </ng-container>
         </div>
 
         Regulation 1:
-        <input
-          class="form-control"
-          type="text"
-          name="reg1Other"
-          [(ngModel)]="demographicData.reg1Other"
-          (blur)="update($event)"
-        />
+        <input class="form-control" type="text" name="reg1Other" [(ngModel)]="demographicData.reg1Other"
+          (blur)="update($event)" />
       </div>
 
       <div class="mb-4">
         <div>Regulation Type 2:</div>
         <div class="mb-3">
           <ng-container *ngFor="let reg of demographicData.listRegulationTypes">
-            <input
-              class="radio-custom"
-              name="regtype2"
-              [id]="'regtype2-' + reg.optionValue"
-              type="radio"
-              autocomplete="off"
-              tabindex="2"
-              (click)="changeRegType2(reg, $event)"
-              [checked]="demographicData.regulationType2 === reg.optionValue"
-            />
+            <input class="radio-custom" name="regtype2" [id]="'regtype2-' + reg.optionValue" type="radio"
+              autocomplete="off" tabindex="2" (click)="changeRegType2(reg, $event)"
+              [checked]="demographicData.regulationType2 === reg.optionValue" />
             <label class="radio-custom-label" [for]="'regtype2-' + reg.optionValue">{{ reg.optionText }}</label>
           </ng-container>
         </div>
 
         Regulation 2:
-        <input
-          class="form-control"
-          type="text"
-          name="reg2Other"
-          [(ngModel)]="demographicData.reg2Other"
-          (blur)="update($event)"
-        />
+        <input class="form-control" type="text" name="reg2Other" [(ngModel)]="demographicData.reg2Other"
+          (blur)="update($event)" />
       </div>
     </div>
   </div>
@@ -415,15 +260,9 @@
       <div class="font-italic my-2">Check all that apply.</div>
       <div class="mb-3">
         <ng-container *ngFor="let org of demographicData.listShareOrgs">
-          <input
-            type="checkbox"
-            tabindex="0"
-            [id]="'share-org-' + org.optionValue"
-            [name]="'share-org-' + org.optionValue"
-            class="checkbox-custom mt-1"
-            (change)="changeShareOrg(org, $event)"
-            [checked]="isSharedOrgChecked(org)"
-          />
+          <input type="checkbox" tabindex="0" [id]="'share-org-' + org.optionValue"
+            [name]="'share-org-' + org.optionValue" class="checkbox-custom mt-1" (change)="changeShareOrg(org, $event)"
+            [checked]="isSharedOrgChecked(org)" />
           <label [for]="'share-org-' + org.optionValue" class="checkbox-custom-label">
             {{ org.optionText }}
           </label>
@@ -431,14 +270,8 @@
       </div>
 
       If other, please list:
-      <input
-        type="text"
-        class="form-control"
-        maxlength="150"
-        [(ngModel)]="demographicData.shareOther"
-        name="shareOther"
-        (blur)="update($event)"
-      />
+      <input type="text" class="form-control" maxlength="150" [(ngModel)]="demographicData.shareOther" name="shareOther"
+        (blur)="update($event)" />
       <p class="font-italic">Commas should be used to separate more than one entry.</p>
     </div>
   </div>
@@ -454,36 +287,17 @@
         If the name of the barrier is not listed please enter it directly into each box as applicable.
       </div>
       <label for="barrier1">Most significant:</label>
-      <input
-        [ngClass]="{ 'alert-danger' : !demographicData.barrier1 }"
-        type="text"
-        maxlength="250"
-        class="form-control mb-3"
-        id="barrier1"
-        name="barrier1"
-        list="listBarriers"
-        [(ngModel)]="demographicData.barrier1"
-        (blur)="update($event)"
-      />
+      <input [ngClass]="{ 'alert-danger' : !demographicData.barrier1 }" type="text" maxlength="250"
+        class="form-control mb-3" id="barrier1" name="barrier1" list="listBarriers"
+        [(ngModel)]="demographicData.barrier1" (blur)="update($event)" />
       <label for="barrier2">Second most significant:</label>
-      <input
-        [ngClass]="{ 'alert-danger' : !demographicData.barrier2 }"
-        type="text"
-        maxlength="250"
-        class="form-control mb-3"
-        id="barrier2"
-        name="barrier2"
-        list="listBarriers"
-        [(ngModel)]="demographicData.barrier2"
-        (blur)="update($event)"
-      />
+      <input [ngClass]="{ 'alert-danger' : !demographicData.barrier2 }" type="text" maxlength="250"
+        class="form-control mb-3" id="barrier2" name="barrier2" list="listBarriers"
+        [(ngModel)]="demographicData.barrier2" (blur)="update($event)" />
     </div>
   </div>
   <datalist id="listBarriers">
-    <option
-      *ngFor="let barrier of demographicData.listBarriers"
-      [attr.data-value]="barrier.optionValue"
-      [value]="barrier.optionText"
-    ></option>
+    <option *ngFor="let barrier of demographicData.listBarriers" [attr.data-value]="barrier.optionValue"
+      [value]="barrier.optionText"></option>
   </datalist>
 </form>

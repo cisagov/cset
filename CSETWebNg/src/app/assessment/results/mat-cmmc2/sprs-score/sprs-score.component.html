@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -33,13 +33,15 @@
 
     <div *ngIf="!loading && !dataError">
 
-      <div class="mt-3 text-center" style="max-width: 500px; margin-left: auto; margin-right: auto" [innerHTML]="sprsGauge | safe"></div>
+      <div class="mt-3 text-center" style="max-width: 500px; margin-left: auto; margin-right: auto"
+        [innerHTML]="sprsGauge | safe"></div>
       <div class="mb-5 text-center">Your SPRS Score is <strong>{{response.sprsScore}}</strong></div>
 
       <h4>Scorecard</h4>
       <p>
-        The following is an accounting of CMMC Level 2 interpreted as your NIST 171 SPRS score. 
-        For more information on SPRS scoring methodology and preliminary requirements for its use, please refer to the tutorial.
+        The following is an accounting of CMMC Level 2 interpreted as your NIST 171 SPRS score.
+        For more information on SPRS scoring methodology and preliminary requirements for its use, please refer to the
+        tutorial.
       </p>
 
       <table class="cset-table" [class.fs-smaller]="layoutSvc.hp">

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
 import { ChartService } from '../../../services/chart.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-compare-bestworst',

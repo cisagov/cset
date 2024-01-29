@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -40,8 +40,10 @@
     <tr *ngFor="let component of diagramComponentList;">
       <td [innerHTML]="component.label"></td>
       <td>
-        <select class="form-control" (change)="changeAssetType($event, component.componentGuid, component.label)" [compGuid]="component.componentGuid">
-          <option *ngFor="let o of this.symbols" [value]="o.abbreviation" [selected]="component.assetType == o.symbol_Name">
+        <select class="form-control" (change)="changeAssetType($event, component.componentGuid, component.label)"
+          [compGuid]="component.componentGuid">
+          <option *ngFor="let o of this.symbols" [value]="o.abbreviation"
+            [selected]="component.assetType == o.symbol_Name">
             {{o.symbol_Name}}
           </option>
         </select>
@@ -49,8 +51,8 @@
       <td style="padding-left: 20px">
         <input type="checkbox" name="{{ component.label }}" id="{{ component.label }}" class="checkbox-custom mt-1"
           [(ngModel)]="component.hasUniqueQuestions" [disabled]="true" [checked]="component.hasUniqueQuestions">
-          <label for="{{ component.label }}" class="checkbox-custom-label"></label> 
-        </td>
+        <label for="{{ component.label }}" class="checkbox-custom-label"></label>
+      </td>
       <td>{{component.sal}}</td>
       <td>{{component.criticality}}</td>
       <!-- <td>{{component.layerName}}</td> -->

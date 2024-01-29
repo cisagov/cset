@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,13 +24,13 @@ namespace CSETWebCore.Api.Controllers
      * is enabled within CSET. For now, we are hard coding the Gallery_Item_Guids for the cards that we
      * want to reveal by setting the Is_Visible column to true. 
      */
-   
+
 
     [CsetAuthorize]
     [ApiController]
     public class ProtectedFeatureController : ControllerBase
     {
-        
+
 
         private CSETContext _context;
         private readonly ITokenManager _tokenManager;
@@ -51,13 +51,14 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         public IActionResult GetFeatures()
         {
-            var openFaaSets = _context.SETS.Where(s=> s.IsEncryptedModule).ToList();
+            var openFaaSets = _context.SETS.Where(s => s.IsEncryptedModule).ToList();
 
             var enabledModules = new List<EnabledModule>();
 
             foreach (var s in openFaaSets)
             {
-                enabledModules.Add(new EnabledModule() { 
+                enabledModules.Add(new EnabledModule()
+                {
                     ShortName = s.Short_Name,
                     FullName = s.Full_Name,
                     Unlocked = s.IsEncryptedModuleOpen ?? false
@@ -78,7 +79,8 @@ namespace CSETWebCore.Api.Controllers
         {
             AddNewlyEnabledModules();
 
-            var response = new { 
+            var response = new
+            {
                 Message = ""
             };
             return Ok(response);
@@ -97,11 +99,11 @@ namespace CSETWebCore.Api.Controllers
 
             if (userId != null)
             {
-               _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
+                _context.USERS.Where(u => u.UserId == userId).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
             }
             else if (ak != null)
             {
-               _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
+                _context.ACCESS_KEY.Where(a => a.AccessKey == ak).FirstOrDefault().CisaAssessorWorkflow = cisaWorkflowEnabled;
             }
 
             _context.SaveChanges();
@@ -132,9 +134,9 @@ namespace CSETWebCore.Api.Controllers
             if (userId != null)
             {
                 var user = _context.USERS.Where(u => u.UserId == userId).FirstOrDefault();
-                if (user!=null)
+                if (user != null)
                 {
-                    cisaWorkflowEnabled =user .CisaAssessorWorkflow;
+                    cisaWorkflowEnabled = user.CisaAssessorWorkflow;
                 }
             }
             else if (ak != null)

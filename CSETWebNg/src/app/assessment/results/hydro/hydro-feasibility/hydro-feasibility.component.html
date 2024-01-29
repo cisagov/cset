@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -31,32 +31,36 @@
         <div class="mb-3">
             <h3>Feasibility</h3>
             <p>
-                The feasibility of deploying mitigations and implementing action items is measured 
-                for each control and graphically presented here based on user’s progress. 
+                The feasibility of deploying mitigations and implementing action items is measured
+                for each control and graphically presented here based on user’s progress.
                 This plot displays feasibility for number of controls vs subdomains.
             </p>
             <br>
 
             <div style="width: fit-content">
                 <div class="d-inline-flex" style="padding-left: 8px;">
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(180, 237, 210);"></span>
                         <span class="color-word">Easy</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(127, 182, 133);"></span>
                         <span class="color-word">Medium</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(66, 106, 90);"></span>
                         <span class="color-word">Hard</span>
                     </div>
                 </div>
-                <app-hydro-bar-chart [barData]="feasibilityData" [subCatNames]="domainGroupNames" [colorScheme]="feasibilityColors" [view]="feasView"></app-hydro-bar-chart>
+                <app-hydro-bar-chart [barData]="feasibilityData" [subCatNames]="domainGroupNames"
+                    [colorScheme]="feasibilityColors" [view]="feasView"></app-hydro-bar-chart>
             </div>
 
-        </div> 
+        </div>
         <app-nav-back-next [page]="'hydro-feasibility'"></app-nav-back-next>
-   
+
     </div>
 </div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,8 +10,8 @@ using System.Security.Cryptography;
 
 namespace CSETWebCore.CryptoBuffer
 {
-    public static class CryptoCommon
-    {
+	public static class CryptoCommon
+	{
 		public static SymmetricAlgorithm GetSymmetricAlgorithm(SymmetricCryptoAlgorithm cryptoAlg)
 		{
 			SymmetricAlgorithm symmetricAlg;

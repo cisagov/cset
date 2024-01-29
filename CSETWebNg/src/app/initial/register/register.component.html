@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,39 +19,41 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="p-4 pb-0 d-flex flex-column flex-00a">
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
       <label required for="firstName">First Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
-        required />
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName"
+        [(ngModel)]="model.firstName" #firstName="ngModel" required />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">First Name is
         required</div>
     </div>
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
       <label required for="lastName">Last Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel"
-        required />
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName"
+        [(ngModel)]="model.lastName" #lastName="ngModel" required />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">Last Name is
         required</div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
+    <div class="form-group"
+      [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
       <label required for="email">Email</label>
-      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail" #email="ngModel" required
-        email />
+      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email"
+        [(ngModel)]="model.primaryEmail" #email="ngModel" required email />
       <div *ngIf="email.invalid && (email.dirty)">
         <div *ngIf="email?.errors?.required" class="alert alert-danger">Email is required</div>
         <div *ngIf="email?.errors?.notValidEmail" class="alert alert-danger">Not a valid email</div>
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
+    <div class="form-group"
+      [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
       <label required for="confirmEmail">Confirm Email</label>
-      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail" required
-        #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
+      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail"
+        required #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
       <div *ngIf="confirmEmail.invalid && confirmEmail.touched">
         <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">Email is required</div>
         <div *ngIf="confirmEmail?.errors?.notValidEmail" class="alert alert-danger">Not a valid email</div>
@@ -60,30 +62,33 @@
     </div>
 
     <div class="form-group">
-      <div class="form-text">Providing security questions is optional but will allow you to recover your password should you forget it.
+      <div class="form-text">Providing security questions is optional but will allow you to recover your password should
+        you forget it.
       </div>
       <table class="paddingBetweenCols">
         <th>Security Question</th>
         <th>Security Answer</th>
         <tr>
           <td>
-            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.securityQuestion1">
+            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1"
+              [(ngModel)]="model.securityQuestion1">
               <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
             </select>
           </td>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
-              placeholder="Answer">
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1"
+              name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1" placeholder="Answer">
           </td>
         </tr>
         <tr>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
-              name="SecurityQuestion2" [(ngModel)]="model.securityQuestion2">
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2"
+              placeholder="Your own custom security question" name="SecurityQuestion2"
+              [(ngModel)]="model.securityQuestion2">
           </td>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
-              [(ngModel)]="model.securityAnswer2">
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2"
+              placeholder="Answer" name="SecurityAnswer2" [(ngModel)]="model.securityAnswer2">
           </td>
         </tr>
       </table>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -37,7 +37,7 @@ namespace CSETWebCore.Helpers
             }
 
             // If the passed is a temp, also check if it is expired
-            if (hist.Is_Temp && hist.Created.AddDays(_tempPassExpiryTermDays) < DateTime.UtcNow) 
+            if (hist.Is_Temp && hist.Created.AddDays(_tempPassExpiryTermDays) < DateTime.UtcNow)
             {
                 // temp pass expired
                 return true;

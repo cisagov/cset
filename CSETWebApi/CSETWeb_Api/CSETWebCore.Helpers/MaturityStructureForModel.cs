@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -150,7 +150,7 @@ namespace CSETWebCore.Helpers
 
 
                 // are there any questions that belong to this grouping?
-                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id 
+                var myQuestions = allQuestions.Where(x => x.Grouping_Id == sg.Grouping_Id
                     && x.Parent_Question_Id == null && x.Parent_Option_Id == null).ToList();
 
                 foreach (var myQ in myQuestions.OrderBy(s => s.Sequence))
@@ -308,7 +308,7 @@ namespace CSETWebCore.Helpers
             return list;
         }
 
-            
+
         private void GetReferences(int questionId, out List<CustomDocument> sourceDocs,
                 out List<CustomDocument> additionalDocs)
         {

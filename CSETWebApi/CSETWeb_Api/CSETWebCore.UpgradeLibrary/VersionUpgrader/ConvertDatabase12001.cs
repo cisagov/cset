@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,7 +11,7 @@ namespace UpgradeLibrary.Upgrade
 {
     internal class ConvertDatabase12001 : ConvertSqlDatabase
     {
-        private string path; 
+        private string path;
         public ConvertDatabase12001(string path) : base(path)
         {
             myVersion = new Version("12.0.0.1");

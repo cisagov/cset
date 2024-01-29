@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -107,23 +107,23 @@ namespace CSETWebCore.Business.Maturity
 
                     // achieved weight points
                     var qAchieved = from g in grouped
-                                           select new RollupOptions()
-                                           {
-                                               Type = g.OptionQuestions.FirstOrDefault().Type,
-                                               Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                                   ? g.OptionQuestions.Where(s => s.Selected).Sum(x => x.Weight)
-                                                   : g.OptionQuestions.FirstOrDefault(s => s.Selected)?.Weight
-                                           };
+                                    select new RollupOptions()
+                                    {
+                                        Type = g.OptionQuestions.FirstOrDefault().Type,
+                                        Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                            ? g.OptionQuestions.Where(s => s.Selected).Sum(x => x.Weight)
+                                            : g.OptionQuestions.FirstOrDefault(s => s.Selected)?.Weight
+                                    };
                     var achievedWeights = qAchieved.ToList();
 
                     // possible weight points
                     var qPossible = from g in grouped
-                                           select new RollupOptions
-                                           {
-                                               Type = g.OptionQuestions.FirstOrDefault().Type,
-                                               Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
-                                                   ? g.OptionQuestions.Sum(x => x.Weight) : g.OptionQuestions.MaxBy(x => x.Weight)?.Weight
-                                           };
+                                    select new RollupOptions
+                                    {
+                                        Type = g.OptionQuestions.FirstOrDefault().Type,
+                                        Weight = g.OptionQuestions.FirstOrDefault().Type != "radio"
+                                            ? g.OptionQuestions.Sum(x => x.Weight) : g.OptionQuestions.MaxBy(x => x.Weight)?.Weight
+                                    };
                     var possibleWeights = qPossible.ToList();
 
 

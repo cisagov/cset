@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -77,41 +77,41 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-     // save a reference to the dialog - it disappears on error
-     const dialogRef = this.dialog;
+    // save a reference to the dialog - it disappears on error
+    const dialogRef = this.dialog;
 
-     // tell the API which app we are, for emailing purposes.
-     this.model.appCode = environment.appCode;
- 
-     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
-       data => {
-         this.loading = false;
-         this.validationError = false;
-         
-         if (data == 'created-and-email-sent') {
-           this.emailSent = true;
-         }
-         if (data == 'waiting-for-approval') {
-           this.waitingForApproval = true;
-         }
-       },
-       error => {
-         this.emailSent = false;
-         this.waitingForApproval = false;
-         this.validationError = true;
-         this.loading = false;
+    // tell the API which app we are, for emailing purposes.
+    this.model.appCode = environment.appCode;
 
-         // translate the error message key
-         this.errorMessage = this.tSvc.translate(error.error);
+    this.emailSvc.sendCreateUserEmail(this.model).subscribe(
+      data => {
+        this.loading = false;
+        this.validationError = false;
 
-         // display the error
-         this.dialog = dialogRef;
-         this.dialog.open(AlertComponent, {
-           data: { messageText: this.errorMessage }
-         })
-           .afterClosed().subscribe();
-         console.log('Error Creating User Account: ' + error.message);
-       });
+        if (data == 'created-and-email-sent') {
+          this.emailSent = true;
+        }
+        if (data == 'waiting-for-approval') {
+          this.waitingForApproval = true;
+        }
+      },
+      error => {
+        this.emailSent = false;
+        this.waitingForApproval = false;
+        this.validationError = true;
+        this.loading = false;
+
+        // translate the error message key
+        this.errorMessage = this.tSvc.translate(error.error);
+
+        // display the error
+        this.dialog = dialogRef;
+        this.dialog.open(AlertComponent, {
+          data: { messageText: this.errorMessage }
+        })
+          .afterClosed().subscribe();
+        console.log('Error Creating User Account: ' + error.message);
+      });
   }
 
   /**

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -76,7 +76,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                     IsCustom = set.Is_Custom,
                     IsDisplayed = set.Is_Displayed ?? false,
-                 
+
                     Clonable = true,
                     Deletable = true
                 };
@@ -91,7 +91,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// <summary>
         /// Gets the full list of sets that are being used in an assessment.
         /// </summary>
-        public List<SetDetail> GetSetsInUseList() 
+        public List<SetDetail> GetSetsInUseList()
         {
             List<AVAILABLE_STANDARDS> selectedStandards = _context.AVAILABLE_STANDARDS.Where(x => x.Selected).ToList();
 
@@ -216,7 +216,7 @@ namespace CSETWebCore.Business.ModuleBuilder
         {
 
             _context.usp_CopyIntoSet(sourceSetName, destinationSetName);
-        
+
         }
 
         public void DeleteCopyToSet(string setName)
@@ -333,7 +333,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 _context.GALLERY_ITEM.Remove(cardInfo);
             }
 
-            _context.SaveChanges();            
+            _context.SaveChanges();
             return resp;
         }
 
@@ -386,8 +386,8 @@ namespace CSETWebCore.Business.ModuleBuilder
                 if (custom != null)
                 {
                     var colIndexList = _context.GALLERY_GROUP_DETAILS.Where(x => x.Group_Id.Equals(custom.Group_Id)).ToList();
-                    
-                    if(colIndexList != null)
+
+                    if (colIndexList != null)
                     {
                         colIndex = colIndexList.Count;
                     }
@@ -1077,35 +1077,35 @@ namespace CSETWebCore.Business.ModuleBuilder
         public void SetQuestionSalLevel(SalParms salParms)
         {
 
-                NEW_QUESTION_SETS nqs = _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
+            NEW_QUESTION_SETS nqs = _context.NEW_QUESTION_SETS.Where(x => x.Question_Id == salParms.QuestionID && x.Set_Name == salParms.SetName).FirstOrDefault();
 
-                NEW_QUESTION_LEVELS nql = _context.NEW_QUESTION_LEVELS.Where(x =>
-                    x.New_Question_Set_Id == nqs.New_Question_Set_Id
-                    && x.Universal_Sal_Level == salParms.Level).FirstOrDefault();
+            NEW_QUESTION_LEVELS nql = _context.NEW_QUESTION_LEVELS.Where(x =>
+                x.New_Question_Set_Id == nqs.New_Question_Set_Id
+                && x.Universal_Sal_Level == salParms.Level).FirstOrDefault();
 
-                if (salParms.State)
+            if (salParms.State)
+            {
+                // add the level if it doesn't exist
+                if (nql == null)
                 {
-                    // add the level if it doesn't exist
-                    if (nql == null)
+                    nql = new NEW_QUESTION_LEVELS()
                     {
-                        nql = new NEW_QUESTION_LEVELS()
-                        {
-                            New_Question_Set_Id = nqs.New_Question_Set_Id,
-                            Universal_Sal_Level = salParms.Level
-                        };
-                        _context.NEW_QUESTION_LEVELS.Add(nql);
-                        _context.SaveChanges();
-                    }
+                        New_Question_Set_Id = nqs.New_Question_Set_Id,
+                        Universal_Sal_Level = salParms.Level
+                    };
+                    _context.NEW_QUESTION_LEVELS.Add(nql);
+                    _context.SaveChanges();
                 }
-                else
+            }
+            else
+            {
+                // remove the level
+                if (nql != null)
                 {
-                    // remove the level
-                    if (nql != null)
-                    {
-                        _context.NEW_QUESTION_LEVELS.Remove(nql);
-                        _context.SaveChanges();
-                    }
+                    _context.NEW_QUESTION_LEVELS.Remove(nql);
+                    _context.SaveChanges();
                 }
+            }
         }
 
 
@@ -1192,16 +1192,16 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// </summary>
         public void UpdateHeadingText(int pairID, string text)
         {
-                var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
+            var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Where(x => x.Heading_Pair_Id == pairID).FirstOrDefault();
 
-                if (usch == null)
-                {
-                    return;
-                }
+            if (usch == null)
+            {
+                return;
+            }
 
-                usch.Sub_Heading_Question_Description = string.IsNullOrEmpty(text) ? null : text;
-                _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Update(usch);
-                _context.SaveChanges();
+            usch.Sub_Heading_Question_Description = string.IsNullOrEmpty(text) ? null : text;
+            _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.Update(usch);
+            _context.SaveChanges();
         }
 
 
@@ -1234,13 +1234,13 @@ namespace CSETWebCore.Business.ModuleBuilder
 
             var set = _context.SETS.Where(x => x.Set_Name == setName).FirstOrDefault();
             response.SetFullName = set.Full_Name;
-            response.SetShortName = set.Short_Name; 
+            response.SetShortName = set.Short_Name;
             response.SetDescription = set.Standard_ToolTip;
 
 
             var q = from rs in _context.REQUIREMENT_SETS
                     from s in _context.SETS.Where(x => x.Set_Name == rs.Set_Name)
-                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)                    
+                    from r in _context.NEW_REQUIREMENT.Where(x => x.Requirement_Id == rs.Requirement_Id)
                     where rs.Set_Name == setName
                     select new { r, rs, s };
             var results = q.Distinct()
@@ -1724,25 +1724,25 @@ namespace CSETWebCore.Business.ModuleBuilder
         /// </summary>
         public void UpdateReferenceDocDetail(ReferenceDoc doc)
         {
-                var dbDoc = _context.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefault();
-                if (dbDoc == null)
-                {
-                    return;
-                }
+            var dbDoc = _context.GEN_FILE.Where(x => x.Gen_File_Id == doc.ID).FirstOrDefault();
+            if (dbDoc == null)
+            {
+                return;
+            }
 
-                dbDoc.Title = string.IsNullOrEmpty(doc.Title) ? "(no title)" : doc.Title;
-                dbDoc.Name = string.IsNullOrEmpty(doc.Name) ? "(no name)" : doc.Name;
-                dbDoc.Short_Name = doc.ShortName;
-                dbDoc.Doc_Num = doc.DocumentNumber;
-                dbDoc.Publish_Date = doc.PublishDate;
-                dbDoc.Doc_Version = doc.DocumentVersion;
-                // dbDoc.Source_Type = doc.sourcetype
-                dbDoc.Summary = doc.Summary;
-                dbDoc.Description = doc.Description;
-                dbDoc.Comments = doc.Comments;
+            dbDoc.Title = string.IsNullOrEmpty(doc.Title) ? "(no title)" : doc.Title;
+            dbDoc.Name = string.IsNullOrEmpty(doc.Name) ? "(no name)" : doc.Name;
+            dbDoc.Short_Name = doc.ShortName;
+            dbDoc.Doc_Num = doc.DocumentNumber;
+            dbDoc.Publish_Date = doc.PublishDate;
+            dbDoc.Doc_Version = doc.DocumentVersion;
+            // dbDoc.Source_Type = doc.sourcetype
+            dbDoc.Summary = doc.Summary;
+            dbDoc.Description = doc.Description;
+            dbDoc.Comments = doc.Comments;
 
-                _context.GEN_FILE.Update(dbDoc);
-                _context.SaveChanges();
+            _context.GEN_FILE.Update(dbDoc);
+            _context.SaveChanges();
         }
 
 

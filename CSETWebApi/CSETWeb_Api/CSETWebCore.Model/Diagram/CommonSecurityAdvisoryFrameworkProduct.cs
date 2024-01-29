@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -16,19 +16,19 @@ namespace CSETWebCore.Model.Diagram
     {
         public CommonSecurityAdvisoryFrameworkProduct() { }
 
-        public CommonSecurityAdvisoryFrameworkProduct(CommonSecurityAdvisoryFrameworkObject csafObj,CommonSecurityAdvisoryFrameworkObject.Branch branch) 
-        { 
+        public CommonSecurityAdvisoryFrameworkProduct(CommonSecurityAdvisoryFrameworkObject csafObj, CommonSecurityAdvisoryFrameworkObject.Branch branch)
+        {
             Name = branch.Name;
             Vulnerabilities = new List<CommonSecurityAdvisoryFrameworkObject.Vulnerability>();
             AffectedVersions = branch.Branches?[0].Name;
             AdvisoryUrl = csafObj.Document?.References?.Find(r => r.Category.ToLower() == "self")?.Url ?? csafObj.Document?.References[0]?.Url;
 
-            if (csafObj.Vulnerabilities != null) 
-            { 
-                foreach (var vulnerability in csafObj.Vulnerabilities) 
+            if (csafObj.Vulnerabilities != null)
+            {
+                foreach (var vulnerability in csafObj.Vulnerabilities)
                 {
-                    if (vulnerability.Product_Status.Known_Affected.Contains(branch.Branches?[0].Product?.Product_Id)) 
-                    { 
+                    if (vulnerability.Product_Status.Known_Affected.Contains(branch.Branches?[0].Product?.Product_Id))
+                    {
                         Vulnerabilities.Add(vulnerability);
                     }
                 }

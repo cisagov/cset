@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
   SOFTWARE.
 -------------------------->
 <div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a component-override-dialog">
-  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a" >
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span>Component Question Overrides</span>
   </div>
   <mat-dialog-content class="py-3">
     <div class="item bigitem">
-      <p>Change the answers that are specific to each component listed below.  Answers
+      <p>Change the answers that are specific to each component listed below. Answers
         set at the component level override any default answer for the component type.</p>
       <p>
         The question list will be refreshed to reflect answer changes when this dialog is dismissed.
@@ -44,43 +44,47 @@
         {{data.myQuestion.questionText}}
       </span>
     </div>
-        <div class="row">
-          <div class="col-12">
-            <table class="assessment-summary">
-              <th colspan="2">Specific Component Name</th>
-              <tr *ngFor="let q of questions; let i = index">
-                <td>{{q.componentName}}</td>
-                <td>
-                  <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
-                    <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label" [class.answer-selected]="q.answer_Text === 'Y'">
-                      <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      (click)="storeAnswer(q, 'Y')" [checked]="q.answer_Text === 'Y'">Yes
-                    </label>
-                    <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label" [class.answer-selected]="q.answer_Text === 'N'">
-                      <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                        (click)="storeAnswer(q, 'N')" [checked]="q.answer_Text === 'N'">No
-                    </label>
-                    <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label" [class.answer-selected]="q.answer_Text === 'NA'">
-                      <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      (click)="storeAnswer(q, 'NA')" [checked]="q.answer_Text === 'NA'">NA
-                    </label>
-                    <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label" [class.answer-selected]="q.answer_Text === 'A'">
-                      <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
-                      (click)="storeAnswer(q, 'A')" [checked]="q.answer_Text === 'A'">Alt
-                    </label>
-                  </div>
-                  <div *ngIf="q.answer_Text === 'A'">
-                      <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
-                        placeholder="Description, explanation and/or justification for alternate answer"
-                        [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, 'A')"></textarea>
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-</mat-dialog-content>
-<mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
-  <button class="btn btn-secondary" (click)="close()">OK</button>
-</mat-dialog-actions>
+    <div class="row">
+      <div class="col-12">
+        <table class="assessment-summary">
+          <th colspan="2">Specific Component Name</th>
+          <tr *ngFor="let q of questions; let i = index">
+            <td>{{q.componentName}}</td>
+            <td>
+              <div class="btn-group btn-group-toggle answer-group" data-toggle="buttons" style="float:right;">
+                <label *ngIf="showThisOption('Y')" class="btn btn-yes form-check-label"
+                  [class.answer-selected]="q.answer_Text === 'Y'">
+                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'Y')" [checked]="q.answer_Text === 'Y'">Yes
+                </label>
+                <label *ngIf="showThisOption('N')" class="btn btn-no form-check-label"
+                  [class.answer-selected]="q.answer_Text === 'N'">
+                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'N')" [checked]="q.answer_Text === 'N'">No
+                </label>
+                <label *ngIf="showThisOption('NA')" class="btn btn-na form-check-label"
+                  [class.answer-selected]="q.answer_Text === 'NA'">
+                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'NA')" [checked]="q.answer_Text === 'NA'">NA
+                </label>
+                <label *ngIf="showThisOption('A')" class="btn btn-alt form-check-label"
+                  [class.answer-selected]="q.answer_Text === 'A'">
+                  <input name="q_{{q.question_Id}}" class="form-check-input" type="radio" autocomplete="off"
+                    (click)="storeAnswer(q, 'A')" [checked]="q.answer_Text === 'A'">Alt
+                </label>
+              </div>
+              <div *ngIf="q.answer_Text === 'A'">
+                <textarea appAutoSize class="form-control" style="height: 80px; width: 100%; min-height: 72px;"
+                  placeholder="Description, explanation and/or justification for alternate answer"
+                  [(ngModel)]="q.altAnswerText" (change)="storeAnswer(q, 'A')"></textarea>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
+    <button class="btn btn-secondary" (click)="close()">OK</button>
+  </mat-dialog-actions>
 </div>

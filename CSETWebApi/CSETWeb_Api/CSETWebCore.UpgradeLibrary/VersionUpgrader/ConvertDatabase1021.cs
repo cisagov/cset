@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,12 +28,12 @@ namespace UpgradeLibrary.Upgrade
         public override void Execute(SqlConnection conn)
         {
             try
-            {                
+            {
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1020_to_1021.sql"), conn);
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\1020_to_1021_data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 10.1.2.0 to 10.2.0.0: " + e.Message);
             }

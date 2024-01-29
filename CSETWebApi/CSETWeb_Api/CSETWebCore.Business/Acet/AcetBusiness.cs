@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -102,7 +102,7 @@ namespace CSETWebCore.Business.Acet
         public Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId)
         {
             Model.Acet.ACETDashboard result = new Model.Acet.ACETDashboard();
-            
+
             // now just properties on an Assessment
             ASSESSMENTS assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
             if (assessment == null) { return null; }
@@ -223,10 +223,10 @@ namespace CSETWebCore.Business.Acet
 
             String defaultPath = "App_Data\\ACET Spanish Question Mapping.xlsx";
             MemoryStream memStream = new MemoryStream();
-            if(Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
+            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
             {
                 defaultPath = "..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx";
-            } 
+            }
             else if (!Path.Exists(defaultPath))
             {
                 return new Dictionary<int, SpanishQuestionRow>();
@@ -304,7 +304,7 @@ namespace CSETWebCore.Business.Acet
 
         public static Dictionary<string, GroupingSpanishRow> buildResultsGroupingDictionary()
         {
-            
+
             String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
             MemoryStream memStream = new MemoryStream();
             if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
@@ -410,7 +410,7 @@ namespace CSETWebCore.Business.Acet
 
             var rowCount = myExcelObjects.Count;
             var dict = new Dictionary<int, IRPSpanishRow>();
-            
+
             foreach (RowInfo<IRPSpanishRow> item in myExcelObjects)
             {
                 try

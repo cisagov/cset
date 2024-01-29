@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ import { AssessmentService } from '../services/assessment.service';
 import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable()
-export class AssessGuard  {
+export class AssessGuard {
   private parser = new JwtParser();
 
   constructor(private router: Router, private authSvc: AuthenticationService, private assessSvc: AssessmentService) { }
@@ -61,7 +61,7 @@ export class AssessGuard  {
   checkToken() {
     if (this.parser.decodeToken(this.authSvc.userToken()).assess
       && this.parser.decodeToken(this.authSvc.userToken()).assess === this.assessSvc.id()) {
-        return true;
+      return true;
     }
     this.router.navigate(['home']);
     return false;

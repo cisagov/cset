@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,9 +13,10 @@ namespace CSETWebCore.Business
 {
     public class NetworkComponent : NetworkNode
     {
-        public List<NetworkComponent> Connections { get; set; }        
+        public List<NetworkComponent> Connections { get; set; }
         public List<FullNode> FullyConnectedConnections { get; set; }
-        public bool IsUnidirectional {
+        public bool IsUnidirectional
+        {
             get
             {
                 return this.Component_Symbol_Id == Constants.Constants.UNIDIRECTIONAL_DEVICE;// = 29;
@@ -23,14 +24,17 @@ namespace CSETWebCore.Business
         }
 
         public NetworkZone Zone { get; internal set; }
-        public bool IsFirewall { get
+        public bool IsFirewall
+        {
+            get
             {
                 return this.Component_Symbol_Id == Constants.Constants.FIREWALL;// = 29;
                 //return string.Equals(this.ComponentType, "Firewall", StringComparison.OrdinalIgnoreCase);
             }
         }
 
-        public bool IsIDSOrIPS {
+        public bool IsIDSOrIPS
+        {
             get
             {
                 return this.Component_Symbol_Id == Constants.Constants.IDS_TYPE || this.Component_Symbol_Id == Constants.Constants.IPS_TYPE;
@@ -46,14 +50,16 @@ namespace CSETWebCore.Business
             }
         }
 
-        public bool IsFirewallUnidirectional {
+        public bool IsFirewallUnidirectional
+        {
             get
             {
                 return IsFirewall || IsUnidirectional;
             }
         }
 
-        public bool IsLinkConnector {
+        public bool IsLinkConnector
+        {
             get
             {
                 return this.Component_Symbol_Id == Constants.Constants.CONNECTOR_TYPE;
@@ -68,7 +74,8 @@ namespace CSETWebCore.Business
             }
         }
 
-        public bool IsPartnerVendorOrWeb {
+        public bool IsPartnerVendorOrWeb
+        {
             get
             {
                 return this.Component_Symbol_Id == Constants.Constants.PARTNER_TYPE
@@ -78,7 +85,7 @@ namespace CSETWebCore.Business
         }
         //public int Component_Symbol_Id { get; internal set; }
         public bool isMultipleConnections { get; internal set; }
-        
+
         public NetworkComponent()
         {
             Connections = new List<NetworkComponent>();
@@ -96,7 +103,7 @@ namespace CSETWebCore.Business
                 Source = this.ComponentGuid,
                 Target = target.ComponentGuid
             };
-            
+
             Connections.Add(target);
             FullyConnectedConnections.Add(new FullNode() { Source = this, Target = target, Link = link });
         }
@@ -118,7 +125,7 @@ namespace CSETWebCore.Business
                     break;
                 case "id":
                     this.ID = value;
-                    break;               
+                    break;
                 case "zone":
                     this.Component_Symbol_Id = Constants.Constants.ZONE;// 121;
                     break;

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import { AssessmentService } from '../../services/assessment.service';
 export class ExcelExportComponent {
 
   doNotShow: boolean = false;
-  
+
   /**
    * Constructor.
    */
@@ -44,9 +44,9 @@ export class ExcelExportComponent {
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-        dialog.beforeClosed().subscribe(() => dialog.close());
-        var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
-        this.doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
+    dialog.beforeClosed().subscribe(() => dialog.close());
+    var doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
+    this.doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
   }
 
   close() {
@@ -63,8 +63,8 @@ export class ExcelExportComponent {
     this.dialog.close();
   }
 
-  setDoNotShow(){
-      localStorage.setItem('doNotShowExcelExport', this.doNotShow.toString());
+  setDoNotShow() {
+    localStorage.setItem('doNotShowExcelExport', this.doNotShow.toString());
   }
 
 }

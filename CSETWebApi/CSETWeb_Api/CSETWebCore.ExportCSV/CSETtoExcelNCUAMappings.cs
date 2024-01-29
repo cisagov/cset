@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -252,7 +252,7 @@ namespace CSETWebCore.ExportCSV
                 }
             }
 
-            
+
         }
 
 
@@ -364,12 +364,14 @@ namespace CSETWebCore.ExportCSV
                 if (g.Maturity_Level_Id == 17)
                 {
                     export.d[g.Question_Title] = answerTranslation[g.Answer_Text];
-                } else if (g.Maturity_Level_Id == 18)
+                }
+                else if (g.Maturity_Level_Id == 18)
                 {
                     var modifiedTitle = g.Question_Title + 'c';
                     export.d[modifiedTitle] = answerTranslation[g.Answer_Text];
 
-                } else if (g.Maturity_Level_Id == 19)
+                }
+                else if (g.Maturity_Level_Id == 19)
                 {
                     var modifiedTitle = g.Question_Title + "c+";
                     export.d[modifiedTitle] += answerTranslation[g.Answer_Text];
@@ -380,10 +382,10 @@ namespace CSETWebCore.ExportCSV
 
 
 
-/// <summary>
-/// Defines the column names and values in a single NCUA export row.
-/// </summary>
-public class SingleRowExport
+    /// <summary>
+    /// Defines the column names and values in a single NCUA export row.
+    /// </summary>
+    public class SingleRowExport
     {
         public Dictionary<string, string> d = new Dictionary<string, string>();
 

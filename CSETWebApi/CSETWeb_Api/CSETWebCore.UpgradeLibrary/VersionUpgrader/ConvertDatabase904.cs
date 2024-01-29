@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,7 +19,7 @@ namespace UpgradeLibrary.Upgrade
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ConvertDatabase904(string path):base(path)
+        public ConvertDatabase904(string path) : base(path)
         {
             myVersion = new Version("9.0.4");
         }
@@ -37,7 +37,7 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\903_to_904Data.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 9.0.3 to 9.0.4: " + e.Message);
             }
