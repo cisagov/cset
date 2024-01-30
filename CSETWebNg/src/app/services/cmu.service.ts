@@ -131,7 +131,7 @@ export class CmuService {
   }
 
   getMil1FullAnswerDistribWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/fullanswerdistrib', { responseType: 'text' });
+    return this.http.get(this.configSvc.apiUrl + 'cmu/mil1fullanswerdistrib', { responseType: 'text' });
   }
 
   getMil1PerformanceSummaryBodyCharts() {

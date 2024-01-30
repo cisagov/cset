@@ -163,6 +163,47 @@ namespace CSETWebCore.Api.Controllers
 
 
         /// <summary>
+        /// Gets the charts for Mil1 Performance Summary and returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/getMil1PerformanceSummaryBodyCharts")]
+        public IActionResult GetMil1PerformanceSummaryBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var XDocument = _scoring.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> stackedBarCharts = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _scoring.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                foreach (XElement goal in goals)
+                {
+                    var goalScores = _scoring.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
+                    goal.Attribute("abbreviation").Value);
+                    var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
+                    stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
+
+                    stackedBarCharts.Add(new { Title = goal.Attribute("title").Value, Chart = new ScoreStackedBarChart(stackedBarChartInput).ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
+        }
+
+
+
+        /// <summary>
         /// Gets the charts for Performance and returns them in a list of raw HTML strings.
         /// </summary>
         /// <returns></returns>
@@ -252,9 +293,21 @@ namespace CSETWebCore.Api.Controllers
         [HttpGet]
         [Route("api/cmu/fullanswerdistrib")]
 
-        public IActionResult getMil1FullAnswerDistribHtml()
+        public IActionResult GetFullAnswerDistribHtml()
         {
             return Content(GetTotalBarChart(), "text/html");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/mil1fullanswerdistrib")]
+
+        public IActionResult GetMil1FullAnswerDistribHtml()
+        {
+            return Content(GetMil1TotalBarChart(), "text/html");
         }
 
 
@@ -277,42 +330,21 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
-        /// Gets the charts for Mil1 Performance Summary and returns them in a list of raw HTML strings.
+        /// 
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Route("api/cmu/getMil1PerformanceSummaryBodyCharts")]
-        public IActionResult GetMil1PerformanceSummaryBodyCharts()
+        private string GetMil1TotalBarChart()
         {
+            string totalBarChartString = string.Empty;
             var assessmentId = _token.AssessmentForUser();
             _scoring.InstantiateScoringHelper(assessmentId);
-            var XDocument = _scoring.XDoc;
-
-            List<string> scoreBarCharts = new List<string>();
-            List<object> stackedBarCharts = new List<object>();
-
-            foreach (XElement domain in XDocument.Root.Elements())
-            {
-                var domainScores = _scoring.DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
-                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
-                barChartInput.IncludePercentFirstBar = true;
-                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
-                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
-
-                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
-
-                foreach (XElement goal in goals)
-                {
-                    var goalScores = _scoring.GoalAnswerDistrib(domain.Attribute("abbreviation").Value,
-                    goal.Attribute("abbreviation").Value);
-                    var stackedBarChartInput = new BarChartInput() { Height = 10, Width = 265 };
-                    stackedBarChartInput.AnswerCounts = new List<int> { goalScores.Green, goalScores.Yellow, goalScores.Red };
-
-                    stackedBarCharts.Add(new { Title = goal.Attribute("title").Value, Chart = new ScoreStackedBarChart(stackedBarChartInput).ToString() });
-                }
-            }
-
-            return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
+            var totalDistribution = _scoring.MIL1FullAnswerDistrib();
+            var totalBarChartInput = new BarChartInput() { Height = 50, Width = 110 };
+            totalBarChartInput.AnswerCounts = new List<int>
+                                        { totalDistribution.Green, totalDistribution.Yellow, totalDistribution.Red };
+            ScoreBarChart barChart = new ScoreBarChart(totalBarChartInput);
+            totalBarChartString = barChart.ToString();
+            return totalBarChartString;
         }
 
         /// <summary>
