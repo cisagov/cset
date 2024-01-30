@@ -35,11 +35,14 @@ import { LayoutService } from '../../../services/layout.service';
 })
 export class SalsComponent implements OnInit {
 
-  selectedSal = 'Simple';
+  selectedMethodology = 'Simple';
 
   sal_Levels: Sal;
 
 
+  /**
+   * 
+   */
   constructor(
     public salsSvc: SalService,
     public navSvc: NavigationService,
@@ -49,10 +52,12 @@ export class SalsComponent implements OnInit {
 
   ngOnInit() {
     this.salsSvc.selectedSAL = new Sal();
+
     this.salsSvc.getSalSelection().subscribe(
       (data: Sal) => {
         this.salsSvc.selectedSAL = data;
         this.sal_Levels = data;
+
         if (data.methodology.toLowerCase() === 'simple') {
           data.methodology = 'Simple';
         }
@@ -60,7 +65,7 @@ export class SalsComponent implements OnInit {
           data.methodology = 'Simple';
         }
 
-        this.selectedSal = data.methodology;
+        this.selectedMethodology = data.methodology;
       },
       error => {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
@@ -70,11 +75,12 @@ export class SalsComponent implements OnInit {
 
   continue() { }
 
-  changeState(newType: string) {
-    this.selectedSal = newType;
-    this.salsSvc.saveSALType(newType).subscribe(
-      () => {
-      },
+  /**
+   * 
+   */
+  changeMethodology(newType: string) {
+    this.selectedMethodology = newType;
+    this.salsSvc.saveSALType(newType).subscribe((data) => {  },
       error => {
         console.log('Error posting change: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error posting change: ' + (<Error>error).stack);
