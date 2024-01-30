@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     }
 
                     String text = String.Format(rule3, componentName).Replace("\n", " ");
-                    SetNodeMessage(component, text);
+                    SetNodeMessage(component, text, 3); // 3 because rule3 was violated
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     }
 
                     String text = String.Format(rule4, componentName).Replace("\n", " ");
-                    SetNodeMessage(component, text);
+                    SetNodeMessage(component, text, 4); // 4 because rule4 was violated
                 }
             }
         }

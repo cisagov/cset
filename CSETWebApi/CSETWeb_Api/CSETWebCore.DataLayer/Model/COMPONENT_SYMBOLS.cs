@@ -63,9 +63,6 @@ public partial class COMPONENT_SYMBOLS
     [StringLength(1000)]
     public string Description { get; set; }
 
-    [StringLength(100)]
-    public string Malcolm_Role { get; set; }
-
     [InverseProperty("Component_Symbol")]
     public virtual ICollection<ASSESSMENT_DIAGRAM_COMPONENTS> ASSESSMENT_DIAGRAM_COMPONENTS { get; set; } = new List<ASSESSMENT_DIAGRAM_COMPONENTS>();
 

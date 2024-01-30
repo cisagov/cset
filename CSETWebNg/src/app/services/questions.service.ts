@@ -103,7 +103,7 @@ export class QuestionsService {
    *
    */
   getComponentQuestionsList() {
-    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
+    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
   }
 
   /**
