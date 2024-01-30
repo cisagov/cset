@@ -68,7 +68,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                 }
 
                 String text = String.Format(rule5, componentName, endComponentName).Replace("\n", " ");
-                SetLineMessage(component, info, text);
+                SetLineMessage(component, info, text, 5); // 5 because rule5 was violated
             }
         }
     }

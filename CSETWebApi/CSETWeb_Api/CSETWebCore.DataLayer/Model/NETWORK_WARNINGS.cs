@@ -20,6 +20,8 @@ public partial class NETWORK_WARNINGS
     [StringLength(2000)]
     public string WarningText { get; set; }
 
+    public int? Rule_Violated { get; set; }
+
     [ForeignKey("Assessment_Id")]
     [InverseProperty("NETWORK_WARNINGS")]
     public virtual ASSESSMENTS Assessment { get; set; }
