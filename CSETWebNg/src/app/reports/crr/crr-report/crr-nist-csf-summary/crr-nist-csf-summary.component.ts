@@ -34,7 +34,7 @@ export class CrrNistCsfSummaryComponent implements OnInit {
   @Input() model: CmuReportModel;
   chartAll: string = '';
   legend: string = '';
-  bodyData: any[] = [];
+  bodyData: any = null;
 
   constructor(private cmuSvc: CmuService) {}
 

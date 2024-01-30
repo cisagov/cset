@@ -96,6 +96,12 @@ export class CmuService {
     });
   }
 
+  getMil1PerformanceLegendWidget(includeGoal: boolean) {
+    return this.http.get(this.configSvc.apiUrl + `cmu/mil1performancelegend?includeGoal=${includeGoal}`, {
+      responseType: 'text'
+    });
+  }
+
   getNistCsfSummaryChartWidget() {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csfsummarywidget', { responseType: 'text' });
   }
@@ -118,12 +124,8 @@ export class CmuService {
     return this.http.get(this.configSvc.apiUrl + 'cmu/csfcatsummary');
   }
 
-  getMil1PerformanceLegendWidget() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/mil1PerformanceLegend', { responseType: 'text' });
-  }
-
   getMil1PerformanceBodyCharts() {
-    return this.http.get(this.configSvc.apiUrl + 'cmu/goalperformance');
+    return this.http.get(this.configSvc.apiUrl + 'cmu/getMil1PerformanceBodyCharts');
   }
 
   getCsfCatPerf() {
