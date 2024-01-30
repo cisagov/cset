@@ -7,7 +7,7 @@
 using CSETWebCore.Business.Reports;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Crr;
+using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Reports.Models;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ namespace CSETWebCore.Api.Models
             ReportData = reportData;
             PageNumbers = new Dictionary<string, int>();
         }
-        public CrrResultsModel crrResultsData { get; set; }
+        public CmuResultsModel crrResultsData { get; set; }
 
         public AssessmentDetail AssessmentDetails { get; set; }
 
@@ -38,7 +38,7 @@ namespace CSETWebCore.Api.Models
 
         public object Structure { get; set; }
 
-        public CrrReportChart ReportChart { get; set; }
+        public CmuReportChart ReportChart { get; set; }
 
         public string CriticalService { get; set; }
 
