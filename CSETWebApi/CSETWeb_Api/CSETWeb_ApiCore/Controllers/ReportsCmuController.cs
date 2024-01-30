@@ -161,6 +161,43 @@ namespace CSETWebCore.Api.Controllers
             return Ok(new { ScoreBarCharts = scoreBarCharts, StackedBarCharts = stackedBarCharts });
         }
 
+        /// <summary>
+        /// Gets the charts for Mil1 Performance and returns them in a list of raw HTML strings.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/getMil1PerformanceBodyCharts")]
+        public IActionResult GetMil1PerformanceBodyCharts()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _scoring.InstantiateScoringHelper(assessmentId);
+            var XDocument = _scoring.XDoc;
+
+            List<string> scoreBarCharts = new List<string>();
+            List<object> heatMaps = new List<object>();
+
+            foreach (XElement domain in XDocument.Root.Elements())
+            {
+                var domainScores = _scoring.MIL1DomainAnswerDistrib(domain.Attribute("abbreviation").Value);
+                var barChartInput = new BarChartInput() { Height = 50, Width = 75 };
+                barChartInput.IncludePercentFirstBar = true;
+                barChartInput.AnswerCounts = new List<int> { domainScores.Green, domainScores.Yellow, domainScores.Red };
+                scoreBarCharts.Add(new ScoreBarChart(barChartInput).ToString());
+
+                var goals = domain.Descendants("Mil").FirstOrDefault().Descendants("Goal");
+
+                foreach (XElement goal in goals)
+                {
+                    var questionsHeatMap = new QuestionsHeatMap(goal, false, 12);
+                    questionsHeatMap.Scale(1.2);
+
+                    heatMaps.Add(new { Title = goal.Attribute("title").Value, Chart = questionsHeatMap.ToString() });
+                }
+            }
+
+            return Ok(new { ScoreBarCharts = scoreBarCharts, HeatMaps = heatMaps });
+        }
+
 
         /// <summary>
         /// Gets the charts for Mil1 Performance Summary and returns them in a list of raw HTML strings.
@@ -250,19 +287,19 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/cmu/widget/heatmap")]
-        public IActionResult GetHeatmapWidget([FromQuery] string domain, [FromQuery] double? scale = null)
+        public IActionResult GetHeatmapWidget([FromQuery] string domain,[FromQuery] string mil, [FromQuery] double? scale = null)
         {
             var assessmentId = _token.AssessmentForUser();
 
             _scoring.InstantiateScoringHelper(assessmentId);
-            var xDomain = _scoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
+            var xDomain = _scoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{mil}']");
             if (xDomain == null)
             {
                 return NotFound();
             }
 
             // the MilHeatMap class works for Domains as well.  
-            var heatmap = new MilHeatMap(xDomain, false, false);
+            var heatmap = new MilHeatMap(xDomain, true, false);
             if (scale != null)
             {
                 heatmap.Scale((double)scale);
@@ -356,6 +393,17 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult getMil1PerformanceSummaryLegend([FromQuery] string configuration = "")
         {
             return Content(GetPerformanceSummaryLegend(configuration), "text/html");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/cmu/mil1PerformanceLegend")]
+        public IActionResult GetMil1PerformanceLegend()
+        {
+            return Content(new MIL1PerformanceLegend().ToString(), "text/html");
         }
 
 

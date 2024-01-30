@@ -48,7 +48,7 @@ export class CrrPerformanceAppendixAComponent implements OnInit {
       this.mil1FullAnswerDistribChart = resp;
     });
 
-    this.cmuSvc.getBlockLegendWidget(false).subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceLegendWidget(false).subscribe((resp: string) => {
       this.legend = resp;
     });
   }

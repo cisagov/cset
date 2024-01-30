@@ -33,7 +33,7 @@ import { CmuService } from '../../../../services/cmu.service';
 export class CrrNistCsfCatPerformanceComponent implements OnInit {
   @Input() model: CmuReportModel;
 
-  bodyData: any[] = [];
+  bodyData: any = null;
 
   constructor(private cmuSvc: CmuService) {}
 
