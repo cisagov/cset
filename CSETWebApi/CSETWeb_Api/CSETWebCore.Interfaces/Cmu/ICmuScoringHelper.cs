@@ -7,7 +7,7 @@
 using System.Collections.Generic;
 using System.Xml.Linq;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Crr;
+using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Reports.Models;
@@ -31,7 +31,7 @@ namespace CSETWebCore.Interfaces.Cmu
 
         public void ManipulateStructure();
         public void Rollup();
-        CrrReportChart GetPercentageOfPractice();
+        CmuReportChart GetPercentageOfPractice();
         public string GetColor(XElement xE);
         public void SetColor(XElement xE, string color);
         public Dictionary<string, string> CsfFunctionColors { get; }

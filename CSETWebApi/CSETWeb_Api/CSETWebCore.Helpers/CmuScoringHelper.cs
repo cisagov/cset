@@ -5,10 +5,9 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Reports;
-using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Cmu;
-using CSETWebCore.Model.Crr;
+using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Reports.Models;
@@ -396,12 +395,12 @@ namespace CSETWebCore.Helpers
         /// Calculates a raw percentage of 'Yes' answers for each Domain
         /// </summary>
         /// <returns></returns>
-        public CrrReportChart GetPercentageOfPractice()
+        public CmuReportChart GetPercentageOfPractice()
         {
             try
             {
                 var results = GetCmuResultsSummary();
-                CrrReportChart rChart = new CrrReportChart();
+                CmuReportChart rChart = new CmuReportChart();
                 foreach (var domain in XDoc.Descendants("Domain").ToList())
                 {
                     var dQuestions = domain.Descendants("Question")
@@ -437,10 +436,10 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public CmuResultsModel GetCmuResultsSummary()
         {
-            var crrDomains = new List<CrrMaturityDomainModel>();
+            var crrDomains = new List<CmuMaturityDomainModel>();
             foreach (var domain in XDoc.Descendants("Domain").ToList())
             {
-                var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
+                var domainModel = new CmuMaturityDomainModel(domain.Attribute("title")?.Value);
 
                 var mils = domain.Descendants("Mil").OrderBy(x => x.Attribute("label").Value).ToList();
 
@@ -472,7 +471,7 @@ namespace CSETWebCore.Helpers
 
             var cmuResultsModel = new CmuResultsModel
             {
-                CrrDomains = crrDomains
+                CmuDomains = crrDomains
             };
             cmuResultsModel.TrimToNElements(10);
             cmuResultsModel.GenerateWidthValues();

@@ -42,7 +42,7 @@ export interface CmuReportModel {
   assessmentDetails?: AssessmentDetail;
   parentScores?: EdmScoreParent[];
   cmuScores?: CmuScoringHelper;
-  reportChart?: CrrReportChart;
+  reportChart?: CmuReportChart;
   criticalService?: string;
   reportData?: MaturityBasicReportData;
   pageNumbers?: { [key: string]: number };
@@ -50,7 +50,7 @@ export interface CmuReportModel {
 }
 
 export interface CmuResultsModel {
-  crrDomains: CmuMaturityDomainModel[];
+  cmuDomains: CmuMaturityDomainModel[];
 }
 
 export interface CmuMaturityDomainModel {
@@ -87,7 +87,7 @@ export interface EdmScoreParent {
   children: EDMScore[];
 }
 
-export interface CrrReportChart {
+export interface CmuReportChart {
   labels: string[];
   values: number[];
 }

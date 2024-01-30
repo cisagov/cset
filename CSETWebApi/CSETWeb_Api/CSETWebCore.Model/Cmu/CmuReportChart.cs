@@ -6,9 +6,9 @@
 //////////////////////////////// 
 using System.Collections.Generic;
 
-namespace CSETWebCore.Model.Crr
+namespace CSETWebCore.Model.Cmu
 {
-    public class CrrReportChart
+    public class CmuReportChart
     {
         public List<string> Labels { get; set; } = new List<string>();
         public List<int> Values { get; set; } = new List<int>();
