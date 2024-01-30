@@ -93,8 +93,8 @@ namespace CSETWebCore.Api.Controllers
             {
                 return BadRequest(e);
             }
-
         }
+
 
         [HttpPost]
         [Route("api/SAL")]
@@ -168,6 +168,7 @@ namespace CSETWebCore.Api.Controllers
             return NoContent();
         }
 
+
         // POST: api/SAL
         [HttpPost]
         [Route("api/Sal_what_is_this")]
@@ -201,6 +202,7 @@ namespace CSETWebCore.Api.Controllers
             return CreatedAtRoute("DefaultApi", new { id = sTANDARD_SELECTION.Assessment_Id }, sTANDARD_SELECTION);
         }
 
+
         [HttpGet]
         [Route("api/SAL/NistData")]
         public NistModel GetNistData()
@@ -217,6 +219,7 @@ namespace CSETWebCore.Api.Controllers
             return rvalue;
         }
 
+
         [HttpPost]
         [Route("api/SAL/NistData")]
         public Sals PostNistData([FromBody] NistSalModel updateValue)
@@ -224,9 +227,8 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             return nistSal.UpdateSalValue(updateValue, assessmentId);
-
-
         }
+
 
         [HttpPost]
         [Route("api/SAL/NistDataQuestions")]
@@ -237,6 +239,7 @@ namespace CSETWebCore.Api.Controllers
             return nistSal.SaveNistQuestions(assessmentId, updateValue);
         }
 
+
         [HttpPost]
         [Route("api/SAL/NistDataSpecialFactor")]
         public Sals PostNistDataSpecialFactor([FromBody] NistSpecialFactor updateValue)
@@ -245,6 +248,7 @@ namespace CSETWebCore.Api.Controllers
             NistSalBusiness nistSal = new NistSalBusiness(_context, _assessmentUtil, _token);
             return nistSal.SaveNistSpecialFactor(assessmentId, updateValue);
         }
+
 
         private bool STANDARD_SELECTIONExists(int id)
         {

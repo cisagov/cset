@@ -201,7 +201,7 @@ export class SalNistComponent implements OnInit {
       }
     }
     selectedSal.selected = e.target.checked;
-    this.salsSvc.updateSal(selectedSal)
+    this.salsSvc.updateNistSalSelection(selectedSal)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
       });

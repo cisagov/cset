@@ -102,7 +102,7 @@ export class SalService {
     return this.http.get(this.apiUrl + '/NistData');
   }
 
-  updateSal(updateSal: any): any {
+  updateNistSalSelection(updateSal: any): any {
     return this.http.post(this.apiUrl + '/NistData', updateSal, headers);
   }
 
@@ -136,18 +136,6 @@ export class SalService {
 
     // for now, let's just try to fit the text
     return level;
-
-    // switch (level.toLowerCase()) {
-    //   case "low":
-    //     return "L";
-    //   case "moderate":
-    //     return "M";
-    //   case "high":
-    //     return "H";
-    //   case "very high":
-    //     return "VH";
-    // }
-    // return "";
   }
 
   /**

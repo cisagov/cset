@@ -14,7 +14,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
 using Microsoft.EntityFrameworkCore;
-using DocumentFormat.OpenXml.Office.CoverPageProps;
+
 
 namespace CSETWebCore.Business.Sal
 {
@@ -125,17 +125,30 @@ namespace CSETWebCore.Business.Sal
             return list;
         }
 
-        public Sals UpdateSalValue(NistSalModel updateValue, int assessmentid)
+
+        public Sals UpdateSalValue(NistSalModel updateValue, int assessmentId)
         {
             TinyMapper.Bind<NistSalModel, NIST_SAL_INFO_TYPES>(config =>
             {
                 config.Ignore(x => x.Assessment_Id);
+                config.Ignore(x => x.Type_Value);
+                config.Ignore(x => x.Confidentiality_Special_Factor);
+                config.Ignore(x => x.Integrity_Special_Factor);
+                config.Ignore(x => x.Availability_Special_Factor);
             });
 
-            NIST_SAL_INFO_TYPES update = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentid && x.Type_Value == updateValue.Type_Value).FirstOrDefault();
-            TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, update);
-            _context.SaveChanges();
-            return CalculateOveralls(assessmentid);
+            var dbInfoDefault = _context.NIST_SAL_INFO_TYPES_DEFAULTS.Where(x => x.Type_Id == updateValue.Type_Id).FirstOrDefault();
+            if (dbInfoDefault != null)
+            {
+                var dbInfoType = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId 
+                    && x.Type_Value == dbInfoDefault.Type_Value).FirstOrDefault();
+
+                TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, dbInfoType);
+
+                _context.SaveChanges();
+            }
+
+            return CalculateOveralls(assessmentId);
         }
 
 
