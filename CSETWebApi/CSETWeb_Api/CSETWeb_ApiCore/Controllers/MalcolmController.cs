@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -72,6 +73,13 @@ namespace CSETWebCore.Api.Controllers
                             stream.Seek(0, SeekOrigin.Begin);
                             StreamReader sr = new StreamReader(stream);
                             string jsonString = sr.ReadToEnd();
+
+                            /* New json file schema differed from what we were originally given */
+                            jsonString = jsonString.Replace("source.ip","values");
+                            jsonString = jsonString.Replace("source.device.role", "values");
+                            jsonString = jsonString.Replace("destination.ip", "values");
+                            jsonString = jsonString.Replace("destination.device.role", "values");
+
                             data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                             dataList.Add(data);
                         }
