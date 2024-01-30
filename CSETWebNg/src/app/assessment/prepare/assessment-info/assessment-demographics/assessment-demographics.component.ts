@@ -21,13 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Demographic } from '../../../../models/assessment-info.model';
 import { DemographicService } from '../../../../services/demographic.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AssessmentContactsResponse } from "../../../../models/assessment-info.model";
 import { User } from '../../../../models/user.model';
 import { ConfigService } from '../../../../services/config.service';
+import { Observable } from 'rxjs';
+import { OkayComponent } from '../../../../dialogs/okay/okay.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 interface DemographicsAssetValue {
@@ -52,6 +55,10 @@ interface AssessmentSize {
     description: string;
 }
 
+interface ImportExportData {
+    data: any; 
+  }
+
 @Component({
     selector: 'app-assessment-demographics',
     templateUrl: './assessment-demographics.component.html',
@@ -59,6 +66,12 @@ interface AssessmentSize {
     host: { class: 'd-flex flex-column flex-11a' }
 })
 export class AssessmentDemographicsComponent implements OnInit {
+    @ViewChild('assetValueSelect') assetValueSelect: ElementRef;
+
+    @Input() events: Observable<void>;
+
+    private eventsSubscription: any;
+
     sectorsList: Sector[];
     sizeList: AssessmentSize[];
     assetValues: DemographicsAssetValue[];
@@ -69,11 +82,13 @@ export class AssessmentDemographicsComponent implements OnInit {
     orgTypes: any[];
 
     showAsterisk = false;
+    assetValueTemp: number; 
 
     constructor(
         private demoSvc: DemographicService,
         public assessSvc: AssessmentService,
-        public configSvc: ConfigService
+        public configSvc: ConfigService, 
+        public dialog: MatDialog,
     ) { }
 
     ngOnInit() {
@@ -110,7 +125,63 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.getOrganizationTypes();
 
         this.showAsterisk = this.showAsterisks();
+        
+      
+
     }
+
+    // Functionality to import demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    importClick($event){
+        const fileReader = new FileReader();
+        const text = fileReader.readAsText($event.target.files[0], "UTF-8");
+        fileReader.onload = () => {
+            const text = fileReader.result;
+            const data = JSON.parse(String(text))
+            this.demographicData = data;
+            this.populateIndustryOptions(this.demographicData.sectorId);
+            this.setAssetValue(this.demographicData.assetValue)
+            this.updateDemographics();
+          };
+        
+          fileReader.onerror = () => {
+            console.log(fileReader.error);
+          };
+    }
+
+
+    //Functionality to export demographic information, excluding contacts, organization point of contact, facilitator, critical service point of contact 
+    exportClick(){
+        if (this.demographicData.organizationName){
+            //Replace organization point of contact, facilitator, and critical service point of contact w/ null 
+            let tempOrgPOC = this.demographicData.orgPointOfContact
+            let tempFacil = this.demographicData.facilitator
+            let tempCritPOC = this.demographicData.pointOfContact
+            this.demographicData.orgPointOfContact = null; 
+            this.demographicData.facilitator = null; 
+            this.demographicData.pointOfContact = null; 
+
+            //File name will be saved with '_' instead of any invalid characters         
+            var FileSaver = require('file-saver');            
+            var demoString = JSON.stringify(this.demographicData);
+            const blob = new Blob([demoString], { type: 'application/json' });
+            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");
+            this.demographicData.orgPointOfContact = tempOrgPOC
+            this.demographicData.facilitator = tempFacil
+            this.demographicData.pointOfContact = tempCritPOC           
+            try {
+            FileSaver.saveAs(blob, fileName + ".json");
+            } catch (error) {
+            console.error("Error during file download:", error);
+            }
+        
+        } else {
+        const msg2 = 'Name of organization required before export';
+        const titleComplete = 'Organization Name Required'
+        const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
+        dlgOkay.componentInstance.hasHeader = true;
+        }
+    }
+
 
     onSelectSector(sectorId: number) {
         this.populateIndustryOptions(sectorId);
@@ -131,6 +202,7 @@ export class AssessmentDemographicsComponent implements OnInit {
             },
             error => console.log('Demographic load Error: ' + (<Error>error).message)
         );
+        
     }
 
     getOrganizationTypes() {
@@ -165,9 +237,9 @@ export class AssessmentDemographicsComponent implements OnInit {
             });
     }
 
-    changeAssetValue(event: any) {
-        this.demographicData.assetValue = event.target.value;
-        this.updateDemographics();
+    // Select asset value after import 
+    setAssetValue(selectedValue: any): void {
+        this.assetValueSelect.nativeElement.value = selectedValue;
     }
 
     changeOrgType(event: any) {
