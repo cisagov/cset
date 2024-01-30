@@ -153,6 +153,12 @@
     <None Update="App_Data\LanguagePacks\UK\NEW_REQUIREMENT.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\UK\NIST_SAL_INFO_TYPES_DEFAULTS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\NIST_SAL_QUESTIONS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\SECTORS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

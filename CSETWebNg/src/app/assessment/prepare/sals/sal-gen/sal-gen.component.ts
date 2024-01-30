@@ -72,12 +72,12 @@ export class SalGenComponent implements OnInit {
           };
 
           // translate display text
-          s.onSite.sal_Description = this.tSvc.translate('titles.sal.gen sal ' + s.onSite.postfix.toLowerCase() + ' desc');
-          s.onSite.postfix = this.tSvc.translate('titles.sal.gen sal ' + s.onSite.postfix.toLowerCase());
-          s.onSite.prefix = this.tSvc.translate('titles.sal.gen sal ' + s.onSite.prefix.toLowerCase());
+          s.onSite.sal_Description = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.postfix.toLowerCase() + ' desc');
+          s.onSite.postfix = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.postfix.toLowerCase());
+          s.onSite.prefix = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.prefix.toLowerCase());
           let onsiteNone = s.onSite.values.findIndex(x => x.trim() == 'None');
           if (onsiteNone >= 0) {
-            s.onSite.values[onsiteNone] = this.tSvc.translate('titles.sal.gen sal none');
+            s.onSite.values[onsiteNone] = this.tSvc.translate('titles.sal.gen sal.none');
           }
 
           s.offSite.options = {
@@ -92,12 +92,12 @@ export class SalGenComponent implements OnInit {
           };
 
           // translate display text
-          s.offSite.sal_Description = this.tSvc.translate('titles.sal.gen sal ' + s.offSite.postfix.toLowerCase() + ' desc');
-          s.offSite.postfix = this.tSvc.translate('titles.sal.gen sal ' + s.offSite.postfix.toLowerCase());
-          s.offSite.prefix = this.tSvc.translate('titles.sal.gen sal ' + s.offSite.prefix.toLowerCase());
+          s.offSite.sal_Description = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.postfix.toLowerCase() + ' desc');
+          s.offSite.postfix = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.postfix.toLowerCase());
+          s.offSite.prefix = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.prefix.toLowerCase());
           let offsiteNone = s.offSite.values.findIndex(x => x.trim() == 'None');
           if (offsiteNone >= 0) {
-            s.offSite.values[offsiteNone] = this.tSvc.translate('titles.sal.gen sal none');
+            s.offSite.values[offsiteNone] = this.tSvc.translate('titles.sal.gen sal.none');
           }
 
         });

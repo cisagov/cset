@@ -1265,7 +1265,7 @@ namespace CSETWebCore.Business.Reports
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-            var manager = new NistSalBusiness(_context, _assessmentUtil);
+            var manager = new NistSalBusiness(_context, _assessmentUtil, _tokenManager);
             var sals = manager.CalculatedNist(_assessmentId);
             List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
             var infos = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
