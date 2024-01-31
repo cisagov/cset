@@ -5,10 +5,9 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Reports;
-using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Cmu;
-using CSETWebCore.Model.Crr;
+using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Reports.Models;
@@ -27,7 +26,7 @@ namespace CSETWebCore.Helpers
     /// <summary>
     /// 
     /// </summary>
-    public class CmuScoringHelper : Interfaces.Cmu.ICmuScoringHelper
+    public class CmuScoringHelper : ICmuScoringHelper
     {
         private readonly CSETContext _context;
 
@@ -396,12 +395,12 @@ namespace CSETWebCore.Helpers
         /// Calculates a raw percentage of 'Yes' answers for each Domain
         /// </summary>
         /// <returns></returns>
-        public CrrReportChart GetPercentageOfPractice()
+        public CmuReportChart GetPercentageOfPractice()
         {
             try
             {
                 var results = GetCmuResultsSummary();
-                CrrReportChart rChart = new CrrReportChart();
+                CmuReportChart rChart = new CmuReportChart();
                 foreach (var domain in XDoc.Descendants("Domain").ToList())
                 {
                     var dQuestions = domain.Descendants("Question")
@@ -437,10 +436,10 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public CmuResultsModel GetCmuResultsSummary()
         {
-            var crrDomains = new List<CrrMaturityDomainModel>();
+            var crrDomains = new List<CmuMaturityDomainModel>();
             foreach (var domain in XDoc.Descendants("Domain").ToList())
             {
-                var domainModel = new CrrMaturityDomainModel(domain.Attribute("title")?.Value);
+                var domainModel = new CmuMaturityDomainModel(domain.Attribute("title")?.Value);
 
                 var mils = domain.Descendants("Mil").OrderBy(x => x.Attribute("label").Value).ToList();
 
@@ -472,7 +471,7 @@ namespace CSETWebCore.Helpers
 
             var cmuResultsModel = new CmuResultsModel
             {
-                CrrDomains = crrDomains
+                CmuDomains = crrDomains
             };
             cmuResultsModel.TrimToNElements(10);
             cmuResultsModel.GenerateWidthValues();
@@ -726,6 +725,31 @@ namespace CSETWebCore.Helpers
         public AnswerColorDistrib FullAnswerDistrib()
         {
             var xQs = XDoc.Descendants("Question").ToList();
+
+            return GetDistrib(xQs);
+        }
+
+        /// <summary>
+        /// Returns the answer distribution of the entire xdoc.
+        /// </summary>
+        /// <returns></returns>
+        public AnswerColorDistrib MIL1FullAnswerDistrib()
+        {
+            var xQs = XDoc.Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1").Descendants("Question").ToList();
+
+            return GetDistrib(xQs);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="domainAbbrev"></param>
+        /// <returns></returns>
+        public AnswerColorDistrib MIL1DomainAnswerDistrib(string domainAbbrev)
+        {
+            var xDomain = XDoc.Descendants("Domain").Where(d => d.Attribute("abbreviation").Value == domainAbbrev).Descendants("Mil").Where(el => el.Attribute("label") != null && el.Attribute("label").Value == "MIL-1");
+            var xQs = xDomain.Descendants("Question").ToList();
 
             return GetDistrib(xQs);
         }

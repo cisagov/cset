@@ -36,17 +36,15 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
-        private readonly ICrrScoringHelper _crr;
 
         public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
-            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
+            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
-            _crr = crr;
         }
 
 

@@ -35,15 +35,14 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-domain-detail-table.component.scss', '../../reports.scss']
 })
 export class CmuResultsDetailComponent implements OnChanges {
+  @Input()
+    moduleName: string;
 
   @Input()
-  moduleName: string;
+    domain: any;
 
   @Input()
-  domain: any;
-
-  @Input()
-  showRemarks = true;
+    showRemarks = true;
 
   heatmapWidget = '';
 
@@ -53,34 +52,33 @@ export class CmuResultsDetailComponent implements OnChanges {
     public reportSvc: ReportService,
     public questionsSvc: QuestionsService,
     private cmuSvc: CmuService
-  ) { }
+  ) {}
 
   /**
    * Get the heatmap as soon as we have a domain
    */
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.domain.firstChange) {
-      this.cmuSvc.getDomainHeatmapWidget(this.domain.abbreviation)
-        .subscribe((resp: string) => {
-          this.heatmapWidget = resp;
-        });
+      this.cmuSvc.getDomainHeatmapWidget(this.domain.abbreviation).subscribe((resp: string) => {
+        this.heatmapWidget = resp;
+      });
     }
   }
 
   /**
-  * Sets the coloring of a cell based on its answer.
-  * @param answer
-  */
+   * Sets the coloring of a cell based on its answer.
+   * @param answer
+   */
   answerCellClass(answer: string) {
     switch (answer) {
-      case 'Y':
-        return 'green-score';
-      case 'I':
-        return 'yellow-score';
-      case 'N':
-        return 'red-score';
-      case 'U':
-        return 'default-score';
+    case 'Y':
+      return 'green-score';
+    case 'I':
+      return 'yellow-score';
+    case 'N':
+      return 'red-score';
+    case 'U':
+      return 'default-score';
     }
   }
 
@@ -90,7 +88,7 @@ export class CmuResultsDetailComponent implements OnChanges {
    */
   parentQuestions(q: Question): Question[] {
     // q might be a single question or might be an array of questions
-    var questions = [];
+    let questions = [];
 
     if (q instanceof Array) {
       questions = q;
@@ -98,7 +96,7 @@ export class CmuResultsDetailComponent implements OnChanges {
       questions = [].concat(q);
     }
 
-    return questions.filter(x => !x.parentQuestionId);
+    return questions.filter((x) => !x.parentQuestionId);
   }
 
   /**
@@ -116,14 +114,14 @@ export class CmuResultsDetailComponent implements OnChanges {
     }
 
     // failing that, assume the question text leads with a number and a dot
-    if (!!q.questionText) {
+    if (q.questionText) {
       dot = q.questionText.trim().indexOf('.');
     }
     if (dot > 0) {
-      return "Q" + q.questionText.trim().substring(0, dot);
+      return 'Q' + q.questionText.trim().substring(0, dot);
     }
 
-    return "Q";
+    return 'Q';
   }
 
   /**

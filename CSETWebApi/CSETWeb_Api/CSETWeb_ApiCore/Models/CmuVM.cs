@@ -9,7 +9,7 @@ using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.Crr;
+using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Edm;
 using CSETWebCore.Reports.Models;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace CSETWebCore.Api.Models
 
         public object Structure { get; set; }
 
-        public CrrReportChart ReportChart { get; set; }
+        public CmuReportChart ReportChart { get; set; }
 
         public string CriticalService { get; set; }
 
