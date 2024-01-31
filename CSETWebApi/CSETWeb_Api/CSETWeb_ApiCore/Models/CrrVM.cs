@@ -5,7 +5,7 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Reports;
-using CSETWebCore.Interfaces.Crr;
+using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Cmu;
 using CSETWebCore.Model.Edm;
@@ -19,7 +19,7 @@ namespace CSETWebCore.Api.Models
     {
         public CrrVM(AssessmentDetail assessmentDetails,
             string criticalService,
-            ICrrScoringHelper crrScores,
+            ICmuScoringHelper crrScores,
             MaturityBasicReportData reportData)
         {
             AssessmentDetails = assessmentDetails;
@@ -34,7 +34,7 @@ namespace CSETWebCore.Api.Models
 
         public List<EdmScoreParent> ParentScores { get; set; }
 
-        public ICrrScoringHelper CRRScores { get; set; }
+        public ICmuScoringHelper CRRScores { get; set; }
 
         public object Structure { get; set; }
 
