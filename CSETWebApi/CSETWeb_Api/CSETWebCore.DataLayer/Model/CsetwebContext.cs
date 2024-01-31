@@ -127,6 +127,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<COMPONENT_SYMBOLS_GM_TO_CSET> COMPONENT_SYMBOLS_GM_TO_CSET { get; set; }
 
+    public virtual DbSet<COMPONENT_SYMBOLS_MAPPINGS> COMPONENT_SYMBOLS_MAPPINGS { get; set; }
+
     public virtual DbSet<CONFIDENTIAL_TYPE> CONFIDENTIAL_TYPE { get; set; }
 
     public virtual DbSet<COUNTIES> COUNTIES { get; set; }
@@ -294,6 +296,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<LEVEL_BACKUP_ACET_QUESTIONS> LEVEL_BACKUP_ACET_QUESTIONS { get; set; }
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
+
+    public virtual DbSet<MALCOLM_MAPPING> MALCOLM_MAPPING { get; set; }
 
     public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
 

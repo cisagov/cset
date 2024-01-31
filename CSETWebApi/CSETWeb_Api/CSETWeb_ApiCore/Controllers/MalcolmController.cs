@@ -96,7 +96,7 @@ namespace CSETWebCore.Api.Controllers
             else
             {
                 DiagramManager diagramManager = new DiagramManager(_context);
-                List<MalcolmData> processedData = new MalcolmBusiness(_context).GetMalcolmJsonData(dataList);
+                List<MalcolmData> processedData = new MalcolmBusiness(_context, _token).GetMalcolmJsonData(dataList);
                 diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
                 return Ok();
             }

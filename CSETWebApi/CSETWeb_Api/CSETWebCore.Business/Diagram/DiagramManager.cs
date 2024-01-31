@@ -1203,6 +1203,8 @@ namespace CSETWebCore.Business.Diagram
 
         public XmlDocument xml = new XmlDocument();
         public int incrementalId = 0;
+        // public int rootNodeX = 0;
+        public int rootNodeY = 0;
         public List<Geometry> nodeLocations = new List<Geometry>();
 
         public void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData)
@@ -1250,7 +1252,10 @@ namespace CSETWebCore.Business.Diagram
             int nodeCount = processedData[0].Graphs.Count;
 
             // Generate the actual Diagram/XML objects
-            WalkDownTree(processedData[0].Trees[2], "");
+            for (int i = 0; i < processedData[0].Trees.Count; i++)
+            {
+                WalkDownTree(processedData[0].Trees[i], "");
+            }
 
             // Save that XML to the Assessments table -- Diagram Markup.
             SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
@@ -1271,7 +1276,11 @@ namespace CSETWebCore.Business.Diagram
                 symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Abbreviation == node.Role).FirstOrDefault();
                 if (symbol == null && node.Role != null)
                 {
-                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Malcolm_Role == node.Role).FirstOrDefault();
+                    int symbolId = _context.COMPONENT_SYMBOLS_MAPPINGS.Where(x => x.Application == "Malcolm" && x.Malcolm_Role == node.Role)
+                            .Select(x => x.Component_Symbol_Id).FirstOrDefault();
+
+                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Component_Symbol_Id == symbolId).FirstOrDefault();
+
                     if (symbol == null)
                     {
                         symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
@@ -1361,24 +1370,32 @@ namespace CSETWebCore.Business.Diagram
 
             edge.AppendChild(geometry);
 
-
             return edge;
         }
 
         public Geometry AssignCoordinates(string parentId, int w, int h)
         {
-            int x = 0;
-            int y = 0;
             XmlElement parentNode = (XmlElement)xml.SelectSingleNode($"//UserObject[@id='{parentId}']");
             Geometry geometry = new Geometry();
 
             if (parentNode == null)
             {
-                geometry.x = x;
-                geometry.y = y;
+
+                // geometry.x = rootNodeX;
+                geometry.x = 0;
+                geometry.y = rootNodeY; //gives a buffer if not the first tree
                 geometry.w = w;
                 geometry.h = h;
 
+                if (rootNodeY != 0)
+                {
+                    do
+                    {
+                        geometry.y += 120;
+                    }
+                    while (AreCoordinatesOverlapping(geometry));
+                }
+                
                 nodeLocations.Add(geometry);
                 return geometry;
             }
@@ -1389,6 +1406,7 @@ namespace CSETWebCore.Business.Diagram
             Geometry newCoordinatesToTry = new Geometry();
             newCoordinatesToTry.w = w;
             newCoordinatesToTry.h = h;
+
             do
             {
                 newCoordinatesToTry = CircleAroundParent(parentCoordinates, i, revolution);
@@ -1408,6 +1426,11 @@ namespace CSETWebCore.Business.Diagram
             geometry.w = newCoordinatesToTry.w;
             geometry.h = newCoordinatesToTry.h;
             nodeLocations.Add(geometry);
+
+            // keeps track of where the next tree has to start 
+            if (rootNodeY <= geometry.y)
+                rootNodeY = geometry.y + 120;
+
             return geometry;
         }
 

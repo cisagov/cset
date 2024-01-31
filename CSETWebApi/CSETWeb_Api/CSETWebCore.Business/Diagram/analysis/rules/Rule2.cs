@@ -81,7 +81,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
             }
 
             String text = String.Format(rule2, componentName).Replace("\n", " ");
-            SetNodeMessage(firewall, text);
+            SetNodeMessage(firewall, text, 2); // 2 because rule2 was violated
         }
 
         private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
