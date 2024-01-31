@@ -34,23 +34,24 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./imr-report.component.scss']
 })
 export class ImrReportComponent implements OnInit {
-
   model: CmuReportModel = {};
-  modelReferences; any;
+  modelReferences;
+  any;
   securityLevel: string = '';
 
   constructor(
     private cmuSvc: CmuService,
     public reportSvc: ReportService,
     private titleSvc: Title,
-    public configSvc: ConfigService) { }
+    public configSvc: ConfigService
+  ) {}
 
   ngOnInit(): void {
     this.titleSvc.setTitle('IMR Report - ' + this.configSvc.behaviors.defaultTitle);
 
     const securityLevel = localStorage.getItem('report-confidentiality');
     if (securityLevel) {
-      securityLevel !== 'None' ? this.securityLevel = securityLevel : this.securityLevel = '';
+      securityLevel !== 'None' ? (this.securityLevel = securityLevel) : (this.securityLevel = '');
       localStorage.removeItem('report-confidentiality');
     }
 
@@ -58,10 +59,11 @@ export class ImrReportComponent implements OnInit {
       this.model.assessmentDetails = resp;
     });
 
-    this.reportSvc.getModelContent('').subscribe((resp: any) => {
-      this.model.structure = resp;
-    },
-      error => console.log('Error loading IMR report: ' + (<Error>error).message)
+    this.reportSvc.getModelContent('').subscribe(
+      (resp: any) => {
+        this.model.structure = resp;
+      },
+      (error) => console.log('Error loading IMR report: ' + (<Error>error).message)
     );
 
     this.cmuSvc.getDomainCompliance().subscribe((resp: any) => {
@@ -69,7 +71,7 @@ export class ImrReportComponent implements OnInit {
     });
 
     this.cmuSvc.getCsf().subscribe((resp: any) => {
-      this.model.crrScores = resp;
+      this.model.cmuScores = resp;
     });
   }
 

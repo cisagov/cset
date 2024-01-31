@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CrrService } from './../../../services/crr.service';
-import { CrrReportModel } from '../../../models/reports.model';
+import { CmuService } from './../../../services/cmu.service';
+import { CmuReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 
@@ -33,10 +33,10 @@ import { ConfigService } from '../../../services/config.service';
   styleUrls: ['./crr-report.component.scss']
 })
 export class CrrReportComponent implements OnInit {
-  crrModel: CrrReportModel;
+  cmuModel: CmuReportModel;
   securityLevel: string = '';
 
-  constructor(private crrSvc: CrrService, private titleSvc: Title, public configSvc: ConfigService) { }
+  constructor(private cmuSvc: CmuService, private titleSvc: Title, public configSvc: ConfigService) {}
 
   ngOnInit(): void {
     const securityLevel = localStorage.getItem('report-confidentiality');
@@ -46,8 +46,8 @@ export class CrrReportComponent implements OnInit {
     }
 
     this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
-    this.crrSvc.getCrrModel().subscribe(
-      (data: CrrReportModel) => {
+    this.cmuSvc.getCmuModel().subscribe(
+      (data: CmuReportModel) => {
         data.structure.Model.Domain.forEach((d) => {
           d.Goal.forEach((g) => {
             // The Question object needs to be an array for the template to work.
@@ -60,7 +60,7 @@ export class CrrReportComponent implements OnInit {
           });
         });
 
-        this.crrModel = data;
+        this.cmuModel = data;
       },
       (error) => console.error('Error loading CRR report: ' + (<Error>error).message)
     );

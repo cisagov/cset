@@ -30,16 +30,15 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-nist-csf-cat-performance.component.scss']
 })
 export class CmuNistCsfCatPerformanceComponent implements OnInit {
-
   @Input() moduleName: string;
 
   csfData: any;
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
     this.cmuSvc.getCsfCatPerf().subscribe((resp: any) => {
       this.csfData = resp;
-    })
+    });
   }
 }
