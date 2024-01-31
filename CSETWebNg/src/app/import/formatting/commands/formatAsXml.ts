@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { editor, Range } from 'monaco-editor/esm/vs/editor/editor.api';
 import { XmlFormatterFactory } from "../xml-formatter";
 import { XmlFormattingEditProvider } from "../xml-formatting-edit-provider";
 
@@ -35,15 +35,15 @@ export function formatAsXml(editor: editor.ICodeEditor, edit: editor.ISingleEdit
 
     let edits;
     if (!editor.getSelection().isEmpty) {
-        const selection = editor.getSelection();
-        edits = xmlFormattingEditProvider.provideDocumentRangeFormattingEdits(
-            editor.getModel(),
-            new monaco.Range(selection.selectionStartLineNumber,
-                selection.selectionStartColumn,
-                selection.endLineNumber,
-                selection.endColumn),
-            formattingOptions,
-            null);
+      const selection = editor.getSelection();
+      edits = xmlFormattingEditProvider.provideDocumentRangeFormattingEdits(
+        editor.getModel(),
+        new Range(selection.selectionStartLineNumber,
+          selection.selectionStartColumn,
+          selection.endLineNumber,
+          selection.endColumn),
+        formattingOptions,
+        null);
     } else {
         edits = xmlFormattingEditProvider.provideDocumentFormattingEdits(
             editor.getModel(),
