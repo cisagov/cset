@@ -49,8 +49,7 @@
     "no search results": "No se encontraron artículos que coincidan con la solicitud de búsqueda.",
     "auto load guidance": "Carga automática de guía",
     "unanswered equals no": "Las preguntas sin respuesta se calculan como una respuesta '{{no-ans}}'",
-    "to start an assessment": "Para iniciar una nueva evaluación, haz clic en una tarjeta. Para ver detalles adicionales, haz clic en el icono",
-    "icon": ".",
+    "to start an assessment": "Para iniciar una nueva evaluación, haz clic en una tarjeta. Para ver detalles adicionales, haz clic en el icono {icon}.",
     "missing email": "Se requiere la dirección de correo electrónico",
     "invalid email format": "Formato de correo inválido",
     "account already exists": "Ya existe una cuenta para la dirección de correo electrónico",
@@ -116,6 +115,7 @@
         "assessment": "Evaluación",
         "results": "Resultados",
         "search results": "Resultados de la búsqueda",
+        "assessment description": "Descripción de la evaluación",
         "assessment configuration": "Configuración de evaluación",
         "assessment information": "Información de evaluación",
         "service demographics": "Demografía del servicio",
@@ -317,6 +317,10 @@
     },
 
     "tooltip": {
+        "view detail": "Ver detalle",
+        "create assessment": "Crear evaluación",
+        "close": "Cerrar",
+        "search": "Buscar",
         "details standard": "Detalles/Estándar",
         "supplemental guidance": "Orientación complementaria",
         "comment": "Comentario",
