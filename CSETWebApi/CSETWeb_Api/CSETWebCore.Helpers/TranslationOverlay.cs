@@ -3,6 +3,7 @@ using CSETWebCore.Model.Edm;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Set;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Org.BouncyCastle.Asn1.Pkcs;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,53 @@ namespace CSETWebCore.Helpers
     /// </summary>
     public class TranslationOverlay
     {
+        private Dictionary<string, JArray> dict = new Dictionary<string, JArray>();
         private Dictionary<string, RequirementTranslations> dReq = new Dictionary<string, RequirementTranslations>();
         private Dictionary<string, CategoryTranslation> dCat = new Dictionary<string, CategoryTranslation>();
-
         private Dictionary<string, GenericTranslation> dKVP = new Dictionary<string, GenericTranslation>();
+
+
+        /// <summary>
+        /// Intended to return a JObject so that it is very generic.
+        /// The caller supplies the key field name and the key value.  A JObject or null is returned.
+        /// </summary>
+        public JObject GetJObject(string collection, string keyFieldName, string key, string lang)
+        {
+            JArray langPack = null;
+
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            lang = lang.ToLower();
+            collection = collection.ToLower();
+
+            var kvpKey = $"{lang}|{collection}";
+
+            if (!dict.ContainsKey(kvpKey))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
+
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(json);
+
+                dict.Add(kvpKey, langPack);
+            }
+            else
+            {
+                langPack = dict[kvpKey];
+            }
+
+            var target = langPack.Children().FirstOrDefault(x => x.SelectToken(keyFieldName).Value<string>().Equals(key, StringComparison.InvariantCultureIgnoreCase));
+
+            return (JObject)target;
+        }
 
 
         /// <summary>
@@ -87,6 +131,13 @@ namespace CSETWebCore.Helpers
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "CATEGORIES.json"));
 
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
+
+
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryTranslation>(json);
 
                 dCat.Add(lang, langPack);
@@ -117,6 +168,12 @@ namespace CSETWebCore.Helpers
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
+
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
 
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<RequirementTranslations>(json);
 
