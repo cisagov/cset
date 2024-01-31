@@ -54,8 +54,7 @@
     "no search results": "No items were found matching the search request.",
     "auto load guidance": "Auto-load Guidance",
     "unanswered equals no": "Unanswered questions are calculated as a '{{no-ans}}' response",
-    "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the",
-    "icon": "icon.",
+    "to start an assessment": "To start a new assessment, click on a card.  To view additional details click the {icon} icon.",
     "missing email": "Email address is required",
     "invalid email format": "Invalid email format",
     "account already exists": "An account already exists for the email address",
@@ -71,6 +70,7 @@
         "assessment": "Assessment",
         "results": "Results",
         "search results": "Search Results",
+        "assessment description": "Assessment Description",
         "assessment configuration": "Assessment Configuration",
         "assessment information": "Assessment Information",
         "service demographics": "Service Demographics",
@@ -328,6 +328,10 @@
         }
     },
     "tooltip": {
+        "view detail": "View Detail",
+        "create assessment": "Create Assessment",
+        "close": "Close",
+        "search": "Search",
         "details standard": "Details/Standard",
         "supplemental guidance": "Supplemental Guidance",
         "comment": "Comment",
