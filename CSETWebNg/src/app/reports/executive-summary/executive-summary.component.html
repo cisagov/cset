@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
   <div class="flex-container">
     <div class="column mt-3">
 
       <p class="report-title">
-        EXECUTIVE SUMMARY
+        {{t('reports.core.executive summary.report title')}}
       </p>
     </div>
     <div class="column">
@@ -44,15 +44,7 @@
 
   <div class="page-break">
 
-    <div class="disclaimer-blurb mt-4">
-      This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S.
-      Government
-      nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability
-      or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product,
-      or
-      process disclosed in this publication, or represents that its use by such third party would not infringe privately
-      owned rights.
-    </div>
+    <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
 
     <app-overall-compliance></app-overall-compliance>
 
