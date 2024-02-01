@@ -23,9 +23,18 @@
 <div class="bgc-page d-flex flex-column flex-11a w-100">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
+
       <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
         *ngIf="auth.isLocal">
         <span class="col-sm-12">Local Installation</span>
+      </div>
+
+      <div class="row no-gutters pcii-header mt-0 pl-3 d-flex justify-content-center align-items-center flex-00a"
+        *ngIf="assessSvc.isPcii()">
+        <span class="col-12">Warning: Data contained in this assessment is Protected Critical Infrastructure
+          Information <a href="https://www.cisa.gov/resources-tools/programs/protected-critical-infrastructure-information-pcii-program"
+            target="_blank">Click here to learn more</a>
+          </span>
       </div>
 
       <!-- Navbar -->
