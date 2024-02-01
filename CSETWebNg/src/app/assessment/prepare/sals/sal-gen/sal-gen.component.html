@@ -37,7 +37,7 @@
     </div>
 
     <div class="mb-3">
-        {{ t('titles.sal.gen sal text1') }}
+        {{ t('titles.sal.gen sal.text1') }}
     </div>
 
     <div *ngFor="let slider of sliders" class="mb-4">
@@ -46,16 +46,16 @@
             <label class="mb-1" style="border-radius: .5rem">{{slider.onSite.sal_Description}}</label>
 
             <div class="p-2">
-                <div class="sal-slider-label">{{t('titles.sal.gen sal on site')}} {{slider?.offSite?.values[0]}}</div>
-                <div class="sal-slider-label">{{t('titles.sal.gen sal on site')}} {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[0]}}</div>
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}
                 </div>
                 <ngx-slider [(value)]="slider.onSite.slider_Value"
                     (valueChange)="valueChange($event, slider.onSite.sal_Name)" [options]="slider.onSite.options"
                     [pointer-type]="" class="mx-1 mb-4" [attr.csetid]="slider.onSite.sal_Name">
                 </ngx-slider>
 
-                <div class="sal-slider-label">{{t('titles.sal.gen sal off site')}} {{slider?.onSite?.values[0]}}</div>
-                <div class="sal-slider-label">{{t('titles.sal.gen sal off site')}} {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[0]}}</div>
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}
                 </div>
                 <ngx-slider [(value)]="slider.offSite.slider_Value"
                     (valueChange)="valueChange($event, slider.offSite.sal_Name)" [options]="slider.offSite.options"
