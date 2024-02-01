@@ -5,23 +5,19 @@
 // 
 //////////////////////////////// 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace CSETWebCore.Helpers.Tests
 {
     [TestClass()]
-    public class CrrScoringHelperTests
+    public class CmuScoringHelperTests
     {
         private DataLayer.Model.CSETContext context;
 
-        private CrrScoringHelper crrScoring;
+        private CmuScoringHelper cmuScoring;
 
         // until we get some insert statements, just set this to your assessment that has answers fleshed out
         private int assessmentId = 8054;
@@ -31,7 +27,7 @@ namespace CSETWebCore.Helpers.Tests
         public void Initialize()
         {
             context = new DataLayer.Model.CSETContext();
-            crrScoring = new CrrScoringHelper(context);
+            cmuScoring = new CmuScoringHelper(context);
         }
 
 
@@ -47,9 +43,9 @@ namespace CSETWebCore.Helpers.Tests
             context.SaveChanges();
 
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
-            var nonRed = crrScoring.XDoc.Descendants("Question").Where(x =>
+            var nonRed = cmuScoring.XDoc.Descendants("Question").Where(x =>
             x.Attribute("isparentquestion").Value == "false" &&
             x.Attribute("placeholder-p") == null &&
             x.Attribute("scorecolor").Value != "red").ToList();
@@ -71,7 +67,7 @@ namespace CSETWebCore.Helpers.Tests
             context.SaveChanges();
 
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
             // all MILs green
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "green");
@@ -96,7 +92,7 @@ namespace CSETWebCore.Helpers.Tests
             // Now flip one answer in MIL-1 to "N" and MIL-2 thru 5 should turn red
             SetAnswer("AM:G5.Q6-F", "N");
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-1"), "yellow");
             Assert.AreEqual(GetMilScoreColor("AM", "MIL-2"), "red");
@@ -120,7 +116,7 @@ namespace CSETWebCore.Helpers.Tests
             // answer AM:G2.Q4-F as YES
             SetAnswer("AM:G2.Q4-F", "Y");
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
             // AM's G2 should be yellow, other goals still red
             Assert.AreEqual(GetGoalScoreColor("AM", "AM:G1"), "red");
@@ -166,7 +162,7 @@ namespace CSETWebCore.Helpers.Tests
             context.SaveChanges();
 
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
 
             // mil-1 should be green, but the domain (AM) should be yellow (mil 2-5 are still red)
@@ -205,7 +201,7 @@ namespace CSETWebCore.Helpers.Tests
             SetAnswer("AM:MIL2.Q1", "Y");
 
 
-            crrScoring.InstantiateScoringHelper(assessmentId);
+            cmuScoring.InstantiateScoringHelper(assessmentId);
 
 
             // MIL-1 should be green, MIL-2 still red
@@ -244,7 +240,7 @@ namespace CSETWebCore.Helpers.Tests
         /// <returns></returns>
         private string GetGoalScoreColor(string domain, string goalLabel)
         {
-            var g = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']//Goal[@abbreviation='{goalLabel}']");
+            var g = cmuScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']//Goal[@abbreviation='{goalLabel}']");
             return g?.Attribute("scorecolor")?.Value;
         }
 
@@ -258,7 +254,7 @@ namespace CSETWebCore.Helpers.Tests
         /// <returns></returns>
         private string GetMilScoreColor(string domain, string milLabel)
         {
-            var m = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
+            var m = cmuScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']/Mil[@label='{milLabel}']");
             return m?.Attribute("scorecolor")?.Value;
         }
 
@@ -271,7 +267,7 @@ namespace CSETWebCore.Helpers.Tests
         /// <returns></returns>
         private string GetDomainScoreColor(string domain)
         {
-            var d = crrScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
+            var d = cmuScoring.XDoc.XPathSelectElement($"//Domain[@abbreviation='{domain}']");
             return d?.Attribute("scorecolor")?.Value;
         }
     }

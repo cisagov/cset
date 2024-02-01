@@ -7,8 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -18,13 +16,11 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -758,8 +754,22 @@ namespace CSETWebCore.Business.Assessment
 
             var result = query.ToList().FirstOrDefault();
 
+            var lang = _tokenManager.GetCurrentLanguage();
+
             if (result != null)
             {
+                // Translate if not English
+                if (lang != "en")
+                {
+                    var itemOverlay = _overlay.GetJObject("GALLERY_ITEM", "key", result.Gallery_Item_Guid.ToString(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        result.Title = itemOverlay.Value<string>("title");
+                        result.Description = itemOverlay.Value<string>("description");
+                    }
+                }
+
                 galleryCardDescription = result.Description;
             }
 
@@ -794,10 +804,12 @@ namespace CSETWebCore.Business.Assessment
             }
 
             if (assessment.TypeTitle != null)
-                if (assessment.TypeTitle.IndexOf(",") == 0)
+            {
+                if (assessment.TypeTitle.StartsWith(","))
                 {
-                    assessment.TypeTitle = assessment.TypeTitle.Substring(2);
+                    assessment.TypeTitle = assessment.TypeTitle.TrimStart(", ".ToCharArray());
                 }
+            }
 
             // Remove description for assessments with multiple types.
             if (multipleTypes)
@@ -805,6 +817,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.TypeDescription = null;
             }
         }
+
 
         public List<SetInfo> GatherSetsInfo(List<string> setNames)
         {

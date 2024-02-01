@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from './../../../../services/crr.service';
+import { CmuReportModel } from '../../../../models/reports.model';
+import { CmuService } from './../../../../services/cmu.service';
 
 @Component({
   selector: 'app-crr-nist-csf-cat-summary',
@@ -31,23 +31,22 @@ import { CrrService } from './../../../../services/crr.service';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrNistCsfCatSummaryComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   @Input() moduleName: string;
 
   bodyData: any = null;
   legend: string = '';
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.crrSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
+    this.cmuSvc.getNistCsfCatSummaryBodyData().subscribe((resp: any[]) => {
       this.bodyData = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
   }
 }
