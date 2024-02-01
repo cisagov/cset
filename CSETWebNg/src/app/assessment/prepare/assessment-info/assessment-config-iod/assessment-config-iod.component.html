@@ -43,7 +43,7 @@
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="name" class="mb-1">Is this PCII?</label>
+        <label for="name" class="mb-1">PCII Requested</label>
         <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">
             <input class="form-check-input" name="standardYes" id="standardYes" type="radio" autocomplete="off"
@@ -61,7 +61,7 @@
         <label class="mb-1" for="name">{{t('PCII Number')}}</label>
         <input type="text" maxlength="100" class="form-control" id="name" name="name" required focusOnInit="true"
           [(ngModel)]="assessment.pciiNumber" (ngModelChange)="assessment.pciiNumber" (change)="update($event)"
-          autofocus tabindex="0">
+          autofocus tabindex="0" placeholder="PCII Number">
       </div>
     </div>
 

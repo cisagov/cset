@@ -613,15 +613,15 @@ export class AssessmentService {
     return false;
   }
 
-    /**
+  /**
    * Indicates if the assessment is PCII.  This is set in the 
    * CISA Assessor Workflow's Assessment Configuration page.
    */
   isPcii() {
     if (!!this.assessment) {
-      console.log(this.assessment);
       return this.assessment.is_PCII ?? false;
     }
+    return false;
   }
 
   /**
