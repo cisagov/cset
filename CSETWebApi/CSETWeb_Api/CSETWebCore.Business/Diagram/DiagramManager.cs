@@ -1233,9 +1233,6 @@ namespace CSETWebCore.Business.Diagram
             newMxGraphModel.AppendChild(root);
             xml.AppendChild(newMxGraphModel);
 
-            // Check how many nodes we need
-            int nodeCount = processedData[0].Graphs.Count;
-
             // Generate the actual Diagram/XML objects
             for (treeNumber = 0; treeNumber < processedData[0].Trees.Count; treeNumber++)
             {
@@ -1320,7 +1317,6 @@ namespace CSETWebCore.Business.Diagram
             userObject.SetAttribute("Description", "");
             userObject.SetAttribute("Criticality", "");
             userObject.SetAttribute("HostName", "");
-            //userObject.SetAttribute("parent", parent);
             userObject.SetAttribute("id", id);
 
             Geometry geometry = AssignCoordinates(parentId, symbol.Width, symbol.Height);
@@ -1348,8 +1344,6 @@ namespace CSETWebCore.Business.Diagram
 
         public XmlElement CreateMxCellAndGeometry(string x, string y, string fileName, string w, string h)
         {
-            //string role = "unknown"; //assuming all are unknown for now
-
             XmlElement mxCell = xml.CreateElement("mxCell");
             mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + fileName);
             mxCell.SetAttribute("vertex", "1");
@@ -1430,8 +1424,7 @@ namespace CSETWebCore.Business.Diagram
             geometry.h = newCoordinatesToTry.h;
             nodeLocations[treeNumber].Add(geometry);
 
-            // keeps track of where the next tree has to start
-
+            // keeps track of the upper and lower bounds for offsetting the trees later 
             if (treeBounds[treeNumber].upperY < geometry.y)
                 treeBounds[treeNumber].upperY = geometry.y;
 
@@ -1443,8 +1436,7 @@ namespace CSETWebCore.Business.Diagram
 
         public bool AreCoordinatesOverlapping(Geometry newCoords)
         {
-            // grab the parent info
-            //Geometry parent = new Geometry(parentCoords.x, parentCoords.y, parentCoords.w, parentCoords.h);
+            // checking the nodes in this tree for overlapping (we realign the trees to not overlap later)
             foreach (Geometry currentNode in nodeLocations[treeNumber])
             {
                 int currentEndX = currentNode.x + currentNode.w;
@@ -1486,6 +1478,14 @@ namespace CSETWebCore.Business.Diagram
             return new Geometry(xInt, yInt, wInt, hInt);
         }
 
+        /// <summary>
+        /// Goes around the parent clockwise,
+        /// checking for an open space (i.e. no overlaps with another component) to put the current component.
+        /// </summary>
+        /// <param name="geo"></param>
+        /// <param name="i"></param>
+        /// <param name="revolution"></param>
+        /// <returns></returns>
         public Geometry CircleAroundParent(Geometry geo, int i, int revolution)
         {
             int changeAmount = 120 * revolution;
@@ -1497,37 +1497,35 @@ namespace CSETWebCore.Business.Diagram
             {
                 case 0:
                     parent.x += changeAmount;
-                    break;
+                    return parent;
                 case 7:
                     parent.x += changeAmount;
                     parent.y -= changeAmount;
-                    break;
+                    return parent;
                 case 6:
                     parent.y -= changeAmount;
-                    break;
+                    return parent;
                 case 5:
                     parent.x -= changeAmount;
                     parent.y -= changeAmount;
-                    break;
+                    return parent;
                 case 4:
                     parent.x -= changeAmount;
-                    break;
+                    return parent;
                 case 3:
                     parent.x -= changeAmount;
                     parent.y += changeAmount;
-                    break;
+                    return parent;
                 case 2:
                     parent.y += changeAmount;
-                    break;
+                    return parent;
                 case 1:
                     parent.x += changeAmount;
                     parent.y += changeAmount;
-                    break;
+                    return parent;
                 default:
-                    break;
+                    return parent;
             }
-
-            return parent;
         }
         
         public class YCoords

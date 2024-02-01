@@ -109,6 +109,12 @@ namespace CSETWebCore.Business.Malcolm
             int assessment_Id = _token.AssessmentForUser();
 
             var xmlMarkup = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessment_Id).Select(x => x.Diagram_Markup).FirstOrDefault();
+
+            if (xmlMarkup == null)
+            {
+                return;
+            }
+
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlMarkup);
             List<int> malcolmRulesViolated = new DiagramAnalysis(_context, assessment_Id).PerformMalcolmAnalysis(xmlDoc);
