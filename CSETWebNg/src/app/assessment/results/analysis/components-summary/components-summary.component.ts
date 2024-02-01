@@ -36,7 +36,7 @@ export class ComponentsSummaryComponent implements OnInit {
   dataRows: { title: string; number: number; total: number; percent: number; }[];
   initialized = false;
   canvasComponentSummary: any;
-  dataSets: any; 
+  componentCount: any; 
 
   constructor(
     private analysisSvc: AnalysisService,
@@ -53,7 +53,8 @@ export class ComponentsSummaryComponent implements OnInit {
       this.canvasComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
       this.dataRows = x.dataRowsPie;
       this.initialized = true;
-      this.dataSets(x.dataSets.length)
+      this.componentCount = x.componentCount
+      console.log(x.componentCount)
     });
     
   }
