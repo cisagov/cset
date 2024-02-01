@@ -59,13 +59,11 @@
     "user inactive": "Usuario está inactivo",
     "control priorities intro1": "Información sobre el ranking se puede encontrar en la <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">guía del usuario</a>.",
-    
     "contact": {
         "contacts": "Contactos",
         "contact": "Contacto",
         "add contact": "Agregar Contacto",
         "email contacts": "Mandar E-mail a los Contactos",
-        
         "assessment owner": "Dueño de Evaluación",
         "first name": "Nombre de Pila",
         "last name": "Apellido",
@@ -108,7 +106,7 @@
         "upgrade confirm 1": "¿Está seguro de que desea convertir esta evaluación? Esta es una conversión unidireccional; no se puede deshacer.",
         "upgrade confirm 2": "La evaluación se ha convertido.",
         "title upgrade complete": "Conversión completa",
-        "upgradeButton":"Convertir a evaluación completa"
+        "upgradeButton": "Convertir a evaluación completa"
     },
     "titles": {
         "prepare": "Preparar",
@@ -201,10 +199,17 @@
         "acet dashboard": "Panel de control de ACET",
         "analysis dashboard": "Panel de control de análisis",
         "standard results": "Resultados de estándar",
+        "assessment compliance": "Cumplimiento de la evaluación",
         "control priorities": "[ES]Control Priorities",
         "standards summary": "[ES]Standards Summary",
         "ranked categories": "[ES]Ranked Categories",
         "results by category": "[ES]Results by Category",
+        "components results": "[ES]Components Results",
+        "components summary": "[ES]Components Summary",
+        "ranked comp by cat": "[ES]Ranked Components By Category",
+        "comp results by cat": "[ES]Component Results By Category",
+        "answers by comp type": "[ES]Answers By Component Type",
+        "network warnings": "[ES]Network Warnings",
         "high level desc exec sec comments": "[ES]High-Level Assessment Description Executive Summary &amp; Comments",
         "reports": "Informes",
         "assessment complete": "[ES]Assessment Complete"
@@ -286,10 +291,14 @@
         },
         "labels": {
             "Yes": "Sí",
+            "y": "Sí",
             "No": "No",
+            "n": "No",
             "NA": "N/A",
             "N/A": "N/A",
+            "na": "N/A",
             "Alt": "Alternar",
+            "a": "Alternar",
             "U": "Sin respuesta",
             "Inc": "Incompleto",
             "Iss": "No con problemas",
@@ -315,7 +324,6 @@
             "description required": "* Descripción requerida"
         }
     },
-
     "tooltip": {
         "view detail": "Ver detalle",
         "create assessment": "Crear evaluación",
@@ -401,7 +409,6 @@
         "override reason": "Anular el motivo",
         "override reason placeholder": "Por favor, proporcione una explicación de por qué se está anulando el perfil de riesgo inherente total.",
         "cybersecurity maturity": "Madurez de Ciberseguridad",
-
         "no override": "Sin anulación",
         "least": "Insignificante",
         "minimal": "Mínimo",
@@ -428,7 +435,7 @@
         "show statements with observations": "Mostrar declaraciones con observaciones",
         "show statements with issues": "Mostrar declaraciones con problemas"
     },
-    "dialogs" : {
+    "dialogs": {
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
@@ -448,11 +455,18 @@
         "domain": "Dominio",
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
-        "standard": "[ES]Standard",
-        "category": "[ES]Category",
-        "answer": "[ES]Answer",
-        "rank": "[ES]Rank",
-        "question": "[ES]Question",
+        "standard": "Estándar",
+        "category": "Categoría",
+        "answer": "Respuesta",
+        "rank": "Ranking",
+        "question": "Pregunta",
+        "assessment compliance text": "Este gráfico muestra las puntuaciones porcentuales generales. <br> Tenga en cuenta que las preguntas sin respuesta se cuentan como respuesta NO en estas puntuaciones.",
+        "ranked categories text": "Este gráfico muestra las principales áreas de preocupación clasificadas. Estos se calculan a partir de una puntuación de riesgo ponderada basada en la dificultad del ataque. Los pesos de ataque son más pesados para ataques fáciles y menos para ataques más difíciles.",
+        "failed": "Fallido",
+        "total": "Total",
+        "percent": "Porciento",
+        "number": "Número",
+        "standards summary text": "Este gráfico muestra los porcentajes generales de respuesta para cada tipo de respuesta individual.",
         "reference number": "Referencia #",
         "high level assessment desc": "[ES]High-Level Assessment Description",
         "high level assessment desc text": "[ES]Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
@@ -478,6 +492,27 @@
             "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
             "question identifier": "Identificador de pregunta",
             "question text": "Texto de la pregunta"
+        },
+        "core": {
+            "dashboard": {
+                "score": "Puntaje",
+                "overall score": "Puntuación general",
+                "standard based": "Basada en estándares",
+                "component based": "Basada en componentes"
+            },
+            "executive summary": {
+                "executive summary": "Resumen ejecutivo",
+                "tab title": "Resumen ejecutivo",
+                "executive summary title 1": "RESUMEN",
+                "executive summary title 2": "EJECUTIVO",
+                "site information": "Información del sitio"
+            },
+            "components summary": {
+                "components summary": "Resumen de componentes",
+                "text": "Este gráfico muestra los porcentajes de respuesta basados en el diagrama de componentes o de red para cada tipo de respuesta individual."
+            },
+            "no ranking": "La información de clasificación no se puede determinar para el conjunto de preguntas actual. No se puede mostrar el gráfico de categorías clasificadas.",
+            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada."
         },
         "acet": {
             "acet reports": "Los informes de ACET",
