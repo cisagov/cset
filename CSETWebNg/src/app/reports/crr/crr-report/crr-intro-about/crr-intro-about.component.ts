@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-intro-about',
@@ -30,12 +30,9 @@ import { CrrReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrIntroAboutComponent implements OnInit {
+  @Input() model: CmuReportModel;
 
-  @Input() model: CrrReportModel;
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

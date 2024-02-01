@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CrrReportModel } from '../../../models/reports.model';
+import { CmuReportModel } from '../../../models/reports.model';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
@@ -9,14 +9,14 @@ import { CmuService } from '../../../services/cmu.service';
 })
 export class CmuGoalPerfStackedBarComponent {
   @Input() moduleName: string;
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   fullAnswerDistribChart: string = '';
   legend: string = '';
   scoreBarCharts: string[] = [];
   stackedBarCharts: any[] = [];
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
     this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
@@ -38,14 +38,14 @@ export class CmuGoalPerfStackedBarComponent {
   // and
   // "Goal 3-Risks are identified."
   stringSplitter(str: string) {
-    return str.split(" - ")[1] ?? str.split("-")[1];
+    return str.split(' - ')[1] ?? str.split('-')[1];
   }
 
   getStackedBarChart(goalTitle: string) {
-    return this.stackedBarCharts.find(c => c.title === goalTitle)?.chart;
+    return this.stackedBarCharts.find((c) => c.title === goalTitle)?.chart;
   }
 
   filterMilDomainGoals(goals) {
-    return goals.filter(g => !g.title.startsWith('MIL'));
+    return goals.filter((g) => !g.title.startsWith('MIL'));
   }
 }

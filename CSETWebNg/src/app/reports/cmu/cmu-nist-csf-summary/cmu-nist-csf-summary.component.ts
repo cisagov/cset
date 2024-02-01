@@ -30,29 +30,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cmu-nist-csf-summary.component.scss']
 })
 export class CmuNistCsfSummaryComponent implements OnInit {
-
   model: any;
 
   chartAll: string = '';
   legend: string = '';
   csfData: any;
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-
     this.cmuSvc.getCsf().subscribe((resp: any) => {
       this.model = resp;
       this.csfData = resp;
-    })
+    });
 
     this.cmuSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {
       this.chartAll = resp;
-    })
+    });
 
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget("1").subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget('1').subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
   }
-
 }

@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-contact-information',
@@ -30,13 +30,10 @@ import { CrrReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrContactInformationComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
   @Input() moduleName: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

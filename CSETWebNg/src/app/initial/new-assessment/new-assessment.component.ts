@@ -32,6 +32,7 @@ import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -83,6 +84,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   };
 
+  pageTitle: string;
   show: boolean = false;
 
   constructor(public dialog: MatDialog,
@@ -90,14 +92,17 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     public gallerySvc: GalleryService,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService) {
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService,
+    ) {
   }
 
   ngOnInit(): void {
+    this.pageTitle = this.tSvc.translate('to start an assessment').replace('{icon}', '<i class="fa-solid fa-circle-info" style="font-size: 1.3rem;"></i>');
     this.gallerySvc.refreshCards();
     this.checkNavigation();
-
   }
+
   ngAfterViewInit(): void {
     this.checkNavigation();
   }
@@ -139,10 +144,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         el.style.right = (cardDimension.w).toString() + 'px';
       }
     }
-
-    //if(offScreen > 0){
-    //el.setAttribute('style', 'margin-right:'+)
-    //}
   }
 
   onHoverOut(i: number, cardId: number) {

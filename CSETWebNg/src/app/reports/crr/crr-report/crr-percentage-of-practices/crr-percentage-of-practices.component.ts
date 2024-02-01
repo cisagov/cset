@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnChanges } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 import { ChartService } from './../../../../services/chart.service';
 import { Chart } from 'chart.js';
 
@@ -32,12 +32,11 @@ import { Chart } from 'chart.js';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrPercentageOfPracticesComponent implements OnChanges {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   chart: Chart;
 
-  constructor(private chartSvc: ChartService) { }
+  constructor(private chartSvc: ChartService) {}
 
   ngOnChanges(): void {
     if (this.model) {

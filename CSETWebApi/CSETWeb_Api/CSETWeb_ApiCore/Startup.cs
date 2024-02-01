@@ -64,7 +64,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Linq;
-using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
@@ -171,7 +170,6 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFlowDocManager, FlowDocManager>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
-            services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
