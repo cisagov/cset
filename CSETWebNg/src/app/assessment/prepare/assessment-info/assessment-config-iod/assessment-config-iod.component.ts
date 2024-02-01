@@ -117,6 +117,14 @@ export class AssessmentConfigIodComponent implements OnInit {
     }
   }
 
+  showCityName() {
+    return this.configSvc.behaviors.showCityName;
+  }
+
+  showStateName() {
+    return this.configSvc.behaviors.showStateName;
+  }
+
   /**
    * Some fields are only intended to be shown for
    * certain assessment/modules.
