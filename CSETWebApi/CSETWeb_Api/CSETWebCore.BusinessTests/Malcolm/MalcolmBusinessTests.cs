@@ -1,15 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.Business.Malcolm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CSETWebCore.Model.Malcolm;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Diagnostics;
-using NPOI.HSSF.Record.Chart;
 
 namespace CSETWebCore.Business.Malcolm.Tests
 {
@@ -29,7 +21,8 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                 datalist.Add(malcolmData);
             }
-            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
+
+            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext(), null);
             List<MalcolmData> list = tst.GetMalcolmJsonData(datalist);
             Dictionary<string, TempNode> nodesList = list[0].Graphs;
             foreach(TempNode node in nodesList.Values)
@@ -89,7 +82,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                 datalist.Add(malcolmData);
             }
-            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
+            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext(), null);
             
             datalist = tst.GetMalcolmJsonData(datalist);
             MalcolmTree tree = new MalcolmTree();
