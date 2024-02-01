@@ -54,7 +54,6 @@ export class ComponentsSummaryComponent implements OnInit {
       this.dataRows = x.dataRowsPie;
       this.initialized = true;
       this.componentCount = x.componentCount
-      console.log(x.componentCount)
     });
     
   }
