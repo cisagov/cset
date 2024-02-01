@@ -1195,17 +1195,10 @@ namespace CSETWebCore.Business.Diagram
         public int incrementalId = 0;
         public int treeNumber = 0;
         public List<YCoords> treeBounds = new List<YCoords>();
-        // public int rootNodeX = 0;
-        public int rootNodeY = 0;
         public List<List<Geometry>> nodeLocations = new List<List<Geometry>>();
 
         public void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData)
         {
-            /*
-            xml = new XmlDocument();
-            incrementalId = 0;
-            nodeLocations = new List<Geometry>();
-            */
             XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
             newMxGraphModel.SetAttribute("dx", "1050");
             newMxGraphModel.SetAttribute("yx", "610");
@@ -1399,21 +1392,10 @@ namespace CSETWebCore.Business.Diagram
 
             if (parentNode == null)
             {
-
-                // geometry.x = rootNodeX;
                 geometry.x = 0;
-                geometry.y = rootNodeY; //gives a buffer if not the first tree
+                geometry.y = 0;
                 geometry.w = w;
                 geometry.h = h;
-
-                //if (rootNodeY != 0)
-                //{
-                //    do
-                //    {
-                //        geometry.y += 120;
-                //    }
-                //    while (AreCoordinatesOverlapping(geometry));
-                //}
 
                 nodeLocations.Add(new List<Geometry> { geometry });
                 treeBounds[treeNumber].upperY = geometry.y;
@@ -1448,9 +1430,7 @@ namespace CSETWebCore.Business.Diagram
             geometry.h = newCoordinatesToTry.h;
             nodeLocations[treeNumber].Add(geometry);
 
-            // keeps track of where the next tree has to start 
-            //if (rootNodeY <= geometry.y)
-            //    rootNodeY = geometry.y + 120;
+            // keeps track of where the next tree has to start
 
             if (treeBounds[treeNumber].upperY < geometry.y)
                 treeBounds[treeNumber].upperY = geometry.y;
