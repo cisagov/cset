@@ -144,6 +144,11 @@ namespace CSETWebCore.Business.ImportAssessment.Models.Version_10_1
         public bool UseMaturity { get; set; }
         public Guid GalleryItemGuid { get; set; }
         public Boolean ISE_StateLed { get; set; }
+
+        public bool Is_PCII { get; set; }
+
+        [StringLength(50)]
+        public string PCII_Number { get; set; }
     }
 
     public class jvQUESTION_HEADINGS
