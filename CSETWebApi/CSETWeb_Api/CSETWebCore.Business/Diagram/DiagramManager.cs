@@ -4,22 +4,12 @@
 // 
 // 
 ////////////////////////////////
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Diagram.layers;
-using CSETWebCore.Business.ImportAssessment.Models.Version_10_1;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Malcolm;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.Office.Word;
-using DocumentFormat.OpenXml.Office2010.Word;
-using DocumentFormat.OpenXml.Spreadsheet;
-using LogicExtensions;
-using Namotion.Reflection;
 using Newtonsoft.Json;
-using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -1203,17 +1193,12 @@ namespace CSETWebCore.Business.Diagram
 
         public XmlDocument xml = new XmlDocument();
         public int incrementalId = 0;
-        // public int rootNodeX = 0;
-        public int rootNodeY = 0;
-        public List<Geometry> nodeLocations = new List<Geometry>();
+        public int treeNumber = 0;
+        public List<YCoords> treeBounds = new List<YCoords>();
+        public List<List<Geometry>> nodeLocations = new List<List<Geometry>>();
 
         public void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData)
         {
-            /*
-            xml = new XmlDocument();
-            incrementalId = 0;
-            nodeLocations = new List<Geometry>();
-            */
             XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
             newMxGraphModel.SetAttribute("dx", "1050");
             newMxGraphModel.SetAttribute("yx", "610");
@@ -1248,13 +1233,37 @@ namespace CSETWebCore.Business.Diagram
             newMxGraphModel.AppendChild(root);
             xml.AppendChild(newMxGraphModel);
 
-            // Check how many nodes we need
-            int nodeCount = processedData[0].Graphs.Count;
-
             // Generate the actual Diagram/XML objects
-            for (int i = 0; i < processedData[0].Trees.Count; i++)
+            for (treeNumber = 0; treeNumber < processedData[0].Trees.Count; treeNumber++)
             {
-                WalkDownTree(processedData[0].Trees[i], "");
+                treeBounds.Add(new YCoords());
+                WalkDownTree(processedData[0].Trees[treeNumber], "");
+            }
+
+            incrementalId = 0;
+            int offset = 0;
+            // going through all the trees again to give buffers between trees
+            for (treeNumber = 0; treeNumber < processedData[0].Trees.Count; treeNumber++)
+            {
+                int treeHeight = 0;
+                if (treeNumber != 0)
+                {
+                    // will be positive becuase lowerY should always be negative
+                    treeHeight = treeBounds[treeNumber - 1].upperY - treeBounds[treeNumber].lowerY;
+                    offset += 120 + treeHeight;
+                }
+
+                // going through the nodes in this tree
+                for (int i = 0; i < nodeLocations[treeNumber].Count; i++)
+                {
+                    string parentId = "component-" + incrementalId;
+                    XmlElement mxGeometry = (XmlElement)xml.SelectSingleNode($"//UserObject[@id='{parentId}']").FirstChild.FirstChild;
+
+                    int y = int.Parse(mxGeometry.Attributes["y"].Value);
+                    mxGeometry.SetAttribute("y", (y + offset).ToString());
+                    incrementalId++;
+                }
+
             }
 
             // Save that XML to the Assessments table -- Diagram Markup.
@@ -1308,7 +1317,6 @@ namespace CSETWebCore.Business.Diagram
             userObject.SetAttribute("Description", "");
             userObject.SetAttribute("Criticality", "");
             userObject.SetAttribute("HostName", "");
-            //userObject.SetAttribute("parent", parent);
             userObject.SetAttribute("id", id);
 
             Geometry geometry = AssignCoordinates(parentId, symbol.Width, symbol.Height);
@@ -1336,8 +1344,6 @@ namespace CSETWebCore.Business.Diagram
 
         public XmlElement CreateMxCellAndGeometry(string x, string y, string fileName, string w, string h)
         {
-            //string role = "unknown"; //assuming all are unknown for now
-
             XmlElement mxCell = xml.CreateElement("mxCell");
             mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + fileName);
             mxCell.SetAttribute("vertex", "1");
@@ -1380,23 +1386,14 @@ namespace CSETWebCore.Business.Diagram
 
             if (parentNode == null)
             {
-
-                // geometry.x = rootNodeX;
                 geometry.x = 0;
-                geometry.y = rootNodeY; //gives a buffer if not the first tree
+                geometry.y = 0;
                 geometry.w = w;
                 geometry.h = h;
 
-                if (rootNodeY != 0)
-                {
-                    do
-                    {
-                        geometry.y += 120;
-                    }
-                    while (AreCoordinatesOverlapping(geometry));
-                }
-                
-                nodeLocations.Add(geometry);
+                nodeLocations.Add(new List<Geometry> { geometry });
+                treeBounds[treeNumber].upperY = geometry.y;
+                treeBounds[treeNumber].lowerY = geometry.y - geometry.h;
                 return geometry;
             }
 
@@ -1425,20 +1422,22 @@ namespace CSETWebCore.Business.Diagram
             geometry.y = newCoordinatesToTry.y;
             geometry.w = newCoordinatesToTry.w;
             geometry.h = newCoordinatesToTry.h;
-            nodeLocations.Add(geometry);
+            nodeLocations[treeNumber].Add(geometry);
 
-            // keeps track of where the next tree has to start 
-            if (rootNodeY <= geometry.y)
-                rootNodeY = geometry.y + 120;
+            // keeps track of the upper and lower bounds for offsetting the trees later 
+            if (treeBounds[treeNumber].upperY < geometry.y)
+                treeBounds[treeNumber].upperY = geometry.y;
+
+            if (treeBounds[treeNumber].lowerY >= geometry.y - geometry.h)
+                treeBounds[treeNumber].lowerY = geometry.y - geometry.h;
 
             return geometry;
         }
 
         public bool AreCoordinatesOverlapping(Geometry newCoords)
         {
-            // grab the parent info
-            //Geometry parent = new Geometry(parentCoords.x, parentCoords.y, parentCoords.w, parentCoords.h);
-            foreach (Geometry currentNode in nodeLocations)
+            // checking the nodes in this tree for overlapping (we realign the trees to not overlap later)
+            foreach (Geometry currentNode in nodeLocations[treeNumber])
             {
                 int currentEndX = currentNode.x + currentNode.w;
                 int currentEndY = currentNode.y + currentNode.h;
@@ -1479,13 +1478,21 @@ namespace CSETWebCore.Business.Diagram
             return new Geometry(xInt, yInt, wInt, hInt);
         }
 
+        /// <summary>
+        /// Goes around the parent clockwise,
+        /// checking for an open space (i.e. no overlaps with another component) to put the current component.
+        /// </summary>
+        /// <param name="geo"></param>
+        /// <param name="i"></param>
+        /// <param name="revolution"></param>
+        /// <returns></returns>
         public Geometry CircleAroundParent(Geometry geo, int i, int revolution)
         {
             int changeAmount = 120 * revolution;
             Geometry parent = new Geometry(geo.x, geo.y, geo.w, geo.h);
-            ///     5   6   7
-            ///     4       0
             ///     3   2   1
+            ///     4       0
+            ///     5   6   7
             switch (i % 8)
             {
                 case 0:
@@ -1493,31 +1500,40 @@ namespace CSETWebCore.Business.Diagram
                     return parent;
                 case 7:
                     parent.x += changeAmount;
-                    parent.y += changeAmount;
+                    parent.y -= changeAmount;
                     return parent;
                 case 6:
-                    parent.y += changeAmount;
+                    parent.y -= changeAmount;
                     return parent;
                 case 5:
                     parent.x -= changeAmount;
-                    parent.y += changeAmount;
+                    parent.y -= changeAmount;
                     return parent;
                 case 4:
                     parent.x -= changeAmount;
                     return parent;
                 case 3:
                     parent.x -= changeAmount;
-                    parent.y -= changeAmount;
+                    parent.y += changeAmount;
                     return parent;
                 case 2:
-                    parent.y -= changeAmount;
+                    parent.y += changeAmount;
                     return parent;
                 case 1:
                     parent.x += changeAmount;
-                    parent.y -= changeAmount;
+                    parent.y += changeAmount;
                     return parent;
                 default:
                     return parent;
+            }
+        }
+        
+        public class YCoords
+        {
+            public int upperY = 0, lowerY = 0;
+            public YCoords()
+            {
+
             }
         }
 
