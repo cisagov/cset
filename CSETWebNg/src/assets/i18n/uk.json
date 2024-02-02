@@ -341,6 +341,15 @@
         "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
+        "assessment complete message": "Дякуємо за завершення оцінювання. Звіти на цій сторінці містять підсумки ваших результатів, які можуть допомогти вашій організації планувати кібербезпеку та розвиватися в майбутньому. Оцінка востаннє оновлювалася {date}.",
+        "reports run prior message": "Будь-які звіти, створені до цього оновлення, можуть не відображати поточний стан оцінювання.",
+        "printing report instructions button": "Інструкції щодо друку звіту",
+        "printing instructions electron": "Щоб роздрукувати або зберегти будь-який із цих звітів у форматі PDF, натисніть звіт, який відкриється в новому вікні. У верхньому правому куті веб-сторінки натисніть кнопку … (Налаштування та інше, ALT + F) і перейдіть до Друк. Щоб експортувати копію вашого оцінювання в інше місце (.csetw), натисніть логотип CSET у верхньому лівому куті сторінки. У розділі «Мої оцінки» ви побачите свою оцінку та кнопку «Експорт» у правій частині сторінки.",
+        "printing instructions non-electron": "Щоб роздрукувати або зберегти будь-який із цих звітів у форматі PDF, натисніть звіт, який відкриється в новому вікні. У верхньому лівому куті вікна звіту натисніть кнопку \"Файл\" на панелі меню та виберіть \"Друк\" (CTRL + P). Щоб експортувати копію вашого оцінювання в інше місце (.csetw), натисніть логотип CSET у верхньому лівому куті сторінки. У розділі «Мої оцінки» ви побачите свою оцінку та кнопку «Експорт» у правій частині сторінки.",
+        "standards and diagram": "Стандарти та діаграма",
+        "site summary report": "Підсумковий звіт сайту",
+        "site cybersecurity plan": "План кібербезпеки сайту",
+        "site detail report": "Детальний звіт про сайт",
         "standard": "Стандартний",
         "category": "Категорія",
         "answer": "Відповідь",
@@ -356,6 +365,14 @@
         "reference number": "Посилання №",
         "high level assessment desc": "Опис оцінювання високого рівня",
         "high level assessment desc text": "Введіть опис процесу оцінки та виконаної роботи для вищого керівництва. Ця інформація буде включена до звітів. Це не призначено для аналізу результатів оцінювання, як зазначено в резюме.",
+        "observations tear-out sheets": {
+            "tab title": "[UK]Observations Tear Out Sheets - {{defaultTitle}}",
+            "observations tear-out sheets": "Спостереження Відривні аркуші",
+            "title page title": "СПОСТЕРЕЖЕННЯ ВІДРИВНІ АРКУШИ",
+            "no observations message": "[UK]The assessment does not contain any observations that are assigned to an individual.",
+            "question identifier": "[UK]Question Identifier",
+            "question text": "[UK]Question Text"
+        },
         "core": {
             "dashboard": {
                 "score": "Оцінка",
@@ -366,8 +383,12 @@
             "executive summary": {
                 "executive summary": "Резюме",
                 "tab title": "Резюме",
-                "report title": "РЕЗЮМЕ",
+                "title page title": "РЕЗЮМЕ",
                 "site information": "Інформація про сайт"
+            },
+            "site summary": {
+                "site summary": "Підсумковий звіт сайту",
+                "report title": "?????"
             },
             "components summary": {
                 "components summary": "Резюме компонентів",
