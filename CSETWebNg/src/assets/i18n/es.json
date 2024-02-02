@@ -300,6 +300,7 @@
             "Alt": "Alternar",
             "a": "Alternar",
             "U": "Sin respuesta",
+            "u": "Sin respuesta",
             "Inc": "Incompleto",
             "Iss": "No con problemas",
             "S": "Seleccionado",
@@ -442,7 +443,7 @@
         "confirm create new assessment": "¿Está seguro de que desea crear una nueva evaluación?"
     },
     "reports": {
-        "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el",
+        "assessment complete message": "Gracias por completar su evaluación. Los informes en esta página capturan resúmenes de sus resultados que pueden ayudar en la planificación y crecimiento de la ciberseguridad de su organización en el futuro. La evaluación fue actualizada por última vez el {date}.",
         "reports run prior message": " Los informes generados antes de esa actualización pueden no reflejar el estado actual de la evaluación.",
         "printing report instructions button": "Instrucciones para imprimir informes",
         "printing instructions electron": "Para imprimir o guardar cualquiera de estos informes como PDF, haga clic en el informe que se abrirá en una nueva ventana. En la esquina superior derecha de la página web, haga clic en el botón de los tres puntos ... y vaya a Imprimir.",

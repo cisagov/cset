@@ -310,6 +310,7 @@
             "Alt": "Alternate",
             "a": "Alternate",
             "U": "Unanswered",
+            "u": "Unanswered",
             "Inc": "Incomplete",
             "Iss": "No with Issue(s)",
             "S": "Selected",
@@ -452,7 +453,7 @@
         "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
-        "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
+        "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",
         "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
@@ -465,6 +466,10 @@
         "domain": "Domain",
         "assessment factor": "Assessment Factor",
         "component": "Component",
+        "standards and diagram": "Standards and Diagram",
+        "site summary report": "Site Summary Report",
+        "site cybersecurity plan": "Site Cybersecurity Plan",
+        "site detail report": "Site Detail Report",
         "standard": "Standard",
         "category": "Category",
         "answer": "Answer",
@@ -497,8 +502,7 @@
         "observations tear-out sheets": {
             "tab title": "Observations Tear Out Sheets - {{defaultTitle}}",
             "observations tear-out sheets": "Observations Tear-Out Sheets",
-            "observation title 1": "OBSERVATIONS TEAR-",
-            "observation title 2": "OUT SHEETS",
+            "title page title": "OBSERVATIONS TEAR-OUT SHEETS",
             "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
             "question identifier": "Question Identifier",
             "question text": "Question Text"
@@ -513,7 +517,7 @@
             "executive summary": {
                 "executive summary": "Executive Summary",
                 "tab title": "Executive Summary",
-                "report title": "EXECUTIVE SUMMARY",
+                "title page title": "EXECUTIVE SUMMARY",
                 "site information": "Site Information"
             },
             "components summary": {
