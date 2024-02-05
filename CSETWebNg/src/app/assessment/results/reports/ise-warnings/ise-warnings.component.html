@@ -27,20 +27,33 @@
     <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
 
     <!-- Don't submit to MERIT without a Credit Union name or asset value above $0
-        If state-led, we don't care because submit button is hidden -->
+        If state-led, we don't care about the submit button, because it's hidden -->
     <span *ngIf="!isAssessmentPageFilled()" class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
 
-        <span class="mt-2 mr-4" *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
-            "Submit" button is disabled until all required fields on <br>the
-            "Demographics" page have been specified.
-            <br><br>
-            <span>The following required fields are missing from the "Demographics" page:</span>
-            <ul class="list-type">
-                <span *ngFor="let field of missingFields; let i = index">
-                    <li>{{ field }}</li>
-                </span>
-            </ul>
-        </span>
+        <div class="!ncuaSvc.isE_StateLed">
+            <span class="mt-2 mr-4" *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
+                "Submit" button is disabled until all required fields on <br>the
+                "Demographics" page have been specified.
+                <br><br>
+                <span>The following required fields are missing from the "Demographics" page:</span>
+                <ul class="list-type">
+                    <span *ngFor="let field of missingFields; let i = index">
+                        <li>{{ field }}</li>
+                    </span>
+                </ul>
+            </span>
+        </div>
+
+        <div class="ncuaSvc.isE_StateLed">
+            <span class="mt-2 mr-4" *ngIf="!disableIseReportLinks && !ncuaSvc.unassignedIssues">
+                <span>The following required fields are missing from the "Demographics" page:</span>
+                <ul class="list-type">
+                    <span *ngFor="let field of missingFields; let i = index">
+                        <li>{{ field }}</li>
+                    </span>
+                </ul>
+            </span>
+        </div>
 
         <span *ngIf="disableIseReportLinks">
             <!-- have all 3 types of warnings -->
@@ -62,7 +75,14 @@
                     </ul>
                 </span>
                 <!-- state-led -->
-                <span *ngIf="assessSvc.assessment.isE_StateLed">
+                <span class="mt-2 mr-4" *ngIf="assessSvc.assessment.isE_StateLed">
+                    <span>The following required fields are missing from the "Demographics" page:</span>
+                    <ul class="list-type">
+                        <span *ngFor="let field of missingFields; let i = index">
+                            <li>{{ field }}</li>
+                        </span>
+                    </ul>
+                    
                     There are unanswered statements. Some domains will be incomplete.
                     <br /><br />
                     Some reports are disabled until all Issues have
@@ -86,7 +106,7 @@
                     </span>
                 </ul>
             </span>
-            <!-- Assessment COnfig and Unanswered Statements -->
+            <!-- Assessment Config and Unanswered Statements -->
             <span *ngIf="!ncuaSvc.unassignedIssues">
                 <!-- non-state-led -->
                 <span *ngIf="!assessSvc.assessment.isE_StateLed">
@@ -105,7 +125,15 @@
                 </span>
                 <!-- state-led -->
                 <span *ngIf="assessSvc.assessment.isE_StateLed">
+                    <span class="mt-2 mr-4">
+                        <span>The following required fields are missing from the "Demographics" page:</span>
+                        <ul class="list-type">
+                            <span *ngFor="let field of missingFields; let i = index">
+                                <li>{{ field }}</li>
+                            </span>
+                        </ul>
                     There are unanswered statements. Some domains will be incomplete.
+                    </span>
                 </span>
             </span>
 
@@ -119,11 +147,18 @@
             "Submit" button and some reports are disabled until all statements have been answered.
         </span>
 
-        <!-- can get here in the case it's state-led and isAssessmentPageFilled() is false, but we don't care 
-        about isAssessmentPageFilled() if it's state-led, so the below section can be skipped -->
+        <!-- can get here in the case it's state-led and isAssessmentPageFilled() is false -->
         <span *ngIf="assessSvc.assessment.isE_StateLed"
             class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
+            <span class="mt-2 mr-4">
+                <span>The following required fields are missing from the "Demographics" page:</span>
+                <ul class="list-type">
+                    <span *ngFor="let field of missingFields; let i = index">
+                        <li>{{ field }}</li>
+                    </span>
+                </ul>
             There are unanswered statements. Some domains will be incomplete.
+            </span>
         </span>
     </span>
 
@@ -218,6 +253,14 @@
 
         <!-- Unanswered and Issue Type for state-led -->
         <span *ngIf="assessSvc.assessment.isE_StateLed">
+            <span class="mt-2 mr-4">
+                <span>The following required fields are missing from the "Demographics" page:</span>
+                <ul class="list-type">
+                    <span *ngFor="let field of missingFields; let i = index">
+                        <li>{{ field }}</li>
+                    </span>
+                </ul>
+            </span><br>
             Some reports are disabled until all Issues have
             an "Issue Type" assigned<br /><br />
         </span>
