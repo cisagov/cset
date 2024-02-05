@@ -153,6 +153,9 @@
     <None Update="App_Data\LanguagePacks\UK\GALLERY_ITEM.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\UK\GENERIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_QUESTIONS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -163,6 +166,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\NIST_SAL_QUESTIONS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\QUESTION_GROUP_HEADING.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\SECTORS.json">

@@ -32,6 +32,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly int _assessmentId;
 
         static Dictionary<String, String> answerColorDefs;
+        private TranslationOverlay _overlay;
+
 
         /// <summary>
         /// Static controller
@@ -50,6 +52,8 @@ namespace CSETWebCore.Api.Controllers
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -214,6 +218,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+            var lang = _tokenManager.GetCurrentLanguage();
 
             FirstPage rval = null;
 
@@ -321,7 +326,19 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (var j in complianceOrdered)
                 {
-                    overallBars.Labels.Add(j.Item1);
+                    string label = j.Item1;
+
+                    if (lang != "en")
+                    {
+                        var val = _overlay.GetValue("GENERIC", j.Item1, lang)?.Value;
+                        if (val != null)
+                        {
+                            label = val;
+                        }
+                    }
+
+
+                    overallBars.Labels.Add(label);
                     overallBars.data.Add(j.Item2);
                 }
 
@@ -788,6 +805,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetStandardsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             ChartData chartData = new ChartData();
 
             _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
@@ -797,21 +816,23 @@ namespace CSETWebCore.Api.Controllers
                         var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
                         var labels = (from usp_getStandardsResultsByCategory an in result
                                       orderby an.Question_Group_Heading
-                                      select an.Question_Group_Heading).Distinct().ToList();
+                                      select new { an.Question_Group_Heading, an.QGH_Id }).Distinct().ToList();
 
                         chartData.DataRows = new List<DataRows>();
-                        foreach (string c in labels)
+                        foreach (var c in labels)
                         {
-                            //    chartData.data.Add((double) c.prc);
-                            chartData.Labels.Add(c);
-                            //    chartData.DataRows.Add(new DataRows()
-                            //    {
-                            //        failed =c.yaCount,
-                            //        percent = c.prc,
-                            //        total = c.Actualcr,
-                            //        title = c.Question_Group_Heading                            
-                            //   });
+                            var label = c.Question_Group_Heading.ToString();
 
+                            if (lang != "en")
+                            {
+                                var val = _overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value;
+                                if (val != null)
+                                {
+                                    label = val;
+                                }
+                            }
+
+                            chartData.Labels.Add(label);
                         }
 
                         ColorsList colors = new ColorsList();
@@ -820,10 +841,9 @@ namespace CSETWebCore.Api.Controllers
                                     select new { an.Set_Name, an.Short_Name }).Distinct();
                         foreach (var set in sets)
                         {
-
                             ChartData nextChartData = new ChartData();
                             chartData.dataSets.Add(nextChartData);
-                            nextChartData.DataRows = new List<DataRows>();
+                            nextChartData.DataRows = [];
                             var nextSet = (from usp_getStandardsResultsByCategory an in result
                                            where an.Set_Name == set.Set_Name
                                            orderby an.Question_Group_Heading
@@ -832,6 +852,16 @@ namespace CSETWebCore.Api.Controllers
                             nextChartData.backgroundColor = colors.getNext(set.Set_Name);
                             foreach (usp_getStandardsResultsByCategory c in nextSet)
                             {
+                                if (lang != "en")
+                                {
+                                    var val = _overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value;
+                                    if (val != null)
+                                    {
+                                        c.Question_Group_Heading = val;
+                                    }
+                                }
+
+
                                 nextChartData.data.Add((double)c.prc);
                                 nextChartData.Labels.Add(c.Question_Group_Heading);
                                 nextChartData.DataRows.Add(new DataRows()
