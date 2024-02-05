@@ -28,7 +28,7 @@ namespace CSETWebCore.Model.AssessmentIO
         /// <param name="context"></param>
         public void Process(SchemaProcessorContext context)
         {
-            if (context.Type == typeof(ExternalStandard))
+            if (context.ContextualType == typeof(ExternalStandard))
             {
                 var schema = context.Schema.Properties.Where(s => s.Key == PropertyHelpers.GetPropertyName(() => new ExternalStandard().category)).FirstOrDefault().Value;
 
