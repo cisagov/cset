@@ -20,21 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h1>
-    Ranked Categories
-</h1>
-<p class="font-italic" [class.d-none]="showChart">
-    Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be
-    displayed.
-</p>
-<div [class.d-none]="!showChart">
-    <p>
-        This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's
-        weighted contribution
-        so that the combined total always equals 100%. The weighted contribution includes the importance of both
-        the
-        question and the subject area, as well as the percentage of missed questions in that subject area.
+<ng-container *transloco="let t">
+    <h1>
+        Ranked Categories
+    </h1>
+    <p class="font-italic" [class.d-none]="showChart">
+        {{t('reports.core.no ranking')}}
     </p>
+    <div [class.d-none]="!showChart">
+        <p>
+            This chart shows subject areas needing the most attention. Each bar represents the labeled subject area's
+            weighted contribution
+            so that the combined total always equals 100%. The weighted contribution includes the importance of both
+            the
+            question and the subject area, as well as the percentage of missed questions in that subject area.
+        </p>
 
-    <canvas id="canvasRankedSubjectAreas"></canvas>
-</div>
+        <canvas id="canvasRankedSubjectAreas"></canvas>
+    </div>
+</ng-container>

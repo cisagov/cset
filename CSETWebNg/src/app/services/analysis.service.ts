@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import Chart from 'chart.js/auto';
 import { ChartService } from './chart.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,8 @@ export class AnalysisService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private chartSvc: ChartService
+    private chartSvc: ChartService,
+    private tSvc: TranslocoService
   ) {
     this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
@@ -137,7 +139,7 @@ export class AnalysisService {
           title: {
             display: false,
             font: { size: 20 },
-            text: 'Assessment Compliance'
+            text: this.tSvc.translate('titles.assessment compliance')
           },
           tooltip: {
             callbacks: {
