@@ -212,6 +212,7 @@
         "network warnings": "[ES]Network Warnings",
         "high level desc exec sec comments": "[ES]High-Level Assessment Description Executive Summary &amp; Comments",
         "reports": "Informes",
+        "feedback": "Retroalimentación",
         "assessment complete": "[ES]Assessment Complete"
     },
     "buttons": {
@@ -250,6 +251,7 @@
             "No": "No",
             "N/A": "N/A",
             "Alt": "Alt",
+            "Alt-ACET": "Sí(C)",
             "Unanswered": "Sin respuesta",
             "Inc": "Inc",
             "Issue(N)": "Issue(N)",
@@ -338,8 +340,8 @@
         "references": "Referencias",
         "observations": "Observaciones",
         "observations with content": "Observaciones con contenido",
-        "feedback": "[ES]Feedback",
-        "feedback with content": "[ES]Feedback with Content",
+        "feedback": "Retroalimentación",
+        "feedback with content": "Retroalimentación con contenido",
         "mfr-flag": "Este control requiere una revisión adicional",
         "category requires review": "Una o más controles en esta categoría requieren una revisión adicional",
         "assessment requires review": "Esta evaluación contiene respuestas que requieren una revisión adicional",

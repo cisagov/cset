@@ -15,7 +15,6 @@
     "goal performance": "Цільова продуктивність",
     "assessment tiers": "Рівні оцінювання",
     "performance summary": "Підсумок продуктивності",
-    "feedback": "Зворотній зв'язок",
     "organization details": "Деталі організації",
     "assessment name": "Назва оцінювання",
     "assessment date": "Дата оцінювання",
@@ -129,10 +128,10 @@
         "network diagram": "мережева схема",
         "diagram component questions": "Питання компонентів діаграми",
         "standard questions": "Стандартні запитання",
-        "standard requirements": "[UK]Standard Requirements",
-        "maturity questions": "[UK]Maturity Questions",
-        "security practices": "[UK]Security Practices",
-        "questions": "[UK]Questions",
+        "standard requirements": "Стандартні Вимоги",
+        "maturity questions": "Питання зрілості",
+        "security practices": "Практики безпеки",
+        "questions": "Питання",
         "practices": "Практики",
         "requirements": "Вимоги",
         "other remarks": "Other Remarks",
@@ -157,6 +156,7 @@
         "network warnings": "Попередження мережі",
         "high level desc exec sec comments": "Опис оцінювання високого рівня, резюме та коментарі",
         "reports": "Звіти",
+        "feedback": "Зворотній зв'язок",
         "assessment complete": "Оцінювання завершено"
     },
     "buttons": {
@@ -166,7 +166,7 @@
         "continue": "продовжувати",
         "change": "Змінити",
         "remove": "Видалити",
-        "email": "Email",
+        "email": "Електронна пошта",
         "next": "Далі",
         "close": "Закрити",
         "back": "Назад",
@@ -184,7 +184,8 @@
         "reviewed": "Переглянуто",
         "questions mode": "Режим питань",
         "requirements mode": "Режим вимог",
-        "add document": "Додайте документ"
+        "add document": "Додайте документ",
+        "copy text": "Копіювати текст"
     },
     "contact": {
         "contacts": "Контакти",
@@ -200,14 +201,14 @@
         "site name": "[UK]Site Name",
         "cell phone": "[UK]Cell Phone",
         "office phone": "[UK]Office Phone",
-        "email": "[UK]Email",
-        "email address": "[UK]Email Address",
+        "email": "Електронна пошта",
+        "email address": "Адреса електронної пошти",
         "emergency communications protocol": "[UK]Emergency Communications Protocol",
         "primary point of contact": "[UK]Primary point of contact",
         "participated in site visit": "[UK]Participated in site visit",
-        "role": "[UK]Role",
-        "participant": "[UK]Participant",
-        "facilitator": "[UK]Facilitator",
+        "role": "Роль",
+        "participant": "Учасник",
+        "facilitator": "Фасилітатор",
         "save": "Save",
         "cancel": "Cancel",
         "change": "Change",
@@ -302,14 +303,17 @@
         "references": "Список літератури",
         "observations": "[UK]Observations",
         "observations with content": "[UK]Observations with Content",
-        "feedback": "[UK]Feedback",
+        "feedback": "Зворотній зв'язок",
         "feedback with content": "[UK]Feedback with Content",
         "mfr-flag": "Цей контроль потребує додаткового перегляду",
         "category requires review": "Один або кілька елементів керування в цій категорії потребують додаткової перевірки",
         "assessment requires review": "[UK] Ця оцінка містить відповіді, які потребують додаткового перегляду",
         "answered count": "Вказує кількість запитань із відповідями на цій сторінці",
         "questions mode": "[UK]Questions Mode displays simple questions that correspond to standard requirements",
-        "requirements mode": "[UK]Requirements Mode displays requirement text verbatim as it appears in the standard"
+        "requirements mode": "[UK]Requirements Mode displays requirement text verbatim as it appears in the standard",
+        "feedback icon": "Значок зворотнього зв'язку",
+        "copy feedback": "Копіювати текст зворотнього зв'язку в буфер обміну",
+        "create feedback email": "Створити електронний лист із зворотнім зв'язком у стандартному поштовому клієнті"
     },
     "level": {
         "low": "Low",
@@ -398,6 +402,14 @@
             "disclaimer": "Цей звіт було підготовлено як звіт про роботу, спонсоровану агентством уряду США. Ані уряд США, ані будь-яке його агентство, ані будь-який працівник не надає жодних гарантій, явних чи неявних, і не бере на себе жодної юридичної відповідальності за будь-яке використання третіми особами чи результати такого використання чи будь-яку інформацію, пристрій, продукт, або процес, описаний у цій публікації, або заявляє, що його використання такою третьою стороною не порушуватиме права приватної власності."
         }
     },
+    "feedback": {
+        "page title": "Зворотній зв'язок",
+        "text 1": "Зворотній зв'язок є механізмом для подання змін або пропозицій до питання, заданого в CSET. Зворотній зв'язок вводиться, натискаючи значок",
+        "text 2": "нижче питання.",
+        "text 3": "Будь ласка, переконайтеся, що наданий вами зворотній зв'язок не містить конфіденційної чи відомостей, пов'язаних із оцінкою. Ці коментарі слід розглядати як частину відкритої громадської дискусії стосовно питань, вимог, запитів щодо функцій CSET або повідомлень про помилки.",
+        "copy paste": "Скопіюйте текст у буфер обміну та вставте його в електронний лист.",
+        "no feedback exists": "Відсутній зворотній зв'язок для жодного питання в цій оцінці."
+    },
     "extras": {
         "artifact title": "Назва артефакту/документа",
         "file name": "Ім'я файлу",
@@ -405,5 +417,9 @@
         "additional documents": "Додаткові документи",
         "section": "Розділ",
         "no reference documents available": "відсутні довідкові документи"
+    },
+    "about": {
+        "about": "Про програму",
+        "version": "Версія"
     }
 }
