@@ -28,6 +28,7 @@ import { ChartService } from '../../../../services/chart.service';
 import { ConfigService } from '../../../../services/config.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-standards-summary',
@@ -37,7 +38,7 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
 })
 export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   chart: any;
-  dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[];
+  dataRows: { answer_Full_Name: string; answer_Text: string; qc: number; Total: number; Percent: number; }[];
   // eslint-disable-next-line max-len
   dataSets: { dataRows: { Answer_Full_Name: string; qc: number; Total: number; Percent: number; }[], label: string, Colors: string[], backgroundColor: string[] }[];
   initialized = false;
@@ -48,7 +49,8 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
     private chartSvc: ChartService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
@@ -61,6 +63,11 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
   setupChart(x: any) {
     this.initialized = false;
     this.dataRows = x.dataRowsPie;
+
+    this.dataRows.forEach(x => {
+      x.answer_Full_Name = this.tSvc.translate('answer-options.labels.' + x.answer_Text.toLowerCase());
+    });
+
     this.dataSets = x.dataSets;
     let tempChart = Chart.getChart('canvasStandardSummary');
     if (tempChart) {
@@ -79,7 +86,7 @@ export class StandardsSummaryComponent implements OnInit, AfterViewInit {
             title: {
               display: false,
               font: { size: 20 },
-              text: 'Standards Summary'
+              text: this.tSvc.translate('titles.standards summary')
             },
             legend: {
               display: true

@@ -306,12 +306,12 @@
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" visible="MATURITY:14" />
 
         <!-- Results - Diagram -->
-        <node displaytext="Components Results" visible="OPTION:DIAGRAM">
-            <node displaytext="Components Summary" id="components-summary" path="assessment/{:id}/results/components-summary" />
-            <node displaytext="Ranked Components By Category" id="components-ranked" path="assessment/{:id}/results/components-ranked" />
-            <node displaytext="Component Results By Category" id="components-results" path="assessment/{:id}/results/components-results" />
-            <node displaytext="Answers By Component Type" id="components-types" path="assessment/{:id}/results/components-types" />
-            <node displaytext="Network Warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" />
+        <node d="components results" visible="OPTION:DIAGRAM">
+            <node d="components summary" id="components-summary" path="assessment/{:id}/results/components-summary" />
+            <node d="ranked comp by cat" id="components-ranked" path="assessment/{:id}/results/components-ranked" />
+            <node d="comp results by cat" id="components-results" path="assessment/{:id}/results/components-results" />
+            <node d="answers by comp type" id="components-types" path="assessment/{:id}/results/components-types" />
+            <node d="network warnings" id="components-warnings" path="assessment/{:id}/results/components-warnings" />
         </node>
 
 
@@ -321,7 +321,7 @@
 
         <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" visible="ORIGIN:CF" /-->
 
-        <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE:CSET SHOW-FEEDBACK" />
+        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE:CSET SHOW-FEEDBACK" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
