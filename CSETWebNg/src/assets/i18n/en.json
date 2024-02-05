@@ -64,7 +64,6 @@
     "user inactive": "User is inactive",
     "control priorities intro1": "Information on ranking can be found in the <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
-
     "titles": {
         "prepare": "Prepare",
         "assessment": "Assessment",
@@ -79,7 +78,7 @@
             "security assurance level (sal)": "Security Assurance Level (SAL)",
             "sal intro1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
             "sal intro2": "For example, a typical high SAL will contain 350-1000 questions where a low SAL will typically contain 30-350 questions, depending on the selected standard.",
-            "sal intro3": "The SAL applies to Standard and Diagram Component question sets.",        
+            "sal intro3": "The SAL applies to Standard and Diagram Component question sets.",
             "current level": "Current Level",
             "choose methodology": "Choose one of the three SAL methodologies below to determine the correct level for your assessment.",
             "overall": "Overall",
@@ -156,15 +155,22 @@
         "acet dashboard": "ACET Dashboard",
         "analysis dashboard": "Analysis Dashboard",
         "standard results": "Standard Results",
+        "assessment compliance": "Assessment Compliance",
         "control priorities": "Control Priorities",
         "standards summary": "Standards Summary",
         "ranked categories": "Ranked Categories",
         "results by category": "Results by Category",
+        "components results": "Components Results",
+        "components summary": "Components Summary",
+        "ranked comp by cat": "Ranked Components By Category",
+        "comp results by cat": "Component Results By Category",
+        "answers by comp type": "Answers By Component Type",
+        "network warnings": "Network Warnings",
         "high level desc exec sec comments": "High-Level Assessment Description Executive Summary & Comments",
         "reports": "Reports",
+        "feedback": "Feedback",
         "assessment complete": "Assessment Complete"
     },
-
     "buttons": {
         "ok": "OK",
         "save": "Save",
@@ -196,7 +202,6 @@
         "requirements mode": "Requirements Mode",
         "add document": "Add a document"
     },
-
     "contact": {
         "contacts": "Contacts",
         "contact": "Contact",
@@ -226,7 +231,6 @@
         "not authorized message": "You are not authorized to make changes to the contacts on this assessment.",
         "contact an administrator message": "Please contact an administrator for this assessment to make changes, or to gain administrative access."
     },
-
     "acet": {
         "empty my assessments page footer text": "The Automated Cybersecurity Evaluation Toolbox (ACET®) is a National Credit Union Administration (NCUA) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of the National Credit Union Administration by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.",
         "credit union": "Credit Union",
@@ -248,8 +252,8 @@
         "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
         "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
         "upgrade confirm 2": "The assessment has been converted.",
-        "title upgrade complete":"Conversion Complete",
-        "upgradeButton":"Convert to Full Assessment"
+        "title upgrade complete": "Conversion Complete",
+        "upgradeButton": "Convert to Full Assessment"
     },
     "answer-options": {
         "button-labels": {
@@ -298,11 +302,16 @@
         },
         "labels": {
             "Yes": "Yes",
+            "y": "Yes",
             "No": "No",
+            "n": "No",
             "NA": "N/A",
             "N/A": "N/A",
+            "na": "N/A",
             "Alt": "Alternate",
+            "a": "Alternate",
             "U": "Unanswered",
+            "u": "Unanswered",
             "Inc": "Incomplete",
             "Iss": "No with Issue(s)",
             "S": "Selected",
@@ -445,7 +454,7 @@
         "confirm create new assessment": "Are you sure you want to create a new assessment?"
     },
     "reports": {
-        "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated",
+        "assessment complete message": "Thank you for completing your assessment. The reports on this page capture summaries of your results that can help your organization’s cybersecurity planning and growth going forward. The assessment was last updated {date}.",
         "reports run prior message": "Any reports run prior to that update may not reflect the current state of the assessment.",
         "printing report instructions button": "Printing Reports Instructions",
         "printing instructions electron": "To print or save any of these reports as PDF, click the report which will open in a new window. In the top right corner of the web page, click the … button (Settings and more, ALT + F) and navigate to Print. To export a copy of your assessment to another location (.csetw), click the CSET logo in the top left corner of the page. Under My Assessments, you will see your assessment and an Export button on the right hand side of the page.",
@@ -458,11 +467,22 @@
         "domain": "Domain",
         "assessment factor": "Assessment Factor",
         "component": "Component",
+        "standards and diagram": "Standards and Diagram",
+        "site summary report": "Site Summary Report",
+        "site cybersecurity plan": "Site Cybersecurity Plan",
+        "site detail report": "Site Detail Report",
         "standard": "Standard",
         "category": "Category",
         "answer": "Answer",
         "rank": "Rank",
         "question": "Question",
+        "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
+        "ranked categories text": "This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.",
+        "failed": "Failed",
+        "total": "Total",
+        "percent": "Percent",
+        "number": "Number",
+        "standards summary text": "This chart shows the overall answer percentages for each individual answer type.",
         "reference number": "Reference #",
         "high level assessment desc": "High-Level Assessment Description",
         "high level assessment desc text": "Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
@@ -483,11 +503,30 @@
         "observations tear-out sheets": {
             "tab title": "Observations Tear Out Sheets - {{defaultTitle}}",
             "observations tear-out sheets": "Observations Tear-Out Sheets",
-            "observation title 1": "OBSERVATIONS TEAR-",
-            "observation title 2": "OUT SHEETS",
+            "title page title": "OBSERVATIONS TEAR-OUT SHEETS",
             "no observations message": "The assessment does not contain any observations that are assigned to an individual.",
             "question identifier": "Question Identifier",
             "question text": "Question Text"
+        },
+        "core": {
+            "dashboard": {
+                "score": "Score",
+                "overall score": "Overall Score",
+                "standard based": "Standard Based",
+                "component based": "Component Based"
+            },
+            "executive summary": {
+                "executive summary": "Executive Summary",
+                "tab title": "Executive Summary",
+                "title page title": "EXECUTIVE SUMMARY",
+                "site information": "Site Information"
+            },
+            "components summary": {
+                "components summary": "Components Summary",
+                "text": "This chart shows the component or network diagram based answer percentages for each individual answer type."
+            },
+            "no ranking": "Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be displayed.",
+            "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights."
         },
         "acet": {
             "acet reports": "ACET Reports",
@@ -565,6 +604,14 @@
         "delete this issue confirm": "Are you sure you want to delete this issue",
         "delete observation confirm": "Are you sure you want to delete observation",
         "delete this observation confirm": "Are you sure you want to delete this observation"
+    },
+    "feedback": {
+        "page title": "Feedback",
+        "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
+        "text 2": "icon below the question.",
+        "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
+        "copy paste": "Copy text to clipboard and paste into an email.",
+        "no feedback exists": "Відсутній зворотній зв'язок для жодного питання в цій оцінці."
     },
     "extras": {
         "artifact title": "Artifact/Document Title",

@@ -25,11 +25,13 @@
     <h3>{{ 'titles.reports' | transloco }}</h3>
 
     <p>
-      {{ t('assessment complete message') }}
-      {{ reportSvc.translatedDateGMT(lastModifiedTimestamp) }}. {{ t('reports run prior message') }}
+      {{ t('assessment complete message').replace('{date}', reportSvc.translatedDateGMT(lastModifiedTimestamp)) }}
+      {{ t('reports run prior message') }}</p>
+    <div class="my-3">
       <button mat-stroked-button (click)="openSnackBar()">
         {{ t('printing report instructions button') }}
       </button>
+    </div>
   </div>
 
   <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
@@ -63,21 +65,21 @@
         (assessSvc.assessment.useStandard || assessSvc.assessment.useDiagram) &&
         !isMobile
       " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>Standards and Diagram</h4>
+      <h4>{{t('standards and diagram')}}</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Executive Summary
+        {{t('core.executive summary.executive summary')}}
       </button>
 
       <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Site Summary Report
+        {{t('site summary report')}}
       </button>
 
       <button (click)="clickReportLink('securityplan')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Site Cybersecurity Plan
+        {{t('site cybersecurity plan')}}
       </button>
 
       <button (click)="clickReportLink('detail')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        Site Detail Report
+        {{t('site detail report')}}
       </button>
     </div>
 

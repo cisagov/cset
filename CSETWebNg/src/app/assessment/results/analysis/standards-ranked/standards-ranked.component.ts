@@ -25,9 +25,9 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-standards-ranked',
@@ -43,7 +43,7 @@ export class StandardsRankedComponent implements OnInit {
 
   constructor(
     private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
+    private tSvc: TranslocoService,
     public navSvc: NavigationService,
     private router: Router,
     public layoutSvc: LayoutService
@@ -95,7 +95,7 @@ export class StandardsRankedComponent implements OnInit {
           title: {
             display: false,
             font: { size: 20 },
-            text: 'Ranked Categories'
+            text: this.tSvc.translate('titles.ranked categories')
           },
           legend: {
             display: false
