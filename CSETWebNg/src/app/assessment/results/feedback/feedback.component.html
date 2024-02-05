@@ -36,15 +36,14 @@
     height: calc(100% - 26px);
   }
 </style>
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 class="d-flex flex-column flex-00a">{{feedbackHeader}}</h3>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3 class="d-flex flex-column flex-00a">{{t('titles.feedback')}}</h3>
   <div class="flex-container">
     <p>
-      Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET.
-      Feedback is entered by clicking the
+      {{t('feedback.text 1')}}
       <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="37px" height="31px" viewBox="44.5 44.5 33 35"
         enable-background="new 44.5 44.5 31 31">
-        <title>feedback icon</title>
+        <title>{{t('tooltip.feedback icon')}}</title>
         <path id="Bubble" fill="#004444" d="M69.051,51.771h-0.027l-2.75,4.554h0.834c0.369,0,0.668,0.298,0.668,0.666
         s-0.299,0.667-0.668,0.667h-1.64l-1.072,1.775h2.712c0.369,0,0.668,0.299,0.668,0.667s-0.299,0.667-0.668,0.667H63.59l-1.074,1.778
         h4.592c0.369,0,0.668,0.298,0.668,0.665c0,0.368-0.299,0.667-0.668,0.667h-5.481l-3.513,2.792l-2.095,1.664l0.49-2.63l0.34-1.826
@@ -61,18 +60,16 @@
             points="58.318,61.438 57.491,65.886 61.027,63.075 69.906,48.374 67.197,46.737 	"></polygon>
         </g>
       </svg>
-      icon below the question.
+      {{t('feedback.text 2')}}
     </p>
     <p>
-      Please ensure that the feedback you provide does not include any proprietary or assessment related
-      information. These comments should be considered part of a public community discussion with regard
-      to the questions, requirements, CSET feature requests or bug notifications.
+      {{t('feedback.text 3')}}
     </p>
-    <p>Copy text to clipboard and paste into an email</p>
-    <button (click)="copyText(divtoView)" title='Copy Feedback Text To Clipboard'
-      class='textAreaCopyBtn btn btn-primary'>Copy Text</button>
-    <button (click)="defaultClientEmail()" title='Create Feedback Email in default mail client'
-      class='textAreaCopyBtn btn btn-primary'>Email</button>
+    <p>{{t('feedback.copy paste')}}</p>
+    <button (click)="copyText(divtoView)" matTooltip="{{t('tooltip.copy feedback')}}"
+      class='textAreaCopyBtn btn btn-primary'>{{t('buttons.copy text')}}</button>
+    <button (click)="defaultClientEmail()" matTooltip="{{t('tooltip.create feedback email')}}"
+      class='textAreaCopyBtn btn btn-primary'>{{t('buttons.email')}}</button>
   </div>
   <div *ngIf="!initialized" class="d-flex flex-11a w-100">
     <div class="spinner-container d-flex justify-content-center align-items-center flex-11a w-100">
