@@ -11,22 +11,25 @@ using System.Windows;
 using CSETWebCore.Business.Diagram.Analysis;
 using System.Xml;
 using Lucene.Net.Util;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules;
+using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
+using CSETWebCore.Business.Diagram.analysis.rules;
+using System.Text;
+using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 
 namespace CSETWebCore.Business.Malcolm
 {
     public class MalcolmBusiness : IMalcolmBusiness
     {
         private CSETContext _context;
-        private ITokenManager _token;
 
         private Dictionary<string, TempNode> networkOfNodes = new Dictionary<string, TempNode>();
 
 
 
-        public MalcolmBusiness(CSETContext context, ITokenManager token)
+        public MalcolmBusiness(CSETContext context)
         {
             _context = context;
-            _token = token;
         }
 
         public List<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
@@ -104,11 +107,10 @@ namespace CSETWebCore.Business.Malcolm
         }
 
         // name is TBD
-        public void VerificationAndValidation()
+        public void VerificationAndValidation(int assessment_Id)
         {
-            int assessment_Id = _token.AssessmentForUser();
-
-            var xmlMarkup = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessment_Id).Select(x => x.Diagram_Markup).FirstOrDefault();
+            var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessment_Id).FirstOrDefault();
+            string xmlMarkup = assessment.Diagram_Markup;
 
             if (xmlMarkup == null)
             {
@@ -117,67 +119,64 @@ namespace CSETWebCore.Business.Malcolm
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlMarkup);
-            List<int> malcolmRulesViolated = new DiagramAnalysis(_context, assessment_Id).PerformMalcolmAnalysis(xmlDoc);
-
-            var warnings = _context.NETWORK_WARNINGS.Where(x => x.Assessment_Id == assessment_Id).Select(x => x.Rule_Violated).Distinct().ToList();
-
-            if (malcolmRulesViolated.Count > 0)
+            List<MALCOLM_MAPPING> malcolmMappingInfo = new DiagramAnalysis(_context, assessment_Id).PerformMalcolmAnalysis(xmlDoc);
+            
+            if (malcolmMappingInfo.Count > 0)
             {
-                foreach(int rule in malcolmRulesViolated)
+                foreach(MALCOLM_MAPPING m in malcolmMappingInfo)
                 {
-                    warnings.Add(rule);
-                }
-            }
-            var questions = _context.NEW_QUESTION.Where(y => y.Std_Ref == "Comp").Select(y => y.Question_Id).ToList();
+                    var dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessment_Id 
+                        && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
 
-            if (warnings != null && warnings.Count > 0)
-            {
-                CheckQuestionsForViolations(warnings, assessment_Id, questions);
-            }
-
-        }
-
-        public void CheckQuestionsForViolations(List<int?> warnings, int assessment_Id, List<int> questions)
-        {
-            var malcolmAnswerables = _context.MALCOLM_MAPPING.ToList(); // questions we can answer for the user
-
-            foreach (var temp in malcolmAnswerables) {
-                var dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == temp.Question_Id).FirstOrDefault();
-                // prevents overwriting the user's answer over and over
-                if (dbAnswer == null)
-                {
-                    foreach (int warning in warnings)
+                    // HYDRO uses Mat_Option_Id and has "S" for "Selected" instead of "N" or "Y"
+                    string answerText = m.Mat_Option_Id == null ? "N" : "S";
+                    if (m.Mat_Option_Id != null)
                     {
-                        if (temp.Rule_Violated == warning)
-                        {
-                            // 2: IDS doesn't exist in a helpful way
-                            // 5: firewall isn't connected properly
-                            // 8: IPS doesn't exist in a helpful way
-                            var answer = new ANSWER
-                            {
-                                Assessment_Id = assessment_Id,
-                                Question_Or_Requirement_Id = temp.Question_Id,
-                                Answer_Text = "N",
-                                Question_Type = "Component",
-                                Is_Component = true
-                            };
-                            _context.ANSWER.Add(answer);
-                        }
+
+                    }
+
+                    if (dbAnswer == null)
+                    {
+                        _context.ANSWER.Add(SetUpAnswer(assessment_Id, answerText, m));
+                    }
+                    else if (dbAnswer.Answer_Text == "U" || dbAnswer.Answer_Text == "")
+                    {
+                        //var temp = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == assessment.GalleryItemGuid)
+                        //    .Select(x => x.Configuration_Setup).FirstOrDefault();
+
+                        //if (temp != null && temp.Contains("ModelName"))
+                        //{
+                        //    dbAnswer.
+                        //}
+
+                        dbAnswer.Answer_Text = answerText;
+                        dbAnswer.Mat_Option_Id = m.Mat_Option_Id;
+                        //_context.ANSWER.Update(dbAnswer);
                     }
                 }
+
+                _context.SaveChanges();
             }
 
-            _context.SaveChanges();
         }
 
-        public ANSWER SetUpAnswer(int assessId, int questionId, string answerText)
+        public ANSWER SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
         {
             var answer = new ANSWER();
             answer.Assessment_Id = assessId;
-            answer.Question_Or_Requirement_Id = questionId;
+            answer.Question_Or_Requirement_Id = currentMalcolmMapRow.Question_Or_Requirement_Id;
             answer.Answer_Text = answerText;
+            answer.Question_Type = currentMalcolmMapRow.Is_Component ? "Component" : (currentMalcolmMapRow.Is_Standard ? "Requirement" : "Maturity");
+            answer.Is_Component = currentMalcolmMapRow.Is_Component;
+            answer.Is_Requirement = currentMalcolmMapRow.Is_Standard;
+            answer.Is_Maturity = currentMalcolmMapRow.Is_Maturity;
+            answer.Mat_Option_Id = currentMalcolmMapRow.Mat_Option_Id;
 
             return answer;
         }
+
+        
+
+
     }
 }
