@@ -326,6 +326,7 @@ export class QuestionExtrasComponent implements OnInit {
         }
         return (this.extras && this.extras.observations && this.extras.observations.length > 0) ? 'inline' : 'none';
     }
+    return false;
   }
 
   /**
