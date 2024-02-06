@@ -415,14 +415,11 @@ export class QuestionExtrasComponent implements OnInit {
    */
   deleteObservation(obsToDelete) {
     // Build a message whether the observation has a title or not
-    let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm')
-      + " '"
-      + obsToDelete.summary
-      + "?'";
+    let msg = this.tSvc.translate('observation.delete ' + this.observationOrIssue().toLowerCase() + ' confirm');
+    msg = msg.replace('{title}', obsToDelete.summary);
 
     if (obsToDelete.summary === null) {
-      msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm')
-        + "?";
+      msg = this.tSvc.translate('observation.delete this ' + this.observationOrIssue().toLowerCase() + ' confirm');
     }
 
 
