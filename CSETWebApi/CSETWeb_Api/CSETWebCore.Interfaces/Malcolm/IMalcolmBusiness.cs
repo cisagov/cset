@@ -16,5 +16,6 @@ namespace CSETWebCore.Interfaces.Malcolm
     public interface IMalcolmBusiness
     {
         public List<MalcolmData> GetMalcolmJsonData(List<MalcolmData> list);
+        public void VerificationAndValidation(int assessment_Id);
     }
 }

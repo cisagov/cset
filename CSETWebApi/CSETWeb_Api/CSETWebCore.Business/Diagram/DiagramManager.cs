@@ -5,11 +5,14 @@
 // 
 ////////////////////////////////
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Malcolm;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +30,7 @@ namespace CSETWebCore.Business.Diagram
         private CSETContext _context;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-
+        
         public DiagramManager(CSETContext context)
         {
             _context = context;
@@ -105,6 +108,9 @@ namespace CSETWebCore.Business.Diagram
                     }
                     assessmentRecord.Diagram_Image = diagramImage;
                     _context.SaveChanges();
+
+                    var mb = new MalcolmBusiness(_context);
+                    mb.VerificationAndValidation(assessmentID);
                 }
             }
             else
@@ -1268,6 +1274,8 @@ namespace CSETWebCore.Business.Diagram
 
             // Save that XML to the Assessments table -- Diagram Markup.
             SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
+            //var mb = new MalcolmBusiness(_context);
+            //mb.VerificationAndValidation(assessmentId);
         }
 
         public void WalkDownTree(TempNode node, string parentId)
