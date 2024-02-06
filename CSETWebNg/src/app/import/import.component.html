@@ -106,7 +106,7 @@
                             <h4>Drop code file here</h4>
                         </div>
                         <h4 class="d-flex" style="align-items:center">Module Code
-                            <div class="btn-group ml-3 flex-11a" role="group" aria-label="...">
+                            <div class="btn-group ml-3 mr-3 flex-11a" role="group" aria-label="...">
                                 <button (click)="switchToJson()" type="button" class="btn btn-secondary"
                                     [ngClass]="{'active': this.lang=='json'}">JSON</button>
                                 <button (click)="switchToXml()" type="button" class="btn btn-secondary"
@@ -239,9 +239,14 @@
                             <span *ngIf="state=='Processing'">Processing</span>
                             <span *ngIf="state=='Ready'">Import</span>
                         </button>
-                        <button *ngIf="state!='Processing'&&state!='Ready'" class="btn btn-primary"
-                            (click)="clearForm()">Import
-                            another module</button>
+                        <div class="d-flex align-items-center" *ngIf="state!='Processing' && state!='Ready'">
+                          <button class="btn btn-primary"
+                              (click)="clearForm()">Import another module
+                          </button>
+                          <div style="margin-bottom: 0" class="alert alert-warning ml-3">
+                            Warning: This will clear the code editor
+                          </div>
+                        </div>
                     </div>
                 </form>
             </div>

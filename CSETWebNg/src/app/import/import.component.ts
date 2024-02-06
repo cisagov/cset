@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { CodeEditorComponent, CodeEditorService, CodeModel } from '@ngstack/code-editor';
 import { saveAs } from 'file-saver';
 import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
@@ -214,7 +213,7 @@ export class ImportComponent implements OnInit, OnDestroy {
         }
       },
       e => {
-        console.log(e)
+        console.error(e)
         for (let key in e.error.errors) {
           this.errors.push(`${e.error.errors[key]}`);
         }
@@ -226,7 +225,7 @@ export class ImportComponent implements OnInit, OnDestroy {
   public clearForm() {
     this.uploader.clearQueue();
     this.moduleCode = '';
-    this.codeModel.value = '';
+    this.codeModel = { ...this.jsonCodeModel };
     this.state = 'Ready';
     this.errors = [];
     this.subscriptions.forEach(s => s.unsubscribe());
@@ -249,7 +248,6 @@ export class ImportComponent implements OnInit, OnDestroy {
   constructor(
     private configSvc: ConfigService,
     private fileClient: FileUploadClientService,
-    private sanitizer: DomSanitizer,
     private editorService: CodeEditorService
   ) {
     // hardcoding the polyfill here, as ugly as that is TODO:  Remove
@@ -303,7 +301,7 @@ export class ImportComponent implements OnInit, OnDestroy {
       return promise;
     };
     this.initializeUploader();
-    this.codeModel = this.jsonCodeModel;
+    this.codeModel = { ...this.jsonCodeModel };
 
   }
 
