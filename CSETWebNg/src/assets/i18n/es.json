@@ -607,6 +607,9 @@
     "observation": {
         "observation title": "Título de la Observación",
         "importance": "Importancia",
+        "importance low": "Baja",
+        "importance medium": "Mediana",
+        "importance high": "Alta",
         "add an observation": "Agregar una Observación",
         "observation details": "Detalles de la Observación",
         "title": "Título",
@@ -619,10 +622,10 @@
         "individuals responsible": "Personas responsables",
         "clear selections": "Limpiar selecciones",
         "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación.",
-        "delete issue confirm": "¿Está seguro de que desea eliminar el problema",
-        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema",
-        "delete observation confirm": "¿Está seguro de que desea eliminar la observación",
-        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación"
+        "delete issue confirm": "¿Está seguro de que desea eliminar el problema '{title}?'",
+        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema?",
+        "delete observation confirm": "¿Está seguro de que desea eliminar la observación '{title}?'",
+        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación?"
     },
     "feedback": {
         "page title": "[ES]Feedback",
