@@ -610,6 +610,9 @@
     "observation": {
         "observation title": "Observation Title",
         "importance": "Importance",
+        "importance low": "Low",
+        "importance medium": "Medium",
+        "importance high": "High",
         "add an observation": "Add an Observation",
         "observation details": "Observation Details",
         "title": "Title",
@@ -622,10 +625,10 @@
         "individuals responsible": "Individuals Responsible",
         "clear selections": "Clear Selections",
         "observation description": "The question observation section is for advanced users that want to collect extra information about specific questions in the assessment.",
-        "delete issue confirm": "Are you sure you want to delete issue",
-        "delete this issue confirm": "Are you sure you want to delete this issue",
-        "delete observation confirm": "Are you sure you want to delete observation",
-        "delete this observation confirm": "Are you sure you want to delete this observation"
+        "delete issue confirm": "Are you sure you want to delete issue '{title}?'",
+        "delete this issue confirm": "Are you sure you want to delete this issue?",
+        "delete observation confirm": "Are you sure you want to delete observation '{title}?'",
+        "delete this observation confirm": "Are you sure you want to delete this observation?"
     },
     "feedback": {
         "page title": "Feedback",
