@@ -32,6 +32,16 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
+            bool 
+            var allNodes = network.Nodes.Values.ToList();
+            foreach (var node in allNodes)
+            {
+                if (node.IsIDS)
+                {
+                    return this.Messages;
+                }
+            }
+
             var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
             foreach (var firewall in firewalls)
             {

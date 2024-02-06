@@ -14,6 +14,7 @@ using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
+using NPOI.POIFS.Properties;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
@@ -32,6 +33,15 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
+            var allNodes = network.Nodes.Values.ToList();
+            foreach (var node in allNodes)
+            {
+                if (node.IsIPS)
+                {
+                    return this.Messages;
+                }
+            }
+
             var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
             foreach (var firewall in firewalls)
             {
