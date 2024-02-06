@@ -111,7 +111,7 @@ export class AuthenticationService {
       .then(
         (response: LoginResponse) => {
 
-          if (response?.email === null || response?.email === undefined) {
+          if (!response?.email) {
             this.isLocal = false;
           } else {
             this.isLocal = true;

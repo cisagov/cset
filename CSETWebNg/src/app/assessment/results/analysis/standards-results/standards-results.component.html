@@ -20,10 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3>Results By Category</h3>
-  <p>This chart shows the individual scores for each of the categories from a positive perspective.
-    High scores on this chart show areas of strength.</p>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3>{{t('reports.core.results by category.title')}}</h3>
+  <p>{{t('reports.core.results by category.text')}}</p>
   <div id="chart" class="mb-3">
     <canvas id="canvasStandardResult">{{chart}}</canvas>
   </div>
@@ -39,10 +38,10 @@
       {{ds.label}}
     </h4>
     <table class="table" [class.fs-smaller]="layoutSvc.hp" style="table-layout: fixed">
-      <th style="width: 50%">Category</th>
-      <th class="align-right">Passed</th>
-      <th class="align-right">Total</th>
-      <th class="align-right">Percent</th>
+      <th style="width: 50%">{{t('reports.category')}}</th>
+      <th class="align-right">{{t('reports.passed')}}</th>
+      <th class="align-right">{{t('reports.total')}}</th>
+      <th class="align-right">{{t('reports.percent')}}</th>
       <tr *ngFor="let row of ds.dataRows">
         <td>{{row.title}}</td>
         <td class="align-right">{{row.failed}}</td>
