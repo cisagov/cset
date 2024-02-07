@@ -172,8 +172,8 @@
             <div *ngIf=" !!extras && !!tab && mode == 'COMPONENT'" class="detail">
                 <table>
                     <tr>
-                        <th>Component Type</th>
-                        <th>Override Component Answer</th>
+                        <th>{{t('extras.component type')}}</th>
+                        <th>{{t('extras.override component answer')}}</th>
                     </tr>
                     <tr *ngFor="let componentType of tab?.componentTypes">
                         <td>{{componentType.symbol_Name}}</td>
@@ -181,10 +181,10 @@
                             <div class="text-right">
                                 <button *ngIf="componentType.enabled; else noOverride"
                                     class="btn btn-link btn-link-dark" style="padding: 0; margin: 0;"
-                                    (click)="this.showOverrideDialog(componentType)">Override</button>
+                                    (click)="this.showOverrideDialog(componentType)">{{t('extras.override')}}</button>
                             </div>
                             <ng-template #noOverride>
-                                <div class="text-right">None</div>
+                                <div class="text-right">{{t('extras.none')}}</div>
                             </ng-template>
                         </td>
                     </tr>
@@ -199,18 +199,18 @@
         <ng-template #detailTab>
             <div *ngIf="!!extras && !!tab && mode == 'DETAIL' && !checkForApproach(tab?.requirementsData?.examinationApproach)"
                 class="detail">
-                <div><span class="reqlabel">Title: </span>{{tab?.requirementFrameworkTitle}}</div>
-                <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">Category:
+                <div><span class="reqlabel">{{t('extras.title')}}: </span>{{tab?.requirementFrameworkTitle}}</div>
+                <div *ngIf="tab?.relatedFrameworkCategory"><span class="reqlabel">{{t('extras.category')}}:
                     </span>{{tab?.relatedFrameworkCategory}}</div>
                 <div *ngIf="!tab?.isMaturity && tab?.levelName && !usesRAC()">
-                    <span class="reqlabel">Security Assurance Level (SAL): </span>{{tab?.levelName}}
+                    <span class="reqlabel">{{t('extras.sal level')}}: </span>{{salLevel(tab?.levelName)}} 
                 </div>
 
                 <div *ngIf="tab?.isMaturity && tab?.levelName">
-                    <span class="reqlabel">Maturity Level: </span>{{tab?.levelName}}
+                    <span class="reqlabel">{{t('extras.maturity level')}}: </span>{{tab?.levelName}}
                 </div>
 
-                <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">Standard Specific Requirement:</div>
+                <div *ngIf="!tab?.showRequirementStandards" class="reqlabel">{{t('extras.standard specific requirement')}}:</div>
                 <div *ngIf="!tab?.showRequirementStandards">
                     <span
                         [innerHTML]="tab?.requirementsData?.text ? (tab.requirementsData.text | safe: 'html') : 'none'"></span>
@@ -218,7 +218,7 @@
                         tab?.requirementsData?.requirementID }}</span>
                 </div>
 
-                <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">Questions Related to this Requirement:
+                <div *ngIf="tab?.questionsList?.length > 0" class="reqlabel">{{t('extras.questions related to req')}}:
                 </div>
 
                 <div>
@@ -246,7 +246,7 @@
                 <!-- "pieces" -->
 
                 <div *ngIf="!!myQuestion.scope" class="mb-3">
-                    <div class="sub-header-1">Scope</div>
+                    <div class="sub-header-1">{{t('extras.scope')}}</div>
                     <div>
                         {{myQuestion.scope}}
                     </div>
@@ -254,7 +254,7 @@
 
                 <div *ngIf="!!myQuestion.recommendedAction" class="mb-3">
                     <div class="sub-header-1">
-                        Recommended Action
+                        {{t('extras.recommended action')}}
                     </div>
                     <div [innerHTML]="myQuestion.recommendedAction">
                     </div>
@@ -262,7 +262,7 @@
 
                 <div *ngIf="!!myQuestion.services" class="mb-3">
                     <div class="sub-header-1">
-                        Free Services and References
+                        {{t('extras.free services')}}
                     </div>
                     <div [innerHTML]="myQuestion.services">
                     </div>
@@ -305,13 +305,13 @@
                     </td>
                     <td>
                         <div class="text-nowrap">
-                            <button (click)="showRelatedQuestions(doc)" matTooltip="Related questions"
+                            <button (click)="showRelatedQuestions(doc)" matTooltip="{{t('tooltip.related questions')}}"
                                 *ngIf="!tab?.isMaturity" matTooltipPosition="above" class="btn btn-link cset2-icons-q"
                                 style="color: #285464; transform: scale(1.3);
                                   cursor: pointer; background-color:transparent;" tabindex="0">
                             </button>
 
-                            <button (click)="deleteDocument(doc)" matTooltip="Delete document"
+                            <button (click)="deleteDocument(doc)" matTooltip="{{t('tooltip.delete document')}}"
                                 matTooltipPosition="above" class="btn btn-link pt-0 pb-0"
                                 style="margin-left: .5rem; margin-right: .5rem; padding-left: .5rem; padding-right: .5rem"
                                 tabindex="0">
@@ -322,7 +322,7 @@
                                 </svg>
                             </button>
 
-                            <button (click)="download(doc)" matTooltip="Copy this document to another location."
+                            <button (click)="download(doc)" matTooltip="{{t('tooltip.copy document')}}"
                                 matTooltipPosition="above" class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
                                   cursor: pointer; background-color:transparent;" tabindex="0"></button>
                         </div>
