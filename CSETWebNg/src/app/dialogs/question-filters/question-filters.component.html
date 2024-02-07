@@ -23,7 +23,7 @@
 <div *transloco="let t; read: 'filterMenu'" class="d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="mr-3 fs-base-6 cset-icons-filter" aria-label="{{ 'buttons.filter' | transloco }}"></span>
-    <span>{{ t(question + ' filters') }}</span>
+    <span>{{ t(skin + '.dialog title') }}</span>
   </div>
 
   <mat-dialog-content class="pt-3 pl-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -45,8 +45,7 @@
         <div>
           <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn(option.value)"
             [id]="getId(option)" (click)="updateFilters($event, option.value)">
-          <label [for]="getId(option)" class="checkbox-custom-label d-block">
-            {{ t('show ' + questions + ' answered') }} <em><strong>{{option.text}}</strong></em>
+          <label [for]="getId(option)" class="checkbox-custom-label d-block" [innerHTML]="t(skin + '.show answered as', {'optionText': option.text })">
           </label>
         </div>
       </div>
@@ -54,42 +53,43 @@
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FR')" id="cbShowFreeResponse"
           name="cbShowFreeResponse" (click)="updateFilters($event, 'FR')">
         <label for="cbShowFreeResponse" class="checkbox-custom-label d-block">
-          Show answered Open Ended {{questions}}
+          {{ t(skin + '.show open ended') }}
+          
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('U')" id="cbShowU" name="cbShowU"
           (click)="updateFilters($event, 'U')">
         <label for="cbShowU" class="checkbox-custom-label d-block">
-          {{ t('show unanswered ' + questions) }}
+          {{ t(skin + '.show unanswered') }}
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('C')" id="cbShowComments"
           name="cbShowComments" (click)="updateFilters($event, 'C')">
         <label for="cbShowComments" class="checkbox-custom-label d-block">
-          {{ t('show '+ questions + ' with ' + comments) }}
+          {{ t(skin + '.show with comments') }}
         </label>
       </div>
       <div *ngIf="!isInstallation('ACET')">
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('FB')" id="cbShowFeedback"
           name="cbShowFeedback" (click)="updateFilters($event, 'FB')">
         <label for="cbShowFeedback" class="checkbox-custom-label d-block">
-          Show {{questions}} with feedback
+          {{ t(skin + '.show with feedback') }}
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('M')" id="cbShowMarked"
           name="cbShowMarked" (click)="updateFilters($event, 'M')">
         <label for="cbShowMarked" class="checkbox-custom-label d-block">
-          {{ t('show ' + questions + ' marked for review') }}
+          {{ t(skin + '.show marked for review') }}
         </label>
       </div>
       <div>
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('O')" id="cbShowObservations"
           name="cbShowObservations" (click)="updateFilters($event, 'O')">
         <label for="cbShowObservations" class="checkbox-custom-label d-block">
-          {{ t('show ' + questions + ' with ' + observations) }}
+          {{ t(skin + '.show with observations') }}
         </label>
       </div>
       <hr class="mt-2 mb-2" *ngIf="showFilterAboveTargetLevel">
@@ -97,7 +97,7 @@
         <input class="checkbox-custom" type="checkbox" [checked]="filterSvc.filterOn('MT+')" id="cbShowAboveMatTarget"
           name="cbShowAboveMatTarget" (click)="updateFilters($event, 'MT+')">
         <label for="cbShowAboveMatTarget" class="checkbox-custom-label d-block">
-          Include {{questions}} above maturity target level
+          {{ t(skin + '.include above target') }}
         </label>
       </div>
     </div>

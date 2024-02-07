@@ -106,10 +106,7 @@ export class QuestionExtrasComponent implements OnInit {
       }
 
       this.showMfr = this.myOptions.showMfr;
-
     }
-
-
   }
 
   /**
@@ -203,6 +200,17 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
+   * Translates the level to the user's language.  
+   * Returns empty string if no level is present.
+   */
+  salLevel(level: string) {
+    if (!level) {
+      return '';
+    }
+    return this.tSvc.translate('titles.sal.' + level.toLowerCase());
+  }
+
+  /**
    *
    * @param e
    */
@@ -217,7 +225,6 @@ export class QuestionExtrasComponent implements OnInit {
    * @returns
    */
   showDocumentsIcon(): boolean {
-
     return true;
   }
 
