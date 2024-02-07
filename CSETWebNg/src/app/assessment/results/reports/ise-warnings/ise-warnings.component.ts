@@ -28,7 +28,7 @@ export class IseWarningsComponent {
       this.missingFields.push("Credit union name");
     }
 
-    if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null) {
+    if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null || this.assessSvc.assessment.assets == null) {
       this.missingFields.push("Assets");
     }
   }
