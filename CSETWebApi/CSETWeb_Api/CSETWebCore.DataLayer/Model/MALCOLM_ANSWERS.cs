@@ -8,20 +8,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-public partial class MALCOLM_MAPPING
+[Index("Malcolm_Answer_Id", Name = "IX_MALCOLM_ANSWERS")]
+public partial class MALCOLM_ANSWERS
 {
-    [Key]
-    public int Malcolm_Id { get; set; }
+    public int Assessment_Id { get; set; }
 
     public int Question_Or_Requirement_Id { get; set; }
 
-    public int Rule_Violated { get; set; }
+    [Required]
+    [StringLength(50)]
+    public string Answer_Text { get; set; }
 
-    public bool Is_Standard { get; set; }
+    public int Malcolm_Id { get; set; }
 
-    public bool Is_Component { get; set; }
-
-    public bool Is_Maturity { get; set; }
+    [Key]
+    public int Malcolm_Answer_Id { get; set; }
 
     public int? Mat_Option_Id { get; set; }
 }
