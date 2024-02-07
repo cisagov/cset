@@ -102,6 +102,8 @@ export class IssuesComponent implements OnInit {
 
       this.questionsSvc.getActionItems(this.questionID, this.observation.observation_Id).subscribe(
         (data: any) => {
+          console.log("data:");
+          console.log(data);
           this.actionItems = data;
 
           this.observation.risk_Area = this.risk;
