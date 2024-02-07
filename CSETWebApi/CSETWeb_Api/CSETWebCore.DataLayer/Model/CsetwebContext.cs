@@ -297,6 +297,8 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<LEVEL_NAMES> LEVEL_NAMES { get; set; }
 
+    public virtual DbSet<MALCOLM_ANSWERS> MALCOLM_ANSWERS { get; set; }
+
     public virtual DbSet<MALCOLM_MAPPING> MALCOLM_MAPPING { get; set; }
 
     public virtual DbSet<MATURITY_ANSWER_OPTIONS> MATURITY_ANSWER_OPTIONS { get; set; }
@@ -683,6 +685,11 @@ public partial class CsetwebContext : DbContext
                 .HasConstraintName("FK_ASSESSMENT_CONTACTS_USERS");
         });
 
+        modelBuilder.Entity<ASSESSMENT_DETAIL_FILTER_DATA>(entity =>
+        {
+            entity.Property(e => e.Detail_Id).ValueGeneratedOnAdd();
+        });
+
         modelBuilder.Entity<ASSESSMENT_DIAGRAM_COMPONENTS>(entity =>
         {
             entity.HasKey(e => new { e.Assessment_Id, e.Component_Guid }).HasName("PK_ASSESSMENT_DIAGRAM_COMPONENTS_1");
@@ -995,6 +1002,13 @@ public partial class CsetwebContext : DbContext
         modelBuilder.Entity<COMPONENT_SYMBOLS_GM_TO_CSET>(entity =>
         {
             entity.ToTable(tb => tb.HasComment("A collection of COMPONENT_SYMBOLS_GM_TO_CSET records"));
+        });
+
+        modelBuilder.Entity<COMPONENT_SYMBOLS_MAPPINGS>(entity =>
+        {
+            entity.Property(e => e.Mapping_Id).ValueGeneratedOnAdd();
+
+            entity.HasOne(d => d.Component_Symbol).WithMany().HasConstraintName("FK_COMPONENT_SYMBOLS_MAPPINGS_COMPONENT_SYMBOLS");
         });
 
         modelBuilder.Entity<COUNTIES>(entity =>
@@ -1621,6 +1635,7 @@ public partial class CsetwebContext : DbContext
                 .IsClustered();
 
             entity.Property(e => e.Mat_Option_Id).ValueGeneratedNever();
+            entity.Property(e => e.Action_Items).IsFixedLength();
 
             entity.HasOne(d => d.Mat_Option).WithOne(p => p.HYDRO_DATA)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1751,6 +1766,17 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
+
+        //modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
+        //{
+        //    entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
+
+        //    entity.HasOne(d => d.Malcolm).WithMany(p => p.MALCOLM_ANSWERS)
+        //        .OnDelete(DeleteBehavior.ClientSetNull)
+        //        .HasConstraintName("FK_MALCOLM_ANSWERS_MALCOLM_MAPPING");
+        //});
 
         modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
         {

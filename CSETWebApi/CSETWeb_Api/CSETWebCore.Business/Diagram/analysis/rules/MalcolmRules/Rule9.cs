@@ -14,6 +14,8 @@ using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
+using CSETWebCore.Model.Diagram;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
@@ -32,22 +34,38 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            bool 
+            bool idsDetected = false;
             var allNodes = network.Nodes.Values.ToList();
             foreach (var node in allNodes)
             {
                 if (node.IsIDS)
                 {
-                    return this.Messages;
+                    idsDetected = true;
                 }
             }
 
-            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
-            foreach (var firewall in firewalls)
+            if (!idsDetected) 
             {
-                Visited.Clear();
-                CheckRule9(firewall);
+                return this.Messages;
             }
+
+            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
+
+            if (firewalls.Count == 0)
+            {
+                String text = String.Format(rule9, allNodes[0].ComponentName).Replace("\n", " ");
+                SetNodeMessage(allNodes[0], text, 9); // 9 because rule9 was violated
+            }
+
+            else
+            {
+                foreach (var firewall in firewalls)
+                {
+                    Visited.Clear();
+                    CheckRule9(firewall);
+                }
+            }
+            
             return this.Messages;
         }
 

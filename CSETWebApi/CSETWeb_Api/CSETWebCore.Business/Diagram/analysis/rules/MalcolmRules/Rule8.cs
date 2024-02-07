@@ -33,21 +33,38 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
+            bool ipsDetected = false;
             var allNodes = network.Nodes.Values.ToList();
             foreach (var node in allNodes)
             {
                 if (node.IsIPS)
                 {
-                    return this.Messages;
+                    ipsDetected = true;
                 }
             }
 
-            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
-            foreach (var firewall in firewalls)
+            if (!ipsDetected)
             {
-                Visited.Clear();
-                CheckRule8(firewall);
+                return this.Messages;
             }
+
+            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
+
+            if (firewalls.Count == 0) 
+            {
+                String text = String.Format(rule8, allNodes[0].ComponentName).Replace("\n", " ");
+                SetNodeMessage(allNodes[0], text, 8); // 8 because rule8 was violated
+            }
+            
+            else
+            {
+                foreach (var firewall in firewalls)
+                {
+                    Visited.Clear();
+                    CheckRule8(firewall);
+                }
+            }
+
             return this.Messages;
         }
 

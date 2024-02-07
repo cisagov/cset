@@ -16,6 +16,8 @@ using CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules;
 using CSETWebCore.Business.Diagram.analysis.rules;
 using System.Text;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
+using CSETWebCore.Model.Assessment;
+using Newtonsoft.Json;
 
 namespace CSETWebCore.Business.Malcolm
 {
@@ -130,46 +132,84 @@ namespace CSETWebCore.Business.Malcolm
 
                     // HYDRO uses Mat_Option_Id and has "S" for "Selected" instead of "N" or "Y"
                     string answerText = m.Mat_Option_Id == null ? "N" : "S";
-                    if (m.Mat_Option_Id != null)
-                    {
-
-                    }
 
                     if (dbAnswer == null)
                     {
-                        _context.ANSWER.Add(SetUpAnswer(assessment_Id, answerText, m));
+                        // need to make sure the assessment uses the Set / Maturity before adding answers for it
+                        GalleryConfig config = null;
+                        var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == assessment.GalleryItemGuid);
+                        if (galleryItem != null)
+                        {
+                            config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
+                            config.GalleryGuid = (Guid)assessment.GalleryItemGuid;
+
+                            // check if Maturity is used
+                            if (config.Model != null)
+                            {
+                                var model = _context.MATURITY_MODELS.Where(x => x.Model_Name == config.Model.ModelName).FirstOrDefault();
+                                if (model != null)
+                                {
+                                    var q = _context.MATURITY_QUESTIONS.Where(x => x.Maturity_Model_Id == model.Maturity_Model_Id
+                                        && x.Mat_Question_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
+
+                                    if (q != null)
+                                    {
+                                        _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                    }
+                                }
+                            }
+
+                            // check if Standard is used
+                            if (config.Sets != null)
+                            {
+                                foreach (var set in config.Sets)
+                                {
+                                    var req = _context.NEW_REQUIREMENT.Where(x => x.Original_Set_Name == set 
+                                        && x.Requirement_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
+
+                                    if (req != null)
+                                    {
+                                        var temp = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id)
+                                        if (temp == null)
+                                        {
+                                            _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                        }
+                                    }
+                                }
+                            }
+
+                            // check if Diagram is used (which it should be)
+                            if (config.Diagram != null && config.Diagram)
+                            {
+                                var new_q = _context.NEW_QUESTION.Where(x => x.Original_Set_Name == "Components"
+                                        && x.Question_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
+
+                                if (new_q != null)
+                                {
+                                    _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                }
+                            }
+                        }
                     }
+
                     else if (dbAnswer.Answer_Text == "U" || dbAnswer.Answer_Text == "")
                     {
-                        //var temp = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == assessment.GalleryItemGuid)
-                        //    .Select(x => x.Configuration_Setup).FirstOrDefault();
-
-                        //if (temp != null && temp.Contains("ModelName"))
-                        //{
-                        //    dbAnswer.
-                        //}
-
                         dbAnswer.Answer_Text = answerText;
                         dbAnswer.Mat_Option_Id = m.Mat_Option_Id;
-                        //_context.ANSWER.Update(dbAnswer);
                     }
                 }
 
                 _context.SaveChanges();
             }
-
         }
 
-        public ANSWER SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
+        public MALCOLM_ANSWERS SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
         {
-            var answer = new ANSWER();
+            var answer = new MALCOLM_ANSWERS();
             answer.Assessment_Id = assessId;
             answer.Question_Or_Requirement_Id = currentMalcolmMapRow.Question_Or_Requirement_Id;
+            answer.Malcolm_Id = currentMalcolmMapRow.Malcolm_Id;
             answer.Answer_Text = answerText;
-            answer.Question_Type = currentMalcolmMapRow.Is_Component ? "Component" : (currentMalcolmMapRow.Is_Standard ? "Requirement" : "Maturity");
-            answer.Is_Component = currentMalcolmMapRow.Is_Component;
-            answer.Is_Requirement = currentMalcolmMapRow.Is_Standard;
-            answer.Is_Maturity = currentMalcolmMapRow.Is_Maturity;
             answer.Mat_Option_Id = currentMalcolmMapRow.Mat_Option_Id;
 
             return answer;
