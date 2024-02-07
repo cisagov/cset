@@ -765,6 +765,9 @@ namespace CSETWebCore.Business.Reports
                     {
                         TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                         TinyMapper.Map(answer.b, qa);
+
+                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                        qa.HasObservation = answer.b.HasDiscovery ?? false;
                     }
 
                     newGrouping.Questions.Add(qa);
