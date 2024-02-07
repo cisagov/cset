@@ -38,7 +38,7 @@
         <div class="form-group">
           <label id="titleLabel" for="title" class="form-label font-weight-bold">Title</label>
           <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true"
-            [(ngModel)]="finding.title">
+            [(ngModel)]="observation.title">
         </div>
       </div>
       <div class="col">
@@ -46,7 +46,7 @@
           <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
           <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper">
             (required)</span>
-          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type" required>
+          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="observation.type" required>
             <option value="Examiner Finding">Examiner Finding</option>
             <option value="DOR">DOR</option>
             <option value="Supplemental Fact">Supplemental Fact</option>
@@ -55,19 +55,19 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="finding.type !== 'Supplemental Fact'">
+    <div class="row" *ngIf="observation.type !== 'Supplemental Fact'">
       <div class="col-6">
         <div class="form-group">
           <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
           <input id="riskArea" type="text" autocomplete="off" class="form-control" [disabled]="true"
-            [(ngModel)]="finding.risk_Area">
+            [(ngModel)]="observation.risk_Area">
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
           <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
           <input id="subRisk" type="text" autocomplete="off" class="form-control" [disabled]="true"
-            [(ngModel)]="finding.sub_Risk">
+            [(ngModel)]="observation.sub_Risk">
         </div>
       </div>
     </div>
@@ -76,32 +76,32 @@
         <div *ngIf="this.actionItems != null" class="form-group">
           <label for="description" class="form-label font-weight-bold">Description</label>
           <textarea id="description" type="text" rows="5" autocomplete="off" class="form-control"
-            [(ngModel)]="finding.description"></textarea>
+            [(ngModel)]="observation.description"></textarea>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="finding.type === 'Supplemental Fact'">
+    <ng-container *ngIf="observation.type === 'Supplemental Fact'">
       <div class="row">
         <div class="col-12">
           <div class="form-group">
             <label for="suppGuide" class="form-label font-weight-bold">Supplemental Fact</label>
             <textarea id="suppGuide" type="text" rows="10" autocomplete="off" class="form-control"
-              [(ngModel)]="finding.supp_Guidance"></textarea>
+              [(ngModel)]="observation.supp_Guidance"></textarea>
           </div>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
-      <div *ngIf="this.finding.auto_Generated === 0">
+    <ng-container *ngIf="observation.type !== 'Supplemental Fact'">
+      <div *ngIf="this.observation.auto_Generated === 0">
         <div class="row">
           <div class="col-12">
             <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
             <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"
-              [(ngModel)]="finding.actionItems"></textarea>
+              [(ngModel)]="observation.actionItems"></textarea>
           </div>
         </div>
       </div>
-      <div *ngIf="this.finding.auto_Generated === 1">
+      <div *ngIf="this.observation.auto_Generated === 1">
         <div class="mt-2 invalid-feedback d-block text-muted">
           <p>Items marked in red indicate a higher level of risk</p>
         </div>
@@ -146,7 +146,7 @@
           <div class="form-group">
             <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
             <input id="additionalCitations" type="text" autocomplete="off" class="form-control"
-              [(ngModel)]="finding.citations">
+              [(ngModel)]="observation.citations">
           </div>
         </div>
       </div>
@@ -155,7 +155,7 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0">
-    <button style="margin-left: 0%;" [disabled]="finding.auto_Generated == 1 || !isIssueEmpty()" mat-button
+    <button style="margin-left: 0%;" [disabled]="observation.auto_Generated == 1 || !isIssueEmpty()" mat-button
       class="btn btn-secondary" (click)="cancel()">Cancel</button>
 
     <button style="margin-left: auto;" mat-button class="btn btn-primary" (click)="update()">Done</button>
