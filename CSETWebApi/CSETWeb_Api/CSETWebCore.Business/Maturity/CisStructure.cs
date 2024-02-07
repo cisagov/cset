@@ -230,7 +230,7 @@ namespace CSETWebCore.Business.Maturity
 
                     if (answer != null)
                     {
-                        question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                        question.HasObservation = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
                     }
 
 
@@ -298,7 +298,7 @@ namespace CSETWebCore.Business.Maturity
 
                 if (answer != null)
                 {
-                    question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                    question.HasObservation = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
                 }
 
 
@@ -405,7 +405,7 @@ namespace CSETWebCore.Business.Maturity
 
                     if (answer != null)
                     {
-                        question.HasObservations = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
+                        question.HasObservation = _context.FINDING.Any(x => x.Answer_Id == answer.Answer_Id);
                     }
 
 
