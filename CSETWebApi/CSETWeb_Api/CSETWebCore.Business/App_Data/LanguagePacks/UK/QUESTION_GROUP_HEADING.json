@@ -226,15 +226,15 @@
     },
     {
       "key": "58",
-      "value": "[UK]Detect"
+      "value": "Виявлення"
     },
     {
       "key": "59",
-      "value": "[UK]Identify"
+      "value": "Ідентифікація"
     },
     {
       "key": "60",
-      "value": "[UK]Protect"
+      "value": "Захист"
     },
     {
       "key": "61",
@@ -242,7 +242,7 @@
     },
     {
       "key": "62",
-      "value": "[UK]Respond"
+      "value": "Реагування"
     },
     {
       "key": "63",
@@ -310,7 +310,7 @@
     },
     {
       "key": "80",
-      "value": "[UK]Recover"
+      "value": "Відновлення"
     },
     {
       "key": "81",

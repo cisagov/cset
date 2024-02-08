@@ -543,7 +543,9 @@
                 "score": "Score",
                 "overall score": "Overall Score",
                 "standard based": "Standard Based",
-                "component based": "Component Based"
+                "component based": "Component Based",
+                "no standards answers": "No Standards Answers",
+                "no components answers": "No Components Answers"
             },
             "executive summary": {
                 "executive summary": "Executive Summary",

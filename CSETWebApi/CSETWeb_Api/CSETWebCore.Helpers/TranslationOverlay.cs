@@ -76,6 +76,7 @@ namespace CSETWebCore.Helpers
         {
             GenericTranslation langPack = null;
 
+            // trying to get out cheaply and not waste time looking up English
             if (lang == "en")
             {
                 return null;
