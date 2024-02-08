@@ -12,9 +12,6 @@
     "prevent encryption": "Turn Off Export Encryption",
     "user language": "User Language",
     "note language change": "Select the desired language",
-    "prepare": "Prepare",
-    "assessment": "Assessment",
-    "results": "Results",
     "assessment information": "Assessment Information",
     "organization details": "Organization Details",
     "assessment name": "Assessment Name",
@@ -44,8 +41,9 @@
     "select effort": "Select Effort",
     "business unit agency": "Business Unit/Agency",
     "critical service name": "Critical Service Name",
-    "PCII Number": "PCII Number",
     "critical service description": "Critical Service Description",
+    "pcii requested": "PCII Requested",
+    "pcii number": "PCII Number",
     "practices": "Practices",
     "requires review": "Requires Review",
     "domain": "Domain",
@@ -200,7 +198,8 @@
         "reviewed": "Reviewed",
         "questions mode": "Questions Mode",
         "requirements mode": "Requirements Mode",
-        "add document": "Add a document"
+        "add document": "Add a document",
+        "copy text": "Copy Texzt"
     },
     "contact": {
         "contacts": "Contacts",
@@ -261,8 +260,11 @@
             "No": "No",
             "N/A": "N/A",
             "Alt": "Alt",
+            "Alt-ACET": "Yes(C)",
             "U": "Unanswered",
+            "Unanswered": "Unanswered",
             "Inc": "Inc",
+            "Issue(N)": "Issue(N)",
             "Iss": "Issue(N)",
             "S": "S",
             "Fully-MVRA": "Fully",
@@ -290,6 +292,7 @@
             "Fully-MVRA": "Fully",
             "Not-MVRA": "Not",
             "Partial-MVRA": "Partial",
+            "Alt-ACET": "Yes(C)",
             "Yes(C)": "Yes Compensating Control",
             "Imp-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
             "Prog-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
@@ -319,6 +322,7 @@
             "Not-MVRA": "Not Implemented",
             "Partial-MVRA": "Partially Implemented",
             "Yes(C)": "Yes Compensating Control",
+            "Alt-ACET": "Yes Compensating Control",
             "Imp-CPG": "Implemented",
             "Prog-CPG": "In Progress",
             "Scoped-CPG": "Scoped",
@@ -346,6 +350,9 @@
         "comment": "Comment",
         "artifacts documents": "Artifacts/Documents",
         "artifacts documents with content": "Artifacts/Documents with Content",
+        "related questions": "Related questions",
+        "delete document": "Delete document",
+        "copy document": "Copy this document to another location",
         "references": "References",
         "observations": "Observations",
         "observations with content": "Observations with content",
@@ -362,6 +369,10 @@
         "answered count": "Indicates the number of answered questions out of the total for this page",
         "questions mode": "Questions Mode displays simple questions that correspond to standard requirements",
         "requirements mode": "Requirements Mode displays requirement text verbatim as it appears in the standard",
+        "feedback icon": "Значок зворотнього зв'язку",
+        "copy feedback": "Копіювати текст зворотнього зв'язку в буфер обміну",
+        "create feedback email": "Створити електронний лист із зворотнім зв'язком у стандартному поштовому клієнті",
+
         "risk description": "Risk Description",
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
@@ -429,23 +440,35 @@
         "most": "Most"
     },
     "filterMenu": {
-        "Question filters": "Question Filters",
-        "Statement filters": "Statement Filters",
         "search": "Search",
         "select deselect all": "Select/Deselect All",
-        "show questions answered": "Show questions answered",
-        "show unanswered questions": "Show unanswered questions",
-        "show questions with comments": "Show questions with comments",
-        "show questions with notes": "Show questions with notes",
-        "show questions marked for review": "Show questions marked for review",
-        "show questions with observations": "Show questions with observations",
-        "show statements answered": "Show statements answered",
-        "show unanswered statements": "Show unanswered statements",
-        "show statements with comments": "Show statements with comments",
-        "show statements with notes": "Show statements with notes",
-        "show statements marked for review": "Show statements marked for review",
-        "show statements with observations": "Show statements with observations",
-        "show statements with issues": "Show statements with issues"
+        "core": {
+            "dialog title": "Question Filters",
+            "show answered as": "Show questions answered <em><b>{{optionText}}</b></em>",
+            "show unanswered": "Show unanswered questions",
+            "show with comments": "Show questions with comments",
+            "show with feedback": "Show questions with feedback",
+            "show with notes": "Show questions with notes",
+            "show marked for review": "Show questions marked for review",
+            "show with observations": "Show questions with observations",
+            "include above target": "Include questions above maturity target level",
+            "show open ended": "Show answered open-ended questions"
+        },
+        "ncua": {
+            "dialog title": "Statement Filters",
+            "show answered as": "Show statements answered <em><b>{{optionText}}</b></em>",
+            "show unanswered": "Show unanswered statements",
+            "show with comments": "Show statements with comments",
+            "show with feedback": "Show statements with feedback",
+            "show with notes": "Show statements with notes",
+            "show marked for review": "Show statements marked for review",
+            "show with observations": "Show statements with observations",
+            "show with issues": "Show statements with issues",
+            "include above target": "Include statements above maturity target level",
+            "show open ended": "Show answered open-ended statements"
+        },
+        "showing only filtered": "Showing Only Filtered Questions",
+        "no questions visible": "There are no questions visible for the current filters or search criteria. Please change your selections and try again."
     },
     "dialogs": {
         "please confirm": "Please Confirm",
@@ -478,14 +501,21 @@
         "question": "Question",
         "assessment compliance text": "This chart shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores.",
         "ranked categories text": "This chart shows the top areas of concern ranked. These are calculated from a weighted risk score based on the difficulty of attack. The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.",
+        "passed": "Passed",
         "failed": "Failed",
         "total": "Total",
         "percent": "Percent",
         "number": "Number",
         "standards summary text": "This chart shows the overall answer percentages for each individual answer type.",
         "reference number": "Reference #",
-        "high level assessment desc": "High-Level Assessment Description",
-        "high level assessment desc text": "Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
+        "high level assessment label": "High-Level Assessment Description",
+        "high level assessment desc": "Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
+        "high level assessment placeholder": "Please provide a description of the assessment process and work performed.",
+        "executive summary label": "Executive Summary",
+        "executive summary placeholder": "Please provide an executive summary.",
+        "comments label": "Comments",
+        "comments desc": "Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
+        "comments placeholder": "Please provide general comments, if any, to include in the reports.",
         "disclaimer": {
             "disclaimer": "Disclaimer",
             "disclaimer section 1": "The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
@@ -546,9 +576,17 @@
                 "environmental impact": "Environmental Impact"
 
             },
+            "site summary": {
+                "site summary": "Site Summary",
+                "report title": "Site Summary"
+            },
             "components summary": {
                 "components summary": "Components Summary",
                 "text": "This chart shows the component or network diagram based answer percentages for each individual answer type."
+            },
+            "results by category": {
+                "title": "Results by Category",
+                "text": "This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
             "no ranking": "Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be displayed.",
             "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights."
@@ -558,8 +596,7 @@
             "executive summary": {
                 "executive summary": "ACET Executive Summary",
                 "tab title": "Executive Report - ACET",
-                "executive summary title 1": "EXECUTIVE",
-                "executive summary title 2": "SUMMARY",
+                "title page title": "EXECUTIVE SUMMARY",
                 "site information": "Site Information"
             },
             "gap report": {
@@ -613,6 +650,9 @@
     "observation": {
         "observation title": "Observation Title",
         "importance": "Importance",
+        "importance low": "Low",
+        "importance medium": "Medium",
+        "importance high": "High",
         "add an observation": "Add an Observation",
         "observation details": "Observation Details",
         "title": "Title",
@@ -625,10 +665,10 @@
         "individuals responsible": "Individuals Responsible",
         "clear selections": "Clear Selections",
         "observation description": "The question observation section is for advanced users that want to collect extra information about specific questions in the assessment.",
-        "delete issue confirm": "Are you sure you want to delete issue",
-        "delete this issue confirm": "Are you sure you want to delete this issue",
-        "delete observation confirm": "Are you sure you want to delete observation",
-        "delete this observation confirm": "Are you sure you want to delete this observation"
+        "delete issue confirm": "Are you sure you want to delete issue '{title}?'",
+        "delete this issue confirm": "Are you sure you want to delete this issue?",
+        "delete observation confirm": "Are you sure you want to delete observation '{title}?'",
+        "delete this observation confirm": "Are you sure you want to delete this observation?"
     },
     "feedback": {
         "page title": "Feedback",
@@ -636,9 +676,22 @@
         "text 2": "icon below the question.",
         "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
         "copy paste": "Copy text to clipboard and paste into an email.",
-        "no feedback exists": "Відсутній зворотній зв'язок для жодного питання в цій оцінці."
+        "no feedback exists": "There is no feedback for any question in this assessment."
     },
     "extras": {
+        "title": "Title",
+        "category": "Category",
+        "sal level": "Security Assurance Level (SAL)",
+        "maturity level": "Maturity Level",
+        "standard specific requirement": "Standard Specific Requirement",
+        "questions related to req": "Questions Related to this Requirement",
+        "scope": "Scope",
+        "recommended action": "Recommended Action",
+        "free services": "Free Services and References",
+        "component type": "Component Type",
+        "override component answer": "Override Component Answer",
+        "override": "Override",
+        "none": "None",
         "artifact title": "Artifact/Document Title",
         "file name": "File Name",
         "source documents": "Source Documents",

@@ -67,9 +67,28 @@ namespace CSETWebCore.Business.Assessment
                                      " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
                                      " a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
 
+            string defaultAssessmentName = "New Assessment";
+
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                var msg = _overlay.GetValue("GENERIC", "default exec summ", lang)?.Value;
+                if (msg != null)
+                {
+                    defaultExecSumm = msg;
+                }
+
+                msg = _overlay.GetValue("GENERIC", "default assessment name", lang)?.Value;
+                if (msg != null)
+                {
+                    defaultAssessmentName = msg;
+                }
+            }
+
+
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = "New Assessment",
+                AssessmentName = defaultAssessmentName,
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,

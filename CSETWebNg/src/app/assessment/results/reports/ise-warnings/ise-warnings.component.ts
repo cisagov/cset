@@ -10,7 +10,7 @@ import { NCUAService } from '../../../../services/ncua.service';
 })
 export class IseWarningsComponent {
   @Input() iseHasBeenSubmitted;
-  @Input() disableIseReportLinks;
+  @Input() disableIseReportLinks; // <-- Checks for unanswered questions
 
   missingFields = [];
 
@@ -20,15 +20,15 @@ export class IseWarningsComponent {
   ) {}
 
   ngOnInit() {
-    this.getMissingFields();
+    this.checkMissingFields();
   }
 
-  getMissingFields() {
+  checkMissingFields() {
     if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName === null) {
       this.missingFields.push("Credit union name");
     }
 
-    if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null) {
+    if (this.ncuaSvc.assetsAsNumber == 0 || this.ncuaSvc.assetsAsString == null || this.assessSvc.assessment.assets == null) {
       this.missingFields.push("Assets");
     }
   }

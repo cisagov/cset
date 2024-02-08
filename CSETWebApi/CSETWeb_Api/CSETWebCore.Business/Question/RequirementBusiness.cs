@@ -231,6 +231,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
@@ -364,6 +367,9 @@ namespace CSETWebCore.Business.Question
                     if (answer != null)
                     {
                         TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+
+                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                        qa.HasObservation = answer.b.HasDiscovery ?? false;
                     }
 
                     qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);

@@ -13,10 +13,13 @@
     "user language": "Idioma del usuario",
     "note language change": "Seleccione el idioma deseado",
     "prepare": "Preparar",
+    "assessment": "Evaluación",
+    "results": "Resultados",
     "assessment information": "Datos de la evaluación",
     "organization details": "Detalles de la organización",
     "assessment name": "Nombre de evaluación",
     "assessment date": "Fecha de evaluación",
+    "no pii in name": "[ES]Please take care not to name your assessment with any identifiable information. (e.g. Individual or Organization Names)",
     "facility name": "Nombre de facilidad",
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
@@ -42,6 +45,9 @@
     "business unit agency": "[ES]Business Unit/Agency",
     "critical service name": "Nombre del servicio critíco",
     "critical service description": "Descripción del servicio critíco",
+    "practices": "[ES]Practices",
+    "pcii requested": "[ES]PCII Requested",
+    "pcii number": "[ES]PCII Number",
     "requires review": "Requiere Revisión",
     "domain": "Dominio",
     "maturity level": "Nivel de madurez",
@@ -81,6 +87,10 @@
         "role": "Rol",
         "participant": "Participante",
         "facilitator": "Facilitador",
+        "save": "[ES]Save",
+        "cancel": "[ES]Cancel",
+        "change": "[ES]Change",
+        "remove": "[ES]Remove",
         "not authorized message": "No está autorizado/a para realizar cambios en los contactos de esta evaluación.",
         "contact an administrator message": "Por favor, contacte a un administrador de esta evaluación para realizar cambios o para obtener acceso administrativo."
     },
@@ -222,6 +232,7 @@
         "continue": "Continuar",
         "change": "Cambiar",
         "remove": "Quitar",
+        "email": "Correo electrónico",
         "next": "Siguiente",
         "close": "Cerrar",
         "back": "Previo",
@@ -243,7 +254,8 @@
         "reviewed": "Revisado",
         "questions mode": "Modo preguntas",
         "requirements mode": "Modo requisitos",
-        "add document": "Agregar documento"
+        "add document": "Agregar documento",
+        "copy text": "Copiar texto"
     },
     "answer-options": {
         "button-labels": {
@@ -252,9 +264,11 @@
             "N/A": "N/A",
             "Alt": "Alt",
             "Alt-ACET": "Sí(C)",
+            "U": "Sin respuesta",
             "Unanswered": "Sin respuesta",
             "Inc": "Inc",
             "Issue(N)": "Issue(N)",
+            "Iss": "Issue(N)",
             "S": "S",
             "Fully-MVRA": "Completo",
             "Not-MVRA": "No",
@@ -337,6 +351,9 @@
         "comment": "Comentario",
         "artifacts documents": "[ES]Artifacts/Documents",
         "artifacts documents with content": "[ES]Artifacts/Documents with Content",
+        "related questions": "[ES]Related questions",
+        "delete document": "[ES]Delete document",
+        "copy document": "[ES]Copy this document to another location",
         "references": "Referencias",
         "observations": "Observaciones",
         "observations with content": "Observaciones con contenido",
@@ -420,23 +437,35 @@
         "most": "Mayor"
     },
     "filterMenu": {
-        "Question filters": "Filtros de preguntas",
-        "Statement filters": "Filtros de declaración",
-        "search": "Búsqueda",
+        "search": "Buscar",
         "select deselect all": "Seleccionar/Deseleccionar todo",
-        "show questions answered": "Mostrar preguntas respondidas",
-        "show unanswered questions": "Mostrar preguntas sin respuesta",
-        "show questions with comments": "Mostrar preguntas con comentarios",
-        "show questions with notes": "Mostrar preguntas con notas",
-        "show questions marked for review": "Mostrar preguntas marcadas para revisión",
-        "show questions with observations": "Mostrar preguntas con observaciones",
-        "show statements answered": "Mostrar declaraciones respondidas",
-        "show unanswered statements": "Mostrar declaraciones sin respuesta",
-        "show statements with comments": "Mostrar declaraciones con comentarios",
-        "show statements with notes": "Mostrar declaraciones con apuntes",
-        "show statements marked for review": "Mostrar declaraciones marcadas para revisión",
-        "show statements with observations": "Mostrar declaraciones con observaciones",
-        "show statements with issues": "Mostrar declaraciones con problemas"
+        "core": {
+            "dialog title": "Filtros de preguntas",
+            "show answered as": "Mostrar preguntas respondidas <em><b>{{optionText}}</b></em>",
+            "show unanswered": "Mostrar preguntas sin respuesta",
+            "show with comments": "Mostrar preguntas con comentarios",
+            "show with feedback": "[ES]Show preguntas with feedback",
+            "show with notes": "Mostrar preguntas con notas",
+            "show marked for review": "Mostrar preguntas marcadas para revisión",
+            "show with observations": "Mostrar preguntas con observaciones",
+            "include above target": "Incluir preguntas arriba del nivel objetivo de madurez",
+            "show open ended": "[ES]Show answered open-ended questions"
+        },
+        "ncua": {
+            "dialog title": "Filtros de declaración",
+            "show answered as": "Mostrar declaraciones respondidas <em><b>{{optionText}}</b></em>",
+            "show unanswered": "Mostrar declaraciones sin respuesta",
+            "show with comments": "Mostrar declaraciones con comentarios",
+            "show with feedback": "[ES]Show declaraciones with feedback",
+            "show with notes": "Mostrar preguntas con notas",
+            "show marked for review": "Mostrar declaraciones marcadas para revisión",
+            "show with observations": "Mostrar declaraciones con observaciones",
+            "show with issues": "Mostrar declaraciones con problemas",
+            "include above target": "Incluir declaraciones arriba del nivel objetivo de madurez",
+            "show open ended": "[ES]Show answered open-ended questions"
+        },
+        "showing only filtered": "Mostrando sólo preguntas filtradas",
+        "no questions visible": "[ES]There are no questions visible for the current filters or search criteria. Please change your selections and try again."
     },
     "dialogs": {
         "please confirm": "Confirme, por favor",
@@ -458,6 +487,10 @@
         "domain": "Dominio",
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
+        "standards and diagram": "[ES]Standards and Diagram",
+        "site summary report": "[ES]Site Summary Report",
+        "site cybersecurity plan": "[ES]Site Cybersecurity Plan",
+        "site detail report": "[ES]Site Detail Report",
         "standard": "Estándar",
         "category": "Categoría",
         "answer": "Respuesta",
@@ -465,14 +498,21 @@
         "question": "Pregunta",
         "assessment compliance text": "Este gráfico muestra las puntuaciones porcentuales generales. <br> Tenga en cuenta que las preguntas sin respuesta se cuentan como respuesta NO en estas puntuaciones.",
         "ranked categories text": "Este gráfico muestra las principales áreas de preocupación clasificadas. Estos se calculan a partir de una puntuación de riesgo ponderada basada en la dificultad del ataque. Los pesos de ataque son más pesados para ataques fáciles y menos para ataques más difíciles.",
+        "passed": "Pasado",
         "failed": "Fallido",
         "total": "Total",
         "percent": "Porciento",
         "number": "Número",
         "standards summary text": "Este gráfico muestra los porcentajes generales de respuesta para cada tipo de respuesta individual.",
         "reference number": "Referencia #",
-        "high level assessment desc": "[ES]High-Level Assessment Description",
-        "high level assessment desc text": "[ES]Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
+        "high level assessment label": "[ES]High-Level Assessment Description",
+        "high level assessment desc": "[ES]Enter a description of the assessment process and work performed for senior management. This information will be included in the reports. This is not intended to be analysis of the assessment results as requested in the executive summary.",
+        "high level assessment placeholder": "[ES]Please provide a description of the assessment process and work performed.",
+        "executive summary label": "[ES]Executive Summary",
+        "executive summary placeholder": "[ES]Please provide an executive summary.",
+        "comments label": "[ES]Comments",
+        "comments desc": "[ES]Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
+        "comments placeholder": "[ES]Please provide general comments, if any, to include in the reports.",
         "disclaimer": {
             "disclaimer": "[ES] Disclaimer",
             "disclaimer section 1": "[ES] The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
@@ -490,8 +530,7 @@
         "observations tear-out sheets": {
             "tab title": "Observaciones hojas - {{defaultTitle}}",
             "observations tear-out sheets": "Observaciones hojas",
-            "observation title 1": "OBSERVACIONES",
-            "observation title 2": "HOJAS",
+            "title page title": "OBSERVACIONES HOJAS",
             "no observations message": "La evaluación no contiene ninguna observación asignada a un individuo.",
             "question identifier": "Identificador de pregunta",
             "question text": "Texto de la pregunta"
@@ -506,8 +545,7 @@
             "executive summary": {
                 "executive summary": "Resumen ejecutivo",
                 "tab title": "Resumen ejecutivo",
-                "executive summary title 1": "RESUMEN",
-                "executive summary title 2": "EJECUTIVO",
+                "title page title": "RESUMEN EJECUTIVO",
                 "site information": "Información del sitio", 
                 "calculated level": "[ES] CALCULATED LEVEL", 
                 "overall values": "[ES] Overall Values", 
@@ -534,9 +572,17 @@
                 "economic impact": "[ES] Economic Impact", 
                 "environmental impact": "[ES] Environmental Impact"
             },
+            "site summary": {
+                "site summary": "[ES]Site Summary",
+                "report title": "[ES]Site Summary"
+            },
             "components summary": {
                 "components summary": "Resumen de componentes",
                 "text": "Este gráfico muestra los porcentajes de respuesta basados en el diagrama de componentes o de red para cada tipo de respuesta individual."
+            },
+            "results by category": {
+                "title": "[ES]Results by Category",
+                "text": "[ES]This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
             "no ranking": "La información de clasificación no se puede determinar para el conjunto de preguntas actual. No se puede mostrar el gráfico de categorías clasificadas.",
             "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada."
@@ -546,8 +592,7 @@
             "executive summary": {
                 "executive summary": "Resumen ejecutivo de ACET",
                 "tab title": "Resumen ejecutivo - ACET",
-                "executive summary title 1": "RESUMEN",
-                "executive summary title 2": "EJECUTIVO",
+                "title page title": "RESUMEN EJECUTIVO",
                 "site information": "Información del Sitio"
             },
             "gap report": {
@@ -601,6 +646,9 @@
     "observation": {
         "observation title": "Título de la Observación",
         "importance": "Importancia",
+        "importance low": "Baja",
+        "importance medium": "Mediana",
+        "importance high": "Alta",
         "add an observation": "Agregar una Observación",
         "observation details": "Detalles de la Observación",
         "title": "Título",
@@ -613,12 +661,33 @@
         "individuals responsible": "Personas responsables",
         "clear selections": "Limpiar selecciones",
         "observation description": "La sección de observaciones de preguntas es para usuarios avanzados que desean recopilar información adicional sobre preguntas específicas en la evaluación.",
-        "delete issue confirm": "¿Está seguro de que desea eliminar el problema",
-        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema",
-        "delete observation confirm": "¿Está seguro de que desea eliminar la observación",
-        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación"
+        "delete issue confirm": "¿Está seguro de que desea eliminar el problema '{title}?'",
+        "delete this issue confirm": "¿Está seguro de que desea eliminar este problema?",
+        "delete observation confirm": "¿Está seguro de que desea eliminar la observación '{title}?'",
+        "delete this observation confirm": "¿Está seguro de que desea eliminar esta observación?"
+    },
+    "feedback": {
+        "page title": "[ES]Feedback",
+        "text 1": "[ES]Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
+        "text 2": "[ES]icon below the question.",
+        "text 3": "[ES]Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
+        "copy paste": "[ES]Copy text to clipboard and paste into an email.",
+        "no feedback exists": "No hay comentarios para ninguna pregunta en esta evaluación."
     },
     "extras": {
+        "title": "[ES]Title",
+        "category": "[ES]Category",
+        "sal level": "[ES]Security Assurance Level (SAL)",
+        "maturity level": "[ES]Maturity Level",
+        "standard specific requirement": "[ES]Standard Specific Requirement",
+        "questions related to req": "[ES]Questions Related to this Requirement",
+        "scope": "[ES]Scope",
+        "recommended action": "Acción recomendada",
+        "free services": "Servicios gratuitas y referencias",
+        "component type": "Tipo de componente",
+        "override component answer": "Sobreescribir Respuesta",
+        "override": "Sobreescribir",
+        "none": "No",
         "artifact title": "[ES]Artifact/Document Title",
         "file name": "[ES]File Name",
         "source documents": "Documentos Fuente",

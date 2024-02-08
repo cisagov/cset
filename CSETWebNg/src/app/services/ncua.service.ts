@@ -83,7 +83,7 @@ export class NCUAService {
   // Variables to manage ISE issues state
   issuesFinishedLoading: boolean = false;
   questionCheck = new Map();
-  issueFindingId = new Map();
+  issueObservationId = new Map();
   deleteHistory = new Set();
 
   // Keeps track of Issues with unassigned Types for report notification
@@ -295,7 +295,7 @@ export class NCUAService {
   // Clears necessary variables on assessment drop
   reset() {
     this.questionCheck.clear();
-    this.issueFindingId.clear();
+    this.issueObservationId.clear();
     this.deleteHistory.clear();
   }
 
