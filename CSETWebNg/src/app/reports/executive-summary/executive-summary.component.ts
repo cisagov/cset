@@ -30,6 +30,7 @@ import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -67,7 +68,8 @@ export class ExecutiveSummaryComponent implements OnInit {
     private titleService: Title,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
