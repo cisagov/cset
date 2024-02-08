@@ -485,7 +485,7 @@
                 "concern questions": "[UK] Top Questions of Concern", 
                 "analysis of network components": "[UK] Analysis of Network Components", 
                 "combined component summary": "[UK] Combined Component Summary", 
-                "identified warnings": "[UK] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is ", 
+                "identified warnings": "[UK] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}", 
                 "see network details": "[UK] See the section 'Findings and Recommendations from Basic Network Analysis' for details.", 
                 "answer distribution": "[UK] Answer Distribution by Component Type", 
                 "calculated general security": "[UK] Calculated General Security Assurance Levels (SAL)", 

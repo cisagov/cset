@@ -559,7 +559,7 @@
                 "concern questions": "[ES] Top Questions of Concern", 
                 "analysis of network components": "[ES] Analysis of Network Components", 
                 "combined component summary": "[ES] Combined Component Summary", 
-                "identified warnings": "[ES] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is ", 
+                "identified warnings": "[ES] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}", 
                 "see network details": "[ES] See the section 'Findings and Recommendations from Basic Network Analysis' for details.", 
                 "answer distribution": "[ES] Answer Distribution by Component Type", 
                 "calculated general security": "[ES] Calculated General Security Assurance Levels (SAL)", 
