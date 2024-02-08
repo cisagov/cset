@@ -67,8 +67,18 @@ export class SalSectionComponent implements OnInit {
     if (!!v) {
       this.nistSalA = v.justification;
     }
-    if (this.response.genSalTable.on_Site_Hospital_Injury == 'None'){
-      this.response.genSalTable.on_Site_Hospital_Injury = this.tSvc.translate('titles.sal.gen sal.none')
-    } 
+    if (this.response.genSalTable){
+      this.translateSALValues()
+    }
   }
+
+  // Translate Gen Sal values 
+  translateSALValues(){
+    for (let salValue in this.response.genSalTable){
+      if (this.response.genSalTable[salValue] === 'None'){
+        this.response.genSalTable[salValue] = this.tSvc.translate('titles.sal.gen sal.none')
+      } 
+    }
+  }
+
 }
