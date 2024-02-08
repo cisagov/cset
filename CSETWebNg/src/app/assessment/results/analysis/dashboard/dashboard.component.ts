@@ -23,11 +23,11 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { Router } from '../../../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 declare var $: any;
 
 @Component({
@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    private router: Router) { }
+    private tSvc: TranslocoService) { }
 
   ngOnInit() {
     this.analysisSvc.getDashboard().subscribe(x => this.setupPage(x));
@@ -75,10 +75,12 @@ export class DashboardComponent implements OnInit {
     this.overallScoreDisplay = this.getScore(x.overallBars, 'Overall').toFixed(0) + '%';
 
     this.standardBasedScore = this.getScore(x.overallBars, 'Standards');
-    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? this.standardBasedScore.toFixed(0) + '%' : 'No Standards Answers';
+    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? 
+      this.standardBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no standards answers');
 
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
-    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
+    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? 
+      this.componentBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no components answers');
 
 
     // Assessment Compliance
@@ -131,12 +133,12 @@ export class DashboardComponent implements OnInit {
 
 
   /**
-   * Returns the 'data' element that corresponds to the position of the 'Label.'
+   * Returns the 'data' element that corresponds to the position of the English 'Label.'
    * @param overallBars
    */
   getScore(overallBars, label) {
-    for (let i = 0; i < overallBars.labels.length; i++) {
-      if (overallBars.labels[i].toLowerCase() === label.toLowerCase()) {
+    for (let i = 0; i < overallBars.englishLabels.length; i++) {
+      if (overallBars.englishLabels[i].toLowerCase() === label.toLowerCase()) {
         return overallBars.data[i];
       }
     }
