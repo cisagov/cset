@@ -540,7 +540,9 @@
                 "score": "Puntaje",
                 "overall score": "Puntuación general",
                 "standard based": "Basada en estándares",
-                "component based": "Basada en componentes"
+                "component based": "Basada en componentes",
+                "no standards answers": "[ES]No Standards Answers",
+                "no components answers": "[ES]No Components Answers"
             },
             "executive summary": {
                 "executive summary": "Resumen ejecutivo",

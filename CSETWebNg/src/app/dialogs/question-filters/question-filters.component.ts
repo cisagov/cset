@@ -40,7 +40,6 @@ export class QuestionFiltersComponent implements OnInit {
 
   @Output() filterChanged = new EventEmitter<any>();
 
-  question = "Question";
 
   /**
    * Holds the word "questions" or "statements"
@@ -75,7 +74,6 @@ export class QuestionFiltersComponent implements OnInit {
    */
   ngOnInit(): any {
     if (this.configSvc.installationMode === 'ACET') {
-      this.question = "Statement";
       this.skin = "ncua";
       if (this.assessSvc.isISE()) {
         this.observations = "issues";
