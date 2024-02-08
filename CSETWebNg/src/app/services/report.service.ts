@@ -208,7 +208,7 @@ export class ReportService {
 
   translatedDate(date: string) {
     moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format('DD-MMM-yyyy');
+    return moment(date).format('l');
   }
 
   translatedDateGMT(date: string) {

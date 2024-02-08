@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-info-block',
@@ -8,6 +9,10 @@ export class InfoBlockComponent {
 
   @Input()
   public response: any;
+
+  constructor(
+    public reportSvc: ReportService
+  ){}
 
 
 }
