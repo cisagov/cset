@@ -142,8 +142,8 @@ export class MergeExaminationsComponent implements OnInit {
           this.questionSvc.getDetails(parentId, 'Maturity').subscribe(
             (details) => {
               let myIssues = [];
-              details.findings.forEach(find => {
-                myIssues.push(find);
+              details.observations.forEach(obs => {
+                myIssues.push(obs);
               });
 
               if (myIssues.length > 0) {
@@ -350,13 +350,13 @@ export class MergeExaminationsComponent implements OnInit {
     issueArray.forEach((issue, index) => {
       let actionItemsOverride: ActionItemText[] = [];
 
-      this.questionSvc.getActionItems(parentKey, issue.finding_Id).subscribe((data: any) => {
+      this.questionSvc.getActionItems(parentKey, issue.observation_Id).subscribe((data: any) => {
 
         for (let i = 0; i < data.length; i++) {
           actionItemsOverride.push({ Mat_Question_Id: data[i].question_Id, ActionItemOverrideText: data[i].action_Items });
         }
 
-        issue.finding_Id = 0;
+        issue.observation_Id = 0;
         issue.answer_Id = this.newAnswerIds.get(parentKey);
 
         this.observationSvc.saveObservation(issue).subscribe((response: any) => {
