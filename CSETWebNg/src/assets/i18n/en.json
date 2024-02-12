@@ -2,7 +2,6 @@
     "my assessments": "My Assessments",
     "import": "Import",
     "export all": "Export All",
-    "resource library": "Resource Library",
     "new assessment": "New Assessment",
     "status": "Status",
     "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
@@ -372,7 +371,6 @@
         "feedback icon": "Значок зворотнього зв'язку",
         "copy feedback": "Копіювати текст зворотнього зв'язку в буфер обміну",
         "create feedback email": "Створити електронний лист із зворотнім зв'язком у стандартному поштовому клієнті",
-
         "risk description": "Risk Description",
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
@@ -543,13 +541,39 @@
                 "score": "Score",
                 "overall score": "Overall Score",
                 "standard based": "Standard Based",
-                "component based": "Component Based"
+                "component based": "Component Based",
+                "no standards answers": "No Standards Answers",
+                "no components answers": "No Components Answers"
             },
             "executive summary": {
                 "executive summary": "Executive Summary",
                 "tab title": "Executive Summary",
                 "title page title": "EXECUTIVE SUMMARY",
-                "site information": "Site Information"
+                "site information": "Site Information",
+                "calculated level": "CALCULATED LEVEL",
+                "overall values": "Overall Values",
+                "summary percent compliance": "Summary Percent Compliance",
+                "evaluation": "Evaluation Against Selected Standards and Question Sets",
+                "standards summary": "Standards Summary",
+                "standard or question set": "Standard or Question Set",
+                "areas of concern": "Areas of Concern Top Subjects and Questions",
+                "top subject areas": "The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.",
+                "concern categories": "Top Categories of Concern",
+                "concern questions": "Top Questions of Concern",
+                "analysis of network components": "Analysis of Network Components",
+                "combined component summary": "Combined Component Summary",
+                "identified warnings": "The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}",
+                "see network details": "See the section 'Findings and Recommendations from Basic Network Analysis' for details.",
+                "answer distribution": "[UK] Answer Distribution by Component Type",
+                "calculated general security": "Calculated General Security Assurance Levels (SAL)",
+                "onsite": "Onsite",
+                "offsite": "Offsite",
+                "physical injury": "Physical Injury",
+                "hospital injury": "Hospital Injury",
+                "death": "Death",
+                "capital assets": "Capital Assets",
+                "economic impact": "Economic Impact",
+                "environmental impact": "Environmental Impact"
             },
             "site summary": {
                 "site summary": "Site Summary",
@@ -674,27 +698,38 @@
         "section": "Section",
         "no reference documents available": "no reference documents available"
     },
-    "tools": {
-        "tools": "Tools",
-        "enable protected features": "Enable Protected Features",
-        "assessment documents": "Assessment Documents",
-        "parameter editor": "Parameter Editor",
-        "export assessment to excel": "Export Assessment to Excel",
-        "import modules": "Import Modules",
-        "module builder": "Module Builder",
-        "module content report": "Module Content Report",
-        "trend": "Trend",
-        "compare": "Compare"
-    },
-    "help": {
-        "help": "Help",
-        "about": "About",
-        "keyboard shortcuts": "Keyboard Shortcuts",
-        "legal": {
-            "legal": "Legal",
-            "accessibility document": "Accessibility Document",
-            "advisory": "Advisory",
-            "terms of use": "Terms of Use"
+    "menu": {
+        "tools": {
+            "tools": "Tools",
+            "enable protected features": "Enable Protected Features",
+            "assessment documents": "Assessment Documents",
+            "parameter editor": "Parameter Editor",
+            "export assessment to excel": "Export Assessment to Excel",
+            "import modules": "Import Modules",
+            "module builder": "Module Builder",
+            "module content report": "Module Content Report",
+            "trend": "Trend",
+            "compare": "Compare"
+        },
+        "resource library": "Resource Library",
+        "help": {
+            "help": "Help",
+            "cset user guide": "CSET User Guide",
+            "about": "About",
+            "keyboard shortcuts": "Keyboard Shortcuts",
+            "legal": {
+                "legal": "Legal",
+                "accessibility document": "Accessibility Document",
+                "advisory": "Advisory",
+                "terms of use": "Terms of Use"
+            }
+        },
+        "user": {
+            "user profile": "User Profile",
+            "my assessments": "My Assessments",
+            "change password": "Change Password",
+            "user language": "User Language",
+            "logout": "Logout"
         }
     },
     "merge examinations": {

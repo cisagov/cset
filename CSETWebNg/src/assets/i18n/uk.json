@@ -1,6 +1,5 @@
 {
     "my assessments": "Мої оцінки",
-    "resource library": "Бібліотека ресурсів",
     "new assessment": "Нова оцінка",
     "status": "Статус",
     "completion-questions": "Дано відповідь на {{complete}}/{{total}} тверджень",
@@ -424,8 +423,8 @@
         "question": "Питання",
         "assessment compliance text": "Ця діаграма показує загальні відсоткові бали. <br> Будь ласка, зверніть увагу, що питання без відповіді зараховуються як відповідь НІ в цих балах.",
         "ranked categories text": "На цій діаграмі показано найпоширеніші проблемні сфери. Вони розраховуються на основі зваженої оцінки ризику на основі складності атаки. Вага атаки має найбільшу вагу для легких атак і меншу для більш складних для атаки.",
-        "passed": "[UK]Passed",
-        "failed": "Не вдалося",
+        "passed": "Пройшло",
+        "failed": "Невдачі",
         "total": "Всього",
         "percent": "Відсоток",
         "number": "кількість",
@@ -466,13 +465,39 @@
                 "score": "Оцінка",
                 "overall score": "Загальний рахунок",
                 "standard based": "Стандартна оцінка",
-                "component based": "На основі компонентів"
+                "component based": "На основі компонентів",
+                "no standards answers": "Немає стандартних відповідей",
+                "no components answers": "Компоненти відповіді відсутні"
             },
             "executive summary": {
                 "executive summary": "Резюме",
                 "tab title": "Резюме",
                 "title page title": "РЕЗЮМЕ",
-                "site information": "Інформація про сайт"
+                "site information": "Інформація про сайт",
+                "calculated level": "[UK] CALCULATED LEVEL",
+                "overall values": "[UK] Overall Values",
+                "summary percent compliance": "[UK] Summary Percent Compliance",
+                "evaluation": "[UK] Evaluation Against Selected Standards and Question Sets",
+                "standards summary": "[UK] Standards Summary",
+                "standard or question set": "[UK] Standard or Question Set",
+                "areas of concern": "[UK] Areas of Concern Top Subjects and Questions",
+                "top subject areas": "[UK] The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.",
+                "concern categories": "[UK] Top Categories of Concern",
+                "concern questions": "[UK] Top Questions of Concern",
+                "analysis of network components": "[UK] Analysis of Network Components",
+                "combined component summary": "[UK] Combined Component Summary",
+                "identified warnings": "[UK] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}",
+                "see network details": "[UK] See the section 'Findings and Recommendations from Basic Network Analysis' for details.",
+                "answer distribution": "[UK] Answer Distribution by Component Type",
+                "calculated general security": "[UK] Calculated General Security Assurance Levels (SAL)",
+                "onsite": "На об'єкті",
+                "offsite": "Поза місцем",
+                "physical injury": "фізичне ушкодження",
+                "hospital injury": "Лікарняна травма",
+                "death": "Смерть",
+                "capital assets": "[UK] Capital Assets",
+                "economic impact": "[UK] Economic Impact",
+                "environmental impact": "[UK] Environmental Impact"
             },
             "site summary": {
                 "site summary": "Підсумковий звіт сайту",
@@ -542,27 +567,38 @@
         "section": "Розділ",
         "no reference documents available": "відсутні довідкові документи"
     },
-    "tools": {
-        "tools": "Інструменти",
-        "enable protected features": "[UK]Enable Protected Features",
-        "assessment documents": "[UK]Assessment Documents",
-        "parameter editor": "[UK]Parameter Editor",
-        "export assessment to excel": "[UK]Export Assessment to Excel",
-        "import modules": "[UK]Import Modules",
-        "module builder": "[UK]Module Builder",
-        "module content report": "[UK]Module Content Report",
-        "trend": "[UK]Trend",
-        "compare": "[UK]Compare"
-    },
-    "help": {
-        "help": "Довідка",
-        "about": "[UK]About",
-        "keyboard shortcuts": "[UK]Keyboard Shortcuts",
-        "legal": {
-            "legal": "[UK]Legal",
-            "accessibility document": "[UK]Accessibility Document",
-            "advisory": "[UK]Advisory",
-            "terms of use": "[UK]Terms of Use"
+    "menu": {
+        "tools": {
+            "tools": "Інструменти",
+            "enable protected features": "[UK]Enable Protected Features",
+            "assessment documents": "[UK]Assessment Documents",
+            "parameter editor": "[UK]Parameter Editor",
+            "export assessment to excel": "[UK]Export Assessment to Excel",
+            "import modules": "[UK]Import Modules",
+            "module builder": "[UK]Module Builder",
+            "module content report": "[UK]Module Content Report",
+            "trend": "[UK]Trend",
+            "compare": "[UK]Compare"
+        },
+        "resource library": "Бібліотека ресурсів",
+        "help": {
+            "help": "Довідка",
+            "cset user guide": "Посібник користувача CSET (англійською)",
+            "about": "Про програму",
+            "keyboard shortcuts": "Гарячі клавіші",
+            "legal": {
+                "legal": "Правова інформація",
+                "accessibility document": "Документ доступності",
+                "advisory": "Консультаційний",
+                "terms of use": "Умови використання"
+            }
+        },
+        "user": {
+            "user profile": "Профіль користувача",
+            "my assessments": "Мої оцінки",
+            "change password": "Змінити пароль",
+            "user language": "Мова користувача",
+            "logout": "Вийти"
         }
     },
     "about": {

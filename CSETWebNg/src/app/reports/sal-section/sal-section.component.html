@@ -20,66 +20,67 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<div *transloco="let t">
 <div class="sal-display {{analysisSvc.salColor(response?.salTable.osv)}}" style="margin: 0 1em 1em 1em;">
-    <div class="sal-label">CALCULATED LEVEL</div>
+    <div class="sal-label">{{t('reports.core.executive summary.calculated level')}}</div>
     <div class="sal-value">
-        {{response?.salTable.osv}}
+        {{t('titles.sal.' + response?.salTable.osv.toLowerCase())}}
     </div>
 </div>
 
 <table class="cset-table" *ngIf="response?.salTable.lastSalDeterminationType !== 'GENERAL'">
     <tr>
         <th style="width: 25%"></th>
-        <th style="width: 25%">Confidentiality</th>
-        <th style="width: 25%">Integrity</th>
-        <th style="width: 25%">Availability</th>
+        <th style="width: 25%">{{t('titles.sal.confidentiality')}}</th>
+        <th style="width: 25%">{{t('titles.sal.integrity')}}</th>
+        <th style="width: 25%">{{t('titles.sal.availability')}}</th>
     </tr>
     <tr>
-        <td>Overall Values</td>
-        <td>{{response?.salTable.q_CV}}</td>
-        <td>{{response?.salTable.q_IV}}</td>
-        <td>{{response?.salTable.q_AV}}</td>
+        <td>{{t('reports.core.executive summary.overall values')}}</td>
+        <td>{{t('titles.sal.' + response?.salTable.q_CV.toLowerCase())}}</td>
+        <td>{{t('titles.sal.' + response?.salTable.q_IV.toLowerCase())}}</td>
+        <td>{{t('titles.sal.' + response?.salTable.q_AV.toLowerCase())}}</td>
     </tr>
 </table>
 
 
 <div *ngIf="response?.salTable.lastSalDeterminationType === 'GENERAL'">
     <p>
-        <b>Calculated General Security Assurance Levels (SAL)</b>
+        <b>{{t('reports.core.executive summary.calculated general security')}}</b>
     </p>
     <table class="cset-table" style="table-layout: fixed">
         <tr>
             <th style="width: 33%"></th>
-            <th style="width: 33%">Onsite</th>
-            <th style="width: 33%">Offsite</th>
+            <th style="width: 33%">{{t('reports.core.executive summary.onsite')}}</th>
+            <th style="width: 33%">{{t('reports.core.executive summary.offsite')}}</th>
         </tr>
         <tr>
-            <td>Physical Injury</td>
+            <td>{{t('reports.core.executive summary.physical injury')}}</td>
             <td>{{response?.genSalTable.on_Site_Physical_Injury}}</td>
             <td>{{response?.genSalTable.off_Site_Physical_Injury}}</td>
         </tr>
         <tr>
-            <td>Hospital Injury</td>
+            <td>{{t('reports.core.executive summary.hospital injury')}}</td>
             <td>{{response?.genSalTable.on_Site_Hospital_Injury}}</td>
             <td>{{response?.genSalTable.off_Site_Hospital_Injury}}</td>
         </tr>
         <tr>
-            <td>Death</td>
+            <td>{{t('reports.core.executive summary.death')}}</td>
             <td>{{response?.genSalTable.on_Site_Death}}</td>
             <td>{{response?.genSalTable.off_Site_Death}}</td>
         </tr>
         <tr>
-            <td>Capital Assets</td>
+            <td>{{t('reports.core.executive summary.capital assets')}}</td>
             <td>{{response?.genSalTable.on_Site_Capital_Assets}}</td>
             <td>{{response?.genSalTable.off_Site_Capital_Assets}}</td>
         </tr>
         <tr>
-            <td>Economic Impact</td>
+            <td>{{t('reports.core.executive summary.economic impact')}}</td>
             <td>{{response?.genSalTable.on_Site_Economic_Impact}}</td>
             <td>{{response?.genSalTable.off_Site_Economic_Impact}}</td>
         </tr>
         <tr>
-            <td>Environmental Impact</td>
+            <td>{{t('reports.core.executive summary.environmental impact')}}</td>
             <td>{{response?.genSalTable.on_Site_Environmental_Cleanup}}</td>
             <td>{{response?.genSalTable.off_Site_Environmental_Cleanup}}</td>
         </tr>
@@ -136,4 +137,5 @@
             <td>{{nistSalA}}</td>
         </tr>
     </table>
+</div>
 </div>
