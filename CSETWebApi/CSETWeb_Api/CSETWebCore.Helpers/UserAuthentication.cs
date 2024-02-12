@@ -168,27 +168,30 @@ namespace CSETWebCore.Helpers
             // Read the file system for the LOCAL-INSTALLATION file put there at install time
             if (!_localInstallationHelper.IsLocalInstallation())
             {
-                // this is not a local install.  Return what we know about this user.
-                var loginUser = _context.USERS.Where(x => x.UserId == int.Parse(tokenManager.Payload("userid"))).FirstOrDefault();
-
-                if (loginUser != null)
+                // this is not a local install.  Return what we know about this user (if anything).
+                if (tokenManager.Payload("userid") != null)
                 {
-                    var respUser = new LoginResponse
-                    {
-                        UserId = loginUser.UserId,
-                        Email = login.Email,
-                        Lang = loginUser.Lang,
-                        UserFirstName = loginUser.FirstName,
-                        UserLastName = loginUser.LastName,
-                        IsSuperUser = loginUser.IsSuperUser,
-                        ResetRequired = loginUser.PasswordResetRequired ?? true,
-                        ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
-                        ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
-                        LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                        IsFirstLogin = loginUser.IsFirstLogin ?? false
-                    };
+                    var loginUser = _context.USERS.Where(x => x.UserId == int.Parse(tokenManager.Payload("userid"))).FirstOrDefault();
 
-                    return respUser;
+                    if (loginUser != null)
+                    {
+                        var respUser = new LoginResponse
+                        {
+                            UserId = loginUser.UserId,
+                            Email = login.Email,
+                            Lang = loginUser.Lang,
+                            UserFirstName = loginUser.FirstName,
+                            UserLastName = loginUser.LastName,
+                            IsSuperUser = loginUser.IsSuperUser,
+                            ResetRequired = loginUser.PasswordResetRequired ?? true,
+                            ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                            ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                            LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                            IsFirstLogin = loginUser.IsFirstLogin ?? false
+                        };
+
+                        return respUser;
+                    }
                 }
 
                 return null;
