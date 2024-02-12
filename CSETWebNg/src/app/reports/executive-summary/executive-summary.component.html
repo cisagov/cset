@@ -49,13 +49,13 @@
     <app-overall-compliance></app-overall-compliance>
 
     <h1 *ngIf="response?.information.assessment_Description">
-      High-Level Assessment Description
+      {{t('reports.high level assessment desc')}}
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
     </p>
 
     <h1>
-      Executive Summary
+      {{t('reports.core.executive summary.executive summary')}}
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.executive_Summary)">
     </p>
@@ -69,7 +69,7 @@
 
   <div *ngIf="!usesRAC()" class="page-break">
     <h1>
-      Security Assurance Level (SAL)
+      {{t('titles.sal.security assurance level (sal)')}}
     </h1>
 
     <!-- SAL -->
@@ -135,18 +135,16 @@
 
   <div class="page-break" *ngIf="response?.information.useStandard">
     <h1>
-      Areas of Concern Top Subjects and Questions
+      {{t('reports.core.executive summary.areas of concern')}}
     </h1>
 
     <p>
-      The top subject areas and questions identify those areas where attention will either provide the most immediate
-      impact or
-      protect against the greatest vulnerabilities.
+      {{t('reports.core.executive summary.top subject areas')}}
     </p>
 
     <div>
       <h3>
-        Top Categories of Concern
+        {{t('reports.core.executive summary.concern categories')}}
       </h3>
       <table class="concern-list">
         <tr *ngFor="let topCat of response?.top5Categories; index as i">
@@ -157,7 +155,7 @@
 
 
       <h3>
-        Top Questions of Concern
+        {{t('reports.core.executive summary.concern questions')}}
       </h3>
       <table class="concern-list">
         <tr *ngFor="let topQ of response?.top5Questions; index as i">
