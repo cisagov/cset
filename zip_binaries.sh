@@ -9,6 +9,9 @@
 _versionNum=$1
 
 start C:/src/Repos/CSETStandAlone/setup/WixInstaller/CSET_WixSetup/deprecateFAA.bat CSETWeb${_versionNum}
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "${package}Web${version}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Users Clean-out.sql"
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "${package}Web${version}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Assessment Clean-out.sql"
+sqlcmd -S "(localdb)\INLLocalDb2022" -d "${package}Web${version}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Standards Clean-out.sql"
 
 sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
 

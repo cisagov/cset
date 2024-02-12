@@ -45,8 +45,8 @@ Copy-Item -Path CSETUI\* -Destination C:\inetpub\wwwroot\CSETUI -Recurse -Force
 
 # Copy database files to user directory
 New-Item -ItemType directory -Path C:\CSETDatabase -Force
-Copy-Item -Path database\CSETWeb12024.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
-Copy-Item -Path database\CSETWeb12024_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
+Copy-Item -Path database\CSETWeb12130.mdf -Destination C:\CSETDatabase\CSETWeb.mdf -Force
+Copy-Item -Path database\CSETWeb12130_log.ldf -Destination C:\CSETDatabase\CSETWeb_log.ldf -Force
 
 $plainTextPassword = [Net.NetworkCredential]::new('', $password).Password
 
