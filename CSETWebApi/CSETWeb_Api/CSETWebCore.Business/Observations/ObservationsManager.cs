@@ -165,15 +165,15 @@ namespace CSETWebCore.Business.Observations
         /// </summary>
         public List<ActionItems> GetActionItems(int parentId, int observation_id)
         {
-            var actionItems = new List<ActionItems>(
+            var actionItems = new List<ActionItems>();
 
-                );
             var table = from questions in _context.MATURITY_QUESTIONS
                         join actions in _context.ISE_ACTIONS on questions.Mat_Question_Id equals actions.Mat_Question_Id
                         join o in _context.ISE_ACTIONS_FINDINGS on new { Mat_Question_Id = questions.Mat_Question_Id, Finding_Id = observation_id }
                             equals new { Mat_Question_Id = o.Mat_Question_Id, Finding_Id = o.Finding_Id }
                            into overrides
                         from o in overrides.DefaultIfEmpty()
+                        orderby questions.Mat_Question_Id ascending
                         where questions.Parent_Question_Id == parentId
                         select new { actions = actions, overrides = o };
             foreach (var row in table.ToList())
