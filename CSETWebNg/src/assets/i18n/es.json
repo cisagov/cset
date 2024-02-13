@@ -2,7 +2,6 @@
     "my assessments": "Mis evaluaciones",
     "import": "Importar",
     "export all": "Exportar todo",
-    
     "new assessment": "Nueva evaluación",
     "status": "Estado",
     "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
@@ -576,7 +575,17 @@
             },
             "site summary": {
                 "site summary": "[ES]Site Summary",
-                "report title": "[ES]Site Summary"
+                "report title": "[ES]Site Summary",
+                "site information": "Información del sitio",
+                "high-level assessment description": "[ES]High-Level Assessment Description",
+                "executive summary": "Sumario ejecutivo",
+                "network diagram": "[ES]Network Diagram",
+                "standards compliance": "[ES]Standards Compliance",
+                "security assurance level": "[ES]Security Assurance Level (SAL)",
+                "document library": "[ES]Document Library",
+                "ranked categories": "[ES]Ranked Categories",
+                "summary of ranked questions": "[ES]Summary of Ranked Questions",
+                "summary of ranked questions desc": "[ES]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
             "components summary": {
                 "components summary": "Resumen de componentes",

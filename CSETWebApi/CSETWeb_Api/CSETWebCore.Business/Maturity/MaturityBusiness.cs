@@ -1204,6 +1204,11 @@ namespace CSETWebCore.Business.Maturity
         public List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
+            // If there are no data, we have no maturity answers so skip the rest
+            if (data.Count == 0)
+            {
+                return new List<MaturityDomain>();
+            }
             return CalculateComponentValues(data, assessmentId, spanishFlag);
         }
 
