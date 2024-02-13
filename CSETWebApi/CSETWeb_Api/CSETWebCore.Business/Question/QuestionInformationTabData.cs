@@ -28,6 +28,8 @@ namespace CSETWebCore.Business.Question
 
         private readonly ITokenManager _tokenManager;
 
+        private readonly TranslationOverlay _overlay;
+
 
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -104,9 +106,14 @@ namespace CSETWebCore.Business.Question
             _converter = converter;
             _context = context;
             _tokenManager = token;
+
+            _overlay = new TranslationOverlay();
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void BuildQuestionTab(QuestionInfoData infoData, SETS set)
         {
             ShowRequirementFrameworkTitle = true;
@@ -114,14 +121,28 @@ namespace CSETWebCore.Business.Question
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set)
         {
             BuildFromNewQuestion(questionInfoData, set);
             ShowRelatedFrameworkCategory = true;
             ShowRequirementFrameworkTitle = true;
             RelatedFrameworkCategory = questionInfoData.Category;
+
+            var lang = _tokenManager.GetCurrentLanguage();
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", questionInfoData.Category.ToLower(), lang);
+            if (cat != null)
+            {
+                RelatedFrameworkCategory = cat;
+            }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set)
         {
             NEW_QUESTION question = infoData.Question;
@@ -257,9 +278,19 @@ namespace CSETWebCore.Business.Question
             }
 
             if (!IsComponent)
+            {
                 RequirementFrameworkTitle = requirement.Requirement_Title;
+            }
 
             RelatedFrameworkCategory = requirement.Standard_Sub_Category;
+
+            // translate category
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), lang);
+            if (cat != null)
+            {
+                RelatedFrameworkCategory = cat;
+            }
+
 
             if (requirementData.SetName == StandardConstants.CNSSI_1253_DB || requirementData.SetName == StandardConstants.CNSSI_ICS_PIT_DB
                 || requirementData.SetName == StandardConstants.CNSSI_ICS_V1_DB || requirementData.SetName == StandardConstants.CNSSI_1253_V2_DB)

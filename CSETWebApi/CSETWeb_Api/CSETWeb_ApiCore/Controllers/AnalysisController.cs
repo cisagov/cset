@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -18,6 +17,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
+using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
@@ -73,13 +73,34 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/analysis/RankedQuestions")]
         public IActionResult GetRankedQuestions()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+            
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
+
+            string mode = GetAssessmentMode(assessmentId);
 
             var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
+                // Currently we only translate text for REQUIREMENTS
+                if (mode == "R")
+                {
+                    var translatedReq = _overlay.GetReq(q.QuestionOrRequirementID, lang);
+                    if (translatedReq != null)
+                    {
+                        q.QuestionText = translatedReq.RequirementText;
+
+                        var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang);
+                        if (translatedCategory != null)
+                        {
+                            q.Category = translatedCategory;
+                        }
+                    }
+                }
+
+
                 q.QuestionText = _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
             }
 
@@ -329,7 +350,7 @@ namespace CSETWebCore.Api.Controllers
                     string label = j.Item1;
 
                     overallBars.EnglishLabels.Add(j.Item1);
-                    overallBars.Labels.Add(_overlay.GetValue("GENERIC", j.Item1, lang)?.Value ?? j.Item1);
+                    overallBars.Labels.Add(_overlay.GetPropertyValue("GENERIC", j.Item1.ToLower(), lang) ?? j.Item1);
                     overallBars.data.Add(j.Item2);
                 }
 
