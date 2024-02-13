@@ -1261,16 +1261,16 @@ namespace CSETWebCore.Business.ModuleBuilder
             foreach (NEW_REQUIREMENT rq in reqs)
             {
                 // overlay
-                var translatedCategory = _overlay.GetCat(rq.Standard_Category, _lang);
+                var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", rq.Standard_Category.ToLower(), _lang);
                 if (translatedCategory != null)
                 {
-                    rq.Standard_Category = translatedCategory.Value;
+                    rq.Standard_Category = translatedCategory;
                 }
 
-                var translatedSubcat = _overlay.GetCat(rq.Standard_Sub_Category, _lang);
+                var translatedSubcat = _overlay.GetPropertyValue("STANDARD_CATEGORY", rq.Standard_Sub_Category.ToLower(), _lang);
                 if (translatedSubcat != null)
                 {
-                    rq.Standard_Sub_Category = translatedSubcat.Value;
+                    rq.Standard_Sub_Category = translatedSubcat;
                 }
 
                 Requirement r = new Requirement()
