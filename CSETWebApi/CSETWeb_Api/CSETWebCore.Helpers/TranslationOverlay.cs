@@ -1,28 +1,41 @@
-﻿using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Edm;
-using CSETWebCore.Model.Question;
-using CSETWebCore.Model.Set;
-using Microsoft.EntityFrameworkCore;
+﻿using CSETWebCore.Model.Question;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Org.BouncyCastle.Asn1.Pkcs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace CSETWebCore.Helpers
 {
     /// <summary>
     /// Manages translation lookup based on language pack
-    /// information stored in App_Data/LanguagePacks
+    /// information stored in App_Data/LanguagePacks.
+    /// 
+    /// Provides several methods to get at the data, depending on 
+    /// how it is stored in the language pack.
     /// </summary>
     public class TranslationOverlay
     {
-        private Dictionary<string, JArray> dict = new Dictionary<string, JArray>();
+        /// <summary>
+        /// A dictionary of loaded JArray language packs
+        /// </summary>
+        private Dictionary<string, JArray> dictJA = new Dictionary<string, JArray>();
+
+        /// <summary>
+        /// A dictionary of loaded JObject language packs
+        /// </summary>
+        private Dictionary<string, JObject> dictJO = new Dictionary<string, JObject>();
+
+        /// <summary>
+        /// A dictionary of loaded RequirementTranslations language packs
+        /// </summary>
         private Dictionary<string, RequirementTranslations> dReq = new Dictionary<string, RequirementTranslations>();
-        private Dictionary<string, CategoryTranslation> dCat = new Dictionary<string, CategoryTranslation>();
-        private Dictionary<string, GenericTranslation> dKVP = new Dictionary<string, GenericTranslation>();
+
+        /// <summary>
+        /// A dictionary of loaded GenericTranslation language packs
+        /// </summary>
+        private Dictionary<string, GenericTranslation> dictGeneric = new Dictionary<string, GenericTranslation>();
 
 
         /// <summary>
@@ -39,11 +52,10 @@ namespace CSETWebCore.Helpers
             }
 
             lang = lang.ToLower();
-            collection = collection.ToLower();
 
-            var kvpKey = $"{lang}|{collection}";
+            var dictKey = $"{lang}|{collection.ToLower()}";
 
-            if (!dict.ContainsKey(kvpKey))
+            if (!dictJA.ContainsKey(dictKey))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
@@ -53,18 +65,74 @@ namespace CSETWebCore.Helpers
                     return null;
                 }
 
-                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<JArray>(json);
+                langPack = JsonConvert.DeserializeObject<JArray>(json);
 
-                dict.Add(kvpKey, langPack);
+                dictJA.Add(dictKey, langPack);
             }
             else
             {
-                langPack = dict[kvpKey];
+                langPack = dictJA[dictKey];
             }
 
             var target = langPack.Children().FirstOrDefault(x => x.SelectToken(keyFieldName).Value<string>().Equals(key, StringComparison.InvariantCultureIgnoreCase));
 
             return (JObject)target;
+        }
+
+
+        /// <summary>
+        /// Returns the string value of the property name.  This works on a JSON file
+        /// that represents a single object with multiple properties.  
+        /// 
+        /// This JSON layout is similar to a transloco language file.
+        /// 
+        /// Returns null if the property is not defined.
+        /// </summary>
+        /// <returns></returns>
+        public string GetPropertyValue(string collection, string propertyName, string lang)
+        {
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            lang = lang.ToLower();
+
+            var dictKey = $"{lang}|{collection.ToLower()}";
+
+            JObject langPack;
+            if (!dictJO.ContainsKey(dictKey))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
+
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = JsonConvert.DeserializeObject<JObject>(json);
+
+                dictJO.Add(dictKey, langPack);
+            }
+            else
+            {
+                langPack = dictJO[dictKey];
+            }
+
+            // adjust propertyName if segments have spaces to make SelectToken happy
+            var segs = propertyName.Split('.');
+            for (var i = 0; i < segs.Length; i++)
+            {
+                if (segs[i].Contains(' '))
+                {
+                    segs[i] = $"['{segs[i]}']";
+                }
+            }
+            propertyName = string.Join(".", segs);
+
+
+            return langPack.SelectToken(propertyName)?.Value<string>() ?? null;
         }
 
 
@@ -83,11 +151,10 @@ namespace CSETWebCore.Helpers
             }
 
             lang = lang.ToLower();
-            collection = collection.ToLower();
 
-            var kvpKey = $"{lang}|{collection}";
+            var dictKey = $"{lang}|{collection.ToLower()}";
 
-            if (!dKVP.ContainsKey(kvpKey))
+            if (!dictGeneric.ContainsKey(dictKey))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
@@ -99,56 +166,15 @@ namespace CSETWebCore.Helpers
 
                 langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<GenericTranslation>(json);
 
-                dKVP.Add(kvpKey, langPack);
+                dictGeneric.Add(dictKey, langPack);
             }
             else
             {
-                langPack = dKVP[kvpKey];
+                langPack = dictGeneric[dictKey];
             }
 
             
             return langPack.Pairs.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
-        }
-
-
-        /// <summary>
-        /// Lazy loads the CATEGORIES language pack and tries to get 
-        /// a value for the specified key.
-        /// </summary>
-        /// <param name="category"></param>
-        /// <param name="lang"></param>
-        /// <returns></returns>
-        public Model.Question.KeyValuePair GetCat(string category, string lang)
-        {
-            CategoryTranslation langPack = null;
-
-            if (lang == "en")
-            {
-                return null;
-            }
-
-            if (!dCat.ContainsKey(lang))
-            {
-                var rh = new ResourceHelper();
-                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "CATEGORIES.json"));
-
-                // safety in case the language pack doesn't exist
-                if (json == null)
-                {
-                    return null;
-                }
-
-
-                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<CategoryTranslation>(json);
-
-                dCat.Add(lang, langPack);
-            }
-            else
-            {
-                langPack = dCat[lang];
-            }
-
-            return langPack.Categories.FirstOrDefault(x => x.Key.ToLower() == category.ToLower());
         }
 
 
@@ -165,7 +191,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            if (!dReq.ContainsKey(lang))
+            if (!dReq.TryGetValue(lang, out RequirementTranslations value))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
@@ -176,13 +202,13 @@ namespace CSETWebCore.Helpers
                     return null;
                 }
 
-                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<RequirementTranslations>(json);
+                langPack = JsonConvert.DeserializeObject<RequirementTranslations>(json);
 
                 dReq.Add(lang, langPack);
             }
             else
             {
-                langPack = dReq[lang];
+                langPack = value;
             }
 
             return langPack.Requirements.FirstOrDefault(x => x.RequirementId == requirementId);

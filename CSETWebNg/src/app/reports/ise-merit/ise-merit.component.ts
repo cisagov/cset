@@ -126,15 +126,15 @@ export class IseMeritComponent implements OnInit {
             let actionItemRow = this.actionData[i];
 
             if (actionItemRow.action_Items != '') { //filters out 'deleted' action items
-              if (!this.masterActionItemsMap.has(actionItemRow.finding_Id)) {
+              if (!this.masterActionItemsMap.has(actionItemRow.observation_Id)) {
 
-                this.masterActionItemsMap.set(actionItemRow.finding_Id, [actionItemRow]);
+                this.masterActionItemsMap.set(actionItemRow.observation_Id, [actionItemRow]);
               } else {
-                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.finding_Id);
+                let tempActionArray = this.masterActionItemsMap.get(actionItemRow.observation_Id);
 
                 tempActionArray.push(actionItemRow);
 
-                this.masterActionItemsMap.set(actionItemRow.finding_Id, tempActionArray);
+                this.masterActionItemsMap.set(actionItemRow.observation_Id, tempActionArray);
               }
             }
           }

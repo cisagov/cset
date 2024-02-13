@@ -149,10 +149,10 @@ namespace CSETWebCore.Business.Question
 
 
                 // translate the Category
-                var translatedCategory = overlay.GetCat(dbR.Standard_Category, lang);
+                var translatedCategory = overlay.GetPropertyValue("STANDARD_CATEGORY", dbR.Standard_Category.ToLower(), lang);
                 if (translatedCategory != null)
                 {
-                    dbR.Standard_Category = translatedCategory.Value;
+                    dbR.Standard_Category = translatedCategory;
                 }
 
 
@@ -172,10 +172,10 @@ namespace CSETWebCore.Business.Question
 
 
                 // translate the Subcategory using the CATEGORIES translation object
-                var translatedSubcategory = overlay.GetCat(dbR.Standard_Sub_Category, lang);
+                var translatedSubcategory = overlay.GetPropertyValue("STANDARD_CATEGORY", dbR.Standard_Sub_Category.ToLower(), lang);
                 if (translatedSubcategory != null)
                 {
-                    dbR.Standard_Sub_Category = translatedSubcategory.Value;
+                    dbR.Standard_Sub_Category = translatedSubcategory;
                 }
 
 
