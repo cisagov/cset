@@ -72,13 +72,13 @@ namespace CSETWebCore.Business.Assessment
             var lang = _tokenManager.GetCurrentLanguage();
             if (lang != "en")
             {
-                var msg = _overlay.GetValue("GENERIC", "default exec summ", lang)?.Value;
+                var msg = _overlay.GetPropertyValue("GENERIC", "default exec summ", lang);
                 if (msg != null)
                 {
                     defaultExecSumm = msg;
                 }
 
-                msg = _overlay.GetValue("GENERIC", "default assessment name", lang)?.Value;
+                msg = _overlay.GetPropertyValue("GENERIC", "default assessment name", lang);
                 if (msg != null)
                 {
                     defaultAssessmentName = msg;
