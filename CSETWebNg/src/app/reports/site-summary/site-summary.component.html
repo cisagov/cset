@@ -53,7 +53,7 @@
 
 
     <div class="page-break">
-        <h1>Site Information</h1>
+        <h1>{{t('reports.core.site summary.site information')}}</h1>
         <app-site-information [response]="response"></app-site-information>
     </div>
 
@@ -63,13 +63,13 @@
         <app-overall-compliance></app-overall-compliance>
 
         <h1 *ngIf="response?.information.assessment_Description">
-            High-Level Assessment Description
+            {{t('reports.core.site summary.high-level assessment description')}}
         </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
         </p>
 
         <h1>
-            Executive Summary
+            {{t('reports.core.site summary.executive summary')}}
         </h1>
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.executive_Summary)">
         </p>
@@ -88,7 +88,7 @@
 
     <!--Network Diagram-->
     <div class="page-break" *ngIf="response?.information.useDiagram">
-        <h1>Network Diagram</h1>
+        <h1>{{t('reports.core.site summary.network diagram')}}</h1>
         <div style="display: table; height: 8in">
             <div style="padding: 50% 0; height: 0">
                 <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"
@@ -135,7 +135,7 @@
 
     <div *ngIf="!usesRAC()" class="page-break">
         <h1>
-            Security Assurance Level (SAL)
+            {{t('reports.core.site summary.security assurance level')}}
         </h1>
 
         <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
@@ -303,7 +303,7 @@
 
     <div class="page-break">
         <h1>
-            Document Library
+            {{t('reports.core.site summary.document library')}}
         </h1>
 
         <table class="cset-table-3">
@@ -330,18 +330,11 @@
 
     <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
-            Summary Of Ranked Questions
+            {{t('reports.core.site summary.summary of ranked questions')}}
         </h1>
 
         <p>
-            Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below.
-            The displayed
-            levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High
-            (VH).
-            CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels
-            are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive
-            (S),
-            and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category.
+            {{t('reports.core.site summary.summary of ranked questions desc')}}
         </p>
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
