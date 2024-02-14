@@ -553,9 +553,8 @@ namespace CSETWebCore.Business.Question
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
 
                 //
-                var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-                var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-                if (user?.Lang == "es" || ak?.Lang == "es")
+                var lang = _tokenManager.GetCurrentLanguage();
+                if (lang == "es")
                 {
                     Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                     var output = new SpanishQuestionRow();
