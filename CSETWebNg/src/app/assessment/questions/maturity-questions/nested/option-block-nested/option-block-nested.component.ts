@@ -31,6 +31,7 @@ import { LayoutService } from '../../../../../services/layout.service';
 import { QuestionsService } from '../../../../../services/questions.service';
 import { Utilities } from '../../../../../services/utilities.service';
 import { HydroService } from '../../../../../services/hydro.service';
+import { MalcolmService } from '../../../../../services/malcolm.service';
 
 @Component({
   selector: 'app-option-block-nested',
@@ -40,10 +41,14 @@ export class OptionBlockNestedComponent implements OnInit {
 
   @Input() q: Question;
   @Input() opts: Option[];
+  @Input() malcolmInfo: any;
+
 
   optRadio: Option[];
   optCheckbox: Option[];
   optOther: Option[];
+
+  selectedOptions: Option[];
 
   optionGroupName = '';
   sectionId = 0;
@@ -57,6 +62,7 @@ export class OptionBlockNestedComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
     public hydroSvc: HydroService,
+    public malcolmSvc: MalcolmService,
     private utilSvc: Utilities,
     private configSvc: ConfigService,
     private route: ActivatedRoute,
@@ -72,8 +78,10 @@ export class OptionBlockNestedComponent implements OnInit {
     this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
     if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName)) {
+      
       // hides 'None' answers for Hydro answers for now
       this.optRadio = this.opts?.filter(x => x.optionType == 'radio' && x.optionText != 'None');
+      this.selectedOptions = this.optRadio?.filter(x => x.selected == true);
     } else {
       this.optRadio = this.opts?.filter(x => x.optionType == 'radio');
     }
@@ -107,18 +115,26 @@ export class OptionBlockNestedComponent implements OnInit {
 
     if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName) && o.selected == true) {
       o.selected = false;
-
+      this.selectedOptions = [];
       answers.push(this.makeAnswer(o));
 
       siblingOptions = this.q.options;
     }
     else {
       o.selected = event.target.checked;
-
+      if (o.selected) {
+        this.selectedOptions.push(o);
+      }
       answers.push(this.makeAnswer(o));
 
       siblingOptions = this.q.options.filter(x => x.optionId !== o.optionId);
     }
+
+    this.selectedOptions.forEach(option => {
+      if (o.optionId == option.optionId && !o.selected) {
+        this.selectedOptions.pop();
+      }
+    });
 
     siblingOptions.forEach(option => {
       option.selected = false;

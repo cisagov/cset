@@ -1,4 +1,11 @@
-﻿using CSETWebCore.Business.Aggregation;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Malcolm;
@@ -27,8 +34,6 @@ namespace CSETWebCore.Business.Malcolm
 
         private Dictionary<string, TempNode> networkOfNodes = new Dictionary<string, TempNode>();
 
-
-
         public MalcolmBusiness(CSETContext context)
         {
             _context = context;
@@ -42,11 +47,8 @@ namespace CSETWebCore.Business.Malcolm
                 {
                     foreach (var bucket in malcolmData.Values.Buckets)
                     {
-                        //if (!networkOfNodes.ContainsKey(bucket.Key))
-                        //{
-                            var buckets = new List<Buckets>() { bucket };
-                            BuildNetwork(null, buckets);
-                        //}
+                        var buckets = new List<Buckets>() { bucket };
+                        BuildNetwork(null, buckets);
                     }
                     malcolmData.Graphs = networkOfNodes;
                     networkOfNodes = new Dictionary<string, TempNode>();           
@@ -108,7 +110,6 @@ namespace CSETWebCore.Business.Malcolm
             }
         }
 
-        // name is TBD
         public void VerificationAndValidation(int assessment_Id)
         {
             var assessment = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessment_Id).FirstOrDefault();
@@ -125,19 +126,21 @@ namespace CSETWebCore.Business.Malcolm
             
             if (malcolmMappingInfo.Count > 0)
             {
-                foreach(MALCOLM_MAPPING m in malcolmMappingInfo)
+                List<MALCOLM_ANSWERS> valuesToAdd = new List<MALCOLM_ANSWERS>();
+                foreach (MALCOLM_MAPPING m in malcolmMappingInfo)
                 {
-                    var dbAnswer = _context.ANSWER.Where(x => x.Assessment_Id == assessment_Id 
-                        && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
+                    var dbMalcolmAnswer = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id
+                        && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id
+                        && x.Malcolm_Id == m.Malcolm_Id).FirstOrDefault();
 
                     // HYDRO uses Mat_Option_Id and has "S" for "Selected" instead of "N" or "Y"
                     string answerText = m.Mat_Option_Id == null ? "N" : "S";
 
-                    if (dbAnswer == null)
+                    if (dbMalcolmAnswer == null)
                     {
                         // need to make sure the assessment uses the Set / Maturity before adding answers for it
                         GalleryConfig config = null;
-                        var galleryItem = _context.GALLERY_ITEM.FirstOrDefault(x => x.Gallery_Item_Guid == assessment.GalleryItemGuid);
+                        var galleryItem = _context.GALLERY_ITEM.Where(x => x.Gallery_Item_Guid == assessment.GalleryItemGuid).FirstOrDefault();
                         if (galleryItem != null)
                         {
                             config = JsonConvert.DeserializeObject<GalleryConfig>(galleryItem.Configuration_Setup);
@@ -154,7 +157,15 @@ namespace CSETWebCore.Business.Malcolm
 
                                     if (q != null)
                                     {
-                                        _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                        var temp = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id).ToList();
+                                        var answer = SetUpAnswer(assessment_Id, answerText, m);
+                                        if (temp == null || temp.Count == 0)
+                                        {
+                                            if (!valuesToAdd.Contains(answer))
+                                            {
+                                                valuesToAdd.Add(answer);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -169,10 +180,14 @@ namespace CSETWebCore.Business.Malcolm
 
                                     if (req != null)
                                     {
-                                        var temp = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id)
-                                        if (temp == null)
+                                        var temp = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id).ToList();
+                                        var answer = SetUpAnswer(assessment_Id, answerText, m);
+                                        if (temp == null || temp.Count == 0)
                                         {
-                                            _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                            if (!valuesToAdd.Contains(answer))
+                                            {
+                                                valuesToAdd.Add(answer);
+                                            }
                                         }
                                     }
                                 }
@@ -186,24 +201,36 @@ namespace CSETWebCore.Business.Malcolm
 
                                 if (new_q != null)
                                 {
-                                    _context.MALCOLM_ANSWERS.Add(SetUpAnswer(assessment_Id, answerText, m));
+                                    var temp = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id && x.Question_Or_Requirement_Id == m.Question_Or_Requirement_Id).ToList();
+                                    var answer = SetUpAnswer(assessment_Id, answerText, m);
+                                    if (temp == null || temp.Count == 0)
+                                    {
+                                        bool tempLock = false;
+                                        foreach (MALCOLM_ANSWERS malcolmAns in valuesToAdd)
+                                        {
+                                            if (malcolmAns.Question_Or_Requirement_Id == answer.Question_Or_Requirement_Id)
+                                            {
+                                                tempLock = true;
+                                            }
+                                        }
+
+                                        if (!tempLock)
+                                        {
+                                            valuesToAdd.Add(answer);
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-
-                    else if (dbAnswer.Answer_Text == "U" || dbAnswer.Answer_Text == "")
-                    {
-                        dbAnswer.Answer_Text = answerText;
-                        dbAnswer.Mat_Option_Id = m.Mat_Option_Id;
-                    }
                 }
-
+                valuesToAdd = valuesToAdd.Distinct().ToList();
+                _context.MALCOLM_ANSWERS.AddRange(valuesToAdd);
                 _context.SaveChanges();
             }
         }
 
-        public MALCOLM_ANSWERS SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
+        private MALCOLM_ANSWERS SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
         {
             var answer = new MALCOLM_ANSWERS();
             answer.Assessment_Id = assessId;
@@ -215,8 +242,11 @@ namespace CSETWebCore.Business.Malcolm
             return answer;
         }
 
-        
-
+        public List<MALCOLM_ANSWERS> GetMalcolmAnswers(int assessId)
+        {
+            var dbList = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessId).ToList();
+            return dbList;
+        }
 
     }
 }
