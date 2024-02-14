@@ -309,7 +309,7 @@
         <table class="cset-table-3">
             <tr>
                 <th>Title</th>
-                <th>File Name</th>
+                <th>{{t('extras.file name')}}</th>
             </tr>
             <tr *ngFor="let doc of response?.documentLibraryTable">
                 <td>{{doc.documentTitle}}</td>
@@ -317,7 +317,7 @@
             </tr>
             <tr *ngIf="response?.documentLibraryTable.length === 0">
                 <td></td>
-                <td>There are no documents to display</td>
+                <td>{{t('extras.no documents to display')}}</td>
             </tr>
         </table>
     </div>
@@ -339,13 +339,13 @@
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>
-                <th style="width: 15%">Rank: {{rq.rank}}</th>
+                <th style="width: 15%">{{t('reports.core.rank')}}: {{rq.rank}}</th>
                 <th>{{rq.categoryAndNumber}}</th>
-                <th style="width: 15%">Level: {{rq.level}}</th>
+                <th style="width: 15%">{{t('reports.core.level')}}: {{rq.level}}</th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.question"></td>
-                <td class="tint2">{{analysisSvc.answerWord(rq.answer)}}</td>
+                <td class="tint2">{{t('answer-options.labels.' + rq.answer.toLowerCase())}}</td>
             </tr>
         </table>
     </div>

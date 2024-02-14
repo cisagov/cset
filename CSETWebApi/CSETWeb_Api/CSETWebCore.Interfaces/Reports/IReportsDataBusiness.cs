@@ -16,6 +16,7 @@ namespace CSETWebCore.Interfaces.Reports
     public interface IReportsDataBusiness
     {
         void SetReportsAssessmentId(int assessmentId);
+
         List<MatRelevantAnswers> GetMaturityDeficiencies();
         List<MatRelevantAnswers> GetCommentsList();
         List<MatRelevantAnswers> GetMarkedForReviewList();

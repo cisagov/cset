@@ -117,6 +117,8 @@ namespace CSETWebCore.Api.Controllers
                 int assessmentId = _tokenManager.AssessmentForUser();
                 _requirement.SetRequirementAssessmentId(assessmentId);
 
+                var lang = _tokenManager.GetCurrentLanguage();
+
                 FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
                 string AssessmentMode = GetAssessmentMode(assessmentId);
@@ -217,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (feedbackQuestions.Count() == 0)
                 {
-                    FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";
+                    FeedbackResult.FeedbackBody = _overlay.GetPropertyValue("GENERIC", "no feedback", lang) ?? "No feedback given for any questions in this assessment";
                 }
 
                 return Ok(FeedbackResult);

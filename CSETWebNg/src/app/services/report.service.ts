@@ -207,6 +207,10 @@ export class ReportService {
   }
 
   translatedDate(date: string) {
+    if (date == '') {
+      return '';
+    }
+
     moment.locale(this.tSvc.getActiveLang());
     return moment(date).format('l');
   }
