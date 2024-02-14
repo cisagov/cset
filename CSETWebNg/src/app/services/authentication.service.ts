@@ -127,6 +127,12 @@ export class AuthenticationService {
           localStorage.setItem('cset.isLocal', this.isLocal + '');
 
           localStorage.setItem('cset.linkerDate', response?.linkerTime);
+
+          // If local, we assume we are authenticated and can configure the CISA assessor workflow switch
+          if (this.isLocal) {
+            return this.configureCisaAssessorWorkflow(response);
+          }
+
         },
         (error) => {
           console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');

@@ -104,15 +104,6 @@ export class ConfigService {
             .then(() => {
               this.setConfigPropertiesForLocalService();
               this.switchConfigsForMode(this.config.installationMode || 'CSET');
-              return this.getCisaAssessorWorkflow()
-                .toPromise()
-                .then((cisaAssessorWorkflowEnabled) => {
-                  if (cisaAssessorWorkflowEnabled) {
-                    return this.enableCisaAssessorWorkflow();
-                  }
-
-                  localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
-                });
             });
         })
         .catch(() => {
