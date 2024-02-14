@@ -132,7 +132,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
 
             List<MALCOLM_MAPPING> malcolmMappingInfo = new List<MALCOLM_MAPPING>();
 
-            foreach (DiagramAnalysisNodeMessage m in msgs)
+            foreach (DiagramAnalysisNodeMessage m in msgs.Distinct())
             {
                 malcolmMappingInfo.AddRange(_context.MALCOLM_MAPPING.Where(x => x.Rule_Violated == m.Rule_Violated).ToList());
             }

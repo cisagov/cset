@@ -70,7 +70,8 @@
         "showCisaAssessorWorkflowSwitch": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
-        "additionalUserGuides": []
+        "additionalUserGuides": [],
+        "showMalcolmAnswerComparison": false
     },
     "answerOptionsDefault": [
         {

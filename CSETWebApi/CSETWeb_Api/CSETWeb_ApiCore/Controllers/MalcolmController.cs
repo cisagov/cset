@@ -109,6 +109,15 @@ namespace CSETWebCore.Api.Controllers
                 return Ok();
             }
         }
+
+        [HttpGet]
+        [Route("api/getMalcolmAnswers")]
+        public List<MALCOLM_ANSWERS> GetMalcolmAnswers()
+        {
+            int assessId = _token.AssessmentForUser();
+
+            return _malcolm.GetMalcolmAnswers(assessId);
+        }
     }
 
 

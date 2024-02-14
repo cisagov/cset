@@ -61,7 +61,7 @@ namespace CSETWebCore.Business.Question
 
             var resp = new QuestionResponse();
             var mb = new MalcolmBusiness(_context);
-            mb.VerificationAndValidation(assessmentId);
+            //mb.VerificationAndValidation(assessmentId);
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?

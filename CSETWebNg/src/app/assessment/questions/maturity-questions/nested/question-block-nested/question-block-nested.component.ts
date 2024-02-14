@@ -31,6 +31,7 @@ import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/q
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { LayoutService } from '../../../../../services/layout.service';
 import { ActivatedRoute } from '@angular/router';
+import { MalcolmService } from '../../../../../services/malcolm.service';
 
 
 @Component({
@@ -55,11 +56,13 @@ export class QuestionBlockNestedComponent implements OnInit {
   showIdTag = false;
 
   sectionId = 0;
+  malcolmInfo: any;
 
   constructor(
     public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    public malcolmSvc: MalcolmService,
     private configSvc: ConfigService,
     public dialog: MatDialog,
     public layoutSvc: LayoutService,
@@ -91,6 +94,11 @@ export class QuestionBlockNestedComponent implements OnInit {
     this.questionsSvc.extrasChanged$.subscribe((qe) => {
       this.refreshExtras(qe);
     });
+
+    this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+      this.malcolmInfo = r;
+    });
+
 
   }
 
