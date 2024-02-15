@@ -261,10 +261,10 @@ namespace CSETWebCore.Business.Question
             // get the user's language
             var lang = _tokenManager.GetCurrentLanguage();
 
-            var translatedReq = overlay.GetReq(tabData.RequirementID, lang);
-            if (translatedReq != null)
+            var reqOverlay = overlay.GetRequirement(tabData.RequirementID, lang);
+            if (reqOverlay != null)
             {
-                tabData.SupplementalInfo = FormatSupplementalInfo(translatedReq.SupplementalInfo);
+                tabData.SupplementalInfo = FormatSupplementalInfo(reqOverlay.SupplementalInfo);
             }
 
 

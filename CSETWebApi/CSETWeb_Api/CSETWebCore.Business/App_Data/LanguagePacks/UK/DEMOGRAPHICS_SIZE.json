@@ -1,34 +1,32 @@
-{
-  "pairs": [
-    {
-      "key": "3",
-      "value": "[UK]Large (3+ days)",
-      "valueEN": "Large (3+ days)"
-    },
-    {
-      "key": "2",
-      "value": "[UK]Medium (1-2 days)",
-      "valueEN": "Medium (1-2 days)"
-    },
-    {
-      "key": "1",
-      "value": "[UK]Small (1-2 hour) assessment",
-      "valueEN": "Small (1-2 hour) assessment"
-    },
-    {
-      "key": "4",
-      "value": "[UK]1 week",
-      "valueEN": "1 week"
-    },
-    {
-      "key": "5",
-      "value": "[UK]2 weeks",
-      "valueEN": "2 weeks"
-    },
-    {
-      "key": "6",
-      "value": "[UK]More than 2 weeks",
-      "valueEN": "More than 2 weeks"
-    }
-  ]
-}
+[
+  {
+    "key": "3",
+    "value": "[UK]Large (3+ days)",
+    "valueEN": "Large (3+ days)"
+  },
+  {
+    "key": "2",
+    "value": "[UK]Medium (1-2 days)",
+    "valueEN": "Medium (1-2 days)"
+  },
+  {
+    "key": "1",
+    "value": "[UK]Small (1-2 hour) assessment",
+    "valueEN": "Small (1-2 hour) assessment"
+  },
+  {
+    "key": "4",
+    "value": "[UK]1 week",
+    "valueEN": "1 week"
+  },
+  {
+    "key": "5",
+    "value": "[UK]2 weeks",
+    "valueEN": "2 weeks"
+  },
+  {
+    "key": "6",
+    "value": "[UK]More than 2 weeks",
+    "valueEN": "More than 2 weeks"
+  }
+]
