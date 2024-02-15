@@ -98,11 +98,7 @@ export class ChangePasswordComponent implements OnInit {
     this.auth.changePassword(this.cpwd).subscribe(
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
-
-        console.log(this.passwordResponse);
-
-
-
+        
         if (this.passwordResponse.isValid) {
           this.dialogRef.close(true);
         } else {
