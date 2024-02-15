@@ -596,7 +596,10 @@
                 "text": "[ES]This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
             "no ranking": "La información de clasificación no se puede determinar para el conjunto de preguntas actual. No se puede mostrar el gráfico de categorías clasificadas.",
-            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada."
+            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada.",
+            "questions comments": {
+                "questions comments": "Preguntas o comentarios"
+            }
         },
         "acet": {
             "acet reports": "Los informes de ACET",

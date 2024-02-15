@@ -32,6 +32,7 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'site-detail',
@@ -74,7 +75,8 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
