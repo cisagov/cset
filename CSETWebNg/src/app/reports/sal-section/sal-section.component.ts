@@ -80,5 +80,4 @@ export class SalSectionComponent implements OnInit {
       } 
     }
   }
-
 }

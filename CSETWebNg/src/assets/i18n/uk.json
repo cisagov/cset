@@ -120,10 +120,16 @@
                 "yes": "Так",
                 "no": "Ні"
             },
-            "low": "Низький",
-            "moderate": "Помірний",
-            "high": "Високий",
-            "very high": "Дуже високо"
+            "level": {
+                "low": "Низький",
+                "l": "Низький",
+                "moderate": "Помірний",
+                "m": "Помірний",
+                "high": "Високий",
+                "h": "Високий",
+                "very high": "Дуже високо",
+                "vh": "Дуже високо"
+            }
         },
         "network diagram": "мережева схема",
         "diagram component questions": "Питання компонентів діаграми",
@@ -501,7 +507,8 @@
             },
             "site summary": {
                 "site summary": "Підсумковий звіт сайту",
-                "report title": "Резюме сайту",
+                "report title": "Резюме для сайту",
+                "title page title": "ПІДСУМКОВИЙ ЗВІТ ДЛЯ САЙТУ",
                 "site information": "Інформація про сайт",
                 "high-level assessment description": "Опис високого рівня оцінювання",
                 "executive summary": "Резюме",
@@ -613,6 +620,24 @@
             "user language": "Мова користувача",
             "logout": "Вийти"
         }
+    },
+    "user profile": {
+        "dialog title": "Профіль користувача",
+        "first name": "Ім'я",
+        "last name": "Прізвище",
+        "email": "Електронна пошта",
+        "confirm email": "Підтвердити електронну адресу",
+        "security questions": "Питання безпеки",
+        "security questions text": "Надання таємних запитань є необов’язковим, але дозволяє відновити пароль, якщо ви його забудете.",
+        "security question 1": "питання 1",
+        "security answer 1": "Відповідь 1",
+        "security question 2": "питання 2",
+        "security answer 2": "Відповідь 2",
+        "first name required": "Ім'я обов'язкове",
+        "last name required": "Необхідно вказати прізвище",
+        "email required": "Необхідно вказати адресу електронної пошти",
+        "not valid email": "Недійсна електронна адреса",
+        "emails do not match": "Електронні адреси не збігаються"
     },
     "about": {
         "about": "Про програму",

@@ -25,7 +25,7 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                {{t('reports.core.site summary.site summary')}}
+                {{t('reports.core.site summary.title page title')}}
             </p>
         </div>
         <div class="column">
@@ -308,7 +308,7 @@
 
         <table class="cset-table-3">
             <tr>
-                <th>Title</th>
+                <th>{{t('extras.title')}}</th>
                 <th>{{t('extras.file name')}}</th>
             </tr>
             <tr *ngFor="let doc of response?.documentLibraryTable">
@@ -341,7 +341,7 @@
             <tr>
                 <th style="width: 15%">{{t('reports.core.rank')}}: {{rq.rank}}</th>
                 <th>{{rq.categoryAndNumber}}</th>
-                <th style="width: 15%">{{t('reports.core.level')}}: {{rq.level}}</th>
+                <th style="width: 15%">{{t('reports.core.level')}}: {{t('titles.sal.level.' + rq.level.toLowerCase())}}</th>
             </tr>
             <tr>
                 <td colspan="2" [innerHTML]="rq.question"></td>
