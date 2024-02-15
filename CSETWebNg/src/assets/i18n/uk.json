@@ -191,7 +191,8 @@
         "questions mode": "Режим питань",
         "requirements mode": "Режим вимог",
         "add document": "Додайте документ",
-        "copy text": "Копіювати текст"
+        "copy text": "Копіювати текст",
+        "change password": "Змінити пароль"
     },
     "contact": {
         "contacts": "Контакти",
@@ -638,6 +639,29 @@
         "email required": "Необхідно вказати адресу електронної пошти",
         "not valid email": "Недійсна електронна адреса",
         "emails do not match": "Електронні адреси не збігаються"
+    },
+    "change password": {
+        "dialog title": "Змінити пароль",
+        "current password": "Поточний пароль",
+        "show passwords": "Показати паролі",
+        "hide passwords": "Приховати паролі",
+        "new password": "Новий пароль",
+        "confirm new password": "Підтвердити новий пароль",
+        "passwords do not match": "Паролі не збігаються",
+        "new and confirmation required": "Потрібні новий пароль і підтвердження",
+        "change temp on logon": "Тимчасовий пароль необхідно змінити під час першого входу",
+        "current invalid": "Поточний пароль недійсний.<br>Виправте його або подайте запит на новий тимчасовий пароль.",
+        "rules not satisfied": "Новий пароль не відповідає всім вимогам політики паролів.",
+        "rules": {
+            "length between": "Довжина від {{lengthMin}} до {{lengthMax}} символів",
+            "required numbers": "Має містити принаймні 2 числа",
+            "required lowercase": "Має містити принаймні 1 малий регістр",
+            "required uppercase": "Має містити принаймні 1 символ у верхньому регістрі",
+            "required special": "Має містити принаймні 1 спеціальний символ",
+            "previous count": "Не можна повторно використовувати попередні {{count}} паролі"
+        },
+        "changed dialog title": "Пароль змінено",
+        "changed message": "Ваш пароль успішно змінено"
     },
     "about": {
         "about": "Про програму",
