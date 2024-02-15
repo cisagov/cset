@@ -260,7 +260,8 @@
         "questions mode": "Modo preguntas",
         "requirements mode": "Modo requisitos",
         "add document": "Agregar documento",
-        "copy text": "Copiar texto"
+        "copy text": "Copiar texto",
+        "change password": "Cambiar la contraseña"
     },
     "answer-options": {
         "button-labels": {
@@ -781,6 +782,29 @@
         "email required": "Email es obligatorio",
         "not valid email": "Email no es válido",
         "emails do not match": "Los correos electrónicos no coinciden"
+    },
+    "change password": {
+        "dialog title": "Cambiar la contraseña",
+        "current password": "Contraseña actual",
+        "show passwords": "Mostrar contraseñas",
+        "hide passwords": "Ocultar contraseñas",
+        "new password": "Nueva contraseña",
+        "confirm new password": "Confirmar nueva contraseña",
+        "passwords do not match": "Las contraseñas no coinciden",
+        "new and confirmation required": "Se requiere nueva contraseña y confirmación",
+        "change temp on logon": "La contraseña temporal debe cambiarse en el primer inicio de sesión",
+        "current invalid": "La contraseña actual no es válida.<br>Corríjala o solicite una nueva contraseña temporal.",
+        "rules not satisfied": "La nueva contraseña no cumple con todos los requisitos de la política de contraseñas.",
+        "rules": {
+            "length between": "Longitud entre {{lengthMin}} y {{lengthMax}} caracteres",
+            "required numbers": "Debe contener al menos 2 números",
+            "required lowercase": "Debe contener al menos 1 carácter en minúscula",
+            "required uppercase": "Debe contener al menos 1 carácter en mayúscula",
+            "required special": "Debe contener al menos 1 carácter especial",
+            "previous count": "No se deben reutilizar {{count}} contraseñas anteriores"
+        },
+        "changed dialog title": "contraseña Cambiada",
+        "changed message": "tu contraseña ha sido cambiada exitosamente"
     },
     "about": {
         "about": "Sobre",
