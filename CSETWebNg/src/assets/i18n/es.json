@@ -180,10 +180,16 @@
                 "yes": "Sí",
                 "no": "No"
             },
-            "low": "Bajo",
-            "moderate": "Moderado",
-            "high": "Alto",
-            "very high": "Muy Alto"
+            "level": {
+                "low": "Bajo",
+                "l": "Bajo",
+                "moderate": "Moderado",
+                "m": "Moderado",
+                "high": "Alto",
+                "h": "Alto",
+                "very high": "Muy Alto",
+                "vh": "Muy Alto"
+            }
         },
         "network diagram": "Diagrama de red",
         "diagram component questions": "Preguntas del diagrama",
@@ -757,6 +763,24 @@
         "no conflicts 3": "para proceder con la fusión.",
         "merge": "Fusión",
         "start merge": "Comenzar a Fusionar"
+    },
+    "user profile": {
+        "dialog title": "Perfil del usuario",
+        "first name": "Nombre de pila",
+        "last name": "Apellido",
+        "email": "Email",
+        "confirm email": "Confirmar email",
+        "security questions": "Preguntas de seguridad",
+        "security questions text": "Proporcionar preguntas de seguridad es opcional, pero le permite recuperar su contraseña en caso de que la olvide.",
+        "security question 1": "Pregunta 1",
+        "security answer 1": "Respuesta 1",
+        "security question 2": "Pregunta 2",
+        "security answer 2": "Respuesta 2",
+        "first name required": "Nombre de pila es obligatorio",
+        "last name required": "Apellido es obligatorio",
+        "email required": "Email es obligatorio",
+        "not valid email": "Email no es válido",
+        "emails do not match": "Los correos electrónicos no coinciden"
     },
     "about": {
         "about": "Sobre",
