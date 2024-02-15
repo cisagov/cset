@@ -204,7 +204,8 @@
         "questions mode": "Questions Mode",
         "requirements mode": "Requirements Mode",
         "add document": "Add a document",
-        "copy text": "Copy Texzt"
+        "copy text": "Copy Text",
+        "change password": "Change Password"
     },
     "contact": {
         "contacts": "Contacts",
@@ -783,6 +784,29 @@
         "email required": "Email is required",
         "not valid email": "Not a valid email",
         "emails do not match": "Emails do not match"
+    },
+    "change password": {
+        "dialog title": "Change Password",
+        "current password": "Current Password",
+        "show passwords": "Show Passwords",
+        "hide passwords": "Hide Passwords",
+        "new password": "New Password",
+        "confirm new password": "Confirm New Password",
+        "passwords do not match": "Passwords do not match",
+        "new and confirmation required": "New Password and Confirmation are required",
+        "change temp on logon": "Temporary password must be changed on first logon",
+        "current invalid": "Current password is invalid.<br>Correct it or request a new temporary password.",
+        "rules not satisfied": "New password does not satisfy all password policy requirements.",
+        "rules": {
+            "length between": "Length between {{lengthMin}} and {{lengthMax}} characters",
+            "required numbers": "Must contain at least 2 numbers",
+            "required lowercase": "Must contain at least 1 lowercase character",
+            "required uppercase": "Must contain at least 1 uppercase character",
+            "required special": "Must contain at least 1 special character",
+            "previous count": "Must not re-use previous {{count}} passwords"
+        },
+        "changed dialog title": "Password Changed",
+        "changed message": "Your password has been changed successfully"
     },
     "about": {
         "about": "About",
