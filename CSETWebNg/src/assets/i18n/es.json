@@ -602,6 +602,11 @@
                 "question": "Pregunta",
                 "comment": "Comentario",
                 "no comments": "No hay comentarios que mostrar"
+            },
+            "alternate justification": {
+                "alternate justification": "Justificación alternativa",
+                "question": "Pregunta",
+                "no questions": "[ES]There are no questions with alternate justifications to display."
             }
         },
         "acet": {

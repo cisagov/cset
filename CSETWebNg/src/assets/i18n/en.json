@@ -604,6 +604,11 @@
                 "question": "Question",
                 "comment": "Comment",
                 "no comments": "There are no comments to display"
+            },
+            "alternate justification": {
+                "alternate justification": "Alternate Justification",
+                "question": "Question",
+                "no questions": "There are no questions with alternate justifications to display."
             }
         },
         "acet": {

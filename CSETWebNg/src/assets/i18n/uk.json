@@ -528,6 +528,11 @@
                 "question": "[UK]Question",
                 "comment": "[UK]Comment",
                 "no comments": "[UK]There are no questions with comments to display."
+            },
+            "alternate justification": {
+                "alternate justification": "[UK]Alternate Justification",
+                "question": "[UK]Question",
+                "no questions": "[UK]There are no questions with alternate justifications to display."
             }
         }
     },
