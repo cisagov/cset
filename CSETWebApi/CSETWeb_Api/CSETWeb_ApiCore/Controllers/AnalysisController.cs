@@ -87,10 +87,10 @@ namespace CSETWebCore.Api.Controllers
                 // Currently we only translate text for REQUIREMENTS
                 if (mode == "R")
                 {
-                    var translatedReq = _overlay.GetReq(q.QuestionOrRequirementID, lang);
-                    if (translatedReq != null)
+                    var reqOverlay = _overlay.GetRequirement(q.QuestionOrRequirementID, lang);
+                    if (reqOverlay != null)
                     {
-                        q.QuestionText = translatedReq.RequirementText;
+                        q.QuestionText = reqOverlay.RequirementText;
 
                         var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang);
                         if (translatedCategory != null)

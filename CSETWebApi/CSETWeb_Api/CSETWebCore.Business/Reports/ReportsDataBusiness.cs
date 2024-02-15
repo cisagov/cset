@@ -1233,16 +1233,14 @@ namespace CSETWebCore.Business.Reports
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
-
                 if (q.RequirementId != null)
                 {
-                    var x = _overlay.GetReq((int)q.RequirementId, lang);
-                    if (x != null)
+                    var reqOverlay = _overlay.GetRequirement((int)q.RequirementId, lang);
+                    if (reqOverlay != null)
                     {
-                        q.QuestionText = x.RequirementText;
+                        q.QuestionText = reqOverlay.RequirementText;
                     }
                 }
-
 
 
                 q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
@@ -1511,7 +1509,7 @@ namespace CSETWebCore.Business.Reports
 
 
                 // get the question identifier and text
-                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
+               GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                     out string qid, out string qtxt);
                 obs.QuestionIdentifier = qid;
                 obs.QuestionText = qtxt;
@@ -1533,6 +1531,9 @@ namespace CSETWebCore.Business.Reports
         /// Formats an identifier for the corresponding question. 
         /// Also returns the question text with parameters applied, in the
         /// case of a requirement.
+        /// 
+        /// If the user's language is non-English, attempts to overlay the
+        /// question text with the translated version.
         /// </summary>
         /// <returns></returns>
         private void GetQuestionTitleAndText(dynamic f,
@@ -1576,7 +1577,7 @@ namespace CSETWebCore.Business.Reports
                     questionText = rb.ResolveParameters(f.r.Requirement_Id, answerId, f.r.Requirement_Text);
 
                     // translate
-                    questionText = _overlay.GetReq(f.r.Requirement_Id, lang)?.RequirementText ?? questionText;
+                    questionText = _overlay.GetRequirement(f.r.Requirement_Id, lang)?.RequirementText ?? questionText;
 
                     return;
 
