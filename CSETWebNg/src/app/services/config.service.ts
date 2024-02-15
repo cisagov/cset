@@ -118,7 +118,6 @@ export class ConfigService {
       .toPromise()
       .then((iodConfig) => {
         merge(this.config, iodConfig);
-        localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
         this.setConfigPropertiesForLocalService();
       });
   }
