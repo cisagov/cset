@@ -1282,11 +1282,11 @@ namespace CSETWebCore.Business.ModuleBuilder
                 };
 
                 // overlay
-                var translatedReq = _overlay.GetReq(r.RequirementID, _lang);
-                if (translatedReq != null)
+                var reqOverlay = _overlay.GetRequirement(r.RequirementID, _lang);
+                if (reqOverlay != null)
                 {
-                    r.RequirementText = translatedReq.RequirementText;
-                    r.SupplementalInfo = translatedReq.SupplementalInfo;
+                    r.RequirementText = reqOverlay.RequirementText;
+                    r.SupplementalInfo = reqOverlay.SupplementalInfo;
                 }
 
                 // Get the SAL levels for this requirement
