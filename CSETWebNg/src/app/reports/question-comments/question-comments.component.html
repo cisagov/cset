@@ -34,17 +34,17 @@
             </th>
         </tr>
         <tr>
-            <td class="tint2" style="width: 10%">Question:</td>
+            <td class="tint2" style="width: 10%">{{t('reports.core.questions comments.question)}}:</td>
             <td class="tint2" [innerHTML]="c.question"></td>
             <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel('', c.answer)}}</td>
         </tr>
         <tr>
-            <td class="tint2">Comment:</td>
+            <td class="tint2">{{t('reports.core.questions comments.comment)}}:</td>
             <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.comment)"></td>
         </tr>
     </table>
 
     <div *ngIf="response?.questionsWithComments.length === 0" class="cset-table-3">
-        There are no questions with comments to display.
+        {{t('reports.core.questions comments.no comments')}}
     </div>
 </div>
