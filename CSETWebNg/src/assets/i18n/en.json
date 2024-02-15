@@ -597,6 +597,8 @@
                 "title": "Results by Category",
                 "text": "This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
+            "rank": "Rank",
+            "level": "Level",
             "no ranking": "Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be displayed.",
             "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights."
         },
@@ -705,6 +707,7 @@
         "file name": "File Name",
         "source documents": "Source Documents",
         "additional documents": "Additional Documents",
+        "no documents to display": "There are no documents to display",
         "section": "Section",
         "no reference documents available": "no reference documents available"
     },

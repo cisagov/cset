@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
@@ -324,7 +324,7 @@
         <table class="cset-table-3">
             <tr>
                 <th>Title</th>
-                <th>File Name</th>
+                <th>{{t('extras.file name')}}</th>
             </tr>
             <tr *ngFor="let doc of response?.documentLibraryTable">
                 <td>{{doc.documentTitle}}</td>
@@ -332,7 +332,7 @@
             </tr>
             <tr *ngIf="response?.documentLibraryTable.length === 0">
                 <td></td>
-                <td>There are no documents to display</td>
+                <td>{{t('extras.no documents to display')}}</td>
             </tr>
         </table>
     </div>
