@@ -124,10 +124,16 @@
                 "yes": "Yes",
                 "no": "No"
             },
-            "low": "Low",
-            "moderate": "Moderate",
-            "high": "High",
-            "very high": "Very High"
+            "level": {
+                "low": "Low",
+                "l": "Low",
+                "moderate": "Moderate",
+                "m": "Moderate",
+                "high": "High",
+                "h": "High",
+                "very high": "Very High",
+                "vh": "Very High"
+            }
         },
         "network diagram": "Network Diagram",
         "diagram component questions": "Diagram Component Questions",
@@ -759,6 +765,24 @@
         "no conflicts 3": "to proceed with the merge.",
         "merge": "Merge",
         "start merge": "Start Merge"
+    },
+    "user profile": {
+        "dialog title": "User Profile",
+        "first name": "First Name",
+        "last name": "Last Name",
+        "email": "Email",
+        "confirm email": "Confirm Email",
+        "security questions": "Security Questions",
+        "security questions text": "Providing security questions is optional but allows you to recover your password should you forget it.",
+        "security question 1": "Question 1",
+        "security answer 1": "Answer 1",
+        "security question 2": "Question 2",
+        "security answer 2": "Answer 2",
+        "first name required": "First Name is required",
+        "last name required": "Last Name is required",
+        "email required": "Email is required",
+        "not valid email": "Not a valid email",
+        "emails do not match": "Emails do not match"
     },
     "about": {
         "about": "About",
