@@ -587,6 +587,19 @@
                 "summary of ranked questions": "[ES]Summary of Ranked Questions",
                 "summary of ranked questions desc": "[ES]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
+            "site detail report": {
+                "site detail report": "[ES]SITE DETAIL REPORT",
+                "site information": "[ES]Site Information",
+                "executive summary": "[ES]Executive Summary",
+                "network diagram": "[ES]Network Diagram",
+                "findings and recommendations": "[ES]Findings and Recommendations From Basic Network Analysis",
+                "security assurance level": "[ES]Security Assurance Level (SAL)",
+                "maturity detail": "[ES]Maturity Detail",
+                "administration": "[ES]Administration",
+                "total review hours": "[ES]Total Review Hours",
+                "grand totals": "[ES]Grand Totals",
+                "cybersecurity maturity": "[ES]Cybersecurity Maturity"
+            },
             "components summary": {
                 "components summary": "Resumen de componentes",
                 "text": "Este gráfico muestra los porcentajes de respuesta basados en el diagrama de componentes o de red para cada tipo de respuesta individual."
