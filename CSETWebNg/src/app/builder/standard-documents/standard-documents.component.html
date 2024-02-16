@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 oy-auto">
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 oy-auto" *transloco="let t">
 
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
@@ -59,9 +59,9 @@
 
     <table class="assessment-summary">
       <th></th>
-      <th>Title</th>
+      <th>{{t('extras.title')}}</th>
       <th></th>
-      <th>File Name</th>
+      <th>{{t('extras.file name')}}</th>
       <tr *ngFor="let doc of filteredDocuments">
         <td class="align-top"><input type="checkbox" [(ngModel)]="doc.selected" (ngModelChange)="selectDoc(doc)"></td>
         <td class="d-flex align-items-start justify-content-between flex-00a">

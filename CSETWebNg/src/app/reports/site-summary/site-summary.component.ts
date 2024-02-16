@@ -33,6 +33,7 @@ import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'site-summary',
@@ -80,7 +81,8 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
     public acetSvc: ACETService,
     private sanitizer: DomSanitizer,
     private maturitySvc: MaturityService,
-    private assessmentSvc: AssessmentService
+    private assessmentSvc: AssessmentService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {

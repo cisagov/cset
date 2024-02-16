@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -32,13 +32,14 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'site-detail',
   templateUrl: './site-detail.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SiteDetailComponent implements OnInit, AfterViewInit {
+export class SiteDetailComponent implements OnInit {
   response: any = null;
   chartStandardsSummary: Chart;
   responseResultsByCategory: any;
@@ -74,7 +75,8 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
@@ -141,12 +143,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
           console.log('Error getting all documents: ' + (<Error>error).stack);
         });
     }
-  }
-
-  /**
-   *
-   */
-  ngAfterViewInit() {
   }
 
   processAcetAdminData() {

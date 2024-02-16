@@ -646,9 +646,10 @@ export class AssessmentService {
    * @param date 
    * @returns 
    */
-  translatedDate(date: string, format: string) {
+  localizeDateString(dateString: string, format: string) {
     moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format(format);
+    const d = new Date(dateString);
+    return moment(d).format(format);
   }
 
 

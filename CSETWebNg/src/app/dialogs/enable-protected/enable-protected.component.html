@@ -53,6 +53,8 @@
       <div class="mx-3 mt-2" *ngIf="message && message.message.length > 0">{{ message.message }}</div>
     </div>
 
+    <hr class="w-100 mt-4 mb-2" *ngIf="showCisaAssessorWorkflowSwitch()" />
+
     <div *ngIf="showCisaAssessorWorkflowSwitch()"
       class="form-group d-flex align-items-center justify-content-between mt-4 mx-2">
       <label for="csaToggle" class="font-weight-bold">CISA Assessor Workflow </label>

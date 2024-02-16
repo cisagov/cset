@@ -2,7 +2,6 @@
     "my assessments": "My Assessments",
     "import": "Import",
     "export all": "Export All",
-    "resource library": "Resource Library",
     "new assessment": "New Assessment",
     "status": "Status",
     "completion-questions": "{{complete}}/{{total}} {{qAlias}} questions answered",
@@ -125,10 +124,16 @@
                 "yes": "Yes",
                 "no": "No"
             },
-            "low": "Low",
-            "moderate": "Moderate",
-            "high": "High",
-            "very high": "Very High"
+            "level": {
+                "low": "Low",
+                "l": "Low",
+                "moderate": "Moderate",
+                "m": "Moderate",
+                "high": "High",
+                "h": "High",
+                "very high": "Very High",
+                "vh": "Very High"
+            }
         },
         "network diagram": "Network Diagram",
         "diagram component questions": "Diagram Component Questions",
@@ -199,7 +204,8 @@
         "questions mode": "Questions Mode",
         "requirements mode": "Requirements Mode",
         "add document": "Add a document",
-        "copy text": "Copy Texzt"
+        "copy text": "Copy Text",
+        "change password": "Change Password"
     },
     "contact": {
         "contacts": "Contacts",
@@ -372,7 +378,6 @@
         "feedback icon": "Значок зворотнього зв'язку",
         "copy feedback": "Копіювати текст зворотнього зв'язку в буфер обміну",
         "create feedback email": "Створити електронний лист із зворотнім зв'язком у стандартному поштовому клієнті",
-
         "risk description": "Risk Description",
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
@@ -551,36 +556,58 @@
                 "executive summary": "Executive Summary",
                 "tab title": "Executive Summary",
                 "title page title": "EXECUTIVE SUMMARY",
-                "site information": "Site Information", 
-                "calculated level": "CALCULATED LEVEL", 
-                "overall values": "Overall Values", 
-                "summary percent compliance": "Summary Percent Compliance", 
-                "evaluation": "Evaluation Against Selected Standards and Question Sets", 
-                "standards summary": "Standards Summary", 
-                "standard or question set": "Standard or Question Set", 
-                "areas of concern": "Areas of Concern Top Subjects and Questions", 
-                "top subject areas": "The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.", 
-                "concern categories": "Top Categories of Concern", 
-                "concern questions": "Top Questions of Concern", 
-                "analysis of network components": "Analysis of Network Components", 
-                "combined component summary": "Combined Component Summary", 
-                "identified warnings": "The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}", 
-                "see network details": "See the section 'Findings and Recommendations from Basic Network Analysis' for details.", 
-                "answer distribution": "[UK] Answer Distribution by Component Type", 
-                "calculated general security": "Calculated General Security Assurance Levels (SAL)", 
-                "onsite": "Onsite", 
-                "offsite": "Offsite", 
-                "physical injury": "Physical Injury", 
-                "hospital injury": "Hospital Injury", 
-                "death": "Death", 
-                "capital assets": "Capital Assets", 
-                "economic impact": "Economic Impact", 
+                "site information": "Site Information",
+                "calculated level": "CALCULATED LEVEL",
+                "overall values": "Overall Values",
+                "summary percent compliance": "Summary Percent Compliance",
+                "evaluation": "Evaluation Against Selected Standards and Question Sets",
+                "standards summary": "Standards Summary",
+                "standard or question set": "Standard or Question Set",
+                "areas of concern": "Areas of Concern Top Subjects and Questions",
+                "top subject areas": "The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.",
+                "concern categories": "Top Categories of Concern",
+                "concern questions": "Top Questions of Concern",
+                "analysis of network components": "Analysis of Network Components",
+                "combined component summary": "Combined Component Summary",
+                "identified warnings": "The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}",
+                "see network details": "See the section 'Findings and Recommendations from Basic Network Analysis' for details.",
+                "answer distribution": "[UK] Answer Distribution by Component Type",
+                "calculated general security": "Calculated General Security Assurance Levels (SAL)",
+                "onsite": "Onsite",
+                "offsite": "Offsite",
+                "physical injury": "Physical Injury",
+                "hospital injury": "Hospital Injury",
+                "death": "Death",
+                "capital assets": "Capital Assets",
+                "economic impact": "Economic Impact",
                 "environmental impact": "Environmental Impact"
-
             },
             "site summary": {
                 "site summary": "Site Summary",
-                "report title": "Site Summary"
+                "report title": "Site Summary",
+                "site information": "Site Information",
+                "high-level assessment description": "High-Level Assessment Description",
+                "executive summary": "Executive Summary",
+                "network diagram": "Network Diagram",
+                "standards compliance": "Standards Compliance",
+                "security assurance level": "Security Assurance Level (SAL)",
+                "document library": "Document Library",
+                "ranked categories": "Ranked Categories",
+                "summary of ranked questions": "Summary of Ranked Questions",
+                "summary of ranked questions desc": "Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
+            },
+            "site detail report": {
+                "site detail report": "SITE DETAIL REPORT",
+                "site information": "Site Information",
+                "executive summary": "Executive Summary",
+                "network diagram": "Network Diagram",
+                "findings and recommendations": "Findings and Recommendations From Basic Network Analysis",
+                "security assurance level": "Security Assurance Level (SAL)",
+                "maturity detail": "Maturity Detail",
+                "administration": "Administration",
+                "total review hours": "Total Review Hours",
+                "grand totals": "Grand Totals",
+                "cybersecurity maturity": "Cybersecurity Maturity"
             },
             "components summary": {
                 "components summary": "Components Summary",
@@ -590,8 +617,25 @@
                 "title": "Results by Category",
                 "text": "This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
+            "rank": "Rank",
+            "level": "Level",
             "no ranking": "Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be displayed.",
-            "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights."
+            "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights.",
+            "questions comments": {
+                "questions comments": "Questions Comments",
+                "question": "Question",
+                "comment": "Comment",
+                "no comments": "There are no comments to display"
+            },
+            "alternate justification": {
+                "alternate justification": "Alternate Justification",
+                "question": "Question",
+                "no questions": "There are no questions with alternate justifications to display."
+            },
+            "questions marked for review": {
+                "questions marked for review": "Questions Marked for Review",
+                "no questions": "There are no questions marked for review."
+            }
         },
         "acet": {
             "acet reports": "ACET Reports",
@@ -698,30 +742,42 @@
         "file name": "File Name",
         "source documents": "Source Documents",
         "additional documents": "Additional Documents",
+        "no documents to display": "There are no documents to display",
         "section": "Section",
         "no reference documents available": "no reference documents available"
     },
-    "tools": {
-        "tools": "Tools",
-        "enable protected features": "Enable Protected Features",
-        "assessment documents": "Assessment Documents",
-        "parameter editor": "Parameter Editor",
-        "export assessment to excel": "Export Assessment to Excel",
-        "import modules": "Import Modules",
-        "module builder": "Module Builder",
-        "module content report": "Module Content Report",
-        "trend": "Trend",
-        "compare": "Compare"
-    },
-    "help": {
-        "help": "Help",
-        "about": "About",
-        "keyboard shortcuts": "Keyboard Shortcuts",
-        "legal": {
-            "legal": "Legal",
-            "accessibility document": "Accessibility Document",
-            "advisory": "Advisory",
-            "terms of use": "Terms of Use"
+    "menu": {
+        "tools": {
+            "tools": "Tools",
+            "enable protected features": "Enable Protected Features",
+            "assessment documents": "Assessment Documents",
+            "parameter editor": "Parameter Editor",
+            "export assessment to excel": "Export Assessment to Excel",
+            "import modules": "Import Modules",
+            "module builder": "Module Builder",
+            "module content report": "Module Content Report",
+            "trend": "Trend",
+            "compare": "Compare"
+        },
+        "resource library": "Resource Library",
+        "help": {
+            "help": "Help",
+            "cset user guide": "CSET User Guide",
+            "about": "About",
+            "keyboard shortcuts": "Keyboard Shortcuts",
+            "legal": {
+                "legal": "Legal",
+                "accessibility document": "Accessibility Document",
+                "advisory": "Advisory",
+                "terms of use": "Terms of Use"
+            }
+        },
+        "user": {
+            "user profile": "User Profile",
+            "my assessments": "My Assessments",
+            "change password": "Change Password",
+            "user language": "User Language",
+            "logout": "Logout"
         }
     },
     "merge examinations": {
@@ -738,6 +794,47 @@
         "no conflicts 3": "to proceed with the merge.",
         "merge": "Merge",
         "start merge": "Start Merge"
+    },
+    "user profile": {
+        "dialog title": "User Profile",
+        "first name": "First Name",
+        "last name": "Last Name",
+        "email": "Email",
+        "confirm email": "Confirm Email",
+        "security questions": "Security Questions",
+        "security questions text": "Providing security questions is optional but allows you to recover your password should you forget it.",
+        "security question 1": "Question 1",
+        "security answer 1": "Answer 1",
+        "security question 2": "Question 2",
+        "security answer 2": "Answer 2",
+        "first name required": "First Name is required",
+        "last name required": "Last Name is required",
+        "email required": "Email is required",
+        "not valid email": "Not a valid email",
+        "emails do not match": "Emails do not match"
+    },
+    "change password": {
+        "dialog title": "Change Password",
+        "current password": "Current Password",
+        "show passwords": "Show Passwords",
+        "hide passwords": "Hide Passwords",
+        "new password": "New Password",
+        "confirm new password": "Confirm New Password",
+        "passwords do not match": "Passwords do not match",
+        "new and confirmation required": "New Password and Confirmation are required",
+        "change temp on logon": "Temporary password must be changed on first logon",
+        "current invalid": "Current password is invalid.<br>Correct it or request a new temporary password.",
+        "rules not satisfied": "New password does not satisfy all password policy requirements.",
+        "rules": {
+            "length between": "Length between {{lengthMin}} and {{lengthMax}} characters",
+            "required numbers": "Must contain at least 2 numbers",
+            "required lowercase": "Must contain at least 1 lowercase character",
+            "required uppercase": "Must contain at least 1 uppercase character",
+            "required special": "Must contain at least 1 special character",
+            "previous count": "Must not re-use previous {{count}} passwords"
+        },
+        "changed dialog title": "Password Changed",
+        "changed message": "Your password has been changed successfully"
     },
     "about": {
         "about": "About",

@@ -363,10 +363,10 @@ export class TopMenusComponent implements OnInit {
       }
 
       // Need to reload application in two cases.
-      // Case 1: cisaWorkflow switch is now on but localStorage still has non IOD installation mode.
-      // Case 2: cisaWorkflowSwitch is now off but localStorage still has IOD installation mode.
-      if ((results.cisaWorkflowEnabled && localStorage.getItem('installationMode') != 'IOD') ||
-        (!results.cisaWorkflowEnabled && localStorage.getItem('installationMode') == 'IOD')) {
+      // Case 1: cisaWorkflow switch is now on but configSvc still has non IOD installationMode set.
+      // Case 2: cisaWorkflow switch is now off but configSvc still has IOD installationMode set.
+      if ((results.cisaWorkflowEnabled && this.configSvc.installationMode != 'IOD') ||
+        (!results.cisaWorkflowEnabled && this.configSvc.installationMode == 'IOD')) {
         this.configSvc.setCisaAssessorWorkflow(results.cisaWorkflowEnabled).subscribe(() => {
           this.goHome();
           window.location.reload();
@@ -455,7 +455,7 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   editUser() {
     if (this.dialog.openDialogs[0]) {
@@ -491,7 +491,7 @@ export class TopMenusComponent implements OnInit {
   }
 
   /**
-   * 
+   *
    */
   checkPasswordReset() {
     this.auth.passwordStatus().subscribe((passwordResetRequired: boolean) => {
