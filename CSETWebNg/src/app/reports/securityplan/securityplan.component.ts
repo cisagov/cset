@@ -29,6 +29,8 @@ import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { AcetDashboard } from '../../models/acet-dashboard.model';
 import { ACETService } from '../../services/acet.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
+
 
 @Component({
   selector: 'securityplan',
@@ -36,7 +38,7 @@ import { AssessmentService } from '../../services/assessment.service';
   styleUrls: ['../reports.scss']
 })
 export class SecurityplanComponent implements OnInit {
-
+  translationSub: any; 
   response: any;
 
   componentCount = 0;
@@ -55,14 +57,19 @@ export class SecurityplanComponent implements OnInit {
     public configSvc: ConfigService,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer, 
+    public tSvc: TranslocoService,
+    private translocoService: TranslocoService
   ) { }
 
   /**
    *
    */
   ngOnInit() {
-    this.titleService.setTitle("Site Cybersecurity Plan - " + this.configSvc.behaviors.defaultTitle);
+    
+    this.translationSub = this.translocoService.selectTranslate('Site Cybersecurity Plan - ')
+        .subscribe(value => 
+        this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {
@@ -109,4 +116,8 @@ export class SecurityplanComponent implements OnInit {
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
   }
+
+  ngOnDestroy() {
+    this.translationSub.unsubscribe()
+}
 }
