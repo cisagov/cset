@@ -188,6 +188,7 @@
         "save": "Save",
         "cancel": "Cancel",
         "continue": "Continue",
+        "exit": "Exit",
         "change": "Change",
         "remove": "Remove",
         "email": "Email",
@@ -214,7 +215,8 @@
         "requirements mode": "Requirements Mode",
         "add document": "Add a document",
         "copy text": "Copy Text",
-        "change password": "Change Password"
+        "change password": "Change Password",
+        "reset password": "Reset Password"
     },
     "contact": {
         "contacts": "Contacts",
@@ -977,14 +979,22 @@
     "change password": {
         "dialog title": "Change Password",
         "current password": "Current Password",
+        "show password": "Show Password",
+        "hide password": "Hide Password",
         "show passwords": "Show Passwords",
         "hide passwords": "Hide Passwords",
         "new password": "New Password",
         "confirm new password": "Confirm New Password",
         "passwords do not match": "Passwords do not match",
+        "answer required": "Answer is required",
+        "email sent": "An email was sent to {{email}} containing your temporary password.",
         "new and confirmation required": "New Password and Confirmation are required",
         "change temp on logon": "Temporary password must be changed on first logon",
         "current invalid": "Current password is invalid.<br>Correct it or request a new temporary password.",
+        "login with temp 1": "Please",
+        "login with temp link": "login",
+        "login with temp 2": "using your temporary password to complete the registration process.",
+        "answer incorrect": "The answer is incorrect",
         "rules not satisfied": "New password does not satisfy all password policy requirements.",
         "rules": {
             "length between": "Length between {{lengthMin}} and {{lengthMax}} characters",
@@ -994,8 +1004,16 @@
             "required special": "Must contain at least 1 special character",
             "previous count": "Must not re-use previous {{count}} passwords"
         },
+        "answer security question": "Please answer the security question and click Reset Password to receive an email with a temporary password.",
         "changed dialog title": "Password Changed",
-        "changed message": "Your password has been changed successfully"
+        "changed message": "Your password has been changed successfully",
+        "enter email cset": "Enter the email address associated with your CSET account",
+        "enter email rra": "Enter the email address associated with your RRA account",
+        "enter email acet": "Enter the email address associated with your ACET account",
+        "enter email tsa": "Enter the email address associated with your CSET TSA account",
+        "enter email renew": "Enter the email address associated with your CSET Renewables account",
+        "enter email cf": "Enter the email address associated with your Cyber Florida CSET account",
+        "ransomware explanation": "Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
         "about": "About",
@@ -1020,5 +1038,23 @@
         "blank assessment": "Blank Assessment",
         "needs review": "Needs Review",
         "statements completed": "{{complete}}/{{total}} Statement(s) Completed"
+    },
+    "login": {
+        "login prompt": "Enter your email address and password to login",
+        "placeholder email": "Email",
+        "placeholder password": "Password",
+        "reset password": "Reset Password",
+        "register new acct": "Register New Account",
+        "origin": "The Cyber Security Evaluation Tool (CSET®) is a Cybersecurity & Infrastructure Security Agency (CISA) product that assists organizations in protecting their key national cyber assets. It was developed under the direction of CISA by cybersecurity experts. This tool provides users with a systematic and repeatable approach for assessing the security posture of their cyber systems and networks. It includes both high-level and detailed questions related to all industrial control and IT systems.",
+        "valid email required": "A valid email address is required",
+        "valid password required": "A valid password is required",
+        "incorrect username or password": "Incorrect username or password",
+        "unknown email account": "Unknown email account",
+        "bad user": "The user does not exist or is not active",
+        "no questions defined": "You have no security questions defined for your account. Please consider adding security questions the next time you are logged in.",
+        "password expired": "Password is expired. Click 'Reset Password'",
+        "running locally": "CSET is running locally. No login is required.",
+        "error encountered": "An error was encountered while running CSET",
+        "enter name and email": "Enter your name and email address to register a new CSET account"
     }
 }

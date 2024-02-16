@@ -244,6 +244,7 @@
         "save": "Guardar",
         "cancel": "Cancelar",
         "continue": "Continuar",
+        "exit": "Salir",
         "change": "Cambiar",
         "remove": "Quitar",
         "email": "Correo electrónico",
@@ -270,7 +271,8 @@
         "requirements mode": "Modo requisitos",
         "add document": "Agregar documento",
         "copy text": "Copiar texto",
-        "change password": "Cambiar la contraseña"
+        "change password": "Cambiar la contraseña",
+        "reset password": "Restablecer la contraseña"
     },
     "answer-options": {
         "button-labels": {
@@ -975,14 +977,22 @@
     "change password": {
         "dialog title": "Cambiar la contraseña",
         "current password": "Contraseña actual",
+        "show password": "Mostrar contraseña",
+        "hide password": "Ocultar contraseña",
         "show passwords": "Mostrar contraseñas",
         "hide passwords": "Ocultar contraseñas",
         "new password": "Nueva contraseña",
         "confirm new password": "Confirmar nueva contraseña",
         "passwords do not match": "Las contraseñas no coinciden",
+        "answer required": "La respuesta es requerida",
+        "email sent": "Se envió un correo electrónico a {{email}} que contiene su contraseña temporal.",
         "new and confirmation required": "Se requiere nueva contraseña y confirmación",
         "change temp on logon": "La contraseña temporal debe cambiarse en el primer inicio de sesión",
         "current invalid": "La contraseña actual no es válida.<br>Corríjala o solicite una nueva contraseña temporal.",
+        "login with temp 1": " ",
+        "login with temp link": "Iniciar sesión",
+        "login with temp 2": "con su contraseña temporal para completar el proceso de registro.",
+        "answer incorrect": "La respuesta no es correcta",
         "rules not satisfied": "La nueva contraseña no cumple con todos los requisitos de la política de contraseñas.",
         "rules": {
             "length between": "Longitud entre {{lengthMin}} y {{lengthMax}} caracteres",
@@ -992,8 +1002,16 @@
             "required special": "Debe contener al menos 1 carácter especial",
             "previous count": "No se deben reutilizar {{count}} contraseñas anteriores"
         },
+        "answer security question": "Responda la pregunta de seguridad y haga clic en Restablecer contraseña para recibir un correo electrónico con una contraseña temporal.",
         "changed dialog title": "contraseña Cambiada",
-        "changed message": "tu contraseña ha sido cambiada exitosamente"
+        "changed message": "tu contraseña ha sido cambiada exitosamente",
+        "enter email cset": "Ingrese la dirección de correo electrónico asociada con su cuenta CSET",
+        "enter email rra": "Ingrese la dirección de correo electrónico asociada con su cuenta RRA",
+        "enter email acet": "Ingrese la dirección de correo electrónico asociada con su cuenta ACET",
+        "enter email tsa": "Ingrese la dirección de correo electrónico asociada con su cuenta CSET TSA",
+        "enter email renew": "Ingrese la dirección de correo electrónico asociada con su cuenta CSET Renewables",
+        "enter email cf": "Ingrese la dirección de correo electrónico asociada con su cuenta Cyber Florida CSET",
+        "ransomware explanation": "[ES]Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
         "about": "Sobre",
@@ -1018,5 +1036,23 @@
         "blank assessment": "Evaluación en blanco",
         "needs review": "Revisión de necesidades",
         "statements completed": "{{complete}}/{{total}} declaraciones completadas"
+    },
+    "login": {
+        "login prompt": "Ingrese su dirección de correo electrónico y contraseña para iniciar sesión",
+        "placeholder email": "Correo electrónico",
+        "placeholder password": "Contraseña",
+        "reset password": "Restablecer la contraseña",
+        "register new acct": "Registrar cuenta nueva",
+        "origin": "La herramienta de evaluación de seguridad cibernética (CSET®) es un producto de la Agencia de seguridad de infraestructura y ciberseguridad (CISA) que ayuda a las organizaciones a proteger sus activos cibernéticos nacionales clave. Fue desarrollado bajo la dirección de CISA por expertos en ciberseguridad. Esta herramienta proporciona a los usuarios un enfoque sistemático y repetible para evaluar la situación de seguridad de sus sistemas y redes cibernéticos. Incluye preguntas detalladas y de alto nivel relacionadas con todos los sistemas de TI y control industrial.",
+        "valid email required": "Se requiere una dirección de correo electrónico válida",
+        "valid password required": "Se requiere una contraseña válida",
+        "incorrect username or password": "Nombre de usuario o contraseña incorrecta",
+        "unknown email account": "Cuenta de correo electrónico desconocida",
+        "bad user": "El usuario no existe o no está activo",
+        "no questions defined": "No tienes preguntas de seguridad definidas para tu cuenta. Considere agregar preguntas de seguridad la próxima vez que inicie sesión.",
+        "password expired": "La contraseña ha caducado. Haga clic en 'Restablecer contraseña'",
+        "running locally": "CSET se está ejecutando localmente. No es necesario iniciar sesión.",
+        "error encountered": "Se encontró un error al ejecutar CSET",
+        "enter name and email": "Ingrese su nombre y dirección de correo electrónico para registrar una nueva cuenta CSET"
     }
 }
