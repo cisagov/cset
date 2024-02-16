@@ -180,6 +180,7 @@
         "save": "Зберегти",
         "cancel": "Скасувати",
         "continue": "продовжувати",
+        "exit": "Вихід",
         "change": "Змінити",
         "remove": "Видалити",
         "email": "Електронна пошта",
@@ -202,7 +203,8 @@
         "requirements mode": "Режим вимог",
         "add document": "Додайте документ",
         "copy text": "Копіювати текст",
-        "change password": "Змінити пароль"
+        "change password": "Змінити пароль",
+        "reset password": "Скинути пароль"
     },
     "contact": {
         "contacts": "Контакти",
@@ -834,14 +836,22 @@
     "change password": {
         "dialog title": "Змінити пароль",
         "current password": "Поточний пароль",
+        "show password": "Показати пароль",
+        "hide password": "Приховати пароль",
         "show passwords": "Показати паролі",
         "hide passwords": "Приховати паролі",
         "new password": "Новий пароль",
         "confirm new password": "Підтвердити новий пароль",
         "passwords do not match": "Паролі не збігаються",
+        "answer required": "Відповідь обов'язкова",
+        "email sent": "На адресу {{email}} надіслано електронний лист із вашим тимчасовим паролем.",
         "new and confirmation required": "Потрібні новий пароль і підтвердження",
         "change temp on logon": "Тимчасовий пароль необхідно змінити під час першого входу",
         "current invalid": "Поточний пароль недійсний.<br>Виправте його або подайте запит на новий тимчасовий пароль.",
+        "login with temp 1": "Будь ласка,",
+        "login with temp link": "увійдіть,",
+        "login with temp 2": "використовуючи свій тимчасовий пароль, щоб завершити процес реєстрації.",
+        "answer incorrect": "Відповідь невірна",
         "rules not satisfied": "Новий пароль не відповідає всім вимогам політики паролів.",
         "rules": {
             "length between": "Довжина від {{lengthMin}} до {{lengthMax}} символів",
@@ -851,11 +861,37 @@
             "required special": "Має містити принаймні 1 спеціальний символ",
             "previous count": "Не можна повторно використовувати попередні {{count}} паролі"
         },
+        "answer security question": "Будь ласка, дайте відповідь на секретне запитання та натисніть «Скинути пароль», щоб отримати електронний лист із тимчасовим паролем.",
         "changed dialog title": "Пароль змінено",
-        "changed message": "Ваш пароль успішно змінено"
+        "changed message": "Ваш пароль успішно змінено",
+        "enter email cset": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом CSET",
+        "enter email rra": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом RRA",
+        "enter email acet": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом ACET",
+        "enter email tsa": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом CSET TSA",
+        "enter email renew": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом CSET Renewables",
+        "enter email cf": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом Cyber Florida CSET",
+        "ransomware explanation": "[UK]Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
         "about": "Про програму",
         "version": "Версія"
+    },
+    "login": {
+        "login prompt": "Введіть адресу електронної пошти та пароль для входу",
+        "placeholder email": "Електронна пошта",
+        "placeholder password": "Пароль",
+        "reset password": "Скинути пароль",
+        "register new acct": "Зареєструвати новий обліковий запис",
+        "origin": "Інструмент оцінки кібербезпеки (CSET®) — це продукт Агентства кібербезпеки та безпеки інфраструктури (CISA), який допомагає організаціям захистити їхні ключові національні кіберактиви. Він був розроблений під керівництвом CISA експертами з кібербезпеки. Цей інструмент надає користувачам систематичний і повторюваний підхід до оцінки стану безпеки їхніх кіберсистем і мереж. Він містить як питання високого рівня, так і детальні питання, пов’язані з усіма промисловими системами управління та ІТ.",
+        "valid email required": "Потрібна дійсна адреса електронної пошти",
+        "valid password required": "Потрібен дійсний пароль",
+        "incorrect username or password": "Неправильне ім'я користувача або пароль",
+        "unknown email account": "Невідомий обліковий запис електронної пошти",
+        "bad user": "Користувач не існує або неактивний",
+        "no questions defined": "У вас немає контрольних запитань для вашого облікового запису. Будь ласка, подумайте про додавання таємних запитань під час наступного входу.",
+        "password expired": "Термін дії пароля закінчився. Натисніть 'Скинути пароль'",
+        "running locally": "CSET працює локально. Логін не потрібен.",
+        "error encountered": "Під час запуску CSET сталася помилка",
+        "enter name and email": "Введіть своє ім’я та адресу електронної пошти, щоб зареєструвати новий обліковий запис CSET"
     }
 }
