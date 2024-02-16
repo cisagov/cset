@@ -596,6 +596,19 @@
                 "summary of ranked questions": "Summary of Ranked Questions",
                 "summary of ranked questions desc": "Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
+            "site detail report": {
+                "site detail report": "SITE DETAIL REPORT",
+                "site information": "Site Information",
+                "executive summary": "Executive Summary",
+                "network diagram": "Network Diagram",
+                "findings and recommendations": "Findings and Recommendations From Basic Network Analysis",
+                "security assurance level": "Security Assurance Level (SAL)",
+                "maturity detail": "Maturity Detail",
+                "administration": "Administration",
+                "total review hours": "Total Review Hours",
+                "grand totals": "Grand Totals",
+                "cybersecurity maturity": "Cybersecurity Maturity"
+            },
             "components summary": {
                 "components summary": "Components Summary",
                 "text": "This chart shows the component or network diagram based answer percentages for each individual answer type."
@@ -607,7 +620,22 @@
             "rank": "Rank",
             "level": "Level",
             "no ranking": "Ranking information cannot be determined for the current question set. The Ranked Categories chart cannot be displayed.",
-            "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights."
+            "disclaimer": "This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product, or process disclosed in this publication, or represents that its use by such third party would not infringe privately owned rights.",
+            "questions comments": {
+                "questions comments": "Questions Comments",
+                "question": "Question",
+                "comment": "Comment",
+                "no comments": "There are no comments to display"
+            },
+            "alternate justification": {
+                "alternate justification": "Alternate Justification",
+                "question": "Question",
+                "no questions": "There are no questions with alternate justifications to display."
+            },
+            "questions marked for review": {
+                "questions marked for review": "Questions Marked for Review",
+                "no questions": "There are no questions marked for review."
+            }
         },
         "acet": {
             "acet reports": "ACET Reports",

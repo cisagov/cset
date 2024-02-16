@@ -594,6 +594,19 @@
                 "summary of ranked questions": "[ES]Summary of Ranked Questions",
                 "summary of ranked questions desc": "[ES]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
+            "site detail report": {
+                "site detail report": "[ES]SITE DETAIL REPORT",
+                "site information": "[ES]Site Information",
+                "executive summary": "[ES]Executive Summary",
+                "network diagram": "[ES]Network Diagram",
+                "findings and recommendations": "[ES]Findings and Recommendations From Basic Network Analysis",
+                "security assurance level": "[ES]Security Assurance Level (SAL)",
+                "maturity detail": "[ES]Maturity Detail",
+                "administration": "[ES]Administration",
+                "total review hours": "[ES]Total Review Hours",
+                "grand totals": "[ES]Grand Totals",
+                "cybersecurity maturity": "[ES]Cybersecurity Maturity"
+            },
             "components summary": {
                 "components summary": "Resumen de componentes",
                 "text": "Este gráfico muestra los porcentajes de respuesta basados en el diagrama de componentes o de red para cada tipo de respuesta individual."
@@ -605,7 +618,22 @@
             "rank": "[ES]Rank",
             "level": "Nivel",
             "no ranking": "La información de clasificación no se puede determinar para el conjunto de preguntas actual. No se puede mostrar el gráfico de categorías clasificadas.",
-            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada."
+            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada.",
+            "questions comments": {
+                "questions comments": "Preguntas o comentarios",
+                "question": "Pregunta",
+                "comment": "Comentario",
+                "no comments": "No hay comentarios que mostrar"
+            },
+            "alternate justification": {
+                "alternate justification": "Justificación alternativa",
+                "question": "Pregunta",
+                "no questions": "[ES]There are no questions with alternate justifications to display."
+            },
+            "questions marked for review": {
+                "questions marked for review": "[ES]Questions Marked for Review",
+                "no questions": "[ES]There are no questions marked for review."
+            }
         },
         "acet": {
             "acet reports": "Los informes de ACET",
