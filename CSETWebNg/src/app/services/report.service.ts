@@ -206,19 +206,32 @@ export class ReportService {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
   }
 
-  translatedDate(date: string) {
+  /**
+   * Converts a date string into a locale-formatted string.
+   * If an empty string is provided, an empty string is returned.
+   */
+  localizeDateString(dateString: string) {
+    if (dateString == '') {
+      return '';
+    }
+
     moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format('l');
+    const d = new Date(dateString);
+    return moment(d).format('l');
   }
 
-  translatedDateGMT(date: string) {
+  /**
+   * Converts a date string into a local-formatted string
+   * that includes the GMT offset based on the user's timezone.
+   */
+  localizeDateWithGMT(dateString: string) {
+    if (dateString == '') {
+      return '';
+    }
+
     moment.locale(this.tSvc.getActiveLang());
-    // below is commented out for now in order to replace Moment's timezone offset with our collected offset from the JWT
-
-    // let currentTime = moment(date).utc(true);
-    //return currentTime.utcOffset(date, true).format('L LTS') + currentTime.utcOffset(date).toString().slice(currentTime.utcOffset(date).toString().lastIndexOf(' '));
-
-    return moment(date).format('L LTS') + ' GMT-' + this.getOffsetFromJwtToken();
+    const d = new Date(dateString);
+    return moment(d).format('L LTS') + ' GMT-' + this.getOffsetFromJwtToken();
   }
 
   getOffsetFromJwtToken() {

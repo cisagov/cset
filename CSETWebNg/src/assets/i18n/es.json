@@ -2,7 +2,6 @@
     "my assessments": "Mis evaluaciones",
     "import": "Importar",
     "export all": "Exportar todo",
-    "resource library": "Biblioteca de recursos",
     "new assessment": "Nueva evaluación",
     "status": "Estado",
     "completion-questions": "{{complete}}/{{total}} preguntas respondidas",
@@ -181,10 +180,16 @@
                 "yes": "Sí",
                 "no": "No"
             },
-            "low": "Bajo",
-            "moderate": "Moderado",
-            "high": "Alto",
-            "very high": "Muy Alto"
+            "level": {
+                "low": "Bajo",
+                "l": "Bajo",
+                "moderate": "Moderado",
+                "m": "Moderado",
+                "high": "Alto",
+                "h": "Alto",
+                "very high": "Muy Alto",
+                "vh": "Muy Alto"
+            }
         },
         "network diagram": "Diagrama de red",
         "diagram component questions": "Preguntas del diagrama",
@@ -255,7 +260,8 @@
         "questions mode": "Modo preguntas",
         "requirements mode": "Modo requisitos",
         "add document": "Agregar documento",
-        "copy text": "Copiar texto"
+        "copy text": "Copiar texto",
+        "change password": "Cambiar la contraseña"
     },
     "answer-options": {
         "button-labels": {
@@ -548,35 +554,58 @@
                 "executive summary": "Resumen ejecutivo",
                 "tab title": "Resumen ejecutivo",
                 "title page title": "RESUMEN EJECUTIVO",
-                "site information": "Información del sitio", 
-                "calculated level": "[ES] CALCULATED LEVEL", 
-                "overall values": "[ES] Overall Values", 
+                "site information": "Información del sitio",
+                "calculated level": "[ES] CALCULATED LEVEL",
+                "overall values": "[ES] Overall Values",
                 "summary percent compliance": "[ES] Summary Percent Compliance",
-                "evaluation": "[ES] Evaluation Against Selected Standards and Question Sets", 
-                "standards summary": "[ES] Standards Summary", 
-                "standard or question set": "[ES] Standard or Question Set", 
-                "areas of concern": "[ES] Areas of Concern Top Subjects and Questions", 
-                "top subject areas": "[ES] The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.", 
-                "concern categories": "[ES] Top Categories of Concern", 
-                "concern questions": "[ES] Top Questions of Concern", 
-                "analysis of network components": "[ES] Analysis of Network Components", 
-                "combined component summary": "[ES] Combined Component Summary", 
-                "identified warnings": "[ES] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}", 
-                "see network details": "[ES] See the section 'Findings and Recommendations from Basic Network Analysis' for details.", 
-                "answer distribution": "[ES] Answer Distribution by Component Type", 
-                "calculated general security": "[ES] Calculated General Security Assurance Levels (SAL)", 
-                "onsite": "[ES] onsite", 
-                "offsite": "[ES] offsite", 
-                "physical injury": "[ES] Physical Injury", 
-                "hospital injury": "[ES] Hospital Injury", 
-                "death": "[ES] Death", 
-                "capital assets": "[ES] Capital Assets", 
-                "economic impact": "[ES] Economic Impact", 
+                "evaluation": "[ES] Evaluation Against Selected Standards and Question Sets",
+                "standards summary": "[ES] Standards Summary",
+                "standard or question set": "[ES] Standard or Question Set",
+                "areas of concern": "[ES] Areas of Concern Top Subjects and Questions",
+                "top subject areas": "[ES] The top subject areas and questions identify those areas where attention will either provide the most immediate impact or protect against the greatest vulnerabilities.",
+                "concern categories": "[ES] Top Categories of Concern",
+                "concern questions": "[ES] Top Questions of Concern",
+                "analysis of network components": "[ES] Analysis of Network Components",
+                "combined component summary": "[ES] Combined Component Summary",
+                "identified warnings": "[ES] The number of identified warnings and recommendations in the basic analysis of the user-defined system diagram is {{count}}",
+                "see network details": "[ES] See the section 'Findings and Recommendations from Basic Network Analysis' for details.",
+                "answer distribution": "[ES] Answer Distribution by Component Type",
+                "calculated general security": "[ES] Calculated General Security Assurance Levels (SAL)",
+                "onsite": "[ES] onsite",
+                "offsite": "[ES] offsite",
+                "physical injury": "[ES] Physical Injury",
+                "hospital injury": "[ES] Hospital Injury",
+                "death": "[ES] Death",
+                "capital assets": "[ES] Capital Assets",
+                "economic impact": "[ES] Economic Impact",
                 "environmental impact": "[ES] Environmental Impact"
             },
             "site summary": {
                 "site summary": "[ES]Site Summary",
-                "report title": "[ES]Site Summary"
+                "report title": "[ES]Site Summary",
+                "site information": "Información del sitio",
+                "high-level assessment description": "[ES]High-Level Assessment Description",
+                "executive summary": "Sumario ejecutivo",
+                "network diagram": "[ES]Network Diagram",
+                "standards compliance": "[ES]Standards Compliance",
+                "security assurance level": "[ES]Security Assurance Level (SAL)",
+                "document library": "[ES]Document Library",
+                "ranked categories": "[ES]Ranked Categories",
+                "summary of ranked questions": "[ES]Summary of Ranked Questions",
+                "summary of ranked questions desc": "[ES]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
+            },
+            "site detail report": {
+                "site detail report": "[ES]SITE DETAIL REPORT",
+                "site information": "[ES]Site Information",
+                "executive summary": "[ES]Executive Summary",
+                "network diagram": "[ES]Network Diagram",
+                "findings and recommendations": "[ES]Findings and Recommendations From Basic Network Analysis",
+                "security assurance level": "[ES]Security Assurance Level (SAL)",
+                "maturity detail": "[ES]Maturity Detail",
+                "administration": "[ES]Administration",
+                "total review hours": "[ES]Total Review Hours",
+                "grand totals": "[ES]Grand Totals",
+                "cybersecurity maturity": "[ES]Cybersecurity Maturity"
             },
             "components summary": {
                 "components summary": "Resumen de componentes",
@@ -586,8 +615,25 @@
                 "title": "[ES]Results by Category",
                 "text": "[ES]This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
+            "rank": "[ES]Rank",
+            "level": "Nivel",
             "no ranking": "La información de clasificación no se puede determinar para el conjunto de preguntas actual. No se puede mostrar el gráfico de categorías clasificadas.",
-            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada."
+            "disclaimer": "Este informe fue preparado como un relato del trabajo patrocinado por una agencia del gobierno de los Estados Unidos. Ni el Gobierno de los EE. UU. ni ninguna agencia del mismo, ni ningún empleado, ofrece ninguna garantía, expresa o implícita, ni asume ninguna responsabilidad legal por el uso de terceros, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso divulgado en esta publicación, o declara que su uso por parte de dicho tercero no infringiría derechos de propiedad privada.",
+            "questions comments": {
+                "questions comments": "Preguntas o comentarios",
+                "question": "Pregunta",
+                "comment": "Comentario",
+                "no comments": "No hay comentarios que mostrar"
+            },
+            "alternate justification": {
+                "alternate justification": "Justificación alternativa",
+                "question": "Pregunta",
+                "no questions": "[ES]There are no questions with alternate justifications to display."
+            },
+            "questions marked for review": {
+                "questions marked for review": "[ES]Questions Marked for Review",
+                "no questions": "[ES]There are no questions marked for review."
+            }
         },
         "acet": {
             "acet reports": "Los informes de ACET",
@@ -694,30 +740,42 @@
         "file name": "[ES]File Name",
         "source documents": "Documentos Fuente",
         "additional documents": "Documentos Adicionales",
+        "no documents to display": "[ES]There are no documents to display",
         "section": "Sección",
         "no reference documents available": "no hay documentos de referencia disponibles"
     },
-    "tools": {
-        "tools": "Herramientas",
-        "enable protected features": "Habilitar funciones protegidas",
-        "assessment documents": "Documentos de evaluación",
-        "parameter editor": "Editor de parámetros",
-        "export assessment to excel": "Exportar evaluación a excel",
-        "import modules": "Importar módulos",
-        "module builder": "Constructor de módulos",
-        "module content report": "Informe de contenido del módulo",
-        "trend": "Tendencia",
-        "compare": "Comparar"
-    },
-    "help": {
-        "help": "Ayuda",
-        "about": "Sobre",
-        "keyboard shortcuts": "Atajos de teclado",
-        "legal": {
-            "legal": "Legal",
-            "accessibility document": "Documento de accesibilidad",
-            "advisory": "Asesoramiento",
-            "terms of use": "Términos de uso"
+    "menu": {
+        "tools": {
+            "tools": "Herramientas",
+            "enable protected features": "Habilitar funciones protegidas",
+            "assessment documents": "Documentos de evaluación",
+            "parameter editor": "Editor de parámetros",
+            "export assessment to excel": "Exportar evaluación a excel",
+            "import modules": "Importar módulos",
+            "module builder": "Constructor de módulos",
+            "module content report": "Informe de contenido del módulo",
+            "trend": "Tendencia",
+            "compare": "Comparar"
+        },
+        "resource library": "Biblioteca de recursos",
+        "help": {
+            "help": "Ayuda",
+            "cset user guide": "CSET User Guide",
+            "about": "Sobre",
+            "keyboard shortcuts": "Atajos de teclado",
+            "legal": {
+                "legal": "Legal",
+                "accessibility document": "Documento de accesibilidad",
+                "advisory": "Asesoramiento",
+                "terms of use": "Términos de uso"
+            }
+        },
+        "user": {
+            "user profile": "Perfil del usuario",
+            "my assessments": "Mis evaluaciones",
+            "change password": "Cambiar la contraseña",
+            "user language": "Idioma del usuario",
+            "logout": "Cerrar sesión"
         }
     },
     "merge examinations": {
@@ -734,6 +792,47 @@
         "no conflicts 3": "para proceder con la fusión.",
         "merge": "Fusión",
         "start merge": "Comenzar a Fusionar"
+    },
+    "user profile": {
+        "dialog title": "Perfil del usuario",
+        "first name": "Nombre de pila",
+        "last name": "Apellido",
+        "email": "Email",
+        "confirm email": "Confirmar email",
+        "security questions": "Preguntas de seguridad",
+        "security questions text": "Proporcionar preguntas de seguridad es opcional, pero le permite recuperar su contraseña en caso de que la olvide.",
+        "security question 1": "Pregunta 1",
+        "security answer 1": "Respuesta 1",
+        "security question 2": "Pregunta 2",
+        "security answer 2": "Respuesta 2",
+        "first name required": "Nombre de pila es obligatorio",
+        "last name required": "Apellido es obligatorio",
+        "email required": "Email es obligatorio",
+        "not valid email": "Email no es válido",
+        "emails do not match": "Los correos electrónicos no coinciden"
+    },
+    "change password": {
+        "dialog title": "Cambiar la contraseña",
+        "current password": "Contraseña actual",
+        "show passwords": "Mostrar contraseñas",
+        "hide passwords": "Ocultar contraseñas",
+        "new password": "Nueva contraseña",
+        "confirm new password": "Confirmar nueva contraseña",
+        "passwords do not match": "Las contraseñas no coinciden",
+        "new and confirmation required": "Se requiere nueva contraseña y confirmación",
+        "change temp on logon": "La contraseña temporal debe cambiarse en el primer inicio de sesión",
+        "current invalid": "La contraseña actual no es válida.<br>Corríjala o solicite una nueva contraseña temporal.",
+        "rules not satisfied": "La nueva contraseña no cumple con todos los requisitos de la política de contraseñas.",
+        "rules": {
+            "length between": "Longitud entre {{lengthMin}} y {{lengthMax}} caracteres",
+            "required numbers": "Debe contener al menos 2 números",
+            "required lowercase": "Debe contener al menos 1 carácter en minúscula",
+            "required uppercase": "Debe contener al menos 1 carácter en mayúscula",
+            "required special": "Debe contener al menos 1 carácter especial",
+            "previous count": "No se deben reutilizar {{count}} contraseñas anteriores"
+        },
+        "changed dialog title": "contraseña Cambiada",
+        "changed message": "tu contraseña ha sido cambiada exitosamente"
     },
     "about": {
         "about": "Sobre",

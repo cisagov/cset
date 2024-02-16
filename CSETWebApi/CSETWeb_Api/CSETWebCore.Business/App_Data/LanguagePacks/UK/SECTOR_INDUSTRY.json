@@ -1,1284 +1,1282 @@
-{
-  "pairs": [
-    {
-      "key": "1",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "78",
-      "value": "[UK]Basic Chemicals",
-      "valueEN": "Basic Chemicals"
-    },
-    {
-      "key": "79",
-      "value": "[UK]Specialty Products",
-      "valueEN": "Specialty Products"
-    },
-    {
-      "key": "80",
-      "value": "[UK]Pharmaceutical Products",
-      "valueEN": "Pharmaceutical Products"
-    },
-    {
-      "key": "81",
-      "value": "[UK]Consumer Products",
-      "valueEN": "Consumer Products"
-    },
-    {
-      "key": "82",
-      "value": "[UK]Agricultural Products",
-      "valueEN": "Agricultural Products"
-    },
-    {
-      "key": "2",
-      "value": "[UK]Entertainment and Media",
-      "valueEN": "Entertainment and Media"
-    },
-    {
-      "key": "3",
-      "value": "[UK]Gaming",
-      "valueEN": "Gaming"
-    },
-    {
-      "key": "4",
-      "value": "[UK]Lodging",
-      "valueEN": "Lodging"
-    },
-    {
-      "key": "5",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "6",
-      "value": "[UK]Outdoor Events",
-      "valueEN": "Outdoor Events"
-    },
-    {
-      "key": "7",
-      "value": "[UK]Public Assembly",
-      "valueEN": "Public Assembly"
-    },
-    {
-      "key": "8",
-      "value": "[UK]Real Estate",
-      "valueEN": "Real Estate"
-    },
-    {
-      "key": "9",
-      "value": "[UK]Retail",
-      "valueEN": "Retail"
-    },
-    {
-      "key": "10",
-      "value": "[UK]Sports Leagues",
-      "valueEN": "Sports Leagues"
-    },
-    {
-      "key": "11",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "12",
-      "value": "[UK]Telecommunications",
-      "valueEN": "Telecommunications"
-    },
-    {
-      "key": "13",
-      "value": "[UK]Wireless Communications Service Providers",
-      "valueEN": "Wireless Communications Service Providers"
-    },
-    {
-      "key": "83",
-      "value": "[UK]Broadcasting",
-      "valueEN": "Broadcasting"
-    },
-    {
-      "key": "84",
-      "value": "[UK]Cable",
-      "valueEN": "Cable"
-    },
-    {
-      "key": "85",
-      "value": "[UK]Satellite",
-      "valueEN": "Satellite"
-    },
-    {
-      "key": "86",
-      "value": "[UK]Wireline",
-      "valueEN": "Wireline"
-    },
-    {
-      "key": "14",
-      "value": "[UK]Electrical Equipment, Appliance and Component Manufacturing",
-      "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
-    },
-    {
-      "key": "15",
-      "value": "[UK]Machinery Manufacturing",
-      "valueEN": "Machinery Manufacturing"
-    },
-    {
-      "key": "16",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "17",
-      "value": "[UK]Primary Metal Manufacturing",
-      "valueEN": "Primary Metal Manufacturing"
-    },
-    {
-      "key": "18",
-      "value": "[UK]Transportation and Heavy Equipment Manufacturing",
-      "valueEN": "Transportation and Heavy Equipment Manufacturing"
-    },
-    {
-      "key": "87",
-      "value": "[UK]Manufacturing",
-      "valueEN": "Manufacturing"
-    },
-    {
-      "key": "88",
-      "value": "[UK]Heavy Machinery Manufacturing",
-      "valueEN": "Heavy Machinery Manufacturing"
-    },
-    {
-      "key": "19",
-      "value": "[UK]Dams",
-      "valueEN": "Dams"
-    },
-    {
-      "key": "20",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "21",
-      "value": "[UK]Private Hydropower Facilities in the US",
-      "valueEN": "Private Hydropower Facilities in the US"
-    },
-    {
-      "key": "89",
-      "value": "[UK]Levees",
-      "valueEN": "Levees"
-    },
-    {
-      "key": "90",
-      "value": "[UK]Navigation Locks",
-      "valueEN": "Navigation Locks"
-    },
-    {
-      "key": "91",
-      "value": "[UK]Tailings and Waste Impoundments",
-      "valueEN": "Tailings and Waste Impoundments"
-    },
-    {
-      "key": "22",
-      "value": "[UK]Aircraft Industry",
-      "valueEN": "Aircraft Industry"
-    },
-    {
-      "key": "23",
-      "value": "[UK]Ammunition",
-      "valueEN": "Ammunition"
-    },
-    {
-      "key": "24",
-      "value": "[UK]Combat Vehicle",
-      "valueEN": "Combat Vehicle"
-    },
-    {
-      "key": "25",
-      "value": "[UK]Communications",
-      "valueEN": "Communications"
-    },
-    {
-      "key": "26",
-      "value": "[UK]Defense Contractors",
-      "valueEN": "Defense Contractors"
-    },
-    {
-      "key": "27",
-      "value": "[UK]Electrical Industry Commodities",
-      "valueEN": "Electrical Industry Commodities"
-    },
-    {
-      "key": "28",
-      "value": "[UK]Electronics",
-      "valueEN": "Electronics"
-    },
-    {
-      "key": "29",
-      "value": "[UK]Mechanical Industry Commodities",
-      "valueEN": "Mechanical Industry Commodities"
-    },
-    {
-      "key": "30",
-      "value": "[UK]Missile Industry",
-      "valueEN": "Missile Industry"
-    },
-    {
-      "key": "31",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "32",
-      "value": "[UK]Research and Development Facilities",
-      "valueEN": "Research and Development Facilities"
-    },
-    {
-      "key": "33",
-      "value": "[UK]Shipbuilding Industry",
-      "valueEN": "Shipbuilding Industry"
-    },
-    {
-      "key": "34",
-      "value": "[UK]Space",
-      "valueEN": "Space"
-    },
-    {
-      "key": "35",
-      "value": "[UK]Structural Industry Commodities",
-      "valueEN": "Structural Industry Commodities"
-    },
-    {
-      "key": "36",
-      "value": "[UK]Troop Support",
-      "valueEN": "Troop Support"
-    },
-    {
-      "key": "37",
-      "value": "[UK]Weapons",
-      "valueEN": "Weapons"
-    },
-    {
-      "key": "38",
-      "value": "[UK]Emergency Management",
-      "valueEN": "Emergency Management"
-    },
-    {
-      "key": "39",
-      "value": "[UK]Emergency Medical Services",
-      "valueEN": "Emergency Medical Services"
-    },
-    {
-      "key": "40",
-      "value": "[UK]Fire and Rescue Services",
-      "valueEN": "Fire and Rescue Services"
-    },
-    {
-      "key": "41",
-      "value": "[UK]Law Enforcement",
-      "valueEN": "Law Enforcement"
-    },
-    {
-      "key": "42",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "43",
-      "value": "[UK]Public Works",
-      "valueEN": "Public Works"
-    },
-    {
-      "key": "44",
-      "value": "[UK]Electric Power Generation, Transmission and Distribution",
-      "valueEN": "Electric Power Generation, Transmission and Distribution"
-    },
-    {
-      "key": "45",
-      "value": "[UK]Natural Gas",
-      "valueEN": "Natural Gas"
-    },
-    {
-      "key": "46",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "47",
-      "value": "[UK]Petroleum Refineries",
-      "valueEN": "Petroleum Refineries"
-    },
-    {
-      "key": "92",
-      "value": "[UK]Oil and Natural Gas",
-      "valueEN": "Oil and Natural Gas"
-    },
-    {
-      "key": "48",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "49",
-      "value": "[UK]US Banks",
-      "valueEN": "US Banks"
-    },
-    {
-      "key": "50",
-      "value": "[UK]US Credit Unions",
-      "valueEN": "US Credit Unions"
-    },
-    {
-      "key": "93",
-      "value": "[UK]Consumer Services",
-      "valueEN": "Consumer Services"
-    },
-    {
-      "key": "94",
-      "value": "[UK]Credit and Liquidity Products",
-      "valueEN": "Credit and Liquidity Products"
-    },
-    {
-      "key": "95",
-      "value": "[UK]Investment Products",
-      "valueEN": "Investment Products"
-    },
-    {
-      "key": "96",
-      "value": "[UK]Risk Transfer Products",
-      "valueEN": "Risk Transfer Products"
-    },
-    {
-      "key": "51",
-      "value": "[UK]Beverage Manufacturing Plants",
-      "valueEN": "Beverage Manufacturing Plants"
-    },
-    {
-      "key": "52",
-      "value": "[UK]Food Manufacturing Plants",
-      "valueEN": "Food Manufacturing Plants"
-    },
-    {
-      "key": "53",
-      "value": "[UK]Food Services",
-      "valueEN": "Food Services"
-    },
-    {
-      "key": "54",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "97",
-      "value": "[UK]Supply",
-      "valueEN": "Supply"
-    },
-    {
-      "key": "98",
-      "value": "[UK]Processing, Packaging, and Production",
-      "valueEN": "Processing, Packaging, and Production"
-    },
-    {
-      "key": "99",
-      "value": "[UK]Product Storage",
-      "valueEN": "Product Storage"
-    },
-    {
-      "key": "100",
-      "value": "[UK]Product Transportation",
-      "valueEN": "Product Transportation"
-    },
-    {
-      "key": "101",
-      "value": "[UK]Product Distribution",
-      "valueEN": "Product Distribution"
-    },
-    {
-      "key": "102",
-      "value": "[UK]Supporting Facilities",
-      "valueEN": "Supporting Facilities"
-    },
-    {
-      "key": "55",
-      "value": "[UK]Local Governments",
-      "valueEN": "Local Governments"
-    },
-    {
-      "key": "56",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "57",
-      "value": "[UK]State Governments",
-      "valueEN": "State Governments"
-    },
-    {
-      "key": "58",
-      "value": "[UK]Territorial Governments",
-      "valueEN": "Territorial Governments"
-    },
-    {
-      "key": "59",
-      "value": "[UK]Tribal Governments",
-      "valueEN": "Tribal Governments"
-    },
-    {
-      "key": "103",
-      "value": "[UK]Public Facilities",
-      "valueEN": "Public Facilities"
-    },
-    {
-      "key": "104",
-      "value": "[UK]Non-Public Facilities",
-      "valueEN": "Non-Public Facilities"
-    },
-    {
-      "key": "60",
-      "value": "[UK]Hospitals",
-      "valueEN": "Hospitals"
-    },
-    {
-      "key": "61",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "62",
-      "value": "[UK]Residential Care Facilities",
-      "valueEN": "Residential Care Facilities"
-    },
-    {
-      "key": "105",
-      "value": "[UK]Direct Patient Care",
-      "valueEN": "Direct Patient Care"
-    },
-    {
-      "key": "106",
-      "value": "[UK]Health IT",
-      "valueEN": "Health IT"
-    },
-    {
-      "key": "107",
-      "value": "[UK]Health Plans and Payers",
-      "valueEN": "Health Plans and Payers"
-    },
-    {
-      "key": "108",
-      "value": "[UK]Fatality Management Services",
-      "valueEN": "Fatality Management Services"
-    },
-    {
-      "key": "109",
-      "value": "[UK]Medical Materials",
-      "valueEN": "Medical Materials"
-    },
-    {
-      "key": "110",
-      "value": "[UK]Support Services",
-      "valueEN": "Support Services"
-    },
-    {
-      "key": "63",
-      "value": "[UK]Information Technology",
-      "valueEN": "Information Technology"
-    },
-    {
-      "key": "64",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "111",
-      "value": "[UK]IT Production",
-      "valueEN": "IT Production"
-    },
-    {
-      "key": "112",
-      "value": "[UK]DNS Services",
-      "valueEN": "DNS Services"
-    },
-    {
-      "key": "113",
-      "value": "[UK]Identity and Trust Support Management",
-      "valueEN": "Identity and Trust Support Management"
-    },
-    {
-      "key": "114",
-      "value": "[UK]Internet Content and Service Providers",
-      "valueEN": "Internet Content and Service Providers"
-    },
-    {
-      "key": "115",
-      "value": "[UK]Internet Routing and Connection",
-      "valueEN": "Internet Routing and Connection"
-    },
-    {
-      "key": "116",
-      "value": "[UK]Incident Management",
-      "valueEN": "Incident Management"
-    },
-    {
-      "key": "65",
-      "value": "[UK]Operating Nuclear Power Plants",
-      "valueEN": "Operating Nuclear Power Plants"
-    },
-    {
-      "key": "66",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "117",
-      "value": "[UK]Fuel Cycle Facilities",
-      "valueEN": "Fuel Cycle Facilities"
-    },
-    {
-      "key": "118",
-      "value": "[UK]Nuclear Materials Transport",
-      "valueEN": "Nuclear Materials Transport"
-    },
-    {
-      "key": "119",
-      "value": "[UK]Radioactive Waste",
-      "valueEN": "Radioactive Waste"
-    },
-    {
-      "key": "120",
-      "value": "[UK]Radioactive Materials",
-      "valueEN": "Radioactive Materials"
-    },
-    {
-      "key": "67",
-      "value": "Авіація",
-      "valueEN": "Aviation"
-    },
-    {
-      "key": "68",
-      "value": "Вантажні залізниці",
-      "valueEN": "Freight Rail"
-    },
-    {
-      "key": "69",
-      "value": "Шосе (автомобільний транспорт)",
-      "valueEN": "Highway (truck transportation)"
-    },
-    {
-      "key": "70",
-      "value": "Морський транспорт",
-      "valueEN": "Maritime"
-    },
-    {
-      "key": "71",
-      "value": "Громадський транспорт і пасажирський залізничний транспорт",
-      "valueEN": "Mass Transit and Passenger Rail"
-    },
-    {
-      "key": "72",
-      "value": "Муніципалітети з системами контролю дорожнього руху",
-      "valueEN": "Municipalities with Traffic Control Systems"
-    },
-    {
-      "key": "73",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "74",
-      "value": "Трубопроводи (транспортують природний газ, небезпечні рідини та різні хімічні речовини)",
-      "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
-    },
-    {
-      "key": "75",
-      "value": "Інше",
-      "valueEN": "Other"
-    },
-    {
-      "key": "76",
-      "value": "[UK]Public Water Systems",
-      "valueEN": "Public Water Systems"
-    },
-    {
-      "key": "77",
-      "value": "[UK]Publicly Owned Treatment Works",
-      "valueEN": "Publicly Owned Treatment Works"
-    },
-    {
-      "key": "121",
-      "value": "[UK]Agricultural and Food Product Distribution",
-      "valueEN": "Agricultural and Food Product Distribution"
-    },
-    {
-      "key": "122",
-      "value": "[UK]Agricultural and Food Product Transportation",
-      "valueEN": "Agricultural and Food Product Transportation"
-    },
-    {
-      "key": "123",
-      "value": "[UK]Agriculture and Food Product Storage and Distribution Warehouse",
-      "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
-    },
-    {
-      "key": "124",
-      "value": "[UK]Agriculture and Food Supporting Facility",
-      "valueEN": "Agriculture and Food Supporting Facility"
-    },
-    {
-      "key": "125",
-      "value": "[UK]Other Agriculture and Food",
-      "valueEN": "Other Agriculture and Food"
-    },
-    {
-      "key": "126",
-      "value": "[UK]Processing, Packaging, and Production",
-      "valueEN": "Processing, Packaging, and Production"
-    },
-    {
-      "key": "127",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "128",
-      "value": "[UK]Supply",
-      "valueEN": "Supply"
-    },
-    {
-      "key": "129",
-      "value": "[UK]Banking and Credit",
-      "valueEN": "Banking and Credit"
-    },
-    {
-      "key": "130",
-      "value": "[UK]Insurance Company",
-      "valueEN": "Insurance Company"
-    },
-    {
-      "key": "131",
-      "value": "[UK]Securities, Commodities, or Financial Investment",
-      "valueEN": "Securities, Commodities, or Financial Investment"
-    },
-    {
-      "key": "132",
-      "value": "[UK]Chemical Manufacturing or Processing Plant",
-      "valueEN": "Chemical Manufacturing or Processing Plant"
-    },
-    {
-      "key": "133",
-      "value": "[UK]Hazardous Chemical Storage/Stockpile/Utilization/Distribution",
-      "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
-    },
-    {
-      "key": "134",
-      "value": "[UK]Hazardous Chemical Transport",
-      "valueEN": "Hazardous Chemical Transport"
-    },
-    {
-      "key": "135",
-      "value": "[UK]Other Chemical and Hazardous Material",
-      "valueEN": "Other Chemical and Hazardous Material"
-    },
-    {
-      "key": "136",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "137",
-      "value": "[UK]Entertainment or Media Facility",
-      "valueEN": "Entertainment or Media Facility"
-    },
-    {
-      "key": "138",
-      "value": "[UK]Gaming Facility/Casino",
-      "valueEN": "Gaming Facility/Casino"
-    },
-    {
-      "key": "139",
-      "value": "[UK]Lodging Facility",
-      "valueEN": "Lodging Facility"
-    },
-    {
-      "key": "140",
-      "value": "[UK]Other Commercial Facility",
-      "valueEN": "Other Commercial Facility"
-    },
-    {
-      "key": "141",
-      "value": "[UK]Public Assembly",
-      "valueEN": "Public Assembly"
-    },
-    {
-      "key": "142",
-      "value": "[UK]Real Estate Facility",
-      "valueEN": "Real Estate Facility"
-    },
-    {
-      "key": "143",
-      "value": "[UK]Retail Facility",
-      "valueEN": "Retail Facility"
-    },
-    {
-      "key": "144",
-      "value": "[UK]Information Services",
-      "valueEN": "Information Services"
-    },
-    {
-      "key": "145",
-      "value": "[UK]Internet",
-      "valueEN": "Internet"
-    },
-    {
-      "key": "146",
-      "value": "[UK]Next Generation Network",
-      "valueEN": "Next Generation Network"
-    },
-    {
-      "key": "147",
-      "value": "[UK]Other Communication Facility",
-      "valueEN": "Other Communication Facility"
-    },
-    {
-      "key": "148",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "149",
-      "value": "[UK]Satellite Communication",
-      "valueEN": "Satellite Communication"
-    },
-    {
-      "key": "150",
-      "value": "[UK]Telecomm Hotel",
-      "valueEN": "Telecomm Hotel"
-    },
-    {
-      "key": "151",
-      "value": "[UK]Wired Communication",
-      "valueEN": "Wired Communication"
-    },
-    {
-      "key": "152",
-      "value": "[UK]Wireless Communication",
-      "valueEN": "Wireless Communication"
-    },
-    {
-      "key": "153",
-      "value": "[UK]Dam Project",
-      "valueEN": "Dam Project"
-    },
-    {
-      "key": "154",
-      "value": "[UK]Flood Damage Reduction System",
-      "valueEN": "Flood Damage Reduction System"
-    },
-    {
-      "key": "155",
-      "value": "[UK]Hurricane or Storm Surge Protection System",
-      "valueEN": "Hurricane or Storm Surge Protection System"
-    },
-    {
-      "key": "156",
-      "value": "[UK]Mine Tailings and Industrial Waste Impoundment",
-      "valueEN": "Mine Tailings and Industrial Waste Impoundment"
-    },
-    {
-      "key": "157",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "158",
-      "value": "[UK]Aircraft Industry",
-      "valueEN": "Aircraft Industry"
-    },
-    {
-      "key": "159",
-      "value": "[UK]Ammunition Industry",
-      "valueEN": "Ammunition Industry"
-    },
-    {
-      "key": "160",
-      "value": "[UK]Combat Vehicle Industry",
-      "valueEN": "Combat Vehicle Industry"
-    },
-    {
-      "key": "161",
-      "value": "[UK]Electrical Industry Commodity Manufacturing",
-      "valueEN": "Electrical Industry Commodity Manufacturing"
-    },
-    {
-      "key": "162",
-      "value": "[UK]Electronic Industry Commodity Manufacturing",
-      "valueEN": "Electronic Industry Commodity Manufacturing"
-    },
-    {
-      "key": "163",
-      "value": "[UK]Electronics Industry",
-      "valueEN": "Electronics Industry"
-    },
-    {
-      "key": "164",
-      "value": "[UK]Information Technology Industry",
-      "valueEN": "Information Technology Industry"
-    },
-    {
-      "key": "165",
-      "value": "[UK]Mechanical Industry Commodity Manufacturing",
-      "valueEN": "Mechanical Industry Commodity Manufacturing"
-    },
-    {
-      "key": "166",
-      "value": "[UK]Missile Industry",
-      "valueEN": "Missile Industry"
-    },
-    {
-      "key": "167",
-      "value": "[UK]Research & Development Facility",
-      "valueEN": "Research & Development Facility"
-    },
-    {
-      "key": "168",
-      "value": "[UK]Shipbuilding Industry",
-      "valueEN": "Shipbuilding Industry"
-    },
-    {
-      "key": "169",
-      "value": "[UK]Space Industry",
-      "valueEN": "Space Industry"
-    },
-    {
-      "key": "170",
-      "value": "[UK]Structural Industry Commodity Manufacturing",
-      "valueEN": "Structural Industry Commodity Manufacturing"
-    },
-    {
-      "key": "171",
-      "value": "[UK]Troop Support Industry",
-      "valueEN": "Troop Support Industry"
-    },
-    {
-      "key": "172",
-      "value": "[UK]Weapons Industry",
-      "valueEN": "Weapons Industry"
-    },
-    {
-      "key": "173",
-      "value": "[UK]Emergency Management",
-      "valueEN": "Emergency Management"
-    },
-    {
-      "key": "174",
-      "value": "[UK]Emergency Medical Services (EMS)",
-      "valueEN": "Emergency Medical Services (EMS)"
-    },
-    {
-      "key": "175",
-      "value": "[UK]Fire and Emergency Services",
-      "valueEN": "Fire and Emergency Services"
-    },
-    {
-      "key": "176",
-      "value": "[UK]Law Enforcement",
-      "valueEN": "Law Enforcement"
-    },
-    {
-      "key": "177",
-      "value": "[UK]Other Emergency Services Facility",
-      "valueEN": "Other Emergency Services Facility"
-    },
-    {
-      "key": "178",
-      "value": "[UK]Public Works",
-      "valueEN": "Public Works"
-    },
-    {
-      "key": "179",
-      "value": "[UK]Biodiesel",
-      "valueEN": "Biodiesel"
-    },
-    {
-      "key": "180",
-      "value": "[UK]Coal",
-      "valueEN": "Coal"
-    },
-    {
-      "key": "181",
-      "value": "[UK]Electricity",
-      "valueEN": "Electricity"
-    },
-    {
-      "key": "182",
-      "value": "[UK]Ethanol",
-      "valueEN": "Ethanol"
-    },
-    {
-      "key": "183",
-      "value": "[UK]Hydrogen",
-      "valueEN": "Hydrogen"
-    },
-    {
-      "key": "184",
-      "value": "[UK]Natural Gas",
-      "valueEN": "Natural Gas"
-    },
-    {
-      "key": "185",
-      "value": "[UK]Other Energy Conversion System",
-      "valueEN": "Other Energy Conversion System"
-    },
-    {
-      "key": "186",
-      "value": "[UK]Petroleum",
-      "valueEN": "Petroleum"
-    },
-    {
-      "key": "187",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "188",
-      "value": "[UK]Education Facility",
-      "valueEN": "Education Facility"
-    },
-    {
-      "key": "189",
-      "value": "[UK]Election Infrastructure",
-      "valueEN": "Election Infrastructure"
-    },
-    {
-      "key": "190",
-      "value": "[UK]Government Research Facility",
-      "valueEN": "Government Research Facility"
-    },
-    {
-      "key": "191",
-      "value": "[UK]Government Sensor or Monitoring System",
-      "valueEN": "Government Sensor or Monitoring System"
-    },
-    {
-      "key": "192",
-      "value": "[UK]Government Space System",
-      "valueEN": "Government Space System"
-    },
-    {
-      "key": "193",
-      "value": "[UK]Government Storage or Preservation Facility",
-      "valueEN": "Government Storage or Preservation Facility"
-    },
-    {
-      "key": "194",
-      "value": "[UK]Military Facility",
-      "valueEN": "Military Facility"
-    },
-    {
-      "key": "195",
-      "value": "[UK]Other Government Facility",
-      "valueEN": "Other Government Facility"
-    },
-    {
-      "key": "196",
-      "value": "[UK]Personnel-Oriented Government Facility",
-      "valueEN": "Personnel-Oriented Government Facility"
-    },
-    {
-      "key": "197",
-      "value": "[UK]Service-Oriented Government Facility",
-      "valueEN": "Service-Oriented Government Facility"
-    },
-    {
-      "key": "198",
-      "value": "[UK]Direct Patient Healthcare",
-      "valueEN": "Direct Patient Healthcare"
-    },
-    {
-      "key": "199",
-      "value": "[UK]Fatality/Mortuary Facility",
-      "valueEN": "Fatality/Mortuary Facility"
-    },
-    {
-      "key": "200",
-      "value": "[UK]Health Supporting Facility",
-      "valueEN": "Health Supporting Facility"
-    },
-    {
-      "key": "201",
-      "value": "[UK]Healthcare Educational Facility",
-      "valueEN": "Healthcare Educational Facility"
-    },
-    {
-      "key": "202",
-      "value": "[UK]Other Healthcare and Public Health Entity",
-      "valueEN": "Other Healthcare and Public Health Entity"
-    },
-    {
-      "key": "203",
-      "value": "[UK]Public Health Agency",
-      "valueEN": "Public Health Agency"
-    },
-    {
-      "key": "204",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "205",
-      "value": "[UK]Hardware Production",
-      "valueEN": "Hardware Production"
-    },
-    {
-      "key": "206",
-      "value": "[UK]Internet-Based Content, Information, and Communications Services",
-      "valueEN": "Internet-Based Content, Information, and Communications Services"
-    },
-    {
-      "key": "207",
-      "value": "[UK]Other Hardware Production Facility",
-      "valueEN": "Other Hardware Production Facility"
-    },
-    {
-      "key": "208",
-      "value": "[UK]Other Information Technology Facility",
-      "valueEN": "Other Information Technology Facility"
-    },
-    {
-      "key": "209",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "210",
-      "value": "[UK]Software Production",
-      "valueEN": "Software Production"
-    },
-    {
-      "key": "211",
-      "value": "[UK]Beverage Manufacturing",
-      "valueEN": "Beverage Manufacturing"
-    },
-    {
-      "key": "212",
-      "value": "[UK]Chemical Manufacturing",
-      "valueEN": "Chemical Manufacturing"
-    },
-    {
-      "key": "213",
-      "value": "[UK]Computer and Electronic Product Manufacturing",
-      "valueEN": "Computer and Electronic Product Manufacturing"
-    },
-    {
-      "key": "214",
-      "value": "[UK]Critical Manufacturing",
-      "valueEN": "Critical Manufacturing"
-    },
-    {
-      "key": "215",
-      "value": "[UK]Fabricated Metal Product Manufacturing",
-      "valueEN": "Fabricated Metal Product Manufacturing"
-    },
-    {
-      "key": "216",
-      "value": "[UK]Food Manufacturing",
-      "valueEN": "Food Manufacturing"
-    },
-    {
-      "key": "217",
-      "value": "[UK]Furniture And Related Product Manufacturing",
-      "valueEN": "Furniture And Related Product Manufacturing"
-    },
-    {
-      "key": "218",
-      "value": "[UK]Mining, Quarrying, or Oil and Gas Extraction",
-      "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
-    },
-    {
-      "key": "219",
-      "value": "[UK]Non-Metallic Mineral Products Manufacturing",
-      "valueEN": "Non-Metallic Mineral Products Manufacturing"
-    },
-    {
-      "key": "220",
-      "value": "[UK]Other Manufacturing",
-      "valueEN": "Other Manufacturing"
-    },
-    {
-      "key": "221",
-      "value": "[UK]Paper Manufacturing",
-      "valueEN": "Paper Manufacturing"
-    },
-    {
-      "key": "222",
-      "value": "[UK]Petroleum and Coal Products Manufacturing",
-      "valueEN": "Petroleum and Coal Products Manufacturing"
-    },
-    {
-      "key": "223",
-      "value": "[UK]Plastics And Rubber Products Manufacturing",
-      "valueEN": "Plastics And Rubber Products Manufacturing"
-    },
-    {
-      "key": "224",
-      "value": "[UK]Printing and Related Support",
-      "valueEN": "Printing and Related Support"
-    },
-    {
-      "key": "225",
-      "value": "[UK]Textile, Textile Product, Apparel, Leather Manufacturing",
-      "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
-    },
-    {
-      "key": "226",
-      "value": "[UK]Tobacco Product Manufacturing",
-      "valueEN": "Tobacco Product Manufacturing"
-    },
-    {
-      "key": "227",
-      "value": "[UK]Wood Product Manufacturing",
-      "valueEN": "Wood Product Manufacturing"
-    },
-    {
-      "key": "228",
-      "value": "[UK]National Monument/Icon Document or Object",
-      "valueEN": "National Monument/Icon Document or Object"
-    },
-    {
-      "key": "229",
-      "value": "[UK]National Monument/Icon Geographic Area",
-      "valueEN": "National Monument/Icon Geographic Area"
-    },
-    {
-      "key": "230",
-      "value": "[UK]National Monument/Icon Structure",
-      "valueEN": "National Monument/Icon Structure"
-    },
-    {
-      "key": "231",
-      "value": "[UK]Other National Monuments and Icons",
-      "valueEN": "Other National Monuments and Icons"
-    },
-    {
-      "key": "232",
-      "value": "[UK]Nuclear Facility",
-      "valueEN": "Nuclear Facility"
-    },
-    {
-      "key": "233",
-      "value": "[UK]Nuclear Material",
-      "valueEN": "Nuclear Material"
-    },
-    {
-      "key": "234",
-      "value": "[UK]Nuclear Waste",
-      "valueEN": "Nuclear Waste"
-    },
-    {
-      "key": "235",
-      "value": "[UK]Other Nuclear Facility",
-      "valueEN": "Other Nuclear Facility"
-    },
-    {
-      "key": "236",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "237",
-      "value": "[UK]Courier",
-      "valueEN": "Courier"
-    },
-    {
-      "key": "238",
-      "value": "[UK]Other Postal and Shipping Facility",
-      "valueEN": "Other Postal and Shipping Facility"
-    },
-    {
-      "key": "239",
-      "value": "[UK]United States Postal Service",
-      "valueEN": "United States Postal Service"
-    },
-    {
-      "key": "240",
-      "value": "[UK]Aviation",
-      "valueEN": "Aviation"
-    },
-    {
-      "key": "241",
-      "value": "[UK]Maritime",
-      "valueEN": "Maritime"
-    },
-    {
-      "key": "242",
-      "value": "[UK]Mass Transit",
-      "valueEN": "Mass Transit"
-    },
-    {
-      "key": "243",
-      "value": "[UK]Pipeline",
-      "valueEN": "Pipeline"
-    },
-    {
-      "key": "244",
-      "value": "[UK]Railroad",
-      "valueEN": "Railroad"
-    },
-    {
-      "key": "245",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "246",
-      "value": "[UK]Road",
-      "valueEN": "Road"
-    },
-    {
-      "key": "247",
-      "value": "[UK]Raw Water Storage",
-      "valueEN": "Raw Water Storage"
-    },
-    {
-      "key": "248",
-      "value": "[UK]Raw Water Supply",
-      "valueEN": "Raw Water Supply"
-    },
-    {
-      "key": "249",
-      "value": "[UK]Raw Water Transmission",
-      "valueEN": "Raw Water Transmission"
-    },
-    {
-      "key": "250",
-      "value": "[UK]Regulatory, Oversight, or Industry Organization",
-      "valueEN": "Regulatory, Oversight, or Industry Organization"
-    },
-    {
-      "key": "251",
-      "value": "[UK]Treated (Finished) Water Storage",
-      "valueEN": "Treated (Finished) Water Storage"
-    },
-    {
-      "key": "252",
-      "value": "[UK]Treated Water Distribution Control Center",
-      "valueEN": "Treated Water Distribution Control Center"
-    },
-    {
-      "key": "253",
-      "value": "[UK]Treated Water Distribution System",
-      "valueEN": "Treated Water Distribution System"
-    },
-    {
-      "key": "254",
-      "value": "[UK]Treated Water Monitoring System",
-      "valueEN": "Treated Water Monitoring System"
-    },
-    {
-      "key": "255",
-      "value": "[UK]Wastewater Facility",
-      "valueEN": "Wastewater Facility"
-    },
-    {
-      "key": "256",
-      "value": "[UK]Water Treatment Facility",
-      "valueEN": "Water Treatment Facility"
-    }
-  ]
-}
+[
+  {
+    "key": "1",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "78",
+    "value": "[UK]Basic Chemicals",
+    "valueEN": "Basic Chemicals"
+  },
+  {
+    "key": "79",
+    "value": "[UK]Specialty Products",
+    "valueEN": "Specialty Products"
+  },
+  {
+    "key": "80",
+    "value": "[UK]Pharmaceutical Products",
+    "valueEN": "Pharmaceutical Products"
+  },
+  {
+    "key": "81",
+    "value": "[UK]Consumer Products",
+    "valueEN": "Consumer Products"
+  },
+  {
+    "key": "82",
+    "value": "[UK]Agricultural Products",
+    "valueEN": "Agricultural Products"
+  },
+  {
+    "key": "2",
+    "value": "[UK]Entertainment and Media",
+    "valueEN": "Entertainment and Media"
+  },
+  {
+    "key": "3",
+    "value": "[UK]Gaming",
+    "valueEN": "Gaming"
+  },
+  {
+    "key": "4",
+    "value": "[UK]Lodging",
+    "valueEN": "Lodging"
+  },
+  {
+    "key": "5",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "6",
+    "value": "[UK]Outdoor Events",
+    "valueEN": "Outdoor Events"
+  },
+  {
+    "key": "7",
+    "value": "[UK]Public Assembly",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "8",
+    "value": "[UK]Real Estate",
+    "valueEN": "Real Estate"
+  },
+  {
+    "key": "9",
+    "value": "[UK]Retail",
+    "valueEN": "Retail"
+  },
+  {
+    "key": "10",
+    "value": "[UK]Sports Leagues",
+    "valueEN": "Sports Leagues"
+  },
+  {
+    "key": "11",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "12",
+    "value": "[UK]Telecommunications",
+    "valueEN": "Telecommunications"
+  },
+  {
+    "key": "13",
+    "value": "[UK]Wireless Communications Service Providers",
+    "valueEN": "Wireless Communications Service Providers"
+  },
+  {
+    "key": "83",
+    "value": "[UK]Broadcasting",
+    "valueEN": "Broadcasting"
+  },
+  {
+    "key": "84",
+    "value": "[UK]Cable",
+    "valueEN": "Cable"
+  },
+  {
+    "key": "85",
+    "value": "[UK]Satellite",
+    "valueEN": "Satellite"
+  },
+  {
+    "key": "86",
+    "value": "[UK]Wireline",
+    "valueEN": "Wireline"
+  },
+  {
+    "key": "14",
+    "value": "[UK]Electrical Equipment, Appliance and Component Manufacturing",
+    "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
+  },
+  {
+    "key": "15",
+    "value": "[UK]Machinery Manufacturing",
+    "valueEN": "Machinery Manufacturing"
+  },
+  {
+    "key": "16",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "17",
+    "value": "[UK]Primary Metal Manufacturing",
+    "valueEN": "Primary Metal Manufacturing"
+  },
+  {
+    "key": "18",
+    "value": "[UK]Transportation and Heavy Equipment Manufacturing",
+    "valueEN": "Transportation and Heavy Equipment Manufacturing"
+  },
+  {
+    "key": "87",
+    "value": "[UK]Manufacturing",
+    "valueEN": "Manufacturing"
+  },
+  {
+    "key": "88",
+    "value": "[UK]Heavy Machinery Manufacturing",
+    "valueEN": "Heavy Machinery Manufacturing"
+  },
+  {
+    "key": "19",
+    "value": "[UK]Dams",
+    "valueEN": "Dams"
+  },
+  {
+    "key": "20",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "21",
+    "value": "[UK]Private Hydropower Facilities in the US",
+    "valueEN": "Private Hydropower Facilities in the US"
+  },
+  {
+    "key": "89",
+    "value": "[UK]Levees",
+    "valueEN": "Levees"
+  },
+  {
+    "key": "90",
+    "value": "[UK]Navigation Locks",
+    "valueEN": "Navigation Locks"
+  },
+  {
+    "key": "91",
+    "value": "[UK]Tailings and Waste Impoundments",
+    "valueEN": "Tailings and Waste Impoundments"
+  },
+  {
+    "key": "22",
+    "value": "[UK]Aircraft Industry",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "23",
+    "value": "[UK]Ammunition",
+    "valueEN": "Ammunition"
+  },
+  {
+    "key": "24",
+    "value": "[UK]Combat Vehicle",
+    "valueEN": "Combat Vehicle"
+  },
+  {
+    "key": "25",
+    "value": "[UK]Communications",
+    "valueEN": "Communications"
+  },
+  {
+    "key": "26",
+    "value": "[UK]Defense Contractors",
+    "valueEN": "Defense Contractors"
+  },
+  {
+    "key": "27",
+    "value": "[UK]Electrical Industry Commodities",
+    "valueEN": "Electrical Industry Commodities"
+  },
+  {
+    "key": "28",
+    "value": "[UK]Electronics",
+    "valueEN": "Electronics"
+  },
+  {
+    "key": "29",
+    "value": "[UK]Mechanical Industry Commodities",
+    "valueEN": "Mechanical Industry Commodities"
+  },
+  {
+    "key": "30",
+    "value": "[UK]Missile Industry",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "31",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "32",
+    "value": "[UK]Research and Development Facilities",
+    "valueEN": "Research and Development Facilities"
+  },
+  {
+    "key": "33",
+    "value": "[UK]Shipbuilding Industry",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "34",
+    "value": "[UK]Space",
+    "valueEN": "Space"
+  },
+  {
+    "key": "35",
+    "value": "[UK]Structural Industry Commodities",
+    "valueEN": "Structural Industry Commodities"
+  },
+  {
+    "key": "36",
+    "value": "[UK]Troop Support",
+    "valueEN": "Troop Support"
+  },
+  {
+    "key": "37",
+    "value": "[UK]Weapons",
+    "valueEN": "Weapons"
+  },
+  {
+    "key": "38",
+    "value": "[UK]Emergency Management",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "39",
+    "value": "[UK]Emergency Medical Services",
+    "valueEN": "Emergency Medical Services"
+  },
+  {
+    "key": "40",
+    "value": "[UK]Fire and Rescue Services",
+    "valueEN": "Fire and Rescue Services"
+  },
+  {
+    "key": "41",
+    "value": "[UK]Law Enforcement",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "42",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "43",
+    "value": "[UK]Public Works",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "44",
+    "value": "[UK]Electric Power Generation, Transmission and Distribution",
+    "valueEN": "Electric Power Generation, Transmission and Distribution"
+  },
+  {
+    "key": "45",
+    "value": "[UK]Natural Gas",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "46",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "47",
+    "value": "[UK]Petroleum Refineries",
+    "valueEN": "Petroleum Refineries"
+  },
+  {
+    "key": "92",
+    "value": "[UK]Oil and Natural Gas",
+    "valueEN": "Oil and Natural Gas"
+  },
+  {
+    "key": "48",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "49",
+    "value": "[UK]US Banks",
+    "valueEN": "US Banks"
+  },
+  {
+    "key": "50",
+    "value": "[UK]US Credit Unions",
+    "valueEN": "US Credit Unions"
+  },
+  {
+    "key": "93",
+    "value": "[UK]Consumer Services",
+    "valueEN": "Consumer Services"
+  },
+  {
+    "key": "94",
+    "value": "[UK]Credit and Liquidity Products",
+    "valueEN": "Credit and Liquidity Products"
+  },
+  {
+    "key": "95",
+    "value": "[UK]Investment Products",
+    "valueEN": "Investment Products"
+  },
+  {
+    "key": "96",
+    "value": "[UK]Risk Transfer Products",
+    "valueEN": "Risk Transfer Products"
+  },
+  {
+    "key": "51",
+    "value": "[UK]Beverage Manufacturing Plants",
+    "valueEN": "Beverage Manufacturing Plants"
+  },
+  {
+    "key": "52",
+    "value": "[UK]Food Manufacturing Plants",
+    "valueEN": "Food Manufacturing Plants"
+  },
+  {
+    "key": "53",
+    "value": "[UK]Food Services",
+    "valueEN": "Food Services"
+  },
+  {
+    "key": "54",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "97",
+    "value": "[UK]Supply",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "98",
+    "value": "[UK]Processing, Packaging, and Production",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "99",
+    "value": "[UK]Product Storage",
+    "valueEN": "Product Storage"
+  },
+  {
+    "key": "100",
+    "value": "[UK]Product Transportation",
+    "valueEN": "Product Transportation"
+  },
+  {
+    "key": "101",
+    "value": "[UK]Product Distribution",
+    "valueEN": "Product Distribution"
+  },
+  {
+    "key": "102",
+    "value": "[UK]Supporting Facilities",
+    "valueEN": "Supporting Facilities"
+  },
+  {
+    "key": "55",
+    "value": "[UK]Local Governments",
+    "valueEN": "Local Governments"
+  },
+  {
+    "key": "56",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "57",
+    "value": "[UK]State Governments",
+    "valueEN": "State Governments"
+  },
+  {
+    "key": "58",
+    "value": "[UK]Territorial Governments",
+    "valueEN": "Territorial Governments"
+  },
+  {
+    "key": "59",
+    "value": "[UK]Tribal Governments",
+    "valueEN": "Tribal Governments"
+  },
+  {
+    "key": "103",
+    "value": "[UK]Public Facilities",
+    "valueEN": "Public Facilities"
+  },
+  {
+    "key": "104",
+    "value": "[UK]Non-Public Facilities",
+    "valueEN": "Non-Public Facilities"
+  },
+  {
+    "key": "60",
+    "value": "[UK]Hospitals",
+    "valueEN": "Hospitals"
+  },
+  {
+    "key": "61",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "62",
+    "value": "[UK]Residential Care Facilities",
+    "valueEN": "Residential Care Facilities"
+  },
+  {
+    "key": "105",
+    "value": "[UK]Direct Patient Care",
+    "valueEN": "Direct Patient Care"
+  },
+  {
+    "key": "106",
+    "value": "[UK]Health IT",
+    "valueEN": "Health IT"
+  },
+  {
+    "key": "107",
+    "value": "[UK]Health Plans and Payers",
+    "valueEN": "Health Plans and Payers"
+  },
+  {
+    "key": "108",
+    "value": "[UK]Fatality Management Services",
+    "valueEN": "Fatality Management Services"
+  },
+  {
+    "key": "109",
+    "value": "[UK]Medical Materials",
+    "valueEN": "Medical Materials"
+  },
+  {
+    "key": "110",
+    "value": "[UK]Support Services",
+    "valueEN": "Support Services"
+  },
+  {
+    "key": "63",
+    "value": "[UK]Information Technology",
+    "valueEN": "Information Technology"
+  },
+  {
+    "key": "64",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "111",
+    "value": "[UK]IT Production",
+    "valueEN": "IT Production"
+  },
+  {
+    "key": "112",
+    "value": "[UK]DNS Services",
+    "valueEN": "DNS Services"
+  },
+  {
+    "key": "113",
+    "value": "[UK]Identity and Trust Support Management",
+    "valueEN": "Identity and Trust Support Management"
+  },
+  {
+    "key": "114",
+    "value": "[UK]Internet Content and Service Providers",
+    "valueEN": "Internet Content and Service Providers"
+  },
+  {
+    "key": "115",
+    "value": "[UK]Internet Routing and Connection",
+    "valueEN": "Internet Routing and Connection"
+  },
+  {
+    "key": "116",
+    "value": "[UK]Incident Management",
+    "valueEN": "Incident Management"
+  },
+  {
+    "key": "65",
+    "value": "[UK]Operating Nuclear Power Plants",
+    "valueEN": "Operating Nuclear Power Plants"
+  },
+  {
+    "key": "66",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "117",
+    "value": "[UK]Fuel Cycle Facilities",
+    "valueEN": "Fuel Cycle Facilities"
+  },
+  {
+    "key": "118",
+    "value": "[UK]Nuclear Materials Transport",
+    "valueEN": "Nuclear Materials Transport"
+  },
+  {
+    "key": "119",
+    "value": "[UK]Radioactive Waste",
+    "valueEN": "Radioactive Waste"
+  },
+  {
+    "key": "120",
+    "value": "[UK]Radioactive Materials",
+    "valueEN": "Radioactive Materials"
+  },
+  {
+    "key": "67",
+    "value": "Авіація",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "68",
+    "value": "Вантажні залізниці",
+    "valueEN": "Freight Rail"
+  },
+  {
+    "key": "69",
+    "value": "Шосе (автомобільний транспорт)",
+    "valueEN": "Highway (truck transportation)"
+  },
+  {
+    "key": "70",
+    "value": "Морський транспорт",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "71",
+    "value": "Громадський транспорт і пасажирський залізничний транспорт",
+    "valueEN": "Mass Transit and Passenger Rail"
+  },
+  {
+    "key": "72",
+    "value": "Муніципалітети з системами контролю дорожнього руху",
+    "valueEN": "Municipalities with Traffic Control Systems"
+  },
+  {
+    "key": "73",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "74",
+    "value": "Трубопроводи (транспортують природний газ, небезпечні рідини та різні хімічні речовини)",
+    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
+  },
+  {
+    "key": "75",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "76",
+    "value": "[UK]Public Water Systems",
+    "valueEN": "Public Water Systems"
+  },
+  {
+    "key": "77",
+    "value": "[UK]Publicly Owned Treatment Works",
+    "valueEN": "Publicly Owned Treatment Works"
+  },
+  {
+    "key": "121",
+    "value": "[UK]Agricultural and Food Product Distribution",
+    "valueEN": "Agricultural and Food Product Distribution"
+  },
+  {
+    "key": "122",
+    "value": "[UK]Agricultural and Food Product Transportation",
+    "valueEN": "Agricultural and Food Product Transportation"
+  },
+  {
+    "key": "123",
+    "value": "[UK]Agriculture and Food Product Storage and Distribution Warehouse",
+    "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
+  },
+  {
+    "key": "124",
+    "value": "[UK]Agriculture and Food Supporting Facility",
+    "valueEN": "Agriculture and Food Supporting Facility"
+  },
+  {
+    "key": "125",
+    "value": "[UK]Other Agriculture and Food",
+    "valueEN": "Other Agriculture and Food"
+  },
+  {
+    "key": "126",
+    "value": "[UK]Processing, Packaging, and Production",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "127",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "128",
+    "value": "[UK]Supply",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "129",
+    "value": "[UK]Banking and Credit",
+    "valueEN": "Banking and Credit"
+  },
+  {
+    "key": "130",
+    "value": "[UK]Insurance Company",
+    "valueEN": "Insurance Company"
+  },
+  {
+    "key": "131",
+    "value": "[UK]Securities, Commodities, or Financial Investment",
+    "valueEN": "Securities, Commodities, or Financial Investment"
+  },
+  {
+    "key": "132",
+    "value": "[UK]Chemical Manufacturing or Processing Plant",
+    "valueEN": "Chemical Manufacturing or Processing Plant"
+  },
+  {
+    "key": "133",
+    "value": "[UK]Hazardous Chemical Storage/Stockpile/Utilization/Distribution",
+    "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
+  },
+  {
+    "key": "134",
+    "value": "[UK]Hazardous Chemical Transport",
+    "valueEN": "Hazardous Chemical Transport"
+  },
+  {
+    "key": "135",
+    "value": "[UK]Other Chemical and Hazardous Material",
+    "valueEN": "Other Chemical and Hazardous Material"
+  },
+  {
+    "key": "136",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "137",
+    "value": "[UK]Entertainment or Media Facility",
+    "valueEN": "Entertainment or Media Facility"
+  },
+  {
+    "key": "138",
+    "value": "[UK]Gaming Facility/Casino",
+    "valueEN": "Gaming Facility/Casino"
+  },
+  {
+    "key": "139",
+    "value": "[UK]Lodging Facility",
+    "valueEN": "Lodging Facility"
+  },
+  {
+    "key": "140",
+    "value": "[UK]Other Commercial Facility",
+    "valueEN": "Other Commercial Facility"
+  },
+  {
+    "key": "141",
+    "value": "[UK]Public Assembly",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "142",
+    "value": "[UK]Real Estate Facility",
+    "valueEN": "Real Estate Facility"
+  },
+  {
+    "key": "143",
+    "value": "[UK]Retail Facility",
+    "valueEN": "Retail Facility"
+  },
+  {
+    "key": "144",
+    "value": "[UK]Information Services",
+    "valueEN": "Information Services"
+  },
+  {
+    "key": "145",
+    "value": "[UK]Internet",
+    "valueEN": "Internet"
+  },
+  {
+    "key": "146",
+    "value": "[UK]Next Generation Network",
+    "valueEN": "Next Generation Network"
+  },
+  {
+    "key": "147",
+    "value": "[UK]Other Communication Facility",
+    "valueEN": "Other Communication Facility"
+  },
+  {
+    "key": "148",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "149",
+    "value": "[UK]Satellite Communication",
+    "valueEN": "Satellite Communication"
+  },
+  {
+    "key": "150",
+    "value": "[UK]Telecomm Hotel",
+    "valueEN": "Telecomm Hotel"
+  },
+  {
+    "key": "151",
+    "value": "[UK]Wired Communication",
+    "valueEN": "Wired Communication"
+  },
+  {
+    "key": "152",
+    "value": "[UK]Wireless Communication",
+    "valueEN": "Wireless Communication"
+  },
+  {
+    "key": "153",
+    "value": "[UK]Dam Project",
+    "valueEN": "Dam Project"
+  },
+  {
+    "key": "154",
+    "value": "[UK]Flood Damage Reduction System",
+    "valueEN": "Flood Damage Reduction System"
+  },
+  {
+    "key": "155",
+    "value": "[UK]Hurricane or Storm Surge Protection System",
+    "valueEN": "Hurricane or Storm Surge Protection System"
+  },
+  {
+    "key": "156",
+    "value": "[UK]Mine Tailings and Industrial Waste Impoundment",
+    "valueEN": "Mine Tailings and Industrial Waste Impoundment"
+  },
+  {
+    "key": "157",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "158",
+    "value": "[UK]Aircraft Industry",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "159",
+    "value": "[UK]Ammunition Industry",
+    "valueEN": "Ammunition Industry"
+  },
+  {
+    "key": "160",
+    "value": "[UK]Combat Vehicle Industry",
+    "valueEN": "Combat Vehicle Industry"
+  },
+  {
+    "key": "161",
+    "value": "[UK]Electrical Industry Commodity Manufacturing",
+    "valueEN": "Electrical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "162",
+    "value": "[UK]Electronic Industry Commodity Manufacturing",
+    "valueEN": "Electronic Industry Commodity Manufacturing"
+  },
+  {
+    "key": "163",
+    "value": "[UK]Electronics Industry",
+    "valueEN": "Electronics Industry"
+  },
+  {
+    "key": "164",
+    "value": "[UK]Information Technology Industry",
+    "valueEN": "Information Technology Industry"
+  },
+  {
+    "key": "165",
+    "value": "[UK]Mechanical Industry Commodity Manufacturing",
+    "valueEN": "Mechanical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "166",
+    "value": "[UK]Missile Industry",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "167",
+    "value": "[UK]Research & Development Facility",
+    "valueEN": "Research & Development Facility"
+  },
+  {
+    "key": "168",
+    "value": "[UK]Shipbuilding Industry",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "169",
+    "value": "[UK]Space Industry",
+    "valueEN": "Space Industry"
+  },
+  {
+    "key": "170",
+    "value": "[UK]Structural Industry Commodity Manufacturing",
+    "valueEN": "Structural Industry Commodity Manufacturing"
+  },
+  {
+    "key": "171",
+    "value": "[UK]Troop Support Industry",
+    "valueEN": "Troop Support Industry"
+  },
+  {
+    "key": "172",
+    "value": "[UK]Weapons Industry",
+    "valueEN": "Weapons Industry"
+  },
+  {
+    "key": "173",
+    "value": "[UK]Emergency Management",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "174",
+    "value": "[UK]Emergency Medical Services (EMS)",
+    "valueEN": "Emergency Medical Services (EMS)"
+  },
+  {
+    "key": "175",
+    "value": "[UK]Fire and Emergency Services",
+    "valueEN": "Fire and Emergency Services"
+  },
+  {
+    "key": "176",
+    "value": "[UK]Law Enforcement",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "177",
+    "value": "[UK]Other Emergency Services Facility",
+    "valueEN": "Other Emergency Services Facility"
+  },
+  {
+    "key": "178",
+    "value": "[UK]Public Works",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "179",
+    "value": "[UK]Biodiesel",
+    "valueEN": "Biodiesel"
+  },
+  {
+    "key": "180",
+    "value": "[UK]Coal",
+    "valueEN": "Coal"
+  },
+  {
+    "key": "181",
+    "value": "[UK]Electricity",
+    "valueEN": "Electricity"
+  },
+  {
+    "key": "182",
+    "value": "[UK]Ethanol",
+    "valueEN": "Ethanol"
+  },
+  {
+    "key": "183",
+    "value": "[UK]Hydrogen",
+    "valueEN": "Hydrogen"
+  },
+  {
+    "key": "184",
+    "value": "[UK]Natural Gas",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "185",
+    "value": "[UK]Other Energy Conversion System",
+    "valueEN": "Other Energy Conversion System"
+  },
+  {
+    "key": "186",
+    "value": "[UK]Petroleum",
+    "valueEN": "Petroleum"
+  },
+  {
+    "key": "187",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "188",
+    "value": "[UK]Education Facility",
+    "valueEN": "Education Facility"
+  },
+  {
+    "key": "189",
+    "value": "[UK]Election Infrastructure",
+    "valueEN": "Election Infrastructure"
+  },
+  {
+    "key": "190",
+    "value": "[UK]Government Research Facility",
+    "valueEN": "Government Research Facility"
+  },
+  {
+    "key": "191",
+    "value": "[UK]Government Sensor or Monitoring System",
+    "valueEN": "Government Sensor or Monitoring System"
+  },
+  {
+    "key": "192",
+    "value": "[UK]Government Space System",
+    "valueEN": "Government Space System"
+  },
+  {
+    "key": "193",
+    "value": "[UK]Government Storage or Preservation Facility",
+    "valueEN": "Government Storage or Preservation Facility"
+  },
+  {
+    "key": "194",
+    "value": "[UK]Military Facility",
+    "valueEN": "Military Facility"
+  },
+  {
+    "key": "195",
+    "value": "[UK]Other Government Facility",
+    "valueEN": "Other Government Facility"
+  },
+  {
+    "key": "196",
+    "value": "[UK]Personnel-Oriented Government Facility",
+    "valueEN": "Personnel-Oriented Government Facility"
+  },
+  {
+    "key": "197",
+    "value": "[UK]Service-Oriented Government Facility",
+    "valueEN": "Service-Oriented Government Facility"
+  },
+  {
+    "key": "198",
+    "value": "[UK]Direct Patient Healthcare",
+    "valueEN": "Direct Patient Healthcare"
+  },
+  {
+    "key": "199",
+    "value": "[UK]Fatality/Mortuary Facility",
+    "valueEN": "Fatality/Mortuary Facility"
+  },
+  {
+    "key": "200",
+    "value": "[UK]Health Supporting Facility",
+    "valueEN": "Health Supporting Facility"
+  },
+  {
+    "key": "201",
+    "value": "[UK]Healthcare Educational Facility",
+    "valueEN": "Healthcare Educational Facility"
+  },
+  {
+    "key": "202",
+    "value": "[UK]Other Healthcare and Public Health Entity",
+    "valueEN": "Other Healthcare and Public Health Entity"
+  },
+  {
+    "key": "203",
+    "value": "[UK]Public Health Agency",
+    "valueEN": "Public Health Agency"
+  },
+  {
+    "key": "204",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "205",
+    "value": "[UK]Hardware Production",
+    "valueEN": "Hardware Production"
+  },
+  {
+    "key": "206",
+    "value": "[UK]Internet-Based Content, Information, and Communications Services",
+    "valueEN": "Internet-Based Content, Information, and Communications Services"
+  },
+  {
+    "key": "207",
+    "value": "[UK]Other Hardware Production Facility",
+    "valueEN": "Other Hardware Production Facility"
+  },
+  {
+    "key": "208",
+    "value": "[UK]Other Information Technology Facility",
+    "valueEN": "Other Information Technology Facility"
+  },
+  {
+    "key": "209",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "210",
+    "value": "[UK]Software Production",
+    "valueEN": "Software Production"
+  },
+  {
+    "key": "211",
+    "value": "[UK]Beverage Manufacturing",
+    "valueEN": "Beverage Manufacturing"
+  },
+  {
+    "key": "212",
+    "value": "[UK]Chemical Manufacturing",
+    "valueEN": "Chemical Manufacturing"
+  },
+  {
+    "key": "213",
+    "value": "[UK]Computer and Electronic Product Manufacturing",
+    "valueEN": "Computer and Electronic Product Manufacturing"
+  },
+  {
+    "key": "214",
+    "value": "[UK]Critical Manufacturing",
+    "valueEN": "Critical Manufacturing"
+  },
+  {
+    "key": "215",
+    "value": "[UK]Fabricated Metal Product Manufacturing",
+    "valueEN": "Fabricated Metal Product Manufacturing"
+  },
+  {
+    "key": "216",
+    "value": "[UK]Food Manufacturing",
+    "valueEN": "Food Manufacturing"
+  },
+  {
+    "key": "217",
+    "value": "[UK]Furniture And Related Product Manufacturing",
+    "valueEN": "Furniture And Related Product Manufacturing"
+  },
+  {
+    "key": "218",
+    "value": "[UK]Mining, Quarrying, or Oil and Gas Extraction",
+    "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
+  },
+  {
+    "key": "219",
+    "value": "[UK]Non-Metallic Mineral Products Manufacturing",
+    "valueEN": "Non-Metallic Mineral Products Manufacturing"
+  },
+  {
+    "key": "220",
+    "value": "[UK]Other Manufacturing",
+    "valueEN": "Other Manufacturing"
+  },
+  {
+    "key": "221",
+    "value": "[UK]Paper Manufacturing",
+    "valueEN": "Paper Manufacturing"
+  },
+  {
+    "key": "222",
+    "value": "[UK]Petroleum and Coal Products Manufacturing",
+    "valueEN": "Petroleum and Coal Products Manufacturing"
+  },
+  {
+    "key": "223",
+    "value": "[UK]Plastics And Rubber Products Manufacturing",
+    "valueEN": "Plastics And Rubber Products Manufacturing"
+  },
+  {
+    "key": "224",
+    "value": "[UK]Printing and Related Support",
+    "valueEN": "Printing and Related Support"
+  },
+  {
+    "key": "225",
+    "value": "[UK]Textile, Textile Product, Apparel, Leather Manufacturing",
+    "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
+  },
+  {
+    "key": "226",
+    "value": "[UK]Tobacco Product Manufacturing",
+    "valueEN": "Tobacco Product Manufacturing"
+  },
+  {
+    "key": "227",
+    "value": "[UK]Wood Product Manufacturing",
+    "valueEN": "Wood Product Manufacturing"
+  },
+  {
+    "key": "228",
+    "value": "[UK]National Monument/Icon Document or Object",
+    "valueEN": "National Monument/Icon Document or Object"
+  },
+  {
+    "key": "229",
+    "value": "[UK]National Monument/Icon Geographic Area",
+    "valueEN": "National Monument/Icon Geographic Area"
+  },
+  {
+    "key": "230",
+    "value": "[UK]National Monument/Icon Structure",
+    "valueEN": "National Monument/Icon Structure"
+  },
+  {
+    "key": "231",
+    "value": "[UK]Other National Monuments and Icons",
+    "valueEN": "Other National Monuments and Icons"
+  },
+  {
+    "key": "232",
+    "value": "[UK]Nuclear Facility",
+    "valueEN": "Nuclear Facility"
+  },
+  {
+    "key": "233",
+    "value": "[UK]Nuclear Material",
+    "valueEN": "Nuclear Material"
+  },
+  {
+    "key": "234",
+    "value": "[UK]Nuclear Waste",
+    "valueEN": "Nuclear Waste"
+  },
+  {
+    "key": "235",
+    "value": "[UK]Other Nuclear Facility",
+    "valueEN": "Other Nuclear Facility"
+  },
+  {
+    "key": "236",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "237",
+    "value": "[UK]Courier",
+    "valueEN": "Courier"
+  },
+  {
+    "key": "238",
+    "value": "[UK]Other Postal and Shipping Facility",
+    "valueEN": "Other Postal and Shipping Facility"
+  },
+  {
+    "key": "239",
+    "value": "[UK]United States Postal Service",
+    "valueEN": "United States Postal Service"
+  },
+  {
+    "key": "240",
+    "value": "[UK]Aviation",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "241",
+    "value": "[UK]Maritime",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "242",
+    "value": "[UK]Mass Transit",
+    "valueEN": "Mass Transit"
+  },
+  {
+    "key": "243",
+    "value": "[UK]Pipeline",
+    "valueEN": "Pipeline"
+  },
+  {
+    "key": "244",
+    "value": "[UK]Railroad",
+    "valueEN": "Railroad"
+  },
+  {
+    "key": "245",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "246",
+    "value": "[UK]Road",
+    "valueEN": "Road"
+  },
+  {
+    "key": "247",
+    "value": "[UK]Raw Water Storage",
+    "valueEN": "Raw Water Storage"
+  },
+  {
+    "key": "248",
+    "value": "[UK]Raw Water Supply",
+    "valueEN": "Raw Water Supply"
+  },
+  {
+    "key": "249",
+    "value": "[UK]Raw Water Transmission",
+    "valueEN": "Raw Water Transmission"
+  },
+  {
+    "key": "250",
+    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "251",
+    "value": "[UK]Treated (Finished) Water Storage",
+    "valueEN": "Treated (Finished) Water Storage"
+  },
+  {
+    "key": "252",
+    "value": "[UK]Treated Water Distribution Control Center",
+    "valueEN": "Treated Water Distribution Control Center"
+  },
+  {
+    "key": "253",
+    "value": "[UK]Treated Water Distribution System",
+    "valueEN": "Treated Water Distribution System"
+  },
+  {
+    "key": "254",
+    "value": "[UK]Treated Water Monitoring System",
+    "valueEN": "Treated Water Monitoring System"
+  },
+  {
+    "key": "255",
+    "value": "[UK]Wastewater Facility",
+    "valueEN": "Wastewater Facility"
+  },
+  {
+    "key": "256",
+    "value": "[UK]Water Treatment Facility",
+    "valueEN": "Water Treatment Facility"
+  }
+]
