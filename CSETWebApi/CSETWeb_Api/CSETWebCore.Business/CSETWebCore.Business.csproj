@@ -138,6 +138,9 @@
     <None Update="App_Data\ACET Spanish Question Mapping.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\DEMOGRAPHICS_ORGANIZATION_TYPE.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -172,6 +175,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\SECTOR_INDUSTRY.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\SECURITY_QUESTION.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\STANDARD_CATEGORY.json">
