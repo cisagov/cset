@@ -140,7 +140,7 @@
                 [(ngModel)]="contact.firstName" #fName="ngModel" [placeholder]="t('contact.first name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
-              <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">First name is required</div>
+              <div *ngIf="f.submitted && !fName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.first name required')}}</div>
             </div>
 
             <div class="form-group d-flex flex-column flex-11a">
@@ -149,7 +149,7 @@
                 [(ngModel)]="contact.lastName" #lName="ngModel" [placeholder]="t('contact.last name')"
                 (keydown.esc)="abandonEdit()" matInput required>
 
-              <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">Last name is required</div>
+              <div *ngIf="f.submitted && !lName.valid" class="m-0 mt-2 alert alert-danger">{{t('user profile.last name required')}}</div>
             </div>
           </div>
           <div class="d-flex flex-wrap flex-11a">

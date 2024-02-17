@@ -341,12 +341,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResetPassword/PotentialQuestions")]
-        public IActionResult GetPotentialQuestions()
+        public IActionResult GetPotentialQuestions([FromQuery] string lang)
         {
             try
             {
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                return Ok(resetter.GetSecurityQuestionList());
+                return Ok(resetter.GetSecurityQuestionList(lang));
             }
             catch (Exception e)
             {

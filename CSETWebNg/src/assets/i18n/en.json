@@ -189,6 +189,7 @@
         "cancel": "Cancel",
         "continue": "Continue",
         "exit": "Exit",
+        "register": "Register",
         "change": "Change",
         "remove": "Remove",
         "email": "Email",
@@ -216,7 +217,8 @@
         "add document": "Add a document",
         "copy text": "Copy Text",
         "change password": "Change Password",
-        "reset password": "Reset Password"
+        "reset password": "Reset Password",
+        "forgot password": "Forgot Password"
     },
     "contact": {
         "contacts": "Contacts",
@@ -487,6 +489,7 @@
         "no questions visible": "There are no questions visible for the current filters or search criteria. Please change your selections and try again."
     },
     "dialogs": {
+        "alert": "Alert",
         "please confirm": "Please Confirm",
         "remove contact": "Are you sure you want to remove {{firstName}} {{lastName}} from this assessment?",
         "remove assessment": "Are you sure you want to remove {{assessmentName}}?",
@@ -964,17 +967,23 @@
         "last name": "Last Name",
         "email": "Email",
         "confirm email": "Confirm Email",
+        "security question": "Security Question",
+        "security answer": "Security Answer",
         "security questions": "Security Questions",
         "security questions text": "Providing security questions is optional but allows you to recover your password should you forget it.",
         "security question 1": "Question 1",
         "security answer 1": "Answer 1",
         "security question 2": "Question 2",
         "security answer 2": "Answer 2",
+        "fields required": "fields are required",
         "first name required": "First Name is required",
         "last name required": "Last Name is required",
         "email required": "Email is required",
         "not valid email": "Not a valid email",
-        "emails do not match": "Emails do not match"
+        "emails do not match": "Emails do not match",
+        "your own question": "Your own custom security question",
+        "answer": "Answer",
+        "account created": "Your account was successfully created. An email was sent to {{email}} containing your temporary password."
     },
     "change password": {
         "dialog title": "Change Password",
