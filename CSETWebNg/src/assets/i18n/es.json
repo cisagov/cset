@@ -245,6 +245,7 @@
         "cancel": "Cancelar",
         "continue": "Continuar",
         "exit": "Salir",
+        "register": "Registrar",
         "change": "Cambiar",
         "remove": "Quitar",
         "email": "Correo electrónico",
@@ -272,7 +273,8 @@
         "add document": "Agregar documento",
         "copy text": "Copiar texto",
         "change password": "Cambiar la contraseña",
-        "reset password": "Restablecer la contraseña"
+        "reset password": "Restablecer la contraseña",
+        "forgot password": "Contraseña olvidada"
     },
     "answer-options": {
         "button-labels": {
@@ -485,6 +487,7 @@
         "no questions visible": "[ES]There are no questions visible for the current filters or search criteria. Please change your selections and try again."
     },
     "dialogs": {
+        "alert": "Alerta",
         "please confirm": "Confirme, por favor",
         "remove contact": "¿Estás seguro de que quieres eliminar a {{firstName}} {{lastName}} de esta evaluación?",
         "remove assessment": "¿Estás seguro de que quieres eliminar {{assessmentName}}?",
@@ -962,17 +965,23 @@
         "last name": "Apellido",
         "email": "Email",
         "confirm email": "Confirmar email",
+        "security question": "Pregunta de seguridad",
+        "security answer": "Respuesta",
         "security questions": "Preguntas de seguridad",
         "security questions text": "Proporcionar preguntas de seguridad es opcional, pero le permite recuperar su contraseña en caso de que la olvide.",
         "security question 1": "Pregunta 1",
         "security answer 1": "Respuesta 1",
         "security question 2": "Pregunta 2",
         "security answer 2": "Respuesta 2",
+        "fields required": "campos obligatorios",
         "first name required": "Nombre de pila es obligatorio",
         "last name required": "Apellido es obligatorio",
         "email required": "Email es obligatorio",
         "not valid email": "Email no es válido",
-        "emails do not match": "Los correos electrónicos no coinciden"
+        "emails do not match": "Los correos electrónicos no coinciden",
+        "your own question": "Tu propia pregunta de seguridad personalizada",
+        "answer": "Respuesta",
+        "account created": "Su cuenta fue creada exitosamente. Se envió un correo electrónico a {{email}} que contiene su contraseña temporal."
     },
     "change password": {
         "dialog title": "Cambiar la contraseña",

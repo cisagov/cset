@@ -342,7 +342,7 @@ export class AuthenticationService {
   }
 
   getSecurityQuestionsPotentialList() {
-    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions');
+    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions?lang=' + this.tSvc.getActiveLang());
   }
 
   userToken() {
