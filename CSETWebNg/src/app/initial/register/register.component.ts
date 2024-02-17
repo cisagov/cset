@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
     if ((!this.model.firstName || this.model.firstName.length === 0)
       || (!this.model.lastName || this.model.lastName.length === 0)
       || (!this.model.primaryEmail || this.model.primaryEmail.length === 0)) {
-      this.errorMessage = "* fields are required";
+      this.errorMessage = "* " + this.tSvc.translate('user profile.fields required');
       this.validationError = true;
       return;
     }
