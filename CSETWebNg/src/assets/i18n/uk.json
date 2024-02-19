@@ -57,6 +57,7 @@
     "user inactive": "Користувач неактивний",
     "control priorities intro1": "Інформацію про рейтинг можна знайти в <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">посібнику користувача</a>.",
+    "local installation": "Місцева установка",
     "titles": {
         "prepare": "Приготуйте",
         "assessment": "Оцінка",
@@ -351,7 +352,7 @@
         "risk description": "[UK]Risk Description",
         "validation approach": "[UK]Validation Approach",
         "prevent encryption": "[UK]Stops the 'enter password' screen from appearing on export",
-        "import": "[UK]Import an assessment from an external {{appCode}} file.",
+        "import": "Імпортуйте оцінку із зовнішнього файлу {{appCode}}",
         "export to excel": "[UK]Export all assessments to Excel",
         "remove assessment": "[UK]Permanently remove this assessment.",
         "export assessment": "[UK]Export a copy of this assessment to another location",
@@ -885,6 +886,17 @@
         "about": "Про програму",
         "version": "Версія"
     },
+    "welcome page": {
+        "internet explorer": "Internet Explorer виявлено як ваш поточний браузер. \nДеякі функції CSET не повністю підтримуються Internet Explorer. \nНаполегливо рекомендуємо використовувати інший веб-переглядач, наприклад Chrome, Firefox або Edge, щоб покращити роботу.",
+        "welcome to": "Ласкаво просимо до {{appTitle}}",
+        "to get started": "Щоб почати, виберіть один із наведених нижче варіантів.",
+        "new assessment": "Розпочати нове оцінювання",
+        "new assessment tooltip": "Виберіть тип оцінювання та почніть нове оцінювання.",
+        "import assessment": "Імпорт наявної оцінки",
+        "blank assessment": "Бланкова оцінка",
+        "needs review": "Потребує перегляду",
+        "statements completed": "{{complete}}/{{total}} звіт(ів) завершено"
+    },
     "login": {
         "login prompt": "Введіть адресу електронної пошти та пароль для входу",
         "placeholder email": "Електронна пошта",
@@ -902,5 +914,12 @@
         "running locally": "CSET працює локально. Логін не потрібен.",
         "error encountered": "Під час запуску CSET сталася помилка",
         "enter name and email": "Введіть своє ім’я та адресу електронної пошти, щоб зареєструвати новий обліковий запис CSET"
+    },
+    "footer": {
+        "faq": "ЧП",
+        "accessibility": "Доступність",
+        "privacy and use": "Конфіденційність та Використання",
+        "traffic light protocol": "Протокол Світлофору",
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>"
     }
 }

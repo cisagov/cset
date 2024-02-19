@@ -29,6 +29,7 @@ namespace CSETWebCore.Business.Question
         private readonly ITokenManager _tokenManager;
 
         private readonly TranslationOverlay _overlay;
+        private readonly string _lang = "en";
 
 
         public String RequirementFrameworkTitle { get; set; }
@@ -108,6 +109,7 @@ namespace CSETWebCore.Business.Question
             _tokenManager = token;
 
             _overlay = new TranslationOverlay();
+            _lang = _tokenManager.GetCurrentLanguage();
         }
 
 
@@ -131,8 +133,7 @@ namespace CSETWebCore.Business.Question
             ShowRequirementFrameworkTitle = true;
             RelatedFrameworkCategory = questionInfoData.Category;
 
-            var lang = _tokenManager.GetCurrentLanguage();
-            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", questionInfoData.Category.ToLower(), lang);
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", questionInfoData.Category.ToLower(), _lang);
             if (cat != null)
             {
                 RelatedFrameworkCategory = cat;
@@ -167,9 +168,9 @@ namespace CSETWebCore.Business.Question
                 }
                 requires = tempRequires;
             }
+
             if (requires == null || !requires.Any())
             {
-
                 requires = from a in _context.NEW_REQUIREMENT
                            join b in _context.REQUIREMENT_QUESTIONS_SETS on a.Requirement_Id equals b.Requirement_Id
                            where b.Question_Id == infoData.QuestionID && b.Set_Name == set.Set_Name
@@ -177,8 +178,24 @@ namespace CSETWebCore.Business.Question
             }
 
             requirement = requires.FirstOrDefault();
+
             if (requirement != null)
             {
+                // overlay requirement text and supplemental 
+                var reqOverlay = _overlay.GetRequirement(requirement.Requirement_Id, _lang);
+                if (reqOverlay != null)
+                {
+                    requirement.Requirement_Text = reqOverlay.RequirementText;
+                    requirement.Supplemental_Info = reqOverlay.SupplementalInfo;
+                }
+
+                var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
+                if (cat != null)
+                {
+                    requirement.Standard_Sub_Category = cat;
+                }
+
+
                 tabData.Set_Name = set.Set_Name;
                 tabData.Text = requirement.Requirement_Text;
                 tabData.RequirementID = requirement.Requirement_Id;
@@ -258,10 +275,8 @@ namespace CSETWebCore.Business.Question
 
             var overlay = new TranslationOverlay();
 
-            // get the user's language
-            var lang = _tokenManager.GetCurrentLanguage();
 
-            var reqOverlay = overlay.GetRequirement(tabData.RequirementID, lang);
+            var reqOverlay = overlay.GetRequirement(tabData.RequirementID, _lang);
             if (reqOverlay != null)
             {
                 tabData.SupplementalInfo = FormatSupplementalInfo(reqOverlay.SupplementalInfo);
@@ -285,7 +300,7 @@ namespace CSETWebCore.Business.Question
             RelatedFrameworkCategory = requirement.Standard_Sub_Category;
 
             // translate category
-            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), lang);
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
             if (cat != null)
             {
                 RelatedFrameworkCategory = cat;
@@ -649,7 +664,8 @@ namespace CSETWebCore.Business.Question
         {
             if (string.IsNullOrEmpty(supp))
             {
-                return "(no supplemental guidance available)";
+                var msg = _overlay.GetPropertyValue("GENERIC", "no supplemental", _lang) ?? "(no supplemental guidance available)";
+                return msg;
             }
 
             if (supp.StartsWith("<FlowDocument"))
