@@ -1026,8 +1026,21 @@
         "ransomware explanation": "Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
-        "about": "About",
+        "dialog title": "About",
+        "cisa name": "Cybersecurity & Infrastructure <br>Security Agency",
         "version": "Version",
+        "build date": "Build Date",
+        "contact": "Contact",
+        "learn more": "To learn more about cyber vulnerabilities, training, standards, and references, visit the <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">CISA Vulnerability Management website</a> or contact <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+        "encourage reporting": "CISA — Cybersecurity and Infrastructure Security Agency — encourages you to report suspicious cyber activity, incidents, and vulnerabilities affecting critical infrastructure control systems.",
+        "cset training resources": "CSET Training Resources",
+        "training available": "CSET training is available through the following resources",
+        "video tutorials": "Video Tutorials",
+        "cisa training program": "CISA Cybersecurity Training Program",
+        "training description": "The training program events consist of Web-Based Training courses, 'regional' training courses and workshops at venues in various locations, in addition to the 5-day training event held in Idaho Falls, Idaho.",
+        "training no cost": "Note: All training courses are presented at no cost to the attendee.",
+        "training website": "Training Website",
+        "training calendar": "Training Calendar",
         "acet": {
             "we ensure financial stability": "We Ensure Financial Stability",
             "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."

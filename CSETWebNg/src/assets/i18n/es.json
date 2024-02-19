@@ -927,7 +927,7 @@
         "resource library": "Biblioteca de recursos",
         "help": {
             "help": "Ayuda",
-            "cset user guide": "CSET User Guide",
+            "cset user guide": "Guía del usuario de CSET",
             "about": "Sobre",
             "keyboard shortcuts": "Atajos de teclado",
             "legal": {
@@ -1024,8 +1024,21 @@
         "ransomware explanation": "[ES]Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
-        "about": "Sobre",
+        "dialog title": "Sobre",
+        "cisa name": "Agencia de Seguridad de la <br>Infraestructura y Ciberseguridad",
         "version": "Versión",
+        "build date": "Fecha de Compilación",
+        "contact": "Contacto",
+        "learn more": "Para obtener más información sobre vulnerabilidades cibernéticas, capacitación, estándares y referencias, visite el <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">sitio web de gestión de vulnerabilidades de CISA</a> o póngase en contacto con <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+        "encourage reporting": "CISA (Agencia de Seguridad de la Infraestructura y Ciberseguridad) lo alienta a informar sobre actividades cibernéticas sospechosas, incidentes y vulnerabilidades que afectan los sistemas de control de infraestructura crítica.",
+        "cset training resources": "Recursos de capacitación CSET",
+        "training available": "La capacitación CSET está disponible a través de los siguientes recursos",
+        "video tutorials": "Tutoriales en vídeo",
+        "cisa training program": "Programa de capacitación en ciberseguridad de CISA",
+        "training description": "Los eventos del programa de capacitación consisten en cursos basados en la web, cursos 'regionales' y talleres en lugares ubicados en varios lugares, además del evento de capacitación de 5 días que se lleva a cabo en Idaho Falls, Idaho, EEUU.",
+        "training no cost": "Nota: Todos los cursos de capacitación se presentan sin costo para el asistente.",
+        "training website": "Sitio web de capacitación",
+        "training calendar": "Calendario de capacitación",
         "acet": {
             "we ensure financial stability": "Garantizamos la estabilidad financiera",
             "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."

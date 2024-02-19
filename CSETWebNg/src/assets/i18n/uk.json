@@ -883,8 +883,22 @@
         "ransomware explanation": "[UK]Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
     },
     "about": {
-        "about": "Про програму",
-        "version": "Версія"
+        "dialog title": "Про програму",
+        "cisa name": "Агентство з кібербезпеки та <br>безпеки інфраструктури",
+        "version": "Версія",
+        "build date": "Дата збірки",
+        "contact": "контакт",
+        "learn more": "Щоб дізнатися більше про кіберуразливості, навчання, стандарти та посилання, відвідайте <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.cisa.gov/cyber-resource-hub\">Веб-сайт керування вразливостями CISA</a> або зв’яжіться з <a class=\"wrap-text\" href=\"mailto:vulnerability@cisa.gov\" class=\"mailto\">vulnerability@cisa.gov</a>.",
+        "encourage reporting": "CISA — Агентство з кібербезпеки та безпеки інфраструктури — заохочує вас повідомляти про підозрілу кіберактивність, інциденти та вразливі місця, що впливають на системи контролю критичної інфраструктури.",
+        "cset training resources": "Навчальні ресурси CSET",
+        "training available": "Навчання CSET доступне через такі ресурси",
+        "video tutorials": "Відеоуроки",
+        "cisa training program": "Програма навчання кібербезпеці CISA",
+        "training description": "Заходи навчальної програми складаються з веб-навчальних курсів, «регіональних» навчальних курсів і семінарів у різних місцях, на додаток до 5-денного навчального заходу, що проводиться в Айдахо-Фоллз, Айдахо, США",
+        "training no cost": "Примітка: усі навчальні курси надаються безкоштовно для відвідувачів.",
+        "training website": "Навчальний веб-сайт",
+        "training calendar": "Календар тренувань",
+        "acet": { }
     },
     "welcome page": {
         "internet explorer": "Internet Explorer виявлено як ваш поточний браузер. \nДеякі функції CSET не повністю підтримуються Internet Explorer. \nНаполегливо рекомендуємо використовувати інший веб-переглядач, наприклад Chrome, Firefox або Edge, щоб покращити роботу.",
