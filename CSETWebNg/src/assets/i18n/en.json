@@ -1046,6 +1046,17 @@
             "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
         }
     },
+    "keyboard": {
+        "dialog title": "Keyboard Shortcuts",
+        "about": "About",
+        "accessibility": "Accessiblity Features",
+        "user guide": "User Guide",
+        "resource library": "Resource Library",
+        "new assessment": "New Assessment",
+        "protected features": "Protected Features",
+        "advisory": "Advisory",
+        "keyboard shortcuts": "Keyboard Shortcuts"
+    },
     "errors": {
         "import unsuported file 1": "Error: Unsupported file. Only CSET Web files can be imported for enterprise installations.",
         "import unsuported file 2": "For more information, see the import section of the user guide"

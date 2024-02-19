@@ -1044,6 +1044,17 @@
             "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
         }
     },
+    "keyboard": {
+        "dialog title": "Atajos de teclado",
+        "about": "Sobre",
+        "accessibility": "Accesibilidad",
+        "user guide": "Guía del usuario",
+        "resource library": "Biblioteca de recursos",
+        "new assessment": "Nueva evaluación",
+        "protected features": "Funciones protegidas",
+        "advisory": "Asesoramiento",
+        "keyboard shortcuts": "Atajos de teclado"
+    },
     "errors": {
         "import unsuported file 1": "Error: archivo no compatible. Solo se pueden importar archivos web CSET para instalaciones empresariales.",
         "import unsuported file 2": "Para obtener más información, consulte la sección de importación de la guía del usuario"
