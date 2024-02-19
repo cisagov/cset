@@ -900,6 +900,17 @@
         "training calendar": "Календар тренувань",
         "acet": { }
     },
+    "keyboard": {
+        "dialog title": "Гарячі клавіши",
+        "about": "Про програму",
+        "accessibility": "Доступність",
+        "user guide": "Керівництво користувача",
+        "resource library": "Бібліотека ресурсів",
+        "new assessment": "Нова оцінка",
+        "protected features": "Захищені функції",
+        "advisory": "консультативний",
+        "keyboard shortcuts": "Гарячі клавіши"
+    },
     "welcome page": {
         "internet explorer": "Internet Explorer виявлено як ваш поточний браузер. \nДеякі функції CSET не повністю підтримуються Internet Explorer. \nНаполегливо рекомендуємо використовувати інший веб-переглядач, наприклад Chrome, Firefox або Edge, щоб покращити роботу.",
         "welcome to": "Ласкаво просимо до {{appTitle}}",
