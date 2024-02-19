@@ -61,6 +61,7 @@
     "user inactive": "User is inactive",
     "control priorities intro1": "Information on ranking can be found in the <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
+    "local installation": "Local Installation",
     "titles": {
         "prepare": "Prepare",
         "assessment": "Assessment",
@@ -1065,5 +1066,12 @@
         "running locally": "CSET is running locally. No login is required.",
         "error encountered": "An error was encountered while running CSET",
         "enter name and email": "Enter your name and email address to register a new CSET account"
+    },
+    "footer": {
+        "faq": "FAQ",
+        "accessibility": "Accessibility",
+        "privacy and use": "Privacy & Use",
+        "traffic light protocol": "Traffic Light Protocol",
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>"
     }
 }
