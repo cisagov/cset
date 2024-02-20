@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{assessSvc.localizeDateString(this.demographics?.assessment_Date, 'l')}}</td>
                     </tr>
                     <tr>
                         <td>City or Site Name:</td>

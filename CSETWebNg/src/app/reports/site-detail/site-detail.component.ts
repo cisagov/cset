@@ -40,6 +40,7 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['../reports.scss']
 })
 export class SiteDetailComponent implements OnInit {
+  translationSub: any;
   response: any = null;
   chartStandardsSummary: Chart;
   responseResultsByCategory: any;
@@ -80,7 +81,9 @@ export class SiteDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Detail Report - " + this.configSvc.behaviors.defaultTitle);
+    this.translationSub = this.tSvc.selectTranslate('reports.core.site detail report.tab title')
+      .subscribe(value =>
+        this.titleService.setTitle(this.tSvc.translate('reports.core.site detail report.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {
@@ -214,5 +217,9 @@ export class SiteDetailComponent implements OnInit {
 
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
+  }
+
+  ngOnDestroy() {
+    this.translationSub.unsubscribe()
   }
 }
