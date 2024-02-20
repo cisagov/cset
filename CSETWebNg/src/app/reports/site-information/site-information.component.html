@@ -28,7 +28,7 @@
     </tr>
     <tr>
         <td>{{ t('assessment date') }}</td>
-        <td>{{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+        <td>{{assessSvc.localizeDateString(response?.information.assessment_Date, 'l')}}</td>
     </tr>
     <tr>
         <td>{{ t('facility name') }}</td>
