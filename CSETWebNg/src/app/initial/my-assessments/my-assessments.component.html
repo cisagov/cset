@@ -225,7 +225,6 @@
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{reportSvc.localizeDateString(assessment.lastModifiedDate)}}
                         </td>
                         <td *ngIf="showColumn('ise-submitted')">
-                            <!-- <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container> -->
                             <ng-container *ngIf="assessment.iseSubmitted">{{
                                 assessSvc.localizeDateString(assessment.submittedDate, 'l') }}</ng-container>
                         </td>

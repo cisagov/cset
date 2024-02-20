@@ -428,6 +428,8 @@
         "printing instructions electron": "Щоб роздрукувати або зберегти будь-який із цих звітів у форматі PDF, натисніть звіт, який відкриється в новому вікні. У верхньому правому куті веб-сторінки натисніть кнопку … (Налаштування та інше, ALT + F) і перейдіть до Друк. Щоб експортувати копію вашого оцінювання в інше місце (.csetw), натисніть логотип CSET у верхньому лівому куті сторінки. У розділі «Мої оцінки» ви побачите свою оцінку та кнопку «Експорт» у правій частині сторінки.",
         "printing instructions non-electron": "Щоб роздрукувати або зберегти будь-який із цих звітів у форматі PDF, натисніть звіт, який відкриється в новому вікні. У верхньому лівому куті вікна звіту натисніть кнопку \"Файл\" на панелі меню та виберіть \"Друк\" (CTRL + P). Щоб експортувати копію вашого оцінювання в інше місце (.csetw), натисніть логотип CSET у верхньому лівому куті сторінки. У розділі «Мої оцінки» ви побачите свою оцінку та кнопку «Експорт» у правій частині сторінки.",
         "site information": "Інформація про сайт",
+        "executive summary": "Резюме",
+        "network diagram": "мережева схема",
         "additional notes and comments": "[UK]Additional Notes and Comments",
         "principal assessor name": "[UK]Principal Assessor Name",
         "marked for review": "[UK]Marked for Review",
@@ -462,14 +464,14 @@
         "comments desc": "[UK]Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
         "comments placeholder": "[UK]Please provide general comments, if any, to include in the reports.",
         "disclaimer": {
-            "disclaimer": "[UK]Disclaimer",
+            "disclaimer": "Відмова від гарантій",
             "disclaimer section 1": "[UK]The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
             "disclaimer section 2": "[UK]CISA does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by CISA.",
             "disclaimer section 3": "[UK]The display of the CISA official seal or other CISA visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia, or other visual identities of CISA. The CISA seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by CISA or the United States Government. Use of the CISA seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against CISA policies governing usage of the seal.",
             "disclaimer section 4": "[UK]The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the CSET Program Office."
         },
         "advisory": {
-            "advisory": "[UK]Advisory",
+            "advisory": "Консультаційний",
             "advisory section 1": "[UK]CSET® is only one component of the overall cybersecurity picture and should be complemented with a robust cybersecurity program within the organization. A self-assessment with CSET® cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization’s security posture.",
             "advisory section 2": "[UK]The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. CSET® is not intended as a substitute for in depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
             "advisory section 3": "[UK]CSET® assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
@@ -496,7 +498,6 @@
                 "executive summary": "Резюме",
                 "tab title": "Резюме",
                 "title page title": "РЕЗЮМЕ",
-                "site information": "Інформація про сайт", 
                 "calculated level": "Розрахований рівень", 
                 "overall values": "Загальні значення", 
                 "summary percent compliance": "[UK] Summary Percent Compliance", 
@@ -524,12 +525,10 @@
             },
             "site summary": {
                 "site summary": "Підсумковий звіт сайту",
+                "tab title": "Резюме для сайту",
                 "report title": "Резюме для сайту",
                 "title page title": "ПІДСУМКОВИЙ ЗВІТ ДЛЯ САЙТУ",
-                "site information": "Інформація про сайт",
                 "high-level assessment description": "Опис високого рівня оцінювання",
-                "executive summary": "Резюме",
-                "network diagram": "Діаграма мережі",
                 "standards compliance": "Відповідність стандартам",
                 "security assurance level": "Гарантований рівень безпеки (SAL)",
                 "document library": "Бібліотека документів",
@@ -538,10 +537,8 @@
                 "summary of ranked questions desc": "[UK]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
             "site detail report": {
-                "site detail report": "[UK]SITE DETAIL REPORT",
-                "site information": "[UK]Site Information",
-                "executive summary": "[UK]Executive Summary",
-                "network diagram": "[UK]Network Diagram",
+                "title page title": "Детальний Звіт про Сайт",
+                "tab title": "Детальний звіт про сайт",
                 "findings and recommendations": "[UK]Findings and Recommendations From Basic Network Analysis",
                 "security assurance level": "[UK]Security Assurance Level (SAL)",
                 "maturity detail": "[UK]Maturity Detail",
@@ -559,8 +556,8 @@
                 "text": "[UK]This chart shows the individual scores for each of the categories from a positive perspective. High scores on this chart show areas of strength."
             },
             "security plan": {
-                "tab title": "[UK] Site Cybersecurity Plan",
-                "site cybersecurity plan": "[UK] SITE CYBERSECURITY PLAN", 
+                "tab title": "План кібербезпеки сайту",
+                "title page title": "План Кібербезпеки Сайту", 
                 "signature": "Підпис", 
                 "signature disclaimer": "[UK] My signature indicates that I have reviewed and approve this Site Cyber Security Plan and the corresponding appendices. To the best of my knowledge, they accurately describe the security profile of the Untitled Assessment 21 security policies and procedures including the operational, management, and technical controls under which they will be operated.", 
                 "signature example": "[UK] (Example only. Copy and replace the text in this signature block for each applicable position.)", 

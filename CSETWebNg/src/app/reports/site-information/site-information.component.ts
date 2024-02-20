@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ReportService } from '../../services/report.service';
+import { AssessmentService } from '../../services/assessment.service';
 
 @Component({
   selector: 'app-site-information',
@@ -12,6 +13,7 @@ export class SiteInformationComponent {
   response: any;
 
   constructor(
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    public assessSvc: AssessmentService
   ) { }
 }
