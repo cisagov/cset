@@ -689,9 +689,9 @@
                 "governance": "[UK] Governance", 
                 "risk assessment": "[UK] Risk Assessment", 
                 "risk management strategy": "[UK] Risk Management Strategy", 
-                "supply chain": "[UK] Suppy Chain Risk Management", 
-                "identity management and access control": "[UK] Identity Management and Access Control", 
-                "awareness": "[UK] Awareness and Training",
+                "risk management": "[UK] Suppy Chain Risk Management", 
+                "access control": "[UK] Identity Management and Access Control", 
+                "awareness and training": "[UK] Awareness and Training",
                 "data security": "[UK] Data Security", 
                 "information protection processes and procedures": "[UK] Information Protection Processes and Procedures", 
                 "maintenance": "[UK] Maintenance", 
@@ -700,11 +700,13 @@
                 "security continuous monitoring": "[UK] Security Continuous Monitoring", 
                 "detection processes": "[UK] Detection Processes", 
                 "response planning": "[UK] Response Planning", 
+                "response communications": "[UK] Response Communications", 
                 "communications": "[UK] Communications", 
                 "analysis": "[UK] Analysis", 
                 "mitigation": "[UK] Mitigation", 
                 "improvements": "[UK] Improvements", 
-                "recovery planning": "[UK] Recovery Planning"       
+                "recovery planning": "[UK] Recovery Planning", 
+                "recovery communications": "[UK] Recovery Communications"       
 
 
             },

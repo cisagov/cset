@@ -77,7 +77,7 @@ export class ExecutiveSummaryComponent implements OnInit {
 
     this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
 
-    this.translationSub = this.translocoService.selectTranslate('Executive Summary - ')
+    this.translationSub = this.translocoService.selectTranslate('')
         .subscribe(value => 
         this.titleService.setTitle(this.tSvc.translate('reports.core.executive summary.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
