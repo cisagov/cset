@@ -127,10 +127,10 @@ namespace UpgradeLibrary.Upgrade
             }
         }
 
-        private void upgradeDB(Version currentVersion, string localDBConnectionString)
+        private void upgradeDB(Version currentVersion, string connectionString)
         {
             Version dbVersion;
-            using (SqlConnection conn = new SqlConnection(localDBConnectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlConnection.ClearAllPools();
                 //drop into where ever you need to start and then upgrade all the way to the current version.
@@ -144,7 +144,7 @@ namespace UpgradeLibrary.Upgrade
             while (dbVersion < currentVersion)
             {
                 ConvertSqlDatabase converter = null;
-                using (SqlConnection conn = new SqlConnection(localDBConnectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
                     if (converters.ContainsKey(dbVersion.ToString()))
@@ -162,10 +162,21 @@ namespace UpgradeLibrary.Upgrade
                 }
 
             }
+
             if (dbVersion > currentVersion)  //Assessmenet is newer than current
             {
                 throw new DatabaseUpgradeException("This database is a newer version of CSET.  Please upgrade to CSET " +
                          dbVersion.ToString() + "or get a newer version of the upgrader");
+            }
+
+            //increase the database's comptibility level to latest
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string compatibilityLevel = GetHighestPossibleSqlServerCompatibilityLevel(conn);
+
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = $"ALTER DATABASE {conn.Database} SET COMPATIBILITY_LEVEL = {compatibilityLevel}";
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -176,12 +187,40 @@ namespace UpgradeLibrary.Upgrade
         /// <returns></returns>
         public Version GetDBVersion(SqlConnection conn)
         {
-            DataTable versionTable = new DataTable();
-            SqlDataAdapter adapter = new SqlDataAdapter("SELECT [Version_Id], [Cset_Version] FROM [CSET_VERSION]", conn);
-            adapter.Fill(versionTable);
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT [Cset_Version] FROM [CSET_VERSION]";
+            string version = cmd.ExecuteScalar().ToString();
+            return VersionHandler.ConvertFromStringToVersion(version);
+        }
 
-            string s = versionTable.Rows[0]["Cset_Version"].ToString();
-            return VersionHandler.ConvertFromStringToVersion(s);
+        /// <summary>
+        /// Gets the highest possible database compatibility
+        /// level given the sql server connection that is provided.
+        /// </summary>
+        /// <param name="conn">I expect this to be open before I get it</param>
+        /// <returns></returns>
+        public string GetHighestPossibleSqlServerCompatibilityLevel(SqlConnection conn) 
+        {
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = @"select
+                'ServerCompatibility' = 
+                    CASE CAST(SERVERPROPERTY('ProductMajorVersion') AS DECIMAL)
+                        WHEN 6.5  THEN '65' 
+                        WHEN 7  THEN '70'
+                        WHEN 8  THEN '80'
+                        WHEN 9  THEN '90'
+                        WHEN 10 THEN '100'
+                        WHEN 10.5 THEN '100'
+                        WHEN 11 THEN '11'
+                        WHEN 12 THEN '120'
+                        WHEN 13 THEN '130'
+                        WHEN 14 THEN '140'
+                        WHEN 15 THEN '150'
+                        WHEN 16 THEN '160'
+                        ELSE 'Unknown'
+                    END";
+
+            return cmd.ExecuteScalar().ToString();
         }
     }
 }
