@@ -36,7 +36,6 @@ import { Answer } from '../models/questions.model';
 import { environment } from '../../../src/environments/environment';
 import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
-import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
 
@@ -165,7 +164,6 @@ export class NCUAService {
           this.tSvc.setActiveLang(defaultLang);
           this.authSvc.setUserLang(defaultLang).subscribe(() => {
             this.dateAdapter.setLocale(defaultLang);
-            moment.locale(defaultLang);
           });
         }
       }
@@ -607,7 +605,7 @@ export class NCUAService {
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
       "effectiveDate": this.information.assessment_Effective_Date,
-      "creationDate": this.reportSvc.applyOffsetFromJwtToken(this.information.assessment_Creation_Date),
+      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,

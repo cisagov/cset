@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from '../../services/config.service';
-import * as moment from "moment";
 import { DateAdapter } from '@angular/material/core';
 
 @Component({
@@ -44,7 +43,6 @@ export class UserLanguageComponent implements OnInit {
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
-      moment.locale(this.langSelection);
     });
   }
 
@@ -56,7 +54,6 @@ export class UserLanguageComponent implements OnInit {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         this.dateAdapter.setLocale(this.langSelection);
-        moment.locale(this.langSelection);
       });
     },
       error => console.error('Error updating user langugage: ' + error.message));
