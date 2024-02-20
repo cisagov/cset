@@ -172,6 +172,7 @@ namespace UpgradeLibrary.Upgrade
             //increase the database's comptibility level to latest
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                conn.Open();
                 string compatibilityLevel = GetHighestPossibleSqlServerCompatibilityLevel(conn);
 
                 SqlCommand cmd = conn.CreateCommand();
