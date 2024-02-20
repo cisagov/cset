@@ -25,7 +25,7 @@
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                {{t('reports.core.site detail report.site detail report')}}
+                {{t('reports.core.site detail report.title page title')}}
             </p>
         </div>
         <div class="column">
@@ -51,7 +51,7 @@
 
 
     <div class="page-break">
-        <h1>{{t('reports.core.site detail report.site information')}}</h1>
+        <h1>{{t('reports.site information')}}</h1>
         <app-site-information [response]="response"></app-site-information>
     </div>
 
@@ -63,7 +63,7 @@
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
         </p>
 
-        <h1>{{t('reports.core.site detail report.executive summary')}}</h1>
+        <h1>{{t('reports.executive summary')}}</h1>
         <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.executive_Summary)">
         </div>
     </div>
@@ -81,7 +81,7 @@
 
     <!--Network Diagram-->
     <div class="page-break" *ngIf="response?.information.useDiagram">
-        <h1>{{t('reports.core.site detail report.network diagram')}}</h1>
+        <h1>{{t('reports.network diagram')}}</h1>
         <div style="display: table; height: 8in">
             <div style="padding: 50% 0; height: 0">
                 <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"

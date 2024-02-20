@@ -210,6 +210,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                         var diagReq = new DiagramRequest()
                         {
                             DiagramXml = assessment.Diagram_Markup,
+                            DiagramSvg = assessment.Diagram_Image,
                             AnalyzeDiagram = false,
                             revision = false
                         };
