@@ -42,7 +42,7 @@
                 }}</label>
             </td>
             <td>
-              {{ assessSvc.localizeDateString(a.assessmentDate, 'l') }}
+              {{ a.assessmentDate | localizeDate }}
             </td>
           </tr>
         </table>
