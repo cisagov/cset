@@ -40,7 +40,7 @@
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div>{{response?.information.assessment_Name}}</div>
         <div>
-          {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
+          {{response?.information.assessment_Date | localizeDate}}
         </div>
         <div>
           {{response?.information.assessor_Name}}

@@ -41,7 +41,7 @@
             <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }}</h3>
             <br />
             <br />
-            <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.assessmentDate | date:'MMMM yyyy' }}</h3>
+            <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.assessmentDate | localizeDate:'LL' }}</h3>
         </div>
     </div>
 </div>
