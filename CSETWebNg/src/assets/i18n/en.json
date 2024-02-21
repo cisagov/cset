@@ -149,6 +149,15 @@
         "edm tutorial": "EDM Tutorial",
         "crr tutorial": "CRR Tutorial",
         "rra tutorial": "Ransomware Readiness Tutorial",
+        "cie tutorial": {
+            "cie tutorial": "CIE Tutorial",
+            "quick facts": "Quick Facts",
+            "overview": "Overview and Orientation",
+            "background": "CIE Background",
+            "principles": "CIE Principles",
+            "lifecycle": "Engineering Lifecycle",
+            "how to use": "How To Use Tutorial"
+        },
         "acet dashboard": "ACET Dashboard",
         "analysis dashboard": "Analysis Dashboard",
         "standard results": "Standard Results",
