@@ -206,13 +206,7 @@ namespace UpgradeLibrary.Upgrade
             cmd.CommandText = @"select
                 'ServerCompatibility' = 
                     CASE CAST(SERVERPROPERTY('ProductMajorVersion') AS DECIMAL)
-                        WHEN 6.5  THEN '65' 
-                        WHEN 7  THEN '70'
-                        WHEN 8  THEN '80'
-                        WHEN 9  THEN '90'
-                        WHEN 10 THEN '100'
-                        WHEN 10.5 THEN '100'
-                        WHEN 11 THEN '11'
+                        WHEN 11 THEN '110'
                         WHEN 12 THEN '120'
                         WHEN 13 THEN '130'
                         WHEN 14 THEN '140'
