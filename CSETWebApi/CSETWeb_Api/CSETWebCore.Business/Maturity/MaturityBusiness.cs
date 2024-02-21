@@ -22,16 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CSETWebCore.Model.Mvra;
-using J2N;
-using Microsoft.AspNetCore.Http.Features;
-using System.ComponentModel;
-using CSETWebCore.Business.Aggregation;
-using static Lucene.Net.Util.Fst.Util;
 using CSETWebCore.Business.Acet;
-using Microsoft.IdentityModel.Tokens;
 using CSETWebCore.DataLayer.Manual;
-using CSETWebCore.Business.User;
-using Org.BouncyCastle.Bcpg;
+
 
 namespace CSETWebCore.Business.Maturity
 {
@@ -43,6 +36,8 @@ namespace CSETWebCore.Business.Maturity
 
         private int _maturityModelId;
 
+        private TranslationOverlay _overlay;
+
         private AdditionalSupplemental _addlSuppl;
 
         public readonly List<string> ModelsWithTargetLevel = new List<string>() { "ACET", "CMMC", "CMMC2" };
@@ -53,7 +48,9 @@ namespace CSETWebCore.Business.Maturity
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
 
-            this._addlSuppl = new AdditionalSupplemental(context);
+            _addlSuppl = new AdditionalSupplemental(context);
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -945,6 +942,21 @@ namespace CSETWebCore.Business.Maturity
             }
             //
 
+            // overlay group properties for language
+            allGroupings.ForEach(
+                grouping =>
+                {
+                    var o = _overlay.GetGrouping(grouping.Grouping_Id, "uk");
+                    if (o != null)
+                    {
+                        grouping.Title = o.Title;
+                        grouping.Description = o.Description;
+                    }
+                });
+
+
+
+
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
             BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
@@ -997,6 +1009,13 @@ namespace CSETWebCore.Business.Maturity
                     Description = sg.Description,
                     Abbreviation = sg.Abbreviation
                 };
+
+                var o = _overlay.GetGrouping(newGrouping.GroupingID, "uk");
+                if (o != null)
+                {
+                    newGrouping.Title = o.Title;
+                    newGrouping.Description = o.Description;
+                }
 
 
                 g.SubGroupings.Add(newGrouping);
