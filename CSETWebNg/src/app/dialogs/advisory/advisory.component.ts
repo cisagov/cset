@@ -24,6 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -44,6 +45,7 @@ export class AdvisoryComponent {
   constructor(
     public configSvc: ConfigService,
     private dialog: MatDialogRef<AdvisoryComponent>,
+    public tSvc: TranslocoService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
 
