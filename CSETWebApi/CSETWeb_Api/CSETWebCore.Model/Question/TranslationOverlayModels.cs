@@ -7,17 +7,6 @@ using System.Threading.Tasks;
 namespace CSETWebCore.Model.Question
 {
     /// <summary>
-    /// Translation info for a single Requirement
-    /// </summary>
-    public class RequirementOverlay
-    {
-        public int RequirementId { get; set; }
-        public string RequirementText { get; set; }
-        public string SupplementalInfo { get; set; }
-    }
-
-
-    /// <summary>
     /// Translation info for a single Category
     /// </summary>
     public class KeyValueOverlay
@@ -31,5 +20,27 @@ namespace CSETWebCore.Model.Question
         /// The translated category name
         /// </summary>
         public string Value { get; set; }
+    }
+
+
+    /// <summary>
+    /// Translation info for a single Requirement
+    /// </summary>
+    public class RequirementOverlay
+    {
+        public int RequirementId { get; set; }
+        public string RequirementText { get; set; }
+        public string SupplementalInfo { get; set; }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MaturityGroupingOverlay
+    {
+        public int GroupingId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }

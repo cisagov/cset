@@ -156,6 +156,9 @@
     <None Update="App_Data\LanguagePacks\UK\GENERIC.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\UK\MATURITY_GROUPINGS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_QUESTIONS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
