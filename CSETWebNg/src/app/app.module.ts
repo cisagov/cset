@@ -620,6 +620,9 @@ import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-in
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
+import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
+import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
+import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @NgModule({
   imports: [
@@ -1188,7 +1191,10 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     MalcolmUploadErrorComponent,
     AssessmentConvertCfComponent,
     IseWarningsComponent,
-    TrendAnalyticsComponent
+    TrendAnalyticsComponent,
+    MalcolmAnswerDefaultComponent,
+    MalcolmAnswerNestedComponent,
+    MalcolmInstructionsComponent
   ],
   providers: [
     TranslocoService,

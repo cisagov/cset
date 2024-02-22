@@ -14,57 +14,58 @@ using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
-using NPOI.POIFS.Properties;
+using CSETWebCore.Model.Diagram;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
-    class Rule8 : AbstractRule, IRuleEvaluate
+    class Rule9 : AbstractRule, IRuleEvaluate
     {
 
-        private String rule8 = "The subnet should have an IPS (Intrusion Prevention System) inline to " +
-            "provide a swift response if malicious traffic penetrates the firewall.";
+        private String rule9 = "The subnet should have an IDS (Intrusion Detection System) inline to " +
+            "detect if malicious traffic penetrates the firewall.";
 
         private SimplifiedNetwork network;
 
-        public Rule8(SimplifiedNetwork simplifiedNetwork)
+        public Rule9(SimplifiedNetwork simplifiedNetwork)
         {
             this.network = simplifiedNetwork;
         }
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            bool ipsDetected = false;
+            bool idsDetected = false;
             var allNodes = network.Nodes.Values.ToList();
             foreach (var node in allNodes)
             {
-                if (node.IsIPS)
+                if (node.IsIDS)
                 {
-                    ipsDetected = true;
+                    idsDetected = true;
                 }
             }
 
-            if (!ipsDetected)
+            if (!idsDetected) 
             {
                 return this.Messages;
             }
 
             var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
 
-            if (firewalls.Count == 0) 
+            if (firewalls.Count == 0)
             {
-                String text = String.Format(rule8, allNodes[0].ComponentName).Replace("\n", " ");
-                SetNodeMessage(allNodes[0], text, 8); // 8 because rule8 was violated
+                String text = String.Format(rule9, allNodes[0].ComponentName).Replace("\n", " ");
+                SetNodeMessage(allNodes[0], text, 9); // 9 because rule9 was violated
             }
-            
+
             else
             {
                 foreach (var firewall in firewalls)
                 {
                     Visited.Clear();
-                    CheckRule8(firewall);
+                    CheckRule9(firewall);
                 }
             }
-
+            
             return this.Messages;
         }
 
@@ -75,10 +76,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
         /// </summary>
         /// <param name="multiServiceComponent"></param>
         /// <param name="visitedNodes"></param>
-        private void CheckRule8(NetworkComponent firewall)
+        private void CheckRule9(NetworkComponent firewall)
         {
-            // This code is here because component can be a multiple service component that is IPS
-            if (firewall.IsIPS)
+            // This code is here because component can be a multiple service component that is IDS
+            if (firewall.IsIDS)
             {
                 return;
             }
@@ -89,7 +90,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
             {
                 if (child.IsInSameZone(firewall))
                 {
-                    if (child.IsIPS)
+                    if (child.IsIDS)
                     {
                         return;
                     }
@@ -106,8 +107,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
                 componentName = firewall.ComponentName;
             }
 
-            String text = String.Format(rule8, componentName).Replace("\n", " ");
-            SetNodeMessage(firewall, text, 8); // 8 because rule8 was violated
+            String text = String.Format(rule9, componentName).Replace("\n", " ");
+            SetNodeMessage(firewall, text, 9); // 9 because rule9 was violated
         }
 
         private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
@@ -119,7 +120,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
                     //Trace.WriteLine("->" + child.ComponentName + ":" + firewall.ComponentName);
                     if (child.IsInSameZone(firewall))
                     {
-                        if (child.IsIPS)
+                        if (child.IsIDS)
                         {
                             //Trace.WriteLine("Found it");
                             return true;
