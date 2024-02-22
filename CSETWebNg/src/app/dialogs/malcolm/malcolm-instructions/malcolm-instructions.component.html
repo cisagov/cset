@@ -30,8 +30,11 @@
         <div class="pr-3">
             Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly.
             <div class="d-flex" style="justify-content: space-between;">
-                <input #ipAddress class="inline-flex" type="text" (blur)="validateIP(ipAddress.value)">
+                <div class="d-flex flex-column">
                 <span style="color:red" *ngIf="iperror">Not a Valid IP Address</span>
+                <input #ipAddress class="inline-flex" type="text" (blur)="validateIP(ipAddress.value)">
+                </div>
+                
                 <button class="btn btn-primary inline-flex" (click)="attemptToImportFromMalcolm(ipAddress.value)">Attempt to Import Malcolm Directly</button>
                 
             </div>
