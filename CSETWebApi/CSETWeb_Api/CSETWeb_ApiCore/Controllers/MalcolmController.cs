@@ -45,6 +45,16 @@ namespace CSETWebCore.Api.Controllers
             _malcolm = malcolm;
         }
 
+        //[HttpGet]
+        //[Route("api/malcolm")]
+        //public IActionResult GetMalcolmData()
+        //{
+        //    int assessmentId = (int)_token.PayloadInt(Constants.Constants.Token_AssessmentId);
+        //    MalcolmData malcolmData = new MalcolmData();
+        //    DiagramManager diagramManager = new DiagramManager(_context);
+        //    malcolmData = diagramManager.GetMalcolmData(assessmentId);
+        //    return Ok(malcolmData);
+        //}
 
         [HttpPost]
         [Route("api/malcolm")]
