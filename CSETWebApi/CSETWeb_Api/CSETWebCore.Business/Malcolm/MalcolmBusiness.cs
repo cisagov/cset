@@ -25,6 +25,7 @@ using System.Text;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Model.Assessment;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Malcolm
 {
@@ -37,6 +38,31 @@ namespace CSETWebCore.Business.Malcolm
         public MalcolmBusiness(CSETContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<MalcolmData>> GetDataFromMalcomInstance(String IPAddress)
+        {
+            MalcomHttpClient client = new MalcomHttpClient();
+            String jsonString = await client.getMalcomData(IPAddress);
+            List<MalcolmData> list =  ProcessMalcomData(jsonString);
+            list = GetMalcolmJsonData(list);
+            return list;            
+        }
+
+        public List<MalcolmData> ProcessMalcomData(String jsonString)
+        {
+            MalcolmData data = new MalcolmData();
+            List<MalcolmData> dataList = new List<MalcolmData>();
+            /* New json file schema differed from what we were originally given */
+            jsonString = jsonString.Replace("source.ip", "values");
+            jsonString = jsonString.Replace("source.device.role", "values");
+            jsonString = jsonString.Replace("destination.ip", "values");
+            jsonString = jsonString.Replace("destination.device.role", "values");
+
+            data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
+            dataList.Add(data);
+            return dataList;
+
         }
 
         public List<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
