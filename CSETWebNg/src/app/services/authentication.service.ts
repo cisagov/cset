@@ -103,7 +103,7 @@ export class AuthenticationService {
         JSON.stringify({
           TzOffset: new Date().getTimezoneOffset().toString(),
           // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
-          Scope: (this.configSvc.installationMode || '') !== '' ? this.configSvc.installationMode : environment.appCode
+          Scope: this.configSvc.installationMode ||  environment.appCode
         }),
         headers
       )
@@ -183,6 +183,9 @@ export class AuthenticationService {
     let scope: string;
 
     switch (this.configSvc.installationMode || '') {
+      case 'CSET':
+        scope = 'CSET';
+        break;
       case 'ACET':
         scope = 'ACET';
         break;
@@ -337,7 +340,7 @@ export class AuthenticationService {
 
   getSecurityQuestionsList(email: string) {
     return this.http.get(
-      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode
+      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode || environment.appCode
     );
   }
 
