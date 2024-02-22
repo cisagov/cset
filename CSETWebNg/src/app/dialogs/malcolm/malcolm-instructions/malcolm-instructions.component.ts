@@ -31,7 +31,7 @@ export class MalcolmInstructionsComponent {
         this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
             (result) => {
                 if (result != null) {
-                    this.openUploadErrorDialog(result);
+                    this.openUploadErrorDialog(result, true);
                 } else {
                     location.reload();
                 }
@@ -69,7 +69,7 @@ export class MalcolmInstructionsComponent {
             this.malcolmSvc.attemptToImportFromMalcolm(ipAddress).subscribe(
                 (result) => {
                     if (result != null) {
-                        this.openUploadErrorDialog(result);
+                        this.openUploadErrorDialog(result, false);
                     } else {
                         location.reload();
                     }
