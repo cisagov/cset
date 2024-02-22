@@ -22,8 +22,7 @@
 -------------------------->
 <div *transloco="let t" class="question-group mb-3">
     <!-- Hides the ISE CORE+ only sub cats unless they need to be shown -->
-    <ng-container
-        *ngIf="(myGrouping.groupingID < 2567 || (myGrouping.groupingID >= 2567 && ncuaSvc.getExtraQuestionStatus() === true))">
+    <ng-container *ngIf="(myGrouping.groupingID < 2567 || (myGrouping.groupingID >= 2567 && ncuaSvc.getExtraQuestionStatus() === true))">
         <div class="subcat-header" [class.flat-bottom]="myGrouping.expanded" (click)="toggleExpansion()"
             (keydown.Spacebar)="toggleExpansion()" (keydown.Enter)="toggleExpansion()"
             [attr.aria-expanded]="myGrouping.expanded">
@@ -67,8 +66,7 @@
 
         </div>
 
-        <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;"
-            [class.display-none]="!myGrouping.expanded">
+        <div *ngIf="this.assessSvc.isISE()" class="subcat-question-list" style="padding: 1em;" [class.display-none]="!myGrouping.expanded">
             <ng-container *ngFor="let q of myGrouping.questions; let last = last">
                 <div class="d-flex flex-column" [class.question-row]="q.parentQuestionId === null"
                     [class.pb-3]="q.parentQuestionId === null" [class.display-none]="!shouldIShow(q)">
@@ -178,7 +176,8 @@
                 <div *ngIf="last">
                     <div>
                         <!-- 7852 is currently the start of the CORE+ only questions and doesn't need this button -->
-                        <button *ngIf="showCorePlusButton(q.questionId) && q.questionId < 7852"
+                        <!-- CORE+ Statements 2.9, 14.12, 14.13, 14.4, and 15.3 got added in late and have an id of 10926+ -->
+                        <button *ngIf="showCorePlusButton(q.questionId) && (q.questionId < 7852 || q.questionId >= 10926)"
                             class="btn btn-na form-check-label mt-2 mb-4" style="width: 20%"
                             (click)="updateCorePlusStatus()">{{this.showCorePlus === false ? 'Expand CORE+' : 'Hide
                             CORE+'}}
