@@ -1,10 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CSETWebCore.Business.Malcolm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSETWebCore.Business.Malcolm.Tests
 {
@@ -12,7 +6,12 @@ namespace CSETWebCore.Business.Malcolm.Tests
     public class MalcomHttpClientTests
     {
         [TestMethod()]
-        public async void getMalcomDataTest()
+        public void getMalcomDataTest()
+        {
+            Task.Run(() => TestMalcomHttpClient()).Wait();
+        }
+
+        private async void TestMalcomHttpClient()
         {
             MalcomHttpClient malcomHttp = new MalcomHttpClient();
             string test = await malcomHttp.getMalcomData("127.0.0.1");
