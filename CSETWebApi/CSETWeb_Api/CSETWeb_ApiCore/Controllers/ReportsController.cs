@@ -459,13 +459,13 @@ namespace CSETWebCore.Api.Controllers
                 d.Mat.Maturity_Model = null;
             });
 
-
             return Ok(data);
         }
 
+
         [HttpGet]
-        [Route("api/reports/discoveries")]
-        public IActionResult GetDiscoveries()
+        [Route("api/reports/observations")]
+        public IActionResult GetObservations()
         {
             int assessmentId = _token.AssessmentForUser();
 

@@ -1520,6 +1520,19 @@ th.data-table {
   font-weight: 600;
 }
 
+.pcii-header {
+  background-color: green;
+  color: #fff;
+  font-size: 1rem !important;
+  padding: .3rem 2rem;
+}
+
+.pcii-header a {
+  display: inline;
+  color: #fff;
+  font-weight: bold;
+}
+
 .nav>li>a:focus,
 .nav>li>a:hover {
   background-color: transparent;

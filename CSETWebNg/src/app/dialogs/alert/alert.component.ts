@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -41,6 +42,7 @@ export class AlertComponent {
    * @param data 
    */
   constructor(
+    public tSvc: TranslocoService,
     private dialog: MatDialogRef<AlertComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -48,7 +50,7 @@ export class AlertComponent {
 
     // default title
     if (!!data && !data.title) {
-      data.title = 'Alert';
+      data.title = this.tSvc.translate('dialogs.alert');
     }
 
     // override icon class if provided

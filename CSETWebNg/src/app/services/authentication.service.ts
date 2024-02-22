@@ -111,7 +111,7 @@ export class AuthenticationService {
       .then(
         (response: LoginResponse) => {
 
-          if (response?.email === null || response?.email === undefined) {
+          if (!response?.email) {
             this.isLocal = false;
           } else {
             this.isLocal = true;
@@ -127,6 +127,13 @@ export class AuthenticationService {
           localStorage.setItem('cset.isLocal', this.isLocal + '');
 
           localStorage.setItem('cset.linkerDate', response?.linkerTime);
+
+          // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
+          // Otherwise, this will be configured after calling auth/login (non-standalone login)
+          if (response.userId) {
+            return this.configureCisaAssessorWorkflow(response);
+          }
+
         },
         (error) => {
           console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
@@ -335,7 +342,7 @@ export class AuthenticationService {
   }
 
   getSecurityQuestionsPotentialList() {
-    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions');
+    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions?lang=' + this.tSvc.getActiveLang());
   }
 
   userToken() {

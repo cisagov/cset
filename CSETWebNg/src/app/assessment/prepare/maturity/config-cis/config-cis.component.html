@@ -75,7 +75,7 @@
             <select class="form-control mr-1" #import>
                 <option value="">-- Select Survey to Import --</option>
                 <option *ngFor="let c of importSourceCandidates" [value]="c.id">
-                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                    {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
                 </option>
             </select>
             <button class="btn btn-primary text-nowrap" [disabled]="import.value == ''"
@@ -99,7 +99,7 @@
             <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
                 <option [ngValue]="null">-- No Baseline Assessment --</option>
                 <option *ngFor="let c of baselineCandidates" [value]="c.id">
-                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                    {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
                 </option>
             </select>
         </div>

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
@@ -18,6 +17,7 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
+using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.Api.Controllers
@@ -32,6 +32,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly int _assessmentId;
 
         static Dictionary<String, String> answerColorDefs;
+        private TranslationOverlay _overlay;
+
 
         /// <summary>
         /// Static controller
@@ -50,6 +52,8 @@ namespace CSETWebCore.Api.Controllers
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -69,13 +73,34 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/analysis/RankedQuestions")]
         public IActionResult GetRankedQuestions()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+            
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
+
+            string mode = GetAssessmentMode(assessmentId);
 
             var rankedQuestionList = _context.usp_GetRankedQuestions(assessmentId).ToList();
 
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
+                // Currently we only translate text for REQUIREMENTS
+                if (mode == "R")
+                {
+                    var reqOverlay = _overlay.GetRequirement(q.QuestionOrRequirementID, lang);
+                    if (reqOverlay != null)
+                    {
+                        q.QuestionText = reqOverlay.RequirementText;
+
+                        var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang);
+                        if (translatedCategory != null)
+                        {
+                            q.Category = translatedCategory;
+                        }
+                    }
+                }
+
+
                 q.QuestionText = _requirement.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
             }
 
@@ -91,6 +116,8 @@ namespace CSETWebCore.Api.Controllers
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
                 _requirement.SetRequirementAssessmentId(assessmentId);
+
+                var lang = _tokenManager.GetCurrentLanguage();
 
                 FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
@@ -192,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (feedbackQuestions.Count() == 0)
                 {
-                    FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";
+                    FeedbackResult.FeedbackBody = _overlay.GetPropertyValue("GENERIC", "no feedback", lang) ?? "No feedback given for any questions in this assessment";
                 }
 
                 return Ok(FeedbackResult);
@@ -214,6 +241,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+            var lang = _tokenManager.GetCurrentLanguage();
 
             FirstPage rval = null;
 
@@ -321,7 +349,10 @@ namespace CSETWebCore.Api.Controllers
 
                 foreach (var j in complianceOrdered)
                 {
-                    overallBars.Labels.Add(j.Item1);
+                    string label = j.Item1;
+
+                    overallBars.EnglishLabels.Add(j.Item1);
+                    overallBars.Labels.Add(_overlay.GetPropertyValue("GENERIC", j.Item1.ToLower(), lang) ?? j.Item1);
                     overallBars.data.Add(j.Item2);
                 }
 
@@ -359,6 +390,8 @@ namespace CSETWebCore.Api.Controllers
             }
 
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             ChartData chartData = null;
 
             var results = new RankedCategoriesMultiResult();
@@ -386,7 +419,7 @@ namespace CSETWebCore.Api.Controllers
                 foreach (usp_getRankedCategories c in results.Result1.Take((int)total))
                 {
                     chartData.data.Add((double)c.prc);
-                    chartData.Labels.Add(c.Question_Group_Heading);
+                    chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
                 }
             }
 
@@ -472,6 +505,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetOverallRankedCategories()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             ChartData chartData = null;
 
             var results = new RankedCategoriesMultiResult();
@@ -500,14 +535,14 @@ namespace CSETWebCore.Api.Controllers
                 foreach (usp_getRankedCategories c in results.Result1)
                 {
                     chartData.data.Add((double)(c.prc ?? 0));
-                    chartData.Labels.Add(c.Question_Group_Heading);
+                    chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
 
                     chartData.DataRows.Add(new DataRows()
                     {
                         failed = (c.nuCount ?? 0),
                         percent = (c.prc ?? 0),
                         total = (c.qc ?? 0),
-                        title = c.Question_Group_Heading,
+                        title = _overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading,
                         rank = i++
                     });
 
@@ -788,6 +823,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetStandardsResultsByCategory()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             ChartData chartData = new ChartData();
 
             _context.LoadStoredProc("[usp_getStandardsResultsByCategory]")
@@ -797,21 +834,13 @@ namespace CSETWebCore.Api.Controllers
                         var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
                         var labels = (from usp_getStandardsResultsByCategory an in result
                                       orderby an.Question_Group_Heading
-                                      select an.Question_Group_Heading).Distinct().ToList();
+                                      select new { an.Question_Group_Heading, an.QGH_Id }).Distinct().ToList();
 
                         chartData.DataRows = new List<DataRows>();
-                        foreach (string c in labels)
+                        foreach (var c in labels)
                         {
-                            //    chartData.data.Add((double) c.prc);
-                            chartData.Labels.Add(c);
-                            //    chartData.DataRows.Add(new DataRows()
-                            //    {
-                            //        failed =c.yaCount,
-                            //        percent = c.prc,
-                            //        total = c.Actualcr,
-                            //        title = c.Question_Group_Heading                            
-                            //   });
-
+                            chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? 
+                                c.Question_Group_Heading);
                         }
 
                         ColorsList colors = new ColorsList();
@@ -820,10 +849,9 @@ namespace CSETWebCore.Api.Controllers
                                     select new { an.Set_Name, an.Short_Name }).Distinct();
                         foreach (var set in sets)
                         {
-
                             ChartData nextChartData = new ChartData();
                             chartData.dataSets.Add(nextChartData);
-                            nextChartData.DataRows = new List<DataRows>();
+                            nextChartData.DataRows = [];
                             var nextSet = (from usp_getStandardsResultsByCategory an in result
                                            where an.Set_Name == set.Set_Name
                                            orderby an.Question_Group_Heading
@@ -833,13 +861,13 @@ namespace CSETWebCore.Api.Controllers
                             foreach (usp_getStandardsResultsByCategory c in nextSet)
                             {
                                 nextChartData.data.Add((double)c.prc);
-                                nextChartData.Labels.Add(c.Question_Group_Heading);
+                                nextChartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading);
                                 nextChartData.DataRows.Add(new DataRows()
                                 {
                                     failed = c.yaCount,
                                     percent = c.prc,
                                     total = c.Actualcr,
-                                    title = c.Question_Group_Heading
+                                    title = _overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? c.Question_Group_Heading
                                 });
                             }
                         }
