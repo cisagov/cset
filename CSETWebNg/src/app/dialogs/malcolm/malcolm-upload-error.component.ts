@@ -29,6 +29,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogActions } from '@angular/materi
   templateUrl: './malcolm-upload-error.component.html'
 })
 export class MalcolmUploadErrorComponent implements OnInit {
+  isFileMode: boolean=true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -49,37 +50,37 @@ export class MalcolmUploadErrorComponent implements OnInit {
 
   ngOnInit() {
     this.errors = this.data.error;
+    this.isFileMode = this.data.isFile;
     this.checkErrors();
 
   }
 
   checkErrors() {
     // Check each error we got back, and save the file name
-    console.log(this.errors);
-
-    this.errors.forEach(error => {
-      if (error.statusCode == 400) {
-        this.errorCode400Files.push(error);
+    if(this.isFileMode){
+      this.errors.forEach(error => {
+        if (error.statusCode == 400) {
+          this.errorCode400Files.push(error);
+        }
+        if (error.statusCode == 415) {
+          this.errorCode415Files.push(error);
+        }
+      });
+  
+      // Show the files that caused HTTP code 400
+      if (this.errorCode400Files.length > 0) {
+        this.have400errors = true;
+      } else {
+        this.have400errors = false;
       }
-      if (error.statusCode == 415) {
-        this.errorCode415Files.push(error);
+  
+      // Show the files that caused HTTP code 415
+      if (this.errorCode415Files.length > 0) {
+        this.have415errors = true;
+      } else {
+        this.have415errors = false;
       }
-    });
-
-    // Show the files that caused HTTP code 400
-    if (this.errorCode400Files.length > 0) {
-      this.have400errors = true;
-    } else {
-      this.have400errors = false;
-    }
-
-    // Show the files that caused HTTP code 415
-    if (this.errorCode415Files.length > 0) {
-      this.have415errors = true;
-    } else {
-      this.have415errors = false;
-    }
-
+    }    
   }
 
 }
