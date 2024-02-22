@@ -143,10 +143,19 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                
-                List<MalcolmData> processedData = _malcolm.GetMalcolmJsonData(dataList);
-                _diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
-                return Ok();
+                try
+                {
+                    List<MalcolmData> processedData = _malcolm.GetMalcolmJsonData(dataList);
+                    _diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    List<MalcolmUploadError> errors2 = new List<MalcolmUploadError>();
+                    MalcolmUploadError error2 = new MalcolmUploadError("General Error", 400, ex.Message);
+                    errors2.Add(error2);
+                    return Ok(errors2);
+                }
             }
         }
 
