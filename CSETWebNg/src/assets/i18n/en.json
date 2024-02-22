@@ -949,7 +949,9 @@
                     "disclaimer 4": "The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact {{intellectualPropertyRightsDistributionRequestEntity}}. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the {{appShortName}} Program Office."
                 },
                 "terms of use": {
-                    "terms of use": "Terms of Use"
+                    "terms of use": "Terms of Use",
+                    "description": "This software was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S. Government nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability or responsibility for any third party's use, or the results of such use, or any information, apparatus, product, or process associated with this software, or represents that its use by such third party would not infringe privately-owned rights.",
+                    "open source licenses": "Open-Source Licenses"
                 }
             }
         },

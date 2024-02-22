@@ -818,7 +818,9 @@
                     "disclaimer 4": "[UK]The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact {{intellectualPropertyRightsDistributionRequestEntity}}. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the {{appShortName}} Program Office."
                 },
                 "terms of use": {
-                    "terms of use": "Умови використання"
+                    "terms of use": "Умови використання",
+                    "description": "Цей програмний продукт був підготовлений як звіт про роботу, спонсоровану агентством уряду США. Ані уряд США, ані будь-яке його агентство, ані будь-який співробітник не дають жодних гарантій, виражених або припущених, і не беруть на себе жодної юридичної відповідальності або відповідальності за використання третьою стороною, або результати такого використання, або будь-яку інформацію, пристрій, продукт або процес, пов’язаний з цим програмним продуктом, або стверджують, що його використання такою третьою стороною не порушує приватні права власності.",
+                    "open source licenses": "Ліцензії відкритого коду"
                 }
             }
         },
