@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
@@ -62,7 +61,7 @@ export class ResetPassComponent implements OnInit {
 
 
     /**
-     * 
+     *
      */
     ngOnInit() {
         switch (this.configSvc.installationMode) {
@@ -145,7 +144,7 @@ export class ResetPassComponent implements OnInit {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode ?? environment.appCode
+            appCode: this.configSvc.installationMode || environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)
