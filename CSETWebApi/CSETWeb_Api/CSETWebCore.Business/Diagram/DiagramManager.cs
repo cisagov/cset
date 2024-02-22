@@ -1291,7 +1291,11 @@ namespace CSETWebCore.Business.Diagram
             if (symbol == null)
             {
                 symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Abbreviation == node.Role).FirstOrDefault();
-                if (symbol == null && node.Role != null)
+                if (symbol != null) 
+                {
+                    label = symbol.Abbreviation;
+                }
+                else if (symbol == null && node.Role != null)
                 {
                     int symbolId = _context.COMPONENT_SYMBOLS_MAPPINGS.Where(x => x.Application == "Malcolm" && x.Malcolm_Role == node.Role)
                             .Select(x => x.Component_Symbol_Id).FirstOrDefault();

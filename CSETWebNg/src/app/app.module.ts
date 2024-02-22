@@ -626,6 +626,7 @@ import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
+import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @NgModule({
   imports: [
@@ -1195,7 +1196,8 @@ import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-ans
     IseWarningsComponent,
     TrendAnalyticsComponent,
     MalcolmAnswerDefaultComponent,
-    MalcolmAnswerNestedComponent
+    MalcolmAnswerNestedComponent,
+    MalcolmInstructionsComponent
   ],
   providers: [
     TranslocoService,
