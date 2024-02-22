@@ -124,6 +124,10 @@ namespace CSETWebCore.Business.Malcolm
                     // checking for role
                     if (!bucket.Key.Contains('.') && !bucket.Key.Contains(':'))
                     {
+                        if (parent == null)
+                        {
+                            throw new ApplicationException("Bad schema format. Please update to the latest version of Malcolm");
+                        }
                         parent.Role = bucket.Key;
                         if (bucket.Values != null)
                             BuildNetwork(parent, bucket.Values.Buckets);
