@@ -32,7 +32,7 @@
 
       <div *ngIf="have400errors">
         The following files were returned with errors
-        <li *ngFor="let file of errorCode400Files"><i>{{ file }}</i></li><br>
+        <li *ngFor="let error of errorCode400Files"><i>{{ error.file }}, {{ error.message}}</i></li><br>
         <p>Please ensure all files are valid JSON and have the correct schema.</p><br>
       </div>
 

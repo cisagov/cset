@@ -55,12 +55,14 @@ export class MalcolmUploadErrorComponent implements OnInit {
 
   checkErrors() {
     // Check each error we got back, and save the file name
+    console.log(this.errors);
+
     this.errors.forEach(error => {
       if (error.statusCode == 400) {
-        this.errorCode400Files.push(error.file);
+        this.errorCode400Files.push(error);
       }
       if (error.statusCode == 415) {
-        this.errorCode415Files.push(error.file);
+        this.errorCode415Files.push(error);
       }
     });
 
