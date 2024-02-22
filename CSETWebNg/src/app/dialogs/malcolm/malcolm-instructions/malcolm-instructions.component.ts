@@ -39,12 +39,13 @@ export class MalcolmInstructionsComponent {
         }
     }
 
-    openUploadErrorDialog(errorData: any) {
+    openUploadErrorDialog(errorData: any, isFile: boolean) {
         let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
             minHeight: '300px',
             minWidth: '400px',
             data: {
-                error: errorData
+                error: errorData,
+                isFile: isFile
             }
         });
     }
