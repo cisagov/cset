@@ -44,9 +44,14 @@ namespace CSETWebCore.Business.Malcolm
         {
             MalcomHttpClient client = new MalcomHttpClient();
             String jsonString = await client.getMalcomData(IPAddress);
-            List<MalcolmData> list =  ProcessMalcomData(jsonString);
+            if (String.IsNullOrWhiteSpace(jsonString))
+            {
+                throw new ApplicationException("Could not find Malcolm data for the given IP address");
+            }            
+            List<MalcolmData> list = ProcessMalcomData(jsonString);
             list = GetMalcolmJsonData(list);
-            return list;            
+            return list;
+            
         }
 
         public List<MalcolmData> ProcessMalcomData(String jsonString)
