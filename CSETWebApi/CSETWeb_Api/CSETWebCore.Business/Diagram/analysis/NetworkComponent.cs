@@ -50,6 +50,15 @@ namespace CSETWebCore.Business
             }
         }
 
+        public bool IsIDS
+        {
+            get
+            {
+                return this.Component_Symbol_Id == Constants.Constants.IDS_TYPE;
+
+            }
+        }
+
         public bool IsFirewallUnidirectional
         {
             get

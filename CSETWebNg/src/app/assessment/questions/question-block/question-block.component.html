@@ -134,10 +134,13 @@
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
               <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
             </div>
+
+            <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
+              && configSvc.config.behaviors.showMalcolmAnswerComparison && malcolmInfo != null"
+              [userAnswer]= "q.answer" [malcolmAnswer]="malcolmSvc.findMalcolmAnswerForQuestion(q.questionId, malcolmInfo)"></app-malcolm-answer-default>
+
           </div>
         </div>
-
-
 
         <div class="w-100" *ngIf="layoutSvc.hp">
           <!-- Handheld Portrait -->

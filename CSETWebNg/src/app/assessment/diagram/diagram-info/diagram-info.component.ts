@@ -31,6 +31,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
 import { ConfigService } from '../../../services/config.service';
 import { NavTreeNode, NavigationService } from '../../../services/navigation/navigation.service';
+import { MalcolmService } from '../../../services/malcolm.service';
+import { MalcolmInstructionsComponent } from '../../../dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @Component({
     selector: 'app-info',
@@ -52,8 +54,9 @@ export class DiagramInfoComponent implements OnInit {
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
         public hydroSvc: HydroService,
+        public malcolmSvc: MalcolmService,
         private location: Location,
-        private dialog: MatDialog
+        private dialog: MatDialog,
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
@@ -67,7 +70,7 @@ export class DiagramInfoComponent implements OnInit {
                 this.authSvc.isLocal = resp;
             });
         }
-        this.delayCheckForDiagram(1000)
+        this.delayCheckForDiagram(1000);
     }
 
     populateTree() {
@@ -140,6 +143,13 @@ export class DiagramInfoComponent implements OnInit {
             data: {
                 error: errorData
             }
+        });
+    }
+
+    openMalcolmInstructionsDialog() {
+        let instructionDialog = this.dialog.open(MalcolmInstructionsComponent, {
+            minHeight: '300px',
+            minWidth: '400px'
         });
     }
 
