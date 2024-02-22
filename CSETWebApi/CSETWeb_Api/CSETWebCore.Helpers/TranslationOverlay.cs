@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Set;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -31,12 +32,17 @@ namespace CSETWebCore.Helpers
         private Dictionary<string, JObject> dictJO = [];
 
         /// <summary>
-        /// A dictionary of loaded RequirementTranslations language packs
+        /// A dictionary of loaded requirement overlay language packs
         /// </summary>
         private Dictionary<string, List<RequirementOverlay>> dictRequirements = [];
 
         /// <summary>
-        /// A dictionary of loaded GenericTranslation language packs
+        /// A dictionary of loaded maturity grouping overlay language packs
+        /// </summary>
+        private Dictionary<string, List<MaturityGroupingOverlay>> dictGroupings = [];
+
+        /// <summary>
+        /// A dictionary of loaded KeyValueOverlay language packs
         /// </summary>
         private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
 
@@ -221,6 +227,46 @@ namespace CSETWebCore.Helpers
             }
 
             return langPack.FirstOrDefault(x => x.RequirementId == requirementId);
+        }
+
+
+        /// <summary>
+        /// Gets the overlay maturity grouping object for the language.
+        /// </summary>
+        /// <param name="groupingId"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public MaturityGroupingOverlay GetGrouping(int groupingId, string lang)
+        {
+            // get out cheaply - don't waste time looking up English
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            List<MaturityGroupingOverlay> langPack = null;
+
+            if (!dictGroupings.TryGetValue(lang, out List<MaturityGroupingOverlay> value))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "MATURITY_GROUPINGS.json"));
+
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = JsonConvert.DeserializeObject<List<MaturityGroupingOverlay>>(json);
+
+                dictGroupings.Add(lang, langPack);
+            }
+            else
+            {
+                langPack = value;
+            }
+
+            return langPack.FirstOrDefault(x => x.GroupingId == groupingId);
         }
     }
 }

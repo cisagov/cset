@@ -24,10 +24,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
-import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
 import { AuthenticationService } from './authentication.service';
 import { JwtParser } from '../helpers/jwt-parser';
+import { DateTime } from 'luxon';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -206,50 +206,10 @@ export class ReportService {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
   }
 
-  /**
-   * Converts a date string into a locale-formatted string.
-   * If an empty string is provided, an empty string is returned.
-   */
-  localizeDateString(dateString: string) {
-    if (dateString == '') {
-      return '';
-    }
-
-    moment.locale(this.tSvc.getActiveLang());
-    const d = new Date(dateString);
-    return moment(d).format('l');
-  }
-
-  /**
-   * Converts a date string into a local-formatted string
-   * that includes the GMT offset based on the user's timezone.
-   */
-  localizeDateWithGMT(dateString: string) {
-    if (dateString == '') {
-      return '';
-    }
-
-    moment.locale(this.tSvc.getActiveLang());
-    const d = new Date(dateString);
-    return moment(d).format('L LTS') + ' GMT-' + this.getOffsetFromJwtToken();
-  }
-
-  getOffsetFromJwtToken() {
+  applyJwtOffset(stringDate: string) {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    let offset = (parsedToken.tzoffset / 60) * 100;
-    let gmtString = offset.toString();
-
-    if (gmtString.length < 4) {
-      gmtString = '0' + gmtString;
-    }
-    return gmtString;
-  }
-
-  applyOffsetFromJwtToken(stringDate: string) {
-    const jwt = new JwtParser();
-    const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    return moment(stringDate).subtract(parsedToken.tzoffset / 60, 'hour').format('L LTS');
+    return DateTime.fromISO(stringDate).subtract(parsedToken.tzoffset / 60, 'hour');
   }
 
   /**

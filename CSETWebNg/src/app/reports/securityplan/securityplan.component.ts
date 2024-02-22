@@ -66,7 +66,7 @@ export class SecurityplanComponent implements OnInit {
    *
    */
   ngOnInit() {
-
+    
     this.translationSub = this.translocoService.selectTranslate('reports.core.security plan.tab title')
       .subscribe(value =>
         this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
@@ -74,7 +74,6 @@ export class SecurityplanComponent implements OnInit {
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {
         this.response = r;
-
         // convert line breaks to HTML
         this.response.controlList.forEach(control => {
           control.controlDescription = control.controlDescription.replace(/\r/g, '<br/>');

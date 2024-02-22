@@ -45,7 +45,7 @@ import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
-import * as moment from "moment";
+import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
@@ -128,9 +128,6 @@ export class MyAssessmentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // initializes moment locale language to transloco's active language
-    moment.locale(this.tSvc.getActiveLang());
-
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -425,9 +422,8 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(lastModifiedDate: any) {
-    // moment().utcOffset(300);
-    let localDate = moment(lastModifiedDate).format('ll LTS');
-    // let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
+    let localDate = DateTime.fromISO(lastModifiedDate).setLocale(this.tSvc.getActiveLang())
+      .toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     return localDate;
   }
 

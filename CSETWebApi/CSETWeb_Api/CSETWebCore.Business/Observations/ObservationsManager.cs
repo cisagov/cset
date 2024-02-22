@@ -226,13 +226,14 @@ namespace CSETWebCore.Business.Observations
                         Finding_Id = items.observation_Id,
                         Action_Items_Override = item.ActionItemOverrideText
                     });
+                    _context.SaveChanges();
                 }
                 else
                 {
                     save.Action_Items_Override = item.ActionItemOverrideText;
+                    _context.SaveChanges();
                 }
             }
-            _context.SaveChanges();
         }
     }
 }

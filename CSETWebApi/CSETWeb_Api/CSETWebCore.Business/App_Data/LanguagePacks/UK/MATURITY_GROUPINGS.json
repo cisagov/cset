@@ -1,0 +1,82 @@
+[
+  {
+    "groupingId": "170",
+    "title": "Оцінка готовності програм-вимагачів",
+    "description": ""
+  },
+  {
+    "groupingId": "173",
+    "title": "[UK]Robust Data Backup (DB)",
+    "description": "[UK]Be prepared to recover gracefully from an incident. Employ a backup solution that  automatically and continuously backs up your business-critical data and system configurations. Ensure the  backed-up data is stored securely (encrypted) offsite or in the cloud and allows for at least 30 days of  rollback. Periodically test your ability to recover data from backup."
+  },
+  {
+    "groupingId": "174",
+    "title": "[UK]Web Browser Management and DNS Filtering (BM)",
+    "description": "[UK]Avoid danger and filter out connections to unauthorized websites, suspicious domains names, and known malicious domains names that will make you vulnerable to malware (such as ransomware) and phishing. Leverage DNS filtering, also known as DNS Blocking or DNS Firewall, with integrated threat intelligence. A number of effective commercial solutions are available ranging from free to low cost that make this an especially recommended action."
+  },
+  {
+    "groupingId": "175",
+    "title": "[UK]Phishing Prevention and Awareness (PP)",
+    "description": "[UK]Take steps to increase and maintain awareness of Phishing threats. Conduct ongoing phishing and social engineering campaigns that randomly and periodically send simulated phishing emails to personnel. Offer phishing awareness training to staff which will assist in recognizing and reporting phishing attacks. Utilize an SMTP (mail server) proxy that employs reputational (IP, URL, and sender) and traditional anti-SPAM and content filtering features."
+  },
+  {
+    "groupingId": "176",
+    "title": "[UK]Network Perimeter Monitoring (NM)",
+    "description": "[UK]Look for suspicious activity and react faster. Monitor internet traffic into and out of your organization. Be sure to use a product or service with integrated threat intelligence and consider subscribing to additional indicator sharing feeds, such as the Automated Indicator Sharing service provided by DHS, to automatically identify attacks and known bad actors."
+  },
+  {
+    "groupingId": "177",
+    "title": "[UK]Asset Management (AM)",
+    "description": "[UK]<p>Protecting your systems requires knowing which devices are connected to your network, which applications are in      use, who has access to them, and the security measures in place. A cyber-ready business keeps its systems up-to-date      and secure. These actions can support a proactive risk management culture and limit the risk of compromise.</p>  <p>Remove unsupported or unauthorized hardware and software. Supported hardware and software generally allow you to      receive updates and patches for vulnerabilities that otherwise are not available for unauthorized and unsupported      assets. Inventory authorized hardware and software throughout your organization. Know the physical location and user      of the hardware to keep patching updates current. This also allows for any unauthorized hardware or software to be      identified and removed.</p>"
+  },
+  {
+    "groupingId": "178",
+    "title": "[UK]Patch and Update Management (PM)",
+    "description": "[UK]Make it generally harder for the bad guys by eliminating known vulnerabilities. Obtain, test, and deploy software and firmware patches as quickly as practical. Enable automatic updates whenever possible. Replace end of life (EOL) / unsupported operating systems, applications, and hardware with vendor supported versions/models."
+  },
+  {
+    "groupingId": "179",
+    "title": "[UK]User and Access Management (UM)",
+    "description": "[UK]Implement policies, processes, and technologies that ensure only authorized users are granted the minimum privileges needed. Identify and deactivate unused accounts, eliminate shared accounts, remove unnecessary privileges, and enforce strong password policies. Monitor and analyze user activities for anomalous behavior such as access attempts outside of normal operating hours or from unusual locations. Consider mechanisms that are stronger than password authentication such as biometrics, one-time passwords and tokens for sensitive applications and functions. Multi-factor authentication, in particular, is highly recommended starting with privileged users first, then expanding to all users. User and Access Management will be a daunting and complex activity&#8212;and there is no &#34;one size fits all&#34; solution. Adopt a strategy appropriate to your organization and leverage a staged approach.&#160;"
+  },
+  {
+    "groupingId": "180",
+    "title": "[UK]Application Integrity and Allowlist (AI)",
+    "description": "[UK]Ensure your applications perform in a secure and as-intended manner by instituting an Application Integrity policy that allows only approved, authorized software and their libraries to load and execute. Monitor the integrity of approved applications with periodic checks of file hashes to ensure no unauthorized modifications have been made. As with identity and access management&#8212;due to the complexity and effort required&#8212;consider a staged, gradually phased-in approach starting with high impact endpoints (e.g. domain controllers, application servers, databases), followed by any remaining support systems, and ending with any remaining user workstations or endpoints.&#160;"
+  },
+  {
+    "groupingId": "181",
+    "title": "[UK]Incident Response (IR)",
+    "description": "[UK]<p>Lead development of an incident response and disaster recovery plan outlining roles and responsibilities. Test it      often. Incident response plans and disaster recovery plans are crucial to information security, but they are      separate plans. Incident response mainly focuses on information asset protection, while disaster recovery plans      focus on business continuity. Once you develop a plan, test the plan using realistic simulations (known as      \"war-gaming\"), where roles and responsibilities are assigned to the people who manage cyber incident      responses. This ensures that your plan is effective and that you have the appropriate people involved in the plan.      Disaster recovery plans minimize recovery time by efficiently recovering critical systems.</p>  <p>Plan, prepare, and conduct drills for cyber-attacks and incidents as you would a fire or robbery. Make your reaction      to cyber incidents or system outages an extension of your other business contingency plans. This involves having      incident response plans and procedures, trained staff, assigned roles and responsibilities, and incident      communications plans.</p>"
+  },
+  {
+    "groupingId": "182",
+    "title": "[UK]Risk Management (RM)",
+    "description": "[UK]Lead investment in cybersecurity by investing in capabilities for your organization and staff. This includes not only investments in technological capabilities, but also a continuous investment in cybersecurity training and awareness capabilities for your organization&#8217;s personnel. Have conversations with your staff, business partners, vendors, managed service providers, and others within your supply chain. Use risk assessments to identify and prioritize allocation of resources and cyber investment."
+  },
+  {
+    "groupingId": "200",
+    "title": "Ідентифікувати",
+    "description": ""
+  },
+  {
+    "groupingId": "201",
+    "title": "Захищати",
+    "description": ""
+  },
+  {
+    "groupingId": "202",
+    "title": "Виявляти",
+    "description": ""
+  },
+  {
+    "groupingId": "203",
+    "title": "Відповісти",
+    "description": ""
+  },
+  {
+    "groupingId": "204",
+    "title": "Відновити",
+    "description": ""
+  }
+]
