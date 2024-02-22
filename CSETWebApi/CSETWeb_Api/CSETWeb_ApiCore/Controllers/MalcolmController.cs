@@ -70,10 +70,29 @@ namespace CSETWebCore.Api.Controllers
             }
             catch(Exception ex)
             {
-                List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
-                MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
-                errors.Add(error);
-                return Ok(errors);
+                if(ex.InnerException == null)
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+                else if(ex.InnerException.Message== "A task was canceled.")
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, "Could not contact the Malcolm host.\nCheck to see that Malcolm is available to and can be connected to from this computer.");
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+                else
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+        
+
             }
         }
 
