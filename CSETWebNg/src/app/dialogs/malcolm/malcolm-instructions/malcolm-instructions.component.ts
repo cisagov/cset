@@ -10,6 +10,7 @@ import { MalcolmService } from '../../../services/malcolm.service';
   styleUrls: ['./malcolm-instructions.component.scss']
 })
 export class MalcolmInstructionsComponent {
+    iperror: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -48,8 +49,24 @@ export class MalcolmInstructionsComponent {
         });
     }
 
+    ipRegEx = new RegExp("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+    validateIP(ipAddress){
+        if(this.ipRegEx.test(ipAddress)){
+            this.iperror = false;            
+        }
+        else{
+            this.iperror = true; 
+        }
+    }
     attemptToImportFromMalcolm(ipAddress: string) {
-        this.malcolmSvc.attemptToImportFromMalcolm(ipAddress);
-        console.log(ipAddress)
+        if(this.ipRegEx.test(ipAddress)){
+            this.iperror = false;
+            this.malcolmSvc.attemptToImportFromMalcolm(ipAddress);
+        }
+        else{
+            this.iperror = true; 
+        }
+        
+        
     }
 }
