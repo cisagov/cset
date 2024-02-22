@@ -123,9 +123,13 @@ namespace CSETWebCore.Business.Malcolm
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlMarkup);
             List<MALCOLM_MAPPING> malcolmMappingInfo = new DiagramAnalysis(_context, assessment_Id).PerformMalcolmAnalysis(xmlDoc);
-            
+            var existing = _context.MALCOLM_ANSWERS.Where(x => x.Assessment_Id == assessment_Id).ToList();
+            _context.MALCOLM_ANSWERS.RemoveRange(existing);
+            _context.SaveChanges();
+
             if (malcolmMappingInfo.Count > 0)
             {
+                
                 List<MALCOLM_ANSWERS> valuesToAdd = new List<MALCOLM_ANSWERS>();
                 foreach (MALCOLM_MAPPING m in malcolmMappingInfo)
                 {
@@ -226,8 +230,8 @@ namespace CSETWebCore.Business.Malcolm
                 }
                 valuesToAdd = valuesToAdd.Distinct().ToList();
                 _context.MALCOLM_ANSWERS.AddRange(valuesToAdd);
-                _context.SaveChanges();
             }
+            _context.SaveChanges();
         }
 
         private MALCOLM_ANSWERS SetUpAnswer(int assessId, string answerText, MALCOLM_MAPPING currentMalcolmMapRow)
