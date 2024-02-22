@@ -65,7 +65,14 @@ export class MalcolmInstructionsComponent {
     attemptToImportFromMalcolm(ipAddress: string) {
         if(this.ipRegEx.test(ipAddress)){
             this.iperror = false;
-            this.malcolmSvc.attemptToImportFromMalcolm(ipAddress);
+            this.malcolmSvc.attemptToImportFromMalcolm(ipAddress).subscribe(
+                (result) => {
+                    if (result != null) {
+                        this.openUploadErrorDialog(result);
+                    } else {
+                        location.reload();
+                    }
+                });
         }
         else{
             this.iperror = true; 
