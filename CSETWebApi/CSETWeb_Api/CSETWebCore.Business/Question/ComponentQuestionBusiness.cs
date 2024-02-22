@@ -202,6 +202,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);
@@ -292,6 +295,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);

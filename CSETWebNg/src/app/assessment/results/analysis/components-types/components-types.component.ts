@@ -36,6 +36,7 @@ export class ComponentsTypesComponent implements OnInit {
   chart: Chart;
   dataRows: { title: string; yes: number; no: number; na: number; alt: number; unanswered: number; total: number; }[];
   initialized = false;
+  dataSet: any; 
 
   constructor(
     private analysisSvc: AnalysisService,
@@ -51,6 +52,7 @@ export class ComponentsTypesComponent implements OnInit {
       this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       this.dataRows = x.dataRows;
       this.initialized = true;
+      this.dataSet = x.dataRows.length
     });
 
 

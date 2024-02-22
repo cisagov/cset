@@ -35,6 +35,8 @@ export class ComponentsResultsComponent implements OnInit {
   canvasComponentCompliance: Chart;
   dataRows: { title: string; passed: number; total: number; percent: number; }[];
   initialized = false;
+  dataSet: any; 
+
   constructor(
     private analysisSvc: AnalysisService,
     private assessSvc: AssessmentService,
@@ -52,6 +54,7 @@ export class ComponentsResultsComponent implements OnInit {
       });
 
       this.initialized = true;
+      this.dataSet = x.data.length
     });
   }
 }

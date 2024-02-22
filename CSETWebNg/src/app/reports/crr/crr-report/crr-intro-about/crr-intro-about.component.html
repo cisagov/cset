@@ -32,7 +32,7 @@
         Introduction
     </h4>
     <p>
-        On {{ model?.assessmentDetails.assessmentDate | date:'MMMM dd yyyy' }}, {{ model?.assessmentDetails.facilityName
+        On {{ model?.assessmentDetails.assessmentDate | localizeDate }}, {{ model?.assessmentDetails.facilityName
         ?? '[Facility Name]' }} conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
         about cybersecurity practices were gathered from key stakeholders within {{
         model?.assessmentDetails.facilityName ?? '[Facility Name]' }} and scored.

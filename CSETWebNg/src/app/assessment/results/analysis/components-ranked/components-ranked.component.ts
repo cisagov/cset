@@ -36,6 +36,7 @@ export class ComponentsRankedComponent implements OnInit {
   canvasComponentRank: Chart;
   dataRows: { title: string; rank: number; failed: number; total: number; percent: number; }[];
   initialized = false;
+  componentCount: any; 
 
   constructor(
     private analysisSvc: AnalysisService,
@@ -55,6 +56,7 @@ export class ComponentsRankedComponent implements OnInit {
       });
 
       this.initialized = true;
+      this.componentCount = x.data.length
     });
   }
 }
