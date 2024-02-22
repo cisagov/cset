@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { HydroService } from '../../../services/hydro.service';
 import { MalcolmUploadErrorComponent } from '../malcolm-upload-error.component';
+import { MalcolmService } from '../../../services/malcolm.service';
 
 @Component({
   selector: 'app-malcolm-instructions',
@@ -14,6 +15,7 @@ export class MalcolmInstructionsComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<MalcolmInstructionsComponent>,
     private hydroSvc: HydroService,
+    private malcolmSvc: MalcolmService,
     private dialog: MatDialog
   ) { }
 
@@ -33,16 +35,21 @@ export class MalcolmInstructionsComponent {
                     location.reload();
                 }
             });
-    }
-}
-
-openUploadErrorDialog(errorData: any) {
-    let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
-        minHeight: '300px',
-        minWidth: '400px',
-        data: {
-            error: errorData
         }
-    });
-}
+    }
+
+    openUploadErrorDialog(errorData: any) {
+        let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
+            minHeight: '300px',
+            minWidth: '400px',
+            data: {
+                error: errorData
+            }
+        });
+    }
+
+    attemptToImportFromMalcolm(ipAddress: string) {
+        this.malcolmSvc.attemptToImportFromMalcolm(ipAddress);
+        console.log(ipAddress)
+    }
 }

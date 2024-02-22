@@ -42,5 +42,9 @@ export class MalcolmService {
     }
   }
 
+  attemptToImportFromMalcolm(ipAddress: string) {
+    return this.http.get(this.configSvc.apiUrl + 'malcolm?IPAddress=' + ipAddress);
+  }
+
 }
 
