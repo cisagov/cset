@@ -77,8 +77,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
   MatRippleModule
@@ -166,6 +164,7 @@ import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
+import { AccessibilityDocumentComponent } from './dialogs/accessibility-document/accessibility-document.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -798,6 +797,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     FeedbackComponent,
     EnableProtectedComponent,
     TermsOfUseComponent,
+    AccessibilityDocumentComponent,
     QuestionFiltersComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
@@ -1271,4 +1271,4 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
