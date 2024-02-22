@@ -27,9 +27,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ChangeDetectorRef } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-register',
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
   errorMessage: any;
 
   constructor(
-    private cd: ChangeDetectorRef,
+    private configSvc: ConfigService,
     private auth: AuthenticationService,
     private emailSvc: EmailService,
     private dialog: MatDialog,
@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   /**
-   * 
+   *
    */
   ngOnInit() {
     this.getSecurityList();
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog;
 
     // tell the API which app we are, for emailing purposes.
-    this.model.appCode = environment.appCode;
+    this.model.appCode = this.configSvc.installationMode || environment.appCode
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {
@@ -115,7 +115,7 @@ export class RegisterComponent implements OnInit {
   }
 
   /**
-   * Gets potential security questions. 
+   * Gets potential security questions.
    */
   getSecurityList() {
     this.auth
