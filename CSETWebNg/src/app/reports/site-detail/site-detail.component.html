@@ -345,19 +345,13 @@
 
     <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
-            394313
+            {{t('reports.core.site detail report.summary of ranked questions')}}
         </h1>
 
         <p>
-            Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below.
-            The displayed
-            levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High
-            (VH).
-            CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels
-            are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive
-            (S),
-            and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category.
+            {{t('reports.core.site detail report.summary of ranked questions desc')}}
         </p>
+        
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>
