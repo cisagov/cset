@@ -545,7 +545,9 @@
                 "administration": "[UK]Administration",
                 "total review hours": "[UK]Total Review Hours",
                 "grand totals": "[UK]Grand Totals",
-                "cybersecurity maturity": "[UK]Cybersecurity Maturity"
+                "cybersecurity maturity": "[UK]Cybersecurity Maturity",
+                "summary of ranked questions": "Резюме ранжованих питань",
+                "summary of ranked questions desc": "[UK]Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
             "components summary": {
                 "components summary": "Резюме компонентів",
