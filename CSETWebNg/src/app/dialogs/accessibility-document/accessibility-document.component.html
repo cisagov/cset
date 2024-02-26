@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="terms-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
+<div class="accessibility-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
         <span class="cset-icons-document mr-3 fs-base-6"></span>
         <span>{{t('menu.help.legal.accessibility document.accessibility document')}}</span>
@@ -104,6 +104,55 @@
                 We check that the default human language of each Web page can be programmatically determined, and that
                 any passage (content, image descriptions, form labels etc.) that differs from the default language of
                 the page is identified correctly.
+            </p>
+            <h6>Page and Frame Titles</h6>
+            <p class="w-100">We test to identify that a title element is defined for the web page, and that it
+                identifies the contents or purpose of our page.</p>
+            <h6>Color Dependence & Color Contrast</h6>
+            <p class="w-100">We test to ensure that:
+                <li>Color is not used as the only visual means of conveying information, indicating an action, prompting
+                    a
+                    response, or distinguishing a visual element</li>
+                <li>The visual presentation of text and images of text have sufficient contrast</li>
+                <li>The text and images of text has a contrast ratio of at least 4.5:1 & Large-scale text and images has
+                    ratio of at least 3:1</li>
+                <li>Instructions provided for understanding and operating content do not rely solely on sensory
+                    characteristics of components, such as shape, size, visual location, orientation, or sound</li>
+            </p>
+            <h6>Images</h6>
+            <p class="w-100">The accessible name and description for a meaningful image provides an equivalent
+                description of the image.</p>
+            <h6>Resize Text</h6>
+            <p class="w-100">We check for functionality to resize, scale, or zoom in on the text to at least 200% of its
+                original size without loss of content or performance.</p>
+            <h6>Multiple Ways</h6>
+            <p class="w-100">We work to make sure our users find information is available using more than one way to
+                locate the web page so they can find information quickly.</p>
+            <h6>Error Identification</h6>
+            <p class="w-100">We test that when an error is detected, an alert is displayed with text describing the
+                error.</p>
+            <h6>CSS Style</h6>
+            <p class="w-100">This accessibility feature does not apply to our software.</p>
+            <h6>Data Tables</h6>
+            <p class="w-100">We check that data tables’ row or column headers are identified programmatically, data
+                cells are associated with relevant headers, and that the layout table does not include structural
+                attributes.</p>
+            <h6>All interactive elements</h6>
+            <p class="w-100">
+                We check that interactive interface elements with multiple statuses indicate a current status, and that
+                an input form role reflects its function accurately so any input text fields will have the correct
+                value.
+            </p>
+            <h6>The following accessibility features do not apply to our software:</h6>
+            <p class="w-100">
+                <li>Autoplay/update</li>
+                <li>Flashing</li>
+                <li>Adjustable time limits</li>
+                <li>Video-Audio only</li>
+                <li>Multimedia</li>
+                <li>Time Outs</li>
+                <li>Required Plug-ins</li>
+                <li>Alternative Version</li>
             </p>
         </div>
     </mat-dialog-content>

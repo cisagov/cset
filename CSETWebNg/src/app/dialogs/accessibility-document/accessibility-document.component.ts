@@ -30,6 +30,7 @@ import { TranslocoService } from '@ngneat/transloco';
 @Component({
     selector: 'accessibility-document',
     templateUrl: './accessibility-document.component.html',
+    styleUrls: ['./accessibility-document.component.scss'],
     // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' }
 })
