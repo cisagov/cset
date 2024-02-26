@@ -36,6 +36,16 @@
                 style="background-color: #8fd4a6;">w:{{o.weight}}</span>
         </div>
     </label>
+    
+    <app-malcolm-answer-nested *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
+        && configSvc.config.behaviors.showMalcolmAnswerComparison 
+        && selectedOptions != null  
+        && selectedOptions.length > 0 
+        && malcolmInfo != null 
+        && malcolmSvc.findMalcolmOptionId(q.questionId, malcolmInfo, o.optionId)" 
+        [options]="opts" [option]="o" [question]="q" 
+        [malcolmAnswer]="malcolmSvc.findMalcolmAnswerForQuestion(q.questionId, malcolmInfo)">
+    </app-malcolm-answer-nested>
 
     <!-- <div *ngIf="rb.checked || noneChecked(optRadio)"  -->
     <div *ngIf="rb.checked || (noneChecked(optRadio) && !hydroSvc.isHydroLevel(q.maturityLevelName))"

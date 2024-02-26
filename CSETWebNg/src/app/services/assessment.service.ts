@@ -35,7 +35,6 @@ import { DemographicExtendedService } from './demographic-extended.service';
 import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
-import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from './conversion.service';
 
@@ -640,17 +639,6 @@ export class AssessmentService {
   getEncryptPreference() {
     return this.http.get(this.apiUrl + 'getPreventEncrypt');
   }
-
-  /**
-   * changes a date into the active Transloco locale format
-   * @param date 
-   * @returns 
-   */
-  translatedDate(date: string, format: string) {
-    moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format(format);
-  }
-
 
   isCyberFloridaComplete(): boolean {
     if (this.configSvc.installationMode == "CF") {

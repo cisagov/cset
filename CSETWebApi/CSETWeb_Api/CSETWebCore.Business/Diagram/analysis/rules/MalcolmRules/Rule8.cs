@@ -14,6 +14,7 @@ using CSETWebCore.Business;
 using CSETWebCore.Business.BusinessManagers.Diagram.analysis;
 using CSETWebCore.Business.Diagram.Analysis;
 using CSETWebCore.Business.Diagram.analysis.rules;
+using NPOI.POIFS.Properties;
 
 namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.MalcolmRules
 {
@@ -32,12 +33,38 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
-            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
-            foreach (var firewall in firewalls)
+            bool ipsDetected = false;
+            var allNodes = network.Nodes.Values.ToList();
+            foreach (var node in allNodes)
             {
-                Visited.Clear();
-                CheckRule8(firewall);
+                if (node.IsIPS)
+                {
+                    ipsDetected = true;
+                }
             }
+
+            if (!ipsDetected)
+            {
+                return this.Messages;
+            }
+
+            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
+
+            if (firewalls.Count == 0) 
+            {
+                String text = String.Format(rule8, allNodes[0].ComponentName).Replace("\n", " ");
+                SetNodeMessage(allNodes[0], text, 8); // 8 because rule8 was violated
+            }
+            
+            else
+            {
+                foreach (var firewall in firewalls)
+                {
+                    Visited.Clear();
+                    CheckRule8(firewall);
+                }
+            }
+
             return this.Messages;
         }
 

@@ -183,6 +183,7 @@ import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { CompletionCountPipe } from './helpers/completion-count.pipe';
+import { LocalizeDatePipe } from './helpers/date-localize.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
@@ -616,11 +617,6 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS
-} from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
@@ -633,6 +629,9 @@ import { BackgroundCieComponent } from './assessment/prepare/maturity/tutorial-c
 import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-cie/principles-cie/principles-cie.component';
 import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
 import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
+import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
+import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
+import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @NgModule({
   imports: [
@@ -789,6 +788,7 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
     SafePipe,
     LinebreakPipe,
     CompletionCountPipe,
+    LocalizeDatePipe,
     LinebreakPlaintextPipe,
     NullishCoalescePipe,
     StatusCreateComponent,
@@ -1209,7 +1209,10 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
     BackgroundCieComponent,
     PrinciplesCieComponent,
     LifecycleCieComponent,
-    HowToUseCieComponent
+    HowToUseCieComponent,
+    MalcolmAnswerDefaultComponent,
+    MalcolmAnswerNestedComponent,
+    MalcolmInstructionsComponent
   ],
   providers: [
     TranslocoService,
@@ -1248,15 +1251,6 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
       },
       deps: [TranslocoService],
       multi: true
-    },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {
-      provide: MAT_DATE_FORMATS,
-      useValue: MAT_MOMENT_DATE_FORMATS
     },
     AuthGuard,
     AssessGuard,

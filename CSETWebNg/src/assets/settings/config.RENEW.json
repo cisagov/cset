@@ -21,7 +21,8 @@
         "showBusinessAgencyName": true,
         "showCriticalService": true,
         "additionalUserGuides": [],
-        "showCisaAssessorWorkflowSwitch": false
+        "showCisaAssessorWorkflowSwitch": false,
+        "showMalcolmAnswerComparison": true
     }
 
 }

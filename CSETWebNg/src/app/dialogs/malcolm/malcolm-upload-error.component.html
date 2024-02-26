@@ -27,21 +27,25 @@
   </div>
 
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="pr-3">
+    <div *ngIf="isFileMode" class="pr-3">
       <p>It appears one or more errors occured during the Malcolm data upload process.<br></p>
 
       <div *ngIf="have400errors">
         The following files were returned with errors
-        <li *ngFor="let file of errorCode400Files"><i>{{ file }}</i></li><br>
+        <li *ngFor="let error of errorCode400Files"><i>{{ error.file }}, {{ error.message}}</i></li><br>
         <p>Please ensure all files are valid JSON and have the correct schema.</p><br>
       </div>
 
       <div *ngIf="have415errors">
         The following files were returned because they are an unsupported file type:
-        <li *ngFor="let file of errorCode415Files"><i>{{ file }}</i></li><br>
+        <li *ngFor="let error of errorCode415Files"><i>{{ error.file }} {{error.message}}</i></li><br>
         <p>The upload process only accepts .JSON files at the current time.</p><br>
       </div>
 
+    </div>
+    <div *ngIf="!isFileMode" class="pr-3">
+      <p>It appears one or more errors occured during the Malcolm data retrieval and upload process.<br></p>
+      <li *ngFor="let error of errors"><i>{{ error.message}}</i></li><br>
     </div>
   </mat-dialog-content>
 

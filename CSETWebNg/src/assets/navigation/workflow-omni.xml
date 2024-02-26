@@ -381,7 +381,7 @@
 
         <!--node displaytext="Assessment Comparison" id="analytics-compare" path="assessment/{:id}/results/analytics-compare" visible="ORIGIN:CF" /-->
 
-        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE:CSET SHOW-FEEDBACK" />
+        <node d="feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="INSTALL-MODE-ANY(CSET,IOD) SHOW-FEEDBACK" />
 
         <node d="assessment complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 

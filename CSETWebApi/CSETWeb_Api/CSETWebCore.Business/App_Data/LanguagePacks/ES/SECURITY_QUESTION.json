@@ -1,0 +1,50 @@
+[
+  {
+    "key": "1",
+    "value": "¿Cuál era el número de la casa y el nombre de la calle en la que vivía cuando era niño?"
+  },
+  {
+    "key": "2",
+    "value": "¿Cuáles fueron los últimos cuatro dígitos de su número de teléfono de la infancia?"
+  },
+  {
+    "key": "3",
+    "value": "¿A qué escuela primaria asististe?"
+  },
+  {
+    "key": "4",
+    "value": "¿En qué pueblo o ciudad fue tu primer trabajo a tiempo completo?"
+  },
+  {
+    "key": "5",
+    "value": "¿En qué pueblo o ciudad conoció a su cónyuge/pareja?"
+  },
+  {
+    "key": "6",
+    "value": "¿Cuál es el segundo nombre de su hijo mayor?"
+  },
+  {
+    "key": "7",
+    "value": "¿Cuáles son los últimos cinco dígitos del número de su licencia de conducir?"
+  },
+  {
+    "key": "8",
+    "value": "¿Cuál es el apellido de soltera de tu abuela (por parte de tu madre)?"
+  },
+  {
+    "key": "9",
+    "value": "¿Cuál es el apellido de soltera de la madre de su cónyuge o pareja?"
+  },
+  {
+    "key": "10",
+    "value": "¿En qué pueblo o ciudad se conocieron tu madre y tu padre?"
+  },
+  {
+    "key": "11",
+    "value": "¿A qué hora del día naciste? (hh:mm)"
+  },
+  {
+    "key": "12",
+    "value": "¿A qué hora del día nació su primer hijo? (hh:mm)"
+  }
+]

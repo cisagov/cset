@@ -17,8 +17,8 @@ using CSETWebCore.Model.Aggregation;
 using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
-using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -74,7 +74,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetRankedQuestions()
         {
             var lang = _tokenManager.GetCurrentLanguage();
-            
+
             int assessmentId = _tokenManager.AssessmentForUser();
             _requirement.SetRequirementAssessmentId(assessmentId);
 
@@ -87,10 +87,10 @@ namespace CSETWebCore.Api.Controllers
                 // Currently we only translate text for REQUIREMENTS
                 if (mode == "R")
                 {
-                    var translatedReq = _overlay.GetReq(q.QuestionOrRequirementID, lang);
-                    if (translatedReq != null)
+                    var reqOverlay = _overlay.GetRequirement(q.QuestionOrRequirementID, lang);
+                    if (reqOverlay != null)
                     {
-                        q.QuestionText = translatedReq.RequirementText;
+                        q.QuestionText = reqOverlay.RequirementText;
 
                         var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang);
                         if (translatedCategory != null)
@@ -116,6 +116,8 @@ namespace CSETWebCore.Api.Controllers
             {
                 int assessmentId = _tokenManager.AssessmentForUser();
                 _requirement.SetRequirementAssessmentId(assessmentId);
+
+                var lang = _tokenManager.GetCurrentLanguage();
 
                 FeedbackDisplayContainer FeedbackResult = new FeedbackDisplayContainer();
 
@@ -217,7 +219,7 @@ namespace CSETWebCore.Api.Controllers
 
                 if (feedbackQuestions.Count() == 0)
                 {
-                    FeedbackResult.FeedbackBody = "No feedback given for any questions in this assessment";
+                    FeedbackResult.FeedbackBody = _overlay.GetPropertyValue("GENERIC", "no feedback", lang) ?? "No feedback given for any questions in this assessment";
                 }
 
                 return Ok(FeedbackResult);
@@ -252,12 +254,18 @@ namespace CSETWebCore.Api.Controllers
               {
                   results.Result1 = handler.ReadToList<GetCombinedOveralls>().ToList();
               });
-            _context.LoadStoredProc("[usp_GetFirstPage]")
-                .WithSqlParam("assessment_id", assessmentId)
-                .ExecuteStoredProc((handler) =>
-                {
-                    results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
-                });
+
+
+            // Kludge - trying to avoid deadlocks between the two procs
+            // Need to fix this properly
+            System.Threading.Thread.Sleep(1000);
+
+            _context.LoadStoredProc("[usp_GetOverallRankedCategoriesPage]")
+               .WithSqlParam("assessment_id", assessmentId)
+               .ExecuteStoredProc((handler) =>
+               {
+                   results.Result2 = handler.ReadToList<usp_getRankedCategories>().ToList();
+               });
 
 
             if (results.Count >= 2)
@@ -837,7 +845,7 @@ namespace CSETWebCore.Api.Controllers
                         chartData.DataRows = new List<DataRows>();
                         foreach (var c in labels)
                         {
-                            chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ?? 
+                            chartData.Labels.Add(_overlay.GetValue("QUESTION_GROUP_HEADING", c.QGH_Id.ToString(), lang)?.Value ??
                                 c.Question_Group_Heading);
                         }
 

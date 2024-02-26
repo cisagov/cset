@@ -103,7 +103,7 @@ export class AuthenticationService {
         JSON.stringify({
           TzOffset: new Date().getTimezoneOffset().toString(),
           // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
-          Scope: (this.configSvc.installationMode || '') !== '' ? this.configSvc.installationMode : environment.appCode
+          Scope: this.configSvc.installationMode ||  environment.appCode
         }),
         headers
       )
@@ -127,6 +127,13 @@ export class AuthenticationService {
           localStorage.setItem('cset.isLocal', this.isLocal + '');
 
           localStorage.setItem('cset.linkerDate', response?.linkerTime);
+
+          // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
+          // Otherwise, this will be configured after calling auth/login (non-standalone login)
+          if (response.userId) {
+            return this.configureCisaAssessorWorkflow(response);
+          }
+
         },
         (error) => {
           console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
@@ -176,6 +183,9 @@ export class AuthenticationService {
     let scope: string;
 
     switch (this.configSvc.installationMode || '') {
+      case 'CSET':
+        scope = 'CSET';
+        break;
       case 'ACET':
         scope = 'ACET';
         break;
@@ -330,12 +340,12 @@ export class AuthenticationService {
 
   getSecurityQuestionsList(email: string) {
     return this.http.get(
-      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode
+      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode || environment.appCode
     );
   }
 
   getSecurityQuestionsPotentialList() {
-    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions');
+    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions?lang=' + this.tSvc.getActiveLang());
   }
 
   userToken() {

@@ -47,7 +47,7 @@
 
                     <div class="title-page-name">{{this.demographics?.assessment_Name}}</div>
                     <div class="title-page-content">{{this.demographics?.assessment_Date |
-                        date:'dd-MMM-yyyy'}}
+                        localizeDate}}
                     </div>
                     <div class="title-page-content">{{this.demographics?.assessor_Name}}</div>
                 </div>
@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{this.demographics?.assessment_Date | localizeDate}}</td>
                     </tr>
                     <tr>
                         <td>City or Site Name:</td>

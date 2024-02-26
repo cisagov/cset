@@ -1,4 +1,5 @@
 ﻿using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Set;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -17,25 +18,36 @@ namespace CSETWebCore.Helpers
     /// </summary>
     public class TranslationOverlay
     {
+
+        #region various dictionaries for lazy loading and caching language packs
+
         /// <summary>
         /// A dictionary of loaded JArray language packs
         /// </summary>
-        private Dictionary<string, JArray> dictJA = new Dictionary<string, JArray>();
+        private Dictionary<string, JArray> dictJA = [];
 
         /// <summary>
         /// A dictionary of loaded JObject language packs
         /// </summary>
-        private Dictionary<string, JObject> dictJO = new Dictionary<string, JObject>();
+        private Dictionary<string, JObject> dictJO = [];
 
         /// <summary>
-        /// A dictionary of loaded RequirementTranslations language packs
+        /// A dictionary of loaded requirement overlay language packs
         /// </summary>
-        private Dictionary<string, RequirementTranslations> dReq = new Dictionary<string, RequirementTranslations>();
+        private Dictionary<string, List<RequirementOverlay>> dictRequirements = [];
 
         /// <summary>
-        /// A dictionary of loaded GenericTranslation language packs
+        /// A dictionary of loaded maturity grouping overlay language packs
         /// </summary>
-        private Dictionary<string, GenericTranslation> dictGeneric = new Dictionary<string, GenericTranslation>();
+        private Dictionary<string, List<MaturityGroupingOverlay>> dictGroupings = [];
+
+        /// <summary>
+        /// A dictionary of loaded KeyValueOverlay language packs
+        /// </summary>
+        private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
+
+        #endregion
+
 
 
         /// <summary>
@@ -44,18 +56,19 @@ namespace CSETWebCore.Helpers
         /// </summary>
         public JObject GetJObject(string collection, string keyFieldName, string key, string lang)
         {
-            JArray langPack = null;
-
+            // get out cheaply - don't waste time looking up English
             if (lang == "en")
             {
                 return null;
             }
 
+            JArray langPack = null;
+
             lang = lang.ToLower();
 
             var dictKey = $"{lang}|{collection.ToLower()}";
 
-            if (!dictJA.ContainsKey(dictKey))
+            if (!dictJA.TryGetValue(dictKey, out JArray value))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
@@ -71,7 +84,7 @@ namespace CSETWebCore.Helpers
             }
             else
             {
-                langPack = dictJA[dictKey];
+                langPack = value;
             }
 
             var target = langPack.Children().FirstOrDefault(x => x.SelectToken(keyFieldName).Value<string>().Equals(key, StringComparison.InvariantCultureIgnoreCase));
@@ -82,7 +95,7 @@ namespace CSETWebCore.Helpers
 
         /// <summary>
         /// Returns the string value of the property name.  This works on a JSON file
-        /// that represents a single object with multiple properties.  
+        /// that represents a SINGLE OBJECT with multiple properties.  
         /// 
         /// This JSON layout is similar to a transloco language file.
         /// 
@@ -91,6 +104,7 @@ namespace CSETWebCore.Helpers
         /// <returns></returns>
         public string GetPropertyValue(string collection, string propertyName, string lang)
         {
+            // get out cheaply - don't waste time looking up English
             if (lang == "en")
             {
                 return null;
@@ -101,7 +115,7 @@ namespace CSETWebCore.Helpers
             var dictKey = $"{lang}|{collection.ToLower()}";
 
             JObject langPack;
-            if (!dictJO.ContainsKey(dictKey))
+            if (!dictJO.TryGetValue(dictKey, out JObject value))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
@@ -117,10 +131,10 @@ namespace CSETWebCore.Helpers
             }
             else
             {
-                langPack = dictJO[dictKey];
+                langPack = value;
             }
 
-            // adjust propertyName if segments have spaces to make SelectToken happy
+            // adjust propertyName if segments have spaces to make SelectToken() happy
             var segs = propertyName.Split('.');
             for (var i = 0; i < segs.Length; i++)
             {
@@ -140,21 +154,21 @@ namespace CSETWebCore.Helpers
         /// Generically gets a value for the specified key and collection.
         /// Collection indicates the name of the JSON file.
         /// </summary>
-        public Model.Question.KeyValuePair GetValue(string collection, string key, string lang)
-        {
-            GenericTranslation langPack = null;
-
-            // trying to get out cheaply and not waste time looking up English
+        public KeyValueOverlay GetValue(string collection, string key, string lang)
+        { 
+            // get out cheaply - don't waste time looking up English
             if (lang == "en")
             {
                 return null;
             }
 
+            List<KeyValueOverlay> langPack = null;
+
             lang = lang.ToLower();
 
             var dictKey = $"{lang}|{collection.ToLower()}";
 
-            if (!dictGeneric.ContainsKey(dictKey))
+            if (!dictGeneric.TryGetValue(dictKey, out List<KeyValueOverlay> value))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, $"{collection}.json"));
@@ -164,17 +178,17 @@ namespace CSETWebCore.Helpers
                     return null;
                 }
 
-                langPack = Newtonsoft.Json.JsonConvert.DeserializeObject<GenericTranslation>(json);
+                langPack = JsonConvert.DeserializeObject<List<KeyValueOverlay>>(json);
 
                 dictGeneric.Add(dictKey, langPack);
             }
             else
             {
-                langPack = dictGeneric[dictKey];
+                langPack = value;
             }
 
             
-            return langPack.Pairs.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
+            return langPack.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
         }
 
 
@@ -182,16 +196,17 @@ namespace CSETWebCore.Helpers
         /// Gets the overlay requirement object for the language.
         /// </summary>
         /// <returns></returns>
-        public RequirementTranslation GetReq(int requirementId, string lang)
+        public RequirementOverlay GetRequirement(int requirementId, string lang)
         {
-            RequirementTranslations langPack = null;
-
+            // get out cheaply - don't waste time looking up English
             if (lang == "en")
             {
                 return null;
             }
 
-            if (!dReq.TryGetValue(lang, out RequirementTranslations value))
+            List<RequirementOverlay> langPack = null;
+
+            if (!dictRequirements.TryGetValue(lang, out List<RequirementOverlay> value))
             {
                 var rh = new ResourceHelper();
                 var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "NEW_REQUIREMENT.json"));
@@ -202,16 +217,56 @@ namespace CSETWebCore.Helpers
                     return null;
                 }
 
-                langPack = JsonConvert.DeserializeObject<RequirementTranslations>(json);
+                langPack = JsonConvert.DeserializeObject<List<RequirementOverlay>>(json);
 
-                dReq.Add(lang, langPack);
+                dictRequirements.Add(lang, langPack);
             }
             else
             {
                 langPack = value;
             }
 
-            return langPack.Requirements.FirstOrDefault(x => x.RequirementId == requirementId);
+            return langPack.FirstOrDefault(x => x.RequirementId == requirementId);
+        }
+
+
+        /// <summary>
+        /// Gets the overlay maturity grouping object for the language.
+        /// </summary>
+        /// <param name="groupingId"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        public MaturityGroupingOverlay GetGrouping(int groupingId, string lang)
+        {
+            // get out cheaply - don't waste time looking up English
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            List<MaturityGroupingOverlay> langPack = null;
+
+            if (!dictGroupings.TryGetValue(lang, out List<MaturityGroupingOverlay> value))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "MATURITY_GROUPINGS.json"));
+
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = JsonConvert.DeserializeObject<List<MaturityGroupingOverlay>>(json);
+
+                dictGroupings.Add(lang, langPack);
+            }
+            else
+            {
+                langPack = value;
+            }
+
+            return langPack.FirstOrDefault(x => x.GroupingId == groupingId);
         }
     }
 }

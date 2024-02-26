@@ -255,8 +255,13 @@ namespace CSETWebCore.Business.Notification
 
             string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
+
+            string footerTSA = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_TSA.html");
+            mail.Body = mail.Body.Replace("{{email-footer-TSA}}", footerTSA);
+
             string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
+
             string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
 

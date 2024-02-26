@@ -22,7 +22,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 datalist.Add(malcolmData);
             }
 
-            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext(), null);
+            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             List<MalcolmData> list = tst.GetMalcolmJsonData(datalist);
             Dictionary<string, TempNode> nodesList = list[0].Graphs;
             foreach(TempNode node in nodesList.Values)
@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Malcolm.Tests
                 var malcolmData = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
                 datalist.Add(malcolmData);
             }
-            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext(), null);
+            MalcolmBusiness tst = new MalcolmBusiness(new DataLayer.Model.CSETContext());
             
             datalist = tst.GetMalcolmJsonData(datalist);
             MalcolmTree tree = new MalcolmTree();
