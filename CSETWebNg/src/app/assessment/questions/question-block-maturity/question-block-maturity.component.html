@@ -116,7 +116,7 @@
                             style="width: 100%; min-height: 80px;"
                             [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">{{
+                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">{{
                             t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
@@ -175,7 +175,7 @@
                             style="width: 100%; min-height: 80px;"
                             [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                             [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
-                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">{{
+                        <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">{{
                             t('answer-options.warnings.description required') }}</div>
                     </div>
                 </div>
