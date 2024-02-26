@@ -375,9 +375,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
     
-    this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
-    
+    // Specific ISE assessment names that we don't want bleeding over to ACET.
     if (this.isAnExamination()) {
+      this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
     }
   }
