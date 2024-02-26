@@ -22,17 +22,88 @@
 -------------------------->
 <div class="terms-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
-        <span class="cset-icons-handshake mr-3 fs-base-6"></span>
-        <span *ngIf="configSvc.installationMode !=='ACET'">CSET {{t('menu.help.legal.terms of use.terms of
-            use')}}</span>
-        <span *ngIf="configSvc.installationMode === 'ACET'">ACET {{t('menu.help.legal.terms of use.terms of
-            use')}}</span>
+        <span class="cset-icons-document mr-3 fs-base-6"></span>
+        <span>{{t('menu.help.legal.accessibility document.accessibility document')}}</span>
     </div>
 
     <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-11a w-100">
         <div class="pr-3 d-flex flex-column align-items-start flex-11a">
             <p class="w-100">
-                {{t('menu.help.legal.terms of use.description')}}
+                In consideration of Section 508 of the U.S. Rehabilitation Act (29 U.S.C. 794d), the
+                features and functions in this application have been developed to support users with
+                accessibility requirements. Industry best practices and standards have guided our design
+                and development processes to incorporate accessibility features built into the Windows
+                operating system and the .NET architecture, as well as the Chrome, Firefox, and Edge
+                browsers. The software development team is committed to integrating accessible
+                design thinking throughout the entire product development cycle.
+                More information on Section 508 and the technical standards can be found
+                at <a href="https://www.section508.gov">www.section508.gov</a>.
+            </p>
+            <h5>Adobe Acrobat PDF Files</h5>
+            <p class="w-100">
+                Many of the documents in this application are in HTML or ASCII (plain text) formats.
+                These formats are generally accessible to people who use screen readers. We also have
+                a large number of documents in Adobe Acrobat® Portable Document Format (PDF).
+                When using a screen reader to read documents directly in PDF format using Adobe
+                Acrobat Reader, you will likely need to install an accessibility plug-in. This plug-in is
+                available free of charge on the <a href="https://www.adobe.com/trust/accessibility.html">Adobe
+                    Accessibility</a> website.
+            </p>
+            <h3>Accessibility Features</h3>
+            <p class="w-100">
+                Our team works to integrate Section 508 accessibility considerations in every application
+                update and release.
+            </p>
+            <h5>Keyboard Shortcuts</h5>
+            <p class="w-100">
+                We offer app-specific keyboard shortcuts in the Help menu.
+            </p>
+            <h5>Browser Support</h5>
+            <p class="w-100">
+                We recommend the use of Google Chrome, Microsoft Edge, and Mozilla Firefox for optimal
+                application functionality. For accessibility functionality specific to each browser, please visit the
+                following features lists:
+                <li><a href="https://about.google/belonging/disability-inclusion/product-accessibility/">Google Chrome
+                        Accessibility Features</a></li>
+                <li><a
+                        href="https://support.microsoft.com/en-us/microsoft-edge/accessibility-features-in-microsoft-edge-4c696192-338e-9465-b2cd-bd9b698ad19a">Microsoft
+                        Edge Accessibility Features</a></li>
+                <li><a
+                        href="https://support.mozilla.org/en-US/kb/accessibility-features-firefox?redirectslug=accessibility-features-firefox-make-firefox-and-we&redirectlocale=en-US">Mozilla
+                        Firefox Accessibility Features</a></li>
+            </p>
+            <h5>Our Section 508 Testing Efforts</h5>
+            <p class="w-100">We believe that a trusted, effective, open-source cybersecurity tool should be readily
+                available and accessible to all.</p>
+            <p class="w-100">To ensure the most accessible experience for all of our users, in addition to the above
+                Section 508 best practices, we regularly test our software for the following functionality:</p>
+            <h6>Keyboard / Focus</h6>
+            <p class="w-100">We test that all functionality can be accessed and executed using only the keyboard.</p>
+            <h6>Forms</h6>
+            <p class="w-100">We check to ensure that labels and instructions are provided for each form input and that
+                each form label is sufficiently descriptive. We test the page to check that notifications are provided
+                of each form-related change in content. We expect any errors to be identified in text and sufficiently
+                described to the user, with additional guidance (e.g., suggestion for corrected input) provided about
+                how to correct errors for form fields. Finally, our web page allows our user to check, reverse, and/or
+                confirm submission.</p>
+            <h6>Links / Buttons</h6>
+            <p class="w-100">We test that each link and button can be determined from any combination of the link/button
+                text, accessible name, accessible description, and/or programmatically determined context. We also check
+                that the page provides notification of each change in content that is the result of interaction with a
+                link or button.</p>
+            <h6>Repetitive Content and Links</h6>
+            <p class="w-100">We check the relative order of repeated components so they match with other pages.</p>
+            <h6>Content Structure</h6>
+            <p class="w-100">We test for functionality that each heading describes the topic or purpose of its content,
+                and that each programmatically determinable heading is a visual heading. We want each visual heading to
+                be programmatically determinable. We check for programmatic heading levels to logically match the visual
+                heading presentation within the heading structure, so that all visually apparent lists are
+                programmatically identified according to their type.</p>
+            <h6>Language</h6>
+            <p class="w-100">
+                We check that the default human language of each Web page can be programmatically determined, and that
+                any passage (content, image descriptions, form labels etc.) that differs from the default language of
+                the page is identified correctly.
             </p>
         </div>
     </mat-dialog-content>
