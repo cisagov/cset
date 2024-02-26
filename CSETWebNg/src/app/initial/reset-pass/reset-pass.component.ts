@@ -22,12 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { environment } from '../../../environments/environment.prod';
 import { ConfigService } from '../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
     selector: 'app-reset-pass',
@@ -54,13 +54,15 @@ export class ResetPassComponent implements OnInit {
 
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
+        public tSvc: TranslocoService,
         private auth: AuthenticationService,
         public configSvc: ConfigService,
         private emailSvc: EmailService) { }
 
 
+    /**
+     *
+     */
     ngOnInit() {
         switch (this.configSvc.installationMode) {
             case 'ACET':
@@ -101,8 +103,7 @@ export class ResetPassComponent implements OnInit {
                         this.enableNext = false;
                         this.emailSent = true;
 
-                        this.warning = 'You have no security questions defined for your account. '
-                            + 'Please consider adding security questions the next time you are logged in.';
+                        this.warning = this.tSvc.translate('login.no questions defined');
                     } else {
                         this.questionsLoaded = true;
                         this.enableNext = false;
@@ -123,9 +124,9 @@ export class ResetPassComponent implements OnInit {
                     this.errorMsg = true;
 
                     if (error.error == 'user-inactive') {
-                        this.warning = 'The user does not exist or is not active';
+                        this.warning = this.tSvc.translate('login.bad user');
                     } else {
-                        this.warning = 'Unknown email account';
+                        this.warning = this.tSvc.translate('login.unknown email account');
                     }
 
                     this.handleError('Error retrieving security questions', error);
@@ -143,7 +144,7 @@ export class ResetPassComponent implements OnInit {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode ?? environment.appCode
+            appCode: this.configSvc.installationMode || environment.appCode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)
@@ -156,7 +157,7 @@ export class ResetPassComponent implements OnInit {
                 },
                 error => {
                     this.errorMsg = true;
-                    this.warning = error.status === 409 ? 'The answer is incorrect' : error.statusText;
+                    this.warning = error.status === 409 ? this.tSvc.translate('change password.answer incorrect') : error.statusText;
                     this.emailSent = false;
                     this.loading = false;
                     this.handleError('Error resetting password', error);

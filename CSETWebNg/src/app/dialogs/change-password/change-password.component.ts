@@ -29,6 +29,8 @@ import { environment } from '../../../environments/environment';
 import { ChangePassword } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { TranslocoService } from '@ngneat/transloco';
+import { ConfigService } from '../../services/config.service';
 
 @Component({
   selector: 'app-change-password',
@@ -48,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
   private _passwordContainsNumbers: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public passwordContainsNumbers: Observable<boolean> = this._passwordContainsNumbers.asObservable();
 
-  msgChangeTempPw = 'Temporary password must be changed on first logon.';
+  msgChangeTempPw = this.tSvc.translate('change password.change temp on logon');
   check = true;
   passwordResponse: any = {
     passwordLengthMin: 13,
@@ -63,25 +65,31 @@ export class ChangePasswordComponent implements OnInit {
   };
 
   constructor(private auth: AuthenticationService,
-    private router: Router,
+    private configSvc: ConfigService,
+    public tSvc: TranslocoService,
     public dialogRef: MatDialogRef<ChangePasswordComponent>,
     private ref: ChangeDetectorRef,
-    private appRef: ApplicationRef,
     @Inject(MAT_DIALOG_DATA) public data: { primaryEmail: string; warning: boolean }) {
     this.cpwd.primaryEmail = data.primaryEmail;
-    this.cpwd.appCode = environment.appCode;
+    this.cpwd.appCode = this.configSvc.installationMode || environment.appCode;
     this.cpwd.currentPassword = '';
     this.cpwd.newPassword = '';
 
     this.warning = data.warning;
   }
 
+  /**
+   *
+   */
   ngOnInit() {
     if (this.warning) {
       this.message = this.msgChangeTempPw;
     }
   }
 
+  /**
+   *
+   */
   onPasswordChangeClick(fReg: NgForm): void {
     if (this.cpwd.newPassword !== this.cpwd.confirmPassword) {
       return;
@@ -90,11 +98,12 @@ export class ChangePasswordComponent implements OnInit {
     this.auth.changePassword(this.cpwd).subscribe(
       (response: any) => {
         this.passwordResponse = JSON.parse(response);
+
         if (this.passwordResponse.isValid) {
           this.dialogRef.close(true);
         } else {
           this.warning = true;
-          this.message = this.passwordResponse.message;
+          this.message = this.tSvc.translate('change password.' + this.passwordResponse.message);
           this.ref.detectChanges();
         }
       },
@@ -105,6 +114,9 @@ export class ChangePasswordComponent implements OnInit {
       });
   }
 
+  /**
+   *
+   */
   checkPassword(event) {
     var temp: ChangePassword = {
       newPassword: event ?? '',
@@ -125,6 +137,9 @@ export class ChangePasswordComponent implements OnInit {
       });
   }
 
+  /**
+   *
+   */
   cancel() {
     this.dialogRef.close();
 
@@ -135,6 +150,9 @@ export class ChangePasswordComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   */
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }

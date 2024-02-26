@@ -141,7 +141,7 @@ namespace CSETWebCore.Api.Controllers
                         new PasswordResponse()
                         {
                             IsValid = false,
-                            Message = "Current password is invalid.<br>Correct it or request a new temporary password."
+                            Message = "current invalid"
                         });
                 }
 
@@ -153,7 +153,7 @@ namespace CSETWebCore.Api.Controllers
                     !respComplex.PasswordContainsSpecial || !respComplex.PasswordNotReused)
                 {
                     respComplex.IsValid = false;
-                    respComplex.Message = "New password does not satisfy all password policy requirements.";
+                    respComplex.Message = "rules not satisfied";
                     return Ok(respComplex);
                 }
 
@@ -341,12 +341,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResetPassword/PotentialQuestions")]
-        public IActionResult GetPotentialQuestions()
+        public IActionResult GetPotentialQuestions([FromQuery] string lang)
         {
             try
             {
                 UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                return Ok(resetter.GetSecurityQuestionList());
+                return Ok(resetter.GetSecurityQuestionList(lang));
             }
             catch (Exception e)
             {

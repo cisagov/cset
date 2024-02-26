@@ -43,6 +43,7 @@ import { TranslocoService } from '@ngneat/transloco';
 export class SiteSummaryComponent implements OnInit, AfterViewInit {
   chartStandardsSummary: Chart;
   chartPercentCompliance: Chart;
+  translationSub: any;
   response: any;
   responseResultsByCategory: any;
 
@@ -86,7 +87,10 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Summary Report - " + this.configSvc.behaviors.defaultTitle);
+    this.translationSub = this.tSvc.selectTranslate('reports.core.site summary.tab title')
+      .subscribe(value =>
+        this.titleService.setTitle(this.tSvc.translate('reports.core.site summary.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+
     this.isCmmc = this.maturitySvc.maturityModelIsCMMC();
     this.reportSvc.getReport('sitesummary').subscribe(
       (r: any) => {
@@ -124,14 +128,20 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
-    this.acetSvc.getMatDetailList().subscribe(
-      (data) => {
-        this.matDetails = data;
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+    this.assessmentSvc.getAssessmentDetail().subscribe(x => {
+      if (x['useMaturity'] === true){
+          this.acetSvc.getMatDetailList().subscribe(
+        (data) => {
+          this.matDetails = data;
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+      }
+    })
+
+    
 
     if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
@@ -235,5 +245,9 @@ export class SiteSummaryComponent implements OnInit, AfterViewInit {
 
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
+  }
+
+  ngOnDestroy() {
+    this.translationSub.unsubscribe()
   }
 }

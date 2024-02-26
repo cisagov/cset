@@ -207,7 +207,7 @@ export class QuestionExtrasComponent implements OnInit {
     if (!level) {
       return '';
     }
-    return this.tSvc.translate('titles.sal.' + level.toLowerCase());
+    return this.tSvc.translate('titles.sal.level.' + level.toLowerCase());
   }
 
   /**
