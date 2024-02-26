@@ -33,6 +33,17 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
         public List<IDiagramAnalysisNodeMessage> Evaluate()
         {
+            CheckRule8();
+            return this.Messages;
+        }
+
+
+        /// <summary>
+        /// Check for IPS (Malcolm can't passively detect a firewall,
+        /// so we don't worry about how the IPS is connected)
+        /// </summary>
+        private void CheckRule8()
+        {
             bool ipsDetected = false;
             var allNodes = network.Nodes.Values.ToList();
             foreach (var node in allNodes)
@@ -45,94 +56,10 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules.Malc
 
             if (!ipsDetected)
             {
-                return this.Messages;
-            }
-
-            var firewalls = network.Nodes.Values.Where(x => x.IsFirewall).ToList();
-
-            if (firewalls.Count == 0) 
-            {
                 String text = String.Format(rule8, allNodes[0].ComponentName).Replace("\n", " ");
                 SetNodeMessage(allNodes[0], text, 8); // 8 because rule8 was violated
             }
-            
-            else
-            {
-                foreach (var firewall in firewalls)
-                {
-                    Visited.Clear();
-                    CheckRule8(firewall);
-                }
-            }
-
-            return this.Messages;
         }
 
-        private HashSet<String> Visited = new HashSet<string>();
-
-        /// <summary>
-        /// Check Firewall for IPS and IDS past the firewall
-        /// </summary>
-        /// <param name="multiServiceComponent"></param>
-        /// <param name="visitedNodes"></param>
-        private void CheckRule8(NetworkComponent firewall)
-        {
-            // This code is here because component can be a multiple service component that is IPS
-            if (firewall.IsIPS)
-            {
-                return;
-            }
-
-            //recurse through all the edges and see if you can find an ids or ips
-            //if it is in the same zone             
-            foreach (NetworkComponent child in firewall.Connections)
-            {
-                if (child.IsInSameZone(firewall))
-                {
-                    if (child.IsIPS)
-                    {
-                        return;
-                    }
-                    else if (RecurseDownConnections(child, firewall))
-                    {
-                        return;
-                    }
-                }
-            }
-
-            String componentName = "unnamed";
-            if (!String.IsNullOrWhiteSpace(firewall.ComponentName))
-            {
-                componentName = firewall.ComponentName;
-            }
-
-            String text = String.Format(rule8, componentName).Replace("\n", " ");
-            SetNodeMessage(firewall, text, 8); // 8 because rule8 was violated
-        }
-
-        private bool RecurseDownConnections(NetworkComponent itemToCheck, NetworkComponent firewall)
-        {
-            foreach (NetworkComponent child in itemToCheck.Connections)
-            {
-                if (Visited.Add(child.ID))
-                {
-                    //Trace.WriteLine("->" + child.ComponentName + ":" + firewall.ComponentName);
-                    if (child.IsInSameZone(firewall))
-                    {
-                        if (child.IsIPS)
-                        {
-                            //Trace.WriteLine("Found it");
-                            return true;
-                        }
-                        else if (RecurseDownConnections(child, firewall))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
     }
 }
