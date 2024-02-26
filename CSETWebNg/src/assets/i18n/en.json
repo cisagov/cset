@@ -612,7 +612,7 @@
                 "summary of ranked questions desc": "Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
             "site detail report": {
-                "site detail report": "SITE DETAIL REPORT",
+                "title page title": "SITE DETAIL REPORT",
                 "tab title": "Site Detail Report",
                 "findings and recommendations": "Findings and Recommendations From Basic Network Analysis",
                 "security assurance level": "Security Assurance Level (SAL)",
@@ -620,7 +620,9 @@
                 "administration": "Administration",
                 "total review hours": "Total Review Hours",
                 "grand totals": "Grand Totals",
-                "cybersecurity maturity": "Cybersecurity Maturity"
+                "cybersecurity maturity": "Cybersecurity Maturity",
+                "summary of ranked questions": "Summary of Ranked Questions",
+                "summary of ranked questions desc": "Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below. The displayed levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High (VH). CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive (S), and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category."
             },
             "components summary": {
                 "components summary": "Components Summary",

@@ -113,14 +113,19 @@ export class SiteDetailComponent implements OnInit {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
-    this.acetSvc.getMatDetailList().subscribe(
-      (data) => {
-        this.matDetails = data;
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+    this.assessmentSvc.getAssessmentDetail().subscribe(x => {
+      if (x['useMaturity'] === true){
+          this.acetSvc.getMatDetailList().subscribe(
+        (data) => {
+          this.matDetails = data;
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+      }
+    })
+    
 
     if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
