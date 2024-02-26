@@ -28,17 +28,17 @@ import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
-    selector: 'accessibility-document',
-    templateUrl: './accessibility-document.component.html',
-    styleUrls: ['./accessibility-document.component.scss'],
+    selector: 'accessibility-statement',
+    templateUrl: './accessibility-statement.component.html',
+    styleUrls: ['./accessibility-statement.component.scss'],
     // eslint-disable-next-line
     host: { class: 'd-flex flex-column flex-11a' }
 })
-export class AccessibilityDocumentComponent {
+export class AccessibilityStatementComponent {
 
     constructor(
         public configSvc: ConfigService,
-        private dialog: MatDialogRef<AccessibilityDocumentComponent>,
+        private dialog: MatDialogRef<AccessibilityStatementComponent>,
         private childDialog: MatDialog,
         private childDialogRef: MatDialogRef<any>,
         public tSvc: TranslocoService,

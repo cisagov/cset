@@ -164,7 +164,7 @@ import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
-import { AccessibilityDocumentComponent } from './dialogs/accessibility-document/accessibility-document.component';
+import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -797,7 +797,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     FeedbackComponent,
     EnableProtectedComponent,
     TermsOfUseComponent,
-    AccessibilityDocumentComponent,
+    AccessibilityStatementComponent,
     QuestionFiltersComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
