@@ -38,7 +38,7 @@ import { GlobalParametersComponent } from '../../dialogs/global-parameters/globa
 import { KeyboardShortcutsComponent } from '../../dialogs/keyboard-shortcuts/keyboard-shortcuts.component';
 import { RraMiniUserGuideComponent } from '../../dialogs/rra-mini-user-guide/rra-mini-user-guide.component';
 import { TermsOfUseComponent } from '../../dialogs/terms-of-use/terms-of-use.component';
-import { AccessibilityDocumentComponent } from '../../dialogs/accessibility-document/accessibility-document.component';
+import { AccessibilityStatementComponent } from '../../dialogs/accessibility-statement/accessibility-statement.component';
 import { CreateUser } from '../../models/user.model';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
@@ -459,7 +459,7 @@ export class TopMenusComponent implements OnInit {
     if (this.dialog.openDialogs[0]) {
       return;
     }
-    this.dialogRef = this.dialog.open(AccessibilityDocumentComponent);
+    this.dialogRef = this.dialog.open(AccessibilityStatementComponent);
     this.dialogRef.afterClosed().subscribe();
   }
 
