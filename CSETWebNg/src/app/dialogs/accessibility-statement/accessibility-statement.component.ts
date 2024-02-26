@@ -24,38 +24,30 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
-import { LicenseComponent } from '../license/license.component';
 import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
-  selector: 'app-terms-of-use',
-  templateUrl: './terms-of-use.component.html',
-  // eslint-disable-next-line
-  host: { class: 'd-flex flex-column flex-11a' }
+    selector: 'accessibility-statement',
+    templateUrl: './accessibility-statement.component.html',
+    styleUrls: ['./accessibility-statement.component.scss'],
+    // eslint-disable-next-line
+    host: { class: 'd-flex flex-column flex-11a' }
 })
-export class TermsOfUseComponent {
+export class AccessibilityStatementComponent {
 
-  constructor(
-    public configSvc: ConfigService,
-    private dialog: MatDialogRef<TermsOfUseComponent>,
-    private childDialog: MatDialog,
-    private childDialogRef: MatDialogRef<any>,
-    public tSvc: TranslocoService,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    constructor(
+        public configSvc: ConfigService,
+        private dialog: MatDialogRef<AccessibilityStatementComponent>,
+        private childDialog: MatDialog,
+        private childDialogRef: MatDialogRef<any>,
+        public tSvc: TranslocoService,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
 
-  close() {
-    return this.dialog.close();
-  }
-
-  openSourceLicenses() {
-    this.childDialogRef = this.childDialog.open(LicenseComponent);
-    this.childDialogRef
-      .afterClosed()
-      .subscribe();
-    this.dialog.close();
-  }
+    close() {
+        return this.dialog.close();
+    }
 
 }
