@@ -132,7 +132,7 @@
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
                 style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
             </div>
 
             <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
@@ -177,7 +177,7 @@
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
                 style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
             </div>
           </div>
 
