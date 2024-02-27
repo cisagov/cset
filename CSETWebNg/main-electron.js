@@ -41,6 +41,10 @@ switch(installationMode) {
     clientCode = 'DOE';
     appCode = 'CSET Renewables';
     break;
+    case 'CIE':
+    clientCode = 'CIE';
+    appCode = 'CSET-CIE';
+    break;
   default:
     clientCode = 'DHS';
     appCode = 'CSET';

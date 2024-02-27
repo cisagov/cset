@@ -622,6 +622,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
+import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
 
 @NgModule({
   imports: [
@@ -1194,7 +1195,8 @@ import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instruct
     TrendAnalyticsComponent,
     MalcolmAnswerDefaultComponent,
     MalcolmAnswerNestedComponent,
-    MalcolmInstructionsComponent
+    MalcolmInstructionsComponent,
+    CieLayoutMainComponent
   ],
   providers: [
     TranslocoService,
