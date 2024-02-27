@@ -30,32 +30,34 @@ SOFTWARE.
 @use 'swiper/scss';
 @use 'swiper/scss/navigation';
 @use 'swiper/scss/pagination';
-@use '@angular/material' as mat;
+
 
 $white: #ffffff;
 $black: #000000;
 
 /* --- Blues --- */
 $primary: (
-  50: #E9EDF2,
-  100: #D1D9E6,
-  150: #BCCFDA,
-  200: #A3B4CC,
-  250: #8FB0C1,
-  300: #79A0B5,
-  350: #6390A9,
-  400: #83A5D4,
-  450: #215283,
-  500: #008ABB,
-  550: #0A5278,
-  600: #0A4B6E,
+  50: #e8eff2,
+  100: #d2dfe6,
+  150: #bccfda,
+  200: #a5c0cd,
+  250: #8fb0c1,
+  300: #79a0b5,
+  350: #6390a9,
+  400: #4c819c,
+  450: #367190,
+  500: #206184,
+  550: #0a5278,
+  600: #0a4b6e,
   650: #094463,
   700: #2c5c6d,
-  750: #083C58,
-  800: #07354D,
-  850: #062D42,
-  900: #17395C,
-  950: #041E2C
+  750: #083c58,
+  800: #07354d,
+  850: #062d42,
+  900: #052637,
+  950: #041e2c,
+  975: #314C63,
+  980: #2982B1
 );
 
 $primary-50: map-get($primary, 50);
@@ -76,17 +78,19 @@ $primary-750: map-get($primary, 750);
 $primary-800: map-get($primary, 800);
 $primary-850: map-get($primary, 850);
 $primary-900: map-get($primary, 900); // Main Dark Primary
+$primary-975: map-get($primary, 975);
+$primary-980: map-get($primary, 980);
 
-$primary-color: $primary-450;
-$secondary-color: $primary-900;
+$primary-color: $primary-975;
+$secondary-color: map-get($primary, 980);
 
 $link-color-dark: #1a53ff; //$primary-350;
 $link-color-light: $primary-350;
 
 // Grays
 $grayscale: (
-  50: #FAFAFA,
-  100: #F2F2F2,
+  50: #fafafa,
+  100: #f2f2f2,
   150: #e6e6e6,
   200: #d9d9d9,
   250: #cccccc,
@@ -103,7 +107,7 @@ $grayscale: (
   800: #404040,
   850: #333333,
   900: #262626,
-  950: #1a1a1a
+  950: #1a1a1a,
 );
 $gray-50: map-get($grayscale, 50);
 $gray-100: map-get($grayscale, 100);
@@ -157,7 +161,6 @@ $c2m2-pi-hover-color: #efc345;
 $c2m2-ni-color: #DCA237;
 $c2m2-ni-hover-color: #bb8521;
 
-
 $spacer: 18px;
 
 *:not(font) {
@@ -192,12 +195,6 @@ a {
   padding: 2px;
 }
 
-.btn-level:not(.disabled).active,
-.btn-level:not(.disabled).activeLevel,
-.show>.btn-level.dropdown-toggle {
-  background-color: $secondary-color;
-  color: $white;
-}
 
 
 /////////// custom checkbox and radio styles
@@ -288,8 +285,9 @@ input[type="radio"]:focus {
   border-radius: 4px;
 }
 
-.white {
-  color: $white;
+.btn:focus {
+  outline: dashed 2px lightgrey;
+  outline-offset: 5px;
 }
 
 a,
@@ -374,7 +372,7 @@ label[required]::after {
 }
 
 .dhs-seal-background {
-  background-image: url("/assets/images/DHSLogo.svg");
+  background-image: url("/assets/images/CISA_Logo_1831px.png");
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: contain;
@@ -445,8 +443,6 @@ label[required]::after {
 
 .footer .card-header {
   padding: 0rem;
-  background-color: $primary-color  !important;
-  border-bottom: none;
 }
 
 .footer .card-body {
@@ -516,11 +512,11 @@ label[required]::after {
 .accordion-header {
   padding-top: 0.2em;
   margin-bottom: 0;
-  background-color: $primary-color
+  background-color: $primary-900;
 }
 
 .footer .bg-primary {
-  background-color: $primary-color !important;
+  background-color: $primary-900  !important;
 }
 
 .footer .card-header:first-child {
@@ -546,7 +542,7 @@ label[required]::after {
 
 .quick-info-container {
   border-radius: 4px;
-  background-color: $secondary-color;
+  background-color: $primary-800;
   color: $gray-100;
   //min-width: 130px;
 }
@@ -650,6 +646,44 @@ table.assessment-summary th {
   font-weight: 500;
   padding: .5rem;
 }
+
+/*
+@media only screen and (max-width: 1200px) {
+  table.assessment-summary td > button > span {
+    display: none;
+  }
+}
+@media only screen and (max-width: 992px) {
+  table.assessment-summary td > button > span {
+    display: none;
+  }
+}
+@media only screen and (max-width: 767px) {
+  table.assessment-summary td:nth-child(2),
+  table.assessment-summary th:nth-child(2) {
+    display: none;
+  }
+
+  table.assessment-summary td:nth-child(3),
+  table.assessment-summary th:nth-child(3) {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  table.assessment-summary td:nth-child(2),
+  table.assessment-summary th:nth-child(2) {
+    display: none;
+  }
+  table.assessment-summary td:nth-child(3),
+  table.assessment-summary th:nth-child(3) {
+    display: none;
+  }
+  table.assessment-summary td:nth-child(4),
+  table.assessment-summary th:nth-child(4) {
+    display: none;
+  }
+}*/
 
 table.paddingBetweenCols td,
 table.paddingBetweenCols th {
@@ -838,6 +872,22 @@ table.td-align-top td {
   color: $active-text-color;
 }
 
+.btn-iss {
+  background-color: $white;
+  border-color: $black;
+  color: $black;
+}
+
+.btn-iss.answer-selected:hover {
+  background-color: $black;
+}
+
+.btn-iss.answer-selected,
+.btn-iss:hover {
+  background-color: $black;
+  color: $active-text-color;
+}
+
 .btn-inc {
   background-color: $white;
   border-color: $alt-color;
@@ -954,7 +1004,7 @@ table.td-align-top td {
 
 .btn-sal-select.active {
   color: $white;
-  background-color: $secondary-color;
+  background-color: $primary-450;
 }
 
 .sal-checkboxes input {
@@ -1095,6 +1145,7 @@ table.td-align-top td {
   color: $white;
 }
 
+
 .gauge {
   background-color: $white;
   fill: $primary-color;
@@ -1108,7 +1159,7 @@ table.td-align-top td {
 .irs-bar,
 .irs-bar-edge,
 .irs-single {
-  background: $gray-600;
+  background: $primary-400;
 }
 
 .ngx-slider {
@@ -1117,11 +1168,11 @@ table.td-align-top td {
 
 .ngx-slider .ngx-slider-pointer,
 .ngx-slider .ngx-slider-selection {
-  background-color: $secondary-color  !important;
+  background-color: $primary-450  !important;
 }
 
 .ngx-slider .ngx-slider-tick.ngx-slider-selected {
-  background: $secondary-color  !important;
+  background: $primary-450  !important;
 }
 
 .ngx-slider .ngx-slider-active::after {
@@ -1144,7 +1195,7 @@ table.td-align-top td {
 .sal-slider-label {
   display: inline-block;
   font-size: 0.6em;
-  background: $gray-600;
+  background: $primary-400;
   color: white;
   border-radius: 5px;
   padding: 2px 8px;
@@ -1183,8 +1234,18 @@ table.td-align-top td {
   line-height: 1.5em !important;
 }
 
+.mat-mdc-tab {
+  color: green !important;
+}
+
 .mat-mdc-tab-label-container {
   margin-bottom: 1rem;
+  font-size: 1rem !important;
+  letter-spacing: normal !important;
+}
+
+.mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label, .mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active .mdc-tab__text-label {
+  color: $primary-color;
 }
 
 ul.mat-tree-node {
@@ -1448,11 +1509,6 @@ th.data-table {
 
 // Header / Navbar
 /////////////////////////////////////////////
-.tsa-header {
-  background-color: $primary-color  !important;
-  background-color: #215283;
-}
-
 .header-help {
   color: $gray-100;
 }
@@ -1542,7 +1598,6 @@ ul.nav-tabs li.active button .tab-icon {
   font-size: 1.6rem;
 }
 
-
 .fs-head-lock {
   font-size: 2rem;
 }
@@ -1566,7 +1621,6 @@ ul.nav-tabs li.active button .tab-icon {
   flex: 0 0 auto;
   padding: 5px;
 }
-
 .navbar-toggler-icon:before {
   content: "\e5d2";
 }
@@ -1610,7 +1664,7 @@ ul.nav-tabs li.active button .tab-icon {
 .navbar a:hover,
 .navbar [mat-button]:focus,
 .navbar [mat-button]:hover {
-  color: $white;
+  color: $white !important;
   background-color: transparent;
   text-decoration: none !important;
 }
@@ -2062,7 +2116,7 @@ input[type="checkbox"]+label {
 .subcat-header {
   padding: 1em;
   border-radius: 1em;
-  background-color: #E9E9EA;
+  background-color: $primary-50;
   border-bottom: 1px solid $gray-250;
   cursor: pointer;
 }
@@ -2239,16 +2293,14 @@ tooltip.glossary-definition.tooltip-left::after {
   margin-bottom: 2px;
 }
 
-.extras-button.active, .extras-button.rkw {
+.extras-button.active {
   background-color: $gray-50;
   border: 3px solid $primary-450;
-  vertical-align: top;
 }
 
 .extras-button:focus {
   background-color: $gray-50;
   border: 3px solid $primary-250;
-  vertical-align: top;
 }
 
 .extras-button.empty {
@@ -2451,7 +2503,7 @@ mat-sidenav {
 }
 
 .progress-complete {
-  fill: $secondary-color;
+  fill: $primary-750;
 }
 
 // Upload Export
@@ -2586,7 +2638,7 @@ mat-sidenav {
 }
 
 .about .nccic {
-  font-family: 'ITC Franklin Gothic', Arial, Times, serif;
+  font-family: "ITC Franklin Gothic", Arial, Times, serif;
   font-size: 30px;
 }
 
@@ -2705,7 +2757,6 @@ mat-sidenav {
   flex: 1 1 auto;
   padding: 0 !important;
   max-width: 100% !important;
-  letter-spacing: normal;
   border-radius: 0.25em;
 }
 
@@ -2910,7 +2961,6 @@ hr.ranked-questions {
 .rq-label-min-width {
   min-width: 96px;
 }
-
 
 // Aggregation
 ///////////////////////////////////////////////////////////////////////
@@ -3216,7 +3266,7 @@ table.td-text-left td {
 }
 
 .bgc-page {
-  background-color: $secondary-color;
+  background-color: $primary-750;
 }
 
 .c-trans {
@@ -3587,20 +3637,6 @@ table.td-text-left td {
   background-color: #5b565c;
   border-color: #787878;
   padding: 0.5rem 0.75rem !important;
-}
-
-.alert-adhoc {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  padding: 0.5rem 0.75rem !important;
-}
-
-.alert-sub {
-  color: #B0B0B0;
-  background-color: #F0F0F0;
-  border-color: #E8E8E8;
-
 }
 
 .alert-baseline {

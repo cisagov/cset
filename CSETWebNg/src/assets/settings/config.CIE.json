@@ -3,7 +3,7 @@
     "installationMode":"CIE",
     "helpContactEmail": "tsasupport@inl.gov",
     "behaviors": {
-        "defaultTitle":"CSET-TSA",
+        "defaultTitle":"CSET-CIE",
         "showModuleBuilder": true,
         "showAssessmentDocuments": true,
         "showAggregation": true,

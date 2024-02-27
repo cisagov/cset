@@ -4,16 +4,20 @@ import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { SetBuilderService } from './../../services/set-builder.service';
 import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
-import { LayoutService } from '../../services/layout.service';
-import { SetBuilderService } from './../../services/set-builder.service';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
+import { LayoutService } from '../../services/layout.service';
+
 
 @Component({
   selector: 'app-cie-layout-main',
   templateUrl: './cie-layout-main.component.html',
-  styleUrls: ['./cie-layout-main.component.scss']
+  styleUrls: ['./cie-layout-main.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  // eslint-disable-next-line
+  host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 })
 export class CieLayoutMainComponent {
   docUrl: string;
@@ -65,4 +69,3 @@ export class CieLayoutMainComponent {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
 }
-
