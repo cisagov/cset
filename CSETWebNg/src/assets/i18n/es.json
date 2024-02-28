@@ -736,7 +736,7 @@
                 "cset question requirement category": "[ES] CSET Question/Requirement Category", 
                 "control level": "[ES] Control Level", 
                 "implementation status": "[ES] Implementation Status", 
-                "short standard name": "[ES] Short Standard Name", 
+                "short standard name": "[ES] Short Standard Name (Optional, may not be included in the table)", 
                 "requirement description": "[ES] Requirement Description", 
                 "affected zones": "[ES] Affected Zones  (Optional, may not be included in the table)", 
                 "affected components": "[ES] Affected Components  (Optional, may not be included in the table)", 
