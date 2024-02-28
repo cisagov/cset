@@ -662,7 +662,7 @@
                 "cset question requirement category": "[UK] CSET Question/Requirement Category", 
                 "control level": "Рівень контролю", 
                 "implementation status": "Статус реалізації", 
-                "short standard name": "Коротка стандартна назва", 
+                "short standard name": "Short Standard Name (Optional, may not be included in the table)", 
                 "requirement description": "Опис вимоги", 
                 "affected zones": "[UK] Affected Zones  (Optional, may not be included in the table)", 
                 "affected components": "[UK] Affected Components  (Optional, may not be included in the table)", 
