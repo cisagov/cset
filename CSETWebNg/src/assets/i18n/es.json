@@ -934,7 +934,30 @@
             "legal": {
                 "legal": "Legal",
                 "accessibility statement": {
-                    "accessibility statement": "Declaración de Accesibilidad"
+                    "accessibility statement": "Declaración de Accesibilidad",
+                    "htag": {
+                        "adobe acrobat pdf files": "Adobe Acrobat PDF Files",
+                        "accessibility features": "Accessibility Features",
+                        "keyboard shortcuts": "Keyboard Shortcuts",
+                        "browser support": "Browser Support",
+                        "our section 508 testing efforts": "Our Section 508 Testing Efforts",
+                        "keyboard focus": "Keyboard / Focus",
+                        "forms": "Forms",
+                        "links buttons": "Links / Buttons",
+                        "repetitive content and links": "Repetitive Content and Links",
+                        "content structure": "Content Structure",
+                        "language": "Language",
+                        "page and frame titles": "Page and Frame Titles",
+                        "color dependence and contrast": "Color Dependence and Color Contrast",
+                        "images": "Images",
+                        "resize text": "Resize Text",
+                        "multiple ways": "Multiple Ways",
+                        "error identification": "Error Identification",
+                        "css style": "CSS Style",
+                        "data tables": "Data Tables",
+                        "all interactive elements": "All Interactive Elements",
+                        "does not apply": "The following accessibility features does not apply to our software"
+                    }
                 },
                 "advisory": {
                     "advisory": "Asesoramiento",
