@@ -915,6 +915,97 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode)
+            
+        {
+            
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            _questionRequirement.InitializeManager(_assessmentId);
+
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
+
+            List<ControlRow> controlRows = new List<ControlRow>();
+
+            var qQ = (from rs in _context.Answer_Components_Default
+                        orderby rs.Question_Group_Heading
+                        where rs.Assessment_Id == _assessmentId
+                        select new { rs } ).ToList();
+
+            foreach (var q in qQ)
+            {
+                controlRows.Add(new ControlRow()
+                {
+                    Requirement_Id = q.rs.heading_pair_id,
+                    Requirement_Text = q.rs.Sub_Heading_Question_Description,
+                    Answer_Text = q.rs.Answer_Text,
+                    Comment = q.rs.Comment,
+                    Question_Id = q.rs.Question_Id,
+                    Requirement_Title = q.rs.Question_Group_Heading,
+                    Short_Name = q.rs.ComponentName,
+                    Simple_Question = q.rs.QuestionText,
+                    Standard_Category = q.rs.Question_Group_Heading,
+                    Standard_Sub_Category = q.rs.Universal_Sub_Category,
+                    Standard_Level = q.rs.SAL
+                });
+            }
+           
+            //get all the questions for this control 
+            //determine the percent implemented.                 
+            int prev_requirement_id = 0;
+            int questionCount = 0;
+            int questionsAnswered = 0;
+            BasicReportData.RequirementControl control = null;
+            List<BasicReportData.Control_Questions> questions = null;
+
+            foreach (var a in controlRows)
+            {
+                if (prev_requirement_id != a.Requirement_Id)
+                {
+                    questionCount = 0;
+                    questionsAnswered = 0;
+                    questions = new List<BasicReportData.Control_Questions>();
+                    control = new BasicReportData.RequirementControl()
+                    {
+                        ControlDescription = a.Requirement_Text,
+                        RequirementTitle = a.Requirement_Title,
+                        Level = a.Standard_Level,
+                        StandardShortName = a.Short_Name,
+                        Standard_Category = a.Standard_Category,
+                        SubCategory = a.Standard_Sub_Category,
+                        Control_Questions = questions
+                    };
+                    controls.Add(control);
+                }
+                questionCount++;
+
+                switch (a.Answer_Text)
+                {
+                    case Constants.Constants.ALTERNATE:
+                    case Constants.Constants.YES:
+                        questionsAnswered++;
+                        break;
+                }
+
+                questions.Add(new BasicReportData.Control_Questions()
+                {
+                    Answer = a.Answer_Text,
+                    Comment = a.Comment,
+                    Simple_Question = a.Simple_Question
+                });
+
+                control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
+                prev_requirement_id = a.Requirement_Id;
+            }
+
+            return controls;
+        }
+
         public List<List<DiagramZones>> GetDiagramZones()
         {
             var level = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
