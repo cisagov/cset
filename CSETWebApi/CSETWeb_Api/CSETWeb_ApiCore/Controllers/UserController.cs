@@ -67,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     PrimaryEmail = u.PrimaryEmail,
-                    IsActive = u.IsActive ?? true                 
+                    IsActive = u.IsActive
                 };
 
                 resp.Add(user);
