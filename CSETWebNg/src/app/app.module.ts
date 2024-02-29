@@ -623,7 +623,7 @@ import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-an
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
-
+ import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1196,7 +1196,8 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     MalcolmAnswerDefaultComponent,
     MalcolmAnswerNestedComponent,
     MalcolmInstructionsComponent,
-    CieLayoutMainComponent
+    CieLayoutMainComponent,
+    AboutCieComponent
   ],
   providers: [
     TranslocoService,
