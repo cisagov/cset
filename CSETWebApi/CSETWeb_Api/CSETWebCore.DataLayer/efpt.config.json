@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 3,
+   "CodeGenerationMode": 4,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
@@ -185,6 +185,10 @@
       },
       {
          "Name": "[dbo].[COMPONENT_SYMBOLS_GM_TO_CSET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[COMPONENT_SYMBOLS_MAPPINGS]",
          "ObjectType": 0
       },
       {
@@ -517,6 +521,14 @@
       },
       {
          "Name": "[dbo].[LEVEL_NAMES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MALCOLM_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MALCOLM_MAPPING]",
          "ObjectType": 0
       },
       {
@@ -1406,6 +1418,7 @@
    "UseDatabaseNames": true,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseHierarchyId": false,
@@ -1417,6 +1430,7 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
