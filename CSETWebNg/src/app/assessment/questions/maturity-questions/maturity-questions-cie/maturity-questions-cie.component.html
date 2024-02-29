@@ -35,26 +35,26 @@
             </div>
         </div>
 
-        <div class="d-block mb-2">
-            <!-- <h2>{{ statementLevel }}</h2> -->
-        </div>
+        <!-- <div class="d-block mb-2">
+            <h2>{{ statementLevel }}</h2>
+        </div> -->
 
         <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div>
 
-        <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
+        <!-- <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
             <div *ngIf="!this.ncuaSvc.issuesFinishedLoading || !groupings" class="w-100">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
             </div>
         </ng-container>
-        <ng-template #notIse>
+        <ng-template #notIse> -->
             <div *ngIf="!groupings" class="w-100">
                 <div class="spinner-container" style="margin: 2em auto">
                     <div style="max-width: 50px; max-height: 50px;"></div>
                 </div>
             </div>
-        </ng-template>
+        <!-- </ng-template> -->
 
 
         <!-- top level (Domains) -->
@@ -63,10 +63,10 @@
                 (changed)="refreshQuestionVisibility()"></app-domain-maturity-filter>-->
 
         <div *ngFor="let g of groupings" class="w-100 mb-5">
-            <app-grouping-block [grouping]="g"></app-grouping-block>
+            <app-question-block-cie [myGrouping]="g"></app-question-block-cie>
         </div>
     </div>
 
-    <app-nav-back-next [page]="'maturity-questions-ise'"></app-nav-back-next>
+    <app-nav-back-next [page]="'maturity-questions-cie-'+sectionId"></app-nav-back-next>
 
 </div>
