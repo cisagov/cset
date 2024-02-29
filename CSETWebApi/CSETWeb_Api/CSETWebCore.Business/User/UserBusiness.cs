@@ -210,10 +210,10 @@ namespace CSETWebCore.Business.User
                 UserId = result.UserId,
                 Email = result.PrimaryEmail,
                 IsSuperUser = result.IsSuperUser,
-                PasswordResetRequired = result.PasswordResetRequired ?? true,
+                PasswordResetRequired = result.PasswordResetRequired,
                 FirstName = result.FirstName,
                 LastName = result.LastName,
-                IsActive = result.IsActive ?? true
+                IsActive = result.IsActive
             };
 
             return u;
@@ -293,9 +293,9 @@ namespace CSETWebCore.Business.User
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 IsSuperUser = user.IsSuperUser,
-                PasswordResetRequired = user.PasswordResetRequired ?? true,
-                IsActive = user.IsActive ?? true,
-                PreventEncrypt = user.PreventEncrypt ?? true,
+                PasswordResetRequired = user.PasswordResetRequired,
+                IsActive = user.IsActive,
+                PreventEncrypt = user.PreventEncrypt,
                 CisaAssessorWorkflow = user.CisaAssessorWorkflow,
                 Lang = user.Lang
             };
