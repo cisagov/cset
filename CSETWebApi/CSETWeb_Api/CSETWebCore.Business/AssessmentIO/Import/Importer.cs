@@ -126,7 +126,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.CreditUnionName = a.CreditUnionName;
                     item.IRPTotalOverride = a.IRPTotalOverride;
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
-                    item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false;
+                    item.MatDetail_targetBandOnly = (bool)(a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false);
 
                     _context.SaveChanges();
                 }
