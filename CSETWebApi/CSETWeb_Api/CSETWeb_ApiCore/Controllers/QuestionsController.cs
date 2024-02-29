@@ -109,7 +109,7 @@ namespace CSETWebCore.Api.Controllers
         {
             if (skin == "RENEW")
             {
-                new MalcolmBusiness(_context, _token).VerificationAndValidation();
+                new MalcolmBusiness(_context).VerificationAndValidation(_token.AssessmentForUser());
             }
             var manager = new ComponentQuestionBusiness(_context, _assessmentUtil, _token, _questionRequirement);
             QuestionResponse resp = manager.GetResponse();

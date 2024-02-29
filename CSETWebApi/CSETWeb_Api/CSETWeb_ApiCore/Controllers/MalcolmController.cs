@@ -22,6 +22,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing;
+using CSETWebCore.Interfaces;
+using System.Threading.Tasks;
+using System.Net;
+using NPOI.HPSF;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -31,20 +37,64 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
         private IHttpContextAccessor _http;
         private IMalcolmBusiness _malcolm;
+        private IDiagramManager _diagramManager;
 
 
 
         /// <summary>
         /// Controller
         /// </summary>
-        public MalcolmController(ITokenManager token, CSETContext context, IHttpContextAccessor http, IMalcolmBusiness malcolm)
+        public MalcolmController(ITokenManager token, CSETContext context, IHttpContextAccessor http, IMalcolmBusiness malcolm, IDiagramManager diagramManager)
         {
             _token = token;
             _context = context;
             _http = http;
             _malcolm = malcolm;
+            _diagramManager = diagramManager;
         }
 
+        [HttpGet]
+        [Route("api/malcolm")]
+        public async Task<IActionResult> GetMalcolmData(string IPAddress)
+        {
+            /**
+             * Get Malcom data from the malcom server and import it. 
+             *
+             **/
+            try
+            {
+                int assessmentId = (int)_token.PayloadInt(Constants.Constants.Token_AssessmentId);
+                List<MalcolmData> processedData = await _malcolm.GetDataFromMalcomInstance(IPAddress);
+                _diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                if(ex.InnerException == null)
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+                else if(ex.InnerException.Message== "A task was canceled.")
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, "Could not contact the Malcolm host.\nCheck to see that Malcolm is available to and can be connected to from this computer.");
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+                else
+                {
+                    List<MalcolmUploadError> errors = new List<MalcolmUploadError>();
+                    MalcolmUploadError error = new MalcolmUploadError(IPAddress, 400, ex.Message);
+                    errors.Add(error);
+                    return Ok(errors);
+                }
+        
+
+            }
+        }
 
         [HttpPost]
         [Route("api/malcolm")]
@@ -65,23 +115,13 @@ namespace CSETWebCore.Api.Controllers
                     {
                         fileName = file.FileName;
                         fileExtension = System.IO.Path.GetExtension(fileName);
-                        MalcolmData data = new MalcolmData();
-
                         if (fileExtension == ".json")
                         {
                             file.CopyTo(stream);
                             stream.Seek(0, SeekOrigin.Begin);
                             StreamReader sr = new StreamReader(stream);
                             string jsonString = sr.ReadToEnd();
-
-                            /* New json file schema differed from what we were originally given */
-                            jsonString = jsonString.Replace("source.ip","values");
-                            jsonString = jsonString.Replace("source.device.role", "values");
-                            jsonString = jsonString.Replace("destination.ip", "values");
-                            jsonString = jsonString.Replace("destination.device.role", "values");
-
-                            data = JsonConvert.DeserializeObject<MalcolmData>(jsonString);
-                            dataList.Add(data);
+                            dataList = _malcolm.ProcessMalcomData(jsonString);
                         }
                         else
                         {
@@ -103,11 +143,31 @@ namespace CSETWebCore.Api.Controllers
             }
             else
             {
-                DiagramManager diagramManager = new DiagramManager(_context);
-                List<MalcolmData> processedData = new MalcolmBusiness(_context, _token).GetMalcolmJsonData(dataList);
-                diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
-                return Ok();
+                try
+                {
+                    List<MalcolmData> processedData = _malcolm.GetMalcolmJsonData(dataList);
+                    _diagramManager.CreateMalcolmDiagram(assessmentId, processedData);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    List<MalcolmUploadError> errors2 = new List<MalcolmUploadError>();
+                    MalcolmUploadError error2 = new MalcolmUploadError("General Error", 400, ex.Message);
+                    errors2.Add(error2);
+                    return Ok(errors2);
+                }
             }
+        }
+
+        
+
+        [HttpGet]
+        [Route("api/getMalcolmAnswers")]
+        public List<MALCOLM_ANSWERS> GetMalcolmAnswers()
+        {
+            int assessId = _token.AssessmentForUser();
+
+            return _malcolm.GetMalcolmAnswers(assessId);
         }
     }
 
