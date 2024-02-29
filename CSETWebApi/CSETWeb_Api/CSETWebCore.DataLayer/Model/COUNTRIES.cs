@@ -25,5 +25,6 @@ public partial class COUNTRIES
     [Key]
     public int COUNTRIES_ID { get; set; }
 
+    [InverseProperty("Country_CodeNavigation")]
     public virtual ICollection<STATES_AND_PROVINCES> STATES_AND_PROVINCES { get; set; } = new List<STATES_AND_PROVINCES>();
 }

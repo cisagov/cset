@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[Index("Malcolm_Answer_Id", Name = "IX_MALCOLM_ANSWERS")]
 public partial class MALCOLM_ANSWERS
 {
     public int Assessment_Id { get; set; }

@@ -33,14 +33,12 @@ public partial class DIAGRAM_TEMPLATES
     /// <summary>
     /// The Is Read Only is used to
     /// </summary>
-    [Required]
-    public bool? Is_Read_Only { get; set; }
+    public bool Is_Read_Only { get; set; }
 
     /// <summary>
     /// The Is Visible is used to
     /// </summary>
-    [Required]
-    public bool? Is_Visible { get; set; }
+    public bool Is_Visible { get; set; }
 
     public string Diagram_Markup { get; set; }
 

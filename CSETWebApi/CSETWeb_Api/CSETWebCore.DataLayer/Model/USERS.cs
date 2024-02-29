@@ -29,8 +29,7 @@ public partial class USERS
 
     public bool IsSuperUser { get; set; }
 
-    [Required]
-    public bool? PasswordResetRequired { get; set; }
+    public bool PasswordResetRequired { get; set; }
 
     [StringLength(150)]
     public string FirstName { get; set; }
@@ -42,11 +41,9 @@ public partial class USERS
 
     public int EmailSentCount { get; set; }
 
-    [Required]
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
-    [Required]
-    public bool? PreventEncrypt { get; set; }
+    public bool PreventEncrypt { get; set; }
 
     public bool CisaAssessorWorkflow { get; set; }
 
@@ -54,8 +51,7 @@ public partial class USERS
     [StringLength(10)]
     public string Lang { get; set; }
 
-    [Required]
-    public bool? IsFirstLogin { get; set; }
+    public bool IsFirstLogin { get; set; }
 
     [InverseProperty("AssessmentCreator")]
     public virtual ICollection<ASSESSMENTS> ASSESSMENTS { get; set; } = new List<ASSESSMENTS>();

@@ -73,6 +73,8 @@ public partial class NEW_REQUIREMENT
     [InverseProperty("Requirement")]
     public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; } = new List<PARAMETER_REQUIREMENTS>();
 
+    [ForeignKey("Question_Group_Heading_Id")]
+    [InverseProperty("NEW_REQUIREMENT")]
     public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
 
     [InverseProperty("Requirement")]

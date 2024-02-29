@@ -32,15 +32,21 @@ public partial class UNIVERSAL_SUB_CATEGORY_HEADINGS
     [StringLength(50)]
     public string Set_Name { get; set; }
 
+    [InverseProperty("Heading_Pair")]
     public virtual ICollection<NEW_QUESTION> NEW_QUESTION { get; set; } = new List<NEW_QUESTION>();
 
+    [ForeignKey("Question_Group_Heading_Id")]
+    [InverseProperty("UNIVERSAL_SUB_CATEGORY_HEADINGS")]
     public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
 
+    [InverseProperty("Heading_Pair")]
     public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; } = new List<SUB_CATEGORY_ANSWERS>();
 
     [ForeignKey("Set_Name")]
     [InverseProperty("UNIVERSAL_SUB_CATEGORY_HEADINGS")]
     public virtual SETS Set_NameNavigation { get; set; }
 
+    [ForeignKey("Universal_Sub_Category_Id")]
+    [InverseProperty("UNIVERSAL_SUB_CATEGORY_HEADINGS")]
     public virtual UNIVERSAL_SUB_CATEGORIES Universal_Sub_Category { get; set; }
 }
