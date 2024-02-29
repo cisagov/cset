@@ -59,5 +59,6 @@ namespace CSETWebCore.Interfaces.Reports
         string FormatName(string firstName, string lastName);
 
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
+        List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
     }
 }
