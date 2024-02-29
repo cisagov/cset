@@ -1,0 +1,74 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="d-flex flex-column justify-content-center flex-11a" style="width:800px;">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+        <span class="mr-3 fs-base-6 {{iconClass}}"></span>
+        <span>Malcolm Instructions</span>
+    </div>
+  
+    <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+        <div class="pr-3">
+            Enter the IP address of the Malcolm instance to attempt to pull data from Malcolm directly.
+            <div class="d-flex" style="justify-content: space-between;">
+                <div class="d-flex flex-column">
+                <span style="color:red" *ngIf="iperror">Not a Valid IP Address</span>
+                <input #ipAddress class="inline-flex" type="text" (blur)="validateIP(ipAddress.value)">
+                </div>
+                
+                <button class="btn btn-primary inline-flex" (click)="attemptToImportFromMalcolm(ipAddress.value)">Attempt to Import Malcolm Directly</button>
+                
+            </div>
+
+            <!-- <span *ngIf=""></span> -->
+            <br>
+
+            <p>OR</p>
+            <ol>
+                <li>Open the command terminal</li>
+                -   Can be found by searching "cmd" in the Search box on the task bar
+                
+                <li>Find your IP address</li>
+                -   Can be found by entering "ipconfig" in the command terminal and finding the "IPv4 Address" field
+                <li>Enter the following command into the command terminal, replacing the marked area with your IP address</li>
+                <br>
+                curl -k -sSL -XPOST -H 'Content-Type: application/json'
+                https://(your_ip_here)/mapi/agg/source.ip,source.device.role,destination.ip,destination.device.role
+                -d '{{ '{' }} "from":"5 years ago","to": "now"{{ '}' }}'
+                <br><br>
+                <li>Copy and paste the text output into a .txt file (i.e. “Notepad” on Windows, etc.)</li>
+                <li>Change the .txt file into a .json file</li>
+                -   Rename the file to have “.json” at the end instead of “.txt”   
+            </ol>
+            <label for="importFile" class="btn btn-primary cset-icons-import">
+                Import Malcolm File
+            </label>
+            <input type="file" class="display-none" id="importFile" multiple accept=".json"
+                (change)="uploadMalcolmData($event)">
+
+        </div>
+    </mat-dialog-content>
+  
+    <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex ml-auto flex-00a">
+        <button class="btn btn-secondary" (click)="dialogRef.close(true)">Close</button>
+    </mat-dialog-actions>
+</div>

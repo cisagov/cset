@@ -77,8 +77,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
   MatRippleModule
@@ -166,6 +164,7 @@ import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
+import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -620,6 +619,9 @@ import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-in
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
+import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
+import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
+import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @NgModule({
   imports: [
@@ -798,6 +800,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     FeedbackComponent,
     EnableProtectedComponent,
     TermsOfUseComponent,
+    AccessibilityStatementComponent,
     QuestionFiltersComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
@@ -1188,7 +1191,10 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     MalcolmUploadErrorComponent,
     AssessmentConvertCfComponent,
     IseWarningsComponent,
-    TrendAnalyticsComponent
+    TrendAnalyticsComponent,
+    MalcolmAnswerDefaultComponent,
+    MalcolmAnswerNestedComponent,
+    MalcolmInstructionsComponent
   ],
   providers: [
     TranslocoService,
@@ -1271,4 +1277,4 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -32,6 +32,7 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ConversionService } from '../../../services/conversion.service';
+import { MalcolmService } from '../../../services/malcolm.service';
 
 
 /**
@@ -55,6 +56,7 @@ export class QuestionBlockComponent implements OnInit {
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
+  malcolmInfo: any;
 
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
@@ -80,6 +82,7 @@ export class QuestionBlockComponent implements OnInit {
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
+    public malcolmSvc: MalcolmService,
     private convertSvc: ConversionService
   ) {
     this.matLevelMap.set("B", "Baseline");
@@ -87,6 +90,8 @@ export class QuestionBlockComponent implements OnInit {
     this.matLevelMap.set("Int", "Intermediate");
     this.matLevelMap.set("A", "Advanced");
     this.matLevelMap.set("Inn", "Innovative");
+
+
   }
 
   /**
@@ -96,6 +101,9 @@ export class QuestionBlockComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
+    this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+      this.malcolmInfo = r;
+    });
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }

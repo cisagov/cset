@@ -25,14 +25,14 @@
         {{t('reports.core.alternate justification.alternate justification')}}
     </h1>
 
-    <table *ngFor="let t of response?.questionsWithAltJust" class="cset-table-3">
+    <table *ngFor="let q of response?.questionsWithAltJust" class="cset-table-3">
         <tr>
-            <th colspan="3">{{t.categoryAndNumber}}</th>
+            <th colspan="3">{{q.categoryAndNumber}}</th>
         </tr>
         <tr>
             <td class="tint2" style="width: 10%">{{t('reports.core.alternate justification.question')}}:</td>
-            <td class="tint2" [innerHTML]="t.question"></td>
-            <td class="tint2" style="width: 20%">{{analysisSvc.answerWord(t.answer)}}</td>
+            <td class="tint2" [innerHTML]="q.question"></td>
+            <td class="tint2" style="width: 20%">{{t('answer-options.labels.' + q.answer.toLowerCase())}}</td>
         </tr>
         <tr>
             <td class="tint2">{{t('reports.core.alternate justification.alternate justification')}}:</td>
