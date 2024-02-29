@@ -872,7 +872,7 @@ namespace CSETWebCore.Business.Maturity
                 .Where(q =>
                 myModel.model_id == q.Maturity_Model_Id);
 
-            if (groupingId != 0)
+            if (groupingId != 0 && myModel.model_id != 17)
             {
                 questionQuery = questionQuery.Where(x => x.Question_Text.StartsWith("A"));
             }

@@ -212,6 +212,7 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
 import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
 import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
+import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
 
 const appRoutes: Routes = [
 
@@ -384,7 +385,8 @@ const appRoutes: Routes = [
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
-          { path: 'maturity-questions-cie', component: MaturityQuestionsComponent },
+          { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
+          { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
           { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },

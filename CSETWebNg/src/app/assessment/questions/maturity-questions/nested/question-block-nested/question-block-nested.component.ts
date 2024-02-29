@@ -129,9 +129,9 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (q.comment !== null && q.comment.length > 0) {
       return 'inline';
     }
-    if (q.documentIds.length > 0) {
-      return 'inline';
-    }
+    // if (q.documentIds !== null && q.documentIds.length != 0) {
+    //   return 'inline';
+    // }
     if (q.hasObservation) {
       return 'inline';
     }

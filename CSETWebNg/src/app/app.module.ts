@@ -632,6 +632,7 @@ import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
+import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
 
 @NgModule({
   imports: [
@@ -1212,7 +1213,8 @@ import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instruct
     HowToUseCieComponent,
     MalcolmAnswerDefaultComponent,
     MalcolmAnswerNestedComponent,
-    MalcolmInstructionsComponent
+    MalcolmInstructionsComponent,
+    MaturityQuestionsCieComponent
   ],
   providers: [
     TranslocoService,
