@@ -25,7 +25,7 @@
       <div class="sticky-navbar">
         <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
           *ngIf="auth.isLocal">
-          <span class="col-sm-12">{{t('local installation')}}   FDDFGDFGF LILY</span>
+          <span class="col-sm-12">{{t('local installation')}} </span>
         </div>
   
         <!-- Navbar -->
@@ -38,7 +38,8 @@
             (click)="this.router.url!=='/resource-library' && goHome()">
             <!-- CSET Lock Logo -->
             <div class="d-flex justify-content-start align-items-center flex-00a">
-              <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
+              <!-- <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset> -->
+              <img src="/assets/images/CIE/CIE-logo.png" class="img-fluid" style="height: 55px; width: 180px;">
             </div>
           </span>
   
@@ -47,12 +48,10 @@
             #topMenusTrigger="matMenuTrigger" tabindex="0">
             <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
           </button>
-  
           <!-- Menus contained in the navbar-toggler submenu -->
           <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
             <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
           </mat-menu>
-  
           <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
           <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
         </nav>

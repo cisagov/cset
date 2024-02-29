@@ -18,7 +18,7 @@
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "additionalUserGuides": ["TSA"],
+        "additionalUserGuides": ["CSET"],
         "showCisaAssessorWorkflowSwitch": false
     }
 
