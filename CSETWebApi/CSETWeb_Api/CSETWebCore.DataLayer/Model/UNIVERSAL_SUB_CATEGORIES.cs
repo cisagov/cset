@@ -28,5 +28,6 @@ public partial class UNIVERSAL_SUB_CATEGORIES
 
     public bool Is_Custom { get; set; }
 
+    [InverseProperty("Universal_Sub_Category")]
     public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; } = new List<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
 }

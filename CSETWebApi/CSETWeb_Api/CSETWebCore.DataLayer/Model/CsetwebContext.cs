@@ -513,8 +513,8 @@ public partial class CsetwebContext : DbContext
     {
         modelBuilder.Entity<ACCESS_KEY>(entity =>
         {
-            entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
-            entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Lang).HasDefaultValue("en");
+            entity.Property(e => e.PreventEncrypt).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<ACCESS_KEY_ASSESSMENT>(entity =>
@@ -575,7 +575,7 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Alternate_Justification).HasComment("The Alternate Justification is used to");
             entity.Property(e => e.Answer_Text)
-                .HasDefaultValueSql("('U')")
+                .HasDefaultValue("U")
                 .HasComment("The Answer Text is used to");
             entity.Property(e => e.Comment).HasComment("The Comment is used to");
             entity.Property(e => e.Component_Guid).HasComment("The Component Guid is used to");
@@ -649,8 +649,8 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.AssessmentCreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Assessment_Date).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
-            entity.Property(e => e.ISE_StateLed).HasDefaultValueSql("((0))");
-            entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValueSql("((1))");
+            entity.Property(e => e.ISE_StateLed).HasDefaultValue(false);
+            entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValue(true);
 
             entity.HasOne(d => d.AssessmentCreator).WithMany(p => p.ASSESSMENTS)
                 .OnDelete(DeleteBehavior.SetNull)
@@ -663,7 +663,7 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<ASSESSMENTS_REQUIRED_DOCUMENTATION>(entity =>
         {
-            entity.Property(e => e.Answer).HasDefaultValueSql("('U')");
+            entity.Property(e => e.Answer).HasDefaultValue("U");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.ASSESSMENTS_REQUIRED_DOCUMENTATION).HasConstraintName("FK_ASSESSMENTS_REQUIRED_DOCUMENTATION_ASSESSMENTS");
 
@@ -987,10 +987,10 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Abbreviation).HasComment("The Abbreviation is used to");
             entity.Property(e => e.Component_Family_Name).HasComment("The Component Family Name is used to");
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
-            entity.Property(e => e.Height).HasDefaultValueSql("((60))");
+            entity.Property(e => e.Height).HasDefaultValue(60);
             entity.Property(e => e.Symbol_Group_Id).HasComment("The Symbol Group Id is used to");
-            entity.Property(e => e.Symbol_Name).HasDefaultValueSql("('')");
-            entity.Property(e => e.Width).HasDefaultValueSql("((60))");
+            entity.Property(e => e.Symbol_Name).HasDefaultValue("");
+            entity.Property(e => e.Width).HasDefaultValue(60);
 
             entity.HasOne(d => d.Component_Family_NameNavigation).WithMany(p => p.COMPONENT_SYMBOLS).HasConstraintName("FK_COMPONENT_SYMBOLS_COMPONENT_FAMILY");
 
@@ -1006,9 +1006,7 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<COMPONENT_SYMBOLS_MAPPINGS>(entity =>
         {
-            entity.Property(e => e.Mapping_Id).ValueGeneratedOnAdd();
-
-            entity.HasOne(d => d.Component_Symbol).WithMany().HasConstraintName("FK_COMPONENT_SYMBOLS_MAPPINGS_COMPONENT_SYMBOLS");
+            entity.HasOne(d => d.Component_Symbol).WithMany(p => p.COMPONENT_SYMBOLS_MAPPINGS).HasConstraintName("FK_COMPONENT_SYMBOLS_MAPPINGS_COMPONENT_SYMBOLS");
         });
 
         modelBuilder.Entity<COUNTIES>(entity =>
@@ -1086,7 +1084,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS records"));
 
             entity.Property(e => e.Assessment_Id).ValueGeneratedNever();
-            entity.Property(e => e.IsScoped).HasDefaultValueSql("((0))");
+            entity.Property(e => e.IsScoped).HasDefaultValue(false);
 
             entity.HasOne(d => d.Assessment).WithOne(p => p.DEMOGRAPHICS).HasConstraintName("FK_DEMOGRAPHICS_ASSESSMENTS");
 
@@ -1112,7 +1110,7 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of DEMOGRAPHICS_ASSET_VALUES records"));
 
-            entity.Property(e => e.AppCode).HasDefaultValueSql("('CSET')");
+            entity.Property(e => e.AppCode).HasDefaultValue("CSET");
             entity.Property(e => e.DemographicsAssetId).ValueGeneratedOnAdd();
 
             entity.HasOne(d => d.AppCodeNavigation).WithMany(p => p.DEMOGRAPHICS_ASSET_VALUES).HasConstraintName("FK_DEMOGRAPHICS_ASSET_VALUES_APP_CODE");
@@ -1161,8 +1159,8 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of DIAGRAM_CONTAINER records"));
 
-            entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('L')");
-            entity.Property(e => e.Visible).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Universal_Sal_Level).HasDefaultValue("L");
+            entity.Property(e => e.Visible).HasDefaultValue(true);
 
             entity.HasOne(d => d.ContainerTypeNavigation).WithMany(p => p.DIAGRAM_CONTAINER)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1192,10 +1190,10 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Id).HasComment("The Id is used to");
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
             entity.Property(e => e.Is_Read_Only)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValue(true)
                 .HasComment("The Is Read Only is used to");
             entity.Property(e => e.Is_Visible)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValue(true)
                 .HasComment("The Is Visible is used to");
             entity.Property(e => e.Template_Name).HasComment("The Template Name is used to");
         });
@@ -1515,7 +1513,7 @@ public partial class CsetwebContext : DbContext
         {
             entity.Property(e => e.Gallery_Item_Guid).ValueGeneratedNever();
             entity.Property(e => e.CreationDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Is_Visible).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Is_Visible).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<GALLERY_ROWS>(entity =>
@@ -1554,13 +1552,13 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Comments).HasComment("The Comments is used to");
             entity.Property(e => e.Description).HasComment("The Description is used to");
             entity.Property(e => e.Doc_Num)
-                .HasDefaultValueSql("('NONE')")
+                .HasDefaultValue("NONE")
                 .HasComment("The Doc Num is used to");
             entity.Property(e => e.Doc_Version).HasComment("The Doc Version is used to");
             entity.Property(e => e.File_Name).HasComment("The File Name is used to");
             entity.Property(e => e.File_Size).HasComment("The File Size is used to");
             entity.Property(e => e.File_Type_Id).HasComment("The File Type Id is used to");
-            entity.Property(e => e.Is_Uploaded).HasDefaultValueSql("((1))");
+            entity.Property(e => e.Is_Uploaded).HasDefaultValue(true);
             entity.Property(e => e.Name).HasComment("The Name is used to");
             entity.Property(e => e.Publish_Date).HasComment("The Publish Date is used to");
             entity.Property(e => e.Short_Name).HasComment("The Short Name is used to");
@@ -1693,7 +1691,7 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Enterprise_Evaluation_Summary).HasComment("The Enterprise Evaluation Summary is used to");
             entity.Property(e => e.Executive_Summary).HasComment("The Executive Summary is used to");
             entity.Property(e => e.Facility_Name).HasComment("The Facility Name is used to");
-            entity.Property(e => e.IsAcetOnly).HasDefaultValueSql("((0))");
+            entity.Property(e => e.IsAcetOnly).HasDefaultValue(false);
             entity.Property(e => e.State_Province_Or_Region).HasComment("The State Province Or Region is used to");
 
             entity.HasOne(d => d.IdNavigation).WithOne(p => p.INFORMATION).HasConstraintName("FK_INFORMATION_ASSESSMENTS");
@@ -1713,7 +1711,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of IRP records"));
 
             entity.Property(e => e.IRP_ID).ValueGeneratedNever();
-            entity.Property(e => e.Risk_Type).HasDefaultValueSql("('IRP')");
+            entity.Property(e => e.Risk_Type).HasDefaultValue("IRP");
 
             entity.HasOne(d => d.Header).WithMany(p => p.IRP)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1766,17 +1764,6 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
-
-        //modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
-        //{
-        //    entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
-
-        //    entity.HasOne(d => d.Malcolm).WithMany(p => p.MALCOLM_ANSWERS)
-        //        .OnDelete(DeleteBehavior.ClientSetNull)
-        //        .HasConstraintName("FK_MALCOLM_ANSWERS_MALCOLM_MAPPING");
-        //});
 
         modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
         {
@@ -1848,7 +1835,7 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of MATURITY_MODELS records"));
 
             entity.Property(e => e.Analytics_Rollup_Level)
-                .HasDefaultValueSql("((1))")
+                .HasDefaultValue(1)
                 .HasComment("This is used by the analytics side of CSET to indicate which grouping level should be used by the analytics when comparing assessments that use a certain maturity model");
 
             entity.HasOne(d => d.Maturity_Level_Usage_TypeNavigation).WithMany(p => p.MATURITY_MODELS).HasConstraintName("FK_MATURITY_MODELS_MATURITY_LEVEL_USAGE_TYPES");
@@ -1951,7 +1938,7 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<NAVIGATION_STATE>(entity =>
         {
-            entity.Property(e => e.IsAvailable).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsAvailable).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<NCSF_CATEGORY>(entity =>
@@ -1960,7 +1947,7 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of NCSF_CATEGORY records"));
 
-            entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValueSql("((50))");
+            entity.Property(e => e.Question_Group_Heading_Id).HasDefaultValue(50);
 
             entity.HasOne(d => d.NCSF_Function).WithMany(p => p.NCSF_CATEGORY).HasConstraintName("FK_NCSF_Category_NCSF_FUNCTIONS");
         });
@@ -2000,7 +1987,7 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Question_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Simple_Question],(8000))),(0)))", true);
             entity.Property(e => e.Std_Ref_Id).HasComputedColumnSql("(case when [std_ref]=NULL then NULL else ([Std_Ref]+'.')+CONVERT([nvarchar](50),[Std_Ref_Number],(0)) end)", false);
-            entity.Property(e => e.Universal_Sal_Level).HasDefaultValueSql("('none')");
+            entity.Property(e => e.Universal_Sal_Level).HasDefaultValue("none");
 
             entity.HasOne(d => d.Heading_Pair).WithMany(p => p.NEW_QUESTION)
                 .HasPrincipalKey(p => p.Heading_Pair_Id)
@@ -2107,7 +2094,7 @@ public partial class CsetwebContext : DbContext
 
         modelBuilder.Entity<NIST_SAL_QUESTION_ANSWERS>(entity =>
         {
-            entity.Property(e => e.Question_Answer).HasDefaultValueSql("('No')");
+            entity.Property(e => e.Question_Answer).HasDefaultValue("No");
 
             entity.HasOne(d => d.Assessment).WithMany(p => p.NIST_SAL_QUESTION_ANSWERS).HasConstraintName("FK_NIST_SAL_QUESTION_ANSWERS_STANDARD_SELECTION");
 
@@ -2504,7 +2491,7 @@ public partial class CsetwebContext : DbContext
         {
             entity.ToTable(tb => tb.HasComment("A collection of SECURITY_QUESTION records"));
 
-            entity.Property(e => e.IsCustomQuestion).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsCustomQuestion).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<SETS>(entity =>
@@ -2513,11 +2500,11 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Set_Name).HasComment("The Set Name is used to");
             entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
-            entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValueSql("((1))");
-            entity.Property(e => e.Is_Displayed).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsEncryptedModuleOpen).HasDefaultValue(true);
+            entity.Property(e => e.Is_Displayed).HasDefaultValue(true);
             entity.Property(e => e.Is_Pass_Fail).HasComment("The Is Pass Fail is used to");
             entity.Property(e => e.Old_Std_Name).HasComment("The Old Std Name is used to");
-            entity.Property(e => e.Short_Name).HasDefaultValueSql("('NO SHORT NAME')");
+            entity.Property(e => e.Short_Name).HasDefaultValue("NO SHORT NAME");
 
             entity.HasOne(d => d.Set_Category).WithMany(p => p.SETS).HasConstraintName("FK_SETS_Sets_Category");
         });
@@ -2578,10 +2565,10 @@ public partial class CsetwebContext : DbContext
                 .ValueGeneratedNever()
                 .HasComment("The Id is used to");
             entity.Property(e => e.Application_Mode)
-                .HasDefaultValueSql("('Questions Based')")
+                .HasDefaultValue("Questions Based")
                 .HasComment("The Application Mode is used to");
             entity.Property(e => e.Selected_Sal_Level)
-                .HasDefaultValueSql("('Low')")
+                .HasDefaultValue("Low")
                 .HasComment("The Selected Sal Level is used to");
 
             entity.HasOne(d => d.Assessment).WithOne(p => p.STANDARD_SELECTION).HasConstraintName("FK_STANDARD_SELECTION_ASSESSMENTS");
@@ -2614,11 +2601,11 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of STANDARD_SPECIFIC_LEVEL records"));
 
             entity.Property(e => e.Standard_Level).HasComment("The Standard Level is used to");
-            entity.Property(e => e.Display_Name).HasDefaultValueSql("('No Display Name')");
+            entity.Property(e => e.Display_Name).HasDefaultValue("No Display Name");
             entity.Property(e => e.Full_Name).HasComment("The Full Name is used to");
             entity.Property(e => e.Level_Order).HasComment("The Level Order is used to");
             entity.Property(e => e.Standard)
-                .HasDefaultValueSql("('No Standard')")
+                .HasDefaultValue("No Standard")
                 .HasComment("The Standard is used to");
         });
 
@@ -2726,7 +2713,7 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of UNIVERSAL_SUB_CATEGORY_HEADINGS records"));
 
-            entity.Property(e => e.Set_Name).HasDefaultValueSql("('Standards')");
+            entity.Property(e => e.Set_Name).HasDefaultValue("Standards");
             entity.Property(e => e.Display_Radio_Buttons).HasComputedColumnSql("(CONVERT([bit],case when [sub_heading_question_description] IS NULL OR len(rtrim(ltrim([sub_heading_question_description])))=(0) OR charindex('?',[sub_heading_question_description])=(0) then (0) else (1) end,(0)))", false);
             entity.Property(e => e.Heading_Pair_Id).ValueGeneratedOnAdd();
 
@@ -2751,11 +2738,11 @@ public partial class CsetwebContext : DbContext
 
             entity.ToTable(tb => tb.HasComment("A collection of USERS records"));
 
-            entity.Property(e => e.IsActive).HasDefaultValueSql("((1))");
-            entity.Property(e => e.IsFirstLogin).HasDefaultValueSql("((1))");
-            entity.Property(e => e.Lang).HasDefaultValueSql("('en')");
-            entity.Property(e => e.PasswordResetRequired).HasDefaultValueSql("((1))");
-            entity.Property(e => e.PreventEncrypt).HasDefaultValueSql("((1))");
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsFirstLogin).HasDefaultValue(true);
+            entity.Property(e => e.Lang).HasDefaultValue("en");
+            entity.Property(e => e.PasswordResetRequired).HasDefaultValue(true);
+            entity.Property(e => e.PreventEncrypt).HasDefaultValue(true);
         });
 
         modelBuilder.Entity<USER_DETAIL_INFORMATION>(entity =>

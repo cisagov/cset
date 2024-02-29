@@ -40,6 +40,7 @@ public partial class UNIVERSAL_SAL_LEVEL
     [InverseProperty("Universal_Sal_LevelNavigation")]
     public virtual ICollection<NEW_QUESTION_LEVELS> NEW_QUESTION_LEVELS { get; set; } = new List<NEW_QUESTION_LEVELS>();
 
+    [InverseProperty("Selected_Sal_LevelNavigation")]
     public virtual ICollection<STANDARD_SELECTION> STANDARD_SELECTION { get; set; } = new List<STANDARD_SELECTION>();
 
     [InverseProperty("Universal_Sal_LevelNavigation")]
