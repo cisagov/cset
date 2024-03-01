@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     ShortName = s.Short_Name,
                     FullName = s.Full_Name,
-                    Unlocked = s.IsEncryptedModuleOpen ?? false
+                    Unlocked = s.IsEncryptedModuleOpen
                 });
             }
 

@@ -20,6 +20,5 @@ public partial class SECURITY_QUESTION
     [StringLength(500)]
     public string SecurityQuestion { get; set; }
 
-    [Required]
-    public bool? IsCustomQuestion { get; set; }
+    public bool IsCustomQuestion { get; set; }
 }

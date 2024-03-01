@@ -372,7 +372,7 @@ namespace CSETWebCore.Api.Controllers
             var userId = _tokenManager.GetCurrentUserId();
             var ak = _tokenManager.GetAccessKey();
 
-            IQueryable<bool?> query = null;
+            IQueryable<bool> query = null;
             if (userId != null)
             {
                 query = from u in _context.USERS

@@ -41,7 +41,9 @@ public partial class QUESTION_GROUP_HEADING
 
     public bool Is_Custom { get; set; }
 
+    [InverseProperty("Question_Group_Heading")]
     public virtual ICollection<NEW_REQUIREMENT> NEW_REQUIREMENT { get; set; } = new List<NEW_REQUIREMENT>();
 
+    [InverseProperty("Question_Group_Heading")]
     public virtual ICollection<UNIVERSAL_SUB_CATEGORY_HEADINGS> UNIVERSAL_SUB_CATEGORY_HEADINGS { get; set; } = new List<UNIVERSAL_SUB_CATEGORY_HEADINGS>();
 }
