@@ -71,7 +71,7 @@ namespace CSETWebCore.Api.Controllers
             var files = from a in _context.GEN_FILE
                         join ft1 in _context.FILE_TYPE on a.File_Type_Id equals ft1.File_Type_Id into tt
                         from ft in tt.DefaultIfEmpty()
-                        where (a.Gen_File_Id == id) && (a.Is_Uploaded ?? false)
+                        where (a.Gen_File_Id == id) && (a.Is_Uploaded)
                         select new { a, ft };
 
             foreach (var f in files.ToList())

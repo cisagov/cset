@@ -72,6 +72,9 @@ public partial class COMPONENT_SYMBOLS
     [InverseProperty("Component_Symbol")]
     public virtual ICollection<COMPONENT_QUESTIONS> COMPONENT_QUESTIONS { get; set; } = new List<COMPONENT_QUESTIONS>();
 
+    [InverseProperty("Component_Symbol")]
+    public virtual ICollection<COMPONENT_SYMBOLS_MAPPINGS> COMPONENT_SYMBOLS_MAPPINGS { get; set; } = new List<COMPONENT_SYMBOLS_MAPPINGS>();
+
     [ForeignKey("Component_Family_Name")]
     [InverseProperty("COMPONENT_SYMBOLS")]
     public virtual COMPONENT_FAMILY Component_Family_NameNavigation { get; set; }

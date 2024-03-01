@@ -77,8 +77,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
   MatRippleModule
@@ -166,6 +164,7 @@ import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
+import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -811,6 +810,7 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
     FeedbackComponent,
     EnableProtectedComponent,
     TermsOfUseComponent,
+    AccessibilityStatementComponent,
     QuestionFiltersComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
@@ -1297,4 +1297,4 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

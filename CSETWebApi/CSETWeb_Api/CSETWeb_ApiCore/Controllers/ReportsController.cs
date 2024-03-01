@@ -82,9 +82,17 @@ namespace CSETWebCore.Api.Controllers
             {
                 data.ApplicationMode = ss.Application_Mode;
             }
-
-            data.ControlList = _report.GetControls(data.ApplicationMode);
+            // Check if assessment is a diagram 
             data.information = _report.GetInformation();
+            if (data.information.UseDiagram == true)
+            {
+               
+                data.ControlList = _report.GetControlsDiagram(data.ApplicationMode);
+
+            } else
+            {
+                data.ControlList = _report.GetControls(data.ApplicationMode);
+            }
 
             data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
