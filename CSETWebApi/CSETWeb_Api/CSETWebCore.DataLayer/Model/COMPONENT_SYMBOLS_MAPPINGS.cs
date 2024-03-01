@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[Keyless]
 public partial class COMPONENT_SYMBOLS_MAPPINGS
 {
     public int Component_Symbol_Id { get; set; }
@@ -21,8 +20,10 @@ public partial class COMPONENT_SYMBOLS_MAPPINGS
     [StringLength(100)]
     public string Malcolm_Role { get; set; }
 
+    [Key]
     public int Mapping_Id { get; set; }
 
     [ForeignKey("Component_Symbol_Id")]
+    [InverseProperty("COMPONENT_SYMBOLS_MAPPINGS")]
     public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
 }
