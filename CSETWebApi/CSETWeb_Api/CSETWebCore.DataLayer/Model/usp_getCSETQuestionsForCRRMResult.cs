@@ -7,12 +7,14 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_getCSETQuestionsForCRRMResult
     {
-        public string Type { get; set; }
+        public string AssessmentMode { get; set; }
         public int Id { get; set; }
         public string question { get; set; }
         public string Info { get; set; }
         public string Heading { get; set; }
         public string SubHeading { get; set; }
         public string SetName { get; set; }
+        public bool? IsComplete { get; set; }
+        public int CRRMId { get; set; }
     }
 }

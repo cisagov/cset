@@ -90,6 +90,9 @@ public partial class NEW_REQUIREMENT
     public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; } = new List<REQUIREMENT_REFERENCES>();
 
     [InverseProperty("Requirement")]
+    public virtual ICollection<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; } = new List<REQUIREMENT_REFERENCE_TEXT>();
+
+    [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; } = new List<REQUIREMENT_SETS>();
 
     [InverseProperty("Requirement")]
