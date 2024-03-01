@@ -1765,6 +1765,11 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Level_Name).HasComment("The Level Name is used to");
         });
 
+        modelBuilder.Entity<MALCOLM_ANSWERS>(entity =>
+        {
+            entity.HasOne(d => d.Assessment).WithMany(p => p.MALCOLM_ANSWERS).HasConstraintName("FK_MALCOLM_ANSWERS_ASSESSMENTS");
+        });
+
         modelBuilder.Entity<MATURITY_ANSWER_OPTIONS>(entity =>
         {
             entity.HasKey(e => e.Mat_Option_Id).HasName("PK_MATURITY_ANSWER_OPTIONS_1");
@@ -2432,6 +2437,11 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Gen_File).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_GEN_FILE");
 
             entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_REFERENCES).HasConstraintName("FK_REQUIREMENT_REFERENCES_NEW_REQUIREMENT");
+        });
+
+        modelBuilder.Entity<REQUIREMENT_REFERENCE_TEXT>(entity =>
+        {
+            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_REFERENCE_TEXT).HasConstraintName("FK_REQUIREMENT_REFERENCE_TEXT_NEW_REQUIREMENT");
         });
 
         modelBuilder.Entity<REQUIREMENT_SETS>(entity =>

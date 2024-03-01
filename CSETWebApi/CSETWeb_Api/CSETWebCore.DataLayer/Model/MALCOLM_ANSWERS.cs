@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
+[Index("Assessment_Id", "Question_Or_Requirement_Id", "Malcolm_Id", Name = "IX_MALCOLM_ANSWERS", IsUnique = true)]
 public partial class MALCOLM_ANSWERS
 {
     public int Assessment_Id { get; set; }
@@ -24,4 +25,8 @@ public partial class MALCOLM_ANSWERS
     public int Malcolm_Answer_Id { get; set; }
 
     public int? Mat_Option_Id { get; set; }
+
+    [ForeignKey("Assessment_Id")]
+    [InverseProperty("MALCOLM_ANSWERS")]
+    public virtual ASSESSMENTS Assessment { get; set; }
 }
