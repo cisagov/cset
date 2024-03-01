@@ -1022,7 +1022,7 @@ namespace CSETWebCore.Business.Diagram
             var templates = Enumerable.Empty<DiagramTemplate>();
 
             templates = _context.DIAGRAM_TEMPLATES
-                .Where(x => x.Is_Visible ?? false)
+                .Where(x => x.Is_Visible)
                 .OrderBy(x => x.Id)
                 .Select(x => new DiagramTemplate
                 {

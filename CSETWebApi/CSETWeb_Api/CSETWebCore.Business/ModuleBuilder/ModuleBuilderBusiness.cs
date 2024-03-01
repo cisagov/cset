@@ -75,7 +75,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     ShortName = set.Short_Name,
                     SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                     IsCustom = set.Is_Custom,
-                    IsDisplayed = set.Is_Displayed ?? false,
+                    IsDisplayed = set.Is_Displayed,
 
                     Clonable = true,
                     Deletable = true
@@ -156,7 +156,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     ShortName = set.Short_Name,
                     SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                     IsCustom = set.Is_Custom,
-                    IsDisplayed = set.Is_Displayed ?? false,
+                    IsDisplayed = set.Is_Displayed,
 
                     Clonable = true,
                     Deletable = false
@@ -196,7 +196,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 set.SetCategory = dbSet.Set_Category_Id == null ? 0 : (int)dbSet.Set_Category_Id;
                 set.ShortName = dbSet.Short_Name;
                 set.IsCustom = dbSet.Is_Custom;
-                set.IsDisplayed = dbSet.Is_Displayed ?? false;
+                set.IsDisplayed = dbSet.Is_Displayed;
             }
 
 
