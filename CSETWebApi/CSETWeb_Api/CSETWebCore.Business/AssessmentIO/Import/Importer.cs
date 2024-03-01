@@ -127,6 +127,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.IRPTotalOverride = a.IRPTotalOverride;
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
                     item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly??false;
+
                     _context.SaveChanges();
                 }
             }
