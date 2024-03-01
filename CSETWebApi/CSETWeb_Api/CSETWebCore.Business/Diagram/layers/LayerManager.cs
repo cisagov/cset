@@ -38,7 +38,7 @@ namespace CSETWebCore.Business.Diagram.layers
                         layerName = parent.Name,
                         DrawIo_id = node.DrawIO_id,
                         Parent_DrawIo_id = parent.DrawIO_id,
-                        visible = (parent.Visible ?? true) ? "true" : "false"
+                        visible = (parent.Visible) ? "true" : "false"
 
                     }).FirstOrDefault();
 

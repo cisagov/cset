@@ -66,7 +66,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            if (!loginUser.IsActive.GetValueOrDefault(true))
+            if (!loginUser.IsActive)
             {
                 return null;
             }
@@ -123,11 +123,11 @@ namespace CSETWebCore.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                ResetRequired = loginUser.PasswordResetRequired ?? true,
+                ResetRequired = loginUser.PasswordResetRequired,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                IsFirstLogin = loginUser.IsFirstLogin ?? false
+                IsFirstLogin = loginUser.IsFirstLogin
             };
 
 
@@ -183,11 +183,11 @@ namespace CSETWebCore.Helpers
                             UserFirstName = loginUser.FirstName,
                             UserLastName = loginUser.LastName,
                             IsSuperUser = loginUser.IsSuperUser,
-                            ResetRequired = loginUser.PasswordResetRequired ?? true,
+                            ResetRequired = loginUser.PasswordResetRequired,
                             ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                             ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                             LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                            IsFirstLogin = loginUser.IsFirstLogin ?? false
+                            IsFirstLogin = loginUser.IsFirstLogin
                         };
 
                         return respUser;

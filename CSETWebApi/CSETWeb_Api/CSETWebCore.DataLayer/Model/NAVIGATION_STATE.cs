@@ -19,8 +19,7 @@ public partial class NAVIGATION_STATE
 
     public bool IsVisited { get; set; }
 
-    [Required]
-    public bool? IsAvailable { get; set; }
+    public bool IsAvailable { get; set; }
 
     public double PercentCompletion { get; set; }
 }
