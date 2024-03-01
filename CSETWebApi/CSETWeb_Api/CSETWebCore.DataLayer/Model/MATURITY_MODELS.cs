@@ -53,6 +53,7 @@ public partial class MATURITY_MODELS
     [InverseProperty("Maturity_Model")]
     public virtual ICollection<MATURITY_QUESTIONS> MATURITY_QUESTIONS { get; set; } = new List<MATURITY_QUESTIONS>();
 
+    [InverseProperty("Model_NameNavigation")]
     public virtual ICollection<MODES_SETS_MATURITY_MODELS> MODES_SETS_MATURITY_MODELS { get; set; } = new List<MODES_SETS_MATURITY_MODELS>();
 
     [ForeignKey("Maturity_Level_Usage_Type")]

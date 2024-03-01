@@ -57,7 +57,7 @@ namespace CSETWebCore.Api.Controllers
             // the consumer can limit the response to inactive users only
             if (onlyInactive ?? false)
             {
-                query =  _context.USERS.Where(x => !x.IsActive.GetValueOrDefault(true));
+                query =  _context.USERS.Where(x => !x.IsActive);
             }
 
             query.ToList().ForEach(u => 
@@ -67,7 +67,7 @@ namespace CSETWebCore.Api.Controllers
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     PrimaryEmail = u.PrimaryEmail,
-                    IsActive = u.IsActive ?? true                 
+                    IsActive = u.IsActive
                 };
 
                 resp.Add(user);
