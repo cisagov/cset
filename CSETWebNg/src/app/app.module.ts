@@ -77,8 +77,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
   MatNativeDateModule,
   MatRippleModule
@@ -166,6 +164,7 @@ import { LicenseComponent } from './dialogs/license/license.component';
 import { OkayComponent } from './dialogs/okay/okay.component';
 import { QuestionFiltersComponent } from './dialogs/question-filters/question-filters.component';
 import { TermsOfUseComponent } from './dialogs/terms-of-use/terms-of-use.component';
+import { AccessibilityStatementComponent } from './dialogs/accessibility-statement/accessibility-statement.component';
 import { UploadExportComponent } from './dialogs/upload-export/upload-export.component';
 import { AssessGuard } from './guards/assess.guard';
 import { AuthGuard } from './guards/auth.guard';
@@ -183,6 +182,7 @@ import { LinebreakPipe } from './helpers/linebreak.pipe';
 import { LinebreakPlaintextPipe } from './helpers/linebreakplain.pipe';
 import { NullishCoalescePipe } from './helpers/nullish-coalesce.pipe';
 import { CompletionCountPipe } from './helpers/completion-count.pipe';
+import { LocalizeDatePipe } from './helpers/date-localize.pipe';
 import { ImportComponent } from './import/import.component';
 import { InitialComponent } from './initial/initial.component';
 import { MyAssessmentsComponent } from './initial/my-assessments/my-assessments.component';
@@ -616,14 +616,12 @@ import { UserLanguageComponent } from './dialogs/user-language/user-language.com
 import { MalcolmUploadErrorComponent } from './dialogs/malcolm/malcolm-upload-error.component';
 import { FooterService } from './services/footer.service';
 import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-info/assessment-convert-cf/assessment-convert-cf.component';
-import {
-  MAT_MOMENT_DATE_FORMATS,
-  MomentDateAdapter,
-  MAT_MOMENT_DATE_ADAPTER_OPTIONS
-} from '@angular/material-moment-adapter';
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
+import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
+import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
+import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @NgModule({
   imports: [
@@ -780,6 +778,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     SafePipe,
     LinebreakPipe,
     CompletionCountPipe,
+    LocalizeDatePipe,
     LinebreakPlaintextPipe,
     NullishCoalescePipe,
     StatusCreateComponent,
@@ -801,6 +800,7 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     FeedbackComponent,
     EnableProtectedComponent,
     TermsOfUseComponent,
+    AccessibilityStatementComponent,
     QuestionFiltersComponent,
     AssessmentDocumentsComponent,
     InlineParameterComponent,
@@ -1191,7 +1191,10 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
     MalcolmUploadErrorComponent,
     AssessmentConvertCfComponent,
     IseWarningsComponent,
-    TrendAnalyticsComponent
+    TrendAnalyticsComponent,
+    MalcolmAnswerDefaultComponent,
+    MalcolmAnswerNestedComponent,
+    MalcolmInstructionsComponent
   ],
   providers: [
     TranslocoService,
@@ -1230,15 +1233,6 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
       },
       deps: [TranslocoService],
       multi: true
-    },
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
-    },
-    {
-      provide: MAT_DATE_FORMATS,
-      useValue: MAT_MOMENT_DATE_FORMATS
     },
     AuthGuard,
     AssessGuard,
@@ -1283,4 +1277,4 @@ import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytic
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

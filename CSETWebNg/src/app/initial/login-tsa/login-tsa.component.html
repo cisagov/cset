@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="tsa-login-page" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
+<div id="tsa-login-page" *transloco="let t" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
   [ngClass]="{'login-background':mode == 'LOGIN'}">
 
   <div class="row">
@@ -84,7 +84,7 @@
               <div class="alert alert-danger">Incorrect Username or Password</div>
             </div>
             <label for="email" style="color: #fff">
-              Enter your email address and password to login.
+              {{t('login.login prompt')}}
             </label>
             <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
               #email="ngModel" required email focusOnInit="true" tabindex="0" />
@@ -162,7 +162,7 @@
                     <div class="alert alert-danger">Incorrect Username or Password</div>
                   </div>
                   <label for="email" style="color: #fff">
-                    Enter your email address and password to login.
+                    {{t('login.login prompt')}}
                   </label>
                   <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
                     #email="ngModel" required email focusOnInit="true" tabindex="0" />

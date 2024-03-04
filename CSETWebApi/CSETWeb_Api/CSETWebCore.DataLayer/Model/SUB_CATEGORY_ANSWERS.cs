@@ -47,5 +47,7 @@ public partial class SUB_CATEGORY_ANSWERS
     [InverseProperty("SUB_CATEGORY_ANSWERS")]
     public virtual ASSESSMENTS Assessement { get; set; }
 
+    [ForeignKey("Heading_Pair_Id")]
+    [InverseProperty("SUB_CATEGORY_ANSWERS")]
     public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }
 }

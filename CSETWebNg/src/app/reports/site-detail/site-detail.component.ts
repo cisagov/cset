@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -32,13 +32,15 @@ import { AdminTableData, AdminPageData, HoursOverride } from '../../models/admin
 import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'site-detail',
   templateUrl: './site-detail.component.html',
   styleUrls: ['../reports.scss']
 })
-export class SiteDetailComponent implements OnInit, AfterViewInit {
+export class SiteDetailComponent implements OnInit {
+  translationSub: any;
   response: any = null;
   chartStandardsSummary: Chart;
   responseResultsByCategory: any;
@@ -74,11 +76,14 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {
-    this.titleService.setTitle("Site Detail Report - " + this.configSvc.behaviors.defaultTitle);
+    this.translationSub = this.tSvc.selectTranslate('reports.core.site detail report.tab title')
+      .subscribe(value =>
+        this.titleService.setTitle(this.tSvc.translate('reports.core.site detail report.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {
@@ -108,14 +113,19 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
       this.networkDiagramImage = this.sanitizer.bypassSecurityTrustHtml(x.diagram);
     });
 
-    this.acetSvc.getMatDetailList().subscribe(
-      (data) => {
-        this.matDetails = data;
-      },
-      error => {
-        console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error getting all documents: ' + (<Error>error).stack);
-      });
+    this.assessmentSvc.getAssessmentDetail().subscribe(x => {
+      if (x['useMaturity'] === true){
+          this.acetSvc.getMatDetailList().subscribe(
+        (data) => {
+          this.matDetails = data;
+        },
+        error => {
+          console.log('Error getting all documents: ' + (<Error>error).name + (<Error>error).message);
+          console.log('Error getting all documents: ' + (<Error>error).stack);
+        });
+      }
+    })
+    
 
     if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
@@ -141,12 +151,6 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
           console.log('Error getting all documents: ' + (<Error>error).stack);
         });
     }
-  }
-
-  /**
-   *
-   */
-  ngAfterViewInit() {
   }
 
   processAcetAdminData() {
@@ -218,5 +222,9 @@ export class SiteDetailComponent implements OnInit, AfterViewInit {
 
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
+  }
+
+  ngOnDestroy() {
+    this.translationSub.unsubscribe()
   }
 }

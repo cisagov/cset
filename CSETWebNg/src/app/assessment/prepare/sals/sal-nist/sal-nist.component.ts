@@ -114,7 +114,7 @@ export class SalNistComponent implements OnInit {
     this.dialogRef = this.dialog.open(ConfirmComponent, { disableClose: false });
 
     let msg = this.tSvc.translate('titles.sal.nist.confirmation');
-    msg = msg.replace('{cia}', this.tSvc.translate('titles.sal.' + cToFullType[ciaType].toLowerCase()));
+    msg = msg.replace('{cia}', this.tSvc.translate('titles.sal.level.' + cToFullType[ciaType].toLowerCase()));
     this.dialogRef.componentInstance.confirmMessage = msg
 
     this.dialogRef.afterClosed().subscribe(result => {

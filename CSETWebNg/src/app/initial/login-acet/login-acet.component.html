@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
+<div id="white-panel" *transloco="let t" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
   [ngClass]="{'login-background':mode == 'LOGIN'}">
   <div class="p-0 d-flex flex-column flex-10a w-100 login-margin">
 
@@ -97,7 +97,7 @@
                   <div class="alert alert-danger">Incorrect Username or Password</div>
                 </div>
                 <label for="email">
-                  Enter your email address and password to login.
+                  {{t('login.login prompt')}}
                 </label>
                 <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
                   #email="ngModel" required email focusOnInit="true" tabindex="0" />

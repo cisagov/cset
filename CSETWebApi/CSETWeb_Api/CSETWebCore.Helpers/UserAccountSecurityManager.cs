@@ -36,6 +36,8 @@ namespace CSETWebCore.Helpers
         // The number of old passwords that cannot be reused
         public readonly int NumberOfHistoricalPasswords = 24;
 
+        private readonly TranslationOverlay _overlay;
+
 
         /// <summary>
         /// 
@@ -51,6 +53,8 @@ namespace CSETWebCore.Helpers
             _userBusiness = userBusiness;
             _notificationBusiness = notificationBusiness;
             _configuration = configuration;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -266,7 +270,7 @@ namespace CSETWebCore.Helpers
         /// Returns a list of potential security questions.
         /// </summary>
         /// <returns></returns>
-        public List<PotentialQuestions> GetSecurityQuestionList()
+        public List<PotentialQuestions> GetSecurityQuestionList(string lang)
         {
             List<PotentialQuestions> questions =
                 (from a in _context.SECURITY_QUESTION
@@ -275,6 +279,13 @@ namespace CSETWebCore.Helpers
                      SecurityQuestion = a.SecurityQuestion,
                      SecurityQuestionId = a.SecurityQuestionId
                  }).ToList<PotentialQuestions>();
+
+            foreach (var item in questions)
+            {
+                item.SecurityQuestion = _overlay.GetValue("SECURITY_QUESTION", item.SecurityQuestionId.ToString(), lang)?.Value 
+                    ?? item.SecurityQuestion;  
+            }
+
             return questions;
         }
 

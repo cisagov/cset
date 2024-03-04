@@ -19,7 +19,7 @@ public partial class MATURITY_GROUPINGS
     [StringLength(500)]
     public string Title { get; set; }
 
-    [StringLength(2000)]
+    [StringLength(3000)]
     public string Description { get; set; }
 
     public int Maturity_Model_Id { get; set; }

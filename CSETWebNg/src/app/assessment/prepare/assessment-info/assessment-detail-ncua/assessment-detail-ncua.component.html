@@ -33,7 +33,7 @@
         <form #f="ngForm">
             <!-- Normal ACET Detail Boxes -->
             <ng-container
-                *ngIf="this.assessment.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
+                *ngIf="this.assessment?.maturityModel === null || this.assessment.maturityModel?.modelName !== 'ISE'">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label class="mb-1" for="name">{{ t('assessment name') }}</label>

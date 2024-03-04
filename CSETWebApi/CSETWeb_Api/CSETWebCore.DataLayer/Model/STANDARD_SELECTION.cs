@@ -63,5 +63,7 @@ public partial class STANDARD_SELECTION
     [InverseProperty("Assessment")]
     public virtual ICollection<NIST_SAL_QUESTION_ANSWERS> NIST_SAL_QUESTION_ANSWERS { get; set; } = new List<NIST_SAL_QUESTION_ANSWERS>();
 
+    [ForeignKey("Selected_Sal_Level")]
+    [InverseProperty("STANDARD_SELECTION")]
     public virtual UNIVERSAL_SAL_LEVEL Selected_Sal_LevelNavigation { get; set; }
 }

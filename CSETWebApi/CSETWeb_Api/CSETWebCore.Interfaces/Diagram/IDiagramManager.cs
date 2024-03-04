@@ -9,6 +9,7 @@ using System.IO;
 using System.Xml;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Diagram;
+using CSETWebCore.Model.Malcolm;
 
 namespace CSETWebCore.Interfaces
 {
@@ -46,5 +47,6 @@ namespace CSETWebCore.Interfaces
         public CommonSecurityAdvisoryFrameworkVendor SaveCsafVendor(CommonSecurityAdvisoryFrameworkVendor vendor);
         public void DeleteCsafVendor(string vendorName);
         public void DeleteCsafProduct(string vendorName, string productName);
+        void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData);
     }
 }

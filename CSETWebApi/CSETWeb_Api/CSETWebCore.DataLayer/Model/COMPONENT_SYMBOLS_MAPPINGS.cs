@@ -3,19 +3,27 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
 public partial class COMPONENT_SYMBOLS_MAPPINGS
 {
+    public int Component_Symbol_Id { get; set; }
+
+    [Required]
+    [StringLength(50)]
+    public string Application { get; set; }
+
+    [Required]
+    [StringLength(100)]
+    public string Malcolm_Role { get; set; }
+
     [Key]
     public int Mapping_Id { get; set; }
 
-    public int Component_Symbol_Id { get; set; }
-
-    public string Application { get; set; }
-
-    public string Malcolm_Role { get; set; }
-
+    [ForeignKey("Component_Symbol_Id")]
+    [InverseProperty("COMPONENT_SYMBOLS_MAPPINGS")]
     public virtual COMPONENT_SYMBOLS Component_Symbol { get; set; }
 }

@@ -60,8 +60,8 @@ namespace CSETWebCore.Business.Question
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var resp = new QuestionResponse();
-            var mb = new MalcolmBusiness(_context, _tokenManager);
-            mb.VerificationAndValidation();
+            var mb = new MalcolmBusiness(_context);
+            //mb.VerificationAndValidation(assessmentId);
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?
@@ -202,6 +202,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);
@@ -292,6 +295,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);

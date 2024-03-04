@@ -16,6 +16,7 @@ namespace CSETWebCore.Interfaces.Reports
     public interface IReportsDataBusiness
     {
         void SetReportsAssessmentId(int assessmentId);
+
         List<MatRelevantAnswers> GetMaturityDeficiencies();
         List<MatRelevantAnswers> GetCommentsList();
         List<MatRelevantAnswers> GetMarkedForReviewList();
@@ -58,5 +59,6 @@ namespace CSETWebCore.Interfaces.Reports
         string FormatName(string firstName, string lastName);
 
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
+        List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
     }
 }
