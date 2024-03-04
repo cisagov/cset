@@ -34,7 +34,7 @@ import { map, startWith } from 'rxjs/operators';
 import { CreditUnionDetails } from '../../../../models/credit-union-details.model';
 import { ACETService } from '../../../../services/acet.service';
 import { AcetDashboard } from '../../../../models/acet-dashboard.model';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 
 @Component({
@@ -158,9 +158,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
-      // moment().utcOffset(300);
-      // let temp = new Date(this.lastModifiedTimestamp);
-      this.lastModifiedTimestamp = moment(this.lastModifiedTimestamp).toString();
+
+      this.lastModifiedTimestamp = new DateTime(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
@@ -375,10 +374,10 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       let date = new Date(Date.parse(this.assessment.assessmentDate));
       this.assessment.assessmentName = this.assessment.assessmentName + " " + this.datePipe.transform(date, 'MMddyy');
     }
-
-    this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
-
+    
+    // Specific ISE assessment names that we don't want bleeding over to ACET.
     if (this.isAnExamination()) {
+      this.assessment.assessmentName = this.assessment.assessmentName + ", " + this.lastModifiedTimestamp;
       this.assessment.assessmentName = this.assessment.assessmentName + this.contactInitials;
     }
   }

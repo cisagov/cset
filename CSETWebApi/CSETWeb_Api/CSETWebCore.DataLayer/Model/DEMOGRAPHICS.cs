@@ -64,6 +64,8 @@ public partial class DEMOGRAPHICS
     [InverseProperty("DEMOGRAPHICSFacilitatorNavigation")]
     public virtual ASSESSMENT_CONTACTS FacilitatorNavigation { get; set; }
 
+    [ForeignKey("IndustryId")]
+    [InverseProperty("DEMOGRAPHICS")]
     public virtual SECTOR_INDUSTRY Industry { get; set; }
 
     [ForeignKey("OrganizationType")]

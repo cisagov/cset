@@ -17,6 +17,8 @@ public partial class vQUESTION_HEADINGS
     [StringLength(250)]
     public string Question_Group_Heading { get; set; }
 
+    public int Question_Group_Heading_Id { get; set; }
+
     [Required]
     [StringLength(100)]
     public string Universal_Sub_Category { get; set; }

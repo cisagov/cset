@@ -28,6 +28,7 @@ import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { AlertComponent } from '../../dialogs/alert/alert.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private tSvc: TranslocoService,
     public authSvc: AuthenticationService,
     public dialog: MatDialog
   ) { }
@@ -133,8 +135,8 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
         if (passwordChangeSuccess) {
           this.dialog.open(AlertComponent, {
             data: {
-              messageText: 'Your password has been changed successfully.',
-              title: 'Password Changed',
+              messageText: this.tSvc.translate('change password.changed message'),
+              title: this.tSvc.translate('change password.changed dialog title'),
               iconClass: 'cset-icons-check-circle'
             }
           });

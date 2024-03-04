@@ -75,7 +75,7 @@
             {{ assess.assessmentName }}
           </td>
           <td>
-            {{ assess.assessmentDate | date:'dd-MMM-yyyy' }}
+            {{ assess.assessmentDate | localizeDate }}
           </td>
           <td *ngFor="let s of assess.selectedStandards" class="text-center" [innerHTML]="showDot(s.selected)">
           </td>

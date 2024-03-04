@@ -13,6 +13,7 @@
     <None Remove="App_Data\EmailFooter.html" />
     <None Remove="App_Data\EmailFooter_ACET.html" />
     <None Remove="App_Data\EmailFooter_CF.html" />
+    <None Remove="App_Data\EmailFooter_TSA.html" />
     <None Remove="App_Data\inlineStylesheet.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_ACET.html" />
     <None Remove="App_Data\invitedPasswordCreationTemplate_CF.html" />
@@ -47,6 +48,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\assessmentInviteTemplate_CSET.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Data\EmailFooter_TSA.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="App_Data\EmailFooter_CF.html">
@@ -138,7 +142,7 @@
     <None Update="App_Data\ACET Spanish Question Mapping.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\UK\CATEGORIES.json">
+    <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\DEMOGRAPHICS_ORGANIZATION_TYPE.json">
@@ -154,6 +158,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\GENERIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\MATURITY_GROUPINGS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_QUESTIONS.json">
@@ -175,6 +182,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\SECTOR_INDUSTRY.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\SECURITY_QUESTION.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\UK\STANDARD_CATEGORY.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\Spanish ACET Groupings.xlsx">

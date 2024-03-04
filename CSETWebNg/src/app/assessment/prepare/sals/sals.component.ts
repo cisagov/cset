@@ -58,10 +58,10 @@ export class SalsComponent implements OnInit {
         this.salsSvc.selectedSAL = data;
         this.sal_Levels = data;
 
-        if (data.methodology.toLowerCase() === 'simple') {
+        if (!data.methodology) {
           data.methodology = 'Simple';
         }
-        if (!data.methodology) {
+        if (data.methodology.toLowerCase() === 'simple') {
           data.methodology = 'Simple';
         }
 

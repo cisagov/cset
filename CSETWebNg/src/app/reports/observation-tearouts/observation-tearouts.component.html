@@ -73,7 +73,7 @@
 
             <table class="finding-table" *ngFor="let obs of individual.observations">
                 <tr>
-                    <td colspan="4" class="tint1">{{obs.finding}}</td>
+                    <td colspan="4" class="tint1">{{obs.observation}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ 'reports.observations tear-out sheets.question identifier' | transloco }}:</td>
@@ -85,9 +85,9 @@
                 </tr>
                 <tr>
                     <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
-                    <td style="width: 25%">{{ 'level.' + obs.importance.toLowerCase() | transloco }}</td>
+                    <td style="width: 25%">{{ 'observation.importance ' + obs.importance.toLowerCase() | transloco }}</td>
                     <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
-                    <td style="width: 25%">{{reportSvc.translatedDate(obs.resolutionDate)}}</td>
+                    <td style="width: 25%">{{obs.resolutionDate | localizeDate}}</td>
                 </tr>
                 <tr>
                     <td class="tint2">{{ t('issue') }}:</td>

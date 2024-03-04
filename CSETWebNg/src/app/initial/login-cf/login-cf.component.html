@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+<div id="white-panel" *transloco="let t" class="oy-auto p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
   <div class="p-0 d-flex flex-column flex-10a w-100">
 
     <!-- CSET Logo and Name -->
@@ -36,7 +36,7 @@
         An error was encountered while running CSET.
       </div>
       <div *ngIf="mode === 'LOGIN' && !isRunningInElectron">
-        Enter your email address and password to login.
+        {{t('login.login prompt')}}
       </div>
       <div *ngIf="mode === 'SIGNUP'">
         Enter your name and email address to register a new Cyber Florida CSET account.
@@ -80,7 +80,7 @@
             <div class="alert alert-danger">Password is expired. Click 'Reset Password'</div>
           </div>
           <label for="email">
-            Enter your email address and password to login.
+            {{t('login.login prompt')}}
           </label>
           <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
             #email="ngModel" required email focusOnInit="true" />

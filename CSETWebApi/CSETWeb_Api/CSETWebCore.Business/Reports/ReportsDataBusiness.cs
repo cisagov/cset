@@ -5,7 +5,6 @@
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Acet;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
@@ -21,16 +20,13 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
-using DocumentFormat.OpenXml.EMMA;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using Org.BouncyCastle.Asn1.Pkcs;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
+
 
 namespace CSETWebCore.Business.Reports
 {
@@ -46,6 +42,12 @@ namespace CSETWebCore.Business.Reports
 
         public List<int> OutOfScopeQuestions = new List<int>();
 
+        private TranslationOverlay _overlay;        //private string _lang = "en";
+
+        //public string Lang { get => _lang; set => _lang = value; }
+
+
+
 
         /// <summary>
         /// Constructor.
@@ -60,6 +62,8 @@ namespace CSETWebCore.Business.Reports
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
             _tokenManager = tokenManager;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -84,6 +88,8 @@ namespace CSETWebCore.Business.Reports
             {
                 return new List<MatRelevantAnswers>();
             }
+
+            var lang = _tokenManager.GetCurrentLanguage();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
@@ -113,13 +119,9 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-            int userId = (int)_tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
 
             //
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            if (lang == "es")
             {
                 responseList.ForEach(
                    matAns =>
@@ -278,6 +280,8 @@ namespace CSETWebCore.Business.Reports
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
+            var lang = _tokenManager.GetCurrentLanguage();
+
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
@@ -306,12 +310,8 @@ namespace CSETWebCore.Business.Reports
 
             Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
             Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
-            int userId = (int)_tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
 
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            if (lang == "es")
             {
                 allGroupings.ForEach(
                     group =>
@@ -371,7 +371,7 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview
                                 };
 
-                                if (user?.Lang == "es" || ak?.Lang == "es")
+                                if (lang == "es")
                                 {
                                     var output = new SpanishQuestionRow();
                                     var temp = new SpanishQuestionRow();
@@ -765,6 +765,9 @@ namespace CSETWebCore.Business.Reports
                     {
                         TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                         TinyMapper.Map(answer.b, qa);
+
+                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                        qa.HasObservation = answer.b.HasDiscovery ?? false;
                     }
 
                     newGrouping.Questions.Add(qa);
@@ -912,6 +915,97 @@ namespace CSETWebCore.Business.Reports
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode)
+            
+        {
+            
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            _questionRequirement.InitializeManager(_assessmentId);
+
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
+
+            List<ControlRow> controlRows = new List<ControlRow>();
+
+            var qQ = (from rs in _context.Answer_Components_Default
+                        orderby rs.Question_Group_Heading
+                        where rs.Assessment_Id == _assessmentId
+                        select new { rs } ).ToList();
+
+            foreach (var q in qQ)
+            {
+                controlRows.Add(new ControlRow()
+                {
+                    Requirement_Id = q.rs.heading_pair_id,
+                    Requirement_Text = q.rs.Sub_Heading_Question_Description,
+                    Answer_Text = q.rs.Answer_Text,
+                    Comment = q.rs.Comment,
+                    Question_Id = q.rs.Question_Id,
+                    Requirement_Title = q.rs.Question_Group_Heading,
+                    Short_Name = q.rs.ComponentName,
+                    Simple_Question = q.rs.QuestionText,
+                    Standard_Category = q.rs.Question_Group_Heading,
+                    Standard_Sub_Category = q.rs.Universal_Sub_Category,
+                    Standard_Level = q.rs.SAL
+                });
+            }
+           
+            //get all the questions for this control 
+            //determine the percent implemented.                 
+            int prev_requirement_id = 0;
+            int questionCount = 0;
+            int questionsAnswered = 0;
+            BasicReportData.RequirementControl control = null;
+            List<BasicReportData.Control_Questions> questions = null;
+
+            foreach (var a in controlRows)
+            {
+                if (prev_requirement_id != a.Requirement_Id)
+                {
+                    questionCount = 0;
+                    questionsAnswered = 0;
+                    questions = new List<BasicReportData.Control_Questions>();
+                    control = new BasicReportData.RequirementControl()
+                    {
+                        ControlDescription = a.Requirement_Text,
+                        RequirementTitle = a.Requirement_Title,
+                        Level = a.Standard_Level,
+                        StandardShortName = a.Short_Name,
+                        Standard_Category = a.Standard_Category,
+                        SubCategory = a.Standard_Sub_Category,
+                        Control_Questions = questions
+                    };
+                    controls.Add(control);
+                }
+                questionCount++;
+
+                switch (a.Answer_Text)
+                {
+                    case Constants.Constants.ALTERNATE:
+                    case Constants.Constants.YES:
+                        questionsAnswered++;
+                        break;
+                }
+
+                questions.Add(new BasicReportData.Control_Questions()
+                {
+                    Answer = a.Answer_Text,
+                    Comment = a.Comment,
+                    Simple_Question = a.Simple_Question
+                });
+
+                control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
+                prev_requirement_id = a.Requirement_Id;
+            }
+
+            return controls;
+        }
+
         public List<List<DiagramZones>> GetDiagramZones()
         {
             var level = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == _assessmentId).FirstOrDefault();
@@ -1035,10 +1129,17 @@ namespace CSETWebCore.Business.Reports
 
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
 
-            return _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+            var categories = _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
 
+            for (var i = 0; i < categories.Count; i++)
+            {
+                var cat = categories[i];
+                cat.Question_Group_Heading = _overlay.GetValue("QUESTION_GROUP_HEADING", cat.QGH_Id.ToString(), lang)?.Value ?? cat.Question_Group_Heading;
+            }
 
+            return categories;
         }
 
 
@@ -1215,13 +1316,27 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+
             var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
+                if (q.RequirementId != null)
+                {
+                    var reqOverlay = _overlay.GetRequirement((int)q.RequirementId, lang);
+                    if (reqOverlay != null)
+                    {
+                        q.QuestionText = reqOverlay.RequirementText;
+                    }
+                }
+
+
                 q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+
+                q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
 
                 list.Add(new RankedQuestions()
                 {
@@ -1478,26 +1593,27 @@ namespace CSETWebCore.Business.Reports
 
 
                 TinyMapper.Bind<FINDING, Observations>();
-                Observations rfind = TinyMapper.Map<Observations>(f.b);
-                rfind.Observation = f.b.Summary;
-                rfind.ResolutionDate = f.b.Resolution_Date.ToString();
-                rfind.Importance = f.Value;
+                Observations obs = TinyMapper.Map<Observations>(f.b);
+                obs.Observation = f.b.Summary;
+                obs.ResolutionDate = f.b.Resolution_Date.ToString();
+                obs.Importance = f.Value;
 
 
                 // get the question identifier and text
-                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
+               GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                     out string qid, out string qtxt);
-                rfind.QuestionIdentifier = qid;
-                rfind.QuestionText = qtxt;
+                obs.QuestionIdentifier = qid;
+                obs.QuestionText = qtxt;
 
 
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
                                   select FormatName(b.FirstName, b.LastName)).ToList();
-                rfind.OtherContacts = string.Join(",", othersList);
+                obs.OtherContacts = string.Join(",", othersList);
 
-                individual.Observations.Add(rfind);
+                individual.Observations.Add(obs);
             }
+
             return individualList;
         }
 
@@ -1506,6 +1622,9 @@ namespace CSETWebCore.Business.Reports
         /// Formats an identifier for the corresponding question. 
         /// Also returns the question text with parameters applied, in the
         /// case of a requirement.
+        /// 
+        /// If the user's language is non-English, attempts to overlay the
+        /// question text with the translated version.
         /// </summary>
         /// <returns></returns>
         private void GetQuestionTitleAndText(dynamic f,
@@ -1515,6 +1634,7 @@ namespace CSETWebCore.Business.Reports
         {
             identifier = "";
             questionText = "";
+            var lang = _tokenManager.GetCurrentLanguage();
 
             switch (f.c.Question_Type)
             {
@@ -1546,15 +1666,18 @@ namespace CSETWebCore.Business.Reports
                     identifier = f.r.Requirement_Title;
                     var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
                     questionText = rb.ResolveParameters(f.r.Requirement_Id, answerId, f.r.Requirement_Text);
+
+                    // translate
+                    questionText = _overlay.GetRequirement(f.r.Requirement_Id, lang)?.RequirementText ?? questionText;
+
                     return;
 
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
                     //
-                    var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
-                    var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == _tokenManager.GetAccessKey());
-                    if (user?.Lang == "es" || ak?.Lang == "es")
+
+                    if (lang == "es")
                     {
                         Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                         var output = new SpanishQuestionRow();

@@ -33,7 +33,7 @@
     Introduction
 </h4>
 <p>
-    On {{ model?.assessmentDetails?.assessment_Date | date:'MMMM dd, yyyy' }}, {{
+    On {{ model?.assessmentDetails?.assessment_Date | localizeDate }}, {{
     model?.assessmentDetails?.facility_Name
     ?? '[Facility Name]' }} conducted an Incident Management Review (IMR).
     Answers to questions regarding the implementation of

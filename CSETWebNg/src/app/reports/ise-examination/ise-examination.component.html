@@ -50,7 +50,7 @@
 
                     <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
                     <div class="title-page-content">{{response?.information?.assessment_Date |
-                        date:'dd-MMM-yyyy'}}
+                        localizeDate}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                     <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'"
@@ -80,7 +80,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{response?.information?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{response?.information?.assessment_Date | localizeDate}}</td>
                     </tr>
                     <tr>
                         <td>Credit Union:</td>
@@ -278,113 +278,104 @@
                     </div>
                 </div>
                 <div *ngIf="this.relaventIssues">
-                    <div *ngFor="let finding of this.findingsResponse">
+                    <div *ngFor="let observation of this.observationResponse">
                         <div
-                            *ngIf="this.ncuaSvc.translateExamLevel(finding?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
+                            *ngIf="this.ncuaSvc.translateExamLevel(observation?.question?.maturity_Level_Id).substring(0, 4) == this.examLevel.substring(0, 4)">
 
                             <div>
-                                <strong>Statement: </strong> {{ finding?.question?.question_Title }}
+                                <strong>Statement: </strong> {{ observation?.question?.question_Title }}
                             </div>
                             <div>
-                                <strong>Title: </strong> {{ finding?.finding?.title }}
+                                <strong>Title: </strong> {{ observation?.finding?.title }}
                             </div>
                             <div>
-                                <strong>Issue Type: </strong> {{ finding?.finding?.type }}
+                                <strong>Issue Type: </strong> {{ observation?.finding?.type }}
                             </div>
 
                             <strong>Description: </strong>
                             <div style="white-space: pre-wrap;"
-                                [innerHTML]="(finding?.finding?.description == null || finding?.finding?.description == '') ? '(no Description available)' : finding?.finding?.description">
+                                [innerHTML]="(observation?.finding?.description == null || observation?.finding?.description == '') ? '(no Description available)' : observation?.finding?.description">
                             </div>
-                            <div *ngIf="finding?.finding?.type !== 'Supplemental Fact'">
+                            <div *ngIf="observation?.finding?.type !== 'Supplemental Fact'">
 
                                 <strong> Action Items: </strong>
                                 <br>
-                                <div *ngIf="finding?.finding?.auto_Generated != 1">
-                                    <div *ngIf="finding?.finding?.actionItems != null" style="white-space: pre-wrap;"
-                                        [innerHTML]="finding?.finding?.actionItems">
+                                <div *ngIf="observation?.finding?.auto_Generated != 1">
+                                    <div *ngIf="observation?.finding?.actionItems != null" style="white-space: pre-wrap;"
+                                        [innerHTML]="observation?.finding?.actionItems">
                                     </div>
-                                    <div *ngIf="finding?.finding?.actionItems == null">
+                                    <div *ngIf="observation?.actionItems == null">
                                         (no Action Items available)
                                     </div>
                                 </div>
-                                <div
-                                    *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id) && finding?.finding?.auto_Generated == 1">
-                                    <div
-                                        *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(finding?.finding?.finding_Id); let i = index">
-                                        <div
-                                            *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
+                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
+                                    <div *ngFor="let allActionsInFinding of this.masterActionItemsMap.get(observation?.finding?.finding_Id); let i = index">
+                                        <div *ngIf="allActionsInFinding.action_Items != '' && allActionsInFinding.action_Items != '.'">
                                             {{ this.getChildQuestionNumber(allActionsInFinding.question_Title) }}: {{
                                             allActionsInFinding.action_Items }}
                                         </div>
-                                        <div
-                                            *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && finding?.finding?.actionItems == null">
+                                        <div *ngIf="(allActionsInFinding.action_Items == '' || allActionsInFinding.action_Items == '.') && observation?.finding?.actionItems == null">
                                             (no Action Items available)
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    *ngIf="!this.masterActionItemsMap.has(finding?.finding?.finding_Id) && finding?.finding?.auto_Generated == 1">
+                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id) && observation?.finding?.auto_Generated == 1">
                                     (no Action Items available)
                                 </div>
-                                <strong> Risk Area: </strong> {{ finding?.finding?.risk_Area }}
+                                <strong> Risk Area: </strong> {{ observation?.finding?.risk_Area }}
                                 <br>
-                                <strong> Sub-Risk Area: </strong> {{ finding?.finding?.sub_Risk }}
+                                <strong> Sub-Risk Area: </strong> {{ observation?.finding?.sub_Risk }}
                                 <br>
                                 <strong> Regulatory Citation: </strong>
                                 <br>
-                                <div *ngIf="this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
-                                    <div
-                                        *ngIf="finding?.finding?.citations != null && finding?.finding?.citations != ''">
+                                <div *ngIf="this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
+                                    <div *ngIf="observation?.finding?.citations != null && observation?.finding?.citations != ''">
                                         {{
-                                        (this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation
+                                        (this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
                                         == null
                                         ||
-                                        this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation
+                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
                                         == '') ?
                                         ' ' :
-                                        this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation
-                                        + ', ' }}{{ finding?.finding?.citations }}
+                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
+                                        + ', ' }}{{ observation?.finding?.citations }}
                                     </div>
-                                    <div
-                                        *ngIf="(finding?.finding?.citations == null || finding?.finding?.citations == '')
-                                                    && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != null
-                                                    && this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation != ''">
+                                    <div *ngIf="(observation?.finding?.citations == null || observation?.finding?.citations == '')
+                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != null
+                                                    && this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation != ''">
                                         {{
-                                        this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation
+                                        this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation
                                         }}
                                     </div>
-                                    <div
-                                        *ngIf="(this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == null
-                                            || this.masterActionItemsMap.get(finding?.finding?.finding_Id)[0].regulatory_Citation == '')
-                                            && (finding?.finding?.citations == null || finding?.finding?.citations == '')">
+                                    <div *ngIf="(this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == null
+                                            || this.masterActionItemsMap.get(observation?.finding?.finding_Id)[0].regulatory_Citation == '')
+                                            && (observation?.finding?.citations == null || observation?.finding?.citations == '')">
                                         (no Regulatory Citations available)
                                     </div>
                                 </div>
-                                <div *ngIf="!this.masterActionItemsMap.has(finding?.finding?.finding_Id)">
+                                <div *ngIf="!this.masterActionItemsMap.has(observation?.finding?.finding_Id)">
                                     (no Regulatory Citations available)
                                 </div>
                             </div>
-                            <div *ngIf="finding?.finding?.type === 'Supplemental Fact'">
+                            <div *ngIf="observation?.finding?.type === 'Supplemental Fact'">
 
                                 <strong> Supplemental Fact: </strong>
 
                                 <br>
                                 <span
-                                    *ngIf="finding?.finding?.supp_Guidance != null && finding?.finding?.supp_Guidance != ''"
-                                    style="white-space: pre-wrap;" [innerHtml]="finding?.finding?.supp_Guidance"></span>
-                                <span
-                                    *ngIf="finding?.finding?.supp_Guidance == null || finding?.finding?.supp_Guidance == ''">(no
+                                    *ngIf="observation?.finding?.supp_Guidance != null && observation?.finding?.supp_Guidance != ''"
+                                    style="white-space: pre-wrap;" [innerHtml]="observation?.finding?.supp_Guidance"></span>
+                                <span *ngIf="observation?.finding?.supp_Guidance == null || observation?.finding?.supp_Guidance == ''">(no
                                     Supplemental Fact available)</span>
                                 <br>
                                 <strong> Resources: </strong>
                                 <br>
-                                <span *ngIf="sourceFilesMap.has(finding?.finding?.finding_Id)">
-                                    <div *ngFor="let file of sourceFilesMap.get(finding?.finding?.finding_Id)">
+                                <span *ngIf="sourceFilesMap.has(observation?.finding?.finding_Id)">
+                                    <div *ngFor="let file of sourceFilesMap.get(observation?.finding?.finding_Id)">
                                         {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
                                     </div>
                                 </span>
-                                <span *ngIf="!sourceFilesMap.has(finding?.finding?.finding_Id)">(no Resources
+                                <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources
                                     available)</span>
                             </div>
 

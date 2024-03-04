@@ -7,6 +7,5 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class usp_Assessments_Completion_For_UserResult
     {
-
     }
 }

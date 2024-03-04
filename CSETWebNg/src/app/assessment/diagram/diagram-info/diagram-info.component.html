@@ -46,11 +46,14 @@
                 class="fas fa-project-diagram mr-2"></i>{{buttonText}}</button>
 
         <span *ngIf="configSvc.installationMode == 'RENEW'">
-            <label for="importFile" class="btn btn-primary cset-icons-import">
+            <button class="btn btn-primary" (click)="openMalcolmInstructionsDialog()">
+                Import Malcolm
+            </button>
+            <!-- <label for="importFile" >
                 Import Malcolm
             </label>
             <input type="file" class="display-none" id="importFile" multiple accept=".json"
-                (change)="uploadMalcolmData($event)">
+                (change)="openMalcolmInstructionsDialog()"> -->
         </span>
     </div>
 

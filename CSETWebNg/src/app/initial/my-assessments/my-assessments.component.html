@@ -222,12 +222,11 @@
                             'CSET' :
                             'TSA' }}</td>
                         <td>{{assessment.type}}</td>
-                        <td *ngIf="!this.ncuaSvc.switchStatus">{{reportSvc.translatedDate(assessment.lastModifiedDate)}}
+                        <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}
                         </td>
                         <td *ngIf="showColumn('ise-submitted')">
-                            <!-- <ng-container *ngIf="assessment.iseSubmitted">{{ assessment.submittedDate | date: 'M/dd/yy' }}</ng-container> -->
                             <ng-container *ngIf="assessment.iseSubmitted">{{
-                                assessSvc.translatedDate(assessment.submittedDate, 'l') }}</ng-container>
+                                assessment.submittedDate | localizeDate }}</ng-container>
                         </td>
                         <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
 

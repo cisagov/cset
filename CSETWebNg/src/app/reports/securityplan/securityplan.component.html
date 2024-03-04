@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                SITE CYBERSECURITY PLAN
+                {{t('reports.core.security plan.title page title')}}
             </p>
         </div>
         <div class="column">
@@ -48,28 +48,23 @@
 
 
     <div class="page-break">
-        <h1>Signatures</h1>
+        <h1>{{t('reports.core.security plan.signature')}}</h1>
 
-        <p>My signature indicates that I have reviewed and approve this Site Cyber Security Plan and the corresponding
-            appendices.
-            To the best of my knowledge, they accurately describe the security profile of the Untitled Assessment 21
-            security
-            policies and procedures, including the operational, management, and technical controls under which they will
-            be operated.
+        <p>{{t('reports.core.security plan.signature disclaimer')}}
         </p>
 
         <p>
             <b>
                 <i>
-                    (Example only. Copy and replace the text in this signature block for each applicable position.)
+                    {{t('reports.core.security plan.signature example')}}
                 </i>
             </b>
         </p>
 
         <div style="margin-bottom: 100px">
             <div class="signature-block">
-                <span class="signature">Sample Corporate Officer, CEO John Doe</span>
-                <span class="date">Date</span>
+                <span class="signature">{{t('reports.core.security plan.signature example text 1')}}</span>
+                <span class="date">{{t('reports.core.security plan.signature example text 2')}}</span>
             </div>
         </div>
     </div>
@@ -78,84 +73,43 @@
 
     <div class="page-break">
         <h1>
-            Introduction
+            {{t('reports.core.security plan.introduction')}}
         </h1>
 
         <p class="intro">
-            Template instructions and directives are given in italicized 10 point font and should be replaced
-            appropriately.
+            {{t('reports.core.security plan.template instructions')}}
         </p>
 
-        <p class="intro">This security plan template is intended to be used as a tool for the development of a security
-            plan. This template
-            will assist you in identifying the controls in place and those needing further implementation based upon the
-            answers provided in the accompanying Cybersecurity Evaluation Tool (CSET) assessment. The basic process for
-            this
-            plan development would be to first determine risk, second select the countermeasures necessary to mitigate
-            the
-            risk to an acceptable level, and finally follow through to ensure that the countermeasures are implemented
-            to
-            the expected level.</p>
+        <p class="intro">{{t('reports.core.security plan.template instructions text 1')}}</p>
 
         <p class="intro">
-            The purpose of the security plan is to provide an overview of the security requirements of the system and
-            describe the controls
-            in place or planned, for meeting those requirements. The site cybersecurity plan also delineates
-            responsibilities
-            and expected behavior of all individuals who access the system. The security plan should be viewed as
-            documentation
-            of the structured process of planning adequate, cost effective security protection for a system. It should
-            reflect
-            input from various managers with responsibilities concerning the system, including information owners, the
-            system
-            operator, and the system security manager. Additional information may be included in the basic plan and the
-            structure
-            and format organized according to agency needs, so long as the major sections described in this document are
-            adequately covered and readily identifiable.
+            {{t('reports.core.security plan.template instructions text 2')}}
         </p>
 
         <p class="intro">
-            The System Owner is responsible for ensuring that the security plan is prepared and for implementing the
-            plan and monitoring
-            its effectiveness. Security plans should reflect input from various individuals with responsibilities
-            concerning
-            the system, including functional “end users,” Information Owners, the System Administrator, and the System
-            Security
-            Manager
+            {{t('reports.core.security plan.template instructions text 3')}}
         </p>
 
         <p class="intro">
-            This template may also include:
+            {{t('reports.core.security plan.template bullets')}}
         </p>
 
         <ul class="intro">
-            <li>Recommended templates for policies or procedures that have been identified as needed but not currently
-                available
-                based on the assessment answers.</li>
+            <li>{{t('reports.core.security plan.template bullet text 1')}}</li>
             <li>
-                The basic network diagram
+                {{t('reports.core.security plan.template bullet text 2')}}
             </li>
             <li>
-                An Inventory List of the components included in the diagram that will be associated with specific
-                controls.
+                {{t('reports.core.security plan.template bullet text 3')}}
             </li>
             <li>
-                The List of recommended security controls along with a status as can be determined from the assessment
-                questions.
+                {{t('reports.core.security plan.template bullet text 4')}}
             </li>
             <li>
-                A recommended implementation priorities list. This priority is based on incident occurrences on the
-                Industrial Control System
-                Cyber Emergency Response Team (ICS-CERT) watch floor and cybersecurity expert opinion. These
-                recommendations
-                do not take into account any cost benefit analysis with respect to implementing a control.
+                {{t('reports.core.security plan.template bullet text 5')}}
             </li>
             <li>
-                Basic security assurance level determinations carried over from the assessment. In developing a security
-                plan it is recommended
-                that a deeper risk analysis is conducted to ensure that the selection of controls is not overly
-                conservative
-                (incurring undo costs) or optimistic (leaving excessive risk exposure).
+                {{t('reports.core.security plan.template bullet text 6')}}
             </li>
         </ul>
     </div>
@@ -164,55 +118,35 @@
 
     <div class="page-break">
         <h1>
-            1. System Identification
+            1. {{t('reports.core.security plan.system identification')}}
         </h1>
 
         <p class="intro">
-            Provide a brief (1-2 paragraphs) description of the main system assests and the necessary protection levels
-            for confidentiality,
-            integrity, and availability.   See section 3.1 for a more detailed description of confidentiality,
-            integrity,
-            and availability.
+            {{t('reports.core.security plan.system identification summary')}}
         </p>
 
         <h2>
-            1.1. System Environment
+            1.1. {{t('reports.core.security plan.system environment')}}
         </h2>
 
         <p class="intro">
-            Provide a brief (1-3 paragraphs) general description of the technical system. Include any environmental or
-            technical factors
-            that raise special security concerns, such as:
+            {{t('reports.core.security plan.system environment summary')}}
         </p>
         <ul class="intro">
-            <li>The system is connected to the Internet;</li>
-            <li>It is located in a harsh or overseas environment;</li>
-            <li>Software is rapidly implemented;</li>
-            <li>The software resides on an open network used by the general public or with overseas access;</li>
-            <li>The application is processed at a facility outside of the organization's control; or</li>
-            <li>The general support mainframe has dial-up lines.</li>
+            <li>{{t('reports.core.security plan.environment bullet text 1')}}</li>
+            <li>{{t('reports.core.security plan.environment bullet text 2')}}</li>
+            <li>{{t('reports.core.security plan.environment bullet text 3')}}</li>
+            <li>{{t('reports.core.security plan.environment bullet text 4')}}</li>
+            <li>{{t('reports.core.security plan.environment bullet text 5')}}</li>
+            <li>{{t('reports.core.security plan.environment bullet text 6')}}</li>
         </ul>
 
         <p class="intro">
-            Describe the primary computing platform(s) used (e.g., mainframe, desk top, LAN or Wide Area Network (WAN).
-            Include a general
-            description of the principal system components, including hardware, software, and communications resources.
-            Discuss
-            the type of communications included (e.g., dedicated circuits, dial circuits, public data/voice networks,
-            Internet).
-            Describe controls used to protect communication lines in the appropriate sections of the security plan.
+            {{t('reports.core.security plan.environment text 1')}}
         </p>
 
         <p class="intro">
-            Include any security software protecting the system and information. Describe in general terms the type of
-            security protection
-            provided (e.g., access control to the computing platform and stored files at the operating system level or
-            access
-            to data records within an application). Include only controls that have been implemented or planned, rather
-            than
-            listing the controls that are available in the software. Controls that are available, but not implemented,
-            provide
-            no protection.
+            {{t('reports.core.security plan.environment text 2')}}
         </p>
     </div>
 
@@ -220,7 +154,7 @@
 
     <!--Network Diagram-->
     <div class="page-break" *ngIf="response?.information.useDiagram">
-        <h1>Network Diagram</h1>
+        <h1>{{t('reports.network diagram')}}</h1>
         <div style="display: table; height: 8in">
             <div style="padding: 50% 0; height: 0">
                 <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"
@@ -233,339 +167,192 @@
 
     <div class="page-break">
         <h1>
-            2. Roles and Responsibilities
+            2. {{t('reports.core.security plan.roles and responsibilities')}}
         </h1>
 
-        <p class="intro">This section defines the roles and responsibilities for cybersecurity within the company.  Use
-            this section to define
-            the roles and responsibilities with respect to this plan for your company.
+        <p class="intro">{{t('reports.core.security plan.roles and responsibilities summary')}}
         </p>
 
         <h2 id="goto">
-            2.1. Executive Management
+            2.1. {{t('reports.core.security plan.executive management')}}
         </h2>
 
         <p>
-            Often this role is comprised of the Board of Directors and CEO.  Executive management is ultimately
-            responsible for the security
-            of the organization but will most likely delegate tasks and actual implementation.
+            {{t('reports.core.security plan.executive management summary')}}
         </p>
 
         <h2>
             <span style='font-family:"Arial",sans-serif'>2.2.
                 <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>
             </span>
-            <span style='font-family:"Arial",sans-serif'>Chief Security Officer or Chief Information Security Officer
-                (CISO)</span>
+            <span style='font-family:"Arial",sans-serif'>{{t('reports.core.security plan.chief security officer')}}</span>
         </h2>
 
         <p>
-            CSO or CISO is the senior level executive within an organization responsible for establishing and
-            maintaining the enterprise
-            vision, strategy and program to ensure information assets are adequately protected. The CISO directs staff
-            in
-            identifying, developing, implementing and maintaining processes across the organization to reduce
-            information
-            and information technology (IT) risks, respond to incidents, establish appropriate standards and controls,
-            and
-            direct the establishment and implementation of policies and procedures. The CISO is also usually responsible
-            for information related compliance.
+            {{t('reports.core.security plan.chief security summary')}}
         </p>
 
         <p>
-            Typically, the CISO's influence reaches the whole organization. Responsibilities include:
+            {{t('reports.core.security plan.chief security bullet header')}}
         </p>
 
         <ul>
-            <li>Information security and information assurance</li>
-            <li>Information regulatory compliance (e.g., US PCI DSS, FISMA, GLBA, HIPAA; UK Data Protection Act 1998;
-                Canada
-                PIPEDA)
-            </li>
-            <li>Information risk management</li>
-            <li>Supply chain risk management</li>
-            <li>Cybersecurity</li>
-            <li>Information technology controls for financial and other systems</li>
-            <li>Information privacy</li>
-            <li>Computer Emergency Response Team / Computer Security Incident Response Team</li>
-            <li>Identity and access management</li>
-            <li>Security Architecture (e.g. Sherwood Applied Business Security Architecture)</li>
-            <li>IT investigations, digital forensics, eDiscovery</li>
-            <li>Disaster recovery and business continuity management</li>
-            <li>Information Security Operations Center (ISOC)</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 1')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 2')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 3')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 4')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 5')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 6')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 7')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 8')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 9')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 10')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 11')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 12')}}</li>
+            <li>{{t('reports.core.security plan.chief security bullet text 13')}}</li>
         </ul>
 
 
         <h2>
-            2.3. Security Steering Committee
+            2.3. {{t('reports.core.security plan.security steering committee')}}
         </h2>
 
         <p>
-            The security steering committee is composed of a representative of all the key stakeholders in IT security.
-            These stake holders
-            are often representatives of the executive council, CISO or CSO, IT management, physical security personnel,
-            help desk, and key application and digitial asset owners.   This committee meets regularly often quarterly
-            to
-            review policies and procedures, security controls implementation progress, and determine future direction
-            for
-            security within a company.
+            {{t('reports.core.security plan.security steering text 1')}}
         </p>
 
         <p>
-            The security steering committee is responsible for making decisions on tactical and strategic security
-            issues within the
-            enterprise as a whole and should not be tied to one or more business units. The group should be made up of
-            people
-            from all over the organization so they can view risks and the effects of security decisions on individual
-            departments
-            and the organization as a whole. The CEO should head this committee, and the CFO, CIO, department managers,
-            and
-            chief internal auditor should all be on it. This committee should meet at least quarterly and have a well
-            defined
-            agenda. Some of the group’s responsibilities are listed next:
+            {{t('reports.core.security plan.security steering text 2')}}
         </p>
 
         <ul>
-            <li>Define the acceptable risk level for the organization.</li>
-            <li>Develop security objectives and strategies.</li>
-            <li>Determine priorities of security initiatives based on business needs.</li>
-            <li>Review risk assessment and auditing reports.</li>
-            <li>Monitor the business impact of security risks.</li>
-            <li>Review major security breaches and incidents.</li>
-            <li>Approve any major change to the security policy and program.</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 1')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 2')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 3')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 4')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 5')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 6')}}</li>
+            <li>{{t('reports.core.security plan.security steering bullet text 7')}}</li>
         </ul>
 
 
 
 
         <p>
-            They should also have a clearly defined vision statement in place that is set up to work with and support
-            the organizational
-            intent of the business. The statement shouldbe structured in a manner that provides support for the goals of
-            confidentiality, integrity, and availability as they pertain to the business objectives of the organization.
-            This in turn should be followed, or supported, by a mission statement that provides support and definition
-            to
-            the processes that will apply to the organization and allow it to reach its business goals.
+            {{t('reports.core.security plan.security steering text 3')}}
         </p>
 
         <h2>
-            2.4. System Owners
+            2.4. {{t('reports.core.security plan.system owners')}}
         </h2>
 
         <p>
-            The system owner is responsible for one or more systems, each of which may hold and process data owned by
-            different data
-            owners. A system owner is responsible for integrating security considerations into application and system
-            purchasing
-            decisions and development projects. The system owner is responsible for ensuring that adequate security is
-            being
-            provided by the necessary controls, password management, remote access controls, operating system
-            configurations,
-            and so on. This role must ensure the systems are properly assessed for vulnerabilities and must report any
-            to
-            the incident response team and data owner.
+            {{t('reports.core.security plan.system owner text')}}
         </p>
 
         <h2>
-            2.5. Data Owners
+            2.5. {{t('reports.core.security plan.data owners')}}
         </h2>
 
         <p>
-            The data owner (information owner) is usually a member of management who is incharge of a specific business
-            unit, and who
-            is ultimately responsible for the protection and use of a specific subset of information. The data owner has
-            due care responsibilities and thus will be held responsible for any negligent act that results in the
-            corruption
-            or disclosure of the data. The data owner decides upon the classification of the data he is responsible for
-            and
-            alters that classification if the business need arises. This person is also responsible for ensuring that
-            the
-            necessary security controls are in place, defining security requirements per classification and backup
-            requirements,
-            approving any disclosure activities, ensuring that proper access rights are being used, and defining user
-            access
-            criteria. The data owner approves access requests or may choose to delegate this function to business unit
-            managers.
-            And it is the data owner who will deal with security violations pertaining to the data he is responsible for
-            protecting. The data owner, who obviously has enough on his plate, delegates responsibility of the
-            day-to-day
-            maintenance of the data protection mechanisms to the data custodian.
+            {{t('reports.core.security plan.data owner text')}}
         </p>
 
         <h2>
-            2.6. Security Administrators
+            2.6. {{t('reports.core.security plan.security admins')}}
         </h2>
 
         <p>
-            Anyone who has a root account on Unix or Linux systems or an administrator account on Windows or Macintosh
-            systems actually
-            has security administrator rights. (Unfortunately, too many people have these accounts in most
-            environments.)
-            This means they can give and take away permissions and set security configurations.  However, just because a
-            person has a root or administrator account does not mean they are fulfilling the security administrator
-            role.
-            A security administrator’s tasks are many, and include creating new system user accounts, implementing new
-            security
-            software, testing security patches and components, and issuing new passwords. The security administrator
-            should
-            not actually approve new system user accounts. This is the responsibility of the supervisor.  The security
-            administrator
-            must make sure access rights given to users support the policies and data owner directives.
+            {{t('reports.core.security plan.security admin text')}}
         </p>
 
         <h2>
-            2.7. Supervisors/Managers
+            2.7. {{t('reports.core.security plan.supervisors managers')}}
         </h2>
 
         <p>
-            The supervisor role, also called user manager, is ultimately responsible for all user activity and any
-            assets created and
-            owned by these users. The supervisor responsibilities would include ensuring that employees understand their
-            responsibilities with respect to security, distributing initial passwords, making sure the employees’
-            account
-            information is up-to-date, and informing the security administrator when an employee is fired, suspended, or
-            transferred.  Any change that pertains to an employee’s role within the company usually affects what access
-            rights
-            they should and should not have, so the user manager must inform the security administrator of these changes
-            immediately.
+            {{t('reports.core.security plan.supervisors managers text')}}
         </p>
 
         <h2>
-            2.8. Users
+            2.8. {{t('reports.core.security plan.users')}}
         </h2>
 
         <p>
-            The user is any individual who routinely uses the data for work related tasks. The user must have the
-            necessary level of
-            access to the data to perform the duties within their position and is responsible for following operational
-            security
-            procedures to ensure the data’s confidentiality, integrity, and availability to others.
+            {{t('reports.core.security plan.user text')}}
         </p>
     </div>
 
 
     <div class="page-break">
         <h1>
-            3. Risk Analysis
+            3. {{t('reports.core.security plan.risk analysis')}}
         </h1>
 
-        <p class="intro">A good security plan will require that a risk evaluation is performed to determine the level of
-            necessary rigor and
-            cost benefit analysis for the level of controls selected. It is recommended that a general risk analysis be
-            performed.
-            A good risk assessment should include an evaluation of the value of the protected assets and information, an
-            examination of the consequences to the organization in the event of a successful attack, an examination of
-            the
-            threat if possible, and the cost of implementing mitigating controls.
+        <p class="intro">{{t('reports.core.security plan.risk analysis text')}}
         </p>
 
-        <p class="intro">threats × vulnerability × asset value = total risk
+        <p class="intro">{{t('reports.core.security plan.threats')}}
         </p>
 
-        <p class="intro">total risk – countermeasures = residual risk
+        <p class="intro">{{t('reports.core.security plan.total risk')}}
         </p>
 
 
-        <h4>Consequence</h4>
-        <p class="intro">The examination of the consequences of an attack should include:
+        <h4>{{t('reports.core.security plan.consequence')}}</h4>
+        <p class="intro">{{t('reports.core.security plan.consequence examination')}}
         </p>
         <ul class="intro">
-            <li>How many people could sustain injuries requiring a hospital stay?</li>
-            <li>How many people could be killed?</li>
-            <li>Estimate the potential cost of losing capital assets or the overall economic impact. (Consider the cost
-                of site
-                buildings, facilities, equipment, etc.)</li>
-            <li>Estimate the potential cost in terms of economic impact to both the site and surrounding communities.
-                (Consider
-                any losses to community structures and any costs associated with displacement.)</li>
-            <li>Estimate the potential cost of environmental cleanup to the site and surrounding communities. (Consider
-                the cost
-                for cleanup, fines, litigation, long term monitoring, etc.)</li>
+            <li>{{t('reports.core.security plan.consequence bullet text 1')}}</li>
+            <li>{{t('reports.core.security plan.consequence bullet text 2')}}</li>
+            <li>{{t('reports.core.security plan.consequence bullet text 3')}}</li>
+            <li>{{t('reports.core.security plan.consequence bullet text 4')}}</li>
+            <li>{{t('reports.core.security plan.consequence bullet text 5')}}</li>
         </ul>
 
-        <h4>Threat</h4>
-        <p class="intro">The threat portion of the equation can be deduced from the recommended implementation
-            priorities list. The priorities
-            are based on incident data collected by the ICS-CERT watch floor and subject matter experts as of the time
-            of
-            publication of CSET. Top priorities are controls that mitigate the most actively exploited vulnerabilities
-            with
-            the most significant consequences.
+        <h4>{{t('reports.core.security plan.threat')}}</h4>
+        <p class="intro">{{t('reports.core.security plan.threat text')}}
         </p>
 
-        <h4>Cost Benefit Analysis</h4>
-        <p class="intro">The cost of implementing controls with respect to the additional security provided is the final
-            step in selecting
-            the controls to implement.
+        <h4>{{t('reports.core.security plan.cost benefit analysis')}}</h4>
+        <p class="intro">{{t('reports.core.security plan.cost benefit text')}}
         </p>
 
 
         <h2>
-            3.1 Basic Model
+            3.1 {{t('reports.core.security plan.basic model')}}
         </h2>
 
         <p>
-            Traditional security models define three areas of consideration Confidentiality, Integrity, and
-            Availability. The security
-            plan should address each of these areas with respect to data and systems.
+            {{t('reports.core.security plan.basic model text')}}
         </p>
 
         <h3>
-            3.1.1 Confidentiality
+            3.1.1 {{t('reports.core.security plan.confidentiality')}}
         </h3>
 
-        <p>Confidentiality refers to preventing the disclosure of information to unauthorized individuals or systems.
-            For example,
-            a credit card transaction on the Internet requires the credit card number to be transmitted from the buyer
-            to
-            the merchant and from the merchant to a transaction processing network. The system attempts to enforce
-            confidentiality
-            by encrypting the card number during transmission, by limiting the places where it might appear (in
-            databases,
-            log files, backups, printed receipts, and so on), and by restricting access to the places where it is
-            stored.
-            If an unauthorized party obtains the card number in any way, a breach of confidentiality has occurred.
+        <p>{{t('reports.core.security plan.confidentiality text 1')}}</p>
 
-        </p>
-
-        <p>Confidentiality is necessary for maintaining the privacy of the people whose personal information a system
-            holds.
+        <p>{{t('reports.core.security plan.confidentiality text 2')}}
         </p>
 
         <h3>
-            3.1.2 Integrity
+            3.1.2 {{t('reports.core.security plan.integrity')}}
         </h3>
 
-        <p>In information security, data integrity means maintaining and assuring the accuracy and consistency of data
-            over
-            its entire life cycle.  This means that data cannot be modified in an unauthorized or undetected manner.
-            This
-            is not the same thing as referential integrity in databases, although it can be viewed as a special case of
-            Consistency
-            as understood in the classic ACID (Atomicity, Consistency, Isolation, Durability) model of transaction
-            processing.
-            Integrity is violated when a message is actively modified in transit. Information security systems typically
-            provide message integrity in addition to data confidentiality.
+        <p>{{t('reports.core.security plan.integrity text')}}
         </p>
 
         <h3>
-            3.1.3 Availability
+            3.1.3 {{t('reports.core.security plan.availability')}}
         </h3>
 
-        <p>For any information system to serve its purpose, the information must be available when it is needed. This
-            means
-            that the computing systems used to store and process the information, the security controls used to protect
-            it,
-            and the communication channels used to access it must be functioning correctly. High availability systems
-            aim
-            to remain available at all times, preventing service disruptions due to power outages, hardware failures,
-            and
-            system upgrades. Ensuring availability also involves preventing denial-of-service attacks.
+        <p>{{t('reports.core.security plan.availability text')}}
         </p>
 
         <ng-container *ngIf="!usesRAC()">
             <h2>
-                3.2 Security Assurance Level (SAL)
+                3.2 {{t('titles.sal.security assurance level (sal)')}}
             </h2>
 
             <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
@@ -617,13 +404,13 @@
 
     <div class="page-break" *ngIf="response?.zones.length > 0">
         <h1>
-            Diagram Component Inventory
+            {{t('reports.core.security plan.diagram component inventory')}}
         </h1>
         <div *ngFor="let zoneList of response?.zones">
             <table class="cset-table">
                 <tr>
-                    <th>Zone &nbsp;-&nbsp;{{zoneList[0].zone_Name}}</th>
-                    <th>SAL Level&nbsp;-&nbsp;{{zoneList[0].universal_Sal_Level}}</th>
+                    <th>{{t('reports.core.security plan.zone', {zoneName: zoneList[0].zone_Name})}}</th>
+                    <th>{{t('reports.core.security plan.sal level', {level: zoneList[0].universal_Sal_Level})}}</th>
                 </tr>
                 <tr *ngFor="let inventoryItem of zoneList">
                     <td>{{inventoryItem.diagram_Component_Type}}</td>
@@ -637,143 +424,177 @@
 
     <div class="page-break">
         <h1>
-            4. Security Plan Controls and Status List
+            4. {{t('reports.core.security plan.plan controls')}}
         </h1>
 
         <p>
-            This section lists all the controls which constitute the security plan and implementation status.   To
-            enable easier reading
-            of the controls list a table key is included at the start of this section. In this section the terms Control
-            and Requirement are used interchangeably to indicate the mitigation effort as defined in the given standard.
+            {{t('reports.core.security plan.plan controls text')}}
         </p>
 
         <p>
             <b>
-                Table Key and Field Descriptions:
+                {{t('reports.core.security plan.table key header')}}
             </b>
         </p>
 
         <table class="cset-table-2">
             <tr>
                 <td colspan="2">
-                    Requirement Title
+                    {{t('reports.core.security plan.requirement title')}}
                 </td>
-                <td>CSET Question/Requirement Category
+                <td>{{t('reports.core.security plan.cset question requirement category')}}
                 </td>
             </tr>
             <tr class="pale-green">
                 <td>
-                    Control Level
+                    {{t('reports.core.security plan.control level')}}
                 </td>
-                <td>Implementation Status
+                <td>{{t('reports.core.security plan.implementation status')}}
                 </td>
-                <td>Short Standard Name
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">Requirement Description
+                <td>{{t('reports.core.security plan.short standard name')}}
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Affected Zones  (Optional, may not be included in the table)
+                <td colspan="3">{{t('reports.core.security plan.requirement description')}}
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Affected Components  (Optional, may not be included in the table)
+                <td colspan="3">{{t('reports.core.security plan.affected zones')}}
                 </td>
             </tr>
             <tr>
-                <td colspan="3">Related Questions and Answers
+                <td colspan="3">{{t('reports.core.security plan.affected components')}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">{{t('reports.core.security plan.affected zones')}}
                 </td>
             </tr>
         </table>
 
         <p>
-            <b>Requirement Title:</b>  Is the control title as it is generally defined in the standard document from
-            which this
-            control is derived
+            <b>{{t('reports.core.security plan.requirement title')}}:</b> {{t('reports.core.security plan.requirement title text')}}
         </p>
 
         <p>
             <b>
-                CSET Question Category:
+                {{t('reports.core.security plan.cset question category')}}:
             </b>
-            Shows the CSET question category from the global questions list.  Questions from multiple standards have
-            been consolidated
-            together in the CSET tool and assigned a common category.
+            {{t('reports.core.security plan.cset question category text')}}
         </p>
 
         <p>
             <b>
-                Control Level:
+                {{t('reports.core.security plan.control level')}}:
             </b>
-            Mapped to one of Low, Moderate, High, or Very High.  A value of none indicates that the level was not
-            defined for the given
-            information type in the standard.
+            {{t('reports.core.security plan.control level text')}}
         </p>
 
         <p>
             <b>
-                Implementation Status:
+                {{t('reports.core.security plan.implementation status')}}:
             </b>
-            Shows the percentage complete as the number of yes and alternate answers / total related questions for this
-            control. The
-            percentage implemented will not necessarily be reflective of the amount of work required to implement the
-            control
-            but is merely an indicator of how many of the questions related to the control have been addressed so far.
+            {{t('reports.core.security plan.implementation status text')}}
         </p>
 
         <p>
             <b>
-                Short Standard Name:
+                {{t('reports.core.security plan.short standard name')}}:
             </b>
-            An indicator of which standard this control is derived from.
+            {{t('reports.core.security plan.short standard name text')}}
         </p>
 
         <p>
             <b>
-                Control Description:
+                {{t('reports.core.security plan.control description')}}:
             </b>
-            The full control text as defined in the standard from which the control is derived.
+            {{t('reports.core.security plan.control description text')}}
 
         </p>
 
         <p>
             <b>
-                Affected Zones:
+                {{t('reports.core.security plan.affected zones')}}:
             </b>
-            Only applicable to controls derived from a diagram.   If you have included a diagram in your original
-            assessment this field
-            will contain a list of zone in which atleast one component was found to require this control.
+            {{t('reports.core.security plan.affected zones text')}}
 
         </p>
 
         <p>
             <b>
-                Affected Components:
+                {{t('reports.core.security plan.affected components')}}:
             </b>
-            This field contains a list of the components that are directly applicable to this control.
+            {{t('reports.core.security plan.affected components text')}}
         </p>
 
         <p>
             <b>
-                Related Questions and Answers:
+                {{t('reports.core.security plan.related questions')}}:
             </b>
-            A list of the questions and answers from which the implementation status of this control was determined.
+            {{t('reports.core.security plan.related questions text')}}
         </p>
 
         <div style="margin-bottom: 3em"></div>
 
 
         <div *ngFor="let control of response?.controlList" style="margin-bottom: 2em;">
-            <table class="cset-table-2">
+            <table *ngIf="!response.information.useDiagram; else elseBlock"class="cset-table-2">
                 <tr>
                     <td colspan="2" style="font-weight: bold;">
                         {{control.requirementTitle}}
                     </td>
-                    <td>{{control.standard_Category}}
+                    <td>
+                        {{t('reports.core.security plan.' + control.standard_Category.toLowerCase())}}
                         <span *ngIf="control.subCategory?.length > 0">
-                            / {{control.subCategory}}
+                            / {{t('reports.core.security plan.' + control.subCategory.toLowerCase())}}
+                        </span>
+                    </td>
+                </tr>
+                <tr class="pale-green">
+                    <td style="width: 20%">
+                        {{t('titles.sal.level.'+ analysisSvc.salWord(control.level).toLowerCase())}}
+                    </td>
+                    <td style="width: 20%">
+                        {{control.implementationStatus}}
+                        <span *ngIf="control.implementationStatus != null
+                    && control.implementationStatus.length > 0">%</span>
+                    </td>
+                    <td style="width: 60%">
+                        {{t('reports.core.security plan.' + control.standardShortName.toLowerCase())}}
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" [innerHTML]="control.controlDescription">
+                    </td>
+                </tr>
+                <tr *ngIf="control.affectedZones">
+                    <td colspan="3">{{control.affectedZones}}
+                    </td>
+                </tr>
+                <tr *ngIf="control.affectedComponents">
+                    <td colspan="3">{{control.affectedComponents}}
+                    </td>
+                </tr>
+                <tr *ngIf="response.applicationMode == 'Questions Based'">
+                    <td colspan="3">
+                        <table class="related-questions">
+                            <tr *ngFor="let q of control.control_Questions">
+                                <td>{{q.simple_Question}}</td>
+                                <td style="width: 10%; text-align: center;">{{t('answer-options.labels.' + q.answer.toLowerCase())}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <table #elseblock class="cset-table-2">
+                <tr>
+                    <td colspan="2" style="font-weight: bold;">
+                        {{control.requirementTitle}}
+                    </td>
+                    <td>
+                        <span *ngIf="control.subCategory?.length > 0">
+                            {{control.subCategory}}
                         </span>
                     </td>
                 </tr>
@@ -787,7 +608,7 @@
                     && control.implementationStatus.length > 0">%</span>
                     </td>
                     <td style="width: 60%">
-                        {{control.standardShortName}}
+                                               
                     </td>
                 </tr>
                 <tr>

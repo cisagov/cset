@@ -29,6 +29,8 @@ public partial class MODES_SETS_MATURITY_MODELS
     [InverseProperty("MODES_SETS_MATURITY_MODELS")]
     public virtual APP_CODE AppCodeNavigation { get; set; }
 
+    [ForeignKey("Model_Name")]
+    [InverseProperty("MODES_SETS_MATURITY_MODELS")]
     public virtual MATURITY_MODELS Model_NameNavigation { get; set; }
 
     [ForeignKey("Set_Name")]

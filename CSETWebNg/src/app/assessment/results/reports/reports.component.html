@@ -25,7 +25,7 @@
     <h3>{{ 'titles.reports' | transloco }}</h3>
 
     <p>
-      {{ t('assessment complete message').replace('{date}', reportSvc.translatedDateGMT(lastModifiedTimestamp)) }}
+      {{ t('assessment complete message').replace('{date}', lastModifiedTimestamp | localizeDate: 'GMT') }}
       {{ t('reports run prior message') }}</p>
     <div class="my-3">
       <button mat-stroked-button (click)="openSnackBar()">
@@ -67,7 +67,7 @@
       " class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>{{t('standards and diagram')}}</h4>
       <button (click)="clickReportLink('executive')" tabindex="0" class="btn btn-link btn-link-dark text-left">
-        {{t('core.executive summary.executive summary')}}
+        {{t('executive summary')}}
       </button>
 
       <button (click)="clickReportLink('sitesummary')" tabindex="0" class="btn btn-link btn-link-dark text-left">
@@ -298,31 +298,24 @@
     </div>
 
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <!-- <div *ngIf="assessSvc.isISE() && !isMobile"
-        class="d-flex flex-column justify-content-start align-items-start mb-4"> -->
       <h4>ISE Reports</h4>
 
-      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted"
-        [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
+      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted" [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
 
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="
-          (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
-          this.ncuaSvc.unassignedIssues
-        ">
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
+
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="
-          (disableIseReportLinks && !assessSvc.assessment.isE_StateLed) ||
-          this.ncuaSvc.unassignedIssues
-        ">
+        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
-        class="btn btn-link btn-link-dark text-left">
+
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
+
       <button (click)="clickReportLink('iseexaminer')" tabindex="0" class="btn btn-link btn-link-dark text-left">
         ISE Examiner Notes
       </button>
@@ -330,7 +323,6 @@
       <div *ngIf="this.ncuaSvc.submitInProgress" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px"></div>
       </div>
-      <!-- </div> -->
     </div>
 
     <div *ngIf="

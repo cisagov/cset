@@ -39,7 +39,7 @@
             <h2>{{ statementLevel }}</h2>
         </div>
 
-        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filterMenu.showing only filtered')}}</div>
 
         <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
             <div *ngIf="!this.ncuaSvc.issuesFinishedLoading || !groupings" class="w-100">

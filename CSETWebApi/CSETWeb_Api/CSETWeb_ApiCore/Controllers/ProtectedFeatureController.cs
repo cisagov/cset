@@ -61,7 +61,7 @@ namespace CSETWebCore.Api.Controllers
                 {
                     ShortName = s.Short_Name,
                     FullName = s.Full_Name,
-                    Unlocked = s.IsEncryptedModuleOpen ?? false
+                    Unlocked = s.IsEncryptedModuleOpen
                 });
             }
 
@@ -117,7 +117,6 @@ namespace CSETWebCore.Api.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         [Route("api/EnableProtectedFeature/getCisaAssessorWorkflow")]
         /// <summary>
         /// Gets the status of the CISA assessor workflow for the current user.

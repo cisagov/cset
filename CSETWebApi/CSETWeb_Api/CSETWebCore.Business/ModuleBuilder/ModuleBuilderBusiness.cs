@@ -75,7 +75,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     ShortName = set.Short_Name,
                     SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                     IsCustom = set.Is_Custom,
-                    IsDisplayed = set.Is_Displayed ?? false,
+                    IsDisplayed = set.Is_Displayed,
 
                     Clonable = true,
                     Deletable = true
@@ -156,7 +156,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                     ShortName = set.Short_Name,
                     SetCategory = set.Set_Category_Id != null ? (int)set.Set_Category_Id : 0,
                     IsCustom = set.Is_Custom,
-                    IsDisplayed = set.Is_Displayed ?? false,
+                    IsDisplayed = set.Is_Displayed,
 
                     Clonable = true,
                     Deletable = false
@@ -196,7 +196,7 @@ namespace CSETWebCore.Business.ModuleBuilder
                 set.SetCategory = dbSet.Set_Category_Id == null ? 0 : (int)dbSet.Set_Category_Id;
                 set.ShortName = dbSet.Short_Name;
                 set.IsCustom = dbSet.Is_Custom;
-                set.IsDisplayed = dbSet.Is_Displayed ?? false;
+                set.IsDisplayed = dbSet.Is_Displayed;
             }
 
 
@@ -1261,16 +1261,16 @@ namespace CSETWebCore.Business.ModuleBuilder
             foreach (NEW_REQUIREMENT rq in reqs)
             {
                 // overlay
-                var translatedCategory = _overlay.GetCat(rq.Standard_Category, _lang);
+                var translatedCategory = _overlay.GetPropertyValue("STANDARD_CATEGORY", rq.Standard_Category.ToLower(), _lang);
                 if (translatedCategory != null)
                 {
-                    rq.Standard_Category = translatedCategory.Value;
+                    rq.Standard_Category = translatedCategory;
                 }
 
-                var translatedSubcat = _overlay.GetCat(rq.Standard_Sub_Category, _lang);
+                var translatedSubcat = _overlay.GetPropertyValue("STANDARD_CATEGORY", rq.Standard_Sub_Category.ToLower(), _lang);
                 if (translatedSubcat != null)
                 {
-                    rq.Standard_Sub_Category = translatedSubcat.Value;
+                    rq.Standard_Sub_Category = translatedSubcat;
                 }
 
                 Requirement r = new Requirement()
@@ -1282,11 +1282,11 @@ namespace CSETWebCore.Business.ModuleBuilder
                 };
 
                 // overlay
-                var translatedReq = _overlay.GetReq(r.RequirementID, _lang);
-                if (translatedReq != null)
+                var reqOverlay = _overlay.GetRequirement(r.RequirementID, _lang);
+                if (reqOverlay != null)
                 {
-                    r.RequirementText = translatedReq.RequirementText;
-                    r.SupplementalInfo = translatedReq.SupplementalInfo;
+                    r.RequirementText = reqOverlay.RequirementText;
+                    r.SupplementalInfo = reqOverlay.SupplementalInfo;
                 }
 
                 // Get the SAL levels for this requirement

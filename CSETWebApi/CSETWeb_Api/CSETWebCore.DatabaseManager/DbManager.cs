@@ -75,8 +75,18 @@ namespace CSETWebCore.DatabaseManager
                     }
 
                     InitialDbInfo localDb2022Info = new InitialDbInfo(LocalDb2022ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2019Info = null;
+                    InitialDbInfo localDb2012Info = null;
+
+                    if (LocalDb2019Installed) 
+                    { 
+                        localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
+                    }
+
+                    if (LocalDb2012Installed) 
+                    { 
+                        localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
+                    }
 
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                     string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
@@ -85,8 +95,8 @@ namespace CSETWebCore.DatabaseManager
                     // Create the new version folder in local app data folder. If it already exists, this call will do nothing and be harmless
                     Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
-                    // If no db's exist, we can do a clean install
-                    if (!localDb2022Info.Exists && !localDb2019Info.Exists && !localDb2012Info.Exists)
+                    // If no DBs exist, we can do a clean install
+                    if (!localDb2022Info.Exists && !(localDb2019Info?.Exists ?? false) && !(localDb2012Info?.Exists ?? false))
                     {
                         // Create a custom localdb instance for 2022
                         CleanInstallNoUpgrades(destDBFile, destLogFile, localDb2022Info);
@@ -104,14 +114,14 @@ namespace CSETWebCore.DatabaseManager
                         return;
                     }
 
-                    if (localDb2019Info.Exists)
+                    if (localDb2019Info?.Exists ?? false)
                     {
                         _logger.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database files and attempting upgrade... ");
                         UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2019Info);
                         return;
                     }
 
-                    if (localDb2012Info.Exists)
+                    if (localDb2012Info?.Exists ?? false)
                     {
                         _logger.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
                         UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2012Info);
