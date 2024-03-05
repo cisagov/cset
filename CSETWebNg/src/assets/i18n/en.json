@@ -62,6 +62,7 @@
     "control priorities intro1": "Information on ranking can be found in the <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
     "local installation": "Local Installation",
+    "legend": "Legend",
     "titles": {
         "prepare": "Prepare",
         "assessment": "Assessment",
@@ -564,23 +565,6 @@
             "question text": "Question Text"
         },
         "core": {
-            "cpg": {
-                "title": "Cybersecurity Performance Goals (CPG)",
-                "report": {
-                    "cpg report": "CPG Report",
-                    "performance summary": "Performance Summary",
-                    "chart detail": "Chart Detail",
-                    "security practice checklist": "Security Practice Checklist",
-                    "p": {
-                        "1": "This chart shows the answer distribution for each of the Security Practice categories.",
-                        "2": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                        "3": "This table lists all security practices and how they have been answered."
-                    }
-                },
-                "deficiency": {
-                    "cpg deficiency": "CPG Deficiency"
-                }
-            },
             "dashboard": {
                 "score": "Score",
                 "overall score": "Overall Score",
@@ -825,12 +809,21 @@
                 "no questions": "There are no questions marked for review."
             },
             "cpg": {
-                "performance summary": "Performance Summary",
-                "performance summary description": "This chart shows the answer distribution for each of the Security Practice categories.",
-                "chart detail": "Chart Detail",
-                "chart detail description": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                "security practice checklist": "Security Practice Checklist",
-                "cpg report description": "This table lists all security practices and how they have been answered."
+                "title": "Cybersecurity Performance Goals (CPG)",
+                "report": {
+                    "cpg report": "CPG Report",
+                    "performance summary": "Performance Summary",
+                    "chart detail": "Chart Detail",
+                    "security practice checklist": "Security Practice Checklist",
+                    "p": {
+                        "1": "This chart shows the answer distribution for each of the Security Practice categories.",
+                        "2": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
+                        "3": "This table lists all security practices and how they have been answered."
+                    }
+                },
+                "deficiency": {
+                    "cpg deficiency": "CPG Deficiency"
+                }
             }
         },
         "acet": {

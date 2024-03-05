@@ -21,18 +21,18 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
-    <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.performance summary')}}</h3>
+    <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.performance summary')}}</h3>
     <p>
-        {{t('reports.core.cpg.performance summary description')}}
+        {{t('reports.core.cpg.report.p.1')}}
     </p>
 
     <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain" class="mb-5"></app-cpg-domain-summary>
 
     <h4>
-        {{t('reports.core.cpg.chart detail')}}
+        {{t('reports.core.cpg.report.chart detail')}}
     </h4>
 
-    <p>{{t('reports.core.cpg.chart detail description')}}</p>
+    <p>{{t('reports.core.cpg.report.p.2')}}</p>
 
     <app-cpg-domain-summary-table [data]="answerDistribByDomain"></app-cpg-domain-summary-table>
 
