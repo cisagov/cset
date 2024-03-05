@@ -817,7 +817,16 @@
                         "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
                         "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above.",
                         "3": "[ES]This table lists all security practices and how they have been answered."
-                    }
+                    },
+                    "current assessment": "[ES]Evaluacion corriente",
+                    "notes": "Notas",
+                    "ttp or risk addressed": "[ES]TTP or Risk Addressed",
+                    "cost": "Costo",
+                    "impact": "Impacto",
+                    "complexity": "Complejidad",
+                    "low": "LOW",
+                    "medium": "MEDIUM",
+                    "high": "HIGH"
                 },
                 "deficiency": {
                     "title": "[ES] DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
