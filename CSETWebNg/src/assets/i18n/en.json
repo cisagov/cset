@@ -822,7 +822,15 @@
                     }
                 },
                 "deficiency": {
-                    "cpg deficiency": "CPG Deficiency"
+                    "title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
+                    "cpg deficiency": "CPG Deficiency",
+                    "deficiencies": "Deficiencies",
+                    "p": {
+                        "1": "This deficiency report lists the practices that are \"Not Implemented\" or unanswered.",
+                        "2": "This is often referred to as the GAP Report. This report intends to list the gaps, assist users of the report in identifying gaps, prioritizing work, and beginning to make a plan to address the gaps by implementing the controls necessary to come into compliance with the associated practice.",
+                        "3": "Marked for Review",
+                        "4": "There are no deficiencies to display."
+                    }
                 }
             }
         },
