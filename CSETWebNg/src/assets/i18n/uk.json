@@ -960,6 +960,7 @@
         "accessibility": "Доступність",
         "privacy and use": "Конфіденційність та Використання",
         "traffic light protocol": "Протокол Світлофору",
-        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>"
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>",
+        "CIE Website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
     }
 }

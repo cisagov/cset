@@ -1,7 +1,7 @@
 {
     "galleryLayout": "CIE",
     "installationMode":"CIE",
-    "helpContactEmail": "tsasupport@inl.gov",
+    "helpContactEmail": "cie@inl.gov",
     "behaviors": {
         "defaultTitle":"CSET-CIE",
         "showModuleBuilder": true,
