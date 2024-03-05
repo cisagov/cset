@@ -58,6 +58,7 @@
     "control priorities intro1": "Інформацію про рейтинг можна знайти в <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">посібнику користувача</a>.",
     "local installation": "Місцева установка",
+    "legend": "Легенда",
     "titles": {
         "prepare": "Приготуйте",
         "assessment": "Оцінка",
@@ -174,7 +175,8 @@
         "reports": "Звіти",
         "feedback": "Зворотній зв'язок",
         "assessment complete": "Оцінювання завершено",
-        "performance summary": "Звіт про роботу"
+        "performance summary": "Звіт про роботу",
+        "security practice checklist": "Контрольний список практики безпеки"
     },
     "buttons": {
         "ok": "OK",
@@ -487,23 +489,6 @@
             "question text": "Текст запитання"
         },
         "core": {
-            "cpg": {
-                "title": "Цілі ефективності кібербезпеки (CPG)",
-                "report": {
-                    "cpg report": "CPG звіт",
-                    "performance summary": "Підсумок діяльності",
-                    "chart detail": "Деталь діаграми",
-                    "security practice checklist": "Чек-лист безпечних практик",
-                    "p": {
-                        "1": "Ця діаграма показує розподіл відповідей для кожної категорії практики безпеки",
-                        "2": "Таблиця нижче показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище",
-                        "3": "Ця таблиця містить усі заходи безпеки та способи їх виконання"
-                    }
-                },
-                "deficiency": {
-                    "cpg deficiency": "CPG недостатності"
-                }
-            },
             "dashboard": {
                 "score": "Оцінка",
                 "overall score": "Загальний рахунок",
@@ -748,10 +733,21 @@
                 "no questions": "[UK]There are no questions marked for review."
             },
             "cpg": {
-                "performance summary": "Звіт про роботу",
-                "performance summary description": "Ця діаграма показує розподіл відповідей для кожної з категорій практики безпеки.",
-                "chart detail": "Деталі діаграми",
-                "chart detail description": "Таблиця показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище."
+                "title": "Цілі ефективності кібербезпеки (CPG)",
+                "report": {
+                    "cpg report": "CPG звіт",
+                    "performance summary": "Підсумок діяльності",
+                    "chart detail": "Деталь діаграми",
+                    "security practice checklist": "Чек-лист безпечних практик",
+                    "p": {
+                        "1": "Ця діаграма показує розподіл відповідей для кожної категорії практики безпеки",
+                        "2": "Таблиця нижче показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище",
+                        "3": "Ця таблиця містить усі заходи безпеки та способи їх виконання"
+                    }
+                },
+                "deficiency": {
+                    "cpg deficiency": "CPG недостатності"
+                }
             }
         }
     },
