@@ -239,7 +239,7 @@
         "reports": "Informes",
         "feedback": "Retroalimentación",
         "assessment complete": "[ES]Assessment Complete",
-        "performance summary": "Performance Summary"
+        "performance summary": "Resumen de desempeño"
     },
     "buttons": {
         "ok": "Aceptar",
@@ -805,7 +805,7 @@
                 "no questions": "[ES]There are no questions marked for review."
             },
             "cpg": {
-                "performance summary": "[ES]Performance Summary",
+                "performance summary": "Resumen de desempeño",
                 "performance summary description": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
                 "chart detail": "[ES]Chart Detail",
                 "chart detail description": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above."
