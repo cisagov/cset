@@ -826,9 +826,9 @@
                     "cost": "Cost",
                     "impact": "Impact",
                     "complexity": "Complexity",
-                    "low": "BAJO",
-                    "medium": "MEDIO",
-                    "high": "ALTO"
+                    "low": "LOW",
+                    "medium": "MEDIUM",
+                    "high": "HIGH"
                 },
                 "deficiency": {
                     "title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
