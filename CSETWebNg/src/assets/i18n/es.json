@@ -65,6 +65,7 @@
     "control priorities intro1": "Información sobre el ranking se puede encontrar en la <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">guía del usuario</a>.",
     "local installation": "Instalación Local",
+    "legend": "Leyenda",
     "contact": {
         "contacts": "Contactos",
         "contact": "Contacto",
@@ -239,7 +240,8 @@
         "reports": "Informes",
         "feedback": "Retroalimentación",
         "assessment complete": "[ES]Assessment Complete",
-        "performance summary": "Resumen de desempeño"
+        "performance summary": "Resumen de desempeño",
+        "security practice checklist": "Lista de prácticas de seguridad"
     },
     "buttons": {
         "ok": "Aceptar",
@@ -561,23 +563,6 @@
             "question text": "Texto de la pregunta"
         },
         "core": {
-            "cpg": {
-                "title": "[ES]Cybersecurity Performance Goals (CPG)",
-                "report": {
-                    "cpg report": "[ES]CPG Report",
-                    "performance summary": "[ES]Performance Summary",
-                    "chart detail": "[ES]Chart Detail",
-                    "security practice checklist": "[ES]Security Practice Checklist",
-                    "p": {
-                        "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
-                        "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above.",
-                        "3": "[ES]This table lists all security practices and how they have been answered."
-                    }
-                },
-                "deficiency": {
-                    "cpg deficiency": "[ES]CPG Deficiency"
-                }
-            },
             "dashboard": {
                 "score": "Puntaje",
                 "overall score": "Puntuación general",
@@ -822,10 +807,21 @@
                 "no questions": "[ES]There are no questions marked for review."
             },
             "cpg": {
-                "performance summary": "Resumen de desempeño",
-                "performance summary description": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
-                "chart detail": "[ES]Chart Detail",
-                "chart detail description": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above."
+                "title": "[ES]Cybersecurity Performance Goals (CPG)",
+                "report": {
+                    "cpg report": "[ES]CPG Report",
+                    "performance summary": "Resumen de desempeño",
+                    "chart detail": "[ES]Chart Detail",
+                    "security practice checklist": "[ES]Security Practice Checklist",
+                    "p": {
+                        "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
+                        "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above.",
+                        "3": "[ES]This table lists all security practices and how they have been answered."
+                    }
+                },
+                "deficiency": {
+                    "cpg deficiency": "[ES]CPG Deficiency"
+                }
             }
         },
         "acet": {
