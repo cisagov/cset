@@ -563,7 +563,14 @@
                 "title": "[ES]Cybersecurity Performance Goals (CPG)",
                 "report": {
                     "cpg report": "[ES]CPG Report",
-                    "performance summary": "[ES]Performance Summary"
+                    "performance summary": "[ES]Performance Summary",
+                    "chart detail": "[ES]Chart Detail",
+                    "security practice checklist": "[ES]Security Practice Checklist",
+                    "p": {
+                        "1": "[ES]This chart shows the answer distribution for each of the Security Practice categories.",
+                        "2": "[ES]This table indicates the answer distribution percentages for each category as indicated in the chart above.",
+                        "3": "[ES]This table lists all security practices and how they have been answered."
+                    }
                 },
                 "deficiency": {
                     "cpg deficiency": "[ES]CPG Deficiency"

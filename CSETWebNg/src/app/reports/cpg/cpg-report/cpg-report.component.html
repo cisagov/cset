@@ -36,23 +36,17 @@
 
 
     <div class="page-break">
-        <h1>Performance Summary</h1>
-        <p>
-            This chart shows the answer distribution for each of the Security Practice categories.
-        </p>
+        <h1>{{t('reports.core.cpg.report.performance summary')}}</h1>
+        <p>{{t('reports.core.cpg.report.p.1')}}</p>
         <div class="chart mb-5 d-inline-block w-100">
             <app-cpg-domain-summary [answerDistribByDomain]="answerDistribByDomain"
                 class="mb-5"></app-cpg-domain-summary>
         </div>
 
         <div>
-            <h4>
-                Chart Detail
-            </h4>
+            <h4>{{t('reports.core.cpg.report.chart detail')}}</h4>
 
-            <p>This table indicates the answer distribution percentages for each category as indicated in the chart
-                above.
-            </p>
+            <p>{{t('reports.core.cpg.report.p.2')}}</p>
 
             <app-cpg-domain-summary-table [data]="answerDistribByDomain"
                 [inReport]="true"></app-cpg-domain-summary-table>
@@ -61,10 +55,8 @@
 
 
     <div class="page-break">
-        <h1>Security Practice Checklist</h1>
-        <p class="mb-0">
-            This table lists all security practices and how they have been answered.
-        </p>
+        <h1>{{t('reports.core.cpg.report.security practice checklist')}}</h1>
+        <p class="mb-0"> {{t('reports.core.cpg.report.p.3')}}</p>
         <app-cpg-practice-table></app-cpg-practice-table>
     </div>
 
