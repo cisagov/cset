@@ -66,9 +66,10 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetQuestions()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetMaturityStructure(assessmentId, true);
+            var x = biz.GetMaturityStructure(assessmentId, true, lang);
             return Ok(x);
         }
 

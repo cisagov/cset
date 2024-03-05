@@ -61,7 +61,7 @@ export class CpgReportComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPGs Report - " + this.configSvc.behaviors.defaultTitle);
+    this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.report.cpg report') + " - " + this.configSvc.behaviors.defaultTitle);
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
