@@ -486,8 +486,14 @@
         },
         "core": {
             "cpg": {
-                "title": "CYBERSECURITY PERFORMANCE GOALS (CPG)",
-                "performance summary": "Performance Summary"
+                "title": "Цілі ефективності кібербезпеки (CPG)",
+                "report": {
+                    "cpg report": "CPG звіт",
+                    "performance summary": "Підсумок діяльності"
+                },
+                "deficiency": {
+                    "cpg deficiency": "CPG недостатності"
+                }
             },
             "dashboard": {
                 "score": "Оцінка",
