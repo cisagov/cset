@@ -562,8 +562,14 @@
         },
         "core": {
             "cpg": {
-                "title": "CYBERSECURITY PERFORMANCE GOALS (CPG)",
-                "performance summary": "Performance Summary"
+                "title": "Cybersecurity Performance Goals (CPG)",
+                "report": {
+                    "cpg report": "CPG Report",
+                    "performance summary": "Performance Summary"
+                },
+                "deficiency": {
+                    "cpg deficiency": "CPG Deficiency"
+                }
             },
             "dashboard": {
                 "score": "Score",
