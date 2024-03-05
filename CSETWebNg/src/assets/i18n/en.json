@@ -392,7 +392,7 @@
         "answered count": "Indicates the number of answered questions out of the total for this page",
         "questions mode": "Questions Mode displays simple questions that correspond to standard requirements",
         "requirements mode": "Requirements Mode displays requirement text verbatim as it appears in the standard",
-        "feedback icon": "Значок зворотнього зв'язку",
+        "feedback icon": "Feedback icon",
         "copy feedback": "Copy the feedback text to the clipboard",
         "create feedback email": "Create a feedback email in a standard email client",
         "risk description": "Risk Description",
