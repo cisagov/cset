@@ -73,7 +73,7 @@ export class CpgDeficiencyComponent implements OnInit {
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPG Deficiencies - " + this.configSvc.behaviors.defaultTitle);
+    this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.deficiency.cpg deficiency') + " - " + this.configSvc.behaviors.defaultTitle);
 
     this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
       this.info = resp.information;
