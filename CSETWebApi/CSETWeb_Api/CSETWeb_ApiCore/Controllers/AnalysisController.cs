@@ -183,7 +183,7 @@ namespace CSETWebCore.Api.Controllers
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 
                 string FaaEmail = "PEDCRA@faa.gov";
-                string DHSEmail = "cset@dhs.gov";
+                string DHSEmail = "CSET_PMO@cisa.dhs.gov";
                 if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
                 FeedbackResult.FeedbackEmailTo += DHSEmail;
 
