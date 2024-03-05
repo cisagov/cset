@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using CSETWebCore.Helpers;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -36,6 +37,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
 
+        private readonly TranslationOverlay _overlay;
+
 
         /// <summary>
         /// 
@@ -48,6 +51,8 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -77,6 +82,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAnswerDistribForDomains()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
 
             var resp = new List<AnswerDistribDomain>();
 
@@ -84,22 +90,31 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (var item in dbList)
             {
-                if (!resp.Exists(x => x.Name == item.title))
+                // translate if necessary
+                item.Title = _overlay.GetGrouping(item.Grouping_Id, lang)?.Title ?? item.Title;
+
+                if (!resp.Exists(x => x.Name == item.Title))
                 {
                     var domain = new AnswerDistribDomain()
                     {
-                        Name = item.title,
+                        Name = item.Title,
                         Series = InitializeSeries()
                     };
 
                     resp.Add(domain);
                 }
-
-                double percent = CalculatePercent(dbList, item);
-
-                var r = resp.First(x => x.Name == item.title);
-                r.Series.First(x => x.Name == item.answer_text).Value = percent;
             }
+
+            // determine percentages for each answer count in the distribution
+            resp.ForEach(domain =>
+            {
+                domain.Series.ForEach(y =>
+                {
+                    double percent = CalculatePercent(dbList.Where(g => g.Title == domain.Name).ToList(), y.Name);
+                    y.Value = percent;
+
+                });
+            });
 
             return Ok(resp);
         }
@@ -109,13 +124,12 @@ namespace CSETWebCore.Api.Controllers
         /// Calculates the percentage based on all answer values for the domain
         /// </summary>
         /// <returns></returns>
-        private double CalculatePercent(IList<GetAnswerDistribGroupingsResult> r,
-            GetAnswerDistribGroupingsResult i)
+        private double CalculatePercent(List<GetAnswerDistribGroupingsResult> r, string ansName)
         {
-            var sum = r.Where(x => x.title == i.title)
-                .Select(x => x.answer_count).Sum();
+            var target = r.FirstOrDefault(x => x.Answer_Text == ansName)?.Answer_Count ?? 0;
+            var total = r.Select(x => x.Answer_Count).Sum();
 
-            return ((double)i.answer_count * 100d / (double)sum);
+            return ((double)target * 100d / (double)total);
         }
 
 
