@@ -183,7 +183,8 @@
         "reports": "Reports",
         "feedback": "Feedback",
         "assessment complete": "Assessment Complete",
-        "performance summary": "Performance Summary"
+        "performance summary": "Performance Summary",
+        "security practice checklist": "Security Practice Checklist"
     },
     "buttons": {
         "ok": "OK",
@@ -827,7 +828,9 @@
                 "performance summary": "Performance Summary",
                 "performance summary description": "This chart shows the answer distribution for each of the Security Practice categories.",
                 "chart detail": "Chart Detail",
-                "chart detail description": "This table indicates the answer distribution percentages for each category as indicated in the chart above."
+                "chart detail description": "This table indicates the answer distribution percentages for each category as indicated in the chart above.",
+                "security practice checklist": "Security Practice Checklist",
+                "cpg report description": "This table lists all security practices and how they have been answered."
             }
         },
         "acet": {

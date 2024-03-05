@@ -174,7 +174,8 @@
         "reports": "Звіти",
         "feedback": "Зворотній зв'язок",
         "assessment complete": "Оцінювання завершено",
-        "performance summary": "Звіт про роботу"
+        "performance summary": "Звіт про роботу",
+        "security practice checklist": "Контрольний список практики безпеки"
     },
     "buttons": {
         "ok": "OK",
@@ -751,7 +752,9 @@
                 "performance summary": "Звіт про роботу",
                 "performance summary description": "Ця діаграма показує розподіл відповідей для кожної з категорій практики безпеки.",
                 "chart detail": "Деталі діаграми",
-                "chart detail description": "Таблиця показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище."
+                "chart detail description": "Таблиця показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище.",
+                "security practice checklist": "Контрольний список практики безпеки",
+                "cpg report description": "[UK]This table lists all security practices and how they have been answered."
             }
         }
     },
