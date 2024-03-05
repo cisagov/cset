@@ -7,9 +7,9 @@ namespace CSETWebCore.DataLayer.Model
 {
     public partial class GetAnswerDistribGroupingsResult
     {
-        public int grouping_id { get; set; }
-        public string title { get; set; }
-        public string answer_text { get; set; }
-        public int? answer_count { get; set; }
+        public int Grouping_Id { get; set; }
+        public string Title { get; set; }
+        public string Answer_Text { get; set; }
+        public int? Answer_Count { get; set; }
     }
 }
