@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { RraDataService } from '../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-report',
@@ -52,7 +53,8 @@ export class CpgReportComponent implements OnInit {
     public titleSvc: Title,
     private assessSvc: AssessmentService,
     public cpgSvc: CpgService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
