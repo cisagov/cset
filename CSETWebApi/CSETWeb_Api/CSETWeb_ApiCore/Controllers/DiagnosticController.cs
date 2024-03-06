@@ -70,8 +70,17 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/version")]
         public IActionResult GetCsetVersion()
         {
-            var dbVersion = _context.CSET_VERSION.FirstOrDefault();
-            return Ok(dbVersion);
+            try
+            {
+                var dbVersion = _context.CSET_VERSION.FirstOrDefault();
+                return Ok(dbVersion);
+            }
+            catch (Exception exc)
+            {
+                var logToDb = LogManager.GetCurrentClassLogger();
+                logToDb.Error(exc.ToString());
+                return Ok(exc.ToString());
+            }
         }
     }
 }
