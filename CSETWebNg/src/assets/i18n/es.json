@@ -261,6 +261,7 @@
         "convert": "Convertir",
         "analytics": "Analítica",
         "export": "Exportar",
+        "export json": "JSON",
         "import": "Importar",
         "enter password": "Introducir la contraseña",
         "export all": "Exportar todo",
@@ -400,6 +401,7 @@
         "export to excel": "Exportar todas las evaluaciones a Excel",
         "remove assessment": "Eliminar permanentemente esta evaluación.",
         "export assessment": "Exportar una copia de esta evaluación a otra ubicación",
+        "export assessment json": "Export una copia de esta evaluación como archivo JSON",
         "analytics": "Ver los análisis de esta evaluación.",
         "merged checked exams": "Fusiona los exámenes marcados",
         "export all": "Exporta una copia de todas las evaluaciones a otra ubicación."

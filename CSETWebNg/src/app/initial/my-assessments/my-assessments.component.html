@@ -259,13 +259,22 @@
                                 <span class="icon-link-button-text-dark">{{t('buttons.remove')}}</span>
                             </button>
                         </td>
-                        <td>
+                        <td *ngIf="showColumn('export')">
                             <button tabindex="0" id="assess-{{i}}-export"
                                 class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                                 (click)="clickDownloadLink(assessment.assessmentId)"
                                 matTooltip="{{ t('tooltip.export assessment') }} ({{ exportExtension }}).">
                                 <span class="cset-icons-export-up fs-base-2 mr-2"></span>
                                 <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
+                            </button>
+                        </td>
+                        <td *ngIf="showColumn('export json')">
+                            <button tabindex="0" id="assess-{{i}}-export"
+                                class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
+                                (click)="clickDownloadLink(assessment.assessmentId, true)"
+                                matTooltip="{{ t('tooltip.export assessment json') }}">
+                                <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+                                <span class="icon-link-button-text-dark">{{t('buttons.export json')}}</span>
                             </button>
                         </td>
                         <td style="display:none;" *ngIf="showColumn('analytics')">

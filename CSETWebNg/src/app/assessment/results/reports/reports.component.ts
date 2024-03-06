@@ -199,6 +199,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       });
     }
 
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
 
   /**
@@ -336,10 +337,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   /**
    *
    */
-  clickExport() {
+  clickExport(jsonOnly: boolean = false) {
     // get short-term JWT from API
     this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-      const url = this.fileSvc.exportUrl + '?token=' + response.token;
+      let url = this.fileSvc.exportUrl + '?token=' + response.token;
+
+      if (jsonOnly) {
+        url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+      }
 
       window.location.href = url;
     });
