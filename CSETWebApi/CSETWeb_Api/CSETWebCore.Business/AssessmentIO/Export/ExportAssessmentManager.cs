@@ -471,7 +471,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                     var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
                     foreach (var file in files)
                     {
-                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded ?? false));
+                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
                         if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
                             continue;
 

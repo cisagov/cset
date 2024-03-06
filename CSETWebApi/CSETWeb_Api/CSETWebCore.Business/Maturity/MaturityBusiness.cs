@@ -2274,9 +2274,9 @@ namespace CSETWebCore.Business.Maturity
         /// <param name="assessmentId"></param>
         /// <param name="includeSupplemental"></param>
         /// <returns></returns>
-        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental)
+        public Model.Maturity.CPG.ContentModel GetMaturityStructure(int assessmentId, bool includeSupplemental, string lang)
         {
-            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental);
+            var ss = new MaturityStructure(assessmentId, _context, includeSupplemental, lang);
             return ss.Top;
         }
 

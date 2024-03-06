@@ -370,7 +370,7 @@ namespace CSETWebCore.Api.Controllers
                     return BadRequest();
                 }
 
-                if (!user.IsActive.GetValueOrDefault(true))
+                if (!user.IsActive)
                 {
                     return BadRequest("user inactive");
                 }

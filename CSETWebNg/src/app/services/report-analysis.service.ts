@@ -421,22 +421,6 @@ export class ReportAnalysisService {
     }
   }
 
-  public answerWord(answer: string) {
-    switch (answer) {
-      case "Y":
-        return "Yes";
-      case "N":
-        return "No";
-      case "NA":
-        return "Not Applicable";
-      case "A":
-        return "Alternate";
-      case "U":
-        return "Unanswered";
-      default:
-        return "";
-    }
-  }
 
   buildComponentSummary(canvasId: string, x: any) {
     return this.chartSvc.buildDoughnutChart(canvasId, x);

@@ -274,7 +274,7 @@
         <!-- Results - RRA -->
         <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:5" />
         <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:5" />
-        <node displaytext="Performance Summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:5" />
+        <node d="performance summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:5" />
 
 
 
@@ -296,11 +296,11 @@
 
         <!-- Results - MVRA -->
         <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" visible="MATURITY:9" />
-        <node displaytext="Performance Summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" visible="MATURITY:9" />
+        <node d="performance summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" visible="MATURITY:9" />
 
         <!-- Results - CPG -->
-        <node displaytext="Performance Summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY:11" />
-        <node displaytext="Security Practice Checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" visible="MATURITY:11" />
+        <node d="performance summary" id="cpg-summary-page" path="assessment/{:id}/results/cpg-summary-page" visible="MATURITY:11" />
+        <node d="security practice checklist" id="cpg-practices-page" path="assessment/{:id}/results/cpg-practices-page" visible="MATURITY:11" />
 
         <!-- Results - SD02 Series -->
         <node displaytext="SD02 Series Pipeline Answer Summary" id="sd-answer-summary" path="assessment/{:id}/results/sd-answer-summary" visible="MATURITY:14" />

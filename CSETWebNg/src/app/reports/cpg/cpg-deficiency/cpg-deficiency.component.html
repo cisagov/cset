@@ -20,26 +20,20 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
-    <app-cover-sheet-a [title]="'DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)'"
-        [assessmentName]="assessmentName" [assessmentDate]="assessmentDate" [assessorName]="assessorName"
+    <app-cover-sheet-a title="{{ 'reports.core.cpg.deficiency.title' | transloco }}" [assessmentName]="assessmentName"
+        [assessmentDate]="assessmentDate" [assessorName]="assessorName"
         [facilityName]="facilityName"></app-cover-sheet-a>
 
     <div class="disclaimer-blurb mt-4">
-        <p>
-            This deficiency report lists the practices that are "Not Implemented" or unanswered.
-        </p>
-        <p>
-            This is often referred to as the GAP Report. This report intends to list the gaps, assist users of
-            the report in identifying gaps, prioritizing work, and beginning to make a plan to address
-            the gaps by implementing the controls necessary to come into compliance with the associated practice.
-        </p>
+        <p> {{t('reports.core.cpg.deficiency.p.1')}} </p>
+        <p> {{t('reports.core.cpg.deficiency.p.2')}} </p>
     </div>
 
     <div class="d-flex flex-row justify-content-between align-items-end">
-        <h1 class="page-title">Deficiencies</h1>
-        <p style="color: #de761c;text-align: right;">Marked for Review - <img class="MarkedFlag"
+        <h1 class="page-title">{{t('reports.core.cpg.deficiency.deficiencies')}}</h1>
+        <p style="color: #de761c;text-align: right;">{{t('reports.core.cpg.deficiency.p.3')}} - <img class="MarkedFlag"
                 src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
     </div>
 
@@ -78,7 +72,7 @@
 
         </table>
         <div *ngIf="def.length == 0">
-            There are no deficiencies to display.
+            {{t('reports.core.cpg.deficiency.p.4')}}
         </div>
     </div>
 </div>
