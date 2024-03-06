@@ -1145,6 +1145,17 @@
         "acet": {
             "we ensure financial stability": "Garantizamos la estabilidad financiera",
             "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
+        },
+        "cie":{
+            "ceser title":"CESER",
+            "ceser":"La Oficina del Departamento de Energía para la Oficina de Ciberseguridad, Seguridad Energética y Respuesta a Emergencias (CESER, por sus siglas en inglés) patrocina las iniciativas de CIE del INL y coordina el programa CIE que incluye el Laboratorio Nacional de Idaho (INL), el Laboratorio Nacional de Energía Renovable (NREL), e industria, académicos y otros socios en apoyo a la Estrategia Nacional de Ingeniería Informada por Ciberseguridad del Departamento de Energía, y la Estrategia Nacional de Ciberseguridad.",
+            "description":"Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
+            "cie tutorial title":"CIE Tutorial",
+            "cie tutorial":"La Guía de Implementación promueve la integración de los principios de Ingeniería Informada por Ciberseguridad (CIE) desde el inicio del ciclo de vida de la infraestructura energética crítica para mitigar las amenazas cibernéticas, enfatizando la colaboración entre las disciplinas de ingeniería, TI y ciberseguridad para avanzar hacia una cultura de 'seguridad por diseño'. Aconseja no convertir a los ingenieros en expertos en ciberseguridad, sino utilizar su experiencia para diseñar sistemas que sean intrínsecamente más seguros contra ataques cibernéticos y fallos tecnológicos.",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Antecedentes de CIE </a>",
+            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>" ,
+            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Ciclo de Vida de la Ingeniería/a>"
+           
         }
     },
     "keyboard": {
@@ -1197,6 +1208,7 @@
         "accessibility": "Accesibilidad",
         "privacy and use": "Privacidad y Uso",
         "traffic light protocol": "Protocolo de Semáforo (TLP)",
-        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>"
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> es parte del <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Departamento de Seguridad Nacional</a>",
+        "CIE Website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Sitio Web</a>"
     }
 }
