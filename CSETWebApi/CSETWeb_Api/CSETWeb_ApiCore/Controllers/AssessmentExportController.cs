@@ -61,5 +61,33 @@ namespace CSETWebCore.Api.Controllers
             return null;
         }
 
+
+        /// <summary>
+        /// A special flavor of export created for sharing assessment data by CISA assessors.
+        /// Only the JSON content is returned, with a name formmated as {assessment-name}.json
+        /// </summary>
+        [HttpGet]
+        [Route("api/assessment/export/json")]
+        public IActionResult ExportAssessmentAsJson([FromQuery] string token, [FromQuery] string password = "", [FromQuery] string passwordHint = "")
+        {
+            try
+            {
+                _token.SetToken(token);
+
+                int assessmentId = _token.AssessmentForUser(token);
+
+                string ext = ".json";
+
+                AssessmentExportFile result = new AssessmentExportManager(_context).ExportAssessment(assessmentId, ext, password, passwordHint, true);
+
+                return File(result.FileContents, "application/octet-stream", result.FileName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return null;
+        }
     }
 }
