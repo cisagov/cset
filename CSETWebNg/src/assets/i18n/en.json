@@ -205,6 +205,7 @@
         "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
+        "export json": "JSON",
         "import": "Import",
         "enter password": "Enter Password",
         "export all": "Export All",
@@ -402,6 +403,7 @@
         "export to excel": "Export all assessments to Excel",
         "remove assessment": "Permanently remove this assessment.",
         "export assessment": "Export a copy of this assessment to another location",
+        "export assessment json": "Export a copy of this assessment as a JSON file",
         "analytics": "View the analytics for this assessment.",
         "merged checked exams": "Merge checked examinations",
         "export all": "Export a copy of all assessments to another location."
