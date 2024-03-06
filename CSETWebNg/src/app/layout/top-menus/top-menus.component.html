@@ -212,8 +212,6 @@
                 <span>Ransomware Readiness</span>
             </button>
 
-
-
             <hr class="menu-divider" />
 
             <button mat-menu-item (click)="about()">
@@ -263,7 +261,6 @@
                 <span>{{auth.firstName()}} {{auth.lastName()}}</span>
             </span>
         </button>
-
         <mat-menu #usermenu="matMenu" class="menu-panel">
             <button mat-menu-item *ngIf="showUserMenuItem()" (click)="editUser()">
                 <span class="cset-icons-profile fs-base mr-2 align-middle"></span>
