@@ -196,6 +196,7 @@
         "analytics": "Аналітика",
         "import": "Імпорт",
         "export": "Експорт",
+        "export json": "JSON",
         "enter password": "Введіть пароль",
         "export all": "Експортувати все",
         "export all to excel": "???",
@@ -357,7 +358,8 @@
         "import": "Імпортуйте оцінку із зовнішнього файлу {{appCode}}",
         "export to excel": "[UK]Export all assessments to Excel",
         "remove assessment": "[UK]Permanently remove this assessment.",
-        "export assessment": "[UK]Export a copy of this assessment to another location",
+        "export assessment": "Експортувати копію цієї оцінки до іншої локації",
+        "export assessment json": "Експортувати копію цієї оцінки у JSON-файл",
         "analytics": "[UK]View the analytics for this assessment.",
         "merged checked exams": "[UK]Merge checked examinations",
         "export all": "[UK]Export a copy of all assessments to another location."
