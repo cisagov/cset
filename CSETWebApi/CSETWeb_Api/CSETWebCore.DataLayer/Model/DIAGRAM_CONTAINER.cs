@@ -24,8 +24,7 @@ public partial class DIAGRAM_CONTAINER
     [StringLength(250)]
     public string Name { get; set; }
 
-    [Required]
-    public bool? Visible { get; set; }
+    public bool Visible { get; set; }
 
     [Required]
     [StringLength(50)]

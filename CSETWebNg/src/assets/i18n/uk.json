@@ -58,6 +58,7 @@
     "control priorities intro1": "Інформацію про рейтинг можна знайти в <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">посібнику користувача</a>.",
     "local installation": "Місцева установка",
+    "legend": "Легенда",
     "titles": {
         "prepare": "Приготуйте",
         "assessment": "Оцінка",
@@ -173,7 +174,9 @@
         "high level desc exec sec comments": "Опис оцінювання високого рівня, резюме та коментарі",
         "reports": "Звіти",
         "feedback": "Зворотній зв'язок",
-        "assessment complete": "Оцінювання завершено"
+        "assessment complete": "Оцінювання завершено",
+        "performance summary": "Звіт про роботу",
+        "security practice checklist": "Контрольний список практики безпеки"
     },
     "buttons": {
         "ok": "OK",
@@ -243,8 +246,8 @@
             "No": "Ні",
             "N/A": "N/A",
             "Alt": "Альт",
-            "U": "Unanswered",
-            "Unanswered": "Unanswered",
+            "U": "Без відповіді",
+            "Unanswered": "Без відповіді",
             "Inc": "Неповний",
             "Issue(N)": "Issue(N)",
             "Iss": "Issue(N)",
@@ -268,7 +271,7 @@
             "No": "Ні",
             "N/A": "Н/Д",
             "Alt": "заміщення",
-            "Unanswered": "Unanswered [UK]",
+            "Unanswered": "Без відповіді",
             "Inc": "Неповний",
             "Issue(N)": "No with Issues [UK]",
             "S": "S",
@@ -447,6 +450,7 @@
         "question": "Питання",
         "assessment compliance text": "Ця діаграма показує загальні відсоткові бали. <br> Будь ласка, зверніть увагу, що питання без відповіді зараховуються як відповідь НІ в цих балах.",
         "ranked categories text": "На цій діаграмі показано найпоширеніші проблемні сфери. Вони розраховуються на основі зваженої оцінки ризику на основі складності атаки. Вага атаки має найбільшу вагу для легких атак і меншу для більш складних для атаки.",
+        "ranked categories text 2": "Ця діаграма показує навчальні предмети, які потребують найбільшої уваги. Кожен стовпчик представляє зважений внесок позначеної предметної області, так що сукупний підсумок завжди дорівнює 100%. Зважений внесок включає важливість як питання, так і предметної області, а також відсоток пропущених питань у цій предметній області.",
         "passed": "Пройшло",
         "failed": "Невдачі",
         "total": "Всього",
@@ -663,7 +667,7 @@
                 "cset question requirement category": "[UK] CSET Question/Requirement Category",
                 "control level": "Рівень контролю",
                 "implementation status": "Статус реалізації",
-                "short standard name": "Коротка стандартна назва",
+                "short standard name": "Short Standard Name (Optional, may not be included in the table)",
                 "requirement description": "Опис вимоги",
                 "affected zones": "[UK] Affected Zones  (Optional, may not be included in the table)",
                 "affected components": "[UK] Affected Components  (Optional, may not be included in the table)",
@@ -727,6 +731,40 @@
             "questions marked for review": {
                 "questions marked for review": "[UK]Questions Marked for Review",
                 "no questions": "[UK]There are no questions marked for review."
+            },
+            "cpg": {
+                "title": "Цілі ефективності кібербезпеки (CPG)",
+                "report": {
+                    "cpg report": "CPG звіт",
+                    "performance summary": "Підсумок діяльності",
+                    "chart detail": "Деталь діаграми",
+                    "security practice checklist": "Чек-лист безпечних практик",
+                    "p": {
+                        "1": "Ця діаграма показує розподіл відповідей для кожної категорії практики безпеки",
+                        "2": "Таблиця нижче показує відсотки розподілу відповідей за кожною категорією, як зазначено на діаграмі вище",
+                        "3": "Ця таблиця містить усі заходи безпеки та способи їх виконання"
+                    },
+                    "current assessment": "Поточна оцінка",
+                    "notes": "Додаткові відомості",
+                    "ttp or risk addressed": "Виявлені методи нейтралізації ризику",
+                    "cost": "Вартість",
+                    "impact": "Вплив",
+                    "complexity": "Складність",
+                    "low": "Низький",
+                    "medium": "Середній",
+                    "high": "Високий"
+                },
+                "deficiency": {
+                    "title": "ЗВІТ ПРО НЕДОЛІКИ ЦІЛІ ПОКАЗНИКІВ КІБЕРБЕЗПЕКИ (CPG)",
+                    "cpg deficiency": "CPG Недостача",
+                    "deficiencies": "недостачі",
+                    "p": {
+                        "1": "Цей звіт про недоліки містить заходи безпеки, які мають статус «Не впроваджено» або на них не надано відповідей",
+                        "2": "Цей звіт часто називають Звітом про Розриви (Zvit pro Rozryvy). Він призначений для того, щоб перерахувати розриви, допомогти користувачам звіту їх виявити, розставити пріоритети в роботі та розпочати планування їх усунення шляхом впровадження необхідного контролю для досягнення відповідності пов'язаним практикам",
+                        "3": "Позначено на перевірку",
+                        "4": "Немає недоліків для відображення"
+                    }
+                }
             }
         }
     },
@@ -804,20 +842,68 @@
             "keyboard shortcuts": "Гарячі клавіші",
             "legal": {
                 "legal": "Правова інформація",
-                "accessibility document": {
-                    "accessibility document": "Заява про доступність"
+                "accessibility statement": {
+                    "accessibility statement": "Заява про доступність",
+                    "htag": {
+                        "adobe acrobat pdf files": "Файли Adobe Acrobat PDF",
+                        "accessibility features": "Функції доступності",
+                        "keyboard shortcuts": "Гарячі клавіші",
+                        "browser support": "Підтримка браузерів",
+                        "our section 508 testing efforts": "Наші зусилля з тестування розділу 508",
+                        "keyboard focus": "Клавіатура / Фокус",
+                        "forms": "Форми",
+                        "links buttons": "Посилання / Кнопки",
+                        "repetitive content and links": "Повторюваний вміст і посилання",
+                        "content structure": "Структура вмісту",
+                        "language": "Мова",
+                        "page and frame titles": "Назви сторінок і фреймів",
+                        "color dependence and contrast": "Залежність від кольору та контрастність",
+                        "images": "Зображення",
+                        "resize text": "Змінити розмір шрифту",
+                        "multiple ways": "Кілька способів",
+                        "error identification": "Ідентифікація помилок",
+                        "css style": "Стиль CSS",
+                        "data tables": "Таблиці даних",
+                        "all interactive elements": "Всі інтерактивні елементи",
+                        "does not apply": "Наступні функції доступності не застосовуються до нашого програмного забезпечення"
+                    },
+                    "p": {
+                        "1": "Згідно з Розділом 508 Закону США про реабілітацію (29 U.S.C. 794d), функції цієї програми розроблені для підтримки користувачів із потребами в доступності. Промислові передові практики та стандарти керували нашими процесами проектування та розробки, щоб інтегрувати функції доступності, вбудовані в операційну систему Windows та архітектуру .NET, а також браузери Chrome, Firefox та Edge. Команда розробників програмного забезпечення прагне інтегрувати принципи доступного дизайну протягом усього циклу розробки продукту. Докладніше про Розділ 508 та технічні стандарти можна знайти на https://www.section508.gov/.",
+                        "2": "Багато документів у цій програмі мають формат HTML або ASCII (звичайний текст). Ці формати, як правило, доступні для людей, які використовують програми читання з екрана. Також у нас є велика кількість документів у форматі Adobe Acrobat® Portable Document Format (PDF). Під час використання програми читання з екрана для читання документів безпосередньо у форматі PDF за допомогою Adobe Acrobat Reader, вам, ймовірно, потрібно буде встановити додатковий модуль доступності. Цей модуль доступний безкоштовно на веб-сайті https://www.adobe.com/trust/accessibility.html.",
+                        "3": "Наша команда працює над тим, щоб інтегрувати принципи доступності Розділу 508 у кожне оновлення та випуск програми.",
+                        "4": "Ми пропонуємо спеціальні клавіатурні скорочення для програми в меню довідки.",
+                        "5": "Для оптимальної роботи програми ми рекомендуємо використовувати Google Chrome, Microsoft Edge та Mozilla Firefox. Щоб ознайомитися з функціями доступності для кожного браузера, перегляньте такі списки функцій: <li>https://www.google.com/accessibility/products-features/</li> <li>https://learn.microsoft.com/en-us/microsoft-edge/accessibility/</li> <li>https://support.mozilla.org/en-US/kb/accessibility-features-firefox</li>",
+                        "6": "Ми віримо, що надійний, ефективний та відкритий інструмент кібербезпеки повинен бути легкодоступним та доступним для всіх.",
+                        "7": "Щоб забезпечити максимально доступний досвід для всіх наших користувачів, на додаток до наведених вище рекомендацій Розділу 508, ми регулярно тестуємо наше програмне забезпечення на наступні функції:",
+                        "8": "Ми тестуємо, чи всі функції можна отримати та виконати лише за допомогою клавіатури.",
+                        "9": "Ми перевіряємо, чи для кожного введення форми надаються мітки та інструкції, і чи кожна мітка форми є достатньо описовою. Ми тестуємо сторінку, щоб перевірити, чи надаються сповіщення про кожну зміну вмісту, пов'язану з формою. Ми очікуємо, що будь-які помилки будуть визначені в тексті та достатньо описані користувачеві, з додатковими інструкціями (наприклад, пропозиція щодо виправленого введення) щодо того, як виправити помилки в полях форми. Нарешті, наша веб-сторінка дозволяє користувачеві перевірити, скасувати та/або підтвердити надсилання.",
+                        "10": "Ми тестуємо, чи кожне посилання та кнопка можуть бути визначені за будь-якою комбінацією тексту посилання/кнопки, доступної назви, доступного опису та/або програмно визначеного контексту. Ми також перевіряємо, чи сторінка повідомляє про кожну зміну вмісту, яка є результатом взаємодії з посиланням або кнопкою.",
+                        "11": "Ми перевіряємо, щоб відносний порядок повторюваних компонентів відповідав іншим сторінкам.",
+                        "12": "Ми тестуємо функціональність, щоб кожен заголовок описував тему або мету свого вмісту, і щоб кожен програмно визначуваний заголовок був візуальним заголовком. Ми хочемо, щоб кожен візуальний заголовок був програмно визначуваним. Ми перевіряємо, чи програмні рівні заголовків логічно відповідають візуальному представленню заголовків у структурі заголовків, щоб усі візуально видимі списки були програмно визначені відповідно до їхнього типу.",
+                        "13": "Ми перевіряємо, щоб  за замовчуванням  людську мову кожної веб-сторінки можна було визначити програмно, і що будь-який фрагмент (вміст, описи зображень, мітки форм тощо), який відрізняється від мови за замовчуванням сторінки, правильно визначено.",
+                        "14": "Ми тестуємо, щоб визначити, чи для веб-сторінки визначено елемент заголовка, і що він  ідентифікує вміст або мету нашої сторінки.",
+                        "15": "Ми тестуємо, щоб переконатися, що: <li>Колір не використовується як єдиний візуальний засіб передачі інформації, позначення дії, спонукання до відповіді або виділення візуального елемента.</li> <li>Візуальне представлення тексту та зображень тексту має достатній контраст.</li> <li>Текст і зображення тексту мають коефіцієнт контрастності не менше 4,5:1, а текст і зображення великого масштабу - коефіцієнт не менше 3:1.</li> <li>Інструкції, надані для розуміння та керування вмістом, не покладаються лише на сенсорні характеристики компонентів, такі як форма, розмір, візуальне розташування, орієнтація або звук.</li>",
+                        "16": "Доступна назва та опис ос meaningful зображення  надає еквівалентний опис зображення.",
+                        "17": "Ми перевіряємо функціональність збільшення, масштабування або збільшення тексту щонайменше на 200% від його початкового розміру без втрати вмісту або продуктивності.",
+                        "18": "Ми працюємо над тим, щоб наші користувачі знаходили інформацію, доступну кількома способами, щоб вони могли швидко її знайти.",
+                        "19": "Ми тестуємо, що коли виявляється помилка, відображається сповіщення з текстом, що описує помилку.",
+                        "20": "Ця функція доступності не застосовується до нашого програмного забезпечення.",
+                        "21": "Ми перевіряємо, щоб заголовки рядків або стовпців таблиць даних були визначені програмно, клітинки даних були пов'язані з відповідними заголовками, а таблиця макета не містила структурних атрибутів.",
+                        "22": "Ми перевіряємо, щоб інтерактивні елементи інтерфейсу з кількома станами відображали поточний стан, а роль форми введення точно відображала її функцію, щоб усі поля введення тексту мали правильне значення.",
+                        "23": "<li>Автозапуск/оновлення</li> <li>Миготіння</li> <li>Налаштовувані обмеження часу</li> <li>Тільки відео-аудіо</li> <li>Мультимедіа</li> <li>Тайм-аути</li> <li>Обов'язкові плагіни</li> <li>Альтернативна версія</li>"
+                    }
                 },
                 "advisory": {
                     "advisory": "Консультаційний",
-                    "introduction 1": "[UK]The {{appLongName}} (<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>) is only one component of the overall cybersecurity picture and should be complemented with a robust cyber security program within the organization. A self-assessment with <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization's security posture.",
-                    "introduction 2": "[UK]The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> is not intended as a substitute for in‑depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk-downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
-                    "introduction 3": "[UK]<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
-                    "introduction 4": "[UK]<p>Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity.</p>",
-                    "disclaimer": "[UK]Disclaimer",
-                    "disclaimer 1": "[UK]The analysis, data, and reports in <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> are provided “as is” for informational purposes only. The {{orgLongName}} ({{orgShortName}}) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
-                    "disclaimer 2": "[UK]{{orgShortName}} does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by {{orgShortName}}.",
-                    "disclaimer 3": "[UK]The display of the {{orgShortName}} official seal or other {{orgShortName}} visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia or other visual identities of {{orgShortName}}. The {{orgShortName}} seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by {{orgShortName}} or the United States Government. Use of the {{orgShortName}} seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against {{orgShortName}} policies governing usage of the seal.",
-                    "disclaimer 4": "[UK]The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact {{intellectualPropertyRightsDistributionRequestEntity}}. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the {{appShortName}} Program Office."
+                    "introduction 1": "Оцінка за допомогою {{appLongName}} (<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>) є лише одним компонентом загальної карти кібербезпеки та повинна доповнюватися потужною програмою кібербезпеки в організації. Самооцінка за допомогою <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> не може виявити всі типи вразливостей безпеки і не повинна бути єдиним засобом визначення рівня безпеки організації.",
+                    "introduction 2": "Інструмент не надасть детального аналізу архітектури мережі або детального огляду конфігурації апаратного/програмного забезпечення мережі. Це не інструмент  аналізу ризиків, тому він не генеруватиме комплексну оцінку ризиків. <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> не призначений для заміни поглибленого аналізу вразливостей систем керування, який проводять кваліфіковані фахівці. Періодичні огляди та інспекції на місці все одно потрібно проводити, використовуючи цілісний підхід, включаючи обхід об'єкта, співбесіди, спостереження та огляд практики об'єкта. Також слід розглянути додаткові кроки, включаючи сканування, тестування на проникнення та навчання за допомогою додаткових, навчальних або невиробничих систем, або систем, де помилки, неочікувані несправності або інші неочікувані результати не вплинуть на виробництво або безпеку.",
+                    "introduction 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> Оцінки не можуть бути ефективно завершені однією особою. Необхідна міжфункціональна команда, що складається з представників операційного, технічного обслуговування, інформаційних технологій, бізнесу та сфери безпеки. Представники повинні бути предметними експертами з  значним досвідом  у своїх відповідних областях. Жодна окрема особа не має достатнього рівня відповідальності  або  знань, щоб ефективно відповісти на всі питання.",
+                    "introduction 4": "<p>Дані та звіти, створені інструментом, слід безпечно зберігати, позначати, зберігати та розповсюджувати відповідно до їхньої конфіденційності.</p>",
+                    "disclaimer": "Відмова від відповідальності",
+                    "disclaimer 1": "Аналіз, дані та звіти в <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> надаються «як є» лише для інформаційних цілей. {{orgLongName}} ({{orgShortName}}) не надає жодних гарантій щодо будь-якої інформації, що міститься в ньому. У жодному разі уряд США, його підрядники або субпідрядники не несуть відповідальності за будь-які збитки, включаючи, але не обмежуючись цим, прямі, непрямі, спеціальні або випадкові збитки, а також збитки, що виникли внаслідок будь-якої недбалості уряду США або його підрядників або субпідрядників, що виникли в результаті, або будь-яким чином пов'язані з цим звітом, незалежно від того, чи ґрунтується він на гарантії, договорі, деліктному праву чи іншим чином, незалежно від того, чи були отримані травми або виникли в результаті результатів або покладаючись на звіт.",
+                    "disclaimer 2": "{{orgShortName}} не підтримує жодних комерційних продуктів або послуг, включаючи предмет оцінки або оцінки в цьому звіті. Будь-яка згадка про конкретні комерційні продукти, процеси або послуги за торговою маркою, виробником або іншим чином не означає і не передбачає їх схвалення, рекомендації або схвалення {{orgShortName}}.",
+                    "disclaimer 3": "Відображення офіційної печатки {{orgShortName}} або інших візуальних елементів {{orgShortName}} у цьому звіті не слід тлумачити як надання організації-отримувачу дозволу використовувати офіційну печатку, емблему або інші візуальні елементи {{orgShortName}}. Печатка, емблема або інші візуальні елементи {{orgShortName}} не можуть використовуватися жодним чином, щоб натякати на схвалення будь-якого комерційного продукту або діяльності {{orgShortName}} або урядом США. Використання печатки {{orgShortName}} без належного дозволу є порушенням федерального законодавства (наприклад, 18 U.S.C. §§ 506, 701, 1017) і суперечить політиці {{orgShortName}} щодо використання печатки.",
+                    "disclaimer 4": "Звіт підготовлено та призначено для внутрішнього використання організацією, яка зробила запит. Вміст цього звіту може підпадати під права інтелектуальної власності держави або приватних осіб. Щоб запросити розповсюдження цього звіту за межами організації, для якої він був підготовлений, зверніться до {{intellectualPropertyRightsDistributionRequestEntity}}. Вміст цього звіту може бути відтворено або включено до інших звітів, але не може бути змінено без попереднього письмового дозволу {{appShortName}} Program Office."
                 },
                 "terms of use": {
                     "terms of use": "Умови використання",

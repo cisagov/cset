@@ -29,6 +29,7 @@ import { CpgService } from '../../../services/cpg.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { RraDataService } from '../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-deficiency',
@@ -64,7 +65,8 @@ export class CpgDeficiencyComponent implements OnInit {
     private assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   /**

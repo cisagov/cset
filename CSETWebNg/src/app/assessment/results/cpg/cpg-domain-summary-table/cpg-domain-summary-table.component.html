@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="w-100 d-block">
+<div class="w-100 d-block" *transloco="let t">
     <table class="table">
         <tr>
-            <th class="text-left align-top">Category</th>
-            <th class="text-right align-top">Implemented</th>
-            <th class="text-right align-top">In Progress</th>
-            <th class="text-right align-top">Scoped</th>
-            <th class="text-right align-top">Not Started</th>
-            <th class="text-right align-top">Unanswered</th>
+            <th class="text-left align-top">{{t('reports.category')}}</th>
+            <th class="text-right align-top">{{t('answer-options.labels.Imp-CPG')}}</th>
+            <th class="text-right align-top">{{t('answer-options.labels.Prog-CPG')}}</th>
+            <th class="text-right align-top">{{t('answer-options.labels.Scoped-CPG')}}</th>
+            <th class="text-right align-top">{{t('answer-options.labels.Not-CPG')}}</th>
+            <th class="text-right align-top">{{t('answer-options.button-labels.Unanswered')}}</th>
         </tr>
         <tr *ngFor="let func of data">
             <td>{{func.name}}</td>

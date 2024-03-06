@@ -300,7 +300,8 @@
     <div *ngIf="assessSvc.isISE() && !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
       <h4>ISE Reports</h4>
 
-      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted" [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
+      <app-ise-warnings [iseHasBeenSubmitted]="iseHasBeenSubmitted"
+        [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
 
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
         [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
@@ -312,7 +313,8 @@
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
 
-      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+      <button (click)="clickReportLink('iseansweredquestions')" tabindex="0"
+        class="btn btn-link btn-link-dark text-left">
         ISE Answered Statements
       </button>
 
@@ -404,16 +406,16 @@
           assessSvc.usesMaturityModel('CPG') &&
           !isMobile
         " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA Cybersecurity Performance Goals (CPG)</h4>
+        <h4>CISA {{t('core.cpg.title')}}</h4>
 
         <div>
           <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">
-            CPG Report
+            {{t('core.cpg.report.cpg report')}}
           </button>
         </div>
         <div>
           <button tabindex="0" (click)="clickReportLink('cpgDeficiency')" class="btn btn-link btn-link-dark text-left">
-            CPG Deficiency
+            {{t('core.cpg.deficiency.cpg deficiency')}}
           </button>
         </div>
       </div>
