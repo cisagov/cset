@@ -357,7 +357,7 @@ export class QuestionsService {
    */
   answerButtonLabel(modelName: string, answerCode: string): string {
     const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.button-labels.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.button-labels.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**
@@ -366,7 +366,7 @@ export class QuestionsService {
    */
   answerButtonTooltip(modelName: string, answerCode: string): string {
     var def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.button-tooltips.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.button-tooltips.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**
@@ -374,7 +374,7 @@ export class QuestionsService {
    */
   answerDisplayLabel(modelName: string, answerCode: string) {
     const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.labels.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.labels.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**
