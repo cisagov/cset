@@ -84,14 +84,6 @@ export class RequirementListComponent implements OnInit {
     );
   }
 
-
-  /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    return this.setBuilderSvc.formatLinebreaks(text);
-  }
-
   /**
    *
    */
