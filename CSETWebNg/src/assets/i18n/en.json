@@ -205,6 +205,7 @@
         "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
+        "export json": "JSON",
         "import": "Import",
         "enter password": "Enter Password",
         "export all": "Export All",
@@ -402,6 +403,7 @@
         "export to excel": "Export all assessments to Excel",
         "remove assessment": "Permanently remove this assessment.",
         "export assessment": "Export a copy of this assessment to another location",
+        "export assessment json": "Export a copy of this assessment as a JSON file",
         "analytics": "View the analytics for this assessment.",
         "merged checked exams": "Merge checked examinations",
         "export all": "Export a copy of all assessments to another location."
@@ -1174,6 +1176,16 @@
         "acet": {
             "we ensure financial stability": "We Ensure Financial Stability",
             "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
+        },
+        "cie":{
+            "ceser title":"CESER",
+            "ceser":"The DOE Office for Office of Cybersecurity, Energy Security, and Emergency Response (CESER) sponsors INL CIE initiatives and coordinates the CIE program that includes Idaho National Laboratory (INL); the National Renewable Energy Laboratory (NREL), and industry, academic, and other partners in support of the Department of Energy’s National Cyber-Informed Engineering Strategy, and the National Cybersecurity Strategy.",
+            "description":"Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
+            "cie tutorial title":"CIE Tutorial",
+            "cie tutorial":"The Implementation Guide promotes integrating Cyber-Informed Engineering (CIE) principles early in the lifecycle of critical energy infrastructure to mitigate cyber threats, emphasizing collaboration among engineering disciplines, IT, and cybersecurity to shift towards a 'secure-by-design' culture. It advises against turning engineers into cyber experts but uses their expertise to design systems that are inherently more secure against cyber-attacks and technological failures.",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">CIE Background</a>",
+            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
+            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Engineering Lifecycle</a>"
         }
     },
     "keyboard": {
@@ -1226,6 +1238,7 @@
         "accessibility": "Accessibility",
         "privacy and use": "Privacy & Use",
         "traffic light protocol": "Traffic Light Protocol",
-        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>"
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
+        "CIE Website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
     }
 }
