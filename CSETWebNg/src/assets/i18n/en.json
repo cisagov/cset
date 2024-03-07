@@ -843,6 +843,32 @@
                         "4": "There are no deficiencies to display."
                     }
                 }
+            }, 
+            "rra": {
+                "title": "RANSOMWARE READINESS ASSESSMENT",
+                "title 2": "(RRA) REPORT", 
+                "report": {
+                    "assessment tiers": "RRA Assessment Tiers", 
+                    "answered tier": "Practices Answered Per Tier", 
+                    "distribution tier": "Practices Distribution Per Tier", 
+                    "levels": {
+                        "text 1": "The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.", 
+                        "text 2": "The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.", 
+                        "rra practices": "RRA Practices", 
+                        "advanced": "Advanced", 
+                        "intermediate": "Intermediate", 
+                        "basic": "Basic", 
+                        "overall": "Overall"
+                    }, 
+                    "yes": "Yes", 
+                    "no": "No", 
+                    "unanswered": "Unanswered", 
+                    "percentage of practices": "Percentage of Practices Performed", 
+                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.", 
+                    "rra performance summary": "RRA Performance Summary", 
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.", 
+                    "legend": "Legend"
+                }
             }
         },
         "acet": {

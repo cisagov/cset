@@ -42,6 +42,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
+        private readonly ITokenManager _tokenManager;
+        private TranslationOverlay _overlay;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
@@ -56,6 +58,8 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
+            _overlay = new TranslationOverlay();
+
         }
 
         [HttpGet]
@@ -217,14 +221,51 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
+            var lang = _token.GetCurrentLanguage();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             RRASummary summary = new RRASummary(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
+
+            foreach (DataLayer.Manual.usp_getRRASummaryOverall q in data.RRASummaryOverall)
+            {
+                var translatedAnswer = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
+                if (translatedAnswer != null)
+                {
+                    q.Answer_Full_Name = translatedAnswer;
+                }
+            }
+
+
             data.RRASummary = summary.GetRRASummary(assessmentId);
+
+            foreach (DataLayer.Manual.usp_getRRASummary q in data.RRASummary)
+            { 
+                var translatedLevel = _overlay.GetPropertyValue("MATURITY_LEVELS", q.Level_Name.ToLower(), lang);
+                if (translatedLevel != null)
+                {
+                    q.Level_Name = translatedLevel;
+                }
+                var translatedFullAnswer = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
+                if (translatedFullAnswer != null)
+                {
+                    q.Answer_Full_Name = translatedFullAnswer;
+                }
+            }
+
             data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
+
+            foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
+            {
+                var translatedAnswerGoal = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
+                if (translatedAnswerGoal != null)
+                {
+                    q.Answer_Full_Name = translatedAnswerGoal;
+                }
+            }
+
             data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
             return Ok(data);
         }
