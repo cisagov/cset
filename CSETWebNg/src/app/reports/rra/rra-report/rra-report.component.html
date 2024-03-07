@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                RANSOMWARE READINESS ASSESSMENT
+                {{t('reports.core.rra.title')}}
             </p>
             <p class="report-title" style="font-size: 36px">
-                (RRA) REPORT
+                {{t('reports.core.rra.title 2')}}
             </p>
         </div>
         <div class="column">
@@ -55,31 +55,31 @@
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">
                 <div class="chart d-flex flex-column flex-00a">
-                    <h1 class="pageHeader">Percentage of Practices Performed</h1>
+                    <h1 class="pageHeader">{{t('reports.core.rra.report.percentage of practices')}}</h1>
                     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
-                            <div>Overall Score</div>
+                            <div>{{t('reports.core.dashboard.overall score')}}</div>
                             <div style="padding: .3rem; font-size: 2rem;">
-                                {{getComplianceScore('Overall')}}%</div>
+                                {{getComplianceScore(t('reports.core.rra.report.levels.overall'))}}%</div>
                         </div>
 
                         <div style="flex-direction: column">
                             <div id="standard-score" class="score-container">
-                                <div>Basic</div>
+                                <div>{{t('reports.core.rra.report.levels.basic')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Basic')}}%
+                                    {{getComplianceScore(t('reports.core.rra.report.levels.basic'))}}%
                                 </div>
                             </div>
                             <div id="standard-score" class="score-container">
-                                <div>Intermediate</div>
+                                <div>{{t('reports.core.rra.report.levels.intermediate')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Intermediate')}}%</div>
+                                    {{getComplianceScore(t('reports.core.rra.report.levels.intermediate'))}}%</div>
                             </div>
                             <div id="standard-score" class="score-container">
-                                <div>Advanced</div>
+                                <div>{{t('reports.core.rra.report.levels.advanced')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Advanced')}}%</div>
+                                    {{getComplianceScore(t('reports.core.rra.report.levels.advanced'))}}%</div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="mb-5"></div>
                     <p>
-                        Scores are calculated as the percentage of "Yes" answers.
+                        {{t('reports.core.rra.report.scores calculated as yes')}}
                     </p>
                 </div>
             </div>
@@ -170,17 +170,17 @@
 
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Assessment Tiers</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.assessment tiers')}}</h1>
         <app-rra-levels></app-rra-levels>
 
 
-        <h1 class="pageHeader">Practices Answered Per Tier</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.answered tier')}}</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-counts></app-rra-answer-counts>
         </div>
         <div style="height: 3rem"></div>
 
-        <h1 class="pageHeader">Practices Distribution Per Tier</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.distribution tier')}}</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-distribution></app-rra-answer-distribution>
         </div>
