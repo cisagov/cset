@@ -49,6 +49,11 @@
                 "input": "./node_modules/monaco-editor/min",
                 "output": "./assets/monaco"
               },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@kolkov/angular-editor/assets/",
+                "output": "./assets/fonts/"
+              },
               "src/assets",
               "src/favicon_cset.ico",
               "src/favicon_acet.ico",
