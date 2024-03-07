@@ -786,7 +786,9 @@
                     "no": "немає", 
                     "unanswered": "без відповіді", 
                     "percentage of practices": "[UK] Percentage of Practices Performed", 
-                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers."
+                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.", 
+                    "rra performance summary": "[Uk] RRA Performance Summary", 
+                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers."
                 }
             }
         }

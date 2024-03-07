@@ -862,7 +862,9 @@
                     "no": "No", 
                     "unanswered": "Unanswered", 
                     "percentage of practices": "Percentage of Practices Performed", 
-                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers."
+                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.", 
+                    "rra performance summary": "RRA Performance Summary", 
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers."
                 }
             }
         },
