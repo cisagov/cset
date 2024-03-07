@@ -196,6 +196,7 @@
         "analytics": "Аналітика",
         "import": "Імпорт",
         "export": "Експорт",
+        "export json": "JSON",
         "enter password": "Введіть пароль",
         "export all": "Експортувати все",
         "export all to excel": "???",
@@ -357,7 +358,8 @@
         "import": "Імпортуйте оцінку із зовнішнього файлу {{appCode}}",
         "export to excel": "[UK]Export all assessments to Excel",
         "remove assessment": "[UK]Permanently remove this assessment.",
-        "export assessment": "[UK]Export a copy of this assessment to another location",
+        "export assessment": "Експортувати копію цієї оцінки до іншої локації",
+        "export assessment json": "Експортувати копію цієї оцінки у JSON-файл",
         "analytics": "[UK]View the analytics for this assessment.",
         "merged checked exams": "[UK]Merge checked examinations",
         "export all": "[UK]Export a copy of all assessments to another location."
@@ -1025,7 +1027,17 @@
         "training no cost": "Примітка: усі навчальні курси надаються безкоштовно для відвідувачів.",
         "training website": "Навчальний веб-сайт",
         "training calendar": "Календар тренувань",
-        "acet": {}
+        "acet": {},
+        "cie":{
+            "ceser title":"CESER",
+            "ceser":"Офіс з питань кібербезпеки, енергетичної безпеки та реагування на надзвичайні ситуації (CESER) Міністерства енергетики США спонсорує ініціативи CIE в ІНЛ та координує програму CIE, до якої входять Ідаго Національна лабораторія (INL), Національна лабораторія відновлюваної енергії (NREL), а також промисловість, академічні та інші партнери на підтримку Національної стратегії кіберінформованої інженерії Міністерства енергетики та Національної стратегії кібербезпеки.",
+            "description":"Кіберінформована інженерія <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> розробляє інструменти для впровадження на високому рівні у навчальні програми, стандарти проектування, сертифікацію та акредитацію навчальних програм.",
+            "cie tutorial title":"Туторіал CIE",
+            "cie tutorial":" Посібник з імплементації пропагує інтеграцію принципів Кіберінформованої інженерії (CIE) на ранніх етапах життєвого циклу критичної енергетичної інфраструктури для пом'якшення кіберзагроз, наголошуючи на співпраці між інженерними дисциплінами, ІТ та кібербезпекою для переходу до культури 'безпека за замовчуванням'. Рекомендує не перетворювати інженерів на експертів з кібербезпеки, а використовувати їхній досвід для проектування систем, які за своєю суттю більш захищені від кібератак та технологічних збоїв.",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Контекст CIE</a>",
+            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">Принципи CIE</a>",
+            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Життєвий цикл інженерії</a>"
+        }
     },
     "keyboard": {
         "dialog title": "Гарячі клавіши",
@@ -1072,6 +1084,7 @@
         "accessibility": "Доступність",
         "privacy and use": "Конфіденційність та Використання",
         "traffic light protocol": "Протокол Світлофору",
-        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>"
+        "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> є частиною <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Департамент державної безпеки Сполучених Штатів</a>",
+        "CIE Website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Веб-сайт</a>"
     }
 }
