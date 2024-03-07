@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-answer-distribution',
@@ -34,7 +35,10 @@ export class RraAnswerDistributionComponent implements OnInit {
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
 
-  constructor(public rraDataSvc: RraDataService) { }
+  constructor(
+    public rraDataSvc: RraDataService,
+    public tSvc: TranslocoService
+    ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -46,12 +50,15 @@ export class RraAnswerDistributionComponent implements OnInit {
     let levelList = [];
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
+      const yes = this.tSvc.translate('reports.core.rra.report.yes')
+      const no = this.tSvc.translate('reports.core.rra.report.no')
+      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
       if (!level) {
         level = {
           name: element.level_Name, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
+            { name: yes, value: 0 },
+            { name: no, value: 0 },
+            { name: unanswered, value: 0 },
           ]
         };
         levelList.push(level);
