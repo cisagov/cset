@@ -330,7 +330,7 @@
         "labels": {
             "yes": "Yes",
             "y": "Yes",
-            "No": "No",
+            "no": "No",
             "n": "No",
             "n/a": "N/A",
             "na": "N/A",
