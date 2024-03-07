@@ -433,7 +433,7 @@
         "level 5": "Nivel 5"
     },
     "irp": {
-        "Inherent Risk": "Riesgo inherente",
+        "inherent risk": "Riesgo inherente",
         "inherent risk profile": "Perfil de riesgo inherente",
         "inherent risk profiles": "Perfil de riesgo inherente",
         "irp desc start": "El IRP tiene",
