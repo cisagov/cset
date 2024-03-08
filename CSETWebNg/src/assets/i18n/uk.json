@@ -769,6 +769,9 @@
             "rra": {
                 "title": "[UK] RANSOMWARE READINESS ASSESSMENT",
                 "title 2": "[UK] (RRA) REPORT",
+                "rra report": "[UK] RRA Report",
+                "rra deficiency report": "[UK] RRA Deficiency Report",
+                "comments and marked for review": "[UK] Comments and Marked for Review",
                 "report": {
                     "assessment tiers": "[UK] RRA Assessment Tiers",
                     "answered tier": "[UK] Practices Answered Per Tier",
