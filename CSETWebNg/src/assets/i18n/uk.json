@@ -765,31 +765,45 @@
                         "4": "Немає недоліків для відображення"
                     }
                 }
-            }, 
+            },
             "rra": {
                 "title": "[UK] RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "[UK] (RRA) REPORT", 
+                "title 2": "[UK] (RRA) REPORT",
                 "report": {
-                    "assessment tiers": "[UK] RRA Assessment Tiers", 
-                    "answered tier": "[UK] Practices Answered Per Tier", 
-                    "distribution tier": "[UK] Practices Distribution Per Tier", 
+                    "assessment tiers": "[UK] RRA Assessment Tiers",
+                    "answered tier": "[UK] Practices Answered Per Tier",
+                    "distribution tier": "[UK] Practices Distribution Per Tier",
                     "levels": {
-                        "text 1": "[UK] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.", 
-                        "text 2": "[UK] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.", 
-                        "rra practices": "[UK] RRA Practices", 
-                        "advanced": "Просунутий", 
-                        "intermediate": "Проміжний", 
-                        "basic": "Базовий", 
+                        "text 1": "[UK] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
+                        "text 2": "[UK] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
+                        "rra practices": "[UK] RRA Practices",
+                        "advanced": "Просунутий",
+                        "intermediate": "Проміжний",
+                        "basic": "Базовий",
                         "overall": "Загалом"
-                    }, 
-                    "yes": "так", 
-                    "no": "немає", 
-                    "unanswered": "без відповіді", 
-                    "percentage of practices": "[UK] Percentage of Practices Performed", 
-                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.", 
-                    "rra performance summary": "[UK] RRA Performance Summary", 
-                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.", 
+                    },
+                    "yes": "так",
+                    "no": "немає",
+                    "unanswered": "без відповіді",
+                    "percentage of practices": "[UK] Percentage of Practices Performed",
+                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.",
+                    "rra performance summary": "[UK] RRA Performance Summary",
+                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
                     "legend": "Легенда"
+                },
+                "deficiency": {
+                    "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
+                    "suggested areas for improvement": "Рекомендовані напрямки покращення",
+                    "deficiencies": "недостачі",
+                    "marked for review": "[UK] Marked for Review",
+                    "no deficiencies to display": "[UK] There are no deficiencies to display",
+                    "comment": "Коментар",
+                    "text": {
+                        "1": "Цей звіт про недоліки містить твердження, на які наразі немає відповідей, або на які було надано відповідь \"ні\"",
+                        "2": "Цей звіт, який часто називають Звітом про Розриви, визначає розриви, щоб допомогти користувачам визначити пріоритетні завдання та розробити план впровадження необхідного контролю для досягнення відповідності пов'язаним практикам",
+                        "3": "Також зазначено відсотковий розрив для кожної цілі, що допоможе визначити пріоритетні напрямки для зосередження зусиль",
+                        "4": "Цілі оцінки ранжуються за ступенем нестачі. Цілі з меншою кількістю успішно виконаних практик посідають вищі позиції на діаграмі. Стовпчаста діаграма відображає відсоток практик для кожної цілі, на які було надано відповідь \"Ні\" або залишено без відповіді"
+                    }
                 }
             }
         }
@@ -1026,15 +1040,15 @@
         "training website": "Навчальний веб-сайт",
         "training calendar": "Календар тренувань",
         "acet": {},
-        "cie":{
-            "ceser title":"CESER",
-            "ceser":"Офіс з питань кібербезпеки, енергетичної безпеки та реагування на надзвичайні ситуації (CESER) Міністерства енергетики США спонсорує ініціативи CIE в ІНЛ та координує програму CIE, до якої входять Ідаго Національна лабораторія (INL), Національна лабораторія відновлюваної енергії (NREL), а також промисловість, академічні та інші партнери на підтримку Національної стратегії кіберінформованої інженерії Міністерства енергетики та Національної стратегії кібербезпеки.",
-            "description":"Кіберінформована інженерія <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> розробляє інструменти для впровадження на високому рівні у навчальні програми, стандарти проектування, сертифікацію та акредитацію навчальних програм.",
-            "cie tutorial title":"Туторіал CIE",
-            "cie tutorial":" Посібник з імплементації пропагує інтеграцію принципів Кіберінформованої інженерії (CIE) на ранніх етапах життєвого циклу критичної енергетичної інфраструктури для пом'якшення кіберзагроз, наголошуючи на співпраці між інженерними дисциплінами, ІТ та кібербезпекою для переходу до культури 'безпека за замовчуванням'. Рекомендує не перетворювати інженерів на експертів з кібербезпеки, а використовувати їхній досвід для проектування систем, які за своєю суттю більш захищені від кібератак та технологічних збоїв.",
+        "cie": {
+            "ceser title": "CESER",
+            "ceser": "Офіс з питань кібербезпеки, енергетичної безпеки та реагування на надзвичайні ситуації (CESER) Міністерства енергетики США спонсорує ініціативи CIE в ІНЛ та координує програму CIE, до якої входять Ідаго Національна лабораторія (INL), Національна лабораторія відновлюваної енергії (NREL), а також промисловість, академічні та інші партнери на підтримку Національної стратегії кіберінформованої інженерії Міністерства енергетики та Національної стратегії кібербезпеки.",
+            "description": "Кіберінформована інженерія <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> розробляє інструменти для впровадження на високому рівні у навчальні програми, стандарти проектування, сертифікацію та акредитацію навчальних програм.",
+            "cie tutorial title": "Туторіал CIE",
+            "cie tutorial": " Посібник з імплементації пропагує інтеграцію принципів Кіберінформованої інженерії (CIE) на ранніх етапах життєвого циклу критичної енергетичної інфраструктури для пом'якшення кіберзагроз, наголошуючи на співпраці між інженерними дисциплінами, ІТ та кібербезпекою для переходу до культури 'безпека за замовчуванням'. Рекомендує не перетворювати інженерів на експертів з кібербезпеки, а використовувати їхній досвід для проектування систем, які за своєю суттю більш захищені від кібератак та технологічних збоїв.",
             "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Контекст CIE</a>",
-            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">Принципи CIE</a>",
-            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Життєвий цикл інженерії</a>"
+            "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">Принципи CIE</a>",
+            "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Життєвий цикл інженерії</a>"
         }
     },
     "keyboard": {
