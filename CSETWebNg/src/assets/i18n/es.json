@@ -843,6 +843,9 @@
             "rra": {
                 "title": "[ES] RANSOMWARE READINESS ASSESSMENT",
                 "title 2": "[ES] (RRA) REPORT",
+                "rra report": "[ES] RRA Report",
+                "rra deficiency report": "[ES] RRA Deficiency Report",
+                "comments and marked for review": "[ES] Comments and Marked for Review",
                 "report": {
                     "assessment tiers": "[ES] RRA Assessment Tiers",
                     "answered tier": "[ES] Practices Answered Per Tier",
