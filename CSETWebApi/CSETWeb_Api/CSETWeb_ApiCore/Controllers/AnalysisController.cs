@@ -18,6 +18,8 @@ using CSETWebCore.Model.Analysis;
 using CSETWebCore.Model.Question;
 using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+
 
 
 namespace CSETWebCore.Api.Controllers
@@ -30,9 +32,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly ITokenManager _tokenManager;
         private readonly IRequirementBusiness _requirement;
         private readonly int _assessmentId;
+        private readonly IConfiguration _configuration;
 
         static Dictionary<String, String> answerColorDefs;
         private TranslationOverlay _overlay;
+
 
 
         /// <summary>
@@ -44,11 +48,12 @@ namespace CSETWebCore.Api.Controllers
         }
 
 
-        public AnalysisController(CSETContext context, ITokenManager tokenManager, IRequirementBusiness requirement)
+        public AnalysisController(CSETContext context, ITokenManager tokenManager, IRequirementBusiness requirement, IConfiguration configuration)
         {
             _context = context;
             _tokenManager = tokenManager;
             _requirement = requirement;
+            _configuration = configuration;
 
             _assessmentId = _tokenManager.AssessmentForUser();
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -182,8 +187,9 @@ namespace CSETWebCore.Api.Controllers
                 FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
 
-                string FaaEmail = "PEDCRA@faa.gov";
-                string DHSEmail = "cset@dhs.gov";
+                var FaaEmail = _configuration.GetValue<string>("Email:FaaEmail");
+                var DHSEmail = _configuration.GetValue<string>("Email:DHSEmail");
+
                 if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
                 FeedbackResult.FeedbackEmailTo += DHSEmail;
 

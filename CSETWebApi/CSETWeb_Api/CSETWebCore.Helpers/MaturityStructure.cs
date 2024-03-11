@@ -46,18 +46,30 @@ namespace CSETWebCore.Helpers
         private bool _includeText = true;
 
 
+        private string _lang = "en";
+        /// <summary>
+        /// 
+        /// </summary>
+        private TranslationOverlay _overlay;
+
+
         /// <summary>
         /// Returns a populated instance of the maturity grouping
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText)
+        public MaturityStructure(int assessmentId, CSETContext context, bool includeText, string lang)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
             this._includeText = includeText;
 
             this._addlSuppl = new AdditionalSupplemental(context);
+
+            // set up translation resources
+            this._overlay = new TranslationOverlay();
+            this._lang = lang;
+
 
             LoadStructure();
         }
@@ -165,6 +177,12 @@ namespace CSETWebCore.Helpers
 
                 var remark = remarks.FirstOrDefault(r => r.Grouping_ID == sg.Grouping_Id);
                 grouping.Remarks = remark?.DomainRemarks ?? "";
+
+
+
+                // i18n
+                grouping.Title = _overlay.GetGrouping(grouping.GroupingId, _lang)?.Title ?? grouping.Title;
+
 
 
 

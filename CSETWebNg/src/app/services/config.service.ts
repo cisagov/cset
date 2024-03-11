@@ -290,6 +290,16 @@ export class ConfigService {
           title.innerText = 'CSET-TSA';
         }
         break;
+        case 'CIE':
+          {
+            // change favicon and title
+            const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+            link.href = 'assets/icons/favicon_cie.ico?app=cie1';
+  
+            var title = this.document.querySelector('title');
+            title.innerText = 'CSET-CIE';
+          }
+          break;
       case 'CF':
         {
           // change favicon and title
