@@ -56,8 +56,11 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
   modelName: string = '';
   questionsAlias: string = '';
 
+  pageTitle: string = '';
+
   section: QuestionGrouping;
   sectionId: Number;
+  sectionIndex: number = 0;
 
   scoreObject: any;
   sectionScore: Number;
@@ -85,7 +88,6 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    console.log('in here')
     // listen for NavigationEnd to know when the page changed
     this._routerSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
@@ -98,6 +100,9 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (this.assessSvc.applicationMode != 'F' && this.assessSvc.applicationMode != 'P') {
+      this.setMode('F');
+    }
     // this.loadQuestions();
   }
 
@@ -127,17 +132,20 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
     this.sectionId = +this.route.snapshot.params['sec'];
     const magic = this.navSvc.getMagic();
     this.groupings = null;
-
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false, this.sectionId.valueOf()).subscribe(
       (response: MaturityQuestionResponse) => {
         this.completionSvc.setQuestionArray(response);
         this.modelName = response.modelName;
         this.questionsAlias = response.questionsAlias;
+        this.sectionIndex = this.sectionId.valueOf() - response.groupings[0].groupingID -1;
 
         // the recommended maturity level(s) based on IRP
         this.maturityLevels = response.levels;
-        this.groupings = response.groupings[0].subGroupings[0].subGroupings;
-        console.log(this.groupings)
+        this.pageTitle = response.groupings[0].subGroupings[this.sectionIndex].title;
+        this.groupings = response.groupings[0].subGroupings[this.sectionIndex].subGroupings;
+        if (this.assessSvc.applicationMode) {
+          this.section = response.groupings[0].subGroupings[this.sectionIndex];
+        }
         this.assessSvc.assessment.maturityModel.maturityTargetLevel = response.maturityTargetLevel;
         this.assessSvc.assessment.maturityModel.answerOptions = response.answerOptions;
         this.filterSvc.answerOptions = response.answerOptions;
@@ -204,6 +212,18 @@ export class MaturityQuestionsCieComponent implements OnInit, AfterViewInit {
  */
   refreshQuestionVisibility() {
     //this.maturityFilteringSvc.evaluateFilters(this.groupings.filter(g => g.groupingType === 'Domain'));
+  }
+
+  /**
+   * Changes the application mode of the assessment
+   */
+  setMode(mode: string) {
+    this.assessSvc.applicationMode = mode;
+    this.questionsSvc.setMode(mode).subscribe(() => {
+      // this.loadQuestions();
+      // this.navSvc.buildTree();
+    });
+    localStorage.setItem("questionSet", mode == 'P' ? "Principle" : "Principle-Phase");
   }
 
 }

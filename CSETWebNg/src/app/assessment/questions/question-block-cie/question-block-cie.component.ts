@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AssessmentService } from '../../../services/assessment.service';
 import { CompletionService } from '../../../services/completion.service';
@@ -15,13 +15,14 @@ import { QuestionDetailsContentViewModel } from '../../../models/question-extras
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { IssuesComponent } from '../issues/issues.component';
 import { Observation } from '../observations/observations.model';
+import { QuestionExtrasDialogComponent } from '../question-extras-dialog/question-extras-dialog.component';
 
 @Component({
   selector: 'app-question-block-cie',
   templateUrl: './question-block-cie.component.html',
   styleUrls: ['./question-block-cie.component.scss']
 })
-export class QuestionBlockCieComponent {
+export class QuestionBlockCieComponent implements OnInit {
   @Input() myGrouping: QuestionGrouping;
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -29,39 +30,17 @@ export class QuestionBlockCieComponent {
   extras: QuestionDetailsContentViewModel;
   dialogRef: MatDialogRef<any>;
 
-  percentAnswered = 0;
   answerOptions = [];
+  percentAnswered = 0;
 
-  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-  altTextPlaceholder_ISE = "Description, explanation and/or justification for note";
-  textForSummary = "Statement Summary (insert summary)";
-  summaryCommentCopy = "";
-  summaryEditedCheck = false;
-
-  contactInitials = "";
-  altAnswerSegment = "";
-  convoBuffer = '\n- - End of Note - -\n';
-  summaryConvoBuffer = '\n\n- - End of Statement Summary - -\n';
   summaryBoxMax = 800;
 
-  // Used to place buttons/text boxes at the bottom of each subcategory
-  finalScuepQuestion = new Set([7576, 7581, 7587, 7593, 7601, 7606, 7611, 7618]);
-  finalCoreQuestion = new Set([7627, 7632, 7638, 7644, 7651, 7654, 7660, 7668, 7673, 7678, 7682, 7686, 7690, 7693, 7698, 7701]);
-  finalCorePlusQuestion = new Set([7706, 10926, 7718, 7730, 7736, 7739, 7746, 7755, 7771, 7779, 7790, 7802, 7821, 10929, 7838, 7851]);
-  finalExtraQuestion = new Set([7867, 7873, 7889, 7900, 7910, 7917, 7946, 7965, 8001]);
-  
-  // Statements added late so their id's are very different from other sub statements
-  addedLateQuestions = new Set([10926, 10927, 10928, 10929, 10930]);
+  textPlaceholderEmpty = "Type answer here...";
+  textPlaceholderNA = "Explain why this question is Not Applicable here...";
+  freeResponseAnswers: Map<number, string> = new Map<number, string>();
 
   showQuestionIds = false;
 
-  iseExamLevel: string = "";
-  showCorePlus: boolean = false;
-  showIssues: boolean = true;
-  coreChecked: boolean = false;
-
-  autoGenerateInProgress: boolean = false;
   maturityModelId: number;
   maturityModelName: string;
 
@@ -89,52 +68,20 @@ export class QuestionBlockCieComponent {
   */
   ngOnInit(): void {
     //this.setIssueMap();
+    this.myGrouping.questions.sort((a, b) => a.questionId - b.questionId);
     console.log(this.myGrouping)
-
-    this.myGrouping.questions.sort((a, b) => a.)
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
 
-      this.iseExamLevel = this.ncuaSvc.getExamLevel();
-
-      this.summaryCommentCopy = this.myGrouping.questions[0].comment;
-
-      this.questionsSvc.getDetails(this.myGrouping.questions[0].questionId, this.myGrouping.questions[0].questionType).subscribe(
-        (details) => {
-          this.extras = details;
-          this.extras.questionId = this.myGrouping.questions[0].questionId;
-
-          this.extras.observations.forEach(obs => {
-            if (obs.auto_Generated === 1) {
-              obs.question_Id = this.myGrouping.questions[0].questionId;
-
-              // This is a check for post-merging ISE assessments.
-              // If an issue existed, but all answers were changed to "Yes" on merge, delete the issue.
-              if (this.ncuaSvc.questionCheck.get(obs.question_Id) !== undefined) {
-                this.ncuaSvc.issueObservationId.set(obs.question_Id, obs.observation_Id);
-              } else {
-                this.deleteIssue(obs.observation_Id, true);
-              }
-
-            }
-          });
-
-          this.ncuaSvc.issuesFinishedLoading = true;
-        });
-
+      
+      this.myGrouping.questions.forEach(question => {
+        this.freeResponseAnswers.set(question.questionId, question.freeResponseAnswer);
+      });
       this.refreshReviewIndicator();
       this.refreshPercentAnswered();
 
-      if (this.configSvc.installationMode === "ACET") {
-        if (this.assessSvc.isISE()) {
-          this.altTextPlaceholder = this.altTextPlaceholder_ISE;
-        }
-        else {
-          this.altTextPlaceholder = this.altTextPlaceholder_ACET;
-        }
-      }
     }
 
     this.acetFilteringSvc.filterAcet.subscribe((filter) => {
@@ -143,10 +90,6 @@ export class QuestionBlockCieComponent {
     });
 
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
-
-    this.assessSvc.getAssessmentContacts().then((response: any) => {
-      this.contactInitials = response.contactList[0].firstName;
-    });
   }
 
   /**
@@ -222,44 +165,42 @@ export class QuestionBlockCieComponent {
     return true;
   }
 
-  shouldIShow(q: Question) {
-    let visible = false;
-
-    if (q.visible || q.isParentQuestion) {
-      visible = true;
+  shouldIShow(question: Question) {
+    let visibility = false;
+    if (question.parentQuestionId == null) {
+      return true;
     }
+    this.myGrouping.questions.forEach(q => {
+      if (q.questionId == question.parentQuestionId) {
+        if (q.freeResponseAnswer != null && q.freeResponseAnswer != '') {
+          visibility = true;
+        }
+        if (this.freeResponseAnswers.get(q.questionId) != null 
+          && this.freeResponseAnswers.get(q.questionId) != '') {
+          visibility = true;
+        }
+        if (q.answer == 'NA') {
+          visibility = false;
+        }
+      } 
+        
+    });
+    return visibility;
+  }
 
-    // If running a SCUEP exam, always show level 1 (SCUEP) questions
-    if (this.iseExamLevel === 'SCUEP' && q.maturityLevel === 1) {
-      if (visible) {
-        this.refreshPercentAnswered(); // updates filtered %completed circles, and keeps it in step when switching between filters
-        return true;
-      }
-      //If running a CORE exam, always show level 2 (CORE) questions
-    } else if (this.iseExamLevel === 'CORE') {
-      if (q.maturityLevel === 2) {
-        if (visible) {
-          this.refreshPercentAnswered();
-          return true;
-        }
-        // For all level 3 (CORE+) questions, check to see if we want to see them
-        } else if (q.maturityLevel === 3) {
-        if ((q.questionId < 7852 || q.questionId >= 10926) && this.showCorePlus === true) {
-          if (visible) {
-            this.refreshPercentAnswered();
-            return true;
-          }
-        } else if ((q.questionId >= 7852 && (!this.addedLateQuestions.has(q.questionId)) 
-                    && this.ncuaSvc.showExtraQuestions === true)) {
-          if (visible) {
-            this.refreshPercentAnswered();
-            return true;
-          }
-        }
-      }
+  isParentNA(parentQuestionId: any) {
+    if (parentQuestionId == null) {
+      return false;
     }
-
-    return false;
+    let isNA = false;
+    this.myGrouping.questions.forEach(q => {
+      if (q.questionId == parentQuestionId) {
+        if (q.answer == 'NA') {
+          isNA = true;
+        }
+      } 
+    });
+    return isNA;
   }
 
 
@@ -315,11 +256,6 @@ export class QuestionBlockCieComponent {
       value++;
       this.ncuaSvc.questionCheck.set(q.parentQuestionId, value);
 
-      if (value >= 1 && !this.ncuaSvc.issueObservationId.has(q.parentQuestionId)) {
-        if (!this.ncuaSvc.deleteHistory.has(q.parentQuestionId)) {
-          this.autoGenerateIssue(q.parentQuestionId, 0);
-        }
-      }
     } else if (oldAnswerValue === 'N' && (q.answer === 'Y' || q.answer === 'U')) {
       value--;
       if (value < 1) {
@@ -375,16 +311,13 @@ export class QuestionBlockCieComponent {
     let totalCount = 0;
 
     this.myGrouping.questions.forEach(q => {
-      if (q.parentQuestionId === null) {
-        return;
-      }
-      if (q.visible && q.maturityLevel != 3) {
-
-        totalCount++;
-        if (q.answer && q.answer !== "U") {
-          answeredCount++;
+      if (q.displayNumber != 'Question K') {
+        if (q.parentQuestionId == null || (q.parentQuestionId != null && q.answer == 'NA')) {
+          totalCount++;
+          if ( q.freeResponseAnswer != null && q.freeResponseAnswer != '') {
+            answeredCount++;
+          }
         }
-
       }
     });
     this.percentAnswered = (answeredCount / totalCount) * 100;
@@ -407,30 +340,6 @@ export class QuestionBlockCieComponent {
    * @param q
    */
   storeComment(q: Question) {
-    if (this.assessSvc.isISE()) {
-      let bracketContact = '[' + this.contactInitials + ']';
-
-      if (q.comment.indexOf(bracketContact) !== 0) {
-        if (q.comment !== '') {
-          if (q.comment.indexOf('[') !== 0) {
-            this.altAnswerSegment = bracketContact + ' ' + q.comment;
-            q.comment = this.altAnswerSegment + this.convoBuffer;
-          }
-
-          else {
-            let previousContactInitials = q.comment.substring(q.comment.lastIndexOf('[') + 1, q.comment.lastIndexOf(']'));
-            let endOfLastBuffer = q.comment.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
-            if (previousContactInitials !== this.contactInitials) {
-              let oldComments = q.comment.substring(0, endOfLastBuffer);
-              let newComment = q.comment.substring(oldComments.length);
-
-              q.comment = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
-            }
-          }
-        }
-      }
-    }
-
     clearTimeout(this._timeoutId);
     this._timeoutId = setTimeout(() => {
       const answer: Answer = {
@@ -481,241 +390,62 @@ export class QuestionBlockCieComponent {
     return true;
   }
 
-  /**
-   * Pushes the answer to the API, specifically containing the alt text
-   * @param q
-   * @param altText
-   */
-  storeAltText(q: Question) {
-    if (this.assessSvc.isISE()) {
-      let bracketContact = '[' + this.contactInitials + ']';
-
-      if (q.altAnswerText.indexOf(bracketContact) !== 0) {
-        if (!!q.altAnswerText) {
-          if (q.altAnswerText.indexOf('[') !== 0) {
-            this.altAnswerSegment = bracketContact + ' ' + q.altAnswerText;
-            q.altAnswerText = this.altAnswerSegment + this.convoBuffer;
-          }
-
-          else {
-            let previousContactInitials = q.altAnswerText.substring(q.altAnswerText.lastIndexOf('[') + 1, q.altAnswerText.lastIndexOf(']'));
-            let endOfLastBuffer = q.altAnswerText.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
-            if (previousContactInitials !== this.contactInitials) {
-              // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
-              let oldComments = q.altAnswerText.substring(0, endOfLastBuffer);
-              let newComment = q.altAnswerText.substring(oldComments.length);
-
-              q.altAnswerText = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
-              // }
-            }
-          }
-        }
-      }
-    }
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.questionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        comment: q.comment,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe();
-    }, 500);
-
-  }
 
   /**
    * Very similar to 'storeAltText' above. Text box is at the end of each question set, and
    * attaches to the parent statement.
    * @param q
   */
-  storeSummaryComment(q: Question, id: number, e: any) {
-    this.autoResize(id);
+  changeText(q: Question, e: any) {
+    // if they clicked on the same answer that was previously set, "un-set" it
 
-    this.summaryCommentCopy = e.target.value;
-    this.summaryEditedCheck = true;
+    let newFreeResponse = e.target.value;
+    q.freeResponseAnswer = newFreeResponse;
+    this.freeResponseAnswers.set(q.questionId, newFreeResponse);
+    const answer: Answer = {
+      answerId: q.answer_Id,
+      questionId: q.questionId,
+      questionType: q.questionType,
+      questionNumber: "0",
+      answerText: q.answer,
+      altAnswerText: q.altAnswerText,
+      comment: q.comment,
+      feedback: q.feedback,
+      markForReview: q.markForReview,
+      reviewed: q.reviewed,
+      is_Component: q.is_Component,
+      is_Requirement: q.is_Requirement,
+      is_Maturity: q.is_Maturity,
+      componentGuid: q.componentGuid,
+      freeResponseAnswer: q.freeResponseAnswer
+    };
 
-    let summarySegment = '';
-    // this.summaryCommentCopy = q.comment;
-    if (this.assessSvc.isISE()) {
-      let bracketContact = '[' + this.contactInitials + ']\n';
+    // Errors out on ISE answers. Commenting out for now.
+    //this.completionSvc.setAnswer(q.questionId, q.answer);
 
-      if (this.summaryCommentCopy.indexOf(bracketContact) !== 0) {
-        if (this.summaryCommentCopy !== '') {
-          if (this.summaryCommentCopy.indexOf('[') !== 0) {
-            summarySegment = bracketContact + ' ' + this.summaryCommentCopy;
-            this.summaryCommentCopy = summarySegment + this.summaryConvoBuffer;
-          }
+    this.refreshReviewIndicator();
+    this.refreshPercentAnswered();
 
-          else {
-            let previousContactInitials = this.summaryCommentCopy.substring(this.summaryCommentCopy.lastIndexOf('[') + 1, this.summaryCommentCopy.lastIndexOf(']'));
-            let endOfLastBuffer = this.summaryCommentCopy.lastIndexOf(this.summaryConvoBuffer) + this.summaryConvoBuffer.length;
-            if (previousContactInitials !== this.contactInitials) {
-              let oldComments = this.summaryCommentCopy.substring(0, endOfLastBuffer);
-              let newComment = this.summaryCommentCopy.substring(oldComments.length);
-
-              this.summaryCommentCopy = oldComments + bracketContact + ' ' + newComment + this.summaryConvoBuffer;
-            }
-          }
-        }
-      }
-    }
-
-    clearTimeout(this._timeoutId);
-    this._timeoutId = setTimeout(() => {
-      const answer: Answer = {
-        answerId: q.answer_Id,
-        questionId: q.parentQuestionId,
-        questionType: q.questionType,
-        questionNumber: q.displayNumber,
-        answerText: q.answer,
-        altAnswerText: q.altAnswerText,
-        comment: this.summaryCommentCopy,
-        feedback: q.feedback,
-        markForReview: q.markForReview,
-        reviewed: q.reviewed,
-        is_Component: q.is_Component,
-        is_Requirement: q.is_Requirement,
-        is_Maturity: q.is_Maturity,
-        componentGuid: q.componentGuid
-      };
-
-      this.refreshReviewIndicator();
-
-      this.questionsSvc.storeAnswer(answer)
-        .subscribe();
-    }, 500);
-
-  }
-
-  getSummaryComment(q: Question) {
-    let parentId = q.parentQuestionId;
-    let comment = "";
-
-    for (const question of this.myGrouping.questions) {
-      if (question.questionId === parentId) {
-        // uses a local copy of the comment to avoid using API call
-        if (this.summaryCommentCopy !== "") {
-          comment = this.summaryCommentCopy;
-          return comment;
-        }
-        if (this.summaryCommentCopy === "" && question.comment !== "" && this.summaryEditedCheck === true) {
-          comment = this.summaryCommentCopy;
-          return comment;
-        }
-        comment = question.comment;
-        break;
-      }
-    }
-
-    return comment;
+    this.questionsSvc.storeAnswer(answer).subscribe
+      (result => {
+        //this.checkForIssues(q, oldAnswerValue);
+      });
   }
 
   autoResize(id: number) {
-    let textArea = document.getElementById("summaryComment" + id);
+    let textArea = document.getElementById("freeResponse-q-" + id);
     textArea.style.overflow = 'hidden';
     // textArea.style.overflowY = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
-    if (textArea.scrollHeight > this.summaryBoxMax) {
-      textArea.style.height = this.summaryBoxMax + 'px';
-      textArea.style.overflowY = 'scroll';
+    // if (textArea.scrollHeight > this.summaryBoxMax) {
+    //   textArea.style.height = this.summaryBoxMax + 'px';
+    //   textArea.style.overflowY = 'scroll';
 
-    }
+    // }
   }
 
-  isFinalQuestion(id: number) {
-    if (this.iseExamLevel === 'SCUEP' && this.finalScuepQuestion.has(id)) {
-      return true;
-    }
-
-    if (this.iseExamLevel === 'CORE') {
-      if (!this.showCorePlus && this.finalCoreQuestion.has(id)) {
-        return true;
-      } else if (this.showCorePlus && this.finalCorePlusQuestion.has(id)) {
-        return true;
-      }
-
-      if (this.ncuaSvc.getExtraQuestionStatus() === true && this.finalExtraQuestion.has(id)) {
-        return true;
-      }
-    }
-
-  }
-
-
-  showCorePlusButton(id: number) {
-    // SCUEP only shows SCUEP.
-    if (this.iseExamLevel !== 'SCUEP') {
-      // if (this.isFinalQuestion(id)) {
-      return true;
-      // }
-    }
-    return false;
-  }
-
-  showSummaryCommentBox(id: number) {
-    if (this.isFinalQuestion(id)) {
-      return true;
-    }
-    return false;
-  }
-
-  showAddIssueButton(id: number) {
-    if (this.isFinalQuestion(id)) {
-      return true;
-    }
-    return false;
-  }
-
-  updateCorePlusStatus() {
-    this.showCorePlus = !this.showCorePlus;
-
-    if (this.showCorePlus) {
-      this.ncuaSvc.showCorePlus = true;
-    } else if (!this.showCorePlus) {
-      this.ncuaSvc.showCorePlus = false;
-    }
-  }
-
-  updateShowIssues() {
-    if (this.showIssues === false) {
-      this.showIssues = true;
-    } else if (this.showIssues === true) {
-      this.showIssues = false;
-    }
-  }
-
-  getIssuesButtonText() {
-    if (this.showIssues === false) {
-      if (this.extras?.observations.length === 1) {
-        return ('Show 1 Issue');
-      } else if (this.extras?.observations.length > 1) {
-        return ('Show ' + this.extras.observations.length + ' Issues');
-      } else {
-        return ('Show Issues');
-      }
-    } else if (this.showIssues === true) {
-      return ('Hide Issues');
-    }
-  }
-
+  
   /**
    *
    * @param observationid
@@ -793,78 +523,6 @@ export class QuestionBlockCieComponent {
 
   }
 
-  isIssueEmpty(observation: Observation) {
-    if (observation.actionItems == null
-      && observation.citations == null
-      && observation.description == null
-      && observation.issue == null
-      && observation.type == null) {
-      return true;
-    }
-    return false;
-  }
-
-  // ISE "issues" should be generated if an examiner answers 'No' to
-  autoGenerateIssue(parentId, observationId) {
-    let name = "";
-    let desc = "";
-
-    if (parentId <= 7674) {
-      name = ("Information Security Program, " + this.myGrouping.title);
-    } else {
-      name = ("Cybersecurity Controls, " + this.myGrouping.title);
-    }
-
-    this.questionsSvc.getActionItems(parentId, observationId).subscribe(
-      (data: any) => {
-        // Used to generate a description for ISE reports even if a user doesn't open the issue.
-        desc = data[0]?.description;
-
-        const obs: Observation = {
-          question_Id: parentId,
-          questionType: this.myGrouping.questions[0].questionType,
-          answer_Id: this.myGrouping.questions[0].answer_Id,
-          observation_Id: observationId,
-          summary: '',
-          observation_Contacts: null,
-          impact: '',
-          importance: null,
-          importance_Id: 1,
-          issue: '',
-          recommendations: '',
-          resolution_Date: null,
-          vulnerabilities: '',
-          title: name,
-          type: null,
-          risk_Area: 'Transaction',
-          sub_Risk: 'Information Systems & Technology Controls',
-          description: desc,
-          actionItems: null,
-          citations: null,
-          auto_Generated: 1,
-          supp_Guidance: null
-        };
-
-        this.ncuaSvc.issueObservationId.set(parentId, observationId);
-
-        this.observationSvc.saveObservation(obs).subscribe(() => {
-          const answerID = obs.answer_Id;
-          this.observationSvc.getAllObservations(answerID).subscribe(
-            (response: Observation[]) => {
-              for (let i = 0; i < response.length; i++) {
-                if (response[i].auto_Generated === 1) {
-                  this.ncuaSvc.issueObservationId.set(parentId, response[i].observation_Id);
-                }
-              }
-              this.extras.observations = response;
-              this.myGrouping.questions[0].hasObservation = (this.extras.observations.length > 0);
-              this.myGrouping.questions[0].answer_Id = obs.answer_Id;
-            },
-            error => console.log('Error updating observations | ' + (<Error>error).message)
-          );
-        });
-      });
-  }
 
   /**
   * Deletes an Observation.
@@ -930,4 +588,72 @@ export class QuestionBlockCieComponent {
       }
     }
   }
+
+  findChildQuestionIndention(q: any) {
+    if (q.parentQuestionId != null){
+      let parentBlock = document.getElementById("question-" + q.parentQuestionId);    
+
+      if (parentBlock != null && parentBlock.style?.paddingLeft != null) {
+        let paddingNumber = parseInt(parentBlock.style?.paddingLeft.substring(0, parentBlock.style?.paddingLeft.indexOf('p')));
+        paddingNumber += 36;
+        return paddingNumber.toString() + 'px';
+      }
+    }
+    return '0px';
+  }
+
+  /**
+   * Returns 'inline' if any details/extras exist
+   */
+  hasDetails(q: Question): string {
+    if (q.comment !== null && q.comment.length > 0) {
+      return 'inline';
+    }
+    // if (q.documentIds !== null && q.documentIds.length != 0) {
+    //   return 'inline';
+    // }
+    if (q.hasObservation) {
+      return 'inline';
+    }
+    if (q.feedback !== null && q.feedback.length > 0) {
+      return 'inline';
+    }
+    if (q.markForReview) {
+      return 'inline';
+    }
+    return 'none';
+  }
+
+  /**
+   *
+   */
+  openExtras(q) {
+    if (!q.questionType) {
+      q.questionType = 'Maturity';
+    }
+    this.dialog.open(QuestionExtrasDialogComponent, {
+      data: {
+        question: q,
+        options: {
+          eagerSupplemental: true,
+          showMfr: true
+        }
+      },
+      width: this.layoutSvc.hp ? '90%' : '50%',
+      maxWidth: this.layoutSvc.hp ? '90%' : '50%'
+    });
+  }
+
+
+  getDetails(q: Question) {
+    this.questionsSvc.getDetails(q.questionId, q.questionType).subscribe(
+      (details) => {
+        this.extras = details;
+        this.extras.questionId = q.questionId;
+
+        
+
+      });
+  }
+
 }

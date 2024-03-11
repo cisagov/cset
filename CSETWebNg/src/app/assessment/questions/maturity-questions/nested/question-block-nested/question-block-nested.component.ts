@@ -99,7 +99,7 @@ export class QuestionBlockNestedComponent implements OnInit {
       this.malcolmInfo = r;
     });
 
-
+    console.log(this.questionList)
   }
 
   getMhdNum(val: string) {

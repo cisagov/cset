@@ -213,6 +213,9 @@ import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie
 import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
 import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
 import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
+import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
+import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
+import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 
 const appRoutes: Routes = [
 
@@ -354,6 +357,9 @@ const appRoutes: Routes = [
                 ]
               },
               { path: 'config-cis', component: ConfigCisComponent },
+              { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
+              { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
+              { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
