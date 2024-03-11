@@ -29,6 +29,7 @@ import { QuestionsService } from '../../../services/questions.service';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { RraDataService } from '../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-deficiency',
@@ -54,7 +55,8 @@ export class RraDeficiencyComponent implements OnInit {
     private titleService: Title,
     public maturitySvc: MaturityService,
     public questionsSvc: QuestionsService,
-    public rraDataSvc: RraDataService
+    public rraDataSvc: RraDataService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit() {

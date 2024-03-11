@@ -20,88 +20,90 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *ngFor="let d of model?.domains">
-    <div class="cpg-domain-bar page-break" [style.color]="textColor(d.groupingId)"
-        [style.background-color]="backgroundColor(d.groupingId)">
-        {{d.title}}
+<ng-container *transloco="let t">
+    <div *ngFor="let d of model?.domains">
+        <div class="cpg-domain-bar page-break" [style.color]="textColor(d.groupingId)"
+            [style.background-color]="backgroundColor(d.groupingId)">
+            {{d.title}}
+        </div>
+
+        <table *ngFor="let q of d.questions" class="cpg-table">
+            <tr>
+                <th style="width: 45%" [style.color]="textColor(d.groupingId)"
+                    [style.background-color]="backgroundColor(d.groupingId)">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-row">
+                            <div class="mr-2 font-weight-bold">
+                                {{q.displayNumber}}
+                            </div>
+                            <div class="font-weight-normal">
+                                <span [innerHTML]="q.practice"></span>
+                            </div>
+                        </div>
+                        <div class="text-right ml-4 font-weight-normal">
+                            <span *ngFor="let c of q.csf; let l = last" class="text-nowrap">
+                                {{c}}{{ l ? '' : ', '}}
+                            </span>
+                        </div>
+                    </div>
+                </th>
+                <th style="width: 25%" [style.color]="textColor(d.groupingId)"
+                    [style.background-color]="backgroundColor(d.groupingId)">
+                    {{t('reports.core.cpg.report.current assessment') | uppercase}}
+                </th>
+                <th style="width: 30%" [style.color]="textColor(d.groupingId)"
+                    [style.background-color]="backgroundColor(d.groupingId)">
+                    {{t('reports.core.cpg.report.notes') | uppercase}}
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <app-cpg-cost-impact-complexity [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">
+                    </app-cpg-cost-impact-complexity>
+
+                    <div class="mb-3">
+                        <div class="sub-header-1">{{t('reports.core.cpg.report.ttp or risk addressed')}}</div>
+                        <ul *ngIf="q.ttp.length > 0">
+                            <li *ngFor="let t of q.ttp">
+                                {{t}}
+                            </li>
+                        </ul>
+
+                        <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="sub-header-1">{{t('extras.recommended action')}}</div>
+                        <p [innerHTML]="q.recommendedAction"></p>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
+                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'Y'"
+                            [class.fa-square]="q.answer != 'Y'"></i>
+                        {{t('answer-options.labels.imp-cpg') | uppercase}}
+                    </div>
+                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'I'">
+                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'I'"
+                            [class.fa-square]="q.answer != 'I'"></i>
+                        {{t('answer-options.labels.prog-cpg') | uppercase}}
+                    </div>
+                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'S'">
+                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'S'"
+                            [class.fa-square]="q.answer != 'S'"></i>
+                        {{t('answer-options.labels.scoped-cpg') | uppercase}}
+                    </div>
+                    <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
+                        <i class="far fa-lg" [class.fa-check-square]="q.answer == 'N'"
+                            [class.fa-square]="q.answer != 'N'"></i>
+                        {{t('answer-options.labels.not-cpg') | uppercase}}
+                    </div>
+                </td>
+                <td>
+                    {{q.comment}}
+                </td>
+            </tr>
+        </table>
     </div>
-
-    <table *ngFor="let q of d.questions" class="cpg-table">
-        <tr>
-            <th style="width: 45%" [style.color]="textColor(d.groupingId)"
-                [style.background-color]="backgroundColor(d.groupingId)">
-                <div class="d-flex flex-row justify-content-between">
-                    <div class="d-flex flex-row">
-                        <div class="mr-2 font-weight-bold">
-                            {{q.displayNumber}}
-                        </div>
-                        <div class="font-weight-normal">
-                            <span [innerHTML]="q.practice"></span>
-                        </div>
-                    </div>
-                    <div class="text-right ml-4 font-weight-normal">
-                        <span *ngFor="let c of q.csf; let l = last" class="text-nowrap">
-                            {{c}}{{ l ? '' : ', '}}
-                        </span>
-                    </div>
-                </div>
-            </th>
-            <th style="width: 25%" [style.color]="textColor(d.groupingId)"
-                [style.background-color]="backgroundColor(d.groupingId)">
-                CURRENT ASSESSMENT
-            </th>
-            <th style="width: 30%" [style.color]="textColor(d.groupingId)"
-                [style.background-color]="backgroundColor(d.groupingId)">
-                NOTES
-            </th>
-        </tr>
-        <tr>
-            <td>
-                <app-cpg-cost-impact-complexity [cost]="q.cost" [impact]="q.impact" [complexity]="q.complexity">
-                </app-cpg-cost-impact-complexity>
-
-                <div class="mb-3">
-                    <div class="sub-header-1">TTP or Risk Addressed</div>
-                    <ul *ngIf="q.ttp.length > 0">
-                        <li *ngFor="let t of q.ttp">
-                            {{t}}
-                        </li>
-                    </ul>
-
-                    <div *ngIf="!!q.riskAddressed" [innerHTML]="q.riskAddressed">
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="sub-header-1">Recommended Action</div>
-                    <p [innerHTML]="q.recommendedAction"></p>
-                </div>
-            </td>
-            <td>
-                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'Y'">
-                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'Y'"
-                        [class.fa-square]="q.answer != 'Y'"></i>
-                    IMPLEMENTED
-                </div>
-                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'I'">
-                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'I'"
-                        [class.fa-square]="q.answer != 'I'"></i>
-                    IN PROGRESS
-                </div>
-                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'S'">
-                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'S'"
-                        [class.fa-square]="q.answer != 'S'"></i>
-                    SCOPED
-                </div>
-                <div class="text-nowrap" [class.font-weight-bold]="q.answer == 'N'">
-                    <i class="far fa-lg" [class.fa-check-square]="q.answer == 'N'"
-                        [class.fa-square]="q.answer != 'N'"></i>
-                    NOT STARTED
-                </div>
-            </td>
-            <td>
-                {{q.comment}}
-            </td>
-        </tr>
-    </table>
-</div>
+</ng-container>

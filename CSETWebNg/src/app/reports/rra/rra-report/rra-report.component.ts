@@ -30,6 +30,7 @@ import { BehaviorSubject } from 'rxjs';
 import { RraDataService } from '../../../services/rra-data.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'rra-report',
@@ -88,7 +89,8 @@ export class RraReportComponent implements OnInit {
     private titleService: Title,
     public cmmcStyleSvc: CmmcStyleService,
     public rraDataSvc: RraDataService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService, 
+    public tSvc: TranslocoService
   ) {
     this.columnWidthEmitter = new BehaviorSubject<number>(25)
   }
@@ -106,6 +108,7 @@ export class RraReportComponent implements OnInit {
       this.createAnswerDistribByGoal(r);
 
       this.createChart1(r);
+      
 
       this.createTopRankedGoals(r);
 
@@ -152,7 +155,7 @@ export class RraReportComponent implements OnInit {
     let levelList = [];
 
     var overall = {
-      name: 'Overall',
+      name: this.tSvc.translate('reports.core.rra.report.levels.overall'),
       value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
@@ -181,12 +184,15 @@ export class RraReportComponent implements OnInit {
     let goalList = [];
     r.rraSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
+      const yes = this.tSvc.translate('reports.core.rra.report.yes')
+      const no = this.tSvc.translate('reports.core.rra.report.no')
+      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
       if (!goal) {
         goal = {
           name: element.title, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
+            { name: yes, value: 0 },
+            { name: no, value: 0 },
+            { name: unanswered, value: 0 },
           ]
         };
         goalList.push(goal);
@@ -207,7 +213,7 @@ export class RraReportComponent implements OnInit {
   createTopRankedGoals(r: any) {
     let goalList = [];
     this.answerDistribByGoal.forEach(element => {
-      var yesPercent = element.series.find(x => x.name == 'Yes').value;
+      var yesPercent = element.series.find(x => x.name == this.tSvc.translate('reports.core.rra.report.yes')).value;
       var goal = {
         name: element.name, value: (100 - Math.round(yesPercent))
       };
