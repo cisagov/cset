@@ -98,8 +98,8 @@
                 </ng-template>
             </table>
 
-            <div *ngIf="!response?.markedForReviewList || response?.markedForReviewList.length == 0" class="mt-3"
-                [innerHTML]="t('reports.core.rra.cmfr.no marked for review', {'questionsAlias': response?.information.questionsAlias})">
+            <div *ngIf="!response?.markedForReviewList || response?.markedForReviewList.length == 0" class="mt-3">
+                {{translateNoComments(response?.information.questionsAlias, 'no marked for review')}}
             </div>
         </div>
 
@@ -154,8 +154,8 @@
                 </ng-template>
             </table>
 
-            <div *ngIf="!response?.comments || response?.comments.length == 0" class="mt-3"
-                [innerHTML]="t('reports.core.rra.cmfr.no comments', {'questionsAlias': response?.information.questionsAlias})">
+            <div *ngIf="!response?.comments || response?.comments.length == 0" class="mt-3">
+                {{translateNoComments(response?.information.questionsAlias, 'no comments')}}
             </div>
         </div>
 
