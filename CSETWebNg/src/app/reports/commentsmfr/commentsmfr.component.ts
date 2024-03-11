@@ -85,4 +85,12 @@ export class CommentsMfrComponent implements OnInit {
     return q;
     // return q.split(/(?<=^\S+)\s/)[1];
   }
+
+  translateNoComments(questionsAlias: string, lookupKey: string) {
+    if (!questionsAlias) {
+      return '';
+    }
+    const alias = this.tSvc.translate('titles.' + questionsAlias.toLowerCase());
+    return this.tSvc.translate(`reports.core.rra.cmfr.${lookupKey}`, { questionsAliasLower: alias.toLowerCase() });
+  }
 }
