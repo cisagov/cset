@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 @Component({
   selector: 'app-rra-answer-compliance',
   templateUrl: './rra-answer-compliance.component.html',
@@ -36,7 +37,10 @@ export class RraAnswerComplianceComponent implements OnInit {
   colorScheme1 = { domain: ['#007BFF'] };
   xAxisTicks = [0, 25, 50, 75, 100];
 
-  constructor(public rraDataSvc: RraDataService) { }
+  constructor(
+    public rraDataSvc: RraDataService, 
+    public tSvc: TranslocoService
+    ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -50,12 +54,15 @@ export class RraAnswerComplianceComponent implements OnInit {
     let levelList = [];
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
+      const yes = this.tSvc.translate('reports.core.rra.report.yes')
+      const no = this.tSvc.translate('reports.core.rra.report.no')
+      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
       if (!level) {
         level = {
           name: element.level_Name, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
+            { name: yes, value: 0 },
+            { name: no, value: 0 },
+            { name: unanswered, value: 0 },
           ]
         };
         levelList.push(level);
@@ -72,12 +79,15 @@ export class RraAnswerComplianceComponent implements OnInit {
     let goalList = [];
     r.rraSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
+      const yes = this.tSvc.translate('reports.core.rra.report.yes')
+      const no = this.tSvc.translate('reports.core.rra.report.no')
+      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
       if (!goal) {
         goal = {
           name: element.title, series: [
-            { name: 'Yes', value: 0 },
-            { name: 'No', value: 0 },
-            { name: 'Unanswered', value: 0 },
+            { name: yes, value: 0 },
+            { name: no, value: 0 },
+            { name: unanswered, value: 0 },
           ]
         };
         goalList.push(goal);
@@ -93,7 +103,7 @@ export class RraAnswerComplianceComponent implements OnInit {
   createComplianceByGoal(r: any) {
     let goalList = [];
     this.answerDistribByGoal.forEach(element => {
-      var yesPercent = element.series.find(x => x.name == 'Yes').value;
+      var yesPercent = element.series.find(x => x.name == this.tSvc.translate('reports.core.rra.report.yes')).value;
 
       var goal = { name: element.name, value: Math.round(yesPercent) };
       goalList.push(goal);

@@ -154,7 +154,10 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
+
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
 
   /**
@@ -184,6 +187,14 @@ export class MyAssessmentsComponent implements OnInit {
       } else {
         return false;
       }
+    }
+
+    if (column == 'export') {
+      return true;
+    }
+    
+    if (column == 'export json') {
+      return this.configSvc.cisaAssessorWorkflow;
     }
 
     return true;
@@ -323,7 +334,7 @@ export class MyAssessmentsComponent implements OnInit {
     this.authSvc.logout();
   }
 
-  clickDownloadLink(ment_id: number) {
+  clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
     if (!this.preventEncrypt) {
       let dialogRef = this.dialog.open(ExportPasswordComponent);
       dialogRef.afterClosed().subscribe(result => {
@@ -331,6 +342,10 @@ export class MyAssessmentsComponent implements OnInit {
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
           let url = this.fileSvc.exportUrl + "?token=" + response.token;
+
+          if (jsonOnly) {
+            url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+          }
 
           if (result.password != null && result.password != "") {
             url = url + "&password=" + result.password;
@@ -349,7 +364,11 @@ export class MyAssessmentsComponent implements OnInit {
       });
     } else {
       this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-        const url = this.fileSvc.exportUrl + "?token=" + response.token;
+        let url = this.fileSvc.exportUrl + "?token=" + response.token;
+
+        if (jsonOnly) {
+          url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+        }
 
         //if electron
         window.location.href = url;

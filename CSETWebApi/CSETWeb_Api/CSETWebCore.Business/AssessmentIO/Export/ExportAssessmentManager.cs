@@ -21,6 +21,7 @@ using CSETWebCore.Helpers;
 using Ionic.Zip;
 using Microsoft.IdentityModel.Tokens;
 
+
 namespace CSETWebCore.Business.AssessmentIO.Export
 {
     public class AssessmentExportManager
@@ -388,7 +389,12 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             return model;
         }
 
-        private Stream ArchiveStream(int assessmentId, string password, string passwordHint)
+
+        /// <summary>
+        /// Gathers the data for an assessment and returns a model.json file, along with any attached documents.
+        /// If desired, only the model.json will be returned, named to match the assessment name.
+        /// </summary>
+        private Stream ArchiveStream(int assessmentId, string password, string passwordHint, bool jsonOnly = false)
         {
             var archiveStream = new MemoryStream();
             var model = CopyForExport(assessmentId);
@@ -468,34 +474,54 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
                     model.CustomStandards.Add(setname);
 
-                    var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
-                    foreach (var file in files)
+
+
+                    // if doing a full export, include documents/artifacts
+                    if (!jsonOnly)
                     {
-                        var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
-                        if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
-                            continue;
+                        var files = extStandard.requirements.SelectMany(s => s.references.Concat(new ExternalResource[] { s.source })).OfType<ExternalResource>().Distinct();
+                        foreach (var file in files)
+                        {
+                            var genFile = _context.GEN_FILE.FirstOrDefault(s => s.File_Name == file.fileName && (s.Is_Uploaded));
+                            if (genFile == null || model.CustomStandardDocs.Contains(file.fileName))
+                                continue;
 
-                        var doc = genFile.ToExternalDocument();
-                        var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
+                            var doc = genFile.ToExternalDocument();
+                            var jsonDoc = JsonConvert.SerializeObject(doc, Formatting.Indented);
 
-                        ZipEntry docEntry = archive.AddEntry($"{doc.ShortName}.json", jsonDoc);
+                            ZipEntry docEntry = archive.AddEntry($"{doc.ShortName}.json", jsonDoc);
 
-                        model.CustomStandardDocs.Add(file.fileName);
+                            model.CustomStandardDocs.Add(file.fileName);
+                        }
                     }
                 }
+
 
                 model.ExportDateTime = DateTime.UtcNow;
 
                 var json = JsonConvert.SerializeObject(model, Formatting.Indented);
-                ZipEntry jsonEntry = archive.AddEntry("model.json", json);
-                ZipEntry hint = archive.AddEntry($"{passwordHint}.hint", passwordHint);
-                archive.Save(archiveStream);
+
+
+                if (jsonOnly)
+                {
+                    // Write only the JSON portion as a stand-alone file to the stream
+                    byte[] bytes = Encoding.UTF8.GetBytes(json);
+                    archiveStream.Write(bytes, 0, bytes.Length);
+                }
+                else
+                {
+                    // Write the ZIP file with the JSON and any artifacts attached.
+                    ZipEntry jsonEntry = archive.AddEntry("model.json", json);
+                    ZipEntry hint = archive.AddEntry($"{passwordHint}.hint", passwordHint);
+                    archive.Save(archiveStream);
+                }
             }
 
 
             archiveStream.Seek(0, SeekOrigin.Begin);
             return archiveStream;
         }
+
 
         /// <summary>
         /// Export an assessment by its ID. 
@@ -506,7 +532,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         /// <param name="password">If not empty, this password will be required to import the assessment</param>
         /// <param name="passwordHint">An optional password hint</param>
         /// <returns>An AssessmentExportFile object containing the file name and the file contents</returns>
-        public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "")
+        public AssessmentExportFile ExportAssessment(int assessmentId, string fileExtension, string password = "", string passwordHint = "", bool jsonOnly = false)
         {
             // determine file name
             var fileName = $"{assessmentId}{fileExtension}";
@@ -517,9 +543,10 @@ namespace CSETWebCore.Business.AssessmentIO.Export
             }
 
             // export the assessment
-            Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint);
+            Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint, jsonOnly);
             return new AssessmentExportFile(fileName, assessmentFileContents);
         }
+
 
         /// <summary>
         /// Exports access key assessments in the current DB context and returns them in a zip archive.

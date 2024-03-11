@@ -238,19 +238,19 @@
       <h4>CISA Ransomware Readiness Assessment</h4>
       <div>
         <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark text-left">
-          RRA Report
+          {{t('core.rra.rra report')}}
         </button>
       </div>
 
       <div>
         <button tabindex="0" (click)="clickReportLink('rraDeficiencyReport')"
           class="btn btn-link btn-link-dark text-left">
-          RRA Deficiency Report
+          {{t('core.rra.rra deficiency report')}}
         </button>
       </div>
       <div>
         <button tabindex="0" (click)="clickReportLink('commentsmfr')" class="btn btn-link btn-link-dark text-left">
-          Comments and Marked for Review
+          {{t('core.rra.comments and marked for review')}}
         </button>
       </div>
     </div>
@@ -493,14 +493,21 @@
         </div>
 
 
-        <div class="mt-5">
-          <button *ngIf="this.configSvc.behaviors.showExportOnReports" tabindex="0"
-            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+        <div class="mt-5 d-flex flex-row" *ngIf="this.configSvc.behaviors.showExportOnReports">
+          <button tabindex="0"
+            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a mr-2"
             (click)="clickExport()" matTooltip="{{ 'tooltip.export assessment' | transloco }} ({{
               exportExtension
             }}).">
             <span class="cset-icons-export-up fs-base-2 mr-2"></span>
             <span>{{ 'buttons.export' | transloco }}</span>
+          </button>
+
+          <button *ngIf="configSvc.cisaAssessorWorkflow" tabindex="0"
+            class="icon-button-dark btn btn-secondary d-flex justify-content-center align-items-center flex-00a"
+            (click)="clickExport(true)" matTooltip="{{ 'tooltip.export assessment json' | transloco }}">
+            <span class="cset-icons-export-up fs-base-2 mr-2"></span>
+            <span>{{ 'buttons.export json' | transloco }}</span>
           </button>
         </div>
 

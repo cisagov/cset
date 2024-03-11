@@ -88,7 +88,7 @@
             <div class="d-flex flex-column mb-3 mr-3 w-100">
               <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
                 <div class="font-weight-bold mr-2">{{q.displayNumber}}</div>
-                <div [innerHTML]="formatLinebreaks(q.questionText)"></div>
+                <div [innerHTML]="setBuilderSvc.formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
                 A question with that text already exists. The edit was canceled.
