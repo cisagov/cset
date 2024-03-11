@@ -24,6 +24,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Color, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-summary',
@@ -54,7 +55,10 @@ export class RraSummaryComponent implements OnInit {
 
   legendColors: ColorHelper;
 
-  constructor(public rraDataSvc: RraDataService) {
+  constructor(
+    public rraDataSvc: RraDataService, 
+    public tSvc: TranslocoService
+    ) {
     Object.assign(this.single);
   }
 
@@ -69,12 +73,15 @@ export class RraSummaryComponent implements OnInit {
     r.rraSummary.forEach(element => {
 
       let level = levelList.find(x => x.name == element.level_Name);
+      const yes = this.tSvc.translate('reports.core.rra.report.yes')
+      const no = this.tSvc.translate('reports.core.rra.report.no')
+      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
       if (!level) {
         level = {
           'name': element.level_Name, series: [
-            { 'name': 'Yes', value: '' },
-            { 'name': 'No', value: '' },
-            { 'name': 'Unanswered', value: '' },
+            { 'name': yes, value: '' },
+            { 'name': no, value: '' },
+            { 'name': unanswered, value: '' },
           ]
         };
         levelList.push(level);

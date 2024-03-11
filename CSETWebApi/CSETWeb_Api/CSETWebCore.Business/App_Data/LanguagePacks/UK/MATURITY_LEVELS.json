@@ -1,0 +1,22 @@
+﻿{
+  "level 1": "рівень 1",
+  "level 2": "рівень 2",
+  "level 3": "рівень 3",
+  "level 4": "рівень 4",
+  "level 5": "рівень 5",
+  "advanced": "Просунутий",
+  "baseline": "Базовий рівень",
+  "evolving": "розвивається",
+  "innovative": "Інноваційний",
+  "intermediate": "Проміжний",
+  "basic": "Базовий",
+  "scuep": "SCUEP",
+  "core": "CORE",
+  "core+": "CORE+",
+  "all levels": "Всі рівні",
+  "mil-0": "MIL-0",
+  "mil-1": "MIL-1",
+  "mil-2": "MIL-2",
+  "mil-3": "MIL-3",
+  "hydro": "HYDRO"
+}

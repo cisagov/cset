@@ -205,6 +205,7 @@
         "convert": "Convert",
         "analytics": "Analytics",
         "export": "Export",
+        "export json": "JSON",
         "import": "Import",
         "enter password": "Enter Password",
         "export all": "Export All",
@@ -270,90 +271,88 @@
         "statements": "Statements",
         "submitted": "Submitted"
     },
-    "cyberFlorida": {
+    "cyber-florida": {
         "upgrade message": "We hope you find these reports helpful.  You can expand these results with more information by completing the full assessment here.  To participate in the Cyber Florida Full Assessment click the convert button below.",
         "upgrade confirm 1": "Upgrading the assessment.  Would you like to continue?",
         "upgrade confirm 2": "The assessment has been converted.",
         "title upgrade complete": "Conversion Complete",
-        "upgradeButton": "Convert to Full Assessment"
+        "upgrade button": "Convert to Full Assessment"
     },
     "answer-options": {
         "button-labels": {
-            "Yes": "Yes",
-            "No": "No",
-            "N/A": "N/A",
-            "Alt": "Alt",
-            "Alt-ACET": "Yes(C)",
-            "U": "Unanswered",
-            "Unanswered": "Unanswered",
-            "Inc": "Inc",
-            "Issue(N)": "Issue(N)",
-            "Iss": "Issue(N)",
-            "S": "S",
-            "Fully-MVRA": "Fully",
-            "Not-MVRA": "Not",
-            "Partial-MVRA": "Partial",
-            "Yes(C)": "Yes(C)",
-            "Imp-CPG": "Imp",
-            "Prog-CPG": "Prog",
-            "Scoped-CPG": "Scoped",
-            "Not-CPG": "Not",
-            "FI-C2M2": "FI",
-            "LI-C2M2": "LI",
-            "PI-C2M2": "PI",
-            "NI-C2M2": "NI"
+            "yes": "Yes",
+            "no": "No",
+            "n/a": "N/A",
+            "alt": "Alt",
+            "alt-acet": "Yes(C)",
+            "u": "Unanswered",
+            "unanswered": "Unanswered",
+            "inc": "Inc",
+            "issue(n)": "Issue(N)",
+            "iss": "Issue(N)",
+            "s": "S",
+            "fully-mvra": "Fully",
+            "not-mvra": "Not",
+            "partial-mvra": "Partial",
+            "yes(c)": "Yes(C)",
+            "imp-cpg": "Imp",
+            "prog-cpg": "Prog",
+            "scoped-cpg": "Scoped",
+            "not-cpg": "Not",
+            "fi-c2m2": "FI",
+            "li-c2m2": "LI",
+            "pi-c2m2": "PI",
+            "ni-c2m2": "NI"
         },
         "button-tooltips": {
-            "Yes": "Yes",
-            "No": "No",
-            "N/A": "N/A",
-            "Alt": "Alternate",
-            "Unanswered": "Unanswered",
-            "Inc": "Incomplete",
-            "Issue(N)": "No with Issue(s)",
-            "S": "",
-            "Fully-MVRA": "Fully",
-            "Not-MVRA": "Not",
-            "Partial-MVRA": "Partial",
-            "Alt-ACET": "Yes(C)",
-            "Yes(C)": "Yes Compensating Control",
-            "Imp-CPG": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
-            "Prog-CPG": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
-            "Scoped-CPG": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
-            "Not-CPG": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
-            "FI-C2M2": "Fully Implemented - Complete",
-            "LI-C2M2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
-            "PI-C2M2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
-            "NI-C2M2": "Not Implemented - Absent; the practice is not performed by the organization"
+            "yes": "Yes",
+            "no": "No",
+            "n/a": "N/A",
+            "alt": "Alternate",
+            "unanswered": "Unanswered",
+            "inc": "Incomplete",
+            "issue(n)": "No with Issue(s)",
+            "s": "S",
+            "fully-mvra": "Fully",
+            "not-mvra": "Not",
+            "partial-mvra": "Partial",
+            "alt-acet": "Yes(C)",
+            "yes(c)": "Yes Compensating Control",
+            "imp-cpg": "Implemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.",
+            "prog-cpg": "In Progress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.",
+            "scoped-cpg": "Scoped - An organization has identified the full set of required activities required to meet the stated outcome of a goal.",
+            "not-cpg": "Not Implemented - An organization has no immediate plans to implement the recommended actions for a goal.",
+            "fi-c2m2": "Fully Implemented - Complete",
+            "li-c2m2": "Largely Implemented - Complete, but with a recognized opportunity for improvement",
+            "pi-c2m2": "Partially Implemented - Incomplete; there are multiple opportunities for improvement",
+            "ni-c2m2": "Not Implemented - Absent; the practice is not performed by the organization"
         },
         "labels": {
-            "Yes": "Yes",
+            "yes": "Yes",
             "y": "Yes",
-            "No": "No",
+            "no": "No",
             "n": "No",
-            "NA": "N/A",
-            "N/A": "N/A",
+            "n/a": "N/A",
             "na": "N/A",
-            "Alt": "Alternate",
+            "alt": "Alternate",
             "a": "Alternate",
-            "U": "Unanswered",
             "u": "Unanswered",
-            "Inc": "Incomplete",
-            "Iss": "No with Issue(s)",
-            "S": "Selected",
-            "Fully-MVRA": "Fully Implemented",
-            "Not-MVRA": "Not Implemented",
-            "Partial-MVRA": "Partially Implemented",
-            "Yes(C)": "Yes Compensating Control",
-            "Alt-ACET": "Yes Compensating Control",
-            "Imp-CPG": "Implemented",
-            "Prog-CPG": "In Progress",
-            "Scoped-CPG": "Scoped",
-            "Not-CPG": "Not Implemented",
-            "FI-C2M2": "Fully Implemented (FI)",
-            "LI-C2M2": "Largely Implemented (LI)",
-            "PI-C2M2": "Partially Implemented (PI)",
-            "NI-C2M2": "Not Implemented (NI)"
+            "inc": "Incomplete",
+            "iss": "No with Issue(s)",
+            "s": "Selected",
+            "fully-mvra": "Fully Implemented",
+            "not-mvra": "Not Implemented",
+            "partial-mvra": "Partially Implemented",
+            "yes(c)": "Yes Compensating Control",
+            "alt-acet": "Yes Compensating Control",
+            "imp-cpg": "Implemented",
+            "prog-cpg": "In Progress",
+            "scoped-cpg": "Scoped",
+            "not-cpg": "Not Implemented",
+            "fi-c2m2": "Fully Implemented (FI)",
+            "li-c2m2": "Largely Implemented (LI)",
+            "pi-c2m2": "Partially Implemented (PI)",
+            "ni-c2m2": "Not Implemented (NI)"
         },
         "placeholders": {
             "alt acet": "Description, explanation and/or justification for compensating control",
@@ -402,6 +401,7 @@
         "export to excel": "Export all assessments to Excel",
         "remove assessment": "Permanently remove this assessment.",
         "export assessment": "Export a copy of this assessment to another location",
+        "export assessment json": "Export a copy of this assessment as a JSON file",
         "analytics": "View the analytics for this assessment.",
         "merged checked exams": "Merge checked examinations",
         "export all": "Export a copy of all assessments to another location."
@@ -435,7 +435,7 @@
         "level 5": "Level 5"
     },
     "irp": {
-        "Inherent Risk": "Inherent Risk",
+        "inherent risk": "Inherent Risk",
         "inherent risk profile": "Inherent Risk Profile",
         "inherent risk profiles": "Inherent Risk Profiles",
         "irp desc start": "The IRP has",
@@ -461,7 +461,7 @@
         "significant": "Significant",
         "most": "Most"
     },
-    "filterMenu": {
+    "filter-menu": {
         "search": "Search",
         "select deselect all": "Select/Deselect All",
         "core": {
@@ -841,6 +841,58 @@
                         "4": "There are no deficiencies to display."
                     }
                 }
+            },
+            "rra": {
+                "title": "RANSOMWARE READINESS ASSESSMENT",
+                "title 2": "(RRA) REPORT",
+                "rra report": "RRA Report",
+                "rra deficiency report": "RRA Deficiency Report",
+                "comments and marked for review": "Comments and Marked for Review",
+                "report": {
+                    "assessment tiers": "RRA Assessment Tiers",
+                    "answered tier": "Practices Answered Per Tier",
+                    "distribution tier": "Practices Distribution Per Tier",
+                    "levels": {
+                        "text 1": "The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
+                        "text 2": "The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
+                        "rra practices": "RRA Practices",
+                        "advanced": "Advanced",
+                        "intermediate": "Intermediate",
+                        "basic": "Basic",
+                        "overall": "Overall"
+                    },
+                    "yes": "Yes",
+                    "no": "No",
+                    "unanswered": "Unanswered",
+                    "percentage of practices": "Percentage of Practices Performed",
+                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.",
+                    "rra performance summary": "RRA Performance Summary",
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.",
+                    "legend": "Legend"
+                },
+                "deficiency": {
+                    "title": "DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
+                    "suggested areas for improvement": "Suggested Areas for Improvement",
+                    "deficiencies": "Deficiencies",
+                    "marked for review": "Marked for Review",
+                    "no deficiencies to display": "There are no deficiencies to display",
+                    "comment": "Comment",
+                    "text": {
+                        "1": "This deficiency report lists the statements that are currently unanswered or have been answered \"No.\"",
+                        "2": "This is often referred to as the Gap Report. This report intends to list the gaps so that users of the report can prioritize work and make a plan to implement the controls necessary to satisfy the practice.",
+                        "3": "The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.",
+                        "4": "The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered \"No\" or are left unanswered."
+                    }
+                },
+                "cmfr": {
+                    "title": "COMMENTS & MARKED FOR REVIEW",
+                    "comment": "Comment",
+                    "marked for review": "Marked for Review",
+                    "with comments": "with Comments",
+                    "no marked for review": "There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "Other Remarks"
+                }
             }
         },
         "acet": {
@@ -1149,15 +1201,15 @@
             "we ensure financial stability": "We Ensure Financial Stability",
             "description": "The NCUA ensures that millions of consumers, businesses and communities can safely use federally insured credit unions for their financial needs."
         },
-        "cie":{
-            "ceser title":"CESER",
-            "ceser":"The DOE Office for Office of Cybersecurity, Energy Security, and Emergency Response (CESER) sponsors INL CIE initiatives and coordinates the CIE program that includes Idaho National Laboratory (INL); the National Renewable Energy Laboratory (NREL), and industry, academic, and other partners in support of the Department of Energy’s National Cyber-Informed Engineering Strategy, and the National Cybersecurity Strategy.",
-            "description":"Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
-            "cie tutorial title":"CIE Tutorial",
-            "cie tutorial":"The Implementation Guide promotes integrating Cyber-Informed Engineering (CIE) principles early in the lifecycle of critical energy infrastructure to mitigate cyber threats, emphasizing collaboration among engineering disciplines, IT, and cybersecurity to shift towards a 'secure-by-design' culture. It advises against turning engineers into cyber experts but uses their expertise to design systems that are inherently more secure against cyber-attacks and technological failures.",
-            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.energy.gov/sites/default/files/2022-06/FINAL%20DOE%20National%20CIE%20Strategy%20-%20June%202022_0.pdf\">CIE Background</a>",
-            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
-            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Engineering Lifecycle</a>"
+        "cie": {
+            "ceser title": "CESER",
+            "ceser": "The DOE Office for Office of Cybersecurity, Energy Security, and Emergency Response (CESER) sponsors INL CIE initiatives and coordinates the CIE program that includes Idaho National Laboratory (INL); the National Renewable Energy Laboratory (NREL), and industry, academic, and other partners in support of the Department of Energy’s National Cyber-Informed Engineering Strategy, and the National Cybersecurity Strategy.",
+            "description": "Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
+            "cie tutorial title": "CIE Tutorial",
+            "cie tutorial": "The Implementation Guide promotes integrating Cyber-Informed Engineering (CIE) principles early in the lifecycle of critical energy infrastructure to mitigate cyber threats, emphasizing collaboration among engineering disciplines, IT, and cybersecurity to shift towards a 'secure-by-design' culture. It advises against turning engineers into cyber experts but uses their expertise to design systems that are inherently more secure against cyber-attacks and technological failures.",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">CIE Background</a>",
+            "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
+            "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Engineering Lifecycle</a>"
         }
     },
     "keyboard": {
@@ -1211,6 +1263,6 @@
         "privacy and use": "Privacy & Use",
         "traffic light protocol": "Traffic Light Protocol",
         "cisa is part of dhs": "<a href=\"https://www.cisa.gov/\" target=\"_blank\" rel=\"noopener noreferrer\">CISA</a> is part of the <a href=\"https://www.dhs.gov\" target=\"_blank\" rel=\"noopener noreferrer\">Department of Homeland Security</a>",
-        "CIE Website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
+        "cie website": "<a href=\"https://www.energy.gov/ceser/cyber-informed-engineering\" target=\"_blank\" rel=\"noopener noreferrer\">CIE Website</a>"
     }
 }

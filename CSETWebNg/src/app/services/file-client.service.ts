@@ -41,6 +41,7 @@ export class FileUploadClientService {
   downloadUrl: String;
   token: String;
   exportUrl: string;
+  exportJsonUrl: string;
 
   continueUpload: boolean = true;
 
@@ -51,6 +52,7 @@ export class FileUploadClientService {
     private authSvc: AuthenticationService) {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
+    this.exportJsonUrl = this.configSvc.apiUrl + 'assessment/export/json';
     this.token = this.authSvc.userToken();
   }
 

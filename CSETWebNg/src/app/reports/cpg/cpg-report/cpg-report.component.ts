@@ -76,10 +76,10 @@ export class CpgReportComponent implements OnInit {
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
-            element.name = this.tSvc.translate('answer-options.labels.U');
+            element.name = this.tSvc.translate('answer-options.labels.u');
           } else {
             const key = cpgAnswerOptions?.find(x => x.code == element.name).buttonLabelKey;
-            element.name = this.tSvc.translate(`answer-options.labels.${key}`);
+            element.name = this.tSvc.translate('answer-options.labels.' + key.toLowerCase());
           }
         });
       });
