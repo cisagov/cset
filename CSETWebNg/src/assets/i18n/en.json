@@ -1155,7 +1155,7 @@
             "description":"Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
             "cie tutorial title":"CIE Tutorial",
             "cie tutorial":"The Implementation Guide promotes integrating Cyber-Informed Engineering (CIE) principles early in the lifecycle of critical energy infrastructure to mitigate cyber threats, emphasizing collaboration among engineering disciplines, IT, and cybersecurity to shift towards a 'secure-by-design' culture. It advises against turning engineers into cyber experts but uses their expertise to design systems that are inherently more secure against cyber-attacks and technological failures.",
-            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">CIE Background</a>",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.energy.gov/sites/default/files/2022-06/FINAL%20DOE%20National%20CIE%20Strategy%20-%20June%202022_0.pdf\">CIE Background</a>",
             "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
             "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Engineering Lifecycle</a>"
         }

@@ -1006,7 +1006,7 @@
             "description":"Кіберінформована інженерія <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> розробляє інструменти для впровадження на високому рівні у навчальні програми, стандарти проектування, сертифікацію та акредитацію навчальних програм.",
             "cie tutorial title":"Туторіал CIE",
             "cie tutorial":" Посібник з імплементації пропагує інтеграцію принципів Кіберінформованої інженерії (CIE) на ранніх етапах життєвого циклу критичної енергетичної інфраструктури для пом'якшення кіберзагроз, наголошуючи на співпраці між інженерними дисциплінами, ІТ та кібербезпекою для переходу до культури 'безпека за замовчуванням'. Рекомендує не перетворювати інженерів на експертів з кібербезпеки, а використовувати їхній досвід для проектування систем, які за своєю суттю більш захищені від кібератак та технологічних збоїв.",
-            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Контекст CIE</a>",
+            "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.energy.gov/sites/default/files/2022-06/FINAL%20DOE%20National%20CIE%20Strategy%20-%20June%202022_0.pdf\">Контекст CIE</a>",
             "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">Принципи CIE</a>",
             "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Життєвий цикл інженерії</a>"
         }
