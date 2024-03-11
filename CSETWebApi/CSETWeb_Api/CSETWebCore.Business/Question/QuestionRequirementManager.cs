@@ -160,7 +160,25 @@ namespace CSETWebCore.Business.Question
             var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefault();
             if (standardSelection != null)
             {
-                var targetString = (mode == "Q") ? "Questions Based" : "Requirements Based";
+                string targetString = "Requirements Based";
+                //var targetString = (mode == "Q") ? "Questions Based" : ((mode == "R") ? "Requirements Based" : 
+                //    ((mode == "P") ? "Principle Scope" : ((mode == "Principle-Phase Scope"));
+                switch (mode) 
+                {
+                    case "Q":
+                        targetString = "Questions Based";
+                        break;
+                    case "P":
+                        targetString = "Principle Scope";
+                        break;
+                    case "F":
+                        targetString = "Principle-Phase Scope";
+                        break;
+                    default:
+                        targetString = "Requirements Based";
+                        break;
+                }
+
                 if (standardSelection.Application_Mode != targetString)
                 {
                     standardSelection.Application_Mode = targetString;
