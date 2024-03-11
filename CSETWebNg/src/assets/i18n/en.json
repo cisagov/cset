@@ -883,6 +883,15 @@
                         "3": "The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.",
                         "4": "The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered \"No\" or are left unanswered."
                     }
+                },
+                "cmfr": {
+                    "title": "COMMENTS & MARKED FOR REVIEW",
+                    "comment": "Comment",
+                    "marked for review": "Marked for Review",
+                    "with comments": "with Comments",
+                    "no marked for review": "There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "Other Remarks"
                 }
             }
         },
