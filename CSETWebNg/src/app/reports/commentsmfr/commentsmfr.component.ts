@@ -86,7 +86,7 @@ export class CommentsMfrComponent implements OnInit {
     // return q.split(/(?<=^\S+)\s/)[1];
   }
 
-  translateNoComments(questionsAlias: string, lookupKey: string) {
+  translateNoCommentsOrMFR(questionsAlias: string, lookupKey: string) {
     if (!questionsAlias) {
       return '';
     }
