@@ -807,6 +807,15 @@
                         "3": "Також зазначено відсотковий розрив для кожної цілі, що допоможе визначити пріоритетні напрямки для зосередження зусиль",
                         "4": "Цілі оцінки ранжуються за ступенем нестачі. Цілі з меншою кількістю успішно виконаних практик посідають вищі позиції на діаграмі. Стовпчаста діаграма відображає відсоток практик для кожної цілі, на які було надано відповідь \"Ні\" або залишено без відповіді"
                     }
+                },
+                "cmfr": {
+                    "title": "[UK] COMMENTS & MARKED FOR REVIEW",
+                    "comment": "Коментар",
+                    "marked for review": "[UK] Marked for Review",
+                    "with comments": "[UK] with Comments",
+                    "no marked for review": "[UK] There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "[UK] There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "[UK] Other Remarks"
                 }
             }
         }
