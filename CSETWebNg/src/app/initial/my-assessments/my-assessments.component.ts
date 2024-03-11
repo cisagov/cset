@@ -190,7 +190,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     if (column == 'export') {
-      return !this.configSvc.cisaAssessorWorkflow;
+      return true;
     }
     
     if (column == 'export json') {
