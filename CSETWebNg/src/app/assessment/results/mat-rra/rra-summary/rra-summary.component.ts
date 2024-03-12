@@ -83,9 +83,9 @@ export class RraSummaryComponent implements OnInit {
         };
         levelList.push(level);
       }
-
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.percent;
+      
     });
     if (this.filter == "Overall") {
       let overall = [];
@@ -96,20 +96,22 @@ export class RraSummaryComponent implements OnInit {
         })
       });
       this.single = overall;
+
       for (let i of this.single){
-        i.name = this.tSvc.translate('answer-options.button-labels.'+ i.name.toLowerCase())
-       }
+       i.name = this.tSvc.translate('answer-options.button-labels.' + (i.name).toLowerCase())
+      }
       this.buildLegend();
       return;
     }
-    this.single = levelList.find(x => x.name == this.filter).series;
-    for (let i of this.single){
-      i.name = this.tSvc.translate('answer-options.button-labels.'+ i.name.toLowerCase())
-     }
-     
+    this.single = levelList.find(x => this.tSvc.translate('reports.core.rra.report.levels.' + (x.name).toLowerCase()) == this.filter).series;
+
+    for (let i of levelList){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.' + (j.name).toLowerCase())
+      }
+    }
+
     this.buildLegend();
-    
-    
   }
 
   buildLegend() {

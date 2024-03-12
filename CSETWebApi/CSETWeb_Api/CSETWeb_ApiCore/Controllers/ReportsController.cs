@@ -235,15 +235,6 @@ namespace CSETWebCore.Api.Controllers
 
             data.RRASummary = summary.GetRRASummary(assessmentId);
 
-            foreach (DataLayer.Manual.usp_getRRASummary q in data.RRASummary)
-            {
-                var translatedLevel = _overlay.GetPropertyValue("MATURITY_LEVELS", q.Level_Name.ToLower(), lang);
-                if (translatedLevel != null)
-                {
-                    q.Level_Name = translatedLevel;
-                }
-            }
-
             data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
