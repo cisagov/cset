@@ -20,17 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
+<div *ngIf="response != null" class="white-panel">
     <div class="domain-group-heading">
         Key Question
     </div>
-    <div [innerHtml]="keyQuestions[0]" style="font-size:large"></div>
+    <div [innerHtml]="keyQuestions[sectionId - 2621]" style="font-size:large"></div>
     <div class="domain-group-heading">
-        Principle 1 Description
+        Principle {{sectionId - 2620}} Description
     </div>
-    <div [innerHtml]="description"></div>
+    <div [innerHtml]="response.description"></div>
 
-    <app-nav-back-next [page]="'principle-summary-'+1"></app-nav-back-next>
+    <div class="domain-group-heading">
+        {{response.title}} Considerations at Each Lifecycle Phase
+    </div>
+    <div [innerHtml]="response.groupings[sectionId - 2621].description"></div>
+
+    <app-nav-back-next [page]="'principle-summary-' + sectionId"></app-nav-back-next>
 </div>
 
 

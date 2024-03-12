@@ -6,10 +6,12 @@ import { ConfigService } from '../../../services/config.service';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
 import { LayoutService } from '../../../services/layout.service';
 import { NCUAService } from '../../../services/ncua.service';
-import { ObservationsService } from '../../../services/observations.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { filter } from 'rxjs/operators';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-principle-summary',
@@ -18,7 +20,9 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class PrincipleSummaryComponent implements OnInit {
   http: any;
-  description: string = '';
+  response: any;
+  private _routerSub = Subscription.EMPTY;
+  sectionId: number = 0;
   keyQuestions: string[] = ['<p><strong>How do I understand what critical functions my system must <u>ensure</u> and the undesired consequences it must <u>prevent</u>?</strong></p>'
                 ,'<p><strong>How do I select and implement controls to minimize avenues for attack or the damage that could result?</strong></p>'
                 ,'<p><strong>How do I prevent undesired manipulation of important data?</strong></p>'
@@ -50,17 +54,31 @@ export class PrincipleSummaryComponent implements OnInit {
     public completionSvc: CompletionService,
     public ncuaSvc: NCUAService,
     public dialog: MatDialog,
-    public maturitySvc: MaturityService,
-    private observationSvc: ObservationsService
+    private router: Router,
+    private route: ActivatedRoute,
+    public maturitySvc: MaturityService
   ) {
-
+    // listen for NavigationEnd to know when the page changed
+    this._routerSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((e: any) => {
+      if (e.urlAfterRedirects.includes('/principle-summary/')) {
+        this.grabQuestions();
+      }
+    });
+    this.assessSvc.currentTab = 'questions';
   }
 
   
   ngOnInit() {
-    this.maturitySvc.getGroupingQuestions(2621).subscribe((r: any) => {
-      console.log(r)
-      this.description = r.description;
+    this.grabQuestions();
+  }
+
+  grabQuestions() {
+    this.sectionId = +this.route.snapshot.params['pri'];
+
+    this.maturitySvc.getGroupingQuestions(this.sectionId).subscribe((r: any) => {
+      this.response = r;
     });
   }
 

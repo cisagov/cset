@@ -69,7 +69,6 @@ export class QuestionBlockCieComponent implements OnInit {
   ngOnInit(): void {
     //this.setIssueMap();
     this.myGrouping.questions.sort((a, b) => a.questionId - b.questionId);
-    console.log(this.myGrouping)
     if (this.assessSvc.assessment.maturityModel.modelName != null) {
       this.answerOptions = this.assessSvc.assessment.maturityModel.answerOptions;
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
