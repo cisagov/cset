@@ -302,7 +302,7 @@
             "partial-mvra": "Parcial",
             "yes(c)": "Sí(C)",
             "imp-cpg": "Imp",
-            "prog-cpg": "Prog",
+            "prog-cpg": "Curso",
             "scoped-cpg": "Del",
             "not-cpg": "No",
             "fi-c2m2": "FI",
@@ -351,7 +351,7 @@
             "yes(c)": "Sí - control de contrapartida",
             "imp-cpg": "Implementado",
             "prog-cpg": "En curso",
-            "scoped-cpg": "Alcance fijo",
+            "scoped-cpg": "Delimitado",
             "not-cpg": "No implementado",
             "fi-c2m2": "[ES] Fully Implemented (FI)",
             "li-c2m2": "[ES] Largely Implemented (LI)",
@@ -844,23 +844,23 @@
                 }
             },
             "rra": {
-                "title": "[ES] RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "[ES] (RRA) REPORT",
-                "rra report": "[ES] RRA Report",
-                "rra deficiency report": "[ES] RRA Deficiency Report",
-                "comments and marked for review": "[ES] Comments and Marked for Review",
+                "title": "INFORME DE EVALUACIÓN DE PREPARACIÓN PARA RANSOMWARE (RRA)",
+                "title 2": "",
+                "rra report": "Informe RRA",
+                "rra deficiency report": "Informe de deficiencia de RRA",
+                "comments and marked for review": "Comentarios y Marcados para Revisión",
                 "report": {
-                    "assessment tiers": "[ES] RRA Assessment Tiers",
-                    "answered tier": "[ES] Practices Answered Per Tier",
-                    "distribution tier": "[ES] Practices Distribution Per Tier",
+                    "assessment tiers": "Niveles de evaluación de RRA",
+                    "answered tier": "Prácticas respondidas por nivel",
+                    "distribution tier": "Distribución de prácticas por nivel",
                     "levels": {
-                        "text 1": "[ES] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
-                        "text 2": "[ES] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
-                        "rra practices": "[ES] RRA Practices",
-                        "advanced": "[ES] Advanced",
-                        "intermediate": "[ES] Intermediate",
-                        "basic": "[ES] Basic",
-                        "overall": "[ES] Overall"
+                        "text 1": "El modelo RRA fomenta la preparación para el ransomware en tres etapas: básica, intermedia y avanzada.",
+                        "text 2": "Las prácticas de RRA se agrupan en niveles básico, intermedio y avanzado. Las prácticas están destinadas a implementarse de un nivel a otro y deben proporcionar un camino claro para la mejora.",
+                        "rra practices": "Prácticas de RRA",
+                        "advanced": "Avancado",
+                        "intermediate": "Intermedio",
+                        "basic": "Básico",
+                        "overall": "En general"
                     },
                     "percentage of practices": "Porcentaje de prácticas realizadas",
                     "scores calculated as yes": "Las puntuaciones se calculan como el porcentaje de respuestas 'Sí'.",
@@ -886,9 +886,9 @@
                     "title": "[ES]DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "[ES]Suggested Areas for Improvement",
                     "deficiencies": "[ES]Deficiencies",
-                    "marked for review": "[ES]Marked for Review",
+                    "marked for review": "Marcados para Revisión",
                     "no deficiencies to display": "[ES]There are no deficiencies to display",
-                    "comment": "[ES]Comment",
+                    "comment": "Comentario",
                     "text": {
                         "1": "[ES]This deficiency report lists the statements that are currently unanswered or have been answered \"No.\"",
                         "2": "[ES]This is often referred to as the Gap Report. This report intends to list the gaps so that users of the report can prioritize work and make a plan to implement the controls necessary to satisfy the practice.",
@@ -897,13 +897,13 @@
                     }
                 },
                 "cmfr": {
-                    "title": "[ES] COMMENTS & MARKED FOR REVIEW",
-                    "comment": "[ES] Comment",
-                    "marked for review": "[ES] Marked for Review",
-                    "with comments": "[ES] with Comments",
-                    "no marked for review": "[ES] There are no {{questionsAliasLower}} marked for review",
-                    "no comments": "[ES] There are no {{questionsAliasLower}} with comments",
-                    "other remarks": "[ES] Other Remarks"
+                    "title": "COMENTARIOS Y MARCADOS PARA REVISION",
+                    "comment": "Comentario",
+                    "marked for review": "Marcados para Revisión",
+                    "with comments": "Con comentarios",
+                    "no marked for review": "No hay {{questionsAliasLower}} marcadas para revisión",
+                    "no comments": "No hay {{questionsAliasLower}} con comentarios",
+                    "other remarks": "Otras notas"
                 }
             }
         },
@@ -1001,7 +1001,7 @@
         "maturity level": "Nivel de madurez",
         "standard specific requirement": "Requisito estándar específico",
         "questions related to req": "Preguntas relacionadas con este requisito",
-        "scope": "Alance",
+        "scope": "Borde",
         "recommended action": "Acción recomendada",
         "free services": "Servicios gratuitas y referencias",
         "component type": "Tipo de componente",
