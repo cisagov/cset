@@ -184,15 +184,12 @@ export class RraReportComponent implements OnInit {
     let goalList = [];
     r.rraSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
-      const yes = this.tSvc.translate('answer-options.button-labels.yes')
-      const no = this.tSvc.translate('answer-options.button-labels.no')
-      const unanswered = this.tSvc.translate('answer-options.button-labels.unanswered')
       if (!goal) {
         goal = {
           name: element.title, series: [
-            { name: yes, value: 0 },
-            { name: no, value: 0 },
-            { name: unanswered, value: 0 },
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
           ]
         };
         goalList.push(goal);
@@ -203,6 +200,11 @@ export class RraReportComponent implements OnInit {
     });
 
     this.answerDistribByGoal = goalList;
+    for (let i of this.answerDistribByGoal){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+      }
+    }
   }
 
   /**
