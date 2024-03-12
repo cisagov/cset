@@ -787,7 +787,12 @@
                     "rra performance summary": "[UK] RRA Performance Summary", 
                     "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
                     "percentage of practices by goal": "[UK] Percentage of Practices Performed by Goal", 
-                    "rra practices": "[UK] RRA Practices Scoring"
+                    "rra practices": "[UK] RRA Practices Scoring", 
+                    "total practices": "[UK] Total Practices", 
+                    "percent complete": "Відсоток завершення", 
+                    "suggested areas": "[UK] Suggested Areas for Improvement", 
+                    "suggested text": "[UK] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
+                    "goal completion summary": "[UK] Goal Completion Summary"
                 }
             }
         }

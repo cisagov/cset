@@ -861,7 +861,11 @@
                     "rra performance summary": "[ES] RRA Performance Summary", 
                     "performance summary text": "[ES] These charts represent the answer distribution overall and across all tiers.",
                     "percentage of practices by goal": "[ES] Percentage of Practices Performed by Goal",  
-                    "rra practices": "[ES] RRA Practices Scoring"
+                    "rra practices": "[ES] RRA Practices Scoring", 
+                    "total practices": "[ES] Total Practices", 
+                    "percent complete": "[ES] Percent Complete", "suggested areas": "[ES] Suggested Areas for Improvement", 
+                    "suggested text": "[ES] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
+                    "goal completion summary": "[ES] Goal Completion Summary"
                 }
             }
         },
