@@ -42,8 +42,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
-        private readonly ITokenManager _tokenManager;
         private TranslationOverlay _overlay;
+
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
@@ -59,8 +59,8 @@ namespace CSETWebCore.Api.Controllers
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
             _overlay = new TranslationOverlay();
-
         }
+
 
         [HttpGet]
         [Route("api/reports/info")]
@@ -72,6 +72,7 @@ namespace CSETWebCore.Api.Controllers
 
             return Ok(info);
         }
+
 
         [HttpGet]
         [Route("api/reports/securityplan")]
@@ -90,10 +91,11 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             if (data.information.UseDiagram == true)
             {
-               
+
                 data.ControlList = _report.GetControlsDiagram(data.ApplicationMode);
 
-            } else
+            }
+            else
             {
                 data.ControlList = _report.GetControls(data.ApplicationMode);
             }
@@ -164,6 +166,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(data);
         }
 
+
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
         public IActionResult GetSiteSummaryCMMCReport()
@@ -233,7 +236,7 @@ namespace CSETWebCore.Api.Controllers
             data.RRASummary = summary.GetRRASummary(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummary q in data.RRASummary)
-            { 
+            {
                 var translatedLevel = _overlay.GetPropertyValue("MATURITY_LEVELS", q.Level_Name.ToLower(), lang);
                 if (translatedLevel != null)
                 {
@@ -269,12 +272,11 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetUserId();
-            string accessKey = _token.GetAccessKey();
+            string lang = _token.GetCurrentLanguage();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = biz.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0, "");
+            var resp = biz.GetMaturityQuestions(assessmentId, true, 0, "", lang);
 
             // get all supplemental info for questions, because it is not included in the previous method
             var dict = biz.GetReferences(assessmentId);
@@ -352,15 +354,13 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetUserId();
-            string accessKey = _token.GetAccessKey();
+            string lang = _token.GetCurrentLanguage();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0, "");
+            var resp = mm.GetMaturityQuestions(assessmentId, true, 0, "", lang);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            //var dict = mm.GetReferences(assessmentId);
             var dict = mm.GetSourceFiles();
 
 
