@@ -873,14 +873,10 @@
                     "suggested text": "The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
                     "goal completion summary": "Goal Completion Summary"
                     },
-                    "yes": "Yes",
-                    "no": "No",
-                    "unanswered": "Unanswered",
                     "percentage of practices": "Percentage of Practices Performed",
                     "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.",
                     "rra performance summary": "RRA Performance Summary",
-                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.",
-                    "legend": "Legend"
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers."
                 ,
                 "deficiency": {
                     "title": "DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
