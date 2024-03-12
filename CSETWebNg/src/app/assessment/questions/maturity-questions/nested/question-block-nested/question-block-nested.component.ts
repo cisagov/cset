@@ -94,12 +94,12 @@ export class QuestionBlockNestedComponent implements OnInit {
     this.questionsSvc.extrasChanged$.subscribe((qe) => {
       this.refreshExtras(qe);
     });
-
-    this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
-      this.malcolmInfo = r;
-    });
-
-
+    
+    if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
+      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+        this.malcolmInfo = r;
+      });
+    }
   }
 
   getMhdNum(val: string) {
@@ -129,7 +129,7 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (q.comment !== null && q.comment.length > 0) {
       return 'inline';
     }
-    if (q.documentIds.length > 0) {
+    if (q.documentIds !== null && q.documentIds.length > 0) {
       return 'inline';
     }
     if (q.hasObservation) {

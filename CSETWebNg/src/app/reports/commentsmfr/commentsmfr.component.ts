@@ -29,6 +29,7 @@ import { ConfigService } from '../../services/config.service';
 import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-commentsmfr',
@@ -53,7 +54,8 @@ export class CommentsMfrComponent implements OnInit {
     public questionsSvc: QuestionsService,
     public configSvc: ConfigService,
     private titleService: Title,
-    public maturitySvc: MaturityService
+    public maturitySvc: MaturityService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
@@ -82,5 +84,13 @@ export class CommentsMfrComponent implements OnInit {
   getQuestion(q) {
     return q;
     // return q.split(/(?<=^\S+)\s/)[1];
+  }
+
+  translateNoCommentsOrMFR(questionsAlias: string, lookupKey: string) {
+    if (!questionsAlias) {
+      return '';
+    }
+    const alias = this.tSvc.translate('titles.' + questionsAlias.toLowerCase());
+    return this.tSvc.translate(`reports.core.rra.cmfr.${lookupKey}`, { questionsAliasLower: alias.toLowerCase() });
   }
 }

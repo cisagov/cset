@@ -839,21 +839,24 @@
                         "4": "[ES] There are no deficiencies to display."
                     }
                 }
-            }, 
+            },
             "rra": {
                 "title": "[ES] RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "[ES] (RRA) REPORT", 
+                "title 2": "[ES] (RRA) REPORT",
+                "rra report": "[ES] RRA Report",
+                "rra deficiency report": "[ES] RRA Deficiency Report",
+                "comments and marked for review": "[ES] Comments and Marked for Review",
                 "report": {
-                    "assessment tiers": "[ES] RRA Assessment Tiers", 
-                    "answered tier": "[ES] Practices Answered Per Tier", 
-                    "distribution tier": "[ES] Practices Distribution Per Tier", 
+                    "assessment tiers": "[ES] RRA Assessment Tiers",
+                    "answered tier": "[ES] Practices Answered Per Tier",
+                    "distribution tier": "[ES] Practices Distribution Per Tier",
                     "levels": {
-                        "text 1": "[ES] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.", 
-                        "text 2": "[ES] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.", 
-                        "rra practices": "[ES] RRA Practices", 
-                        "advanced": "[ES] Advanced", 
-                        "intermediate": "[ES] Intermediate", 
-                        "basic": "[ES] Basic", 
+                        "text 1": "[ES] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
+                        "text 2": "[ES] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
+                        "rra practices": "[ES] RRA Practices",
+                        "advanced": "[ES] Advanced",
+                        "intermediate": "[ES] Intermediate",
+                        "basic": "[ES] Basic",
                         "overall": "[ES] Overall"
                     }, 
                     "percentage of practices": "[ES] Percentage of Practices Performed", 
@@ -866,6 +869,38 @@
                     "percent complete": "[ES] Percent Complete", "suggested areas": "[ES] Suggested Areas for Improvement", 
                     "suggested text": "[ES] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
                     "goal completion summary": "[ES] Goal Completion Summary"
+                    },
+                    "yes": "[ES] Yes",
+                    "no": "[ES] No",
+                    "unanswered": "[ES] Unanswered",
+                    "percentage of practices": "[ES] Percentage of Practices Performed",
+                    "scores calculated as yes": "[ES] Scores are calculated as the percentage of 'Yes' answers.",
+                    "rra performance summary": "[ES] RRA Performance Summary",
+                    "performance summary text": "[ES] These charts represent the answer distribution overall and across all tiers.",
+                    "legend": "[ES] Legend"
+                },
+                "deficiency": {
+                    "title": "[ES]DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
+                    "suggested areas for improvement": "[ES]Suggested Areas for Improvement",
+                    "deficiencies": "[ES]Deficiencies",
+                    "marked for review": "[ES]Marked for Review",
+                    "no deficiencies to display": "[ES]There are no deficiencies to display",
+                    "comment": "[ES]Comment",
+                    "text": {
+                        "1": "[ES]This deficiency report lists the statements that are currently unanswered or have been answered \"No.\"",
+                        "2": "[ES]This is often referred to as the Gap Report. This report intends to list the gaps so that users of the report can prioritize work and make a plan to implement the controls necessary to satisfy the practice.",
+                        "3": "[ES]The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.",
+                        "4": "[ES]The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered \"No\" or are left unanswered."
+                    }
+                },
+                "cmfr": {
+                    "title": "[ES] COMMENTS & MARKED FOR REVIEW",
+                    "comment": "[ES] Comment",
+                    "marked for review": "[ES] Marked for Review",
+                    "with comments": "[ES] with Comments",
+                    "no marked for review": "[ES] There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "[ES] There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "[ES] Other Remarks"
                 }
             }
         },
@@ -1174,16 +1209,15 @@
             "we ensure financial stability": "Garantizamos la estabilidad financiera",
             "description": "La NCUA se asegura de que millones de consumidores, empresas y comunidades puedan utilizar de manera segura las cooperativas de crédito aseguradas federalmente para sus necesidades financieras."
         },
-        "cie":{
-            "ceser title":"CESER",
-            "ceser":"La Oficina del Departamento de Energía para la Oficina de Ciberseguridad, Seguridad Energética y Respuesta a Emergencias (CESER, por sus siglas en inglés) patrocina las iniciativas de CIE del INL y coordina el programa CIE que incluye el Laboratorio Nacional de Idaho (INL), el Laboratorio Nacional de Energía Renovable (NREL), e industria, académicos y otros socios en apoyo a la Estrategia Nacional de Ingeniería Informada por Ciberseguridad del Departamento de Energía, y la Estrategia Nacional de Ciberseguridad.",
-            "description":"Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
-            "cie tutorial title":"CIE Tutorial",
-            "cie tutorial":"La Guía de Implementación promueve la integración de los principios de Ingeniería Informada por Ciberseguridad (CIE) desde el inicio del ciclo de vida de la infraestructura energética crítica para mitigar las amenazas cibernéticas, enfatizando la colaboración entre las disciplinas de ingeniería, TI y ciberseguridad para avanzar hacia una cultura de 'seguridad por diseño'. Aconseja no convertir a los ingenieros en expertos en ciberseguridad, sino utilizar su experiencia para diseñar sistemas que sean intrínsecamente más seguros contra ataques cibernéticos y fallos tecnológicos.",
+        "cie": {
+            "ceser title": "CESER",
+            "ceser": "La Oficina del Departamento de Energía para la Oficina de Ciberseguridad, Seguridad Energética y Respuesta a Emergencias (CESER, por sus siglas en inglés) patrocina las iniciativas de CIE del INL y coordina el programa CIE que incluye el Laboratorio Nacional de Idaho (INL), el Laboratorio Nacional de Energía Renovable (NREL), e industria, académicos y otros socios en apoyo a la Estrategia Nacional de Ingeniería Informada por Ciberseguridad del Departamento de Energía, y la Estrategia Nacional de Ciberseguridad.",
+            "description": "Cyber-Informed Engineering <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://inl.gov/cie/\">(CIE)</a> builds tools for high-level implementation into curriculum, design standards, certification and curriculum accreditation.",
+            "cie tutorial title": "CIE Tutorial",
+            "cie tutorial": "La Guía de Implementación promueve la integración de los principios de Ingeniería Informada por Ciberseguridad (CIE) desde el inicio del ciclo de vida de la infraestructura energética crítica para mitigar las amenazas cibernéticas, enfatizando la colaboración entre las disciplinas de ingeniería, TI y ciberseguridad para avanzar hacia una cultura de 'seguridad por diseño'. Aconseja no convertir a los ingenieros en expertos en ciberseguridad, sino utilizar su experiencia para diseñar sistemas que sean intrínsecamente más seguros contra ataques cibernéticos y fallos tecnológicos.",
             "cie background": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.whitehouse.gov/wp-content/uploads/2023/03/National-Cybersecurity-Strategy-2023.pdf\">Antecedentes de CIE </a>",
-            "cie principles":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>" ,
-            "cie engineering lifecycle":"<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Ciclo de Vida de la Ingeniería/a>"
-           
+            "cie principles": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.osti.gov/servlets/purl/1369373\">CIE Principles</a>",
+            "cie engineering lifecycle": "<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2\">Ciclo de Vida de la Ingeniería/a>"
         }
     },
     "keyboard": {
