@@ -11,11 +11,18 @@
         <node d="crr tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" visible="MATURITY:4" />
         <node d="imr tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" visible="MATURITY:15" />
         <node d="rra tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" visible="MATURITY:5 ORIGIN-NOT:CF" />
-
+        <node d="cie tutorial.cie tutorial" id="tutorial-cie" visible="MATURITY:17" >
+            <node d="cie tutorial.quick facts" id="quick-facts-cie" path="assessment/{:id}/prepare/tutorial-cie/quick-facts-cie" />
+            <node d="cie tutorial.overview" id="overview-cie" path="assessment/{:id}/prepare/tutorial-cie/overview-cie" />
+            <node d="cie tutorial.background" id="background-cie" path="assessment/{:id}/prepare/tutorial-cie/background-cie" />
+            <node d="cie tutorial.principles" id="principles-cie" path="assessment/{:id}/prepare/tutorial-cie/principles-cie" />
+            <node d="cie tutorial.lifecycle" id="lifecycle-cie" path="assessment/{:id}/prepare/tutorial-cie/lifecycle-cie" />
+            <node d="cie tutorial.how to use" id="how-to-use-cie" path="assessment/{:id}/prepare/tutorial-cie/how-to-use-cie" />
+        </node>
 
         <!-- vanilla prepare pages -->
-        <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NOT:10" />
-        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:10" />
+        <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NONE(10,17)" />
+        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NONE(10,17)" />
 
         <node d="assessment configuration" displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
         <node d="assessment information" displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
@@ -27,6 +34,10 @@
         <!-- CIS config page -->
         <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
+        <!-- CIE config page -->
+        <node displaytext="Analysis Details" id="assessment-detail-cie" path="assessment/{:id}/prepare/assessment-detail-cie" visible="MATURITY:17" />
+        <node displaytext="CIE Analysis Information" id="assessment-info-cie" path="assessment/{:id}/prepare/assessment-info-cie" visible="MATURITY:17" />
+        <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
 
         <!-- Critical Service -->
         <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
@@ -52,15 +63,72 @@
 
     </node>
 
+    <!--  -->
+    <!-- Assessment Phase -->
+    <node displaytext="Analysis" id="phase-assessment" visible="MATURITY:17">
+        <!-- CIE questions displayed in tree structure -->
+        <node displaytext="Principles" id="maturity-questions-nested-2620" visible="MATURITY:17">
+            <node displaytext="Principle 1">
+                <node id="principle-summary-2621" path="assessment/{:id}/principle-summary/2621" displaytext="Consequence Focused Design" />
+                <node id="maturity-questions-cie-2621" path="assessment/{:id}/maturity-questions-cie/2621" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 2">
+                <node id="principle-summary-2622" path="assessment/{:id}/principle-summary/2622" displaytext="Engineered Controls" />
+                <node id="maturity-questions-cie-2622" path="assessment/{:id}/maturity-questions-cie/2622" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 3">
+                <node id="principle-summary-2623" path="assessment/{:id}/principle-summary/2623" displaytext="Secure Information Architecture" />
+                <node id="maturity-questions-cie-2623" path="assessment/{:id}/maturity-questions-cie/2623" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 4">
+                <node id="principle-summary-2624" path="assessment/{:id}/principle-summary/2624" displaytext="Design Simplification" />
+                <node id="maturity-questions-cie-2624" path="assessment/{:id}/maturity-questions-cie/2624" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 5">
+                <node id="principle-summary-2625" path="assessment/{:id}/principle-summary/2625" displaytext="Layered Defenses" />
+                <node id="maturity-questions-cie-2625" path="assessment/{:id}/maturity-questions-cie/2625" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 6">
+                <node id="principle-summary-2626" path="assessment/{:id}/principle-summary/2626" displaytext="Active Defenses" />
+                <node id="maturity-questions-cie-2626" path="assessment/{:id}/maturity-questions-cie/2626" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 7">
+                <node id="principle-summary-2627" path="assessment/{:id}/principle-summary/2627" displaytext="Interdependency Evaluation" />
+                <node id="maturity-questions-cie-2627" path="assessment/{:id}/maturity-questions-cie/2627" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 8">
+                <node id="principle-summary-2628" path="assessment/{:id}/principle-summary/2628" displaytext="Digital Asset Awareness" />
+                <node id="maturity-questions-cie-2628" path="assessment/{:id}/maturity-questions-cie/2628" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 9">
+                <node id="principle-summary-2629" path="assessment/{:id}/principle-summary/2629" displaytext="Cyber-Secure Supply Chain Controls" />
+                <node id="maturity-questions-cie-2629" path="assessment/{:id}/maturity-questions-cie/2629" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 10">
+                <node id="principle-summary-2630" path="assessment/{:id}/principle-summary/2630" displaytext="Planned Resilience" />
+                <node id="maturity-questions-cie-2630" path="assessment/{:id}/maturity-questions-cie/2630" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 11">
+                <node id="principle-summary-2631" path="assessment/{:id}/principle-summary/2631" displaytext="Engineering Information Control" />
+                <node id="maturity-questions-cie-2631" path="assessment/{:id}/maturity-questions-cie/2631" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 12">
+                <node id="principle-summary-2632" path="assessment/{:id}/principle-summary/2632" displaytext="Organizational Culture" />
+                <node id="maturity-questions-cie-2632" path="assessment/{:id}/maturity-questions-cie/2632" displaytext="Questions" />
+            </node>
+            
+        </node>
 
+    </node>
+    <!--  -->
 
     <!-- Assessment Phase -->
-    <node d="assessment" id="phase-assessment" visible="CF-DEMOGRAPHICS-COMPLETE">
+    <node d="assessment" id="phase-assessment" visible="CF-DEMOGRAPHICS-COMPLETE MATURITY-NOT:17">
         <node d="standard questions" id="standard-questions" path="assessment/{:id}/questions" visible="OPTION:STANDARD" />
 
 
         <!-- The scenario that will normally show -->
-        <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13)" />
+        <node d="maturity questions" id="maturity-questions" path="assessment/{:id}/maturity-questions" visible="OPTION:MATURITY MATURITY-NONE(1,10,8,9,14,13,17)" />
 
         <!-- ACET or ISE in non-ACET skin shows the normal maturity-questions -->
         <node d="maturity questions" id="maturity-questions-ncua" path="assessment/{:id}/maturity-questions" visible="INSTALL-MODE-NOT:ACET OPTION:MATURITY MATURITY-ANY(1,10)" />
@@ -145,6 +213,59 @@
                 <node id="maturity-questions-nested-2595" path="assessment/{:id}/maturity-questions-nested/2595" displaytext="3. Plant Operational System" />
                 <node id="maturity-questions-nested-2596" path="assessment/{:id}/maturity-questions-nested/2596" displaytext="4. Endpoint and Data Security" />
             </node>
+        </node>
+
+        <!-- CIE questions displayed in tree structure -->
+        <node displaytext="Principles" id="maturity-questions-nested-2620" visible="MATURITY:17">
+            <node displaytext="Principle 1">
+                <node id="principle-summary-1" path="assessment/{:id}/principle-summary/1" displaytext="Consequence Focused Design" />
+                <node id="maturity-questions-cie-2621" path="assessment/{:id}/maturity-questions-cie/2621" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 2">
+                <node id="principle-summary-2" path="assessment/{:id}/principle-summary/2" displaytext="Engineered Controls" />
+                <node id="maturity-questions-cie-2622" path="assessment/{:id}/maturity-questions-cie/2622" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 3">
+                <node id="principle-summary-3" path="assessment/{:id}/principle-summary/3" displaytext="Secure Information Architecture" />
+                <node id="maturity-questions-cie-2623" path="assessment/{:id}/maturity-questions-cie/2623" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 4">
+                <node id="principle-summary-4" path="assessment/{:id}/principle-summary/4" displaytext="Design Simplification" />
+                <node id="maturity-questions-cie-2624" path="assessment/{:id}/maturity-questions-cie/2624" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 5">
+                <node id="principle-summary-5" path="assessment/{:id}/principle-summary/5" displaytext="Layered Defenses" />
+                <node id="maturity-questions-cie-2625" path="assessment/{:id}/maturity-questions-cie/2625" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 6">
+                <node id="principle-summary-6" path="assessment/{:id}/principle-summary/6" displaytext="Active Defenses" />
+                <node id="maturity-questions-cie-2626" path="assessment/{:id}/maturity-questions-cie/2626" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 7">
+                <node id="principle-summary-7" path="assessment/{:id}/principle-summary/7" displaytext="Interdependency Evaluation" />
+                <node id="maturity-questions-cie-2627" path="assessment/{:id}/maturity-questions-cie/2627" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 8">
+                <node id="principle-summary-8" path="assessment/{:id}/principle-summary/8" displaytext="Digital Asset Awareness" />
+                <node id="maturity-questions-cie-2628" path="assessment/{:id}/maturity-questions-cie/2628" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 9">
+                <node id="principle-summary-9" path="assessment/{:id}/principle-summary/9" displaytext="Cyber-Secure Supply Chain Controls" />
+                <node id="maturity-questions-cie-2629" path="assessment/{:id}/maturity-questions-cie/2629" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 10">
+                <node id="principle-summary-10" path="assessment/{:id}/principle-summary/10" displaytext="Planned Resilience" />
+                <node id="maturity-questions-cie-2630" path="assessment/{:id}/maturity-questions-cie/2630" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 11">
+                <node id="principle-summary-11" path="assessment/{:id}/principle-summary/11" displaytext="Engineering Information Control" />
+                <node id="maturity-questions-cie-2631" path="assessment/{:id}/maturity-questions-cie/2631" displaytext="Questions" />
+            </node>
+            <node displaytext="Principle 12">
+                <node id="principle-summary-12" path="assessment/{:id}/principle-summary/12" displaytext="Organizational Culture" />
+                <node id="maturity-questions-cie-2632" path="assessment/{:id}/maturity-questions-cie/2632" displaytext="Questions" />
+            </node>
+            
         </node>
 
         <!-- MVRA questions displayed in tree structure -->

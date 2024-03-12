@@ -52,6 +52,7 @@
         </div>
 
         <div *ngIf="q.questionType == 'text'">
+            
             <input type="text" class="form-control w-100" maxlength="4000" [value]="q.answerMemo"
                 (change)="changeText(q, $event)">
         </div>

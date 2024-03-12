@@ -203,6 +203,19 @@ import { TutorialImrComponent } from './assessment/prepare/maturity/tutorial-imr
 import { TsaSdComponent } from './reports/tsa-sd/tsa-sd.component';
 import { OtherRemarksComponent } from './assessment/questions/other-remarks/other-remarks.component';
 import { GeneralDeficiencyComponent } from './reports/general-deficiency/general-deficiency.component';
+import { QuickFactsCieComponent } from './assessment/prepare/maturity/tutorial-cie/quick-facts-cie/quick-facts-cie.component';
+import { OverviewCieComponent } from './assessment/prepare/maturity/tutorial-cie/overview-cie/overview-cie.component';
+import { BackgroundCieComponent } from './assessment/prepare/maturity/tutorial-cie/background-cie/background-cie.component';
+import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-cie/principles-cie/principles-cie.component';
+import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
+import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
+import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
+import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
+import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
+import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
+import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
+import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
+import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 
 const appRoutes: Routes = [
 
@@ -333,7 +346,20 @@ const appRoutes: Routes = [
               { path: 'tutorial-imr', component: TutorialImrComponent },
               { path: 'tutorial-rra', component: TutorialRraComponent },
               { path: 'tutorial-cis', component: TutorialCisComponent },
+              { path: 'tutorial-cie', component: TutorialCieComponent,
+                children: [
+                { path: 'quick-facts-cie', component: QuickFactsCieComponent },
+                { path: 'overview-cie', component: OverviewCieComponent },
+                { path: 'background-cie', component: BackgroundCieComponent },
+                { path: 'principles-cie', component: PrinciplesCieComponent },
+                { path: 'lifecycle-cie', component: LifecycleCieComponent },
+                { path: 'how-to-use-cie', component: HowToUseCieComponent }
+                ]
+              },
               { path: 'config-cis', component: ConfigCisComponent },
+              { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
+              { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
+              { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -365,6 +391,9 @@ const appRoutes: Routes = [
           { path: 'maturity-questions', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-acet', component: MaturityQuestionsAcetComponent },
           { path: 'maturity-questions-ise', component: MaturityQuestionsIseComponent },
+          { path: 'maturity-questions-cie/:sec', component: MaturityQuestionsCieComponent },
+          { path: 'question-block-cie/:sec', component: QuestionBlockCieComponent },
+          { path: 'principle-summary/:pri', component: PrincipleSummaryComponent },
           { path: 'maturity-questions/:grp', component: MaturityQuestionsComponent },
           { path: 'maturity-questions-nested/:sec', component: MaturityQuestionsNestedComponent },
           { path: 'other-remarks', component: OtherRemarksComponent },
