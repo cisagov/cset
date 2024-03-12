@@ -264,6 +264,12 @@ namespace CSETWebCore.Api.Controllers
                 {
                     q.Answer_Full_Name = translatedAnswerGoal;
                 }
+
+                var translatedTitle = _overlay.GetPropertyValue("MATURITY_GROUPINGS_TITLE", q.Title.ToLower(), lang);
+                if (translatedTitle != null)
+                {
+                    q.Title = translatedTitle;
+                }
             }
 
             data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);

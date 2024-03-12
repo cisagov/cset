@@ -858,14 +858,12 @@
                         "basic": "Basic", 
                         "overall": "Overall"
                     }, 
-                    "yes": "Yes", 
-                    "no": "No", 
-                    "unanswered": "Unanswered", 
                     "percentage of practices": "Percentage of Practices Performed", 
                     "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.", 
                     "rra performance summary": "RRA Performance Summary", 
-                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.", 
-                    "legend": "Legend"
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.",  
+                    "percentage of practices by goal": "Percentage of Practices Performed by Goal", 
+                    "rra practices": "RRA Practices Scoring"
                 }
             }
         },
