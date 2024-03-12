@@ -24,12 +24,13 @@ namespace CSETWebCore.Interfaces.Maturity
         void ClearMaturityModel(int assessmentId);
         void PersistMaturityLevel(int assessmentId, int level);
         object GetEdmPercentScores(int assessmentId);
-        MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode);
+        MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang);
 
         void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
-            List<FullAnswer> answers);
+            List<FullAnswer> answers,
+            string lang);
 
         int StoreAnswer(int assessmentId, Answer answer);
         List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false);

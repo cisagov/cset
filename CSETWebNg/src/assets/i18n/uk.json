@@ -244,7 +244,7 @@
     "answer-options": {
         "button-labels": {
             "yes": "Так",
-            "no": "Ні",
+            "no": "Немає",
             "n/a": "N/A",
             "alt": "Альт",
             "u": "Без відповіді",
@@ -784,16 +784,24 @@
                         "intermediate": "Проміжний",
                         "basic": "Базовий",
                         "overall": "Загалом"
+                    }, 
+                    "percentage of practices": "[UK] Percentage of Practices Performed", 
+                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.", 
+                    "rra performance summary": "[UK] RRA Performance Summary", 
+                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
+                    "percentage of practices by goal": "[UK] Percentage of Practices Performed by Goal", 
+                    "rra practices": "[UK] RRA Practices Scoring", 
+                    "total practices": "[UK] Total Practices", 
+                    "percent complete": "Відсоток завершення", 
+                    "suggested areas": "[UK] Suggested Areas for Improvement", 
+                    "suggested text": "[UK] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
+                    "goal completion summary": "[UK] Goal Completion Summary"
                     },
-                    "yes": "так",
-                    "no": "немає",
-                    "unanswered": "без відповіді",
                     "percentage of practices": "[UK] Percentage of Practices Performed",
                     "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.",
                     "rra performance summary": "[UK] RRA Performance Summary",
-                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
-                    "legend": "Легенда"
-                },
+                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers."
+                ,
                 "deficiency": {
                     "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "Рекомендовані напрямки покращення",
@@ -807,6 +815,15 @@
                         "3": "Також зазначено відсотковий розрив для кожної цілі, що допоможе визначити пріоритетні напрямки для зосередження зусиль",
                         "4": "Цілі оцінки ранжуються за ступенем нестачі. Цілі з меншою кількістю успішно виконаних практик посідають вищі позиції на діаграмі. Стовпчаста діаграма відображає відсоток практик для кожної цілі, на які було надано відповідь \"Ні\" або залишено без відповіді"
                     }
+                },
+                "cmfr": {
+                    "title": "[UK] COMMENTS & MARKED FOR REVIEW",
+                    "comment": "Коментар",
+                    "marked for review": "[UK] Marked for Review",
+                    "with comments": "[UK] with Comments",
+                    "no marked for review": "[UK] There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "[UK] There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "[UK] Other Remarks"
                 }
             }
         }

@@ -1,14 +1,14 @@
 ﻿{
-  "alternate": "чергувати",
-  "fully implemented": "повністю реалізовано",
-  "incomplete": "неповний",
-  "issues": "питання",
-  "largely implemented": "в основному реалізовано",
-  "no": "немає",
-  "not applicable": "не застосовується",
-  "not implemented": "не впроваджений",
-  "partially implemented": "виконано частково",
-  "selected": "вибране",
-  "unanswered": "без відповіді",
-  "yes": "так"
+  "alternate": "Чергувати",
+  "fully implemented": "Повністю реалізовано",
+  "incomplete": "Неповний",
+  "issues": "Питання",
+  "largely implemented": "В основному реалізовано",
+  "no": "Немає",
+  "not applicable": "Не застосовується",
+  "not implemented": "Не впроваджений",
+  "partially implemented": "Виконано частково",
+  "selected": "Вибране",
+  "unanswered": "Без відповіді",
+  "yes": "Так"
 }

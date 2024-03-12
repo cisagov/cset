@@ -541,7 +541,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, int? userId, string accessKey)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info)
         {
             try
             {

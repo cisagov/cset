@@ -101,9 +101,11 @@ export class QuestionBlockComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
-    this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
-      this.malcolmInfo = r;
-    });
+    if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
+      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+        this.malcolmInfo = r;
+      });
+    }
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
