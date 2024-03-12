@@ -244,7 +244,7 @@
     "answer-options": {
         "button-labels": {
             "yes": "Так",
-            "no": "Ні",
+            "no": "Немає",
             "n/a": "N/A",
             "alt": "Альт",
             "u": "Без відповіді",
@@ -782,14 +782,12 @@
                         "basic": "Базовий", 
                         "overall": "Загалом"
                     }, 
-                    "yes": "так", 
-                    "no": "немає", 
-                    "unanswered": "без відповіді", 
                     "percentage of practices": "[UK] Percentage of Practices Performed", 
                     "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.", 
                     "rra performance summary": "[UK] RRA Performance Summary", 
-                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.", 
-                    "legend": "Легенда"
+                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
+                    "percentage of practices by goal": "[UK] Percentage of Practices Performed by Goal", 
+                    "rra practices": "[UK] RRA Practices Scoring"
                 }
             }
         }

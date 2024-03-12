@@ -50,9 +50,9 @@ export class RraAnswerDistributionComponent implements OnInit {
     let levelList = [];
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
-      const yes = this.tSvc.translate('reports.core.rra.report.yes')
-      const no = this.tSvc.translate('reports.core.rra.report.no')
-      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
+      const yes = this.tSvc.translate('answer-options.button-labels.yes')
+      const no = this.tSvc.translate('answer-options.button-labels.no')
+      const unanswered = this.tSvc.translate('answer-options.button-labels.unanswered')
       if (!level) {
         level = {
           name: element.level_Name, series: [

@@ -184,9 +184,9 @@ export class RraReportComponent implements OnInit {
     let goalList = [];
     r.rraSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
-      const yes = this.tSvc.translate('reports.core.rra.report.yes')
-      const no = this.tSvc.translate('reports.core.rra.report.no')
-      const unanswered = this.tSvc.translate('reports.core.rra.report.unanswered')
+      const yes = this.tSvc.translate('answer-options.button-labels.yes')
+      const no = this.tSvc.translate('answer-options.button-labels.no')
+      const unanswered = this.tSvc.translate('answer-options.button-labels.unanswered')
       if (!goal) {
         goal = {
           name: element.title, series: [
@@ -213,7 +213,7 @@ export class RraReportComponent implements OnInit {
   createTopRankedGoals(r: any) {
     let goalList = [];
     this.answerDistribByGoal.forEach(element => {
-      var yesPercent = element.series.find(x => x.name == this.tSvc.translate('reports.core.rra.report.yes')).value;
+      var yesPercent = element.series.find(x => x.name == this.tSvc.translate('answer-options.button-labels.yes')).value;
       var goal = {
         name: element.name, value: (100 - Math.round(yesPercent))
       };
