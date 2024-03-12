@@ -73,6 +73,7 @@
         "assessment information": "Assessment Information",
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
+        "organization demographics": "Organization Demographics",
         "sal": {
             "security assurance level (sal)": "Security Assurance Level (SAL)",
             "sal intro1": "The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
@@ -194,7 +195,9 @@
         "feedback": "Feedback",
         "assessment complete": "Assessment Complete",
         "performance summary": "Performance Summary",
-        "security practice checklist": "Security Practice Checklist"
+        "security practice checklist": "Security Practice Checklist",
+        "goal performance": "Goal Performance",
+        "assessment tiers": "Assessment Tiers"
     },
     "buttons": {
         "ok": "OK",

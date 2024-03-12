@@ -9,8 +9,6 @@
     "prevent encryption": "запобігти шифруванню",
     "user language": "Мова користувача",
     "note language change": "Виберіть потрібну мову",
-    "goal performance": "Цільова продуктивність",
-    "assessment tiers": "Рівні оцінювання",
     "performance summary": "Підсумок продуктивності",
     "organization details": "Деталі організації",
     "assessment name": "Назва оцінювання",
@@ -69,6 +67,7 @@
         "assessment information": "Інформація про оцінку",
         "service demographics": "Service Demographics",
         "critical service information": "Critical Service Information",
+        "organization demographics": "Організаційна демографія",
         "sal": {
             "security assurance level (sal)": "Гарантований рівень безпеки (SAL)",
             "sal intro1": "[UK]The Security Assurance Level or SAL determines the number of questions to be answered and the level of rigor of the assessment.",
@@ -176,7 +175,9 @@
         "feedback": "Зворотній зв'язок",
         "assessment complete": "Оцінювання завершено",
         "performance summary": "Звіт про роботу",
-        "security practice checklist": "Контрольний список практики безпеки"
+        "security practice checklist": "Контрольний список практики безпеки",
+        "goal performance": "Цільова продуктивність",
+        "assessment tiers": "Рівні оцінювання"
     },
     "buttons": {
         "ok": "OK",
