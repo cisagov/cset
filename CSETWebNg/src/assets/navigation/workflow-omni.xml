@@ -69,51 +69,51 @@
         <!-- CIE questions displayed in tree structure -->
         <node displaytext="Principles" id="maturity-questions-nested-2620" visible="MATURITY:17">
             <node displaytext="Principle 1">
-                <node id="principle-summary-1" path="assessment/{:id}/principle-summary/1" displaytext="Consequence Focused Design" />
+                <node id="principle-summary-2621" path="assessment/{:id}/principle-summary/2621" displaytext="Consequence Focused Design" />
                 <node id="maturity-questions-cie-2621" path="assessment/{:id}/maturity-questions-cie/2621" displaytext="Questions" />
             </node>
             <node displaytext="Principle 2">
-                <node id="principle-summary-2" path="assessment/{:id}/principle-summary/2" displaytext="Engineered Controls" />
+                <node id="principle-summary-2622" path="assessment/{:id}/principle-summary/2622" displaytext="Engineered Controls" />
                 <node id="maturity-questions-cie-2622" path="assessment/{:id}/maturity-questions-cie/2622" displaytext="Questions" />
             </node>
             <node displaytext="Principle 3">
-                <node id="principle-summary-3" path="assessment/{:id}/principle-summary/3" displaytext="Secure Information Architecture" />
+                <node id="principle-summary-2623" path="assessment/{:id}/principle-summary/2623" displaytext="Secure Information Architecture" />
                 <node id="maturity-questions-cie-2623" path="assessment/{:id}/maturity-questions-cie/2623" displaytext="Questions" />
             </node>
             <node displaytext="Principle 4">
-                <node id="principle-summary-4" path="assessment/{:id}/principle-summary/4" displaytext="Design Simplification" />
+                <node id="principle-summary-2624" path="assessment/{:id}/principle-summary/2624" displaytext="Design Simplification" />
                 <node id="maturity-questions-cie-2624" path="assessment/{:id}/maturity-questions-cie/2624" displaytext="Questions" />
             </node>
             <node displaytext="Principle 5">
-                <node id="principle-summary-5" path="assessment/{:id}/principle-summary/5" displaytext="Layered Defenses" />
+                <node id="principle-summary-2625" path="assessment/{:id}/principle-summary/2625" displaytext="Layered Defenses" />
                 <node id="maturity-questions-cie-2625" path="assessment/{:id}/maturity-questions-cie/2625" displaytext="Questions" />
             </node>
             <node displaytext="Principle 6">
-                <node id="principle-summary-6" path="assessment/{:id}/principle-summary/6" displaytext="Active Defenses" />
+                <node id="principle-summary-2626" path="assessment/{:id}/principle-summary/2626" displaytext="Active Defenses" />
                 <node id="maturity-questions-cie-2626" path="assessment/{:id}/maturity-questions-cie/2626" displaytext="Questions" />
             </node>
             <node displaytext="Principle 7">
-                <node id="principle-summary-7" path="assessment/{:id}/principle-summary/7" displaytext="Interdependency Evaluation" />
+                <node id="principle-summary-2627" path="assessment/{:id}/principle-summary/2627" displaytext="Interdependency Evaluation" />
                 <node id="maturity-questions-cie-2627" path="assessment/{:id}/maturity-questions-cie/2627" displaytext="Questions" />
             </node>
             <node displaytext="Principle 8">
-                <node id="principle-summary-8" path="assessment/{:id}/principle-summary/8" displaytext="Digital Asset Awareness" />
+                <node id="principle-summary-2628" path="assessment/{:id}/principle-summary/2628" displaytext="Digital Asset Awareness" />
                 <node id="maturity-questions-cie-2628" path="assessment/{:id}/maturity-questions-cie/2628" displaytext="Questions" />
             </node>
             <node displaytext="Principle 9">
-                <node id="principle-summary-9" path="assessment/{:id}/principle-summary/9" displaytext="Cyber-Secure Supply Chain Controls" />
+                <node id="principle-summary-2629" path="assessment/{:id}/principle-summary/2629" displaytext="Cyber-Secure Supply Chain Controls" />
                 <node id="maturity-questions-cie-2629" path="assessment/{:id}/maturity-questions-cie/2629" displaytext="Questions" />
             </node>
             <node displaytext="Principle 10">
-                <node id="principle-summary-10" path="assessment/{:id}/principle-summary/10" displaytext="Planned Resilience" />
+                <node id="principle-summary-2630" path="assessment/{:id}/principle-summary/2630" displaytext="Planned Resilience" />
                 <node id="maturity-questions-cie-2630" path="assessment/{:id}/maturity-questions-cie/2630" displaytext="Questions" />
             </node>
             <node displaytext="Principle 11">
-                <node id="principle-summary-11" path="assessment/{:id}/principle-summary/11" displaytext="Engineering Information Control" />
+                <node id="principle-summary-2631" path="assessment/{:id}/principle-summary/2631" displaytext="Engineering Information Control" />
                 <node id="maturity-questions-cie-2631" path="assessment/{:id}/maturity-questions-cie/2631" displaytext="Questions" />
             </node>
             <node displaytext="Principle 12">
-                <node id="principle-summary-12" path="assessment/{:id}/principle-summary/12" displaytext="Organizational Culture" />
+                <node id="principle-summary-2632" path="assessment/{:id}/principle-summary/2632" displaytext="Organizational Culture" />
                 <node id="maturity-questions-cie-2632" path="assessment/{:id}/maturity-questions-cie/2632" displaytext="Questions" />
             </node>
             
