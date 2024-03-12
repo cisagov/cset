@@ -815,10 +815,10 @@ namespace CSETWebCore.Business.Maturity
         /// as well as the question set in its hierarchy of domains, practices, etc.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode)
+        public virtual MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang)
         {
             var response = new MaturityResponse();
-            return GetMaturityQuestions(assessmentId, userId, accessKey, installationMode, fill, groupingId, response);
+            return GetMaturityQuestions(assessmentId, installationMode, fill, groupingId, response, lang);
         }
 
 
@@ -826,7 +826,7 @@ namespace CSETWebCore.Business.Maturity
         /// Assembles a response consisting of maturity questions for the assessment.
         /// </summary>
         /// <returns></returns>
-        public MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, string installationMode, bool fill, int groupingId, MaturityResponse response)
+        public MaturityResponse GetMaturityQuestions(int assessmentId, string installationMode, bool fill, int groupingId, MaturityResponse response, string lang)
         {
             if (fill)
             {
@@ -888,13 +888,9 @@ namespace CSETWebCore.Business.Maturity
             }
 
 
-
             var questions = questionQuery.ToList();
 
-            //
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            if (lang == "es")
             {
                 Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
                 questions.ForEach(
@@ -926,7 +922,7 @@ namespace CSETWebCore.Business.Maturity
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
             //
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            if (lang == "es")
             {
                 Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
                 allGroupings.ForEach(
@@ -946,7 +942,7 @@ namespace CSETWebCore.Business.Maturity
             allGroupings.ForEach(
                 grouping =>
                 {
-                    var o = _overlay.GetGrouping(grouping.Grouping_Id, "uk");
+                    var o = _overlay.GetGrouping(grouping.Grouping_Id, lang);
                     if (o != null)
                     {
                         grouping.Title = o.Title;
@@ -959,7 +955,7 @@ namespace CSETWebCore.Business.Maturity
 
             // Recursively build the grouping/question hierarchy
             var tempModel = new MaturityGrouping();
-            BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList());
+            BuildSubGroupings(tempModel, null, allGroupings, questions, answers.ToList(), lang);
 
             //GRAB all the domain remarks and assign them if necessary
             Dictionary<int, MATURITY_DOMAIN_REMARKS> domainRemarks =
@@ -990,7 +986,8 @@ namespace CSETWebCore.Business.Maturity
         public void BuildSubGroupings(MaturityGrouping g, int? parentID,
             List<MATURITY_GROUPINGS> allGroupings,
             List<MATURITY_QUESTIONS> questions,
-            List<FullAnswer> answers)
+            List<FullAnswer> answers,
+            string lang)
         {
             var mySubgroups = allGroupings.Where(x => x.Parent_Id == parentID).OrderBy(x => x.Sequence).ToList();
 
@@ -1010,7 +1007,7 @@ namespace CSETWebCore.Business.Maturity
                     Abbreviation = sg.Abbreviation
                 };
 
-                var o = _overlay.GetGrouping(newGrouping.GroupingID, "uk");
+                var o = _overlay.GetGrouping(newGrouping.GroupingID, lang);
                 if (o != null)
                 {
                     newGrouping.Title = o.Title;
@@ -1096,7 +1093,7 @@ namespace CSETWebCore.Business.Maturity
                 newGrouping.Questions.Sort((a, b) => a.Sequence.CompareTo(b.Sequence));
 
                 // Recurse down to build subgroupings
-                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers);
+                BuildSubGroupings(newGrouping, newGrouping.GroupingID, allGroupings, questions, answers, lang);
             }
         }
 
