@@ -25,7 +25,7 @@ namespace CSETWebCore.Business.Maturity
 
         // -- 
 
-        public override MaturityResponse GetMaturityQuestions(int assessmentId, int? userId, string accessKey, bool fill, int groupingId, string installationMode)
+        public override MaturityResponse GetMaturityQuestions(int assessmentId, bool fill, int groupingId, string installationMode, string lang)
         {
             var response = new MaturityResponse();
             var myModel = ProcessModelDefaults(assessmentId, installationMode, 1);
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.Maturity
                 response.MaturityTargetLevel = response.OverallIRP;
             }
 
-            response = base.GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode);
+            response = base.GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang);
 
             return response;
         }
