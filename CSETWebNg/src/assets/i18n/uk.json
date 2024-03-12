@@ -795,13 +795,12 @@
                     "percent complete": "Відсоток завершення", 
                     "suggested areas": "[UK] Suggested Areas for Improvement", 
                     "suggested text": "[UK] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
-                    "goal completion summary": "[UK] Goal Completion Summary"
-                    },
-                    "percentage of practices": "[UK] Percentage of Practices Performed",
-                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.",
-                    "rra performance summary": "[UK] RRA Performance Summary",
-                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers."
-                ,
+                    "goal completion summary": "[UK] Goal Completion Summary",
+                    "goal performance": "[UK] Goal Performance", 
+                    "rra performance by goal": "[UK] RRA Performance by Goal", 
+                    "performance by goal text": "[UK] This chart shows your positive assessment results. High scores on this chart are desirable.", 
+                    "tiers": "[UK] Assessment Tiers"
+                },
                 "deficiency": {
                     "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "Рекомендовані напрямки покращення",

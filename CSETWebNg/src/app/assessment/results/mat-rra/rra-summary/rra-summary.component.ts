@@ -73,15 +73,12 @@ export class RraSummaryComponent implements OnInit {
     r.rraSummary.forEach(element => {
 
       let level = levelList.find(x => x.name == element.level_Name);
-      const yes = this.tSvc.translate('answer-options.button-labels.yes')
-      const no = this.tSvc.translate('answer-options.button-labels.no')
-      const unanswered = this.tSvc.translate('answer-options.button-labels.unanswered')
       if (!level) {
         level = {
           'name': element.level_Name, series: [
-            { 'name': yes, value: '' },
-            { 'name': no, value: '' },
-            { 'name': unanswered, value: '' },
+            { 'name': 'Yes', value: '' },
+            { 'name': 'No', value: '' },
+            { 'name': 'Unanswered', value: '' },
           ]
         };
         levelList.push(level);
@@ -99,11 +96,20 @@ export class RraSummaryComponent implements OnInit {
         })
       });
       this.single = overall;
+      for (let i of this.single){
+        i.name = this.tSvc.translate('answer-options.button-labels.'+ i.name.toLowerCase())
+       }
       this.buildLegend();
       return;
     }
     this.single = levelList.find(x => x.name == this.filter).series;
+    for (let i of this.single){
+      i.name = this.tSvc.translate('answer-options.button-labels.'+ i.name.toLowerCase())
+     }
+     
     this.buildLegend();
+    
+    
   }
 
   buildLegend() {
