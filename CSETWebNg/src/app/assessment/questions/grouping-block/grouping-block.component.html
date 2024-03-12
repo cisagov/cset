@@ -57,12 +57,16 @@
         <div *ngFor="let sg of grouping.subGroupings">
             <app-grouping-block [grouping]="sg"></app-grouping-block>
         </div>
+        <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('CIE')">
+            <app-question-block-cie #questionBlock [myGrouping]="grouping">
+            </app-question-block-cie>
+        </div>
         <div *ngIf="(grouping.questions.length > 0) && assessSvc.usesMaturityModel('VADR')">
             <app-question-block-vadr #questionBlock [myGrouping]="grouping">
             </app-question-block-vadr>
         </div>
         <div
-            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE')">
+            *ngIf="(grouping.questions.length > 0) && !assessSvc.usesMaturityModel('VADR') && !assessSvc.usesMaturityModel('ISE') && !assessSvc.usesMaturityModel('CIE')">
             <app-question-block-maturity #questionBlock [myGrouping]="grouping">
             </app-question-block-maturity>
         </div>

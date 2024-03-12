@@ -1412,7 +1412,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "(localdb)\\inllocaldb2022.CSETWeb",
+   "UiHint": "(LocalDb)\\INLLocaldb2022.CSETWeb",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,

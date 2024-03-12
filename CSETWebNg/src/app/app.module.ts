@@ -619,9 +619,23 @@ import { AssessmentConvertCfComponent } from './assessment/prepare/assessment-in
 import { IseWarningsComponent } from './assessment/results/reports/ise-warnings/ise-warnings.component';
 //   import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { TrendCompareCompatibilityComponent } from './aggregation/trend-analytics/trend-compare-compatibility/trend-compare-compatibility.component';
+import { QuestionBlockCieComponent } from './assessment/questions/question-block-cie/question-block-cie.component';
+import { PrincipleSummaryComponent } from './assessment/questions/principle-summary/principle-summary.component';
+import { TutorialCieComponent } from './assessment/prepare/maturity/tutorial-cie/tutorial-cie.component';
+import { QuickFactsCieComponent } from './assessment/prepare/maturity/tutorial-cie/quick-facts-cie/quick-facts-cie.component';
+import { OverviewCieComponent } from './assessment/prepare/maturity/tutorial-cie/overview-cie/overview-cie.component';
+import { BackgroundCieComponent } from './assessment/prepare/maturity/tutorial-cie/background-cie/background-cie.component';
+import { PrinciplesCieComponent } from './assessment/prepare/maturity/tutorial-cie/principles-cie/principles-cie.component';
+import { LifecycleCieComponent } from './assessment/prepare/maturity/tutorial-cie/lifecycle-cie/lifecycle-cie.component';
+import { HowToUseCieComponent } from './assessment/prepare/maturity/tutorial-cie/how-to-use-cie/how-to-use-cie.component';
 import { MalcolmAnswerDefaultComponent } from './assessment/questions/malcolm-answer/malcolm-answer-default/malcolm-answer-default.component';
 import { MalcolmAnswerNestedComponent } from './assessment/questions/malcolm-answer/malcolm-answer-nested/malcolm-answer-nested.component';
 import { MalcolmInstructionsComponent } from './dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
+import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-questions/maturity-questions-cie/maturity-questions-cie.component';
+import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
+import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
+import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
+
 import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
  import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
 @NgModule({
@@ -1193,9 +1207,22 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     AssessmentConvertCfComponent,
     IseWarningsComponent,
     TrendAnalyticsComponent,
+    QuestionBlockCieComponent,
+    PrincipleSummaryComponent,
+    TutorialCieComponent,
+    QuickFactsCieComponent,
+    OverviewCieComponent,
+    BackgroundCieComponent,
+    PrinciplesCieComponent,
+    LifecycleCieComponent,
+    HowToUseCieComponent,
     MalcolmAnswerDefaultComponent,
     MalcolmAnswerNestedComponent,
     MalcolmInstructionsComponent,
+    MaturityQuestionsCieComponent,
+    AssessmentInfoCieComponent,
+    AssessmentConfigCieComponent,
+    AssessmentDetailCieComponent,
     CieLayoutMainComponent,
     AboutCieComponent
   ],
