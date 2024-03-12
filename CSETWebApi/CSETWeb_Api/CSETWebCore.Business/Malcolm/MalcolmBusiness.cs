@@ -47,11 +47,11 @@ namespace CSETWebCore.Business.Malcolm
             if (String.IsNullOrWhiteSpace(jsonString))
             {
                 throw new ApplicationException("Could not find Malcolm data for the given IP address");
-            }            
+            }
             List<MalcolmData> list = ProcessMalcomData(jsonString);
             list = GetMalcolmJsonData(list);
             return list;
-            
+
         }
 
         public List<MalcolmData> ProcessMalcomData(String jsonString)
@@ -71,7 +71,7 @@ namespace CSETWebCore.Business.Malcolm
         }
 
         public List<MalcolmData> GetMalcolmJsonData(List<MalcolmData> datalist)
-        {   
+        {
             foreach (MalcolmData malcolmData in datalist)
             {
                 if (malcolmData != null)
@@ -82,7 +82,7 @@ namespace CSETWebCore.Business.Malcolm
                         BuildNetwork(null, buckets);
                     }
                     malcolmData.Graphs = networkOfNodes;
-                    networkOfNodes = new Dictionary<string, TempNode>();           
+                    networkOfNodes = new Dictionary<string, TempNode>();
                 }
             }
             datalist = GetTreesFromMalcolmData(datalist);
@@ -91,11 +91,11 @@ namespace CSETWebCore.Business.Malcolm
         }
         public List<MalcolmData> GetTreesFromMalcolmData(List<MalcolmData> datalist)
         {
-            var malcolmDataList = new List<MalcolmData>();            
+            var malcolmDataList = new List<MalcolmData>();
             foreach (MalcolmData malcolmData in datalist)
             {
                 if (malcolmData != null)
-                {   
+                {
                     MalcolmTree trees = new MalcolmTree();
                     malcolmData.Trees = trees.StartTheTreeWalk(malcolmData.Graphs);
                     malcolmDataList.Add(malcolmData);
@@ -117,7 +117,7 @@ namespace CSETWebCore.Business.Malcolm
                 if (networkOfNodes.TryGetValue(bucket.Key, out tnode))
                 {
                     if (parent != null)
-                        parent.AddChildGraphOnly(tnode);                    
+                        parent.AddChildGraphOnly(tnode);
                 }
                 else
                 {
@@ -164,7 +164,7 @@ namespace CSETWebCore.Business.Malcolm
 
             if (malcolmMappingInfo.Count > 0)
             {
-                
+
                 List<MALCOLM_ANSWERS> valuesToAdd = new List<MALCOLM_ANSWERS>();
                 foreach (MALCOLM_MAPPING m in malcolmMappingInfo)
                 {
@@ -214,7 +214,7 @@ namespace CSETWebCore.Business.Malcolm
                             {
                                 foreach (var set in config.Sets)
                                 {
-                                    var req = _context.NEW_REQUIREMENT.Where(x => x.Original_Set_Name == set 
+                                    var req = _context.NEW_REQUIREMENT.Where(x => x.Original_Set_Name == set
                                         && x.Requirement_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
 
                                     if (req != null)
@@ -233,7 +233,7 @@ namespace CSETWebCore.Business.Malcolm
                             }
 
                             // check if Diagram is used (which it should be)
-                            if (config.Diagram != null && config.Diagram)
+                            if (config.Diagram)
                             {
                                 var new_q = _context.NEW_QUESTION.Where(x => x.Original_Set_Name == "Components"
                                         && x.Question_Id == m.Question_Or_Requirement_Id).FirstOrDefault();
