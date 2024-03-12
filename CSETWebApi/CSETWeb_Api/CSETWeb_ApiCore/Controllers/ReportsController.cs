@@ -232,41 +232,13 @@ namespace CSETWebCore.Api.Controllers
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
 
-            foreach (DataLayer.Manual.usp_getRRASummaryOverall q in data.RRASummaryOverall)
-            {
-                var translatedAnswer = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
-                if (translatedAnswer != null)
-                {
-                    q.Answer_Full_Name = translatedAnswer;
-                }
-            }
-
 
             data.RRASummary = summary.GetRRASummary(assessmentId);
-
-            foreach (DataLayer.Manual.usp_getRRASummary q in data.RRASummary)
-            {
-                var translatedLevel = _overlay.GetPropertyValue("MATURITY_LEVELS", q.Level_Name.ToLower(), lang);
-                if (translatedLevel != null)
-                {
-                    q.Level_Name = translatedLevel;
-                }
-                var translatedFullAnswer = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
-                if (translatedFullAnswer != null)
-                {
-                    q.Answer_Full_Name = translatedFullAnswer;
-                }
-            }
 
             data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
             {
-                var translatedAnswerGoal = _overlay.GetPropertyValue("ANSWER_LOOKUP", q.Answer_Full_Name.ToLower(), lang);
-                if (translatedAnswerGoal != null)
-                {
-                    q.Answer_Full_Name = translatedAnswerGoal;
-                }
 
                 var translatedTitle = _overlay.GetPropertyValue("MATURITY_GROUPINGS_TITLE", q.Title.ToLower(), lang);
                 if (translatedTitle != null)

@@ -20,27 +20,27 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Assessment Tiers</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
+    <h3>{{t('reports.core.rra.report.tiers')}}</h3>
 
     <div class="d-flex flex-column flex-11a">
 
         <div clas="container">
             <div class="row">
                 <div class="col-12">
-                    <h5>RRA Assessment Tiers</h5>
+                    <h5>{{t('reports.core.rra.report.assessment tiers')}}</h5>
                     <app-rra-levels></app-rra-levels>
                 </div>
             </div>
             <div class="row mb-5">
                 <div class="col-12">
-                    <h5>Practices Answered Per Tier</h5>
+                    <h5>{{t('reports.core.rra.report.answered tier')}}</h5>
                     <app-rra-answer-counts></app-rra-answer-counts>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h5>Practices Distribution Per Tier</h5>
+                    <h5>{{t('reports.core.rra.report.distribution tier')}}</h5>
                     <app-rra-answer-distribution></app-rra-answer-distribution>
                 </div>
             </div>
