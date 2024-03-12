@@ -155,7 +155,7 @@ export class RraReportComponent implements OnInit {
     let levelList = [];
 
     var overall = {
-      name: this.tSvc.translate('reports.core.rra.report.levels.overall'),
+      name: 'Overall',
       value: Math.round(r.rraSummaryOverall.find(x => x.answer_Text == 'Y').percent)
     };
     levelList.push(overall);
@@ -174,6 +174,9 @@ export class RraReportComponent implements OnInit {
     });
 
     this.complianceGraph1 = levelList;
+    for (let i of this.complianceGraph1){
+      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+     }
   }
 
 

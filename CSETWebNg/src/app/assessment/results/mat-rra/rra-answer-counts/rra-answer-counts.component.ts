@@ -69,7 +69,10 @@ export class RraAnswerCountsComponent implements OnInit {
 
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.qc;
+     
+
     });
+
     this.answerCountsByLevel = levelList;
     this.findMaxLength();
 
@@ -77,6 +80,9 @@ export class RraAnswerCountsComponent implements OnInit {
       for (let j of i.series){
         j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
       }
+    }
+    for (let i of this.answerCountsByLevel){
+     i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
     }
   }
 

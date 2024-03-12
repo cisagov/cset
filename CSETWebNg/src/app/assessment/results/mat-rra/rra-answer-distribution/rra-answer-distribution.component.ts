@@ -72,6 +72,9 @@ export class RraAnswerDistributionComponent implements OnInit {
         j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
       }
     }
+    for (let i of this.answerDistribByLevel){
+      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+     }
 
   }
 
