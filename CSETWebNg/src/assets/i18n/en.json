@@ -881,7 +881,7 @@
                     "rra performance summary": "RRA Performance Summary",
                     "performance summary text": "These charts represent the answer distribution overall and across all tiers.",
                     "legend": "Legend"
-                },
+                ,
                 "deficiency": {
                     "title": "DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "Suggested Areas for Improvement",

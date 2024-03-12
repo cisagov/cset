@@ -805,7 +805,7 @@
                     "rra performance summary": "[UK] RRA Performance Summary",
                     "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
                     "legend": "Легенда"
-                },
+                ,
                 "deficiency": {
                     "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "Рекомендовані напрямки покращення",
