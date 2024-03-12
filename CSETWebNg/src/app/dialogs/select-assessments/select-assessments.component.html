@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <i class="far fa-check-square mr-3 fs-base-6"></i>
     <span>Select Assessments</span>
@@ -48,7 +48,7 @@
         </table>
 
         <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-          <button class="m-0 btn btn-primary" (click)="close()">OK</button>
+          <button class="m-0 btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
         </mat-dialog-actions>
       </div>
     </form>
