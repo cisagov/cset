@@ -858,16 +858,23 @@
                         "intermediate": "[ES] Intermediate",
                         "basic": "[ES] Basic",
                         "overall": "[ES] Overall"
+                    }, 
+                    "percentage of practices": "[ES] Percentage of Practices Performed", 
+                    "scores calculated as yes": "[ES] Scores are calculated as the percentage of 'Yes' answers.", 
+                    "rra performance summary": "[ES] RRA Performance Summary", 
+                    "performance summary text": "[ES] These charts represent the answer distribution overall and across all tiers.",
+                    "percentage of practices by goal": "[ES] Percentage of Practices Performed by Goal",  
+                    "rra practices": "[ES] RRA Practices Scoring", 
+                    "total practices": "[ES] Total Practices", 
+                    "percent complete": "[ES] Percent Complete", "suggested areas": "[ES] Suggested Areas for Improvement", 
+                    "suggested text": "[ES] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
+                    "goal completion summary": "[ES] Goal Completion Summary"
                     },
-                    "yes": "[ES] Yes",
-                    "no": "[ES] No",
-                    "unanswered": "[ES] Unanswered",
                     "percentage of practices": "[ES] Percentage of Practices Performed",
                     "scores calculated as yes": "[ES] Scores are calculated as the percentage of 'Yes' answers.",
                     "rra performance summary": "[ES] RRA Performance Summary",
-                    "performance summary text": "[ES] These charts represent the answer distribution overall and across all tiers.",
-                    "legend": "[ES] Legend"
-                },
+                    "performance summary text": "[ES] These charts represent the answer distribution overall and across all tiers."
+                ,
                 "deficiency": {
                     "title": "[ES]DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
                     "suggested areas for improvement": "[ES]Suggested Areas for Improvement",
@@ -881,6 +888,15 @@
                         "3": "[ES]The percentage gap in each goal is also listed and will help to prioritize areas to concentrate on.",
                         "4": "[ES]The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered \"No\" or are left unanswered."
                     }
+                },
+                "cmfr": {
+                    "title": "[ES] COMMENTS & MARKED FOR REVIEW",
+                    "comment": "[ES] Comment",
+                    "marked for review": "[ES] Marked for Review",
+                    "with comments": "[ES] with Comments",
+                    "no marked for review": "[ES] There are no {{questionsAliasLower}} marked for review",
+                    "no comments": "[ES] There are no {{questionsAliasLower}} with comments",
+                    "other remarks": "[ES] Other Remarks"
                 }
             }
         },
