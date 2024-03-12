@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-    <h3>Goal Performance</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
+    <h3>{{t('reports.core.rra.report.goal performance')}}</h3>
 
     <div *ngIf="!initialized">
         <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
@@ -33,14 +33,14 @@
         <div clas="container">
             <div class="row mb-5">
                 <div class="col-12">
-                    <h5>RRA Performance by Goal</h5>
-                    <p>This chart shows your positive assessment results. High scores on this chart are desirable.</p>
+                    <h5>{{t('reports.core.rra.report.rra performance by goal')}}</h5>
+                    <p>{{t('reports.core.rra.report.performance by goal text')}}</p>
                     <app-rra-answer-compliance></app-rra-answer-compliance>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h5>RRA Practices Scoring</h5>
+                    <h5>{{t('reports.core.rra.report.rra practices')}}</h5>
                     <app-rra-questions-scoring></app-rra-questions-scoring>
                 </div>
             </div>

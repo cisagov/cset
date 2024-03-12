@@ -50,15 +50,12 @@ export class RraAnswerDistributionComponent implements OnInit {
     let levelList = [];
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
-      const yes = this.tSvc.translate('answer-options.button-labels.yes')
-      const no = this.tSvc.translate('answer-options.button-labels.no')
-      const unanswered = this.tSvc.translate('answer-options.button-labels.unanswered')
       if (!level) {
         level = {
           name: element.level_Name, series: [
-            { name: yes, value: 0 },
-            { name: no, value: 0 },
-            { name: unanswered, value: 0 },
+            { name: 'Yes', value: 0 },
+            { name: 'No', value: 0 },
+            { name: 'Unanswered', value: 0 },
           ]
         };
         levelList.push(level);
@@ -69,6 +66,16 @@ export class RraAnswerDistributionComponent implements OnInit {
     });
 
     this.answerDistribByLevel = levelList;
+
+    for (let i of this.answerDistribByLevel){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+      }
+    }
+    for (let i of this.answerDistribByLevel){
+      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+     }
+
   }
 
   formatPercent(x: any) {
