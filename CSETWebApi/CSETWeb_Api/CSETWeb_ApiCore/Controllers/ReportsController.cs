@@ -42,7 +42,6 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
-        private readonly ITokenManager _tokenManager;
         private TranslationOverlay _overlay;
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
@@ -90,10 +89,11 @@ namespace CSETWebCore.Api.Controllers
             data.information = _report.GetInformation();
             if (data.information.UseDiagram == true)
             {
-               
+
                 data.ControlList = _report.GetControlsDiagram(data.ApplicationMode);
 
-            } else
+            }
+            else
             {
                 data.ControlList = _report.GetControls(data.ApplicationMode);
             }
@@ -242,7 +242,7 @@ namespace CSETWebCore.Api.Controllers
             data.RRASummary = summary.GetRRASummary(assessmentId);
 
             foreach (DataLayer.Manual.usp_getRRASummary q in data.RRASummary)
-            { 
+            {
                 var translatedLevel = _overlay.GetPropertyValue("MATURITY_LEVELS", q.Level_Name.ToLower(), lang);
                 if (translatedLevel != null)
                 {
