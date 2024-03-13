@@ -797,8 +797,13 @@
                     "goal completion summary": "[UK] Goal Completion Summary",
                     "goal performance": "[UK] Goal Performance", 
                     "rra performance by goal": "[UK] RRA Performance by Goal", 
-                    "performance by goal text": "[UK] This chart shows your positive assessment results. High scores on this chart are desirable.", 
-                    "tiers": "[UK] Assessment Tiers"
+                    "performance by goal text": "[UK] This chart shows your positive assessment results. High scores on this chart are desirable.",
+                    "tiers": "[UK] Assessment Tiers", 
+                    "rra practice list": "[UK] RRA Practice List with Corresponding References", 
+                    "rra practice list text": "[UK] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
+                    "identifier": "Ідентифікатор", 
+                    "practice": "Практика", 
+                    "references": "Список літератури"
                 },
                 "deficiency": {
                     "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
