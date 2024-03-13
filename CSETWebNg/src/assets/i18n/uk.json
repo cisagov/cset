@@ -317,6 +317,13 @@
             "li-c2m2": "[UK] Largely Implemented (LI)",
             "pi-c2m2": "[UK] Partially Implemented (PI)",
             "ni-c2m2": "[UK] Not Implemented (NI)"
+        },
+        "placeholders": {
+            "alt acet": "Опис, пояснення та/або обґрунтування компенсаційного контролю",
+            "alt cset": "Опис пояснення та/або обґрунтування для альтернативної відповіді"
+        },
+        "warnings": {
+            "description required": "* Потрібен опис"
         }
     },
     "tooltip": {
@@ -467,6 +474,11 @@
         "comments label": "[UK]Comments",
         "comments desc": "[UK]Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
         "comments placeholder": "[UK]Please provide general comments, if any, to include in the reports.",
+        "cisa workflow required msg": {
+            "1": "Будь ласка, дайте відповіді на всі демографічні дані організації, конфігурацію оцінки та критичні сервісні поля, щоб отримати доступ до звітів і експорт оцінки.",
+            "2": "Наступні поля не заповнені",
+            "3": "Для перегляду звітів необхідно надати всю демографічну інформацію на сторінці «Інформація про оцінювання»."
+        },
         "disclaimer": {
             "disclaimer": "Відмова від гарантій",
             "disclaimer section 1": "[UK]The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",

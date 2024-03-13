@@ -35,22 +35,19 @@
   </div>
 
   <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
-    Please answer all organization demographic, assessment configuration, and critical service fields to access
-    reports
-    and assessment export.
-    <p class="mt-2">The following fields are incomplete:</p>
+    {{t('cisa workflow required msg.1')}}
+    <p class="mt-2">{{t('cisa workflow required msg.2')}}:</p>
     <ul>
       <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
     </ul>
   </div>
-  <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
-  <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
 
   <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
-    All demographics information on the Assessment Information page must be
-    provided in order to view reports.
+    {{t('cisa workflow required msg.3')}}
   </div>
 
+  <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
+  <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
 
   <div class="d-flex flex-column justify-content-start align-items-start mb-4" *ngIf="showObservationTearouts()">
     <button (click)="clickReportLink('observations')" tabindex="0" class="btn btn-link btn-link-dark text-left">
