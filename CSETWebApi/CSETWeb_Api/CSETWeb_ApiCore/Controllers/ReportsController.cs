@@ -287,6 +287,15 @@ namespace CSETWebCore.Api.Controllers
                 questions.Add(newQ);
             }));
 
+            foreach (MaturityQuestion q in questions)
+            {
+                var translatedGroup = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
+                if (translatedGroup != null)
+                {
+                    q.Question_Text = translatedGroup.QuestionText;
+                }
+            }
+
             return Ok(questions);
         }
 
