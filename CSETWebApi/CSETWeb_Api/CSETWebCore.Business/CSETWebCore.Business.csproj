@@ -143,6 +143,9 @@
     <None Update="App_Data\ACET Spanish Question Mapping.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\GENERIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

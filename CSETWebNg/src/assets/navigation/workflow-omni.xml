@@ -21,18 +21,18 @@
         </node>
 
         <!-- vanilla prepare pages -->
-        <node d="assessment configuration" displaytext="Assessment Configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NONE(10,17)" />
-        <node d="assessment information" displaytext="Assessment Information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NONE(10,17)" />
+        <node d="assessment configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NOT:10" />
+        <node d="assessment information" id="info2" path="assessment/{:id}/prepare/info2" visible="INSTALL-MODE-NONE(TSA,IOD) MATURITY-NOT:10" />
 
-        <node d="assessment configuration" displaytext="Assessment Configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
-        <node d="assessment information" displaytext="Assessment Information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
+        <node d="assessment configuration" id="info-tsa" path="assessment/{:id}/prepare/info-tsa" visible="INSTALL-MODE:TSA" />
+        <node d="assessment information" id="info2-tsa" path="assessment/{:id}/prepare/info2-tsa" visible="INSTALL-MODE:TSA" />
 
         <!-- IOD CSA 'prepare' pages -->
-        <node displaytext="Organization Demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="INSTALL-MODE:IOD" />
-        <node displaytext="Assessment Configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="INSTALL-MODE:IOD" />
+        <node d="organization demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="INSTALL-MODE:IOD" />
+        <node d="assessment configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="INSTALL-MODE:IOD" />
 
         <!-- CIS config page -->
-        <node displaytext="CIS Configuration" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
+        <node d="critical service information" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
         <!-- CIE config page -->
         <node displaytext="Analysis Details" id="assessment-detail-cie" path="assessment/{:id}/prepare/assessment-detail-cie" visible="MATURITY:17" />
@@ -40,8 +40,8 @@
         <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
 
         <!-- Critical Service -->
-        <node displaytext="Critical Service Information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
-        <node displaytext="Critical Service Information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
+        <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
+        <node d="critical service information" id="csi2" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE:IOD" />
 
 
         <node d="sal.security assurance level (sal)" id="sal" path="assessment/{:id}/prepare/sal" visible="OPTION-ANY(STANDARD,DIAGRAM) ORIGIN-NOT:CF STANDARD-NOT:RAC" />
@@ -393,8 +393,8 @@
 
 
         <!-- Results - RRA -->
-        <node displaytext="Goal Performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:5" />
-        <node displaytext="Assessment Tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:5" />
+        <node d="goal performance" id="rra-gaps" path="assessment/{:id}/results/rra-gaps" visible="MATURITY:5" />
+        <node d="assessment tiers" id="rra-level-results" path="assessment/{:id}/results/rra-level-results" visible="MATURITY:5" />
         <node d="performance summary" id="rra-summary-all" path="assessment/{:id}/results/rra-summary-all" visible="MATURITY:5" />
 
 
@@ -416,7 +416,7 @@
         <node displaytext="Action Items" id="hydro-actions" path="assessment/{:id}/results/hydro-actions" visible="MATURITY:13" />
 
         <!-- Results - MVRA -->
-        <node displaytext="Goal Performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" visible="MATURITY:9" />
+        <node d="goal performance" id="mvra-gaps-page" path="assessment/{:id}/results/mvra-gaps-page" visible="MATURITY:9" />
         <node d="performance summary" id="mvra-summary-page" path="assessment/{:id}/results/mvra-summary-page" visible="MATURITY:9" />
 
         <!-- Results - CPG -->
