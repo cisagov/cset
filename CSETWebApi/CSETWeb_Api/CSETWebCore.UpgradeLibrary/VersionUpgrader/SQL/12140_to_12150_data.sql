@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-(localdb)\INLLocalDB2022.RENEWWeb12140    -  This database will be modified
+(localdb)\INLLocalDB2022.CSETWeb12140    -  This database will be modified
 
 to synchronize it with:
 
-(localdb)\INLLocalDB2022.NCUAWeb12150
+(localdb)\INLLocalDB2022.CSETWeb12150
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/13/2024 11:07:20 AM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/13/2024 12:04:48 PM
 
 */
 		
@@ -631,11 +631,6 @@ INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name],
 INSERT INTO [dbo].[MATURITY_LEVELS] ([Maturity_Level_Id], [Level], [Level_Name], [Maturity_Model_Id]) VALUES (35, 5, N'Non-Controlling-Phase-Independent', 17)
 SET IDENTITY_INSERT [dbo].[MATURITY_LEVELS] OFF
 PRINT(N'Operation applied to 5 rows out of 5')
-
-PRINT(N'Add row to [dbo].[NEW_REQUIREMENT]')
-SET IDENTITY_INSERT [dbo].[NEW_REQUIREMENT] ON
-INSERT INTO [dbo].[NEW_REQUIREMENT] ([Requirement_Id], [Requirement_Title], [Requirement_Text], [Supplemental_Info], [Standard_Category], [Standard_Sub_Category], [Weight], [Implementation_Recommendations], [Original_Set_Name], [NCSF_Cat_Id], [NCSF_Number], [Ranking], [Question_Group_Heading_Id], [ExaminationApproach], [Old_Id_For_Copy]) VALUES (1005318, N'A.1', N'This is requirement A.1.  Better do what it says, or else.', NULL, N'Access Control', N'Network Access', NULL, NULL, N'SET.20240307.140203', NULL, NULL, NULL, 4, NULL, NULL)
-SET IDENTITY_INSERT [dbo].[NEW_REQUIREMENT] OFF
 
 PRINT(N'Add rows to [dbo].[MATURITY_QUESTIONS]')
 SET IDENTITY_INSERT [dbo].[MATURITY_QUESTIONS] ON

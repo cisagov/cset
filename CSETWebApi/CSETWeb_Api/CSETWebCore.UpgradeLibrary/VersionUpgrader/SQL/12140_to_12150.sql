@@ -1,15 +1,15 @@
 /*
 Run this script on:
 
-        (localdb)\INLLocalDB2022.RENEWWeb12140    -  This database will be modified
+        (localdb)\INLLocalDB2022.CSETWeb12140    -  This database will be modified
 
 to synchronize it with:
 
-        (localdb)\INLLocalDB2022.NCUAWeb12150
+        (localdb)\INLLocalDB2022.CSETWeb12150
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/13/2024 11:05:04 AM
+Script created by SQL Compare version 14.10.9.22680 from Red Gate Software Ltd at 3/13/2024 12:02:37 PM
 
 */
 SET NUMERIC_ROUNDABORT OFF
@@ -21,6 +21,16 @@ GO
 SET TRANSACTION ISOLATION LEVEL Serializable
 GO
 BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Dropping foreign keys from [dbo].[NEW_REQUIREMENT]'
+GO
+ALTER TABLE [dbo].[NEW_REQUIREMENT] DROP CONSTRAINT [FK_NEW_REQUIREMENT_NCSF_Category]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[NEW_REQUIREMENT] DROP CONSTRAINT [FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING]
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -44,6 +54,18 @@ SELECT        AssessmentMode = 'maturity', Question_Title AS title, mat_question
 FROM            MATURITY_QUESTIONS q JOIN
                          MATURITY_GROUPINGS g ON q.Grouping_Id = g.Grouping_Id JOIN
                          MATURITY_MODELS m ON q.Maturity_Model_Id = m.Maturity_Model_Id AND g.Maturity_Model_Id = m.Maturity_Model_Id
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[NEW_REQUIREMENT]'
+GO
+ALTER TABLE [dbo].[NEW_REQUIREMENT] WITH NOCHECK  ADD CONSTRAINT [FK_NEW_REQUIREMENT_NCSF_Category] FOREIGN KEY ([NCSF_Cat_Id]) REFERENCES [dbo].[NCSF_CATEGORY] ([NCSF_Cat_Id]) ON DELETE CASCADE ON UPDATE CASCADE
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+PRINT N'Adding foreign keys to [dbo].[NEW_REQUIREMENT]'
+GO
+ALTER TABLE [dbo].[NEW_REQUIREMENT] ADD CONSTRAINT [FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING] FOREIGN KEY ([Question_Group_Heading_Id]) REFERENCES [dbo].[QUESTION_GROUP_HEADING] ([Question_Group_Heading_Id]) ON DELETE CASCADE ON UPDATE CASCADE
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
