@@ -107,6 +107,7 @@ namespace UpgradeLibrary.Upgrade
             converters.Add("12.1.2.0", new ConvertDatabase12121(path));
             converters.Add("12.1.2.1", new ConvertDatabase12130(path));
             converters.Add("12.1.3.0", new ConvertDatabase12140(path));
+            converters.Add("12.1.4.0", new ConvertDatabase12150(path));
         }
 
         public void UpgradeOnly(Version currentVersion, string tempConnect)
