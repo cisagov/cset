@@ -528,9 +528,7 @@
         </div>
       </div>
     </div>
-
-    <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
-      [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
-
   </div>
+  <app-nav-back-next *ngIf="!assessSvc.isISE()" [page]="'reports'"
+    [hide]="navSvc.isLastVisiblePage('reports') ? 'next' : ''"></app-nav-back-next>
 </div>
