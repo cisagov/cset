@@ -61,7 +61,7 @@ export class QuestionBlockComponent implements OnInit {
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
-  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
+  altTextPlaceholder = "alt cset";
 
   showQuestionIds = false;
 
