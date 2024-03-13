@@ -3,5 +3,245 @@
     "matQuestionId": 1,
     "questionText": "Обмежте доступ до інформаційної системи авторизованим користувачам, процесам, що діють від імені авторизованих користувачів, або пристроям (включаючи інші інформаційні системи).",
     "supplementalInfo": "<div><strong>Мета контролю</strong></div><div class=\"mb-2\"></div><div><strong>Додаткові вказівки</strong></div><div class= \"mb-2\"></div><div><strong>Для отримання додаткової інформації див. відповідні елементи керування</strong></div><div class=\"mb-2\"></div>"
+  },
+  {
+    "matQuestionId": "1892",
+    "questionText": "[UK] Is malicious web content being blocked using DNS filtering via methods like DNS resolvers and DNS firewalls?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1893",
+    "questionText": "[UK] Are web browser security settings managed?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1894",
+    "questionText": "[UK] Is least privilege enforced through technical (technology based) restrictions?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1895",
+    "questionText": "[UK] Are audit logs maintained for all privileged (e.g. system administrator) accounts?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1897",
+    "questionText": "[UK] Are important systems and data backed up daily to an offsite location with the ability to restore multiple versions back at least 30 days?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1898",
+    "questionText": "[UK] Are annual tabletop exercises that include phishing response scenarios conducted?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1899",
+    "questionText": "[UK] Are users trained to recognize cyber threats like phishing?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1900",
+    "questionText": "[UK] Is email filtered to protect against malicious content?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1902",
+    "questionText": "[UK] Is perimeter network traffic monitored?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1903",
+    "questionText": "[UK] Is internal network traffic monitored?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1904",
+    "questionText": "[UK] Are networks segmented to protect mission critical assets?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1905",
+    "questionText": "[UK] Has the organization established a baseline of network traffic and is it used to identify anomalous activity?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1906",
+    "questionText": "[UK] Have the organization&#8217;s hardware and software assets been inventoried and is the inventory managed?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1907",
+    "questionText": "[UK] Has the organization removed all unsupported hardware and software from its operating environment?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1908",
+    "questionText": "[UK] Does the organization detect rogue hardware and alert key stakeholders?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1909",
+    "questionText": "[UK] Does the organization quarantine and/or remove all rogue hardware?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1910",
+    "questionText": "[UK] Is all public-facing software patched for vulnerabilities within 15 days for vulnerabilities rated as &#8220;Critical&#8221; and 30 days for vulnerabilities rated as &#8220;High&#8221;?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1911",
+    "questionText": "[UK] Are all internal-facing software and firewalls patched for vulnerabilities within 30 days for both vulnerabilities rated as &#8220;Critical&#8221; and for vulnerabilities rated as &#8220;High&#8221;?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1912",
+    "questionText": "[UK] Are all software and firewalls patched for vulnerabilities within 15 days for vulnerabilities rated as &#8220;Critical&#8221; and 30 days for vulnerabilities rated as &#8220;High&#8221;?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1913",
+    "questionText": "[UK] Are all software and firewalls patched for vulnerabilities within 3 days for vulnerabilities rated as &#8220;Critical&#8221; and 7 days for vulnerabilities rated as &#8220;High&#8221;?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1914",
+    "questionText": "[UK] Are strong and unique passwords implemented throughout the entire organization?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1915",
+    "questionText": "[UK] Is two-factor authentication implemented for all privileged (e.g. system administrators) and remote users",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1916",
+    "questionText": "[UK] Is two-factor authentication implemented for all users?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1917",
+    "questionText": "[UK] Is the principle of least privilege enforced through policies and procedures? ",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1918",
+    "questionText": "[UK] Is there a list of known bad software (a &#8220;Blocklist&#8221;), and is the software on that list being blocked?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1919",
+    "questionText": "[UK] Has the organization documented a list of known approved software (an &#8220;Allowlist&#8221;)?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1920",
+    "questionText": "[UK] Is the Allowlist organized by software publisher, and is that list used to allow only approved software to run on organizational systems?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1921",
+    "questionText": "[UK] Has the organization documented a list of known approved software (an Allowlist) organized by software publisher and version number, and is that list used to allow only approved software to run on organizational systems?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1922",
+    "questionText": "[UK] Does the organization perform business impact assessments?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1923",
+    "questionText": "[UK] Has the organization defined organizational risk criteria and tolerances?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1924",
+    "questionText": "[UK] Does the organization consider risk inheritance and exposure between its various interconnected systems?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1925",
+    "questionText": "[UK] Does the organization apply quantitative risk analysis to remediation activities?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1926",
+    "questionText": "[UK] Has the organization developed an incident response plan?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1927",
+    "questionText": "[UK] Are cybersecurity incidents reported and escalated to the appropriate stakeholders?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1928",
+    "questionText": "[UK] Have disaster recovery procedures been developed?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1929",
+    "questionText": "[UK] Does the organization conduct annual incident response tabletop exercises that include ransomware response scenarios?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1930",
+    "questionText": "[UK] Are data backups tested annually?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1931",
+    "questionText": "[UK] Is role-based security training conducted?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1932",
+    "questionText": "[UK] Is rogue hardware being detected?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1933",
+    "questionText": "[UK] Are documented and approved secure configurations used to manage the organization&#8217;s hardware and software assets?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1934",
+    "questionText": "[UK] Are standard baseline images used to control hardware and software configurations?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1935",
+    "questionText": "[UK] Does the organization manage system configurations using security hardening guides?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1936",
+    "questionText": "[UK] Are users who attempt to install rogue hardware counseled against installing rogue hardware?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1937",
+    "questionText": "[UK] Are incident response tabletop exercises performed at least twice a year?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1938",
+    "questionText": "[UK] Is a physical incident response exercise performed at least once a year?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1939",
+    "questionText": "[UK] Are physical incident response exercises performed at least twice a year?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1940",
+    "questionText": "[UK] Has the organization implemented redundant systems where appropriate for the purpose of resiliency?",
+    "supplementalInfo": null
+  },
+  {
+    "matQuestionId": "1941",
+    "questionText": "[UK] Have redundant and resilient systems and data been implemented throughout the organization?",
+    "supplementalInfo": null
   }
 ]
