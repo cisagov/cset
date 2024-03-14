@@ -40,11 +40,8 @@ export class IRPService {
   /**
    * Retrieves the list of frameworks.
    */
-  getIRPList(spanishFlag?: boolean) {
-    if (spanishFlag == null) {
-      spanishFlag = false;
-    }
-    return this.http.get(this.configSvc.apiUrl + 'irps?spanishFlag=' + spanishFlag);
+  getIRPList() {
+    return this.http.get(this.configSvc.apiUrl + 'irps');
   }
 
   /**

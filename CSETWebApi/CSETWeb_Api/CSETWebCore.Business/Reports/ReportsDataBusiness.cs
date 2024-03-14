@@ -327,9 +327,6 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-            // Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
-            //Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
-
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
