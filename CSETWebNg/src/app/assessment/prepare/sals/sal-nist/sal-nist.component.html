@@ -181,13 +181,13 @@
                 [class.active]="question.question_Answer === 'Yes'" (click)="saveQuestionChanged(question,'Yes')">
                 <input class="form-check-input" type="radio" autocomplete="off"
                   name="options{{question.question_Number}}"
-                  [checked]="question.question_Answer === 'Yes'">{{t('titles.sal.nist.yes')}}
+                  [checked]="question.question_Answer === 'Yes'">{{t('answer-options.labels.yes')}}
               </label>
               <label [attr.csetid]="question.question_Text + 'No'" class="btn btn-level btn-rounded form-check-label"
                 [class.active]="question.question_Answer === 'No'" (click)="saveQuestionChanged(question,'No')">
                 <input class="form-check-input" type="radio" autocomplete="off"
                   name="options{{question.question_Number}}"
-                  [checked]="question.question_Answer === 'No'">{{t('titles.sal.nist.no')}}
+                  [checked]="question.question_Answer === 'No'">{{t('answer-options.labels.no')}}
               </label>
             </div>
           </td>
