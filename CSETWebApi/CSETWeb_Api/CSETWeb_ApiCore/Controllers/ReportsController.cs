@@ -293,6 +293,7 @@ namespace CSETWebCore.Api.Controllers
                 if (translatedGroup != null)
                 {
                     q.Question_Text = translatedGroup.QuestionText;
+
                 }
             }
 

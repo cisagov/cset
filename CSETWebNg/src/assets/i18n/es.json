@@ -841,9 +841,8 @@
                 }
             },
             "rra": {
-                "title": "INFORME DE EVALUACIÓN DE PREPARACIÓN PARA RANSOMWARE (RRA)",
-                "title 2": "",
-                "rra report": "Informe RRA",
+                "title": "Informe RRA",
+                "tab title": "INFORME DE EVALUACIÓN DE PREPARACIÓN PARA RANSOMWARE (RRA)",
                 "rra deficiency report": "Informe de deficiencia de RRA",
                 "comments and marked for review": "Comentarios y Marcados para Revisión",
                 "report": {
