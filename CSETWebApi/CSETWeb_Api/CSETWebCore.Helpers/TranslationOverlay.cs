@@ -1,4 +1,4 @@
-﻿using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Set;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -50,6 +50,11 @@ namespace CSETWebCore.Helpers
         /// A dictionary of loaded KeyValueOverlay language packs
         /// </summary>
         private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
+
+        /// <summary>
+        /// A dictionary of loaded maturity question language packs
+        /// </summary>
+        private Dictionary<string, List<MaturityQuestionOverlay>> dictQuestions = [];
 
         #endregion
 
@@ -160,7 +165,7 @@ namespace CSETWebCore.Helpers
         /// Collection indicates the name of the JSON file.
         /// </summary>
         public KeyValueOverlay GetValue(string collection, string key, string lang)
-        { 
+        {
             // get out cheaply - don't waste time looking up English
             if (lang == "en")
             {
@@ -192,7 +197,7 @@ namespace CSETWebCore.Helpers
                 langPack = value;
             }
 
-            
+
             return langPack.FirstOrDefault(x => x.Key.ToLower() == key.ToLower());
         }
 
@@ -311,4 +316,5 @@ namespace CSETWebCore.Helpers
             return langPack.FirstOrDefault(x => x.MatQuestionId == questionId);
         }
     }
+
 }

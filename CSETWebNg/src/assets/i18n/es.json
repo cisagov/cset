@@ -878,7 +878,12 @@
                     "goal performance": "Rendimiento de objetivos", 
                     "rra performance by goal": "Desempeño de RRA por objetivo", 
                     "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.", 
-                    "tiers": "Niveles de evaluación"
+                    "tiers": "Niveles de evaluación", 
+                    "rra practice list": "[ES] RRA Practice List with Corresponding References", 
+                    "rra practice list text": "[ES] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
+                    "identifier": "Identificador", 
+                    "practice": "Práctica", 
+                    "references": "Referencias"
                 },
                 "percentage of practices": "[ES] Percentage of Practices Performed",
                 "scores calculated as yes": "[ES] Scores are calculated as the percentage of 'Yes' answers.",

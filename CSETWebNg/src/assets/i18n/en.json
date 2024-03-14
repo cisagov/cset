@@ -889,7 +889,13 @@
                     "goal performance": "Goal Performance", 
                     "rra performance by goal": "RRA Performance by Goal", 
                     "performance by goal text": "This chart shows your positive assessment results. High scores on this chart are desirable.", 
-                    "tiers": "Assessment Tiers"
+                    "tiers": "Assessment Tiers", 
+                    "rra practice list": "RRA Practice List with Corresponding References", 
+                    "rra practice list text": "Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
+                    "identifier": "Identifier", 
+                    "practice": "Practice", 
+                    "references": "References"
+
                 },
                 "deficiency": {
                     "title": "DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
