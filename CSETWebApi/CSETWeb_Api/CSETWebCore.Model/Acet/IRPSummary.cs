@@ -8,6 +8,7 @@ namespace CSETWebCore.Model.Acet
 {
     public class IRPSummary
     {
+        public int HeaderId { get; set; }
         public string HeaderText { get; set; }
         public int[] RiskCount { get; set; }
         public int RiskSum { get; set; }
