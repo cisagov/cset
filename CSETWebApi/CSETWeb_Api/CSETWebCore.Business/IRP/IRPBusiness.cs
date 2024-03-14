@@ -24,22 +24,26 @@ namespace CSETWebCore.Business.IRP
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly TranslationOverlay _overlay;
+
 
         public IRPBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+
+            _overlay = new TranslationOverlay();
         }
-        public IRPResponse GetIRPList(int assessmentId, bool spanishFlag = false)
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IRPResponse GetIRPList(int assessmentId, string lang)
         {
             IRPResponse response = new IRPResponse();
             Dictionary<int, IRPModel> dictionary = new Dictionary<int, IRPModel>();
-            Dictionary<int, IRPSpanishRow> dictionaryHeaders = new Dictionary<int, IRPSpanishRow>();
-            if (spanishFlag)
-            {
-                dictionary = AcetBusiness.buildIRPDictionary();
-                dictionaryHeaders = AcetBusiness.buildIRPHeaderDictionary();
-            }
+
 
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
@@ -48,11 +52,14 @@ namespace CSETWebCore.Business.IRP
                     header = header.Header
                 };
 
-                if (spanishFlag)
+                // overlay
+                if (lang != "en")
                 {
-                    var output = new IRPSpanishRow();
-                    if (dictionaryHeaders.TryGetValue(header.IRP_Header_Id, out output))
-                        tempHeader.header = dictionaryHeaders[header.IRP_Header_Id].SpanishHeader;
+                    var o = _overlay.GetValue("IRP_HEADER", header.IRP_Header_Id.ToString(), lang);
+                    if (o != null)
+                    {
+                        tempHeader.header = o.Value;
+                    }
                 }
 
                 foreach (DataLayer.Model.IRP irp in _context.IRP.Where(x => x.Header_Id == header.IRP_Header_Id).ToList())
@@ -72,22 +79,23 @@ namespace CSETWebCore.Business.IRP
                         Risk_Type = irp.Risk_Type
                     };
 
-                    if (spanishFlag)
+                    // overlay
+                    if (lang != "en")
                     {
-                        var output = new IRPModel();
-                        var temp = new IRPModel();
-                        if (dictionary.TryGetValue(tempIRP.IRP_Id, out output))
+                        var o = _overlay.GetJObject("IRP", "IRP_ID", tempIRP.IRP_Id.ToString(), lang);
+                        if (o != null)
                         {
-                            tempIRP.Description = dictionary[tempIRP.IRP_Id].Description;
-                            tempIRP.Risk_1_Description = dictionary[tempIRP.IRP_Id].Risk_1_Description;
-                            tempIRP.Risk_2_Description = dictionary[tempIRP.IRP_Id].Risk_2_Description;
-                            tempIRP.Risk_3_Description = dictionary[tempIRP.IRP_Id].Risk_3_Description;
-                            tempIRP.Risk_4_Description = dictionary[tempIRP.IRP_Id].Risk_4_Description;
-                            tempIRP.Risk_5_Description = dictionary[tempIRP.IRP_Id].Risk_5_Description;
-                            tempIRP.DescriptionComment = dictionary[tempIRP.IRP_Id].DescriptionComment;
-                            tempIRP.Validation_Approach = dictionary[tempIRP.IRP_Id].Validation_Approach;
+                            tempIRP.Description = o.Value<string>("Description");
+                            tempIRP.Risk_1_Description = o.Value<string>("Risk_1_Description");
+                            tempIRP.Risk_2_Description = o.Value<string>("Risk_2_Description");
+                            tempIRP.Risk_3_Description = o.Value<string>("Risk_3_Description");
+                            tempIRP.Risk_4_Description = o.Value<string>("Risk_4_Description");
+                            tempIRP.Risk_5_Description = o.Value<string>("Risk_5_Description");
+                            tempIRP.DescriptionComment = o.Value<string>("DescriptionComment");
+                            tempIRP.Validation_Approach = o.Value<string>("Validation_Approach");
                         }
                     }
+
 
                     // Get the existing answer or create a blank 
                     ASSESSMENT_IRP answer = _context.ASSESSMENT_IRP.FirstOrDefault(ans =>
@@ -121,6 +129,10 @@ namespace CSETWebCore.Business.IRP
             return response;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void PersistSelectedIRP(int assessmentId, IRPModel irp)
         {
             if (assessmentId == 0) { return; }

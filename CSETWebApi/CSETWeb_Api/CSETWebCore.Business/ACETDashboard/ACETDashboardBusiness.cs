@@ -16,6 +16,7 @@ using CSETWebCore.Model.Maturity;
 using CSETWebCore.Business.Acet;
 using NPOI.SS.Formula.Functions;
 using CSETWebCore.Helpers;
+using Org.BouncyCastle.Utilities.IO.Pem;
 
 namespace CSETWebCore.Business.ACETDashboard
 {
@@ -49,7 +50,6 @@ namespace CSETWebCore.Business.ACETDashboard
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
-            Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
 
             List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, lang);
 
@@ -64,17 +64,16 @@ namespace CSETWebCore.Business.ACETDashboard
                 result.Domains.Add(d1);
             }
 
+
+            // overlay
             if (lang != "en")
             {
-                dictionaryIrp = AcetBusiness.buildIRPDashboardDictionary();
-
-                var outputIrp = new IRPSpanishRow();
-
                 foreach (var irp in result.Irps)
                 {
-                    if (dictionaryIrp.TryGetValue(irp.HeaderText, out outputIrp))
+                    var o = _overlay.GetValue("IRP_HEADER", irp.HeaderId.ToString(), lang);
+                    if (o != null)
                     {
-                        irp.HeaderText = dictionaryIrp[irp.HeaderText].SpanishHeader;
+                        irp.HeaderText = o.Value;
                     }
                 }
             }
@@ -138,6 +137,7 @@ namespace CSETWebCore.Business.ACETDashboard
             foreach (IRP_HEADER header in _context.IRP_HEADER)
             {
                 IRPSummary summary = new IRPSummary();
+                summary.HeaderId = header.IRP_Header_Id;
                 summary.HeaderText = header.Header;
 
                 ASSESSMENT_IRP_HEADER headerInfo = _context.ASSESSMENT_IRP_HEADER.FirstOrDefault(h => h.IRP_HEADER.IRP_Header_Id == header.IRP_Header_Id && h.ASSESSMENT.Assessment_Id == assessmentId);

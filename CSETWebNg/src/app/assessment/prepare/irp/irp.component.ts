@@ -54,7 +54,7 @@ export class IRPComponent implements OnInit {
     }
 
     loadFrameworks() {
-        this.irpSvc.getIRPList(this.tSvc.getActiveLang() == "es").subscribe(
+        this.irpSvc.getIRPList().subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
             },
