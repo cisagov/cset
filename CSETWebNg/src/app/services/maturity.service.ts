@@ -215,10 +215,10 @@ export class MaturityService {
   /**
    * Asks the API for all maturity questions/answers for the current assessment.
    */
-  getQuestionsList(installationMode: string, fillEmpty: boolean, groupingId?: number, spanishFlag?: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean, groupingId?: number) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty + '&groupingId=' + groupingId + '&spanishFlag=' + spanishFlag,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty + '&groupingId=' + groupingId,
       headers
     );
   }

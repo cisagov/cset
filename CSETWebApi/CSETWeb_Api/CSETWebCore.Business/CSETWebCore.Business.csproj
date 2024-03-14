@@ -152,6 +152,12 @@
     <None Update="App_Data\LanguagePacks\ES\GENERIC.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\ES\IRP.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\IRP_HEADER.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="App_Data\LanguagePacks\ES\MATURITY_GROUPINGS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -210,12 +216,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\STANDARD_CATEGORY.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\Spanish_Mapped_IRPS.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\Spanish_Mapped_IRP_Headers.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_LEVELS.json">
