@@ -48,6 +48,6 @@ namespace CSETWebCore.Model.Question
     {
         public int MatQuestionId { get; set; }
         public string QuestionText { get; set; }
-        public string SupplementatlInfo { get; set; }
+        public string SupplementalInfo { get; set; }
     }
 }

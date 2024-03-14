@@ -766,9 +766,8 @@
                 }
             },
             "rra": {
-                "title": "[UK] RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "[UK] (RRA) REPORT",
-                "rra report": "[UK] RRA Report",
+                "title": "RRA Звіт", 
+                "tab title": "Оцінка готовності до рейдерського програмного забезпечення",
                 "rra deficiency report": "[UK] RRA Deficiency Report",
                 "comments and marked for review": "[UK] Comments and Marked for Review",
                 "report": {

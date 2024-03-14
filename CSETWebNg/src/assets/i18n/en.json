@@ -852,9 +852,8 @@
                 }
             },
             "rra": {
-                "title": "RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "(RRA) REPORT",
-                "rra report": "RRA Report",
+                "title": "RRA Report", 
+                "tab title": "Ransomware Readiness Assessment",
                 "rra deficiency report": "RRA Deficiency Report",
                 "comments and marked for review": "Comments and Marked for Review",
                 "report": {
