@@ -200,17 +200,17 @@
     <!-- Reference Table -->
     <div class="page-break">
         <h1 class="pageHeader">
-            RRA Practice List with Corresponding References
+            {{t('reports.core.rra.report.rra practice list')}}
         </h1>
         <p>
-            Red-shaded rows indicate practices that have been answered as "No" or left unanswered.
+            {{t('reports.core.rra.report.rra practice list text')}}
         </p>
 
         <table class="table">
             <tr>
-                <th>Identifier</th>
-                <th>Practice</th>
-                <th>References</th>
+                <th>{{t('reports.core.rra.report.identifier')}}</th>
+                <th>{{t('reports.core.rra.report.practice')}}</th>
+                <th>{{t('reports.core.rra.report.references')}}</th>
             </tr>
             <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.answer.answer_Text != 'Y'">
                 <td>{{ref.question_Title}}</td>
