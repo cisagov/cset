@@ -42,6 +42,11 @@ namespace CSETWebCore.Helpers
         private Dictionary<string, List<MaturityGroupingOverlay>> dictGroupings = [];
 
         /// <summary>
+        /// A dictionary of loaded maturity question overlay language packs
+        /// </summary>
+        private Dictionary<string, List<MaturityQuestionOverlay>> dictQuestions = [];
+
+        /// <summary>
         /// A dictionary of loaded KeyValueOverlay language packs
         /// </summary>
         private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
@@ -236,7 +241,7 @@ namespace CSETWebCore.Helpers
         /// <param name="groupingId"></param>
         /// <param name="lang"></param>
         /// <returns></returns>
-        public MaturityGroupingOverlay GetGrouping(int groupingId, string lang)
+        public MaturityGroupingOverlay GetMaturityGrouping(int groupingId, string lang)
         {
             // get out cheaply - don't waste time looking up English
             if (lang == "en")
@@ -267,6 +272,43 @@ namespace CSETWebCore.Helpers
             }
 
             return langPack.FirstOrDefault(x => x.GroupingId == groupingId);
+        }
+
+
+        /// <summary>
+        /// Gets the overlay maturity question object for the language.
+        /// </summary>
+        public MaturityQuestionOverlay GetMaturityQuestion(int questionId, string lang)
+        {
+            // get out cheaply - don't waste time looking up English
+            if (lang == "en")
+            {
+                return null;
+            }
+
+            List<MaturityQuestionOverlay> langPack = null;
+
+            if (!dictQuestions.TryGetValue(lang, out List<MaturityQuestionOverlay> value))
+            {
+                var rh = new ResourceHelper();
+                var json = rh.GetCopiedResource(System.IO.Path.Combine("app_data", "LanguagePacks", lang, "MATURITY_QUESTIONS.json"));
+
+                // safety in case the language pack doesn't exist
+                if (json == null)
+                {
+                    return null;
+                }
+
+                langPack = JsonConvert.DeserializeObject<List<MaturityQuestionOverlay>>(json);
+
+                dictQuestions.Add(lang, langPack);
+            }
+            else
+            {
+                langPack = value;
+            }
+
+            return langPack.FirstOrDefault(x => x.MatQuestionId == questionId);
         }
     }
 }

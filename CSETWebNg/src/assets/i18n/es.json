@@ -109,7 +109,7 @@
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
         "components": "Componentes",
-        "statements": "Declaración",
+        "statements": "Declaraciónes",
         "submitted": "Enviado"
     },
     "cyber-florida": {
@@ -444,9 +444,9 @@
         "irp desc end": "a través de cinco categorías. Se mide en una escala desde el menor riesgo hasta el mayor riesgo en este orden a continuación:",
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "category": "Categoría",
-        "total %": "Totale %",
+        "total %": "Total %",
         "totals": "Totales",
-        "risk levels": "Niveles de iesgo",
+        "risk levels": "Niveles de riesgo",
         "overall risk level is": "El nivel de riesgo general es",
         "overall risk level has not been overridden": "Nivel de Riesgo General no ha sido anulado",
         "overall risk level has been overriden to": "Nivel de Riesgo General ha sido anulado a",

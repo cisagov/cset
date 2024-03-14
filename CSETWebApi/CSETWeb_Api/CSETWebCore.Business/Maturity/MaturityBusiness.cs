@@ -890,24 +890,19 @@ namespace CSETWebCore.Business.Maturity
 
             var questions = questionQuery.ToList();
 
-            if (lang == "es")
+
+            // apply translation overlay to the questions
+            foreach (var q in questions)
             {
-                Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                questions.ForEach(
-                    question =>
-                    {
-                        var output = new SpanishQuestionRow();
-                        var temp = new SpanishQuestionRow();
-                        // test if not finding a match will safely skip
-                        if (dictionary.TryGetValue(question.Mat_Question_Id, out output))
-                        {
-                            question.Question_Text = dictionary[question.Mat_Question_Id].Question_Text;
-                            question.Examination_Approach = dictionary[question.Mat_Question_Id].Examination_Approach;
-                            question.Supplemental_Info = dictionary[question.Mat_Question_Id].Supplemental_Info;
-                        }
-                    });
+                var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
+                if (o != null)
+                {
+                    q.Question_Title = o.QuestionTitle;
+                    q.Question_Text = o.QuestionText;
+                    q.Supplemental_Info = o.SupplementalInfo;
+                    q.Examination_Approach = o.ExaminationApproach;
+                }
             }
-            //
 
 
             // Get all MATURITY answers for the assessment
@@ -921,36 +916,18 @@ namespace CSETWebCore.Business.Maturity
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            //
-            if (lang == "es")
-            {
-                Dictionary<int, GroupingSpanishRow> dictionary = AcetBusiness.buildGroupingDictionary();
-                allGroupings.ForEach(
-                    group =>
-                    {
-                        var output = new GroupingSpanishRow();
-                        var temp = new GroupingSpanishRow();
-                        if (dictionary.TryGetValue(group.Grouping_Id, out output))
-                        {
-                            group.Title = dictionary[group.Grouping_Id].Spanish_Title;
-                        }
-                    });
-            }
-            //
 
             // overlay group properties for language
             allGroupings.ForEach(
                 grouping =>
                 {
-                    var o = _overlay.GetGrouping(grouping.Grouping_Id, lang);
+                    var o = _overlay.GetMaturityGrouping(grouping.Grouping_Id, lang);
                     if (o != null)
                     {
                         grouping.Title = o.Title;
                         grouping.Description = o.Description;
                     }
                 });
-
-
 
 
             // Recursively build the grouping/question hierarchy
@@ -1007,7 +984,7 @@ namespace CSETWebCore.Business.Maturity
                     Abbreviation = sg.Abbreviation
                 };
 
-                var o = _overlay.GetGrouping(newGrouping.GroupingID, lang);
+                var o = _overlay.GetMaturityGrouping(newGrouping.GroupingID, lang);
                 if (o != null)
                 {
                     newGrouping.Title = o.Title;
@@ -1217,7 +1194,7 @@ namespace CSETWebCore.Business.Maturity
         // The methods that follow were originally built for NCUA/ACET.
         // It is hoped that they will eventually be refactored to fit a more
         // 'generic' approach to maturity models.
-        public List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false)
+        public List<MaturityDomain> GetMaturityAnswers(int assessmentId, string lang)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
             // If there are no data, we have no maturity answers so skip the rest
@@ -1225,12 +1202,14 @@ namespace CSETWebCore.Business.Maturity
             {
                 return new List<MaturityDomain>();
             }
-            return CalculateComponentValues(data, assessmentId, spanishFlag);
+
+            return CalculateComponentValues(data, assessmentId, lang);
         }
 
         public List<MaturityDomain> GetIseMaturityAnswers(int assessmentId)
         {
             var data = _context.GetMaturityDetailsCalculations(assessmentId).ToList();
+
             return CalculateComponentValues(data, assessmentId);
         }
 
@@ -1253,61 +1232,73 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="maturity"></param>
         /// <returns></returns>
-        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId, bool spanishFlag = false)
+        public List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity, int assessmentId, string lang = "en")
         {
             var maturityDomains = new List<MaturityDomain>();
-            var domains = _context.FINANCIAL_DOMAINS.ToList();
-            var standardCategories = _context.FINANCIAL_DETAILS.ToList();
-            var sub_categories = from m in maturity
+
+            var financialDomains = _context.FINANCIAL_DOMAINS.ToList();
+            var financialDetails = _context.FINANCIAL_DETAILS.ToList();
+
+            var subCategories = from m in maturity
                                  group new { m.Domain, m.AssessmentFactor, m.FinComponent }
-                                  by new { m.Domain, m.AssessmentFactor, m.FinComponent } into mk
-                                 select new
+                                  by new { m.DomainId, m.Domain, m.AssessmentFactorId, m.AssessmentFactor, m.FinComponentId, m.FinComponent } into mk
+                                 select new MaturityDetailsCalculations()
                                  {
-                                     mk.Key.Domain,
-                                     mk.Key.AssessmentFactor,
-                                     mk.Key.FinComponent
+                                     DomainId = mk.Key.DomainId,
+                                     Domain = mk.Key.Domain,
+                                     AssessmentFactorId = mk.Key.AssessmentFactorId,
+                                     AssessmentFactor = mk.Key.AssessmentFactor,
+                                     FinComponentId = mk.Key.FinComponentId,
+                                     FinComponent = mk.Key.FinComponent
                                  };
 
             var maturityRange = GetMaturityRange(assessmentId);
-            Dictionary<string, GroupingSpanishRow> dictionary = new Dictionary<string, GroupingSpanishRow>();
 
-            if (spanishFlag)
-            {
-                dictionary = AcetBusiness.buildResultsGroupingDictionary();
-            }
 
             if (maturity.Count > 0)
             {
-                foreach (var d in domains)
+                foreach (var fd in financialDomains)
                 {
-                    var tGroupOrder = maturity.FirstOrDefault(x => x.Domain == d.Domain);
+                    var tGroupOrder = maturity.FirstOrDefault(x => x.Domain == fd.Domain);
+
+
+                    // this is the object that is returned in a list
                     var maturityDomain = new MaturityDomain
                     {
-                        DomainName = d.Domain,
-                        Assessments = new List<MaturityAssessment>(),
+                        DomainId = fd.DomainId,
+                        DomainName = fd.Domain,
+                        Assessments = [],
                         Sequence = tGroupOrder == null ? 0 : tGroupOrder.grouporder,
                         TargetPercentageAchieved = 0,
                         PercentAnswered = 0
                     };
 
+                    
+
+
                     var DomainQT = 0;
                     var DomainAT = 0;
 
-                    var partial_sub_categoy = sub_categories.Where(x => x.Domain == d.Domain).GroupBy(x => x.AssessmentFactor).Select(x => x.Key);
-                    foreach (var s in partial_sub_categoy)
+                    var domainSubCategories = subCategories.Where(x => x.DomainId == fd.DomainId).GroupBy(x => x.AssessmentFactorId).ToList();
+
+                    foreach (var s in domainSubCategories)
                     {
+                        var af = subCategories.FirstOrDefault(x => x.AssessmentFactorId == s.Key);
 
                         int AssQT = 0;
                         int AssAT = 0;
 
                         var maturityAssessment = new MaturityAssessment
                         {
-                            AssessmentFactor = s,
+                            AssessmentFactorId = af.AssessmentFactorId,
+                            AssessmentFactor = af.AssessmentFactor,
                             Components = new List<MaturityComponent>(),
-                            Sequence = (int)maturity.FirstOrDefault(x => x.AssessmentFactor == s).grouporder
+                            Sequence = (int)maturity.FirstOrDefault(x => x.AssessmentFactorId == af.AssessmentFactorId).grouporder
 
                         };
-                        var assessmentCategories = sub_categories.Where(x => x.AssessmentFactor == s);
+
+                        var assessmentCategories = subCategories.Where(x => x.AssessmentFactorId == af.AssessmentFactorId);
+
                         foreach (var c in assessmentCategories)
                         {
                             int CompQT = 0;
@@ -1318,9 +1309,9 @@ namespace CSETWebCore.Business.Maturity
 
                             var component = new MaturityComponent
                             {
+                                ComponentId = c.FinComponentId,
                                 ComponentName = c.FinComponent,
                                 Sequence = (int)maturity.FirstOrDefault(x => x.FinComponent == c.FinComponent).grouporder
-
                             };
 
 
@@ -1486,37 +1477,29 @@ namespace CSETWebCore.Business.Maturity
                     double AchPerTol = Math.Round(((double)DomainAT / DomainQT) * 100, 0);
                     maturityDomain.TargetPercentageAchieved = AchPerTol;
 
-                    //
-                    if (spanishFlag)
+                    
+                    // overlay
+                    if (lang != "en")
                     {
-                        var output = new GroupingSpanishRow();
-                        if (dictionary.TryGetValue(maturityDomain.DomainName, out output))
-                        {
-                            maturityDomain.DomainName = dictionary[maturityDomain.DomainName].Spanish_Title;
-                            maturityDomain.Assessments.ForEach(
-                                assessment =>
-                                {
-                                    var output = new GroupingSpanishRow();
-                                    // test if not finding a match will safely skip
-                                    if (dictionary.TryGetValue(assessment.AssessmentFactor, out output))
-                                    {
-                                        assessment.AssessmentFactor = dictionary[assessment.AssessmentFactor].Spanish_Title;
+                        maturityDomain.DomainName = _overlay.GetValue("FINANCIAL_DOMAINS", fd.DomainId.ToString(), lang)?.Value ?? maturityDomain.DomainName;
 
-                                        assessment.Components.ForEach(
-                                            component =>
-                                            {
-                                                var output = new GroupingSpanishRow();
-                                                // test if not finding a match will safely skip
-                                                if (dictionary.TryGetValue(component.ComponentName, out output))
-                                                {
-                                                    component.ComponentName = dictionary[component.ComponentName].Spanish_Title;
-                                                }
-                                            });
-                                    }
-                                });
-                        }
+                        maturityDomain.Assessments.ForEach(
+                            assessment =>
+                            {
+                                assessment.AssessmentFactor = 
+                                _overlay.GetValue("FINANCIAL_ASSESSMENT_FACTORS", 
+                                assessment.AssessmentFactorId.ToString(), lang)?.Value ?? assessment.AssessmentFactor;
+
+                                    assessment.Components.ForEach(
+                                        component =>
+                                        {
+                                            component.ComponentName = 
+                                            _overlay.GetValue("FINANCIAL_COMPONENTS", 
+                                            component.ComponentId.ToString(), lang)?.Value ?? component.ComponentName;
+                                        }); 
+                            });
                     }
-                    //
+                    
 
                     maturityDomains.Add(maturityDomain);
                 }
@@ -1525,6 +1508,7 @@ namespace CSETWebCore.Business.Maturity
             maturityDomains = maturityDomains.OrderBy(x => x.Sequence).ToList();
             return maturityDomains;
         }
+
 
         /// <summary>
         /// Calculate maturity levels of components
@@ -1962,14 +1946,14 @@ namespace CSETWebCore.Business.Maturity
             return glossaryTerms.ToList();
         }
 
-        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, string lang)
         {
 
             Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
 
-            List<MaturityDomain> domains = GetMaturityAnswers(assessmentId);
+            List<MaturityDomain> domains = GetMaturityAnswers(assessmentId, lang);
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -2308,13 +2292,21 @@ namespace CSETWebCore.Business.Maturity
         /// </summary>
         /// <param name="modelId"></param>
         /// <returns></returns>
-        public List<GroupingTitle> GetGroupingTitles(int modelId)
+        public List<GroupingTitle> GetGroupingTitles(int modelId, string lang)
         {
             var dbList = _context.MATURITY_GROUPINGS.Where(x => x.Maturity_Model_Id == modelId).ToList();
 
             var response = new List<GroupingTitle>();
             dbList.ForEach(x =>
             {
+                var o = _overlay.GetMaturityGrouping(x.Grouping_Id, lang);
+                if (o != null)
+                {
+                    x.Title = o.Title;
+                    //x.Title_Prefix = ?
+                }
+
+
                 response.Add(new GroupingTitle()
                 {
                     Id = x.Grouping_Id,

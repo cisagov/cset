@@ -43,4 +43,17 @@ namespace CSETWebCore.Model.Question
         public string Title { get; set; }
         public string Description { get; set; }
     }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MaturityQuestionOverlay
+    {
+        public int MatQuestionId { get; set; }
+        public string QuestionTitle { get; set; }
+        public string QuestionText { get; set; }
+        public string SupplementalInfo { get; set; }
+        public string ExaminationApproach { get; set; }
+    }
 }
