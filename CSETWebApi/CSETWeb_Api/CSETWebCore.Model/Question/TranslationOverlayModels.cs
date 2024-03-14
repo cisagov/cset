@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,10 +44,16 @@ namespace CSETWebCore.Model.Question
         public string Description { get; set; }
     }
 
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class MaturityQuestionOverlay
     {
         public int MatQuestionId { get; set; }
+        public string QuestionTitle { get; set; }
         public string QuestionText { get; set; }
-        public string SupplementatlInfo { get; set; }
+        public string SupplementalInfo { get; set; }
+        public string ExaminationApproach { get; set; }
     }
 }

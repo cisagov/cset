@@ -42,7 +42,7 @@ namespace CSETWebCore.Business.Acet
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, string lang = "en")
         {
 
             Model.Acet.ACETDashboard result = GetIrpCalculation(assessmentId);
@@ -50,7 +50,7 @@ namespace CSETWebCore.Business.Acet
             result.Domains = new List<DashboardDomain>();
             MaturityBusiness matManager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var domains = matManager.GetMaturityAnswers(assessmentId);
+            var domains = matManager.GetMaturityAnswers(assessmentId, lang);
             foreach (var d in domains)
             {
                 result.Domains.Add(new DashboardDomain
@@ -209,142 +209,9 @@ namespace CSETWebCore.Business.Acet
             }
 
             _context.SaveChanges();
-
         }
 
-        private static Dictionary<int, SpanishQuestionRow> dict = null;
-
-        public static Dictionary<int, SpanishQuestionRow> buildQuestionDictionary()
-        {
-            if (AcetBusiness.dict != null)
-            {
-                return AcetBusiness.dict;
-            }
-
-            String defaultPath = "App_Data\\ACET Spanish Question Mapping.xlsx";
-            MemoryStream memStream = new MemoryStream();
-            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx"))
-            {
-                defaultPath = "..\\CSETWebCore.Business\\App_Data\\ACET Spanish Question Mapping.xlsx";
-            }
-            else if (!Path.Exists(defaultPath))
-            {
-                return new Dictionary<int, SpanishQuestionRow>();
-            }
-
-            FileStream file = File.OpenRead(defaultPath);
-            file.CopyTo(memStream);
-
-            IWorkbook workbook = WorkbookFactory.Create(memStream);
-
-            var mapper = new Mapper(workbook);
-            List<RowInfo<SpanishQuestionRow>> myExcelObjects = mapper.Take<SpanishQuestionRow>(workbook.ActiveSheetIndex).ToList();
-
-            var rowCount = myExcelObjects.Count;
-
-            AcetBusiness.dict = new Dictionary<int, SpanishQuestionRow>();
-
-            foreach (RowInfo<SpanishQuestionRow> item in myExcelObjects)
-            {
-                try
-                {
-                    if (!dict.ContainsKey(item.Value.Mat_Question_Id))
-                    {
-                        dict.Add(item.Value.Mat_Question_Id, item.Value);
-                    }
-                }
-                catch (Exception e)
-                {
-                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
-                }
-            }
-            return dict;
-        }
-
-        public static Dictionary<int, GroupingSpanishRow> buildGroupingDictionary()
-        {
-            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
-            MemoryStream memStream = new MemoryStream();
-            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
-            {
-                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
-            }
-            else if (!Path.Exists(defaultPath))
-            {
-                return new Dictionary<int, GroupingSpanishRow>();
-            }
-            FileStream file = File.OpenRead(defaultPath);
-            file.CopyTo(memStream);
-
-            IWorkbook workbook = WorkbookFactory.Create(memStream);
-
-            var mapper = new Mapper(workbook);
-            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
-
-            var rowCount = myExcelObjects.Count;
-
-            var dict = new Dictionary<int, GroupingSpanishRow>();
-            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
-            {
-                try
-                {
-                    if (!dict.ContainsKey(item.Value.Grouping_Id))
-                    {
-                        dict.Add(item.Value.Grouping_Id, item.Value);
-                    }
-                }
-                catch (Exception e)
-                {
-                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
-                }
-            }
-
-            return dict;
-        }
-
-        public static Dictionary<string, GroupingSpanishRow> buildResultsGroupingDictionary()
-        {
-
-            String defaultPath = "App_Data\\Spanish ACET Groupings.xlsx";
-            MemoryStream memStream = new MemoryStream();
-            if (Path.Exists("..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx"))
-            {
-                defaultPath = "..\\CSETWebCore.Business\\App_Data\\Spanish ACET Groupings.xlsx";
-            }
-            else if (!Path.Exists(defaultPath))
-            {
-                return new Dictionary<string, GroupingSpanishRow>();
-            }
-
-            FileStream file = File.OpenRead(defaultPath);
-            file.CopyTo(memStream);
-
-            IWorkbook workbook = WorkbookFactory.Create(memStream);
-
-            var mapper = new Mapper(workbook);
-            List<RowInfo<GroupingSpanishRow>> myExcelObjects = mapper.Take<GroupingSpanishRow>(workbook.ActiveSheetIndex).ToList();
-
-            var rowCount = myExcelObjects.Count;
-
-            var dict = new Dictionary<string, GroupingSpanishRow>();
-
-            foreach (RowInfo<GroupingSpanishRow> item in myExcelObjects)
-            {
-                try
-                {
-                    if (!dict.ContainsKey(item.Value.English_Title))
-                    {
-                        dict.Add(item.Value.English_Title, item.Value);
-                    }
-                }
-                catch (Exception e)
-                {
-                    NLog.LogManager.GetCurrentClassLogger().Error($"... {e}");
-                }
-            }
-            return dict;
-        }
-
+  
         public static Dictionary<int, IRPModel> buildIRPDictionary()
         {
             String defaultPath = "App_Data\\Spanish_Mapped_IRPS.xlsx";
@@ -471,6 +338,5 @@ namespace CSETWebCore.Business.Acet
 
             return dict;
         }
-
     }
 }

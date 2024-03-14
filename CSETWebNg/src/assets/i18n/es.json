@@ -109,7 +109,7 @@
         "assessment factor": "Factor de evaluación",
         "component": "Componente",
         "components": "Componentes",
-        "statements": "Declaración",
+        "statements": "Declaraciónes",
         "submitted": "Enviado"
     },
     "cyber-florida": {
@@ -360,7 +360,7 @@
         },
         "placeholders": {
             "alt acet": "Descripción, explicación y/o justificación para el control compensatorio",
-            "alt cset": "Descripción explicación y/o justificación para la respuesta alternativa"
+            "alt cset": "Descripción, explicación y/o justificación para la respuesta alternativa"
         },
         "warnings": {
             "description required": "* Descripción requerida"
@@ -444,9 +444,9 @@
         "irp desc end": "a través de cinco categorías. Se mide en una escala desde el menor riesgo hasta el mayor riesgo en este orden a continuación:",
         "inherent risk profile summary": "Resumen del perfil de riesgo inherente",
         "category": "Categoría",
-        "total %": "Totale %",
+        "total %": "Total %",
         "totals": "Totales",
-        "risk levels": "Niveles de iesgo",
+        "risk levels": "Niveles de riesgo",
         "overall risk level is": "El nivel de riesgo general es",
         "overall risk level has not been overridden": "Nivel de Riesgo General no ha sido anulado",
         "overall risk level has been overriden to": "Nivel de Riesgo General ha sido anulado a",
@@ -543,6 +543,11 @@
         "comments label": "Comentarios",
         "comments desc": "Ingrese cualquier comentario general para incluir en los informes. Estos comentarios no se incluyen en el Informe resumido ejecutivo, pero sí en los informes restantes.",
         "comments placeholder": "Proporcione comentarios generales, si los hubiera, para incluirlos en los informes.",
+        "cisa workflow required msg": {
+            "1": "Responda todos los campos demográficos, de configuración de evaluaciones y de servicios críticos de la organización para acceder a los informes y exportar las evaluaciones.",
+            "2": "Los siguientes campos están incompletos",
+            "3": "Se debe proporcionar toda la información demográfica en la página Información de evaluación para poder ver los informes."
+        },
         "disclaimer": {
             "disclaimer": "Descargo de responsabilidad",
             "disclaimer section 1": "Los análisis, datos e informes de CSET® se proporcionan 'tal cual' solo con fines informativos. La Agencia de Seguridad de Infraestructura y Ciberseguridad (CISA) no ofrece garantías de ningún tipo con respecto a la información contenida en ella. En ningún caso el Gobierno de los Estados Unidos o sus contratistas o subcontratistas serán responsables de ningún daño, incluidos, entre otros, daños directos, indirectos, especiales o consecuentes, e incluidos daños basados en cualquier negligencia del Gobierno de los Estados Unidos o sus contratistas o subcontratistas, que surjan de, resulten de, o de alguna manera estén relacionados con este informe, ya sea basado en garantía, contrato, agravio o de otro modo, ya sea que la lesión se haya sufrido o haya surgido de los resultados o la confianza en el informe.",

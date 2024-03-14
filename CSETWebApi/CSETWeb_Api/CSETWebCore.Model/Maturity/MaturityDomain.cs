@@ -10,6 +10,7 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MaturityDomain
     {
+        public int DomainId { get; set; }
         public string DomainName { get; set; }
         public string DomainMaturity { get; set; }
         public int Sequence { get; set; }

@@ -1,0 +1,1282 @@
+[
+  {
+    "key": "1",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "78",
+    "value": "Productos Químicos Básicos",
+    "valueEN": "Basic Chemicals"
+  },
+  {
+    "key": "79",
+    "value": "Productos Especializados",
+    "valueEN": "Specialty Products"
+  },
+  {
+    "key": "80",
+    "value": "Productos Farmacéuticos",
+    "valueEN": "Pharmaceutical Products"
+  },
+  {
+    "key": "81",
+    "value": "Productos de Consumo",
+    "valueEN": "Consumer Products"
+  },
+  {
+    "key": "82",
+    "value": "Productos Agrícolas",
+    "valueEN": "Agricultural Products"
+  },
+  {
+    "key": "2",
+    "value": "Entretenimiento y Medios",
+    "valueEN": "Entertainment and Media"
+  },
+  {
+    "key": "3",
+    "value": "Juegos",
+    "valueEN": "Gaming"
+  },
+  {
+    "key": "4",
+    "value": "Hospedaje",
+    "valueEN": "Lodging"
+  },
+  {
+    "key": "5",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "6",
+    "value": "Eventos al Aire Libre",
+    "valueEN": "Outdoor Events"
+  },
+  {
+    "key": "7",
+    "value": "Reuniones Públicas",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "8",
+    "value": "Bienes Raíces",
+    "valueEN": "Real Estate"
+  },
+  {
+    "key": "9",
+    "value": "Venta Minorista",
+    "valueEN": "Retail"
+  },
+  {
+    "key": "10",
+    "value": "Ligas Deportivas",
+    "valueEN": "Sports Leagues"
+  },
+  {
+    "key": "11",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "12",
+    "value": "Telecomunicaciones",
+    "valueEN": "Telecommunications"
+  },
+  {
+    "key": "13",
+    "value": "Proveedores de Servicios de Comunicación Inalámbrica",
+    "valueEN": "Wireless Communications Service Providers"
+  },
+  {
+    "key": "83",
+    "value": "Radiodifusión",
+    "valueEN": "Broadcasting"
+  },
+  {
+    "key": "84",
+    "value": "Cable",
+    "valueEN": "Cable"
+  },
+  {
+    "key": "85",
+    "value": "Satélite",
+    "valueEN": "Satellite"
+  },
+  {
+    "key": "86",
+    "value": "Línea Alámbrica",
+    "valueEN": "Wireline"
+  },
+  {
+    "key": "14",
+    "value": "Fabricación de Equipos Eléctricos, Electrodomésticos y Componentes",
+    "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
+  },
+  {
+    "key": "15",
+    "value": "Fabricación de Maquinaria",
+    "valueEN": "Machinery Manufacturing"
+  },
+  {
+    "key": "16",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "17",
+    "value": "Fabricación de Metales Primarios",
+    "valueEN": "Primary Metal Manufacturing"
+  },
+  {
+    "key": "18",
+    "value": "Fabricación de Equipos de Transporte y Maquinaria Pesada",
+    "valueEN": "Transportation and Heavy Equipment Manufacturing"
+  },
+  {
+    "key": "87",
+    "value": "Fabricación",
+    "valueEN": "Manufacturing"
+  },
+  {
+    "key": "88",
+    "value": "Fabricación de Maquinaria Pesada",
+    "valueEN": "Heavy Machinery Manufacturing"
+  },
+  {
+    "key": "19",
+    "value": "Presas",
+    "valueEN": "Dams"
+  },
+  {
+    "key": "20",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "21",
+    "value": "Instalaciones Privadas de Energía Hidroeléctrica en Estados Unidos",
+    "valueEN": "Private Hydropower Facilities in the US"
+  },
+  {
+    "key": "89",
+    "value": "Diques",
+    "valueEN": "Levees"
+  },
+  {
+    "key": "90",
+    "value": "Esclusas de Navegación",
+    "valueEN": "Navigation Locks"
+  },
+  {
+    "key": "91",
+    "value": "Diques de Residuos",
+    "valueEN": "Tailings and Waste Impoundments"
+  },
+  {
+    "key": "22",
+    "value": "Industria Aeronáutica",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "23",
+    "value": "Municiones",
+    "valueEN": "Ammunition"
+  },
+  {
+    "key": "24",
+    "value": "Vehículos de Combate",
+    "valueEN": "Combat Vehicle"
+  },
+  {
+    "key": "25",
+    "value": "Comunicaciones",
+    "valueEN": "Communications"
+  },
+  {
+    "key": "26",
+    "value": "Contratistas de Defensa",
+    "valueEN": "Defense Contractors"
+  },
+  {
+    "key": "27",
+    "value": "Suministros para la Industria Eléctrica",
+    "valueEN": "Electrical Industry Commodities"
+  },
+  {
+    "key": "28",
+    "value": "Electrónica",
+    "valueEN": "Electronics"
+  },
+  {
+    "key": "29",
+    "value": "Industria Mecánica (Productos)",
+    "valueEN": "Mechanical Industry Commodities"
+  },
+  {
+    "key": "30",
+    "value": "Industria de Misiles",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "31",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "32",
+    "value": "Instalaciones de Investigación y Desarrollo",
+    "valueEN": "Research and Development Facilities"
+  },
+  {
+    "key": "33",
+    "value": "Industria Naval (Astilleros)",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "34",
+    "value": "Espacio",
+    "valueEN": "Space"
+  },
+  {
+    "key": "35",
+    "value": "Productos de la Industria de la Construcción",
+    "valueEN": "Structural Industry Commodities"
+  },
+  {
+    "key": "36",
+    "value": "Apoyo a las Tropas",
+    "valueEN": "Troop Support"
+  },
+  {
+    "key": "37",
+    "value": "Armamento",
+    "valueEN": "Weapons"
+  },
+  {
+    "key": "38",
+    "value": "Gestión de Emergencias",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "39",
+    "value": "Servicios Médicos de Emergencia",
+    "valueEN": "Emergency Medical Services"
+  },
+  {
+    "key": "40",
+    "value": "Servicios de Bomberos y Rescate",
+    "valueEN": "Fire and Rescue Services"
+  },
+  {
+    "key": "41",
+    "value": "Cumplimiento de la Ley",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "42",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "43",
+    "value": "Obras Públicas",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "44",
+    "value": "Generación, Transmisión y Distribución de Energía Eléctrica",
+    "valueEN": "Electric Power Generation, Transmission and Distribution"
+  },
+  {
+    "key": "45",
+    "value": "Gas Natural",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "46",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "47",
+    "value": "Refinerías de Petróleo",
+    "valueEN": "Petroleum Refineries"
+  },
+  {
+    "key": "92",
+    "value": "Petróleo y Gas Natural",
+    "valueEN": "Oil and Natural Gas"
+  },
+  {
+    "key": "48",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "49",
+    "value": "Bancos Estadounidenses",
+    "valueEN": "US Banks"
+  },
+  {
+    "key": "50",
+    "value": "Cooperativas de Crédito Estadounidenses",
+    "valueEN": "US Credit Unions"
+  },
+  {
+    "key": "93",
+    "value": "Servicios al Consumidor",
+    "valueEN": "Consumer Services"
+  },
+  {
+    "key": "94",
+    "value": "Productos de Crédito y Liquidez",
+    "valueEN": "Credit and Liquidity Products"
+  },
+  {
+    "key": "95",
+    "value": "Productos de Inversión",
+    "valueEN": "Investment Products"
+  },
+  {
+    "key": "96",
+    "value": "Productos de Transferencia de Riesgos",
+    "valueEN": "Risk Transfer Products"
+  },
+  {
+    "key": "51",
+    "value": "Plantas de Fabricación de Bebidas",
+    "valueEN": "Beverage Manufacturing Plants"
+  },
+  {
+    "key": "52",
+    "value": "Plantas de Fabricación de Alimentos",
+    "valueEN": "Food Manufacturing Plants"
+  },
+  {
+    "key": "53",
+    "value": "Servicios de Alimentos",
+    "valueEN": "Food Services"
+  },
+  {
+    "key": "54",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "97",
+    "value": "Suministro (Abastecimiento)",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "98",
+    "value": "Procesamiento, Empaque y Producción",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "99",
+    "value": "Almacenamiento de Productos",
+    "valueEN": "Product Storage"
+  },
+  {
+    "key": "100",
+    "value": "Transporte de Productos",
+    "valueEN": "Product Transportation"
+  },
+  {
+    "key": "101",
+    "value": "Distribución de Productos",
+    "valueEN": "Product Distribution"
+  },
+  {
+    "key": "102",
+    "value": "Instalaciones de Apoyo",
+    "valueEN": "Supporting Facilities"
+  },
+  {
+    "key": "55",
+    "value": "Gobiernos Locales",
+    "valueEN": "Local Governments"
+  },
+  {
+    "key": "56",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "57",
+    "value": "Gobiernos Estatales",
+    "valueEN": "State Governments"
+  },
+  {
+    "key": "58",
+    "value": "Gobiernos Territoriales",
+    "valueEN": "Territorial Governments"
+  },
+  {
+    "key": "59",
+    "value": "Gobiernos Tribales",
+    "valueEN": "Tribal Governments"
+  },
+  {
+    "key": "103",
+    "value": "Instalaciones Públicas",
+    "valueEN": "Public Facilities"
+  },
+  {
+    "key": "104",
+    "value": "Instalaciones Privadas",
+    "valueEN": "Non-Public Facilities"
+  },
+  {
+    "key": "60",
+    "value": "Hospitales",
+    "valueEN": "Hospitals"
+  },
+  {
+    "key": "61",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "62",
+    "value": "Centros de Atención Residencial",
+    "valueEN": "Residential Care Facilities"
+  },
+  {
+    "key": "105",
+    "value": "Atención Directa al Paciente",
+    "valueEN": "Direct Patient Care"
+  },
+  {
+    "key": "106",
+    "value": "Informática de la Salud (IT de Salud)",
+    "valueEN": "Health IT"
+  },
+  {
+    "key": "107",
+    "value": "Planes y Pagadores de Salud",
+    "valueEN": "Health Plans and Payers"
+  },
+  {
+    "key": "108",
+    "value": "Servicios de Manejo de Defunciones",
+    "valueEN": "Fatality Management Services"
+  },
+  {
+    "key": "109",
+    "value": "Materiales Médicos",
+    "valueEN": "Medical Materials"
+  },
+  {
+    "key": "110",
+    "value": "Servicios de Apoyo",
+    "valueEN": "Support Services"
+  },
+  {
+    "key": "63",
+    "value": "Tecnologías de la Información (TI)",
+    "valueEN": "Information Technology"
+  },
+  {
+    "key": "64",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "111",
+    "value": "Producción de TI (Tecnologías de la Información)",
+    "valueEN": "IT Production"
+  },
+  {
+    "key": "112",
+    "value": "Servicios DNS (Sistema de Nombres de Dominio)",
+    "valueEN": "DNS Services"
+  },
+  {
+    "key": "113",
+    "value": "Gestión de Identidad y Soporte de Confianza",
+    "valueEN": "Identity and Trust Support Management"
+  },
+  {
+    "key": "114",
+    "value": "Proveedores de Contenido y Servicios de Internet",
+    "valueEN": "Internet Content and Service Providers"
+  },
+  {
+    "key": "115",
+    "value": "Enrutamiento y Conexión a Internet",
+    "valueEN": "Internet Routing and Connection"
+  },
+  {
+    "key": "116",
+    "value": "Gestión de Incidentes",
+    "valueEN": "Incident Management"
+  },
+  {
+    "key": "65",
+    "value": "Operación de Plantas de Energía Nuclear",
+    "valueEN": "Operating Nuclear Power Plants"
+  },
+  {
+    "key": "66",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "117",
+    "value": "Instalaciones del Ciclo del Combustible Nuclear",
+    "valueEN": "Fuel Cycle Facilities"
+  },
+  {
+    "key": "118",
+    "value": "Transporte de Materiales Nucleares",
+    "valueEN": "Nuclear Materials Transport"
+  },
+  {
+    "key": "119",
+    "value": "Residuos Radiactivos",
+    "valueEN": "Radioactive Waste"
+  },
+  {
+    "key": "120",
+    "value": "Materiales Radiactivos",
+    "valueEN": "Radioactive Materials"
+  },
+  {
+    "key": "67",
+    "value": "Aviación",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "68",
+    "value": "Transporte Ferroviario de Mercancías",
+    "valueEN": "Freight Rail"
+  },
+  {
+    "key": "69",
+    "value": "Transporte por Carretera (Camiones)",
+    "valueEN": "Highway (truck transportation)"
+  },
+  {
+    "key": "70",
+    "value": "Transporte Marítimo",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "71",
+    "value": "Transporte Público y Trenes de Pasajeros",
+    "valueEN": "Mass Transit and Passenger Rail"
+  },
+  {
+    "key": "72",
+    "value": "Municipios con Sistemas de Control de Tráfico",
+    "valueEN": "Municipalities with Traffic Control Systems"
+  },
+  {
+    "key": "73",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "74",
+    "value": "Ductos (transportan gas natural, líquidos peligrosos y diversos productos químicos)",
+    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
+  },
+  {
+    "key": "75",
+    "value": "Otro",
+    "valueEN": "Other"
+  },
+  {
+    "key": "76",
+    "value": "Sistemas Públicos de Agua",
+    "valueEN": "Public Water Systems"
+  },
+  {
+    "key": "77",
+    "value": "Plantas de Tratamiento de Propiedad Pública",
+    "valueEN": "Publicly Owned Treatment Works"
+  },
+  {
+    "key": "121",
+    "value": "Distribución de Productos Agrícolas y Alimentarios",
+    "valueEN": "Agricultural and Food Product Distribution"
+  },
+  {
+    "key": "122",
+    "value": "Transporte de Productos Agrícolas y Alimentarios",
+    "valueEN": "Agricultural and Food Product Transportation"
+  },
+  {
+    "key": "123",
+    "value": "Almacenamiento, Distribución y Depósitos de Productos Agrícolas y Alimentarios",
+    "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
+  },
+  {
+    "key": "124",
+    "value": "Instalaciones de Apoyo a la Agricultura y Alimentos",
+    "valueEN": "Agriculture and Food Supporting Facility"
+  },
+  {
+    "key": "125",
+    "value": "Otro Sector de Agricultura y Alimentos",
+    "valueEN": "Other Agriculture and Food"
+  },
+  {
+    "key": "126",
+    "value": "Procesamiento, Empaque y Producción",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "127",
+    "value": "Organizaciones Reguladoras, Supervisoras o Industriales",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "128",
+    "value": "Suministro",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "129",
+    "value": "Banca y Crédito",
+    "valueEN": "Banking and Credit"
+  },
+  {
+    "key": "130",
+    "value": "Compañías de Seguros",
+    "valueEN": "Insurance Company"
+  },
+  {
+    "key": "131",
+    "value": "Valores, Productos Básicos o Inversión Financiera",
+    "valueEN": "Securities, Commodities, or Financial Investment"
+  },
+  {
+    "key": "132",
+    "value": "Planta de Fabricación o Procesamiento de Productos Químicos",
+    "valueEN": "Chemical Manufacturing or Processing Plant"
+  },
+  {
+    "key": "133",
+    "value": "Almacenamiento/Acopio/Utilización/Distribución de Productos Químicos Peligrosos",
+    "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
+  },
+  {
+    "key": "134",
+    "value": "Transporte de Productos Químicos Peligrosos",
+    "valueEN": "Hazardous Chemical Transport"
+  },
+  {
+    "key": "135",
+    "value": "Otro Sector Químico y Materiales Peligrosos",
+    "valueEN": "Other Chemical and Hazardous Material"
+  },
+  {
+    "key": "136",
+    "value": "Organizaciones Reguladoras, Supervisoras o Industriales",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "137",
+    "value": "Instalaciones de Entretenimiento o Medios",
+    "valueEN": "Entertainment or Media Facility"
+  },
+  {
+    "key": "138",
+    "value": "Establecimiento de Juego/Casino",
+    "valueEN": "Gaming Facility/Casino"
+  },
+  {
+    "key": "139",
+    "value": "Instalaciones de Alojamiento",
+    "valueEN": "Lodging Facility"
+  },
+  {
+    "key": "140",
+    "value": "Otro Establecimiento Comercial",
+    "valueEN": "Other Commercial Facility"
+  },
+  {
+    "key": "141",
+    "value": "Asamblea Pública",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "142",
+    "value": "Instalación de Bienes Raíces",
+    "valueEN": "Real Estate Facility"
+  },
+  {
+    "key": "143",
+    "value": "Establecimiento Minorista",
+    "valueEN": "Retail Facility"
+  },
+  {
+    "key": "144",
+    "value": "Servicios de Información",
+    "valueEN": "Information Services"
+  },
+  {
+    "key": "145",
+    "value": "Internet",
+    "valueEN": "Internet"
+  },
+  {
+    "key": "146",
+    "value": "Red de Próxima Generación",
+    "valueEN": "Next Generation Network"
+  },
+  {
+    "key": "147",
+    "value": "Otra Instalación de Comunicación",
+    "valueEN": "Other Communication Facility"
+  },
+  {
+    "key": "148",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "149",
+    "value": "Comunicación Satelital",
+    "valueEN": "Satellite Communication"
+  },
+  {
+    "key": "150",
+    "value": "Hotel de Telecomunicaciones",
+    "valueEN": "Telecomm Hotel"
+  },
+  {
+    "key": "151",
+    "value": "Comunicación por Cable",
+    "valueEN": "Wired Communication"
+  },
+  {
+    "key": "152",
+    "value": "Comunicación Inalámbrica",
+    "valueEN": "Wireless Communication"
+  },
+  {
+    "key": "153",
+    "value": "Proyecto de Presa",
+    "valueEN": "Dam Project"
+  },
+  {
+    "key": "154",
+    "value": "Sistema de Reducción de Daños por Inundaciones",
+    "valueEN": "Flood Damage Reduction System"
+  },
+  {
+    "key": "155",
+    "value": "Sistema de Protección contra Huracanes o Marejadas",
+    "valueEN": "Hurricane or Storm Surge Protection System"
+  },
+  {
+    "key": "156",
+    "value": "Colas de Mina y Embalses de Desechos Industriales",
+    "valueEN": "Mine Tailings and Industrial Waste Impoundment"
+  },
+  {
+    "key": "157",
+    "value": "",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "158",
+    "value": "Industria Aeronáutica",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "159",
+    "value": "Industria de Municiones",
+    "valueEN": "Ammunition Industry"
+  },
+  {
+    "key": "160",
+    "value": "Industria de Vehículos de Combate",
+    "valueEN": "Combat Vehicle Industry"
+  },
+  {
+    "key": "161",
+    "value": "Manufactura de Commodities de la Industria Eléctrica",
+    "valueEN": "Electrical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "162",
+    "value": "Manufactura de Commodities de la Industria Electrónica",
+    "valueEN": "Electronic Industry Commodity Manufacturing"
+  },
+  {
+    "key": "163",
+    "value": "Industria Electrónica",
+    "valueEN": "Electronics Industry"
+  },
+  {
+    "key": "164",
+    "value": "Industria de Tecnologías de la Información",
+    "valueEN": "Information Technology Industry"
+  },
+  {
+    "key": "165",
+    "value": "Manufactura de Commodities de la Industria Mecánica",
+    "valueEN": "Mechanical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "166",
+    "value": "Industria de Misiles",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "167",
+    "value": "Instalación de Investigación y Desarrollo",
+    "valueEN": "Research & Development Facility"
+  },
+  {
+    "key": "168",
+    "value": "Industria Naval",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "169",
+    "value": "Industria Espacial",
+    "valueEN": "Space Industry"
+  },
+  {
+    "key": "170",
+    "value": "Manufactura de Commodities de la Industria Estructural",
+    "valueEN": "Structural Industry Commodity Manufacturing"
+  },
+  {
+    "key": "171",
+    "value": "Industria de Apoyo a las Tropas",
+    "valueEN": "Troop Support Industry"
+  },
+  {
+    "key": "172",
+    "value": "Industria de Armas",
+    "valueEN": "Weapons Industry"
+  },
+  {
+    "key": "173",
+    "value": "Gestión de Emergencias",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "174",
+    "value": "Servicios Médicos de Emergencia (EMS)",
+    "valueEN": "Emergency Medical Services (EMS)"
+  },
+  {
+    "key": "175",
+    "value": "Servicios de Bomberos y Emergencias",
+    "valueEN": "Fire and Emergency Services"
+  },
+  {
+    "key": "176",
+    "value": "Aplicación de la Ley",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "177",
+    "value": "Otra Instalación de Servicios de Emergencia",
+    "valueEN": "Other Emergency Services Facility"
+  },
+  {
+    "key": "178",
+    "value": "Obras Públicas",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "179",
+    "value": "Biodiésel",
+    "valueEN": "Biodiesel"
+  },
+  {
+    "key": "180",
+    "value": "Carbón",
+    "valueEN": "Coal"
+  },
+  {
+    "key": "181",
+    "value": "Electricidad",
+    "valueEN": "Electricity"
+  },
+  {
+    "key": "182",
+    "value": "Etanol",
+    "valueEN": "Ethanol"
+  },
+  {
+    "key": "183",
+    "value": "Hidrógeno",
+    "valueEN": "Hydrogen"
+  },
+  {
+    "key": "184",
+    "value": "Gas Natural",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "185",
+    "value": "Otro Sistema de Conversión de Energía",
+    "valueEN": "Other Energy Conversion System"
+  },
+  {
+    "key": "186",
+    "value": "Petróleo",
+    "valueEN": "Petroleum"
+  },
+  {
+    "key": "187",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "188",
+    "value": "Facilidad Educativa",
+    "valueEN": "Education Facility"
+  },
+  {
+    "key": "189",
+    "value": "Infraestructura Electoral",
+    "valueEN": "Election Infrastructure"
+  },
+  {
+    "key": "190",
+    "value": "Facilidad de Investigación Gubernamental",
+    "valueEN": "Government Research Facility"
+  },
+  {
+    "key": "191",
+    "value": "Sistema de Sensores o Monitoreo del Gobierno",
+    "valueEN": "Government Sensor or Monitoring System"
+  },
+  {
+    "key": "192",
+    "value": "Sistema Espacial Gubernamental",
+    "valueEN": "Government Space System"
+  },
+  {
+    "key": "193",
+    "value": "Facilidad de Almacenamiento o Preservación del Gobierno",
+    "valueEN": "Government Storage or Preservation Facility"
+  },
+  {
+    "key": "194",
+    "value": "Instalación Militar",
+    "valueEN": "Military Facility"
+  },
+  {
+    "key": "195",
+    "value": "Otra Instalación Gubernamental",
+    "valueEN": "Other Government Facility"
+  },
+  {
+    "key": "196",
+    "value": "Facilidad Gubernamental Orientada al Personal",
+    "valueEN": "Personnel-Oriented Government Facility"
+  },
+  {
+    "key": "197",
+    "value": "Facilidad Gubernamental Orientada al Servicio",
+    "valueEN": "Service-Oriented Government Facility"
+  },
+  {
+    "key": "198",
+    "value": "Atención Directa al Paciente",
+    "valueEN": "Direct Patient Healthcare"
+  },
+  {
+    "key": "199",
+    "value": "Facilidad de Fatalidades/Mortuoria",
+    "valueEN": "Fatality/Mortuary Facility"
+  },
+  {
+    "key": "200",
+    "value": "Facilidad de Apoyo a la Salud",
+    "valueEN": "Health Supporting Facility"
+  },
+  {
+    "key": "201",
+    "value": "Facilidad Educativa en el Ámbito de la Salud",
+    "valueEN": "Healthcare Educational Facility"
+  },
+  {
+    "key": "202",
+    "value": "Otra Entidad de Salud y Salud Pública",
+    "valueEN": "Other Healthcare and Public Health Entity"
+  },
+  {
+    "key": "203",
+    "value": "Agencia de Salud Pública",
+    "valueEN": "Public Health Agency"
+  },
+  {
+    "key": "204",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "205",
+    "value": "Producción de Hardware",
+    "valueEN": "Hardware Production"
+  },
+  {
+    "key": "206",
+    "value": "Servicios de Contenido, Información y Comunicaciones Basados en Internet",
+    "valueEN": "Internet-Based Content, Information, and Communications Services"
+  },
+  {
+    "key": "207",
+    "value": "Otra Instalación de Producción de Hardware",
+    "valueEN": "Other Hardware Production Facility"
+  },
+  {
+    "key": "208",
+    "value": "Otra Instalación de Tecnología de la Información",
+    "valueEN": "Other Information Technology Facility"
+  },
+  {
+    "key": "209",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "210",
+    "value": "Producción de Software",
+    "valueEN": "Software Production"
+  },
+  {
+    "key": "211",
+    "value": "Fabricación de Bebidas",
+    "valueEN": "Beverage Manufacturing"
+  },
+  {
+    "key": "212",
+    "value": "Fabricación de Productos Químicos",
+    "valueEN": "Chemical Manufacturing"
+  },
+  {
+    "key": "213",
+    "value": "Fabricación de Productos de Computación y Electrónicos",
+    "valueEN": "Computer and Electronic Product Manufacturing"
+  },
+  {
+    "key": "214",
+    "value": "Manufactura Crítica",
+    "valueEN": "Critical Manufacturing"
+  },
+  {
+    "key": "215",
+    "value": "Fabricación de Productos Metálicos Fabricados",
+    "valueEN": "Fabricated Metal Product Manufacturing"
+  },
+  {
+    "key": "216",
+    "value": "Fabricación de Alimentos",
+    "valueEN": "Food Manufacturing"
+  },
+  {
+    "key": "217",
+    "value": "Fabricación de Muebles y Productos Relacionados",
+    "valueEN": "Furniture And Related Product Manufacturing"
+  },
+  {
+    "key": "218",
+    "value": "Extracción de Minerales, Canteras o Petróleo y Gas",
+    "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
+  },
+  {
+    "key": "219",
+    "value": "Fabricación de Productos Minerales no Metálicos",
+    "valueEN": "Non-Metallic Mineral Products Manufacturing"
+  },
+  {
+    "key": "220",
+    "value": "Otra Manufactura",
+    "valueEN": "Other Manufacturing"
+  },
+  {
+    "key": "221",
+    "value": "Fabricación de Papel",
+    "valueEN": "Paper Manufacturing"
+  },
+  {
+    "key": "222",
+    "value": "Fabricación de Productos de Petróleo y Carbón",
+    "valueEN": "Petroleum and Coal Products Manufacturing"
+  },
+  {
+    "key": "223",
+    "value": "Fabricación de Productos de Plástico y Caucho",
+    "valueEN": "Plastics And Rubber Products Manufacturing"
+  },
+  {
+    "key": "224",
+    "value": "Impresión y Soporte Relacionado",
+    "valueEN": "Printing and Related Support"
+  },
+  {
+    "key": "225",
+    "value": "Fabricación de Textiles, Productos Textiles, Prendas de Vestir, Cuero",
+    "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
+  },
+  {
+    "key": "226",
+    "value": "Fabricación de Productos de Tabaco",
+    "valueEN": "Tobacco Product Manufacturing"
+  },
+  {
+    "key": "227",
+    "value": "Fabricación de Productos de Madera",
+    "valueEN": "Wood Product Manufacturing"
+  },
+  {
+    "key": "228",
+    "value": "Documento u Objeto de Monumento/Icono Nacional",
+    "valueEN": "National Monument/Icon Document or Object"
+  },
+  {
+    "key": "229",
+    "value": "Área Geográfica de Monumento/Icono Nacional",
+    "valueEN": "National Monument/Icon Geographic Area"
+  },
+  {
+    "key": "230",
+    "value": "Estructura de Monumento/Icono Nacional",
+    "valueEN": "National Monument/Icon Structure"
+  },
+  {
+    "key": "231",
+    "value": "Otros Monumentos e Iconos Nacionales",
+    "valueEN": "Other National Monuments and Icons"
+  },
+  {
+    "key": "232",
+    "value": "Instalación Nuclear",
+    "valueEN": "Nuclear Facility"
+  },
+  {
+    "key": "233",
+    "value": "Material Nuclear",
+    "valueEN": "Nuclear Material"
+  },
+  {
+    "key": "234",
+    "value": "Residuos Nucleares",
+    "valueEN": "Nuclear Waste"
+  },
+  {
+    "key": "235",
+    "value": "Otra Instalación Nuclear",
+    "valueEN": "Other Nuclear Facility"
+  },
+  {
+    "key": "236",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "237",
+    "value": "Courier",
+    "valueEN": "Courier"
+  },
+  {
+    "key": "238",
+    "value": "Otra Instalación Postal y de Envío",
+    "valueEN": "Other Postal and Shipping Facility"
+  },
+  {
+    "key": "239",
+    "value": "Servicio Postal de los Estados Unidos",
+    "valueEN": "United States Postal Service"
+  },
+  {
+    "key": "240",
+    "value": "Aviación",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "241",
+    "value": "Marítimo",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "242",
+    "value": "Transporte Masivo",
+    "valueEN": "Mass Transit"
+  },
+  {
+    "key": "243",
+    "value": "Ducto",
+    "valueEN": "Pipeline"
+  },
+  {
+    "key": "244",
+    "value": "Ferrocarril",
+    "valueEN": "Railroad"
+  },
+  {
+    "key": "245",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "246",
+    "value": "Carretera",
+    "valueEN": "Road"
+  },
+  {
+    "key": "247",
+    "value": "Almacenamiento de Agua Cruda",
+    "valueEN": "Raw Water Storage"
+  },
+  {
+    "key": "248",
+    "value": "Suministro de Agua Cruda",
+    "valueEN": "Raw Water Supply"
+  },
+  {
+    "key": "249",
+    "value": "Transmisión de Agua Cruda",
+    "valueEN": "Raw Water Transmission"
+  },
+  {
+    "key": "250",
+    "value": "Organización Reguladora, de Supervisión o de la Industria",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "251",
+    "value": "Almacenamiento de Agua Tratada (Finalizada)",
+    "valueEN": "Treated (Finished) Water Storage"
+  },
+  {
+    "key": "252",
+    "value": "Centro de Control de Distribución de Agua Tratada",
+    "valueEN": "Treated Water Distribution Control Center"
+  },
+  {
+    "key": "253",
+    "value": "Sistema de Distribución de Agua Tratada",
+    "valueEN": "Treated Water Distribution System"
+  },
+  {
+    "key": "254",
+    "value": "Sistema de Monitoreo de Agua Tratada",
+    "valueEN": "Treated Water Monitoring System"
+  },
+  {
+    "key": "255",
+    "value": "Instalación de Aguas Residuales",
+    "valueEN": "Wastewater Facility"
+  },
+  {
+    "key": "256",
+    "value": "Planta de Tratamiento de Agua",
+    "valueEN": "Water Treatment Facility"
+  }
+]
