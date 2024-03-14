@@ -567,21 +567,17 @@ namespace CSETWebCore.Business.Question
 
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
 
-                //
-                var lang = _tokenManager.GetCurrentLanguage();
-                if (lang == "es")
-                {
-                    Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                    var output = new SpanishQuestionRow();
-                    var temp = new SpanishQuestionRow();
 
-                    if (dictionary.TryGetValue(info.MaturityQuestion.Mat_Question_Id, out output))
-                    {
-                        tabData.SupplementalInfo = FormatSupplementalInfo(dictionary[info.MaturityQuestion.Mat_Question_Id].Supplemental_Info);
-                        tabData.ExaminationApproach = dictionary[info.MaturityQuestion.Mat_Question_Id].Examination_Approach;
-                    }
+                // apply an overlay if one exists
+                var lang = _tokenManager.GetCurrentLanguage();
+
+                var o = _overlay.GetMaturityQuestion(info.QuestionID, lang);
+                if (o != null)
+                {
+                    tabData.SupplementalInfo = o.SupplementalInfo;
+                    tabData.ExaminationApproach = o.ExaminationApproach;
                 }
-                //
+
 
                 RequirementsData = tabData;
 
