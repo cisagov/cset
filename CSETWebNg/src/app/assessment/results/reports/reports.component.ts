@@ -193,7 +193,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     // Moved this from the assessment-convert-cf component
     // determine if this assessment is a Cyber Florida "entry" assessment.
-    if (this.assessSvc.assessment.origin == 'CF') {
+    if (this.assessSvc.assessment?.origin == 'CF') {
       this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
         this.isCfEntry = resp;
       });

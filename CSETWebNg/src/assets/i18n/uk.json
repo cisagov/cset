@@ -393,6 +393,8 @@
         "mil-4": "MIL-4",
         "mil-5": "MIL-5"
     },
+    "irp": {
+    },
     "filter-menu": {
         "search": "Пошук",
         "select deselect all": "Вибрати/Скасувати вибір усіх",

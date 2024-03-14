@@ -15,6 +15,7 @@ using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Business.Acet;
 using NPOI.SS.Formula.Functions;
+using CSETWebCore.Helpers;
 
 namespace CSETWebCore.Business.ACETDashboard
 {
@@ -24,6 +25,8 @@ namespace CSETWebCore.Business.ACETDashboard
         private IAssessmentUtil _assessmentUtil;
         private IMaturityBusiness _maturity;
         private IAdminTabBusiness _adminTab;
+        private TranslationOverlay _overlay;
+
 
         public ACETDashboardBusiness(CSETContext context, IAssessmentUtil assessmentUtil, IMaturityBusiness maturity, IAdminTabBusiness adminTab)
         {
@@ -31,6 +34,8 @@ namespace CSETWebCore.Business.ACETDashboard
             _assessmentUtil = assessmentUtil;
             _maturity = maturity;
             _adminTab = adminTab;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -39,24 +44,27 @@ namespace CSETWebCore.Business.ACETDashboard
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, bool spanishFlag = false)
+        public Model.Acet.ACETDashboard LoadDashboard(int assessmentId, string lang = "en")
         {
             var result = GetIrpCalculation(assessmentId);
 
             result.Domains = new List<DashboardDomain>();
             Dictionary<string, IRPSpanishRow> dictionaryIrp = new Dictionary<string, IRPSpanishRow>();
 
-            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, spanishFlag);
+            List<MaturityDomain> domains = _maturity.GetMaturityAnswers(assessmentId, lang);
 
             foreach (var d in domains)
             {
-                result.Domains.Add(new DashboardDomain
+                var d1 = new DashboardDomain
                 {
                     Maturity = d.DomainMaturity,
                     Name = d.DomainName
-                });
+                };
+
+                result.Domains.Add(d1);
             }
-            if (spanishFlag)
+
+            if (lang != "en")
             {
                 dictionaryIrp = AcetBusiness.buildIRPDashboardDictionary();
 
