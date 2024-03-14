@@ -51,10 +51,6 @@ namespace CSETWebCore.Helpers
         /// </summary>
         private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
 
-        /// <summary>
-        /// A dictionary of loaded maturity question language packs
-        /// </summary>
-        private Dictionary<string, List<MaturityQuestionOverlay>> dictQuestions = [];
 
         #endregion
 
