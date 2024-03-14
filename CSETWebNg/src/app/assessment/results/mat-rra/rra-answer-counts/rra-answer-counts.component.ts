@@ -82,7 +82,7 @@ export class RraAnswerCountsComponent implements OnInit {
       }
     }
     for (let i of this.answerCountsByLevel){
-     i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+     i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
     }
   }
 

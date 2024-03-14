@@ -178,7 +178,7 @@ export class RraReportComponent implements OnInit {
 
     this.complianceGraph1 = levelList;
     for (let i of this.complianceGraph1){
-      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+      i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
      }
   }
 

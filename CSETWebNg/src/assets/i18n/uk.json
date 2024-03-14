@@ -384,7 +384,8 @@
         "mil-2": "MIL-2",
         "mil-3": "MIL-3",
         "mil-4": "MIL-4",
-        "mil-5": "MIL-5"
+        "mil-5": "MIL-5", 
+        "overall": "Загалом"
     },
     "filter-menu": {
         "search": "Пошук",
