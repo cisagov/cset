@@ -118,8 +118,6 @@
                 "high": "ВИЩ",
                 "none": "ВІДСУТ",
                 "answer questions": "Питання",
-                "yes": "Так",
-                "no": "Ні",
                 "fips 199": "[UK] FIPS 199 Security Assurance Level Guidance",
                 "nist sp800": "[UK] NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors",
                 "confidentiality": "[UK] Confidentiality",
@@ -499,9 +497,7 @@
                 "no components answers": "Компоненти відповіді відсутні"
             },
             "executive summary": {
-                "executive summary": "Резюме",
-                "report title": "РЕЗЮМЕ",
-                "tab title": "Резюме - {{defaultTitle}}",
+                "report title": "Резюме",
                 "calculated level": "Розрахований рівень",
                 "overall values": "Загальні значення",
                 "summary percent compliance": "[UK] Summary Percent Compliance",
@@ -528,9 +524,7 @@
                 "environmental impact": "[UK] Environmental Impact"
             },
             "site summary": {
-                "site summary": "Підсумковий звіт сайту",
-                "report title": "Резюме для сайту",
-                "tab title": "Резюме для сайту - {{defaultTitle}}",
+                "report title": "Огляд сайту",
                 "high-level assessment description": "Опис високого рівня оцінювання",
                 "standards compliance": "Відповідність стандартам",
                 "security assurance level": "Гарантований рівень безпеки (SAL)",
@@ -541,7 +535,6 @@
             },
             "site detail report": {
                 "report title": "Детальний Звіт про Сайт",
-                "tab title": "Детальний звіт про сайт - {{defaultTitle}}",
                 "findings and recommendations": "[UK]Findings and Recommendations From Basic Network Analysis",
                 "security assurance level": "[UK]Security Assurance Level (SAL)",
                 "maturity detail": "[UK]Maturity Detail",
@@ -562,7 +555,6 @@
             },
             "security plan": {
                 "report title": "План Кібербезпеки Сайту",
-                "tab title": "План кібербезпеки сайту - {{defaultTitle}}",
                 "signature": "Підпис",
                 "signature disclaimer": "[UK] My signature indicates that I have reviewed and approve this Site Cyber Security Plan and the corresponding appendices. To the best of my knowledge, they accurately describe the security profile of the Untitled Assessment 21 security policies and procedures including the operational, management, and technical controls under which they will be operated.",
                 "signature example": "[UK] (Example only. Copy and replace the text in this signature block for each applicable position.)",
@@ -733,7 +725,7 @@
                 "no questions": "[UK]There are no questions marked for review."
             },
             "cpg": {
-                "title": "Цілі ефективності кібербезпеки (CPG)",
+                "report title": "Цілі ефективності кібербезпеки (CPG)",
                 "report": {
                     "cpg report": "CPG звіт",
                     "performance summary": "Підсумок діяльності",
@@ -755,7 +747,7 @@
                     "high": "Високий"
                 },
                 "deficiency": {
-                    "title": "ЗВІТ ПРО НЕДОЛІКИ ЦІЛІ ПОКАЗНИКІВ КІБЕРБЕЗПЕКИ (CPG)",
+                    "report title": "ЗВІТ ПРО НЕДОЛІКИ ЦІЛІ ПОКАЗНИКІВ КІБЕРБЕЗПЕКИ (CPG)",
                     "cpg deficiency": "CPG Недостача",
                     "deficiencies": "недостачі",
                     "p": {
@@ -767,10 +759,11 @@
                 }
             },
             "rra": {
-                "title": "RRA Звіт", 
+                "report title": "RRA Звіт", 
                 "tab title": "Оцінка готовності до рейдерського програмного забезпечення",
                 "rra deficiency report": "[UK] RRA Deficiency Report",
                 "comments and marked for review": "[UK] Comments and Marked for Review",
+                "cisa ransomware readiness assessment": "CISA Оцінка готовності до рейдерського програмного забезпечення",
                 "report": {
                     "assessment tiers": "[UK] RRA Assessment Tiers",
                     "answered tier": "[UK] Practices Answered Per Tier",
@@ -778,11 +771,7 @@
                     "levels": {
                         "text 1": "[UK] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
                         "text 2": "[UK] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
-                        "rra practices": "[UK] RRA Practices",
-                        "advanced": "Просунутий",
-                        "intermediate": "Проміжний",
-                        "basic": "Базовий",
-                        "overall": "Загалом"
+                        "rra practices": "[UK] RRA Practices"
                     }, 
                     "percentage of practices": "[UK] Percentage of Practices Performed", 
                     "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.", 
@@ -806,7 +795,7 @@
                     "references": "Список літератури"
                 },
                 "deficiency": {
-                    "title": "[UK] DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
+                    "report title": "[UK] Deficiency Report CISA Ransomware Readiness Assessment (RRA)",
                     "suggested areas for improvement": "Рекомендовані напрямки покращення",
                     "deficiencies": "недостачі",
                     "marked for review": "[UK] Marked for Review",
@@ -820,7 +809,7 @@
                     }
                 },
                 "cmfr": {
-                    "title": "[UK] COMMENTS & MARKED FOR REVIEW",
+                    "report title": "[UK] Comments & Marked for Review",
                     "comment": "Коментар",
                     "marked for review": "[UK] Marked for Review",
                     "with comments": "[UK] with Comments",
