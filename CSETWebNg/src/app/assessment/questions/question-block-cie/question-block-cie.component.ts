@@ -33,7 +33,7 @@ export class QuestionBlockCieComponent implements OnInit {
   answerOptions = [];
   percentAnswered = 0;
 
-  summaryBoxMax = 800;
+  summaryBoxMax = 450;
 
   textPlaceholderEmpty = "Type answer here...";
   textPlaceholderNA = "Explain why this question is Not Applicable here...";
@@ -74,7 +74,7 @@ export class QuestionBlockCieComponent implements OnInit {
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
 
-      
+      console.log(this.myGrouping)
       this.myGrouping.questions.forEach(question => {
         this.freeResponseAnswers.set(question.questionId, question.freeResponseAnswer);
       });
@@ -437,11 +437,11 @@ export class QuestionBlockCieComponent implements OnInit {
     // textArea.style.overflowY = 'hidden';
     textArea.style.height = '0px';
     textArea.style.height = textArea.scrollHeight + 'px';
-    // if (textArea.scrollHeight > this.summaryBoxMax) {
-    //   textArea.style.height = this.summaryBoxMax + 'px';
-    //   textArea.style.overflowY = 'scroll';
+    if (textArea.scrollHeight > this.summaryBoxMax) {
+      textArea.style.height = this.summaryBoxMax + 'px';
+      textArea.style.overflowY = 'scroll';
 
-    // }
+    }
   }
 
   
