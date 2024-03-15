@@ -375,6 +375,22 @@ namespace CSETWebCore.Api.Controllers
         }
 
         /// <summary>
+        /// Returns list of CIE assessments accessible to the current user.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cie/myCieAssessments")]
+        public IActionResult GetCieAssessments()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+            var userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+
+            var biz = new CieQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetMyCieAssessments(assessmentId, userId);
+            return Ok(x);
+        }
+
+        /// <summary>
         /// Returns list of CIS assessments accessible to the current user.
         /// </summary>
         /// <returns></returns>
