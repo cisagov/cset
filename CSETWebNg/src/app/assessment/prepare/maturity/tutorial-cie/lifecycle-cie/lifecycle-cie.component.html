@@ -20,4 +20,81 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<p>lifecycle-cie works!</p>
+<div class="white-panel">
+  <div>
+    <h2>Systems Engineering Lifecycle Model for CIE</h2>
+    <p>
+      As a project progresses from initial concept, through design and ultimately implementation, 
+      the design team has different opportunities to identify, implement, and verify cyber protections 
+      and mitigations appropriate for the system. The Implementation Guide presents each CIE principle 
+      for each phase of the engineering lifecycle. By considering CIE through a systems-engineering perspective, 
+      rather than as principles alone, practitioners can understand how the application of CIE changes 
+      through a project’s lifecycle. This approach encourages more thorough upfront work for requirements, 
+      design, and stakeholder coordination.
+    </p>
+    <p>
+      This guide offers considerations to practically apply CIE principles at each lifecycle phase. 
+      The team considered several systems engineering models to use as a basis for the 
+      Implementation Guide, but they found that many models were either too granular or too industry- 
+      or system-specific to adopt directly.
+    </p>
+    <p>
+      The guide uses an engineering lifecycle model that simplifies the lifecycle into seven core 
+      systems engineering phases, with three controlling processes that occur across all phases 
+      (project management, risk management, and change/configuration management).
+    </p>
+    <p>
+      <strong>This model offers several benefits:</strong>
+    </p>
+    <ul>
+      <li>Simple enough to identify discrete CIE considerations at each phase</li>
+      <li>Focused broadly on systems engineering, rather than specifically on software engineering</li>
+      <li>Can be flexibly adapted to a variety of common engineering lifecycle models</li>
+    </ul>
+    <p>
+      Engineers should be able to align each phase in the Implementation Guide with one or more phases 
+      in their own preferred systems engineering model and apply the guidance at each relevant phase.
+    </p>
+  </div>
+  <div>
+    <img src="../../../../../assets/images/CIE/lifecycle_model.png" alt="CIE Systems Engineering Lifecycle Model">
+    <h2>Lifecycle Models Considered</h2>
+    <div>
+      <p>
+        Extensive literature review identified four lifecycle models for initial consideration, including the 
+        <a href="https://www.incose.org/docs/default-source/los-angeles/libraryresources/se-jr-handdbook-2015.pdf?sfvrsn=1d3c80c6_2" target="_blank">INCOSE project lifecycle model</a>,
+        <a href="https://www.energy.gov/sites/prod/files/cioprod/documents/SEM3_1231.pdf" target="_blank">DOE project lifecycle model</a>,
+        <a href="https://doi.org/10.6028/NIST.SP.800-160v1r1" target="_blank">NIST Systems Security Engineering Framework</a>,
+        and the <a href="https://www.fhwa.dot.gov/cadiv/segb/files/segbversion3.pdf" target="_blank">U.S. Department of Transportation (DoT) Vee Technical Development</a>. 
+        Although each model provided unique benefits and perspectives, the DoT model was selected as the structure for primary 
+        mapping because of its significant level of detail around its phases. Further, the DoT model’s terminology 
+        aligns most closely with that of industrial/energy infrastructure system design.
+      </p>
+      <img src="../../../../../assets/images/CIE/lifecycle_model_2.png" alt="The U.S. Department of Transportation (DoT) Vee Technical Development Model">
+      <p>
+        The Implementation Guide development team initially chose this model for use in the Implementation Guide because it 
+        offers the following attributes:
+      </p>
+      <ul>
+        <li>Includes a conceptual design phase (concept exploration and concept of operations), which is important for early inclusion and application of CIE principles.</li>
+        <li>Includes clear, cross-cutting activities (creation and execution of validation, verification, and test plans) to which CIE principles and decisions/designs/ requirements derived through the application of CIE principles can be included. Cross-cutting activities ensure that CIE-driven system requirements and designs are both included in the final system design and achieve their intended purpose.</li>
+        <li>Includes a maintenance and operations lifecycle phase to ensure CIE principles are considered for the entire operational life of the system. This also helps ensure technicians have a role in the application of CIE. </li>
+        <li>Includes a changes and upgrades phase so that CIE can be incorporated as designs, requirements, equipment, functions, etc. evolve over time.</li>
+        <li>Includes a retirement/replacement/end of life phase.</li>
+      </ul>
+
+      <p>
+        While the DoT model provided a valuable framework upon which to unpack CIE’s principles against the lifecycle 
+        of a project, the development team ultimately determined that the framework was too granular. After conducting 
+        an extensive mapping exercise across the entire DoT Vee and CIE’s principles, the team identified core phases 
+        that apply synergistically to energy projects and have the flexibility to apply to other infrastructure that 
+        includes physical processes with digital control.
+      </p>
+      <img src="../../../../../assets/images/CIE/phases_table.png" alt="Map of Implementation Guide Phase to DoT Phases">
+
+    </div>
+  </div>
+
+  <app-nav-back-next [page]="'lifecycle-cie'"></app-nav-back-next>
+
+</div>
