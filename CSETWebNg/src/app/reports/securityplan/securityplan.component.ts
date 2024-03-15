@@ -67,9 +67,9 @@ export class SecurityplanComponent implements OnInit {
    */
   ngOnInit() {
     
-    this.translationSub = this.translocoService.selectTranslate('reports.core.security plan.tab title')
+    this.translationSub = this.translocoService.selectTranslate('reports.core.security plan.report title')
       .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+        this.titleService.setTitle(this.tSvc.translate('reports.core.security plan.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('securityplan').subscribe(
       (r: any) => {

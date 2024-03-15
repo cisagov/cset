@@ -81,9 +81,9 @@ export class SiteDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.translationSub = this.tSvc.selectTranslate('reports.core.site detail report.tab title')
+    this.translationSub = this.tSvc.selectTranslate('reports.core.site detail report.report title')
       .subscribe(value =>
-        this.titleService.setTitle(this.tSvc.translate('reports.core.site detail report.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+        this.titleService.setTitle(this.tSvc.translate('reports.core.site detail report.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('detail').subscribe(
       (r: any) => {
