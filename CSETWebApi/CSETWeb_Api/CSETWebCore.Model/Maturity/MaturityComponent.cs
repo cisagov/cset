@@ -8,6 +8,7 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MaturityComponent
     {
+        public int ComponentId { get; set; }
         public string ComponentName { get; set; }
         public bool Incomplete { get; set; }
         public double Baseline { get; set; }

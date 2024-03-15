@@ -140,10 +140,34 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="App_Data\ACET Spanish Question Mapping.xlsx">
+    <None Update="App_Data\LanguagePacks\ES\FINANCIAL_ASSESSMENT_FACTORS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\FINANCIAL_COMPONENTS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\FINANCIAL_DOMAINS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\ES\GENERIC.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\IRP.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\IRP_HEADER.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\MATURITY_GROUPINGS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\MATURITY_QUESTIONS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\SECTORS.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="App_Data\LanguagePacks\ES\SECTOR_INDUSTRY.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\ES\SECURITY_QUESTION.json">
@@ -192,15 +216,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\STANDARD_CATEGORY.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\Spanish ACET Groupings.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\Spanish_Mapped_IRPS.xlsx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="App_Data\Spanish_Mapped_IRP_Headers.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\MATURITY_LEVELS.json">

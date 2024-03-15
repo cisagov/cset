@@ -92,7 +92,7 @@ namespace CSETWebCore.Api.Controllers
             foreach (var item in dbList)
             {
                 // translate if necessary
-                item.Title = _overlay.GetGrouping(item.Grouping_Id, lang)?.Title ?? item.Title;
+                item.Title = _overlay.GetMaturityGrouping(item.Grouping_Id, lang)?.Title ?? item.Title;
 
                 if (!resp.Exists(x => x.Name == item.Title))
                 {

@@ -1,4 +1,4 @@
-﻿using CSETWebCore.Model.Question;
+using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Set;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -42,14 +42,15 @@ namespace CSETWebCore.Helpers
         private Dictionary<string, List<MaturityGroupingOverlay>> dictGroupings = [];
 
         /// <summary>
+        /// A dictionary of loaded maturity question overlay language packs
+        /// </summary>
+        private Dictionary<string, List<MaturityQuestionOverlay>> dictQuestions = [];
+
+        /// <summary>
         /// A dictionary of loaded KeyValueOverlay language packs
         /// </summary>
         private Dictionary<string, List<KeyValueOverlay>> dictGeneric = [];
 
-        /// <summary>
-        /// A dictionary of loaded maturity question language packs
-        /// </summary>
-        private Dictionary<string, List<MaturityQuestionOverlay>> dictQuestions = [];
 
         #endregion
 
@@ -241,7 +242,7 @@ namespace CSETWebCore.Helpers
         /// <param name="groupingId"></param>
         /// <param name="lang"></param>
         /// <returns></returns>
-        public MaturityGroupingOverlay GetGrouping(int groupingId, string lang)
+        public MaturityGroupingOverlay GetMaturityGrouping(int groupingId, string lang)
         {
             // get out cheaply - don't waste time looking up English
             if (lang == "en")
@@ -274,13 +275,11 @@ namespace CSETWebCore.Helpers
             return langPack.FirstOrDefault(x => x.GroupingId == groupingId);
         }
 
+
         /// <summary>
         /// Gets the overlay maturity question object for the language.
         /// </summary>
-        /// <param name="matQuestionId"></param>
-        /// <param name="lang"></param>
-        /// <returns></returns>
-        public MaturityQuestionOverlay GetMaturityQuestion(int matQuestionId, string lang)
+        public MaturityQuestionOverlay GetMaturityQuestion(int questionId, string lang)
         {
             // get out cheaply - don't waste time looking up English
             if (lang == "en")
@@ -310,7 +309,7 @@ namespace CSETWebCore.Helpers
                 langPack = value;
             }
 
-            return langPack.FirstOrDefault(x => x.MatQuestionId == matQuestionId);
+            return langPack.FirstOrDefault(x => x.MatQuestionId == questionId);
         }
     }
 

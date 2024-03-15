@@ -57,9 +57,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
   percentAnswered = 0;
   answerOptions = [];
 
-  // altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  // altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
-
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
   altTextPlaceholder = "alt cset";
   showQuestionIds = false;
