@@ -124,8 +124,6 @@
                 "high": "HIGH",
                 "none": "NONE",
                 "answer questions": "Answer Questions",
-                "yes": "Yes",
-                "no": "No",
                 "fips 199": "FIPS 199 Security Assurance Level Guidance",
                 "nist sp800": "NIST SP800-60 (FIPS 199) Based Security Assurance Levels with CNSS Special Factors",
                 "confidentiality": "Confidentiality",
@@ -444,7 +442,8 @@
         "level 2": "Level 2",
         "level 3": "Level 3",
         "level 4": "Level 4",
-        "level 5": "Level 5"
+        "level 5": "Level 5", 
+        "overall": "Overall"
     },
     "irp": {
         "inherent risk": "Inherent Risk",
@@ -590,10 +589,8 @@
                 "no components answers": "No Components Answers"
             },
             "executive summary": {
-                "executive summary": "Executive Summary",
                 "report title": "Executive Summary",
-                "tab title": "Executive Summary - {{defaultTitle}}",
-                "calculated level": "CALCULATED LEVEL",
+                "calculated level": "Calculated Level",
                 "overall values": "Overall Values",
                 "summary percent compliance": "Summary Percent Compliance",
                 "evaluation": "Evaluation Against Selected Standards and Question Sets",
@@ -620,7 +617,6 @@
             },
             "site summary": {
                 "report title": "Site Summary",
-                "tab title": "Site Summary - {{defaultTitle}}",
                 "high-level assessment description": "High-Level Assessment Description",
                 "standards compliance": "Standards Compliance",
                 "security assurance level": "Security Assurance Level (SAL)",
@@ -631,7 +627,6 @@
             },
             "site detail report": {
                 "report title": "Site Detail Report",
-                "tab title": "Site Detail Report - {{defaultTitle}}",
                 "findings and recommendations": "Findings and Recommendations From Basic Network Analysis",
                 "security assurance level": "Security Assurance Level (SAL)",
                 "maturity detail": "Maturity Detail",
@@ -652,7 +647,6 @@
             },
             "security plan": {
                 "report title": "Site Cybersecurity Plan",
-                "tab title": "Site Cybersecurity Plan - {{defaultTitle}}",
                 "signature": "Signature",
                 "signature disclaimer": "My signature indicates that I have reviewed and approve this Site Cyber Security Plan and the corresponding appendices. To the best of my knowledge, they accurately describe the security profile of the Untitled Assessment 21 security policies and procedures including the operational, management, and technical controls under which they will be operated.",
                 "signature example": "(Example only. Copy and replace the text in this signature block for each applicable position.)",
@@ -823,7 +817,7 @@
                 "no questions": "There are no questions marked for review."
             },
             "cpg": {
-                "title": "Cybersecurity Performance Goals (CPG)",
+                "report title": "Cybersecurity Performance Goals (CPG)",
                 "report": {
                     "cpg report": "CPG Report",
                     "performance summary": "Performance Summary",
@@ -845,7 +839,7 @@
                     "high": "HIGH"
                 },
                 "deficiency": {
-                    "title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
+                    "report title": "DEFICIENCY REPORT CYBERSECURITY PERFORMANCE GOALS (CPG)",
                     "cpg deficiency": "CPG Deficiency",
                     "deficiencies": "Deficiencies",
                     "p": {
@@ -857,11 +851,11 @@
                 }
             },
             "rra": {
-                "title": "RANSOMWARE READINESS ASSESSMENT",
-                "title 2": "(RRA) REPORT",
-                "rra report": "RRA Report",
+                "title": "RRA Report", 
+                "tab title": "Ransomware Readiness Assessment",
                 "rra deficiency report": "RRA Deficiency Report",
                 "comments and marked for review": "Comments and Marked for Review",
+                "cisa ransomware readiness assessment": "CISA Ransomware Readiness Assessment",
                 "report": {
                     "assessment tiers": "RRA Assessment Tiers",
                     "answered tier": "Practices Answered Per Tier",
@@ -869,11 +863,7 @@
                     "levels": {
                         "text 1": "The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
                         "text 2": "The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
-                        "rra practices": "RRA Practices",
-                        "advanced": "Advanced",
-                        "intermediate": "Intermediate",
-                        "basic": "Basic",
-                        "overall": "Overall"
+                        "rra practices": "RRA Practices"
                     }, 
                     "percentage of practices": "Percentage of Practices Performed", 
                     "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.", 
@@ -898,7 +888,7 @@
 
                 },
                 "deficiency": {
-                    "title": "DEFICIENCY REPORT CISA RANSOMWARE READINESS ASSESSMENT (RRA)",
+                    "report title": "Deficiency Report CISA Ransomware Readiness Assessment (RRA)",
                     "suggested areas for improvement": "Suggested Areas for Improvement",
                     "deficiencies": "Deficiencies",
                     "marked for review": "Marked for Review",
@@ -912,7 +902,7 @@
                     }
                 },
                 "cmfr": {
-                    "title": "COMMENTS & MARKED FOR REVIEW",
+                    "report title": "Comments & Marked for Review",
                     "comment": "Comment",
                     "marked for review": "Marked for Review",
                     "with comments": "with Comments",

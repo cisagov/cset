@@ -232,10 +232,10 @@
         assessSvc.usesMaturityModel('RRA') &&
         !isMobile
       " class="d-flex flex-column justify-content-start align-items-start mb-4">
-      <h4>CISA Ransomware Readiness Assessment</h4>
+      <h4>{{t('core.rra.cisa ransomware readiness assessment')}}</h4>
       <div>
         <button tabindex="0" (click)="clickReportLink('rrareport')" class="btn btn-link btn-link-dark text-left">
-          {{t('core.rra.rra report')}}
+          {{t('core.rra.report title')}}
         </button>
       </div>
 
@@ -403,7 +403,7 @@
           assessSvc.usesMaturityModel('CPG') &&
           !isMobile
         " class="d-flex flex-column justify-content-start align-items-start mb-4">
-        <h4>CISA {{t('core.cpg.title')}}</h4>
+        <h4>CISA {{t('core.cpg.report title')}}</h4>
 
         <div>
           <button tabindex="0" (click)="clickReportLink('cpgReport')" class="btn btn-link btn-link-dark text-left">

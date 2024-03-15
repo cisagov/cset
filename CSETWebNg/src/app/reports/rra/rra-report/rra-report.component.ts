@@ -39,6 +39,7 @@ import { TranslocoService } from '@ngneat/transloco';
 })
 export class RraReportComponent implements OnInit {
   response: any;
+  translationTabTitle: any;
 
   overallScoreDisplay: string;
   standardBasedScore: number;
@@ -123,14 +124,16 @@ export class RraReportComponent implements OnInit {
     });
 
 
-    this.titleService.setTitle("Ransomware Readiness Report - " + this.configSvc.behaviors.defaultTitle);
-
     this.reportSvc.getReport('rramain').subscribe(
       (r: any) => {
         this.response = r;
       },
       error => console.log('Main RRA report load Error: ' + (<Error>error).message)
     );
+
+    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.tab title')
+      .subscribe(value =>
+        this.titleService.setTitle(this.tSvc.translate('reports.core.rra.tab title') + ' - ' + this.configSvc.behaviors.defaultTitle));
   }
 
   /**
@@ -175,7 +178,7 @@ export class RraReportComponent implements OnInit {
 
     this.complianceGraph1 = levelList;
     for (let i of this.complianceGraph1){
-      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+      i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
      }
   }
 

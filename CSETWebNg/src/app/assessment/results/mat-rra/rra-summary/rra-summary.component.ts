@@ -103,7 +103,7 @@ export class RraSummaryComponent implements OnInit {
       this.buildLegend();
       return;
     }
-    this.single = levelList.find(x => this.tSvc.translate('reports.core.rra.report.levels.' + (x.name).toLowerCase()) == this.filter).series;
+    this.single = levelList.find(x => this.tSvc.translate('level.' + (x.name).toLowerCase()) == this.filter).series;
 
     for (let i of levelList){
       for (let j of i.series){

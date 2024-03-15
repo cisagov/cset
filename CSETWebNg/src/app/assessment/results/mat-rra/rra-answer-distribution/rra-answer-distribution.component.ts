@@ -73,7 +73,7 @@ export class RraAnswerDistributionComponent implements OnInit {
       }
     }
     for (let i of this.answerDistribByLevel){
-      i.name = this.tSvc.translate('reports.core.rra.report.levels.'+ i.name.toLowerCase())
+      i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
      }
 
   }
