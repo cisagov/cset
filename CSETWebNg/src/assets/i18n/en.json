@@ -366,7 +366,7 @@
         },
         "placeholders": {
             "alt acet": "Description, explanation and/or justification for compensating control",
-            "alt cset": "Description explanation and/or justification for alternate answer"
+            "alt cset": "Description, explanation and/or justification for alternate answer"
         },
         "warnings": {
             "description required": "* Description required"
@@ -553,6 +553,11 @@
         "comments label": "Comments",
         "comments desc": "Enter any general comments to include in the reports. These comments are not included in the Executive Summary Report but are included in the remaining reports.",
         "comments placeholder": "Please provide general comments, if any, to include in the reports.",
+        "cisa workflow required msg": {
+            "1": "Please answer all organization demographic, assessment configuration, and critical service fields to access reports and assessment export.",
+            "2": "The following fields are incomplete",
+            "3": "All demographics information on the Assessment Information page must be provided in order to view reports."
+        },
         "disclaimer": {
             "disclaimer": "Disclaimer",
             "disclaimer section 1": "The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",

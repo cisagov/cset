@@ -42,9 +42,9 @@ export class InherentRiskProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.assessmentSvc.isISE()) {
-      this.title = "Exam Profile"
+      this.title = "exam profile"
     } else {
-      this.title = "Inherent Risk"
+      this.title = "inherent risk"
     }
   }
 

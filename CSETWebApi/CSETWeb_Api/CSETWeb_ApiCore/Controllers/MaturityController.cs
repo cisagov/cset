@@ -258,8 +258,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/groupingtitles")]
         public IActionResult GetGroupingTitles([FromQuery] int modelId)
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetGroupingTitles(modelId);
+            var x = biz.GetGroupingTitles(modelId, lang);
             return Ok(x);
         }
 
@@ -530,11 +532,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults(bool spanishFlag = false)
+        public IActionResult GetMaturityResults()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId, spanishFlag);
+            var maturity = manager.GetMaturityAnswers(assessmentId, lang);
 
             return Ok(maturity);
         }

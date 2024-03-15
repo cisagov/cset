@@ -181,7 +181,7 @@ namespace CSETWebCore.Helpers
 
 
                 // i18n
-                grouping.Title = _overlay.GetGrouping(grouping.GroupingId, _lang)?.Title ?? grouping.Title;
+                grouping.Title = _overlay.GetMaturityGrouping(grouping.GroupingId, _lang)?.Title ?? grouping.Title;
 
 
 

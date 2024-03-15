@@ -119,24 +119,17 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-
-            //
-            if (lang == "es")
+            foreach (var matAns in responseList)
             {
-                responseList.ForEach(
-                   matAns =>
-                   {
-                       Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                       var output = new SpanishQuestionRow();
-                       var temp = new SpanishQuestionRow();
-
-                       if (dictionary.TryGetValue(matAns.Mat.Mat_Question_Id, out output))
-                       {
-                           matAns.Mat.Question_Text = dictionary[matAns.Mat.Mat_Question_Id].Question_Text;
-                       }
-                   });
+                var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
+                if (o != null)
+                {
+                    matAns.Mat.Question_Title = o.QuestionTitle;
+                    matAns.Mat.Question_Text = o.QuestionText;
+                    matAns.Mat.Supplemental_Info = o.SupplementalInfo;
+                }
             }
-            //
+
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
@@ -297,6 +290,20 @@ namespace CSETWebCore.Business.Reports
                 && targetRange.Contains(q.Maturity_Level_Id)).ToList();
 
 
+            // apply overlay
+            foreach (var q in questions)
+            {
+                var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
+                if (o != null)
+                {
+                    q.Question_Title = o.QuestionTitle;
+                    q.Question_Text = o.QuestionText;
+                    q.Supplemental_Info = o.SupplementalInfo;
+                    q.Examination_Approach = o.ExaminationApproach;
+                }
+            }
+
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -308,22 +315,18 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
-            Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
 
-            if (lang == "es")
+            // apply translation overlay
+            foreach (var g in allGroupings)
             {
-                allGroupings.ForEach(
-                    group =>
-                    {
-                        var output = new GroupingSpanishRow();
-                        var temp = new GroupingSpanishRow();
-                        if (dictionaryGrouping.TryGetValue(group.Grouping_Id, out output))
-                        {
-                            group.Title = dictionaryGrouping[group.Grouping_Id].Spanish_Title;
-                        }
-                    });
+                var o = _overlay.GetMaturityGrouping(g.Grouping_Id, lang);
+                if (o != null)
+                {
+                    g.Title = o.Title;
+                    g.Description = o.Description;
+                }
             }
+
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
@@ -371,15 +374,15 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview
                                 };
 
-                                if (lang == "es")
+
+                                // overlay
+                                var o = _overlay.GetMaturityQuestion(question.QuestionId, lang);
+                                if (o != null)
                                 {
-                                    var output = new SpanishQuestionRow();
-                                    var temp = new SpanishQuestionRow();
-                                    if (dictionaryQuestion.TryGetValue(question.QuestionId, out output))
-                                    {
-                                        newQuestion.QuestionText = dictionaryQuestion[question.QuestionId].Question_Text;
-                                    }
+                                    newQuestion.QuestionText = o.QuestionText;
                                 }
+
+
 
                                 if (question.Answer == "N")
                                 {
@@ -1675,20 +1678,14 @@ namespace CSETWebCore.Business.Reports
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
-                    //
 
-                    if (lang == "es")
+                    // overlay
+                    MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.mq.Mat_Question_Id, lang);
+                    if (o != null)
                     {
-                        Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                        var output = new SpanishQuestionRow();
-                        var temp = new SpanishQuestionRow();
-                        // test if not finding a match will safely skip
-                        if (dictionary.TryGetValue(f.mq.Mat_Question_Id, out output))
-                        {
-                            questionText = dictionary[f.mq.Mat_Question_Id].Question_Text;
-                        }
+                        identifier = o.QuestionTitle;
+                        questionText = o.QuestionText;
                     }
-                    //
                     return;
 
                 default:

@@ -33,12 +33,12 @@ namespace CSETWebCore.Interfaces.Maturity
             string lang);
 
         int StoreAnswer(int assessmentId, Answer answer);
-        List<MaturityDomain> GetMaturityAnswers(int assessmentId, bool spanishFlag = false);
+        List<MaturityDomain> GetMaturityAnswers(int assessmentId, string lang = "en");
         bool GetTargetBandOnly(int assessmentId);
         void SetTargetBandOnly(int assessmentId, bool value);
 
         List<MaturityDomain> CalculateComponentValues(List<GetMaturityDetailsCalculations_Result> maturity,
-            int assessmentId, bool spanishFlag = false);
+            int assessmentId, string lang = "en");
 
         List<string> GetMaturityRange(int assessmentId);
         List<string> GetIseMaturityRange(int assessmentId);
@@ -51,7 +51,7 @@ namespace CSETWebCore.Interfaces.Maturity
         object GetReferenceText(string modelName);
         List<GlossaryEntry> GetGlossaryEntries(int modelId);
         List<GlossaryEntry> GetGlossaryEntries(string modelName);
-        Model.Acet.ACETDashboard LoadDashboard(int assessmentId);
+        Model.Acet.ACETDashboard LoadDashboard(int assessmentId, string lang = "en");
         string GetOverallIrp(int assessmentId);
         int GetOverallIrpNumber(int assessmentId);
         Model.Acet.ACETDashboard GetIrpCalculation(int assessmentId);
