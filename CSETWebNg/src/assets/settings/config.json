@@ -71,7 +71,8 @@
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
         "additionalUserGuides": [],
-        "showMalcolmAnswerComparison": false
+        "showMalcolmAnswerComparison": false,
+        "replaceAssessmentWithAnalysis": false
     },
     "answerOptionsDefault": [
         {
