@@ -37,6 +37,7 @@ import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-assessment',
@@ -64,6 +65,8 @@ export class AssessmentComponent implements OnInit {
   widthBreakpoint = 960;
   scrollTop = 0;
 
+  assessmentAlias = this.tSvc.translate('titles.assessment');
+
 
   @Output() navSelected = new EventEmitter<string>();
 
@@ -82,7 +85,8 @@ export class AssessmentComponent implements OnInit {
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public layoutSvc: LayoutService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private configSvc: ConfigService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -92,6 +96,10 @@ export class AssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.evaluateWindowSize();
+
+    if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
+      this.assessmentAlias = this.tSvc.translate('titles.analysis');
+    }
 
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
