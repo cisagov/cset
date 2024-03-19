@@ -41,6 +41,8 @@ export class NavTreeService {
 
   workflow: Document
 
+  sideNavScrollLocation = 0;
+
   public currentPage: string;
 
   public magic: string;
@@ -82,7 +84,6 @@ export class NavTreeService {
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
-
     this.isNavLoading = false;
   }
 
@@ -93,7 +94,6 @@ export class NavTreeService {
     const toc: NavTreeNode[] = [];
 
     this.domToNav(this.workflow.documentElement.children, toc);
-
     return toc;
   }
 
@@ -247,6 +247,7 @@ export class NavTreeService {
    * Sets all nodes in the tree to NOT be current
    */
   clearCurrentPage(tree: NavTreeNode[]) {
+    this.getSideNavScrollLocation()
     this.currentPage = '';
 
     if (!tree) {
@@ -287,5 +288,19 @@ export class NavTreeService {
     }
 
     return result;
+  }
+
+  getSideNavScrollLocation() {
+    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNav.length > 0) {
+      this.sideNavScrollLocation = sideNav[0].scrollTop;
+    }
+  }
+
+  setSideNavScrollLocation() {
+    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNav.length > 0) {
+      sideNav[0].scrollTo(0, 500);
+    }
   }
 }
