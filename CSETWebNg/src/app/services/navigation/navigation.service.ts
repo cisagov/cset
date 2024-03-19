@@ -24,7 +24,6 @@
 import { Router } from '@angular/router';
 import { AssessmentService } from '../assessment.service';
 import { EventEmitter, Injectable, Output } from "@angular/core";
-import { of as observableOf } from "rxjs";
 import { ConfigService } from '../config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
@@ -75,8 +74,6 @@ export class NavigationService {
   @Output()
   disableNext = new EventEmitter<boolean>();
 
-  isNavLoading = false;
-
   activeResultsView: string;
 
   frameworkSelected = false;
@@ -113,11 +110,8 @@ export class NavigationService {
           this.navDirect('phase-prepare');
           break;
       }
-
     });
   }
-
-  private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
 
   /**
