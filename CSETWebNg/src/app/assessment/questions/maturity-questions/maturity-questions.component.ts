@@ -150,7 +150,7 @@ export class MaturityQuestionsComponent implements OnInit {
    */
   loadQuestions() {
     this.completionSvc.reset();
-    console.log('in overall maturity-questions component')
+    
     const magic = this.navSvc.getMagic();
     this.groupings = null;
     this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(

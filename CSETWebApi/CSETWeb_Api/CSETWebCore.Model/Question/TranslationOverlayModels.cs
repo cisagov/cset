@@ -55,5 +55,6 @@ namespace CSETWebCore.Model.Question
         public string QuestionText { get; set; }
         public string SupplementalInfo { get; set; }
         public string ExaminationApproach { get; set; }
+        public string ReferenceText { get; set; }
     }
 }
