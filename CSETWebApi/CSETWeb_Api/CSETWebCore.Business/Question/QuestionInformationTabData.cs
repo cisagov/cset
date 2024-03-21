@@ -591,6 +591,11 @@ namespace CSETWebCore.Business.Question
 
 
                 ReferenceTextList = refBuilder.BuildReferenceTextForMaturityQuestion(info.QuestionID);
+                var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
+                if (translatedGroup != null)
+                {
+                    ReferenceTextList[0] = translatedGroup.ReferenceText;
+                }
             }
             catch (Exception exc)
             {
