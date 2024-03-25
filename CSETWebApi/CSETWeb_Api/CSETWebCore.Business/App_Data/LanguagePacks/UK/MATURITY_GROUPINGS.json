@@ -52,302 +52,302 @@
   {
     "groupingId": "14",
     "title": "[UK] Access Control (AC)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "15",
     "title": "[UK] Asset Management (AM)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "16",
     "title": "[UK] Audit and Accountability (AU)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "17",
     "title": "[UK] Awareness and Training (AT)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "18",
     "title": "[UK] Configuration Management (CM)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "19",
     "title": "[UK] Identification and Authentication (IA)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "20",
     "title": "[UK] Incident Response (IR)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "21",
     "title": "[UK] Maintenance (MA)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "22",
     "title": "[UK] Media Protection (MP)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "23",
     "title": "[UK] Personnel Security (PS)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "24",
     "title": "[UK] Physical Protection (PE)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "25",
     "title": "[UK] Recovery (RE)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "26",
     "title": "[UK] Risk Management (RM)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "27",
     "title": "[UK] Security Assessment (CA)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "28",
     "title": "[UK] Situational Awareness (SA)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "29",
     "title": "[UK] Systems and Communications Protection (SC)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "30",
     "title": "[UK] System and Information Integrity (SI)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "31",
     "title": "[UK] Establish system access requirements",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "32",
     "title": "[UK] Control internal system access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "33",
     "title": "[UK] Control remote system access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "34",
     "title": "[UK] Limit data access to authorized users and processes",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "35",
     "title": "[UK] Identify and document assets",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "36",
     "title": "[UK] Manage asset inventory",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "37",
     "title": "[UK] Define audit requirements",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "38",
     "title": "[UK] Perform auditing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "39",
     "title": "[UK] Identify and protect audit information",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "40",
     "title": "[UK] Review and manage audit logs",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "41",
     "title": "[UK] Conduct security awareness activities",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "42",
     "title": "[UK] Conduct training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "43",
     "title": "[UK] Establish configuration baselines",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "44",
     "title": "[UK] Perform configuration and change management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "45",
     "title": "[UK] Grant access to authenticated entities",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "46",
     "title": "[UK] Plan incident response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "47",
     "title": "[UK] Detect and report events",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "48",
     "title": "[UK] Develop and implement a response to a declared incident",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "49",
     "title": "[UK] Perform post incident reviews",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "50",
     "title": "[UK] Test incident response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "51",
     "title": "[UK] Manage maintenance",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "52",
     "title": "[UK] Identify and mark media",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "53",
     "title": "[UK] Protect and control media",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "54",
     "title": "[UK] Sanitize media",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "55",
     "title": "[UK] Protect media during transport",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "56",
     "title": "[UK] Screen personnel",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "57",
     "title": "[UK] Protect CUI during personnel actions",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "58",
     "title": "[UK] Limit physical access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "59",
     "title": "[UK] Manage backups",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "60",
     "title": "[UK] Manage information security continuity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "61",
     "title": "[UK] Identify and evaluate risk",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "62",
     "title": "[UK] Manage risk",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "63",
     "title": "[UK] Manage supply chain risk",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "64",
     "title": "[UK] Develop and manage a system security plan",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "65",
     "title": "[UK] Define and manage controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "66",
     "title": "[UK] Perform code reviews",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "67",
     "title": "[UK] Implement threat monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "68",
     "title": "[UK] Define security requirements for systems and communications",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "69",
     "title": "[UK] Control communications at system boundaries",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "70",
     "title": "[UK] Identify and manage information system flaws",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "71",
     "title": "[UK] Identify malicious content",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "72",
     "title": "[UK] Perform network and system monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "73",
     "title": "[UK] Implement advanced email protections",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "74",
@@ -422,252 +422,252 @@
   {
     "groupingId": "88",
     "title": "[UK] Cyber Risk Management & Oversight",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "89",
     "title": "[UK] Threat Intelligence & Collaboration",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "90",
     "title": "[UK] Cybersecurity Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "91",
     "title": "[UK] External Dependency Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "92",
     "title": "[UK] Cyber Incident Management and Resilience",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "93",
     "title": "Управління",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "94",
     "title": "Управління ризиками",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "95",
     "title": "[UK] Resources",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "96",
     "title": "[UK] Training and Culture",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "97",
     "title": "[UK] Threat Intelligence",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "98",
     "title": "[UK] Monitoring and Analyzing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "99",
     "title": "Розповсюдження інформації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "100",
     "title": "[UK] Preventative Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "101",
     "title": "[UK] Detective Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "102",
     "title": "[UK] Corrective Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "103",
     "title": "[UK] Connections",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "104",
     "title": "[UK] Relationship Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "105",
     "title": "[UK] Incident Resilience Planning and Strategy",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "106",
     "title": "[UK] Detection, Response, and Mitigation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "107",
     "title": "[UK] Escalation and Reporting",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "108",
     "title": "[UK] Oversight",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "109",
     "title": "[UK] Strategy / Policies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "110",
     "title": "[UK] IT Asset Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "111",
     "title": "[UK] Risk Management Program",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "112",
     "title": "Оцінка ризиків",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "113",
     "title": "[UK] Audit",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "114",
     "title": "[UK] Staffing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "115",
     "title": "[UK] Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "116",
     "title": "[UK] Culture",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "117",
     "title": "[UK] Threat Intelligence and Information",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "118",
     "title": "[UK] Monitoring and Analyzing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "119",
     "title": "Розповсюдження інформації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "120",
     "title": "[UK] Infrastructure Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "121",
     "title": "[UK] Access and Data Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "122",
     "title": "[UK] Device / End-Point Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "123",
     "title": "[UK] Secure Coding",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "124",
     "title": "[UK] Threat and Vulnerability Detection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "125",
     "title": "[UK] Anomalous Activity Detection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "126",
     "title": "[UK] Event Detection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "127",
     "title": "[UK] Patch Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "128",
     "title": "[UK] Remediation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "129",
     "title": "[UK] Connections",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "130",
     "title": "[UK] Due Diligence",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "131",
     "title": "[UK] Contracts",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "132",
     "title": "[UK] Ongoing Monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "133",
     "title": "[UK] Planning",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "134",
     "title": "[UK] Testing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "135",
     "title": "[UK] Detection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "136",
     "title": "[UK] Response and Mitigation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "137",
     "title": "[UK] Escalation and Reporting",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "139",
@@ -727,107 +727,107 @@
   {
     "groupingId": "150",
     "title": "[UK] Goal 1 - Services are identified and prioritized.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "151",
     "title": "[UK] Goal 2 - Assets are inventoried, and the authority and responsibility for these assets is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "152",
     "title": "[UK] Goal 3 - The relationship between assets and the services they support is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "153",
     "title": "[UK] Goal 1 - Control objectives are established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "154",
     "title": "[UK] Goal 4 - The asset inventory is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "155",
     "title": "[UK] Goal 2 - Controls are implemented.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "156",
     "title": "[UK] Goal 1 - Threat monitoring is performed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "157",
     "title": "[UK] Goal 2 - The requirements for communicating threat information are established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "158",
     "title": "[UK] Goal 3 - Threat information is communicated.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "159",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "160",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "161",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "162",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "163",
     "title": "[UK] Goal 5 - Access to assets is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "164",
     "title": "[UK] Goal 6 - Information assets are categorized and managed to ensure the sustainment and protection of the critical service.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "165",
     "title": "[UK] Goal 7 - Facility assets supporting the critical service are prioritized and managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "166",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "167",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "168",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "169",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "170",
     "title": "Оцінка готовності програм-вимагачів",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "173",
@@ -882,27 +882,27 @@
   {
     "groupingId": "200",
     "title": "Ідентифікувати",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "201",
     "title": "Захищати",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "202",
     "title": "Виявляти",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "203",
     "title": "Відповісти",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "204",
     "title": "Відновити",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "206",
@@ -912,7 +912,7 @@
   {
     "groupingId": "207",
     "title": "[UK] Goal 1 - Organizational services and assets are prioritized and supported by event detection and handling capabilities.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "208",
@@ -1037,312 +1037,312 @@
   {
     "groupingId": "429",
     "title": "[UK] Goal 3 - Control designs are analyzed to ensure they satisfy control objectives.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "430",
     "title": "[UK] Goal 4 - The internal control system is assessed to ensure control objectives are met.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "431",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "432",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "433",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "434",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "435",
     "title": "[UK] Goal 1 - The life cycle of assets is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "436",
     "title": "[UK] Goal 2 - The integrity of technology and information assets is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "437",
     "title": "[UK] Goal 3 - Asset configuration baselines are established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "438",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "439",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "440",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "441",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "442",
     "title": "[UK] Goal 1 - Preparation for vulnerability analysis and resolution activities is conducted.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "443",
     "title": "[UK] Goal 2 - A process for identifying and analyzing vulnerabilities is established and maintained.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "444",
     "title": "[UK] Goal 3 - Exposure to identified vulnerabilities is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "445",
     "title": "[UK] Goal 4 - The root causes of vulnerabilities are addressed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "446",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "447",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "448",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "449",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "450",
     "title": "[UK] Goal 1 - A process for identifying, analyzing, responding to, and learning from incidents is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "451",
     "title": "[UK] Goal 2 - A process for detecting, reporting, triaging, and analyzing events is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "452",
     "title": "[UK] Goal 3 - Incidents are declared and analyzed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "453",
     "title": "[UK] Goal 4 - A process for responding to and recovering from incidents is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "454",
     "title": "[UK] Goal 5 - Post-incident lessons learned are translated into improvement strategies.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "455",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "456",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "457",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "458",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "459",
     "title": "[UK] Goal 1 - Service continuity plans for high-value services are developed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "460",
     "title": "[UK] Goal 2 - Service continuity plans are reviewed to resolve conflicts between plans.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "461",
     "title": "[UK] Goal 3 - Service continuity plans are tested to ensure they meet their stated objectives.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "462",
     "title": "[UK] Goal 4 - Service continuity plans are executed and reviewed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "463",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "464",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "465",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "466",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "467",
     "title": "[UK] Goal 1 - A strategy for identifying, analyzing, and mitigating risks is developed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "468",
     "title": "[UK] Goal 2 - Risk tolerances are identified, and the focus of risk management activities is established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "469",
     "title": "[UK] Goal 3 - Risks are identified.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "470",
     "title": "[UK] Goal 4 - Risks are analyzed and assigned a disposition.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "471",
     "title": "[UK] Goal 5 - Risks to assets and services are mitigated and controlled.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "472",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "473",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "474",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "475",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "476",
     "title": "[UK] Goal 1 - External dependencies are identified and prioritized to ensure sustained operation of high-value services.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "477",
     "title": "[UK] Goal 2 - Risks due to external dependencies are identified and managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "478",
     "title": "[UK] Goal 3 - Relationships with external entities are formally established and maintained.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "479",
     "title": "[UK] Goal 4 - Performance of external entities is managed.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "480",
     "title": "[UK] Goal 5 - Dependencies on public services and infrastructure service providers are identified.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "481",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "482",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "483",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "484",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "485",
     "title": "[UK] Goal 1 - Cybersecurity awareness and training programs are established.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "486",
     "title": "[UK] Goal 2 - Awareness and training activities are conducted.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "487",
     "title": "[UK] MIL2 - Planned",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "488",
     "title": "[UK] MIL3 - Managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "489",
     "title": "[UK] MIL4 - Measured",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "490",
     "title": "[UK] MIL5 - Defined",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "500",
@@ -1682,402 +1682,402 @@
   {
     "groupingId": "1255",
     "title": "[UK] CMMC 2.0 Practices",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1256",
     "title": "Управління доступом",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1257",
     "title": "[UK] Account Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1258",
     "title": "[UK] Configuration Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1259",
     "title": "[UK] Continuity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1260",
     "title": "[UK] Incident Report",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1261",
     "title": "[UK] Logging/Monitoring & Malware",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1262",
     "title": "[UK] Physical Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1263",
     "title": "[UK] Media Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1264",
     "title": "[UK] Policies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1265",
     "title": "[UK] System & Services Acquisition",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1266",
     "title": "[UK] Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1279",
     "title": "[UK] Access Control for Portable and Mobile Devices",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1280",
     "title": "[UK] Access Control Policy And Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1281",
     "title": "[UK] Access Restrictions",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1282",
     "title": "[UK] Boundary Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1283",
     "title": "[UK] Data Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1284",
     "title": "[UK] Identification and Authentication",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1285",
     "title": "Розповсюдження інформації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1286",
     "title": "[UK] Logical Access Control to Control Systems and Control Networks",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1287",
     "title": "[UK] Network Access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1288",
     "title": "[UK] Remote Access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1289",
     "title": "[UK] Least Privilege",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1290",
     "title": "[UK] Wireless Access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1291",
     "title": "[UK] Account Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1292",
     "title": "[UK] Account Monitoring and Control",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1293",
     "title": "[UK] Administrative Safeguards",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1294",
     "title": "[UK] Authenticator Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1295",
     "title": "[UK] Identification and Authentication",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1296",
     "title": "[UK] Identifier Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1297",
     "title": "[UK] Passwords",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1298",
     "title": "[UK] Personnel Termination",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1299",
     "title": "[UK] Policy & Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1300",
     "title": "[UK] Least Privilege",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1301",
     "title": "[UK] Shared Hosting",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1302",
     "title": "[UK] Baseline Configuration",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1303",
     "title": "[UK] Configuration Change Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1304",
     "title": "[UK] Configuration Management Policy And Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1305",
     "title": "[UK] Inventory of Authorized and Unauthorized Software",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1306",
     "title": "[UK] Least Functionality",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1307",
     "title": "[UK] Manage Changes to Assets",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1308",
     "title": "[UK] Patch Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1309",
     "title": "[UK] Services Procurement Standards",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1310",
     "title": "[UK] System Component Inventory",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1311",
     "title": "[UK] Secure Configurations for Hardware and Software",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1312",
     "title": "[UK] Security of Configuration Documentation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1313",
     "title": "[UK] Continuity of Operations Plan",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1314",
     "title": "[UK] System Backup",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1315",
     "title": "[UK] Incident Response Planning and Policy",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1316",
     "title": "[UK] Incident Reporting & Response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1317",
     "title": "[UK] Audit Logs and Security Events",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1318",
     "title": "[UK] Monitoring and Analyzing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1319",
     "title": "[UK] Network Monitoring Devices",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1320",
     "title": "[UK] Malicious Code Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1321",
     "title": "[UK] Vulnerability Scanning",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1322",
     "title": "[UK] Access Authorizations",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1323",
     "title": "[UK] Access Control Equipment",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1324",
     "title": "[UK] Controlled Area",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1325",
     "title": "[UK] Device Access Control",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1326",
     "title": "[UK] Monitor Physical Access",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1327",
     "title": "[UK] Physical Access Control",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1328",
     "title": "[UK] Physical Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1329",
     "title": "[UK] System Monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1330",
     "title": "[UK] Disposal of Physical Media",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1331",
     "title": "[UK] Media Protection Policy And Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1332",
     "title": "[UK] Removable Media",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1333",
     "title": "[UK] Cyber Security Policies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1334",
     "title": "[UK] Cyber Security Plan",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1335",
     "title": "[UK] Information Security Responsibilities",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1336",
     "title": "[UK] Personnel Screening",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1337",
     "title": "[UK] Security in Procurement",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1338",
     "title": "Обізнаність і навчання",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1339",
     "title": "[UK] General Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1340",
     "title": "[UK] Increase Cybersecurity Awareness",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "1341",
     "title": "[UK] Security Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2301",
     "title": "[UK] Cybersecurity Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2302",
     "title": "[UK] Cybersecurity Forces",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2303",
     "title": "[UK] Cybersecurity Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2304",
     "title": "[UK] Incident Response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2305",
     "title": "[UK] Dependencies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2306",
@@ -2087,7 +2087,7 @@
   {
     "groupingId": "2307",
     "title": "[UK] Cybersecurity Architecture",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2308",
@@ -2117,12 +2117,12 @@
   {
     "groupingId": "2313",
     "title": "[UK] Розповсюдження інформації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2314",
     "title": "[UK] Personnel",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2315",
@@ -2137,12 +2137,12 @@
   {
     "groupingId": "2317",
     "title": "[UK] Access Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2318",
     "title": "[UK] Cybersecurity Measures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2319",
@@ -2172,22 +2172,22 @@
   {
     "groupingId": "2324",
     "title": "[UK] Dependencies - Data at Rest",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2325",
     "title": "[UK] Dependencies - Data in Motion",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2326",
     "title": "[UK] Dependencies - Data in Process",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2327",
     "title": "[UK] Dependencies - End Point Systems",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2328",
@@ -2202,7 +2202,7 @@
   {
     "groupingId": "2330",
     "title": "[UK] Security Architecture",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2331",
@@ -2212,7 +2212,7 @@
   {
     "groupingId": "2332",
     "title": "[UK] Internal Information Sharing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2333",
@@ -2242,387 +2242,387 @@
   {
     "groupingId": "2338",
     "title": "[UK] Anticipate",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2339",
     "title": "[UK] Withstand",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2340",
     "title": "Відновити",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2342",
     "title": "[UK] Adapt",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2343",
     "title": "[UK] Adaptive Response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2344",
     "title": "Бізнес середовище",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2345",
     "title": "[UK] Contextual Awareness",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2346",
     "title": "[UK] Coordinated Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2347",
     "title": "[UK] Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2348",
     "title": "[UK] Dynamic Positioning",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2349",
     "title": "Управління",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2350",
     "title": "Оцінка ризиків",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2353",
     "title": "Стратегія управління ризиками",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2354",
     "title": "[UK] Supply Chain Risk Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2355",
     "title": "Аномалії та події",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2356",
     "title": "Управління активами",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2357",
     "title": "Обізнаність і навчання",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2358",
     "title": "Безпека даних",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2359",
     "title": "[UK] Deception",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2360",
     "title": "Процеси виявлення",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2361",
     "title": "[UK] Identity and Access Control",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2362",
     "title": "[UK] Information Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2363",
     "title": "Технічне обслуговування",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2371",
     "title": "[UK] Non-Persistence",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2372",
     "title": "[UK] Privilege Restriction",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2373",
     "title": "Захисна техніка",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2374",
     "title": "Постійний моніторинг безпеки",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2375",
     "title": "[UK] Segmentation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2376",
     "title": "[UK] Sustained Integrity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2377",
     "title": "[UK] Unpredictability",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2378",
     "title": "Аналіз",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2379",
     "title": "[UK] Analytic Monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2380",
     "title": "Комунікації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2381",
     "title": "Покращення",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2382",
     "title": "Пом'якшення",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2383",
     "title": "[UK] Redundancy",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2384",
     "title": "Планування відновлення",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2385",
     "title": "Покращення",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2386",
     "title": "Комунікації",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2387",
     "title": "[UK] Realignment 800-160",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2388",
     "title": "[UK] Dynamic Reconfiguration",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2389",
     "title": "[UK] Dynamic Resource Allocation",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2390",
     "title": "[UK] Adaptive Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2391",
     "title": "[UK] Dynamic Resource Awareness",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2392",
     "title": "[UK] Dynamic Threat Awareness",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2393",
     "title": "[UK] Calibrated Defense-in-Depth",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2394",
     "title": "[UK] Consistency Analysis",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2395",
     "title": "[UK] Orchestration",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2396",
     "title": "[UK] Self-Challenge",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2397",
     "title": "[UK] Design and Architectural Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2398",
     "title": "[UK] Architectural Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2399",
     "title": "[UK] Information Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2400",
     "title": "[UK] Synthetic Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2401",
     "title": "[UK] Design Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2402",
     "title": "[UK] Path Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2403",
     "title": "[UK] Supply Chain Diversity",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2404",
     "title": "[UK] Functional Relocation of Sensors",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2408",
     "title": "[UK] Distributed Functionality",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2409",
     "title": "[UK] Organizational cybersecurity policy is established and communicated",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2410",
     "title": "[UK] Cybersecurity roles and responsibilities are coordinated and aligned with internal roles and external partners",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2411",
     "title": "[UK] Legal and regulatory requirements regarding cybersecurity, including privacy and civil liberties obligations, are understood and managed",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2412",
     "title": "[UK] Governance and risk management processes address cybersecurity risks",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2413",
     "title": "[UK] Cyber threat intelligence is received from information sharing forums and sources.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2414",
     "title": "[UK] Threats, both internal and external, are identified and documented.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2415",
     "title": "[UK] Potential business impacts and likelihoods are identified.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2416",
     "title": "[UK] Threats, vulnerabilities, likelihoods, and impacts are used to determine risk.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2417",
     "title": "[UK] Risk responses are identified and prioritized",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2418",
     "title": "[UK] Risk management processes are established, managed, and agreed to by organizational stakeholders",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2420",
     "title": "[UK] The organization’s determination of risk tolerance is informed by its role in critical infrastructure and sector specific risk analysis",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2422",
     "title": "[UK] Cyber supply chain risk management processes are identified, established, assessed, managed, and agreed to by organizational stakeholders",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2425",
     "title": "[UK] Suppliers and third-party partners are routinely assessed using audits, test results, or other forms of evaluations to confirm they are meeting their contractual obligations.",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2426",
     "title": "[UK] Response and recovery planning and testing are conducted with suppliers and third-party providers",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2427",
     "title": "[UK] The organization’s role in the supply chain is identified and communicated",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2428",
     "title": "[UK] The organization’s place in critical infrastructure and its industry sector is identified and communicated",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2429",
     "title": "[UK] Priorities for organizational mission, objectives, and activities are established and communicated",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2430",
     "title": "[UK] Dependencies and critical functions for delivery of critical services are established",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2431",
     "title": "[UK] Resilience requirements to support delivery of critical services are established for all operating states (e.g. under duress/attack, during recovery, normal operations)",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2433",
@@ -2782,7 +2782,7 @@
   {
     "groupingId": "2467",
     "title": "[UK] Event data are collected and correlated from multiple sources and sensors",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2468",
@@ -3137,292 +3137,292 @@
   {
     "groupingId": "2539",
     "title": "[UK] Examination Statements",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2540",
     "title": "[UK] Information Security Program",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2541",
     "title": "[UK] Policies & Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2542",
     "title": "Управління",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2543",
     "title": "Оцінка ризиків",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2544",
     "title": "[UK] Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2545",
     "title": "[UK] Incident Response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2546",
     "title": "[UK] Third-Party Risk Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2547",
     "title": "[UK] Business Continuity / Disaster Recovery",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2548",
     "title": "[UK] Cybersecurity Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2549",
     "title": "[UK] Information Security Program",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2550",
     "title": "[UK] Policies & Procedures",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2551",
     "title": "Управління",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2552",
     "title": "[UK] Asset Inventory",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2553",
     "title": "Оцінка ризиків",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2554",
     "title": "[UK] Controls Testing",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2555",
     "title": "[UK] Corrective Actions",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2556",
     "title": "[UK] Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2557",
     "title": "[UK] Incident Response",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2558",
     "title": "[UK] Third-Party Risk Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2559",
     "title": "[UK] Business Continuity / Disaster Recovery",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2560",
     "title": "[UK] Cybersecurity Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2561",
     "title": "[UK] Vulnerability & Patch Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2562",
     "title": "[UK] Anti-Virus/Anti-Malware",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2563",
     "title": "[UK] Access Controls",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2564",
     "title": "[UK] Network Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2565",
     "title": "[UK] Data Leak Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2566",
     "title": "[UK] Change & Configuration Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2567",
     "title": "[UK] Monitoring",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2568",
     "title": "[UK] Logging",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2569",
     "title": "[UK] Data Governance",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2570",
     "title": "[UK] Conversion",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2571",
     "title": "[UK] Software Development Process",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2572",
     "title": "[UK] Internal Audit Program",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2573",
     "title": "[UK] Due Diligence",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2574",
     "title": "[UK] CISA Ransomware Readiness Assessment (RRA) BASIC",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2575",
     "title": "[UK] CISA Ransomware Readiness Assessment (RRA) INTERMEDIATE",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2576",
     "title": "[UK] Hydropower Valuation Assessment",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2577",
     "title": "[UK] Management",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2578",
     "title": "[UK] Leadership and Personnel",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2579",
     "title": "[UK] Training",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2580",
     "title": "[UK] Risk management ",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2581",
     "title": "Управління активами",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2582",
     "title": "[UK] Site and Service Control Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2583",
     "title": "[UK] Physical Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2584",
     "title": "[UK] Access Control ",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2585",
     "title": "[UK] Information Protection",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2586",
     "title": "[UK] Critical Operations ",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2587",
     "title": "[UK] Plant Auxillary System",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2588",
     "title": "Технічне обслуговування",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2589",
     "title": "[UK] Safety",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2590",
     "title": "[UK] Generic Control Catalog",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2591",
     "title": "[UK] Plant Operational System",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2592",
     "title": "[UK] Dependencies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2593",
     "title": "[UK] Dependencies",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2594",
     "title": "[UK] Grid Operations",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2595",
     "title": "[UK] Plant Operational System",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2596",
     "title": "[UK] Endpoint and Data Security",
-    "description": "[UK] "
+    "description": ""
   },
   {
     "groupingId": "2601",
