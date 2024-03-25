@@ -6,42 +6,42 @@
   },
   {
     "key": "78",
-    "value": "[UK]Basic Chemicals",
+    "value": "Основні хімічні речовини",
     "valueEN": "Basic Chemicals"
   },
   {
     "key": "79",
-    "value": "[UK]Specialty Products",
+    "value": "Спеціальні продукти",
     "valueEN": "Specialty Products"
   },
   {
     "key": "80",
-    "value": "[UK]Pharmaceutical Products",
+    "value": "Фармацевтична продукція",
     "valueEN": "Pharmaceutical Products"
   },
   {
     "key": "81",
-    "value": "[UK]Consumer Products",
+    "value": "Споживацькі товари",
     "valueEN": "Consumer Products"
   },
   {
     "key": "82",
-    "value": "[UK]Agricultural Products",
+    "value": "Сільськогосподарська продукція",
     "valueEN": "Agricultural Products"
   },
   {
     "key": "2",
-    "value": "[UK]Entertainment and Media",
+    "value": "Розваги та ЗМІ",
     "valueEN": "Entertainment and Media"
   },
   {
     "key": "3",
-    "value": "[UK]Gaming",
+    "value": "Ігри",
     "valueEN": "Gaming"
   },
   {
     "key": "4",
-    "value": "[UK]Lodging",
+    "value": "Ночівля",
     "valueEN": "Lodging"
   },
   {
@@ -51,27 +51,27 @@
   },
   {
     "key": "6",
-    "value": "[UK]Outdoor Events",
+    "value": "Заходи на природі",
     "valueEN": "Outdoor Events"
   },
   {
     "key": "7",
-    "value": "[UK]Public Assembly",
+    "value": "Громадські збори",
     "valueEN": "Public Assembly"
   },
   {
     "key": "8",
-    "value": "[UK]Real Estate",
+    "value": "Нерухомість",
     "valueEN": "Real Estate"
   },
   {
     "key": "9",
-    "value": "[UK]Retail",
+    "value": "Роздрібна торгівля",
     "valueEN": "Retail"
   },
   {
     "key": "10",
-    "value": "[UK]Sports Leagues",
+    "value": "Спортивні ліги",
     "valueEN": "Sports Leagues"
   },
   {
@@ -81,37 +81,37 @@
   },
   {
     "key": "12",
-    "value": "[UK]Telecommunications",
+    "value": "Телекомунікації",
     "valueEN": "Telecommunications"
   },
   {
     "key": "13",
-    "value": "[UK]Wireless Communications Service Providers",
+    "value": "Постачальники послуг бездротового зв’язку",
     "valueEN": "Wireless Communications Service Providers"
   },
   {
     "key": "83",
-    "value": "[UK]Broadcasting",
+    "value": "Мовлення",
     "valueEN": "Broadcasting"
   },
   {
     "key": "84",
-    "value": "[UK]Cable",
+    "value": "Кабель",
     "valueEN": "Cable"
   },
   {
     "key": "85",
-    "value": "[UK]Satellite",
+    "value": "Супутник",
     "valueEN": "Satellite"
   },
   {
     "key": "86",
-    "value": "[UK]Wireline",
+    "value": "Дротовий",
     "valueEN": "Wireline"
   },
   {
     "key": "14",
-    "value": "[UK]Electrical Equipment, Appliance and Component Manufacturing",
+    "value": "Виробництво електрообладнання, приладів і компонентів",
     "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
   },
   {
@@ -281,267 +281,232 @@
   },
   {
     "key": "43",
-    "value": "[UK]Public Works",
+    "value": "Громадські роботи",
     "valueEN": "Public Works"
   },
   {
     "key": "44",
-    "value": "[UK]Electric Power Generation, Transmission and Distribution",
+    "value": "Виробництво, передача та розподіл електроенергії",
     "valueEN": "Electric Power Generation, Transmission and Distribution"
   },
   {
     "key": "45",
-    "value": "[UK]Natural Gas",
+    "value": "Природний газ",
     "valueEN": "Natural Gas"
   },
   {
-    "key": "46",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "47",
-    "value": "[UK]Petroleum Refineries",
+    "value": "Нафтопереробні заводи",
     "valueEN": "Petroleum Refineries"
   },
   {
     "key": "92",
-    "value": "[UK]Oil and Natural Gas",
+    "value": "Нафта і природний газ",
     "valueEN": "Oil and Natural Gas"
   },
   {
-    "key": "48",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "49",
-    "value": "[UK]US Banks",
+    "value": "Банки",
     "valueEN": "US Banks"
   },
   {
     "key": "50",
-    "value": "[UK]US Credit Unions",
+    "value": "Кредитні спілки",
     "valueEN": "US Credit Unions"
   },
   {
     "key": "93",
-    "value": "[UK]Consumer Services",
+    "value": "Побутове обслуговування",
     "valueEN": "Consumer Services"
   },
   {
     "key": "94",
-    "value": "[UK]Credit and Liquidity Products",
+    "value": "Кредитні та ліквідні продукти",
     "valueEN": "Credit and Liquidity Products"
   },
   {
     "key": "95",
-    "value": "[UK]Investment Products",
+    "value": "Інвестиційні продукти",
     "valueEN": "Investment Products"
   },
   {
     "key": "96",
-    "value": "[UK]Risk Transfer Products",
+    "value": "Продукти передачі ризиків",
     "valueEN": "Risk Transfer Products"
   },
   {
     "key": "51",
-    "value": "[UK]Beverage Manufacturing Plants",
+    "value": "Заводи з виробництва напоїв",
     "valueEN": "Beverage Manufacturing Plants"
   },
   {
     "key": "52",
-    "value": "[UK]Food Manufacturing Plants",
+    "value": "Заводи з виробництва харчових продуктів",
     "valueEN": "Food Manufacturing Plants"
   },
   {
     "key": "53",
-    "value": "[UK]Food Services",
+    "value": "Послуги харчування",
     "valueEN": "Food Services"
   },
   {
-    "key": "54",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "97",
-    "value": "[UK]Supply",
+    "value": "Постачання",
     "valueEN": "Supply"
   },
   {
     "key": "98",
-    "value": "[UK]Processing, Packaging, and Production",
+    "value": "Переробка, упаковка та виробництво",
     "valueEN": "Processing, Packaging, and Production"
   },
   {
     "key": "99",
-    "value": "[UK]Product Storage",
+    "value": "Зберігання продукту",
     "valueEN": "Product Storage"
   },
   {
     "key": "100",
-    "value": "[UK]Product Transportation",
+    "value": "Транспортування продукції",
     "valueEN": "Product Transportation"
   },
   {
     "key": "101",
-    "value": "[UK]Product Distribution",
+    "value": "Розповсюдження продукції",
     "valueEN": "Product Distribution"
   },
   {
     "key": "102",
-    "value": "[UK]Supporting Facilities",
+    "value": "Допоміжні засоби",
     "valueEN": "Supporting Facilities"
   },
   {
     "key": "55",
-    "value": "[UK]Local Governments",
+    "value": "Органи місцевого самоврядування",
     "valueEN": "Local Governments"
   },
   {
-    "key": "56",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "57",
-    "value": "[UK]State Governments",
+    "value": "Обласні уряди",
     "valueEN": "State Governments"
   },
   {
     "key": "58",
-    "value": "[UK]Territorial Governments",
+    "value": "Уряди територіальних громад",
     "valueEN": "Territorial Governments"
   },
   {
     "key": "59",
-    "value": "[UK]Tribal Governments",
+    "value": "Місцеві уряди",
     "valueEN": "Tribal Governments"
   },
   {
     "key": "103",
-    "value": "[UK]Public Facilities",
+    "value": "Громадські об'єкти",
     "valueEN": "Public Facilities"
   },
   {
     "key": "104",
-    "value": "[UK]Non-Public Facilities",
+    "value": "Негромадські об'єкти",
     "valueEN": "Non-Public Facilities"
   },
   {
     "key": "60",
-    "value": "[UK]Hospitals",
+    "value": "Лікарні",
     "valueEN": "Hospitals"
   },
   {
-    "key": "61",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "62",
-    "value": "[UK]Residential Care Facilities",
+    "value": "Заклади стаціонарного догляду",
     "valueEN": "Residential Care Facilities"
   },
   {
     "key": "105",
-    "value": "[UK]Direct Patient Care",
+    "value": "Безпосередній догляд за пацієнтами",
     "valueEN": "Direct Patient Care"
   },
   {
     "key": "106",
-    "value": "[UK]Health IT",
+    "value": "Здоров'я IT",
     "valueEN": "Health IT"
   },
   {
     "key": "107",
-    "value": "[UK]Health Plans and Payers",
+    "value": "Плани охорони здоров'я та платники",
     "valueEN": "Health Plans and Payers"
   },
   {
     "key": "108",
-    "value": "[UK]Fatality Management Services",
+    "value": "Послуги з управління нещасними випадками",
     "valueEN": "Fatality Management Services"
   },
   {
     "key": "109",
-    "value": "[UK]Medical Materials",
+    "value": "Медичні матеріали",
     "valueEN": "Medical Materials"
   },
   {
     "key": "110",
-    "value": "[UK]Support Services",
+    "value": "Служби підтримки",
     "valueEN": "Support Services"
   },
   {
     "key": "63",
-    "value": "[UK]Information Technology",
+    "value": "Інформаційні технології",
     "valueEN": "Information Technology"
   },
   {
-    "key": "64",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "111",
-    "value": "[UK]IT Production",
+    "value": "ІТ виробництво",
     "valueEN": "IT Production"
   },
   {
     "key": "112",
-    "value": "[UK]DNS Services",
+    "value": "Служби DNS",
     "valueEN": "DNS Services"
   },
   {
     "key": "113",
-    "value": "[UK]Identity and Trust Support Management",
+    "value": "Управління підтримкою ідентифікації та довіри",
     "valueEN": "Identity and Trust Support Management"
   },
   {
     "key": "114",
-    "value": "[UK]Internet Content and Service Providers",
+    "value": "Інтернет-контент і постачальники послуг",
     "valueEN": "Internet Content and Service Providers"
   },
   {
     "key": "115",
-    "value": "[UK]Internet Routing and Connection",
+    "value": "Інтернет-маршрутизація та підключення",
     "valueEN": "Internet Routing and Connection"
   },
   {
     "key": "116",
-    "value": "[UK]Incident Management",
+    "value": "Управління інцидентами",
     "valueEN": "Incident Management"
   },
   {
     "key": "65",
-    "value": "[UK]Operating Nuclear Power Plants",
+    "value": "Експлуатація атомних електростанцій",
     "valueEN": "Operating Nuclear Power Plants"
   },
   {
-    "key": "66",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "117",
-    "value": "[UK]Fuel Cycle Facilities",
+    "value": "Засоби паливного циклу",
     "valueEN": "Fuel Cycle Facilities"
   },
   {
     "key": "118",
-    "value": "[UK]Nuclear Materials Transport",
+    "value": "Транспортування ядерних матеріалів",
     "valueEN": "Nuclear Materials Transport"
   },
   {
     "key": "119",
-    "value": "[UK]Radioactive Waste",
+    "value": "Радіоактивні відходи",
     "valueEN": "Radioactive Waste"
   },
   {
     "key": "120",
-    "value": "[UK]Radioactive Materials",
+    "value": "Радіоактивні матеріали",
     "valueEN": "Radioactive Materials"
   },
   {
@@ -550,733 +515,698 @@
     "valueEN": "Aviation"
   },
   {
-    "key": "68",
-    "value": "Вантажні залізниці",
-    "valueEN": "Freight Rail"
-  },
-  {
-    "key": "69",
-    "value": "Шосе (автомобільний транспорт)",
-    "valueEN": "Highway (truck transportation)"
-  },
-  {
     "key": "70",
-    "value": "Морський транспорт",
+    "value": "Морський",
     "valueEN": "Maritime"
   },
   {
-    "key": "71",
-    "value": "Громадський транспорт і пасажирський залізничний транспорт",
-    "valueEN": "Mass Transit and Passenger Rail"
-  },
-  {
-    "key": "72",
-    "value": "Муніципалітети з системами контролю дорожнього руху",
-    "valueEN": "Municipalities with Traffic Control Systems"
-  },
-  {
-    "key": "73",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
-    "key": "74",
-    "value": "Трубопроводи (транспортують природний газ, небезпечні рідини та різні хімічні речовини)",
-    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
-  },
-  {
-    "key": "75",
-    "value": "Інше",
-    "valueEN": "Other"
-  },
-  {
     "key": "76",
-    "value": "[UK]Public Water Systems",
+    "value": "Громадські системи водопостачання",
     "valueEN": "Public Water Systems"
   },
   {
     "key": "77",
-    "value": "[UK]Publicly Owned Treatment Works",
+    "value": "Державні очисні споруди",
     "valueEN": "Publicly Owned Treatment Works"
   },
   {
     "key": "121",
-    "value": "[UK]Agricultural and Food Product Distribution",
+    "value": "Розповсюдження сільськогосподарської та харчової продукції",
     "valueEN": "Agricultural and Food Product Distribution"
   },
   {
     "key": "122",
-    "value": "[UK]Agricultural and Food Product Transportation",
+    "value": "Перевезення сільськогосподарської та харчової продукції",
     "valueEN": "Agricultural and Food Product Transportation"
   },
   {
     "key": "123",
-    "value": "[UK]Agriculture and Food Product Storage and Distribution Warehouse",
+    "value": "Склад для зберігання та розподілу сільськогосподарських та харчових продуктів",
     "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
   },
   {
     "key": "124",
-    "value": "[UK]Agriculture and Food Supporting Facility",
+    "value": "Аграрно-продовольчий фонд",
     "valueEN": "Agriculture and Food Supporting Facility"
   },
   {
     "key": "125",
-    "value": "[UK]Other Agriculture and Food",
+    "value": "Інше сільське господарство та продовольство",
     "valueEN": "Other Agriculture and Food"
   },
   {
     "key": "126",
-    "value": "[UK]Processing, Packaging, and Production",
+    "value": "Переробка, упаковка та виробництво",
     "valueEN": "Processing, Packaging, and Production"
   },
   {
     "key": "127",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "128",
-    "value": "[UK]Supply",
+    "value": "Постачання",
     "valueEN": "Supply"
   },
   {
     "key": "129",
-    "value": "[UK]Banking and Credit",
+    "value": "Банківська справа та кредитування ",
     "valueEN": "Banking and Credit"
   },
   {
     "key": "130",
-    "value": "[UK]Insurance Company",
+    "value": "Страхова компанія",
     "valueEN": "Insurance Company"
   },
   {
     "key": "131",
-    "value": "[UK]Securities, Commodities, or Financial Investment",
+    "value": "Цінні папери, товари або фінансові інвестиції",
     "valueEN": "Securities, Commodities, or Financial Investment"
   },
   {
     "key": "132",
-    "value": "[UK]Chemical Manufacturing or Processing Plant",
+    "value": "Виробництво або переробка хімічних речовин",
     "valueEN": "Chemical Manufacturing or Processing Plant"
   },
   {
     "key": "133",
-    "value": "[UK]Hazardous Chemical Storage/Stockpile/Utilization/Distribution",
+    "value": "Зберігання/запаси/утилізація/розповсюдження небезпечних хімічних речовин",
     "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
   },
   {
     "key": "134",
-    "value": "[UK]Hazardous Chemical Transport",
+    "value": "Перевезення небезпечних хімікатів",
     "valueEN": "Hazardous Chemical Transport"
   },
   {
     "key": "135",
-    "value": "[UK]Other Chemical and Hazardous Material",
+    "value": "Інші хімічні та небезпечні матеріали",
     "valueEN": "Other Chemical and Hazardous Material"
   },
   {
     "key": "136",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "137",
-    "value": "[UK]Entertainment or Media Facility",
+    "value": "Розваги або ЗМІ",
     "valueEN": "Entertainment or Media Facility"
   },
   {
     "key": "138",
-    "value": "[UK]Gaming Facility/Casino",
+    "value": "Ігровий заклад/казино",
     "valueEN": "Gaming Facility/Casino"
   },
   {
     "key": "139",
-    "value": "[UK]Lodging Facility",
+    "value": "Житло",
     "valueEN": "Lodging Facility"
   },
   {
     "key": "140",
-    "value": "[UK]Other Commercial Facility",
+    "value": "Інший комерційний об'єкт",
     "valueEN": "Other Commercial Facility"
   },
   {
     "key": "141",
-    "value": "[UK]Public Assembly",
+    "value": "Громадські збори",
     "valueEN": "Public Assembly"
   },
   {
     "key": "142",
-    "value": "[UK]Real Estate Facility",
+    "value": "Об'єкт нерухомості",
     "valueEN": "Real Estate Facility"
   },
   {
     "key": "143",
-    "value": "[UK]Retail Facility",
+    "value": "Роздрібний об'єкт",
     "valueEN": "Retail Facility"
   },
   {
     "key": "144",
-    "value": "[UK]Information Services",
+    "value": "Інформаційні послуги",
     "valueEN": "Information Services"
   },
   {
     "key": "145",
-    "value": "[UK]Internet",
+    "value": "Інтернет",
     "valueEN": "Internet"
   },
   {
     "key": "146",
-    "value": "[UK]Next Generation Network",
+    "value": "Мережа нового покоління",
     "valueEN": "Next Generation Network"
   },
   {
     "key": "147",
-    "value": "[UK]Other Communication Facility",
+    "value": "Інші засоби зв'язку",
     "valueEN": "Other Communication Facility"
   },
   {
     "key": "148",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "149",
-    "value": "[UK]Satellite Communication",
+    "value": "Супутниковий зв'язок",
     "valueEN": "Satellite Communication"
   },
   {
     "key": "150",
-    "value": "[UK]Telecomm Hotel",
+    "value": "Готельний зв'язок",
     "valueEN": "Telecomm Hotel"
   },
   {
     "key": "151",
-    "value": "[UK]Wired Communication",
+    "value": "Дротовий зв'язок",
     "valueEN": "Wired Communication"
   },
   {
     "key": "152",
-    "value": "[UK]Wireless Communication",
+    "value": "Бездротовий зв'язок",
     "valueEN": "Wireless Communication"
   },
   {
     "key": "153",
-    "value": "[UK]Dam Project",
+    "value": "Проект дамби",
     "valueEN": "Dam Project"
   },
   {
     "key": "154",
-    "value": "[UK]Flood Damage Reduction System",
+    "value": "Система зменшення шкоди від повені",
     "valueEN": "Flood Damage Reduction System"
   },
   {
     "key": "155",
-    "value": "[UK]Hurricane or Storm Surge Protection System",
+    "value": "Система захисту від урагану або шторму",
     "valueEN": "Hurricane or Storm Surge Protection System"
   },
   {
     "key": "156",
-    "value": "[UK]Mine Tailings and Industrial Waste Impoundment",
+    "value": "Шахтні хвости та сховище промислових відходів",
     "valueEN": "Mine Tailings and Industrial Waste Impoundment"
   },
   {
     "key": "157",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "158",
-    "value": "[UK]Aircraft Industry",
+    "value": "Авіаційна промисловість",
     "valueEN": "Aircraft Industry"
   },
   {
     "key": "159",
-    "value": "[UK]Ammunition Industry",
+    "value": "Боєприпасна промисловість",
     "valueEN": "Ammunition Industry"
   },
   {
     "key": "160",
-    "value": "[UK]Combat Vehicle Industry",
+    "value": "Промисловість бойових машин",
     "valueEN": "Combat Vehicle Industry"
   },
   {
     "key": "161",
-    "value": "[UK]Electrical Industry Commodity Manufacturing",
+    "value": "Електротехнічна промисловість Товарне виробництво",
     "valueEN": "Electrical Industry Commodity Manufacturing"
   },
   {
     "key": "162",
-    "value": "[UK]Electronic Industry Commodity Manufacturing",
+    "value": "Електронна промисловість. Товарне виробництво",
     "valueEN": "Electronic Industry Commodity Manufacturing"
   },
   {
     "key": "163",
-    "value": "[UK]Electronics Industry",
+    "value": "Електронна промисловість",
     "valueEN": "Electronics Industry"
   },
   {
     "key": "164",
-    "value": "[UK]Information Technology Industry",
+    "value": "Індустрія інформаційних технологій",
     "valueEN": "Information Technology Industry"
   },
   {
     "key": "165",
-    "value": "[UK]Mechanical Industry Commodity Manufacturing",
+    "value": "Механічна промисловість. Товарне виробництво",
     "valueEN": "Mechanical Industry Commodity Manufacturing"
   },
   {
     "key": "166",
-    "value": "[UK]Missile Industry",
+    "value": "Ракетна промисловість",
     "valueEN": "Missile Industry"
   },
   {
     "key": "167",
-    "value": "[UK]Research & Development Facility",
+    "value": "Науково-дослідна установа",
     "valueEN": "Research & Development Facility"
   },
   {
     "key": "168",
-    "value": "[UK]Shipbuilding Industry",
+    "value": "Суднобудівна промисловість",
     "valueEN": "Shipbuilding Industry"
   },
   {
     "key": "169",
-    "value": "[UK]Space Industry",
+    "value": "Космічна промисловість",
     "valueEN": "Space Industry"
   },
   {
     "key": "170",
-    "value": "[UK]Structural Industry Commodity Manufacturing",
+    "value": "Структурна галузь. Товарне виробництво",
     "valueEN": "Structural Industry Commodity Manufacturing"
   },
   {
     "key": "171",
-    "value": "[UK]Troop Support Industry",
+    "value": "Індустрія підтримки військ",
     "valueEN": "Troop Support Industry"
   },
   {
     "key": "172",
-    "value": "[UK]Weapons Industry",
+    "value": "Збройна промисловість",
     "valueEN": "Weapons Industry"
   },
   {
     "key": "173",
-    "value": "[UK]Emergency Management",
+    "value": "Управління надзвичайними ситуаціями",
     "valueEN": "Emergency Management"
   },
   {
     "key": "174",
-    "value": "[UK]Emergency Medical Services (EMS)",
+    "value": "Екстрена медична допомога (Emergency Medical Services, EMS)",
     "valueEN": "Emergency Medical Services (EMS)"
   },
   {
     "key": "175",
-    "value": "[UK]Fire and Emergency Services",
+    "value": "Пожежна та аварійна служби",
     "valueEN": "Fire and Emergency Services"
   },
   {
     "key": "176",
-    "value": "[UK]Law Enforcement",
+    "value": "Правозастосування",
     "valueEN": "Law Enforcement"
   },
   {
     "key": "177",
-    "value": "[UK]Other Emergency Services Facility",
+    "value": "Інші служби екстреної допомоги",
     "valueEN": "Other Emergency Services Facility"
   },
   {
     "key": "178",
-    "value": "[UK]Public Works",
+    "value": "Громадські роботи",
     "valueEN": "Public Works"
   },
   {
     "key": "179",
-    "value": "[UK]Biodiesel",
+    "value": "Біодизель",
     "valueEN": "Biodiesel"
   },
   {
     "key": "180",
-    "value": "[UK]Coal",
+    "value": "Вугілля",
     "valueEN": "Coal"
   },
   {
     "key": "181",
-    "value": "[UK]Electricity",
+    "value": "Електрика",
     "valueEN": "Electricity"
   },
   {
     "key": "182",
-    "value": "[UK]Ethanol",
+    "value": "Етанол",
     "valueEN": "Ethanol"
   },
   {
     "key": "183",
-    "value": "[UK]Hydrogen",
+    "value": "Водень",
     "valueEN": "Hydrogen"
   },
   {
     "key": "184",
-    "value": "[UK]Natural Gas",
+    "value": "Природний газ",
     "valueEN": "Natural Gas"
   },
   {
     "key": "185",
-    "value": "[UK]Other Energy Conversion System",
+    "value": "Інша система перетворення енергії",
     "valueEN": "Other Energy Conversion System"
   },
   {
     "key": "186",
-    "value": "[UK]Petroleum",
+    "value": "Нафта",
     "valueEN": "Petroleum"
   },
   {
     "key": "187",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "188",
-    "value": "[UK]Education Facility",
+    "value": "Навчальний заклад",
     "valueEN": "Education Facility"
   },
   {
     "key": "189",
-    "value": "[UK]Election Infrastructure",
+    "value": "Виборча інфраструктура",
     "valueEN": "Election Infrastructure"
   },
   {
     "key": "190",
-    "value": "[UK]Government Research Facility",
+    "value": "Державна дослідницька установа",
     "valueEN": "Government Research Facility"
   },
   {
     "key": "191",
-    "value": "[UK]Government Sensor or Monitoring System",
+    "value": "Урядовий датчик або система моніторингу",
     "valueEN": "Government Sensor or Monitoring System"
   },
   {
     "key": "192",
-    "value": "[UK]Government Space System",
+    "value": "Урядова космічна система",
     "valueEN": "Government Space System"
   },
   {
     "key": "193",
-    "value": "[UK]Government Storage or Preservation Facility",
+    "value": "Державне сховище або консерваційний заклад",
     "valueEN": "Government Storage or Preservation Facility"
   },
   {
     "key": "194",
-    "value": "[UK]Military Facility",
+    "value": "Військовий об'єкт",
     "valueEN": "Military Facility"
   },
   {
     "key": "195",
-    "value": "[UK]Other Government Facility",
+    "value": "Інші державні установи",
     "valueEN": "Other Government Facility"
   },
   {
     "key": "196",
-    "value": "[UK]Personnel-Oriented Government Facility",
+    "value": "Урядовий заклад, орієнтований на персонал",
     "valueEN": "Personnel-Oriented Government Facility"
   },
   {
     "key": "197",
-    "value": "[UK]Service-Oriented Government Facility",
+    "value": "Сервісно-орієнтована державна установа",
     "valueEN": "Service-Oriented Government Facility"
   },
   {
     "key": "198",
-    "value": "[UK]Direct Patient Healthcare",
+    "value": "Безпосереднє лікування пацієнтів",
     "valueEN": "Direct Patient Healthcare"
   },
   {
     "key": "199",
-    "value": "[UK]Fatality/Mortuary Facility",
+    "value": "Смертельна служба/морг",
     "valueEN": "Fatality/Mortuary Facility"
   },
   {
     "key": "200",
-    "value": "[UK]Health Supporting Facility",
+    "value": "Заклад підтримки здоров'я",
     "valueEN": "Health Supporting Facility"
   },
   {
     "key": "201",
-    "value": "[UK]Healthcare Educational Facility",
+    "value": "Навчальний заклад охорони здоров'я",
     "valueEN": "Healthcare Educational Facility"
   },
   {
     "key": "202",
-    "value": "[UK]Other Healthcare and Public Health Entity",
+    "value": "Інша організація охорони здоров'я",
     "valueEN": "Other Healthcare and Public Health Entity"
   },
   {
     "key": "203",
-    "value": "[UK]Public Health Agency",
+    "value": "Агентство громадського здоров'я",
     "valueEN": "Public Health Agency"
   },
   {
     "key": "204",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "205",
-    "value": "[UK]Hardware Production",
+    "value": "Виробництво обладнання",
     "valueEN": "Hardware Production"
   },
   {
     "key": "206",
-    "value": "[UK]Internet-Based Content, Information, and Communications Services",
+    "value": "Інтернет-контент, інформація та комунікаційні послуги",
     "valueEN": "Internet-Based Content, Information, and Communications Services"
   },
   {
     "key": "207",
-    "value": "[UK]Other Hardware Production Facility",
+    "value": "Інше обладнання для виробництва обладнання",
     "valueEN": "Other Hardware Production Facility"
   },
   {
     "key": "208",
-    "value": "[UK]Other Information Technology Facility",
+    "value": "Інші засоби інформаційних технологій",
     "valueEN": "Other Information Technology Facility"
   },
   {
     "key": "209",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "210",
-    "value": "[UK]Software Production",
+    "value": "Виробництво програмного забезпечення",
     "valueEN": "Software Production"
   },
   {
     "key": "211",
-    "value": "[UK]Beverage Manufacturing",
+    "value": "Виробництво напоїв",
     "valueEN": "Beverage Manufacturing"
   },
   {
     "key": "212",
-    "value": "[UK]Chemical Manufacturing",
+    "value": "Хімічне виробництво",
     "valueEN": "Chemical Manufacturing"
   },
   {
     "key": "213",
-    "value": "[UK]Computer and Electronic Product Manufacturing",
+    "value": "Виробництво комп’ютерної та електронної продукції",
     "valueEN": "Computer and Electronic Product Manufacturing"
   },
   {
     "key": "214",
-    "value": "[UK]Critical Manufacturing",
+    "value": "Критичне виробництво",
     "valueEN": "Critical Manufacturing"
   },
   {
     "key": "215",
-    "value": "[UK]Fabricated Metal Product Manufacturing",
+    "value": "Виробництво готових металевих виробів",
     "valueEN": "Fabricated Metal Product Manufacturing"
   },
   {
     "key": "216",
-    "value": "[UK]Food Manufacturing",
+    "value": "Виробництво харчових продуктів",
     "valueEN": "Food Manufacturing"
   },
   {
     "key": "217",
-    "value": "[UK]Furniture And Related Product Manufacturing",
+    "value": "Виробництво меблів і супутніх товарів",
     "valueEN": "Furniture And Related Product Manufacturing"
   },
   {
     "key": "218",
-    "value": "[UK]Mining, Quarrying, or Oil and Gas Extraction",
+    "value": "Гірнича промисловість, розробка кар’єрів або видобуток нафти та газу",
     "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
   },
   {
     "key": "219",
-    "value": "[UK]Non-Metallic Mineral Products Manufacturing",
+    "value": "Виробництво неметалевої мінеральної продукції",
     "valueEN": "Non-Metallic Mineral Products Manufacturing"
   },
   {
     "key": "220",
-    "value": "[UK]Other Manufacturing",
+    "value": "Інше Виробництво",
     "valueEN": "Other Manufacturing"
   },
   {
     "key": "221",
-    "value": "[UK]Paper Manufacturing",
+    "value": "Виробництво паперу",
     "valueEN": "Paper Manufacturing"
   },
   {
     "key": "222",
-    "value": "[UK]Petroleum and Coal Products Manufacturing",
+    "value": "Виробництво нафтопродуктів і вугільної промисловості",
     "valueEN": "Petroleum and Coal Products Manufacturing"
   },
   {
     "key": "223",
-    "value": "[UK]Plastics And Rubber Products Manufacturing",
+    "value": "Виробництво пластмасових та гумових виробів",
     "valueEN": "Plastics And Rubber Products Manufacturing"
   },
   {
     "key": "224",
-    "value": "[UK]Printing and Related Support",
+    "value": "Друк та супутня підтримка",
     "valueEN": "Printing and Related Support"
   },
   {
     "key": "225",
-    "value": "[UK]Textile, Textile Product, Apparel, Leather Manufacturing",
+    "value": "Текстиль, текстильні вироби, одяг, виробництво шкіри",
     "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
   },
   {
     "key": "226",
-    "value": "[UK]Tobacco Product Manufacturing",
+    "value": "Виробництво тютюнових виробів",
     "valueEN": "Tobacco Product Manufacturing"
   },
   {
     "key": "227",
-    "value": "[UK]Wood Product Manufacturing",
+    "value": "Виробництво виробів з дерева",
     "valueEN": "Wood Product Manufacturing"
   },
   {
     "key": "228",
-    "value": "[UK]National Monument/Icon Document or Object",
+    "value": "Національний пам'ятник/знак, документ або об'єкт",
     "valueEN": "National Monument/Icon Document or Object"
   },
   {
     "key": "229",
-    "value": "[UK]National Monument/Icon Geographic Area",
+    "value": "Національний пам'ятник/знак географічна зона",
     "valueEN": "National Monument/Icon Geographic Area"
   },
   {
     "key": "230",
-    "value": "[UK]National Monument/Icon Structure",
+    "value": "Національна пам'ятка/знак структура",
     "valueEN": "National Monument/Icon Structure"
   },
   {
     "key": "231",
-    "value": "[UK]Other National Monuments and Icons",
+    "value": "Інші національні пам'ятники та знаки",
     "valueEN": "Other National Monuments and Icons"
   },
   {
     "key": "232",
-    "value": "[UK]Nuclear Facility",
+    "value": "Ядерний об'єкт",
     "valueEN": "Nuclear Facility"
   },
   {
     "key": "233",
-    "value": "[UK]Nuclear Material",
+    "value": "Ядерний матеріал",
     "valueEN": "Nuclear Material"
   },
   {
     "key": "234",
-    "value": "[UK]Nuclear Waste",
+    "value": "Ядерні відходи",
     "valueEN": "Nuclear Waste"
   },
   {
     "key": "235",
-    "value": "[UK]Other Nuclear Facility",
+    "value": "Інший ядерний об'єкт",
     "valueEN": "Other Nuclear Facility"
   },
   {
     "key": "236",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "237",
-    "value": "[UK]Courier",
+    "value": "Кур'єр",
     "valueEN": "Courier"
   },
   {
     "key": "238",
-    "value": "[UK]Other Postal and Shipping Facility",
+    "value": "Інші поштові та транспортні засоби",
     "valueEN": "Other Postal and Shipping Facility"
   },
   {
     "key": "239",
-    "value": "[UK]United States Postal Service",
+    "value": "Поштова служба",
     "valueEN": "United States Postal Service"
   },
   {
     "key": "240",
-    "value": "[UK]Aviation",
+    "value": "Авіація",
     "valueEN": "Aviation"
   },
   {
     "key": "241",
-    "value": "[UK]Maritime",
+    "value": "Морський",
     "valueEN": "Maritime"
   },
   {
     "key": "242",
-    "value": "[UK]Mass Transit",
+    "value": "Громадський транспорт",
     "valueEN": "Mass Transit"
   },
   {
     "key": "243",
-    "value": "[UK]Pipeline",
+    "value": "Трубопровід",
     "valueEN": "Pipeline"
   },
   {
     "key": "244",
-    "value": "[UK]Railroad",
+    "value": "Залізниця",
     "valueEN": "Railroad"
   },
   {
     "key": "245",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "246",
-    "value": "[UK]Road",
+    "value": "Дорога",
     "valueEN": "Road"
   },
   {
     "key": "247",
-    "value": "[UK]Raw Water Storage",
+    "value": "Зберігання сирої води",
     "valueEN": "Raw Water Storage"
   },
   {
     "key": "248",
-    "value": "[UK]Raw Water Supply",
+    "value": "Постачання сирої води",
     "valueEN": "Raw Water Supply"
   },
   {
     "key": "249",
-    "value": "[UK]Raw Water Transmission",
+    "value": "Передача сирої води",
     "valueEN": "Raw Water Transmission"
   },
   {
     "key": "250",
-    "value": "[UK]Regulatory, Oversight, or Industry Organization",
+    "value": "Регуляторна, наглядова або галузева організація",
     "valueEN": "Regulatory, Oversight, or Industry Organization"
   },
   {
     "key": "251",
-    "value": "[UK]Treated (Finished) Water Storage",
+    "value": "Зберігання очищеної (готової) води",
     "valueEN": "Treated (Finished) Water Storage"
   },
   {
     "key": "252",
-    "value": "[UK]Treated Water Distribution Control Center",
+    "value": "Центр управління розподілом очищеної води",
     "valueEN": "Treated Water Distribution Control Center"
   },
   {
     "key": "253",
-    "value": "[UK]Treated Water Distribution System",
+    "value": "Система розподілу очищеної води",
     "valueEN": "Treated Water Distribution System"
   },
   {
     "key": "254",
-    "value": "[UK]Treated Water Monitoring System",
+    "value": "Система моніторингу очищеної води",
     "valueEN": "Treated Water Monitoring System"
   },
   {
     "key": "255",
-    "value": "[UK]Wastewater Facility",
+    "value": "Споруда каналізації",
     "valueEN": "Wastewater Facility"
   },
   {
     "key": "256",
-    "value": "[UK]Water Treatment Facility",
+    "value": "Водоочисна споруда",
     "valueEN": "Water Treatment Facility"
   }
 ]
