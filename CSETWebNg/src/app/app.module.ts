@@ -635,9 +635,15 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
+import { CieLayoutMainComponent } from './layout/cie-layout-main/cie-layout-main.component';
+import { AboutCieComponent } from './dialogs/about-cie/about-cie.component';
+import { ApplyingCieComponent } from './assessment/results/cie-example/cie-analysis/applying-cie/applying-cie.component';
+import { CieExampleComponent } from './assessment/results/cie-example/cie-example.component';
+import { CieBackgroundComponent } from './assessment/results/cie-example/cie-background/cie-background.component';
+import { CieAnalysisComponent } from './assessment/results/cie-example/cie-analysis/cie-analysis.component';
+import { PrincipleAnalysisCieComponent } from './assessment/results/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
+import { CieAnalysisMatrixComponent } from './assessment/results/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
 
-import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
- import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1224,7 +1230,13 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     AssessmentConfigCieComponent,
     AssessmentDetailCieComponent,
     CieLayoutMainComponent,
-    AboutCieComponent
+    AboutCieComponent,
+    ApplyingCieComponent,
+    CieExampleComponent,
+    CieBackgroundComponent,
+    CieAnalysisComponent,
+    PrincipleAnalysisCieComponent,
+    CieAnalysisMatrixComponent
   ],
   providers: [
     TranslocoService,

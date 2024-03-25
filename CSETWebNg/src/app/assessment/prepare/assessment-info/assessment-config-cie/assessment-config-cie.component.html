@@ -67,15 +67,24 @@
     <h2>Import CIE Answers</h2>
     <p>Import all answers from a previous CIE Analysis. All answers, comments, and artifacts currently in the Analysis will be overwritten.</p>
     <div class="d-flex flex-row">
-        <select class="form-control mr-1" #import>
-            <option value="">-- Select Survey to Import --</option>
-            <option *ngFor="let c of importSourceCandidates" [value]="c.id">
+        <!-- <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+            <option [ngValue]="null">-- No Baseline Assessment --</option>
+            <option *ngFor="let c of baselineCandidates" [value]="c.id">
+                {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
+            </option>
+        </select> -->
+
+        <select class="form-control mr-1" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
+            <option [ngValue]="null">-- Select Analysis to Import --</option>
+            <option *ngFor="let c of importSourceCandidates" [ngValue]="c.id">
                 {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}] -{{c.id}}-
             </option>
         </select>
-        <button class="btn btn-primary text-nowrap" [disabled]="import.value == ''"
-            (click)="confirmImportSurvey(import)">
+        <button class="btn btn-primary text-nowrap" [disabled]="baselineAssessmentId == null"
+            (click)="confirmImportSurvey()">
             <i class="fs-base cset-icons-import"></i>
             Import</button>
     </div>
+    <app-nav-back-next [page]="'assessment-config-cie'"></app-nav-back-next>
+
 </div>

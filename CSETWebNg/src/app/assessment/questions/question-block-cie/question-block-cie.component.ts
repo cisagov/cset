@@ -33,7 +33,7 @@ export class QuestionBlockCieComponent implements OnInit {
   answerOptions = [];
   percentAnswered = 0;
 
-  summaryBoxMax = 450;
+  summaryBoxMax = 275;
 
   textPlaceholderEmpty = "Type answer here...";
   textPlaceholderNA = "Explain why this question is Not Applicable here...";
@@ -74,7 +74,6 @@ export class QuestionBlockCieComponent implements OnInit {
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
 
-      console.log(this.myGrouping)
       this.myGrouping.questions.forEach(question => {
         this.freeResponseAnswers.set(question.questionId, question.freeResponseAnswer);
       });
@@ -114,46 +113,6 @@ export class QuestionBlockCieComponent implements OnInit {
       return "normal";
     }
     return "break-all";
-  }
-
-  displayTooltip(maturityModelName: string, option: string) {
-    let toolTip = this.questionsSvc.answerDisplayLabel(maturityModelName, option);
-    if (toolTip === 'Yes' || toolTip === 'No') {
-      toolTip = "";
-    }
-    return toolTip;
-  }
-
-  /**
-  * Repopulates the map variables to correctly track/delete issues
-  */
-  setIssueMap() {
-    let parentId = 0;
-    let count = 0;
-
-    this.myGrouping.questions.forEach(question => {
-      parentId = question.parentQuestionId;
-
-      if (question.answer === 'N') {
-        count++;
-        this.ncuaSvc.questionCheck.set(parentId, count);
-      }
-      this.ncuaSvc.deleteHistory.clear();
-    });
-  }
-
-  deleteIssueMaps(observation: number) {
-    const iterator = this.ncuaSvc.issueObservationId.entries();
-    let parentKey = 0;
-
-    for (let value of iterator) {
-      if (value[1] === observation) {
-        parentKey = value[0];
-        this.ncuaSvc.questionCheck.delete(parentKey);
-        this.ncuaSvc.issueObservationId.delete(parentKey);
-        this.ncuaSvc.deleteHistory.add(parentKey);
-      }
-    }
   }
 
   /**
@@ -535,7 +494,7 @@ export class QuestionBlockCieComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.deleteIssueMaps(observationId);
+          //this.deleteIssueMaps(observationId);
           this.observationSvc.deleteObservation(observationId).subscribe();
           let deleteIndex = null;
 

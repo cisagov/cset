@@ -369,6 +369,7 @@ namespace CSETWebCore.Api.Controllers
 
             resp.Title = grouping.Title;
             resp.Description = grouping.Description;
+            resp.Description_Extended = grouping.Description_Extended;
 
             return Ok(resp);
 
