@@ -917,12 +917,12 @@
   {
     "groupingId": "208",
     "title": "[UK] Goal 2 - Events are detected.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "209",
     "title": "[UK] Goal 3 - Events are analyzed, processed, and tracked.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "210",
@@ -932,22 +932,22 @@
   {
     "groupingId": "211",
     "title": "[UK] Goal 1 - Incidents are declared.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "212",
     "title": "[UK] Goal 2 - Incidents are analyzed and correlated to determine a response.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "213",
     "title": "[UK] Goal 3 - Incident response is implemented.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "214",
     "title": "[UK] Goal 4 - Forensic handling of events and incidents is conducted.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "215",
@@ -957,12 +957,12 @@
   {
     "groupingId": "216",
     "title": "[UK] Goal 1 - Post-incident review and analysis is conducted as appropriate.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "217",
     "title": "[UK] Goal 2 - The incident detection, handling, and response capability is tested and exercised.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "218",
@@ -972,22 +972,22 @@
   {
     "groupingId": "219",
     "title": "[UK] Goal 1 - The Incident Management Function is integrated with the organization's change management program.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "220",
     "title": "[UK] Goal 2 - The Incident Management Function is able to leverage the organization's vulnerability analysis and resolution activities.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "221",
     "title": "[UK] Goal 3 - Incident Management Function is integrated with the organization's service continuity program.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "222",
     "title": "[UK] Goal 4 - Incident Management Function is integrated with the organization's threat monitoring program.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "223",
@@ -997,12 +997,12 @@
   {
     "groupingId": "224",
     "title": "[UK] Goal 1 - The Incident Management Function's assets are protected and sustained.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "225",
     "title": "[UK] Goal 2 - The confidentiality, integrity and availability of event and incident information is managed.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "226",
@@ -1012,27 +1012,27 @@
   {
     "groupingId": "227",
     "title": "[UK] Goal 1 - A process to detect and analyze events, identify incidents, and determine an organizational response is established.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "228",
     "title": "[UK] Goal 2 - A documented communication plan is established.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "229",
     "title": "[UK] Goal 3 - Interfaces for the exchange of incident management information are defined.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "230",
     "title": "[UK] Goal 4 - External dependencies on which the incident management function depends are managed.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "231",
     "title": "[UK] Goal 5 - Incident management personnel are trained.",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "429",
@@ -1356,7 +1356,7 @@
   },
   {
     "groupingId": "502",
-    "title": "[UK] Управління ризиками",
+    "title": "Управління ризиками",
     "description": "[UK] Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and respond to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders."
   },
   {
@@ -1397,217 +1397,217 @@
   {
     "groupingId": "510",
     "title": "[UK] Manage IT and OT Asset Inventory",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "511",
     "title": "[UK] Manage Information Asset Inventory",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "512",
     "title": "[UK] Manage IT and OT Asset Configurations",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "513",
     "title": "[UK] Manage Changes to IT and OT Assets",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "514",
     "title": "[UK] Management Activities for the ASSET domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "515",
     "title": "[UK] Reduce Cybersecurity Vulnerabilities",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "516",
     "title": "[UK] Respond to Threats and Share Threat Information",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "517",
     "title": "[UK] Management Activities for the THREAT domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "518",
     "title": "[UK] Establish and Maintain Cyber Risk Management Strategy and Program",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "519",
     "title": "[UK] Identify Cyber Risk",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "520",
     "title": "[UK] Analyze Cyber Risk",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "521",
     "title": "[UK] Respond to Cyber Risk",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "522",
     "title": "[UK] Management Activities for the RISK domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "523",
     "title": "[UK] Establish Identities and Manage Authentication",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "524",
     "title": "[UK] Control Logical Access",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "525",
     "title": "[UK] Control Physical Access",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "526",
     "title": "[UK] Management Activities for the ACCESS domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "527",
     "title": "[UK] Perform Logging",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "528",
     "title": "[UK] Perform Monitoring",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "529",
     "title": "[UK] Establish and Maintain Situational Awareness",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "530",
     "title": "[UK] Management Activities for the SITUATION domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "531",
     "title": "[UK] Detect Cybersecurity Events",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "532",
     "title": "[UK] Analyze Cybersecurity Events and Declare Incidents",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "533",
     "title": "[UK] Respond to Cybersecurity Incidents",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "534",
     "title": "[UK] Address Cybersecurity in Continuity of Operations",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "535",
     "title": "[UK] Management Activities for the RESPONSE domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "536",
     "title": "[UK] Identify and Prioritize Third Parties",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "537",
     "title": "[UK] Manage Third-Party Risk",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "538",
     "title": "[UK] Management Activities for the THIRD-PARTIES domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "539",
     "title": "[UK] Implement Workforce Controls",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "540",
     "title": "[UK] Increase Cybersecurity Awareness",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "541",
     "title": "[UK] Assign Cybersecurity Responsibilities",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "542",
     "title": "[UK] Develop Cybersecurity Workforce",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "543",
     "title": "[UK] Management Activities for the WORKFORCE domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "544",
     "title": "[UK] Establish and Maintain Cybersecurity Architecture Strategy and Program",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "545",
     "title": "[UK] Implement Network Protections as an Element of the Cybersecurity Architecture",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "546",
     "title": "[UK] Implement IT and OT Asset Security as an Element of the Cybersecurity Architecture",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "547",
     "title": "[UK] Implement Software Security as an Element of the Cybersecurity Architecture",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "548",
     "title": "[UK] Implement Data Security as an Element of the Cybersecurity Architecture",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "549",
     "title": "[UK] Management Activities for the ARCHITECTURE domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "550",
     "title": "[UK] Establish Cybersecurity Program Strategy",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "551",
     "title": "[UK] Establish and Maintain Cybersecurity Program",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "552",
     "title": "[UK] Management Activities for the PROGRAM domain",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "1187",
@@ -2627,157 +2627,157 @@
   {
     "groupingId": "2433",
     "title": "[UK] Recovery plan is executed during or after a cybersecurity incident",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2434",
     "title": "[UK] Recovery plans incorporate lessons learned",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2436",
     "title": "[UK] Public relations are managed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2437",
     "title": "[UK] Reputation is repaired after an incident",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2438",
     "title": "[UK] Recovery activities are communicated to internal and external stakeholders as well as executive management teams",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2439",
     "title": "[UK] Purposing",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2440",
     "title": "[UK] Offloading",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2441",
     "title": "[UK] Replacement",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2443",
     "title": "[UK] Notifications from detection systems are investigated",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2444",
     "title": "[UK] The impact of the incident is understood",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2445",
     "title": "[UK] Forensics are performed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2446",
     "title": "[UK] Incidents are categorized consistent with response plans",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2448",
     "title": "[UK] Monitoring and Damage Assessment",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2449",
     "title": "[UK] Sensor Fusion and Analysis",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2450",
     "title": "[UK] Forensic and Behavioral Analysis",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2451",
     "title": "[UK] Personnel know their roles and order of operations when a response is needed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2452",
     "title": "[UK] Incidents are reported consistent with established criteria",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2453",
     "title": "[UK] Information is shared consistent with response plans",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2454",
     "title": "[UK] Coordination with stakeholders occurs consistent with response plans",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2455",
     "title": "[UK] Voluntary information sharing occurs with external stakeholders to achieve broader cybersecurity situational awareness",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2456",
     "title": "[UK] Response plans incorporate lessons learned",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2457",
     "title": "[UK] Response strategies are updated",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2458",
     "title": "[UK] Incidents are contained",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2459",
     "title": "[UK] Incidents are mitigated",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2460",
     "title": "[UK] Newly identified vulnerabilities are mitigated or documented as accepted risks",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2461",
     "title": "[UK] Protected Backup and Restore",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2462",
     "title": "[UK] Surplus Capacity",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2463",
     "title": "[UK] Replication",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2464",
     "title": "[UK] Processes are established to receive, analyze and respond to vulnerabilities disclosed to the organization from internal and external sources (e.g. internal testing, security bulletins, or security researchers)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2465",
     "title": "[UK] A baseline of network operations and expected data flows for users and systems is established and managed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2466",
     "title": "[UK] Detected events (incidents) are analyzed to understand attack targets and methods",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2467",
@@ -2787,352 +2787,352 @@
   {
     "groupingId": "2468",
     "title": "[UK] Impact of events is determined",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2469",
     "title": "[UK] Incident alert thresholds are established",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2470",
     "title": "[UK] Physical devices and systems within the organization are inventoried",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2471",
     "title": "[UK] Organizational communication and data flows are mapped",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2472",
     "title": "[UK] External information systems are catalogued",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2473",
     "title": "[UK] Resources (e.g., hardware, devices, data, time, personnel, and software) are prioritized based on their classification, criticality, and business value",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2474",
     "title": "[UK] Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders (e.g., suppliers, customers, partners) are established",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2475",
     "title": "[UK] All users are informed and trained",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2476",
     "title": "[UK] Privileged users understand their roles and responsibilities",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2477",
     "title": "[UK] Physical and cybersecurity personnel understand their roles and responsibilities",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2478",
     "title": "[UK] Data-at-rest is protected",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2479",
     "title": "[UK] Data-in-transit is protected",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2480",
     "title": "[UK] Assets are formally managed throughout removal, transfers, and disposition",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2481",
     "title": "[UK] Adequate capacity to ensure availability is maintained",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2482",
     "title": "[UK] Protections against data leaks are implemented",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2483",
     "title": "[UK] Integrity checking mechanisms are used to verify software, firmware, and information integrity",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2484",
     "title": "[UK] The development and testing environment(s) are separate from the production environment",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2485",
     "title": "[UK] Integrity checking mechanisms are used to verify hardware integrity",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2486",
     "title": "[UK] Obfuscation",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2487",
     "title": "[UK] Misdirection",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2488",
     "title": "[UK] Tainting",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2489",
     "title": "[UK] Roles and responsibilities for detection are well defined to ensure accountability",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2490",
     "title": "[UK] Detection activities comply with all applicable requirements",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2491",
     "title": "[UK] Event detection information is communicated",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2492",
     "title": "[UK] Detection processes are tested",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2493",
     "title": "[UK] Detection processes are continuously improved",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2494",
     "title": "[UK] Identities and credentials are issued, managed, verified, revoked, and audited for authorized devices, users and processes",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2495",
     "title": "[UK] Access permissions and authorizations are managed, incorporating the principles of least privilege and separation of duties",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2496",
     "title": "[UK] Identities are proofed and bound to credentials and asserted in interactions",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2497",
     "title": "[UK] Users, devices, and other assets are authenticated (e.g., single-factor, multi-factor) commensurate with the risk of the transaction (e.g., individuals’ security and privacy risks and other organizational risks)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2498",
     "title": "[UK] A baseline configuration of information technology/industrial control systems is created and maintained incorporating security principles (e.g. concept of least functionality)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2499",
     "title": "[UK] A System Development Life Cycle to manage systems is implemented",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2500",
     "title": "[UK] Configuration change control processes are in place",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2501",
     "title": "[UK] Backups of information are conducted, maintained, and tested",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2502",
     "title": "[UK] Policy and regulations regarding the physical operating environment for organizational assets are met",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2503",
     "title": "[UK] Data is destroyed according to policy",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2504",
     "title": "[UK] Protection processes are improved",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2505",
     "title": "[UK] Effectiveness of protection technologies is shared",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2506",
     "title": "[UK] Response plans (Incident Response and Business Continuity) and recovery plans (Incident Recovery and Disaster Recovery) are in place and managed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2507",
     "title": "[UK] Response and recovery plans are tested",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2508",
     "title": "[UK] Cybersecurity is included in human resources practices (e.g., deprovisioning, personnel screening)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2509",
     "title": "[UK] A vulnerability management plan is developed and implemented",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2510",
     "title": "[UK] Maintenance and repair of organizational assets are performed and logged, with approved and controlled tools",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2511",
     "title": "[UK] Remote maintenance of organizational assets is approved, logged, and performed in a manner that prevents unauthorized access",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2512",
     "title": "[UK] Non-Persistent Information",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2513",
     "title": "[UK] Non-Persistent Services",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2514",
     "title": "[UK] Non-Persistent Connectivity",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2515",
     "title": "[UK] Trust-Based Privilege Management",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2516",
     "title": "[UK] Attribute-Based Usage Restriction",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2517",
     "title": "[UK] Dynamic Privileges",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2518",
     "title": "[UK] Audit/log records are determined, documented, implemented, and reviewed in accordance with policy",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2520",
     "title": "[UK] Removable media is protected and its use restricted according to policy",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2521",
     "title": "[UK] The principle of least functionality is incorporated by configuring systems to provide only essential capabilities",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2522",
     "title": "[UK] Communications and control networks are protected",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2523",
     "title": "[UK] Mechanisms (e.g., failsafe, load balancing, hot swap) are implemented to achieve resilience requirements in normal and adverse situations",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2524",
     "title": "[UK] The network is monitored to detect potential cybersecurity events",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2525",
     "title": "[UK] The physical environment is monitored to detect potential cybersecurity events",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2526",
     "title": "[UK] Personnel activity is monitored to detect potential cybersecurity events",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2527",
     "title": "[UK] Malicious code is detected",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2528",
     "title": "[UK] Unauthorized mobile code is detected",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2529",
     "title": "[UK] External service provider activity is monitored to detect potential cybersecurity events",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2530",
     "title": "[UK] Monitoring for unauthorized personnel, connections, devices, and software is performed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2531",
     "title": "[UK] Vulnerability scans are performed",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2532",
     "title": "[UK] Predefined Segmentation",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2533",
     "title": "[UK] Dynamic Segmentation and Isolation",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2534",
     "title": "[UK] Integrity Checks",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2535",
     "title": "[UK] Provenance Tracking",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2536",
     "title": "[UK] Behavior Validation",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2537",
     "title": "[UK] Temporal Unpredictability",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2538",
     "title": "[UK] Contextual Unpredictability",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2539",
@@ -3427,77 +3427,77 @@
   {
     "groupingId": "2601",
     "title": "[UK] Identify Cyber Critical Systems (IC)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2602",
     "title": "[UK] Network Segmentation (NS)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2603",
     "title": "[UK] External Connections (EC)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2604",
     "title": "[UK] Zone Boundaries (ZB)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2605",
     "title": "[UK] Encryption (EN)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2606",
     "title": "[UK] Access Control (AC)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2607",
     "title": "[UK] MFA (MF)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2608",
     "title": "[UK] Least Privilege (LP)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2609",
     "title": "[UK] Shared Accounts (SA)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2610",
     "title": "[UK] Continuous Monitoring Capabilities (CC)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2611",
     "title": "[UK] Continuous Monitoring Procedures (CP)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2612",
     "title": "[UK] Incident Response (IR)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2613",
     "title": "[UK] Logging Policies (LP)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2614",
     "title": "[UK] Patching (PA)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2615",
     "title": "[UK] Cybersecurity Assessment Plan (CAP)",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2616",
@@ -3507,16 +3507,16 @@
   {
     "groupingId": "2617",
     "title": "[UK] SD02D Section 1",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2618",
     "title": "[UK] SD02D Section 2",
-    "description": "[UK] NULL"
+    "description": "NULL"
   },
   {
     "groupingId": "2619",
     "title": "[UK] SD02D Section 3",
-    "description": "[UK] NULL"
+    "description": "NULL"
   }
 ]
