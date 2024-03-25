@@ -446,12 +446,12 @@
   },
   {
     "groupingId": "93",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "94",
-    "title": "[UK] Risk Management",
+    "title": "Управління ризиками",
     "description": ""
   },
   {
@@ -476,7 +476,7 @@
   },
   {
     "groupingId": "99",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -541,7 +541,7 @@
   },
   {
     "groupingId": "112",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -576,7 +576,7 @@
   },
   {
     "groupingId": "119",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -1356,7 +1356,7 @@
   },
   {
     "groupingId": "502",
-    "title": "[UK] Risk Management",
+    "title": "Управління ризиками",
     "description": "[UK] Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and respond to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders."
   },
   {
@@ -1686,7 +1686,7 @@
   },
   {
     "groupingId": "1256",
-    "title": "[UK] Access Control",
+    "title": "Управління доступом",
     "description": ""
   },
   {
@@ -1771,7 +1771,7 @@
   },
   {
     "groupingId": "1285",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -2036,7 +2036,7 @@
   },
   {
     "groupingId": "1338",
-    "title": "[UK] Awareness and Training",
+    "title": "Обізнаність і навчання",
     "description": ""
   },
   {
@@ -2116,7 +2116,7 @@
   },
   {
     "groupingId": "2313",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -2251,7 +2251,7 @@
   },
   {
     "groupingId": "2340",
-    "title": "[UK] Recover",
+    "title": "Відновити",
     "description": ""
   },
   {
@@ -2266,7 +2266,7 @@
   },
   {
     "groupingId": "2344",
-    "title": "[UK] Business Environment",
+    "title": "Бізнес середовище",
     "description": ""
   },
   {
@@ -2291,17 +2291,17 @@
   },
   {
     "groupingId": "2349",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "2350",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
     "groupingId": "2353",
-    "title": "[UK] Risk Management Strategy",
+    "title": "Стратегія управління ризиками",
     "description": ""
   },
   {
@@ -2311,22 +2311,22 @@
   },
   {
     "groupingId": "2355",
-    "title": "[UK] Anomalies and Events",
+    "title": "Аномалії та події",
     "description": ""
   },
   {
     "groupingId": "2356",
-    "title": "[UK] Asset Management",
+    "title": "Управління активами",
     "description": ""
   },
   {
     "groupingId": "2357",
-    "title": "[UK] Awareness and Training",
+    "title": "Обізнаність і навчання",
     "description": ""
   },
   {
     "groupingId": "2358",
-    "title": "[UK] Data Security",
+    "title": "Безпека даних",
     "description": ""
   },
   {
@@ -2336,7 +2336,7 @@
   },
   {
     "groupingId": "2360",
-    "title": "[UK] Detection Processes",
+    "title": "Процеси виявлення",
     "description": ""
   },
   {
@@ -2351,7 +2351,7 @@
   },
   {
     "groupingId": "2363",
-    "title": "[UK] Maintenance",
+    "title": "Технічне обслуговування",
     "description": ""
   },
   {
@@ -2366,12 +2366,12 @@
   },
   {
     "groupingId": "2373",
-    "title": "[UK] Protective Technology",
+    "title": "Захисна техніка",
     "description": ""
   },
   {
     "groupingId": "2374",
-    "title": "[UK] Security Continuous Monitoring",
+    "title": "Постійний моніторинг безпеки",
     "description": ""
   },
   {
@@ -2391,7 +2391,7 @@
   },
   {
     "groupingId": "2378",
-    "title": "[UK] Analysis",
+    "title": "Аналіз",
     "description": ""
   },
   {
@@ -2401,17 +2401,17 @@
   },
   {
     "groupingId": "2380",
-    "title": "[UK] Communications",
+    "title": "Комунікації",
     "description": ""
   },
   {
     "groupingId": "2381",
-    "title": "[UK] Improvements",
+    "title": "Покращення",
     "description": ""
   },
   {
     "groupingId": "2382",
-    "title": "[UK] Mitigation",
+    "title": "Пом'якшення",
     "description": ""
   },
   {
@@ -2421,17 +2421,17 @@
   },
   {
     "groupingId": "2384",
-    "title": "[UK] Recovery Planning",
+    "title": "Планування відновлення",
     "description": ""
   },
   {
     "groupingId": "2385",
-    "title": "[UK] Improvements",
+    "title": "Покращення",
     "description": ""
   },
   {
     "groupingId": "2386",
-    "title": "[UK] Communications",
+    "title": "Комунікації",
     "description": ""
   },
   {
@@ -3151,12 +3151,12 @@
   },
   {
     "groupingId": "2542",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "2543",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -3196,7 +3196,7 @@
   },
   {
     "groupingId": "2551",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
@@ -3206,7 +3206,7 @@
   },
   {
     "groupingId": "2553",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -3346,7 +3346,7 @@
   },
   {
     "groupingId": "2581",
-    "title": "[UK] Asset Management",
+    "title": "Управління активами",
     "description": ""
   },
   {
@@ -3381,7 +3381,7 @@
   },
   {
     "groupingId": "2588",
-    "title": "[UK] Maintenance",
+    "title": "Технічне обслуговування",
     "description": ""
   },
   {
