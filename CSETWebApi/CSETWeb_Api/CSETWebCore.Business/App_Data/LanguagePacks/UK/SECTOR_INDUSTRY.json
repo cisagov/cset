@@ -116,7 +116,7 @@
   },
   {
     "key": "15",
-    "value": "[UK]Machinery Manufacturing",
+    "value": "Машинобудування",
     "valueEN": "Machinery Manufacturing"
   },
   {
@@ -126,27 +126,27 @@
   },
   {
     "key": "17",
-    "value": "[UK]Primary Metal Manufacturing",
+    "value": "Виробництво первинного металу",
     "valueEN": "Primary Metal Manufacturing"
   },
   {
     "key": "18",
-    "value": "[UK]Transportation and Heavy Equipment Manufacturing",
+    "value": "Виробництво транспорту та важкого устаткування",
     "valueEN": "Transportation and Heavy Equipment Manufacturing"
   },
   {
     "key": "87",
-    "value": "[UK]Manufacturing",
+    "value": "Виробництво",
     "valueEN": "Manufacturing"
   },
   {
     "key": "88",
-    "value": "[UK]Heavy Machinery Manufacturing",
+    "value": "Виробництво важкого машинобудування",
     "valueEN": "Heavy Machinery Manufacturing"
   },
   {
     "key": "19",
-    "value": "[UK]Dams",
+    "value": "Дамби",
     "valueEN": "Dams"
   },
   {
@@ -156,67 +156,67 @@
   },
   {
     "key": "21",
-    "value": "[UK]Private Hydropower Facilities in the US",
+    "value": "Приватні гідроелектростанції",
     "valueEN": "Private Hydropower Facilities in the US"
   },
   {
     "key": "89",
-    "value": "[UK]Levees",
+    "value": "Дамби",
     "valueEN": "Levees"
   },
   {
     "key": "90",
-    "value": "[UK]Navigation Locks",
+    "value": "Блокування навігації",
     "valueEN": "Navigation Locks"
   },
   {
     "key": "91",
-    "value": "[UK]Tailings and Waste Impoundments",
+    "value": "Хвостосховища та сховища відходів",
     "valueEN": "Tailings and Waste Impoundments"
   },
   {
     "key": "22",
-    "value": "[UK]Aircraft Industry",
+    "value": "Авіаційна промисловість",
     "valueEN": "Aircraft Industry"
   },
   {
     "key": "23",
-    "value": "[UK]Ammunition",
+    "value": "Боєприпаси",
     "valueEN": "Ammunition"
   },
   {
     "key": "24",
-    "value": "[UK]Combat Vehicle",
+    "value": "Бойова машина",
     "valueEN": "Combat Vehicle"
   },
   {
     "key": "25",
-    "value": "[UK]Communications",
+    "value": "Комунікації",
     "valueEN": "Communications"
   },
   {
     "key": "26",
-    "value": "[UK]Defense Contractors",
+    "value": "Оборонні підрядники",
     "valueEN": "Defense Contractors"
   },
   {
     "key": "27",
-    "value": "[UK]Electrical Industry Commodities",
+    "value": "Товари електротехнічної промисловості",
     "valueEN": "Electrical Industry Commodities"
   },
   {
     "key": "28",
-    "value": "[UK]Electronics",
+    "value": "Електроніка",
     "valueEN": "Electronics"
   },
   {
     "key": "29",
-    "value": "[UK]Mechanical Industry Commodities",
+    "value": "Товари машинобудівної промисловості",
     "valueEN": "Mechanical Industry Commodities"
   },
   {
     "key": "30",
-    "value": "[UK]Missile Industry",
+    "value": "Ракетна промисловість",
     "valueEN": "Missile Industry"
   },
   {
@@ -226,52 +226,52 @@
   },
   {
     "key": "32",
-    "value": "[UK]Research and Development Facilities",
+    "value": "Дослідження та розробки",
     "valueEN": "Research and Development Facilities"
   },
   {
     "key": "33",
-    "value": "[UK]Shipbuilding Industry",
+    "value": "Суднобудівна промисловість",
     "valueEN": "Shipbuilding Industry"
   },
   {
     "key": "34",
-    "value": "[UK]Space",
+    "value": "Космос",
     "valueEN": "Space"
   },
   {
     "key": "35",
-    "value": "[UK]Structural Industry Commodities",
+    "value": "Товари структурної промисловості",
     "valueEN": "Structural Industry Commodities"
   },
   {
     "key": "36",
-    "value": "[UK]Troop Support",
+    "value": "Підтримка військ",
     "valueEN": "Troop Support"
   },
   {
     "key": "37",
-    "value": "[UK]Weapons",
+    "value": "Зброя",
     "valueEN": "Weapons"
   },
   {
     "key": "38",
-    "value": "[UK]Emergency Management",
+    "value": "Управління надзвичайними ситуаціями",
     "valueEN": "Emergency Management"
   },
   {
     "key": "39",
-    "value": "[UK]Emergency Medical Services",
+    "value": "Екстрена медична допомога",
     "valueEN": "Emergency Medical Services"
   },
   {
     "key": "40",
-    "value": "[UK]Fire and Rescue Services",
+    "value": "Пожежно-рятувальні служби",
     "valueEN": "Fire and Rescue Services"
   },
   {
     "key": "41",
-    "value": "[UK]Law Enforcement",
+    "value": "Правозастосування",
     "valueEN": "Law Enforcement"
   },
   {
