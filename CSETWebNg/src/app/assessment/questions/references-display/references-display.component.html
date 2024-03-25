@@ -34,7 +34,7 @@
 </div>
 
 <div *ngIf="question?.ttp?.length > 0 || !!question?.riskAddressed" class="mb-4">
-    <div class="sub-header-1">TTP or Risk Addressed</div>
+    <div class="sub-header-1">{{'reports.core.cpg.report.ttp or risk addressed' | transloco}}</div>
     <div>
         {{question.riskAddressed}}
     </div>
