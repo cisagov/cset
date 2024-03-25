@@ -351,11 +351,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
-    if (this.disableIseReportLinks) {
-      return true;
-    }
-
-    if (this.ncuaSvc.creditUnionName == '') {
+    if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName == null) {
       return true;
     }
 
@@ -368,6 +364,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     }
 
     if (this.ncuaSvc.submitInProgress) {
+      return true;
+    }
+
+    if (this.disableIseReportLinks) {
       return true;
     }
   }
