@@ -295,6 +295,11 @@
     "valueEN": "Natural Gas"
   },
   {
+    "key": "46",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
     "key": "47",
     "value": "Нафтопереробні заводи",
     "valueEN": "Petroleum Refineries"
@@ -303,6 +308,11 @@
     "key": "92",
     "value": "Нафта і природний газ",
     "valueEN": "Oil and Natural Gas"
+  },
+  {
+    "key": "48",
+    "value": "Інше",
+    "valueEN": "Other"
   },
   {
     "key": "49",
@@ -350,6 +360,11 @@
     "valueEN": "Food Services"
   },
   {
+    "key": "54",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
     "key": "97",
     "value": "Постачання",
     "valueEN": "Supply"
@@ -385,6 +400,11 @@
     "valueEN": "Local Governments"
   },
   {
+    "key": "56",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
     "key": "57",
     "value": "Обласні уряди",
     "valueEN": "State Governments"
@@ -413,6 +433,11 @@
     "key": "60",
     "value": "Лікарні",
     "valueEN": "Hospitals"
+  },
+  {
+    "key": "61",
+    "value": "Інше",
+    "valueEN": "Other"
   },
   {
     "key": "62",
@@ -455,6 +480,11 @@
     "valueEN": "Information Technology"
   },
   {
+    "key": "64",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
     "key": "111",
     "value": "ІТ виробництво",
     "valueEN": "IT Production"
@@ -490,6 +520,11 @@
     "valueEN": "Operating Nuclear Power Plants"
   },
   {
+    "key": "66",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
     "key": "117",
     "value": "Засоби паливного циклу",
     "valueEN": "Fuel Cycle Facilities"
@@ -515,9 +550,44 @@
     "valueEN": "Aviation"
   },
   {
+    "key": "68",
+    "value": "Вантажні залізниці",
+    "valueEN": "Freight Rail"
+  },
+  {
+    "key": "69",
+    "value": "Шосе (автомобільний транспорт)",
+    "valueEN": "Highway (truck transportation)"
+  },
+  {
     "key": "70",
     "value": "Морський",
     "valueEN": "Maritime"
+  },
+  {
+    "key": "71",
+    "value": "Громадський транспорт і пасажирський залізничний транспорт",
+    "valueEN": "Mass Transit and Passenger Rail"
+  },
+  {
+    "key": "72",
+    "value": "Муніципалітети з системами контролю дорожнього руху",
+    "valueEN": "Municipalities with Traffic Control Systems"
+  },
+  {
+    "key": "73",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "74",
+    "value": "Трубопроводи (транспортують природний газ, небезпечні рідини та різні хімічні речовини)",
+    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
+  },
+  {
+    "key": "75",
+    "value": "Інше",
+    "valueEN": "Other"
   },
   {
     "key": "76",
