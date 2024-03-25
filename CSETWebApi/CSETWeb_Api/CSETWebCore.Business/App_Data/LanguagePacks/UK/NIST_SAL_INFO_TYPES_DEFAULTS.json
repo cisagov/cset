@@ -1,312 +1,312 @@
 [
   {
     "typeId": "1",
-    "typeValue": "[UK]Air Transportation",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Unauthorized disclosure of information (e.g., investigations, maintenance) that has not been adequately researched, coordinated, or edited can result in serious economic harm to individuals and to corporations. Loss in public confidence is a further potential consequence. Additionally, some information associated with air transportation functions is proprietary to corporations or subject to privacy laws. In such cases, the confidentiality impact resulting from unauthorized disclosure can be moderate. The sensitivity of air transportation information (e.g., aircraft positioning data)can be time or event-driven. For example, passenger lists are not releasable to the general public before a flight takes off, but are placed in the public domain in the event of a crash. In such cases, the confidentiality impact resulting from unauthorized disclosure can be moderate.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Some air transportation functions are time-critical (e.g., air traffic control instructions, position reports, situational awareness, separation, weather reports for the terminal area, microburst tracking, maintenance trouble reports). Communications management (e.g., frequency management) information also needs to be included in air transportation integrity impact considerations. There may be circumstances under which erroneous frequency assignment information can result in a loss of communications with aircraft that are affected by hazardous conditions (e.g., loss of communications with an aircraft in a crowded air space.) Unauthorized modification or destruction of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. The Wide Area Augmentation System (WAAS) supplements the availability and integrity of position information available from the DoD's Global Positioning Systems (GPS). Because of the potential system-wide impacts from a loss of integrity of this system, a high integrity impact level is recommended.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: Some air transportation functions are time-critical (e.g., air traffic control instructions, position reports, situational awareness, separation, weather reports for the terminal area, microburst tracking, maintenance trouble reports). Loss of availability of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. Timing plays a large part in the availability impact of air transportation information. For example, the time criticality of weather information may be measured in minutes or hours in the case of pre-flight and mid-flight operations. However, on final landing approach, up to the second availability may be required (e.g., detection of microbursts in the terminal area). Air operations are not tolerant of information loss. The Wide Area Augmentation System (WAAS) supplements the availability of information available from the Department of Defense's Global Positioning Systems (GPS). Because of the potential system-wide impacts from a loss of availability of this system, it would be appropriately categorized as having a high availability impact."
+    "typeValue": "Повітряний транспорт",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: Несанкціоноване розкриття інформації (наприклад, розслідування, технічне обслуговування), яка не була належним чином досліджена, скоординована або відредагована, може призвести до серйозної економічної шкоди окремим особам і корпораціям. Ще одним потенційним наслідком є втрата довіри громадськості. Крім того, деяка інформація, пов’язана з функціями повітряного транспорту, є власністю корпорацій або регулюється відповідними нормативно-правовими актами. У таких випадках вплив на конфіденційність у результаті неавторизованого розголошення може бути помірним. Чутливість інформації про повітряний транспорт (наприклад, дані про місцезнаходження літака) може залежати від часу або події. Наприклад, списки пасажирів не можна оприлюднити для широкого загалу перед вильотом рейсу, але вони розміщуються у відкритому доступі у разі катастрофи. У таких випадках вплив на конфіденційність у результаті неавторизованого розголошення може бути помірним.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на цілісність: деякі функції повітряного транспорту є критичними за часом (наприклад, інструкції диспетчера повітряного руху, звіти про місцезнаходження, обізнаність про ситуацію, ешелонування, звіти про погоду для зони терміналу, відстеження мікроспалахів, звіти про проблеми з обслуговуванням). Інформацію про керування зв’язком (наприклад, керування частотами) також необхідно включити до розгляду впливу на цілісність повітряного транспорту. Можуть існувати обставини, за яких помилкова інформація про призначення частоти може призвести до втрати зв’язку з літаком, який перебуває під впливом небезпечних умов (наприклад, втрата зв’язку з літаком у переповненому повітряному просторі). Несанкціонована модифікація або знищення критично важливої інформації виконання цих функцій може призвести до великомасштабної втрати майна та людських життів. Широкомасштабна система доповнення (WAAS) доповнює доступність і цілісність інформації про місцезнаходження, доступну з глобальних систем позиціонування (GPS). Через потенційні загальносистемні впливи від втрати цілісності цієї системи рекомендується високий рівень впливу на цілісність.",
+    "specialFactorA": "Спеціальні фактори, що впливають на визначення впливу на доступність: Деякі функції повітряного транспорту є критичними за часом (наприклад, інструкції диспетчера повітряного руху, звіти про місцезнаходження, обізнаність про ситуацію, ешелонування, звіти про погоду для зони терміналу, відстеження мікроспалахів, звіти про проблеми з обслуговуванням). Втрата критично важливої інформації, необхідної для виконання цих функцій, може призвести до великомасштабної втрати власності та людських життів. Час відіграє значну роль у доступності інформації про авіатранспорт. Наприклад, критичність інформації про погоду в часі може вимірюватися в хвилинах або годинах у випадку виконання операцій перед польотом і в середині польоту. Однак при кінцевому заході на посадку може знадобитися до другої готовності (наприклад, виявлення мікроспалахів у зоні терміналу). Повітряні операції не терплять втрати інформації. Система глобального визначення місцезнаходження (WAAS) доповнює доступність інформації, доступної з глобальних систем позиціонування (GPS) Міністерства оборони. Через потенційний загальносистемний вплив через втрату доступності цієї системи її було б належним чином класифікувати як таку, що має високий вплив на доступність."
   },
   {
     "typeId": "2",
-    "typeValue": "[UK]Asset and Liability Management"
+    "typeValue": "Управління активами та пасивами"
   },
   {
     "typeId": "3",
-    "typeValue": "[UK]Budget Execution"
+    "typeValue": "Виконання бюджету"
   },
   {
     "typeId": "4",
-    "typeValue": "[UK]Budget Formulation"
+    "typeValue": "Формулювання бюджету"
   },
   {
     "typeId": "5",
-    "typeValue": "[UK]Budgeting & Performance Integration"
+    "typeValue": "Бюджетування та інтеграція ефективності"
   },
   {
     "typeId": "6",
-    "typeValue": "[UK]Capital Planning"
+    "typeValue": "Планування капіталу"
   },
   {
     "typeId": "7",
-    "typeValue": "[UK]Collections & Receivables"
+    "typeValue": "Стягнення та дебіторська заборгованість"
   },
   {
     "typeId": "8",
-    "typeValue": "[UK]Contingency Planning"
+    "typeValue": "Contingency Planning"
   },
   {
     "typeId": "9",
-    "typeValue": "[UK]Continuity of Operations"
+    "typeValue": "Безперервність операцій"
   },
   {
     "typeId": "10",
-    "typeValue": "[UK]Cost Accounting/Performance Measurement"
+    "typeValue": "Облік витрат/вимірювання ефективності"
   },
   {
     "typeId": "11",
-    "typeValue": "[UK]Customer Services"
+    "typeValue": "Обслуговування клієнтів"
   },
   {
     "typeId": "12",
-    "typeValue": "[UK]Disaster Preparedness & Planning",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: The consequences of unauthorized disclosure of some disaster preparedness and planning information may include revealing weak or sensitive critical infrastructure characteristics or inadequate security of U.S. targets to terrorists or other adversaries. Such information may reveal to an enemy the most effective technique(s) to use in attacking a target, and/or information regarding the capabilities, intent, and plans of our adversaries. Where unauthorized disclosure of disaster preparedness and planning information associated with critical infrastructures, large groups of people, or key national assets is expected to be of direct use to terrorists, the confidentiality impact level is recommended to be high.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Unauthorized modification or destruction of information affecting external communications (e.g., web pages, electronic mail) may adversely affect operations and/or public confidence in the agency, but the damage to the mission will usually be limited. The consequences of unauthorized modification or destruction of information can be very serious or catastrophic if the data is time-critical operational information. In such cases, the impact level assigned would be moderate or high.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: If emergency responders and those responsible for repair and restoration activities are unable to access preparedness and planning information in the event of an actual emergency the consequences may include confusion and delays. In such cases, the availability impact level can be moderate or high."
+    "typeValue": "Готовність до катастроф і планування",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: Наслідки неавторизованого розголошення деякої інформації про готовність до стихійного лиха та планування можуть включати розкриття слабких або чутливих характеристик критичної інфраструктури або неадекватної безпеки об’єктів у країні для терористів чи інших супротивників. Така інформація може розкрити ворогу найефективнішу техніку(-и) для атаки на ціль та/або інформацію про можливості, наміри та плани наших противників. Якщо очікується, що несанкціоноване розголошення інформації щодо готовності до стихійних лих і планування, пов’язаної з критично важливою інфраструктурою, великими групами людей або ключовими національними активами, буде безпосередньо використано терористами, рівень впливу на конфіденційність рекомендується мати високий.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на чесність: Несанкціонована зміна або знищення інформації, що впливає на зовнішні комунікації (наприклад, веб-сторінки, електронна пошта), може негативно вплинути на роботу та/або довіру громадськості до агентства, але шкода для місії зазвичай буде обмеженою. Наслідки несанкціонованої модифікації або знищення інформації можуть бути дуже серйозними або катастрофічними, якщо дані є оперативною інформацією, критичною за часом. У таких випадках призначається помірний або високий рівень впливу.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: якщо служби реагування на надзвичайні ситуації та особи, відповідальні за ремонтно-відновлювальні роботи, не можуть отримати доступ до інформації щодо готовності та планування у випадку фактичної надзвичайної ситуації, наслідки можуть включати плутанину та затримки. У таких випадках рівень впливу доступності може бути помірним або високим."
   },
   {
     "typeId": "13",
-    "typeValue": "[UK]Emergency Response",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: In cases where an attack is underway, unauthorized disclosure of emergency response information can provide information that might permit terrorists or other adversaries to target emergency response assets, thus jeopardizing emergency response resources and missions and public safety. Given the criticality that much emergency response information has in terms of potential loss of human life and major property damage, where unauthorized release of information can reasonably be expected to facilitate interference with emergency response missions, the confidentiality impact level may be moderate or high. The unauthorized disclosure of one agency’s emergency response by another agency could result in negative impacts on cross-jurisdictional coordination within the critical emergency services infrastructure and the general effectiveness of organizations tasked with emergency response missions.",
-    "specialFactorI": "[UK]Recommended Integrity Impact Level: The provisional integrity impact level recommended for emergency response information is normally high.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for emergency response information is high."
+    "typeValue": "Реагування на надзвичайні ситуації",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: у випадках, коли відбувається атака, несанкціоноване розкриття інформації про реагування на надзвичайні ситуації може надати інформацію, яка може дозволити терористам або іншим супротивникам атакувати засоби реагування на надзвичайні ситуації, таким чином ставлячи під загрозу ресурси та місії реагування на надзвичайні ситуації та громадську безпеку. Враховуючи критичність, яку має велика частина інформації про реагування на надзвичайні ситуації з точки зору потенційної втрати людського життя та значної шкоди майну, де несанкціоноване оприлюднення інформації може обґрунтовано сприяти втручанню в місії реагування на надзвичайні ситуації, рівень впливу на конфіденційність може бути помірним або високим. Несанкціоноване розголошення іншою агенцією інформації про реагування на надзвичайні ситуації однієї агенції може негативно вплинути на міжюрисдикційну координацію в рамках критичної інфраструктури екстрених служб і загальну ефективність організацій, яким доручено виконувати місії реагування на надзвичайні ситуації.",
+    "specialFactorI": "Рекомендований рівень впливу на цілісність: попередній рівень впливу на цілісність, рекомендований для інформації про реагування на надзвичайні ситуації, зазвичай високий.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для інформації про реагування на надзвичайні ситуації, є високим."
   },
   {
     "typeId": "14",
-    "typeValue": "[UK]Energy Conservation & Preparedness",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: In some cases, unauthorized disclosure of preliminary findings or policies under consideration regarding proposed conservation measures or the distribution of energy in the event of an emergency may result in mobilization of special interests. These groups may successfully oppose necessary conservation measures and be given an unfair advantage for specific commercial interests. Also, the unauthorized disclosure may cause domestic or international loss of confidence in the Federal government. In such cases, serious damage may result for energy conservation and preparedness operations. Therefore, the confidentiality impact level may be moderate. In other cases, unauthorized disclosure of information regarding measures taken to ensure the provision of energy in the event of an emergency may facilitate malicious activities of terrorists. Here, there is a potential for loss of human life resulting from extended outages, so the confidentiality impact level may be high.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Unauthorized modification or destruction of information necessary to mission-critical procedures ensuring the provision of energy in the event of an emergency can result in extended outages. There is some potential for a consequent threat to critical energy infrastructure and to human life. In such cases, the integrity impact level may be high.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: Unavailability of information necessary to mission-critical procedures ensuring the provision of energy in the event of an emergency may result in extended outages. There is some potential for a consequent threat to critical energy infrastructure and to human life. In such cases, the availability impact level may be high."
+    "typeValue": "Енергозбереження та готовність",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: У деяких випадках несанкціоноване розголошення попередніх висновків або політики, що розглядається щодо запропонованих заходів збереження або розподілу енергії в разі надзвичайної ситуації, може призвести до мобілізації особливих інтересів. Ці групи можуть успішно протистояти необхідним заходам збереження та отримати несправедливу перевагу для певних комерційних інтересів. Крім того, несанкціоноване розголошення може спричинити втрату довіри до уряду на внутрішньому або міжнародному рівні. У таких випадках може бути завдано серйозної шкоди роботам із збереження енергії та готовності. Тому рівень впливу на конфіденційність може бути помірним. В інших випадках несанкціоноване розголошення інформації щодо вжитих заходів для забезпечення енергозабезпечення у разі надзвичайної ситуації може сприяти зловмисній діяльності терористів. Тут існує потенційна втрата людських життів внаслідок тривалих відключень, тому рівень впливу на конфіденційність може бути високим.",
+    "specialFactorI": "Визначення впливу особливих факторів, що впливають на цілісність: Несанкціонована зміна або знищення інформації, необхідної для критично важливих процедур, що забезпечують забезпечення енергією в разі надзвичайної ситуації, може призвести до тривалих відключень. Існує певна потенційна загроза критичній енергетичній інфраструктурі та життю людей. У таких випадках рівень впливу на цілісність може бути високим.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: Відсутність інформації, необхідної для критично важливих процедур, що забезпечують забезпечення енергією в разі надзвичайної ситуації, може призвести до тривалих відключень. Існує певна потенційна загроза критичній енергетичній інфраструктурі та життю людей. У таких випадках рівень впливу на доступність може бути високим."
   },
   {
     "typeId": "15",
-    "typeValue": "[UK]Energy Production",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Unauthorized disclosure of some energy production information can result in major financial consequences. In some cases, premature disclosure of this information can impact financial markets. Unauthorized disclosure to a single institution could damage faith in government institutions, result in adverse financial events, and have a serious adverse effect on public confidence in the agency. Therefore, the confidentiality impact should be at least moderate for this energy production information.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: If the energy production information is time-critical or very sensitive, the integrity impact level may be moderate or high.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for energy production information is low."
+    "typeValue": "Виробництво енергії",
+    "specialFactorC": "Особливі фактори, що впливають на конфіденційність Визначення впливу: Несанкціоноване розкриття деякої інформації про виробництво енергії може призвести до серйозних фінансових наслідків. У деяких випадках передчасне розкриття цієї інформації може вплинути на фінансові ринки. Несанкціоноване розкриття інформації одній установі може підірвати довіру до державних установ, призвести до несприятливих фінансових подій і мати серйозний негативний вплив на довіру громадськості до установи. Тому вплив на конфіденційність для цієї інформації про виробництво енергії має бути принаймні помірним.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на цілісність: якщо інформація про виробництво енергії є критичною за часом або дуже чутливою, рівень впливу на цілісність може бути помірним або високим.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для інформації про виробництво енергії, низький."
   },
   {
     "typeId": "16",
-    "typeValue": "[UK]Energy Resource Management"
+    "typeValue": "Управління енергетичними ресурсами"
   },
   {
     "typeId": "17",
-    "typeValue": "[UK]Energy Supply",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: The consequences of unauthorized disclosure of energy supply information can have a serious economic impact with respect to competitive advantages and financial and commodity market dynamics. Also, the unauthorized disclosure of supply information may assist terrorists in the theft of energy products or disruption of energy distribution channels. Facilitation of theft of nuclear materials is a particularly catastrophic potential result of unauthorized disclosure of specific types of energy supply information. In these cases, the confidentiality impact must be considered to be high.",
-    "specialFactorI": "[UK]Recommended Confidentiality Impact Level: The provisional confidentiality impact level recommended for most energy supply information is low.",
-    "specialFactorA": "[UK]Special Factors Affecting Integrity Impact Determination: Mission-critical systems: Unauthorized modification of mission-critical information or information systems (e.g., electrical power distribution, petroleum or gas pipelines) can result in severe impacts to the environment, service, major assets and/or human safety. Consequently, the integrity impact level associated with these types of mission-critical processes/systems may be high. Non mission-critical systems: For information or information systems that do not directly impact mission-critical functions, the integrity impact level may be downgraded to low."
+    "typeValue": "Енергопостачання",
+    "specialFactorC": "Особливі фактори, що впливають на конфіденційність Визначення впливу: Наслідки несанкціонованого розкриття інформації про енергопостачання можуть мати серйозні економічні наслідки щодо конкурентних переваг та динаміки фінансового та товарного ринку. Крім того, несанкціоноване розкриття інформації про постачання може допомогти терористам у крадіжці енергетичних продуктів або порушенні каналів розподілу енергії. Сприяння розкраданню ядерних матеріалів є особливо катастрофічним потенційним результатом несанкціонованого розголошення окремих видів інформації про енергопостачання. У цих випадках вплив на конфіденційність має бути високим.",
+    "specialFactorI": "Рекомендований рівень впливу на конфіденційність: попередній рівень впливу на конфіденційність, рекомендований для більшості інформації про енергопостачання, є низьким.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на цілісність: критично важливі системи: несанкціонована модифікація критично важливої інформації або інформаційних систем (наприклад, розподіл електроенергії, нафто- чи газопроводи) може призвести до серйозного впливу на навколишнє середовище, послуги, основні активи та/або безпека людини. Отже, рівень впливу на цілісність, пов’язаний із цими типами критично важливих процесів/систем, може бути високим. Некритичні системи: для інформації або інформаційних систем, які безпосередньо не впливають на критично важливі функції, рівень впливу на цілісність можна знизити до низького."
   },
   {
     "typeId": "18",
-    "typeValue": "[UK]Enterprise Architecture"
+    "typeValue": "Архітектура підприємства"
   },
   {
     "typeId": "19",
-    "typeValue": "[UK]Environmental Monitoring & Forecasting",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: The most serious adverse effects are likely to involve exposure of information that is proprietary to an organization or result in damaging publicity for an organization. [Unauthorized disclosure of some information can have serious economic impact on both individual companies and the broader market place. The consequences of such unauthorized disclosures may have an adverse effect on public confidence in the agency.] In such cases, the potential confidentiality impacts may be at least moderate.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Unauthorized modification or destruction of information affecting external communications (e.g., web pages, electronic mail) may adversely affect operations and public confidence in the agency, but also the agency mission. In some cases, unauthorized modification or destruction of information can result in loss of human life - a high-impact potential.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for environmental monitoring and forecasting information is low."
+    "typeValue": "Екологічний моніторинг і прогнозування",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: найсерйозніші несприятливі наслідки, ймовірно, включатимуть розголошення інформації, яка є власністю організації, або призведуть до шкоди для публічності організації. [Несанкціоноване розкриття певної інформації може мати серйозні економічні наслідки як для окремих компаній, так і для ширшого ринку. Наслідки такого несанкціонованого розкриття можуть мати негативний вплив на довіру громадськості до агентства.] У таких випадках потенційний вплив на конфіденційність може бути принаймні помірним.",
+    "specialFactorI": "Визначення впливу особливих факторів, що впливають на доброчесність: Несанкціонована зміна або знищення інформації, що впливає на зовнішні комунікації (наприклад, веб-сторінки, електронна пошта), може негативно вплинути на роботу та довіру громадськості до агентства, а також на місію агентства. У деяких випадках несанкціонована модифікація або знищення інформації може призвести до втрати людського життя, що є потенційним ризиком.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для моніторингу навколишнього середовища та прогнозної інформації, низький."
   },
   {
     "typeId": "20",
-    "typeValue": "[UK]Environmental Remediation"
+    "typeValue": "Оздоровлення навколишнього середовища"
   },
   {
     "typeId": "21",
-    "typeValue": "[UK]Facilities Fleet & Equipment Management",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Information associated with maintenance, administration, and operation of many Federal government office buildings, transportation fleets, and operational facilities can be of material use to criminals seeking to gain access to Federal facilities in order to facilitate or perpetrate fraud, theft, or some other criminal enterprise (e.g., extract inmates from Federal detention facilities). In this case, unauthorized disclosure of information can have a serious adverse effect on agency operations, agency assets, or individuals. The consequent confidentiality impact would be at least moderate.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Exceptions may include emergency response aspects of disaster management or leadership protection. In such cases, the integrity impact level associated with unauthorized modification or destruction of facilities, fleet, and equipment management information can be high.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: Exceptions may include emergency response aspects of disaster management or leadership protection. In such cases, delays measured in seconds can cost lives and major property damage. Consequently, the availability impact level associated with unauthorized modification or destruction of facilities, fleet, and equipment management information needed to respond to emergencies will be high."
+    "typeValue": "Управління автопарком і обладнанням",
+    "specialFactorC": "Особливі фактори, що впливають на конфіденційність. Визначення впливу: інформація, пов’язана з обслуговуванням, адмініструванням та експлуатацією багатьох урядових офісних будівель, транспортних парків і операційних об’єктів, може бути матеріально корисною для злочинців, які прагнуть отримати доступ до урядових об’єктів, щоб сприяти чи вчиняти шахрайство, крадіжки чи іншій злочинній діяльності (наприклад, вилучення ув’язнених із місць ув’язнення). У цьому випадку несанкціоноване розкриття інформації може мати серйозний негативний вплив на діяльність агентства, активи агентства або осіб. Наступний вплив на конфіденційність буде принаймні помірним.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на доброчесність: Винятки можуть включати аспекти реагування на надзвичайні ситуації щодо ліквідації наслідків стихійних лих або захисту керівництва. У таких випадках рівень впливу на цілісність, пов’язаний із неавторизованою модифікацією або знищенням об’єктів, парку та інформації про керування обладнанням, може бути високим.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: Винятки можуть включати аспекти реагування на надзвичайні ситуації, пов’язані з ліквідацією надзвичайних ситуацій або захистом керівництва. У таких випадках затримки, які вимірюються секундами, можуть коштувати життя та завдати значних матеріальних збитків. Відповідно, рівень впливу на доступність, пов’язаний із несанкціонованою модифікацією або знищенням об’єктів, парку та інформації про керування обладнанням, необхідної для реагування на надзвичайні ситуації, буде високим."
   },
   {
     "typeId": "22",
-    "typeValue": "[UK]General Purpose Data & Statistics",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Unauthorized premature disclosure of much economic (e.g., agricultural commodity, economic indicators) data and statistics information can result in major financial consequences. In some cases, premature disclosure of this information can impact major financial markets and damage national banking and finance infrastructures. Unauthorized and premature disclosure to a single institution (e.g., a major commodity brokerage house), could damage faith in general-purpose data and statistics gathering and development institutions, result in even more market disruption, and have a severe or catastrophic adverse effect on public confidence in the agency. Even when the consequences are limited to giving an unfair market advantage to a single financial or commercial institution, unauthorized disclosure can have a serious adverse effect on public confidence in the agency and its staff. This can result in assignment of a moderate impact level to such information.",
-    "specialFactorI": "[UK]Recommended Integrity Impact Level: The provisional integrity impact level recommended for general-purpose data and statistics information is low.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for general-purpose data and statistics information is low."
+    "typeValue": "Дані та статистика загального призначення",
+    "specialFactorC": "Особливі фактори, що впливають на конфіденційність Визначення впливу: Несанкціоноване передчасне розголошення багатьох економічних (наприклад, сільськогосподарських товарів, економічних показників) даних і статистичної інформації може призвести до серйозних фінансових наслідків. У деяких випадках передчасне розкриття цієї інформації може вплинути на основні фінансові ринки та завдати шкоди національній банківській та фінансовій інфраструктурі. Несанкціоноване та передчасне розкриття інформації одній установі (наприклад, великій товарній брокерській компанії) може зашкодити довірі до даних загального призначення та статистичних установ, що збирають і розвивають, призвести до ще більших порушень ринку та мати серйозний або катастрофічний негативний вплив на громадськість довіра до агентства. Навіть якщо наслідки обмежені наданням нечесної ринкової переваги одній фінансовій чи комерційній установі, несанкціоноване розкриття може мати серйозний негативний вплив на довіру громадськості до агентства та його персоналу. Це може призвести до присвоєння такій інформації помірного рівня впливу.",
+    "specialFactorI": "Рекомендований рівень впливу на цілісність: попередній рівень впливу на цілісність, рекомендований для даних загального призначення та статистичної інформації, низький.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для даних загального призначення та статистичної інформації, низький."
   },
   {
     "typeId": "23",
-    "typeValue": "[UK]Goods Acquisition"
+    "typeValue": "Придбання товарів"
   },
   {
     "typeId": "24",
-    "typeValue": "[UK]Ground Transportation",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Some regulatory and tariff enforcement functions associated with the safe passage of passengers and goods over land involve relatively sensitive information. These are included in Law Enforcement. Unauthorized disclosure of accident investigation information that has not yet been adequately researched, coordinated, or edited can result in serious economic harm to individuals and to corporations. Loss in public confidence is a further potential consequence. Additionally, some information associated with ground transportation functions is proprietary to corporations or subject to privacy laws (e.g., the Privacy Act of 1974). (The Privacy Act Information provisional impact levels are documented in the Personal Identity and Authentication information type.) In such cases, the confidentiality impact resulting from unauthorized disclosure may be moderate.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Some ground transportation functions are time-critical (e.g., track switching functions associated with rail travel). Unauthorized modification or destruction of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. Such information will have a high integrity impact level.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: Some ground transportation functions are time-critical (e.g., track switching functions associated with rail travel). Loss of availability of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. Such information will have a high integrity impact level."
+    "typeValue": "Наземний транспорт",
+    "specialFactorC": "Особливі фактори, що впливають на конфіденційність. Визначення впливу: деякі регулятивні та тарифні функції, пов’язані з безпечним проходженням пасажирів і вантажів по суші, включають відносно конфіденційну інформацію. Вони входять до складу правоохоронних органів. Несанкціоноване розголошення інформації про розслідування нещасних випадків, яка ще не була належним чином досліджена, скоординована або відредагована, може призвести до серйозної економічної шкоди окремим особам і корпораціям. Ще одним потенційним наслідком є втрата довіри громадськості. Крім того, деяка інформація, пов’язана з функціями наземного транспорту, є власністю корпорацій або регулюється нормативно-правовими актами із захисту інформації. У таких випадках вплив на конфіденційність у результаті неавторизованого розголошення може бути помірним.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на цілісність: деякі функції наземного транспорту є критичними за часом (наприклад, функції перемикання колій, пов’язані з поїздкою залізницею). Несанкціонована зміна або знищення критично важливої інформації, необхідної для цих функцій, може призвести до великомасштабної втрати майна та людських життів. Така інформація матиме високий рівень впливу на цілісність.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: Деякі функції наземного транспорту є критичними за часом (наприклад, функції перемикання колій, пов’язані з поїздкою залізницею). Втрата критично важливої інформації, необхідної для виконання цих функцій, може призвести до великомасштабної втрати власності та людських життів. Така інформація матиме високий рівень впливу на цілісність."
   },
   {
     "typeId": "25",
-    "typeValue": "[UK]Help Desk Services"
+    "typeValue": "Послуги служби підтримки"
   },
   {
     "typeId": "26",
-    "typeValue": "[UK]Information Infrastructure Management"
+    "typeValue": "Управління інформаційною інфраструктурою"
   },
   {
     "typeId": "27",
-    "typeValue": "[UK]Information Management"
+    "typeValue": "Управління інформацією"
   },
   {
     "typeId": "28",
-    "typeValue": "[UK]Information Security"
+    "typeValue": "Інформаційна безпека"
   },
   {
     "typeId": "29",
-    "typeValue": "[UK]Information Sharing"
+    "typeValue": "Розповсюдження інформації"
   },
   {
     "typeId": "30",
-    "typeValue": "[UK]Intellectual Property Protection"
+    "typeValue": "Захист інтелектуальної власності"
   },
   {
     "typeId": "31",
-    "typeValue": "[UK]Inventory Control"
+    "typeValue": "Контроль запасів"
   },
   {
     "typeId": "32",
-    "typeValue": "[UK]Key Asset & Critical Infrastructure Protection",
-    "specialFactorC": "[UK]Recommended Confidentiality Impact Level: The provisional confidentiality impact level recommended for critical infrastructure protection information is high.",
-    "specialFactorI": "[UK]Recommended Integrity Impact Level: The provisional integrity impact level recommended for critical infrastructure protection information is high.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for critical infrastructure protection information is high."
+    "typeValue": "Захист ключових активів і критичної інфраструктури",
+    "specialFactorC": "Рекомендований рівень впливу на конфіденційність: попередній рівень впливу на конфіденційність, рекомендований для інформації про захист критичної інфраструктури, є високим.",
+    "specialFactorI": "Рекомендований рівень впливу на цілісність: попередній рівень впливу на цілісність, рекомендований для інформації про захист критичної інфраструктури, є високим.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для інформації про захист критичної інфраструктури, є високим."
   },
   {
     "typeId": "33",
-    "typeValue": "[UK]Labor Rights Management"
+    "typeValue": "Управління трудовими правами"
   },
   {
     "typeId": "34",
-    "typeValue": "[UK]Lifecycle/Change Management"
+    "typeValue": "Управління життєвим циклом/змінами"
   },
   {
     "typeId": "35",
-    "typeValue": "[UK]Logistics Management"
+    "typeValue": "Управління логістикою"
   },
   {
     "typeId": "36",
-    "typeValue": "[UK]Management Improvement"
+    "typeValue": "Удосконалення менеджменту"
   },
   {
     "typeId": "37",
-    "typeValue": "[UK]Manufacturing"
+    "typeValue": "Виробництво"
   },
   {
     "typeId": "38",
-    "typeValue": "[UK]Other Financial"
+    "typeValue": "Інші фінансові"
   },
   {
     "typeId": "39",
-    "typeValue": "[UK]Other Information Management"
+    "typeValue": "Управління іншою інформацією"
   },
   {
     "typeId": "40",
-    "typeValue": "[UK]Other Management"
+    "typeValue": "Інше управління"
   },
   {
     "typeId": "41",
-    "typeValue": "[UK]Other Operations"
+    "typeValue": "Інші операції"
   },
   {
     "typeId": "42",
-    "typeValue": "[UK]Other Research & Development"
+    "typeValue": "Інші дослідження та розробки"
   },
   {
     "typeId": "43",
-    "typeValue": "[UK]Other Security"
+    "typeValue": "Інша безпека"
   },
   {
     "typeId": "44",
-    "typeValue": "[UK]Other Support Functions"
+    "typeValue": "Інші функції підтримки"
   },
   {
     "typeId": "45",
-    "typeValue": "[UK]Payments"
+    "typeValue": "Платежі"
   },
   {
     "typeId": "46",
-    "typeValue": "[UK]Percentage Infrastructure Maintenance"
+    "typeValue": "Обслуговування інфраструктури у відсотках"
   },
   {
     "typeId": "47",
-    "typeValue": "[UK]Permits & Licensing"
+    "typeValue": "Дозволи та ліцензування"
   },
   {
     "typeId": "48",
-    "typeValue": "[UK]Pollution Prevention & Control"
+    "typeValue": "Запобігання та контроль забруднення"
   },
   {
     "typeId": "49",
-    "typeValue": "[UK]Product Outreach"
+    "typeValue": "Охоплення продуктів"
   },
   {
     "typeId": "50",
-    "typeValue": "[UK]Property Protection",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Where critical infrastructure facilities or key national assets are being protected, the consequences of unauthorized disclosure of property protection information might reveal vulnerabilities in protection measures to terrorists or other adversaries. Where unauthorized disclosure of property protection information associated with critical infrastructures, large groups of people, or key national assets is expected to be of direct use to terrorists, the confidentiality impact level is high.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Unauthorized modification or destruction of information affecting external communications (e.g., web pages, electronic mail) may adversely affect operations or public confidence in the agency. However, the potential damage to the protection mission will usually be of greater concern. If the modified or destroyed information is tactical i.e., time-critical, there is a greater potential for actions being taken based on incomplete or false information. This can have serious adverse effects on protection operation. This can result in assignment of a moderate impact level to such information.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: The consequences of inability of guard forces and other emergency responders to receive property protection information in a timely manner may result in catastrophic consequences for properties that could include critical infrastructures and key national assets. In general, the availability impact level assigned to property protection information is dependent on what is being protected. This can result in assignment of a moderate or high impact level to such information."
+    "typeValue": "Захист власності",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: якщо захищаються об’єкти критичної інфраструктури або ключові національні активи, наслідки несанкціонованого розкриття інформації про захист власності можуть виявити слабкі місця в заходах захисту для терористів або інших супротивників. Якщо очікується, що несанкціоноване розкриття інформації про захист власності, пов’язаної з критично важливою інфраструктурою, великими групами людей або ключовими національними активами, буде безпосередньо використано терористами, рівень впливу на конфіденційність є високим.",
+    "specialFactorI": "Визначення впливу особливих факторів на доброчесність: Несанкціонована зміна або знищення інформації, що впливає на зовнішні комунікації (наприклад, веб-сторінки, електронна пошта), може негативно вплинути на роботу або довіру громадськості до агентства. Однак потенційна шкода місії захисту зазвичай викликає більше занепокоєння. Якщо змінена або знищена інформація є тактичною, тобто критичною за часом, існує більша ймовірність вжиття дій на основі неповної або неправдивої інформації. Це може мати серйозні негативні наслідки для роботи захисту. Це може призвести до присвоєння такій інформації помірного рівня впливу.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: наслідки нездатності сил охорони та інших служб реагування на надзвичайні ситуації своєчасно отримати інформацію про захист власності можуть призвести до катастрофічних наслідків для власності, яка може включати критичну інфраструктуру та ключові національні активи. Загалом рівень впливу на доступність, призначений для інформації про захист власності, залежить від того, що захищається. Це може призвести до присвоєння такій інформації помірного або високого рівня впливу."
   },
   {
     "typeId": "51",
-    "typeValue": "[UK]Public Relations"
+    "typeValue": "Зв'язки з громадськістю"
   },
   {
     "typeId": "52",
-    "typeValue": "[UK]Records Retention"
+    "typeValue": "Зберігання записів"
   },
   {
     "typeId": "53",
-    "typeValue": "[UK]Reporting Information"
+    "typeValue": "Звітна інформація"
   },
   {
     "typeId": "54",
-    "typeValue": "[UK]Research & Development"
+    "typeValue": "Дослідження та розробки"
   },
   {
     "typeId": "55",
-    "typeValue": "[UK]Scientific & Technological Research & Innovation"
+    "typeValue": "Наукові та технологічні дослідження та інновації"
   },
   {
     "typeId": "56",
-    "typeValue": "[UK]Security Management"
+    "typeValue": "Управління безпекою"
   },
   {
     "typeId": "57",
-    "typeValue": "[UK]Service Recovery"
+    "typeValue": "Відновлення служби"
   },
   {
     "typeId": "58",
-    "typeValue": "[UK]Services Acquisition"
+    "typeValue": "Придбання послуг"
   },
   {
     "typeId": "59",
-    "typeValue": "[UK]System & Networking Monitoring",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Where the system and network monitoring information collected can be expected to have a high confidentiality impact level, then the system and network monitoring information must be assigned a high confidentiality impact level. When the system and network monitoring data being collected supports information types described in this guideline, agency personnel should consider a confidentiality impact assignment of the highest impact information type processed by the system. Depending on the agency and the mission being supported, the sensitivity of the information can range from low to high. (National security information and national security systems are outside the scope of this guideline.)",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: The loss of integrity for some system and network monitoring information can be very serious for agency network and security operations, as well as, the functionality of the information system. Additionally, a loss of integrity can have severe consequences for the agency’s mission and critical business functions. The integrity impact level recommended for system and network monitoring information associated with highly critical information is high.",
-    "specialFactorA": "[UK]Recommended Availability Impact Level: The provisional availability impact level recommended for system and network monitoring information is low."
+    "typeValue": "Моніторинг систем та мереж",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: якщо можна очікувати, що зібрана інформація моніторингу системи та мережі матиме високий рівень впливу на конфіденційність, тоді інформації моніторингу системи та мережі слід призначити високий рівень впливу на конфіденційність. Якщо дані моніторингу системи та мережі, що збираються, підтримують типи інформації, описані в цьому посібнику, персонал агентства повинен розглянути можливість призначення впливу на конфіденційність найважливішого типу інформації, який обробляється системою. Залежно від агентства та місії, яка підтримується, конфіденційність інформації може коливатися від низького до високого. (Інформація про національну безпеку та системи національної безпеки виходять за межі цієї настанови.)",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на цілісність: втрата цілісності певної системи та інформації моніторингу мережі може бути дуже серйозною для мереж агентства та операцій безпеки, а також для функціональності інформаційної системи. Крім того, втрата цілісності може мати серйозні наслідки для місії агентства та важливих бізнес-функцій. Рівень впливу на цілісність, рекомендований для інформації моніторингу системи та мережі, пов’язаної з дуже важливою інформацією, є високим.",
+    "specialFactorA": "Рекомендований рівень впливу на доступність: попередній рівень впливу на доступність, рекомендований для інформації про моніторинг системи та мережі, низький."
   },
   {
     "typeId": "60",
-    "typeValue": "[UK]System Development"
+    "typeValue": "Розробка системи"
   },
   {
     "typeId": "61",
-    "typeValue": "[UK]System Maintenance"
+    "typeValue": "Обслуговування системи"
   },
   {
     "typeId": "62",
-    "typeValue": "[UK]Training & Employment"
+    "typeValue": "Навчання та працевлаштування"
   },
   {
     "typeId": "63",
-    "typeValue": "[UK]Water Resource Management"
+    "typeValue": "Управління водними ресурсами"
   },
   {
     "typeId": "64",
-    "typeValue": "[UK]Water Transportation",
-    "specialFactorC": "[UK]Special Factors Affecting Confidentiality Impact Determination: Unauthorized disclosure of accident investigation information that has not been adequately researched, coordinated, or edited can result in serious economic harm to individuals and to corporations. Loss in public confidence is a further potential consequence. Additionally, some information associated with water transportation functions is proprietary to corporations or subject to privacy laws. In such cases, the confidentiality impact resulting from unauthorized disclosure can be moderate.",
-    "specialFactorI": "[UK]Special Factors Affecting Integrity Impact Determination: Some water and sea transportation functions are time-critical (e.g., distress signals, docking operations, collision avoidance, warnings of hazardous weather or sea conditions). Unauthorized modification or destruction of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. Such information would have a high integrity impact level. Communications management (e.g., frequency management) information also needs to be included in water transportation integrity impact considerations. There may be circumstances when errors in frequency assignment information can result in an inability for Federal government agencies to communicate with state or local government activities. The subsequent loss of communications capabilities can result in life-threatening situations. Such information would have a high integrity impact level.",
-    "specialFactorA": "[UK]Special Factors Affecting Availability Impact Determination: Some water and sea transportation functions are time-critical (e.g., distress signals, docking operations, collision avoidance, warnings of hazardous weather or sea conditions). Loss of availability of time-critical information necessary to these functions can result in large-scale property loss and in loss of human lives. Such information would have a high integrity impact level."
+    "typeValue": "Водний транспорт",
+    "specialFactorC": "Особливі фактори, що впливають на визначення впливу на конфіденційність: Несанкціоноване розголошення інформації про розслідування нещасних випадків, яка не була належним чином досліджена, скоординована або відредагована, може призвести до серйозної економічної шкоди окремим особам і корпораціям. Ще одним потенційним наслідком є втрата довіри громадськості. Крім того, деяка інформація, пов’язана з функціями водного транспорту, є власністю корпорацій або регулюється нормативно-правовими актами із захисту інформації. У таких випадках вплив на конфіденційність у результаті неавторизованого розголошення може бути помірним.",
+    "specialFactorI": "Особливі фактори, що впливають на визначення впливу на цілісність: Деякі функції водного та морського транспорту є критичними за часом (наприклад, сигнали лиха, операції стикування, запобігання зіткненням, попередження про небезпечну погоду чи стан моря). Несанкціонована зміна або знищення критично важливої інформації, необхідної для цих функцій, може призвести до великомасштабної втрати майна та людських життів. Така інформація матиме високий рівень впливу на цілісність. Інформацію про керування зв’язком (наприклад, керування частотою) також необхідно включити до розгляду впливу на цілісність водного транспорту. Можуть виникнути обставини, коли помилки в інформації про призначення частоти можуть призвести до того, що урядові установи не зможуть спілкуватися з державними або місцевими органами влади. Подальша втрата можливостей зв’язку може призвести до ситуацій, що загрожують життю. Така інформація матиме високий рівень впливу на цілісність.",
+    "specialFactorA": "Особливі фактори, що впливають на визначення впливу на доступність: Деякі функції водного та морського транспорту є критичними за часом (наприклад, сигнали лиха, операції стикування, уникнення зіткнень, попередження про небезпечну погоду чи стан моря). Втрата критично важливої інформації, необхідної для виконання цих функцій, може призвести до великомасштабної втрати майна та людських життів. Така інформація матиме високий рівень впливу на цілісність."
   },
   {
     "typeId": "65",
-    "typeValue": "[UK]Worker Safety"
+    "typeValue": "Безпека працівників"
   },
   {
     "typeId": "66",
-    "typeValue": "[UK]Work-Force Planning"
+    "typeValue": "Планування робочої сили"
   },
   {
     "typeId": "67",
-    "typeValue": "[UK]Workplace Policy Development & Management"
+    "typeValue": "Розробка та управління політикою на робочому місці"
   }
 ]

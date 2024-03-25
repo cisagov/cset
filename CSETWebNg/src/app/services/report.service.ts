@@ -209,7 +209,7 @@ export class ReportService {
   applyJwtOffset(stringDate: string) {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    return DateTime.fromISO(stringDate).subtract(parsedToken.tzoffset / 60, 'hour');
+    return DateTime.fromISO(stringDate).minus(parsedToken.tzoffset / 60);
   }
 
   /**
