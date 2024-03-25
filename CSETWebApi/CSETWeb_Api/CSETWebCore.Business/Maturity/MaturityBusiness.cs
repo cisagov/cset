@@ -904,6 +904,10 @@ namespace CSETWebCore.Business.Maturity
                     q.Question_Text = o.QuestionText;
                     q.Supplemental_Info = o.SupplementalInfo;
                     q.Examination_Approach = o.ExaminationApproach;
+                    q.Scope = o.Scope;
+                    q.Recommend_Action = o.RecommendAction;
+                    q.Risk_Addressed = o.RiskAddressed;
+                    q.Services = o.Services;
                 }
             }
 
