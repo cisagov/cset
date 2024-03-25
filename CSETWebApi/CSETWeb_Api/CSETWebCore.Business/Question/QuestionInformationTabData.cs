@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Reports;
 using CSETWebCore.Constants;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
@@ -591,6 +592,17 @@ namespace CSETWebCore.Business.Question
 
 
                 ReferenceTextList = refBuilder.BuildReferenceTextForMaturityQuestion(info.QuestionID);
+
+                // Translation of Quesiton Reference Text
+                var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
+                for (int i  = 0; i < ReferenceTextList.Count; i++)
+                {
+                    if (translatedGroup != null)
+                    {
+                        ReferenceTextList[i] = translatedGroup.ReferenceText;
+                    }
+                }
+
             }
             catch (Exception exc)
             {
