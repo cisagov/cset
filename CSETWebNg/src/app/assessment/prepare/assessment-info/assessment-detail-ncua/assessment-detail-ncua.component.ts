@@ -287,16 +287,18 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   updateAssets() {
-    if (this.assessment.assets != null) {
-      this.ncuaSvc.updateAssetSize(this.assessment.assets);
-      this.acetDashboard.assets = this.assessment.assets;
-
-      if (this.ncuaSvc.assetsAsNumber > 50000000) {
-        this.updateOverride("No Override");
-      }
-
-      this.assessSvc.updateAssessmentDetails(this.assessment);
+    if (this.assessment.assets == null) {
+      this.assessment.assets = "0";
     }
+      
+    this.ncuaSvc.updateAssetSize(this.assessment.assets);
+    this.acetDashboard.assets = this.assessment.assets;
+
+    if (this.ncuaSvc.assetsAsNumber > 50000000) {
+      this.updateOverride("No Override");
+    }
+
+    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   /**
