@@ -36,7 +36,7 @@ export class QuestionBlockCieComponent implements OnInit {
   summaryBoxMax = 275;
 
   textPlaceholderEmpty = "Type answer here...";
-  textPlaceholderNA = "Explain why this question is Not Applicable here...";
+  textPlaceholderNA = "Explain why this question is Not Applicable here (Optional)";
   freeResponseAnswers: Map<number, string> = new Map<number, string>();
 
   showQuestionIds = false;

@@ -637,12 +637,12 @@ import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-in
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { CieLayoutMainComponent } from './layout/cie-layout-main/cie-layout-main.component';
 import { AboutCieComponent } from './dialogs/about-cie/about-cie.component';
-import { ApplyingCieComponent } from './assessment/results/cie-example/cie-analysis/applying-cie/applying-cie.component';
-import { CieExampleComponent } from './assessment/results/cie-example/cie-example.component';
-import { CieBackgroundComponent } from './assessment/results/cie-example/cie-background/cie-background.component';
-import { CieAnalysisComponent } from './assessment/results/cie-example/cie-analysis/cie-analysis.component';
-import { PrincipleAnalysisCieComponent } from './assessment/results/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
-import { CieAnalysisMatrixComponent } from './assessment/results/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
+import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
+import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
+import { CieBackgroundComponent } from './assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
+import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
+import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
+import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
 
 @NgModule({
   imports: [

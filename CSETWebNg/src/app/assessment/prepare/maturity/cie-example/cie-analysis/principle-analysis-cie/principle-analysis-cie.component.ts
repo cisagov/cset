@@ -1,17 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { QuestionGrouping } from '../../../../../models/questions.model';
+import { QuestionGrouping } from '../../../../../../models/questions.model';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { AssessmentService } from '../../../../../services/assessment.service';
-import { CompletionService } from '../../../../../services/completion.service';
-import { ConfigService } from '../../../../../services/config.service';
-import { AcetFilteringService } from '../../../../../services/filtering/maturity-filtering/acet-filtering.service';
-import { LayoutService } from '../../../../../services/layout.service';
-import { MaturityService } from '../../../../../services/maturity.service';
-import { NCUAService } from '../../../../../services/ncua.service';
-import { QuestionsService } from '../../../../../services/questions.service';
+import { AssessmentService } from '../../../../../../services/assessment.service';
+import { CompletionService } from '../../../../../../services/completion.service';
+import { ConfigService } from '../../../../../../services/config.service';
+import { AcetFilteringService } from '../../../../../../services/filtering/maturity-filtering/acet-filtering.service';
+import { LayoutService } from '../../../../../../services/layout.service';
+import { MaturityService } from '../../../../../../services/maturity.service';
+import { NCUAService } from '../../../../../../services/ncua.service';
+import { QuestionsService } from '../../../../../../services/questions.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
@@ -67,7 +67,6 @@ export class PrincipleAnalysisCieComponent implements OnInit {
     this.sectionId = +this.route.snapshot.params['pri'];
 
     this.maturitySvc.getGroupingQuestions(this.sectionId).subscribe((r: any) => {
-      console.log(r)
       this.response = r;
     });
   }

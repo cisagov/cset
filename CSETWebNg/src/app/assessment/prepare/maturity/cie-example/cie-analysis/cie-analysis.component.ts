@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-tutorial-cie',
-  templateUrl: './tutorial-cie.component.html',
-  styleUrls: ['./tutorial-cie.component.scss']
+  selector: 'app-cie-analysis',
+  templateUrl: './cie-analysis.component.html',
+  styleUrls: ['./cie-analysis.component.scss']
 })
-export class TutorialCieComponent {
+export class CieAnalysisComponent {
 
   @ViewChild('topScrollAnchor') topScroll;
 

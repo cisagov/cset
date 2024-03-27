@@ -45,6 +45,7 @@ export class AssessmentDetailCieComponent implements OnInit {
 
   dialogRefAwwa: MatDialogRef<AwwaStandardComponent>;
   isAwwa = false;
+  summaryBoxMax = 275;
 
   /**
    *
@@ -69,26 +70,16 @@ export class AssessmentDetailCieComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-    if (this.assessment.assessmentName.trim().length === 0) {
+    if (this.assessment.assessmentName.trim().length === 0 || this.assessment.assessmentName.trim() == "New Assessment") {
       this.assessment.assessmentName = "New Analysis";
-    }
-    // a few things for a brand new assessment
-    if (this.assessSvc.isBrandNew) {
-      // RRA install presets the maturity model
-      if (this.configSvc.installationMode === 'RRA') {
-        this.assessSvc.setRraDefaults();
-        this.assessSvc.updateAssessmentDetails(this.assessment);
-      }
+      this.assessSvc.updateAssessmentDetails(this.assessment);
     }
 
-    this.assessSvc.isBrandNew = false;
     // Null out a 'low date' so that we display a blank
     const assessDate: Date = new Date(this.assessment.assessmentDate);
     if (assessDate.getFullYear() <= 1900) {
       this.assessment.assessmentDate = null;
     }
-
-    this.isAwwa = this.assessment.standards?.includes('AWWA');
   }
 
   /**
@@ -101,6 +92,7 @@ export class AssessmentDetailCieComponent implements OnInit {
         this.assessment.assessmentName = "New Analysis";
       }
     }
+    console.log(this.assessment)
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
@@ -138,5 +130,19 @@ export class AssessmentDetailCieComponent implements OnInit {
       this.dialogRefAwwa = null;
     });
   }
+
+  autoResize() {
+    let textArea = document.getElementById("otherDetailsTextarea");
+    textArea.style.overflow = 'hidden';
+    // textArea.style.overflowY = 'hidden';
+    textArea.style.height = '0px';
+    textArea.style.height = textArea.scrollHeight + 'px';
+    if (textArea.scrollHeight > this.summaryBoxMax) {
+      textArea.style.height = this.summaryBoxMax + 'px';
+      textArea.style.overflowY = 'scroll';
+
+    }
+  }
+
 }
 
