@@ -29,35 +29,26 @@
 
     <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
 
-      <h4 class="px-3">{{appLongName}}</h4>
       <div class="px-3">
-        <p
-          [innerHTML]="t('menu.help.legal.advisory.introduction 1', {'appLongName': appLongName, 'appShortName': appShortName})">
-        </p>
-        <p
-          [innerHTML]="t('menu.help.legal.advisory.introduction 2', {'appLongName': appLongName, 'appShortName': appShortName})">
-        </p>
-        <p [innerHTML]="t('menu.help.legal.advisory.introduction 3', {'appShortName': appShortName})">
-        </p>
-        <p [innerHTML]="t('menu.help.legal.advisory.introduction 4')">
-        </p>
-      </div>
-
-      <ng-container *ngIf="configSvc.behaviors.showDisclaimer">
-        <h4 class="px-3">{{t('menu.help.legal.advisory.disclaimer')}}</h4>
-        <div class="px-3">
+        <h4>{{appLongName}}</h4>
+        <div>
           <p
-            [innerHTML]="t('menu.help.legal.advisory.disclaimer 1', {'appShortName': appShortName, 'orgLongName': orgLongName, 'orgShortName': orgShortName})">
+            [innerHTML]="t('menu.help.legal.advisory.introduction 1', {'appLongName': appLongName, 'appShortName': appShortName})">
           </p>
-          <p [innerHTML]="t('menu.help.legal.advisory.disclaimer 2', {'orgShortName': orgShortName})">
+          <p
+            [innerHTML]="t('menu.help.legal.advisory.introduction 2', {'appLongName': appLongName, 'appShortName': appShortName})">
           </p>
-          <p [innerHTML]="t('menu.help.legal.advisory.disclaimer 3', {'orgShortName': orgShortName})">
+          <p [innerHTML]="t('menu.help.legal.advisory.introduction 3', {'appShortName': appShortName})">
           </p>
-          <p *ngIf="showIntellectualPropertyRightsAssertion"
-            [innerHTML]="t('menu.help.legal.advisory.disclaimer 4', {'appShortName': appShortName, 'intellectualPropertyRightsDistributionRequestEntity': intellectualPropertyRightsDistributionRequestEntity})">
+          <p [innerHTML]="t('menu.help.legal.advisory.introduction 4')">
           </p>
         </div>
-      </ng-container>
+
+        <ng-container *ngIf="configSvc.behaviors.showDisclaimer">
+          <app-report-disclaimer></app-report-disclaimer>
+        </ng-container>
+
+      </div>
     </mat-dialog-content>
 
     <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-start flex-00a">
