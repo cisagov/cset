@@ -48,9 +48,10 @@
     <ng-template #mainContent>
         <div class="ml-3 mr-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
-                <h1 class="page-title">{{response?.information.questionsAlias}} {{t('reports.core.rra.cmfr.marked for
-                    review')}}</h1>
-                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review')}} - <img
+                <h1 class="page-title">
+                    {{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}}
+                </h1>
+                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}} - <img
                         class="MarkedFlag" src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
@@ -105,8 +106,10 @@
 
         <div class="ml-3 mr-3 form">
             <div class="d-flex flex-row justify-content-between align-items-end">
-                <h1 class="page-title">{{response?.information.questionsAlias}} with Comments</h1>
-                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review')}} - <img
+                <h1 class="page-title">
+                    {{t('reports.core.rra.cmfr.with comments', {alias: aliasTranslated})}}
+                </h1>
+                <p style="color: #de761c;text-align: right;">{{t('reports.core.rra.cmfr.marked for review', {alias: aliasTranslated})}} - <img
                         class="MarkedFlag" src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
             </div>
             <hr class="page-line m-0">
