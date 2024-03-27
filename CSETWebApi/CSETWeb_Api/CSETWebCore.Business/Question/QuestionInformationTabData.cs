@@ -597,7 +597,7 @@ namespace CSETWebCore.Business.Question
                 var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
                 for (int i  = 0; i < ReferenceTextList.Count; i++)
                 {
-                    if (translatedGroup.ReferenceText != null)
+                    if (translatedGroup?.ReferenceText != null)
                     {
                         ReferenceTextList[i] = translatedGroup.ReferenceText;
                     }
