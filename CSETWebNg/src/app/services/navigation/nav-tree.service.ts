@@ -300,7 +300,7 @@ export class NavTreeService {
   setSideNavScrollLocation() {
     const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
     if (sideNav.length > 0) {
-      sideNav[0].scrollTo(0, 500);
+      sideNav[0].scrollTo(0, this.sideNavScrollLocation);
     }
   }
 }
