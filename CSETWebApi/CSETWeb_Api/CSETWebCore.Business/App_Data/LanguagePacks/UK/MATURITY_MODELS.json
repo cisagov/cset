@@ -1,0 +1,66 @@
+﻿[
+  {
+    "maturity_model_id": "1",
+    "model_title": "Automated Cybersecurity Evaluation Toolbox (ACET)"
+  },
+  {
+    "maturity_model_id": "2",
+    "model_title": "Cybersecurity Maturity Model Certification (CMMC) 1.0"
+  },
+  {
+    "maturity_model_id": "3",
+    "model_title": "CISA External Dependencies Management (EDM)"
+  },
+  {
+    "maturity_model_id": "4",
+    "model_title": "CISA Cyber Resilience Review (CRR)"
+  },
+  {
+    "maturity_model_id": "5",
+    "model_title": "CISA Оцінка готовності до програм-вимагачів (RRA)"
+  },
+  {
+    "maturity_model_id": "6",
+    "model_title": "Draft CMMC 2.0 w/SPRS Scorecard"
+  },
+  {
+    "maturity_model_id": "7",
+    "model_title": "TSA Validated Architecture Design Reviews (VADR)"
+  },
+  {
+    "maturity_model_id": "8",
+    "model_title": "CISA Cyber Infrastructure Survey (CIS)"
+  },
+  {
+    "maturity_model_id": "9",
+    "model_title": "Minimum Viable Resilience Assessment (MVRA) - DRAFT"
+  },
+  {
+    "maturity_model_id": "10",
+    "model_title": "NCUA Information Security Examination (ISE)"
+  },
+  {
+    "maturity_model_id": "11",
+    "model_title": "CISA Cross-Sector Cybersecurity Performance Goals (CPG)"
+  },
+  {
+    "maturity_model_id": "12",
+    "model_title": "Cybersecurity Capability Maturity Model (C2M2) 2.1"
+  },
+  {
+    "maturity_model_id": "13",
+    "model_title": "Hydropower Valuation Assessment"
+  },
+  {
+    "maturity_model_id": "14",
+    "model_title": "Security Directive (SD) Pipeline-2021-02 Series"
+  },
+  {
+    "maturity_model_id": "15",
+    "model_title": "CISA Incident Management Review (IMR)"
+  },
+  {
+    "maturity_model_id": "16",
+    "model_title": "Security Directive (SD) Pipeline-2021-02 Series Owners/Operators"
+  }
+]
