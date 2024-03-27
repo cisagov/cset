@@ -64,6 +64,59 @@
     "local installation": "Local Installation",
     "legend": "Legend",
     "img suffix": "_en",
+    "publisher": {
+        "cset": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Cybersecurity & Infrastructure Security Agency",
+            "org short name": "CISA",
+            "show ip rights assertion": true,
+            "ip dist": "the CSET Program Office"
+        },
+        "acet": {
+            "app long name": "Automated Cybersecurity Evaluation Toolbox",
+            "app short name": "ACET",
+            "org long name": "",
+            "org short name": "NCUA",    
+            "show ip rights assertion": false
+        },
+        "tsa": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Transportation Security Administration",
+            "org short name": "TSA",
+            "show ip rights assertion": false
+        },
+        "cf": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Cyber Florida",
+            "org short name": "CF",
+            "show ip rights assertion": false
+        },
+        "renew": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET Renewables",
+            "org long name": "Idaho National Laboratory",
+            "org short name": "INL",
+            "show ip rights assertion": false
+        },
+        "rra": {
+            "app long name": "Ransomware Readiness Assessment",
+            "app short name": "RRA",
+            "org long name": "Cybersecurity & Infrastructure Security Agency",
+            "org short name": "CISA",
+            "show ip rights assertion": true,
+            "ip dist": "the CSET Program Office"
+        }
+    },
+    "disclaimer": {
+        "title": "Disclaimer",
+        "disclaimer 1": "The analysis, data, and reports in <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> are provided “as is” for informational purposes only. The {{orgLongName}} ({{orgShortName}}) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
+        "disclaimer 2": "{{orgShortName}} does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by {{orgShortName}}.",
+        "disclaimer 3": "The display of the {{orgShortName}} official seal or other {{orgShortName}} visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia or other visual identities of {{orgShortName}}. The {{orgShortName}} seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by {{orgShortName}} or the United States Government. Use of the {{orgShortName}} seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against {{orgShortName}} policies governing usage of the seal.",
+        "disclaimer 4": "The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact {{intellectualPropertyRightsDistributionRequestEntity}}. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the {{appShortName}} Program Office."
+    },
     "titles": {
         "prepare": "Prepare",
         "assessment": "Assessment",
@@ -444,7 +497,7 @@
         "level 2": "Level 2",
         "level 3": "Level 3",
         "level 4": "Level 4",
-        "level 5": "Level 5", 
+        "level 5": "Level 5",
         "overall": "Overall"
     },
     "irp": {
@@ -559,13 +612,6 @@
             "1": "Please answer all organization demographic, assessment configuration, and critical service fields to access reports and assessment export.",
             "2": "The following fields are incomplete",
             "3": "All demographics information on the Assessment Information page must be provided in order to view reports."
-        },
-        "disclaimer": {
-            "disclaimer": "Disclaimer",
-            "disclaimer section 1": "The analysis, data, and reports in CSET® are provided “as is” for informational purposes only. The Cybersecurity & Infrastructure Security Agency (CISA) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
-            "disclaimer section 2": "CISA does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by CISA.",
-            "disclaimer section 3": "The display of the CISA official seal or other CISA visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia, or other visual identities of CISA. The CISA seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by CISA or the United States Government. Use of the CISA seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against CISA policies governing usage of the seal.",
-            "disclaimer section 4": "The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact the CSET Program Office. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the CSET Program Office."
         },
         "advisory": {
             "advisory": "Advisory",
@@ -853,7 +899,7 @@
                 }
             },
             "rra": {
-                "report title": "RRA Report", 
+                "report title": "RRA Report",
                 "tab title": "Ransomware Readiness Assessment",
                 "rra deficiency report": "RRA Deficiency Report",
                 "comments and marked for review": "Comments and Marked for Review",
@@ -866,28 +912,27 @@
                         "text 1": "The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
                         "text 2": "The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
                         "rra practices": "RRA Practices"
-                    }, 
-                    "percentage of practices": "Percentage of Practices Performed", 
-                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.", 
-                    "rra performance summary": "RRA Performance Summary", 
-                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.",  
-                    "percentage of practices by goal": "Percentage of Practices Performed by Goal", 
-                    "rra practices": "RRA Practices Scoring", 
-                    "total practices": "Total Practices", 
-                    "percent complete": "Percent Complete", 
-                    "suggested areas": "Suggested Areas for Improvement", 
-                    "suggested text": "The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.", 
+                    },
+                    "percentage of practices": "Percentage of Practices Performed",
+                    "scores calculated as yes": "Scores are calculated as the percentage of 'Yes' answers.",
+                    "rra performance summary": "RRA Performance Summary",
+                    "performance summary text": "These charts represent the answer distribution overall and across all tiers.",
+                    "percentage of practices by goal": "Percentage of Practices Performed by Goal",
+                    "rra practices": "RRA Practices Scoring",
+                    "total practices": "Total Practices",
+                    "percent complete": "Percent Complete",
+                    "suggested areas": "Suggested Areas for Improvement",
+                    "suggested text": "The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.",
                     "goal completion summary": "Goal Completion Summary",
-                    "goal performance": "Goal Performance", 
-                    "rra performance by goal": "RRA Performance by Goal", 
-                    "performance by goal text": "This chart shows your positive assessment results. High scores on this chart are desirable.", 
-                    "tiers": "Assessment Tiers", 
-                    "rra practice list": "RRA Practice List with Corresponding References", 
-                    "rra practice list text": "Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
-                    "identifier": "Identifier", 
-                    "practice": "Practice", 
+                    "goal performance": "Goal Performance",
+                    "rra performance by goal": "RRA Performance by Goal",
+                    "performance by goal text": "This chart shows your positive assessment results. High scores on this chart are desirable.",
+                    "tiers": "Assessment Tiers",
+                    "rra practice list": "RRA Practice List with Corresponding References",
+                    "rra practice list text": "Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.",
+                    "identifier": "Identifier",
+                    "practice": "Practice",
                     "references": "References"
-
                 },
                 "deficiency": {
                     "report title": "Deficiency Report CISA Ransomware Readiness Assessment (RRA)",
@@ -1100,12 +1145,7 @@
                     "introduction 1": "The {{appLongName}} (<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>) is only one component of the overall cybersecurity picture and should be complemented with a robust cyber security program within the organization. A self-assessment with <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> cannot reveal all types of security weaknesses, and should not be the sole means of determining an organization's security posture.",
                     "introduction 2": "The tool will not provide a detailed architectural analysis of the network or a detailed network hardware/software configuration review. It is not a risk analysis tool so it will not generate a complex risk assessment. <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> is not intended as a substitute for in‑depth analysis of control system vulnerabilities as performed by trained professionals. Periodic onsite reviews and inspections must still be conducted using a holistic approach including facility walk-downs, interviews, and observation and examination of facility practices. Consideration should also be given to additional steps including scanning, penetration testing, and exercises on surrogate, training, or non-production systems, or systems where failures, unexpected faults, or other unexpected results will not compromise production or safety.",
                     "introduction 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>assessments cannot be completed effectively by any one individual. A cross-functional team consisting of representatives from operational, maintenance, information technology, business, and security areas is essential. The representatives must be subject matter experts with significant expertise in their respective areas. No one individual has the span of responsibility or knowledge to effectively answer all the questions.",
-                    "introduction 4": "<p>Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity.</p>",
-                    "disclaimer": "Disclaimer",
-                    "disclaimer 1": "The analysis, data, and reports in <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> are provided “as is” for informational purposes only. The {{orgLongName}} ({{orgShortName}}) does not provide any warranties of any kind regarding any information contained within. In no event shall the United States Government or its contractors or subcontractors be liable for any damages, including but not limited to, direct, indirect, special, or consequential damages and including damages based on any negligence of the United States Government or its contractors or subcontractors, arising out of, resulting from, or in any way connected with this report, whether based on warranty, contract, tort, or otherwise, whether injury was sustained from, or arose out of the results of, or reliance upon the report.",
-                    "disclaimer 2": "{{orgShortName}} does not endorse any commercial product or service, including the subject of the assessment or evaluation in this report. Any reference to specific commercial products, processes, or services by trademark, manufacturer, or otherwise, does not constitute or imply its endorsement, recommendation, or favoring by {{orgShortName}}.",
-                    "disclaimer 3": "The display of the {{orgShortName}} official seal or other {{orgShortName}} visual identities on this report shall not be interpreted to provide the recipient organization authorization to use the official seal, insignia or other visual identities of {{orgShortName}}. The {{orgShortName}} seal, insignia, or other visual identities shall not be used in any manner to imply endorsement of any commercial product or activity by {{orgShortName}} or the United States Government. Use of the {{orgShortName}} seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and is against {{orgShortName}} policies governing usage of the seal.",
-                    "disclaimer 4": "The report is prepared and intended for internal use by the organization that made the request. The contents of this report may be subject to government or private intellectual property rights. To request distribution of this report outside the organization for which it was prepared, contact {{intellectualPropertyRightsDistributionRequestEntity}}. The contents of this report may be reproduced or incorporated into other reports, but may not be modified without the prior express written permission of the {{appShortName}} Program Office."
+                    "introduction 4": "<p>Data and reports generated by the tool should be managed securely and marked, stored, and distributed in a manner appropriate to their sensitivity.</p>"
                 },
                 "terms of use": {
                     "terms of use": "Terms of Use",
