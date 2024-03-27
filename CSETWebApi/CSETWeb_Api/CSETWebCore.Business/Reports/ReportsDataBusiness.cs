@@ -124,7 +124,7 @@ namespace CSETWebCore.Business.Reports
                 var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
                 if (o != null)
                 {
-                    matAns.Mat.Question_Title = o.QuestionTitle;
+                    matAns.Mat.Question_Title = o.QuestionTitle ?? matAns.Mat.Question_Title;
                     matAns.Mat.Question_Text = o.QuestionText;
                     matAns.Mat.Supplemental_Info = o.SupplementalInfo;
                 }
@@ -296,7 +296,7 @@ namespace CSETWebCore.Business.Reports
                 var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
                 if (o != null)
                 {
-                    q.Question_Title = o.QuestionTitle;
+                    q.Question_Title = o.QuestionTitle ?? q.Question_Title;
                     q.Question_Text = o.QuestionText;
                     q.Supplemental_Info = o.SupplementalInfo;
                     q.Examination_Approach = o.ExaminationApproach;
