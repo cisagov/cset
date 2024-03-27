@@ -37,6 +37,7 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['../../reports.scss', '../../acet-reports.scss']
 })
 export class RraDeficiencyComponent implements OnInit {
+  translationTabTitle: any;
 
   response: any;
 
@@ -59,9 +60,15 @@ export class RraDeficiencyComponent implements OnInit {
     public tSvc: TranslocoService
   ) { }
 
+  
+
   ngOnInit() {
     this.loading = true;
-    this.titleService.setTitle("Deficiency Report - RRA");
+    
+    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.rra deficiency report')
+      .subscribe(value =>
+        this.titleService.setTitle(this.tSvc.translate('reports.core.rra.rra deficiency report') + ' - ' + this.configSvc.behaviors.defaultTitle));
+    
 
     this.maturitySvc.getMaturityDeficiency("RRA").subscribe(
       (r: any) => {
@@ -74,14 +81,15 @@ export class RraDeficiencyComponent implements OnInit {
 
         this.response.deficienciesList.forEach(element => {
           let level = this.getStringLevel(element.mat.maturity_Level_Id);
+        
           switch (level) {
-            case 'Basic':
+            case this.tSvc.translate('level.basic').toString():
               basicList.push(element);
               break;
-            case 'Intermediate':
+            case this.tSvc.translate('level.intermediate').toString():
               intermediateList.push(element);
               break;
-            case 'Advanced':
+            case this.tSvc.translate('level.advanced').toString():
               advancedList.push(element);
               break;
           }
@@ -122,9 +130,9 @@ export class RraDeficiencyComponent implements OnInit {
   getStringLevel(levelNumber: number) {
     //this should come from db eventually.
     var levelsList = {
-      11: "Basic",
-      12: "Intermediate",
-      13: "Advanced"
+      11: this.tSvc.translate('level.basic').toString(),
+      12: this.tSvc.translate('level.intermediate').toString(),
+      13: this.tSvc.translate('level.advanced').toString()
     };
     return levelsList[levelNumber];
   }
