@@ -443,7 +443,7 @@
         "network diagram": "мережева схема",
         "additional notes and comments": "[UK]Additional Notes and Comments",
         "principal assessor name": "[UK]Principal Assessor Name",
-        "marked for review": "[UK]Marked for Review",
+        "marked for review": "Позначено для перегляду",
         "statement": "[UK]Statement",
         "domain": "[UK]Domain",
         "standards and diagram": "Стандарти та діаграма",
@@ -725,18 +725,18 @@
             "disclaimer": "Цей звіт було підготовлено як звіт про роботу, спонсоровану агентством уряду США. Ані уряд США, ані будь-яке його агентство, ані будь-який працівник не надає жодних гарантій, явних чи неявних, і не бере на себе жодної юридичної відповідальності за будь-яке використання третіми особами чи результати такого використання чи будь-яку інформацію, пристрій, продукт, або процес, описаний у цій публікації, або заявляє, що його використання такою третьою стороною не порушуватиме права приватної власності.",
             "questions comments": {
                 "questions comments": "[UK]Questions Comments",
-                "question": "[UK]Question",
-                "comment": "[UK]Comment",
-                "no comments": "[UK]There are no questions with comments to display."
+                "question": "Питання",
+                "comment": "Коментар",
+                "no comments": "Немає питань з коментарями для відображення."
             },
             "alternate justification": {
-                "alternate justification": "[UK]Alternate Justification",
-                "question": "[UK]Question",
-                "no questions": "[UK]There are no questions with alternate justifications to display."
+                "alternate justification": "Альтернативне обґрунтування",
+                "question": "Питання",
+                "no questions": "Немає питань з альтернативним обґрунтуванням для відображення."
             },
             "questions marked for review": {
-                "questions marked for review": "[UK]Questions Marked for Review",
-                "no questions": "[UK]There are no questions marked for review."
+                "questions marked for review": "Питання, позначені для перегляду",
+                "no questions": "Немає питань, позначених для перегляду."
             },
             "cpg": {
                 "report title": "Цілі ефективності кібербезпеки (CPG)",
@@ -775,61 +775,61 @@
             "rra": {
                 "report title": "RRA Звіт",
                 "tab title": "Оцінка готовності до рейдерського програмного забезпечення",
-                "rra deficiency report": "[UK] RRA Deficiency Report",
-                "comments and marked for review": "[UK] Comments and Marked for Review",
+                "rra deficiency report": "Звіт про недоліки за RRA",
+                "comments and marked for review": "Коментарі та Позначені для Перегляду",
                 "cisa ransomware readiness assessment": "CISA Оцінка готовності до рейдерського програмного забезпечення",
                 "report": {
-                    "assessment tiers": "[UK] RRA Assessment Tiers",
-                    "answered tier": "[UK] Practices Answered Per Tier",
-                    "distribution tier": "[UK] Practices Distribution Per Tier",
+                    "assessment tiers": "Рівні оцінки RRA",
+                    "answered tier": "Практики, відповіді на рівні оцінки",
+                    "distribution tier": "Розподіл практик за рівнями",
                     "levels": {
-                        "text 1": "[UK] The RRA model encourages ransomware readiness in three stages - Basic, Intermediate, and Advanced.",
-                        "text 2": "[UK] The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented from one tier to the next and are meant to provide a clear path for improvement.",
-                        "rra practices": "[UK] RRA Practices"
+                        "text 1": "Модель RRA сприяє готовності до програм-вимагачів у трьох етапах - Базовому, Проміжному та Розширеному.",
+                        "text 2": "Практики RRA поділяються на базовий, проміжний та розширений рівні. Практики призначені для впровадження з одного рівня наступний і призначені для забезпечення чіткого шляху до покращення.",
+                        "rra practices": "Практики RRA"
                     },
-                    "percentage of practices": "[UK] Percentage of Practices Performed",
-                    "scores calculated as yes": "[UK] Scores are calculated as the percentage of 'Yes' answers.",
-                    "rra performance summary": "[UK] RRA Performance Summary",
-                    "performance summary text": "[UK] These charts represent the answer distribution overall and across all tiers.",
-                    "percentage of practices by goal": "[UK] Percentage of Practices Performed by Goal",
-                    "rra practices": "[UK] RRA Practices Scoring",
-                    "total practices": "[UK] Total Practices",
+                    "percentage of practices": "Відсоток виконаних практик",
+                    "scores calculated as yes": "Оцінки обчислюються як відсоток відповідей ter «Так».",
+                    "rra performance summary": "Зведення про ефективність RRA",
+                    "performance summary text": "Ці діаграми відображають розподіл відповідей загалом та за всіма рівнями.",
+                    "percentage of practices by goal": "Відсоток виконаних практик за цілями",
+                    "rra practices": "Оцінка практик RRA",
+                    "total practices": "Загальна кількість практик",
                     "percent complete": "Відсоток завершення",
-                    "suggested areas": "[UK] Suggested Areas for Improvement",
-                    "suggested text": "[UK] The goals in the assessment are ranked in order of deficiency with goals having fewer satisfied practices ranked higher in the chart. The bar chart reflects the percentage of practices for each goal that are answered 'No' or are left unanswered.",
-                    "goal completion summary": "[UK] Goal Completion Summary",
-                    "goal performance": "[UK] Goal Performance",
-                    "rra performance by goal": "[UK] RRA Performance by Goal",
-                    "performance by goal text": "[UK] This chart shows your positive assessment results. High scores on this chart are desirable.",
-                    "tiers": "[UK] Assessment Tiers",
-                    "rra practice list": "[UK] RRA Practice List with Corresponding References",
-                    "rra practice list text": "[UK] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.",
+                    "suggested areas": "Рекомендовані напрямки покращень",
+                    "suggested text": "Мети в оцінці ранжуються за ступенем недоліків, де мети з меншою кількістю задоволених практик ранжуються вище у графіку. Стовпчаста діаграма відображає відсоток практик для кожної мети, на які дано відповідь «Немає» або які залишено без відповіді.",
+                    "goal completion summary": "Зведення про виконання мети",
+                    "goal performance": "Ефективність мети",
+                    "rra performance by goal": "Ефективність RRA за метою",
+                    "performance by goal text": "Ця діаграма показує ваші позитивні результати оцінки. Високі бали на цій діаграмі бажані.",
+                    "tiers": "Рівні оцінки",
+                    "rra practice list": "Список практик RRA з відповідними посиланнями",
+                    "rra practice list text": "Червоним кольором позначені рядки, в яких практики були відповідені як «Немає» або залишені без відповіді.",
                     "identifier": "Ідентифікатор",
                     "practice": "Практика",
                     "references": "Список літератури"
                 },
                 "deficiency": {
-                    "report title": "[UK] Deficiency Report CISA Ransomware Readiness Assessment (RRA)",
+                    "report title": "Звіт про недоліки оцінки готовності до атак програм-вимагачів CISA (RRA)",
                     "suggested areas for improvement": "Рекомендовані напрямки покращення",
                     "deficiencies": "недостачі",
-                    "marked for review": "[UK] Marked for Review",
-                    "no deficiencies to display": "[UK] There are no deficiencies to display",
+                    "marked for review": "Позначено для перегляду",
+                    "no deficiencies to display": "Відсутні недоліки для відображення",
                     "comment": "Коментар",
                     "text": {
-                        "1": "Цей звіт про недоліки містить твердження, на які наразі немає відповідей, або на які було надано відповідь \"ні\"",
-                        "2": "Цей звіт, який часто називають Звітом про Розриви, визначає розриви, щоб допомогти користувачам визначити пріоритетні завдання та розробити план впровадження необхідного контролю для досягнення відповідності пов'язаним практикам",
-                        "3": "Також зазначено відсотковий розрив для кожної цілі, що допоможе визначити пріоритетні напрямки для зосередження зусиль",
-                        "4": "Цілі оцінки ранжуються за ступенем нестачі. Цілі з меншою кількістю успішно виконаних практик посідають вищі позиції на діаграмі. Стовпчаста діаграма відображає відсоток практик для кожної цілі, на які було надано відповідь \"Ні\" або залишено без відповіді"
+                        "1": "Цей звіт про недоліки містить твердження, на які наразі немає відповідей, або на які було надано відповідь «Немає».",
+                        "2": "Цей звіт, який часто називають Звітом про Розриви, визначає розриви, щоб допомогти користувачам визначити пріоритетні завдання та розробити план впровадження необхідного контролю для досягнення відповідності пов'язаним практикам.",
+                        "3": "Також зазначено відсотковий розрив для кожної цілі, що допоможе визначити пріоритетні напрямки для зосередження зусиль.",
+                        "4": "Цілі оцінки ранжуються за ступенем нестачі. Цілі з меншою кількістю успішно виконаних практик посідають вищі позиції на діаграмі. Стовпчаста діаграма відображає відсоток практик для кожної цілі, на які було надано відповідь «Немає» або залишено без відповіді."
                     }
                 },
                 "cmfr": {
-                    "report title": "[UK] Comments & Marked for Review",
+                    "report title": "Коментарі та Позначені для Перегляду",
                     "comment": "Коментар",
-                    "marked for review": "[UK] Marked for Review",
-                    "with comments": "[UK] with Comments",
-                    "no marked for review": "[UK] There are no {{questionsAliasLower}} marked for review",
-                    "no comments": "[UK] There are no {{questionsAliasLower}} with comments",
-                    "other remarks": "[UK] Other Remarks"
+                    "marked for review": "{{alias}}, позначені для перегляду",
+                    "with comments": "{{alias}} з коментарями",
+                    "no marked for review": "Немає жодних {{questionsAliasLower}} позначених для перегляду.",
+                    "no comments": "Немає жодних {{questionsAliasLower}} з коментарями.",
+                    "other remarks": "Інші зауваження"
                 }
             }
         }
@@ -1047,7 +1047,7 @@
         "enter email tsa": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом CSET TSA",
         "enter email renew": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом CSET Renewables",
         "enter email cf": "Введіть адресу електронної пошти, пов’язану з вашим обліковим записом Cyber Florida CSET",
-        "ransomware explanation": "[UK]Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange for decryption. These resources are designed to help individuals and organizations prevent attacks that can severely impact business processes and leave organizations without the data they need to operate and deliver mission-critical services."
+        "ransomware explanation": "Вимагачі програм - це постійно еволюціонуючий тип шкідливих програм, призначений для шифрування файлів на пристрої, що робить недоступними будь-які файли та системи, які на них покладаються. Зловмисники потім вимагають викуп у обмін на розшифрування. Ці ресурси призначені для допомоги фізичним особам та організаціям у запобіганні атак, які можуть серйозно впливати на бізнес-процеси і залишати організації без даних, необхідних для роботи та надання критичних послуг."
     },
     "about": {
         "dialog title": "Про програму",

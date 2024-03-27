@@ -44,6 +44,8 @@ export class CommentsMfrComponent implements OnInit {
 
   questionAliasSingular: string;
 
+  aliasTranslated: string;
+
   /**
    * 
    */
@@ -71,6 +73,8 @@ export class CommentsMfrComponent implements OnInit {
 
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
         this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
+        this.aliasTranslated = this.tSvc.translate(`titles.${this.response?.information.questionsAlias.toLowerCase()}`);
+
         this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
@@ -90,6 +94,7 @@ export class CommentsMfrComponent implements OnInit {
     if (!questionsAlias) {
       return '';
     }
+
     const alias = this.tSvc.translate('titles.' + questionsAlias.toLowerCase());
     return this.tSvc.translate(`reports.core.rra.cmfr.${lookupKey}`, { questionsAliasLower: alias.toLowerCase() });
   }
