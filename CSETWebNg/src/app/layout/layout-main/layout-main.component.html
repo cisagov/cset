@@ -112,3 +112,34 @@
   <div class="bgc-white dhs-seal-background"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
 </div>
+      <!-- Added modal version number -->
+
+      <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+        <div class="modal-dialog" role="document">
+              <div class="modal-content localversionModal">
+                    <div class="modal-header">
+                          <h4 class="modal-title">A new version of CyOTE is available.</h4>
+                          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                        </div>
+               <div class="modal-body">
+                <p>Your version: {{this.localVersion}}
+                 <br>Available Version: {{this.actualVersion}}
+                 
+                 
+               </p>
+               Patch Notes:
+                 <div [innerHTML]="patchNotes"></div>
+                 <div class="p-3 mb-2" *ngIf="skippedVersion">
+                   <p class="text-warning"> Please update to the newest version. </p>
+                  </div>    
+                        </div>
+                    <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" (click)="skipVersion()" >Skip Version</button>
+                           <button type="button" class="btn btn-primary"(click)="downloadNewVersion()">Download New Version</button>
+                        </div>
+                          
+           </div>
+            </div>
+
+</div>
+  <!-- Added modal version number -->
