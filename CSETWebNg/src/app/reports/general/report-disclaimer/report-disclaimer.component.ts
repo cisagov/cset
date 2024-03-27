@@ -22,6 +22,8 @@
 //
 ////////////////////////////////
 import { Component } from '@angular/core';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-report-disclaimer',
@@ -30,4 +32,25 @@ import { Component } from '@angular/core';
 })
 export class ReportDisclaimerComponent {
 
+  appLongName: string;
+  appShortName: string;
+  orgLongName: string;
+  orgShortName: string;
+  showIntellectualPropertyRightsAssertion = false;
+  intellectualPropertyRightsDistributionRequestEntity: string;
+
+  /**
+   * 
+   */
+  constructor(
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
+  ) {
+    this.appLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app long name`);
+    this.appShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app short name`);
+    this.orgLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org long name`);
+    this.orgShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org short name`);
+    this.showIntellectualPropertyRightsAssertion = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.show ip rights assertion`);
+    this.intellectualPropertyRightsDistributionRequestEntity = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.ip dist`);
+  }
 }
