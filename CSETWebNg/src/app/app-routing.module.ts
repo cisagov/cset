@@ -216,12 +216,12 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
-import { CieExampleComponent } from './assessment/results/cie-example/cie-example.component';
-import { CieBackgroundComponent } from './assessment/results/cie-example/cie-background/cie-background.component';
-import { CieAnalysisComponent } from './assessment/results/cie-example/cie-analysis/cie-analysis.component';
-import { ApplyingCieComponent } from './assessment/results/cie-example/cie-analysis/applying-cie/applying-cie.component';
-import { PrincipleAnalysisCieComponent } from './assessment/results/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
-import { CieAnalysisMatrixComponent } from './assessment/results/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
+import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
+import { CieBackgroundComponent } from './assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
+import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
+import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
+import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
+import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
 
 const appRoutes: Routes = [
 
@@ -359,13 +359,31 @@ const appRoutes: Routes = [
                 { path: 'background-cie', component: BackgroundCieComponent },
                 { path: 'principles-cie', component: PrinciplesCieComponent },
                 { path: 'lifecycle-cie', component: LifecycleCieComponent },
-                { path: 'how-to-use-cie', component: HowToUseCieComponent }
+                ]
+              },
+              { path: 'cie-example', 
+                component: CieExampleComponent, 
+                canActivate: [AssessGuard],
+                canActivateChild: [AssessGuard],
+                children: [
+                  { path: 'cie-background', component: CieBackgroundComponent },
+                  { path: 'cie-analysis', 
+                    component: CieAnalysisComponent,
+                    canActivate: [AssessGuard],
+                    canActivateChild: [AssessGuard],
+                    children: [
+                      { path: 'applying-cie', component: ApplyingCieComponent },
+                      { path: 'principle-analysis-cie/:pri', component: PrincipleAnalysisCieComponent }
+                    ]
+                  },
+                  { path: 'cie-analysis-matrix', component: CieAnalysisMatrixComponent },
                 ]
               },
               { path: 'config-cis', component: ConfigCisComponent },
               { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
               { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
               { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
+              { path: 'how-to-use-cie', component: HowToUseCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -425,22 +443,6 @@ const appRoutes: Routes = [
               { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
               { path: 'cpg-summary-page', component: CpgSummaryComponent },
               { path: 'cpg-practices-page', component: CpgPracticesComponent },
-
-              { path: 'cie-example', 
-                component: CieExampleComponent, 
-                children: [
-                  { path: 'cie-background', component: CieBackgroundComponent },
-                  { path: 'cie-analysis', 
-                    component: CieAnalysisComponent,
-                    children: [
-                      { path: 'applying-cie', component: ApplyingCieComponent },
-                      { path: 'principle-analysis-cie/:pri', component: PrincipleAnalysisCieComponent }
-                    ]
-                  },
-                  { path: 'cie-analysis-matrix', component: CieAnalysisMatrixComponent },
-                ]
-              },
-
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },

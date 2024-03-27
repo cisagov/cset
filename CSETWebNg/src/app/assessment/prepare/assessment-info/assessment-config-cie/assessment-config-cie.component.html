@@ -77,7 +77,7 @@
         <select class="form-control mr-1" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
             <option [ngValue]="null">-- Select Analysis to Import --</option>
             <option *ngFor="let c of importSourceCandidates" [ngValue]="c.id">
-                {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}] -{{c.id}}-
+                {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
             </option>
         </select>
         <button class="btn btn-primary text-nowrap" [disabled]="baselineAssessmentId == null"

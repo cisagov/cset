@@ -480,6 +480,22 @@
         </div>
       </div>
 
+      <div *ngIf="!!assessSvc.assessment &&
+          assessSvc.usesMaturityModel('CIE') &&
+          !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
+        <h4>Cyber-Informed Engineering (CIE)</h4>
+        <div>
+          <button tabindex="0" class="btn btn-link btn-link-dark text-left">
+            Export Applicable Questions Tear Out Sheets
+          </button>
+        </div>
+        <div>
+          <button tabindex="0" class="btn btn-link btn-link-dark text-left">
+            Export CIE-CSET Report
+          </button>
+        </div>
+      </div>
+
 
       <div>
         <div class="ml-2" *ngIf="isConfigChainEqual">
@@ -497,7 +513,7 @@
               exportExtension
             }}).">
             <span class="cset-icons-export-up fs-base-2 mr-2"></span>
-            <span>{{ 'buttons.export' | transloco }}</span>
+            <span>{{assessSvc.usesMaturityModel('CIE') ? 'CSET FILE' : ''}} {{ 'buttons.export' | transloco }}</span>
           </button>
 
           <button *ngIf="configSvc.cisaAssessorWorkflow" tabindex="0"

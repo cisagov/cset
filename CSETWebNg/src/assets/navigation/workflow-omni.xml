@@ -17,7 +17,6 @@
             <node d="cie tutorial.background" id="background-cie" path="assessment/{:id}/prepare/tutorial-cie/background-cie" />
             <node d="cie tutorial.principles" id="principles-cie" path="assessment/{:id}/prepare/tutorial-cie/principles-cie" />
             <node d="cie tutorial.lifecycle" id="lifecycle-cie" path="assessment/{:id}/prepare/tutorial-cie/lifecycle-cie" />
-            <node d="cie tutorial.how to use" id="how-to-use-cie" path="assessment/{:id}/prepare/tutorial-cie/how-to-use-cie" />
         </node>
 
         <!-- vanilla prepare pages -->
@@ -34,10 +33,33 @@
         <!-- CIS config page -->
         <node d="critical service information" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
 
-        <!-- CIE config page -->
+        <!-- Prepare - CIE Example -->
+        <node displaytext="CIE Example" id="cie-example" visible="MATURITY:17">
+            <node displaytext="Background" id="cie-background" path="assessment/{:id}/prepare/cie-example/cie-background" />
+            <node displaytext="CIE Analysis" id="cie-analysis">
+                <node displaytext="Applying CIE" id="applying-cie" path="assessment/{:id}/prepare/cie-example/cie-analysis/applying-cie" />
+                <node displaytext="Principle 1" id="principle-analysis-cie-2621" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2621" />
+                <node displaytext="Principle 2" id="principle-analysis-cie-2622" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2622" />
+                <node displaytext="Principle 3" id="principle-analysis-cie-2623" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2623" />
+                <node displaytext="Principle 4" id="principle-analysis-cie-2624" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2624" />
+                <node displaytext="Principle 5" id="principle-analysis-cie-2625" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2625" />
+                <node displaytext="Principle 6" id="principle-analysis-cie-2626" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2626" />
+                <node displaytext="Principle 7" id="principle-analysis-cie-2627" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2627" />
+                <node displaytext="Principle 8" id="principle-analysis-cie-2628" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2628" />
+                <node displaytext="Principle 9" id="principle-analysis-cie-2629" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2629" />
+                <node displaytext="Principle 10" id="principle-analysis-cie-2630" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2630" />
+                <node displaytext="Principle 11" id="principle-analysis-cie-2631" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2631" />
+                <node displaytext="Principle 12" id="principle-analysis-cie-2632" path="assessment/{:id}/prepare/cie-example/cie-analysis/principle-analysis-cie/2632" />
+            </node>
+            <node displaytext="CIE Analysis Matrix" id="cie-analysis-matrix" path="assessment/{:id}/prepare/cie-example/cie-analysis-matrix" />
+        </node>
+
+        <!-- CIE config pages -->
         <node displaytext="Analysis Details" id="assessment-detail-cie" path="assessment/{:id}/prepare/assessment-detail-cie" visible="MATURITY:17" />
         <node displaytext="CIE Analysis Information" id="assessment-info-cie" path="assessment/{:id}/prepare/assessment-info-cie" visible="MATURITY:17" />
         <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
+        
+        <node d="cie tutorial.how to use" id="how-to-use-cie" path="assessment/{:id}/prepare/how-to-use-cie" visible="MATURITY:17"/>
 
         <!-- Critical Service -->
         <node d="critical service information" id="csi" path="assessment/{:id}/prepare/csi" visible="INSTALL-MODE-NONE(IOD) MATURITY:8" />
@@ -408,30 +430,6 @@
         <!-- Results - CIS -->
         <node displaytext="CIS Section Scoring" id="section-scoring" path="assessment/{:id}/results/section-scoring" visible="MATURITY:8" />
         <node displaytext="CIS Deficiencies" id="ranked-deficiency" path="assessment/{:id}/results/ranked-deficiency" visible="MATURITY:8" />
-
-        <!-- Results - CIE Example -->
-        <node displaytext="CIE Example" id="cie-example" visible="MATURITY:17" path="assessment/{:id}/results/cie-example">
-            <node displaytext="Background" id="cie-background" path="assessment/{:id}/results/cie-example/cie-background" />
-            <node displaytext="CIE Analysis" id="cie-analysis">
-                <node displaytext="Applying CIE" id="applying-cie" path="assessment/{:id}/results/cie-example/cie-analysis/applying-cie" />
-                <node displaytext="Principle 1" id="principle-analysis-cie-2621" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2621" />
-                <node displaytext="Principle 2" id="principle-analysis-cie-2622" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2622" />
-                <node displaytext="Principle 3" id="principle-analysis-cie-2623" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2623" />
-                <node displaytext="Principle 4" id="principle-analysis-cie-2624" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2624" />
-                <node displaytext="Principle 5" id="principle-analysis-cie-2625" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2625" />
-                <node displaytext="Principle 6" id="principle-analysis-cie-2626" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2626" />
-                <node displaytext="Principle 7" id="principle-analysis-cie-2627" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2627" />
-                <node displaytext="Principle 8" id="principle-analysis-cie-2628" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2628" />
-                <node displaytext="Principle 9" id="principle-analysis-cie-2629" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2629" />
-                <node displaytext="Principle 10" id="principle-analysis-cie-2630" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2630" />
-                <node displaytext="Principle 11" id="principle-analysis-cie-2631" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2631" />
-                <node displaytext="Principle 12" id="principle-analysis-cie-2632" path="assessment/{:id}/results/cie-example/cie-analysis/principle-analysis-cie/2632" />
-            </node>
-            <node displaytext="CIE Analysis Matrix" id="cie-analysis-matrix" path="assessment/{:id}/results/cie-example/cie-analysis-matrix" />
-
-
-        </node>
-        
 
 
         <!-- Results - HYDRO -->
