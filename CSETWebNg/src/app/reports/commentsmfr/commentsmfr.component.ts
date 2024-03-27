@@ -37,6 +37,7 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class CommentsMfrComponent implements OnInit {
+  translationTabTitle: any;
   response: any = null;
   remarks: string;
 
@@ -65,7 +66,11 @@ export class CommentsMfrComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments and Marked For Review Report");
+    
+    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.cmfr.report title')
+    .subscribe(value =>
+      this.titleService.setTitle(this.tSvc.translate('reports.core.rra.cmfr.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+  
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
