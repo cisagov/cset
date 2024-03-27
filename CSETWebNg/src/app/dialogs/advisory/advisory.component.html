@@ -24,7 +24,7 @@
   <div class="advisory-dialog d-flex flex-column justify-content-center flex-11a">
     <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
       <span class="mr-3 fs-base-6 cset-icons-advisory"></span>
-      <span>{{t('menu.help.legal.advisory.advisory')}}</span>
+      <span>{{t('advisory.title')}}</span>
     </div>
 
     <mat-dialog-content class="p-3 pr-0 mt-2 oy-auto d-flex flex-column flex-11a">
@@ -33,14 +33,14 @@
         <h4>{{appLongName}}</h4>
         <div>
           <p
-            [innerHTML]="t('menu.help.legal.advisory.introduction 1', {'appLongName': appLongName, 'appShortName': appShortName})">
+            [innerHTML]="t('advisory.advisory 1', {'appLongName': appLongName, 'appShortName': appShortName})">
           </p>
           <p
-            [innerHTML]="t('menu.help.legal.advisory.introduction 2', {'appLongName': appLongName, 'appShortName': appShortName})">
+            [innerHTML]="t('advisory.advisory 2', {'appLongName': appLongName, 'appShortName': appShortName})">
           </p>
-          <p [innerHTML]="t('menu.help.legal.advisory.introduction 3', {'appShortName': appShortName})">
+          <p [innerHTML]="t('advisory.advisory 3', {'appShortName': appShortName})">
           </p>
-          <p [innerHTML]="t('menu.help.legal.advisory.introduction 4')">
+          <p [innerHTML]="t('advisory.advisory 4')">
           </p>
         </div>
 
