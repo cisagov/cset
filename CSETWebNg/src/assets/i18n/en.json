@@ -434,6 +434,9 @@
             "description required": "* Description required"
         }
     },
+    "questions": {
+        "cpg answer key": "CPG Answer Key"
+    },
     "tooltip": {
         "view detail": "View Detail",
         "create assessment": "Create Assessment",
@@ -1067,6 +1070,7 @@
         "additional documents": "Additional Documents",
         "no documents to display": "There are no documents to display",
         "section": "Section",
+        "no supplemental available": "no supplemental guidance available",
         "no reference documents available": "no reference documents available"
     },
     "menu": {
