@@ -293,7 +293,6 @@ namespace CSETWebCore.Api.Controllers
                 {
                     q.Question_Text = translatedGroup.QuestionText;
                     q.ReferenceText = translatedGroup.ReferenceText;
-
                 }
             }
 

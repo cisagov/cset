@@ -58,6 +58,7 @@ namespace CSETWebCore.Business.Reports
         public string Question_Text { get; set; }
         public string Supplemental_Info { get; set; }
         public string Examination_Approach { get; set; }
+        public string Recommended_Action { get; set; }
         public int Maturity_Level { get; set; }
         public string Set_Name { get; set; }
         public int Sequence { get; set; }
