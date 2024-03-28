@@ -783,6 +783,7 @@
                 "rra deficiency report": "Звіт про недоліки за RRA",
                 "comments and marked for review": "Коментарі та Позначені для Перегляду",
                 "cisa ransomware readiness assessment": "CISA Оцінка готовності до рейдерського програмного забезпечення",
+                "assessment full title": "готовності до рейдерського програмного забезпечення",
                 "report": {
                     "assessment tiers": "Рівні оцінки RRA",
                     "answered tier": "Практики, відповіді на рівні оцінки",
