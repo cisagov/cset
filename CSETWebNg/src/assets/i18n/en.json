@@ -904,6 +904,7 @@
                 "rra deficiency report": "RRA Deficiency Report",
                 "comments and marked for review": "Comments and Marked for Review",
                 "cisa ransomware readiness assessment": "CISA Ransomware Readiness Assessment",
+                "assessment full title": "Ransomware Readiness",
                 "report": {
                     "assessment tiers": "RRA Assessment Tiers",
                     "answered tier": "Practices Answered Per Tier",

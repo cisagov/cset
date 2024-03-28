@@ -848,6 +848,7 @@
                 "rra deficiency report": "Informe de deficiencia de RRA",
                 "comments and marked for review": "Comentarios y Marcados para Revisión",
                 "cisa ransomware readiness assessment": "CISA Informe de Evaluación de Preparación para Ransomware (RRA)",
+                "assessment full title": "Preparación para ransomware",
                 "report": {
                     "assessment tiers": "Niveles de evaluación de RRA",
                     "answered tier": "Prácticas respondidas por nivel",
