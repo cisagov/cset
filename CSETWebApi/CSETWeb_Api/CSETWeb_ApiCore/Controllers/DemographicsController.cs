@@ -121,7 +121,7 @@ namespace CSETWebCore.Api.Controllers
             {
                 list.ForEach(x =>
                 {
-                    var val = _overlay.GetValue("SECTORS", x.SectorId.ToString(), lang)?.Value;
+                    var val = _overlay.GetValue("SECTOR", x.SectorId.ToString(), lang)?.Value;
                     if (val != null)
                     {
                         x.SectorName = val;
