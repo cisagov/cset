@@ -224,5 +224,8 @@
     <None Update="App_Data\LanguagePacks\UK\ANSWER_LOOKUP.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="App_Data\LanguagePacks\UK\MATURITY_MODELS.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
