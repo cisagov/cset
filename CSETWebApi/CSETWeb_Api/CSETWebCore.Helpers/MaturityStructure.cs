@@ -216,6 +216,9 @@ namespace CSETWebCore.Helpers
                         var cpgPractice = p.Select(".cpg-practice");
                         question.Practice = cpgPractice.FirstOrDefault()?.Html();
 
+                        var cpgOutcome = p.Select(".cpg-outcome");
+                        question.Outcome = cpgOutcome.FirstOrDefault()?.Html();
+
 
                         question.Supplemental = myQ.Supplemental_Info;
 
@@ -246,6 +249,24 @@ namespace CSETWebCore.Helpers
                     question.Cost = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COST")?.PropertyValue;
                     question.Impact = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "IMPACT")?.PropertyValue;
                     question.Complexity = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COMPLEXITY")?.PropertyValue;
+
+
+                    // overlay
+                    var o = _overlay.GetMaturityQuestion(question.QuestionId, _lang);
+                    if (o != null)
+                    {
+                        question.QuestionText = o.QuestionText;
+                        question.Scope = o.Scope;
+                        question.RiskAddressed = o.RiskAddressed;
+                        question.RecommendedAction = o.RecommendAction;
+
+                        var p = Parser.Parse(o.QuestionText, ".");
+                        var practice = p.Select(".cpg-practice").FirstOrDefault()?.Html();
+                        question.Practice = practice ?? question.Practice;
+
+                        var outcome = p.Select(".cpg-outcome").FirstOrDefault()?.Html();
+                        question.Outcome = outcome ?? question.Outcome;
+                    }
 
                     grouping.Questions.Add(question);
                 }
