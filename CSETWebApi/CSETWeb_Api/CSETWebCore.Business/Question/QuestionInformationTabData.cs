@@ -672,8 +672,7 @@ namespace CSETWebCore.Business.Question
         {
             if (string.IsNullOrEmpty(supp))
             {
-                var msg = _overlay.GetPropertyValue("GENERIC", "no supplemental", _lang) ?? "(no supplemental guidance available)";
-                return msg;
+                return null;
             }
 
             if (supp.StartsWith("<FlowDocument"))

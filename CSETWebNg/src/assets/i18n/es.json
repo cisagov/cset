@@ -381,6 +381,9 @@
             "description required": "* Descripción requerida"
         }
     },
+    "questions": {
+        "cpg answer key": "Clave de Respuestas CPG"
+    },
     "tooltip": {
         "view detail": "Ver detalle",
         "create assessment": "Crear evaluación",
@@ -1014,6 +1017,7 @@
         "additional documents": "Documentos Adicionales",
         "no documents to display": "No hay documentos para mostrar",
         "section": "Sección",
+        "no supplemental available": "no hay orientación complementaria disponible",
         "no reference documents available": "no hay documentos de referencia disponibles"
     },
     "menu": {

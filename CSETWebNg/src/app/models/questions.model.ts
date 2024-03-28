@@ -163,6 +163,11 @@ export interface Question {
     is_Maturity: boolean;
     extrasExpanded: boolean;
 
+    // CPG fields
+    scope: string;
+    recommendedAction: string;
+    services: string;
+
     // parent questions aren't answered directly and have subparts that are answered.
     isParentQuestion: boolean;
     parentQuestionId: number;

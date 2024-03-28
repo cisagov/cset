@@ -344,6 +344,9 @@
             "description required": "* Потрібен опис"
         }
     },
+    "questions": {
+        "cpg answer key": "CPG Відповідний ключ"
+    },
     "tooltip": {
         "view detail": "Переглянути деталі",
         "create assessment": "Створити оцінку",
@@ -891,6 +894,7 @@
         "additional documents": "Додаткові документи",
         "no documents to display": "Немає документів для відображення",
         "section": "Розділ",
+        "no supplemental available": "немає додаткових вказівок",
         "no reference documents available": "відсутні довідкові документи"
     },
     "menu": {
