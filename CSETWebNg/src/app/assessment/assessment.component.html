@@ -76,7 +76,7 @@
         <mat-tree [dataSource]="navTreeSvc?.dataSource" [treeControl]="navTreeSvc?.tocControl" class="mb-5">
 
           <mat-tree-node *matTreeNodeDef="let node" [hidden]="!node.visible" class="ml-1"
-            [class.current-node]="node?.isCurrent">
+            [class.current-node]="node?.isCurrent" [id]="node?.value">
             <!--isNodeDisabled(node?.disabled) ||-->
             <button (click)="selectNavItem(node?.value)" [disabled]="!(node?.enabled)" tabindex="0"
               class="btn btn-link no-underline ta-left">
