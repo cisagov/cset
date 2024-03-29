@@ -206,10 +206,10 @@ export class ReportService {
     return this.http.get(this.configSvc.apiUrl + 'reports/CisaAssessorWorkflowValidateFields');
   }
 
-  applyJwtOffset(stringDate: string) {
+  applyJwtOffset(d: DateTime) {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    return DateTime.fromISO(stringDate).minus(parsedToken.tzoffset / 60);
+    return d.minus({minutes: parsedToken.tzoffset});
   }
 
   /**
