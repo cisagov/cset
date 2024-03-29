@@ -35,6 +35,4 @@ public partial class CSET_VERSION
 
     [StringLength(500)]
     public string Build_Number { get; set; }
-    [StringLength(50)]
-    public string currentVersion { get; set; }
 }

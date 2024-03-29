@@ -61,6 +61,7 @@ export class LayoutMainComponent  implements OnInit{
   newVersion: AppVersion;
   display = "none";
   displayNotifications="none";
+  githubVersion=[]
 
   constructor(
     public auth: AuthenticationService,
@@ -75,12 +76,26 @@ export class LayoutMainComponent  implements OnInit{
     private versionSvc: VersionService
   ) { }
   ngOnInit() {
-    // this.checkForUpdates();
-  this.versionSvc.getInstalledVersion().subscribe(r=>{
-    console.log(r)
-  }
-   
-  )
+    this.versionSvc.getGithubLatestRelease().subscribe(data=>{
+      this.actualVersion=data.tag_name.substring(1)
+      console.log(data.tag_name.substring(1).split('.').map(x => parseInt(x, 10)))
+      this.githubVersion=data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
+      if(data){
+        this.versionSvc.getInstalledVersion().subscribe(version=>{
+          this.localVersion=version.majorVersion.toString()+'.'+version.minorVersion.toString()+'.'+version.patch.toString()+'.'+version.build.toString();
+          if(version.majorVersion < this.githubVersion[0] ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion < this.githubVersion[1]) ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch < this.githubVersion[2]) ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch === this.githubVersion[2] && version.build < this.githubVersion[3]))
+         {
+          this.showVersionNotification=true;
+         }
+        else{
+          this.showVersionNotification=false;
+        }
+        })
+      }
+    })
   }
   /**
    * Indicates if the user is currently within the Module Builder pages.
@@ -113,62 +128,12 @@ export class LayoutMainComponent  implements OnInit{
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
-// version 
-  checkForUpdates(reset: boolean = false): void {
-    this.versionSvc.getInstalledVersion().subscribe(
-      data=>{
-        this.versiontoUpdate=data;
-        localStorage.setItem('versionNotificationViewed',data.cset_Version1)
-        if(this.versiontoUpdate.currentVersion!=this.versiontoUpdate.cset_Version1){
-          this.skippedVersion=true;
-         }
-      }
-    )
-    this.versionSvc.isNewerVersionAvailable()
-      .pipe(take(1))
-      .subscribe(response => {
-       this.showVersionNotification = response.isNewer && this.versionSvc.compareVersion(localStorage.getItem('versionNotificationViewed'), response.version.majorVersion.toString()+'.'+response.version.minorVersion.toString()+'.'+response.version.patch.toString()+'.'+response.version.build.toString()) === 'newer'
-        this.newVersion = response.version;
-       if(this.showVersionNotification==true && this.versiontoUpdate?.currentVersion==localStorage.getItem('versionNotificationViewed')){
-        this.showNotifications();
-       }
-      });
-    if (reset) {
-      this.showNotifications();
-    }
-  }
+onCloseHandled() {
+  this.display = "none";
+  this.displayNotifications="none"
 
-  showNotifications(): void {
-    this.display = "block";
-    this.localVersion=localStorage.getItem('versionNotificationViewed');
-    this.actualVersion=this.newVersion.majorVersion.toString()+'.'+this.newVersion.minorVersion.toString()+'.'+this.newVersion.patch.toString()+'.'+this.newVersion.build.toString();
-    this.patchNotes = this.newVersion.patchNotes;
-  }
-
-  onCloseHandled() {
-    this.display = "none";
-    this.displayNotifications="none"
-
-   }
-  skipVersion(){
-    this.versiontoUpdate.updateVersion=this.actualVersion;
-    console.log(this.versiontoUpdate.updateVersion)
-    this.versionSvc.updateVersion(this.versiontoUpdate).subscribe(data=>{
-      this.skippedVersion=true;
-      this.display="none";
-    })
-  }
-  downloadNewVersion(){
-  
-    this.versiontoUpdate.cset_Version1=this.actualVersion;
-    this.versiontoUpdate.updateVersion=this.actualVersion;
-    this.versionSvc.updateVersion(this.versiontoUpdate).subscribe(data=>{
-      this.display = "none";
-      window.location.href=this.newVersion.versionString;
-      this.showVersionNotification = false;
-    }
-
-    );
-
-  }
+ }
+ showNotifications(): void {
+  this.display = "block";
+}
 }

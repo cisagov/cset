@@ -25,15 +25,6 @@ namespace CSETWebCore.Business.Version
                   .FirstOrDefault();
             return result;
         }
-
-        public void getVersion(CSET_VERSION updatedVersion)
-        {
-
-            CSET_VERSION version = _context.CSET_VERSION.Find(updatedVersion.Id);
-            version.Cset_Version1 = updatedVersion.Cset_Version1;
-            version.currentVersion = updatedVersion.currentVersion;
-            _context.SaveChanges();
-        }
     }
 }
 

@@ -9,6 +9,7 @@ using CSETWebCore.Interfaces.User;
 using CSETWebCore.Interfaces.Version;
 using CSETWebCore.Business.Version;
 using Microsoft.AspNetCore.Mvc;
+using DocumentFormat.OpenXml.Bibliography;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,29 +31,47 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/version/getVersionNumber")]
-        public CSET_VERSION getVersionNumber()
+        public IActionResult getVersionNumber()
         {
-            //var result = _versionBusiness.getversionNumber();
-            //return result;
-            var result = _context.CSET_VERSION
+            var version = _context.CSET_VERSION
                  .OrderByDescending(v => v.Id)
                 .Take(1)
                 .FirstOrDefault();
-            return result;
-            
-        }
-        //[HttpPost]
-        //[Route("api/saveNewVersionNumber")]
-        //public IActionResult saveNewVersionNumber([FromBody] CSET_VERSION version)
-        //{
+            if (version != null)
+            {
+                if (version.Cset_Version1 == null)
+                {
+                    return Ok(version);
+                }
 
-        //    CSET_VERSION version = _context.CSET_VERSION.Find(version.Id);
-        //    version.Cset_Version1 = updatedVersion.Cset_Version1;
-        //    version.currentVersion = updatedVersion.currentVersion;
-        //    _context.SaveChanges();
-        //    //_versionBusiness.getVersion(version);
-        //    return Ok();
-        //}
+                if (version.Cset_Version1.Any())
+                {
+                    var versionNumberstr = version.Cset_Version1.Split('.').Select(int.Parse).ToList();
+                    var versionNumber = new CsetVersionResponse();
+
+                    versionNumber.MajorVersion = versionNumberstr[0];
+                    versionNumber.MinorVersion = versionNumberstr[1];
+                    versionNumber.Patch = versionNumberstr[2];
+                    versionNumber.Build = versionNumberstr[3];
+                    
+                    return Ok(versionNumber);
+                }
+                else
+                {
+                    return Ok(version);
+                }
+            }
+
+            return Ok(new CsetVersionResponse
+            {
+                MajorVersion = 0,
+                MinorVersion = 0,
+                Patch = 0,
+                Build = 0
+            });
+        }
+
     }
-}
+    }
+
 

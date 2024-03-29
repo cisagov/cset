@@ -47,7 +47,7 @@
           #topMenusTrigger="matMenuTrigger" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
-
+       
         <!-- Menus contained in the navbar-toggler submenu -->
         <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
           <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
@@ -55,7 +55,12 @@
 
         <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
         <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+        <span *ngIf="showVersionNotification" class="text-warning">
+          <span class="float-right notification-link" (click)="showNotifications()"><mat-icon class="settingsIcon">settings</mat-icon>   <span class="newinstaller">1</span></span>
+    
+        </span>
       </nav>
+     
     </div>
 
     <!-- Body -->
@@ -64,7 +69,7 @@
         <router-outlet></router-outlet>
       </div>
     </div>
-
+ 
     <!-- Footer -->
     <div ngbAccordion type="primary" class="footer row no-gutters sticky-footer"
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
@@ -118,7 +123,7 @@
         <div class="modal-dialog" role="document">
               <div class="modal-content localversionModal">
                     <div class="modal-header">
-                          <h4 class="modal-title">A new version of CyOTE is available.</h4>
+                          <h4 class="modal-title">A new version of CSET is available.</h4>
                           <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
                         </div>
                <div class="modal-body">
@@ -127,15 +132,10 @@
                  
                  
                </p>
-               Patch Notes:
-                 <div [innerHTML]="patchNotes"></div>
-                 <div class="p-3 mb-2" *ngIf="skippedVersion">
-                   <p class="text-warning"> Please update to the newest version. </p>
-                  </div>    
-                        </div>
+                 
+               </div>
                     <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" (click)="skipVersion()" >Skip Version</button>
-                           <button type="button" class="btn btn-primary"(click)="downloadNewVersion()">Download New Version</button>
+                           <a href="https://github.com/cisagov/cset/releases" target="_blank" class="btn btn-primary">Link to Github Release page</a>
                         </div>
                           
            </div>
