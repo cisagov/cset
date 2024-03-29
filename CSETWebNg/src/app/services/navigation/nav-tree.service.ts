@@ -84,6 +84,12 @@ export class NavTreeService {
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
+
+    // if (this.assessSvc.usesMaturityModel('CIE')) {
+    //   let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
+    //   this.tocControl.collapse(temp);
+    // }
+
     this.isNavLoading = false;
   }
 
@@ -297,10 +303,14 @@ export class NavTreeService {
     }
   }
 
-  setSideNavScrollLocation() {
+  setSideNavScrollLocation(targetId) {
+    console.log(targetId)
     const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
     if (sideNav.length > 0) {
-      sideNav[0].scrollTo(0, 500);
+      let target = document.getElementById(targetId);
+      //sideNav[0].scrollTo(0, sideNav[0].scrollHeight);
+      //sideNav[0].scrollTo(0, sideNav[0].scrollIntoView());
+      target.scrollIntoView({ behavior: "smooth"});
     }
   }
 }
