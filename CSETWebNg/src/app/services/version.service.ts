@@ -19,10 +19,6 @@ const headers = {
   providedIn: 'root'
 })
 export class VersionService {
-
-  // private apiUrl = this.configSvc.versionApiUrl + 'aAP/';
-  // private apiUrl='http://localhost:5001/api/AppVersion';
-
   private csetGithubApiUrl=environment.csetGithubApiUrl
   private apiURLCset=this.configSvc.apiUrl;
   installedVersion:any;
@@ -34,9 +30,7 @@ export class VersionService {
   getGithubLatestRelease():Observable<any>{
     return this.http.get<any>(this.csetGithubApiUrl)
   }
-  // getLatestVersion(): Observable<AppVersion> {
-  //   return this.http.get<AppVersion>(this.apiUrl);
-  // }
+ 
   getInstalledVersion():Observable<any>{
    return this.http.get<any>(this.apiURLCset+'version/getVersionNumber')
  }
