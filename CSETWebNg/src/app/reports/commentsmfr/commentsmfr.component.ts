@@ -37,12 +37,15 @@ import { TranslocoService } from '@ngneat/transloco';
   styleUrls: ['../reports.scss', '../acet-reports.scss']
 })
 export class CommentsMfrComponent implements OnInit {
+  translationTabTitle: any;
   response: any = null;
   remarks: string;
 
   loading: boolean = false;
 
   questionAliasSingular: string;
+
+  aliasTranslated: string;
 
   /**
    * 
@@ -63,7 +66,11 @@ export class CommentsMfrComponent implements OnInit {
    */
   ngOnInit(): void {
     this.loading = true;
-    this.titleService.setTitle("Comments and Marked For Review Report");
+    
+    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.rra.cmfr.report title')
+    .subscribe(value =>
+      this.titleService.setTitle(this.tSvc.translate('reports.core.rra.cmfr.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
+  
 
     this.maturitySvc.getCommentsMarked().subscribe(
       (r: any) => {
@@ -71,6 +78,8 @@ export class CommentsMfrComponent implements OnInit {
 
         // until we define a singular version in the maturity model database table, just remove (hopefully) the last 's'
         this.questionAliasSingular = this.response?.information.questionsAlias.slice(0, -1);
+        this.aliasTranslated = this.tSvc.translate(`titles.${this.response?.information.questionsAlias.toLowerCase()}`);
+
         this.loading = false;
       },
       error => console.log('Comments Marked Report Error: ' + (<Error>error).message)
@@ -90,6 +99,7 @@ export class CommentsMfrComponent implements OnInit {
     if (!questionsAlias) {
       return '';
     }
+
     const alias = this.tSvc.translate('titles.' + questionsAlias.toLowerCase());
     return this.tSvc.translate(`reports.core.rra.cmfr.${lookupKey}`, { questionsAliasLower: alias.toLowerCase() });
   }

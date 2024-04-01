@@ -151,7 +151,7 @@ export class AssessmentComponent implements OnInit {
     this.navSvc.navDirect(target);
     setTimeout(() => {
       this.navTreeSvc.setSideNavScrollLocation()
-    }, 300);
+    }, 5);
   }
 
   toggleNav() {

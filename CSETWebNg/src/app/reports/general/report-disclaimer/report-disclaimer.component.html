@@ -20,21 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *transloco="let t; read: 'reports.disclaimer'">
-    <h1>{{ t('disclaimer') }}</h1>
-    <p>
-        {{ t('disclaimer section 1') }}
+<div *transloco="let t; read: 'disclaimer'">
+    <h1>{{ t('title') }}</h1>
+    
+    <p [innerHTML]="t('disclaimer 1', {'appShortName': appShortName, 'orgLongName': orgLongName, 'orgShortName': orgShortName})">
     </p>
 
-    <p>
-        {{ t('disclaimer section 2') }}
+    <p [innerHTML]="t('disclaimer 2', {'orgShortName': orgShortName})">
     </p>
 
-    <p>
-        {{ t('disclaimer section 3') }}
+    <p [innerHTML]="t('disclaimer 3', {'orgShortName': orgShortName})">
     </p>
 
-    <p>
-        {{ t('disclaimer section 4') }}
+    <p [innerHTML]="t('disclaimer 4', {'appShortName': appShortName, 'intellectualPropertyRightsDistributionRequestEntity': intellectualPropertyRightsDistributionRequestEntity})">
     </p>
 </div>

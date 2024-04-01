@@ -164,7 +164,7 @@
     <None Update="App_Data\LanguagePacks\ES\MATURITY_QUESTIONS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\ES\SECTORS.json">
+    <None Update="App_Data\LanguagePacks\ES\SECTOR.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\ES\SECTOR_INDUSTRY.json">
@@ -206,7 +206,7 @@
     <None Update="App_Data\LanguagePacks\UK\QUESTION_GROUP_HEADING.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\UK\SECTORS.json">
+    <None Update="App_Data\LanguagePacks\UK\SECTOR.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\SECTOR_INDUSTRY.json">
@@ -224,7 +224,7 @@
     <None Update="App_Data\LanguagePacks\UK\ANSWER_LOOKUP.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\UK\MATURITY_GROUPINGS_TITLE.json">
+    <None Update="App_Data\LanguagePacks\UK\MATURITY_MODELS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

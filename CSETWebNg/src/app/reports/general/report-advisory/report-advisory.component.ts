@@ -22,6 +22,8 @@
 //
 ////////////////////////////////
 import { Component } from '@angular/core';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-report-advisory',
@@ -30,4 +32,17 @@ import { Component } from '@angular/core';
 })
 export class ReportAdvisoryComponent {
 
+  appLongName: string;
+  appShortName: string;
+
+  /**
+   * 
+   */
+  constructor(
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
+  ) {
+    this.appLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app long name`);
+    this.appShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app short name`);
+  }
 }

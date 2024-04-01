@@ -71,6 +71,8 @@ export class QuestionExtrasComponent implements OnInit {
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
 
+  msgNoSupplemental: string = `(${this.tSvc.translate('extras.no supplemental available')})`;
+
   showMfr = false;
 
   showQuestionIds = false;
@@ -617,6 +619,17 @@ export class QuestionExtrasComponent implements OnInit {
 
   autoLoadSupplemental() {
     return this.questionsSvc.autoLoadSupplemental(this.assessSvc.assessment.maturityModel?.modelId);
+  }
+
+  /**
+   * Returns a boolean indicating if ANY type of supplemental exists
+   */
+  supplementalExists() {
+    return (
+      !!this.tab?.requirementsData?.supplementalInfo 
+      || !!this.myQuestion.scope 
+      || !!this.myQuestion.recommendedAction
+      || !!this.myQuestion.services);
   }
 
   /**
