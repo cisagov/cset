@@ -21,11 +21,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         //IVersionBusiness versionBusiness
 
-        public VersionController(CSETContext context)
+        public VersionController(CSETContext context, IVersionBusiness versionBusiness)
         {
             _context = context;
 
-            //_versionBusiness = versionBusiness;
+            _versionBusiness = versionBusiness;
 
         }
 
@@ -33,42 +33,9 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/version/getVersionNumber")]
         public IActionResult getVersionNumber()
         {
-            var version = _context.CSET_VERSION
-                 .OrderByDescending(v => v.Id)
-                .Take(1)
-                .FirstOrDefault();
-            if (version != null)
-            {
-                if (version.Cset_Version1 == null)
-                {
-                    return Ok(version);
-                }
-
-                if (version.Cset_Version1.Any())
-                {
-                    var versionNumberstr = version.Cset_Version1.Split('.').Select(int.Parse).ToList();
-                    var versionNumber = new CsetVersionResponse();
-
-                    versionNumber.MajorVersion = versionNumberstr[0];
-                    versionNumber.MinorVersion = versionNumberstr[1];
-                    versionNumber.Patch = versionNumberstr[2];
-                    versionNumber.Build = versionNumberstr[3];
-                    
-                    return Ok(versionNumber);
-                }
-                else
-                {
-                    return Ok(version);
-                }
-            }
-
-            return Ok(new CsetVersionResponse
-            {
-                MajorVersion = 0,
-                MinorVersion = 0,
-                Patch = 0,
-                Build = 0
-            });
+          
+            var versionResponse = _versionBusiness.getversionNumber();
+            return Ok(versionResponse);
         }
 
     }

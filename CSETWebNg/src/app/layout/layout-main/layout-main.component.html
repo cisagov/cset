@@ -116,30 +116,31 @@
 
   <div class="bgc-white dhs-seal-background"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
-</div>
-      <!-- Added modal version number -->
+     <!-- Added modal version number -->
 
-      <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
-        <div class="modal-dialog" role="document">
-              <div class="modal-content localversionModal">
-                    <div class="modal-header">
-                          <h4 class="modal-title">A new version of CSET is available.</h4>
-                          <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
-                        </div>
-               <div class="modal-body">
-                <p>Your version: {{this.localVersion}}
-                 <br>Available Version: {{this.actualVersion}}
-                 
-                 
-               </p>
-                 
-               </div>
-                    <div class="modal-footer">
-                           <a href="https://github.com/cisagov/cset/releases" target="_blank" class="btn btn-primary">Link to Github Release page</a>
-                        </div>
-                          
-           </div>
-            </div>
+     <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content localversionModal">
+                  <div class="modal-header">
+                        <h4 class="modal-title">{{t('new version')}}</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                      </div>
+             <div class="modal-body">
+              <p>{{t('your version')}} {{this.localVersion}}
+               <br>{{t('version available')}} {{this.actualVersion}}
+               
+               
+             </p>
+               
+             </div>
+                  <div class="modal-footer">
+                         <a href="https://github.com/cisagov/cset/releases" target="_blank" class="text-dark" >{{t('link version')}}</a>
+                      </div>
+                        
+         </div>
+          </div>
 
 </div>
-  <!-- Added modal version number -->
+<!-- Added modal version number -->
+</div>
+     
