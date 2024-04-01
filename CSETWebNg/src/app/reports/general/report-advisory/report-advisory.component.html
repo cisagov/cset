@@ -20,22 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div *transloco="let t; read: 'reports.advisory'">
-    <h1>{{ t('advisory') }}</h1>
+<div *transloco="let t; read: 'advisory'">
+    <h1>{{ t('title') }}</h1>
 
-    <p>
-        {{ t('advisory section 1') }}
+    <p [innerHTML]="t('advisory 1', {'appLongName': appLongName, 'appShortName': appShortName})">
     </p>
-
-    <p>
-        {{ t('advisory section 2') }}
+    <p [innerHTML]="t('advisory 2', {'appLongName': appLongName, 'appShortName': appShortName})">
     </p>
-
-    <p>
-        {{ t('advisory section 3') }}
+    <p [innerHTML]="t('advisory 3', {'appShortName': appShortName})">
     </p>
-
-    <p>
-        {{ t('advisory section 4') }}
+    <p [innerHTML]="t('advisory 4')">
     </p>
 </div>
