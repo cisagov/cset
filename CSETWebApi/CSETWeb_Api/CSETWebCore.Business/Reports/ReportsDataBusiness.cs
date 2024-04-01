@@ -683,6 +683,82 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
+        /// Returns a block of data generally from the INFORMATION table plus a few others.
+        /// </summary>
+        /// <returns></returns>
+        public BasicReportData.INFORMATION GetIseInformation()
+        {
+            INFORMATION infodb = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+
+            TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
+            {
+                config.Ignore(x => x.Additional_Contacts);
+            });
+            var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
+
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+
+            DateTime assessmentEffectiveDate;
+            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToString();
+
+            // Primary Assessor
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
+
+
+            // Other Contacts
+            info.Additional_Contacts = new List<string>();
+            var contacts = _context.ASSESSMENT_CONTACTS
+                .Where(ac => ac.Assessment_Id == _assessmentId
+                        && ac.UserId != assessment.AssessmentCreatorId)
+                .Include(u => u.User)
+                .ToList();
+            foreach (var c in contacts)
+            {
+                info.Additional_Contacts.Add(FormatName(c.FirstName, c.LastName));
+            }
+
+            // Include anything that was in the INFORMATION record's Additional_Contacts column
+            if (infodb.Additional_Contacts != null)
+            {
+                string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string c in acLines)
+                {
+                    info.Additional_Contacts.Add(c);
+                }
+            }
+
+            info.UseStandard = assessment.UseStandard;
+            info.UseMaturity = assessment.UseMaturity;
+            info.UseDiagram = assessment.UseDiagram;
+
+            // ACET properties
+            info.Credit_Union_Name = assessment.CreditUnionName;
+            info.Charter = assessment.Charter;
+
+            info.Assets = 0;
+            bool a = long.TryParse(assessment.Assets, out long assets);
+            if (a)
+            {
+                info.Assets = assets;
+            }
+
+            // Maturity properties
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            if (myModel != null)
+            {
+                info.QuestionsAlias = myModel.model.Questions_Alias;
+            }
+
+            return info;
+        }
+
+
+        /// <summary>
         /// Returns a list of domains for the assessment.
         /// </summary>
         /// <returns></returns>
