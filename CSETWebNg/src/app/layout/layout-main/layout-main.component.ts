@@ -78,7 +78,6 @@ export class LayoutMainComponent  implements OnInit{
   ngOnInit() {
     this.versionSvc.getGithubLatestRelease().subscribe(data=>{
       this.actualVersion=data.tag_name.substring(1)
-      console.log(data.tag_name.substring(1).split('.').map(x => parseInt(x, 10)))
       this.githubVersion=data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
       if(data){
         this.versionSvc.getInstalledVersion().subscribe(version=>{
