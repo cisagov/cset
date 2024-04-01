@@ -65,6 +65,10 @@
     "control priorities intro1": "Información sobre el ranking se puede encontrar en la <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">guía del usuario</a>.",
     "local installation": "Instalación Local",
+    "new version":"A new version of CSET is available.",
+    "your version":"Tu versión:",
+    "version available":"Versión disponible:",
+    "link version":"Haga clic aquí para ver o descargar las versiones de CSET.",
     "legend": "Leyenda",
     "publisher": {
 
