@@ -597,7 +597,7 @@ namespace CSETWebCore.Business.Question
                 var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
                 for (int i  = 0; i < ReferenceTextList.Count; i++)
                 {
-                    if (translatedGroup != null)
+                    if (translatedGroup?.ReferenceText != null)
                     {
                         ReferenceTextList[i] = translatedGroup.ReferenceText;
                     }
@@ -672,8 +672,7 @@ namespace CSETWebCore.Business.Question
         {
             if (string.IsNullOrEmpty(supp))
             {
-                var msg = _overlay.GetPropertyValue("GENERIC", "no supplemental", _lang) ?? "(no supplemental guidance available)";
-                return msg;
+                return null;
             }
 
             if (supp.StartsWith("<FlowDocument"))

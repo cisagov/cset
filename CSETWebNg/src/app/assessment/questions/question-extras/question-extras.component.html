@@ -191,8 +191,13 @@
                 </table>
             </div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
+
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
+                </div>
+
+                <div *ngIf="!supplementalExists()">
+                    {{msgNoSupplemental}}!
                 </div>
             </div>
         </div>
@@ -231,10 +236,13 @@
                 class="supplemental"
                 [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak | safe: 'html'">
             </div>
+
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
+
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
                 </div>
+
                 <div *ngIf="!seperateGuidanceFromApproach()">
                     <hr
                         *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
@@ -267,8 +275,13 @@
                     <div [innerHTML]="myQuestion.services">
                     </div>
                 </div>
+
+                <div *ngIf="!supplementalExists()">
+                    {{msgNoSupplemental}}?
+                </div>
             </div>
         </ng-template>
+
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
