@@ -897,10 +897,17 @@ namespace CSETWebCore.Business.Maturity
                 var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
                 if (o != null)
                 {
-                    q.Question_Title = o.QuestionTitle;
+                    if (o.QuestionTitle != null)
+                    {
+                        q.Question_Title = o.QuestionTitle;
+                    }
                     q.Question_Text = o.QuestionText;
                     q.Supplemental_Info = o.SupplementalInfo;
                     q.Examination_Approach = o.ExaminationApproach;
+                    q.Scope = o.Scope;
+                    q.Recommend_Action = o.RecommendAction;
+                    q.Risk_Addressed = o.RiskAddressed;
+                    q.Services = o.Services;
                 }
             }
 

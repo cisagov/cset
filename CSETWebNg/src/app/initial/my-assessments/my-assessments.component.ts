@@ -61,7 +61,7 @@ interface UserAssessment {
   type: string;
   assessmentCreatedDate: string;
   creatorName: string;
-  lastModifiedDate: string;
+  lastModifiedDate: DateTime;
   markedForReview: boolean;
   altTextMissing: boolean;
   selectedMaturityModel?: string;
@@ -440,9 +440,10 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
-  systemTimeTranslator(lastModifiedDate: any) {
-    let localDate = DateTime.fromISO(lastModifiedDate).setLocale(this.tSvc.getActiveLang())
-      .toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
+  systemTimeTranslator(d: DateTime) {
+    var dtD = DateTime.fromISO(d, {});
+    let localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+    
     return localDate;
   }
 
