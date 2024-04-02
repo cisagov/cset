@@ -517,7 +517,7 @@
           </button>
 
           <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
-            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(findings);"
+            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(observations);"
             [disabled]="disableSubmitButton()">
             Submit
           </button>
