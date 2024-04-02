@@ -62,6 +62,10 @@
     "control priorities intro1": "Information on ranking can be found in the <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
     "local installation": "Local Installation",
+    "new version":"A new version of CSET is available.",
+    "your version":"Your version:",
+    "version available":"Available version:",
+    "link version":"Click here to view or download CSET releases.",
     "legend": "Legend",
     "img suffix": "_en",
     "publisher": {
