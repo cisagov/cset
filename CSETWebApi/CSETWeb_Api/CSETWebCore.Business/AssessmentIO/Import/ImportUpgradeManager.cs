@@ -70,7 +70,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             if (csetVersionToken != null)
             {
-                version = Version.Parse(csetVersionToken.Value<string>());
+                version = System.Version.Parse(csetVersionToken.Value<string>());
             }
             else
             {

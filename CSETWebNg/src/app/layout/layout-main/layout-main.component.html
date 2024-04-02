@@ -55,6 +55,10 @@
 
         <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
         <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+        <span *ngIf="showVersionNotification" class="text-warning">
+          <span class="float-right notification-link" (click)="showNotifications()"><mat-icon class="settingsIcon">settings</mat-icon>   <span class="newinstaller">1</span></span>
+
+        </span>
       </nav>
     </div>
 
@@ -112,4 +116,27 @@
 
   <div class="bgc-white dhs-seal-background"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content localversionModal">
+                  <div class="modal-header">
+                        <h4 class="modal-title">{{t('new version')}}</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                      </div>
+             <div class="modal-body">
+              <p>{{t('your version')}} {{this.localVersion}}
+               <br>{{t('version available')}} {{this.actualVersion}}
+
+
+             </p>
+
+             </div>
+                  <div class="modal-footer">
+                         <a href="https://github.com/cisagov/cset/releases" target="_blank" class="text-dark" >{{t('link version')}}</a>
+                      </div>
+
+         </div>
+          </div>
+
+</div>
 </div>
