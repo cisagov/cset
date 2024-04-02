@@ -442,12 +442,8 @@ export class MyAssessmentsComponent implements OnInit {
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(d: DateTime) {
     var dtD = DateTime.fromISO(d, {});
-
-    const options = {
-      locale: this.tSvc.getActiveLang(),
-      dateTime: 'short'
-    };
-    let localDate = dtD.toLocaleString(options);
+    let localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+    
     return localDate;
   }
 

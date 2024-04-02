@@ -481,8 +481,6 @@ export class NCUAService {
       (r: any) => {
         this.questions = r;
         this.information = this.questions.information;
-        console.log('info:')
-        console.log(this.information)
         this.examLevel = this.getExamLevel();
 
         // goes through domains
