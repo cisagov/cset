@@ -225,10 +225,12 @@
                         <td *ngIf="!this.ncuaSvc.switchStatus">{{assessment.lastModifiedDate | localizeDate}}
                         </td>
                         <td *ngIf="showColumn('ise-submitted')">
+                            <!-- <ng-container *ngIf="assessment.iseSubmitted">{{
+                                assessment.submittedDate | localizeDate }}</ng-container> -->
                             <ng-container *ngIf="assessment.iseSubmitted">{{
-                                assessment.submittedDate | localizeDate }}</ng-container>
+                                systemTimeTranslator(assessment.submittedDate, 'short') }}</ng-container>
                         </td>
-                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                        <td *ngIf="this.ncuaSvc.switchStatus">{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
 
                         <td *ngIf="showColumn('primary-assessor')">
                             <!--{{assessment.creatorName}}--> {{assessment.firstName}} {{assessment.lastName}}
@@ -305,7 +307,7 @@
                                 {{assessment.assessmentName}}
                             </button>
                         </td>
-                        <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                        <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
                         <td class="text-nowrap pl-1">
                             <button tabindex="0" class="icon-link-button-dark btn bgc-trans my-0 mx-1 p-0"
                                 (click)="removeAssessment(assessment, i)"
@@ -341,7 +343,7 @@
                         </button>
                     </td>
                     <td>{{assessment.type}}</td>
-                    <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                    <td>{{systemTimeTranslator(assessment.lastModifiedDate, 'med')}}</td>
                     <td>
                         <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
                             <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
