@@ -21,11 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { ChangePassword } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -71,7 +69,7 @@ export class ChangePasswordComponent implements OnInit {
     private ref: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: { primaryEmail: string; warning: boolean }) {
     this.cpwd.primaryEmail = data.primaryEmail;
-    this.cpwd.appCode = this.configSvc.installationMode || environment.appCode;
+    this.cpwd.appCode = this.configSvc.installationMode;
     this.cpwd.currentPassword = '';
     this.cpwd.newPassword = '';
 
