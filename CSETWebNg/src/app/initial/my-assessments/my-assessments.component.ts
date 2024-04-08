@@ -135,7 +135,7 @@ export class MyAssessmentsComponent implements OnInit {
     this.importExtensions = localStorage.getItem('importExtensions');
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
-    this.appCode = this.configSvc.config.appCode;
+    this.appCode = 'CSET';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
         this.ncuaSvc.reset();
@@ -192,7 +192,7 @@ export class MyAssessmentsComponent implements OnInit {
     if (column == 'export') {
       return true;
     }
-    
+
     if (column == 'export json') {
       return this.configSvc.cisaAssessorWorkflow;
     }
