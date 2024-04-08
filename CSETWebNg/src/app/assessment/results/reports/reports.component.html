@@ -301,12 +301,12 @@
         [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
 
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="disableSubmitButton()">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
 
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="disableSubmitButton()">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
 
