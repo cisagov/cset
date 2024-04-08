@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog;
 
     // tell the API which app we are, for emailing purposes.
-    this.model.appCode = this.configSvc.installationMode;
+    this.model.appName = this.configSvc.installationMode;
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {

@@ -69,7 +69,7 @@ export class ChangePasswordComponent implements OnInit {
     private ref: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) public data: { primaryEmail: string; warning: boolean }) {
     this.cpwd.primaryEmail = data.primaryEmail;
-    this.cpwd.appCode = this.configSvc.installationMode;
+    this.cpwd.appName = this.configSvc.installationMode;
     this.cpwd.currentPassword = '';
     this.cpwd.newPassword = '';
 
@@ -116,23 +116,25 @@ export class ChangePasswordComponent implements OnInit {
    *
    */
   checkPassword(event) {
-    var temp: ChangePassword = {
+    const temp: ChangePassword = {
       newPassword: event ?? '',
       currentPassword: this.cpwd.currentPassword,
       primaryEmail: this.cpwd.primaryEmail,
-      appCode: this.cpwd.appCode
+      appName: this.cpwd.appName
     };
 
-    this.auth.checkPassword(temp).subscribe((response: any) => {
-      this.passwordResponse = JSON.parse(response);
-      this.warning = !this.passwordResponse.isValid;
-      this.ref.detectChanges();
-    },
+    this.auth.checkPassword(temp).subscribe(
+      (response: any) => {
+        this.passwordResponse = JSON.parse(response);
+        this.warning = !this.passwordResponse.isValid;
+        this.ref.detectChanges();
+      },
       error => {
         this.warning = true;
         this.message = error.error;
         this.ref.detectChanges();
-      });
+      }
+    );
   }
 
   /**

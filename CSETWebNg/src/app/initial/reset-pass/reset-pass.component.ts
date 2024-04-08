@@ -143,7 +143,7 @@ export class ResetPassComponent implements OnInit {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode
+            appName: this.configSvc.installationMode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)
