@@ -57,7 +57,7 @@ export interface CreateUser {
   securityAnswer1?: string;
   securityQuestion2?: string;
   securityAnswer2?: string;
-  appCode?: string;
+  appName?: string;
   title?: string;
   phone?: string;
   isFirstLogin?: boolean;

@@ -32,7 +32,7 @@ export interface SecurityQuestionAnswer {
     questionText?: string;
     answerText?: string;
     primaryEmail?: string;
-    appCode?: string;
+    appName?: string;
 }
 
 export interface ChangePassword {
@@ -40,5 +40,5 @@ export interface ChangePassword {
     newPassword?: string;
     primaryEmail?: string;
     confirmPassword?: string;
-    appCode?: string;
+    appName?: string;
 }
