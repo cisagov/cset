@@ -138,6 +138,8 @@ export class MyAssessmentsComponent implements OnInit {
     this.appCode = this.configSvc.config.appCode;
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
+        this.preventEncrypt = true;
+        this.updateEncryptPreference();
         this.ncuaSvc.reset();
         break;
       case 'TSA':
