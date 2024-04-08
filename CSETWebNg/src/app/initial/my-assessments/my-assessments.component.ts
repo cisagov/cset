@@ -147,8 +147,7 @@ export class MyAssessmentsComponent implements OnInit {
         this.isCSET = true;
     }
 
-    if (localStorage.getItem("returnPath")) {
-    }
+    if (localStorage.getItem("returnPath")) { }
     else {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
