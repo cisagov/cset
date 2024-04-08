@@ -244,7 +244,6 @@ export class MyAssessmentsComponent implements OnInit {
                 (currentAssessmentStats?.totalStandardQuestionsCount ?? 0);
             });
             this.sortedAssessments = assessments;
-            console.log(this.sortedAssessments)
           },
             error => {
               console.log(
@@ -324,7 +323,6 @@ export class MyAssessmentsComponent implements OnInit {
         case "status":
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
         case "ise-submitted":
-          //console.log(DateTime.fromFormat({}, a.submittedDate, 'd/mm/yyyy'))
           return this.comparer.compareIseSubmission(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
