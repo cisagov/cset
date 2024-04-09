@@ -638,6 +638,7 @@ import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-in
 
 import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
  import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
+import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1224,7 +1225,8 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     AssessmentConfigCieComponent,
     AssessmentDetailCieComponent,
     CieLayoutMainComponent,
-    AboutCieComponent
+    AboutCieComponent,
+    ReferencesSectionComponent
   ],
   providers: [
     TranslocoService,

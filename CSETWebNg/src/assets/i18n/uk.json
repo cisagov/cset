@@ -899,7 +899,10 @@
         "no documents to display": "Немає документів для відображення",
         "section": "Розділ",
         "no supplemental available": "немає додаткових вказівок",
-        "no reference documents available": "відсутні довідкові документи"
+        "no reference documents available": "відсутні довідкові документи",
+        "document": "Документ",
+        "link": "посилання ",
+        "launches external": "Веде на зовнішню веб-сторінку"
     },
     "menu": {
         "tools": {

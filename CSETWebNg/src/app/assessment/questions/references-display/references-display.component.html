@@ -49,28 +49,9 @@
 
 
 <div *ngIf="sourceDocuments.length > 0" class="sub-header-1">{{ 'extras.source documents' | transloco }}</div>
-<div *ngFor="let doc of sourceDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
-    {{doc.title}}:
-    <ng-container *ngFor="let b of doc.bookmarks; let l = last">
-        <span *ngIf="documentUrl(doc, b).length === 0">
-            {{b}}
-        </span>
-        <a *ngIf="documentUrl(doc, b).length > 0" href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
-            target="_blank">{{bookmarkDisplay(b)}}</a><ng-container *ngIf="!l">, </ng-container>
-    </ng-container>
-</div>
+<app-references-section [q]="question" [documents]="sourceDocuments"></app-references-section>
 
 
 <div *ngIf="additionalDocuments.length > 0" class="sub-header-1">{{'extras.additional documents' | transloco }}
 </div>
-<div *ngFor="let doc of additionalDocuments; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
-    {{doc.title}}<ng-container *ngIf="doc.file_Name">:
-        <ng-container *ngFor="let b of doc.bookmarks; let l = last">
-            <span *ngIf="documentUrl(doc, b).length === 0">
-                {{b}}
-            </span>
-            <a *ngIf="documentUrl(doc, b).length > 0" href="{{documentUrl(doc, b)}}" rel="noopener noreferrer"
-                target="_blank">{{bookmarkDisplay(b)}}</a><ng-container *ngIf="!l">, </ng-container>
-        </ng-container>
-    </ng-container>
-</div>
+<app-references-section [q]="question" [documents]="additionalDocuments"></app-references-section>

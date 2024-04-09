@@ -1075,7 +1075,10 @@
         "no documents to display": "There are no documents to display",
         "section": "Section",
         "no supplemental available": "no supplemental guidance available",
-        "no reference documents available": "no reference documents available"
+        "no reference documents available": "no reference documents available",
+        "document": "document",
+        "link": "link",
+        "launches external": "launches external site"
     },
     "menu": {
         "tools": {
