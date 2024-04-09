@@ -360,7 +360,7 @@ export class IseMeritComponent implements OnInit {
       let copyString = '';
       let allSourceFiles = this.sourceFilesMap.get(id);
       for (let i = 0; i < allSourceFiles.length; i++) {
-        copyString += allSourceFiles[i].title + ' (Section: ' + allSourceFiles[i].section_Ref + ')\n'
+        copyString += allSourceFiles[i].title + ' (Section: ' + allSourceFiles[i].sectionRef + ')\n'
       }
       return copyString;
     } else {
