@@ -157,7 +157,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                 // at this point, CSET assessment answers can be built from the 'mappedAnswers' collection ...
                 var queryAwwaReqQuestions = from r in _context.NEW_REQUIREMENT
-                                            from rq in _context.REQUIREMENT_QUESTIONS
+                                            from rq in _context.REQUIREMENT_QUESTIONS_SETS
                                             where r.Requirement_Id == rq.Requirement_Id
                                             from nq in _context.NEW_QUESTION
                                             where rq.Question_Id == nq.Question_Id
