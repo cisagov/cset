@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input } from '@angular/core';
-import { CustomDocument } from '../../../models/question-extras.model';
+import { ReferenceDocLink } from '../../../models/question-extras.model';
 import { ConfigService } from '../../../services/config.service';
 import { ResourceLibraryService } from '../../../services/resource-library.service';
 
@@ -65,7 +65,7 @@ export class ReferencesTableComponent {
   /**
    *
    */
-  documentUrl(document: CustomDocument, bookmark: string) {
+  documentUrl(document: ReferenceDocLink, bookmark: string) {
     return this.resourceLibSvc.documentUrl(document, bookmark);
   }
 }
