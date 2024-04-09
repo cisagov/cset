@@ -254,7 +254,7 @@ namespace CSETWebCore.Business.Question
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
 
             // Get related questions
-            var query = from rq in _context.REQUIREMENT_QUESTIONS
+            var query = from rq in _context.REQUIREMENT_QUESTIONS_SETS
                         join q in _context.NEW_QUESTION on rq.Question_Id equals q.Question_Id
                         where rq.Requirement_Id == requirementData.RequirementID
                         select new RelatedQuestion
@@ -500,7 +500,7 @@ namespace CSETWebCore.Business.Question
                 }
 
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
-                var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
