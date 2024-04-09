@@ -1020,7 +1020,10 @@
         "no documents to display": "No hay documentos para mostrar",
         "section": "Sección",
         "no supplemental available": "no hay orientación complementaria disponible",
-        "no reference documents available": "no hay documentos de referencia disponibles"
+        "no reference documents available": "no hay documentos de referencia disponibles",
+        "document": "documento",
+        "link": "enlace",
+        "launches external": "lanza sitio externo"
     },
     "menu": {
         "tools": {
