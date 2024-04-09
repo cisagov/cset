@@ -71,9 +71,6 @@ public partial class NEW_QUESTION
     public virtual SETS Original_Set_NameNavigation { get; set; }
 
     [InverseProperty("Question")]
-    public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; } = new List<REQUIREMENT_QUESTIONS>();
-
-    [InverseProperty("Question")]
     public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; } = new List<REQUIREMENT_QUESTIONS_SETS>();
 
     [ForeignKey("Universal_Sal_Level")]

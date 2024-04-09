@@ -76,6 +76,7 @@ namespace CSETWebCore.DataLayer.Model
             modelBuilder.Entity<usp_Assessments_Completion_For_Access_KeyResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_Completion_For_UserResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_Assessments_For_UserResult>().HasNoKey().ToView(null);
+            modelBuilder.Entity<usp_CopyIntoSetResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_countsForLevelsByGroupMaturityModelResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_financial_attributesResult>().HasNoKey().ToView(null);
             modelBuilder.Entity<usp_GenerateSPRSScoreResult>().HasNoKey().ToView(null);
@@ -1700,7 +1701,7 @@ namespace CSETWebCore.DataLayer.Model
             return _;
         }
 
-        public virtual async Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
+        public virtual async Task<List<usp_CopyIntoSetResult>> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default)
         {
             var parameterreturnValue = new SqlParameter
             {
@@ -1727,7 +1728,7 @@ namespace CSETWebCore.DataLayer.Model
                 },
                 parameterreturnValue,
             };
-            var _ = await _context.Database.ExecuteSqlRawAsync("EXEC @returnValue = [dbo].[usp_CopyIntoSet] @SourceSetName, @DestinationSetName", sqlParameters, cancellationToken);
+            var _ = await _context.SqlQueryAsync<usp_CopyIntoSetResult>("EXEC @returnValue = [dbo].[usp_CopyIntoSet] @SourceSetName, @DestinationSetName", sqlParameters, cancellationToken);
 
             returnValue?.SetValue(parameterreturnValue.Value);
 
