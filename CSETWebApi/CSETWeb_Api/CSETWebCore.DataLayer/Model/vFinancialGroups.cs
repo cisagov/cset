@@ -13,6 +13,8 @@ public partial class vFinancialGroups
 {
     public int FinancialGroupId { get; set; }
 
+    public int DomainId { get; set; }
+
     [Required]
     [StringLength(255)]
     public string Domain { get; set; }
@@ -21,9 +23,13 @@ public partial class vFinancialGroups
     [StringLength(255)]
     public string MaturityLevel { get; set; }
 
+    public int AssessmentFactorId { get; set; }
+
     [Required]
     [StringLength(255)]
     public string AssessmentFactor { get; set; }
+
+    public int FinComponentId { get; set; }
 
     [Required]
     [StringLength(255)]
