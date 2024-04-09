@@ -11,13 +11,6 @@
         <node d="crr tutorial" id="tutorial-crr" path="assessment/{:id}/prepare/tutorial-crr" visible="MATURITY:4" />
         <node d="imr tutorial" id="tutorial-imr" path="assessment/{:id}/prepare/tutorial-imr" visible="MATURITY:15" />
         <node d="rra tutorial" id="tutorial-rra" path="assessment/{:id}/prepare/tutorial-rra" visible="MATURITY:5 ORIGIN-NOT:CF" />
-        <node d="cie tutorial.cie tutorial" id="tutorial-cie" visible="MATURITY:17" >
-            <node d="cie tutorial.quick facts" id="quick-facts-cie" path="assessment/{:id}/prepare/tutorial-cie/quick-facts-cie" />
-            <node d="cie tutorial.overview" id="overview-cie" path="assessment/{:id}/prepare/tutorial-cie/overview-cie" />
-            <node d="cie tutorial.background" id="background-cie" path="assessment/{:id}/prepare/tutorial-cie/background-cie" />
-            <node d="cie tutorial.principles" id="principles-cie" path="assessment/{:id}/prepare/tutorial-cie/principles-cie" />
-            <node d="cie tutorial.lifecycle" id="lifecycle-cie" path="assessment/{:id}/prepare/tutorial-cie/lifecycle-cie" />
-        </node>
 
         <!-- vanilla prepare pages -->
         <node d="assessment configuration" id="info1" path="assessment/{:id}/prepare/info1" visible="INSTALL-MODE-NONE(TSA,IOD,ISE) MATURITY-NONE(10,17)" />
@@ -30,8 +23,21 @@
         <node d="organization demographics" id="info-demog-iod" path="assessment/{:id}/prepare/info-demog-iod" visible="INSTALL-MODE:IOD" />
         <node d="assessment configuration" id="info-config-iod" path="assessment/{:id}/prepare/info-config-iod" visible="INSTALL-MODE:IOD" />
 
+        <!-- CIE config pages -->
+        <node displaytext="Analysis Details" id="assessment-detail-cie" path="assessment/{:id}/prepare/assessment-detail-cie" visible="MATURITY:17" />
+        <node displaytext="CIE Analysis Information" id="assessment-info-cie" path="assessment/{:id}/prepare/assessment-info-cie" visible="MATURITY:17" />
+        <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
+        
         <!-- CIS config page -->
         <node d="critical service information" id="config-cis" path="assessment/{:id}/prepare/config-cis" visible="MATURITY:8" />
+
+        <node d="cie tutorial.cie tutorial" id="tutorial-cie" visible="MATURITY:17" >
+            <node d="cie tutorial.quick facts" id="quick-facts-cie" path="assessment/{:id}/prepare/tutorial-cie/quick-facts-cie" />
+            <node d="cie tutorial.overview" id="overview-cie" path="assessment/{:id}/prepare/tutorial-cie/overview-cie" />
+            <node d="cie tutorial.background" id="background-cie" path="assessment/{:id}/prepare/tutorial-cie/background-cie" />
+            <node d="cie tutorial.principles" id="principles-cie" path="assessment/{:id}/prepare/tutorial-cie/principles-cie" />
+            <node d="cie tutorial.lifecycle" id="lifecycle-cie" path="assessment/{:id}/prepare/tutorial-cie/lifecycle-cie" />
+        </node>
 
         <!-- Prepare - CIE Example -->
         <node displaytext="CIE Example" id="cie-example" visible="MATURITY:17">
@@ -54,11 +60,6 @@
             <node displaytext="CIE Analysis Matrix" id="cie-analysis-matrix" path="assessment/{:id}/prepare/cie-example/cie-analysis-matrix" />
         </node>
 
-        <!-- CIE config pages -->
-        <node displaytext="Analysis Details" id="assessment-detail-cie" path="assessment/{:id}/prepare/assessment-detail-cie" visible="MATURITY:17" />
-        <node displaytext="CIE Analysis Information" id="assessment-info-cie" path="assessment/{:id}/prepare/assessment-info-cie" visible="MATURITY:17" />
-        <node displaytext="CIE Analysis Configuration" id="assessment-config-cie" path="assessment/{:id}/prepare/assessment-config-cie" visible="MATURITY:17" />
-        
         <node d="cie tutorial.how to use" id="how-to-use-cie" path="assessment/{:id}/prepare/how-to-use-cie" visible="MATURITY:17"/>
 
         <!-- Critical Service -->
