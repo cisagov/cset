@@ -76,9 +76,7 @@ export class ResourceLibraryService {
    * The "isOnlineUrlLive" code will pull documents from the cloud-based
    * Resource Library when it is available at a future date.
    */
-  documentUrl(doc: ReferenceDocLink, bookmark?: string): string {
-
-    console.log(doc);
+  formatDocumentUrl(doc: ReferenceDocLink, bookmark?: any): string {
     if (typeof bookmark === 'undefined') {
       bookmark = '';
     }
@@ -86,7 +84,7 @@ export class ResourceLibraryService {
     // First look to see if this is a URL
     if (doc.url) {
       if (bookmark) {
-        return doc.url + "#" + bookmark;
+        return doc.url + "#" + bookmark.sectionRef;
       }
       
       return doc.url;
@@ -94,7 +92,7 @@ export class ResourceLibraryService {
 
     // April 2024 - moving to this method of querying documents; by ID rather than filename
     if (doc.fileId) {
-      return this.configSvc.apiUrl + 'referencedocument/' + doc.fileId + '#' + bookmark;
+      return this.configSvc.apiUrl + 'referencedocument/' + doc.fileId + '#' + bookmark.sectionRef;
     }
 
     // April 2024 - phasing out this older way of querying documents by filename
@@ -103,7 +101,7 @@ export class ResourceLibraryService {
     // }
 
     if (this.configSvc.isOnlineUrlLive) {
-      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark;
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark.sectionRef;
     }
 
     return '';

@@ -31,7 +31,7 @@
     </tr>
     <tr *ngFor="let reference of tab?.sourceDocumentsList">
         <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
-            <a href="{{documentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
+            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                 target="_blank">{{reference.title}}</a>
         </td>
         <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
@@ -41,7 +41,7 @@
         <td>{{'extras.section' | transloco}}</td>
     </tr>
     <tr *ngFor="let reference of tab?.additionalDocumentsList">
-        <td class="align-top"><a href="{{documentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
+        <td class="align-top"><a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                 target="_blank">{{reference.title}}</a></td>
         <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
     </tr>
