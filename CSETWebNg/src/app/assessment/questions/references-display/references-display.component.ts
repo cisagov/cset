@@ -86,7 +86,7 @@ export class ReferencesDisplayComponent implements OnInit {
         list.push(listDoc);
       }
 
-      listDoc.bookmarks.push(ref.sectionRef.trim());
+      listDoc.bookmarks.push(ref);
     });
 
     return list;

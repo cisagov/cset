@@ -24,34 +24,6 @@ export class ReferencesSectionComponent {
       public tSvc: TranslocoService,
       private resourceLibSvc: ResourceLibraryService
     ) { }
-  
-
-   /**
-   * Creates a list with one instance of each document.  The document instance
-   * has a collection of all of its bookmarks.
-   */
-   groupDocumentBookmarks(docList): ReferenceDocLink[] {
-    const list: ReferenceDocLink[] = [];
-
-    docList?.forEach(ref => {
-      let listDoc: ReferenceDocLink = list.find(d => d.fileName == ref.fileName && d.title == ref.title);
-      if (!listDoc) {
-        listDoc = {
-          fileId: ref.fileId,
-          fileName: ref.fileName?.trim(),
-          title: ref.title.trim(),
-          url: ref.url?.trim(),
-          isUploaded: ref.isUploaded,
-          bookmarks: []
-        };
-        list.push(listDoc);
-      }
-
-      listDoc.bookmarks.push(ref.sectionRef.trim());
-    });
-
-    return list;
-  }
 
   /**
    * Formats a URL to the document.  Handles uploaded documents via the
@@ -59,21 +31,31 @@ export class ReferencesSectionComponent {
    * file system in the API.
    * Bookmarks to an actual sectionRef are appended to the URL.
    */
-  documentUrl(doc: ReferenceDocLink, bookmark: string) {
-    return this.resourceLibSvc.documentUrl(doc, bookmark);
+  formatDocumentUrl(doc: ReferenceDocLink, bookmark: any) {
+    return this.resourceLibSvc.formatDocumentUrl(doc, bookmark);
   }
 
   /**
-   * Formats the text of the bookmark link.
+   * Returns the display text of the bookmark link.
    */
-  bookmarkDisplay(doc: ReferenceDocLink, bookmark: string) {
-    if (bookmark == '') {
+  formatBookmarkDisplay(doc: ReferenceDocLink, bookmark: any) {
+    if (!bookmark || bookmark.sectionRef == '') {
       if (doc.url) {
+        // "link"
         return this.tSvc.translate('extras.link');
       }
+
+      // "document"
       return this.tSvc.translate('extras.document');
+      
     } else {
-      return bookmark;
+      if (!!bookmark.destinationString && bookmark.destinationString.trim().length > 0) {
+        // display the destinationstring 
+        return bookmark.destinationString;
+      }
+
+      // display the sectionRef value
+      return bookmark.sectionRef;
     }
   }
 }

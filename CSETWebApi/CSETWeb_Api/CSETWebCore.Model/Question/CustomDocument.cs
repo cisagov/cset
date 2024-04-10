@@ -20,6 +20,7 @@ namespace CSETWebCore.Model.Question
         public string Url { get; set; }
         public decimal File_Type_Id { get; set; }
         public string Section_Ref { get; set; }
+        public string Destination_String { get; set; }
         public bool Is_Uploaded { get; set; }
         public int? Sequence { get; set; }
 
@@ -50,5 +51,6 @@ namespace CSETWebCore.Model.Question
         public string Title { get; set; }
         public string Url { get; set; }
         public string SectionRef { get; set; }
+        public string DestinationString { get; set;}
     }
 }
