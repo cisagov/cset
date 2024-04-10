@@ -49,7 +49,7 @@ namespace CSETWebCore.Helpers
             var q1 = _context.REQUIREMENT_SOURCE_FILES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
             sourceDocList = SortList(q1, onboardRefDocs);
 
@@ -59,7 +59,7 @@ namespace CSETWebCore.Helpers
                 .Include(x => x.Gen_File)
                 .Where(s => s.Requirement_Id == requirementId)
                 .OrderBy(s => s.Sequence)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
             additionalDocList = SortList(q2, onboardRefDocs);
         }
@@ -82,7 +82,7 @@ namespace CSETWebCore.Helpers
             var q1 = _context.MATURITY_SOURCE_FILES
                 .Include(x => x.Gen_File)
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
             sourceDocList = SortList(q1, onboardRefDocs);
 
@@ -92,7 +92,7 @@ namespace CSETWebCore.Helpers
                 .Include(x => x.Gen_File)
                 .Where(s => s.Mat_Question_Id == maturityQuestion_ID)
                 .OrderBy(s => s.Sequence)
-                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
+                .Select(s => new GenFileView { File_Id = s.Gen_File_Id, Title = s.Gen_File.Title, File_Name = s.Gen_File.File_Name, File_Type_Id = s.Gen_File.File_Type_Id ?? 0, Section_Ref = s.Section_Ref, Destination_String = s.Destination_String, Is_Uploaded = s.Gen_File.Is_Uploaded, Sequence = s.Sequence });
 
             additionalDocList = SortList(q2, onboardRefDocs);
         }
@@ -122,7 +122,8 @@ namespace CSETWebCore.Helpers
                     FileName = doc.File_Name,
                     Url = doc.Url,
                     Title = doc.Title,
-                    SectionRef = doc.Section_Ref
+                    SectionRef = doc.Section_Ref,
+                    DestinationString = doc.Destination_String,
                 };
 
 

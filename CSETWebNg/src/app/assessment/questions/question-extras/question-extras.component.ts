@@ -778,8 +778,8 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: ReferenceDocLink, bookmark: string) {
-    return this.resourceLibSvc.documentUrl(document, bookmark);
+formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
+    return this.resourceLibSvc.formatDocumentUrl(document, bookmark);
   }
 
   /**
