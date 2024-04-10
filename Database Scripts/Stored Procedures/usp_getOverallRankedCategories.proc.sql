@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		hansbk
 -- Create date: 8/1/2018
@@ -36,6 +37,7 @@ begin
 	IF OBJECT_ID('tempdb..#TempAnswered') IS NOT NULL DROP TABLE #TempAnswered
 
 	SELECT h.Question_Group_Heading,
+		h.Question_Group_Heading_Id as [QGH_Id],
 		isnull(count(c.question_id),0) qc,  
 		isnull(SUM(@maxRank-c.Ranking),0) cr, 
 		sum(sum(@maxrank - c.Ranking)) OVER() AS Total 
@@ -54,9 +56,10 @@ begin
 		)
 		s on c.Question_Id = s.Question_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text != 'NA'
-		group by Question_Group_Heading
+		group by Question_Group_Heading, Question_Group_Heading_id
      
 	 SELECT h.Question_Group_Heading, 
+		h.Question_Group_Heading_Id as [QGH_Id],
 		isnull(count(c.question_id),0) nuCount, 
 		isnull(SUM(@maxRank-c.Ranking),0) cr 
 		into #tempAnswered
@@ -72,7 +75,7 @@ begin
 				where v.Selected = 1 and v.Assessment_Id = @assessment_id and l.Universal_Sal_Level = ul.Universal_Sal_Level
 		)	s on c.Question_Id = s.Question_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text in ('N','U')
-		group by Question_Group_Heading
+		group by Question_Group_Heading, Question_Group_Heading_Id
 
 	select t.*, 
 	isnull(a.nuCount,0) nuCount, 
@@ -94,6 +97,7 @@ begin
 	IF OBJECT_ID('tempdb..#TempRAnswered') IS NOT NULL DROP TABLE #TempRAnswered
 
 	SELECT h.Question_Group_Heading,
+	h.Question_Group_Heading_Id as [QGH_Id],
 	count(c.Requirement_Id) qc,  
 	SUM(@maxRank-c.Ranking) cr, 
 	sum(sum(@maxrank - c.Ranking)) OVER() AS Total
@@ -104,9 +108,10 @@ begin
 		join (select distinct requirement_id from REQUIREMENT_SETS s join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name where v.Selected = 1 and v.assessment_id = @assessment_id)
 		s on c.Requirement_Id = s.Requirement_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text != 'NA'
-		group by Question_Group_Heading
+		group by Question_Group_Heading, h.Question_Group_Heading_Id
 
 	SELECT h.Question_Group_Heading,
+	h.Question_Group_Heading_Id as [QGH_Id],
 	isnull(count(c.requirement_id),0) nuCount,
 	SUM(@maxRank-c.Ranking) cr
 	into #tempRAnswered
@@ -116,7 +121,7 @@ begin
 		join (select distinct requirement_id from REQUIREMENT_SETS s join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name where v.Selected = 1 and v.assessment_id = @assessment_id)
 		s on c.Requirement_Id = s.Requirement_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text in ('N','U')
-		group by Question_Group_Heading
+		group by Question_Group_Heading, h.Question_Group_Heading_Id
 
 	select t.*, 
 	isnull(a.nuCount,0) nuCount, 
@@ -127,4 +132,3 @@ begin
 	order by prc desc	
 end
 END
-

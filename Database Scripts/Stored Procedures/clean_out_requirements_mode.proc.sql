@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
@@ -27,14 +28,14 @@ end
 ELSE
 begin
 	DELETE FROM dbo.REQUIREMENT_SOURCE_FILES
-	FrOM dbo.REQUIREMENT_SOURCE_FILES a INNER JOIN #tempSetList b ON a.Requirement_Id = b.Requirement_Id
+	FROM dbo.REQUIREMENT_SOURCE_FILES a INNER JOIN #tempSetList b ON a.Requirement_Id = b.Requirement_Id
 	DELETE FROM dbo.REQUIREMENT_REFERENCES
 	FROM dbo.REQUIREMENT_REFERENCES a INNER JOIN #tempSetList b ON a.Requirement_Id=b.Requirement_Id
 	DELETE FROM dbo.REQUIREMENT_levels
 	FROM dbo.REQUIREMENT_levels a INNER JOIN #tempSetList b ON a.Requirement_Id = b.Requirement_Id
-	DELETE FROM dbo.REQUIREMENT_QUESTIONS
-	FROM dbo.REQUIREMENT_QUESTIONS a INNER JOIN #tempSetList b ON a.Requirement_Id=b.Requirement_Id
-	delete  [dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
+	DELETE FROM dbo.REQUIREMENT_QUESTIONS_SETS
+	FROM dbo.REQUIREMENT_QUESTIONS_SETS a INNER JOIN #tempSetList b ON a.Requirement_Id=b.Requirement_Id
+	DELETE  [dbo].[Requirement_SETS] where set_name = @standard_name_with_mode
 end
 COMMIT TRANSACTION
 
