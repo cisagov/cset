@@ -56,6 +56,10 @@
     "control priorities intro1": "Інформацію про рейтинг можна знайти в <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">посібнику користувача</a>.",
     "local installation": "Місцева установка",
+    "new version": "Доступна нова версія CSET.",
+    "your version": "Ваша версія:",
+    "version available": "Доступна версія:",
+    "link version": "Натисніть тут, щоб переглянути або завантажити версії CSET.",
     "legend": "Легенда",
     "img suffix": "_uk",
     "publisher": {
@@ -382,7 +386,7 @@
         "risk description": "Опис ризику",
         "validation approach": "Підхід до перевірки",
         "prevent encryption": "Припиняє відображення екрана «введіть пароль» під час експорту",
-        "import": "Імпортуйте оцінку із зовнішнього файлу {{appCode}}",
+        "import": "Імпортуйте оцінку із зовнішнього файлу {{appName}}",
         "export to excel": "Експорт всіх оцінок до Excel",
         "remove assessment": "Постійне видалення цієї оцінки.",
         "export assessment": "Експортувати копію цієї оцінки до іншої локації",
@@ -895,7 +899,10 @@
         "no documents to display": "Немає документів для відображення",
         "section": "Розділ",
         "no supplemental available": "немає додаткових вказівок",
-        "no reference documents available": "відсутні довідкові документи"
+        "no reference documents available": "відсутні довідкові документи",
+        "document": "Документ",
+        "link": "посилання ",
+        "launches external": "Веде на зовнішню веб-сторінку"
     },
     "menu": {
         "tools": {

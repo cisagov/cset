@@ -17,8 +17,10 @@
 
   <ItemGroup>
     <None Remove="Dashboard\" />
+    <None Remove="Version\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\" />
+    <Folder Include="Version\" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,6 @@
     "currentConfigChain": [
         "CSET"
     ],
-    "appCode": "CSET",
     "defaultLang": "en",
     "isRunningAnonymous": false,
     "app": {
@@ -25,7 +24,7 @@
     "supplementalAutoloadInitialValue": false,
     "debug": {
         "showBuildTime": false,
-        "showQuestionAndRequirementIDs": false,
+        "showQuestionAndRequirementIDs": true,
         "canDeleteCustomModules": true,
         "showExportAllButton": false
     },

@@ -511,6 +511,7 @@ namespace CSETWebCore.Business.Question
                 subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
                 subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
                 subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
+                subCatAnswer.Component_Guid = new Guid().ToString();
                 _context.SUB_CATEGORY_ANSWERS.Add(subCatAnswer);
             }
             else

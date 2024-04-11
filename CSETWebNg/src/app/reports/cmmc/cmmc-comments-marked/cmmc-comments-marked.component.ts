@@ -52,7 +52,6 @@ export class CmmcCommentsMarkedComponent implements OnInit {
     this.loading = true;
     this.keyToCategory = this.maturitySvc.keyToCategory;
     this.titleService.setTitle("CMMC Comments and Marked for Review - " + this.configSvc.behaviors.defaultTitle);
-    let appCode = this.configSvc.installationMode;
 
     this.maturitySvc.getCmmcReportData().subscribe(
       (r: any) => {

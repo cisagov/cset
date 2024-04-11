@@ -124,8 +124,8 @@ namespace CSETWebCore.Model.Hydro
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
 
-        public List<CustomDocument> SourceDocuments { get; set; }
-        public List<CustomDocument> AdditionalDocuments { get; set; }
+        public List<GenFileView> SourceDocuments { get; set; }
+        public List<GenFileView> AdditionalDocuments { get; set; }
 
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }

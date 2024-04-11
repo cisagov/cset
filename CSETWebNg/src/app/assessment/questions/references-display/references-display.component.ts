@@ -23,8 +23,9 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from '../../../services/config.service';
-import { CustomDocument } from '../../../models/question-extras.model';
+import { ReferenceDocLink } from '../../../models/question-extras.model';
 import { ResourceLibraryService } from '../../../services/resource-library.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 /**
  * Displays references for a question in a more concise way than
@@ -42,15 +43,16 @@ export class ReferencesDisplayComponent implements OnInit {
   @Input('q')
   question: any;
 
-  sourceDocuments: CustomDocument[] = [];
+  sourceDocuments: ReferenceDocLink[] = [];
 
-  additionalDocuments: CustomDocument[] = [];
+  additionalDocuments: ReferenceDocLink[] = [];
 
   /**
    *
    */
   constructor(
     public configSvc: ConfigService,
+    public tSvc: TranslocoService,
     private resourceLibSvc: ResourceLibraryService
   ) { }
 
@@ -58,7 +60,7 @@ export class ReferencesDisplayComponent implements OnInit {
    *
    */
   ngOnInit(): void {
-    // group section_Refs (bookmarks) with their documents
+    // group sectionRefs (bookmarks) with their documents
     this.sourceDocuments = this.groupDocumentBookmarks(this.tab.sourceDocumentsList);
     this.additionalDocuments = this.groupDocumentBookmarks(this.tab.additionalDocumentsList);
   }
@@ -67,23 +69,24 @@ export class ReferencesDisplayComponent implements OnInit {
    * Creates a list with one instance of each document.  The document instance
    * has a collection of all of its bookmarks.
    */
-  groupDocumentBookmarks(docList): CustomDocument[] {
-    const list: CustomDocument[] = [];
+  groupDocumentBookmarks(docList): ReferenceDocLink[] {
+    const list: ReferenceDocLink[] = [];
 
     docList?.forEach(ref => {
-      let listDoc: CustomDocument = list.find(d => d.file_Name == ref.file_Name && d.title == ref.title);
+      let listDoc: ReferenceDocLink = list.find(d => d.fileName == ref.fileName && d.title == ref.title);
       if (!listDoc) {
         listDoc = {
-          file_Id: ref.file_Id,
-          file_Name: ref.file_Name?.trim(),
+          fileId: ref.fileId,
+          fileName: ref.fileName?.trim(),
           title: ref.title.trim(),
-          is_Uploaded: ref.is_Uploaded,
+          url: ref.url?.trim(),
+          isUploaded: ref.isUploaded,
           bookmarks: []
         };
         list.push(listDoc);
       }
 
-      listDoc.bookmarks.push(ref.section_Ref.trim());
+      listDoc.bookmarks.push(ref);
     });
 
     return list;
@@ -95,27 +98,6 @@ export class ReferencesDisplayComponent implements OnInit {
     */
   replaceDocUrl(s: string) {
     return s.replaceAll("{{ cset_document_url }}", this.configSvc.docUrl);
-  }
-
-  /**
-   * Formats a URL to the document.  Handles uploaded documents via the
-   * 'ReferenceDocument' endpoint as well as direct PDFs stored on the
-   * file system in the API.
-   * Bookmarks to an actual section_Ref are appended to the URL.
-   */
-  documentUrl(doc: CustomDocument, bookmark: string) {
-    return this.resourceLibSvc.documentUrl(doc, bookmark);
-  }
-
-  /**
-   * Formats the text of the bookmark link.
-   */
-  bookmarkDisplay(bookmark: string) {
-    if (bookmark == '') {
-      return 'document';
-    } else {
-      return bookmark;
-    }
   }
 
   /**

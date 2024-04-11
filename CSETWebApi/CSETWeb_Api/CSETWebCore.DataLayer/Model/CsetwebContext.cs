@@ -423,8 +423,6 @@ public partial class CsetwebContext : DbContext
 
     public virtual DbSet<REQUIREMENT_LEVEL_TYPE> REQUIREMENT_LEVEL_TYPE { get; set; }
 
-    public virtual DbSet<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; }
-
     public virtual DbSet<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; }
 
     public virtual DbSet<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; }
@@ -502,6 +500,8 @@ public partial class CsetwebContext : DbContext
     public virtual DbSet<VISIO_MAPPING> VISIO_MAPPING { get; set; }
 
     public virtual DbSet<WEIGHT> WEIGHT { get; set; }
+
+    public virtual DbSet<vAllSimpleQuestions> vAllSimpleQuestions { get; set; }
 
     public virtual DbSet<vFinancialGroups> vFinancialGroups { get; set; }
 
@@ -2045,7 +2045,9 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Supp_Hash).HasComputedColumnSql("(CONVERT([varbinary](32),hashbytes('SHA1',left([Supplemental_Info],(8000))),(0)))", true);
             entity.Property(e => e.Text_Hash).HasComputedColumnSql("(CONVERT([varbinary](20),hashbytes('SHA1',[Requirement_Text]),(0)))", true);
 
-            entity.HasOne(d => d.NCSF_Cat).WithMany(p => p.NEW_REQUIREMENT).HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
+            entity.HasOne(d => d.NCSF_Cat).WithMany(p => p.NEW_REQUIREMENT)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_NEW_REQUIREMENT_NCSF_Category");
 
             entity.HasOne(d => d.Original_Set_NameNavigation).WithMany(p => p.NEW_REQUIREMENT)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2054,7 +2056,6 @@ public partial class CsetwebContext : DbContext
             entity.HasOne(d => d.Question_Group_Heading).WithMany(p => p.NEW_REQUIREMENT)
                 .HasPrincipalKey(p => p.Question_Group_Heading_Id)
                 .HasForeignKey(d => d.Question_Group_Heading_Id)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_NEW_REQUIREMENT_QUESTION_GROUP_HEADING");
 
             entity.HasOne(d => d.Standard_CategoryNavigation).WithMany(p => p.NEW_REQUIREMENT)
@@ -2404,17 +2405,6 @@ public partial class CsetwebContext : DbContext
 
             entity.Property(e => e.Level_Type).HasComment("The Level Type is used to");
             entity.Property(e => e.Level_Type_Full_Name).HasComment("The Level Type Full Name is used to");
-        });
-
-        modelBuilder.Entity<REQUIREMENT_QUESTIONS>(entity =>
-        {
-            entity.HasKey(e => new { e.Question_Id, e.Requirement_Id }).HasName("PK_REQUIREMENT_QUESTIONS_1");
-
-            entity.ToTable(tb => tb.HasComment("A collection of REQUIREMENT_QUESTIONS records"));
-
-            entity.HasOne(d => d.Question).WithMany(p => p.REQUIREMENT_QUESTIONS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1");
-
-            entity.HasOne(d => d.Requirement).WithMany(p => p.REQUIREMENT_QUESTIONS).HasConstraintName("FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT");
         });
 
         modelBuilder.Entity<REQUIREMENT_QUESTIONS_SETS>(entity =>
@@ -2795,6 +2785,11 @@ public partial class CsetwebContext : DbContext
             entity.ToTable(tb => tb.HasComment("A collection of WEIGHT records"));
 
             entity.Property(e => e.Weight1).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<vAllSimpleQuestions>(entity =>
+        {
+            entity.ToView("vAllSimpleQuestions");
         });
 
         modelBuilder.Entity<vFinancialGroups>(entity =>
