@@ -1,9 +1,8 @@
 {
-    "appCode": "ACET",
     "installationMode": "ACET",
     "galleryLayout": "ACET",
     "behaviors": {
-        "defaultTitle":"ACET",
+        "defaultTitle": "ACET",
         "showModuleBuilder": true,
         "showAssessmentDocuments": false,
         "showAggregation": true,
@@ -26,7 +25,13 @@
         "showCisaAssessorWorkflowSwitch": false
     },
     "languageOptions": [
-        { "value": "en", "name": "English" },
-        { "value": "es", "name": "Español" }
+        {
+            "value": "en",
+            "name": "English"
+        },
+        {
+            "value": "es",
+            "name": "Español"
+        }
     ]
 }

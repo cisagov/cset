@@ -27,7 +27,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // eslint-disable-next-line max-len
-import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
+import { ReferenceDocLink, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
@@ -778,8 +778,8 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: CustomDocument, bookmark: string) {
-    return this.resourceLibSvc.documentUrl(document, bookmark);
+formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
+    return this.resourceLibSvc.formatDocumentUrl(document, bookmark);
   }
 
   /**

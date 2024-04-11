@@ -75,6 +75,8 @@ using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Interfaces.Malcolm;
 using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Interfaces.Cmu;
+using CSETWebCore.Business.Version;
+using CSETWebCore.Interfaces.Version;
 
 namespace CSETWeb_ApiCore
 {
@@ -175,7 +177,7 @@ namespace CSETWeb_ApiCore
             services.AddScoped<IIRPBusiness, IRPBusiness>();
             services.AddTransient<IJSONFileExport, JSONFileExport>();
             services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
-
+            services.AddScoped<IVersionBusiness, VersionBusiness>();
 
             services.AddSwaggerGen(c =>
             {

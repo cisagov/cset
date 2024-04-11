@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { CustomDocument } from '../models/question-extras.model';
+import { ReferenceDocLink } from '../models/question-extras.model';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -68,27 +68,40 @@ export class ResourceLibraryService {
   }
 
   /**
-   * Formats a URL of a provided document.  Handles uploaded documents via the
-   * 'ReferenceDocument' endpoint as well as direct PDFs stored on the
-   * file system in the API.
-   * Bookmarks to an actual section_Ref are appended to the URL.
+   * Formats a URL of a provided document.  Sends the document ID to the
+   * 'referencedocument' endpoint.  
+   * 
+   * Bookmarks to an actual sectionRef are appended to the URL.
+   * 
+   * The "isOnlineUrlLive" code will pull documents from the cloud-based
+   * Resource Library when it is available at a future date.
    */
-  documentUrl(doc: CustomDocument, bookmark?: string): string {
-
+  formatDocumentUrl(doc: ReferenceDocLink, bookmark?: any): string {
     if (typeof bookmark === 'undefined') {
       bookmark = '';
     }
 
-    if (doc.is_Uploaded) {
-      return this.configSvc.apiUrl + 'ReferenceDocument/' + doc.file_Id + '#' + bookmark;
+    // First look to see if this is a URL
+    if (doc.url) {
+      if (bookmark) {
+        return doc.url + "#" + bookmark.sectionRef;
+      }
+      
+      return doc.url;
     }
 
-    if (this.configSvc.isDocUrl) {
-      return this.configSvc.docUrl + doc.file_Name + '#' + bookmark;
+    // April 2024 - moving to this method of querying documents; by ID rather than filename
+    if (doc.fileId) {
+      return this.configSvc.apiUrl + 'referencedocument/' + doc.fileId + '#' + bookmark.sectionRef;
     }
+
+    // April 2024 - phasing out this older way of querying documents by filename
+    // if (this.configSvc.isDocUrl) {
+    //   return this.configSvc.docUrl + doc.fileName + '#' + bookmark;
+    // }
 
     if (this.configSvc.isOnlineUrlLive) {
-      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.file_Name + '#' + bookmark;
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark.sectionRef;
     }
 
     return '';

@@ -65,10 +65,12 @@
     "control priorities intro1": "Información sobre el ranking se puede encontrar en la <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">guía del usuario</a>.",
     "local installation": "Instalación Local",
+    "new version": "A new version of CSET is available.",
+    "your version": "Tu versión:",
+    "version available": "Versión disponible:",
+    "link version": "Haga clic aquí para ver o descargar las versiones de CSET.",
     "legend": "Leyenda",
-    "publisher": {
-
-    },
+    "publisher": {},
     "disclaimer": {
         "title": "Descargo de responsabilidad",
         "disclaimer 1": "El análisis, los datos y los informes en <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> se proporcionan \"tal cual\" y solo para fines informativos. El {{orgLongName}} ({{orgShortName}}) no ofrece garantías de ningún tipo con respecto a la información contenida en ellos. En ningún caso, el Gobierno de los Estados Unidos ni sus contratistas o subcontratistas serán responsables por ningún daño, incluidos, entre otros, los daños directos, indirectos, especiales o consecuentes, y daños basados en cualquier negligencia del Gobierno de los Estados Unidos o de sus contratistas o subcontratistas, que surjan de, resulten de o estén relacionados de alguna manera con este informe, ya sea basado en garantía, contrato, agravio o de otro modo, ya sea que se haya sufrido lesiones o se haya derivado de los resultados de, o la confianza en el informe.",
@@ -416,7 +418,7 @@
         "risk description": "Descripción del riesgo",
         "validation approach": "Enfoque de validación",
         "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
-        "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
+        "import": "Importar una evaluación desde un archivo externo de {{appName}}.",
         "export to excel": "Exportar todas las evaluaciones a Excel",
         "remove assessment": "Eliminar permanentemente esta evaluación.",
         "export assessment": "Exportar una copia de esta evaluación a otra ubicación",
@@ -451,7 +453,7 @@
         "level 2": "Nivel 2",
         "level 3": "Nivel 3",
         "level 4": "Nivel 4",
-        "level 5": "Nivel 5", 
+        "level 5": "Nivel 5",
         "overall": "En general"
     },
     "irp": {
@@ -872,14 +874,14 @@
                     "suggested areas": "Áreas sugeridas para mejorar",
                     "suggested text": "Los objetivos de la evaluación se clasifican en orden de deficiencia y los objetivos que tienen menos prácticas satisfechas se clasifican más arriba en el cuadro. El gráfico de barras refleja el porcentaje de prácticas para cada objetivo a las que se respondió 'No' o se dejaron sin respuesta.",
                     "goal completion summary": "Resumen de consecución de objetivos",
-                    "goal performance": "Rendimiento de objetivos", 
-                    "rra performance by goal": "Desempeño de RRA por objetivo", 
-                    "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.", 
-                    "tiers": "Niveles de evaluación", 
-                    "rra practice list": "[ES] RRA Practice List with Corresponding References", 
-                    "rra practice list text": "[ES] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
-                    "identifier": "Identificador", 
-                    "practice": "Práctica", 
+                    "goal performance": "Rendimiento de objetivos",
+                    "rra performance by goal": "Desempeño de RRA por objetivo",
+                    "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.",
+                    "tiers": "Niveles de evaluación",
+                    "rra practice list": "[ES] RRA Practice List with Corresponding References",
+                    "rra practice list text": "[ES] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.",
+                    "identifier": "Identificador",
+                    "practice": "Práctica",
                     "references": "Referencias"
                 },
                 "percentage of practices": "[ES] Percentage of Practices Performed",
@@ -1018,7 +1020,10 @@
         "no documents to display": "No hay documentos para mostrar",
         "section": "Sección",
         "no supplemental available": "no hay orientación complementaria disponible",
-        "no reference documents available": "no hay documentos de referencia disponibles"
+        "no reference documents available": "no hay documentos de referencia disponibles",
+        "document": "documento",
+        "link": "enlace",
+        "launches external": "lanza sitio externo"
     },
     "menu": {
         "tools": {
@@ -1092,7 +1097,7 @@
                         "23": "<li>Reproducción automática/actualización</li> <li>Parpadeo</li> <li>Límites de tiempo ajustables</li> <li>Solo video-audio</li> <li>Multimedia</li> <li>Tiempos de espera</li> <li>Complementos requeridos</li> <li>Versión alternativa</li>"
                     }
                 },
-               "terms of use": {
+                "terms of use": {
                     "terms of use": "Términos de uso",
                     "description": "Este software fue preparado como una cuenta de trabajo patrocinada por una agencia del Gobierno de los EE. UU. Ni el Gobierno de los EE. UU. ni ninguna de sus agencias, ni ningún empleado, hacen ninguna garantía, expresa o implícita, o asumen ninguna responsabilidad legal o responsabilidad por el uso de un tercero, o los resultados de dicho uso, o cualquier información, aparato, producto, o proceso asociado con este software, o representa que su uso por dicho tercero no infringiría derechos de propiedad privada.",
                     "open source licenses": "Licencias de Código Abierto"
