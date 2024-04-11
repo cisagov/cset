@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,10 +22,9 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { NavigationAggregService } from '../../../services/navigationAggreg.service';
 import { AggregationService } from '../../../services/aggregation.service';
-import { ChartService, ChartColors } from '../../../services/chart.service';
-import { Chart } from 'chart.js'
+import { ChartService } from '../../../services/chart.service';
+import { Chart } from 'chart.js';
 import { ColorService } from '../../../services/color.service';
 
 @Component({
@@ -62,7 +61,7 @@ export class CompareIndividualComponent implements OnInit {
 
 
     // Overall Comparison
-    this.aggregationSvc.getOverallComparison().subscribe((x: any) => {      
+    this.aggregationSvc.getOverallComparison().subscribe((x: any) => {
 
       // apply visual attributes
       x.datasets.forEach((ds: any) => {

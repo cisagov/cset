@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -25,7 +25,7 @@
   <div *ngIf="rows.length == 0">
     {{t('no search results')}}
   </div>
-  <div style="height:235px; margin: 0 1.5rem" *ngFor="let row of rows">
+  <div *ngFor="let row of rows" class="m-4" style="height: 250px;">
     <swiper class="gallery-slider" [config]="config" (slideChange)="onSlideChange()" #swiper>
       <ng-template swiperSlide *ngFor="let c of row; let i = index">
 

@@ -1,0 +1,81 @@
+<!---------------------- 
+
+   Copyright 2024 Battelle Energy Alliance, LLC  
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy 
+  of this software and associated documentation files (the "Software"), to deal 
+  in the Software without restriction, including without limitation the rights 
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+  copies of the Software, and to permit persons to whom the Software is 
+  furnished to do so, subject to the following conditions: 
+ 
+  The above copyright notice and this permission notice shall be included in all 
+  copies or substantial portions of the Software. 
+ 
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
+  SOFTWARE. 
+-------------------------->
+<div class="accessibility-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
+        <span class="cset-icons-document mr-3 fs-base-6"></span>
+        <span>{{t('menu.help.legal.accessibility statement.accessibility statement')}}</span>
+    </div>
+
+    <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-11a w-100">
+        <div class="pr-3 d-flex flex-column align-items-start flex-11a">
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.1')"></p>
+            <h5>{{t('menu.help.legal.accessibility statement.htag.adobe acrobat pdf files')}}</h5>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.2')"></p>
+            <h3>{{t('menu.help.legal.accessibility statement.htag.accessibility features')}}</h3>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.3')"></p>
+            <h5>{{t('menu.help.legal.accessibility statement.htag.keyboard shortcuts')}}</h5>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.4')"></p>
+            <h5>{{t('menu.help.legal.accessibility statement.htag.browser support')}}</h5>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.5')"></p>
+            <h5>{{t('menu.help.legal.accessibility statement.htag.our section 508 testing efforts')}}</h5>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.6')"></p>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.7')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.keyboard focus')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.8')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.forms')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.9')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.links buttons')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.10')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.repetitive content and links')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.11')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.content structure')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.12')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.language')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.13')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.page and frame titles')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.14')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.color dependence and contrast')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.15')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.images')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.16')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.resize text')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.17')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.multiple ways')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.18')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.error identification')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.19')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.css style')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.20')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.data tables')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.21')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.all interactive elements')}}</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.22')"></p>
+            <h6>{{t('menu.help.legal.accessibility statement.htag.does not apply')}}:</h6>
+            <p class="w-100" [innerHTML]="t('menu.help.legal.accessibility statement.p.23')"></p>
+        </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex flex-00a">
+        <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+    </mat-dialog-actions>
+</div>

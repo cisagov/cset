@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-summary-all',
@@ -29,9 +30,11 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./rra-summary-all.component.scss']
 })
 export class RraSummaryAllComponent implements OnInit {
-  @Input() title = "RRA Performance Summary";
+  @Input() title = this.tSvc.translate('reports.core.rra.report.rra performance summary');
   @Input() showNav = true;
-  constructor() { }
+  constructor(
+    public tSvc: TranslocoService
+  ) { }
 
   ngOnInit(): void {
   }

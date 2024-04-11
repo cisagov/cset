@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,10 +19,10 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3>Standards Summary</h3>
-  <p>This graph shows the overall answer percentages for each individual answer type.</p>
+-------------------------->
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3>{{t('titles.standards summary')}}</h3>
+  <p>{{t('reports.standards summary text')}}</p>
   <div id="chart" class="mb-3">
     <canvas id="canvasStandardSummary" style="max-width: 800px; margin: 0 auto;">{{chart}}</canvas>
   </div>
@@ -33,11 +33,11 @@
   </div>
   <div class="data" [hidden]="!initialized">
     <table class="table" [class.fs-smaller]="layoutSvc.hp">
-      <th *ngIf="dataSets?.length > 1">Standard</th>
-      <th>Answer </th>
-      <th class="align-right">Number</th>
-      <th class="align-right">Total</th>
-      <th class="align-right">Percent</th>
+      <th *ngIf="dataSets?.length > 1">{{t('reports.standard')}}</th>
+      <th>{{t('reports.answer')}}</th>
+      <th class="align-right">{{t('reports.number')}}</th>
+      <th class="align-right">{{t('reports.total')}}</th>
+      <th class="align-right">{{t('reports.percent')}}</th>
       <tr *ngFor="let row of dataRows; let i = index">
         <td *ngIf="dataSets?.length > 1">{{row.short_Name}}</td>
         <td width=50%>{{row.answer_Full_Name}}</td>
@@ -47,7 +47,7 @@
       </tr>
     </table>
   </div>
-  
+
   <app-nav-back-next [page]="'standards-summary'"></app-nav-back-next>
-  
+
 </div>

@@ -22,7 +22,7 @@ namespace CSETWebCore.Business.Maturity
         public List<HydroDonutData> GetHydroDonutData(int assessmentId)
         {
             var result = from question in _context.MATURITY_QUESTIONS
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join action in _context.HYDRO_DATA on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on question.Mat_Question_Id equals answer.Question_Or_Requirement_Id
                          join answerOption in _context.MATURITY_ANSWER_OPTIONS on answer.Mat_Option_Id equals answerOption.Mat_Option_Id
                          where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S" && answerOption.Mat_Option_Id == action.Mat_Option_Id && answer.Assessment_Id == assessmentId
@@ -52,11 +52,12 @@ namespace CSETWebCore.Business.Maturity
             var result = from subGrouping in _context.MATURITY_GROUPINGS
                          join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
                          join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join action in _context.HYDRO_DATA on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
                          where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
                               && answer.Mat_Option_Id == action.Mat_Option_Id
                               && answer.Assessment_Id == assessmentId
+                              && action.Sequence != null
                          select new { subGrouping, domain, question, action, answer };
 
             List<HydroActionsByDomain> actionsByDomains = new List<HydroActionsByDomain>();
@@ -132,11 +133,12 @@ namespace CSETWebCore.Business.Maturity
             var result = from subGrouping in _context.MATURITY_GROUPINGS
                          join domain in _context.MATURITY_GROUPINGS on subGrouping.Parent_Id equals domain.Grouping_Id
                          join question in _context.MATURITY_QUESTIONS on subGrouping.Grouping_Id equals question.Grouping_Id
-                         join action in _context.ISE_ACTIONS on question.Mat_Question_Id equals action.Mat_Question_Id
+                         join action in _context.HYDRO_DATA on question.Mat_Question_Id equals action.Mat_Question_Id
                          join answer in _context.ANSWER on action.Mat_Option_Id equals answer.Mat_Option_Id
                          where question.Maturity_Model_Id == 13 && answer.Answer_Text == "S"
                               && answer.Mat_Option_Id == action.Mat_Option_Id
                               && answer.Assessment_Id == assessmentId
+                              && action.Sequence != null
                          select new { subGrouping, domain, question, action, answer };
 
             List<HydroActionQuestion> actionQuestions = new List<HydroActionQuestion>();

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -39,7 +39,7 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
         /// <param name="component1"></param>
         /// <param name="component2"></param>
         /// <param name="text"></param>
-        public void SetLineMessage(NetworkNode component1, NetworkNode component2, string text)
+        public void SetLineMessage(NetworkNode component1, NetworkNode component2, string text, int ruleViolated)
         {
             DiagramAnalysisNodeMessage messageNode;
             //flag node and put up the message
@@ -63,9 +63,10 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
 
                 Component = (NetworkComponent)component1,
                 NodeId1 = component1.ID,
-                NodeId2 = component2.ID,                
+                NodeId2 = component2.ID,
                 edgeId = appropriateEdgeId,
-                SetMessages = new HashSet<string>()
+                SetMessages = new HashSet<string>(),
+                Rule_Violated = ruleViolated
             };
 
             dictionaryLineMessages.Add(pair, messageNode);
@@ -84,7 +85,7 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
             return link.ID;
         }
 
-        public void SetNodeMessage(NetworkNode component, string text)
+        public void SetNodeMessage(NetworkNode component, string text, int ruleViolated)
         {
             DiagramAnalysisNodeMessage messageNode;
             //flag node and put up the message
@@ -99,7 +100,8 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
                 {
                     Component = (NetworkComponent)component,
                     SetMessages = new HashSet<string>(),
-                    NodeId1 = component.ID
+                    NodeId1 = component.ID,
+                    Rule_Violated = ruleViolated
                 };
                 dictionaryNodeMessages.Add(component.ComponentGuid, messageNode);
                 IsMessageAdded = true;

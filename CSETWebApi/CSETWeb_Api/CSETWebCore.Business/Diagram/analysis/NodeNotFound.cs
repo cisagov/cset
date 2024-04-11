@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -24,7 +24,7 @@ namespace CSETWebCore.Business
         {
         }
 
-        protected NodeNotFound(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected NodeNotFound(SerializationInfo info, StreamingContext context)
         {
         }
     }

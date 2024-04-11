@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,10 +19,10 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="d-flex flex-column justify-content-center flex-11a">
+-------------------------->
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-      <span class="cset-icons-books-stack-1 fs-base-6 mr-3"></span>
+    <span class="cset-icons-books-stack-1 fs-base-6 mr-3"></span>
     <span>Assessment Documents</span>
   </div>
 
@@ -38,7 +38,7 @@
         <table class="assessment-documents">
           <tr>
             <th style="width:50%;">Document Title</th>
-            <th style="width:40%;">File Name</th>
+            <th style="width:40%;">{{t('extras.file name')}}</th>
             <th style="width:10%;"></th>
           </tr>
           <tr *ngFor="let doc of documents">
@@ -51,7 +51,7 @@
               <div>{{doc.fileName}}</div>
             </td>
             <td>
-                <button (click)="download(doc)" class="fs-base-6 cset-icons-export c-primary cursor-pointer btn-link"
+              <button (click)="download(doc)" class="fs-base-6 cset-icons-export c-primary cursor-pointer btn-link"
                 matTooltip="Copy this document to another location."></button>
             </td>
           </tr>
@@ -61,6 +61,6 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

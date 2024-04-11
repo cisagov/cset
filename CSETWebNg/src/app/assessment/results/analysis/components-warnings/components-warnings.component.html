@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,10 +20,10 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="assess-component d-flex flex-column justify-content-start flex-11a">
+<div class="assess-component d-flex flex-column justify-content-start flex-11a" *transloco="let t">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
 
-    <h3>Network Warnings</h3>
+    <h3>{{t('titles.network warnings')}}</h3>
 
     <div *ngIf="initialized">
       <p>All identified network analysis problems.</p>
@@ -31,7 +31,7 @@
       <table class="table" *ngIf="!!warnings && warnings.length > 0">
         <tr>
           <th class="align-right">ID</th>
-          <th>Network Warnings</th>
+          <th>{{t('titles.network warnings')}}</th>
         </tr>
         <tr *ngFor="let w of warnings">
           <td class="align-right">{{w.id}}</td>
@@ -51,6 +51,6 @@
     </div>
 
     <app-nav-back-next [page]="'components-warnings'"></app-nav-back-next>
-    
+
   </div>
 </div>

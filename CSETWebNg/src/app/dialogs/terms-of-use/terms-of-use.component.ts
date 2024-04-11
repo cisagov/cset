@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
 import { LicenseComponent } from '../license/license.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -40,6 +41,7 @@ export class TermsOfUseComponent {
     private dialog: MatDialogRef<TermsOfUseComponent>,
     private childDialog: MatDialog,
     private childDialogRef: MatDialogRef<any>,
+    public tSvc: TranslocoService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 

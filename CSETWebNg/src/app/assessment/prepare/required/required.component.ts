@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -73,8 +73,8 @@ export class RequiredDocsComponent implements OnInit {
     commentToggle(id: number) {
         this.commentShow[id] = !this.commentShow[id];
     }
-    has(doc: RequiredDocument) {        
-        return (doc.comment && doc.comment.length > 0) ? 'inline' : 'none';            
+    has(doc: RequiredDocument) {
+        return (doc.comment && doc.comment.length > 0) ? 'inline' : 'none';
     }
 
     submit(doc: RequiredDocument, answer: string = null) {

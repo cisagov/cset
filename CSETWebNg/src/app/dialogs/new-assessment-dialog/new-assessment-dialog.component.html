@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,23 +20,26 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column justify-content-center flex-11a h-100 w-100">
-    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-      <span class="fs-base-6 mr-3"><i class="fa-solid fa-file"></i></span>
-      <span>Assesment Description</span>
-    </div>
-    <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a h-100" style="position:relative; overflow-x:hidden;">
-      <div class="card-image-parent">
-        <img class="card-image-child" src="{{data.path}}">
-      </div>
-      <div class="p-4">
-        <h3 class="mb-4">{{ data.title }}</h3>
-        <div [innerHTML]="data.description">
-        </div>
-      </div>
-    </mat-dialog-content>
-    <mat-dialog-actions class="pb-3 pt-0 mb-0" style="padding-right: 4rem" align="end">
-      <button matTooltip="Close" class="btn btn-secondary" (click)="close()" style="margin-right:5px;"><i class="fa-solid fa-xmark"></i></button>
-      <button matTooltip="Create Assessment" class="btn btn-primary" (click)="launchAssessment()"><i class="fa-solid fa-play"></i></button>
-    </mat-dialog-actions>
+<div class="d-flex flex-column justify-content-center flex-11a h-100 w-100" *transloco="let t">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="fs-base-6 mr-3"><i class="fa-solid fa-file"></i></span>
+    <span>{{t('titles.assessment description')}}</span>
   </div>
+  <mat-dialog-content class="pb-0 p-3 pr-0 oy-auto d-flex flex-column flex-11a h-100"
+    style="position:relative; overflow-x:hidden;">
+    <div class="p-4" style="z-index: 100">
+      <h3 class="mb-4">{{ data.title }}</h3>
+      <div [innerHTML]="data.description">
+      </div>
+    </div>
+    <div class="card-image-parent">
+      <img class="card-image-child" src="{{data.path}}">
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="pb-3 pt-0 mb-0" style="padding-right: 4rem" align="end">
+    <button [matTooltip]="t('tooltip.close')" class="btn btn-secondary" (click)="close()" style="margin-right:5px;"><i
+        class="fa-solid fa-xmark"></i></button>
+    <button [matTooltip]="t('tooltip.create assessment')" class="btn btn-primary" (click)="launchAssessment()"><i
+        class="fa-solid fa-play"></i></button>
+  </mat-dialog-actions>
+</div>

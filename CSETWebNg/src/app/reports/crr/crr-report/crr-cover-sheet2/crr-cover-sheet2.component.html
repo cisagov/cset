@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,59 +21,60 @@
   SOFTWARE.
 -------------------------->
 <div style="text-align: center;">
-  <div class="row">
-      <div class="col">
-          <img [src]="logoUrl" style="width: 267px; margin: 30px 0;">
-      </div>
-  </div>
-  <div class="row">
-      <div class="col">
-          <h3 style="font-weight: lighter;">
-              CYBER RESILIENCE REVIEW v4.0
-              <br />
-              <br />
-              SELF-ASSESSMENT REPORT
-              <br />
-              <br />
-              FOR
-          </h3>
-          <br />
-          <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }}</h3>
-          <br />
-          <br />
-      <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.assessmentDate | date:'MMMM yyyy' }}</h3>
-      </div>
-  </div>
+    <div class="row">
+        <div class="col">
+            <img [src]="logoUrl" style="width: 267px; margin: 30px 0;">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h3 style="font-weight: lighter;">
+                CYBER RESILIENCE REVIEW v4.0
+                <br />
+                <br />
+                SELF-ASSESSMENT REPORT
+                <br />
+                <br />
+                FOR
+            </h3>
+            <br />
+            <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }}</h3>
+            <br />
+            <br />
+            <h3 style="font-weight: lighter;">{{ model?.assessmentDetails.assessmentDate | localizeDate:'LL' }}</h3>
+        </div>
+    </div>
 </div>
 
 <div class="page-break"></div>
 
 <div class="report-notification">
-  <h4 style="color: black; text-align: center;">Notification</h4>
-  <p>
-      This report is provided "as-is" for informational purposes only. The Cybersecurity and Infrastructure Security Agency
-      (CISA) does not provide any warranties of any kind regarding any information
-      contained within. In no event shall the United States Government or its contractors or
-      subcontractors be liable for any damages, including but not limited to, direct, indirect,
-      special or consequential damages and including damages based on any negligence
-      of the United States Government or its contractors or subcontractors, arising out of, resulting
-      from, or in any way connected with this report, whether or not based upon warranty,
-      contract, tort, or otherwise, whether or not injury was sustained from, or arose out of the
-      results of, or reliance upon the report.
-  </p>
-  <p>
-      The CISA does not endorse any commercial product or service, including the subject of the
-      analysis in this report. Any reference to specific commercial products, processes, or services
-      by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their
-      endorsement, recommendation, or favoring by CISA.
-  </p>
-  <p>
-      The display of the CISA official seal or other CISA visual identities on this report shall not be
-      interpreted to provide the recipient organization authorization to use the official seal, insignia
-      or other visual identities of the Department of Homeland Security. The CISA seal, insignia,
-      or other visual identities shall not be used in any manner to imply endorsement of any
-      commercial product or activity by CISA or the United States Government. Use of the CISA
-      seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and
-      is against CISA policies governing usage of its seal.
-  </p>
+    <h4 style="color: black; text-align: center;">Notification</h4>
+    <p>
+        This report is provided "as-is" for informational purposes only. The Cybersecurity and Infrastructure Security
+        Agency
+        (CISA) does not provide any warranties of any kind regarding any information
+        contained within. In no event shall the United States Government or its contractors or
+        subcontractors be liable for any damages, including but not limited to, direct, indirect,
+        special or consequential damages and including damages based on any negligence
+        of the United States Government or its contractors or subcontractors, arising out of, resulting
+        from, or in any way connected with this report, whether or not based upon warranty,
+        contract, tort, or otherwise, whether or not injury was sustained from, or arose out of the
+        results of, or reliance upon the report.
+    </p>
+    <p>
+        The CISA does not endorse any commercial product or service, including the subject of the
+        analysis in this report. Any reference to specific commercial products, processes, or services
+        by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their
+        endorsement, recommendation, or favoring by CISA.
+    </p>
+    <p>
+        The display of the CISA official seal or other CISA visual identities on this report shall not be
+        interpreted to provide the recipient organization authorization to use the official seal, insignia
+        or other visual identities of the Department of Homeland Security. The CISA seal, insignia,
+        or other visual identities shall not be used in any manner to imply endorsement of any
+        commercial product or activity by CISA or the United States Government. Use of the CISA
+        seal without proper authorization violates federal law (e.g., 18 U.S.C. §§ 506, 701, 1017), and
+        is against CISA policies governing usage of its seal.
+    </p>
 </div>

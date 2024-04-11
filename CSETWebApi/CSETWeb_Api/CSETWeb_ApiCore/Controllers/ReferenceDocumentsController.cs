@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,6 +11,8 @@ using System.Linq;
 using System.Net.Http.Headers;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Http;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -39,6 +41,7 @@ namespace CSETWebCore.Api.Controllers
             }
         }
 
+
         /// <summary>
         /// This can find a file in the GEN_FILE table either by
         /// filename or by the file's ID.
@@ -55,8 +58,8 @@ namespace CSETWebCore.Api.Controllers
                 file = file.Substring(0, hashLocation);
             }
 
-            var id = 0;
-            if (!int.TryParse(file, out id))
+
+            if (!int.TryParse(file, out int id))
             {
                 // if the identifier is not an int, assume it's the filename, and get his gen_file_id
                 var f = _context.GEN_FILE.Where(f => f.File_Name == file).FirstOrDefault();
@@ -67,35 +70,42 @@ namespace CSETWebCore.Api.Controllers
             }
 
 
-            var files = from a in _context.GEN_FILE
-                        join ft1 in _context.FILE_TYPE on a.File_Type_Id equals ft1.File_Type_Id into tt
+            var files = from gf in _context.GEN_FILE
+                        join ft1 in _context.FILE_TYPE on gf.File_Type_Id equals ft1.File_Type_Id into tt
                         from ft in tt.DefaultIfEmpty()
-                        where (a.Gen_File_Id == id) && (a.Is_Uploaded ?? false)
-                        select new { a, ft };
+                        where (gf.Gen_File_Id == id)
+                        select new { gf, ft };
 
-            foreach (var f in files.ToList())
+            var refDoc = files.FirstOrDefault();
+            if (refDoc == null)
+            {
+                return new NotFoundResult();
+            }
+
+
+            try
             {
                 Stream stream;
 
                 // use binary data if available, otherwise get physical file
-                if (f.a.Data != null)
+                if (refDoc.gf.Data != null)
                 {
-                    stream = new MemoryStream(f.a.Data);
+                    stream = new MemoryStream(refDoc.gf.Data);
                 }
                 else
                 {
-                    var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", f.a.File_Name);
+                    var docPath = Path.Combine((string)AppDomain.CurrentDomain.GetData("ContentRootPath"), "Documents", refDoc.gf.File_Name);
                     stream = new FileStream(docPath, FileMode.Open, FileAccess.Read);
                 }
 
-                string filename = f.a.File_Name;
+                string filename = refDoc.gf.File_Name;
 
 
                 // determine the contentType
                 var contentType = "application/octet-stream";
-                if (f.ft != null && f.ft.Mime_Type != null)
+                if (refDoc.ft != null && refDoc.ft.Mime_Type != null)
                 {
-                    contentType = f.ft.Mime_Type;
+                    contentType = refDoc.ft.Mime_Type;
                 }
                 else
                 {
@@ -105,12 +115,16 @@ namespace CSETWebCore.Api.Controllers
 
                 var contentDisposition = new ContentDispositionHeaderValue("inline");
                 contentDisposition.FileName = filename;
-                Response.Headers.Add("Content-Disposition", contentDisposition.ToString());
+                Response.Headers.Append("Content-Disposition", contentDisposition.ToString());
 
                 return File(stream, contentType);
             }
+            catch (Exception ex)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error(ex);
 
-            return new NotFoundResult();
+                return new NotFoundResult();
+            }
         }
     }
 }

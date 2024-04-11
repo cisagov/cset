@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -34,7 +34,7 @@ namespace CSETWebCore.Helpers
         private TopLevelScoreNode topNode;
 
         private CSETContext _context;
-        
+
         public EDMScoring(CSETContext context)
         {
             _context = context;
@@ -46,8 +46,8 @@ namespace CSETWebCore.Helpers
 
             //then load the answers;
             var result = from a in _context.ANSWER
-                where a.Assessment_Id == assessment_id && a.Question_Type == "Maturity"
-                select a;
+                         where a.Assessment_Id == assessment_id && a.Question_Type == "Maturity"
+                         select a;
             foreach (var a in result.ToList())
             {
                 LeafNode leaf;
@@ -74,7 +74,7 @@ namespace CSETWebCore.Helpers
             while (tnode != null)
             {
                 tnode.CalculatePartialScore();
-                tnode = ((TopLevelScoreNode) tnode).TopLevelChild;
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
             }
 
             return this.topNode;
@@ -87,7 +87,7 @@ namespace CSETWebCore.Helpers
             while (tnode != null)
             {
                 tnode.CalculatePartialScore();
-                tnode = ((TopLevelScoreNode) tnode).TopLevelChild;
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
             }
 
             return this.topNode;
@@ -100,7 +100,7 @@ namespace CSETWebCore.Helpers
             while (tnode != null)
             {
                 tnode.CalculatePercentageScore();
-                tnode = ((TopLevelScoreNode) tnode).TopLevelChild;
+                tnode = ((TopLevelScoreNode)tnode).TopLevelChild;
             }
 
             return this.topNode;
@@ -117,9 +117,9 @@ namespace CSETWebCore.Helpers
             //get the top level nodes
             //then add in all the children
             var result = from a in _context.MATURITY_QUESTIONS
-                join b in _context.MATURITY_GROUPINGS on a.Grouping_Id equals b.Grouping_Id
-                where a.Maturity_Model_Id == 3
-                select new {a, b};
+                         join b in _context.MATURITY_GROUPINGS on a.Grouping_Id equals b.Grouping_Id
+                         where a.Maturity_Model_Id == 3
+                         select new { a, b };
             Dictionary<int, string> questionIDtoTitle = new Dictionary<int, string>();
             foreach (var q in result.ToList())
             {
@@ -207,72 +207,75 @@ namespace CSETWebCore.Helpers
 
         private TopLevelScoreNode staticLoadTreeMidStructure()
         {
-            TopLevelScoreNode mil1 = new TopLevelScoreNode() {Title_Id = "MIL1", Description = "MIL1 - Performed"};
+            TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
             midNodes.Add(mil1.Title_Id, mil1);
-            MidlevelScoreNode rf = new MidlevelScoreNode() {Title_Id = "RF", Description = "Relationship Formation"};
+            MidlevelScoreNode rf = new MidlevelScoreNode() { Title_Id = "RF", Description = "Relationship Formation" };
             mil1.Children.Add(rf);
             rf.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G1", Description = "Goal 1 - Acquirer service and asset priorities are established."});
+            { Title_Id = "RF:G1", Description = "Goal 1 - Acquirer service and asset priorities are established." });
             rf.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "RF:G2", Description = "Goal 2 - Forming relationships with external entities is planned."
+                Title_Id = "RF:G2",
+                Description = "Goal 2 - Forming relationships with external entities is planned."
             });
             rf.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G3", Description = "Goal 3 – Risk management includes external dependencies."});
+            { Title_Id = "RF:G3", Description = "Goal 3 – Risk management includes external dependencies." });
             rf.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G4", Description = "Goal 4 - External entities are evaluated."});
+            { Title_Id = "RF:G4", Description = "Goal 4 - External entities are evaluated." });
             rf.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G5", Description = "Goal 5 – Formal agreements include resilience requirements."});
+            { Title_Id = "RF:G5", Description = "Goal 5 – Formal agreements include resilience requirements." });
             rf.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G6", Description = "Goal 6 –Technology asset supply chain risks are managed."});
+            { Title_Id = "RF:G6", Description = "Goal 6 –Technology asset supply chain risks are managed." });
             MidlevelScoreNode rmg = new MidlevelScoreNode()
-                {Title_Id = "RMG", Description = "Relationship Management and Governance"};
+            { Title_Id = "RMG", Description = "Relationship Management and Governance" };
             mil1.Children.Add(rmg);
 
             rmg.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G1", Description = "Goal 1 - External dependencies are identified and prioritized."});
+            { Title_Id = "RMG:G1", Description = "Goal 1 - External dependencies are identified and prioritized." });
             rmg.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G2", Description = "Goal 2 - Supplier risk management is continuous."});
+            { Title_Id = "RMG:G2", Description = "Goal 2 - Supplier risk management is continuous." });
             rmg.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G3", Description = "Goal 3 – Supplier performance is governed and managed."});
+            { Title_Id = "RMG:G3", Description = "Goal 3 – Supplier performance is governed and managed." });
             rmg.Children.Add(new MidlevelScoreNode()
             {
                 Title_Id = "RMG:G4",
                 Description = "Goal 4 – Change and capacity management are applied to external dependencies."
             });
             rmg.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G5", Description = "Goal 5 – Supplier transitions are managed."});
+            { Title_Id = "RMG:G5", Description = "Goal 5 – Supplier transitions are managed." });
             rmg.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "RMG:G6", Description = "Goal 6 – Infrastructure and governmental dependencies are managed."
+                Title_Id = "RMG:G6",
+                Description = "Goal 6 – Infrastructure and governmental dependencies are managed."
             });
             rmg.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed."});
+            { Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed." });
 
             MidlevelScoreNode sps = new MidlevelScoreNode()
-                {Title_Id = "SPS", Description = "Service Protection and Sustainment"};
+            { Title_Id = "SPS", Description = "Service Protection and Sustainment" };
             mil1.Children.Add(sps);
             sps.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies."});
+            { Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies." });
             sps.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated."});
+            { Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated." });
             sps.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "SPS:G3", Description = "Goal 3 – Situational awareness extends to external dependencies."
+                Title_Id = "SPS:G3",
+                Description = "Goal 3 – Situational awareness extends to external dependencies."
             });
 
             addChildrenToList(mil1, midNodes);
 
-            TopLevelScoreNode mIL2 = new TopLevelScoreNode() {Title_Id = "MIL2", Description = "MIL2 - Planned"};
+            TopLevelScoreNode mIL2 = new TopLevelScoreNode() { Title_Id = "MIL2", Description = "MIL2 - Planned" };
             mIL2.TopLevelChild = mil1;
             midNodes.Add(mIL2.Title_Id, mIL2);
-            TopLevelScoreNode mIL3 = new TopLevelScoreNode() {Title_Id = "MIL3", Description = "MIL3 - Managed"};
+            TopLevelScoreNode mIL3 = new TopLevelScoreNode() { Title_Id = "MIL3", Description = "MIL3 - Managed" };
             mIL3.TopLevelChild = mIL2;
             midNodes.Add(mIL3.Title_Id, mIL3);
-            TopLevelScoreNode mIL4 = new TopLevelScoreNode() {Title_Id = "MIL4", Description = "MIL4 - Measured"};
+            TopLevelScoreNode mIL4 = new TopLevelScoreNode() { Title_Id = "MIL4", Description = "MIL4 - Measured" };
             mIL4.TopLevelChild = mIL3;
             midNodes.Add(mIL4.Title_Id, mIL4);
-            TopLevelScoreNode mIL5 = new TopLevelScoreNode() {Title_Id = "MIL5", Description = "MIL5 - Defined"};
+            TopLevelScoreNode mIL5 = new TopLevelScoreNode() { Title_Id = "MIL5", Description = "MIL5 - Defined" };
             mIL5.TopLevelChild = mIL4;
             midNodes.Add(mIL5.Title_Id, mIL5);
             return mIL5;
@@ -302,61 +305,64 @@ namespace CSETWebCore.Helpers
 
         private TopLevelScoreNode staticLoadTree()
         {
-            TopLevelScoreNode mil1 = new TopLevelScoreNode() {Title_Id = "MIL1", Description = "MIL1 - Performed"};
+            TopLevelScoreNode mil1 = new TopLevelScoreNode() { Title_Id = "MIL1", Description = "MIL1 - Performed" };
             midNodes.Add(mil1.Title_Id, mil1);
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G1", Description = "Goal 1 - Acquirer service and asset priorities are established."});
+            { Title_Id = "RF:G1", Description = "Goal 1 - Acquirer service and asset priorities are established." });
             mil1.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "RF:G2", Description = "Goal 2 - Forming relationships with external entities is planned."
+                Title_Id = "RF:G2",
+                Description = "Goal 2 - Forming relationships with external entities is planned."
             });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G3", Description = "Goal 3 – Risk management includes external dependencies."});
+            { Title_Id = "RF:G3", Description = "Goal 3 – Risk management includes external dependencies." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G4", Description = "Goal 4 - External entities are evaluated."});
+            { Title_Id = "RF:G4", Description = "Goal 4 - External entities are evaluated." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G5", Description = "Goal 5 – Formal agreements include resilience requirements."});
+            { Title_Id = "RF:G5", Description = "Goal 5 – Formal agreements include resilience requirements." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RF:G6", Description = "Goal 6 –Technology asset supply chain risks are managed."});
+            { Title_Id = "RF:G6", Description = "Goal 6 –Technology asset supply chain risks are managed." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G1", Description = "Goal 1 - External dependencies are identified and prioritized."});
+            { Title_Id = "RMG:G1", Description = "Goal 1 - External dependencies are identified and prioritized." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G2", Description = "Goal 2 - Supplier risk management is continuous."});
+            { Title_Id = "RMG:G2", Description = "Goal 2 - Supplier risk management is continuous." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G3", Description = "Goal 3 – Supplier performance is governed and managed."});
+            { Title_Id = "RMG:G3", Description = "Goal 3 – Supplier performance is governed and managed." });
             mil1.Children.Add(new MidlevelScoreNode()
             {
                 Title_Id = "RMG:G4",
                 Description = "Goal 4 – Change and capacity management are applied to external dependencies."
             });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G5", Description = "Goal 5 – Supplier transitions are managed."});
+            { Title_Id = "RMG:G5", Description = "Goal 5 – Supplier transitions are managed." });
             mil1.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "RMG:G6", Description = "Goal 6 – Infrastructure and governmental dependencies are managed."
+                Title_Id = "RMG:G6",
+                Description = "Goal 6 – Infrastructure and governmental dependencies are managed."
             });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed."});
+            { Title_Id = "RMG:G7", Description = "Goal 7 – External entity access to acquirer assets is managed." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies."});
+            { Title_Id = "SPS:G1", Description = "Goal 1 - Disruption planning includes external dependencies." });
             mil1.Children.Add(new MidlevelScoreNode()
-                {Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated."});
+            { Title_Id = "SPS:G2", Description = "Goal 2 - Planning and controls are maintained and updated." });
             mil1.Children.Add(new MidlevelScoreNode()
             {
-                Title_Id = "SPS:G3", Description = "Goal 3 – Situational awareness extends to external dependencies."
+                Title_Id = "SPS:G3",
+                Description = "Goal 3 – Situational awareness extends to external dependencies."
             });
             foreach (ScoringNode s in mil1.Children)
                 midNodes.Add(s.Title_Id, s);
-            TopLevelScoreNode mIL2 = new TopLevelScoreNode() {Title_Id = "MIL2", Description = "MIL2 - Planned"};
+            TopLevelScoreNode mIL2 = new TopLevelScoreNode() { Title_Id = "MIL2", Description = "MIL2 - Planned" };
             mIL2.TopLevelChild = mil1;
             midNodes.Add(mIL2.Title_Id, mIL2);
-            TopLevelScoreNode mIL3 = new TopLevelScoreNode() {Title_Id = "MIL3", Description = "MIL3 - Managed"};
+            TopLevelScoreNode mIL3 = new TopLevelScoreNode() { Title_Id = "MIL3", Description = "MIL3 - Managed" };
             mIL3.TopLevelChild = mIL2;
             midNodes.Add(mIL3.Title_Id, mIL3);
-            TopLevelScoreNode mIL4 = new TopLevelScoreNode() {Title_Id = "MIL4", Description = "MIL4 - Measured"};
+            TopLevelScoreNode mIL4 = new TopLevelScoreNode() { Title_Id = "MIL4", Description = "MIL4 - Measured" };
             mIL4.TopLevelChild = mIL3;
             midNodes.Add(mIL4.Title_Id, mIL4);
-            TopLevelScoreNode mIL5 = new TopLevelScoreNode() {Title_Id = "MIL5", Description = "MIL5 - Defined"};
+            TopLevelScoreNode mIL5 = new TopLevelScoreNode() { Title_Id = "MIL5", Description = "MIL5 - Defined" };
             mIL5.TopLevelChild = mIL4;
             midNodes.Add(mIL5.Title_Id, mIL5);
             return mIL5;
@@ -504,7 +510,7 @@ namespace CSETWebCore.Helpers
                 }
 
                 this.ColorStatus = score;
-                scores.Add(new EDMscore() {Title_Id = this.Title_Id, Color = this.ColorStatus.ToString()});
+                scores.Add(new EDMscore() { Title_Id = this.Title_Id, Color = this.ColorStatus.ToString() });
                 return score;
             }
         }
@@ -534,7 +540,7 @@ namespace CSETWebCore.Helpers
                 }
 
                 this.PercentageCountRight = totalRight;
-                this.PercentageScore = (double) totalRight / (double) this.PercentageTotalCount;
+                this.PercentageScore = (double)totalRight / (double)this.PercentageTotalCount;
                 return this.PercentageCountRight;
             }
 
@@ -548,7 +554,7 @@ namespace CSETWebCore.Helpers
                 //green if they are all green
                 ScoreStatus score = basicScore(scores);
                 this.ColorStatus = score;
-                scores.Add(new EDMscore() {Title_Id = this.Title_Id, Color = this.ColorStatus.ToString()});
+                scores.Add(new EDMscore() { Title_Id = this.Title_Id, Color = this.ColorStatus.ToString() });
                 return score;
             }
         }
@@ -580,7 +586,7 @@ namespace CSETWebCore.Helpers
                 }
 
                 this.PercentageCountRight = totalRight;
-                this.PercentageScore = (double) totalRight / (double) this.PercentageTotalCount;
+                this.PercentageScore = (double)totalRight / (double)this.PercentageTotalCount;
                 return this.PercentageCountRight;
             }
 
@@ -611,7 +617,7 @@ namespace CSETWebCore.Helpers
                     this.ColorStatus = ok ? ScoreStatus.Green : ScoreStatus.Red;
                 }
 
-                scores.Add(new EDMscore() {Title_Id = this.Title_Id, Color = this.ColorStatus.ToString()});
+                scores.Add(new EDMscore() { Title_Id = this.Title_Id, Color = this.ColorStatus.ToString() });
                 return this.ColorStatus;
 
             }

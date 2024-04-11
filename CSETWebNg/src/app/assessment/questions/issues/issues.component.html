@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -37,14 +37,16 @@
       <div class="col">
         <div class="form-group">
           <label id="titleLabel" for="title" class="form-label font-weight-bold">Title</label>
-          <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.title">
+          <input id="title" type="text" autocomplete="off" class="form-control" [disabled]="true"
+            [(ngModel)]="observation.title">
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label for="issueType" class="form-label font-weight-bold">Issue Type</label>
-          <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper"> (required)</span>
-          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="finding.type" required>
+          <span style="color: red;">*</span><span style="color: red; font-size: 10px;" *ngIf="this.showRequiredHelper">
+            (required)</span>
+          <select name="issueType" id="issueType" class="form-control" [(ngModel)]="observation.type" required>
             <option value="Examiner Finding">Examiner Finding</option>
             <option value="DOR">DOR</option>
             <option value="Supplemental Fact">Supplemental Fact</option>
@@ -53,48 +55,53 @@
         </div>
       </div>
     </div>
-    <div class="row" *ngIf="finding.type !== 'Supplemental Fact'">
+    <div class="row" *ngIf="observation.type !== 'Supplemental Fact'">
       <div class="col-6">
         <div class="form-group">
           <label for="riskArea" class="form-label font-weight-bold">Risk Area</label>
-          <input id="riskArea" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.risk_Area">
+          <input id="riskArea" type="text" autocomplete="off" class="form-control" [disabled]="true"
+            [(ngModel)]="observation.risk_Area">
         </div>
       </div>
       <div class="col-6">
         <div class="form-group">
           <label for="subriskArea" class="form-label font-weight-bold">Sub Risk</label>
-          <input id="subRisk" type="text" autocomplete="off" class="form-control" [disabled]="true" [(ngModel)]="finding.sub_Risk">
-        </div> 
+          <input id="subRisk" type="text" autocomplete="off" class="form-control" [disabled]="true"
+            [(ngModel)]="observation.sub_Risk">
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-12">
         <div *ngIf="this.actionItems != null" class="form-group">
           <label for="description" class="form-label font-weight-bold">Description</label>
-          <textarea id="description" type="text" rows="5" autocomplete="off" class="form-control" [(ngModel)]="finding.description"></textarea>
+          <textarea id="description" type="text" rows="5" autocomplete="off" class="form-control"
+            [(ngModel)]="observation.description"></textarea>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="finding.type === 'Supplemental Fact'">
+    <ng-container *ngIf="observation.type === 'Supplemental Fact'">
       <div class="row">
         <div class="col-12">
           <div class="form-group">
             <label for="suppGuide" class="form-label font-weight-bold">Supplemental Fact</label>
-            <textarea id="suppGuide" type="text" rows="10" autocomplete="off" class="form-control" [(ngModel)]="finding.supp_Guidance"></textarea>
+            <textarea id="suppGuide" type="text" rows="10" autocomplete="off" class="form-control"
+              [(ngModel)]="observation.supp_Guidance"></textarea>
           </div>
         </div>
       </div>
     </ng-container>
-    <ng-container *ngIf="finding.type !== 'Supplemental Fact'">
-      <div *ngIf="this.finding.auto_Generated === 0">
+    <ng-container *ngIf="observation.type !== 'Supplemental Fact'">
+      <div *ngIf="this.observation.auto_Generated === 0">
         <div class="row">
           <div class="col-12">
             <label for="manual-actions" class="form-label font-weight-bold">Action Items</label>
-            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control" [(ngModel)]="finding.actionItems"></textarea>
+            <textarea id="manual-actions" type="text" rows="5" autocomplete="off" class="form-control"
+              [(ngModel)]="observation.actionItems"></textarea>
           </div>
         </div>
       </div>
-      <div *ngIf="this.finding.auto_Generated === 1">
+      <div *ngIf="this.observation.auto_Generated === 1">
         <div class="mt-2 invalid-feedback d-block text-muted">
           <p>Items marked in red indicate a higher level of risk</p>
         </div>
@@ -111,13 +118,15 @@
               <tbody>
                 <ng-container *ngFor="let q of this.questionData; let i = index;">
                   <tr *ngIf="q.answer_Text === 'N'">
-                      <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="text-align: center;">{{ q.question_Title }}</td>
-                      <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}" style="vertical-align: middle;">{{ q.question_Text }}</td>
-                      <td *ngIf="this.actionItems != null">
-                        <textarea class="form-control" name="actionItems" id="actionItems" cols="100" 
-                          [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}"
-                          (blur)="updateActionText($event, q)">{{ this.actionItems[i]?.action_Items }}</textarea>
-                      </td>
+                    <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}"
+                      style="text-align: center;">{{ q.question_Title }}</td>
+                    <td [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}"
+                      style="vertical-align: middle;">{{ q.question_Text }}</td>
+                    <td *ngIf="this.actionItems != null">
+                      <textarea class="form-control" name="actionItems" id="actionItems" cols="100"
+                        [ngStyle]="{'color': (q.ranking === 1 && q.answer_Text === 'N') ? 'red' : 'black'}"
+                        (blur)="updateActionText($event, q)">{{ this.actionItems[i]?.action_Items }}</textarea>
+                    </td>
                   </tr>
                 </ng-container>
               </tbody>
@@ -129,13 +138,15 @@
         <div class="col-6">
           <span *ngIf="this.actionItems != null">
             <label for="regulatoryCitation" class="form-label font-weight-bold">Regulatory Citation</label>
-            <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true" value="{{ this.actionItems[0]?.regulatory_Citation }}">
+            <input id="regulatoryCitation" type="text" autocomplete="off" class="form-control" [disabled]="true"
+              value="{{ this.actionItems[0]?.regulatory_Citation }}">
           </span>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label for="additionalCitations" class="form-label font-weight-bold">Additional Citations</label>
-            <input id="additionalCitations" type="text" autocomplete="off" class="form-control" [(ngModel)]="finding.citations">
+            <input id="additionalCitations" type="text" autocomplete="off" class="form-control"
+              [(ngModel)]="observation.citations">
           </div>
         </div>
       </div>
@@ -143,10 +154,11 @@
     </ng-container>
   </mat-dialog-content>
 
-  <mat-dialog-actions class="p-3 mb-0" >
-    <button style="margin-left: 0%;" [disabled]="finding.auto_Generated == 1 || !isIssueEmpty()" mat-button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+  <mat-dialog-actions class="p-3 mb-0">
+    <button style="margin-left: 0%;" [disabled]="observation.auto_Generated == 1 || !isIssueEmpty()" mat-button
+      class="btn btn-secondary" (click)="cancel()">Cancel</button>
 
     <button style="margin-left: auto;" mat-button class="btn btn-primary" (click)="update()">Done</button>
   </mat-dialog-actions>
-  
+
 </ng-template>

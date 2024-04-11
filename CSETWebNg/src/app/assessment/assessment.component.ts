@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,15 @@ import {
   Component,
   EventEmitter,
   OnInit,
-  Output,
-  ViewChild,
-  HostListener
+  Output, HostListener
 } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentService } from '../services/assessment.service';
 import { LayoutService } from '../services/layout.service';
 import { NavTreeService } from '../services/navigation/nav-tree.service';
 import { NavigationService } from '../services/navigation/navigation.service';
 import { TranslocoService } from '@ngneat/transloco';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-assessment',
@@ -64,11 +62,10 @@ export class AssessmentComponent implements OnInit {
   widthBreakpoint = 960;
   scrollTop = 0;
 
+  assessmentAlias = this.tSvc.translate('titles.assessment');
+
 
   @Output() navSelected = new EventEmitter<string>();
-
-  @ViewChild('sNav')
-  sideNav: MatSidenav;
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -82,7 +79,8 @@ export class AssessmentComponent implements OnInit {
     public navSvc: NavigationService,
     public navTreeSvc: NavTreeService,
     public layoutSvc: LayoutService,
-    public tSvc: TranslocoService
+    public tSvc: TranslocoService,
+    private configSvc: ConfigService
   ) {
     this.assessSvc.getAssessmentToken(+this.route.snapshot.params['id']);
     this.assessSvc.getMode();
@@ -92,6 +90,10 @@ export class AssessmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.evaluateWindowSize();
+
+    if (this.configSvc.behaviors.replaceAssessmentWithAnalysis) {
+      this.assessmentAlias = this.tSvc.translate('titles.analysis');
+    }
 
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
@@ -147,21 +149,13 @@ export class AssessmentComponent implements OnInit {
     }
 
     this.navSvc.navDirect(target);
+    setTimeout(() => {
+      this.navTreeSvc.setSideNavScrollLocation()
+    }, 5);
   }
 
   toggleNav() {
     this.expandNav = !this.expandNav;
-  }
-
-  handleScroll(component: string) {
-    const element = document.getElementById(component);
-    if (
-      element.scrollTop < this.scrollTop &&
-      document.scrollingElement.scrollTop > 0
-    ) {
-      document.scrollingElement.scrollTo({ behavior: 'smooth', top: 0 });
-    }
-    this.scrollTop = element.scrollTop;
   }
 
   /**

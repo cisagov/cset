@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,17 +44,17 @@ export class DemographicIodService {
    * @param configSvc 
    */
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private configSvc: ConfigService,
     private assessSvc: AssessmentService
   ) {
     this.apiUrl = this.configSvc.apiUrl + 'demographics/ext2';
-   }
+  }
 
-   /**
-    * 
-    * @returns 
-    */
+  /**
+   * 
+   * @returns 
+   */
   getDemographics() {
     return this.http.get(this.apiUrl);
   }
@@ -75,11 +75,10 @@ export class DemographicIodService {
    */
   updateDemographic(demographic: any) {
     this.http.post(this.apiUrl, JSON.stringify(demographic), headers)
-    .subscribe(()=>{
-      if(this.configSvc.cisaAssessorWorkflow){
-          console.log("the assessment name update got called");
+      .subscribe(() => {
+        if (this.configSvc.cisaAssessorWorkflow) {
           this.assessSvc.updateAssessmentName();
-      }
-    });
+        }
+      });
   }
 }

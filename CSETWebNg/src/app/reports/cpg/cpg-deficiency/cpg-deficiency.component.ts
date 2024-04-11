@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ import { CpgService } from '../../../services/cpg.service';
 import { MaturityService } from '../../../services/maturity.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { RraDataService } from '../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-deficiency',
@@ -43,7 +44,7 @@ export class CpgDeficiencyComponent implements OnInit {
    * Sorry for hardcoding the cpgPracticeTag,
    * but the purpose is to get the hardcoded HTML out of the question text,
    * so look at this if wonky stuff is happening with question text stuff
-  */  
+  */
   cpgPracticeTag: string = '<p class="cpg-practice">';
 
   assessmentName: string;
@@ -64,14 +65,15 @@ export class CpgDeficiencyComponent implements OnInit {
     private assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cpgSvc: CpgService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPG Deficiencies - " + this.configSvc.behaviors.defaultTitle);
+    this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.deficiency.cpg deficiency') + " - " + this.configSvc.behaviors.defaultTitle);
 
     this.maturitySvc.getMaturityDeficiency('CPG').subscribe((resp: any) => {
       this.info = resp.information;
@@ -87,7 +89,7 @@ export class CpgDeficiencyComponent implements OnInit {
   }
 
   parseQuestionText(textWithHtml: string) {
-    let startOfRealText = textWithHtml.indexOf(this.cpgPracticeTag)+this.cpgPracticeTag.length;
+    let startOfRealText = textWithHtml.indexOf(this.cpgPracticeTag) + this.cpgPracticeTag.length;
     let endOfRealText = textWithHtml.indexOf('<', startOfRealText);
 
     return textWithHtml.substring(startOfRealText, endOfRealText);

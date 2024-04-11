@@ -1,0 +1,115 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div class="report-body mb-5">
+
+    <div class="flex-container">
+        <div class="column mt-3">
+            <p class="report-title">
+                {{ 'reports.observations tear-out sheets.report title' | transloco | uppercase }}
+            </p>
+        </div>
+        <div class="column">
+            <p style="text-align:center;">
+                <img width="471" height="529" alt="cset" src="assets/images/TearOutFiles/image002.jpg">
+            </p>
+        </div>
+
+        <div class="cover-page-bottom">
+            <app-logo-for-reports></app-logo-for-reports>
+            <app-info-block [response]="response" />
+        </div>
+    </div>
+
+
+
+    <div class="page-break" *ngIf="configSvc.behaviors.showDisclaimer">
+        <app-report-disclaimer></app-report-disclaimer>
+    </div>
+
+
+
+    <div class="page-break">
+        <app-report-advisory></app-report-advisory>
+    </div>
+
+
+
+    <div class="page-break">
+        <div style="margin-bottom: 3em;">
+            <h1>{{ 'reports.site information' | transloco }}</h1>
+            <app-site-information [response]="response"></app-site-information>
+        </div>
+
+        <div *ngIf="response?.individuals.length === 0" style="font-style: italic; font-weight: bold;">
+            {{ 'reports.observations tear-out sheets.no observations message' | transloco }}
+        </div>
+    </div>
+
+    <div *ngFor="let individual of response?.individuals">
+        <div *transloco="let t; read: 'observation'" class="page-break">
+            <div id="indiv_{{individual.individualfullname.replace(' ','_')}}"
+                style="font-weight: bold; color: #0A5278; margin-bottom: .5em;">{{individual.individualfullname}}
+            </div>
+
+            <table class="finding-table" *ngFor="let obs of individual.observations">
+                <tr>
+                    <td colspan="4" class="tint1">{{obs.observation}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ 'reports.observations tear-out sheets.question identifier' | transloco }}:</td>
+                    <td colspan="3">{{obs.questionIdentifier}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ 'reports.observations tear-out sheets.question text' | transloco }}:</td>
+                    <td colspan="3" [innerHTML]="obs.questionText"></td>
+                </tr>
+                <tr>
+                    <td class="tint2" style="width: 25%">{{ t('importance') }}:</td>
+                    <td style="width: 25%">{{ 'observation.importance ' + obs.importance.toLowerCase() | transloco }}</td>
+                    <td class="tint2" style="width: 25%">{{ t('resolution date') }}:</td>
+                    <td style="width: 25%">{{obs.resolutionDate | localizeDate}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ t('issue') }}:</td>
+                    <td colspan="3">{{obs.issue}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ t('impacts') }}:</td>
+                    <td colspan="3">{{obs.impact}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ t('recommendations') }}:</td>
+                    <td colspan="3">{{obs.recommendations}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ t('vulnerabilities') }}:</td>
+                    <td colspan="3">{{obs.vulnerabilities}}</td>
+                </tr>
+                <tr>
+                    <td class="tint2">{{ 'contact.contacts' | transloco }}:</td>
+                    <td colspan="3">{{obs.otherContacts.replace(',',', ')}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

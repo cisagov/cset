@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -191,7 +191,7 @@ namespace CSETWebCore.Business.Demographic
             }
 
             demo.CustomersSupported = da.CustomersSupported;
-            demo.CyberRiskService = da.CyberRiskService;
+            demo.CyberRiskService = da.cyberRiskService;
             demo.CioExists = da.CIOExists;
             demo.CisoExists = da.CISOExists;
             demo.Employees = da.Employees;
@@ -225,7 +225,7 @@ namespace CSETWebCore.Business.Demographic
             {
                 dbDemog = new DEMOGRAPHIC_ANSWERS()
                 {
-                    Assessment_Id = demographics.AssessmentId                               
+                    Assessment_Id = demographics.AssessmentId
                 };
                 _context.DEMOGRAPHIC_ANSWERS.Add(dbDemog);
                 _context.SaveChanges();
@@ -239,7 +239,7 @@ namespace CSETWebCore.Business.Demographic
             dbDemog.CIOExists = demographics.CioExists;
             dbDemog.CISOExists = demographics.CisoExists;
             dbDemog.CyberTrainingProgramExists = demographics.CyberTrainingProgramExists;
-            dbDemog.CyberRiskService = demographics.CyberRiskService;
+            dbDemog.cyberRiskService = demographics.CyberRiskService;
 
             _context.DEMOGRAPHIC_ANSWERS.Update(dbDemog);
             _context.SaveChanges();

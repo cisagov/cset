@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-import { DatePipe, getLocaleDateFormat } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -38,16 +38,13 @@ import { Title } from "@angular/platform-browser";
 import { NavigationService } from "../../services/navigation/navigation.service";
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
-import { concatMap, delay, map } from "rxjs/operators";
-import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
+import { concatMap, map } from "rxjs/operators";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
 import { Comparer } from "../../helpers/comparer";
 import { ExportPasswordComponent } from '../../dialogs/assessment-encryption/export-password/export-password.component';
-import { ImportPasswordComponent } from '../../dialogs/assessment-encryption/import-password/import-password.component';
-import * as moment from "moment";
-import { forEach } from "lodash";
+import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
@@ -62,7 +59,7 @@ interface UserAssessment {
   type: string;
   assessmentCreatedDate: string;
   creatorName: string;
-  lastModifiedDate: string;
+  lastModifiedDate: DateTime;
   markedForReview: boolean;
   altTextMissing: boolean;
   selectedMaturityModel?: string;
@@ -88,7 +85,7 @@ export class MyAssessmentsComponent implements OnInit {
   browserIsIE: boolean = false;
 
   // contains CSET or ACET; used for tooltips, etc
-  appCode: string;
+  appName: string;
   appTitle: string;
   isTSA: boolean = false;
   isCSET: boolean = false;
@@ -119,7 +116,6 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     public tSvc: TranslocoService,
-    private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
@@ -128,9 +124,6 @@ export class MyAssessmentsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // initializes moment locale language to transloco's active language
-    moment.locale(this.tSvc.getActiveLang());
-
     this.getAssessments();
 
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -138,9 +131,11 @@ export class MyAssessmentsComponent implements OnInit {
     this.importExtensions = localStorage.getItem('importExtensions');
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
-    this.appCode = this.configSvc.config.appCode;
+    this.appName = 'CSET';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
+        this.preventEncrypt = true;
+        this.updateEncryptPreference();
         this.ncuaSvc.reset();
         break;
       case 'TSA':
@@ -150,14 +145,16 @@ export class MyAssessmentsComponent implements OnInit {
         this.isCSET = true;
     }
 
-    if (localStorage.getItem("returnPath")) {
-    }
+    if (localStorage.getItem("returnPath")) { }
     else {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
+
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
 
   /**
@@ -169,10 +166,10 @@ export class MyAssessmentsComponent implements OnInit {
       if (this.configSvc.config.isRunningAnonymous) {
         return false;
       }
-      
+
       if (this.ncuaSvc.switchStatus) {
         return false;
-      }      
+      }
     }
 
     if (column == 'analytics') {
@@ -188,7 +185,15 @@ export class MyAssessmentsComponent implements OnInit {
         return false;
       }
     }
-    
+
+    if (column == 'export') {
+      return true;
+    }
+
+    if (column == 'export json') {
+      return this.configSvc.cisaAssessorWorkflow;
+    }
+
     return true;
   }
 
@@ -315,7 +320,7 @@ export class MyAssessmentsComponent implements OnInit {
         case "status":
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
         case "ise-submitted":
-          return this.comparer.compareBool(a.submittedDate, b.submittedDate, isAsc);
+          return this.comparer.compareIseSubmission(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
       }
@@ -326,7 +331,7 @@ export class MyAssessmentsComponent implements OnInit {
     this.authSvc.logout();
   }
 
-  clickDownloadLink(ment_id: number) {
+  clickDownloadLink(ment_id: number, jsonOnly: boolean = false) {
     if (!this.preventEncrypt) {
       let dialogRef = this.dialog.open(ExportPasswordComponent);
       dialogRef.afterClosed().subscribe(result => {
@@ -334,6 +339,10 @@ export class MyAssessmentsComponent implements OnInit {
         // get short-term JWT from API
         this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
           let url = this.fileSvc.exportUrl + "?token=" + response.token;
+
+          if (jsonOnly) {
+            url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+          }
 
           if (result.password != null && result.password != "") {
             url = url + "&password=" + result.password;
@@ -352,7 +361,11 @@ export class MyAssessmentsComponent implements OnInit {
       });
     } else {
       this.authSvc.getShortLivedTokenForAssessment(ment_id).subscribe((response: any) => {
-        const url = this.fileSvc.exportUrl + "?token=" + response.token;
+        let url = this.fileSvc.exportUrl + "?token=" + response.token;
+
+        if (jsonOnly) {
+          url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+        }
 
         //if electron
         window.location.href = url;
@@ -407,7 +420,7 @@ export class MyAssessmentsComponent implements OnInit {
         assessments: this.sortedAssessments
       }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         window.location.href = this.configSvc.apiUrl + 'ExcelExportAllNCUA?token=' + localStorage.getItem('userToken') + '&type=' + result;
@@ -424,10 +437,16 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
-  systemTimeTranslator(lastModifiedDate: any) {
-    // moment().utcOffset(300);
-    let localDate = moment(lastModifiedDate).format('ll LTS'); 
-    // let localDate = moment.utc(lastModifiedDate).local(true).format('ll LTS'); 
+  systemTimeTranslator(d: DateTime, format: string) {
+    var dtD = DateTime.fromISO(d, {});
+    let localDate = '';
+    if (format == 'med') {
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+    }
+    else if (format == 'short') {
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+    }
+    
     return localDate;
   }
 
@@ -451,6 +470,10 @@ export class MyAssessmentsComponent implements OnInit {
     this.disabledEncrypt = true;
     this.assessSvc.persistEncryptPreference(this.preventEncrypt);
     this.disabledEncrypt = false;
+  }
+
+  temp() {
+    this.assessSvc.moveActionItemsFrom_IseActions_To_HydroData().subscribe();
   }
 
 }

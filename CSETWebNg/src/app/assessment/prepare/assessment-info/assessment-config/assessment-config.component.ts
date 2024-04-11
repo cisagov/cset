@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 
 @Component({
   selector: 'app-assessment-config',
@@ -86,8 +86,7 @@ export class AssessmentConfigComponent implements OnInit {
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    switch(this.configSvc.installationMode || '')
-    {
+    switch (this.configSvc.installationMode || '') {
       case "ACET":
         return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         break;

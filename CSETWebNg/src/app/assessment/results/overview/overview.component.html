@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,33 +20,29 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a">
-  <h3 class="d-flex flex-column flex-00a">High-Level Assessment Description</h3>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" *transloco="let t">
+  <h3 class="d-flex flex-column flex-00a">{{t('reports.high level assessment label')}}</h3>
   <div class="d-flex flex-column flex-00a">
-    Enter a description of the assessment process and work performed for
-    senior management. This information will be included in the reports. 
-    This is not intended to be analysis of the assessment results as
-    requested in the executive summary.
+    {{t('reports.high level assessment desc')}}
     <textarea maxlength="4000" class="overview-textarea-height" name="overview" id="overview"
-      placeholder="Please provide a description of the assessment process and work performed."
+      placeholder="{{t('reports.high level assessment placeholder')}}"
       [(ngModel)]="o.assessmentDescription" (change)="update($event)"></textarea>
   </div>
   <hr>
 
-  <h3 class="d-flex flex-column flex-00a">Executive Summary</h3>
+  <h3 class="d-flex flex-column flex-00a">{{t('reports.executive summary label')}}</h3>
   <div class="d-flex flex-column flex-00a">
     <textarea class="overview-textarea-height" name="summary" id="summary"
-      placeholder="Please provide an executive summary." [(ngModel)]="o.executiveSummary"
+      placeholder="{{t('reports.executive summary placeholder')}}" [(ngModel)]="o.executiveSummary"
       (change)="update($event)"></textarea>
   </div>
   <hr>
-  
-  <h3 class="d-flex flex-column flex-00a">Comments</h3>
+
+  <h3 class="d-flex flex-column flex-00a">{{t('reports.comments label')}}</h3>
   <div class="d-flex flex-column flex-00a">
-    Enter any general comments to include in the reports. These comments are not included in the
-    Executive Summary Report but are included in the remaining reports.
+    {{t('reports.comments desc')}}
     <textarea maxlength="4000" class="overview-textarea-height" name="comments" id="comments"
-      placeholder="Please provide general comments, if any, to include in the reports."
+      placeholder="{{t('reports.comments placeholder')}}"
       [(ngModel)]="o.additionalNotesAndComments" (change)="update($event)"></textarea>
   </div>
 

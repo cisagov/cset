@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -21,25 +21,23 @@
   SOFTWARE.
 -------------------------->
 <table matSort (matSortChange)="sortData($event)" class="assessment-summary" style='overflow:auto'>
-    <th mat-sort-header="type">Type</th>
-    <th mat-sort-header="label">Label</th>
-    <th mat-sort-header="sal">Sal</th>
-    <th mat-sort-header="layer">Layer</th>
-    <th mat-sort-header="visible">Visible</th>
-    <tr *ngFor="let zone of zones; let i = index">
-        <td>{{zone.zoneType}}</td>
-        <td>{{zone.label}}</td>
-        <td>{{zone.sal}}</td>
-        <td>{{zone.layerName}}</td>
-        <td>
-          <input type="checkbox" name="{{ zone.visible }}" class="mt-1" [(ngModel)]="zone.visible"
-            [checked]="zone.visible" [disabled]="true" >
-       </td>
-    </tr>
+  <th mat-sort-header="type">Type</th>
+  <th mat-sort-header="label">Label</th>
+  <th mat-sort-header="sal">Sal</th>
+  <th mat-sort-header="layer">Layer</th>
+  <th mat-sort-header="visible">Visible</th>
+  <tr *ngFor="let zone of zones; let i = index">
+    <td>{{zone.zoneType}}</td>
+    <td>{{zone.label}}</td>
+    <td>{{zone.sal}}</td>
+    <td>{{zone.layerName}}</td>
+    <td>
+      <input type="checkbox" name="{{ zone.visible }}" class="mt-1" [(ngModel)]="zone.visible" [checked]="zone.visible"
+        [disabled]="true">
+    </td>
+  </tr>
 
-    <tr *ngIf="zones.length == 0">
-      <td colspan="5" style="text-align: center;">There are no zones in this Network Diagram.</td>
-    </tr>
+  <tr *ngIf="zones.length == 0">
+    <td colspan="5" style="text-align: center;">There are no zones in this Network Diagram.</td>
+  </tr>
 </table>
-
-

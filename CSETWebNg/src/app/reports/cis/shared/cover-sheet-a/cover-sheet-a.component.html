@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 <div class="flex-container">
     <div class="column mt-3">
         <p class="report-title">
-            {{title}}
+            {{title | uppercase}}
         </p>
     </div>
     <div class="column">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="cover-page-bottom">
-        <app-logo-for-reports></app-logo-for-reports>        
+        <app-logo-for-reports></app-logo-for-reports>
         <app-info-block [response]="infoParent"></app-info-block>
     </div>
 </div>

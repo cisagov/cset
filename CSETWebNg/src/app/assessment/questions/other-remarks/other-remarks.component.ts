@@ -15,7 +15,7 @@ export class OtherRemarksComponent implements OnInit {
    */
   constructor(
     private assessSvc: AssessmentService
-  ) {}
+  ) { }
 
   /**
    * 

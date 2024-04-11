@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -59,9 +59,9 @@ namespace CSETWebCore.Business.Standards
 
             var query = from sc in _context.SETS_CATEGORY
                         from s in _context.SETS.Where(set => set.Set_Category_Id == sc.Set_Category_Id
-                            && (set.Is_Displayed ?? false)
+                            && (set.Is_Displayed)
                             && (!set.IsEncryptedModule
-                            || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen ?? false)))
+                            || (set.IsEncryptedModule && (set.IsEncryptedModuleOpen)))
                             )
                         select new { s, sc.Set_Category_Name };
 

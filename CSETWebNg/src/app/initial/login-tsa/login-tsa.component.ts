@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
@@ -82,7 +82,7 @@ export class LoginTsaComponent implements OnInit {
           this.showLoginBox = true;
         }
       })
-   }
+  }
 
   /**
    *
@@ -108,9 +108,9 @@ export class LoginTsaComponent implements OnInit {
     }
   }
 
-    /**
-   *
-   */
+  /**
+ *
+ */
   checkForEjection(token: string) {
     if (this.route.snapshot.params['eject']) {
 
@@ -195,7 +195,7 @@ export class LoginTsaComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-    refreshWindow() {
+  refreshWindow() {
     window.location.reload();
   }
 

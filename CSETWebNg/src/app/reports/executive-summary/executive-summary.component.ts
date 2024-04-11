@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ import { ACETService } from '../../services/acet.service';
 import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class ExecutiveSummaryComponent implements OnInit {
   chartStandardsSummary: Chart;
   //canvasStandardResultsByCategory: Chart;
   responseResultsByCategory: any;
-
+  translationSub: any; 
 
   // Charts for Components
   componentCount = 0;
@@ -67,11 +68,18 @@ export class ExecutiveSummaryComponent implements OnInit {
     private titleService: Title,
     public acetSvc: ACETService,
     private assessmentSvc: AssessmentService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService, 
+    private translocoService: TranslocoService
   ) { }
 
   ngOnInit() {
+
     this.titleService.setTitle("Executive Summary - " + this.configSvc.behaviors.defaultTitle);
+
+    this.translationSub = this.translocoService.selectTranslate('')
+        .subscribe(value => 
+        this.titleService.setTitle(this.tSvc.translate('reports.core.executive summary.report title') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.reportSvc.getReport('executive').subscribe(
       (r: any) => {
@@ -94,7 +102,7 @@ export class ExecutiveSummaryComponent implements OnInit {
       }, 0);
     });
 
-    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment.maturityModel?.modelName)) {
+    if (['ACET', 'ISE'].includes(this.assessmentSvc.assessment?.maturityModel?.modelName)) {
       this.acetSvc.getAcetDashboard().subscribe(
         (data: AcetDashboard) => {
           this.acetDashboard = data;
@@ -113,4 +121,9 @@ export class ExecutiveSummaryComponent implements OnInit {
   usesRAC() {
     return !!this.responseResultsByCategory?.dataSets.find(e => e.label === 'RAC');
   }
+
+  ngOnDestroy() {
+    this.translationSub.unsubscribe()
+}
+
 }

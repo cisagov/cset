@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h1>
-    Ranked Subject Areas
-</h1>
+<ng-container *transloco="let t">
+    <h1>
+        {{t('titles.ranked categories')}}
+    </h1>
+    <p class="font-italic" [class.d-none]="showChart">
+        {{t('reports.core.no ranking')}}
+    </p>
+    <div [class.d-none]="!showChart">
+        <p>
+            {{t('reports.ranked categories text 2')}}
+        </p>
 
-<p>
-    This chart shows subject areas needing the most attention.  Each bar represents the labeled subject area’s
-    weighted contribution
-    so that the combined total always equals 100%.  The weighted contribution includes the importance of both
-    the
-    question and the subject area, as well as the percentage of missed questions in that subject area.
-</p>
-
-<canvas id="canvasRankedSubjectAreas"></canvas>
+        <canvas id="canvasRankedSubjectAreas"></canvas>
+    </div>
+</ng-container>

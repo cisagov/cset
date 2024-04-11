@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, HostListener, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import { BehaviorSubject } from 'rxjs';
-import { RraDataService } from '../../../services/rra-data.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { ConfigService } from '../../../services/config.service';
 import { VadrDataService } from '../../../services/vadr-data.service';
 import { MaturityService } from '../../../services/maturity.service';
@@ -191,7 +190,7 @@ export class VadrReportComponent implements OnInit {
       }
       return 0;
     });
-    
+
     r.vadrSummaryByGoal.forEach(element => {
       let goal = goalList.find(x => x.name == element.title);
       if (!goal) {
@@ -199,7 +198,7 @@ export class VadrReportComponent implements OnInit {
           name: element.title, series: [
             { name: 'Yes', value: 0 },
             { name: 'No', value: 0 },
-            { name: 'Alternate', value: 0},
+            { name: 'Alternate', value: 0 },
             { name: 'Unanswered', value: 0 },
           ]
         };
@@ -251,8 +250,8 @@ export class VadrReportComponent implements OnInit {
    */
   zeroDeficiencies(): boolean {
     return this.questionReferenceTable
-    && this.questionReferenceTable.length > 0
-    && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
+      && this.questionReferenceTable.length > 0
+      && this.questionReferenceTable.every(q => q.answer.answer_Text == 'Y');
   }
 
   /**

@@ -1,16 +1,18 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 ////////////////////////////////
 using CSETWebCore.Business.Diagram.layers;
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
 using CSETWebCore.Model.Diagram;
-using DocumentFormat.OpenXml.Spreadsheet;
-using Namotion.Reflection;
+using CSETWebCore.Model.Malcolm;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +30,7 @@ namespace CSETWebCore.Business.Diagram
         private CSETContext _context;
         static readonly NLog.Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-
+        
         public DiagramManager(CSETContext context)
         {
             _context = context;
@@ -50,7 +52,7 @@ namespace CSETWebCore.Business.Diagram
 
             var cellCount = xDoc.SelectNodes("//root/mxCell").Count;
             var objectCount = xDoc.SelectNodes("//root/UserObject").Count;
-            
+
             if (cellCount == 2 && objectCount == 0)
             {
                 // Update 29-Aug-2019 RKW - we are no longer getting the save calls on open.
@@ -106,6 +108,9 @@ namespace CSETWebCore.Business.Diagram
                     }
                     assessmentRecord.Diagram_Image = diagramImage;
                     _context.SaveChanges();
+
+                    var mb = new MalcolmBusiness(_context);
+                    mb.VerificationAndValidation(assessmentID);
                 }
             }
             else
@@ -327,7 +332,7 @@ namespace CSETWebCore.Business.Diagram
         public StringReader GetDiagramXml(int assessmentId)
         {
             var diagram = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId)?.Diagram_Markup;
-            
+
             if (diagram != null)
             {
                 // updates the previous version's 'object' to 'UserObject' if needed (Draw.IO v21.0.2 uses 'UserObject' instead)
@@ -394,7 +399,7 @@ namespace CSETWebCore.Business.Diagram
                             }
                         //}
                         */
-                        
+
                         var addLayerVisible = (mxGraphModelRootObject)item;
                         //var addLayerVisible = (mxGraphModelRootMxCell)item;
 
@@ -409,7 +414,7 @@ namespace CSETWebCore.Business.Diagram
 
                             vertices.Add(addLayerVisible);
                         }
-                        
+
                     }
                 }
             }
@@ -489,7 +494,7 @@ namespace CSETWebCore.Business.Diagram
             return edges;
         }
 
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -1017,7 +1022,7 @@ namespace CSETWebCore.Business.Diagram
             var templates = Enumerable.Empty<DiagramTemplate>();
 
             templates = _context.DIAGRAM_TEMPLATES
-                .Where(x => x.Is_Visible ?? false)
+                .Where(x => x.Is_Visible)
                 .OrderBy(x => x.Id)
                 .Select(x => new DiagramTemplate
                 {
@@ -1189,6 +1194,379 @@ namespace CSETWebCore.Business.Diagram
             }
 
             _context.SaveChanges();
+        }
+
+
+        public XmlDocument xml = new XmlDocument();
+        public int incrementalId = 0;
+        public int treeNumber = 0;
+        public List<YCoords> treeBounds = new List<YCoords>();
+        public List<List<Geometry>> nodeLocations = new List<List<Geometry>>();
+
+        public void CreateMalcolmDiagram(int assessmentId, List<MalcolmData> processedData)
+        {
+            XmlElement newMxGraphModel = xml.CreateElement("mxGraphModel");
+            newMxGraphModel.SetAttribute("dx", "1050");
+            newMxGraphModel.SetAttribute("yx", "610");
+            newMxGraphModel.SetAttribute("grid", "1");
+            newMxGraphModel.SetAttribute("gridSize", "10");
+            newMxGraphModel.SetAttribute("guides", "1");
+            newMxGraphModel.SetAttribute("tooltips", "1");
+            newMxGraphModel.SetAttribute("connect", "1");
+            newMxGraphModel.SetAttribute("arrows", "1");
+            newMxGraphModel.SetAttribute("fold", "1");
+            newMxGraphModel.SetAttribute("page", "0");
+            newMxGraphModel.SetAttribute("pageScale", "1");
+            newMxGraphModel.SetAttribute("pageWidth", "850");
+            newMxGraphModel.SetAttribute("pageHeight", "1100");
+            newMxGraphModel.SetAttribute("math", "0");
+            newMxGraphModel.SetAttribute("shadow", "0");
+
+            // Create an empty Network diagram
+            XmlElement root = xml.CreateElement("root", null);
+
+            XmlElement parentOfMainLayer = xml.CreateElement("mxCell");
+            parentOfMainLayer.SetAttribute("id", "0");
+
+            XmlElement mainLayer = xml.CreateElement("mxCell");
+            mainLayer.SetAttribute("id", "1");
+            mainLayer.SetAttribute("value", "Main Layer");
+            mainLayer.SetAttribute("parent", "0");
+
+            root.AppendChild(parentOfMainLayer);
+            root.AppendChild(mainLayer);
+
+            newMxGraphModel.AppendChild(root);
+            xml.AppendChild(newMxGraphModel);
+
+            // Generate the actual Diagram/XML objects
+            for (treeNumber = 0; treeNumber < processedData[0].Trees.Count; treeNumber++)
+            {
+                treeBounds.Add(new YCoords());
+                WalkDownTree(processedData[0].Trees[treeNumber], "");
+            }
+
+            incrementalId = 0;
+            int offset = 0;
+            // going through all the trees again to give buffers between trees
+            for (treeNumber = 0; treeNumber < processedData[0].Trees.Count; treeNumber++)
+            {
+                int treeHeight = 0;
+                if (treeNumber != 0)
+                {
+                    // will be positive becuase lowerY should always be negative
+                    treeHeight = treeBounds[treeNumber - 1].upperY - treeBounds[treeNumber].lowerY;
+                    offset += 120 + treeHeight;
+                }
+
+                // going through the nodes in this tree
+                for (int i = 0; i < nodeLocations[treeNumber].Count; i++)
+                {
+                    string parentId = "component-" + incrementalId;
+                    XmlElement mxGeometry = (XmlElement)xml.SelectSingleNode($"//UserObject[@id='{parentId}']").FirstChild.FirstChild;
+
+                    int y = int.Parse(mxGeometry.Attributes["y"].Value);
+                    mxGeometry.SetAttribute("y", (y + offset).ToString());
+                    incrementalId++;
+                }
+
+            }
+
+            // Save that XML to the Assessments table -- Diagram Markup.
+            SaveDiagram(assessmentId, xml, new DiagramRequest(), true);
+            //var mb = new MalcolmBusiness(_context);
+            //mb.VerificationAndValidation(assessmentId);
+        }
+
+        public void WalkDownTree(TempNode node, string parentId)
+        {
+            // Get a unique Guid for each node
+            string guid = Guid.NewGuid().ToString();
+            string id = "component-" + incrementalId;
+            incrementalId++;
+
+            // set the label to include the node's key (IP address)
+            string label = "";
+            var symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == node.Role).FirstOrDefault();
+            if (symbol == null)
+            {
+                symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Abbreviation == node.Role).FirstOrDefault();
+                if (symbol != null) 
+                {
+                    label = symbol.Abbreviation;
+                }
+                else if (symbol == null && node.Role != null)
+                {
+                    int symbolId = _context.COMPONENT_SYMBOLS_MAPPINGS.Where(x => x.Application == "Malcolm" && x.Malcolm_Role == node.Role)
+                            .Select(x => x.Component_Symbol_Id).FirstOrDefault();
+
+                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Component_Symbol_Id == symbolId).FirstOrDefault();
+
+                    if (symbol == null)
+                    {
+                        symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
+                    }
+                    label = node.Role;
+                }
+                else
+                {
+                    symbol = _context.COMPONENT_SYMBOLS.Where(x => x.Symbol_Name == "Unknown").FirstOrDefault();
+                    label = "UN-" + node.Key;
+                }
+            }
+            else
+            {
+                label = symbol.Symbol_Name;
+            }
+
+
+            var userObject = xml.CreateElement("UserObject");
+            userObject.SetAttribute("label", label);
+            userObject.SetAttribute("internalLabel", label);
+            userObject.SetAttribute("ComponentGuid", guid);
+            userObject.SetAttribute("HasUniqueQuestions", "");
+            userObject.SetAttribute("IPAddress", node.Key);
+            userObject.SetAttribute("Description", "");
+            userObject.SetAttribute("Criticality", "");
+            userObject.SetAttribute("HostName", "");
+            userObject.SetAttribute("id", id);
+
+            Geometry geometry = AssignCoordinates(parentId, symbol.Width, symbol.Height);
+            userObject.AppendChild(CreateMxCellAndGeometry(geometry.x.ToString(), geometry.y.ToString()
+                , symbol.File_Name, symbol.Width.ToString(), symbol.Height.ToString()));
+            XmlElement root = (XmlElement)xml.SelectSingleNode("//root");
+
+            root.AppendChild(userObject);
+
+            if (parentId != "")
+            {
+                root.AppendChild(CreateEdge(parentId, id, "1")); // "1" because the only layer is the main layer for now
+            }
+
+            if (node.Children != null && node.Children.Count > 0)
+            {
+                foreach (TempNode childNode in node.Children)
+                {
+                    WalkDownTree(childNode, id);
+                }
+            }
+
+            return;
+        }
+
+        public XmlElement CreateMxCellAndGeometry(string x, string y, string fileName, string w, string h)
+        {
+            XmlElement mxCell = xml.CreateElement("mxCell");
+            mxCell.SetAttribute("style", "aspect=fixed;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/cset/" + fileName);
+            mxCell.SetAttribute("vertex", "1");
+            mxCell.SetAttribute("parent", "1");
+
+            XmlElement mxGeometry = xml.CreateElement("mxGeometry");
+            mxGeometry.SetAttribute("x", x);
+            mxGeometry.SetAttribute("y", y);
+            mxGeometry.SetAttribute("width", w);
+            mxGeometry.SetAttribute("height", h);
+            mxGeometry.SetAttribute("as", "geometry");
+
+            mxCell.AppendChild(mxGeometry);
+
+            return mxCell;
+        }
+
+        public XmlElement CreateEdge(string source, string target, string parentLayer)
+        {
+            XmlElement edge = xml.CreateElement("mxCell");
+            edge.SetAttribute("style", "rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#808080;strokeWidth=1;endArrow=none;labelBackgroundColor=none;");
+            edge.SetAttribute("parent", parentLayer);
+            edge.SetAttribute("source", source);
+            edge.SetAttribute("target", target);
+            edge.SetAttribute("edge", "1");
+
+            XmlElement geometry = xml.CreateElement("mxGeometry");
+            geometry.SetAttribute("relative", "1");
+            geometry.SetAttribute("as", "geometry");
+
+            edge.AppendChild(geometry);
+
+            return edge;
+        }
+
+        public Geometry AssignCoordinates(string parentId, int w, int h)
+        {
+            XmlElement parentNode = (XmlElement)xml.SelectSingleNode($"//UserObject[@id='{parentId}']");
+            Geometry geometry = new Geometry();
+
+            if (parentNode == null)
+            {
+                geometry.x = 0;
+                geometry.y = 0;
+                geometry.w = w;
+                geometry.h = h;
+
+                nodeLocations.Add(new List<Geometry> { geometry });
+                treeBounds[treeNumber].upperY = geometry.y;
+                treeBounds[treeNumber].lowerY = geometry.y - geometry.h;
+                return geometry;
+            }
+
+            int i = 0;
+            int revolution = 1;
+            Geometry parentCoordinates = ParseCoordinates(parentNode);
+            Geometry newCoordinatesToTry = new Geometry();
+            newCoordinatesToTry.w = w;
+            newCoordinatesToTry.h = h;
+
+            do
+            {
+                newCoordinatesToTry = CircleAroundParent(parentCoordinates, i, revolution);
+                i++;
+                newCoordinatesToTry.w = w;
+                newCoordinatesToTry.h = h;
+                if (i == 8)
+                {
+                    i = 0;
+                    revolution++;
+                }
+            }
+            while (AreCoordinatesOverlapping(newCoordinatesToTry));
+
+            geometry.x = newCoordinatesToTry.x;
+            geometry.y = newCoordinatesToTry.y;
+            geometry.w = newCoordinatesToTry.w;
+            geometry.h = newCoordinatesToTry.h;
+            nodeLocations[treeNumber].Add(geometry);
+
+            // keeps track of the upper and lower bounds for offsetting the trees later 
+            if (treeBounds[treeNumber].upperY < geometry.y)
+                treeBounds[treeNumber].upperY = geometry.y;
+
+            if (treeBounds[treeNumber].lowerY >= geometry.y - geometry.h)
+                treeBounds[treeNumber].lowerY = geometry.y - geometry.h;
+
+            return geometry;
+        }
+
+        public bool AreCoordinatesOverlapping(Geometry newCoords)
+        {
+            // checking the nodes in this tree for overlapping (we realign the trees to not overlap later)
+            foreach (Geometry currentNode in nodeLocations[treeNumber])
+            {
+                int currentEndX = currentNode.x + currentNode.w;
+                int currentEndY = currentNode.y + currentNode.h;
+                int newCoordsEndX = newCoords.x + newCoords.w;
+                int newCoordsEndY = newCoords.y + newCoords.h;
+
+                // check for x and y overlaps
+                bool xOverlapping = (currentNode.x <= newCoords.x && newCoordsEndX <= currentEndX) || (currentNode.x >= newCoords.x && newCoordsEndX >= currentEndX);
+                bool yOverlapping = (currentNode.y <= newCoords.y && newCoordsEndY <= currentEndY) || (currentNode.y >= newCoords.y && newCoordsEndY >= currentEndY);
+
+                if (xOverlapping && yOverlapping)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public Geometry ParseCoordinates(XmlElement node)
+        {
+            var mxGeometry = node.FirstChild.FirstChild;
+            string x = mxGeometry.Attributes["x"].Value;
+            string y = mxGeometry.Attributes["y"].Value;
+            string width = mxGeometry.Attributes["width"].Value;
+            string height = mxGeometry.Attributes["height"].Value;
+
+            int xInt, yInt, wInt, hInt;
+
+            if (!int.TryParse(x, out xInt)
+                || !int.TryParse(y, out yInt)
+                || !int.TryParse(width, out wInt)
+                || !int.TryParse(height, out hInt))
+            {
+                throw new Exception("Coordinates or width/height couldn't be found.");
+            }
+
+            return new Geometry(xInt, yInt, wInt, hInt);
+        }
+
+        /// <summary>
+        /// Goes around the parent clockwise,
+        /// checking for an open space (i.e. no overlaps with another component) to put the current component.
+        /// </summary>
+        /// <param name="geo"></param>
+        /// <param name="i"></param>
+        /// <param name="revolution"></param>
+        /// <returns></returns>
+        public Geometry CircleAroundParent(Geometry geo, int i, int revolution)
+        {
+            int changeAmount = 120 * revolution;
+            Geometry parent = new Geometry(geo.x, geo.y, geo.w, geo.h);
+            ///     3   2   1
+            ///     4       0
+            ///     5   6   7
+            switch (i % 8)
+            {
+                case 0:
+                    parent.x += changeAmount;
+                    return parent;
+                case 7:
+                    parent.x += changeAmount;
+                    parent.y -= changeAmount;
+                    return parent;
+                case 6:
+                    parent.y -= changeAmount;
+                    return parent;
+                case 5:
+                    parent.x -= changeAmount;
+                    parent.y -= changeAmount;
+                    return parent;
+                case 4:
+                    parent.x -= changeAmount;
+                    return parent;
+                case 3:
+                    parent.x -= changeAmount;
+                    parent.y += changeAmount;
+                    return parent;
+                case 2:
+                    parent.y += changeAmount;
+                    return parent;
+                case 1:
+                    parent.x += changeAmount;
+                    parent.y += changeAmount;
+                    return parent;
+                default:
+                    return parent;
+            }
+        }
+        
+        public class YCoords
+        {
+            public int upperY = 0, lowerY = 0;
+            public YCoords()
+            {
+
+            }
+        }
+
+        public class Geometry
+        {
+            public int x = 0;
+            public int y = 0;
+            public int w = 0;
+            public int h = 0;
+
+            public Geometry(int x, int y, int w, int h)
+            {
+                this.x = x;
+                this.y = y;
+                this.w = w;
+                this.h = h;
+            }
+            public Geometry()
+            {
+
+            }
         }
     }
 }

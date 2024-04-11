@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,6 +27,7 @@ import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { CpgService } from '../../../services/cpg.service';
 import { RraDataService } from '../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-report',
@@ -34,9 +35,10 @@ import { RraDataService } from '../../../services/rra-data.service';
   styleUrls: ['./cpg-report.component.scss', '../../reports.scss']
 })
 export class CpgReportComponent implements OnInit {
+  translationTabTitle: any;
 
   loading = false;
-
+  
   assessmentName: string;
   assessmentDate: string;
   assessorName: string;
@@ -52,14 +54,18 @@ export class CpgReportComponent implements OnInit {
     public titleSvc: Title,
     private assessSvc: AssessmentService,
     public cpgSvc: CpgService,
-    public configSvc: ConfigService
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
   ) { }
 
   /**
    * 
    */
   ngOnInit(): void {
-    this.titleSvc.setTitle("CPGs Report - " + this.configSvc.behaviors.defaultTitle);
+
+    this.translationTabTitle = this.tSvc.selectTranslate('reports.core.cpg.report.cpg report')
+      .subscribe(value =>
+        this.titleSvc.setTitle(this.tSvc.translate('reports.core.cpg.report.cpg report') + ' - ' + this.configSvc.behaviors.defaultTitle));
 
     this.assessSvc.getAssessmentDetail().subscribe((assessmentDetail: any) => {
       this.assessmentName = assessmentDetail.assessmentName;
@@ -74,9 +80,10 @@ export class CpgReportComponent implements OnInit {
       resp.forEach(r => {
         r.series.forEach(element => {
           if (element.name == 'U') {
-            element.name = 'Unanswered';
+            element.name = this.tSvc.translate('answer-options.labels.u');
           } else {
-            element.name = cpgAnswerOptions?.find(x => x.code == element.name).answerLabel;
+            const key = cpgAnswerOptions?.find(x => x.code == element.name).buttonLabelKey;
+            element.name = this.tSvc.translate('answer-options.labels.' + key.toLowerCase());
           }
         });
       });

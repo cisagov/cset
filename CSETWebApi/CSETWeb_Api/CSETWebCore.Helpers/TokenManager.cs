@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -303,7 +303,7 @@ namespace CSETWebCore.Helpers
 
                 return false;
             }
-          
+
 
 
             // see if the token has expired (we aren't really concerned with expiration on local installations)
@@ -392,6 +392,23 @@ namespace CSETWebCore.Helpers
         public int? GetCurrentUserId()
         {
             return PayloadInt(Constants.Constants.Token_UserId);
+        }
+
+
+        /// <summary>
+        /// Determines the language for the current user or access key.
+        /// </summary>
+        /// <returns></returns>
+        public string GetCurrentLanguage()
+        {
+            var userId = PayloadInt(Constants.Constants.Token_UserId);
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
+
+            var accessKey = Payload(Constants.Constants.Token_AccessKey);
+            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
+            var lang = user?.Lang ?? ak?.Lang ?? "en";
+
+            return lang;
         }
 
 

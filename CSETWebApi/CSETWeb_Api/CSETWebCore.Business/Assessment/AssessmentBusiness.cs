@@ -1,14 +1,12 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.Sal;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -18,13 +16,11 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
-using CSETWebCore.Model.Acet;
 using CSETWebCore.Model.Assessment;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace CSETWebCore.Business.Assessment
 {
@@ -38,6 +34,9 @@ namespace CSETWebCore.Business.Assessment
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IStandardsBusiness _standardsBusiness;
         private readonly IDiagramManager _diagramManager;
+
+        private readonly TranslationOverlay _overlay;
+
 
         private CSETContext _context;
 
@@ -55,6 +54,7 @@ namespace CSETWebCore.Business.Assessment
             _standardsBusiness = standardsBusiness;
             _context = context;
             _diagramManager = new Diagram.DiagramManager(context);
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -67,9 +67,28 @@ namespace CSETWebCore.Business.Assessment
                                      " a tailored assessment of cyber vulnerabilities. Once the standards were selected and the resulting question sets answered, the CSET created" +
                                      " a compliance summary, compiled variance statistics, ranked top areas of concern, and generated security recommendations.";
 
+            string defaultAssessmentName = "New Assessment";
+
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                var msg = _overlay.GetPropertyValue("GENERIC", "default exec summ", lang);
+                if (msg != null)
+                {
+                    defaultExecSumm = msg;
+                }
+
+                msg = _overlay.GetPropertyValue("GENERIC", "default assessment name", lang);
+                if (msg != null)
+                {
+                    defaultAssessmentName = msg;
+                }
+            }
+
+
             AssessmentDetail newAssessment = new AssessmentDetail
             {
-                AssessmentName = "New Assessment",
+                AssessmentName = defaultAssessmentName,
                 AssessmentDate = nowUTC,
                 CreatorId = currentUserId,
                 CreatedDate = nowUTC,
@@ -264,6 +283,30 @@ namespace CSETWebCore.Business.Assessment
             return list;
         }
 
+        public AggregationAssessment GetAggregationAssessmentDetail(int assessmentId)
+        {
+            AggregationAssessment aggregation = new AggregationAssessment();
+
+            var query = from aa in _context.ASSESSMENTS
+                        where aa.Assessment_Id == assessmentId
+                        select aa;
+
+            var result = query.ToList().FirstOrDefault();
+            if (result != null)
+            {
+                aggregation.Assessment = new ASSESSMENTS();
+                aggregation.Assessment = result;
+                aggregation.Answers = _context.ANSWER.Where(x => x.Assessment_Id == assessmentId).ToList();
+                aggregation.Demographics = _context.DEMOGRAPHICS.FirstOrDefault(x => x.Assessment_Id == assessmentId);
+                aggregation.Documents = _context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId).ToList();
+                aggregation.Findings = (from a in aggregation.Answers
+                                        join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
+                                        select f).ToList();       
+                                       
+            }
+            return aggregation;
+        }
+
 
         /// <summary>
         /// 
@@ -327,13 +370,20 @@ namespace CSETWebCore.Business.Assessment
 
         /// <summary>
         /// Returns the details for the specified Assessments given a GUID.
+        /// Returns null if no assessment with the provided GUID exists.
         /// </summary>
         /// <param name="assessmentGuid"></param>
         /// <returns></returns>
-        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid) 
-        { 
-            int assessmentId = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid).Assessment_Id;
-            return GetAssessmentDetail(assessmentId);
+        public AssessmentDetail GetAssessmentDetail(Guid assessmentGuid)
+        {
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(assessment => assessment.Assessment_GUID == assessmentGuid);
+
+            if (assessment == null)
+            {
+                return null;
+            }
+
+            return GetAssessmentDetail(assessment.Assessment_Id);
         }
 
         /// <summary>
@@ -606,7 +656,7 @@ namespace CSETWebCore.Business.Assessment
             dbAssessment.UseMaturity = assessment.UseMaturity;
             dbAssessment.UseStandard = assessment.UseStandard;
 
-            dbAssessment.Charter = "00000";            
+            dbAssessment.Charter = "00000";
             dbAssessment.Assets = assessment.Assets.ToString();
             dbAssessment.Diagram_Markup = assessment.DiagramMarkup;
             dbAssessment.Diagram_Image = assessment.DiagramImage;
@@ -662,8 +712,8 @@ namespace CSETWebCore.Business.Assessment
             }
 
             // No user is null here if accesskey login is used
-            if (user != null) 
-            { 
+            if (user != null)
+            {
                 AssessmentNaming.ProcessName(_context, user.UserId, assessmentId);
             }
             _assessmentUtil.TouchAssessment(assessmentId);
@@ -672,7 +722,7 @@ namespace CSETWebCore.Business.Assessment
         }
 
 
-     
+
 
         /// <summary>
         /// Get all organization types
@@ -681,10 +731,23 @@ namespace CSETWebCore.Business.Assessment
         /// <returns></returns>
         public List<DEMOGRAPHICS_ORGANIZATION_TYPE> GetOrganizationTypes()
         {
-            var orgType = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
-            orgType = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
+            var list = new List<DEMOGRAPHICS_ORGANIZATION_TYPE>();
+            list = _context.DEMOGRAPHICS_ORGANIZATION_TYPE.ToList();
 
-            return orgType;
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("DEMOGRAPHICS_ORGANIZATION_TYPE", x.OrganizationTypeId.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.OrganizationType = val;
+                    }
+                });
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -734,8 +797,22 @@ namespace CSETWebCore.Business.Assessment
 
             var result = query.ToList().FirstOrDefault();
 
+            var lang = _tokenManager.GetCurrentLanguage();
+
             if (result != null)
             {
+                // Translate if not English
+                if (lang != "en")
+                {
+                    var itemOverlay = _overlay.GetJObject("GALLERY_ITEM", "key", result.Gallery_Item_Guid.ToString(), lang);
+
+                    if (itemOverlay != null)
+                    {
+                        result.Title = itemOverlay.Value<string>("title");
+                        result.Description = itemOverlay.Value<string>("description");
+                    }
+                }
+
                 galleryCardDescription = result.Description;
             }
 
@@ -749,6 +826,13 @@ namespace CSETWebCore.Business.Assessment
 
                 // Use shorter names on assessments with multiple types.
                 assessment.TypeTitle += ", " + assessment.MaturityModel?.ModelTitle;
+
+                var modelObject = _overlay.GetJObject("MATURITY_MODELS", "maturity_model_id", (assessment.MaturityModel.ModelId).ToString(), lang);
+                if (modelObject != null)
+                {
+                    assessment.TypeTitle = modelObject.Value<string>("model_title");
+                }
+
                 assessment.TypeDescription = galleryCardDescription;
             }
 
@@ -770,10 +854,12 @@ namespace CSETWebCore.Business.Assessment
             }
 
             if (assessment.TypeTitle != null)
-                if (assessment.TypeTitle.IndexOf(",") == 0)
+            {
+                if (assessment.TypeTitle.StartsWith(","))
                 {
-                    assessment.TypeTitle = assessment.TypeTitle.Substring(2);
+                    assessment.TypeTitle = assessment.TypeTitle.TrimStart(", ".ToCharArray());
                 }
+            }
 
             // Remove description for assessments with multiple types.
             if (multipleTypes)
@@ -781,6 +867,7 @@ namespace CSETWebCore.Business.Assessment
                 assessment.TypeDescription = null;
             }
         }
+
 
         public List<SetInfo> GatherSetsInfo(List<string> setNames)
         {
@@ -867,11 +954,16 @@ namespace CSETWebCore.Business.Assessment
         public void clearFirstTime(int userid, int assessment_id)
         {
             var us = _context.USERS.Where(x => x.UserId == userid).FirstOrDefault();
-            if(us != null)
+            if (us != null)
             {
                 us.IsFirstLogin = false;
                 _context.SaveChanges();
             }
+        }
+
+        public void MoveHydroActionsOutOfIseActions()
+        {
+            _utilities.MoveActionItemsFrom_IseActions_To_HydroData(_context);
         }
     }
 }

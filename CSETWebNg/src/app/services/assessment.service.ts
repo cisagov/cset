@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,6 @@ import { DemographicExtendedService } from './demographic-extended.service';
 import { CyberFloridaService } from './cyberflorida.service';
 import { Answer } from '../models/questions.model';
 import { BehaviorSubject } from 'rxjs';
-import moment from 'moment';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from './conversion.service';
 
@@ -52,7 +51,7 @@ const headers = {
 
 @Injectable()
 export class AssessmentService {
-  
+
   userRoleId: number;
   roles: Role[];
   currentTab: string;
@@ -87,7 +86,7 @@ export class AssessmentService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private router: Router,    
+    private router: Router,
     private extDemoSvc: DemographicExtendedService,
     private floridaSvc: CyberFloridaService,
     private tSvc: TranslocoService,
@@ -128,7 +127,7 @@ export class AssessmentService {
 
   clearFirstTime() {
     this.http.get(this.apiUrl + 'clearFirstTime').subscribe(
-      ()=>{
+      () => {
         console.log("cleared first Time");
       }
     );
@@ -195,6 +194,9 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'text' });
   }
 
+  moveActionItemsFrom_IseActions_To_HydroData() {
+    return this.http.get(this.apiUrl + 'moveHydroActionsOutOfIseActions');
+  }
 
   /**
    *
@@ -216,7 +218,7 @@ export class AssessmentService {
         headers
       )
       .subscribe(() => {
-        if(this.configSvc.cisaAssessorWorkflow){          
+        if (this.configSvc.cisaAssessorWorkflow) {
           this.updateAssessmentName();
         }
       });
@@ -407,9 +409,9 @@ export class AssessmentService {
   //Call this when the assessment name 
   //was calculated in the backend and needs
   //to be updated here
-  updateAssessmentName(){
-    this.getAssessmentDetail().subscribe((data: AssessmentDetail)=> {
-      this.assessment.assessmentName =  data.assessmentName;
+  updateAssessmentName() {
+    this.getAssessmentDetail().subscribe((data: AssessmentDetail) => {
+      this.assessment.assessmentName = data.assessmentName;
     });
   }
 
@@ -421,7 +423,7 @@ export class AssessmentService {
    */
   loadAssessment(id: number): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.getAssessmentToken(id).then(() => {            
+      this.getAssessmentToken(id).then(() => {
         this.getAssessmentDetail().subscribe(data => {
           this.assessment = data;
 
@@ -446,7 +448,7 @@ export class AssessmentService {
             resolve('assessment loaded');
             return;
           }
-          
+
           // return path specified
           localStorage.removeItem('returnPath');
           const returnPath = `/assessment/${id}/${rpath}`;
@@ -546,11 +548,11 @@ export class AssessmentService {
     if (!this.assessment.maturityModel) {
       return false;
     }
-    
+
     if (!this.assessment.maturityModel.modelName) {
       return false;
     }
-    
+
     if (modelName == '*' && !!this.assessment.maturityModel.modelName) {
       return true;
     }
@@ -611,6 +613,17 @@ export class AssessmentService {
   }
 
   /**
+   * Indicates if the assessment is PCII.  This is set in the 
+   * CISA Assessor Workflow's Assessment Configuration page.
+   */
+  isPcii() {
+    if (!!this.assessment) {
+      return this.assessment.is_PCII ?? false;
+    }
+    return false;
+  }
+
+  /**
   * Saves the user's "Prevent Encrypt" toggle option to the database.
   * @param status 
   */
@@ -627,39 +640,28 @@ export class AssessmentService {
     return this.http.get(this.apiUrl + 'getPreventEncrypt');
   }
 
-  /**
-   * changes a date into the active Transloco locale format
-   * @param date 
-   * @returns 
-   */
-  translatedDate(date: string, format: string) {
-    moment.locale(this.tSvc.getActiveLang());
-    return moment(date).format(format);
-  }
-
-
   isCyberFloridaComplete(): boolean {
-    if(this.configSvc.installationMode=="CF"){      
-      return this.floridaSvc.isAssessmentComplete(); 
+    if (this.configSvc.installationMode == "CF") {
+      return this.floridaSvc.isAssessmentComplete();
     }
     else
       return true;
   }
 
   initCyberFlorida(assessmentId: number) {
-    this.floridaSvc.getInitialState().then(()=>{
+    this.floridaSvc.getInitialState().then(() => {
       this.assessmentStateChanged.next(125);
-      }
-    );    
+    }
+    );
   }
 
   updateAnswer(answer: Answer) {
-    this.floridaSvc.updateCompleteStatus(answer);  
-    if(this.isCyberFloridaComplete()){  
-      this.convSvc.isEntryCfAssessment().subscribe((data)=>{        
-        if(data)
+    this.floridaSvc.updateCompleteStatus(answer);
+    if (this.isCyberFloridaComplete()) {
+      this.convSvc.isEntryCfAssessment().subscribe((data) => {
+        if (data)
           this.assessmentStateChanged.next(124);
       });
-    }     
+    }
   }
 }

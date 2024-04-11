@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { CrrService } from './../../../services/crr.service';
-import { CrrReportModel } from '../../../models/reports.model';
+import { CmuService } from './../../../services/cmu.service';
+import { CmuReportModel } from '../../../models/reports.model';
 import { Title } from '@angular/platform-browser';
 import { ConfigService } from '../../../services/config.service';
 
@@ -33,42 +33,36 @@ import { ConfigService } from '../../../services/config.service';
   styleUrls: ['./crr-report.component.scss']
 })
 export class CrrReportComponent implements OnInit {
-
-  crrModel: CrrReportModel;
+  cmuModel: CmuReportModel;
   securityLevel: string = '';
 
-  constructor(
-    private crrSvc: CrrService,
-    private titleSvc: Title,
-    public configSvc: ConfigService) { }
+  constructor(private cmuSvc: CmuService, private titleSvc: Title, public configSvc: ConfigService) {}
 
   ngOnInit(): void {
-
     const securityLevel = localStorage.getItem('report-confidentiality');
     if (securityLevel) {
-      securityLevel !== 'None' ? this.securityLevel = securityLevel : this.securityLevel = '';
+      securityLevel !== 'None' ? (this.securityLevel = securityLevel) : (this.securityLevel = '');
       localStorage.removeItem('report-confidentiality');
     }
 
     this.titleSvc.setTitle('CRR Report - ' + this.configSvc.behaviors.defaultTitle);
-    this.crrSvc.getCrrModel().subscribe((data: CrrReportModel) => {
-
-      data.structure.Model.Domain.forEach(d => {
-        d.Goal.forEach(g => {
-          // The Question object needs to be an array for the template to work.
-          // A singular question will be an object.  Create an array and push the question into it
-          if (!Array.isArray(g.Question)) {
-            var onlyChild = Object.assign({}, g.Question);
-            g.Question = [];
-            g.Question.push(onlyChild);
-          }
+    this.cmuSvc.getCmuModel().subscribe(
+      (data: CmuReportModel) => {
+        data.structure.Model.Domain.forEach((d) => {
+          d.Goal.forEach((g) => {
+            // The Question object needs to be an array for the template to work.
+            // A singular question will be an object.  Create an array and push the question into it
+            if (!Array.isArray(g.Question)) {
+              const onlyChild = Object.assign({}, g.Question);
+              g.Question = [];
+              g.Question.push(onlyChild);
+            }
+          });
         });
-      });
 
-      this.crrModel = data
-      console.log(this.crrModel);
-    },
-      error => console.log('Error loading CRR report: ' + (<Error>error).message)
+        this.cmuModel = data;
+      },
+      (error) => console.error('Error loading CRR report: ' + (<Error>error).message)
     );
   }
 

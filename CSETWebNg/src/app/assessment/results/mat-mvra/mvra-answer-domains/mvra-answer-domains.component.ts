@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,36 +21,33 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-mvra-answer-domains',
   templateUrl: './mvra-answer-domains.component.html',
   styleUrls: ['./mvra-answer-domains.component.scss', '../../../../reports/reports.scss']
 })
-export class MvraAnswerDomainsComponent implements OnInit, OnChanges {
+export class MvraAnswerDomainsComponent implements OnChanges {
 
   @Input() model: any[];
-  flattenedModel:any = [];
+  flattenedModel: any = [];
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    this.model = changes.model.currentValue;   
+    this.model = changes.model.currentValue;
     this.flattenData();
   }
 
-  flattenData(){
+  flattenData() {
     let m = [];
     this.model.forEach(element => {
-      var goal = { title: element.title, credit: element.credit+'%', rating:'', function: true };
+      var goal = { title: element.title, credit: element.credit + '%', rating: '', function: true };
       this.flattenedModel.push(goal);
       m.push(goal);
-      element.domainScores.forEach(domain=>{
-        var dGoal = {title: domain.title, credit: domain.credit, rating: domain.rating, function: false }
+      element.domainScores.forEach(domain => {
+        var dGoal = { title: domain.title, credit: domain.credit, rating: domain.rating, function: false }
         m.push(dGoal)
       })
     });

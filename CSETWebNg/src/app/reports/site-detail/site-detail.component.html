@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                SITE DETAIL REPORT
+                {{t('reports.core.site detail report.report title') | uppercase}}
             </p>
         </div>
         <div class="column">
@@ -36,7 +36,7 @@
 
         <div class="cover-page-bottom">
             <app-logo-for-reports></app-logo-for-reports>
-            <app-info-block [response]="response"/>
+            <app-info-block [response]="response" />
         </div>
     </div>
 
@@ -51,7 +51,7 @@
 
 
     <div class="page-break">
-        <h1>Site Information</h1>
+        <h1>{{t('reports.site information')}}</h1>
         <app-site-information [response]="response"></app-site-information>
     </div>
 
@@ -63,7 +63,7 @@
         <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
         </p>
 
-        <h1>Executive Summary</h1>
+        <h1>{{t('reports.executive summary')}}</h1>
         <div [innerHTML]="reportSvc.formatLinebreaks(response?.information?.executive_Summary)">
         </div>
     </div>
@@ -81,7 +81,7 @@
 
     <!--Network Diagram-->
     <div class="page-break" *ngIf="response?.information.useDiagram">
-        <h1>Network Diagram</h1>
+        <h1>{{t('reports.network diagram')}}</h1>
         <div style="display: table; height: 8in">
             <div style="padding: 50% 0; height: 0">
                 <div style="width: 8in; display: block; transform-origin: top left; transform: rotate(90deg) translate(0, -100%); margin-top: -50%"
@@ -106,7 +106,7 @@
 
     <!--Findings and Recommendations From Basic Network Analysis-->
     <div class="page-break" *ngIf="response?.information.useDiagram">
-        <h1>Findings and Recommendations From Basic Network Analysis</h1>
+        <h1>{{t('reports.core.site detail report.findings and recommendations')}}</h1>
 
         <table class="table" *ngIf="!!warnings && warnings.length > 0">
             <tr>
@@ -127,7 +127,7 @@
 
     <div *ngIf="!usesRAC()" class="page-break">
         <h1>
-            Security Assurance Level (SAL)
+            {{t('reports.core.site detail report.security assurance level')}}
         </h1>
 
         <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
@@ -135,7 +135,7 @@
 
 
     <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
-        <h1>Maturity Detail</h1>
+        <h1>{{t('reports.core.site detail report.maturity detail')}}</h1>
 
         <div *ngFor="let domain of matDetails" class="pl-3 pr-3 mb-5 w-100 domain-section card">
             <h2>{{domain.DomainName}}</h2>
@@ -204,7 +204,7 @@
 
 
     <div class="page-break" *ngIf="reportSvc.isInstallation('ACET')">
-        <h1>Administration</h1>
+        <h1>{{t('reports.core.site detail report.administration')}}</h1>
         <table class="cset-table td-align-top">
             <tr>
                 <th class="col-4">Component</th>
@@ -223,13 +223,13 @@
                 <td class="text-right">{{comp.StatementsReviewed}}</td>
             </tr>
             <tr class="total-row">
-                <td>Total Review Hours</td>
+                <td>{{t('reports.core.site detail report.total review hours')}}</td>
                 <td class="text-right">{{ documentationTotal }}</td>
                 <td class="text-right">{{ interviewTotal }}</td>
                 <td class="text-right"></td>
             </tr>
             <tr class="total-row">
-                <td>Grand Totals</td>
+                <td>{{t('reports.core.site detail report.grand totals')}}</td>
                 <td class="text-right" colspan="2">{{ grandTotal }}</td>
                 <td class="text-right">{{ reviewedStatementTotal }}</td>
             </tr>
@@ -295,7 +295,7 @@
 
         <div class="mt-3 mb-3">
             <p>
-                <b>Cybersecurity Maturity</b>
+                <b>{{t('reports.core.site detail report.cybersecurity maturity')}}</b>
             </p>
             <table class="cset-table">
                 <tr>
@@ -323,8 +323,8 @@
 
         <table class="cset-table-3">
             <tr>
-                <th>Title</th>
-                <th>File Name</th>
+                <th>{{t('extras.title')}}</th>
+                <th>{{t('extras.file name')}}</th>
             </tr>
             <tr *ngFor="let doc of response?.documentLibraryTable">
                 <td>{{doc.documentTitle}}</td>
@@ -332,7 +332,7 @@
             </tr>
             <tr *ngIf="response?.documentLibraryTable.length === 0">
                 <td></td>
-                <td>There are no documents to display</td>
+                <td>{{t('extras.no documents to display')}}</td>
             </tr>
         </table>
     </div>
@@ -345,19 +345,13 @@
 
     <div class="page-break" *ngIf="response?.information.useStandard">
         <h1>
-            Summary Of Ranked Questions
+            {{t('reports.core.site detail report.summary of ranked questions')}}
         </h1>
 
         <p>
-            Each question that did not meet the required Security Assurance Level (SAL) is shown in ranking order below.
-            The displayed
-            levels are the SALs applicable to that question. They are: Low (L), Moderate (M), High (H), and Very High
-            (VH).
-            CNSSI levels are for Confidentiality (C), Integrity (I), and Availability (A). DoD Instruction 8500.2 levels
-            are for Confidentiality (Conf) and Mission Assurance Category (MAC). They are: Classified (C), Sensitive
-            (S),
-            and Public (P) for Confidentiality; MAC I, II, and III for Mission Assurance Category.
+            {{t('reports.core.site detail report.summary of ranked questions desc')}}
         </p>
+        
 
         <table *ngFor="let rq of response?.rankedQuestionsTable" class="cset-table-3">
             <tr>
@@ -373,7 +367,7 @@
     </div>
 
 
-    
+
     <div class="page-break" *ngIf="response?.information.useDiagram">
         <app-component-question-list [data]="response?.componentQuestions"></app-component-question-list>
     </div>

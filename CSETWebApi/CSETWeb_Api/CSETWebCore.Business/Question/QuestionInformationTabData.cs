@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,9 +10,12 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CSETWebCore.Business.Acet;
+using CSETWebCore.Business.Reports;
 using CSETWebCore.Constants;
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
+using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Question;
 
 
@@ -23,6 +26,12 @@ namespace CSETWebCore.Business.Question
     {
         private readonly CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter _converter;
         private readonly CSETContext _context;
+
+        private readonly ITokenManager _tokenManager;
+
+        private readonly TranslationOverlay _overlay;
+        private readonly string _lang = "en";
+
 
         public String RequirementFrameworkTitle { get; set; }
         public String RelatedFrameworkCategory { get; set; }
@@ -37,13 +46,13 @@ namespace CSETWebCore.Business.Question
         /// Documents that appear in the "Source Documents" section of question details.
         /// These are the principal reference documents for the requirement.
         /// </summary>
-        public List<CustomDocument> SourceDocumentsList { get; set; }
+        public List<ReferenceDocLink> SourceDocumentsList { get; set; }
 
         /// <summary>
         /// Documents that appear in the "Help Documents" section of question details.
         /// These are additional documents that may be helpful.
         /// </summary>
-        public List<CustomDocument> AdditionalDocumentsList { get; set; }
+        public List<ReferenceDocLink> AdditionalDocumentsList { get; set; }
 
         public List<string> ReferenceTextList { get; set; }
 
@@ -90,17 +99,24 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="converter"></param>
         /// <param name="context"></param>
-        public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context)
+        public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context, ITokenManager token)
         {
-            SourceDocumentsList = new List<CustomDocument>();
+            SourceDocumentsList = new List<ReferenceDocLink>();
             this.ComponentVisibility = false;
             this.ComponentTypes = new List<ComponentOverrideLinkInfo>();
             this.FrameworkQuestions = new ObservableCollection<FrameworkQuestionItem>();
             _converter = converter;
             _context = context;
+            _tokenManager = token;
+
+            _overlay = new TranslationOverlay();
+            _lang = _tokenManager.GetCurrentLanguage();
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void BuildQuestionTab(QuestionInfoData infoData, SETS set)
         {
             ShowRequirementFrameworkTitle = true;
@@ -108,14 +124,27 @@ namespace CSETWebCore.Business.Question
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void BuildRelatedQuestionTab(RelatedQuestionInfoData questionInfoData, SETS set)
         {
             BuildFromNewQuestion(questionInfoData, set);
             ShowRelatedFrameworkCategory = true;
             ShowRequirementFrameworkTitle = true;
             RelatedFrameworkCategory = questionInfoData.Category;
+
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", questionInfoData.Category.ToLower(), _lang);
+            if (cat != null)
+            {
+                RelatedFrameworkCategory = cat;
+            }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         private NEW_QUESTION BuildFromNewQuestion(BaseQuestionInfoData infoData, SETS set)
         {
             NEW_QUESTION question = infoData.Question;
@@ -140,9 +169,9 @@ namespace CSETWebCore.Business.Question
                 }
                 requires = tempRequires;
             }
+
             if (requires == null || !requires.Any())
             {
-
                 requires = from a in _context.NEW_REQUIREMENT
                            join b in _context.REQUIREMENT_QUESTIONS_SETS on a.Requirement_Id equals b.Requirement_Id
                            where b.Question_Id == infoData.QuestionID && b.Set_Name == set.Set_Name
@@ -150,8 +179,24 @@ namespace CSETWebCore.Business.Question
             }
 
             requirement = requires.FirstOrDefault();
+
             if (requirement != null)
             {
+                // overlay requirement text and supplemental 
+                var reqOverlay = _overlay.GetRequirement(requirement.Requirement_Id, _lang);
+                if (reqOverlay != null)
+                {
+                    requirement.Requirement_Text = reqOverlay.RequirementText;
+                    requirement.Supplemental_Info = reqOverlay.SupplementalInfo;
+                }
+
+                var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
+                if (cat != null)
+                {
+                    requirement.Standard_Sub_Category = cat;
+                }
+
+
                 tabData.Set_Name = set.Set_Name;
                 tabData.Text = requirement.Requirement_Text;
                 tabData.RequirementID = requirement.Requirement_Id;
@@ -177,8 +222,8 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
@@ -209,7 +254,7 @@ namespace CSETWebCore.Business.Question
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
 
             // Get related questions
-            var query = from rq in _context.REQUIREMENT_QUESTIONS
+            var query = from rq in _context.REQUIREMENT_QUESTIONS_SETS
                         join q in _context.NEW_QUESTION on rq.Question_Id equals q.Question_Id
                         where rq.Requirement_Id == requirementData.RequirementID
                         select new RelatedQuestion
@@ -227,9 +272,21 @@ namespace CSETWebCore.Business.Question
             tabData.SupplementalInfo = FormatSupplementalInfo(requirement.Supplemental_Info);
             tabData.Set_Name = requirementData.SetName;
 
+
+
+            var overlay = new TranslationOverlay();
+
+
+            var reqOverlay = overlay.GetRequirement(tabData.RequirementID, _lang);
+            if (reqOverlay != null)
+            {
+                tabData.SupplementalInfo = FormatSupplementalInfo(reqOverlay.SupplementalInfo);
+            }
+
+
+
             RequirementsData = tabData;
             int requirement_id = requirement.Requirement_Id;
-            // var questions = requirement.NEW_QUESTION;
             SETS set;
             if (!requirementData.Sets.TryGetValue(requirementData.SetName, out set))
             {
@@ -237,9 +294,19 @@ namespace CSETWebCore.Business.Question
             }
 
             if (!IsComponent)
+            {
                 RequirementFrameworkTitle = requirement.Requirement_Title;
+            }
 
             RelatedFrameworkCategory = requirement.Standard_Sub_Category;
+
+            // translate category
+            var cat = _overlay.GetPropertyValue("STANDARD_CATEGORY", requirement.Standard_Sub_Category.ToLower(), _lang);
+            if (cat != null)
+            {
+                RelatedFrameworkCategory = cat;
+            }
+
 
             if (requirementData.SetName == StandardConstants.CNSSI_1253_DB || requirementData.SetName == StandardConstants.CNSSI_ICS_PIT_DB
                 || requirementData.SetName == StandardConstants.CNSSI_ICS_V1_DB || requirementData.SetName == StandardConstants.CNSSI_1253_V2_DB)
@@ -323,8 +390,8 @@ namespace CSETWebCore.Business.Question
 
             var refBuilder = new Helpers.ReferencesBuilder(_context);
             refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
             SourceDocumentsList = sourceDocList;
             AdditionalDocumentsList = additionalDocList;
 
@@ -390,7 +457,7 @@ namespace CSETWebCore.Business.Question
                     ShowSALLevel = true;
 
                     var refBuilder = new Helpers.ReferencesBuilder(_context);
-                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<CustomDocument> sourceDocList, out List<CustomDocument> additionalDocList);
+                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<ReferenceDocLink> sourceDocList, out List<ReferenceDocLink> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
                 }
@@ -433,13 +500,13 @@ namespace CSETWebCore.Business.Question
                 }
 
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
-                var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
-                refBuilder.BuildReferenceDocuments(reqid, 
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                refBuilder.BuildReferenceDocuments(reqid,
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
@@ -475,7 +542,7 @@ namespace CSETWebCore.Business.Question
         /// </summary>
         /// <param name="info"></param>
         /// <param name="controlContext"></param>
-        public void BuildMaturityInfoTab(MaturityQuestionInfoData info, int? userId, string accessKey)
+        public void BuildMaturityInfoTab(MaturityQuestionInfoData info)
         {
             try
             {
@@ -501,35 +568,41 @@ namespace CSETWebCore.Business.Question
 
                 tabData.ExaminationApproach = info.MaturityQuestion.Examination_Approach;
 
-                //
-                var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-                var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-                if (user?.Lang == "es" || ak?.Lang == "es")
-                {
-                    Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                    var output = new SpanishQuestionRow();
-                    var temp = new SpanishQuestionRow();
 
-                    if (dictionary.TryGetValue(info.MaturityQuestion.Mat_Question_Id, out output))
-                    {
-                        tabData.SupplementalInfo = FormatSupplementalInfo(dictionary[info.MaturityQuestion.Mat_Question_Id].Supplemental_Info);
-                        tabData.ExaminationApproach = dictionary[info.MaturityQuestion.Mat_Question_Id].Examination_Approach;
-                    }
+                // apply an overlay if one exists
+                var lang = _tokenManager.GetCurrentLanguage();
+
+                var o = _overlay.GetMaturityQuestion(info.QuestionID, lang);
+                if (o != null)
+                {
+                    tabData.SupplementalInfo = o.SupplementalInfo;
+                    tabData.ExaminationApproach = o.ExaminationApproach;
                 }
-                //
+
 
                 RequirementsData = tabData;
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
 
                 ReferenceTextList = refBuilder.BuildReferenceTextForMaturityQuestion(info.QuestionID);
+
+                // Translation of Quesiton Reference Text
+                var translatedGroup = _overlay.GetMaturityQuestion(info.QuestionID, lang);
+                for (int i  = 0; i < ReferenceTextList.Count; i++)
+                {
+                    if (translatedGroup?.ReferenceText != null)
+                    {
+                        ReferenceTextList[i] = translatedGroup.ReferenceText;
+                    }
+                }
+
             }
             catch (Exception exc)
             {
@@ -599,7 +672,7 @@ namespace CSETWebCore.Business.Question
         {
             if (string.IsNullOrEmpty(supp))
             {
-                return "(no supplemental guidance available)";
+                return null;
             }
 
             if (supp.StartsWith("<FlowDocument"))

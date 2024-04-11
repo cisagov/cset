@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ConfigService } from './../../../../services/config.service';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-cover-sheet',
@@ -31,20 +31,18 @@ import { CrrReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrCoverSheetComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   headerUrl: string;
   bannerUrl: string = 'assets/images/CRR/report-header.jpg';
 
-  constructor(private configSvc: ConfigService) { }
+  constructor(private configSvc: ConfigService) {}
 
   ngOnInit(): void {
     if (this.configSvc.installationMode === 'TSA') {
       this.headerUrl = 'assets/images/TSA/tsa_insignia_rgbtransparent.png';
     } else {
-      this.headerUrl = 'assets/images/CISA_Logo_1831px.png'
+      this.headerUrl = 'assets/images/CISA_Logo_1831px.png';
     }
   }
-
 }

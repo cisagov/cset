@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,15 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                RANSOMWARE READINESS ASSESSMENT
+                {{t('reports.core.rra.tab title').toUpperCase()}}
             </p>
             <p class="report-title" style="font-size: 36px">
-                (RRA) REPORT
+                {{t('reports.core.rra.report title')}}
             </p>
         </div>
         <div class="column">
@@ -55,31 +55,31 @@
         <div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
             <div class="d-flex flex-column flex-11a">
                 <div class="chart d-flex flex-column flex-00a">
-                    <h1 class="pageHeader">Percentage of Practices Performed</h1>
+                    <h1 class="pageHeader">{{t('reports.core.rra.report.percentage of practices')}}</h1>
                     <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
                         <div id="overall-score" class="score-container" style="margin: 0 4px;">
-                            <div>Overall Score</div>
+                            <div>{{t('reports.core.dashboard.overall score')}}</div>
                             <div style="padding: .3rem; font-size: 2rem;">
-                                {{getComplianceScore('Overall')}}%</div>
+                                {{getComplianceScore(t('level.overall'))}}%</div>
                         </div>
 
                         <div style="flex-direction: column">
                             <div id="standard-score" class="score-container">
-                                <div>Basic</div>
+                                <div>{{t('level.basic')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Basic')}}%
+                                    {{getComplianceScore(t('level.basic'))}}%
                                 </div>
                             </div>
                             <div id="standard-score" class="score-container">
-                                <div>Intermediate</div>
+                                <div>{{t('level.intermediate')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Intermediate')}}%</div>
+                                    {{getComplianceScore(t('level.intermediate'))}}%</div>
                             </div>
                             <div id="standard-score" class="score-container">
-                                <div>Advanced</div>
+                                <div>{{t('level.advanced')}}</div>
                                 <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">
-                                    {{getComplianceScore('Advanced')}}%</div>
+                                    {{getComplianceScore(t('level.advanced'))}}%</div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="mb-5"></div>
                     <p>
-                        Scores are calculated as the percentage of "Yes" answers.
+                        {{t('reports.core.rra.report.scores calculated as yes')}}
                     </p>
                 </div>
             </div>
@@ -107,14 +107,14 @@
 
 
     <div class="page-break">
-        <h1 class="pageHeader">Percentage of Practices Performed by Goal</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.percentage of practices by goal')}}</h1>
 
         <app-rra-answer-compliance></app-rra-answer-compliance>
     </div>
 
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Practices Scoring</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.rra practices')}}</h1>
 
         <app-rra-questions-scoring></app-rra-questions-scoring>
     </div>
@@ -123,12 +123,10 @@
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
             <h1 class="pageHeader">
-                Suggested Areas for Improvement
+                {{t('reports.core.rra.report.suggested areas')}}
             </h1>
-            <p>The goals in the assessment are ranked in order of deficiency with goals having
-                fewer satisfied practices ranked higher in the chart.
-                The bar graph reflects the percentage of practices for each goal that are
-                answered "No" or are left unanswered.
+            <p>
+                {{t('reports.core.rra.report.suggested text')}}
             </p>
             <div style="height: 30rem">
                 <ngx-charts-bar-horizontal [results]="topRankedGoals" [yAxis]="'true'" [xAxis]="'true'"
@@ -148,12 +146,12 @@
 
     <div class="page-break">
         <h1 class="pageHeader">
-            Goal Completion Summary
+            {{t('reports.core.rra.report.goal completion summary')}}
         </h1>
 
         <div style="width: 100%; max-height: 20rem" class="d-block">
             <ngx-charts-bar-horizontal-stacked [results]="answerDistribByGoal" [yAxis]="'true'" [xAxis]="'true'"
-                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'"
+                [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks" [legend]="'true'" [legendTitle]="t('legend')"
                 [legendPosition]="'below'" [xAxisTickFormatting]="formatPercent" [scheme]="answerDistribColorScheme">
                 <ng-template #tooltipTemplate let-model="model">
                     <div class="p-1">
@@ -170,17 +168,17 @@
 
 
     <div class="page-break">
-        <h1 class="pageHeader">RRA Assessment Tiers</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.assessment tiers')}}</h1>
         <app-rra-levels></app-rra-levels>
 
 
-        <h1 class="pageHeader">Practices Answered Per Tier</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.answered tier')}}</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-counts></app-rra-answer-counts>
         </div>
         <div style="height: 3rem"></div>
 
-        <h1 class="pageHeader">Practices Distribution Per Tier</h1>
+        <h1 class="pageHeader">{{t('reports.core.rra.report.distribution tier')}}</h1>
         <div style="width: 100%; max-height: 20rem" class="d-block mb-5">
             <app-rra-answer-distribution></app-rra-answer-distribution>
         </div>
@@ -191,7 +189,7 @@
 
     <div class="page-break">
         <div class="chart d-flex flex-column flex-00a">
-            <h1 class="pageHeader">RRA Performance Summary</h1>
+            <h1 class="pageHeader">{{t('reports.core.rra.report.rra performance summary')}}</h1>
             <app-rra-summary-all [title]="''" [showNav]="false"></app-rra-summary-all>
         </div>
     </div>
@@ -202,17 +200,17 @@
     <!-- Reference Table -->
     <div class="page-break">
         <h1 class="pageHeader">
-            RRA Practice List with Corresponding References
+            {{t('reports.core.rra.report.rra practice list')}}
         </h1>
         <p>
-            Red-shaded rows indicate practices that have been answered as "No" or left unanswered.
+            {{t('reports.core.rra.report.rra practice list text')}}
         </p>
 
         <table class="table">
             <tr>
-                <th>Identifier</th>
-                <th>Practice</th>
-                <th>References</th>
+                <th>{{t('reports.core.rra.report.identifier')}}</th>
+                <th>{{t('reports.core.rra.report.practice')}}</th>
+                <th>{{t('reports.core.rra.report.references')}}</th>
             </tr>
             <tr *ngFor="let ref of questionReferenceTable" [class.shaded-red]="ref.answer.answer_Text != 'Y'">
                 <td>{{ref.question_Title}}</td>

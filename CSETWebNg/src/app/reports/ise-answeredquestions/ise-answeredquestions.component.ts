@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
@@ -59,18 +59,18 @@ export class IseAnsweredQuestionsComponent implements OnInit {
         this.response = r;
 
         // goes through domains
-        for(let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) { 
+        for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
           let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
           // goes through subcategories
-          for(let j = 0; j < domain.components?.length; j++) {
+          for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            if(subcat?.questions[0]?.maturityLevel !== 'CORE+') {
+            if (subcat?.questions[0]?.maturityLevel !== 'CORE+') {
               this.showSubcats.set(subcat?.title, true);
             } else {
               this.showSubcats.set(subcat?.title, false);
             }
             // goes through questions
-            for(let k = 0; k < subcat?.questions?.length; k++) {
+            for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
               if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
@@ -81,12 +81,12 @@ export class IseAnsweredQuestionsComponent implements OnInit {
         }
 
         this.loading = false;
-        
+
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
 
-    
+
   }
 
   requiredQuestion(q: any) {
@@ -95,5 +95,5 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     }
     return true;
   }
-  
+
 }

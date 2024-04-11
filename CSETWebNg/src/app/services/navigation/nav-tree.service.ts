@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -40,6 +40,8 @@ export class NavTreeService {
   tocControl: NestedTreeControl<NavTreeNode>;
 
   workflow: Document
+
+  sideNavScrollLocation = 0;
 
   public currentPage: string;
 
@@ -82,7 +84,6 @@ export class NavTreeService {
     this.setQuestionsTree();
 
     this.tocControl.expandAll();
-
     this.isNavLoading = false;
   }
 
@@ -93,7 +94,6 @@ export class NavTreeService {
     const toc: NavTreeNode[] = [];
 
     this.domToNav(this.workflow.documentElement.children, toc);
-
     return toc;
   }
 
@@ -122,10 +122,10 @@ export class NavTreeService {
           children: [],
           expandable: true,
           visible: true,
-          enabled: true   
-        };        
+          enabled: true
+        };
         navNode.visible = this.pageVisibliltySvc.showPage(workflowNode);
-        if(navNode.visible){
+        if (navNode.visible) {
           navNode.enabled = this.pageVisibliltySvc.isEnabled(workflowNode);
         }
         // the node might need tweaking based on certain factors
@@ -164,7 +164,7 @@ export class NavTreeService {
       if (mode == 'r') {
         node.label = this.tSvc.translate('titles.standard requirements');
       }
-    }    
+    }
   }
 
   /**
@@ -247,6 +247,7 @@ export class NavTreeService {
    * Sets all nodes in the tree to NOT be current
    */
   clearCurrentPage(tree: NavTreeNode[]) {
+    this.getSideNavScrollLocation()
     this.currentPage = '';
 
     if (!tree) {
@@ -287,5 +288,19 @@ export class NavTreeService {
     }
 
     return result;
+  }
+
+  getSideNavScrollLocation() {
+    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNav.length > 0) {
+      this.sideNavScrollLocation = sideNav[0].scrollTop;
+    }
+  }
+
+  setSideNavScrollLocation() {
+    const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
+    if (sideNav.length > 0) {
+      sideNav[0].scrollTo(0, this.sideNavScrollLocation);
+    }
   }
 }

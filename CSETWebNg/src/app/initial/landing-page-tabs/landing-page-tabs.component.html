@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,50 +22,51 @@
 -------------------------->
 <div *transloco="let t" class="assess-component d-flex flex-column justify-content-start flex-11a w-100">
 
-    <!-- Tabs -->
-    <div #tabs class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
-      <div class="d-flex justify-content-start flex-11a">
-        <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
-          <li style="margin-left:45px;" class="d-flex align-items-center flex-00a" [class.active]="checkActive('newAssessment')"
-            (click)="setTab('newAssessment')">
-            <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-              tabindex="0">
-              <span class="tab-icon mr-2" id="prepareIcon"><i class="fa-solid fa-file-circle-plus"></i></span>
-              <span class="nav-tab-text">{{t('new assessment')}}</span>
-            </button>
-          </li>
-          <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('myAssessments')"
-            (click)="setTab('myAssessments')">
-            <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab"
-              tabindex="0">
-              <span class="tab-icon mr-2" id="questionsIcon"><i class="fa-solid fa-clipboard-check"></i></span>
-              <span class="nav-tab-text">{{ t('my assessments') }}</span>
-            </button>
-          </li>
-        </ul>
-      </div>
+  <!-- Tabs -->
+  <div #tabs class="mt-0 pl-0 d-flex flex-column justify-content-start flex-00a">
+    <div class="d-flex justify-content-start flex-11a">
+      <ul class="nav nav-tabs d-flex flex-11a questions-tab-border">
+        <li style="margin-left:45px;" class="d-flex align-items-center flex-00a"
+          [class.active]="checkActive('newAssessment')" (click)="setTab('newAssessment')">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" tabindex="0">
+            <span class="tab-icon mr-2" id="prepareIcon"><i class="fa-solid fa-file-circle-plus"></i></span>
+            <span class="nav-tab-text">{{t('new assessment')}}</span>
+          </button>
+        </li>
+        <li class="d-flex align-items-center flex-00a" [class.active]="checkActive('myAssessments')"
+          (click)="setTab('myAssessments')">
+          <button class="btn bgc-trans d-flex align-items-center flex-00a h-100" data-toggle="tab" tabindex="0">
+            <span class="tab-icon mr-2" id="questionsIcon"><i class="fa-solid fa-clipboard-check"></i></span>
+            <span class="nav-tab-text">{{ t('my assessments') }}</span>
+          </button>
+        </li>
+      </ul>
     </div>
-    <div *ngIf="checkActive('newAssessment')">
-      <div class="input-bar">
-        <div class="input-bar-item" style="width:300px;">
-          <div class="input-group" style="width:300px; padding: 20px 10px 0 20px">
-            <input #searchGallery type="text" class="form-control" placeholder="Search" (keyup.enter)="changeToSearch(searchGallery.value)" aria-label="search gallery" aria-describedby="search-gallery">
-            <div class="input-group-append">
-              <button class="btn btn-outline-primary" type="button" id="search-gallery" (click)="changeToSearch(searchGallery.value)"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
+  </div>
+  <div *ngIf="checkActive('newAssessment')">
+    <div class="input-bar">
+      <div class="input-bar-item" style="width:300px;">
+        <div class="input-group" style="width:300px; padding: 20px 10px 0 20px">
+          <input #searchGallery type="text" class="form-control" [placeholder]="t('tooltip.search')"
+            (keyup.enter)="changeToSearch(searchGallery.value)" aria-label="search gallery"
+            aria-describedby="search-gallery">
+          <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="button" id="search-gallery"
+              (click)="changeToSearch(searchGallery.value)"><i class="fa-solid fa-magnifying-glass"></i></button>
           </div>
         </div>
-        <div class="input-bar-item" *ngIf="isSearch">
-          <div class="input-group">
-            <button class="btn btn-primary" (click)="cancelSearch()">{{t('buttons.back')}}</button>
-          </div>
+      </div>
+      <div class="input-bar-item" *ngIf="isSearch">
+        <div class="input-group">
+          <button class="btn btn-primary" (click)="cancelSearch()">{{t('buttons.back')}}</button>
         </div>
+      </div>
 
-      </div>
-      <app-new-assessment *ngIf="!isSearch" class="new-assessment"></app-new-assessment>
-      <app-search-page *ngIf="isSearch" [searchQuery]="searchString"></app-search-page>
     </div>
-    <div *ngIf="checkActive('myAssessments')">
-        <app-my-assessments></app-my-assessments>
-    </div>
+    <app-new-assessment *ngIf="!isSearch" class="new-assessment"></app-new-assessment>
+    <app-search-page *ngIf="isSearch" [searchQuery]="searchString"></app-search-page>
+  </div>
+  <div *ngIf="checkActive('myAssessments')">
+    <app-my-assessments></app-my-assessments>
+  </div>
 </div>

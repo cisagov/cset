@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
 import { LayoutService } from '../../../../services/layout.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-standards-ranked',
@@ -36,13 +36,14 @@ import { NavigationService } from '../../../../services/navigation/navigation.se
   host: { class: 'd-flex flex-column flex-11a' }
 })
 export class StandardsRankedComponent implements OnInit {
+  showChart = false;
   chart: Chart;
   dataRows: { title: string; rank: string; failed: number; total: number; percent: string; }[];
   initialized = false;
 
   constructor(
     private analysisSvc: AnalysisService,
-    private assessSvc: AssessmentService,
+    private tSvc: TranslocoService,
     public navSvc: NavigationService,
     private router: Router,
     public layoutSvc: LayoutService
@@ -53,7 +54,10 @@ export class StandardsRankedComponent implements OnInit {
   }
 
   setupChart(x: any) {
-    if(this.chart){
+    // only show the chart if there is some non-zero data to show
+    this.showChart = x.data.some(x => x > 0);
+
+    if (this.chart) {
       this.chart.destroy();
     }
     this.initialized = false;
@@ -62,7 +66,7 @@ export class StandardsRankedComponent implements OnInit {
       r.percent = parseFloat(r.percent).toFixed();
     });
     let tempChart = Chart.getChart('canvasStandardRank');
-    if(tempChart){
+    if (tempChart) {
       tempChart.destroy();
     }
     this.chart = new Chart('canvasStandardRank', {
@@ -83,15 +87,15 @@ export class StandardsRankedComponent implements OnInit {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
-                + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
+                  + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
           },
           title: {
             display: false,
-            font: {size: 20},
-            text: 'Ranked Categories'
+            font: { size: 20 },
+            text: this.tSvc.translate('titles.ranked categories')
           },
           legend: {
             display: false

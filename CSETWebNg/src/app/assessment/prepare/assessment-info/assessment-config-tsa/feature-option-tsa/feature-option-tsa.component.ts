@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,15 +22,13 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { AssessmentDetail, MaturityModel } from '../../../../../models/assessment-info.model';
+import { QuestionRequirementCounts, StandardsBlock } from "../../../../../models/standards.model";
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { ConfigService } from '../../../../../services/config.service';
 import { MaturityService } from '../../../../../services/maturity.service';
 import { NavigationService } from '../../../../../services/navigation/navigation.service';
-import { TsaService } from '../../../../../services/tsa.service';
-import { QuestionRequirementCounts, StandardsBlock } from "../../../../../models/standards.model";
 import { StandardService } from '../../../../../services/standard.service';
-import { data } from 'jquery';
+import { TsaService } from '../../../../../services/tsa.service';
 @Component({
   selector: 'app-feature-option-tsa',
   templateUrl: './feature-option-tsa.component.html',

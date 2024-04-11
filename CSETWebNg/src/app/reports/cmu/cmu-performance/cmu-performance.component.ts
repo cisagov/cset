@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-performance.component.scss']
 })
 export class CmuPerformanceComponent implements OnInit {
-
   @Input() model: any;
 
   @Input() moduleName: string;
@@ -42,7 +41,7 @@ export class CmuPerformanceComponent implements OnInit {
 
   fullAnswerDistribChart: string = '';
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
     this.cmuSvc.getFullAnswerDistribWidget().subscribe((resp: string) => {
@@ -53,7 +52,7 @@ export class CmuPerformanceComponent implements OnInit {
       this.legend = resp;
     });
 
-    this.cmuSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
+    this.cmuSvc.getPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
       this.charts = resp;
     });
 
@@ -68,14 +67,14 @@ export class CmuPerformanceComponent implements OnInit {
   }
 
   getHeatMap(goalTitle: string) {
-    return this.heatMaps?.find(c => c.title === goalTitle).chart;
+    return this.heatMaps?.find((c) => c.title === goalTitle).chart;
   }
 
-    // This function splits strings like
+  // This function splits strings like
   // "Goal 6 - Post-incident lessons learned are translated into improvement strategies."
   // and
   // "Goal 3-Risks are identified."
   stringSplitter(str: string) {
-    return str.split(" - ")[1] ?? str.split("-")[1];
+    return str.split(' - ')[1] ?? str.split('-')[1];
   }
 }

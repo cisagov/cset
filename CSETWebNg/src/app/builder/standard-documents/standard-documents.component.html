@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 oy-auto">
-  
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 oy-auto" *transloco="let t">
+
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
@@ -36,8 +36,8 @@
         Filter field to narrow down candidates.
       </p>
       <button class="btn btn-primary add" (click)="openFileBrowser($event)">
-          <span class="cset-icons-import fs-base-1 mr-2"></span>
-          Import a Document
+        <span class="cset-icons-import fs-base-1 mr-2"></span>
+        Import a Document
       </button>
       <input id="docUpload" type="file" (change)="fileSelect($event)" class="display-none">
     </div>
@@ -51,24 +51,25 @@
           (ngModelChange)="applyFilter()">
       </div>
       <div class="form-check m-3">
-        <input type="checkbox" class="form-check-input" id="showOnlyChecked" name="showOnlyChecked" [checked]="showChecked"
-          (change)="toggleShowChecked()">
+        <input type="checkbox" class="form-check-input" id="showOnlyChecked" name="showOnlyChecked"
+          [checked]="showChecked" (change)="toggleShowChecked()">
         <label class="form-check-label" for="showOnlyChecked">Show Selected Items</label>
       </div>
     </div>
 
     <table class="assessment-summary">
       <th></th>
-      <th>Title</th>
+      <th>{{t('extras.title')}}</th>
       <th></th>
-      <th>File Name</th>
+      <th>{{t('extras.file name')}}</th>
       <tr *ngFor="let doc of filteredDocuments">
         <td class="align-top"><input type="checkbox" [(ngModel)]="doc.selected" (ngModelChange)="selectDoc(doc)"></td>
         <td class="d-flex align-items-start justify-content-between flex-00a">
-            {{ doc.title }}
+          {{ doc.title }}
         </td>
         <td>
-          <button *ngIf="doc.isCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.id)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
+          <button *ngIf="doc.isCustom" type="button" (click)="setBuilderSvc.navRefDocDetail(doc.id)"
+            class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a ml-4 mr-4">
             <span class="cset-icons-pencil fs-base-2"></span>
             <span class="d-none d-md-flex fs-smaller">Edit</span>
           </button>

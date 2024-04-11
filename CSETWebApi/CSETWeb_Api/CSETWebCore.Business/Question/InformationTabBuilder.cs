@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -34,7 +34,7 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateFrameworkInformationTab(FrameworkInfoData frameworkData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
             tab.BuildFrameworkInfoTab(frameworkData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
@@ -51,7 +51,7 @@ namespace CSETWebCore.Business.Question
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             foreach (var set in questionInfoData.Sets)
             {
-                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
                 tab.BuildQuestionTab(questionInfoData, set.Value);
                 tempTabDataList.Add(tab);
             }
@@ -69,7 +69,7 @@ namespace CSETWebCore.Business.Question
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
             foreach (var set in questionInfoData.Sets)
             {
-                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+                QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
                 tab.BuildRelatedQuestionTab(questionInfoData, set.Value);
                 tempTabDataList.Add(tab);
             }
@@ -86,7 +86,7 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateRequirementInformationTab(RequirementInfoData reqInfoData, IStandardSpecficLevelRepository levelManager)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
             tab.BuildRequirementInfoTab(reqInfoData, levelManager);
             tempTabDataList.Add(tab);
             return tempTabDataList;
@@ -101,7 +101,7 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateComponentInformationTab(ComponentQuestionInfoData questionInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
             tab.BuildComponentInfoTab(questionInfoData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
@@ -116,8 +116,8 @@ namespace CSETWebCore.Business.Question
         public List<QuestionInformationTabData> CreateMaturityInformationTab(MaturityQuestionInfoData maturityInfoData)
         {
             List<QuestionInformationTabData> tempTabDataList = new List<QuestionInformationTabData>();
-            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context);
-            tab.BuildMaturityInfoTab(maturityInfoData, _tokenManager.GetUserId(), _tokenManager.GetAccessKey());
+            QuestionInformationTabData tab = new QuestionInformationTabData(_converter, _context, _tokenManager);
+            tab.BuildMaturityInfoTab(maturityInfoData);
             tempTabDataList.Add(tab);
             return tempTabDataList;
         }

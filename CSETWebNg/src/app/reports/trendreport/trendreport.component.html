@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,11 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
   <div class="flex-container">
     <div class="column mt-3">
-      <p
-        class="report-title">
+      <p class="report-title">
         SECURITY TREND REPORT
       </p>
     </div>
@@ -41,7 +40,7 @@
       <div style="flex-direction: column; line-height: 150%; padding-right: 2em">
         <div>{{response?.information.assessment_Name}}</div>
         <div>
-          {{response?.information.assessment_Date | date:'dd-MMM-yyyy'}}
+          {{response?.information.assessment_Date | localizeDate}}
         </div>
         <div>
           {{response?.information.assessor_Name}}
@@ -73,7 +72,7 @@
       </tr>
       <tr *ngFor="let a of response?.salList">
         <td>{{a.alias}}</td>
-        <td>{{a.oSV}}</td>
+        <td>{{a.osv}}</td>
         <td>{{a.q_CV}}</td>
         <td>{{a.q_IV}}</td>
         <td>{{a.q_AV}}</td>
@@ -83,8 +82,7 @@
 
   <div class="page-break">
     <h1>Overall Compliance Score</h1>
-    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-      <div>OVERALL PERCENT COMPLIANCE SCORE</div>
+    <div style="margin: 0 auto 2em auto; display: block;">
       <div><canvas id="canvasOverallCompliance"> {{ chartOverallCompl }} </canvas></div>
     </div>
 
@@ -106,7 +104,7 @@
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.total }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.y }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.n }}</td>
-          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.nA }}</td>
+          <td class="text-right p-2 pl-3" style="width: 10%">{{ a.na }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.a }}</td>
           <td class="text-right p-2 pl-3" style="width: 10%">{{ a.u }}</td>
         </tr>
@@ -122,16 +120,14 @@
 
   <div class="page-break">
     <h1>The Top Five Most Improved Areas</h1>
-    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-      <div>TOP 5 MOST IMPROVED AREAS</div>
+    <div style="margin: 0 auto 2em auto; display: block;">
       <div><canvas id="canvasTop5"> {{ chartTop5 }} </canvas></div>
     </div>
   </div>
 
   <div class="page-break">
     <h1>The Bottom Five (Areas of Concern)</h1>
-    <div class="cset-container" style="width: 500px; margin: 0 auto 2em auto; display: block;">
-      <div>TOP 5 AREAS OF CONCERN</div>
+    <div style="margin: 0 auto 2em auto; display: block;">
       <div><canvas id="canvasBottom5"> {{ chartBottom5 }} </canvas></div>
     </div>
   </div>
@@ -148,16 +144,16 @@
 
     <table class="cset-table-3">
       <tr>
-        <th>Title</th>
-        <th>File Name</th>
+        <th>{{t('extras.title')}}</th>
+        <th>{{t('extras.file name')}}</th>
       </tr>
       <tr *ngFor="let doc of response?.documentLibraryTable">
-        <td>{{doc.documenttitle}}</td>
+        <td>{{doc.documentTitle}}</td>
         <td>{{doc.fileName}}</td>
       </tr>
       <tr *ngIf="response?.documentLibraryTable.length === 0">
         <td></td>
-        <td>There are no documents to display</td>
+        <td>{{t('extras.no documents to display')}}</td>
       </tr>
     </table>
   </div>

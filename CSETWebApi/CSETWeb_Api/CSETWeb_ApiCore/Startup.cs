@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -64,18 +64,19 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.Linq;
-using CSETWebCore.Interfaces.Crr;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Rewrite;
 using CSETWebCore.Interfaces.Analytics;
 using CSETWebCore.Business.Analytics;
-using System.Text.Json;
 using CSETWebCore.Api.Error;
 using CSETWebCore.Business.Merit;
-using System.Collections.Generic;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Interfaces.Malcolm;
+using CSETWebCore.Business.Malcolm;
+using CSETWebCore.Interfaces.Cmu;
+using CSETWebCore.Business.Version;
+using CSETWebCore.Interfaces.Version;
 
 namespace CSETWeb_ApiCore
 {
@@ -123,7 +124,7 @@ namespace CSETWeb_ApiCore
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                    
+
                 }).AddXmlDataContractSerializerFormatters();
             services.AddHttpContextAccessor();
             services.AddDbContext<CSETContext>(
@@ -155,6 +156,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IStandardsBusiness, StandardsBusiness>();
             services.AddTransient<IStandardSpecficLevelRepository, StandardSpecficLevelRepository>();
             services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<ICmuScoringHelper, CmuScoringHelper>();
             services.AddTransient<IApiKeyManager, ApiKeyManager>();
             services.AddTransient<IImportManager, ImportManager>();
             services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
@@ -170,12 +172,12 @@ namespace CSETWeb_ApiCore
             services.AddTransient<IFlowDocManager, FlowDocManager>();
             services.AddTransient<IFileRepository, FileRepository>();
             services.AddTransient<IDataHandling, DataHandling>();
-            services.AddTransient<ICrrScoringHelper, CrrScoringHelper>();
             services.AddTransient<IGalleryState, GalleryState>();
             services.AddTransient<IGalleryEditor, GalleryEditor>();
             services.AddScoped<IIRPBusiness, IRPBusiness>();
             services.AddTransient<IJSONFileExport, JSONFileExport>();
-
+            services.AddTransient<IMalcolmBusiness, MalcolmBusiness>();
+            services.AddScoped<IVersionBusiness, VersionBusiness>();
 
             services.AddSwaggerGen(c =>
             {
@@ -230,19 +232,19 @@ namespace CSETWeb_ApiCore
             {
                 var options = new RewriteOptions()
                     .AddIISUrlRewrite(iisUrlRewriteStreamReader);
-                 app.UseRewriter(options);
+                app.UseRewriter(options);
             }
 
             // Serve up index.html from webapp when root url is hit
             app.UseRewriter(new RewriteOptions().AddRewrite("^$", "index.html", true));
- 
+
             //app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Diagram")),
                 RequestPath = "/Diagram"
-            });            
+            });
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(

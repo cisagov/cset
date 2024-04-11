@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import { CisService } from '../../../../services/cis.service';
 })
 export class RankedDeficiencyComponent implements OnInit {
 
-  hasBaseline:boolean = false;
+  hasBaseline: boolean = false;
 
   constructor(public cisSvc: CisService) { }
 

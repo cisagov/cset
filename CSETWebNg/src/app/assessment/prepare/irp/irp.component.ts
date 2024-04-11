@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ export class IRPComponent implements OnInit {
     }
 
     loadFrameworks() {
-        this.irpSvc.getIRPList(this.tSvc.getActiveLang() == "es").subscribe(
+        this.irpSvc.getIRPList().subscribe(
             (data: IRPResponse) => {
                 this.irps = data;
             },

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,14 +21,14 @@
   SOFTWARE. 
 -------------------------->
 
-<table class="table">
+<table class="table" *transloco="let t">
     <tr>
         <th></th>
-        <th class="text-right">Yes</th>
-        <th class="text-right">No</th>
-        <th class="text-right">Unanswered</th>
-        <th class="text-right">Total Practices</th>
-        <th class="text-right">Percent Complete</th>
+        <th class="text-right">{{t('answer-options.button-labels.yes')}}</th>
+        <th class="text-right">{{t('answer-options.button-labels.no')}}</th>
+        <th class="text-right">{{t('answer-options.button-labels.unanswered')}}</th>
+        <th class="text-right">{{t('reports.core.rra.report.total practices')}}</th>
+        <th class="text-right">{{t('reports.core.rra.report.percent complete')}}</th>
     </tr>
     <tr *ngFor="let g of goalTable">
         <td>{{g.name}}</td>

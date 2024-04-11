@@ -25,6 +25,15 @@ public partial class HYDRO_DATA
 
     public int? Impact_Limit { get; set; }
 
+    public string Action_Item_Description { get; set; }
+
+    [StringLength(1000)]
+    public string Action_Items { get; set; }
+
+    public int? Severity { get; set; }
+
+    public int? Sequence { get; set; }
+
     [ForeignKey("Mat_Option_Id")]
     [InverseProperty("HYDRO_DATA")]
     public virtual MATURITY_ANSWER_OPTIONS Mat_Option { get; set; }

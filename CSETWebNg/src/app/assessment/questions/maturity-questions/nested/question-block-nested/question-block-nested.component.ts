@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,8 @@ import { ConfigService } from '../../../../../services/config.service';
 import { QuestionExtrasDialogComponent } from '../../../question-extras-dialog/question-extras-dialog.component';
 import { AssessmentService } from '../../../../../services/assessment.service';
 import { LayoutService } from '../../../../../services/layout.service';
+import { ActivatedRoute } from '@angular/router';
+import { MalcolmService } from '../../../../../services/malcolm.service';
 
 
 @Component({
@@ -53,19 +55,26 @@ export class QuestionBlockNestedComponent implements OnInit {
   // temporary debug aid
   showIdTag = false;
 
+  sectionId = 0;
+  malcolmInfo: any;
+
   constructor(
     public assessSvc: AssessmentService,
     public questionsSvc: QuestionsService,
     public cisSvc: CisService,
+    public malcolmSvc: MalcolmService,
     private configSvc: ConfigService,
     public dialog: MatDialog,
-    public layoutSvc: LayoutService
+    public layoutSvc: LayoutService,
+    private route: ActivatedRoute
   ) { }
 
   /**
    *
    */
   ngOnInit(): void {
+    this.sectionId = +this.route.snapshot.params['sec'];
+
     if (!!this.grouping) {
       this.questionList = this.grouping.questions;
     }
@@ -85,7 +94,12 @@ export class QuestionBlockNestedComponent implements OnInit {
     this.questionsSvc.extrasChanged$.subscribe((qe) => {
       this.refreshExtras(qe);
     });
-
+    
+    if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
+      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+        this.malcolmInfo = r;
+      });
+    }
   }
 
   getMhdNum(val: string) {
@@ -115,10 +129,10 @@ export class QuestionBlockNestedComponent implements OnInit {
     if (q.comment !== null && q.comment.length > 0) {
       return 'inline';
     }
-    if (q.documentIds.length > 0) {
+    if (q.documentIds !== null && q.documentIds.length > 0) {
       return 'inline';
     }
-    if (q.hasObservations) {
+    if (q.hasObservation) {
       return 'inline';
     }
     if (q.feedback !== null && q.feedback.length > 0) {
@@ -202,7 +216,9 @@ export class QuestionBlockNestedComponent implements OnInit {
       componentGuid: '00000000-0000-0000-0000-000000000000'
     };
 
-    this.cisSvc.storeAnswer(answer).subscribe(x => {
+    this.cisSvc.storeAnswer(answer, this.sectionId).subscribe((x: any) => {
+      let score = x.groupingScore;
+      this.cisSvc.changeScore(score);
     });
   }
 

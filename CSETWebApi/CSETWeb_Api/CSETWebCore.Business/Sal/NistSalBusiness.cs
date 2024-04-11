@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -15,20 +15,26 @@ using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Sal;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CSETWebCore.Business.Sal
 {
     public class NistSalBusiness
     {
         private CSETContext _context;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly ITokenManager _tokenManager;
+        private readonly TranslationOverlay _overlay;
 
         /// <summary>
         /// 
         /// </summary>
-        public NistSalBusiness(CSETContext context, IAssessmentUtil assessmentUtil)
+        public NistSalBusiness(CSETContext context, IAssessmentUtil assessmentUtil, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
+            _tokenManager = tokenManager;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -71,29 +77,78 @@ namespace CSETWebCore.Business.Sal
                 new SqlParameter("@Id", assessmentId));
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
         public List<NistSalModel> GetInformationTypes(int assessmentId)
         {
             TinyMapper.Bind<NIST_SAL_INFO_TYPES, NistSalModel>();
             CreateInitialList(assessmentId);
-            List<NistSalModel> rlist = new List<NistSalModel>();
-            foreach (NIST_SAL_INFO_TYPES t in _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId))
+
+            List<NistSalModel> list = new List<NistSalModel>();
+
+            var q = from n1 in _context.NIST_SAL_INFO_TYPES
+                    join n2 in _context.NIST_SAL_INFO_TYPES_DEFAULTS on n1.Type_Value equals n2.Type_Value
+                    where n1.Assessment_Id == assessmentId
+                    select new { n1, n2 };
+
+            var qqq = q.ToList();
+
+
+            foreach (var t in qqq)
             {
-                rlist.Add(TinyMapper.Map<NistSalModel>(t));
+                var j = TinyMapper.Map<NistSalModel>(t.n1);
+                j.Type_Id = t.n2.Type_Id;
+
+                list.Add(j);
+            }         
+
+
+            // overlay question text for language
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetJObject("NIST_SAL_INFO_TYPES_DEFAULTS", "typeId", x.Type_Id.ToString(), lang);
+                    if (val != null)
+                    {
+                        x.Type_Value = val.Value<string>("typeValue");
+                        x.Confidentiality_Special_Factor = val.Value<string>("specialFactorC");
+                        x.Integrity_Special_Factor = val.Value<string>("specialFactorI");
+                        x.Availability_Special_Factor = val.Value<string>("specialFactorA");
+                    }
+                });
             }
-            return rlist;
+
+            return list;
         }
 
-        public Sals UpdateSalValue(NistSalModel updateValue, int assessmentid)
+
+        public Sals UpdateSalValue(NistSalModel updateValue, int assessmentId)
         {
             TinyMapper.Bind<NistSalModel, NIST_SAL_INFO_TYPES>(config =>
             {
                 config.Ignore(x => x.Assessment_Id);
+                config.Ignore(x => x.Type_Value);
+                config.Ignore(x => x.Confidentiality_Special_Factor);
+                config.Ignore(x => x.Integrity_Special_Factor);
+                config.Ignore(x => x.Availability_Special_Factor);
             });
 
-            NIST_SAL_INFO_TYPES update = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentid && x.Type_Value == updateValue.Type_Value).FirstOrDefault();
-            TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, update);
-            _context.SaveChanges();
-            return CalculateOveralls(assessmentid);
+            var dbInfoDefault = _context.NIST_SAL_INFO_TYPES_DEFAULTS.Where(x => x.Type_Id == updateValue.Type_Id).FirstOrDefault();
+            if (dbInfoDefault != null)
+            {
+                var dbInfoType = _context.NIST_SAL_INFO_TYPES.Where(x => x.Assessment_Id == assessmentId 
+                    && x.Type_Value == dbInfoDefault.Type_Value).FirstOrDefault();
+
+                TinyMapper.Map<NistSalModel, NIST_SAL_INFO_TYPES>(updateValue, dbInfoType);
+
+                _context.SaveChanges();
+            }
+
+            return CalculateOveralls(assessmentId);
         }
 
 
@@ -125,12 +180,30 @@ namespace CSETWebCore.Business.Sal
                 _context.SaveChanges();
             }
 
-            var rlist = from a in _context.NIST_SAL_QUESTIONS
+            var qList = from a in _context.NIST_SAL_QUESTIONS
                         join b in _context.NIST_SAL_QUESTION_ANSWERS on a.Question_Id equals b.Question_Id
                         where b.Assessment_Id == assessmentId
                         orderby a.Question_Number
                         select new NistQuestionsAnswers() { Assessment_Id = b.Assessment_Id, Question_Id = b.Question_Id, Question_Answer = b.Question_Answer, Question_Number = a.Question_Number, Question_Text = a.Question_Text };
-            return rlist.ToList();
+            
+            var list = qList.ToList();
+
+
+            // overlay question text for language
+            var lang = _tokenManager.GetCurrentLanguage();
+            if (lang != "en")
+            {
+                list.ForEach(x =>
+                {
+                    var val = _overlay.GetValue("NIST_SAL_QUESTIONS", x.Question_Id.ToString(), lang)?.Value;
+                    if (val != null)
+                    {
+                        x.Question_Text = val;
+                    }
+                });
+            }
+
+            return list;
         }
 
 
@@ -240,6 +313,7 @@ namespace CSETWebCore.Business.Sal
     public class NistSalModel
     {
         public int Assessment_Id { get; set; }
+        public int Type_Id { get; set; }
         public string Type_Value { get; set; }
         public bool Selected { get; set; }
         public string Confidentiality_Value { get; set; }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,86 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ConfigService } from './config.service';
-import { Observable } from 'rxjs';
+import { ReferenceDocLink } from '../models/question-extras.model';
 
 const headers = {
-    headers: new HttpHeaders()
-        .set('Content-Type', 'application/json'),
-    params: new HttpParams()
+  headers: new HttpHeaders().set('Content-Type', 'application/json'),
+  params: new HttpParams()
 };
 
 /**
- * A service that provides everything that ACET needs.
+ * A service that provides everything needed for getting documents.
  */
 @Injectable()
 export class ResourceLibraryService {
-    apiUrl: string;
-    constructor(
-        private http: HttpClient,
-        private configSvc: ConfigService
-    ) { 
-        if(this.configSvc.apiUrl){
-            this.apiUrl = this.configSvc.apiUrl;
-        }
-        else{
-            this.apiUrl = "http://localhost:46000/api/";
-        }
+  apiUrl: string;
+  constructor(private http: HttpClient, private configSvc: ConfigService) {
+    if (this.configSvc.apiUrl) {
+      this.apiUrl = this.configSvc.apiUrl;
+    } else {
+      this.apiUrl = 'http://localhost:46000/api/';
+    }
+  }
+
+  showResourceLibrary() {
+    return this.http.get(this.apiUrl + 'ShowResourceLibrary');
+  }
+
+
+  /**
+   * Gets the Url of the document based on the given name.
+   * @param documentName
+   * @returns Url of the document as a string
+   */
+  documentUrlByName(documentName: string) {
+    if (this.configSvc.isDocUrl) {
+      return this.configSvc.docUrl + documentName;
     }
 
-    showResourceLibrary() {
-        return this.http.get(this.apiUrl + 'ShowResourceLibrary');
+    if (this.configSvc.isOnlineUrlLive) {
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + documentName
     }
+
+    return '';
+  }
+
+  /**
+   * Formats a URL of a provided document.  Sends the document ID to the
+   * 'referencedocument' endpoint.  
+   * 
+   * Bookmarks to an actual sectionRef are appended to the URL.
+   * 
+   * The "isOnlineUrlLive" code will pull documents from the cloud-based
+   * Resource Library when it is available at a future date.
+   */
+  formatDocumentUrl(doc: ReferenceDocLink, bookmark?: any): string {
+    if (typeof bookmark === 'undefined') {
+      bookmark = '';
+    }
+
+    // First look to see if this is a URL
+    if (doc.url) {
+      if (bookmark) {
+        return doc.url + "#" + bookmark.sectionRef;
+      }
+      
+      return doc.url;
+    }
+
+    // April 2024 - moving to this method of querying documents; by ID rather than filename
+    if (doc.fileId) {
+      return this.configSvc.apiUrl + 'referencedocument/' + doc.fileId + '#' + bookmark.sectionRef;
+    }
+
+    // April 2024 - phasing out this older way of querying documents by filename
+    // if (this.configSvc.isDocUrl) {
+    //   return this.configSvc.docUrl + doc.fileName + '#' + bookmark;
+    // }
+
+    if (this.configSvc.isOnlineUrlLive) {
+      return this.configSvc.onlineUrl + "/" + this.configSvc.config.api.documentsIdentifier + "/" + doc.fileName + '#' + bookmark.sectionRef;
+    }
+
+    return '';
+  }
 }

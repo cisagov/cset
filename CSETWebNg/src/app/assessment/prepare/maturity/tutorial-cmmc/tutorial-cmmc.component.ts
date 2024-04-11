@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,9 @@
 //
 ////////////////////////////////
 import { ConfigService } from './../../../../services/config.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LayoutService } from '../../../../services/layout.service';
+import { ResourceLibraryService } from '../../../../services/resource-library.service';
 
 
 @Component({
@@ -31,19 +32,16 @@ import { LayoutService } from '../../../../services/layout.service';
   templateUrl: './tutorial-cmmc.component.html',
   styleUrls: ['./tutorial-cmmc.component.scss']
 })
-export class TutorialCmmcComponent implements OnInit {
-
+export class TutorialCmmcComponent {
 
   constructor(
     public configSvc: ConfigService,
-    public layoutSvc: LayoutService
-    ) { }
+    public layoutSvc: LayoutService,
+    private resourceLibSvc: ResourceLibraryService
+  ) { }
 
   documentURL(documentName: string) {
-    return this.configSvc.docUrl + documentName;
-  }
-
-  ngOnInit(): void {
+    return this.resourceLibSvc.documentUrlByName(documentName);
   }
 
 }

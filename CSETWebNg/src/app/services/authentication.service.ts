@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { timer, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -32,7 +32,6 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
-import { environment } from '../../environments/environment';
 import { TranslocoService } from '@ngneat/transloco';
 
 export interface LoginResponse {
@@ -59,7 +58,7 @@ const headers = {
 
 @Injectable()
 export class AuthenticationService {
-  
+
   isLocal: boolean;
   private initialized = false;
   private parser = new JwtParser();
@@ -102,8 +101,8 @@ export class AuthenticationService {
         this.configSvc.apiUrl + 'auth/login/standalone',
         JSON.stringify({
           TzOffset: new Date().getTimezoneOffset().toString(),
-          // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
-          Scope: (this.configSvc.installationMode || '') !== '' ? this.configSvc.installationMode : environment.appCode
+          // If InstallationMode isn't empty, use it. Otherwise, default to CSET.
+          Scope: this.configSvc.installationMode
         }),
         headers
       )
@@ -111,13 +110,13 @@ export class AuthenticationService {
       .then(
         (response: LoginResponse) => {
 
-          if (response?.email === null || response?.email === undefined) {
+          if (!response?.email) {
             this.isLocal = false;
           } else {
             this.isLocal = true;
             this.storeUserData(response);
           }
-                    
+
           // if there's a language for the user, set it
           if (!!response?.lang) {
             this.tSvc.setActiveLang(response.lang);
@@ -127,6 +126,13 @@ export class AuthenticationService {
           localStorage.setItem('cset.isLocal', this.isLocal + '');
 
           localStorage.setItem('cset.linkerDate', response?.linkerTime);
+
+          // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
+          // Otherwise, this will be configured after calling auth/login (non-standalone login)
+          if (response?.userId) {
+            return this.configureCisaAssessorWorkflow(response);
+          }
+
         },
         (error) => {
           console.warn('Error getting stand-alone status. Assuming non-stand-alone mode.');
@@ -176,6 +182,9 @@ export class AuthenticationService {
     let scope: string;
 
     switch (this.configSvc.installationMode || '') {
+      case 'CSET':
+        scope = 'CSET';
+        break;
       case 'ACET':
         scope = 'ACET';
         break;
@@ -192,7 +201,7 @@ export class AuthenticationService {
         scope = 'IOD';
         break;
       default:
-        scope = environment.appCode;
+        scope = 'CSET';
     }
 
     return this.http
@@ -213,7 +222,7 @@ export class AuthenticationService {
 
           this.tSvc.setActiveLang(user.lang);
 
-          this.isAuthenticated = true;          
+          this.isAuthenticated = true;
           return this.configureCisaAssessorWorkflow(user);
         })
       );
@@ -330,12 +339,12 @@ export class AuthenticationService {
 
   getSecurityQuestionsList(email: string) {
     return this.http.get(
-      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + environment.appCode
+      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode
     );
   }
 
   getSecurityQuestionsPotentialList() {
-    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions');
+    return this.http.get(this.configSvc.apiUrl + 'ResetPassword/PotentialQuestions?lang=' + this.tSvc.getActiveLang());
   }
 
   userToken() {
@@ -361,9 +370,9 @@ export class AuthenticationService {
   lastName() {
     return localStorage.getItem('lastName');
   }
-  isFirstLogin():boolean{
-    var tstring = localStorage.getItem('isFirstLogin'); 
-    if(tstring){
+  isFirstLogin(): boolean {
+    var tstring = localStorage.getItem('isFirstLogin');
+    if (tstring) {
       return Boolean(JSON.parse(tstring));
     }
     return false;

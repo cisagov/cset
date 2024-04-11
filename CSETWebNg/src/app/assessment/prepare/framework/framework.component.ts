@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
 import { FrameworkService } from '../../../services/framework.service';
 import { Frameworks, SelectedTier } from '../../../models/frameworks.model';
@@ -32,7 +31,7 @@ import { NavigationService } from '../../../services/navigation/navigation.servi
   selector: 'app-framework',
   templateUrl: './framework.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class FrameworkComponent implements OnInit {
   frameworks: Frameworks;
@@ -43,7 +42,7 @@ export class FrameworkComponent implements OnInit {
     public navSvc: NavigationService,
     private assessSvc: AssessmentService,
     private frameworkSvc: FrameworkService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.loadFrameworks();

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewInit  } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { ChartService } from '../../../../services/chart.service';
-import  Chart  from 'chart.js/auto';
-import { CisRankedDeficiencyComponent } from '../../../../reports/cis/cis-ranked-deficiency/cis-ranked-deficiency.component';
+import Chart from 'chart.js/auto';
 import { CisService } from '../../../../services/cis.service';
 
 @Component({
@@ -37,23 +36,23 @@ export class RankedDeficienctyChartComponent implements AfterViewInit {
 
   rankedChart: Chart;
   loading = true;
-  hasBaseline:boolean = false;
+  hasBaseline: boolean = false;
 
   constructor(public chartSvc: ChartService, public cisSvc: CisService) { }
 
- ngAfterViewInit(): void {
-   this.setUpChart();
- }
+  ngAfterViewInit(): void {
+    this.setUpChart();
+  }
 
-  setUpChart(){
-    if (this.cisSvc.hasBaseline()){
+  setUpChart() {
+    if (this.cisSvc.hasBaseline()) {
       this.hasBaseline = true;
-      this.cisSvc.getDeficiencyData().subscribe((data:any)=>{
+      this.cisSvc.getDeficiencyData().subscribe((data: any) => {
 
-        data.option = {options: false};
-        var opts = {scales:{x:{position:'top', min:-100, max:100}, x1:{position:'bottom',min:-100, max:100}}};
-        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency',data, false,false, opts, false);
-        
+        data.option = { options: false };
+        var opts = { scales: { x: { position: 'top', min: -100, max: 100 }, x1: { position: 'bottom', min: -100, max: 100 } } };
+        this.rankedChart = this.chartSvc.buildHorizBarChart('ranked-deficiency', data, false, false, opts, false);
+
         this.loading = false;
       });
     } else {

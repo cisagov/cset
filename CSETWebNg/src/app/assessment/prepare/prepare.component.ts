@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,11 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { StandardService } from "./../../services/standard.service";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AssessmentService } from "../../services/assessment.service";
-import { NavigationService } from "../../services/navigation/navigation.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
+import { NavigationService } from "../../services/navigation/navigation.service";
 
 @Component({
   selector: "app-prepare",
@@ -60,12 +59,12 @@ export class PrepareComponent implements OnInit {
    */
   ngOnInit() {
     this.navSvc.disableNext
-    .asObservable()
-    .subscribe(
-      (tgt: boolean) => {
-        this.navSvc.buildTree();
-      }
-    );
+      .asObservable()
+      .subscribe(
+        (tgt: boolean) => {
+          this.navSvc.buildTree();
+        }
+      );
     if (this.navTreeSvc.tocControl.dataNodes == null) {
       setTimeout(() => {
         this.navSvc.buildTree();
@@ -73,10 +72,10 @@ export class PrepareComponent implements OnInit {
     }
   }
 
-   /**
-   * Scrolls newly-displayed prepare pages at the top.
-   */
-     onNavigate(event) {
-      this.topScroll?.nativeElement.scrollIntoView();
-    }
+  /**
+  * Scrolls newly-displayed prepare pages at the top.
+  */
+  onNavigate(event) {
+    this.topScroll?.nativeElement.scrollIntoView();
+  }
 }

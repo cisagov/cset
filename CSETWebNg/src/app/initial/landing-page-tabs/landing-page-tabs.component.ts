@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { filter } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ChangePasswordComponent } from "../../dialogs/change-password/change-password.component";
 import { AlertComponent } from '../../dialogs/alert/alert.component';
-import { AssessmentService } from '../../services/assessment.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -40,16 +40,17 @@ import { AssessmentService } from '../../services/assessment.service';
 export class LandingPageTabsComponent implements OnInit, AfterViewInit {
 
   currentTab: string;
-  isSearch: boolean= false;
-  searchString:string="";
+  isSearch: boolean = false;
+  searchString: string = "";
   @ViewChild('tabs') tabsElementRef: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private tSvc: TranslocoService,
     public authSvc: AuthenticationService,
     public dialog: MatDialog
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.setTab('myAssessments');
@@ -65,7 +66,7 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    if (!!this.tabsElementRef) { 
+    if (!!this.tabsElementRef) {
       const tabsEl = this.tabsElementRef.nativeElement;
       tabsEl.classList.add('sticky-tabs');
       if (this.authSvc.isLocal) {
@@ -84,12 +85,12 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
     return this.currentTab === tab;
   }
 
-  changeToSearch(val){
+  changeToSearch(val) {
     this.isSearch = true;
     this.searchString = val;
   }
 
-  cancelSearch(){
+  cancelSearch() {
     this.isSearch = false;
     this.searchString = '';
   }
@@ -134,8 +135,8 @@ export class LandingPageTabsComponent implements OnInit, AfterViewInit {
         if (passwordChangeSuccess) {
           this.dialog.open(AlertComponent, {
             data: {
-              messageText: 'Your password has been changed successfully.',
-              title: 'Password Changed',
+              messageText: this.tSvc.translate('change password.changed message'),
+              title: this.tSvc.translate('change password.changed dialog title'),
               iconClass: 'cset-icons-check-circle'
             }
           });

@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -34,7 +34,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import.CustomRules
             string newValue;
             if (String.IsNullOrWhiteSpace(value))
                 return value;
-            if(oldToNewValues.TryGetValue(value, out newValue))
+            if (oldToNewValues.TryGetValue(value, out newValue))
             {
                 return newValue;
             }

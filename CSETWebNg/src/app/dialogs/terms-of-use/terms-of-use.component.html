@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,29 +20,25 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="terms-dialog d-flex flex-column justify-content-center flex-11a">
+<div class="terms-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a w-100">
     <span class="cset-icons-handshake mr-3 fs-base-6"></span>
-    <span *ngIf="configSvc.installationMode !=='ACET'">CSET Terms of Use</span>
-    <span *ngIf="configSvc.installationMode === 'ACET'">ACET Terms of Use</span>
+    <span *ngIf="configSvc.installationMode !=='ACET'">CSET {{t('menu.help.legal.terms of use.terms of use')}}</span>
+    <span *ngIf="configSvc.installationMode === 'ACET'">ACET {{t('menu.help.legal.terms of use.terms of use')}}</span>
   </div>
 
   <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-11a w-100">
     <div class="pr-3 d-flex flex-column align-items-start flex-11a">
       <p class="w-100">
-        This software was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the
-        U.S. Government
-        nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal
-        liability
-        or responsibility for any third party's use, or the results of such use, or any information, apparatus,
-        product, or process associated with
-        this software, or represents that its use by such third party would not infringe privately-owned rights.
+        {{t('menu.help.legal.terms of use.description')}}
       </p>
-      <button class="btn btn-link p-0" (click)="openSourceLicenses()">Open-Source Licenses</button>
+      <button class="btn btn-link p-0" (click)="openSourceLicenses()">
+        {{t('menu.help.legal.terms of use.open source licenses')}}
+      </button>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex flex-00a">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

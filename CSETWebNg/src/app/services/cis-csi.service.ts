@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -51,42 +51,42 @@ export class CsiService {
     return this.http.get(this.apiUrl + 'serviceDemographics');
   }
 
-    /**
-   * POSTs the CIS organization demographic screen data to the API.
-   * @param csiServiceDemographic
-   */
+  /**
+ * POSTs the CIS organization demographic screen data to the API.
+ * @param csiServiceDemographic
+ */
   updateCsiServiceDemographic(csiServiceDemographic: CsiServiceDemographic) {
     this.http.post(this.apiUrl + 'serviceDemographics', JSON.stringify(csiServiceDemographic), headers).subscribe();
   }
 
-   /**
-  * GETs the screen data for CIS assessment organization demographic
-  */
+  /**
+ * GETs the screen data for CIS assessment organization demographic
+ */
   getCsiOrgDemographic() {
     return this.http.get(this.apiUrl + 'organizationDemographics');
   }
 
-   /**
-   * GETs the screen data for CIS assessment service composition
-   */
+  /**
+  * GETs the screen data for CIS assessment service composition
+  */
   getCsiServiceComposition() {
     return this.http.get(this.apiUrl + 'serviceComposition');
   }
 
-     /**
-    * POSTs the CIS organization demographic screen data to the API.
-    * @param orgDemographic
-    */
+  /**
+ * POSTs the CIS organization demographic screen data to the API.
+ * @param orgDemographic
+ */
   updateCsiOrgDemographic(orgDemographic: CsiOrganizationDemographic) {
     this.http.post(this.apiUrl + 'organizationDemographics', JSON.stringify(orgDemographic), headers).subscribe();
   }
 
-   /**
-  * POSTs the CIS service composition screen data to the API.
-  * @param orgDemographic
-  */
+  /**
+ * POSTs the CIS service composition screen data to the API.
+ * @param orgDemographic
+ */
   updateCsiServiceComposition(serviceComposition: CsiServiceComposition) {
-     this.http.post(this.apiUrl + 'serviceComposition', JSON.stringify(serviceComposition), headers).subscribe();
+    this.http.post(this.apiUrl + 'serviceComposition', JSON.stringify(serviceComposition), headers).subscribe();
   }
 
   /**

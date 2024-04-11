@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
         private List<NetworkAnalysisNode> ListAnalysisNodes = new List<NetworkAnalysisNode>();
         private Dictionary<string, NetworkLayer> layers = new Dictionary<string, NetworkLayer>();
         //drawio id to zone lookup
-        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();               
+        private Dictionary<string, NetworkZone> zones = new Dictionary<string, NetworkZone>();
         private List<IDiagramAnalysisNodeMessage> NetworkWarnings = new List<IDiagramAnalysisNodeMessage>();
 
 
@@ -77,7 +77,7 @@ namespace CSETWebCore.Business.Diagram.analysis.rules
                             if (!allowToConnect.Contains(child.Component_Symbol_Id))
                             {
                                 String text = String.Format(rule1, node.ComponentName, child.ComponentName).Replace("\n", " ");
-                                SetLineMessage(node, child, text);
+                                SetLineMessage(node, child, text, 1); // 1 because Rule1 was violated
                             }
                         }
                     }

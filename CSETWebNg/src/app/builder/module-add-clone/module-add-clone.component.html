@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -27,25 +27,25 @@
   </div>
 
 
-    <mat-dialog-content>
-      <div class="my-3">
-        Select one or more modules to clone from.  <strong>NOTE: Your module will be 
+  <mat-dialog-content>
+    <div class="my-3">
+      Select one or more modules to clone from. <strong>NOTE: Your module will be
         replaced by the requirements and questions
         from modules selected below.</strong>
-      </div>
+    </div>
 
-      <div style="height: 30vh">
-        <mat-selection-list #sets dense [(ngModel)]="selectedSets">
-          <mat-list-option *ngFor="let set of setNames" [value]="set">
-            {{set.shortName}}
-          </mat-list-option>
-        </mat-selection-list>
-      </div>
+    <div style="height: 30vh">
+      <mat-selection-list #sets dense [(ngModel)]="selectedSets">
+        <mat-list-option *ngFor="let set of setNames" [value]="set">
+          {{set.shortName}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
 
-      <div class="alert alert-warning" role="alert" [hidden]="!warning">
-        There was an error saving the changes
-      </div>
-    </mat-dialog-content>
+    <div class="alert alert-warning" role="alert" [hidden]="!warning">
+      There was an error saving the changes
+    </div>
+  </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
     <button id="addsets" class="btn btn-primary" (click)="addSets()">Add Questions and Requirements</button>

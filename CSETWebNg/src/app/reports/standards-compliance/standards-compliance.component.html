@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,17 +20,19 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h1>
-    Standards Compliance
-</h1>
-<div *ngIf="loading">
-    <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+<ng-container *transloco="let t">
+    <h1>
+        {{t('reports.core.site summary.standards compliance')}}
+    </h1>
+    <div *ngIf="loading">
+        <div class="spinner-container" style="margin: 2em auto">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
     </div>
-</div>
-<ng-container *ngIf="!loading">
-    <div *ngFor="let graph of complianceGraphs; index as i">
-        <h2 style="text-align: center">{{graph.label}}</h2>
-        <canvas id="complianceGraph{{i}}"></canvas>
-    </div>
+    <ng-container *ngIf="!loading">
+        <div *ngFor="let graph of complianceGraphs; index as i">
+            <h2 style="text-align: center">{{graph.label}}</h2>
+            <canvas id="complianceGraph{{i}}"></canvas>
+        </div>
+    </ng-container>
 </ng-container>

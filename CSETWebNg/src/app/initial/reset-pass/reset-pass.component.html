@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="white-panel" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
+<div id="white-panel" *transloco="let t" class="p-0 bgc-gray-50 d-flex flex-column justify-content-start flex-11a">
     <div class="p-0 d-flex flex-column flex-00a mx-auto col-lg-8 col-md-8 col-sm-10">
 
         <!-- CSET Logo and Name -->
@@ -34,22 +34,22 @@
         <div class="mb-4 mr-4 ml-4 p-3 bgc-black c-white"
             [ngClass]="{'login-margin' : (configSvc.installationMode === 'ACET') }">
             <div *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === ''">
-                Enter the email address associated with your CSET account.
+                {{t('change password.enter email cset')}}
             </div>
             <div *ngIf="configSvc.installationMode === 'RRA'">
-                Enter the email address associated with your RRA account.
+                {{t('change password.enter email rra')}}
             </div>
             <div *ngIf="configSvc.installationMode === 'ACET'">
-                Enter the email address associated with your ACET account.
+                {{t('change password.enter email acet')}}
             </div>
             <div *ngIf="configSvc.installationMode === 'TSA'">
-                Enter the email address associated with your CSET TSA account.
+                {{t('change password.enter email tsa')}}
             </div>
             <div *ngIf="configSvc.installationMode === 'RENEW'">
-                Enter the email address associated with your CSET Renewables account.
+                {{t('change password.enter email renew')}}
             </div>
             <div *ngIf="configSvc.installationMode === 'CF'">
-              Enter the email address associated with your Cyber Florida CSET account.
+                {{t('change password.enter email cf')}}
             </div>
         </div>
 
@@ -57,14 +57,16 @@
             <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate
                 class="d-flex flex-column justify-content-between flex-00a">
                 <div class="mb-3" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-                    <input type="email" tabindex="0" class="form-control" name="email" placeholder="Email"
-                        [(ngModel)]="model.email" #email="ngModel" required />
-                    <div *ngIf="f.submitted && !email.valid" class="mx-4 alert alert-danger">eMail is required</div>
+                    <input type="email" tabindex="0" class="form-control" name="email"
+                        placeholder="{{'login.placeholder email' | transloco}}" [(ngModel)]="model.email"
+                        #email="ngModel" required />
+                    <div *ngIf="f.submitted && !email.valid" class="mx-4 alert alert-danger">{{t('login.valid email
+                        required')}}</div>
                 </div>
                 <div class="d-flex justify-content-between flex-11a">
                     <button [disabled]="loading || !enableNext" tabindex="0" class="btn btn-primary"
-                        (click)="loadQuestions()">Next</button>
-                    <a [routerLink]="['/home','login']">Login</a>
+                        (click)="loadQuestions()">{{t('buttons.next')}}</button>
+                    <a [routerLink]="['/home','login']">{{t('buttons.login')}}</a>
                 </div>
 
                 <div class="mb-3">
@@ -82,8 +84,7 @@
             <form name="form" (ngSubmit)="f.form.valid && resetPassword()" #f="ngForm" novalidate>
                 <hr />
                 <div class="mb-3">
-                    Please answer the security question and click Reset Password to receive an email with a
-                    temporary password.
+                    {{t('change password.answer security question')}}
                 </div>
                 <table class="paddingBetweenCols">
                     <tr *ngIf="securityQuestion !== null">
@@ -91,12 +92,14 @@
                         <td>
                             <input required tabindex="0" type="text" class="form-control" id="questionAnswer"
                                 name="questionAnswer" #answer="ngModel" [(ngModel)]="securityAnswer">
-                            <div *ngIf="f.submitted && !answer.valid" class="alert alert-danger mt-1">answer is required
+                            <div *ngIf="f.submitted && !answer.valid" class="alert alert-danger mt-1">{{t('change
+                                password.answer required')}}
                             </div>
                         </td>
                     </tr>
                 </table>
-                <button type="submit" tabindex="0" [disabled]="loading || emailSent" class="btn btn-primary">Reset Password</button>
+                <button type="submit" tabindex="0" [disabled]="loading || emailSent" class="btn btn-primary">
+                    {{t('buttons.reset password')}}</button>
             </form>
         </div>
 
@@ -104,12 +107,14 @@
             <div class="mb-3">
                 <p *ngIf="warning.length > 0" class="alert alert-danger">{{warning}}</p>
                 <p class="alert alert-info">
-                    An email was sent to {{model.email}} containing your temporary password.
+                    {{t('change password.email sent', {email: model.email})}}
                 </p>
             </div>
-            <p>Please <a [routerLink]="['/home','login']">login</a> using your temporary password to complete the
-                registration
-                process.</p>
+            <p>
+                {{t('change password.login with temp 1')}} 
+                <a [routerLink]="['/home','login']">{{t('change password.login with temp link')}}</a> 
+                {{t('change password.login with temp 2')}}
+            </p>
         </div>
         <div class="mx-4 alert alert-danger" *ngIf="errorMsg">{{warning}}</div>
 
@@ -120,18 +125,12 @@
                 <app-acet-origin *ngIf="configSvc.installationMode === 'ACET'"></app-acet-origin>
 
                 <div *ngIf="configSvc.installationMode === 'RRA'">
-                    Ransomware is an ever-evolving form of malware designed to encrypt files on a device, rendering any
-                    files and the systems that rely on them unusable. Malicious actors then demand ransom in exchange
-                    for
-                    decryption. These resources are designed to help individuals and organizations prevent attacks that
-                    can
-                    severely impact business processes and leave organizations without the data they need to operate and
-                    deliver mission-critical services.
+                    {{t('change password.ransomware explanation')}}
                 </div>
             </div>
             <img *ngIf="(configSvc.installationMode || '') === ''" src="./assets/images/CISA_Logo_183px.png" alt="cisa">
-            <img *ngIf="(configSvc.installationMode || '') === 'TSA'" src="./assets/images/TSA/tsa_insignia_rgbtransparent.png"
-                alt="TSA seal" style="width: 175px">
+            <img *ngIf="(configSvc.installationMode || '') === 'TSA'"
+                src="./assets/images/TSA/tsa_insignia_rgbtransparent.png" alt="TSA seal" style="width: 175px">
         </div>
 
     </div>

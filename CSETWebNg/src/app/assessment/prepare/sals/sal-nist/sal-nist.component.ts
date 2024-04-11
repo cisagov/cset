@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,13 @@ import { SalService } from '../../../../services/sal.service';
 import { ConfigService } from '../../../../services/config.service';
 import { Sal } from '../../../../models/sal.model';
 import { ConfirmComponent } from '../../../../dialogs/confirm/confirm.component';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-sal-nist',
   templateUrl: './sal-nist.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class SalNistComponent implements OnInit {
 
@@ -46,7 +47,9 @@ export class SalNistComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     public salsSvc: SalService,
     public configSvc: ConfigService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    public tSvc: TranslocoService
+  ) { }
 
   ngOnInit() {
     // retrieve the existing sal_selection for this assessment
@@ -58,6 +61,7 @@ export class SalNistComponent implements OnInit {
         console.log('Error Getting all standards: ' + (<Error>error).name + (<Error>error).message);
         console.log('Error Getting all standards: ' + (<Error>error).stack);
       });
+
     this.salsSvc.getInformationTypes().subscribe(
       (data: NistModel) => {
         this.topModel = data;
@@ -69,7 +73,7 @@ export class SalNistComponent implements OnInit {
   }
 
   saveLevel(level: string, ltype: string) {
-    this.salsSvc.selectedSAL.last_Sal_Determination_Type = 'NIST';
+    this.salsSvc.selectedSAL.methodology = 'NIST';
     switch (ltype) {
       case 'C': {
         this.salsSvc.selectedSAL.selectedSALOverride = false;
@@ -108,10 +112,10 @@ export class SalNistComponent implements OnInit {
 
     // confirm that they want to overwrite the special factor text
     this.dialogRef = this.dialog.open(ConfirmComponent, { disableClose: false });
-    this.dialogRef.componentInstance.confirmMessage =
-      'This will overwrite the current '
-      + cToFullType[ciaType]
-      + ' special factor text.  Do you want to continue?';
+
+    let msg = this.tSvc.translate('titles.sal.nist.confirmation');
+    msg = msg.replace('{cia}', this.tSvc.translate('titles.sal.level.' + cToFullType[ciaType].toLowerCase()));
+    this.dialogRef.componentInstance.confirmMessage = msg
 
     this.dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -157,10 +161,12 @@ export class SalNistComponent implements OnInit {
       salName: this.salsSvc.selectedSAL.iLevel,
       salValue: 0
     };
+
     this.topModel.specialFactors.availability_Value = {
       salName: this.salsSvc.selectedSAL.aLevel,
       salValue: 0
     };
+
     this.salsSvc.updateNistSpecialFactors(this.topModel.specialFactors)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
@@ -195,7 +201,7 @@ export class SalNistComponent implements OnInit {
       }
     }
     selectedSal.selected = e.target.checked;
-    this.salsSvc.updateSal(selectedSal)
+    this.salsSvc.updateNistSalSelection(selectedSal)
       .subscribe(response => {
         this.salsSvc.selectedSAL = response;
       });

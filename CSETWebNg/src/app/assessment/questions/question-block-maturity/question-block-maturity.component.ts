@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
@@ -56,9 +56,6 @@ export class QuestionBlockMaturityComponent implements OnInit {
 
   percentAnswered = 0;
   answerOptions = [];
-
-  // altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
-  // altTextPlaceholder_ACET = "Description, explanation and/or justification for compensating control";
 
   // tokenized placeholder for transloco, made this variable a switch between the different placeholders
   altTextPlaceholder = "alt cset";

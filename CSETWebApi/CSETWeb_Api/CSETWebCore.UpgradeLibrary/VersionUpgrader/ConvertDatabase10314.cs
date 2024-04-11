@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 using System.IO;
 namespace UpgradeLibrary.Upgrade
 {
-    internal class ConvertDatabase10314: ConvertSqlDatabase
+    internal class ConvertDatabase10314 : ConvertSqlDatabase
     {
         public ConvertDatabase10314(string path) : base(path)
         {

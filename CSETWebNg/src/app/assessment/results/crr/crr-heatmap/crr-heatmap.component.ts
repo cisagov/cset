@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { identity } from 'rxjs';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MaturityService } from '../../../../services/maturity.service';
 
 @Component({
@@ -30,20 +29,16 @@ import { MaturityService } from '../../../../services/maturity.service';
   templateUrl: './crr-heatmap.component.html'
 })
 export class CrrHeatmapComponent implements OnChanges {
-
   @Input()
-  domainAbbrev: string;
+    domainAbbrev: string;
 
   public milHeatmaps: MilSvg[] = [];
-
 
   /**
    *
    * @param maturitySvc
    */
-  constructor(
-    public maturitySvc: MaturityService
-  ) {  }
+  constructor(public maturitySvc: MaturityService) {}
 
   /**
    *
@@ -53,15 +48,14 @@ export class CrrHeatmapComponent implements OnChanges {
       return;
     }
 
-    for (var i = 1; i <= 5; i++) {
-      this.maturitySvc.getMilHeatmapWidget(this.domainAbbrev, "MIL-" + i).subscribe((svg: string) => {
-
+    for (let i = 1; i <= 5; i++) {
+      this.maturitySvc.getMilHeatmapWidget(this.domainAbbrev, 'MIL-' + i).subscribe((svg: string) => {
         // parse the SVG and read the MIL value from the root element
-        var p = new DOMParser();
-        var x = p.parseFromString(svg, "text/xml");
-        var id = x.documentElement.getAttribute("data-mil");
+        const p = new DOMParser();
+        const x = p.parseFromString(svg, 'text/xml');
+        const id = x.documentElement.getAttribute('data-mil');
 
-        this.milHeatmaps.push({ milId: id, 'svg': svg });
+        this.milHeatmaps.push({ milId: id, svg: svg });
       });
     }
   }
@@ -73,12 +67,12 @@ export class CrrHeatmapComponent implements OnChanges {
    */
   show(i: string): string {
     if (!this.milHeatmaps) {
-      return "";
+      return '';
     }
 
-    const h = this.milHeatmaps.find(h => h.milId == i);
+    const h = this.milHeatmaps.find((h) => h.milId == i);
     if (!h) {
-      return "";
+      return '';
     }
 
     return h.svg;

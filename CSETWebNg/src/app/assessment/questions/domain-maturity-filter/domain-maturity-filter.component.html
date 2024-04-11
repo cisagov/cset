@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,19 +19,17 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div *transloco="let t; read:'level'" class="btn-group btn-group-toggle my-1">
 
   <label *ngFor="let l of maturityLevels" class="btn btn-app-mode" tabindex="0"
-    (keydown)="checkFilterKeydown(l.level, $event)"
-    [class.font-weight-bold]="l.applicable"
-    [class.font-italic]="l.applicable"
-    [class.active]="isFilterActive(l)"
-    [class.default-mat-filter]="acetFilteringSvc.isRequiredLevel(l.level) || acetFilteringSvc.isRecommendedLevel(l.level)" ngbButtonLabel>
-    <input class="form-check-input" type="checkbox" ngbButton
-      [ngModel]="getNgModel(l)"
+    (keydown)="checkFilterKeydown(l.level, $event)" [class.font-weight-bold]="l.applicable"
+    [class.font-italic]="l.applicable" [class.active]="isFilterActive(l)"
+    [class.default-mat-filter]="acetFilteringSvc.isRequiredLevel(l.level) || acetFilteringSvc.isRecommendedLevel(l.level)"
+    ngbButtonLabel>
+    <input class="form-check-input" type="checkbox" ngbButton [ngModel]="getNgModel(l)"
       (ngModelChange)="filterChanged(l.level, $event)">
-      {{ t(l.label.toLowerCase()) }}
-    </label>    
+    {{ t(l.label.toLowerCase()) }}
+  </label>
 
 </div>

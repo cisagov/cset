@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -31,36 +31,40 @@
     <div class="d-flex">
         <div class="d-inline-flex" style="width: 40%">
             <p>
-                Feasibility is defined as how much resources will it take 
-                to implement a particular control. It is broken down into 
-                three different tiers: Easy, Medium, and Hard. Easy means 
-                that the control will require no existing process, and cost 
-                little to no money to implement. Medium means that a control 
-                will require multiple inputs from multiple personnel and may 
-                cost a significant amount. High means that a control will require 
-                a significant lift requiring multiple inputs from personnel 
-                and require a significant cost. {{facilityName}} can see how their 
-                facility breaks down in terms of how difficult controls will be to implement. 
+                Feasibility is defined as how much resources will it take
+                to implement a particular control. It is broken down into
+                three different tiers: Easy, Medium, and Hard. Easy means
+                that the control will require no existing process, and cost
+                little to no money to implement. Medium means that a control
+                will require multiple inputs from multiple personnel and may
+                cost a significant amount. High means that a control will require
+                a significant lift requiring multiple inputs from personnel
+                and require a significant cost. {{facilityName}} can see how their
+                facility breaks down in terms of how difficult controls will be to implement.
             </p>
         </div>
         <div class="d-inline-flex" style="width: 60%; align-items: center;">
             <div style="width: fit-content">
                 <div class="d-inline-flex" style="padding-left: 8px;">
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(180, 237, 210);"></span>
                         <span class="color-word">Easy</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(127, 182, 133);"></span>
                         <span class="color-word">Medium</span>
                     </div>
-                    <div class="d-inline-flex" style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
+                    <div class="d-inline-flex"
+                        style="flex-wrap: nowrap; width: auto; margin-right: 16px; margin-bottom: 8px;">
                         <span class="color-block" style="background: rgb(66, 106, 90);"></span>
                         <span class="color-word">Hard</span>
                     </div>
                 </div>
-                <app-hydro-bar-chart [barData]="feasibilityData" [subCatNames]="domainGroupNames" [colorScheme]="feasibilityColors" [view]="feasView"></app-hydro-bar-chart>
-            </div> 
+                <app-hydro-bar-chart [barData]="feasibilityData" [subCatNames]="domainGroupNames"
+                    [colorScheme]="feasibilityColors" [view]="feasView"></app-hydro-bar-chart>
+            </div>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,7 @@ import { ConfigService } from './config.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AssessmentService } from './assessment.service';
 import { MaturityModel } from "../models/assessment-info.model";
-import { Answer, MaturityDomainRemarks, QuestionGrouping } from '../models/questions.model';
-import { BehaviorSubject } from 'rxjs';
+import { MaturityDomainRemarks } from '../models/questions.model';
 const headers = {
   headers: new HttpHeaders().set("Content-Type", "application/json"),
   params: new HttpParams()
@@ -107,7 +106,7 @@ export class MaturityService {
     };
     return MaturityService.currentMaturityModelName == "CMMC";
   }
-  
+
   /**
    * Posts the current selections to the server.
    */
@@ -216,10 +215,10 @@ export class MaturityService {
   /**
    * Asks the API for all maturity questions/answers for the current assessment.
    */
-  getQuestionsList(installationMode: string, fillEmpty: boolean, groupingId?: number, spanishFlag?: boolean) {
+  getQuestionsList(installationMode: string, fillEmpty: boolean, groupingId?: number) {
     return this.http.get(
       this.configSvc.apiUrl
-      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty + '&groupingId=' + groupingId + '&spanishFlag=' + spanishFlag,
+      + "MaturityQuestions?installationMode=" + installationMode + '&fill=' + fillEmpty + '&groupingId=' + groupingId,
       headers
     );
   }
@@ -228,7 +227,7 @@ export class MaturityService {
    * Asks the API for one grouping's worth of questions/answers.
    */
   getGroupingQuestions(groupingId: Number) {
-    return this.http.get(this.configSvc.apiUrl 
+    return this.http.get(this.configSvc.apiUrl
       + 'maturity/questions/grouping?groupingId=' + groupingId);
   }
 
@@ -258,11 +257,11 @@ export class MaturityService {
 
   /**
    * Indicates whether to show the scoring bar chart
-   * on MaturityQuestionsNested.  
+   * on MaturityQuestionsNested.
    * Someday this could be set in the MATURITY_MODELS table as a profile item
    * for each model that uses the nested questions structure.
    */
-   showChartOnNestedQPage(): boolean {
+  showChartOnNestedQPage(): boolean {
     if (this.assessSvc.assessment.maturityModel.modelName == "CIS") {
       return true;
     }
@@ -277,11 +276,11 @@ export class MaturityService {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyList?maturity=' + maturityModel);
   }
 
-  getMaturityDeficiencySd(){
+  getMaturityDeficiencySd() {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityDeficiencyListSd');
   }
 
-  getMaturityOpenEndedQuestions(maturityModel){
+  getMaturityOpenEndedQuestions(maturityModel) {
     return this.http.get(this.configSvc.apiUrl + 'getMaturityOpenEndedQList?maturity=' + maturityModel);
   }
   /**
@@ -337,23 +336,27 @@ export class MaturityService {
    * Scaling the SVG to 1.5 gives a nice readable chart.
    */
   getMilHeatmapWidget(domain: string, mil: string) {
-    return this.http.get(this.configSvc.apiUrl + 'reportscrr/widget/milheatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
+    return this.http.get(this.configSvc.apiUrl + 'cmu/widget/heatmap?domain=' + domain + '&mil=' + mil + '&scale=1.5',
       { responseType: 'text' }
     );
   }
 
   /**
-   * 
+   *
    */
   getGroupingTitles(modelId: number) {
     return this.http.get(this.configSvc.apiUrl + 'maturity/groupingtitles?modelId=' + modelId);
   }
 
-  getMvraScoring(){
-    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring'); 
+  getMvraScoring() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/mvra/scoring');
   }
 
   getHydroResults() {
     return this.http.get(this.configSvc.apiUrl + 'maturity/hydro/getResultsData');
+  }
+
+  getMyCieAssessments() {
+    return this.http.get(this.configSvc.apiUrl + 'maturity/cie/myCieAssessments');
   }
 }

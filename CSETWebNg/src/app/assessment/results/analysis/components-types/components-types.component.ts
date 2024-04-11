@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,10 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
-import { AssessmentService } from '../../../../services/assessment.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import  Chart  from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { QuestionsService } from '../../../../services/questions.service';
 
 @Component({
@@ -38,6 +36,7 @@ export class ComponentsTypesComponent implements OnInit {
   chart: Chart;
   dataRows: { title: string; yes: number; no: number; na: number; alt: number; unanswered: number; total: number; }[];
   initialized = false;
+  dataSet: any; 
 
   constructor(
     private analysisSvc: AnalysisService,
@@ -46,13 +45,14 @@ export class ComponentsTypesComponent implements OnInit {
     public navSvc: NavigationService,
     public configSvc: ConfigService,
     //private router: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.analysisSvc.getComponentTypes().subscribe(x => {
       this.analysisSvc.buildComponentTypes('canvasComponentTypes', x);
       this.dataRows = x.dataRows;
       this.initialized = true;
+      this.dataSet = x.dataRows.length
     });
 
 

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -21,17 +21,19 @@ namespace CSETWebCore.Model.Analysis
         public string backgroundColor { get; set; }
         public string borderColor { get; set; }
         public string borderWidth { get; set; }
-        public List<double> data { get; set; }
-        public List<String> Labels { get; set; }
+        public List<double> data { get; set; } = [];
+        public List<String> Labels { get; set; } = [];
+        public List<string> EnglishLabels { get; set; } = [];
         public int ComponentCount { get; set; }
-        public List<DataRows> DataRows { get; set; }
-        public List<DataRowsPie> DataRowsPie { get; set; }
-        public List<string> Colors { get; set; }
+        public List<DataRows> DataRows { get; set; } = [];
+        public List<DataRowsPie> DataRowsPie { get; set; } = [];
+        public List<string> Colors { get; set; } = [];
 
         public ChartData()
         {
             data = new List<double>();
             Labels = new List<string>();
+            EnglishLabels = new List<string>();
             dataSets = new List<ChartData>();
             DataRows = new List<DataRows>();
         }

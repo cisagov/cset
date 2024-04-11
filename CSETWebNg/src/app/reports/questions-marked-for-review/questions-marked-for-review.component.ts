@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,16 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { QuestionsService } from '../../services/questions.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-questions-marked-for-review',
   templateUrl: './questions-marked-for-review.component.html',
   styleUrls: ['../reports.scss']
 })
-export class QuestionsMarkedForReviewComponent implements OnInit {
+export class QuestionsMarkedForReviewComponent {
 
   @Input('data')
   response: any;
@@ -38,13 +39,8 @@ export class QuestionsMarkedForReviewComponent implements OnInit {
    * 
    */
   constructor(
-    public questionsSvc: QuestionsService
+    public questionsSvc: QuestionsService,
+    public tSvc: TranslocoService
   ) { }
-
-  /**
-   * 
-   */
-  ngOnInit(): void {
-  }
 
 }

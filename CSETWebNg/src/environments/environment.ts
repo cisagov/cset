@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,9 @@ export const environment = {
   appUrl: 'http://localhost:4200/',
   apiUrl: 'https://localhost:5001/api/',
   docUrl: 'https://localhost:5001/Documents/',
-  appCode: 'CSET',
-  visibleVersion: '12.1.1.0',
-  version: '12.1.1.0',
+  csetGithubApiUrl: 'https://api.github.com/repos/cisagov/cset/releases/latest',
+  visibleVersion: '12.1.6.0',
+  version: '12.1.6.0',
   helpContactEmail: 'cset@cisa.dhs.gov',
   helpContactPhone: ''
 };

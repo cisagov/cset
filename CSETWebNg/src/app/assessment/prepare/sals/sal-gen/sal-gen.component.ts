@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -27,20 +27,33 @@ import { GeneralSalDescriptionsWeights } from '../../../../models/sal.model';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { Sal } from '../../../../models/sal.model';
 import { SalService } from '../../../../services/sal.service';
+import { TranslocoService } from '@ngneat/transloco';
+
 
 
 @Component({
   selector: 'app-sal-gen',
   templateUrl: './sal-gen.component.html',
   // eslint-disable-next-line
-  host: {class: 'd-flex flex-column flex-11a'}
+  host: { class: 'd-flex flex-column flex-11a' }
 })
 export class SalGenComponent implements OnInit {
 
   sliders: GenSalPairs[];
-  constructor(private assessSvc: AssessmentService, private route: ActivatedRoute, public salsSvc: SalService) {
-  }
 
+  /**
+   * 
+   */
+  constructor(
+    private assessSvc: AssessmentService,
+    private route: ActivatedRoute,
+    public salsSvc: SalService,
+    public tSvc: TranslocoService
+  ) { }
+
+  /**
+   * 
+   */
   ngOnInit() {
     this.salsSvc.getGenSalDescriptions().subscribe(
       (data: GenSalPairs[]) => {
@@ -58,6 +71,15 @@ export class SalGenComponent implements OnInit {
             }
           };
 
+          // translate display text
+          s.onSite.sal_Description = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.postfix.toLowerCase() + ' desc');
+          s.onSite.postfix = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.postfix.toLowerCase());
+          s.onSite.prefix = this.tSvc.translate('titles.sal.gen sal.' + s.onSite.prefix.toLowerCase());
+          let onsiteNone = s.onSite.values.findIndex(x => x.trim() == 'None');
+          if (onsiteNone >= 0) {
+            s.onSite.values[onsiteNone] = this.tSvc.translate('titles.sal.gen sal.none');
+          }
+
           s.offSite.options = {
             floor: s.offSite.min,
             ceil: s.offSite.max,
@@ -68,12 +90,22 @@ export class SalGenComponent implements OnInit {
               return s.offSite.values[v];
             }
           };
+
+          // translate display text
+          s.offSite.sal_Description = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.postfix.toLowerCase() + ' desc');
+          s.offSite.postfix = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.postfix.toLowerCase());
+          s.offSite.prefix = this.tSvc.translate('titles.sal.gen sal.' + s.offSite.prefix.toLowerCase());
+          let offsiteNone = s.offSite.values.findIndex(x => x.trim() == 'None');
+          if (offsiteNone >= 0) {
+            s.offSite.values[offsiteNone] = this.tSvc.translate('titles.sal.gen sal.none');
+          }
+
         });
 
       },
       error => {
-        console.log('Error Getting gensal descriptions: ' + (<Error>error).name + (<Error>error).message);
-        console.log('Error gensal descriptions: ' + (<Error>error).stack);
+        console.log('Error getting gen sal descriptions: ' + (<Error>error).name + (<Error>error).message);
+        console.log('Error gen sal descriptions: ' + (<Error>error).stack);
       });
 
     // retrieve the existing sal_selection for this assessment

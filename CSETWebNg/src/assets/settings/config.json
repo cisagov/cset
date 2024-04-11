@@ -3,7 +3,6 @@
     "currentConfigChain": [
         "CSET"
     ],
-    "appCode": "CSET",
     "defaultLang": "en",
     "isRunningAnonymous": false,
     "app": {
@@ -19,13 +18,13 @@
         "documentsIdentifier": "Documents",
         "onlineUrl": "https://cset.inl.gov"
     },
-    "helpContactEmail": "cset@cisa.dhs.gov",
+    "helpContactEmail": "CSET_PMO@cisa.dhs.gov",
     "helpContactPhone": "",
     "msgServerNotAvailable": "The server is unavailable. Contact your system administrator.",
     "supplementalAutoloadInitialValue": false,
     "debug": {
         "showBuildTime": false,
-        "showQuestionAndRequirementIDs": false,
+        "showQuestionAndRequirementIDs": true,
         "canDeleteCustomModules": true,
         "showExportAllButton": false
     },
@@ -46,7 +45,7 @@
         "showAnalytics": true,
         "showAnalyticsAtTheEnd": true,
         "showMenuParameterEditor": true,
-        "showMenuLanguagePicker": false,
+        "showMenuLanguagePicker": true,
         "showAnalyticsColumnOnLanding": true,
         "splashPageHTML": "dist/assets/splash.html",
         "homeComponentForCurrentInstallationMode": "",
@@ -67,9 +66,12 @@
         "showComments": true,
         "showFeedback": true,
         "showEnableProtectedFeatures": true,
+        "showCisaAssessorWorkflowSwitch": true,
         "showUpdateDiagramCsafVulnerabilitiesButton": false,
         "showVulnerabilitiesDiagramInventoryTab": false,
-        "additionalUserGuides": []
+        "additionalUserGuides": [],
+        "showMalcolmAnswerComparison": false,
+        "replaceAssessmentWithAnalysis": false
     },
     "answerOptionsDefault": [
         {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,19 +21,24 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Finding } from "../assessment/questions/findings/findings.model";
-import { ConfigService } from "../services/config.service";
+import { Observation } from "../assessment/questions/observations/observations.model";
 
 export interface QuestionExtrasResponse {
   ListTabs: QuestionInformationTabData[];
 }
 
-export interface CustomDocument {
-  file_Id: number;
+/**
+ * Custom documents can ne paired to a single sectionRef or have
+ * all of its applicable sectionRefs grouped in a bookmarks array.
+ */
+export interface ReferenceDocLink {
+  fileId: number;
   title: string;
-  file_Name: string;
-  section_Ref: string;
-  is_Uploaded: boolean;
+  fileName: string;
+  url: string;
+  isUploaded: boolean;
+  sectionRef?: string;
+  bookmarks?: string[];
 }
 
 /**
@@ -55,7 +60,7 @@ export interface QuestionDetailsContentViewModel {
   isNoQuestion: boolean;
   selectedTabIndex: number;
   listTabs: QuestionInformationTabData[];
-  findings: Finding[];
+  observations: Observation[];
   documents: QuestionDocument[];
 }
 
@@ -65,8 +70,8 @@ export interface QuestionInformationTabData {
   showRequirementFrameworkTitle: boolean;
   question_or_Requirement_Id: number;
   requirementsData: RequirementTabData;
-  additionalDocumentsList: CustomDocument[];
-  sourceDocumentsList: CustomDocument[];
+  additionalDocumentsList: ReferenceDocLink[];
+  sourceDocumentsList: ReferenceDocLink[];
   referenceTextList: string[];
   references: string;
   componentTypes: ComponentOverrideLinkInfo[];
@@ -91,25 +96,6 @@ export interface RequirementTabData {
   supplementalInfo: String;
   set_Name: string;
   examinationApproach: String;
-}
-
-export class CustomDocument {
-  constructor(public configSvc: ConfigService) {}
-
-  title: string;
-  file_Name: string;
-  section_Ref: string;
-  is_Uploaded: boolean;
-  get url(): string {
-    return (
-      (this.is_Uploaded
-        ? this.configSvc.apiUrl + 'ReferenceDocument/'
-        : this.configSvc.docUrl) +
-      this.file_Name +
-      '#' +
-      this.section_Ref
-    );
-  }
 }
 
 export interface ComponentOverrideLinkInfo {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from '../../../../services/crr.service';
+import { CmuReportModel } from '../../../../models/reports.model';
+import { CmuService } from '../../../../services/cmu.service';
 
 @Component({
   selector: 'app-crr-mil1-performance-summary',
@@ -31,28 +31,27 @@ import { CrrService } from '../../../../services/crr.service';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrMil1PerformanceSummaryComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
   mil1FullAnswerDistribChart: string = '';
   legend: string = '';
   scoreBarCharts: string[] = [];
   stackedBarCharts: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
       this.mil1FullAnswerDistribChart = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getMil1PerformanceSummaryBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.stackedBarCharts = resp.stackedBarCharts;
-    })
+    });
   }
 
   // This function splits strings like
@@ -60,14 +59,14 @@ export class CrrMil1PerformanceSummaryComponent implements OnInit {
   // and
   // "Goal 3-Risks are identified."
   stringSplitter(str: string) {
-    return str.split(" - ")[1] ?? str.split("-")[1];
+    return str.split(' - ')[1] ?? str.split('-')[1];
   }
 
   getStackedBarChart(goalTitle: string) {
-    return this.stackedBarCharts.find(c => c.title === goalTitle).chart;
+    return this.stackedBarCharts.find((c) => c.title === goalTitle).chart;
   }
 
   filterMilDomainGoals(goals) {
-    return goals.filter(g => !g.title.startsWith('MIL'));
+    return goals.filter((g) => !g.title.startsWith('MIL'));
   }
 }

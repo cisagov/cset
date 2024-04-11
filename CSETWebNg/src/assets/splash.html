@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -22,61 +22,73 @@
 -------------------------->
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      body {
-        overflow: hidden;
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      overflow: hidden;
+    }
+
+    @keyframes spin-wait {
+      0% {
+        transform: rotate(0deg);
       }
 
-      @keyframes spin-wait {
-        0% {
-          transform: rotate(0deg);
-        }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-        100% {
-          transform: rotate(360deg);
-        }
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
       }
 
-      @keyframes fade-in {
-        0%   {opacity: 0;}
-        80%  {opacity: 0;}
-        100% {opacity: 1;}
+      80% {
+        opacity: 0;
       }
 
-      .spinner-container > div {
-        border: 4px solid #f2f2f2;
-        border-radius: 50%;
-        border-top: 4px solid #18375F;
-        width: 100px;
-        height: 100px;
-        animation: fade-in 8s forwards, spin-wait 1.3s linear infinite;
+      100% {
+        opacity: 1;
       }
+    }
 
-      div.spinner-size-50 {
-        max-width: 50px;
-        max-height: 50px;
-      }
+    .spinner-container>div {
+      border: 4px solid #f2f2f2;
+      border-radius: 50%;
+      border-top: 4px solid #18375F;
+      width: 100px;
+      height: 100px;
+      animation: fade-in 8s forwards, spin-wait 1.3s linear infinite;
+    }
 
-      p {
-        font-family: "Roboto", sans-serif;
-        font-size: large;
-        animation: fade-in 8s forwards;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      <img src="images/CISA_Logo_1831px.png" alt="CISA" width="300px">
-      <img src="images/logo_cset_1667x303.png" alt="CSET" width="500px">
-      <div class="spinner-container" style="margin-top: 30px;">
-        <div class="spinner-size-50"></div>
-      </div>
-      <p>Initializing CSET...</p>
+    div.spinner-size-50 {
+      max-width: 50px;
+      max-height: 50px;
+    }
+
+    p {
+      font-family: "Roboto", sans-serif;
+      font-size: large;
+      animation: fade-in 8s forwards;
+    }
+  </style>
+</head>
+
+<body>
+  <div
+    style="position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <img src="images/CISA_Logo_1831px.png" alt="CISA" width="300px">
+    <img src="images/logo_cset_1667x303.png" alt="CSET" width="500px">
+    <div class="spinner-container" style="margin-top: 30px;">
+      <div class="spinner-size-50"></div>
     </div>
-  </body>
+    <p>Initializing CSET...</p>
+  </div>
+</body>
+
 </html>

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,8 +20,9 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<div *transloco="let t">
 <p>
-    The RRA model encourages ransomware readiness in three stages &ndash; Basic, Intermediate, and Advanced.
+    {{t('reports.core.rra.report.levels.text 1')}}
 </p>
 <div class="pyramidGraphContainer">
     <div class="pyramidGraph">
@@ -34,25 +35,24 @@
                 <div class="arrowBaseMask arrowBaseLeft"></div>
                 <div class="arrowBaseCenter" style="color: white; justify-content: center;">
                     <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">
-                        RRA Practices
+                        {{t('reports.core.rra.report.levels.rra practices')}}
                     </span>
                 </div>
                 <div class="arrowBaseMask arrowBaseRight"></div>
             </div>
         </div>
         <div class="pyramidLevel levelOne pyramidRowItem" [ngStyle]="getPyramidRowColor(3)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Advanced</span>
+            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.advanced')}}</span>
         </div>
         <div class="pyramidLevel levelTwo pyramidRowItem" [ngStyle]="getPyramidRowColor(2)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Intermediate</span>
+            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.intermediate')}}</span>
         </div>
         <div class="pyramidLevel levelThree pyramidRowItem" [ngStyle]="getPyramidRowColor(1)">
-            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">Basic</span>
+            <span style="font-size: 1.2em; font-weight: bold; background-color: transparent;">{{t('level.basic')}}</span>
         </div>
     </div>
 </div>
 <p class="my-4">
-    The RRA practices are grouped by basic, intermediate, and advanced tiers. The practices are intended to be implemented
-    from one tier to the next and are meant to provide a
-    clear path for improvement.
+    {{t('reports.core.rra.report.levels.text 2')}}
 </p>
+</div>

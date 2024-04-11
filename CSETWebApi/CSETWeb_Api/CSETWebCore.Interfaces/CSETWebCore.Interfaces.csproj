@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npoi.Mapper" Version="6.1.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +17,10 @@
 
   <ItemGroup>
     <None Remove="Dashboard\" />
+    <None Remove="Version\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\" />
+    <Folder Include="Version\" />
   </ItemGroup>
 </Project>

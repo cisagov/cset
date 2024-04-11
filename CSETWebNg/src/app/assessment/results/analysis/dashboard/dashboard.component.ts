@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,12 +22,12 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import  Chart  from 'chart.js/auto';
-import { Router } from '../../../../../../node_modules/@angular/router';
+import Chart from 'chart.js/auto';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { AnalysisService } from './../../../../services/analysis.service';
 import { ConfigService } from '../../../../services/config.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 declare var $: any;
 
 @Component({
@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   componentBasedScoreDisplay: string;
 
   assessComplChart: Chart;
+  showTopCategChart = false;
   topCategChart: Chart;
   stdsSummChart: Chart = null;
   compSummChart: Chart = null;
@@ -57,7 +58,7 @@ export class DashboardComponent implements OnInit {
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
     public configSvc: ConfigService,
-    private router: Router) { }
+    private tSvc: TranslocoService) { }
 
   ngOnInit() {
     this.analysisSvc.getDashboard().subscribe(x => this.setupPage(x));
@@ -74,37 +75,46 @@ export class DashboardComponent implements OnInit {
     this.overallScoreDisplay = this.getScore(x.overallBars, 'Overall').toFixed(0) + '%';
 
     this.standardBasedScore = this.getScore(x.overallBars, 'Standards');
-    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? this.standardBasedScore.toFixed(0) + '%' : 'No Standards Answers';
+    this.standardBasedScoreDisplay = this.standardBasedScore > 0 ? 
+      this.standardBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no standards answers');
 
     this.componentBasedScore = this.getScore(x.overallBars, 'Components');
-    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? this.componentBasedScore.toFixed(0) + '%' : 'No Components Answers';
+    this.componentBasedScoreDisplay = this.componentBasedScore > 0 ? 
+      this.componentBasedScore.toFixed(0) + '%' : this.tSvc.translate('reports.core.dashboard.no components answers');
 
-    if(this.assessComplChart){
+
+    // Assessment Compliance
+    if (this.assessComplChart) {
       this.assessComplChart.destroy();
     }
-    // Assessment Compliance
     this.assessComplChart = this.analysisSvc.buildPercentComplianceChart('canvasAssessmentCompliance', x);
 
-    if(this.topCategChart){
+
+    // Top Categories (only show the top 5 entries for dashboard)
+    if (this.topCategChart) {
       this.topCategChart.destroy();
     }
-    // Top Categories (only show the top 5 entries for dashboard)
-    this.analysisSvc.getTopCategories(5).subscribe(resp => {
+    this.analysisSvc.getTopCategories(5).subscribe((resp: any) => {
       this.topCategChart = this.analysisSvc.buildTopCategories('canvasTopCategories', resp);
+
+      // only show the chart if there is some non-zero data to show
+      this.showTopCategChart = resp.data.some(x => x > 0);
     });
 
-    if(this.stdsSummChart){
+
+    // Standards Summary
+    if (this.stdsSummChart) {
       this.stdsSummChart.destroy();
     }
-    // Standards Summary
     this.analysisSvc.getStandardsSummary().subscribe(resp => {
       this.stdsSummChart = <Chart>this.analysisSvc.buildStandardsSummary('canvasStandardSummary', resp);
     });
 
-    if(this.compSummChart){
+
+    // Component Summary
+    if (this.compSummChart) {
       this.compSummChart.destroy();
     }
-    // Component Summary
     this.analysisSvc.getComponentsSummary().subscribe(resp => {
       this.componentCount = resp.componentCount;
       this.compSummInitialized = true;
@@ -116,19 +126,19 @@ export class DashboardComponent implements OnInit {
     });
 
     this.initialized = true;
-    setTimeout(function(){
+    setTimeout(function () {
       document.getElementById("analysisDiv").scrollIntoView();
     }, 250);
   }
 
 
   /**
-   * Returns the 'data' element that corresponds to the position of the 'Label.'
+   * Returns the 'data' element that corresponds to the position of the English 'Label.'
    * @param overallBars
    */
   getScore(overallBars, label) {
-    for (let i = 0; i < overallBars.labels.length; i++) {
-      if (overallBars.labels[i].toLowerCase() === label.toLowerCase()) {
+    for (let i = 0; i < overallBars.englishLabels.length; i++) {
+      if (overallBars.englishLabels[i].toLowerCase() === label.toLowerCase()) {
         return overallBars.data[i];
       }
     }

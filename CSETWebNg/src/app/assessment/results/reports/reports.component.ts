@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ import { MatSnackBar, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/materi
 import { FileUploadClientService } from '../../../services/file-client.service';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { NCUAService } from '../../../services/ncua.service';
-import { FindingsService } from '../../../services/findings.service';
+import { ObservationsService } from '../../../services/observations.service';
 import { CisaWorkflowFieldValidationResponse } from '../../../models/demographics-iod.model';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConversionService } from '../../../services/conversion.service';
@@ -69,7 +69,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   dialogRef: MatDialogRef<any>;
   isCyberFlorida: boolean = false;
 
-  findings: any = null;
+  observations: any = null;
   numberOfContacts: number = 1;
   isConfigChainEqual: boolean = false;
 
@@ -87,7 +87,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     public navSvc: NavigationService,
     private acetSvc: ACETService,
     private ncuaSvc: NCUAService,
-    public findSvc: FindingsService,
+    public observationsSvc: ObservationsService,
     public fileSvc: FileUploadClientService,
     public authSvc: AuthenticationService,
     private router: Router,
@@ -151,7 +151,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       if (this.assessSvc.isISE()) {
         this.checkIseDisabledStatus();
 
-        this.getAssessmentFindings();
+        this.getAssessmentObservations();
       } else {
         this.checkAcetDisabledStatus();
       }
@@ -193,12 +193,13 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
     // Moved this from the assessment-convert-cf component
     // determine if this assessment is a Cyber Florida "entry" assessment.
-    if (this.assessSvc.assessment.origin == 'CF') {
+    if (this.assessSvc.assessment?.origin == 'CF') {
       this.convertSvc.isEntryCfAssessment().subscribe((resp: boolean) => {
         this.isCfEntry = resp;
       });
     }
 
+    this.configSvc.getCisaAssessorWorkflow().subscribe((resp: boolean) => this.configSvc.cisaAssessorWorkflow = resp);
   }
 
   /**
@@ -277,24 +278,24 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Gets all ISE Findings/Issues,
+   * Gets all ISE Observations/Issues,
    * then stores them in an array if the exam levels match (SCUEP alone, CORE/CORE+ together)
    */
-  getAssessmentFindings() {
+  getAssessmentObservations() {
     this.ncuaSvc.unassignedIssueTitles = [];
-    this.findSvc.GetAssessmentFindings().subscribe(
+    this.observationsSvc.getAssessmentObservations().subscribe(
       (r: any) => {
-        this.findings = r;
+        this.observations = r;
         let title = '';
 
-        for (let i = 0; i < this.findings?.length; i++) {
+        for (let i = 0; i < this.observations?.length; i++) {
           // substringed this way to cut off the '+' from 'CORE+' so it's still included with a CORE assessment
           if (
-            this.ncuaSvc.translateExamLevel(this.findings[i]?.question?.maturity_Level_Id).substring(0, 4) ==
+            this.ncuaSvc.translateExamLevel(this.observations[i]?.question?.maturity_Level_Id).substring(0, 4) ==
             this.ncuaSvc.getExamLevel().substring(0, 4)
           ) {
-            if (this.findings[i]?.finding?.type == null || this.findings[i]?.finding?.type == '') {
-              title = this.findings[i]?.category?.title + ', ' + this.findings[i]?.question?.question_Title;
+            if (this.observations[i]?.finding?.type == null || this.observations[i]?.finding?.type == '') {
+              title = this.observations[i]?.category?.title + ', ' + this.observations[i]?.question?.question_Title;
               this.ncuaSvc.unassignedIssueTitles.push(title);
             }
           }
@@ -305,7 +306,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
           this.ncuaSvc.unassignedIssues = true;
         }
       },
-      (error) => console.log('Findings Error: ' + (<Error>error).message)
+      (error) => console.log('Observations Error: ' + (<Error>error).message)
     );
   }
 
@@ -336,25 +337,25 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   /**
    *
    */
-  clickExport() {
+  clickExport(jsonOnly: boolean = false) {
     // get short-term JWT from API
     this.authSvc.getShortLivedTokenForAssessment(this.assessSvc.assessment.id).subscribe((response: any) => {
-      const url = this.fileSvc.exportUrl + '?token=' + response.token;
+      let url = this.fileSvc.exportUrl + '?token=' + response.token;
+
+      if (jsonOnly) {
+        url = this.fileSvc.exportJsonUrl + "?token=" + response.token;
+      }
 
       window.location.href = url;
     });
   }
 
   disableSubmitButton() {
-    if (this.disableIseReportLinks) {
+    if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
       return true;
     }
 
-    if (this.ncuaSvc.creditUnionName == '') {
-      return true;
-    }
-
-    if (this.ncuaSvc.assetsAsNumber == 0) {
+    if (this.ncuaSvc.assetsAsNumber == null || this.ncuaSvc.assetsAsNumber == 0) {
       return true;
     }
 
@@ -365,6 +366,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.ncuaSvc.submitInProgress) {
       return true;
     }
+
+    if (this.disableIseReportLinks) {
+      return true;
+    }
+    return false;
   }
 
   getSubmitButtonStyle() {

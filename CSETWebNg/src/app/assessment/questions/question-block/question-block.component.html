@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -130,14 +130,19 @@
 
             <div *ngIf="q.answer === 'A'">
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
+                style="width: 100%; min-height: 80px;" 
+                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
+                [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
             </div>
+
+            <app-malcolm-answer-default *ngIf="configSvc.config.behaviors.showMalcolmAnswerComparison != null 
+              && configSvc.config.behaviors.showMalcolmAnswerComparison && malcolmInfo != null"
+              [userAnswer]= "q.answer" [malcolmAnswer]="malcolmSvc.findMalcolmAnswerForQuestion(q.questionId, malcolmInfo)"></app-malcolm-answer-default>
+
           </div>
         </div>
-
-
 
         <div class="w-100" *ngIf="layoutSvc.hp">
           <!-- Handheld Portrait -->
@@ -172,9 +177,11 @@
 
             <div *ngIf="q.answer === 'A'">
               <textarea appAutoSize class="form-control" [class.alt-text-required]="isAltTextRequired(q)"
-                style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder" [(ngModel)]="q.altAnswerText"
+                style="width: 100%; min-height: 80px;" 
+                [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
+                [(ngModel)]="q.altAnswerText"
                 (ngModelChange)="storeAltText(q)" tabindex="0"></textarea>
-              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required</div>
+              <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg" aria-label="description required">* Description required</div>
             </div>
           </div>
 

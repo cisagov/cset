@@ -56,6 +56,8 @@ public partial class NEW_QUESTION
     [InverseProperty("Question")]
     public virtual ICollection<FINANCIAL_QUESTIONS> FINANCIAL_QUESTIONS { get; set; } = new List<FINANCIAL_QUESTIONS>();
 
+    [ForeignKey("Heading_Pair_Id")]
+    [InverseProperty("NEW_QUESTION")]
     public virtual UNIVERSAL_SUB_CATEGORY_HEADINGS Heading_Pair { get; set; }
 
     [InverseProperty("Question")]
@@ -67,9 +69,6 @@ public partial class NEW_QUESTION
     [ForeignKey("Original_Set_Name")]
     [InverseProperty("NEW_QUESTION")]
     public virtual SETS Original_Set_NameNavigation { get; set; }
-
-    [InverseProperty("Question")]
-    public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; } = new List<REQUIREMENT_QUESTIONS>();
 
     [InverseProperty("Question")]
     public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; } = new List<REQUIREMENT_QUESTIONS_SETS>();

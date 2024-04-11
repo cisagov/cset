@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="about d-flex flex-column justify-content-center flex-11a">
-  <app-about-cset *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === 'IOD' || configSvc.installationMode === ''"></app-about-cset>
+<div class="about d-flex flex-column justify-content-center flex-11a" *transloco="let t">
+  <app-about-cset
+    *ngIf="configSvc.installationMode === 'CSET' || configSvc.installationMode === 'IOD' || configSvc.installationMode === ''"></app-about-cset>
   <app-about-rra *ngIf="configSvc.installationMode === 'RRA'"></app-about-rra>
   <app-about-acet *ngIf="configSvc.installationMode === 'ACET'"></app-about-acet>
   <app-about-tsa *ngIf="configSvc.installationMode === 'TSA'"></app-about-tsa>
   <app-about-cf *ngIf="configSvc.installationMode === 'CF'"></app-about-cf>
   <app-about-renew *ngIf="configSvc.installationMode === 'RENEW'"></app-about-renew>
+  <app-about-cie *ngIf="configSvc.installationMode === 'CIE'"></app-about-cie>
   <mat-dialog-actions class="p-4 mb-0">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

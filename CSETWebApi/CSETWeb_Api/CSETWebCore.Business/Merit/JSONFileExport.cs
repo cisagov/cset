@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -32,7 +32,7 @@ namespace CSETWebCore.Business.Merit
 
     }
 
-    public class JSONFileExport:IJSONFileExport
+    public class JSONFileExport : IJSONFileExport
     {
         public const string MeritExportPathName = "NCUAMeritExportPath";
         public void SendFileToMerit(string filename, string data, string uncPath)
@@ -40,7 +40,7 @@ namespace CSETWebCore.Business.Merit
             long minimumFileSize = 28000; // hardcoded value, change if file changes size (sorry)
             if (!DoesDirectoryExist(uncPath))
             {
-                throw new ApplicationException("the directory Path " + uncPath + " is not available or does not exist");
+                throw new ApplicationException("the directory Path is not available or does not exist");
             }
             var pathToCreate = Path.Combine(uncPath, filename);
             File.WriteAllText(pathToCreate, data);
@@ -56,7 +56,7 @@ namespace CSETWebCore.Business.Merit
         }
 
         public bool DoesDirectoryExist(string uncPath)
-        {   
+        {
             return Directory.Exists(uncPath);
         }
 
@@ -85,7 +85,7 @@ namespace CSETWebCore.Business.Merit
         public string GetUncPath(CSETContext context)
         {
             GLOBAL_PROPERTIES uncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
-            if(uncPath == null)
+            if (uncPath == null)
             {
                 uncPath = new GLOBAL_PROPERTIES()
                 {
@@ -93,11 +93,11 @@ namespace CSETWebCore.Business.Merit
                     Property_Value = "\\\\hqwinfs1\\global\\Field_Staff\\ISE" // default path for client
                 };
                 context.GLOBAL_PROPERTIES.Add(uncPath);
-                
+
             }
             if (!DoesDirectoryExist(uncPath.Property_Value))
             {
-                var excp = new MERITApplicationException("Directory does not exist or is unavailable:"+ uncPath.Property_Value); 
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable.");
                 excp.Path = uncPath.Property_Value;
                 throw excp;
             }
@@ -108,12 +108,12 @@ namespace CSETWebCore.Business.Merit
         {
             if (!DoesDirectoryExist(uncPath))
             {
-                var excp = new MERITApplicationException("Directory does not exist or is unavailable:" + uncPath);
+                var excp = new MERITApplicationException("Directory does not exist or is unavailable.");
                 excp.Path = uncPath;
                 throw excp;
             }
             var currentUncPath = context.GLOBAL_PROPERTIES.Where(x => x.Property == JSONFileExport.MeritExportPathName).FirstOrDefault();
-            if(currentUncPath == null)
+            if (currentUncPath == null)
             {
                 context.GLOBAL_PROPERTIES.Add(new GLOBAL_PROPERTIES()
                 {

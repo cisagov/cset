@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -13,10 +13,8 @@ using CSETWebCore.Interfaces.Helpers;
 using Microsoft.EntityFrameworkCore;
 using CSETWebCore.Business.Authorization;
 using CSETWebCore.Model.Acet;
-using CSETWebCore.Business.Acet;
-using CSETWebCore.Model.Maturity;
-using NLog;
-using NPOI.SS.Formula.Functions;
+using CSETWebCore.Helpers;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -26,13 +24,17 @@ namespace CSETWebCore.Api.Controllers
         private readonly CSETContext _context;
         private readonly ITokenManager _tokenManager;
         private readonly IAssessmentUtil _assessmentUtil;
+        private readonly TranslationOverlay _overlay;
 
         public ACETFilterController(CSETContext context, IAssessmentUtil assessmentUtil, ITokenManager tokenManager)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
             _tokenManager = tokenManager;
+
+            _overlay = new TranslationOverlay();
         }
+
 
         [HttpGet]
         [Route("api/IsAcetOnly")]
@@ -83,7 +85,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetAcetDomains()
         {
             var userId = _tokenManager.GetCurrentUserId();
-            var userLang = _context.USERS.Where(x => x.UserId == userId).FirstOrDefault()?.Lang ?? "en";
+            var lang = _tokenManager.GetCurrentLanguage();
 
             try
             {
@@ -98,20 +100,16 @@ namespace CSETWebCore.Api.Controllers
                 }
 
 
-                if (userLang == "es")
+                // overlay
+                foreach (var d in domains)
                 {
-                    Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
-
-                    var outputGrouping = new GroupingSpanishRow();
-
-                    foreach (var domain in domains)
+                    var o = _overlay.GetMaturityGrouping(d.DomainId, lang);
+                    if (o != null)
                     {
-                        if (dictionaryDomain.TryGetValue(domain.DomainName, out outputGrouping))
-                        {
-                            domain.DomainName = dictionaryDomain[domain.DomainName].Spanish_Title;
-                        }
+                        d.DomainName = o.Title;
                     }
                 }
+
 
                 return Ok(domains);
             }
@@ -138,8 +136,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetACETFilters()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            int? userId = _tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             List<ACETFilter> filters = new List<ACETFilter>();
 
             //full cross join
@@ -153,7 +151,7 @@ namespace CSETWebCore.Api.Controllers
                               into myFilters
                               from subfilter in myFilters.DefaultIfEmpty()
                               where subfilter.Assessment_Id == assessmentId
-                              select new
+                              select new ACETDomainFilterSetting()
                               {
                                   DomainId = c.DomainId,
                                   DomainName = c.Domain,
@@ -161,26 +159,17 @@ namespace CSETWebCore.Api.Controllers
                                   IsOn = subfilter.IsOn
                               }).ToList();
 
-            if (_context.USERS.Where(x => x.UserId == userId).FirstOrDefault()?.Lang == "es" || _context.ACCESS_KEY.Where(x => x.AccessKey == accessKey).FirstOrDefault()?.Lang == "es")
+
+            // language overlay
+            foreach (var f in tmpFilters)
             {
-                Dictionary<string, GroupingSpanishRow> dictionaryDomain = AcetBusiness.buildResultsGroupingDictionary();
-                var output = new GroupingSpanishRow();
-                if (dictionaryDomain.Count > 0)
+                var o = _overlay.GetValue("FINANCIAL_DOMAINS", f.DomainId.ToString(), lang);
+                if (o != null)
                 {
-                    tmpFilters = (from c in crossJoin
-                                  join a in _context.FINANCIAL_DOMAIN_FILTERS_V2 on new { c.Financial_Level_Id, c.DomainId } equals new { a.Financial_Level_Id, a.DomainId }
-                                  into myFilters
-                                  from subfilter in myFilters.DefaultIfEmpty()
-                                  where subfilter.Assessment_Id == assessmentId
-                                  select new
-                                  {
-                                      DomainId = c.DomainId,
-                                      DomainName = (dictionaryDomain.TryGetValue(c.Domain, out output) ? dictionaryDomain[c.Domain].Spanish_Title : c.Domain),
-                                      Financial_Level_Id = c.Financial_Level_Id,
-                                      IsOn = subfilter.IsOn
-                                  }).ToList();
+                    f.DomainName = o.Value;
                 }
             }
+
 
             var groups = tmpFilters.GroupBy(d => d.DomainId, d => d, (key, g) => new { DomainId = key, DomainName = g.First().DomainName, Tiers = g.ToList() }).ToList();
 

@@ -1,0 +1,122 @@
+[
+  {
+    "key": "1",
+    "value": "Conexiones"
+  },
+  {
+    "key": "2",
+    "value": "Detección"
+  },
+  {
+    "key": "3",
+    "value": "Diligencia Debida"
+  },
+  {
+    "key": "4",
+    "value": "Proceso de Escalación y Registro"
+  },
+  {
+    "key": "5",
+    "value": "Intercambio de Información"
+  },
+  {
+    "key": "6",
+    "value": "Gestión en Infraestructura"
+  },
+  {
+    "key": "7",
+    "value": "Monitoreo y Análisis"
+  },
+  {
+    "key": "8",
+    "value": "Supervisión"
+  },
+  {
+    "key": "9",
+    "value": "Gestión de Parches"
+  },
+  {
+    "key": "10",
+    "value": "Planificación"
+  },
+  {
+    "key": "11",
+    "value": "Programa de Gestión de Riesgo"
+  },
+  {
+    "key": "12",
+    "value": "Personal"
+  },
+  {
+    "key": "13",
+    "value": "Detección de Amenzas y Vulnerabilidades"
+  },
+  {
+    "key": "14",
+    "value": "Inteligencia de Amenazas y Colaboración"
+  },
+  {
+    "key": "15",
+    "value": "Capacitación"
+  },
+  {
+    "key": "16",
+    "value": "Acceso y Gestión de Datos"
+  },
+  {
+    "key": "17",
+    "value": "Detección de Actividad Anómala"
+  },
+  {
+    "key": "18",
+    "value": "Contratos"
+  },
+  {
+    "key": "19",
+    "value": "Cultura"
+  },
+  {
+    "key": "20",
+    "value": "Corrección"
+  },
+  {
+    "key": "21",
+    "value": "Respuesta y Mitigación"
+  },
+  {
+    "key": "22",
+    "value": "Evaluación de Riedgo"
+  },
+  {
+    "key": "23",
+    "value": "Estrategias / Políticas"
+  },
+  {
+    "key": "24",
+    "value": "Pruebas"
+  },
+  {
+    "key": "25",
+    "value": "Auditoría"
+  },
+  {
+    "key": "26",
+    "value": "Seguridad del Dispositivo / Terminales"
+  },
+  {
+    "key": "27",
+    "value": "Detección de Eventos"
+  },
+  {
+    "key": "28",
+    "value": "Gestión de Activos de TI"
+  },
+  {
+    "key": "29",
+    "value": "Monitoreo Permanente"
+  },
+  {
+    "key": "30",
+    "value": "Codificación Segura"
+  }
+]

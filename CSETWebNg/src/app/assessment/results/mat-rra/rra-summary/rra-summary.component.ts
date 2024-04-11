@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Color, ColorHelper, ScaleType } from '@swimlane/ngx-charts';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-summary',
@@ -54,7 +55,10 @@ export class RraSummaryComponent implements OnInit {
 
   legendColors: ColorHelper;
 
-  constructor(public rraDataSvc: RraDataService) {
+  constructor(
+    public rraDataSvc: RraDataService, 
+    public tSvc: TranslocoService
+    ) {
     Object.assign(this.single);
   }
 
@@ -79,9 +83,9 @@ export class RraSummaryComponent implements OnInit {
         };
         levelList.push(level);
       }
-
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.percent;
+      
     });
     if (this.filter == "Overall") {
       let overall = [];
@@ -92,10 +96,21 @@ export class RraSummaryComponent implements OnInit {
         })
       });
       this.single = overall;
+
+      for (let i of this.single){
+       i.name = this.tSvc.translate('answer-options.button-labels.' + (i.name).toLowerCase())
+      }
       this.buildLegend();
       return;
     }
-    this.single = levelList.find(x => x.name == this.filter).series;
+    this.single = levelList.find(x => this.tSvc.translate('level.' + (x.name).toLowerCase()) == this.filter).series;
+
+    for (let i of levelList){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.' + (j.name).toLowerCase())
+      }
+    }
+
     this.buildLegend();
   }
 

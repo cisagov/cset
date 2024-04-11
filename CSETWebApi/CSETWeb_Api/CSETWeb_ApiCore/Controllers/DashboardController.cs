@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -27,10 +27,12 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/acet/dashboard")]
-        public IActionResult GetDashboard(bool spanishFlag = false)
+        public IActionResult GetDashboard()
         {
             int assessmentId = _token.AssessmentForUser();
-            return Ok(_acetDashboard.LoadDashboard(assessmentId, spanishFlag));
+            var lang = _token.GetCurrentLanguage();
+
+            return Ok(_acetDashboard.LoadDashboard(assessmentId, lang));
         }
 
         [HttpPost]

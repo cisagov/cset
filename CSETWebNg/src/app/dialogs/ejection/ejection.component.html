@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,18 +19,19 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="d-flex flex-column justify-content-center flex-11a">
+-------------------------->
+<div class="d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-exclamation-triangle fs-base-6 mr-3"></span>
     <span>Access Denied</span>
   </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
-    <p class="pr-3">Your session has expired, a connection error has occurred, or you are no longer authorized to access that
+    <p class="pr-3">Your session has expired, a connection error has occurred, or you are no longer authorized to access
+      that
       assessment.</p>
     <p>Please log in again.</p>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-0 mb-0">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

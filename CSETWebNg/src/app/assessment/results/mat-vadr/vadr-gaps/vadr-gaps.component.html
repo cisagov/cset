@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,32 +20,32 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a">
-  <h3>Goal Performance</h3>
+<div class="white-panel oy-auto h-0 d-flex flex-column flex-11a" *transloco="let t">
+    <h3>{{t('titles.goal performance')}}</h3>
 
-  <div *ngIf="!initialized">
-      <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-      </div>
-  </div>
+    <div *ngIf="!initialized">
+        <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
+            <div style="max-width: 50px; max-height: 50px;"></div>
+        </div>
+    </div>
 
-  <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
-      <div clas="container">
-          <div class="row mb-5">
-              <div class="col-12">
-                  <h5>VADR Performance by Goal</h5>
-                  <app-vadr-answer-compliance></app-vadr-answer-compliance>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-12">
-                  <h5>VADR Practice Scoring</h5>
-                  <app-vadr-questions-scoring></app-vadr-questions-scoring>
-              </div>
-          </div>
-      </div>
+    <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
+        <div clas="container">
+            <div class="row mb-5">
+                <div class="col-12">
+                    <h5>VADR Performance by Goal</h5>
+                    <app-vadr-answer-compliance></app-vadr-answer-compliance>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h5>VADR Practice Scoring</h5>
+                    <app-vadr-questions-scoring></app-vadr-questions-scoring>
+                </div>
+            </div>
+        </div>
 
-      <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
+        <app-nav-back-next [page]="'rra-gaps'"></app-nav-back-next>
 
-  </div>
+    </div>
 </div>

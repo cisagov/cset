@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import Chart from 'chart.js/auto';
 import { ChartService } from './chart.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +37,9 @@ export class AnalysisService {
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
-    private chartSvc: ChartService
-    ) {
+    private chartSvc: ChartService,
+    private tSvc: TranslocoService
+  ) {
     this.apiUrl = this.configSvc.apiUrl + "analysis/";
   }
 
@@ -137,12 +139,12 @@ export class AnalysisService {
           title: {
             display: false,
             font: { size: 20 },
-            text: 'Assessment Compliance'
+            text: this.tSvc.translate('titles.assessment compliance')
           },
           tooltip: {
             callbacks: {
               label: function (context) {
-                const label = context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                const label = context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
                 return label;
               }
@@ -190,12 +192,12 @@ export class AnalysisService {
           title: {
             display: false,
             font: { size: 20 },
-            text: 'Top Ranked Categories'
+            text: 'Ranked Categories'
           },
           tooltip: {
             callbacks: {
               label: ((context) =>
-                context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                 + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
             }
           },
@@ -246,7 +248,7 @@ export class AnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
@@ -299,7 +301,7 @@ export class AnalysisService {
             tooltip: {
               callbacks: {
                 label: ((context) =>
-                  context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                  context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%')
               }
             }
@@ -344,7 +346,7 @@ export class AnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }
@@ -395,7 +397,7 @@ export class AnalysisService {
           tooltip: {
             callbacks: {
               label: ((context) => {
-                return context.dataset.label + (!!context.dataset.label ? ': '  : ' ')
+                return context.dataset.label + (!!context.dataset.label ? ': ' : ' ')
                   + (<Number>context.dataset.data[context.dataIndex]).toFixed() + '%';
               })
             }

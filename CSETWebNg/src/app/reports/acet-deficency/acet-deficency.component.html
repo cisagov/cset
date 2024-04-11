@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,28 +22,26 @@
 -------------------------->
 <div *transloco="let t; read:'reports.acet.gap report'" class="report-body mb-5">
 
-    <div class="flex-container">
-        <div class="column mt-3">
-            <p
-                class="report-title">
-                {{ t('gap report title 1') }}
-            </p>
-            <p
-                class="report-title">
-                {{ t('gap report title 2') }}
-            </p>
-        </div>
-        <div class="column">
-            <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/ACET_shield_logo.png">
-            </p>
-        </div>
+  <div class="flex-container">
+    <div class="column mt-3">
+      <p class="report-title">
+        {{ t('gap report title 1') }}
+      </p>
+      <p class="report-title">
+        {{ t('gap report title 2') }}
+      </p>
+    </div>
+    <div class="column">
+      <p style="text-align: center">
+        <img height="600" src="assets/images/ACET/ACET_shield_logo.png">
+      </p>
+    </div>
 
-        <div class="cover-page-bottom mb-4">
-            <div>
-                <img style="height: 185px" alt="ncua" src="assets/images/NCUA/ncua_seal_blue.svg">
-            </div>
-            <div style="
+    <div class="cover-page-bottom mb-4">
+      <div>
+        <img style="height: 185px" alt="ncua" src="assets/images/NCUA/ncua_seal_blue.svg">
+      </div>
+      <div style="
                             text-align: right;
                             font-weight: normal;
                             font-size: 18px;
@@ -52,95 +50,95 @@
                             padding-right: 2em;
                         ">
 
-                <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}</div>
-                <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
-                <div class="title-page-content">{{response?.information?.assets | currency}}</div>
-            </div>
-        </div>
+        <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
+        <div class="title-page-content">{{response?.information?.assessment_Date | localizeDate}}</div>
+        <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
+        <div class="title-page-content">{{response?.information?.assets | currency}}</div>
+      </div>
     </div>
-    <div class="page-break">
+  </div>
+  <div class="page-break">
 
-        <div class="disclaimer-blurb mt-4">
-            <p>
-              {{ t('gap disclaimer 1') }}
-            </p>
-            <p>
-              {{ t('gap disclaimer 2') }}
-            </p>
-            <p>
-              {{ t('gap disclaimer 3') }}
-            </p>
-        </div>
+    <div class="disclaimer-blurb mt-4">
+      <p>
+        {{ t('gap disclaimer 1') }}
+      </p>
+      <p>
+        {{ t('gap disclaimer 2') }}
+      </p>
+      <p>
+        {{ t('gap disclaimer 3') }}
+      </p>
+    </div>
 
-        <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
+    <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
+      <div style="max-width: 50px; max-height: 50px;"></div>
+    </div>
 
-        <ng-template #mainContent>
-          <div class="d-flex flex-row justify-content-between align-items-end">
-            <h1 class="page-title">{{ t('gaps') }}</h1>
-            <p style="color: #de761c;text-align: right;">{{ t('marked for review') }} - <img class="MarkedFlag"
-              src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
-            </div>
-            <hr class="page-line m-0">
-            <table role="presentation">
-              <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                <tr class="rkw-domain" *ngIf="d.isDeficient">
-                  <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - {{ 'domain' | transloco }}</td>
+    <ng-template #mainContent>
+      <div class="d-flex flex-row justify-content-between align-items-end">
+        <h1 class="page-title">{{ t('gaps') }}</h1>
+        <p style="color: #de761c;text-align: right;">{{ t('marked for review') }} - <img class="MarkedFlag"
+            src="assets/images/icons/MarkedFlag.png" alt="marked for review"> </p>
+      </div>
+      <hr class="page-line m-0">
+      <table role="presentation">
+        <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+          <tr class="rkw-domain" *ngIf="d.isDeficient">
+            <td colspan="5" class="background-1 h4 color-white" style="padding:.5rem">{{d.title}} - {{ 'domain' |
+              transloco }}</td>
+          </tr>
+          <ng-container *ngFor="let f of d.assessmentFactors">
+            <tr *ngIf="f.isDeficient">
+              <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} -
+                {{ 'acet.assessment factor' | transloco }}
+              </td>
+            </tr>
+            <ng-container *ngFor="let c of f.components">
+              <tr *ngIf="c.isDeficient">
+                <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - {{ 'acet.component' |
+                  transloco }}</td>
+              </tr>
+              <ng-container *ngFor="let q of c.questions">
+                <tr *ngIf="c.isDeficient && q.answerText == 'N'">
+                  <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.title}}</td>
+                  <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
+                  <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
+                    <div style="width: 7rem">
+                      {{ 'answer-options.button-labels.' + questionsSvc.answerDisplayLabel('ACET',q.answerText) |
+                      transloco }}
+                    </div>
+                  </td>
+                  <td class="deficiencies-list-flag"><img title="marked for review" class="MarkedFlag ml-2"
+                      *ngIf="q.markForReview" src="assets/images/icons/MarkedFlag.png"></td>
                 </tr>
-                <ng-container *ngFor="let f of d.assessmentFactors">
-                  <tr *ngIf="f.isDeficient">
-                    <td colspan="5" class="background-2 font-weight-bold pl-4" style="padding:.5rem">{{f.title}} -
-                      {{ 'acet.assessment factor' | transloco }}
+                <div *ngIf="q.comment && c.isDeficient && q.answerText == 'N';then c_comments_given"></div>
+                <ng-template #c_comments_given>
+                  <tr>
+                    <td></td>
+                    <td colspan="4">
+                      <div class="alert alert-secondary" style="background-color:#d6d8db">
+                        <table>
+                          <tr>
+                            <td style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
+                              <b>{{ 'tooltip.comment' | transloco }}:</b>
+                            </td>
+                            <td style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
+                              {{q.comment}}</td>
+                          </tr>
+                        </table>
+                      </div>
                     </td>
                   </tr>
-                  <ng-container *ngFor="let c of f.components">
-                    <tr *ngIf="c.isDeficient">
-                      <td colspan="5" class="background-3 pl-5" style="padding:.5rem">{{c.title}} - {{ 'acet.component' | transloco }}</td>
-                    </tr>
-                    <ng-container *ngFor="let q of c.questions">
-                      <tr *ngIf="c.isDeficient && q.answerText == 'N'">
-                        <td class="deficiencies-list-item font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td class="deficiencies-list-comment pr-3" [innerHTML]="q.questionText"></td>
-                                <td style="padding-top: 1rem; padding-left: 1rem; vertical-align: top; color: #555555">
-                                  <div style="width: 7rem">
-                                    {{ 'answer-options.button-labels.' + questionsSvc.answerDisplayLabel('ACET',q.answerText) | transloco }}
-                                  </div>
-                                </td>
-                                <td class="deficiencies-list-flag"><img title="marked for review"
-                                  class="MarkedFlag ml-2" *ngIf="q.markForReview"
-                                  src="assets/images/icons/MarkedFlag.png"></td>
-                                </tr>
-                                <div *ngIf="q.comment && c.isDeficient && q.answerText == 'N';then c_comments_given"></div>
-                                <ng-template #c_comments_given>
-                                  <tr>
-                                    <td></td>
-                                    <td colspan="4">
-                                      <div class="alert alert-secondary" style="background-color:#d6d8db">
-                                        <table>
-                                          <tr>
-                                            <td
-                                            style="width:15%; padding-right:15px; vertical-align:top; text-align: left;">
-                                            <b>{{ 'tooltip.comment' | transloco }}:</b>
-                                          </td>
-                                          <td
-                                          style="width:85%; vertical-align:top;word-break: break-all; text-align:left;">
-                                          {{q.comment}}</td>
-                                        </tr>
-                                      </table>
-                                        </div>
-                                    </td>
-                                  </tr>
-                            </ng-template>
-                        </ng-container>
-                    </ng-container>
-                </ng-container>
+                </ng-template>
+              </ng-container>
             </ng-container>
-          </table>
-          <div *ngIf="!checkForGaps()" class="mt-3">
-            {{ t('no deficiencies') }}
-          </div>
-        </ng-template>
-    </div>
+          </ng-container>
+        </ng-container>
+      </table>
+      <div *ngIf="!checkForGaps()" class="mt-3">
+        {{ t('no deficiencies') }}
+      </div>
+    </ng-template>
+  </div>
 </div>

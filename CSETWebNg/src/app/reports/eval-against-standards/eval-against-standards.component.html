@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,17 +20,18 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
+<div *transloco="let t">
 <h1>
-  Evaluation Against Selected Standards and Question Sets
+  {{t('reports.core.executive summary.evaluation')}}
 </h1>
 
 <div>
-  <h2>Standards Summary</h2>
+  <h2>{{t('reports.core.executive summary.standards summary')}}</h2>
   <div *ngIf="loading1">
     <div class="spinner-container" style="margin: 2em auto">
-        <div style="max-width: 50px; max-height: 50px;"></div>
+      <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
-</div>
+  </div>
   <div *ngIf="!loading1" style="max-width: 20rem" class="ml-auto mr-auto">
     <canvas id="canvasStandardSummary"></canvas>
   </div>
@@ -38,14 +39,15 @@
 
 
 <h2>
-  Standard or Question Set
+  {{t('reports.core.executive summary.standard or question set')}}
 </h2>
 
 <div *ngIf="loading2">
   <div class="spinner-container" style="margin: 2em auto">
-      <div style="max-width: 50px; max-height: 50px;"></div>
+    <div style="max-width: 50px; max-height: 50px;"></div>
   </div>
 </div>
 <div *ngIf="!loading2">
   <canvas id="canvasStandardResultsByCategory"></canvas>
+</div>
 </div>

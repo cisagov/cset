@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,7 +28,7 @@ namespace CSETWebCore.Model.Hydro
     {
         public MATURITY_QUESTIONS Question { get; set; }
         public MATURITY_ANSWER_OPTIONS AnswerOption { get; set; }
-        public ISE_ACTIONS Actions { get; set; }
+        public HYDRO_DATA Actions { get; set; }
         //public ANSWER Answer { get; set; }
     }
 
@@ -42,11 +42,11 @@ namespace CSETWebCore.Model.Hydro
     public class HydroActionQuestion
     {
         public MATURITY_QUESTIONS Question { get; set; }
-        public ISE_ACTIONS Action { get; set; } //ended here. make a method to tie actions with questions for results page
+        public HYDRO_DATA Action { get; set; } //ended here. make a method to tie actions with questions for results page
         public HYDRO_DATA_ACTIONS ActionData { get; set; }
     }
 
-    public class HydroGroupingInfo 
+    public class HydroGroupingInfo
     {
         public List<QuestionWithAnswers> QuestionsWithAnswers { get; set; }
         public int GroupingId { get; set; }
@@ -111,7 +111,7 @@ namespace CSETWebCore.Model.Hydro
         public int QuestionId { get; set; }
         public string QuestionType { get; set; }
         public int Sequence { get; set; }
-        public int MaturityLevel { get; set; }  
+        public int MaturityLevel { get; set; }
         public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
@@ -119,13 +119,13 @@ namespace CSETWebCore.Model.Hydro
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
-        public string AltAnswerText { get; set;  }
+        public string AltAnswerText { get; set; }
 
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
 
-        public List<CustomDocument> SourceDocuments { get; set; }
-        public List<CustomDocument> AdditionalDocuments { get; set; }
+        public List<GenFileView> SourceDocuments { get; set; }
+        public List<GenFileView> AdditionalDocuments { get; set; }
 
         public int? ParentQuestionId { get; set; }
         public int? ParentOptionId { get; set; }
@@ -187,7 +187,7 @@ namespace CSETWebCore.Model.Hydro
     }
 
 
-    public class IntegrityCheckOption 
+    public class IntegrityCheckOption
     {
         public int OptionId { get; set; }
         public bool Selected { get; set; }

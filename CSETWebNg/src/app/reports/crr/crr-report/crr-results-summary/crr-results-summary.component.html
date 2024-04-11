@@ -1,7 +1,6 @@
-
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +35,7 @@
         </div>
         <div class="CrrResultsBody">
             <div class="crrResultsTable">
-                <div *ngFor="let domain of model?.crrResultsData.crrDomains" class="crrResultsTableRow">
+                <div *ngFor="let domain of model?.cmuResultsData.cmuDomains" class="crrResultsTableRow">
                     <div class="crrResultsDomainCell">
                         <div class="crrResultsTableDomainName">
                             {{ domain.domainName }}
@@ -53,16 +52,46 @@
                 </div>
                 <div style="margin-left:1px" class="crrResultsTableRow crrResultsTableLabelRow">
                     <div class="crrResultsLabelCell pr-2 pe-2">
-                      Maturity&nbsp;Indicator&nbsp;Level&nbsp;<strong style="font-size: 18;">0</strong>
+                        Maturity&nbsp;Indicator&nbsp;Level&nbsp;<strong style="font-size: 18;">0</strong>
                     </div>
-                    <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.25</p></div>
-                    <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.5</p></div>
-                    <div class="crrTableLabel mil-1-grid"><p class="mil-number-labels">.75</p></div>
-                    <div class="crrTableLabel mil-1-grid mil-1-override"><p class="mil-number-labels">1</p><p class="upper-mil-label-bold">MIL-1 Performed</p><p class="upper-mil-label-desc">Domain practices are being performed.</p></div>
-                    <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">2</p><p class="upper-mil-label-bold">MIL-2 Planned</p><p class="upper-mil-label-desc">Domain practices are supported by planning, policy, stakeholders, and standards.</p></div>
-                    <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">3</p><p class="upper-mil-label-bold">MIL-3 Managed</p><p class="upper-mil-label-desc">Domain practices are supported by governance and adequate resources.</p></div>
-                    <div class="crrTableLabel rb-d mil-upper-grid"><p class="mil-number-labels">4</p><p class="upper-mil-label-bold">MIL-4 Measured</p><p class="upper-mil-label-desc">Domain practices are supported by measurement, monitoring, and executive oversight.</p></div>
-                    <div class="crrTableLabel mil-upper-grid ccrLastLabel"><p class="mil-number-labels">5</p><p class="upper-mil-label-bold">MIL-5 Defined</p><p class="upper-mil-label-desc pe-0 pr-0">Domain practices are supported by enterprise standardization and analysis of lessons learned.</p></div>
+                    <div class="crrTableLabel mil-1-grid">
+                        <p class="mil-number-labels">.25</p>
+                    </div>
+                    <div class="crrTableLabel mil-1-grid">
+                        <p class="mil-number-labels">.5</p>
+                    </div>
+                    <div class="crrTableLabel mil-1-grid">
+                        <p class="mil-number-labels">.75</p>
+                    </div>
+                    <div class="crrTableLabel mil-1-grid mil-1-override">
+                        <p class="mil-number-labels">1</p>
+                        <p class="upper-mil-label-bold">MIL-1 Performed</p>
+                        <p class="upper-mil-label-desc">Domain practices are being performed.</p>
+                    </div>
+                    <div class="crrTableLabel rb-d mil-upper-grid">
+                        <p class="mil-number-labels">2</p>
+                        <p class="upper-mil-label-bold">MIL-2 Planned</p>
+                        <p class="upper-mil-label-desc">Domain practices are supported by planning, policy,
+                            stakeholders, and standards.</p>
+                    </div>
+                    <div class="crrTableLabel rb-d mil-upper-grid">
+                        <p class="mil-number-labels">3</p>
+                        <p class="upper-mil-label-bold">MIL-3 Managed</p>
+                        <p class="upper-mil-label-desc">Domain practices are supported by governance and adequate
+                            resources.</p>
+                    </div>
+                    <div class="crrTableLabel rb-d mil-upper-grid">
+                        <p class="mil-number-labels">4</p>
+                        <p class="upper-mil-label-bold">MIL-4 Measured</p>
+                        <p class="upper-mil-label-desc">Domain practices are supported by measurement, monitoring, and
+                            executive oversight.</p>
+                    </div>
+                    <div class="crrTableLabel mil-upper-grid ccrLastLabel">
+                        <p class="mil-number-labels">5</p>
+                        <p class="upper-mil-label-bold">MIL-5 Defined</p>
+                        <p class="upper-mil-label-desc pe-0 pr-0">Domain practices are supported by enterprise
+                            standardization and analysis of lessons learned.</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -41,11 +41,20 @@
 
         </div>
     </div>
-    <div class="mt-3 mb-5">
+    <div class="mt-3 mb-5" style="display: flex; justify-content: space-between;">
         <button class="btn btn-primary" (click)="navToDiagram('')"><i
                 class="fas fa-project-diagram mr-2"></i>{{buttonText}}</button>
-        <!-- <button class="btn btn-primary" (click)="navToDiagram('orig')"><i
-                class="fas fa-project-diagram mr-2"></i>{{buttonText}} ORIG</button> -->
+
+        <span *ngIf="configSvc.installationMode == 'RENEW'">
+            <button class="btn btn-primary" (click)="openMalcolmInstructionsDialog()">
+                Import Malcolm
+            </button>
+            <!-- <label for="importFile" >
+                Import Malcolm
+            </label>
+            <input type="file" class="display-none" id="importFile" multiple accept=".json"
+                (change)="openMalcolmInstructionsDialog()"> -->
+        </span>
     </div>
 
     <app-nav-back-next [page]="'diagram'"></app-nav-back-next>

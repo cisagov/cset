@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -30,7 +30,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 m-4">
-                    <p>This tool allows you to export either your ACET or ISE assessments into an excel file to view the raw data.</p>
+                    <p>This tool allows you to export either your ACET or ISE assessments into an excel file to view the
+                        raw data.</p>
                     <p>This data is for simple analysis and cannot be reimported into this system.</p>
                 </div>
             </div>
@@ -42,9 +43,9 @@
     <button class="btn btn-secondary mr-4" (click)="close()">Cancel</button>
 
     <button [matTooltip]="getAcetTooltip()" class="btn btn-primary mr-1" [disabled]="this.acetCount == 0"
-            (click)="exportAcetToExcel()">Export ACET Assessments</button>
+        (click)="exportAcetToExcel()">Export ACET Assessments</button>
 
     <button [matTooltip]="getIseTooltip()" class="btn btn-primary" [disabled]="this.iseCount == 0"
-            (click)="exportIseToExcel()">Export ISE Assessments</button>
-            
+        (click)="exportIseToExcel()">Export ISE Assessments</button>
+
 </mat-dialog-actions>

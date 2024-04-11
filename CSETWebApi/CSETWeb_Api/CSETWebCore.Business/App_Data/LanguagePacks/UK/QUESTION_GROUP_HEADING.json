@@ -1,0 +1,366 @@
+[
+  {
+    "key": "1",
+    "value": "800-53 R3"
+  },
+  {
+    "key": "2",
+    "value": "800-53 R3 App I"
+  },
+  {
+    "key": "3",
+    "value": "800-82"
+  },
+  {
+    "key": "4",
+    "value": "Access Control"
+  },
+  {
+    "key": "5",
+    "value": "Account Management"
+  },
+  {
+    "key": "6",
+    "value": "Audit and Accountability"
+  },
+  {
+    "key": "7",
+    "value": "Boundary Protection"
+  },
+  {
+    "key": "8",
+    "value": "CFATS"
+  },
+  {
+    "key": "9",
+    "value": "Communication Protection"
+  },
+  {
+    "key": "10",
+    "value": "Configuration Management"
+  },
+  {
+    "key": "11",
+    "value": "Continuity"
+  },
+  {
+    "key": "12",
+    "value": "Defense in Depth"
+  },
+  {
+    "key": "13",
+    "value": "Encryption"
+  },
+  {
+    "key": "14",
+    "value": "Environmental Security"
+  },
+  {
+    "key": "15",
+    "value": "Firewall"
+  },
+  {
+    "key": "16",
+    "value": "Host Intrusion Detection"
+  },
+  {
+    "key": "17",
+    "value": "Incident Response"
+  },
+  {
+    "key": "18",
+    "value": "Information Protection"
+  },
+  {
+    "key": "19",
+    "value": "Information and Document Management"
+  },
+  {
+    "key": "20",
+    "value": "Intrusion Detection"
+  },
+  {
+    "key": "21",
+    "value": "Logging"
+  },
+  {
+    "key": "22",
+    "value": "Maintenance"
+  },
+  {
+    "key": "23",
+    "value": "Management"
+  },
+  {
+    "key": "24",
+    "value": "Management Practices"
+  },
+  {
+    "key": "25",
+    "value": "Monitoring & Malware"
+  },
+  {
+    "key": "26",
+    "value": "NERC Rev 3"
+  },
+  {
+    "key": "27",
+    "value": "NIST_SAL"
+  },
+  {
+    "key": "28",
+    "value": "NRC 5.71"
+  },
+  {
+    "key": "29",
+    "value": "Organizational"
+  },
+  {
+    "key": "30",
+    "value": "Password"
+  },
+  {
+    "key": "31",
+    "value": "Personnel"
+  },
+  {
+    "key": "32",
+    "value": "Physical Access"
+  },
+  {
+    "key": "33",
+    "value": "Physical Security"
+  },
+  {
+    "key": "34",
+    "value": "Planning"
+  },
+  {
+    "key": "35",
+    "value": "Plans"
+  },
+  {
+    "key": "36",
+    "value": "Policies"
+  },
+  {
+    "key": "37",
+    "value": "Policies & Procedures General"
+  },
+  {
+    "key": "38",
+    "value": "Portable/Mobile/Wireless"
+  },
+  {
+    "key": "39",
+    "value": "Procedures"
+  },
+  {
+    "key": "40",
+    "value": "Remote Access Control"
+  },
+  {
+    "key": "41",
+    "value": "Risk Management and Assessment"
+  },
+  {
+    "key": "42",
+    "value": "Securing Content"
+  },
+  {
+    "key": "43",
+    "value": "Securing the Component"
+  },
+  {
+    "key": "44",
+    "value": "Securing the Router"
+  },
+  {
+    "key": "45",
+    "value": "Securing the System"
+  },
+  {
+    "key": "46",
+    "value": "Safety Instrumented System (SIS)"
+  },
+  {
+    "key": "47",
+    "value": "Software"
+  },
+  {
+    "key": "48",
+    "value": "System and Services Acquisition"
+  },
+  {
+    "key": "49",
+    "value": "System Integrity"
+  },
+  {
+    "key": "50",
+    "value": "System Protection"
+  },
+  {
+    "key": "51",
+    "value": "Training"
+  },
+  {
+    "key": "52",
+    "value": "User Authentication"
+  },
+  {
+    "key": "54",
+    "value": "Privacy"
+  },
+  {
+    "key": "55",
+    "value": "NISTIR"
+  },
+  {
+    "key": "56",
+    "value": "INGAA"
+  },
+  {
+    "key": "57",
+    "value": "NEI 0809 R6"
+  },
+  {
+    "key": "58",
+    "value": "Виявлення"
+  },
+  {
+    "key": "59",
+    "value": "Ідентифікація"
+  },
+  {
+    "key": "60",
+    "value": "Захист"
+  },
+  {
+    "key": "61",
+    "value": "Disaster Recovery"
+  },
+  {
+    "key": "62",
+    "value": "Реагування"
+  },
+  {
+    "key": "63",
+    "value": "Awareness and Training"
+  },
+  {
+    "key": "64",
+    "value": "Contingency Planning"
+  },
+  {
+    "key": "65",
+    "value": "Identification and Authentication"
+  },
+  {
+    "key": "66",
+    "value": "Media Protection"
+  },
+  {
+    "key": "67",
+    "value": "Personnel Security"
+  },
+  {
+    "key": "68",
+    "value": "Physical and Environmental Protection"
+  },
+  {
+    "key": "69",
+    "value": "Program Management"
+  },
+  {
+    "key": "70",
+    "value": "Risk Assessment"
+  },
+  {
+    "key": "71",
+    "value": "Security Assessment and Authorization"
+  },
+  {
+    "key": "72",
+    "value": "System and Communications Protection"
+  },
+  {
+    "key": "73",
+    "value": "System and Information Integrity"
+  },
+  {
+    "key": "74",
+    "value": "NERC5"
+  },
+  {
+    "key": "75",
+    "value": "Provenance"
+  },
+  {
+    "key": "76",
+    "value": "HIPAA"
+  },
+  {
+    "key": "78",
+    "value": "Vulnerability Assessment and Management"
+  },
+  {
+    "key": "79",
+    "value": "Mobile Device Management MDM "
+  },
+  {
+    "key": "80",
+    "value": "Відновлення"
+  },
+  {
+    "key": "81",
+    "value": "Recovery"
+  },
+  {
+    "key": "82",
+    "value": "Supply Chain"
+  },
+  {
+    "key": "83",
+    "value": "Information Exchange"
+  },
+  {
+    "key": "84",
+    "value": "Relationship Management"
+  },
+  {
+    "key": "85",
+    "value": "Application Security"
+  },
+  {
+    "key": "86",
+    "value": "Data Security"
+  },
+  {
+    "key": "87",
+    "value": "Education"
+  },
+  {
+    "key": "88",
+    "value": "Governance and Risk Management"
+  },
+  {
+    "key": "89",
+    "value": "Operations Security"
+  },
+  {
+    "key": "90",
+    "value": "Service Level Agreements (SLA)"
+  },
+  {
+    "key": "1085",
+    "value": "Assessment, Authorization, and Monitoring"
+  },
+  {
+    "key": "1086",
+    "value": "Personally Identifiable Information Processing and Transparency"
+  },
+  {
+    "key": "1087",
+    "value": "Supply Chain Risk Management"
+  }
+]

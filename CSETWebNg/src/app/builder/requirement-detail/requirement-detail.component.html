@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
-  
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
+
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
@@ -32,12 +32,12 @@
       <div class="form-group p-0 col-md-6">
         <label>Category</label>
         <div class="font-weight-bold">
-          <input required type="text" maxlength="250" class="form-control" 
-            id="category" name="category" list="catoptions" [(ngModel)]="r.category"
-            (change)="updateRequirement($event)">
+          <input required type="text" maxlength="250" class="form-control" id="category" name="category"
+            list="catoptions" [(ngModel)]="r.category" (change)="updateRequirement($event)">
 
           <datalist id="catoptions">
-            <option *ngFor="let category of categories" [attr.data-value]="category.id" [value]="category.text"></option>
+            <option *ngFor="let category of categories" [attr.data-value]="category.id" [value]="category.text">
+            </option>
           </datalist>
         </div>
       </div>
@@ -46,7 +46,8 @@
         <label>Subcategory</label>
         <div class="font-weight-bold">
           <input required #subcat="ngModel" type="text" maxlength="100" id="subcategory" name="subcategory"
-            [(ngModel)]="r.subcategory" (change)="updateRequirement($event)" list="subcatoptions" class="form-control" />
+            [(ngModel)]="r.subcategory" (change)="updateRequirement($event)" list="subcatoptions"
+            class="form-control" />
 
           <datalist id="subcatoptions">
             <option *ngFor="let subcategory of subcategories" [attr.data-value]="subcategory.id"
@@ -115,7 +116,7 @@
       </div>
       <table class="builder-requirement-docs">
         <tr>
-          <th class="pr-4">Source Documents</th>
+          <th class="pr-4">{{t('extras.source documents')}}</th>
           <th>Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.sourceDocs">
@@ -153,7 +154,7 @@
           </td>
         </tr>
         <tr>
-          <th class="pt-2 pr-4">Additional Documents</th>
+          <th class="pt-2 pr-4">{{t('extras.additional documents')}}</th>
           <th class="pt-2">Bookmark</th>
         </tr>
         <tr *ngFor="let ref of r.additionalDocs">

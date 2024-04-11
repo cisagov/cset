@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,10 +28,10 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
         }
 
         private Dictionary<string, NetworkComponent> nodes { get; set; }
-        
+
         private void SetIsMultiHomed()
         {
-            foreach(NetworkComponent nc in nodes.Values)
+            foreach (NetworkComponent nc in nodes.Values)
             {
                 nc.isMultipleConnections = (nc.Connections.Count > 1);
             }
@@ -59,7 +59,7 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
                 if (!ProcessedAlreadyConnections.Contains(nc))
                 {
                     ExtractLeafSpanningTree treeConnections = new ExtractLeafSpanningTree(nc);
-                    foreach(NetworkComponent already in treeConnections.ProcessedAlreadyConnections)
+                    foreach (NetworkComponent already in treeConnections.ProcessedAlreadyConnections)
                     {
                         ProcessedAlreadyConnections.Add(already);
                     }

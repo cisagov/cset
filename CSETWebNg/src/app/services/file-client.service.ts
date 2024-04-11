@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@ export class FileUploadClientService {
   downloadUrl: String;
   token: String;
   exportUrl: string;
+  exportJsonUrl: string;
 
   continueUpload: boolean = true;
 
@@ -51,6 +52,7 @@ export class FileUploadClientService {
     private authSvc: AuthenticationService) {
     this.downloadUrl = this.configSvc.apiUrl + 'files/download/';
     this.exportUrl = this.configSvc.apiUrl + 'assessment/export';
+    this.exportJsonUrl = this.configSvc.apiUrl + 'assessment/export/json';
     this.token = this.authSvc.userToken();
   }
 
@@ -220,14 +222,14 @@ export class FileUploadClientService {
   */
   uploadCsafFiles(fileItems: Set<File>): { [key: string]: Observable<number> } {
     const apiEndpoint = this.configSvc.apiUrl + 'diagram/vulnerabilities';
-    const tmpheader = new HttpHeaders({'Authorization': localStorage.getItem('userToken')});
+    const tmpheader = new HttpHeaders({ 'Authorization': localStorage.getItem('userToken') });
     tmpheader.append('Authorization', localStorage.getItem('userToken'));
 
     // this will be the our resulting map
     const status = {};
 
     for (let fileItem of fileItems) {
-      if(!this.continueUpload) {
+      if (!this.continueUpload) {
         fileItems = null;
         break;
       }
@@ -256,12 +258,12 @@ export class FileUploadClientService {
 
       // send the http-request and subscribe for progress-updates
       this.http.request(req).subscribe(event => {
-        if(!this.continueUpload) {
+        if (!this.continueUpload) {
           fileItems = null;
           progress.isStopped = true;
           return status;
         }
-    
+
         if (event.type === HttpEventType.UploadProgress) {
 
           // calculate the progress percentage
@@ -273,11 +275,11 @@ export class FileUploadClientService {
           if (event.status != 200) { //MAYBE: Make this >= 400
             let errObj = {
               message: fileItems.size == 1 ? "File import failed. Ensure the JSON is properly formatted."
-              : "Some files failed to import. Ensure the JSON is properly formatted.",
+                : "Some files failed to import. Ensure the JSON is properly formatted.",
             };
             progress.error(errObj);
           }
-          
+
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           else {

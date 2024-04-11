@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
-import { Answer, Question } from '../../models/questions.model';
+import { Answer } from '../../models/questions.model';
 import { QuestionsService } from '../../services/questions.service';
 
 @Component({
@@ -32,7 +32,7 @@ import { QuestionsService } from '../../services/questions.service';
   templateUrl: './component-override.component.html',
   // eslint-disable-next-line
   host: { class: 'd-flex flex-column flex-11a' },
-  styleUrls: ['./component-override.component.scss']
+  // styleUrls: ['./component-override.component.scss']
 })
 export class ComponentOverrideComponent {
 
@@ -60,10 +60,10 @@ export class ComponentOverrideComponent {
       });
   }
 
-    /**
-   * 
-   * @param ans 
-   */
+  /**
+ * 
+ * @param ans 
+ */
   showThisOption(ans: string) {
     if (!this.questionsSvc.questions) {
       return true;
@@ -78,6 +78,8 @@ export class ComponentOverrideComponent {
     }
 
     q.answer_Text = newAnswerValue;
+
+    q.question_Number = this.data.myQuestion.displayNumber;
 
     const answer: Answer = {
       answerId: q.answer_Id,
@@ -95,6 +97,7 @@ export class ComponentOverrideComponent {
       is_Maturity: q.is_Maturity,
       componentGuid: q.component_GUID
     };
+
 
     // update the master question structure
     this.questionsSvc.setAnswerInQuestionList(q.question_Id, q.answer_Id, q.answer_Text);

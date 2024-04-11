@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -57,7 +57,7 @@ export class UploadExportComponent implements OnInit {
   successfulAssessmentIndexes = [];
 
   xCount = 0; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
-  appCode: string = "";
+  appName: string = "";
 
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
     public newDialog: MatDialog,
@@ -74,8 +74,8 @@ export class UploadExportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appCode = this.configSvc.installationMode;
-    
+    this.appName = this.configSvc.installationMode;
+
     if (this.data) {
       const files: { [key: string]: File } = this.data.files;
       for (const key in files) {
@@ -184,7 +184,7 @@ export class UploadExportComponent implements OnInit {
           this.successfulAssessmentIndexes.push(i);
           this.files.delete(fileToRemove);
 
-          if (count >= allProgressObservables.length){
+          if (count >= allProgressObservables.length) {
             if (this.data.isCsafUpload) {
               this.canBeClosed = true;
               this.dialog.disableClose = false;

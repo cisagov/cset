@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,8 @@
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
+import { TranslocoService } from '@ngneat/transloco';
+
 
 @Component({
   selector: 'app-sal-section',
@@ -44,7 +46,8 @@ export class SalSectionComponent implements OnInit {
    * @param analysisSvc 
    */
   constructor(
-    public analysisSvc: ReportAnalysisService
+    public analysisSvc: ReportAnalysisService, 
+    public tSvc: TranslocoService
   ) { }
 
   /**
@@ -63,6 +66,18 @@ export class SalSectionComponent implements OnInit {
     v = this.response.nistTypes.find(x => x.ciA_Type === 'Availability');
     if (!!v) {
       this.nistSalA = v.justification;
+    }
+    if (this.response.genSalTable){
+      this.translateSALValues()
+    }
+  }
+
+  // Translate Gen Sal values 
+  translateSALValues(){
+    for (let salValue in this.response.genSalTable){
+      if (this.response.genSalTable[salValue] === 'None'){
+        this.response.genSalTable[salValue] = this.tSvc.translate('titles.sal.gen sal.none')
+      } 
     }
   }
 }

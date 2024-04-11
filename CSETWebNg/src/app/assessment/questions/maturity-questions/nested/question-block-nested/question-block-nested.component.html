@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -52,13 +52,14 @@
         </div>
 
         <div *ngIf="q.questionType == 'text'">
+            
             <input type="text" class="form-control w-100" maxlength="4000" [value]="q.answerMemo"
                 (change)="changeText(q, $event)">
         </div>
 
         <div *ngIf="q.questionType == 'min-hr-day'">
             <input type="text" class="form-control mr-2" style="width: 6rem; display: inline" maxlength="5" #tsNumber
-                digitsOnlyNotZero [value]="getMhdNum(q.answerMemo)" (change)="changeMinHrDay(tsNumber, tsUnit, q)">
+                digitsOnly [value]="getMhdNum(q.answerMemo)" (change)="changeMinHrDay(tsNumber, tsUnit, q)">
             <select class="form-control d-inline" style="width: 30%;" #tsUnit [value]="getMhdUnit(q.answerMemo)"
                 (change)="changeMinHrDay(tsNumber, tsUnit, q)">
                 <option value="">-- Select Unit --</option>
@@ -68,7 +69,7 @@
             </select>
         </div>
 
-        <app-option-block-nested [q]="q" [opts]="q.options"></app-option-block-nested>
+        <app-option-block-nested [q]="q" [opts]="q.options" [malcolmInfo]="malcolmInfo"></app-option-block-nested>
 
         <div *ngIf="q.followups?.length > 0" class="pl-5 pt-5">
             <app-question-block-nested #questionBlock [questions]="q.followups"></app-question-block-nested>

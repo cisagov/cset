@@ -30,8 +30,7 @@ public partial class SETS
     [StringLength(50)]
     public string Short_Name { get; set; }
 
-    [Required]
-    public bool? Is_Displayed { get; set; }
+    public bool Is_Displayed { get; set; }
 
     /// <summary>
     /// The Is Pass Fail is used to
@@ -73,8 +72,7 @@ public partial class SETS
 
     public bool IsEncryptedModule { get; set; }
 
-    [Required]
-    public bool? IsEncryptedModuleOpen { get; set; }
+    public bool IsEncryptedModuleOpen { get; set; }
 
     [InverseProperty("Set_NameNavigation")]
     public virtual ICollection<AVAILABLE_STANDARDS> AVAILABLE_STANDARDS { get; set; } = new List<AVAILABLE_STANDARDS>();

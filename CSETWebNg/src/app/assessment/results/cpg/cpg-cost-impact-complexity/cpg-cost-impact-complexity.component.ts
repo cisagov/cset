@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-cpg-cost-impact-complexity',
@@ -38,18 +39,26 @@ export class CpgCostImpactComplexityComponent implements OnInit {
 
   @Input()
   impact: string;
+  impactWord: string;
 
   @Input()
   complexity: string
+  complexityWord: string;
 
   /**
    * 
    */
-  constructor() { }
+  constructor(
+    private tSvc: TranslocoService
+  ) { }
 
   ngOnInit(): void {
     this.greenDollars = "$".repeat(Number.parseInt(this.cost));
     this.grayDollars = "$".repeat(4 - Number.parseInt(this.cost));
+
+    // i18n
+    this.impactWord = this.tSvc.translate('reports.core.cpg.report.' + this.impact.toLowerCase());
+    this.complexityWord = this.tSvc.translate('reports.core.cpg.report.' + this.complexity.toLowerCase());
   }
 
   lowMedHigh(val: string) {

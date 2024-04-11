@@ -54,7 +54,6 @@
 <div class="b-pageLayout" id="pageLayout">
 <script type="text/javascript">
 //<![CDATA[
-    $("#pageLayout").addClass("loading");
     if ($.drex_avoid_load)
         $("#pageLayout").addClass("hidden");
     else if (1 == 1 && !is_touch_device())
@@ -64,6 +63,7 @@
         <div class="b-pageContent
         m-pageContent__withoutLeft
         m-pageContent__withoutRight
+        m-pageContent__withoutFooter
 " id="pageContent">
             <table id="noscriptWarning" style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
                 <tr style="border-style: none; width: 100%; padding: 0; margin: 0; border-collapse: collapse;">
@@ -77,9 +77,7 @@
             <table class="b-pageContent__layout">
                 <tr class="b-pageContent__row m-pageContent__row__header" id="pageContentHeader">
                     <td class="b-pageContent__side m-pageContent__side__header">
-                        <div class="m-pageContent__side__header__wrapper">
-                            <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                        </div>
+                        
                     </td>
                 </tr>
                 <tr>
@@ -212,6 +210,30 @@
                                         <div class="b-workZone__content" id="workZone_article__content">
                                             <a href="#" class="b-article__presentSideNavButton" id="presentSideNavButton"><span></span></a>
                                             <div class="b-workZone__overlay" id="workZone_article__overlay"></div>
+<div class="b-search m-search__workZone" id="searchZone">
+    <form action="#" class="b-search__form">
+        <table class="b-search__layout">
+            <tr>
+                <td class="b-search__side m-search__side__input">
+                    <div class="b-search__gap">
+                        <span class="b-interfaceIcon m-interfaceIcon__search m-interfaceIcon__search__input b-search__inputTextIcon"></span>
+                        <label id="workZone_searchInput_label" for="workZone_searchInput" class="b-search__labelPlaceholder">Search</label>
+                        <input id="workZone_searchInput" type="text" value="" class="b-search__inputText" />
+                    </div>
+                </td>
+                <td class="b-search__side m-search__side__submit">
+                    <span class="b-button b-search__button">
+                        <span class="b-button__wrapper">
+                            <span class="b-button__text"></span>
+                        </span>
+                        <input type="submit" class="b-button__submit" value="Search" id="workZone_searchSubmit" />
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div><!-- /search -->
+
 
 <div class="b-article" id="article">
     <div class="b-article__preWrapper">
@@ -221,7 +243,7 @@
                     <div id="headerSide__nav__breadCrumbs" class="b-breadCrumbs">
                         <ul class="b-breadCrumbs__items"><li class="b-breadCrumbs__item"><a href="main_cset_window_sections.htm" class="b-breadCrumbs__link">Main CSET Window Sections</a></li>
 
-<li class="b-breadCrumbs__item"><a href="cset_assessment_basics.htm" class="b-breadCrumbs__link">CSET Assessment Basics</a></li>
+<li class="b-breadCrumbs__item"><a href="prepare_section.htm" class="b-breadCrumbs__link">Prepare Section</a></li>
 
 <li class="b-breadCrumbs__item">Cybersecurity Framework Description</li>
 </ul>                    </div>
@@ -229,10 +251,9 @@
                 <td id="headerSide__buttons" class="b-article__headerSide m-article__headerSide__buttons">
                     <div class="b-controlButtons">
                         <ul class="b-controlButtons__items">
-                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="sal_window_fips_selection.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
+                            <li class="b-controlButtons__item m-controlButtons__item__prev"><a href="cmmc.htm" class="b-controlButtons__link" title="Previous page"><span class="b-controlButtons__link_icon"></span><span class="b-controlButtons__link_text">&#xa0;Previous page</span></a></li>
                             <li class="b-controlButtons__item m-controlButtons__item__next"><a href="framework_implementation_tiers.htm" class="b-controlButtons__link" title="Next page"><span class="b-controlButtons__link_text">Next page&#xa0;</span><span class="b-controlButtons__link_icon"></span></a></li>
-                                <li class="b-controlButtons__item m-controlButtons__item__print"><a href="cybersecurity_framework_description_print.htm" class="b-controlButtons__link"><span class="b-interfaceIcon m-interfaceIcon__print"></span>Print version</a></li>
-                        </ul>
+                                                </ul>
                     </div>
                 </td>
             </tr>
@@ -260,7 +281,7 @@
                             .addClass("b-article__headerSide m-article__headerSide__buttons")
                             .append(
                                 $("<div></div>").addClass("b-controlButtons")
-                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"sal_window_fips_selection.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"framework_implementation_tiers.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n        <li class=\"b-controlButtons__item m-controlButtons__item__print\"><a href=\"cybersecurity_framework_description_print.htm\" class=\"b-controlButtons__link\"><span class=\"b-interfaceIcon m-interfaceIcon__print\"></span>Print version</a></li>\n"))
+                                .html($("<ul></ul>").addClass("b-controlButtons__items").html("    <li class=\"b-controlButtons__item m-controlButtons__item__prev\"><a href=\"cmmc.htm\" class=\"b-controlButtons__link\" title=\"Previous page\"><span class=\"b-controlButtons__link_icon\"></span><span class=\"b-controlButtons__link_text\">&#xa0;Previous page</span></a></li>\n    <li class=\"b-controlButtons__item m-controlButtons__item__next\"><a href=\"framework_implementation_tiers.htm\" class=\"b-controlButtons__link\" title=\"Next page\"><span class=\"b-controlButtons__link_text\">Next page&#xa0;</span><span class=\"b-controlButtons__link_icon\"></span></a></li>\n"))
                             )
                         )
                     )
@@ -293,8 +314,7 @@
                                 $( "#pageContentFooter" ).addClass("hidden");
                         //]]>
                         </script>
-                        <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-                    </td>
+                                            </td>
                 </tr>
             </table>
         </div><!-- /pageContent -->
@@ -304,11 +324,6 @@
     <noscript>
     <div>To properly display this page you need a browser with JavaScript support.</div>
     </noscript>
-    <script>
-    //<![CDATA[
-        $("#hiddenContent").addClass("loading");
-    //]]>
-    </script>
                 <div class="description_on_page"><div class="p" style="text-align: center; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="ic"><h1><strong>Cybersecurity Framework Description</strong></h1></div></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">This section provides additional information about the Cybersecurity Framework assessment mode. This function was added to CSET in response to Executive Order 13636, Improving Critical Infrastructure Cybersecurity issued on February 12, 2013, which calls for the development of a voluntary risk-based Cybersecurity Framework. The Framework consists of three parts: (1) the Framework Core, (2) the Framework Implementation Tiers, and (3) the Framework Profile. </div>
@@ -336,14 +351,14 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Functions and Categories are identified as shown in the figure below.</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="Function and category identifiers " style="border: solid 0px;  " width="604" height="466" class="de_custom_img de_780D01ADE8" src="drex_cybersecurity_framework_description_custom.png" data-full-src="drex_cybersecurity_framework_description_custom.png" data-full-width="604" data-full-height="466" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="604" height="466" class=" de_780D01ADE8" src="drex_cybersecurity_framework_description_custom.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Function and category identifiers </strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">The Framework Core represents a common set of activities for managing cybersecurity risk. In other words, it presents what owners and operators of cyber assets should do to secure their systems. While it is not exhaustive, it is extensible, allowing organizations, sectors, and other entities to use Subcategories and Informative References that are cost-effective and efficient and that enable the organizations to manage their cybersecurity risk. </div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">As an example, the recommended activities for Asset Management are shown in the figure below The actions listed under Subcategory will, when implemented, increase cybersecurity and decrease risk. The provided references are the Standards and guidelines from whence the recommended actions were derived. </div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="Framework core example" style="border: solid 0px;  " width="564" height="630" class="de_custom_img de_780D01ADE8" src="drex_cybersecurity_framework_description_custom_2.png" data-full-src="drex_cybersecurity_framework_description_custom_2.png" data-full-width="564" data-full-height="630" /></div>
+<div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><img  alt="" style="border: solid 0px;  " width="564" height="630" class=" de_780D01ADE8" src="drex_cybersecurity_framework_description_custom_2.png"/></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="Caption"><strong>Figure: Framework core example</strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
@@ -398,49 +413,49 @@
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="T1"><strong>Tier 1: Partial </strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-22" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-22;">
+<ul class="de_list"><li class="list-element list-counter-24" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-24;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Risk Management Process</strong></span> – Organizational cybersecurity risk management practices are not formalized, and risk is managed in an ad hoc and sometimes reactive manner. Prioritization of cybersecurity activities may not be directly informed by organizational risk objectives, the threat environment, or business/mission requirements. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-23" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-23;">
+<ul class="de_list"><li class="list-element list-counter-25" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-25;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Integrated Risk Management Program</strong></span> – Awareness of cybersecurity risk is limited at the organizational level, and an organization-wide approach to managing cybersecurity risk has not been established. The organization implements cybersecurity risk management on an irregular, case-by-case basis because of varied experience or information gained from outside sources. The organization may not have processes that enable cybersecurity information to be shared within the organization. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-24" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-24;">
+<ul class="de_list"><li class="list-element list-counter-26" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-26;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>External Participation</strong></span> – An organization may not have the processes in place to participate in coordination or collaboration with other entities. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="T1"><strong>Tier 2: Risk Informed </strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-25" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-25;">
+<ul class="de_list"><li class="list-element list-counter-27" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-27;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Risk Management Process</strong></span> – Risk management practices are approved by management but may not be established as an organization wide policy. Prioritization of cybersecurity activities is directly informed by organizational risk objectives, the threat environment, or business/mission requirements. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-26" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-26;">
+<ul class="de_list"><li class="list-element list-counter-28" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-28;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Integrated Risk Management Program</strong></span> – There is an awareness of cybersecurity risk at the organizational level, but an organization-wide approach to managing cybersecurity risk has not been established. Risk-informed, management-approved processes and procedures are defined and implemented, and staff has adequate resources to perform their cybersecurity duties. Cybersecurity information is shared within the organization on an informal basis. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-27" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-27;">
+<ul class="de_list"><li class="list-element list-counter-29" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-29;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>External Participation </strong></span>– The organization knows its role in the larger ecosystem, but has not formalized its capabilities to interact and share information externally. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="T1"><strong>Tier 3: Repeatable </strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-28" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-28;">
+<ul class="de_list"><li class="list-element list-counter-30" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-30;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Risk Management Process</strong></span> – The organization’s risk management practices are formally approved and expressed as policy. Organizational cybersecurity practices are regularly updated based on the application of risk management processes to changes in business/mission requirements and a changing threat and technology landscape. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-29" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-29;">
+<ul class="de_list"><li class="list-element list-counter-31" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-31;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Integrated Risk Management Program</strong></span> – There is an organization-wide approach to manage cybersecurity risk. Risk-informed policies, processes, and procedures are defined, implemented as intended, and reviewed. Consistent methods are in place to respond effectively to changes in risk. Personnel possess the knowledge and skills to perform their appointed roles and responsibilities. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-30" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-30;">
+<ul class="de_list"><li class="list-element list-counter-32" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-32;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>External Participation</strong></span> – The organization understands its dependencies and partners and receives information from these partners that enables collaboration and risk-based management decisions within the organization in response to events. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><span class="T1"><strong>Tier 4: Adaptive </strong></span></div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-31" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-31;">
+<ul class="de_list"><li class="list-element list-counter-33" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-33;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Risk Management Process</strong></span> – The organization adapts its cybersecurity practices based on lessons learned and predictive indicators derived from previous and current cybersecurity activities. Through a process of continuous improvement incorporating advanced cybersecurity technologies and practices, the organization actively adapts to a changing cybersecurity landscape and responds to evolving and sophisticated threats in a timely manner. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-32" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-32;">
+<ul class="de_list"><li class="list-element list-counter-34" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-34;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>Integrated Risk Management Program</strong></span> – An organization-wide approach to managing cybersecurity risk uses risk-informed policies, processes, and procedures to address potential cybersecurity events. Cybersecurity risk management is part of the organizational culture and evolves from an awareness of previous activities, information shared by other sources, and continuous awareness of activities on their systems and networks. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
-<ul class="de_list"><li class="list-element list-counter-33" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-33;">
+<ul class="de_list"><li class="list-element list-counter-35" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; direction: ltr; counter-reset: list-counter-35;">
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;"><div class="list-marker" style="color:#003366;font-size:12pt;font-family:&quot;Arial&quot;; display: inline-block; direction: ltr;"></div><span class="Subtitle"><strong>External Participation</strong></span> – The organization manages risk and actively shares information with partners to ensure that accurate, current information is being distributed and consumed to improve cybersecurity before a cybersecurity event occurs. </div>
 </li></ul><div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">&#160;</div>
 <div class="p" style="text-align: left; direction: ltr; margin-left: 0px; text-indent: 0px;">Successful implementation of the Framework is based on achievement of the outcomes described in the organization’s Target Profiles and not on Tier determination.</div>
@@ -462,48 +477,6 @@
 	<span class="b-tree__itemText"><a class="b-breadCrumbs__link" href="framework_implementation_tiers.htm">Framework Implementation Tiers</a></span>
 </div>	</div>
                     			
-                			                <h6 class="b-article__generatorCopyright">
-                    <a class="b-link b-article__generatorCopyrightLink" href="https://www.drexplain.com" target="_blank" rel="nofollow">Made with help of Dr.Explain</a>
-                </h6>
-                </div>
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <div class="pswp__scroll-wrap">
-
-        <!-- Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close"></button>
-                <button class="pswp__button pswp__button--zoom"></button>
-
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                      <div class="pswp__preloader__cut">
-                        <div class="pswp__preloader__donut"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
+                			</div>
 </body>
 </html>

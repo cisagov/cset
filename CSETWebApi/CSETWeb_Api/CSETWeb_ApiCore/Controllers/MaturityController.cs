@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -9,7 +9,6 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.AdminTab;
-using CSETWebCore.Interfaces.Crr;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Reports;
 using CSETWebCore.Model.Maturity;
@@ -36,17 +35,15 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IReportsDataBusiness _reports;
-        private readonly ICrrScoringHelper _crr;        
 
-        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil, 
-            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports, ICrrScoringHelper crr)
+        public MaturityController(ITokenManager tokenManager, CSETContext context, IAssessmentUtil assessmentUtil,
+            IAdminTabBusiness adminTabBusiness, IReportsDataBusiness reports)
         {
             _tokenManager = tokenManager;
             _context = context;
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _reports = reports;
-            _crr = crr;
         }
 
 
@@ -137,15 +134,14 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            int? userId = _tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
+            string lang = _tokenManager.GetCurrentLanguage();
 
             if (installationMode == "ACET")
             {
-                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode));
+                return Ok(new ACETMaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
             }
 
-            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, userId, accessKey, fill, groupingId, installationMode));
+            return Ok(new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness).GetMaturityQuestions(assessmentId, fill, groupingId, installationMode, lang));
         }
 
         [HttpGet]
@@ -262,8 +258,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/maturity/groupingtitles")]
         public IActionResult GetGroupingTitles([FromQuery] int modelId)
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var x = biz.GetGroupingTitles(modelId);
+            var x = biz.GetGroupingTitles(modelId, lang);
             return Ok(x);
         }
 
@@ -342,7 +340,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetGrouping([FromQuery] int groupingId)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            
+
             var grouping = _context.MATURITY_GROUPINGS.FirstOrDefault(x => x.Grouping_Id == groupingId);
             if (grouping == null)
             {
@@ -370,9 +368,26 @@ namespace CSETWebCore.Api.Controllers
             }
 
             resp.Title = grouping.Title;
+            resp.Description = grouping.Description;
 
             return Ok(resp);
 
+        }
+
+        /// <summary>
+        /// Returns list of CIE assessments accessible to the current user.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/maturity/cie/myCieAssessments")]
+        public IActionResult GetCieAssessments()
+        {
+            var assessmentId = _tokenManager.AssessmentForUser();
+            var userId = _tokenManager.PayloadInt(Constants.Constants.Token_UserId);
+
+            var biz = new CieQuestionsBusiness(_context, _assessmentUtil, assessmentId);
+            var x = biz.GetMyCieAssessments(assessmentId, userId);
+            return Ok(x);
         }
 
         /// <summary>
@@ -455,7 +470,7 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/maturity/cis/integritycheck")]
-        public IActionResult GetIntegrityCheckOptions() 
+        public IActionResult GetIntegrityCheckOptions()
         {
             var assessmentId = _tokenManager.AssessmentForUser();
 
@@ -533,11 +548,13 @@ namespace CSETWebCore.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("api/getMaturityResults")]
-        public IActionResult GetMaturityResults(bool spanishFlag = false)
+        public IActionResult GetMaturityResults()
         {
             int assessmentId = _tokenManager.AssessmentForUser();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             MaturityBusiness manager = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-            var maturity = manager.GetMaturityAnswers(assessmentId, spanishFlag);
+            var maturity = manager.GetMaturityAnswers(assessmentId, lang);
 
             return Ok(maturity);
         }
@@ -672,17 +689,17 @@ namespace CSETWebCore.Api.Controllers
             List<Grouping> filteredGroupingsS = new List<Grouping>();
 
             foreach (var b in biz.MyModel.Groupings)
-            {   
+            {
                 var questionsU = new List<Question>();
                 var questionsS = new List<Question>();
                 foreach (var q in b.Questions)
                 {
-                    
+
                     var question = new Question();
                     if (q.AnswerText == "U")
                     {
                         if (q.Options.Any(x => x.OptionType.ToLower() == "radio"))
-                        {                    
+                        {
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -699,7 +716,7 @@ namespace CSETWebCore.Api.Controllers
                     {
                         if (q.Options.Any(x =>
                                 x.Selected && x.OptionText == "No" && x.OptionType.ToLower() == "radio"))
-                        {   
+                        {
                             question = new Question()
                             {
                                 QuestionType = q.QuestionType,
@@ -712,7 +729,7 @@ namespace CSETWebCore.Api.Controllers
                         }
                     }
                 }
-                
+
                 if (questionsU.Any())
                 {
                     filteredGroupingsU.Add(new Grouping
@@ -733,8 +750,8 @@ namespace CSETWebCore.Api.Controllers
                 questionsU = new List<Question>();
                 questionsS = new List<Question>();
             }
-            
-            return Ok(new {no=filteredGroupingsS, unanswered=filteredGroupingsU});
+
+            return Ok(new { no = filteredGroupingsS, unanswered = filteredGroupingsU });
         }
 
         /// <summary>
@@ -767,10 +784,10 @@ namespace CSETWebCore.Api.Controllers
                 MarkedForReviewList = _reports.GetMarkedForReviewList(),
                 Information = _reports.GetInformation()
             };
-            
 
-           data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
-           data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+
+            data.Comments.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
+            data.MarkedForReviewList.RemoveAll(x => oos.Contains(x.Mat.Mat_Question_Id));
 
 
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
@@ -899,14 +916,14 @@ namespace CSETWebCore.Api.Controllers
             var scoring = maturity.GetMvraScoring(model);
             return Ok(scoring);
         }
-        
+
         [HttpGet]
         [Route("api/maturity/mvra/mvraTree")]
         public IActionResult GetMvraTree([FromQuery] int id)
         {
             //int assessemntId = _tokenManager.AssessmentForUser();
             //var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
-           
+
             var maturity = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
             var model = maturity.GetMaturityStructureForModel(9, id);
             //var scoring = maturity.GetMvraScoring(model);

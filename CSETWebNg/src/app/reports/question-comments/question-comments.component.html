@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,31 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<h1>
-    Question Comments
-</h1>
+<div *transloco="let t">
+    <h1>
+        {{t('reports.core.questions comments.questions comments')}}
+    </h1>
 
-<table *ngFor="let c of response?.questionsWithComments" class="cset-table-3">
-    <tr>
-        <th colspan="3">
-            {{c.categoryAndNumber}}
-            <i *ngIf="c.markedForReview === 'True'" class="cset-icons-browse"
-                style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
-        </th>
-    </tr>
-    <tr>
-        <td class="tint2" style="width: 10%">Question:</td>
-        <td class="tint2" [innerHTML]="c.question"></td>
-        <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel('', c.answer)}}</td>
-    </tr>
-    <tr>
-        <td class="tint2">Comment:</td>
-        <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.comment)"></td>
-    </tr>
-</table>
+    <table *ngFor="let c of response?.questionsWithComments" class="cset-table-3">
+        <tr>
+            <th colspan="3">
+                {{c.categoryAndNumber}}
+                <i *ngIf="c.markedForReview === 'True'" class="cset-icons-browse"
+                    style="font-size: 150%; margin: 0 10px; top: 3px; height: 1px;" title="Marked for Review"></i>
+            </th>
+        </tr>
+        <tr>
+            <td class="tint2" style="width: 10%">{{t('reports.core.questions comments.question)}}:</td>
+            <td class="tint2" [innerHTML]="c.question"></td>
+            <td class="tint2" style="width: 20%">{{questionsSvc.answerDisplayLabel('', c.answer)}}</td>
+        </tr>
+        <tr>
+            <td class="tint2">{{t('reports.core.questions comments.comment)}}:</td>
+            <td colspan="2" [innerHTML]="reportSvc.formatLinebreaks(c.comment)"></td>
+        </tr>
+    </table>
 
-<div *ngIf="response?.questionsWithComments.length === 0" class="cset-table-3">
-    There are no questions with comments to display.
+    <div *ngIf="response?.questionsWithComments.length === 0" class="cset-table-3">
+        {{t('reports.core.questions comments.no comments')}}
+    </div>
 </div>

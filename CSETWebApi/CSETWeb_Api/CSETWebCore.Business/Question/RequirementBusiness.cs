@@ -1,17 +1,20 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Api.Models;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
 using Nelibur.ObjectMapper;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CSETWebCore.Business.Question
@@ -115,6 +118,12 @@ namespace CSETWebCore.Business.Question
         public QuestionResponse BuildResponse(List<RequirementPlus> requirements,
             List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
         {
+            // get the user's language
+            var lang = _tokenManager.GetCurrentLanguage();
+
+            var overlay = new TranslationOverlay();
+
+
             var response = new QuestionResponse();
 
             foreach (var req in requirements.OrderBy(x => x.SetShortName).ToList())
@@ -138,6 +147,13 @@ namespace CSETWebCore.Business.Question
                 }
 
 
+                // translate the Category
+                var translatedCategory = overlay.GetPropertyValue("STANDARD_CATEGORY", dbR.Standard_Category.ToLower(), lang);
+                if (translatedCategory != null)
+                {
+                    dbR.Standard_Category = translatedCategory;
+                }
+
 
                 // find or create the category
                 var category = response.Categories.Where(cat => cat.SetName == req.SetName && cat.GroupHeadingText == dbR.Standard_Category).FirstOrDefault();
@@ -149,7 +165,16 @@ namespace CSETWebCore.Business.Question
                         SetName = req.SetName,
                         StandardShortName = req.SetShortName
                     };
+
                     response.Categories.Add(category);
+                }
+
+
+                // translate the Subcategory using the CATEGORIES translation object
+                var translatedSubcategory = overlay.GetPropertyValue("STANDARD_CATEGORY", dbR.Standard_Sub_Category.ToLower(), lang);
+                if (translatedSubcategory != null)
+                {
+                    dbR.Standard_Sub_Category = translatedSubcategory;
                 }
 
 
@@ -189,6 +214,13 @@ namespace CSETWebCore.Business.Question
                     QuestionType = answer?.a.Question_Type
                 };
 
+
+                var reqOverlay = overlay.GetRequirement(dbR.Requirement_Id, lang);
+                if (reqOverlay != null)
+                {
+                    qa.QuestionText = reqOverlay.RequirementText;
+                }
+
                 if (string.IsNullOrEmpty(qa.QuestionType))
                 {
                     qa.QuestionType = _questionRequirement.DetermineQuestionType(qa.Is_Requirement, qa.Is_Component, false, qa.Is_Maturity);
@@ -198,6 +230,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
@@ -331,6 +366,9 @@ namespace CSETWebCore.Business.Question
                     if (answer != null)
                     {
                         TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
+
+                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                        qa.HasObservation = answer.b.HasDiscovery ?? false;
                     }
 
                     qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);

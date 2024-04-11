@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -38,7 +38,7 @@ export class ModelSelectComponent implements OnInit {
   docUrl: string;
   cmmcURL: string;
   modelChoice: string;
-  isTSA:boolean=false;
+  isTSA: boolean = false;
   // this should be stored in a service
   selectedModels = [];
 
@@ -55,8 +55,8 @@ export class ModelSelectComponent implements OnInit {
   ngOnInit() {
     this.docUrl = this.configSvc.docUrl;
     this.cmmcURL = this.docUrl + 'CMMC_ModelMain 1.02.pdf';
-    if ( this.configSvc.installationMode=="TSA"){
-      this.isTSA=true;
+    if (this.configSvc.installationMode == "TSA") {
+      this.isTSA = true;
     }
   }
 

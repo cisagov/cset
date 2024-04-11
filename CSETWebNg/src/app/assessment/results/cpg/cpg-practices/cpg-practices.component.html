@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,13 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column flex-11a">
-    <h3 class="d-flex flex-column flex-00a">Security Practice Checklist</h3>
+<div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
+    <h3 class="d-flex flex-column flex-00a">{{t('reports.core.cpg.report.security practice checklist')}}</h3>
     <p class="mb-0">
-        This table lists all security practices and how they have been answered.
+        {{t('reports.core.cpg.report.p.3')}}
     </p>
-    
+
     <app-cpg-practice-table></app-cpg-practice-table>
-    
+
     <app-nav-back-next [page]="'cpg-practices-page'"></app-nav-back-next>
 </div>

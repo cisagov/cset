@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,6 +8,7 @@ namespace CSETWebCore.Model.Maturity
 {
     public class MaturityComponent
     {
+        public int ComponentId { get; set; }
         public string ComponentName { get; set; }
         public bool Incomplete { get; set; }
         public double Baseline { get; set; }

@@ -1,27 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="CrrNistCsfMapping.xml" />
-    <None Remove="NIST_CSF_Structure.xml" />
+  <ItemGroup>    <None Remove="NIST_CSF_Structure.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="NIST_CSF_Structure.xml" />
-    <EmbeddedResource Include="CrrNistCsfMapping.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.12" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="NJsonSchema" Version="10.9.0" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.5" />
-    <PackageReference Include="Npoi.Mapper" Version="6.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="NJsonSchema" Version="11.0.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
+    <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
     <PackageReference Include="NSoupCore" Version="1.0.0" />
     <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
   </ItemGroup>

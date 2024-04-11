@@ -1,5 +1,5 @@
 <!----------------------
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
@@ -21,12 +21,10 @@
 <div class="report-body mb-5">
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 DATA
             </p>
-            <p
-                class="report-title">
+            <p class="report-title">
                 REPORT
             </p>
         </div>
@@ -50,8 +48,8 @@
                         ">
 
                 <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                <div class="title-page-content">{{response?.information?.assessment_Date  |
-                    date:'dd-MM-yyyy'}}
+                <div class="title-page-content">{{response?.information?.assessment_Date |
+                    localizeDate}}
                 </div>
                 <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
             </div>
@@ -69,8 +67,9 @@
         </div>
 
         <strong>Filename:</strong> {{ response?.information?.assessment_Date
-            | date:'yyyyMMdd' }}{{ response?.information?.charter }}{{ replaceSpaces(response?.information?.credit_Union_Name) }}{{ this.currentDate
-            | date:'h_mm_ss' }}.csv<br>
+        | date:'yyyyMMdd' }}{{ response?.information?.charter }}{{
+        replaceSpaces(response?.information?.credit_Union_Name) }}{{ this.currentDate
+        | date:'h_mm_ss' }}.csv<br>
         <strong>Exam Type:</strong> {{ this.examLevel }}<br>
         <strong>Version:</strong> {{ this.versionName }}<br>
         <strong>Credit Union Name:</strong> {{ response?.information?.credit_Union_Name }}<br>
@@ -98,15 +97,20 @@
                     <ng-container *ngFor="let c of f.components">
                         <ng-container *ngFor="let q of c.questions">
                             <tr>
-                                <td *ngIf="isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">{{q.title}}</td>
-                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                <td *ngIf="isParentQuestion(q.title)" class="background-3 font-weight-bold text-nowrap">
+                                    {{q.title}}</td>
+                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                    class="font-weight-bold text-nowrap">{{q.title}}</td>
 
                                 <td *ngIf="isParentQuestion(q.title)" class="background-3 pr-3"> </td>
-                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))" class="pr-3">{{ answerToNumber(q.answerText) }}</td>
+                                <td *ngIf="!isParentQuestion(q.title) && shouldExpand(getParentQuestionTitle(q.title))"
+                                    class="pr-3">{{ answerToNumber(q.answerText) }}</td>
 
                                 <td *ngIf="isParentQuestion(q.title)" class="background-3">
-                                    <label class="btn form-check-label" style="float: right">{{ this.expandedOptions.get(q.title) ? '-' : '+' }}
-                                        <input class="hide" name="nameExample" type=checkbox (click)="toggleExpansion(q.title)">
+                                    <label class="btn form-check-label" style="float: right">{{
+                                        this.expandedOptions.get(q.title) ? '-' : '+' }}
+                                        <input class="hide" name="nameExample" type=checkbox
+                                            (click)="toggleExpansion(q.title)">
                                     </label>
                                 </td>
                             </tr>
@@ -163,7 +167,8 @@
                 </tr>
             </ng-container>
         </table>
-        <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'" matTooltipPosition="below">Submit
+        <label class="btn form-check-label btn-copy" [matTooltip]="'Copy to Clipboard'"
+            matTooltipPosition="below">Submit
         </label>
     </div>
 </div>

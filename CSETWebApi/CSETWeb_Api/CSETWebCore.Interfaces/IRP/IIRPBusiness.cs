@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -10,7 +10,7 @@ namespace CSETWebCore.Interfaces.IRP
 {
     public interface IIRPBusiness
     {
-        IRPResponse GetIRPList(int assessmentId, bool spanishFlag);
+        IRPResponse GetIRPList(int assessmentId, string lang);
         void PersistSelectedIRP(int assessmentId, IRPModel irp);
     }
 }

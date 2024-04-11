@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -14,7 +14,7 @@ namespace CSETWebCore.Reports.Models
 {
     public class CmuResultsModel
     {
-        public List<CrrMaturityDomainModel> CrrDomains { get; set; }
+        public List<CmuMaturityDomainModel> CmuDomains { get; set; }
 
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace CSETWebCore.Reports.Models
         /// </summary>
         public CmuResultsModel()
         {
-            CrrDomains = new List<CrrMaturityDomainModel>();
+            CmuDomains = new List<CmuMaturityDomainModel>();
         }
 
 
@@ -34,23 +34,23 @@ namespace CSETWebCore.Reports.Models
         {
             foreach (DomainStats d in data)
             {
-                if (CrrDomains.Find(f => f.DomainName == d.domainName) is null)
+                if (CmuDomains.Find(f => f.DomainName == d.domainName) is null)
                 {
-                    CrrDomains.Add(new CrrMaturityDomainModel(d.domainName));
+                    CmuDomains.Add(new CmuMaturityDomainModel(d.domainName));
                 }
-                CrrDomains.Find(c => c.DomainName == d.domainName).AddLevelData(d);
+                CmuDomains.Find(c => c.DomainName == d.domainName).AddLevelData(d);
             }
-            // crrDomains.ForEach(c => c.CalcLevelAcheived());
+            // CmuDomains.ForEach(c => c.CalcLevelAcheived());
         }
 
 
         //TESTING
         public void TrimToNElements(int elementCount)
         {
-            int countToRemove = CrrDomains.Count - elementCount;
+            int countToRemove = CmuDomains.Count - elementCount;
             if (countToRemove > 0)
             {
-                CrrDomains.RemoveRange(elementCount, countToRemove);
+                CmuDomains.RemoveRange(elementCount, countToRemove);
             }
         }
 
@@ -72,10 +72,10 @@ namespace CSETWebCore.Reports.Models
             double milUpperWidth = barWidth * milUpperRatio;
 
 
-            foreach (CrrMaturityDomainModel domain in CrrDomains)
+            foreach (CmuMaturityDomainModel domain in CmuDomains)
             {
                 domain.WidthValpx = mil1Width * domain.DomainScore;
-                
+
                 if (domain.DomainScore > 1)
                 {
                     // reset to MIL-1 complete ...
@@ -98,7 +98,7 @@ namespace CSETWebCore.Reports.Models
         public CmuMaturityDomainModel(string DomainName)
         {
             this.DomainName = DomainName;
-            StatsByLevel = new List<CRRMaturityLevelStats>();
+            StatsByLevel = new List<CMUMaturityLevelStats>();
             WidthValpx = 0;
         }
 
@@ -107,7 +107,7 @@ namespace CSETWebCore.Reports.Models
         public double DomainScore { get; set; }
         public double WidthValpx { get; set; }
 
-        public List<CRRMaturityLevelStats> StatsByLevel { get; set; }
+        public List<CMUMaturityLevelStats> StatsByLevel { get; set; }
 
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace CSETWebCore.Reports.Models
         public void AddLevelData(DomainStats data)
         {
             StatsByLevel.Add(
-                new CRRMaturityLevelStats(
+                new CMUMaturityLevelStats(
                     Int32.Parse(data.ModelLevel),
                     data.questionCount,
                     data.questionAnswered

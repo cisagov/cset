@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,10 @@ export class Comparer {
   }
 
   compareBool(a, b, isAsc) {
-    return (a === b) ? 0 : a ? -1 * (isAsc ? 1 : -1) : 1 * (isAsc ? 1 : -1);
+    return (a === b) ? 0 : (a ? -1 * (isAsc ? 1 : -1) : (1 * (isAsc ? 1 : -1)));
+  }
+
+  compareIseSubmission(a, b, isAsc) {
+    return (a === b) ? 0 : (a ? (b ? this.compare(a, b, isAsc) : 1 * (isAsc ? 1 : -1)) : -1 * (isAsc ? 1 : -1))
   }
 }

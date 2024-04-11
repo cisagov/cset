@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -90,7 +90,7 @@ namespace CSETWebCore.Api.Controllers
         {
             int assessmentId = _token.AssessmentForUser();
             string applicationMode = _questionRequirement.GetApplicationMode(assessmentId);
-           
+
             if (applicationMode.ToLower().StartsWith("questions"))
             {
                 _question.SetQuestionAssessmentId(assessmentId);

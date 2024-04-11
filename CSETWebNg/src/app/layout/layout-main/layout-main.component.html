@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,12 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="bgc-page d-flex flex-column flex-11a w-100">
+<div class="bgc-page d-flex flex-column flex-11a w-100" *transloco="let t">
   <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
     <div class="sticky-navbar">
       <div class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
-        *ngIf="auth.isLocal">
-        <span class="col-sm-12">Local Installation</span>
+        *ngIf="auth.isLocal && devMode">
+        <span class="col-sm-12">{{t('local installation')}}</span>
       </div>
 
       <!-- Navbar -->
@@ -34,21 +34,31 @@
         <!-- *ngIf="auth.userToken() && auth.userToken() !== 'null'">   -->
         <!-- Brand (BASE) -->
         <span
-          [ngClass]="{'btn btn-link navbar-brand': this.router.url!='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
-          (click)="this.router.url!='/resource-library' && goHome()">
+          [ngClass]="{'btn btn-link navbar-brand': this.router.url!=='/resource-library', 'navbar-brand-override-bandaid': (this.router.url == '/resource-library' || isModuleBuilder(this.router.url)) }"
+          (click)="this.router.url!=='/resource-library' && goHome()">
           <!-- CSET Lock Logo -->
           <div class="d-flex justify-content-start align-items-center flex-00a">
             <app-logo-cset mode="white" style="max-height: 3rem"></app-logo-cset>
           </div>
         </span>
 
-        <!-- Navbar Toggler Button -->
-        <button class="navbar-toggler c-gray-150 ml-auto" type="button" data-toggle="collapse"
-          data-target="#csetNavbarCollapse">
+        <!-- Navbar Toggler Button (only renders when screen is narrow enough) -->
+        <button mat-button class="navbar-menu-header navbar-toggler c-gray-150 ml-auto" [matMenuTriggerFor]="topMenus"
+          #topMenusTrigger="matMenuTrigger" tabindex="0">
           <span class="navbar-toggler-icon fs-base-5 c-gray-150"></span>
         </button>
-        <!-- Menus -->
-        <app-top-menus class="w-100"></app-top-menus>
+
+        <!-- Menus contained in the navbar-toggler submenu -->
+        <mat-menu #topMenus="matMenu" class="menu-panel px-3 py-2">
+          <app-top-menus (click)="$event.stopPropagation()"></app-top-menus>
+        </mat-menu>
+
+        <!-- Menus on full size navbar (collapses when screen width gets narrow) -->
+        <app-top-menus class="mt-1 collapse navbar-collapse"></app-top-menus>
+        <span *ngIf="showVersionNotification" class="text-warning">
+          <span class="float-right notification-link" (click)="showNotifications()"><mat-icon class="settingsIcon">settings</mat-icon>   <span class="newinstaller">1</span></span>
+
+        </span>
       </nav>
     </div>
 
@@ -64,40 +74,37 @@
       *ngIf="layoutSvc.isFooterShown(this.router.url)">
       <div ngbAccordionItem id="footerPanel" [collapsed]="footerClosed">
         <h4 ngbAccordionHeader>
-         
-            <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button" (click)="isFooterOpen()"
-              [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
+          <button ngbAccordionButton id="footerExpanderButton" class="cset-footer-expand-button"
+            (click)="isFooterOpen()"
+            [ngClass]="{'cset-icons-chevron-down flex-11a': !footerClosed, 'cset-icons-chevron-up flex-00a': footerClosed}"></button>
         </h4>
         <div ngbAccordionCollapse>
-            <div ngbAccordionBody>
-           
-            <ng-template >
+          <div ngbAccordionBody>
+            <ng-template>
               <div class="footer-section-2 p-2">
                 <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
                   <ng-container *ngIf="isRunningAnonymous()">
-                    <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer" (click)="showDisclaimer()">INL
-                      Privacy & Accessibility</a>
+                    <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
+                      (click)="showDisclaimer()">INL Privacy & Accessibility</a>
                     <span class="mr-2 ml-2">|</span>
                     <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
                       href=" https://doe.responsibledisclosure.com/hc/en-us">Vulnerability Disclosure Program</a>
                     <span class="mr-2 ml-2">|</span>
                   </ng-container>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">FAQ</a>
+                    href="https://www.us-cert.gov/ics/Frequently-Asked-Questions">{{t('footer.faq')}}</a>
                   <span class="mr-2 ml-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="http://www.us-cert.gov/tlp/">Traffic Light Protocol</a>
+                    href="http://www.us-cert.gov/tlp/">{{t('footer.traffic light protocol')}}</a>
                   <span class="mr-2 ml-2">|</span>
                   <a target="_blank" rel="noopener noreferrer" rel="noopener noreferrer"
-                    href="http://www.us-cert.gov/privacy/">Privacy &amp; Use</a>
+                    href="http://www.us-cert.gov/privacy/">{{t('footer.privacy and use')}}</a>
                   <span class="mr-2 ml-2">|</span>
                   <a target="_blank" rel="noopener noreferrer"
-                    href="http://www.us-cert.gov/accessibility/">Accessibility</a>
+                    href="http://www.us-cert.gov/accessibility/">{{t('footer.accessibility')}}</a>
                 </div>
-                <div class="d-flex flex-row flex-wrap justify-content-center flex-11a">
-                  <a target="_blank" rel="noopener noreferrer" href="https://www.cisa.gov/">CISA</a>
-                  <span style="padding: 2px">is part of the</span>
-                  <a target="_blank" rel="noopener noreferrer" href="http://www.dhs.gov">Department of Homeland Security</a>
+                <div class="d-flex flex-row flex-wrap justify-content-center align-items-baseline flex-11a"
+                  [innerHTML]="t('footer.cisa is part of dhs') | safe">
                 </div>
               </div>
             </ng-template>
@@ -109,4 +116,27 @@
 
   <div class="bgc-white dhs-seal-background"
     *ngIf="(this.router.url!='/home/login' && this.router.url!='/home/reset-pass')"></div>
+    <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content localversionModal">
+                  <div class="modal-header">
+                        <h4 class="modal-title">{{t('new version')}}</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+                      </div>
+             <div class="modal-body">
+              <p>{{t('your version')}} {{this.localVersion}}
+               <br>{{t('version available')}} {{this.actualVersion}}
+
+
+             </p>
+
+             </div>
+                  <div class="modal-footer">
+                         <a href="https://github.com/cisagov/cset/releases" target="_blank" class="text-dark" >{{t('link version')}}</a>
+                      </div>
+
+         </div>
+          </div>
+
+</div>
 </div>

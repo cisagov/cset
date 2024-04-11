@@ -1,5 +1,5 @@
 ﻿{
-   "CodeGenerationMode": 3,
+   "CodeGenerationMode": 4,
    "ContextClassName": "CsetwebContext",
    "ContextNamespace": null,
    "DefaultDacpacSchema": null,
@@ -185,6 +185,10 @@
       },
       {
          "Name": "[dbo].[COMPONENT_SYMBOLS_GM_TO_CSET]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[COMPONENT_SYMBOLS_MAPPINGS]",
          "ObjectType": 0
       },
       {
@@ -520,6 +524,14 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[MALCOLM_ANSWERS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[MALCOLM_MAPPING]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[MATURITY_ANSWER_OPTIONS]",
          "ObjectType": 0
       },
@@ -768,10 +780,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[REQUIREMENT_QUESTIONS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[REQUIREMENT_QUESTIONS_SETS]",
          "ObjectType": 0
       },
@@ -969,6 +977,10 @@
       },
       {
          "Name": "[dbo].[ExcelExport]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vAllSimpleQuestions]",
          "ObjectType": 3
       },
       {
@@ -1406,6 +1418,7 @@
    "UseDatabaseNames": true,
    "UseDateOnlyTimeOnly": false,
    "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
    "UseFluentApiOnly": false,
    "UseHandleBars": false,
    "UseHierarchyId": false,

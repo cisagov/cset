@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,11 +44,11 @@ export class LoginRenewComponent implements OnInit {
    * The current display mode of the page -- LOGIN or SIGNUP
    */
   mode: string;
-  
+
   isRunningInElectron: boolean;
   assessmentId: number;
   model: any = {};
-  
+
   loading = false;
   incorrect = false;
   showPassword = false;
@@ -65,7 +65,7 @@ export class LoginRenewComponent implements OnInit {
     private emailSvc: EmailService,
     private assessSvc: AssessmentService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.browserIsIE = /msie\s|trident\//i.test(window.navigator.userAgent);
@@ -169,9 +169,9 @@ export class LoginRenewComponent implements OnInit {
       if (!this.isEjectDialogOpen && minutesSinceExpiration < 60) {
         this.isEjectDialogOpen = true;
         this.dialog
-        .open(EjectionComponent)
-        .afterClosed()
-        .subscribe(() => (this.isEjectDialogOpen = false));
+          .open(EjectionComponent)
+          .afterClosed()
+          .subscribe(() => (this.isEjectDialogOpen = false));
       }
     }
   }

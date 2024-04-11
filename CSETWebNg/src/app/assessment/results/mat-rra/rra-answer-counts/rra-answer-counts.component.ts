@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,26 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
+
 @Component({
   selector: 'app-rra-answer-counts',
   templateUrl: './rra-answer-counts.component.html',
   styleUrls: ['./rra-answer-counts.component.scss']
 })
 export class RraAnswerCountsComponent implements OnInit {
-  
+
   sAxisTicks = [0, 5, 10, 15, 18];
   maxLevel = 0;
   answerCountsByLevel = [];
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
 
-  constructor(public rraDataSvc: RraDataService) { }
+  constructor(
+    public rraDataSvc: RraDataService, 
+    public tSvc: TranslocoService
+    
+    ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -46,10 +51,11 @@ export class RraAnswerCountsComponent implements OnInit {
 
   createAnswerCountsByLevel(r: any) {
     let levelList = [];
-
+  
     r.rraSummary.forEach(element => {
       let level = levelList.find(x => x.name == element.level_Name);
-      if (!level) {
+     
+      if (!level) {     
         level = {
           name: element.level_Name, series: [
             { name: 'Yes', value: 0 },
@@ -58,23 +64,36 @@ export class RraAnswerCountsComponent implements OnInit {
           ]
         };
         levelList.push(level);
+      
       }
 
       var p = level.series.find(x => x.name == element.answer_Full_Name);
       p.value = element.qc;
+     
+
     });
+
     this.answerCountsByLevel = levelList;
     this.findMaxLength();
+
+    for (let i of this.answerCountsByLevel){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+      }
+    }
+    for (let i of this.answerCountsByLevel){
+     i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
+    }
   }
 
-  findMaxLength(){
+  findMaxLength() {
     let mLength = 0;
-    this.answerCountsByLevel.forEach(x =>{
+    this.answerCountsByLevel.forEach(x => {
       let length = 0;
       x.series.forEach(y => {
         length += y.value;
       });
-      if(mLength < length){
+      if (mLength < length) {
         mLength = length;
       }
     })

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -70,8 +70,17 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/version")]
         public IActionResult GetCsetVersion()
         {
-            var dbVersion = _context.CSET_VERSION.FirstOrDefault();
-            return Ok(dbVersion);
+            try
+            {
+                var dbVersion = _context.CSET_VERSION.FirstOrDefault();
+                return Ok(dbVersion);
+            }
+            catch (Exception exc)
+            {
+                var logToDb = LogManager.GetCurrentClassLogger();
+                logToDb.Error(exc.ToString());
+                return Ok(exc.ToString());
+            }
         }
     }
 }

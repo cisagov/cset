@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,18 +19,19 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
+-------------------------->
 <div class="assess-component d-flex flex-column justify-content-start flex-11a">
   <div class="white-panel d-flex flex-column justify-content-start flex-11a">
+    <div *ngIf="dataSet != 0; else elseBlock">
     <div id="chart" class="mb-3">
       <h3>Component Results By Category</h3>
-      <p>This graph shows the individual scores for each of the categories in a network components based assessment.</p>
+      <p>This chart shows the individual scores for each of the categories in a network components based assessment.</p>
       <canvas id="canvasComponentCompliance">{{canvasComponentCompliance}}</canvas>
     </div>
     <div *ngIf="!initialized">
       <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
-          <div style="max-width: 50px; max-height: 50px;"></div>
-        </div>
+        <div style="max-width: 50px; max-height: 50px;"></div>
+      </div>
     </div>
     <div class="data" [hidden]="!initialized">
       <table class="table">
@@ -46,9 +47,18 @@
         </tr>
       </table>
     </div>
-    
+    </div>
+    <ng-template #elseBlock>
+      <h3>Component Results By Category</h3>
+      <div class="alert-warning mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
+      <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">
+        There are no results to display. This may be caused by a network diagram
+        that contains no network components.
+      </span>
+      </div>
+    </ng-template>
     <app-nav-back-next [page]="'components-results'"></app-nav-back-next>
 
   </div>
 </div>
-
