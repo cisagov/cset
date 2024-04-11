@@ -1,0 +1,101 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<div *transloco="let t" class="d-flex flex-column justify-content-center flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+    <span class="mr-3 fs-base-6 cset-icons-light-bulb"></span>
+    <span>{{ t('observation.observation details') }}</span>
+  </div>
+
+  <mat-dialog-content class="py-3">
+    <div class="item bigitem">
+      <p>{{ t('observation.observation description') }}</p>
+
+      <div class="form-group">
+        <label for="title" class="form-label">{{ t('observation.title') }}</label>
+        <input id="title" type="text" autocomplete="off" class="form-control" [(ngModel)]="observation.summary">
+      </div>
+
+      <div class="form-group">
+        <label for="importance" class="form-label">{{ t('observation.importance') }}</label>
+        <select id="importance" name="importance" class="form-control" [(ngModel)]="observation.importance_Id"
+          (change)="updateImportance($event.target.value)">
+          <option *ngFor="let import of importances" [value]="import?.importance_Id">{{ t('observation.importance ' +
+            import?.value.toLowerCase()) }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="date" class="form-label">{{ t('observation.resolution date') }}</label>
+        <input matInput MatDatepickerInput class="form-control" id="date" name="date"
+          [(ngModel)]="observation.resolution_Date" [matDatepicker]="picker" (focus)="picker.open()"
+          (click)="picker.open()" (change)="update()">
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+
+      <div class="form-group">
+        <label for="issue" class="form-label">{{ t('observation.issue') }}</label>
+        <textarea id="issue" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.issue"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="impact" class="form-label">{{ t('observation.impacts') }}</label>
+        <textarea id="impact" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.impact"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="recommendations" class="form-label">{{ t('observation.recommendations') }}</label>
+        <textarea id="recommendations" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.recommendations"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="vulnerabilities" class="form-label">{{ t('observation.vulnerabilities') }}</label>
+        <textarea id="vulnerabilities" autocomplete="off" class="form-control" type="text"
+          [(ngModel)]="observation.vulnerabilities"></textarea>
+      </div>
+    </div>
+
+
+    <!-- interested parties -->
+    <div class="form-group" *ngIf="showContacts()">
+      <div class="d-flex justify-content-between align-items-center flex-11a">
+        <label for="contacts" class="form-label">{{ t('observation.individuals responsible') }}</label>
+        <button class="btn-link fs-smaller" (click)="clearMulti()">{{ t('observation.clear selections') }}</button>
+      </div>
+
+      <div class="pl-3">
+        <div *ngFor="let contact of observation.observation_Contacts" class="py-1">
+          <input class="checkbox-custom d-none" type="checkbox" id="{{contact.assessment_Contact_Id}}"
+            (change)="updateContact(contact)" [(ngModel)]="contact.selected">
+          <label for="{{contact.assessment_Contact_Id}}" class="checkbox-custom-label">{{ contact.name }}</label>
+        </div>
+      </div>
+      <br /><br />
+      <app-assessment-contacts (triggerChange)="refreshContacts()"
+        class="mb-4 d-flex justify-content-end flex-00a"></app-assessment-contacts>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="p-3 mb-0 d-flex justify-content-between flex-00a">
+    <button class="btn btn-primary" (click)="update()">{{ t('buttons.close') }}</button>
+  </mat-dialog-actions>
+</div>

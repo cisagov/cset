@@ -73,19 +73,21 @@ public partial class NEW_REQUIREMENT
     [InverseProperty("Requirement")]
     public virtual ICollection<PARAMETER_REQUIREMENTS> PARAMETER_REQUIREMENTS { get; set; } = new List<PARAMETER_REQUIREMENTS>();
 
+    [ForeignKey("Question_Group_Heading_Id")]
+    [InverseProperty("NEW_REQUIREMENT")]
     public virtual QUESTION_GROUP_HEADING Question_Group_Heading { get; set; }
 
     [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; } = new List<REQUIREMENT_LEVELS>();
 
     [InverseProperty("Requirement")]
-    public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; } = new List<REQUIREMENT_QUESTIONS>();
-
-    [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; } = new List<REQUIREMENT_QUESTIONS_SETS>();
 
     [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_REFERENCES> REQUIREMENT_REFERENCES { get; set; } = new List<REQUIREMENT_REFERENCES>();
+
+    [InverseProperty("Requirement")]
+    public virtual ICollection<REQUIREMENT_REFERENCE_TEXT> REQUIREMENT_REFERENCE_TEXT { get; set; } = new List<REQUIREMENT_REFERENCE_TEXT>();
 
     [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_SETS> REQUIREMENT_SETS { get; set; } = new List<REQUIREMENT_SETS>();

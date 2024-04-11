@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfigService } from '../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 
 @Component({
@@ -44,56 +45,15 @@ export class AdvisoryComponent {
   constructor(
     public configSvc: ConfigService,
     private dialog: MatDialogRef<AdvisoryComponent>,
+    public tSvc: TranslocoService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-
-    switch (configSvc.installationMode) {
-      case '':
-      case 'CSET':
-        this.appLongName = 'Cyber Security Evaluation Tool';
-        this.appShortName = 'CSET';
-        this.orgLongName = 'Cybersecurity & Infrastructure Security Agency';
-        this.orgShortName = 'CISA';
-        this.showIntellectualPropertyRightsAssertion = true;
-        this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
-        break; 
-      case 'ACET':
-        this.appLongName = 'Automated Cybersecurity Evaluation Toolbox';
-        this.appShortName = 'ACET';
-        this.orgLongName = '';
-        this.orgShortName = 'NCUA';
-        this.showIntellectualPropertyRightsAssertion = false;
-        break;
-      case 'TSA':
-        this.appLongName = 'Cyber Security Evaluation Tool';
-        this.appShortName = 'CSET';
-        this.orgLongName = 'Transportation Security Administration';
-        this.orgShortName = 'TSA';
-        this.showIntellectualPropertyRightsAssertion = false;
-        break;
-      case 'CF':
-        this.appLongName = 'Cyber Security Evaluation Tool';
-        this.appShortName = 'CSET';
-        this.orgLongName = 'Cyber Florida';
-        this.orgShortName = 'CF';
-        this.showIntellectualPropertyRightsAssertion = false;
-        break;
-      case 'RENEW':
-        this.appLongName = 'Cyber Security Evaluation Tool';
-        this.appShortName = 'CSET Renewables';
-        this.orgLongName = 'Idaho National Laboratory';
-        this.orgShortName = 'INL';
-        this.showIntellectualPropertyRightsAssertion = false;
-        break;
-      case 'RRA':
-        this.appLongName = 'Ransomware Readiness Assessment';
-        this.appShortName = 'RRA';
-        this.orgLongName = 'Cybersecurity & Infrastructure Security Agency';
-        this.orgShortName = 'CISA';
-        // this.showIntellectualPropertyRightsAssertion = true;
-        // this.intellectualPropertyRightsDistributionRequestEntity = 'the CSET Program Office';
-        break;
-    }
+    this.appLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app long name`);
+    this.appShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app short name`);
+    this.orgLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org long name`);
+    this.orgShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org short name`);
+    this.showIntellectualPropertyRightsAssertion = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.show ip rights assertion`);
+    this.intellectualPropertyRightsDistributionRequestEntity = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.ip dist`);
   }
 
   close() {

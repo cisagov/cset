@@ -28,8 +28,7 @@ public partial class GALLERY_ITEM
     [StringLength(200)]
     public string Title { get; set; }
 
-    [Required]
-    public bool? Is_Visible { get; set; }
+    public bool Is_Visible { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime CreationDate { get; set; }

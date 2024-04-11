@@ -1,9 +1,10 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.DataLayer.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace CSETWebCore.Interfaces.Helpers
         DateTime UtcToLocal(DateTime dt);
         DateTime LocalToUtc(DateTime dt);
         string GetClientHost();
+        void MoveActionItemsFrom_IseActions_To_HydroData(CSETContext context);
     }
 }

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -33,10 +33,10 @@
         <table class="resource-table w-100">
             <tr *ngIf="sourceDocs.length > 0">
                 <td class="w-75">
-                    <strong>Source Documents</strong>
+                    <strong>{{'extras.source documents' | transloco}}</strong>
                 </td>
                 <td class="pl-3">
-                    <strong>Section</strong>
+                    <strong>{{'extras.section' | transloco}}</strong>
                 </td>
             </tr>
             <tr *ngFor="let d of sourceDocs">
@@ -44,15 +44,15 @@
                     {{d.title}}
                 </td>
                 <td class="pl-3 section-ref text-nowrap align-top">
-                    {{d.sectionRef}}{{d.section_Ref}}
+                    {{d.sectionRef}}{{d.sectionRef}}
                 </td>
             </tr>
             <tr *ngIf="additionalDocs.length > 0">
                 <td class="w-75" [class.pt-4]="sourceDocs.length > 0">
-                    <strong>Additional Documents</strong>
+                    <strong>{{'extras.additional documents' | transloco}}</strong>
                 </td>
                 <td class="pl-3" [class.pt-4]="sourceDocs.length > 0">
-                    <strong>Section</strong>
+                    <strong>{{'extras.section' | transloco}}</strong>
                 </td>
             </tr>
             <tr *ngFor="let d of additionalDocs">
@@ -60,7 +60,7 @@
                     {{d.title}}
                 </td>
                 <td class="pl-3 section-ref text-nowrap align-top">
-                    {{d.sectionRef}}{{d.section_Ref}}
+                    {{d.sectionRef}}{{d.sectionRef}}
                 </td>
             </tr>
         </table>

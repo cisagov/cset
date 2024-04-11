@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -81,34 +81,26 @@ namespace CSETWebCore.Business.Sal
             CNSS_CIA_JUSTIFICATIONS cnvalu;
 
             // Availability
-            if (!String.IsNullOrWhiteSpace(this.Availability_Special_Factor))
-            {
-                cnvalu = getOrCreateNew("availability", id, dbValues, context);
-                cnvalu.Justification = this.Availability_Special_Factor == null ? String.Empty : this.Availability_Special_Factor;
-                cnvalu.DropDownValueLevel = this.Availability_Value.SALName;
-            }
+            cnvalu = GetOrCreateNew("availability", id, dbValues, context);
+            cnvalu.Justification = this.Availability_Special_Factor == null ? String.Empty : this.Availability_Special_Factor;
+            cnvalu.DropDownValueLevel = this.Availability_Value.SALName;
 
             // Confidentiality
-            if (!String.IsNullOrWhiteSpace(this.Confidentiality_Special_Factor))
-            {
-                cnvalu = getOrCreateNew("confidentiality", id, dbValues, context);
-                cnvalu.Justification = this.Confidentiality_Special_Factor == null ? string.Empty : this.Confidentiality_Special_Factor;
-                cnvalu.DropDownValueLevel = this.Confidentiality_Value.SALName;
-            }
+            cnvalu = GetOrCreateNew("confidentiality", id, dbValues, context);
+            cnvalu.Justification = this.Confidentiality_Special_Factor == null ? string.Empty : this.Confidentiality_Special_Factor;
+            cnvalu.DropDownValueLevel = this.Confidentiality_Value.SALName;
 
             // Integrity
-            if (!String.IsNullOrWhiteSpace(this.Integrity_Special_Factor))
-            {
-                cnvalu = getOrCreateNew("integrity", id, dbValues, context);
-                cnvalu.Justification = this.Integrity_Special_Factor == null ? String.Empty : this.Integrity_Special_Factor;
-                cnvalu.DropDownValueLevel = this.Integrity_Value.SALName;
-            }
+            cnvalu = GetOrCreateNew("integrity", id, dbValues, context);
+            cnvalu.Justification = this.Integrity_Special_Factor == null ? String.Empty : this.Integrity_Special_Factor;
+            cnvalu.DropDownValueLevel = this.Integrity_Value.SALName; 
 
             context.SaveChanges();
             assessmentUtils.TouchAssessment(id);
         }
 
-        private CNSS_CIA_JUSTIFICATIONS getOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CSETContext context)
+
+        private CNSS_CIA_JUSTIFICATIONS GetOrCreateNew(String ciaType, int id, Dictionary<String, CNSS_CIA_JUSTIFICATIONS> dbValues, CSETContext context)
         {
             CNSS_CIA_JUSTIFICATIONS cnvalu;
             if (dbValues.TryGetValue(ciaType, out cnvalu))
@@ -122,6 +114,7 @@ namespace CSETWebCore.Business.Sal
                 return rval;
             }
         }
+
 
         /// <summary>
         /// Upper Case the First Letter (UCF)

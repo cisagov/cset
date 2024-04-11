@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 // eslint-disable-next-line max-len
-import { Answer, DefaultParameter, ParameterForAnswer, Domain, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
+import { Answer, DefaultParameter, ParameterForAnswer, Category, SubCategoryAnswers, QuestionResponse, SubCategory, Question } from '../models/questions.model';
 import { ConfigService } from './config.service';
 import { AssessmentService } from './assessment.service';
 import { QuestionFilterService } from './filtering/question-filter.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { ACETService } from './acet.service';
-import { NavigationService } from './navigation/navigation.service';
 
 const headers = {
   headers: new HttpHeaders()
@@ -105,7 +103,7 @@ export class QuestionsService {
    *
    */
   getComponentQuestionsList() {
-    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist', headers);
+    return this.http.get(this.configSvc.apiUrl + 'componentquestionlist?skin=' + this.configSvc.installationMode, headers);
   }
 
   /**
@@ -128,9 +126,9 @@ export class QuestionsService {
    * Grab all the child question's answers for a specific parent question.
    * Currently set up for use in an ISE assessment.
   */
-  getActionItems(parentId: number, finding_id: number) {
+  getActionItems(parentId: number, observation_id: number) {
     headers.params = headers.params.set('parentId', parentId);
-    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + finding_id, headers);
+    return this.http.get(this.configSvc.apiUrl + 'GetActionItems?finding_id=' + observation_id, headers);
   }
 
   /**
@@ -161,8 +159,8 @@ export class QuestionsService {
    */
   storeAnswer(answer: Answer) {
     answer.questionType = localStorage.getItem('questionSet');
-    if(this.configSvc.installationMode == 'CF'){      
-      this.processNavigationDisable(answer);      
+    if (this.configSvc.installationMode == 'CF') {
+      this.processNavigationDisable(answer);
     }
     return this.http.post(this.configSvc.apiUrl + 'answerquestion', answer, headers);
   }
@@ -359,7 +357,7 @@ export class QuestionsService {
    */
   answerButtonLabel(modelName: string, answerCode: string): string {
     const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.button-labels.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.button-labels.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**
@@ -368,7 +366,7 @@ export class QuestionsService {
    */
   answerButtonTooltip(modelName: string, answerCode: string): string {
     var def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.button-tooltips.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.button-tooltips.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**
@@ -376,7 +374,7 @@ export class QuestionsService {
    */
   answerDisplayLabel(modelName: string, answerCode: string) {
     const def = this.findAnsDefinition(modelName, answerCode);
-    return this.tSvc.translate(`answer-options.labels.${def.buttonLabelKey}`);
+    return this.tSvc.translate('answer-options.labels.' + def.buttonLabelKey.toLowerCase());
   }
 
   /**

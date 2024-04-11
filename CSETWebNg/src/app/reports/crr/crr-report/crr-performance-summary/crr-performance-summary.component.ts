@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from '../../../../services/crr.service';
+import { CmuReportModel } from '../../../../models/reports.model';
+import { CmuService } from '../../../../services/cmu.service';
 
 @Component({
   selector: 'app-crr-performance-summary',
@@ -31,20 +31,19 @@ import { CrrService } from '../../../../services/crr.service';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrPerformanceSummaryComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   legend: string = '';
   charts: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.crrSvc.getCrrPerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getBlockLegendWidget(false).subscribe((resp: string) => {
       this.legend = resp;
     });
 
-    this.crrSvc.getCrrPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
+    this.cmuSvc.getPerformanceSummaryBodyCharts().subscribe((resp: any[]) => {
       this.charts = resp;
     });
   }
@@ -52,5 +51,4 @@ export class CrrPerformanceSummaryComponent implements OnInit {
   getChart(i, j) {
     return this.charts[i][j];
   }
-
 }

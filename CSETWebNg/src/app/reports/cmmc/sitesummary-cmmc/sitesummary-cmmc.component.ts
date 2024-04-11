@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,12 +25,10 @@ import { Component, OnInit, AfterViewChecked, AfterViewInit, ElementRef, ViewChi
 import { ReportAnalysisService } from '../../../services/report-analysis.service';
 import { ReportService } from '../../../services/report.service';
 import { ConfigService } from '../../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { CmmcStyleService } from '../../../services/cmmc-style.service';
 import * as $ from 'jquery';
 import { BehaviorSubject } from 'rxjs';
-import { MAT_RIPPLE_GLOBAL_OPTIONS } from '@angular/material/core';
-import { first } from 'rxjs/operators';
 import { ChartService } from '../../../services/chart.service';
 @Component({
   selector: 'sitesummary',
@@ -76,8 +74,8 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
     this.titleService.setTitle("Site Summary - " + this.configSvc.behaviors.defaultTitle);
 
     this.reportSvc.getReport('sitesummarycmmc').subscribe((r: any) => {
-        this.response = r;
-      },
+      this.response = r;
+    },
       error => console.log('Site summary CMMC report load Error: ' + (<Error>error).message)
     );
     this.columnWidthEmitter.subscribe(item => {
@@ -108,7 +106,7 @@ export class SitesummaryCMMCComponent implements OnInit, AfterViewChecked, After
   /**
    *
    */
-   buildNewPie(level: any) {
+  buildNewPie(level: any) {
     // build the data object for Chart
     var x: any = {};
     x.label = '';

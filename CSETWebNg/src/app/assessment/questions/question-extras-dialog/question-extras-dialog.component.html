@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,16 +20,16 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<mat-dialog-content>
-    <div class="p-2">
-        <div class="my-4" [innerHTML]="q.questionText"></div>
-        <app-question-extras #extrasComponent 
-            [myQuestion]="q" 
-            [myOptions]="options">
-        </app-question-extras>
-    </div>
-</mat-dialog-content>
+<ng-container *transloco="let t">
+    <mat-dialog-content>
+        <div class="p-2">
+            <div class="my-4" [innerHTML]="q.questionText"></div>
+            <app-question-extras #extrasComponent [myQuestion]="q" [myOptions]="options">
+            </app-question-extras>
+        </div>
+    </mat-dialog-content>
 
-<mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
-</mat-dialog-actions>
+    <mat-dialog-actions class="pl-4 p-1" style="margin-bottom:15px;">
+        <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
+    </mat-dialog-actions>
+</ng-container>

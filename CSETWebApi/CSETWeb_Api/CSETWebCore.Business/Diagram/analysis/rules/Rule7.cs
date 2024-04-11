@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -26,7 +26,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 
         static Rule7()
         {
-           // sals = context.UNIVERSAL_SAL_LEVEL.ToDictionary(x => x.Full_Name_Sal.ToLower(), x => x);
+            // sals = context.UNIVERSAL_SAL_LEVEL.ToDictionary(x => x.Full_Name_Sal.ToLower(), x => x);
         }
 
 
@@ -105,7 +105,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     if (!isComponentConnectionValid)
                     {
                         String text = String.Format(rule7, componentName).Replace("\n", " ");
-                        SetLineMessage(component, link, text);
+                        SetLineMessage(component, link, text, 7); // 7 because rule7 was violated
                     }
                 }
             }

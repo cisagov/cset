@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,21 +21,14 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { NgxChartsModule, ColorHelper } from '@swimlane/ngx-charts';
-import { VadrDataService } from '../../../../services/vadr-data.service';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-vadr-summary-all',
   templateUrl: './vadr-summary-all.component.html',
   styleUrls: ['./vadr-summary-all.component.scss']
 })
-export class VadrSummaryAllComponent implements OnInit {
+export class VadrSummaryAllComponent {
   @Input() title = "RRA Performance Summary";
   @Input() showNav = true;
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

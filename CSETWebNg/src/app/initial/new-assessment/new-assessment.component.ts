@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,22 +21,18 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { NumberSymbol } from '@angular/common';
-import { AfterViewInit, Component, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import SwiperCore, { SwiperOptions, Navigation, Pagination, Virtual } from 'swiper';
 import { MatDialog } from '@angular/material/dialog';
 import { NewAssessmentDialogComponent } from '../../dialogs/new-assessment-dialog/new-assessment-dialog.component';
 import { AssessmentService } from '../../services/assessment.service';
-import {
-  BreakpointObserver,
-  Breakpoints,
-  BreakpointState
-} from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { SwiperComponent } from 'swiper/angular';
 import { GalleryService } from '../../services/gallery.service';
 import { trigger, style, animate, transition, state } from '@angular/animations';
 import { ConfigService } from '../../services/config.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 SwiperCore.use([Navigation, Pagination, Virtual]);
 @Component({
@@ -88,6 +84,7 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     }
   };
 
+  pageTitle: string;
   show: boolean = false;
 
   constructor(public dialog: MatDialog,
@@ -95,14 +92,17 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     public gallerySvc: GalleryService,
     public assessSvc: AssessmentService,
     public navSvc: NavigationService,
-    public configSvc: ConfigService) {
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService,
+    ) {
   }
 
   ngOnInit(): void {
+    this.pageTitle = this.tSvc.translate('to start an assessment').replace('{icon}', '<i class="fa-solid fa-circle-info" style="font-size: 1.3rem;"></i>');
     this.gallerySvc.refreshCards();
     this.checkNavigation();
-
   }
+
   ngAfterViewInit(): void {
     this.checkNavigation();
   }
@@ -111,7 +111,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
     let swiperPrev = document.getElementsByClassName('swiper-button-prev');
     let swiperNext = document.getElementsByClassName('swiper-button-next');
     if (window.innerWidth < 620) {
-
       if (swiperPrev != null && swiperNext != null) {
         for (var i = 0; i < swiperPrev.length; i++) {
           swiperPrev[i].setAttribute('style', 'display:none');
@@ -145,10 +144,6 @@ export class NewAssessmentComponent implements OnInit, AfterViewInit {
         el.style.right = (cardDimension.w).toString() + 'px';
       }
     }
-
-    //if(offScreen > 0){
-    //el.setAttribute('style', 'margin-right:'+)
-    //}
   }
 
   onHoverOut(i: number, cardId: number) {

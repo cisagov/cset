@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,12 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
-                MVRA SUMMARY<br/>REPORT
+            <p class="report-title">
+                MVRA SUMMARY<br />REPORT
             </p>
         </div>
 
@@ -38,7 +37,7 @@
 
         <div class="cover-page-bottom">
             <app-logo-for-reports />
-            <app-info-block [response]="response"/>
+            <app-info-block [response]="response" />
         </div>
     </div>
 
@@ -51,7 +50,7 @@
     </div>
 
     <div class="page-break">
-        <h1>Goal Performance</h1>
+        <h1>{{t('titles.goal performance')}}</h1>
         <app-mvra-gaps></app-mvra-gaps>
     </div>
 

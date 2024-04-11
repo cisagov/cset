@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ import { QuestionFilterService } from '../../../services/filtering/question-filt
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
 import { ConversionService } from '../../../services/conversion.service';
+import { MalcolmService } from '../../../services/malcolm.service';
 
 
 /**
@@ -55,11 +56,12 @@ export class QuestionBlockComponent implements OnInit {
 
   dialogRef: MatDialogRef<InlineParameterComponent>;
   answer: Answer;
+  malcolmInfo: any;
 
   matLevelMap = new Map<string, string>();
   private _timeoutId: NodeJS.Timeout;
 
-  altTextPlaceholder = "Description, explanation and/or justification for alternate answer";
+  altTextPlaceholder = "alt cset";
 
   showQuestionIds = false;
 
@@ -80,13 +82,16 @@ export class QuestionBlockComponent implements OnInit {
     public configSvc: ConfigService,
     public assessSvc: AssessmentService,
     public layoutSvc: LayoutService,
+    public malcolmSvc: MalcolmService,
     private convertSvc: ConversionService
-    ) {
+  ) {
     this.matLevelMap.set("B", "Baseline");
     this.matLevelMap.set("E", "Evolving");
     this.matLevelMap.set("Int", "Intermediate");
     this.matLevelMap.set("A", "Advanced");
     this.matLevelMap.set("Inn", "Innovative");
+
+
   }
 
   /**
@@ -96,6 +101,11 @@ export class QuestionBlockComponent implements OnInit {
     this.answerOptions = this.questionsSvc.questions?.answerOptions;
     this.refreshReviewIndicator();
     this.refreshPercentAnswered();
+    if (this.configSvc.behaviors.showMalcolmAnswerComparison) {
+      this.malcolmSvc.getMalcolmAnswers().subscribe((r: any) => {    
+        this.malcolmInfo = r;
+      });
+    }
 
     this.showQuestionIds = this.configSvc.showQuestionAndRequirementIDs();
   }
@@ -349,8 +359,8 @@ export class QuestionBlockComponent implements OnInit {
 
     this.questionsSvc.storeAnswer(answer)
       .subscribe((ansId: number) => {
-        q.answer_Id = ansId;       
-        }
+        q.answer_Id = ansId;
+      }
       );
   }
 

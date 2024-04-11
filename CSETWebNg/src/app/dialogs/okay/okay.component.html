@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,17 +19,17 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="ok-dialog d-flex flex-column justify-content-center flex-11a">
+-------------------------->
+<div class="ok-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a" *ngIf="hasHeader">
     <span class="mr-3 fs-base-6 {{iconClass}}"></span>
     <span>{{dialogTitle}}</span>
   </div>
   <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
-    <div class="pr-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe"> 
-      </div>
+    <div class="pr-3" *ngIf="data.messageText" [innerHTML]="data.messageText | safe">
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions class="p-3 pt-3 mb-0 d-flex justify-content-between flex-00a">
-    <button class="btn btn-secondary" (click)="dialogRef.close(true)">OK</button>
+    <button class="btn btn-secondary" (click)="dialogRef.close(true)">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

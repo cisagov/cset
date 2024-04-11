@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -39,15 +39,16 @@
       <td>{{component.assetType}}</td>
       <td>
         <input matInput class="form-control" [(ngModel)]="component.vendorName" (ngModelChange)="filterVendors($event)"
-        [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)" (blur)="saveComponent(component)">
+          [matAutocomplete]="autoVendor" (click)="filterVendors(component.vendorName)"
+          (blur)="saveComponent(component)">
         <mat-autocomplete #autoVendor="matAutocomplete">
           <mat-option *ngFor="let vendor of filteredVendorOptions" [value]="vendor.name">
             <div class="d-flex justify-content-between">
               <span>
                 {{ vendor.name }}
               </span>
-              <button class="btn bgc-trans ml-3 mt-1 p-0"
-               mat-icon-button aria-label="Delete Vendor" (click)="deleteVendor(vendor.name)">
+              <button class="btn bgc-trans ml-3 mt-1 p-0" mat-icon-button aria-label="Delete Vendor"
+                (click)="deleteVendor(vendor.name)">
                 <mat-icon matTooltip="Delete Vendor" matTooltipPosition="right" class="delete-button">close</mat-icon>
               </button>
             </div>
@@ -55,17 +56,18 @@
         </mat-autocomplete>
       </td>
       <td>
-        <input class="form-control" [(ngModel)]="component.productName" (ngModelChange)="filterProducts($event, component.vendor?.products)"
-        [disabled]="!component.vendorName" (click)="filterProducts(component.productName, component.vendor?.products)"
-        [matAutocomplete]="autoProduct" (blur)="saveComponent(component)">
+        <input class="form-control" [(ngModel)]="component.productName"
+          (ngModelChange)="filterProducts($event, component.vendor?.products)" [disabled]="!component.vendorName"
+          (click)="filterProducts(component.productName, component.vendor?.products)" [matAutocomplete]="autoProduct"
+          (blur)="saveComponent(component)">
         <mat-autocomplete #autoProduct="matAutocomplete">
           <mat-option *ngFor="let product of filteredProductOptions" [value]="product.name">
             <div class="d-flex justify-content-between">
               <span>
                 {{ product.name }}
               </span>
-              <button class="btn bgc-trans ml-3 mt-1 p-0"
-               mat-icon-button aria-label="Delete Product" (click)="deleteProduct(component.vendorName, product.name)">
+              <button class="btn bgc-trans ml-3 mt-1 p-0" mat-icon-button aria-label="Delete Product"
+                (click)="deleteProduct(component.vendorName, product.name)">
                 <mat-icon matTooltip="Delete Product" matTooltipPosition="right" class="delete-button">close</mat-icon>
               </button>
             </div>
@@ -79,7 +81,8 @@
         <div
           matTooltip="There are no vulnerabilities identified with this vendor and product in the current local database"
           [matTooltipDisabled]="!isShowVulnerabilitiesButtonDisabled(component)">
-          <button class="btn" (click)="showVulnerabilities(component)" [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
+          <button class="btn" (click)="showVulnerabilities(component)"
+            [disabled]="isShowVulnerabilitiesButtonDisabled(component)"
             matTooltip="View the vulnerabilities associated with this network component">
             <span class="icon-link-button-text-dark" style="color: #1a53ff">Vulnerabilities</span>
           </button>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -23,7 +23,7 @@ namespace UpgradeLibrary.Upgrade
         {
             myVersion = new Version("9.0.1");
         }
-        
+
 
         /// <summary>
         /// Runs the database update script to take 9.0 to 9.0.1.
@@ -39,7 +39,7 @@ namespace UpgradeLibrary.Upgrade
                 RunFile(Path.Combine(this.applicationPath, @"VersionUpgrader\SQL\90_to_901_data2.sql"), conn);
                 this.UpgradeToVersionLocalDB(conn, myVersion);
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
                 throw new DatabaseUpgradeException("Error in upgrading database version 9.0 to 9.0.1: " + e.Message);
             }

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -28,6 +28,6 @@ namespace CSETWebCore.Model.Question
         /// <summary>
         /// 
         /// </summary>
-        public bool FindingsExist { get; set; }
+        public bool ObservationsExist { get; set; }
     }
 }

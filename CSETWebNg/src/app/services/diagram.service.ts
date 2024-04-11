@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -112,7 +112,7 @@ export class DiagramService {
   changeShapeToComponent(componentType: string, id: string, label: string) {
     return this.http.post(this.apiUrl + 'changeShapeToComponent?type=' + componentType + '&id=' + id + '&label=' + label, '');
   }
-  
+
   /**
    * finds and appends the '-#' suffix a component label needs (e.g. CLK-1, FW-4, etc.)
    */

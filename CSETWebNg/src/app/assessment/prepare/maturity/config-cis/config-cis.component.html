@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -49,13 +49,16 @@
         <p>A returning user will have a selection of previous CIS assessments to return to on their dashboard.</p>
         <p>After completing an initial CIS, the user will have the option to later recall the assessment to: </p>
         <ul>
-            <li><strong>Increase efficiency</strong> when prepopulating a future assessment by importing answers from a previous CIS assessment.
+            <li><strong>Increase efficiency</strong> when prepopulating a future assessment by importing answers from a
+                previous CIS assessment.
             </li>
-            <li><strong>Track progress</strong> by choosing a previously completed CIS to serve as a baseline assessment for comparison
+            <li><strong>Track progress</strong> by choosing a previously completed CIS to serve as a baseline assessment
+                for comparison
                 against the new assessment.</li>
         </ul>
         <p>
-            If you are a returning user, the fields below offer the ability to <strong>Import</strong> a previous assessment and/or
+            If you are a returning user, the fields below offer the ability to <strong>Import</strong> a previous
+            assessment and/or
             <strong>Select a Baseline Survey</strong> from a previously saved CIS assessment.
         </p>
 
@@ -72,7 +75,7 @@
             <select class="form-control mr-1" #import>
                 <option value="">-- Select Survey to Import --</option>
                 <option *ngFor="let c of importSourceCandidates" [value]="c.id">
-                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                    {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
                 </option>
             </select>
             <button class="btn btn-primary text-nowrap" [disabled]="import.value == ''"
@@ -96,7 +99,7 @@
             <select class="form-control" (change)="changeBaseline($event)" [(ngModel)]="baselineAssessmentId">
                 <option [ngValue]="null">-- No Baseline Assessment --</option>
                 <option *ngFor="let c of baselineCandidates" [value]="c.id">
-                    {{c.assessmentName}} [{{c.assessmentDate | date}}]
+                    {{c.assessmentName}} [{{c.assessmentDate | localizeDate}}]
                 </option>
             </select>
         </div>

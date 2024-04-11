@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../config.service';
-import { ACETDomain, Domain, Question, QuestionGrouping } from '../../../models/questions.model';
+import { QuestionGrouping } from '../../../models/questions.model';
 import { QuestionFilterService } from '../question-filter.service';
 import { AssessmentService } from '../../assessment.service';
 import { AcetFilteringService } from './acet-filtering.service';
@@ -58,7 +58,7 @@ export class MaturityFilteringService {
   /**
    * The allowable filter values.  Used for "select all"
    */
-  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  readonly allowableFilters = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'MT+', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * The allowable maturity filter values.  Only applicable on maturity questions page.
@@ -70,14 +70,14 @@ export class MaturityFilteringService {
    * Filter settings
    *   Comments - C
    *   Marked For Review - M
-   *   Discoveries (Observations) - D
+   *   Observations - O
    */
   public showFilters: string[] = [];
 
   /**
    * Filters that are turned on at the start.
    */
-  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'D', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
+  public defaultFilterSettings = ['Y', 'N', 'NA', 'A', 'U', 'C', 'M', 'O', 'FB', 'MT', 'FR', 'FI', 'LI', 'PI', 'NI'];
 
   /**
    * If the user enters characters into the box, only questions containing that string
@@ -338,7 +338,7 @@ export class MaturityFilteringService {
         q.visible = true;
       }
 
-      if (filterSvc.showFilters.includes('D') && q.hasObservations) {
+      if (filterSvc.showFilters.includes('O') && q.hasObservation) {
         q.visible = true;
       }
 
@@ -363,7 +363,7 @@ export class MaturityFilteringService {
       g.visible = false;
     }
 
-    if(g.subGroupings.length == 0 && g.questions.length == 0){
+    if (g.subGroupings.length == 0 && g.questions.length == 0) {
       g.visible = false;
     }
   }

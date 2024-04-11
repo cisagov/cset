@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FileUploadClientService } from '../../../../services/file-client.service';
 
@@ -70,11 +70,11 @@ export class AwwaStandardComponent implements OnInit {
       if (result.hasOwnProperty('ok')) {
         this.importStatus = 3;
       }
-    }, 
-    err=>{
-      this.errorMessage = "Error importing excel.  Check that AWWA file is valid."; 
-      this.importStatus = 1; 
-    });
+    },
+      err => {
+        this.errorMessage = "Error importing excel.  Check that AWWA file is valid.";
+        this.importStatus = 1;
+      });
   }
 
   /**

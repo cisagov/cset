@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,17 @@
 
     <div class="flex-container">
         <div class="column mt-3">
-            <p
-                class="report-title">
+            <p class="report-title">
                 ACTION ITEMS
             </p>
-            <p
-                class="report-title">
+            <p class="report-title">
                 REPORT
             </p>
         </div>
         <div class="column">
             <div class="cover-page-bottom mb-4">
                 <div>
-                    <img src="assets/images/RENEW/SHIELD_LOGO.svg" alt="renew" style="height: 185px"/>
+                    <img src="assets/images/RENEW/SHIELD_LOGO.svg" alt="renew" style="height: 185px" />
                 </div>
                 <div style="
                                     text-align: right;
@@ -48,8 +46,8 @@
                                 ">
 
                     <div class="title-page-name">{{this.demographics?.assessment_Name}}</div>
-                    <div class="title-page-content">{{this.demographics?.assessment_Date  |
-                        date:'dd-MMM-yyyy'}}
+                    <div class="title-page-content">{{this.demographics?.assessment_Date |
+                        localizeDate}}
                     </div>
                     <div class="title-page-content">{{this.demographics?.assessor_Name}}</div>
                 </div>
@@ -75,7 +73,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{this.demographics?.assessment_Date | date:'dd-MMM-yyyy'}}</td>
+                        <td>{{this.demographics?.assessment_Date | localizeDate}}</td>
                     </tr>
                     <tr>
                         <td>City or Site Name:</td>
@@ -116,13 +114,15 @@
                         </ng-container>
                         <ng-container *ngFor="let progressArray of actionItems">
                             <tr>
-                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]" style="pointer-events: none;">
+                                <td colspan="3" [class]="classArray[progressArray[0].actionData.progress_Id-1]"
+                                    style="pointer-events: none;">
                                     {{ progressInfo[progressArray[0].actionData.progress_Id-1].progress_Text }}
                                 </td>
                             </tr>
                             <ng-container *ngFor="let item of progressArray">
                                 <tr>
-                                    <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{ hydroSvc.impactTranslator(item.action.severity) }}</td>
+                                    <td class="font-weight-bold text-nowrap cell" style="text-align: center;">{{
+                                        hydroSvc.impactTranslator(item.action.severity) }}</td>
                                     <td class="cell" [innerHTML]="item.action.action_Items"></td>
                                     <td class="cell" [innerHTML]="item.actionData.comment"></td>
                                 </tr>

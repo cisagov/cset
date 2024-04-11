@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,14 +21,13 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ComponentFactoryResolver, ElementRef, Injector, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Question, QuestionGrouping, Answer } from '../../../models/questions.model';
 import { AssessmentService } from '../../../services/assessment.service';
 import { ConfigService } from '../../../services/config.service';
 import { QuestionsService } from '../../../services/questions.service';
 import { GroupingDescriptionComponent } from '../grouping-description/grouping-description.component';
 import { AcetFilteringService } from '../../../services/filtering/maturity-filtering/acet-filtering.service';
-import { groupBy } from 'rxjs/operators';
 import { LayoutService } from '../../../services/layout.service';
 import { CompletionService } from '../../../services/completion.service';
 

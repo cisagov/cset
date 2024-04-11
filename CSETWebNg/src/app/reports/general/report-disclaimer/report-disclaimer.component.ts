@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,36 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-report-disclaimer',
   templateUrl: './report-disclaimer.component.html',
   styleUrls: ['./report-disclaimer.component.scss', '../../reports.scss']
 })
-export class ReportDisclaimerComponent implements OnInit {
+export class ReportDisclaimerComponent {
 
-  constructor() { }
+  appLongName: string;
+  appShortName: string;
+  orgLongName: string;
+  orgShortName: string;
+  showIntellectualPropertyRightsAssertion = false;
+  intellectualPropertyRightsDistributionRequestEntity: string;
 
-  ngOnInit(): void {
+  /**
+   * 
+   */
+  constructor(
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
+  ) {
+    this.appLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app long name`);
+    this.appShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app short name`);
+    this.orgLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org long name`);
+    this.orgShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.org short name`);
+    this.showIntellectualPropertyRightsAssertion = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.show ip rights assertion`);
+    this.intellectualPropertyRightsDistributionRequestEntity = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.ip dist`);
   }
-
 }

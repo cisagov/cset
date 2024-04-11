@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,10 @@
 -------------------------->
 <div *transloco="let t" class="white-panel">
   <div id="top"></div>
-  <div class="d-flex flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
+  <div class="flex-column flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
     <div class="d-flex flex-row flex-wrap sticky-sal w-100 justify-content-end align-items-start flex-11a pb-3">
-      <div class="mr-3 answered-count" *ngIf="!!groupings"
-        matTooltip="{{t('tooltip.answered count')}}">
+      <div class="mr-3 answered-count" *ngIf="!!groupings" matTooltip="{{t('tooltip.answered count')}}">
         {{ completionSvc.answeredCount }}/{{ completionSvc.totalCount }}
       </div>
       <div>
@@ -63,10 +62,11 @@
       </span>
     </div>
 
-    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+    <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
 
     <div *ngIf="maturityFilteringSvc.showingAboveMaturityTargetLevel()" class="filters-engaged">Including Questions
       Above Target Level</div>
+
 
 
     <p class="mb-4" *ngIf="!!groupings">
@@ -74,12 +74,27 @@
     </p>
 
     <div class="mb-4" *ngIf="this.assessSvc.assessment?.maturityModel?.modelId == 11">
-      CPG Answer Key
-      <ul>
-        <li><Strong style="color:#006000; font-size: large;">Imp</Strong>lemented - An organization has implemented and continues to maintain the recommended actions, or a suitable alternative, necessary to achieve the stated outcome.</li>
-        <li>In <Strong style="color:#0a4b6e; font-size: large;">Prog</Strong>ress - An organization is in the process of implementing the recommended actions within a goal, or a suitable alternative, to achieve the stated outcome.</li>
-        <li><Strong style="color:#b17300; font-size: large;">Scoped</Strong> - An organization has identified the full set of required activities required to meet the stated outcome of a goal.</li>
-        <li><Strong style="color:#990000; font-size: large;">Not</Strong> Implemented - An organization has no immediate plans to implement the recommended actions for a goal.</li>
+      <strong>{{t('questions.cpg answer key')}}</strong>
+      <ul style="list-style-type: none;">
+        <li><span
+            style="background-color:#006000; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
+          {{t('answer-options.button-tooltips.imp-cpg')}}
+        </li>
+        <li>
+          <span
+            style="background-color:#0a4b6e; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
+          {{t('answer-options.button-tooltips.prog-cpg')}}
+        </li>
+        <li>
+          <span
+            style="background-color:#b17300; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
+          {{t('answer-options.button-tooltips.scoped-cpg')}}
+        </li>
+        <li>
+          <span
+            style="background-color:#990000; width: 20px; height: 20px; display: inline-block; vertical-align: middle"></span>
+          {{t('answer-options.button-tooltips.not-cpg')}}
+        </li>
       </ul>
     </div>
 

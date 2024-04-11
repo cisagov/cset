@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -46,7 +46,7 @@ namespace CSETWebCore.Business.Common
             return htmlString;
         }
 
-       
+
         /// <summary>
         /// Processes a root level element of XAML (normally it's FlowDocument element).
         /// </summary>

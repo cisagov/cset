@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { HttpClient, HttpHeaders, HttpParams, HttpResponseBase } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { concat } from 'rxjs';
@@ -104,15 +104,6 @@ export class ConfigService {
             .then(() => {
               this.setConfigPropertiesForLocalService();
               this.switchConfigsForMode(this.config.installationMode || 'CSET');
-              return this.getCisaAssessorWorkflow()
-                .toPromise()
-                .then((cisaAssessorWorkflowEnabled) => {
-                  if (cisaAssessorWorkflowEnabled) {
-                    return this.enableCisaAssessorWorkflow()
-                  }
-
-                  localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
-                });
             });
         })
         .catch(() => {
@@ -127,18 +118,17 @@ export class ConfigService {
       .toPromise()
       .then((iodConfig) => {
         merge(this.config, iodConfig);
-        localStorage.setItem('installationMode', this.config.installationMode.toUpperCase());
         this.setConfigPropertiesForLocalService();
       });
   }
 
   checkLocalDocStatus() {
-    return this.http.get(this.apiUrl + 'HasLocalDocuments')
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
   checkOnlineDocStatus() {
     // TODO: temporary return until we get this working in production
-    return this.http.get(this.apiUrl + 'HasLocalDocuments')
+    return this.http.get(this.apiUrl + 'HasLocalDocuments');
   }
 
   /**
@@ -155,12 +145,13 @@ export class ConfigService {
     const appProtocol = this.config.app.protocol + '://';
     if (localStorage.getItem('apiUrl') != null) {
       this.apiUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = localStorage.getItem('apiUrl') + '/' + this.config.api.documentsIdentifier + '/';
     } else {
       this.apiUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.apiIdentifier + '/';
+      this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     }
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;
-    this.docUrl = apiProtocol + this.config.api.url + apiPort + '/' + this.config.api.documentsIdentifier + '/';
     this.onlineUrl = this.config.api.onlineUrl;
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
@@ -173,7 +164,6 @@ export class ConfigService {
     this.initialized = true;
   }
 
-
   checkOnlineStatusFromConfig() {
     this.checkLocalDocStatus().subscribe(
       (resp: boolean) => {
@@ -182,7 +172,7 @@ export class ConfigService {
       () => {
         this.isDocUrl = false;
       }
-    )
+    );
 
     this.checkOnlineDocStatus().subscribe(
       (resp: boolean) => {
@@ -300,6 +290,16 @@ export class ConfigService {
           title.innerText = 'CSET-TSA';
         }
         break;
+        case 'CIE':
+          {
+            // change favicon and title
+            const link: HTMLLinkElement = this.document.querySelector("link[rel~='icon']");
+            link.href = 'assets/icons/favicon_cie.ico?app=cie1';
+  
+            var title = this.document.querySelector('title');
+            title.innerText = 'CSET-CIE';
+          }
+          break;
       case 'CF':
         {
           // change favicon and title

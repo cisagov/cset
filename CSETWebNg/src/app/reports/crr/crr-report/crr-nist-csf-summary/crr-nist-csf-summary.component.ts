@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { CrrService } from './../../../../services/crr.service';
+import { CmuService } from './../../../../services/cmu.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-nist-csf-summary',
@@ -31,27 +31,24 @@ import { CrrReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrNistCsfSummaryComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
   chartAll: string = '';
   legend: string = '';
-  bodyData: any[] = [];
+  bodyData: any = null;
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-
-    this.crrSvc.getNistCsfSummaryReportBodyData().subscribe((resp: any[]) => {
+    this.cmuSvc.getCsf().subscribe((resp: any[]) => {
       this.bodyData = resp;
-    })
+    });
 
-    this.crrSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {
+    this.cmuSvc.getNistCsfSummaryChartWidget().subscribe((resp: string) => {
       this.chartAll = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget().subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
   }
-
 }

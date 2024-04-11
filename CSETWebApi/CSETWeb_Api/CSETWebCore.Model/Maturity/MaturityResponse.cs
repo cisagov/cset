@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -58,5 +58,10 @@ namespace CSETWebCore.Model.Maturity
         /// All known glossary terms for the maturity model.
         /// </summary>
         public List<GlossaryEntry> Glossary { get; set; } = new List<GlossaryEntry>();
+
+        /// <summary>
+        /// The description for the maturity model
+        /// </summary>
+        public string? Description { get; set; }
     }
 }

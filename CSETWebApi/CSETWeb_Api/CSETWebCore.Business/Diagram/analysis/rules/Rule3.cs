@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -19,7 +19,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
 {
     class Rule3and4 : AbstractRule, IRuleEvaluate
     {
-        
+
         public Rule3and4(SimplifiedNetwork simplifiedNetwork)
         {
             this.network = simplifiedNetwork;
@@ -52,8 +52,8 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
         /// </summary>
         /// <param name="component"></param>
         private void CheckRule34(NetworkComponent component)
-        {   
-            List<NetworkComponent> list = GetNodeEdges(component, 
+        {
+            List<NetworkComponent> list = GetNodeEdges(component,
                 new HashSet<int>() {
                     Constants.FIREWALL,
                     Constants.UNIDIRECTIONAL_DEVICE,
@@ -74,7 +74,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     }
 
                     String text = String.Format(rule3, componentName).Replace("\n", " ");
-                    SetNodeMessage(component, text);
+                    SetNodeMessage(component, text, 3); // 3 because rule3 was violated
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace CSETWeb_Api.BusinessLogic.BusinessManagers.Diagram.analysis.rules
                     }
 
                     String text = String.Format(rule4, componentName).Replace("\n", " ");
-                    SetNodeMessage(component, text);
+                    SetNodeMessage(component, text, 4); // 4 because rule4 was violated
                 }
             }
         }

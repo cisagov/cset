@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -26,24 +26,24 @@
         </td>
     </tr>
     <tr *ngIf="tab?.sourceDocumentsList?.length > 0" class="font-weight-bold">
-        <td>Source Documents</td>
-        <td>Section</td>
+        <td>{{'extras.source documents' | transloco}}</td>
+        <td>{{'extras.section' | transloco}}</td>
     </tr>
     <tr *ngFor="let reference of tab?.sourceDocumentsList">
         <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0">
-            <a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
+            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                 target="_blank">{{reference.title}}</a>
         </td>
-        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
     </tr>
     <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
-        <td>Additional Documents</td>
-        <td>Section</td>
+        <td>{{'extras.source documents' | transloco}}</td>
+        <td>{{'extras.section' | transloco}}</td>
     </tr>
     <tr *ngFor="let reference of tab?.additionalDocumentsList">
-        <td class="align-top"><a href="{{documentUrl(reference)}}" rel="noopener noreferrer"
+        <td class="align-top"><a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                 target="_blank">{{reference.title}}</a></td>
-        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
     </tr>
     <tr *ngIf="areNoReferenceDocumentsAvailable()">
         <td colspan="2">(no reference documents available)</td>

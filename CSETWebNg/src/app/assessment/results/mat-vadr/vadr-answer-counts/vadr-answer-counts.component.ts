@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,6 @@
 //
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { VadrDataService } from '../../../../services/vadr-data.service';
 
 @Component({
@@ -68,14 +67,14 @@ export class VadrAnswerCountsComponent implements OnInit {
     this.findMaxLength();
   }
 
-  findMaxLength(){
+  findMaxLength() {
     let mLength = 0;
-    this.answerCountsByLevel.forEach(x =>{
+    this.answerCountsByLevel.forEach(x => {
       let length = 0;
       x.series.forEach(y => {
         length += y.value;
       });
-      if(mLength < length){
+      if (mLength < length) {
         mLength = length;
       }
     })

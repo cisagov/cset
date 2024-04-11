@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,10 +21,10 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AggregationService } from '../../services/aggregation.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SelectAssessmentsComponent } from '../../dialogs/select-assessments/select-assessments.component';
 import { NavigationAggregService } from '../../services/navigationAggreg.service';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
@@ -41,6 +41,8 @@ export class AliasAssessmentsComponent implements OnInit {
   dialogRefSelect: MatDialogRef<SelectAssessmentsComponent>;
   dialogRefConfirm: MatDialogRef<ConfirmComponent>;
   trendNameError: boolean = true;
+  @ViewChild('refreshComponent') refreshComponent;
+  maturity: boolean;
 
   constructor(
     public aggregationSvc: AggregationService,
@@ -61,14 +63,13 @@ export class AliasAssessmentsComponent implements OnInit {
 
   updateAggregation() {
     this.checkTrendName();
-    if(this.trendNameError){
+    if (this.trendNameError) {
       this.aggregationSvc.updateAggregation().subscribe();
     }
   }
 
-  validateNext(){
-    if(this.aliasData != null)
-    {
+  validateNext() {
+    if (this.aliasData != null) {
       var checkNext = this.aliasData.assessments.length < 2 || !this.checkTrendName();
       return checkNext;
     }
@@ -97,14 +98,15 @@ export class AliasAssessmentsComponent implements OnInit {
     });
     this.dialogRefSelect.afterClosed().subscribe(() => {
       this.getRelatedAssessments();
+      this.refreshComponent.refresh();
     });
   }
 
   /**
    * Check trend name empty 
    */
-  checkTrendName(){
-    this.trendNameError =  this.aggregationSvc.currentAggregation.aggregationName.length > 0;
+  checkTrendName() {
+    this.trendNameError = this.aggregationSvc.currentAggregation.aggregationName.length > 0;
     return this.trendNameError;
   }
 

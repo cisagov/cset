@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { Component, Input, OnChanges } from '@angular/core';
+import { CmuReportModel } from '../../../../models/reports.model';
 import { ChartService } from './../../../../services/chart.service';
 import { Chart } from 'chart.js';
 
@@ -32,12 +32,11 @@ import { Chart } from 'chart.js';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrPercentageOfPracticesComponent implements OnChanges {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   chart: Chart;
 
-  constructor(private chartSvc: ChartService) { }
+  constructor(private chartSvc: ChartService) {}
 
   ngOnChanges(): void {
     if (this.model) {

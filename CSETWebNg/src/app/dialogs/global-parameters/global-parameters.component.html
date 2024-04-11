@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,10 +19,10 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="global-parameters-dialog d-flex flex-column justify-content-center flex-11a">
+-------------------------->
+<div class="global-parameters-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
-      <span class="cset-icons-puzzle fs-base-6 mr-3"></span>
+    <span class="cset-icons-puzzle fs-base-6 mr-3"></span>
     <span>Parameter Editor</span>
   </div>
 
@@ -43,7 +43,8 @@
         </div>
       </div>
 
-      <div *ngIf="defaults != null && defaults.length === 0" class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
+      <div *ngIf="defaults != null && defaults.length === 0"
+        class="alert-danger mt-4 mb-4 d-flex flex-row justify-content-center align-items-center flex-11a">
         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"></span>
         <span class="fs-base-3 p-2 d-flex flex-column justify-content-center flex-11a">The selected
           cybersecurity standards do not contain any parameters for customization.</span>
@@ -57,10 +58,10 @@
         <tr *ngFor="let p of defaults">
           <td>{{p.parameterName}}</td>
           <td>
-            <div [class.display-none]="p.editMode" tabindex="1" class="sub-me" (focus)="edit(p)" (keydown.enter)="edit(p)"
-              (click)="edit(p)">{{p.parameterValue}}</div>
-            <input #editValue [class.display-none]="!p.editMode" id="edit-{{p.parameterId}}" tabindex="1" style="width: 100%"
-              (keydown.enter)="save(p)" (blur)="save(p)" [(ngModel)]="p.parameterValue" />
+            <div [class.display-none]="p.editMode" tabindex="1" class="sub-me" (focus)="edit(p)"
+              (keydown.enter)="edit(p)" (click)="edit(p)">{{p.parameterValue}}</div>
+            <input #editValue [class.display-none]="!p.editMode" id="edit-{{p.parameterId}}" tabindex="1"
+              style="width: 100%" (keydown.enter)="save(p)" (blur)="save(p)" [(ngModel)]="p.parameterValue" />
           </td>
         </tr>
       </table>
@@ -68,6 +69,6 @@
   </mat-dialog-content>
 
   <mat-dialog-actions class="p-3 mb-0">
-    <button class="btn btn-secondary" (click)="close()">OK</button>
+    <button class="btn btn-secondary" (click)="close()">{{t('buttons.ok')}}</button>
   </mat-dialog-actions>
 </div>

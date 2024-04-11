@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -44,7 +44,7 @@ export class ShapesComponent implements OnInit {
   symbols: any[];
   diagramComponentList: any[] = []
   displayedColumns = ['label', 'color', 'layer', 'visible'];
-  newComponent: any = {'componentGuid':'', 'assetType':''};
+  newComponent: any = { 'componentGuid': '', 'assetType': '' };
   comparer: Comparer = new Comparer();
 
 
@@ -61,7 +61,7 @@ export class ShapesComponent implements OnInit {
         this.componentsChange.emit(this.getComponents());
       }
 
-      this.shapes = x;      
+      this.shapes = x;
     });
   }
 
@@ -84,7 +84,7 @@ export class ShapesComponent implements OnInit {
       this.symbols = [];
       this.symbols.push( // inserts a default blank object in the beginning 
         {
-          'abbreviation': null, 
+          'abbreviation': null,
           'componentFamilyName': null,
           'component_Symbol_Id': null,
           'fileName': '',
@@ -92,10 +92,10 @@ export class ShapesComponent implements OnInit {
           'search_Tags': null,
           'symbol_Name': '',
           'width': 0
-      });
+        });
 
       g.forEach(gg => {
-        gg.symbols.forEach(s => {            
+        gg.symbols.forEach(s => {
           this.symbols.push(s);
         });
       });
@@ -114,12 +114,11 @@ export class ShapesComponent implements OnInit {
         label = label == '' ? this.diagramSvc.applyComponentSuffix(type, x) : label;
 
         this.diagramSvc.changeShapeToComponent(type, id, label).subscribe(
-          (compList: any) =>
-            {
-              this.getShapes();
-              this.componentsChange.emit(compList);
-            }
-        );      
+          (compList: any) => {
+            this.getShapes();
+            this.componentsChange.emit(compList);
+          }
+        );
       }
     );
 

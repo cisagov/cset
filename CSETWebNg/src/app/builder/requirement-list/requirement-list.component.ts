@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SetBuilderService } from '../../services/set-builder.service';
-import {Requirement } from '../../models/set-builder.model';
+import { Requirement } from '../../models/set-builder.model';
 import { RequirementResult, CategoryEntry } from '../../models/set-builder.model';
 import { AddRequirementComponent } from '../../dialogs/add-requirement/add-requirement/add-requirement.component';
 import { ConfirmComponent } from '../../dialogs/confirm/confirm.component';
@@ -84,14 +84,6 @@ export class RequirementListComponent implements OnInit {
     );
   }
 
-
-  /**
-   * Converts linebreak characters to HTML <br> tag.
-   */
-  formatLinebreaks(text: string) {
-    return this.setBuilderSvc.formatLinebreaks(text);
-  }
-
   /**
    *
    */
@@ -130,7 +122,7 @@ export class RequirementListComponent implements OnInit {
       },
       error => {
         this.dialog
-          .open(AlertComponent, { data: { title: "Error removing requirement from set" }})
+          .open(AlertComponent, { data: { title: "Error removing requirement from set" } })
           .afterClosed()
           .subscribe();
         console.log(

@@ -1,9 +1,10 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
+using CSETWebCore.Business.Malcolm;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
@@ -41,7 +42,7 @@ namespace CSETWebCore.Business.Question
         /// Constructor.
         /// </summary>
         /// <param name="assessmentID"></param>
-        public ComponentQuestionBusiness(CSETContext context, IAssessmentUtil assessmentUtil, ITokenManager tokenManager, IQuestionRequirementManager questionRequirement) 
+        public ComponentQuestionBusiness(CSETContext context, IAssessmentUtil assessmentUtil, ITokenManager tokenManager, IQuestionRequirementManager questionRequirement)
         {
             _context = context;
             _assessmentUtil = assessmentUtil;
@@ -59,6 +60,8 @@ namespace CSETWebCore.Business.Question
             int assessmentId = _tokenManager.AssessmentForUser();
 
             var resp = new QuestionResponse();
+            var mb = new MalcolmBusiness(_context);
+            //mb.VerificationAndValidation(assessmentId);
 
             // Ideally, we would not call this proc each time we fetch the questions.
             // Is there a quick way to tell if all the diagram answers have already been filled?
@@ -77,9 +80,8 @@ namespace CSETWebCore.Business.Question
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == assessmentId && x.Question_Type == "Component")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
                           from c in _context.FINDING.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
-                          select new FullAnswer() { a = a, b = b, FindingsExist = c != null };
+                          select new FullAnswer() { a = a, b = b, ObservationsExist = c != null };
 
-            //this.questions = query.Distinct().ToList();
             this.Answers = answers.ToList();
 
             AddResponse(resp, list2, "Component Defaults");
@@ -187,7 +189,7 @@ namespace CSETWebCore.Business.Question
                     Answer = dbQ.Answer_Text,
                     Answer_Id = dbQ.Answer_Id,
                     AltAnswerText = dbQ.Alternate_Justification,
-                    FreeResponseAnswer=dbQ.Free_Response_Answer,
+                    FreeResponseAnswer = dbQ.Free_Response_Answer,
                     Comment = dbQ.Comment,
                     MarkForReview = dbQ.Mark_For_Review ?? false,
                     Reviewed = dbQ.Reviewed ?? false,
@@ -200,6 +202,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);
@@ -259,7 +264,7 @@ namespace CSETWebCore.Business.Question
                         GroupHeadingId = dbQ.GroupHeadingId,
                         SubCategoryId = dbQ.SubCategoryId,
                         SubCategoryHeadingText = dbQ.Universal_Sub_Category,
-                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description??string.Empty,
+                        HeaderQuestionText = dbQ.Sub_Heading_Question_Description ?? string.Empty,
                         SubCategoryAnswer = this.SubCatAnswers?.Where(x => x.HeadingId == dbQ.heading_pair_id).FirstOrDefault()?.AnswerText
                     };
 
@@ -290,6 +295,9 @@ namespace CSETWebCore.Business.Question
                 {
                     TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                     TinyMapper.Map(answer.b, qa);
+
+                    // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                    qa.HasObservation = answer.b.HasDiscovery ?? false;
                 }
 
                 sc.Questions.Add(qa);
@@ -312,30 +320,30 @@ namespace CSETWebCore.Business.Question
         {
             List<Answer_Components_Exploded_ForJSON> rlist = new List<Answer_Components_Exploded_ForJSON>();
 
-                List<usp_getExplodedComponent> questionlist = null;
+            List<usp_getExplodedComponent> questionlist = null;
 
-                _context.LoadStoredProc("[usp_getExplodedComponent]")
-                  .WithSqlParam("assessment_id", assessmentId)
-                  .ExecuteStoredProc((handler) =>
-                  {
-                      questionlist = handler.ReadToList<usp_getExplodedComponent>().Where(c => c.Question_Id == question_id
-                                    && c.Component_Symbol_Id == Component_Symbol_Id).ToList();
-                  });
+            _context.LoadStoredProc("[usp_getExplodedComponent]")
+              .WithSqlParam("assessment_id", assessmentId)
+              .ExecuteStoredProc((handler) =>
+              {
+                  questionlist = handler.ReadToList<usp_getExplodedComponent>().Where(c => c.Question_Id == question_id
+                                && c.Component_Symbol_Id == Component_Symbol_Id).ToList();
+              });
 
-                IQueryable<Answer_Components> answeredQuestionList = _context.Answer_Components.Where(a =>
-                    a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
+            IQueryable<Answer_Components> answeredQuestionList = _context.Answer_Components.Where(a =>
+                a.Assessment_Id == assessmentId && a.Question_Or_Requirement_Id == question_id);
 
 
-                foreach (var question in questionlist.ToList())
-                {
-                    Answer_Components_Exploded_ForJSON tmp = null;
-                    TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
-                    tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
-                    tmp.Component_GUID = question.Component_GUID.ToString();
-                    rlist.Add(tmp);
-                }
+            foreach (var question in questionlist.ToList())
+            {
+                Answer_Components_Exploded_ForJSON tmp = null;
+                TinyMapper.Bind<usp_getExplodedComponent, Answer_Components_Exploded_ForJSON>();
+                tmp = TinyMapper.Map<Answer_Components_Exploded_ForJSON>(question);
+                tmp.Component_GUID = question.Component_GUID.ToString();
+                rlist.Add(tmp);
+            }
 
-                return rlist;            
+            return rlist;
         }
 
 
@@ -395,8 +403,11 @@ namespace CSETWebCore.Business.Question
 
             if (dbAnswer == null)
             {
-                dbAnswer = new ANSWER();                
+                dbAnswer = new ANSWER();
                 dbAnswer.Assessment_Id = assessmentId;
+                dbAnswer.Answer_Text = "U";
+                dbAnswer.Question_Type = "Component";
+
                 _context.ANSWER.Add(dbAnswer);
                 _context.SaveChanges();
                 answerId = dbAnswer.Answer_Id;
@@ -405,7 +416,6 @@ namespace CSETWebCore.Business.Question
             {
                 answerId = dbAnswer.Answer_Id;
             }
-
 
             dbAnswer.Answer_Id = answerId;
             dbAnswer.Question_Or_Requirement_Id = answer.QuestionId;

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -24,7 +24,7 @@
 <div class="w-100 d-block mb-5" style="height: 20rem">
     <ngx-charts-bar-horizontal-stacked [results]="answerDistribByDomain" [yAxis]="'true'" [xAxis]="'true'"
         [trimYAxisTicks]="'false'" [maxYAxisTickLength]="100" [xAxisTicks]="xAxisTicks"
-        [xAxisTickFormatting]="formatPercent" [legend]="'true'" [legendPosition]="'below'"
+        [xAxisTickFormatting]="formatPercent" [legend]="'true'" [legendPosition]="'below'" [legendTitle]="'legend' | transloco"
         [scheme]="answerDistribColorScheme">
         <ng-template #tooltipTemplate let-model="model">
             <div class="p-1">

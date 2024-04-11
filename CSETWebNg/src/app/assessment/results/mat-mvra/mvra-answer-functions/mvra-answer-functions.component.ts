@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,34 +21,31 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-mvra-answer-functions',
   templateUrl: './mvra-answer-functions.component.html'
 })
-export class MvraAnswerFunctionsComponent implements OnInit, OnChanges {
+export class MvraAnswerFunctionsComponent implements OnChanges {
 
-  @Input() model: any; 
+  @Input() model: any;
 
   colorScheme1 = { domain: ['#007BFF'] };
   xAxisTicks = [0, 25, 50, 75, 100];
-  graphModel:any = [];
+  graphModel: any = [];
 
   constructor() { }
 
-  ngOnInit(): void {
-    //this.createGraphByFunction();
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.model = changes.model.currentValue;
     this.createGraphByFunction();
   }
 
-  createGraphByFunction(){
+  createGraphByFunction() {
     let m = [];
-    if(this.model){
+    if (this.model) {
       this.model.forEach(element => {
         var goal = { name: element.title, value: element.credit };
         m.push(goal);

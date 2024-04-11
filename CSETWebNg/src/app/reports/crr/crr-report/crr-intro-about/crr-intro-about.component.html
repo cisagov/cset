@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,10 @@
         Introduction
     </h4>
     <p>
-        On {{ model?.assessmentDetails.assessmentDate | date:'MMMM dd yyyy' }}, {{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }} conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
-        about cybersecurity practices were gathered from key stakeholders within {{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }} and scored.
+        On {{ model?.assessmentDetails.assessmentDate | localizeDate }}, {{ model?.assessmentDetails.facilityName
+        ?? '[Facility Name]' }} conducted a Cyber Resilience Review (CRR) Self-Assessment. Answers to questions
+        about cybersecurity practices were gathered from key stakeholders within {{
+        model?.assessmentDetails.facilityName ?? '[Facility Name]' }} and scored.
     </p>
 
     <br />
@@ -157,8 +159,9 @@
     <p>
         The CRR has a service orientation, meaning that one of the foundational principles of its
         design is the idea that an organization deploys its people, information, technology and
-        facilities to support specific operational missions.  During the CRR, this focus on services
-        is how {{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }} improves its understanding of the cybersecurity management of services that support
+        facilities to support specific operational missions. During the CRR, this focus on services
+        is how {{ model?.assessmentDetails.facilityName ?? '[Facility Name]' }} improves its understanding of the
+        cybersecurity management of services that support
         critical infrastructure. This improved understanding helps the organization focus its efforts
         in improving cybersecurity management.
     </p>

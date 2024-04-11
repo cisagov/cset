@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -36,7 +36,7 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/sets")]
         public IActionResult GetAllSets()
         {
-            var sets = _context.SETS.Where(s => s.Is_Displayed ?? true)
+            var sets = _context.SETS.Where(s => s.Is_Displayed)
                 .Select(s => new { Name = s.Full_Name, SetName = s.Set_Name })
                 .OrderBy(s => s.Name)
                 .ToArray();
@@ -99,7 +99,7 @@ namespace CSETWebCore.Api.Controllers
                 .Include(s => s.REQUIREMENT_SETS)
                     .ThenInclude(r => r.Requirement)
                         .ThenInclude(r => r.REQUIREMENT_LEVELS)
-                .Where(s => (s.Is_Displayed ?? false) && s.Set_Name == setName).FirstOrDefault();
+                .Where(s => (s.Is_Displayed) && s.Set_Name == setName).FirstOrDefault();
 
             if (set == null)
             {

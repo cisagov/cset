@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -428,7 +428,7 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult UpdateComponentType([FromQuery] string guid, [FromQuery] string type, [FromQuery] string label)
         {
             int assessmentId = _token.AssessmentForUser();
-            
+
             _diagram.UpdateComponentType(assessmentId, guid, type);
 
             if (!label.IsNullOrEmpty())

@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +33,10 @@
                                 <h6>{{set.name}}</h6>
                                 <div class="d-flex mt-2">
                                     <span class="flex-11a mb-1">
-                                        <button (click)="clickXMLLink(set.setName)" class="btn btn-secondary mr-1">XML</button>
-                                        <button (click)="clickJSONLink(set.setName)" class="btn btn-secondary">JSON</button>
+                                        <button (click)="clickXMLLink(set.setName)"
+                                            class="btn btn-secondary mr-1">XML</button>
+                                        <button (click)="clickJSONLink(set.setName)"
+                                            class="btn btn-secondary">JSON</button>
                                     </span>
                                     <span class="flex-01a">
                                         <button (click)="loadJSONLink(set.setName)" class="btn btn-success">Load to
@@ -61,45 +63,74 @@
                 </div>
                 <form #importNgForm='ngForm' class="d-flex flex-column flex-11a" (submit)="submitForm()">
                     <style>
-                        .my-drop-zone { border: dashed 3px lightgray; top:0; bottom:0;left:0;right:0; color:#aaa;font-size:20pt;text-align:center; position:absolute;z-index:1000; opacity:0.8}
-                        .nv-file-over { border: dotted 3px darkred; } /* Default class applied to drop zones on over */
-                        .nv-file-hidden {visibility:hidden;}
-                        .another-file-over-class { border: dotted 3px green; }
+                        .my-drop-zone {
+                            border: dashed 3px lightgray;
+                            top: 0;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            color: #aaa;
+                            font-size: 20pt;
+                            text-align: center;
+                            position: absolute;
+                            z-index: 1000;
+                            opacity: 0.8
+                        }
 
-                        .fullscreen{
-                            background:white;
-                            padding:10px;
+                        .nv-file-over {
+                            border: dotted 3px darkred;
+                        }
+
+                        /* Default class applied to drop zones on over */
+                        .nv-file-hidden {
+                            visibility: hidden;
+                        }
+
+                        .another-file-over-class {
+                            border: dotted 3px green;
+                        }
+
+                        .fullscreen {
+                            background: white;
+                            padding: 10px;
                         }
                     </style>
 
 
-                    <div class="d-flex flex-11a flex-column w-100" ng2FileDrop style="position:relative;min-height:100px;position:relative; "
-                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)"  [uploader]="uploader"
-                        #codeContainer [ngClass]="{'fullscreen':getFullScreen()}">
+                    <div class="d-flex flex-11a flex-column w-100" ng2FileDrop
+                        style="position:relative;min-height:100px;position:relative; "
+                        (fileOver)="fileOverModuleBase($event)" (onFileDrop)="onModuleFileChanged($event)"
+                        [uploader]="uploader" #codeContainer [ngClass]="{'fullscreen':getFullScreen()}">
                         <div style="position:absolute;top:0;bottom:0;left:0;right:0;display:none;z-index:10000;background:rgba(0,0,0,0.25); align-items:center;justify-content:center"
                             [ngClass]="{'d-flex': hasModuleBaseDropZoneOver }">
                             <h4>Drop code file here</h4>
                         </div>
                         <h4 class="d-flex" style="align-items:center">Module Code
-                            <div class="btn-group ml-3 flex-11a" role="group" aria-label="...">
-                                <button (click)="switchToJson()" type="button" class="btn btn-secondary" [ngClass]="{'active': this.lang=='json'}">JSON</button>
-                                <button (click)="switchToXml()" type="button" class="btn btn-secondary" [ngClass]="{'active': this.lang=='xml'}">XML</button>
+                            <div class="btn-group ml-3 mr-3 flex-11a" role="group" aria-label="...">
+                                <button (click)="switchToJson()" type="button" class="btn btn-secondary"
+                                    [ngClass]="{'active': this.lang=='json'}">JSON</button>
+                                <button (click)="switchToXml()" type="button" class="btn btn-secondary"
+                                    [ngClass]="{'active': this.lang=='xml'}">XML</button>
                             </div>
 
                             <span class="flex-01a" style="font-size:12px;font-weight:normal;display:inline-block">
-                                Schema: <a style="font-size:12px;font-weight:normal;" role="button" (click)="getXSD()">XML</a>
-                                | <a style="font-size:12px;font-weight:normal;" role="button" (click)="getJsonSchema()">JSON</a>
+                                Schema: <a style="font-size:12px;font-weight:normal;" role="button"
+                                    (click)="getXSD()">XML</a>
+                                | <a style="font-size:12px;font-weight:normal;" role="button"
+                                    (click)="getJsonSchema()">JSON</a>
                             </span>
                             <button class="btn btn-secondary flex-01a ml-3" type="button" (click)="this.fullScreen()">
-                                <span [ngClass]="{'cset-icons-resize-small':getFullScreen(), 'cset-icons-resize-full':!getFullScreen()}"></span>
+                                <span
+                                    [ngClass]="{'cset-icons-resize-small':getFullScreen(), 'cset-icons-resize-full':!getFullScreen()}"></span>
                             </button>
                         </h4>
                         <div class="mb-2">Please specify the code for your new module below. You can either begin
-                            typing, drop a file onto the editor, load an existing module, or copy and paste text. To get suggestions, type CTRL-Spacebar. Use alt-shift-f to format the code.</div>
-                        <div [ngClass]="{'has-error': showError()}"
-                            class="d-flex flex-11a p-0 mb-2">
+                            typing, drop a file onto the editor, load an existing module, or copy and paste text. To get
+                            suggestions, type CTRL-Spacebar. Use alt-shift-f to format the code.</div>
+                        <div [ngClass]="{'has-error': showError()}" class="d-flex flex-11a p-0 mb-2">
                             <ngs-code-editor #code class="d-flex flex-11a form-control" [codeModel]="codeModel"
-                                [options]="configOptions" (valueChanged)="onModelChange($event)" style="height:auto!important;"></ngs-code-editor>
+                                [options]="configOptions" (valueChanged)="onModelChange($event)"
+                                style="height:auto!important;"></ngs-code-editor>
                         </div>
                     </div>
                     <div class="panel panel-default mt-0 mb-3" *ngIf="errors.length">
@@ -114,18 +145,22 @@
                         </ul>
                     </div>
 
-                    <input style="display:none" #codeGoodInput="ngModel" [(ngModel)]="codeGood" name="codeGood" type="checkbox"
-                        value="true" required *ngIf="!codeChecked">
-                    <div class="panel panel-default mt-0 mb-3" *ngIf="state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length">
+                    <input style="display:none" #codeGoodInput="ngModel" [(ngModel)]="codeGood" name="codeGood"
+                        type="checkbox" value="true" required *ngIf="!codeChecked">
+                    <div class="panel panel-default mt-0 mb-3"
+                        *ngIf="state!='Processing'&&monaco&&monaco.editor&&monaco.editor.getModelMarkers({}).length">
                         <div class="panel-heading">
                             <h4 class="panel-title px-2 py-1" style="color:white">
                                 Validation messages
                             </h4>
                         </div>
                         <ul class="panel-body m-0" style="max-height:150px;overflow:auto;">
-                            <li style="list-style-type:none; margin:2px 5px; " *ngFor="let item of monaco.editor.getModelMarkers({})">
-                                <span style="font-family:'Courier New', Courier, monospace; font-size:10pt;" [ngClass]="{'text-warning':!item.code, 'text-danger':item.code}">{{
-                                    "Line "+ item.startLineNumber+', Column '+ item.startColumn+' - '+item.message }}</span>
+                            <li style="list-style-type:none; margin:2px 5px; "
+                                *ngFor="let item of monaco.editor.getModelMarkers({})">
+                                <span style="font-family:'Courier New', Courier, monospace; font-size:10pt;"
+                                    [ngClass]="{'text-warning':!item.code, 'text-danger':item.code}">{{
+                                    "Line "+ item.startLineNumber+', Column '+ item.startColumn+' - '+item.message
+                                    }}</span>
                             </li>
                         </ul>
                     </div>
@@ -134,10 +169,10 @@
                         below by dropping the file onto the drop area.</div>
                     <div *ngIf="isDocError" class="text-danger">An error occurred while processing documents. Please
                         review the files below and try again</div>
-                    <div ng2FileDrop class="pb-2" style=" position:relative;min-height:100px;" (fileOver)="fileOverBase($event)"
-                        >
-                        <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver" [ngClass]="{'nv-file-over': hasBaseDropZoneOver }"
-                            class="well my-drop-zone">
+                    <div ng2FileDrop class="pb-2" style=" position:relative;min-height:100px;"
+                        (fileOver)="fileOverBase($event)">
+                        <div *ngIf="!uploader?.queue?.length||hasBaseDropZoneOver"
+                            [ngClass]="{'nv-file-over': hasBaseDropZoneOver }" class="well my-drop-zone">
                             Drop reference files here
                         </div>
                         <div *ngIf="uploader?.queue?.length">
@@ -154,27 +189,34 @@
                                     <ng-container *ngFor="let item of uploader.queue; index as i">
                                         <tr [ngClass]="{'danger': item.isError, 'success': item.isSuccess }">
                                             <td style="vertical-align:middle">
-                                                <span class="cset-icons-check-circle text-success pr-1" title="The file was uploaded successfully"
+                                                <span class="cset-icons-check-circle text-success pr-1"
+                                                    title="The file was uploaded successfully"
                                                     *ngIf="item.isSuccess"></span>
-                                                <span class="cset-icons-exclamation-triangle text-danger pr-1" title="There was an error uploading the file.  Please try again."
+                                                <span class="cset-icons-exclamation-triangle text-danger pr-1"
+                                                    title="There was an error uploading the file.  Please try again."
                                                     *ngIf="item.isError"></span>
                                                 <strong>{{ item?.file?.name }}</strong>
-                                                <div class="progress" style="margin-bottom: 0;" *ngIf="item.isUploading">
-                                                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                                                <div class="progress" style="margin-bottom: 0;"
+                                                    *ngIf="item.isUploading">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        [ngStyle]="{ 'width': item.progress + '%' }"></div>
                                                 </div>
                                             </td>
-                                            <td [ngClass]="{'has-error': name.invalid && (name.dirty || name.touched)}"><input
-                                                    type="text" class="form-control" name="name{{i}}" [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
-                                                    #name="ngModel" style="vertical-align:middle" [(ngModel)]="this.items[item.file.name].name"
-                                                    required /></td>
-                                            <td [ngClass]="{'has-error': shortName.invalid && (shortName.dirty || shortName.touched)}"><input
-                                                    type="text" class="form-control" name="shortName{{i}}" [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
-                                                    style="vertical-align:middle" #shortName="ngModel" [(ngModel)]="this.items[item.file.name].shortName"
-                                                    required /></td>
+                                            <td [ngClass]="{'has-error': name.invalid && (name.dirty || name.touched)}">
+                                                <input type="text" class="form-control" name="name{{i}}"
+                                                    [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
+                                                    #name="ngModel" style="vertical-align:middle"
+                                                    [(ngModel)]="this.items[item.file.name].name" required /></td>
+                                            <td
+                                                [ngClass]="{'has-error': shortName.invalid && (shortName.dirty || shortName.touched)}">
+                                                <input type="text" class="form-control" name="shortName{{i}}"
+                                                    [readOnly]="(item.isReady || item.isUploading || item.isSuccess)"
+                                                    style="vertical-align:middle" #shortName="ngModel"
+                                                    [(ngModel)]="this.items[item.file.name].shortName" required /></td>
 
                                             <td nowrap style="vertical-align:middle">
-                                                <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()"
-                                                    *ngIf="!item.isUploading">
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)="item.remove()" *ngIf="!item.isUploading">
                                                     <span class="cset-icons-close-x"></span>
                                                 </button>
                                             </td>
@@ -186,7 +228,8 @@
                     </div>
                     <div style="margin: .5em 0">
                         <button [attr.disabled]="state=='Processing'||!importNgForm.valid?true:null" type="submit"
-                            class="btn btn-success btn-s mr-2" *ngIf="state!='Succeeded'" [ngClass]="{'p-0': state=='Processing', 'pr-2':state=='Processing'}"
+                            class="btn btn-success btn-s mr-2" *ngIf="state!='Succeeded'"
+                            [ngClass]="{'p-0': state=='Processing', 'pr-2':state=='Processing'}"
                             style="display:inline-flex;align-items:center">
                             <span class="spinner-container" style="display:inline-block" *ngIf="state=='Processing'">
                                 <div class="spinner" style="max-width: 20px; max-height: 20px;"></div>
@@ -196,8 +239,14 @@
                             <span *ngIf="state=='Processing'">Processing</span>
                             <span *ngIf="state=='Ready'">Import</span>
                         </button>
-                        <button *ngIf="state!='Processing'&&state!='Ready'" class="btn btn-primary" (click)="clearForm()">Import
-                            another module</button>
+                        <div class="d-flex align-items-center" *ngIf="state!='Processing' && state!='Ready'">
+                          <button class="btn btn-primary"
+                              (click)="clearForm()">Import another module
+                          </button>
+                          <div style="margin-bottom: 0" class="alert alert-warning ml-3">
+                            Warning: This will clear the code editor
+                          </div>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -27,6 +27,7 @@ namespace CSETWebCore.Interfaces.Helpers
         void AuthorizeUserForAssessment(int assessmentId);
         void ValidateTokenForAssessment(int assessmentId);
         int? GetCurrentUserId();
+        string GetCurrentLanguage();
         void GenerateSecret();
         string GetSecret();
         int? GetUserId();

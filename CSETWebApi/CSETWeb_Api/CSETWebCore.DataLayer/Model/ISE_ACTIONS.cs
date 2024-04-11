@@ -30,12 +30,6 @@ public partial class ISE_ACTIONS
     [Key]
     public int Action_Item_Id { get; set; }
 
-    public int? Severity { get; set; }
-
-    public int? Mat_Option_Id { get; set; }
-
-    public int? Sequence { get; set; }
-
     [ForeignKey("Mat_Question_Id")]
     [InverseProperty("ISE_ACTIONS")]
     public virtual MATURITY_QUESTIONS Mat_Question { get; set; }

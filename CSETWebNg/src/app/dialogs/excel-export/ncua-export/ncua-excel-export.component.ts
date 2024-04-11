@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ export class NcuaExcelExportComponent {
     public configSvc: ConfigService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
-    
+
   ngOnInit() {
     this.checkAssessmentTypes();
   }
@@ -53,19 +53,19 @@ export class NcuaExcelExportComponent {
 
   checkAssessmentTypes() {
     for (let i = 0; i < this.data.assessments.length; i++) {
-        if (this.data.assessments[i].type == "ACET") {
-            this.acetCount++;
-        } else if (this.data.assessments[i].type == "ISE") {
-            this.iseCount++;
-        }
+      if (this.data.assessments[i].type == "ACET") {
+        this.acetCount++;
+      } else if (this.data.assessments[i].type == "ISE") {
+        this.iseCount++;
+      }
     }
 
     if (this.acetCount == 0) {
-        this.acetTooltip = "There are no ACET assessments to export.";
+      this.acetTooltip = "There are no ACET assessments to export.";
     }
 
     if (this.iseCount == 0) {
-        this.iseTooltip = "There are no ISE assessments to export.";
+      this.iseTooltip = "There are no ISE assessments to export.";
     }
 
   }

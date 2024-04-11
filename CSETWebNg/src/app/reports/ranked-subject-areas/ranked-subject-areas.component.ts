@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ import Chart from 'chart.js/auto';
 })
 export class RankedSubjectAreasComponent implements OnInit {
 
+  showChart = false;
   chartRankedSubjectAreas: Chart;
 
   constructor(
@@ -39,9 +40,10 @@ export class RankedSubjectAreasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Ranked Subject Areas
+    // Ranked Categories
     this.chartRankedSubjectAreas = null;
     this.analysisSvc.getOverallRankedCategories().subscribe(x => {
+      this.showChart = x.data.some(x => x > 0);
       setTimeout(() => {
         this.chartRankedSubjectAreas = this.analysisSvc.buildRankedSubjectAreasChart('canvasRankedSubjectAreas', x);
       }, 0);

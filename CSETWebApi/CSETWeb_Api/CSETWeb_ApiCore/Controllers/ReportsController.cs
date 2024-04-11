@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -11,6 +11,7 @@ using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Reports;
 using CSETWebCore.DataLayer.Model;
+using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces.AdminTab;
 using CSETWebCore.Interfaces.Aggregation;
 using CSETWebCore.Interfaces.Helpers;
@@ -41,6 +42,8 @@ namespace CSETWebCore.Api.Controllers
         private readonly IAssessmentUtil _assessmentUtil;
         private readonly IAdminTabBusiness _adminTabBusiness;
         private readonly IGalleryEditor _galleryEditor;
+        private TranslationOverlay _overlay;
+
 
         public ReportsController(CSETContext context, IReportsDataBusiness report, ITokenManager token,
             IAggregationBusiness aggregation, IQuestionBusiness question, IQuestionRequirementManager questionRequirement,
@@ -55,7 +58,9 @@ namespace CSETWebCore.Api.Controllers
             _assessmentUtil = assessmentUtil;
             _adminTabBusiness = adminTabBusiness;
             _galleryEditor = galleryEditor;
+            _overlay = new TranslationOverlay();
         }
+
 
         [HttpGet]
         [Route("api/reports/info")]
@@ -64,9 +69,10 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData.INFORMATION info = _report.GetInformation();
-    
+
             return Ok(info);
         }
+
 
         [HttpGet]
         [Route("api/reports/securityplan")]
@@ -81,9 +87,18 @@ namespace CSETWebCore.Api.Controllers
             {
                 data.ApplicationMode = ss.Application_Mode;
             }
-
-            data.ControlList = _report.GetControls(data.ApplicationMode);
+            // Check if assessment is a diagram 
             data.information = _report.GetInformation();
+            if (data.information.UseDiagram == true)
+            {
+
+                data.ControlList = _report.GetControlsDiagram(data.ApplicationMode);
+
+            }
+            else
+            {
+                data.ControlList = _report.GetControls(data.ApplicationMode);
+            }
 
             data.genSalTable = _report.GetGenSals();
             data.salTable = _report.GetSals();
@@ -151,6 +166,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok(data);
         }
 
+
         [HttpGet]
         [Route("api/reports/sitesummarycmmc")]
         public IActionResult GetSiteSummaryCMMCReport()
@@ -208,14 +224,28 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetRRADetailReport()
         {
             int assessmentId = _token.AssessmentForUser();
+            var lang = _token.GetCurrentLanguage();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(assessmentId);
 
             RRASummary summary = new RRASummary(_context);
             MaturityReportDetailData data = new MaturityReportDetailData();
             data.RRASummaryOverall = summary.GetSummaryOverall(assessmentId);
+
+
             data.RRASummary = summary.GetRRASummary(assessmentId);
+
             data.RRASummaryByGoal = summary.GetRRASummaryByGoal(assessmentId);
+
+            foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
+            {
+                var o = _overlay.GetMaturityGrouping(q.Grouping_Id, lang);
+                if (o != null)
+                {
+                    q.Title = o.Title;
+                }
+            }
+
             data.RRASummaryByGoalOverall = summary.GetRRASummaryByGoalOverall(assessmentId);
             return Ok(data);
         }
@@ -232,12 +262,11 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetUserId();
-            string accessKey = _token.GetAccessKey();
+            string lang = _token.GetCurrentLanguage();
 
             var biz = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = biz.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0, "");
+            var resp = biz.GetMaturityQuestions(assessmentId, true, 0, "", lang);
 
             // get all supplemental info for questions, because it is not included in the previous method
             var dict = biz.GetReferences(assessmentId);
@@ -256,6 +285,16 @@ namespace CSETWebCore.Api.Controllers
 
                 questions.Add(newQ);
             }));
+
+            foreach (MaturityQuestion q in questions)
+            {
+                var translatedGroup = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
+                if (translatedGroup != null)
+                {
+                    q.Question_Text = translatedGroup.QuestionText;
+                    q.ReferenceText = translatedGroup.ReferenceText;
+                }
+            }
 
             return Ok(questions);
         }
@@ -315,15 +354,13 @@ namespace CSETWebCore.Api.Controllers
             var questions = new List<MaturityQuestion>();
 
             int assessmentId = _token.AssessmentForUser();
-            int? userId = _token.GetUserId();
-            string accessKey = _token.GetAccessKey();
+            string lang = _token.GetCurrentLanguage();
 
             var mm = new MaturityBusiness(_context, _assessmentUtil, _adminTabBusiness);
 
-            var resp = mm.GetMaturityQuestions(assessmentId, userId, accessKey, true, 0, "");
+            var resp = mm.GetMaturityQuestions(assessmentId, true, 0, "", lang);
 
             // get all supplemental info for questions, because it is not included in the previous method
-            //var dict = mm.GetReferences(assessmentId);
             var dict = mm.GetSourceFiles();
 
 
@@ -458,20 +495,20 @@ namespace CSETWebCore.Api.Controllers
                 d.Mat.Maturity_Model = null;
             });
 
-
             return Ok(data);
         }
 
+
         [HttpGet]
-        [Route("api/reports/discoveries")]
-        public IActionResult GetDiscoveries()
+        [Route("api/reports/observations")]
+        public IActionResult GetObservations()
         {
             int assessmentId = _token.AssessmentForUser();
 
             _report.SetReportsAssessmentId(assessmentId);
             BasicReportData data = new BasicReportData();
             data.information = _report.GetInformation();
-            data.Individuals = _report.GetFindingIndividuals();
+            data.Individuals = _report.GetObservationIndividuals();
             return Ok(data);
         }
 
@@ -699,7 +736,10 @@ namespace CSETWebCore.Api.Controllers
         [Route("api/reports/modulecontent")]
         public IActionResult ModuleContentReport([FromQuery] string set)
         {
+            var lang = _token.GetCurrentLanguage();
+
             var report = new ModuleContentReport(_context, _questionRequirement, _galleryEditor);
+            report.SetLanguage(lang);
             var resp = report.GetResponse(set);
             return Ok(resp);
         }

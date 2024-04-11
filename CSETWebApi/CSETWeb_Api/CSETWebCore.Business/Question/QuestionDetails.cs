@@ -1,11 +1,11 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Model.Findings;
+using CSETWebCore.Model.Observations;
 using System.Collections.Generic;
 
 
@@ -30,10 +30,10 @@ namespace CSETWebCore.Business.Question
 
 
         private bool isDetailAndInfo { get; set; }
-        
+
 
         public bool IsNoQuestion { get; set; }
-        
+
 
         private int selectedTabIndex { get; set; }
 
@@ -52,9 +52,9 @@ namespace CSETWebCore.Business.Question
 
         /// <summary>
         /// List contains only the title, finding_id and answer id
-        /// call finding details for complete finding information
+        /// call observation details for complete observation information
         /// </summary>
-        public List<Finding> Findings { get; set; }
+        public List<Observation> Observations { get; set; }
 
 
         /// <summary>

@@ -1,11 +1,9 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { EditUserComponent } from '../edit-user/edit-user.component';
-import { NgForm } from '@angular/forms';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from '../../services/config.service';
-import * as moment from "moment";
 import { DateAdapter } from '@angular/material/core';
 
 @Component({
@@ -35,7 +33,7 @@ export class UserLanguageComponent implements OnInit {
 
     // This ACET check is because the config.ACET.json's languageOptions 
     // isn't being read correctly (as of 10/31/23) and I don't have time to fix it
-    if (this.configSvc.config.installationMode == 'ACET') { 
+    if (this.configSvc.config.installationMode == 'ACET') {
       this.languageOptions = [
         { value: "en", name: "English" },
         { value: "es", name: "Español" }
@@ -45,7 +43,6 @@ export class UserLanguageComponent implements OnInit {
     this.authSvc.getUserLang().subscribe((resp: any) => {
       this.langSelection = resp.lang.toLowerCase();
       this.dateAdapter.setLocale(this.langSelection);
-      moment.locale(this.langSelection);
     });
   }
 
@@ -57,7 +54,6 @@ export class UserLanguageComponent implements OnInit {
       this.tSvc.setActiveLang(this.langSelection);
       this.authSvc.setUserLang(this.langSelection).subscribe(() => {
         this.dateAdapter.setLocale(this.langSelection);
-        moment.locale(this.langSelection);
       });
     },
       error => console.error('Error updating user langugage: ' + error.message));

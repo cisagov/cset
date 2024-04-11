@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,9 +22,8 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
-import { CrrService } from '../../../../services/crr.service';
-
+import { CmuReportModel } from '../../../../models/reports.model';
+import { CmuService } from '../../../../services/cmu.service';
 
 @Component({
   selector: 'app-crr-performance-appendix-a',
@@ -32,29 +31,25 @@ import { CrrService } from '../../../../services/crr.service';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrPerformanceAppendixAComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
 
   bodyData: any[];
   legend: string = '';
   mil1FullAnswerDistribChart = '';
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.crrSvc.getCrrPerformanceAppendixABodyData().subscribe((resp: any) =>{
+    this.cmuSvc.getPerformanceAppendixABodyData().subscribe((resp: any) => {
       this.bodyData = resp;
     });
 
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
       this.mil1FullAnswerDistribChart = resp;
-    })
-
-    this.crrSvc.getMil1PerformanceLegendWidget().subscribe((resp: string) => {
-      this.legend = resp;
     });
 
+    this.cmuSvc.getMil1PerformanceLegendWidget(false).subscribe((resp: string) => {
+      this.legend = resp;
+    });
   }
 }
-
-

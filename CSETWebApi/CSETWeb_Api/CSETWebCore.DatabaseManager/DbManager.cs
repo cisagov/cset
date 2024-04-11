@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -61,7 +61,7 @@ namespace CSETWebCore.DatabaseManager
 
                 if (LocalDb2022Installed)
                 {
-                    using (SqlLocalDbApi localDb = new SqlLocalDbApi()) 
+                    using (SqlLocalDbApi localDb = new SqlLocalDbApi())
                     {
 
                         // Create and start our custom localdb instance
@@ -72,11 +72,21 @@ namespace CSETWebCore.DatabaseManager
                         {
                             manager.Start();
                         }
-                    } 
+                    }
 
                     InitialDbInfo localDb2022Info = new InitialDbInfo(LocalDb2022ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
-                    InitialDbInfo localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
+                    InitialDbInfo localDb2019Info = null;
+                    InitialDbInfo localDb2012Info = null;
+
+                    if (LocalDb2019Installed) 
+                    { 
+                        localDb2019Info = new InitialDbInfo(LocalDb2019ConnectionString, DatabaseCode);
+                    }
+
+                    if (LocalDb2012Installed) 
+                    { 
+                        localDb2012Info = new InitialDbInfo(LocalDb2012ConnectionString, DatabaseCode);
+                    }
 
                     string appdatas = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
                     string destDBFile = Path.Combine(appdatas, ClientCode, ApplicationCode, NewVersion.ToString(), DatabaseFileName);
@@ -85,8 +95,8 @@ namespace CSETWebCore.DatabaseManager
                     // Create the new version folder in local app data folder. If it already exists, this call will do nothing and be harmless
                     Directory.CreateDirectory(Path.GetDirectoryName(destDBFile));
 
-                    // If no db's exist, we can do a clean install
-                    if (!localDb2022Info.Exists && !localDb2019Info.Exists && !localDb2012Info.Exists)
+                    // If no DBs exist, we can do a clean install
+                    if (!localDb2022Info.Exists && !(localDb2019Info?.Exists ?? false) && !(localDb2012Info?.Exists ?? false))
                     {
                         // Create a custom localdb instance for 2022
                         CleanInstallNoUpgrades(destDBFile, destLogFile, localDb2022Info);
@@ -104,14 +114,14 @@ namespace CSETWebCore.DatabaseManager
                         return;
                     }
 
-                    if (localDb2019Info.Exists)
+                    if (localDb2019Info?.Exists ?? false)
                     {
                         _logger.Info($"{ApplicationCode} {localDb2019Info.GetInstalledDBVersion()} database detected on LocalDB 2019 default instance. Copying database files and attempting upgrade... ");
                         UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2019Info);
                         return;
                     }
 
-                    if (localDb2012Info.Exists)
+                    if (localDb2012Info?.Exists ?? false)
                     {
                         _logger.Info($"{ApplicationCode} {localDb2012Info.GetInstalledDBVersion()} database detected on LocalDB 2012 default instance. Copying database files and attempting upgrade... ");
                         UpgradeOldLocalDb(destDBFile, destLogFile, localDb2022Info, localDb2012Info);
@@ -234,25 +244,28 @@ namespace CSETWebCore.DatabaseManager
             }
         }
 
-        private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo) 
+        private void DisplayOldLocalDbInstalledNotification(InitialDbInfo localdbInfo)
         {
-            if (LocalDb2019Installed || LocalDb2012Installed) 
+            if (!ApplicationCode.Equals("ACET"))
             {
-                var result = ExecuteScalarQuery("SELECT [Property_Value] FROM [GLOBAL_PROPERTIES] WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
-                
-                if (result != null && ((string)result).ToLower().Equals("false")) 
+                if (LocalDb2019Installed || LocalDb2012Installed)
                 {
-                    string oldLocalDbInstalledMessage = $"{(LocalDb2012Installed && LocalDb2019Installed ? "Old versions" : "An old version")} of SQL Server LocalDB " +
-                        $"{(LocalDb2012Installed && LocalDb2019Installed ? "are" : "is")} still installed. {ApplicationCode} uses the latest version of LocalDB (2022); however, " +
-                        $"{ApplicationCode} does not uninstall previous versions automatically. " +
-                        "If you would like to remove an old version of LocalDB, you will have to do so manually: \r\n \r\n" +
-                        $"{(LocalDb2019Installed ? LOCALDB_2019_REGISTRY_DISPLAY_NAME + "\r\n" : "")}" +
-                        $"{(LocalDb2012Installed ? LOCALDB_2012_REGISTRY_DISPLAY_NAME : "")}";
+                    var result = ExecuteScalarQuery("SELECT [Property_Value] FROM [GLOBAL_PROPERTIES] WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
 
-                    _logger.Info(oldLocalDbInstalledMessage);
-                    Console.WriteLine(oldLocalDbInstalledMessage);
+                    if (result != null && ((string)result).ToLower().Equals("false"))
+                    {
+                        string oldLocalDbInstalledMessage = $"{(LocalDb2012Installed && LocalDb2019Installed ? "Old versions" : "An old version")} of SQL Server LocalDB " +
+                            $"{(LocalDb2012Installed && LocalDb2019Installed ? "are" : "is")} still installed. {ApplicationCode} uses the latest version of LocalDB (2022); however, " +
+                            $"{ApplicationCode} does not uninstall previous versions automatically. " +
+                            "If you would like to remove an old version of LocalDB, you will have to do so manually: \r\n \r\n" +
+                            $"{(LocalDb2019Installed ? LOCALDB_2019_REGISTRY_DISPLAY_NAME + "\r\n" : "")}" +
+                            $"{(LocalDb2012Installed ? LOCALDB_2012_REGISTRY_DISPLAY_NAME : "")}";
 
-                    ExecuteNonQuery("UPDATE [GLOBAL_PROPERTIES] SET [Property_Value] = 'True' WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
+                        _logger.Info(oldLocalDbInstalledMessage);
+                        Console.WriteLine(oldLocalDbInstalledMessage);
+
+                        ExecuteNonQuery("UPDATE [GLOBAL_PROPERTIES] SET [Property_Value] = 'True' WHERE [Property] = 'AgreedToLocalDbNotification'", localdbInfo.ConnectionString);
+                    }
                 }
             }
         }
@@ -523,7 +536,7 @@ namespace CSETWebCore.DatabaseManager
                 {
                     return ApplicationCode + "Web";
                 }
-                else if (ApplicationCode.Equals("CSET Renewables")) 
+                else if (ApplicationCode.Equals("CSET Renewables"))
                 {
                     return "RENEWWeb";
                 }
@@ -542,7 +555,7 @@ namespace CSETWebCore.DatabaseManager
             // "INLLocalDb2022" is our custom localdb 2022 instance name, so we need to build it "custom".
             get { return @$"data source=(LocalDB)\{LOCALDB_2022_CUSTOM_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=10;MultipleActiveResultSets=True;"; }
         }
-        
+
         public string LocalDb2019ConnectionString
         {
             // "MSSQLLocalDB" is the default instance name for localdb2019
@@ -554,7 +567,7 @@ namespace CSETWebCore.DatabaseManager
             // "v11.0" is the default instance name for localdb2012
             get { return @$"data source=(LocalDB)\{LOCALDB_2012_DEFAULT_INSTANCE_NAME};initial catalog={DatabaseCode};integrated security=SSPI;connect timeout=5;MultipleActiveResultSets=True;"; }
         }
-        
+
         public string DatabaseFileName
         {
             get { return $"{DatabaseCode}{DB_EXTENSION}"; }

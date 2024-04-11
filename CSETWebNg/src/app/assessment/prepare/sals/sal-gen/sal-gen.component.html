@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,51 +20,49 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="d-flex flex-column flex-11a mb-5">
-    <h4>Overall SAL</h4>
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-            <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
-                [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
-                (click)="saveLevel(level.value,'std')">
-                <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
-                    [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
-                {{level.value}}
-            </label>
-        </ng-template>
-    </div>
-</div>
-
-<div class="mb-3">
-    Answer the following questions to help determine the SAL for your assessment by selecting the potential impacts on
-    people and/or economic factors in the event your system is compromised.
-</div>
-
-<div *ngFor="let slider of sliders" class="mb-4">
-    <div class="mb-3 p-2 gen-sal-slider-group">
-        <h5>{{ slider.onSite.postfix | titlecase }}</h5>
-        <label class="mb-1" style="border-radius: .5rem">{{slider.onSite.sal_Description}}</label>
-
-        <div class="p-2">
-            <div class="sal-slider-label">On Site {{slider?.offSite?.values[0]}}</div>
-            <div class="sal-slider-label">On Site {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}</div>
-            <ngx-slider [(value)]="slider.onSite.slider_Value"
-                (valueChange)="valueChange($event, slider.onSite.sal_Name)"
-                [options]="slider.onSite.options"
-                [pointer-type]=""
-                class="mx-1 mb-4"
-                [attr.csetid]="slider.onSite.sal_Name">
-                </ngx-slider>
-            
-                <div class="sal-slider-label">Off Site {{slider?.onSite?.values[0]}}</div>
-                <div class="sal-slider-label">Off Site {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}</div>
-            <ngx-slider [(value)]="slider.offSite.slider_Value"
-                (valueChange)="valueChange($event, slider.offSite.sal_Name)" 
-                [options]="slider.offSite.options"
-                class="mx-1 mb-4"
-                [attr.csetid]="slider.offSite.sal_Name">
-            </ngx-slider>
+<ng-container *transloco="let t">
+    <div class="d-flex flex-column flex-11a mb-5">
+        <h4>{{t('titles.sal.overall sal')}}</h4>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+                <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
+                    [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+                    (click)="saveLevel(level.value,'std')">
+                    <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
+                        [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
+                    {{t('titles.sal.level.' + level.value.toLowerCase())}}
+                </label>
+            </ng-template>
         </div>
-        <!-- fw-500 fs-base-2 bgc-gray-100 -->
     </div>
-</div>
+
+    <div class="mb-3">
+        {{ t('titles.sal.gen sal.text1') }}
+    </div>
+
+    <div *ngFor="let slider of sliders" class="mb-4">
+        <div class="mb-3 p-2 gen-sal-slider-group">
+            <h5>{{ slider.onSite.postfix | titlecase }}</h5>
+            <label class="mb-1" style="border-radius: .5rem">{{slider.onSite.sal_Description}}</label>
+
+            <div class="p-2">
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[0]}}</div>
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.on site')}} {{slider?.offSite?.values[slider?.offSite?.values?.length - 1]}}
+                </div>
+                <ngx-slider [(value)]="slider.onSite.slider_Value"
+                    (valueChange)="valueChange($event, slider.onSite.sal_Name)" [options]="slider.onSite.options"
+                    [pointer-type]="" class="mx-1 mb-4" [attr.csetid]="slider.onSite.sal_Name">
+                </ngx-slider>
+
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[0]}}</div>
+                <div class="sal-slider-label">{{t('titles.sal.gen sal.off site')}} {{slider?.onSite?.values[slider?.offSite?.values?.length - 1]}}
+                </div>
+                <ngx-slider [(value)]="slider.offSite.slider_Value"
+                    (valueChange)="valueChange($event, slider.offSite.sal_Name)" [options]="slider.offSite.options"
+                    class="mx-1 mb-4" [attr.csetid]="slider.offSite.sal_Name">
+                </ngx-slider>
+            </div>
+            <!-- fw-500 fs-base-2 bgc-gray-100 -->
+        </div>
+    </div>
+</ng-container>

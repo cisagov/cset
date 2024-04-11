@@ -20,7 +20,9 @@
         "showOrganizationName": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
-        "additionalUserGuides": []
+        "additionalUserGuides": [],
+        "showCisaAssessorWorkflowSwitch": false,
+        "showMalcolmAnswerComparison": true
     }
 
 }

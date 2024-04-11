@@ -1,14 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ReportService } from '../../services/report.service';
 
 @Component({
   selector: 'app-info-block',
   templateUrl: './info-block.component.html'
 })
-export class InfoBlockComponent implements OnInit {
+export class InfoBlockComponent {
 
   @Input()
   public response: any;
 
-  ngOnInit() { }
+  constructor(
+    public reportSvc: ReportService
+  ){}
+
 
 }

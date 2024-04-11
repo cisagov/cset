@@ -100,8 +100,7 @@ public partial class GEN_FILE
 
     public byte[] Data { get; set; }
 
-    [Required]
-    public bool? Is_Uploaded { get; set; }
+    public bool Is_Uploaded { get; set; }
 
     [ForeignKey("Doc_Num")]
     [InverseProperty("GEN_FILE")]

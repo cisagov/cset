@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -20,6 +20,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
         string vertex { get; set; }
         string Message { get; set; }
         int MessageIdentifier { get; set; }
+        int Rule_Violated { get; set; }
         string NodeId1 { get; set; }
         string NodeId2 { get; set; }
         HashSet<string> SetMessages { get; set; }

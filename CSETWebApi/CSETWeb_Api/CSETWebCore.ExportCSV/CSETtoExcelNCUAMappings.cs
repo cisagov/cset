@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -154,7 +154,7 @@ namespace CSETWebCore.ExportCSV
             export.d["Assets"] = acetDashboard.Assets;
 
             // Build different Excel columns for ACET/ISE
-            if (type == "ACET")
+            if (type == "ACET" || type == "")
             {
                 ProcessIRP(assessmentID, acetDashboard, ref export, assessName);
                 ProcessMaturity(acetDashboard, maturityDomains, ref export);
@@ -187,7 +187,8 @@ namespace CSETWebCore.ExportCSV
                 { 5, "5 - Most" }
             };
 
-            for (int i = 0; i < acetDashboard.Irps.Count; i++)
+            // gather IRPC 0 - 4 (5 is ISE specific)
+            for (int i = 0; i < acetDashboard.Irps.Count - 1; i++)
             {
                 export.d["IRPC" + (i + 1)] = riskLevelDescription[acetDashboard.Irps[i].RiskLevel];
             }
@@ -197,10 +198,20 @@ namespace CSETWebCore.ExportCSV
                 .Where(x => x.Assessment_Id == assessmentID)
                 .OrderBy(i => i.IRP.Item_Number)
                 .ToList();
-
-            foreach (var irpAnswer in irpAnswers)
+            // If the user never opens the Exam Profile page
+            if (irpAnswers.Count == 0)
             {
-                export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                for (int i = 1; i < 40; i++)
+                {
+                    export.d["IRP" + i] = "0";
+                }
+            }
+            else
+            {
+                foreach (var irpAnswer in irpAnswers)
+                {
+                    export.d["IRP" + irpAnswer.IRP.Item_Number] = irpAnswer.Response.ToString();
+                }
             }
         }
 
@@ -241,7 +252,7 @@ namespace CSETWebCore.ExportCSV
                 }
             }
 
-            
+
         }
 
 
@@ -251,10 +262,10 @@ namespace CSETWebCore.ExportCSV
         /// <param name="export"></param>
         private void ProcessMaturity(ACETDashboard acetDashboard, List<MaturityDomain> maturityDomains, ref SingleRowExport export)
         {
-            // gather Domain Maturity 1 - 5
-            for (int i = 0; i < acetDashboard.Domains.Count; i++)
+            // gather Domain Maturity 1 - 5 (0 is ISE specific)
+            for (int i = 1; i < acetDashboard.Domains.Count; i++)
             {
-                export.d["Dom Mat " + (i + 1)] = acetDashboard.Domains[i].Maturity;
+                export.d["Dom Mat " + i] = acetDashboard.Domains[i].Maturity;
             }
 
             // gather the maturity levels for all factors and components
@@ -353,12 +364,14 @@ namespace CSETWebCore.ExportCSV
                 if (g.Maturity_Level_Id == 17)
                 {
                     export.d[g.Question_Title] = answerTranslation[g.Answer_Text];
-                } else if (g.Maturity_Level_Id == 18)
+                }
+                else if (g.Maturity_Level_Id == 18)
                 {
                     var modifiedTitle = g.Question_Title + 'c';
                     export.d[modifiedTitle] = answerTranslation[g.Answer_Text];
 
-                } else if (g.Maturity_Level_Id == 19)
+                }
+                else if (g.Maturity_Level_Id == 19)
                 {
                     var modifiedTitle = g.Question_Title + "c+";
                     export.d[modifiedTitle] += answerTranslation[g.Answer_Text];
@@ -369,10 +382,10 @@ namespace CSETWebCore.ExportCSV
 
 
 
-/// <summary>
-/// Defines the column names and values in a single NCUA export row.
-/// </summary>
-public class SingleRowExport
+    /// <summary>
+    /// Defines the column names and values in a single NCUA export row.
+    /// </summary>
+    public class SingleRowExport
     {
         public Dictionary<string, string> d = new Dictionary<string, string>();
 
@@ -1154,6 +1167,7 @@ public class SingleRowExport
             "Stmt 2.6c+",
             "Stmt 2.7c+",
             "Stmt 2.8c+",
+            "Stmt 2.9c+",
             "Stmt 3.1c",
             "Stmt 3.2c",
             "Stmt 3.3c",
@@ -1328,6 +1342,9 @@ public class SingleRowExport
             "Stmt 14.9c+",
             "Stmt 14.10c+",
             "Stmt 14.11c+",
+            "Stmt 14.12c+",
+            "Stmt 14.13c+",
+            "Stmt 14.14c+",
             "Stmt 15.1c",
             "Stmt 15.2c",
             "Stmt 15.3c",
@@ -1340,6 +1357,7 @@ public class SingleRowExport
             "Stmt 15.10c+",
             "Stmt 15.11c+",
             "Stmt 15.12c+",
+            "Stmt 15.13c+",
             "Stmt 16.1c",
             "Stmt 16.2c",
             "Stmt 16.3c+",

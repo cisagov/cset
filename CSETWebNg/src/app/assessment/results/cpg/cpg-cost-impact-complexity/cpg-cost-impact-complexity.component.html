@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,8 @@
   SOFTWARE. 
 -------------------------->
 <div class="d-flex flex-row pb-3 align-items-center">
-    <div class="mr-3 text-nowrap align-middle">COST: <span class="green-dollars align-middle">{{greenDollars}}</span><span class="gray-dollars align-middle">{{grayDollars}}</span></div>
-    <div class="mr-3 text-nowrap">IMPACT: <span [class]="lowMedHigh(impact)">{{impact}}</span></div>
-    <div class="mr-3 text-nowrap">COMPLEXITY: <span [class]="lowMedHigh(complexity)">{{complexity}}</span></div>
+  <div class="mr-3 text-nowrap align-middle">{{'reports.core.cpg.report.cost' | transloco | uppercase}}: <span class="green-dollars align-middle">{{greenDollars}}</span><span
+      class="gray-dollars align-middle">{{grayDollars}}</span></div>
+  <div class="mr-3 text-nowrap">{{'reports.core.cpg.report.impact' | transloco | uppercase}}: <span [class]="lowMedHigh(impact)">{{impactWord | uppercase}}</span></div>
+  <div class="mr-3 text-nowrap">{{'reports.core.cpg.report.complexity' | transloco | uppercase}}: <span [class]="lowMedHigh(complexity)">{{complexityWord | uppercase}}</span></div>
 </div>

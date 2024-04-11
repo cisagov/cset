@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "12.1.1",
+  "version": "12.1.6",
   "license": "MIT",
   "main": "main-electron.js",
   "private": true,
@@ -30,7 +30,6 @@
     "@angular/flex-layout": "^15.0.0-beta.42",
     "@angular/forms": "^16.1.6",
     "@angular/material": "^15.2.9",
-    "@angular/material-moment-adapter": "^15.2.9",
     "@angular/platform-browser": "^16.1.6",
     "@angular/platform-browser-dynamic": "^16.1.6",
     "@angular/platform-server": "^16.1.6",
@@ -69,8 +68,9 @@
     "intersection-observer": "^0.12.0",
     "jquery": "^3.6.0",
     "lodash": "^4.17.21",
+    "luxon": "^3.4.4",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.29.1",
+    "moment": "^2.30.1",
     "monaco-editor": "^0.36.1",
     "mousetrap": "^1.6.5",
     "ng-sidebar": "^9.4.3",
@@ -116,8 +116,8 @@
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "css-loader": "^6.7.3",
-    "electron": "^23.0.0",
-    "electron-packager": "^17.0.0",
+    "electron": "^29.1.0",
+    "electron-packager": "^17.1.2",
     "eslint": "^8.33.0",
     "jasmine-core": "^4.6.0",
     "jasmine-spec-reporter": "^7.0.0",
@@ -138,8 +138,6 @@
   },
   "resolutions": {
     "minimist": "1.2.6",
-    "d3-color": "3.1.0",
-    "minimatch": "3.0.8",
-    "xml2js": "0.5.0"
+    "tough-cookie": "4.1.3"
   }
 }

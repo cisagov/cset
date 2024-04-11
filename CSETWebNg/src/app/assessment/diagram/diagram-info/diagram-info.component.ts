@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,18 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { NavigationService } from '../../../services/navigation/navigation.service';
-import { NavTreeNode } from '../../../services/navigation/navigation.service';
-import { ConfigService } from '../../../services/config.service';
-import { Location } from '@angular/common';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { DiagramInventoryComponent } from '../diagram-inventory/diagram-inventory.component';
+import { HydroService } from '../../../services/hydro.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MalcolmUploadErrorComponent } from '../../../dialogs/malcolm/malcolm-upload-error.component';
+import { ConfigService } from '../../../services/config.service';
+import { NavTreeNode, NavigationService } from '../../../services/navigation/navigation.service';
+import { MalcolmService } from '../../../services/malcolm.service';
+import { MalcolmInstructionsComponent } from '../../../dialogs/malcolm/malcolm-instructions/malcolm-instructions.component';
 
 @Component({
     selector: 'app-info',
@@ -42,12 +45,18 @@ export class DiagramInfoComponent implements OnInit {
     buttonText: string = this.msgNoDiagramExists;
     hasDiagram: boolean = false;
 
+    malcolmFiles: File[];
+
+
     constructor(private router: Router,
         public assessSvc: AssessmentService,
         public navSvc: NavigationService,
         public configSvc: ConfigService,
         public authSvc: AuthenticationService,
-        private location: Location
+        public hydroSvc: HydroService,
+        public malcolmSvc: MalcolmService,
+        private location: Location,
+        private dialog: MatDialog,
     ) { }
     tree: NavTreeNode[] = [];
     ngOnInit() {
@@ -61,27 +70,27 @@ export class DiagramInfoComponent implements OnInit {
                 this.authSvc.isLocal = resp;
             });
         }
-        this.delayCheckForDiagram(1000)
+        this.delayCheckForDiagram(1000);
     }
 
     populateTree() {
         this.navSvc.buildTree();
     }
 
-    private checkForDiagram(){
+    private checkForDiagram() {
         this.assessSvc.hasDiagram().subscribe((resp: boolean) => {
             this.hasDiagram = resp;
             this.buttonText = this.hasDiagram ? this.msgDiagramExists : this.msgNoDiagramExists;
         });
     }
 
-    private async delayCheckForDiagram(ms){
+    private async delayCheckForDiagram(ms) {
         await this.delay(ms)
         this.checkForDiagram();
     }
 
-    private delay(ms: number){
-        return new Promise(resolve => setTimeout(resolve,ms));
+    private delay(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     navToDiagram(which: string) {
@@ -94,9 +103,9 @@ export class DiagramInfoComponent implements OnInit {
 
         let client;
         if (window.location.protocol === 'file:') {
-          client = window.location.href.substring(0, window.location.href.lastIndexOf('/dist') + 5);
+            client = window.location.href.substring(0, window.location.href.lastIndexOf('/dist') + 5);
         } else {
-          client = window.location.origin;
+            client = window.location.origin;
         }
 
         let folder = 'diagram';
@@ -111,4 +120,37 @@ export class DiagramInfoComponent implements OnInit {
             '&l=' + this.authSvc.isLocal +
             '&a=' + localStorage.getItem('assessmentId');
     }
+
+    uploadMalcolmData(event: any) {
+        this.malcolmFiles = event.target.files;
+
+        if (this.malcolmFiles) {
+            this.hydroSvc.uploadMalcolmFiles(this.malcolmFiles).subscribe(
+                (result) => {
+                    if (result != null) {
+                        this.openUploadErrorDialog(result);
+                    } else {
+                        location.reload();
+                    }
+                });
+        }
+    }
+
+    openUploadErrorDialog(errorData: any) {
+        let errorDialog = this.dialog.open(MalcolmUploadErrorComponent, {
+            minHeight: '300px',
+            minWidth: '400px',
+            data: {
+                error: errorData
+            }
+        });
+    }
+
+    openMalcolmInstructionsDialog() {
+        let instructionDialog = this.dialog.open(MalcolmInstructionsComponent, {
+            minHeight: '300px',
+            minWidth: '400px'
+        });
+    }
+
 }

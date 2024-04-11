@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,7 @@
 //
 ////////////////////////////////
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment
-} from '../../../../node_modules/@angular/router';
+import { Router, NavigationEnd, UrlTree, PRIMARY_OUTLET, UrlSegmentGroup, UrlSegment } from '../../../../node_modules/@angular/router';
 import { AssessmentService } from '../../services/assessment.service';
 import { NavigationService } from '../../services/navigation/navigation.service';
 

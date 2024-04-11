@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -133,7 +133,8 @@
                             <div *ngIf="q.answer === 'A'">
                                 <textarea appAutoSize class="form-control"
                                     [class.alt-text-required]="isAltTextRequired(q)"
-                                    style="width: 100%; min-height: 80px;" [placeholder]="altTextPlaceholder"
+                                    style="width: 100%; min-height: 80px;" 
+                                    [placeholder]="t('answer-options.placeholders.' + altTextPlaceholder)"
                                     [(ngModel)]="q.altAnswerText" (change)="storeAltText(q)"></textarea>
                                 <div *ngIf="isAltTextRequired(q)" class="alt-text-required-msg">* Description required
                                 </div>

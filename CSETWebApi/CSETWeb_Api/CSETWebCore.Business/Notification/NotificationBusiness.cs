@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -108,7 +108,7 @@ namespace CSETWebCore.Business.Notification
             if (_localInstallationHelper.IsLocalInstallation())
             {
                 RemoveCsetAppLink(ref bodyHtml);
-            }           
+            }
 
 
             MailMessage message = new MailMessage();
@@ -255,8 +255,13 @@ namespace CSETWebCore.Business.Notification
 
             string footerACET = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_ACET.html");
             mail.Body = mail.Body.Replace("{{email-footer-ACET}}", footerACET);
+
+            string footerTSA = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_TSA.html");
+            mail.Body = mail.Body.Replace("{{email-footer-TSA}}", footerTSA);
+
             string footerCF = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter_CF.html");
             mail.Body = mail.Body.Replace("{{email-footer-CF}}", footerCF);
+
             string footer = _resourceHelper.GetEmbeddedResource(@"App_Data\EmailFooter.html");
             mail.Body = mail.Body.Replace("{{email-footer}}", footer);
 
@@ -333,7 +338,8 @@ namespace CSETWebCore.Business.Notification
         {
             var doc = NSoup.Parse.Parser.Parse(html, "");
             var appLinks = doc.Select(".cset-app-link").ToList();
-            appLinks.ForEach(l => {
+            appLinks.ForEach(l =>
+            {
                 l.Parent.RemoveChild(l);
             });
 

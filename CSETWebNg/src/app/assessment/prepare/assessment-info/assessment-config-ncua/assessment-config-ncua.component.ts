@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { NCUAService } from '../../../../services/ncua.service';
 import { FeatureOptionNcuaComponent } from './feature-option-ncua/feature-option-ncua.component';
 
@@ -58,7 +58,7 @@ export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
       description: 'A network diagram is a visual representation of a computer or network. It shows the components and how they interact, including routers, devices, hubs, firewalls, etc. and can help define the scope of the network for the assessment.',
       expanded: false
     }
-  ] ];
+  ]];
 
   @ViewChildren(FeatureOptionNcuaComponent) featureChildren: QueryList<FeatureOptionNcuaComponent>;
 
@@ -94,7 +94,7 @@ export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
     }
 
   }
-  
+
   ngAfterViewInit() {
     this.setDisabledOptions();
   }
@@ -153,7 +153,7 @@ export class AssessmentConfigNcuaComponent implements OnInit, AfterViewInit {
 
       if (f.feature.code === 'ise' &&
         !!this.assessSvc.assessment.maturityModel &&
-        this.assessSvc.assessment.maturityModel.modelName != 'ISE') {      
+        this.assessSvc.assessment.maturityModel.modelName != 'ISE') {
         f.isDisabled = true;
         return;
       }

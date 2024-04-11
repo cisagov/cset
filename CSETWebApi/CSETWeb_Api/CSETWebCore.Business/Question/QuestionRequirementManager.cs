@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,11 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.DataLayer.Model;
-using CSETWebCore.Helpers;
+using Nelibur.ObjectMapper;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Interfaces.Question;
 using CSETWebCore.Model.Question;
-using Microsoft.AspNetCore.Http;
 using Snickler.EFCore;
 
 namespace CSETWebCore.Business.Question
@@ -161,7 +160,25 @@ namespace CSETWebCore.Business.Question
             var standardSelection = _context.STANDARD_SELECTION.Where(x => x.Assessment_Id == AssessmentId).FirstOrDefault();
             if (standardSelection != null)
             {
-                var targetString = (mode == "Q") ? "Questions Based" : "Requirements Based";
+                string targetString = "Requirements Based";
+                //var targetString = (mode == "Q") ? "Questions Based" : ((mode == "R") ? "Requirements Based" : 
+                //    ((mode == "P") ? "Principle Scope" : ((mode == "Principle-Phase Scope"));
+                switch (mode) 
+                {
+                    case "Q":
+                        targetString = "Questions Based";
+                        break;
+                    case "P":
+                        targetString = "Principle Scope";
+                        break;
+                    case "F":
+                        targetString = "Principle-Phase Scope";
+                        break;
+                    default:
+                        targetString = "Requirements Based";
+                        break;
+                }
+
                 if (standardSelection.Application_Mode != targetString)
                 {
                     standardSelection.Application_Mode = targetString;
@@ -253,7 +270,7 @@ namespace CSETWebCore.Business.Question
                 (answer.QuestionType == "Question" && !_context.NEW_QUESTION.Any(q => q.Question_Id == answer.QuestionId))
                 || (answer.QuestionType == "Requirement" && !_context.NEW_REQUIREMENT.Any(r => r.Requirement_Id == answer.QuestionId))
                 || (answer.QuestionType == "Component" && !_context.COMPONENT_QUESTIONS.Any(c => c.Question_Id == answer.QuestionId))
-                || (answer.QuestionType == "Maturity" && !_context.MATURITY_QUESTIONS.Any(m => m.Mat_Question_Id == answer.QuestionId))               
+                || (answer.QuestionType == "Maturity" && !_context.MATURITY_QUESTIONS.Any(m => m.Mat_Question_Id == answer.QuestionId))
                 )
             {
                 throw new Exception("Unknown question or requirement ID: " + answer.QuestionId);
@@ -324,7 +341,8 @@ namespace CSETWebCore.Business.Question
         /// <param name="resp"></param>        
         public void BuildComponentsResponse(QuestionResponse resp)
         {
-            var list = _context.usp_Answer_Components_Default(this.AssessmentId).Cast<Answer_Components_Base>().ToList();
+            var answerComponents = _context.usp_Answer_Components_Default(this.AssessmentId);
+            var list = answerComponents.Select(component => TinyMapper.Map<Answer_Components_Base>(component)).ToList();
             //.Where(x => x.Assessment_Id == this.assessmentID).Cast<Answer_Components_Base>()
             //.OrderBy(x => x.Question_Group_Heading).ThenBy(x => x.Universal_Sub_Category).ToList();
 

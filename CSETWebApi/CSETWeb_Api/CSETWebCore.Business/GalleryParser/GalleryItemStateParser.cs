@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -16,29 +16,36 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Nelibur.ObjectMapper;
+using CSETWebCore.Interfaces.Helpers;
 
 namespace CSETWebCore.Business.GalleryParser
 {
 
     public class GalleryState : IGalleryState
     {
+        private readonly ITokenManager _token;
         private CSETContext _context;
         private IMaturityBusiness _maturity_business;
         private IStandardsBusiness _standardsBusiness;
         private IQuestionRequirementManager _questionRequirementMananger;
 
+        private readonly TranslationOverlay _overlay;
+
 
         /// <summary>
         /// 
         /// </summary>
-        public GalleryState(CSETContext context, IMaturityBusiness maturityBusiness
+        public GalleryState(ITokenManager token, CSETContext context, IMaturityBusiness maturityBusiness
             , IStandardsBusiness standardsBusiness
             , IQuestionRequirementManager questionRequirementManager)
         {
+            _token = token;
             _context = context;
             _maturity_business = maturityBusiness;
             _standardsBusiness = standardsBusiness;
             _questionRequirementMananger = questionRequirementManager;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -58,6 +65,7 @@ namespace CSETWebCore.Business.GalleryParser
                        select new { r, g, d, i };
             var rvalue = new GalleryBoardData();
 
+            var lang = _token.GetCurrentLanguage();
 
             int row = -1;
             GalleryGroup galleryGroup = null;
@@ -71,11 +79,29 @@ namespace CSETWebCore.Business.GalleryParser
                     galleryGroup.Group_Id = item.g.Group_Id;
                     rvalue.Rows.Add(galleryGroup);
                     row = item.r.Row_Index;
+
+                    if (lang != "en")
+                    {
+                        galleryGroup.Group_Title = _overlay.GetValue("GALLERY_GROUP", galleryGroup.Group_Id.ToString(), lang)?.Value;
+                    }
                 }
 
                 if ((bool)item.i.Is_Visible)
                 {
-                    galleryGroup.GalleryItems.Add(new GalleryItem(item.i, galleryGroup.Group_Id));
+                    var galleryItem = new GalleryItem(item.i, galleryGroup.Group_Id);
+
+                    if (lang != "en")
+                    {
+                        var itemOverlay = _overlay.GetJObject("GALLERY_ITEM", "key", galleryItem.Gallery_Item_Guid.ToString(), lang);
+
+                        if (itemOverlay != null)
+                        {
+                            galleryItem.Title = itemOverlay.Value<string>("title");
+                            galleryItem.Description = itemOverlay.Value<string>("description");
+                        }
+                    }
+
+                    galleryGroup.GalleryItems.Add(galleryItem);
                 }
             }
 
@@ -97,7 +123,7 @@ namespace CSETWebCore.Business.GalleryParser
         /// <param name="board"></param>
         private void IncludeCustomSets(GalleryBoardData board)
         {
-            var customSets = _context.SETS.Where(s => s.Is_Custom && (s.Is_Displayed ?? true) && !s.Is_Deprecated).ToList();
+            var customSets = _context.SETS.Where(s => s.Is_Custom && (s.Is_Displayed) && !s.Is_Deprecated).ToList();
 
             if (customSets.Count > 0)
             {

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,26 +21,19 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-logo-rra',
   templateUrl: './logo-rra.component.html',
   styleUrls: ['./logo-rra.component.scss']
 })
-export class LogoRraComponent implements OnInit {
+export class LogoRraComponent {
 
-  @Input() 
+  @Input()
   shadow = true;
 
   @Input()
   hexColor = "#B43236";
-
-  
-  constructor() { }
-
-  ngOnInit(): void {
-
-  }
 
 }

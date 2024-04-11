@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,68 +19,72 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="d-flex flex-column flex-11a mb-5">
-  <h4>Overall SAL</h4>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-      <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
-        (click)="saveLevel(level.value,'std')">
-        
-        <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main" [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
-        {{level.value}}
-      </label>
-    </ng-template>
-  </div>
-</div>
+-------------------------->
+<ng-container *transloco="let t">
+  <div class="d-flex flex-column flex-11a mb-5">
+    <h4>{{t('titles.sal.overall sal')}}</h4>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+        <label [attr.csetid]="'OverallSAL' + level.value" class="btn btn-level btn-rounded form-check-label"
+          [class.active]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level"
+          (click)="saveLevel(level.value,'std')">
 
-<div class="d-flex flex-column flex-11a mb-4">
-  <h4>Confidentiality</h4>
-  <div class="mb-2">
-    This value relates to the importance of protecting information from unauthorized access. The more important it is
-    that unauthorized users do not have access to the information the higher your SAL level.
+          <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_main"
+            [checked]="level.value === this.salsSvc.selectedSAL?.selected_Sal_Level">
+          {{t('titles.sal.level.' + level.value.toLowerCase())}}
+        </label>
+      </ng-template>
+    </div>
   </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-      <label [attr.csetid]="'Confidentiality' + level.value"  class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel"
-        (click)="saveLevel(level.value,'C')">
-        <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_confidentiality" [checked]="level.value === this.salsSvc.selectedSAL?.cLevel">
-        {{level.value}}
-      </label>
-    </ng-template>
-  </div>
-</div>
 
-<div class="d-flex flex-column flex-11a mb-3">
-  <h4>Integrity</h4>
-  <div class="mb-2">
-    This value relates to the the importance of the accuracy of information. The more important it is that
-    information is kept consistent, accurate, and only changed by those authorized the higher your SAL level.
+  <div class="d-flex flex-column flex-11a mb-4">
+    <h4>{{t('titles.sal.confidentiality')}}</h4>
+    <div class="mb-2">
+      {{t('titles.sal.confidentiality text')}}
+    </div>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+        <label [attr.csetid]="'Confidentiality' + level.value" class="btn btn-level btn-rounded form-check-label"
+          [class.active]="level.value === this.salsSvc.selectedSAL?.cLevel" (click)="saveLevel(level.value,'C')">
+          <input class="form-check-input" tabindex="0" type="radio" autocomplete="off" name="sal_confidentiality"
+            [checked]="level.value === this.salsSvc.selectedSAL?.cLevel">
+          {{t('titles.sal.level.' + level.value.toLowerCase())}}
+        </label>
+      </ng-template>
+    </div>
   </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-      <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel"
-        (click)="saveLevel(level.value,'I')">
-        <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity" [checked]="level.value === this.salsSvc.selectedSAL?.iLevel">
-        {{level.value}}
-      </label>
-    </ng-template>
-  </div>
-</div>
 
-<div class="d-flex flex-column flex-11a mb-3">
-  <h4>Availability</h4>
-  <div class="mb-2">
-    This value relates to the importance of information being readily available. The more important it is to have your
-    information available for use the higher your SAL level.
+  <div class="d-flex flex-column flex-11a mb-3">
+    <h4>{{t('titles.sal.integrity')}}</h4>
+    <div class="mb-2">
+      {{t('titles.sal.integrity text')}}
+    </div>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+        <label [attr.csetid]="'Integrity' + level.value" class="btn btn-level btn-rounded form-check-label"
+          [class.active]="level.value === this.salsSvc.selectedSAL?.iLevel" (click)="saveLevel(level.value,'I')">
+          <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_integrity"
+            [checked]="level.value === this.salsSvc.selectedSAL?.iLevel">
+          {{t('titles.sal.level.' + level.value.toLowerCase())}}
+        </label>
+      </ng-template>
+    </div>
   </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
-      <label [attr.csetid]="'Availability' + level.value" class="btn btn-level btn-rounded form-check-label" [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel"
-        (click)="saveLevel(level.value,'A')">
-        <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability" [checked]="level.value === this.salsSvc.selectedSAL?.aLevel">
-        {{level.value}}
-      </label>
-    </ng-template>
+
+  <div class="d-flex flex-column flex-11a mb-3">
+    <h4>{{t('titles.sal.availability')}}</h4>
+    <div class="mb-2">
+      {{t('titles.sal.availability text')}}
+    </div>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <ng-template ngFor let-level [ngForOf]="salsSvc.levels">
+        <label [attr.csetid]="'Availability' + level.value" class="btn btn-level btn-rounded form-check-label"
+          [class.active]="level.value === this.salsSvc.selectedSAL?.aLevel" (click)="saveLevel(level.value,'A')">
+          <input class="form-check-input" type="radio" tabindex="0" autocomplete="off" name="sal_availability"
+            [checked]="level.value === this.salsSvc.selectedSAL?.aLevel">
+          {{t('titles.sal.level.' + level.value.toLowerCase())}}
+        </label>
+      </ng-template>
+    </div>
   </div>
-</div>
+</ng-container>

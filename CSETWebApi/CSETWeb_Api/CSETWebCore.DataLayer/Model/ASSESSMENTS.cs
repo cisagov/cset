@@ -43,8 +43,7 @@ public partial class ASSESSMENTS
     [StringLength(150)]
     public string IRPTotalOverrideReason { get; set; }
 
-    [Required]
-    public bool? MatDetail_targetBandOnly { get; set; }
+    public bool MatDetail_targetBandOnly { get; set; }
 
     [Column(TypeName = "xml")]
     public string Diagram_Markup { get; set; }
@@ -67,10 +66,10 @@ public partial class ASSESSMENTS
 
     public bool? ISE_StateLed { get; set; }
 
-    public bool Is_PCII { get; set; }
-
     [StringLength(50)]
     public string PCII_Number { get; set; }
+
+    public bool Is_PCII { get; set; }
 
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
@@ -157,6 +156,9 @@ public partial class ASSESSMENTS
 
     [InverseProperty("IdNavigation")]
     public virtual INFORMATION INFORMATION { get; set; }
+
+    [InverseProperty("Assessment")]
+    public virtual ICollection<MALCOLM_ANSWERS> MALCOLM_ANSWERS { get; set; } = new List<MALCOLM_ANSWERS>();
 
     [InverseProperty("Assessment")]
     public virtual ICollection<MATURITY_DOMAIN_REMARKS> MATURITY_DOMAIN_REMARKS { get; set; } = new List<MATURITY_DOMAIN_REMARKS>();

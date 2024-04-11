@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -79,17 +79,6 @@ namespace CSETWebCore.Business.AssessmentIO.Import
              {
                  config.Ignore(x => x.Finding_Id);
              });
-            //copy the incoming information to an intermediary
-            //then copy from the intermediary to destination
-            //and permit updates.
-
-            // RKW 22-MAR-19 - this was crashing with a StackOverflowException.  
-            //TinyMapper.Bind<INFORMATION, INFORMATION>(config =>
-            //{
-            //    config.Ignore(x => x.Id);
-            //    config.Ignore(x => x.IdNavigation);
-            //    config.Ignore(x => x.ASSESSMENT);
-            //});
         }
 
 
@@ -99,20 +88,21 @@ namespace CSETWebCore.Business.AssessmentIO.Import
         /// <returns></returns>
         public int RunImportManualPortion(bool overwriteAssessment)
         {
-            //create the new assessment
+            //create the new assessment / get existing assessment if overwrite is true
             //copy each of the items to the table 
             //as the copy occurs change to the current assessment_id
             //update the answer id's             
 
             Dictionary<int, DOCUMENT_FILE> oldIdToNewDocument = new Dictionary<int, DOCUMENT_FILE>();
-            AssessmentDetail detail;
+            AssessmentDetail detail = null;
 
             if (overwriteAssessment)
             {
                 detail = _assessmentBiz.GetAssessmentDetail(_model.jASSESSMENTS.FirstOrDefault().Assessment_GUID);
             }
-            else 
-            { 
+
+            if (detail == null)
+            {
                 detail = _assessmentBiz.CreateNewAssessmentForImport(_currentUserId, _accessKey);
             }
 
@@ -123,7 +113,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
             Dictionary<string, int> oldUserNewUser = _context.USERS.ToDictionary(x => x.PrimaryEmail, y => y.UserId);
 
-            foreach(var a in _model.jASSESSMENTS)
+            foreach (var a in _model.jASSESSMENTS)
             {
                 var item = _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
                 if (item != null)
@@ -136,7 +126,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     item.CreditUnionName = a.CreditUnionName;
                     item.IRPTotalOverride = a.IRPTotalOverride;
                     item.IRPTotalOverrideReason = a.IRPTotalOverrideReason;
-                    item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly != null ? a.MatDetail_targetBandOnly : false;
+                    item.MatDetail_targetBandOnly = a.MatDetail_targetBandOnly??false;
 
                     _context.SaveChanges();
                 }
@@ -165,12 +155,12 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                     dictAC.Add(a.Assessment_Contact_Id, newPrimaryContact.Assessment_Contact_Id);
                     continue;
                 }
-                
+
                 var item = TinyMapper.Map<ASSESSMENT_CONTACTS>(a);
                 item.Assessment_Id = assessmentId;
                 item.PrimaryEmail = a.PrimaryEmail;
-               
-                if (a?.PrimaryEmail != null 
+
+                if (a?.PrimaryEmail != null
                     && oldUserNewUser.TryGetValue(a.PrimaryEmail, out int userid))
                 {
                     item.UserId = userid;

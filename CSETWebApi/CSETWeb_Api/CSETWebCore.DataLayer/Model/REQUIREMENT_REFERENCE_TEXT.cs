@@ -18,4 +18,8 @@ public partial class REQUIREMENT_REFERENCE_TEXT
     public int Sequence { get; set; }
 
     public string Reference_Text { get; set; }
+
+    [ForeignKey("Requirement_Id")]
+    [InverseProperty("REQUIREMENT_REFERENCE_TEXT")]
+    public virtual NEW_REQUIREMENT Requirement { get; set; }
 }

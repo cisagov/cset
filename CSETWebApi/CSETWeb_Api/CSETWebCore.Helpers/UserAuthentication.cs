@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -66,7 +66,7 @@ namespace CSETWebCore.Helpers
                 return null;
             }
 
-            if (!loginUser.IsActive.GetValueOrDefault(true))
+            if (!loginUser.IsActive)
             {
                 return null;
             }
@@ -123,11 +123,11 @@ namespace CSETWebCore.Helpers
                 UserFirstName = loginUser.FirstName,
                 UserLastName = loginUser.LastName,
                 IsSuperUser = loginUser.IsSuperUser,
-                ResetRequired = loginUser.PasswordResetRequired ?? true,
+                ResetRequired = loginUser.PasswordResetRequired,
                 ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
                 ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
                 LinkerTime = new BuildNumberHelper().GetLinkerTime(),
-                IsFirstLogin = loginUser.IsFirstLogin ?? false
+                IsFirstLogin = loginUser.IsFirstLogin
             };
 
 
@@ -168,6 +168,32 @@ namespace CSETWebCore.Helpers
             // Read the file system for the LOCAL-INSTALLATION file put there at install time
             if (!_localInstallationHelper.IsLocalInstallation())
             {
+                // this is not a local install.  Return what we know about this user (if anything).
+                if (tokenManager.Payload("userid") != null)
+                {
+                    var loginUser = _context.USERS.Where(x => x.UserId == int.Parse(tokenManager.Payload("userid"))).FirstOrDefault();
+
+                    if (loginUser != null)
+                    {
+                        var respUser = new LoginResponse
+                        {
+                            UserId = loginUser.UserId,
+                            Email = login.Email,
+                            Lang = loginUser.Lang,
+                            UserFirstName = loginUser.FirstName,
+                            UserLastName = loginUser.LastName,
+                            IsSuperUser = loginUser.IsSuperUser,
+                            ResetRequired = loginUser.PasswordResetRequired,
+                            ExportExtension = IOHelper.GetExportFileExtension(login.Scope),
+                            ImportExtensions = IOHelper.GetImportFileExtensions(login.Scope),
+                            LinkerTime = new BuildNumberHelper().GetLinkerTime(),
+                            IsFirstLogin = loginUser.IsFirstLogin
+                        };
+
+                        return respUser;
+                    }
+                }
+
                 return null;
             }
 
@@ -237,7 +263,7 @@ namespace CSETWebCore.Helpers
             string token = _transactionSecurity.GenerateToken(userIdSO, null, login.TzOffset, -1, assessmentId, null, login.Scope);
 
             // Build response object
-            LoginResponse resp = new LoginResponse
+            var resp = new LoginResponse
             {
                 Token = token,
                 Email = primaryEmailSO,

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +24,10 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ReportService } from '../../../app/services/report.service';
 import { Title } from '@angular/platform-browser';
-import { AggregationService } from  '../../../app/services/aggregation.service';
+import { AggregationService } from '../../../app/services/aggregation.service';
 import { ChartService, ChartColors } from '../../../app/services/chart.service';
 import { MaturityService } from '../../services/maturity.service';
-import  Chart  from 'chart.js/auto';
-import { stubTrue } from 'lodash';
+import Chart from 'chart.js/auto';
 import { ConfigService } from '../../services/config.service';
 import { ColorService } from '../../services/color.service';
 
@@ -68,9 +67,9 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     this.reportSvc.getAggReport('comparereport', aggId).subscribe(
       (r: any) => {
         this.response = r;
-    },
+      },
 
-    error => console.log('Compare report load Error: ' + (<Error>error).message)
+      error => console.log('Compare report load Error: ' + (<Error>error).message)
     );
 
     this.populateCharts(aggId);
@@ -82,12 +81,12 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     // Overall Average
     this.aggregationSvc.getOverallAverageSummary(aggId).subscribe((x: any) => {
 
-    // Makes the Compliance Summary chart a light blue color instead of grey
-    const chartColors = new ChartColors();
-    x.datasets.forEach((ds: any) => {
-      ds.backgroundColor = chartColors.getNextBluesBarColor();
-      ds.borderColor = ds.backgroundColor;
-    });
+      // Makes the Compliance Summary chart a light blue color instead of grey
+      const chartColors = new ChartColors();
+      x.datasets.forEach((ds: any) => {
+        ds.backgroundColor = chartColors.getNextBluesBarColor();
+        ds.borderColor = ds.backgroundColor;
+      });
       this.chartOverallAverage = this.chartSvc.buildHorizBarChart('canvasOverallAverage', x, false, true);
     });
 
@@ -99,11 +98,11 @@ export class CompareReportComponent implements OnInit, AfterViewChecked {
     // Category Averages
     this.aggregationSvc.getCategoryAverages(aggId).subscribe((x: any) => {
 
-    // Makes the Category Average chart a nice green color instead of grey
-        x.datasets.forEach(ds => {
-          ds.backgroundColor = '#008a00';
-          ds.borderColor = '#008a00';
-        });
+      // Makes the Category Average chart a nice green color instead of grey
+      x.datasets.forEach(ds => {
+        ds.backgroundColor = '#008a00';
+        ds.borderColor = '#008a00';
+      });
 
       if (!x.options) {
         x.options = {};

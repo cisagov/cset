@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,13 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="report-body mb-5">
+<div class="report-body mb-5" *transloco="let t">
 
   <div class="flex-container">
     <div class="column mt-3">
-      
-      <p
-        class="report-title">
-        EXECUTIVE SUMMARY
+
+      <p class="report-title">
+        {{t('reports.core.executive summary.report title') | uppercase}}
       </p>
     </div>
     <div class="column">
@@ -38,33 +37,25 @@
 
     <div class="cover-page-bottom">
       <app-logo-for-reports></app-logo-for-reports>
-      <app-info-block [response]="response"/>
+      <app-info-block [response]="response" />
     </div>
   </div>
 
 
   <div class="page-break">
 
-    <div class="disclaimer-blurb mt-4">
-      This report was prepared as an account of work sponsored by an agency of the U.S. Government. Neither the U.S.
-      Government
-      nor any agency thereof, nor any employee, makes any warranty, expressed or implied, or assumes any legal liability
-      or responsibility for any third-party's use, or the results of such use, or any information, apparatus, product,
-      or
-      process disclosed in this publication, or represents that its use by such third party would not infringe privately
-      owned rights.
-    </div>
+    <app-disclaimer-blurb-a></app-disclaimer-blurb-a>
 
     <app-overall-compliance></app-overall-compliance>
 
     <h1 *ngIf="response?.information.assessment_Description">
-      High-Level Assessment Description
+      {{t('reports.high level assessment desc')}}
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.assessment_Description)">
     </p>
 
     <h1>
-      Executive Summary
+      {{t('reports.executive summary')}}
     </h1>
     <p [innerHTML]="reportSvc.formatLinebreaks(response?.information.executive_Summary)">
     </p>
@@ -78,11 +69,11 @@
 
   <div *ngIf="!usesRAC()" class="page-break">
     <h1>
-      Security Assurance Level (SAL)
+      {{t('titles.sal.security assurance level (sal)')}}
     </h1>
 
     <!-- SAL -->
-      <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
+    <app-sal-section *ngIf="response" [response]="response"></app-sal-section>
   </div>
 
 
@@ -144,18 +135,16 @@
 
   <div class="page-break" *ngIf="response?.information.useStandard">
     <h1>
-      Areas of Concern Top Subjects and Questions
+      {{t('reports.core.executive summary.areas of concern')}}
     </h1>
 
     <p>
-      The top subject areas and questions identify those areas where attention will either provide the most immediate
-      impact or
-      protect against the greatest vulnerabilities.
+      {{t('reports.core.executive summary.top subject areas')}}
     </p>
 
     <div>
       <h3>
-        Top Categories of Concern
+        {{t('reports.core.executive summary.concern categories')}}
       </h3>
       <table class="concern-list">
         <tr *ngFor="let topCat of response?.top5Categories; index as i">
@@ -166,7 +155,7 @@
 
 
       <h3>
-        Top Questions of Concern
+        {{t('reports.core.executive summary.concern questions')}}
       </h3>
       <table class="concern-list">
         <tr *ngFor="let topQ of response?.top5Questions; index as i">

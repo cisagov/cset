@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -67,20 +67,20 @@ namespace CSETWebCore.Model.Nested
         public string QuestionType { get; set; }
 
         public int Sequence { get; set; }
-        public int MaturityLevel { get; set; }  
+        public int MaturityLevel { get; set; }
         public string MaturityLevelName { get; set; }
         public string DisplayNumber { get; set; }
         public string QuestionText { get; set; }
 
         public string AnswerText { get; set; }
         public string AnswerMemo { get; set; }
-        public string AltAnswerText { get; set;  }
+        public string AltAnswerText { get; set; }
 
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
 
-        public List<CustomDocument> SourceDocuments { get; set; }
-        public List<CustomDocument> AdditionalDocuments { get; set; }
+        public List<ReferenceDocLink> SourceDocuments { get; set; }
+        public List<ReferenceDocLink> AdditionalDocuments { get; set; }
 
         public List<string> CSF { get; set; } = new List<string>();
         public List<TTPReference> TTP { get; set; } = new List<TTPReference>();
@@ -91,7 +91,7 @@ namespace CSETWebCore.Model.Nested
         public List<Question> Followups { get; set; } = new List<Question>();
 
         public string Comment { get; set; }
-        public bool HasObservations { get; set; }
+        public bool HasObservation { get; set; }
         public string Feedback { get; set; }
         public bool MarkForReview { get; set; }
         public List<int> DocumentIds { get; set; } = new List<int>();
@@ -147,7 +147,7 @@ namespace CSETWebCore.Model.Nested
     }
 
 
-    public class IntegrityCheckOption 
+    public class IntegrityCheckOption
     {
         public int OptionId { get; set; }
         public bool Selected { get; set; }
@@ -195,25 +195,47 @@ namespace CSETWebCore.Model.Nested
         public bool HasChildren { get; set; } = false;
     }
 
-    public class FlatQuestion
+    public class FlatOption
     {
+        public int QuestionId { get; set; }
         public string QuestionText { get; set; }
+        public int? OptionId { get; set; }
+        public string? OptionText { get; set; }
         public decimal? Weight { get; set; }
         public bool Selected { get; set; }
         public string Type { get; set; }
         public int? ThreatType { get; set; }
     }
 
-    public class GroupedQuestions
+    public class GroupedOptions
     {
         public string QuestionText { get; set; }
-        public List<FlatQuestion> OptionQuestions { get; set; }
+        public List<FlatOption> OptionQuestions { get; set; }
     }
 
     public class RollupOptions
     {
         public string Type { get; set; }
         public decimal? Weight { get; set; }
+    }
+
+    /// <summary>
+    /// Defines a period of time in hours and whether shorter
+    /// or longer times are better.  
+    /// 
+    ///  - For recovery/failover questions, shorter is better.
+    ///  - For time to impact questions, longer is better.
+    /// </summary>
+    public class DurationThreshold
+    {
+        public double DurationHours { get; set; }
+        public bool ShorterIsBetter { get; set; }
+
+        public DurationThreshold(double hours, bool shorterIsBetter)
+        {
+            DurationHours = hours;
+            ShorterIsBetter = shorterIsBetter;
+        }
     }
 
     public class CisAssessmentsResponse

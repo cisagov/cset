@@ -1,6 +1,6 @@
 /*
 
-  Copyright 2023 Battelle Energy Alliance, LLC
+  Copyright 2024 Battelle Energy Alliance, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -208,38 +208,13 @@ a {
 
 .checkbox-custom,
 .radio-custom {
-  opacity: 0;    
-}
-
-input#cbSelectAll.checkbox-custom{
+  opacity: 0;
   display: none;
 }
-input#cbShowOptionY.checkbox-custom{
-  display: none;
-}
-input#cbShowOptionN.checkbox-custom{
-  display: none;
-}
-input#cbShowU.checkbox-custom{
-  display: none;
-}
-input#cbShowComments.checkbox-custom{
-  display: none;
-}
-input#cbShowFeedback.checkbox-custom{
-  display: none;
-}
-input#cbShowMarked.checkbox-custom{
-  display: none;
-}
-input#cbShowDisc.checkbox-custom{
-  display: none;
-}
-
 
 .checkbox-custom-label,
 .radio-custom-label {
-  display: flex;  
+  display: flex;
   vertical-align: middle;
   margin: 5px;
   cursor: pointer;
@@ -283,6 +258,21 @@ input#cbShowDisc.checkbox-custom{
 .radio-custom:focus+.radio-custom-label {
   // outline: 3px solid #8bb4f8; /* focus style */
   box-shadow: 0 0 3pt 2pt #8bb4f8;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label,
+.radio-custom:disabled+.radio-custom-label {
+  cursor: unset;
+}
+
+.checkbox-custom:disabled+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  border-color: lighten($secondary-color, 35%);
+}
+
+.checkbox-custom:disabled:checked+.checkbox-custom-label:before,
+.radio-custom:disabled+.radio-custom-label:before {
+  background-color: lighten($secondary-color, 35%);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -421,7 +411,7 @@ label[required]::after {
 /* --- header --- */
 .cset-header {
   background-color: $primary-color;
-  height: 62px;
+  height: 62.4px;
 }
 
 .sticky-navbar {
@@ -649,23 +639,15 @@ table.assessment-summary th:nth-child(1) {
   padding-left: 12px;
 }
 
-table.assessment-summary td,
-table.assessment-summary th {
-  padding: 0.5em 0.4em 0.5em 0;
+table.assessment-summary td {
+  padding: 0.2rem 0.5rem;
 }
 
 table.assessment-summary th {
   background-color: $secondary-color;
   color: $gray-50;
   font-weight: 500;
-}
-
-@media only screen and (max-width: 767px) {
-  .navbar-collapse.collapse.show {
-    background-color: $primary-color;
-    z-index: 10000;
-    padding: 10px;
-  }
+  padding: .5rem;
 }
 
 /*
@@ -1632,10 +1614,6 @@ ul.nav-tabs li.active button .tab-icon {
   padding: 5px;
 }
 
-#csetNavbarCollapse {
-  margin-top: 4px;
-}
-
 .navbar-toggler-icon:before {
   content: "\e5d2";
 }
@@ -2046,7 +2024,7 @@ input[type="checkbox"]+label {
   margin-left: 0.5em;
 }
 
-// Findings
+// Observations
 ///////////////////////////////////////////////////////////////////////
 .bigitem {
   /* This will be twice as */
@@ -2696,6 +2674,14 @@ mat-sidenav {
 
 .component-override article {
   max-width: 600px;
+}
+
+.component-override-dialog {
+  max-width: 600px;
+
+  @media screen and (max-width: 800px) {
+    max-width: 90vw;
+  }
 }
 
 // Terms
@@ -3880,7 +3866,7 @@ h6.dropdown-header {
 }
 
 .swiper-wrapper {
-  padding: 35px 0 20px 0;
+  padding: 0 0 20px 0;
 }
 
 .gallery-card-body {

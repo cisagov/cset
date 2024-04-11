@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -19,70 +19,76 @@
   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
---------------------------> 
-<div class="p-4 pb-0 d-flex flex-column flex-00a">
+-------------------------->
+<div class="p-4 pb-0 d-flex flex-column flex-00a" *transloco="let t">
   <form name="form" (ngSubmit)="signup()" #fReg="ngForm">
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !firstName.valid }">
-      <label required for="firstName">First Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel"
-        required />
+      <label required for="firstName">{{t('user profile.first name')}}</label>
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="firstName" name="firstName"
+        [(ngModel)]="model.firstName" #firstName="ngModel" required />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="alert alert-danger">First Name is
         required</div>
     </div>
 
     <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && !lastName.valid }">
-      <label required for="lastName">Last Name</label>
-      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel"
-        required />
+      <label required for="lastName">{{t('user profile.last name')}}</label>
+      <input type="text" tabindex="0" maxlength="150" class="form-control" id="lastName" name="lastName"
+        [(ngModel)]="model.lastName" #lastName="ngModel" required />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="alert alert-danger">Last Name is
         required</div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
-      <label required for="email">Email</label>
-      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail" #email="ngModel" required
-        email />
+    <div class="form-group"
+      [ngClass]="{ 'has-error': fReg.submitted && (email?.errors?.notValidEmail || email?.errors?.required) }">
+      <label required for="email">{{t('user profile.email')}}</label>
+      <input type="email" tabindex="0" maxlength="150" class="form-control" name="email"
+        [(ngModel)]="model.primaryEmail" #email="ngModel" required email />
       <div *ngIf="email.invalid && (email.dirty)">
-        <div *ngIf="email?.errors?.required" class="alert alert-danger">Email is required</div>
-        <div *ngIf="email?.errors?.notValidEmail" class="alert alert-danger">Not a valid email</div>
+        <div *ngIf="email?.errors?.required" class="alert alert-danger">{{t('user profile.email required')}}</div>
+        <div *ngIf="email?.errors?.notValidEmail" class="alert alert-danger">{{t('user profile.not valid email')}}</div>
       </div>
     </div>
 
-    <div class="form-group" [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
-      <label required for="confirmEmail">Confirm Email</label>
-      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail" required
-        #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
+    <div class="form-group"
+      [ngClass]="{ 'has-error': fReg.submitted && (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail || confirmEmail?.errors?.notValidEmail) }">
+      <label required for="confirmEmail">{{t('user profile.confirm email')}}</label>
+      <input type="email" tabindex="0" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail"
+        required #confirmEmail="ngModel" appConfirmEqualValidator="email" email />
       <div *ngIf="confirmEmail.invalid && confirmEmail.touched">
-        <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">Email is required</div>
-        <div *ngIf="confirmEmail?.errors?.notValidEmail" class="alert alert-danger">Not a valid email</div>
-        <div *ngIf="confirmEmail?.errors?.notEqual" class="alert alert-danger">Emails do not match</div>
+        <div *ngIf="confirmEmail?.errors?.required" class="alert alert-danger">{{t('user profile.email required')}}</div>
+        <div *ngIf="confirmEmail?.errors?.notValidEmail" class="alert alert-danger">{{t('user profile.not valid email')}}</div>
+        <div *ngIf="confirmEmail?.errors?.notEqual" class="alert alert-danger">{{t('user profile.emails do not match')}}</div>
       </div>
     </div>
 
     <div class="form-group">
-      <div class="form-text">Providing security questions is optional but will allow you to recover your password should you forget it.
+      <div class="form-text mt-4 mb-3">{{t('user profile.security questions text')}}
       </div>
       <table class="paddingBetweenCols">
-        <th>Security Question</th>
-        <th>Security Answer</th>
+        <th>{{t('user profile.security question')}}</th>
+        <th>{{t('user profile.security answer')}}</th>
         <tr>
           <td>
-            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1" [(ngModel)]="model.securityQuestion1">
+            <select class="form-control" tabindex="0" id="securityQuestion1" name="securityQustion1"
+              [(ngModel)]="model.securityQuestion1">
               <option *ngFor="let question of SecurityQuestions">{{question.securityQuestion}}</option>
             </select>
           </td>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
-              placeholder="Answer">
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer1"
+              name="SecurityAnswer1" [(ngModel)]="model.securityAnswer1"
+              placeholder="{{'user profile.answer' | transloco}}">
           </td>
         </tr>
         <tr>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2" placeholder="Your own custom security question"
-              name="SecurityQuestion2" [(ngModel)]="model.securityQuestion2">
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityQuestion2"
+              placeholder="{{'user profile.your own question' | transloco}}" name="SecurityQuestion2"
+              [(ngModel)]="model.securityQuestion2">
           </td>
           <td>
-            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer" name="SecurityAnswer2"
+            <input type="text" tabindex="0" maxlength="250" class="form-control" id="SecurityAnswer2"
+              placeholder="{{'user profile.answer' | transloco}}" name="SecurityAnswer2"
               [(ngModel)]="model.securityAnswer2">
           </td>
         </tr>
@@ -91,23 +97,28 @@
 
     <div class="mb-4 d-flex justify-content-between flex-11a">
       <div class="d-flex justify-content-start flex-11a">
-        <button type="submit" tabindex="0" [disabled]="loading" class="btn btn-primary">Register</button>
+        <button type="submit" tabindex="0" [disabled]="loading"
+          class="btn btn-primary">{{t('buttons.register')}}</button>
         <div class="spinner-container" *ngIf="loading">
           <div style="max-width: 30px; max-height: 30px;"></div>
         </div>
       </div>
       <div class="d-flex flex-column flex-00a">
-        <a href="index.html">Login</a>
-        <a [routerLink]="['/home','reset-pass']">Forgot Password</a>
+        <a href="index.html">{{t('buttons.login')}}</a>
+        <a [routerLink]="['/home','reset-pass']">{{t('buttons.forgot password')}}</a>
       </div>
     </div>
 
     <div *ngIf="emailSent" style="margin-top: 15px;">
       <div class="alert alert-success">
-        <p>Your account was successfully created. An email was sent to {{model.primaryEmail}} containing your
-          temporary password.</p>
-        <p>Please <a href="index.html">login</a> using your temporary password to complete the registration
-          process.</p>
+        <p>
+          {{t('user profile.account created', {email: model.primaryEmail})}}
+        </p>
+        <p>
+          {{t('change password.login with temp 1')}}
+          <a href="index.html">{{t('change password.login with temp link')}}</a>
+          {{t('change password.login with temp 2')}}
+        </p>
       </div>
     </div>
     <div *ngIf="waitingForApproval" style="margin-top: 15px;">
@@ -119,9 +130,9 @@
           process.</p>
       </div>
     </div>
-    <div *ngIf="receivedError" class="mb-3">
+    <div *ngIf="validationError" class="mb-3">
       <div class="alert alert-danger">
-        <p>{{errorMessage}}</p>
+        {{errorMessage}}
       </div>
     </div>
   </form>

@@ -1,6 +1,6 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -103,7 +103,7 @@ namespace CSETWebCore.Business.ModuleIO
             {
                 set.Standard_ToolTip = $"{category.Set_Category_Name} - {set.Standard_ToolTip}";
             }
-            else 
+            else
             {
                 set.Standard_ToolTip = $"{category.Set_Category_Name}";
             }
@@ -169,7 +169,7 @@ namespace CSETWebCore.Business.ModuleIO
                             DataLayer.Model.NEW_QUESTION existingQuestion;
                             if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
                             {
-                                requirementResult.REQUIREMENT_QUESTIONS.Remove(new REQUIREMENT_QUESTIONS() { Question_Id = question.Question_Id, Requirement_Id = requirementResult.Requirement_Id });
+                                requirementResult.REQUIREMENT_QUESTIONS_SETS.Remove(new REQUIREMENT_QUESTIONS_SETS() { Question_Id = question.Question_Id, Requirement_Id = requirementResult.Requirement_Id });
                             }
                             else
                             {
@@ -499,19 +499,6 @@ namespace CSETWebCore.Business.ModuleIO
                         && x.Set_Name == rqs.Set_Name) == 0)
                     {
                         _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
-                    }
-
-
-                    var rq = new REQUIREMENT_QUESTIONS()
-                    {
-                        Question_Id = newQuestion.Question_Id,
-                        Requirement_Id = newRequirement.Requirement_Id
-                    };
-
-                    if (_context.REQUIREMENT_QUESTIONS_SETS.Count(x => x.Question_Id == rq.Question_Id
-                        && x.Requirement_Id == rq.Requirement_Id) == 0)
-                    {
-                        _context.REQUIREMENT_QUESTIONS.Add(rq);
                     }
 
                     _context.SaveChanges();

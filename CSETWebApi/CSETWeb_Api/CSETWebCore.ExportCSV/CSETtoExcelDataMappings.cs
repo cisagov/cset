@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -65,7 +65,7 @@ namespace CSETWebCore.ExportCSV
 
 
             CreateWorksheetPageFrameworkAnswers(ref doc);
-            
+
 
 
             // Add a worksheet with the product version
@@ -192,22 +192,22 @@ namespace CSETWebCore.ExportCSV
             var answers = _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity" && questionIds.Contains(x.Question_Or_Requirement_Id)).ToList();
 
             IEnumerable<QuestionExport> list = from a in answers
-                   join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
-                   select new QuestionExport()
-                   {
-                       Question_Id = q.Mat_Question_Id,
-                       Simple_Question = q.Question_Text,
-                       Answer_Text = a.Answer_Text,
-                       Mark_For_Review = a.Mark_For_Review ?? false,
-                       Reviewed = a.Reviewed,
-                       Is_Requirement = a.Is_Requirement ?? false,
-                       Is_Maturity = a.Is_Maturity ?? false,
-                       Is_Component = a.Is_Component ?? false,
-                       Is_Framework = a.Is_Framework ?? false,
-                       Comment = a.Comment,
-                       Alternate_Justification = a.Alternate_Justification,
-                       Answer_Id = a.Answer_Id
-                   };
+                                               join q in _context.MATURITY_QUESTIONS on a.Question_Or_Requirement_Id equals q.Mat_Question_Id
+                                               select new QuestionExport()
+                                               {
+                                                   Question_Id = q.Mat_Question_Id,
+                                                   Simple_Question = q.Question_Text,
+                                                   Answer_Text = a.Answer_Text,
+                                                   Mark_For_Review = a.Mark_For_Review ?? false,
+                                                   Reviewed = a.Reviewed,
+                                                   Is_Requirement = a.Is_Requirement ?? false,
+                                                   Is_Maturity = a.Is_Maturity ?? false,
+                                                   Is_Component = a.Is_Component ?? false,
+                                                   Is_Framework = a.Is_Framework ?? false,
+                                                   Comment = a.Comment,
+                                                   Alternate_Justification = a.Alternate_Justification,
+                                                   Answer_Id = a.Answer_Id
+                                               };
 
             var rows = list.ToList<QuestionExport>();
             rows.ForEach(q =>
@@ -246,7 +246,7 @@ namespace CSETWebCore.ExportCSV
                        Simple_Question = q.Simple_Question,
                        Answer_Text = a.Answer_Text,
                        Mark_For_Review = a.Mark_For_Review ?? false,
-                       Reviewed = a.Reviewed,                   
+                       Reviewed = a.Reviewed,
                        Is_Requirement = a.Is_Requirement,
                        Is_Component = a.Is_Component,
                        Is_Maturity = false,

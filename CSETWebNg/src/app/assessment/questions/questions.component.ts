@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,6 @@ import { NavigationService } from '../../services/navigation/navigation.service'
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ConfigService } from '../../services/config.service';
 import { CompletionService } from '../../services/completion.service';
-import { ɵNullViewportScroller } from '@angular/common';
 import { ACETService } from '../../services/acet.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -241,7 +240,7 @@ export class QuestionsComponent implements AfterViewChecked, OnInit {
    */
   loadQuestions() {
     // set the message with the current "no" answer value
-    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', {'no-ans': this.questionsSvc.answerButtonLabel('', 'N')});
+    this.msgUnansweredEqualsNo = this.tSvc.translate('unanswered equals no', { 'no-ans': this.questionsSvc.answerButtonLabel('', 'N') });
     this.completionSvc.reset();
 
     this.questionsSvc.getQuestionsList().subscribe(

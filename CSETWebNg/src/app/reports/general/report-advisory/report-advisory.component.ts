@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,18 +21,28 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ConfigService } from '../../../services/config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-report-advisory',
   templateUrl: './report-advisory.component.html',
   styleUrls: ['./report-advisory.component.scss', '../../reports.scss']
 })
-export class ReportAdvisoryComponent implements OnInit {
+export class ReportAdvisoryComponent {
 
-  constructor() { }
+  appLongName: string;
+  appShortName: string;
 
-  ngOnInit(): void {
+  /**
+   * 
+   */
+  constructor(
+    public configSvc: ConfigService,
+    public tSvc: TranslocoService
+  ) {
+    this.appLongName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app long name`);
+    this.appShortName = this.tSvc.translate(`publisher.${configSvc.installationMode.toLowerCase()}.app short name`);
   }
-
 }

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,8 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ReportService } from '../../services/report.service';
 import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
@@ -48,7 +48,7 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+
     this.acetSvc.getAnsweredQuestions().subscribe(
       (r: any) => {
         this.response = r;
@@ -56,8 +56,8 @@ export class AcetAnsweredQuestionsComponent implements OnInit {
       },
       error => console.log('Assessment Information Error: ' + (<Error>error).message)
     );
-    
+
   }
 
-  
+
 }

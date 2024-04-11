@@ -1,7 +1,7 @@
 import { AlertComponent } from './../../dialogs/alert/alert.component';
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,11 +25,9 @@ import { AlertComponent } from './../../dialogs/alert/alert.component';
 import { Component, OnInit } from '@angular/core';
 import { SetBuilderService } from '../../services/set-builder.service';
 import { SetDetail } from '../../models/set-builder.model';
-import { Router } from '@angular/router';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { ModuleAddCloneComponent } from '../module-add-clone/module-add-clone.component';
 import { OkayComponent } from '../../dialogs/okay/okay.component';
-import { set } from 'lodash';
 
 @Component({
   selector: 'app-set-detail',
@@ -79,7 +77,7 @@ export class CustomSetComponent implements OnInit {
    *
    */
   update(e: Event) {
-    if (this.setDetail.fullName || this.setDetail.fullName.length > 0) {
+    if (this.setDetail.fullName?.length > 0) {
       for (let s of this.setDetailList) {
         if (s.fullName == this.setDetail.fullName) {
           const msg2 = 'Module Name Already In Use';
@@ -90,7 +88,7 @@ export class CustomSetComponent implements OnInit {
         }
       }
     }
-    if (this.setDetail.shortName || this.setDetail.shortName.length > 0) {
+    if (this.setDetail.shortName?.length > 0) {
       for (let s of this.setDetailList) {
         if (s.shortName == this.setDetail.shortName) {
           const msg2 = 'Short Name Already In Use';

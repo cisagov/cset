@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { CrrService } from './../../../../services/crr.service';
+import { CmuService } from './../../../../services/cmu.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../../models/reports.model';
+import { CmuReportModel } from '../../../../models/reports.model';
 
 @Component({
   selector: 'app-crr-mil1-performance',
@@ -31,28 +31,27 @@ import { CrrReportModel } from '../../../../models/reports.model';
   styleUrls: ['./../crr-report.component.scss']
 })
 export class CrrMil1PerformanceComponent implements OnInit {
-
-  @Input() model: CrrReportModel;
+  @Input() model: CmuReportModel;
   mil1FullAnswerDistribChart: string = '';
   legend: string = '';
   scoreBarCharts: string[] = [];
   heatMaps: any[] = [];
 
-  constructor(private crrSvc: CrrService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
-    this.crrSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1FullAnswerDistribWidget().subscribe((resp: string) => {
       this.mil1FullAnswerDistribChart = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceLegendWidget().subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceLegendWidget(false).subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
 
-    this.crrSvc.getMil1PerformanceBodyCharts().subscribe((resp: any) => {
+    this.cmuSvc.getMil1PerformanceBodyCharts().subscribe((resp: any) => {
       this.scoreBarCharts = resp.scoreBarCharts;
       this.heatMaps = resp.heatMaps;
-    })
+    });
   }
 
   // This function splits strings like
@@ -60,14 +59,14 @@ export class CrrMil1PerformanceComponent implements OnInit {
   // and
   // "Goal 3-Risks are identified."
   stringSplitter(str: string) {
-    return str.split(" - ")[1] ?? str.split("-")[1];
+    return str.split(' - ')[1] ?? str.split('-')[1];
   }
 
   getHeatMap(goalTitle: string) {
-    return this.heatMaps.find(c => c.title === goalTitle).chart;
+    return this.heatMaps.find((c) => c.title === goalTitle).chart;
   }
 
   filterMilDomainGoals(goals) {
-    return goals.filter(g => !g.title.startsWith('MIL'));
+    return goals.filter((g) => !g.title.startsWith('MIL'));
   }
 }

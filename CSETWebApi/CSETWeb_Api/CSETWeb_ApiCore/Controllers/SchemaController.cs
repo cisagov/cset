@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -8,6 +8,7 @@ using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using NJsonSchema.NewtonsoftJson.Generation;
 
 
 namespace CSETWebCore.Api.Controllers
@@ -32,7 +33,7 @@ namespace CSETWebCore.Api.Controllers
         {
             try
             {
-                var settings = new NJsonSchema.Generation.JsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true };
+                var settings = new NewtonsoftJsonSchemaGeneratorSettings() { FlattenInheritanceHierarchy = true };
 
                 StandardSchemaProcessor.dbContext = _context;
                 var schema = NJsonSchema.JsonSchema.FromType<ExternalStandard>(settings);

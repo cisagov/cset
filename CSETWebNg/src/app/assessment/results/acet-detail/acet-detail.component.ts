@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,8 +24,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AssessmentService } from '../../../services/assessment.service';
-import { MatDetailResponse, MaturityDomain, MaturityAssessment, MaturityComponent } from '../../../models/mat-detail.model';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MaturityDomain, MaturityAssessment, MaturityComponent } from '../../../models/mat-detail.model';
 import { ACETService } from '../../../services/acet.service';
 import { NavigationService } from '../../../services/navigation/navigation.service';
 import { LayoutService } from '../../../services/layout.service';
@@ -113,8 +112,8 @@ export class AcetDetailComponent implements OnInit {
 
                             var sectionInfo = {
                                 "name": component.componentName,
-                                "assessedMaturityLevel": this.updateMaturity(component.assessedMaturityLevel),    
-                                "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(component.assessedMaturityLevel)),           
+                                "assessedMaturityLevel": this.updateMaturity(component.assessedMaturityLevel),
+                                "levelDisplay": this.acetSvc.translateMaturity(this.updateMaturity(component.assessedMaturityLevel)),
                                 "data": sectionData
                             }
                             assesmentData.sections.push(sectionInfo);

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,8 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit } from '@angular/core';
-import { CrrReportModel } from '../../../models/reports.model';
+import { Component, OnInit } from '@angular/core';
 import { CmuService } from '../../../services/cmu.service';
 
 @Component({
@@ -31,19 +30,18 @@ import { CmuService } from '../../../services/cmu.service';
   styleUrls: ['./cmu-nist-csf-cat-summary.component.scss']
 })
 export class CmuNistCsfCatSummaryComponent implements OnInit {
-
   csfData: any;
   legend: string = '';
 
-  constructor(private cmuSvc: CmuService) { }
+  constructor(private cmuSvc: CmuService) {}
 
   ngOnInit(): void {
     this.cmuSvc.getCsfCatSummary().subscribe((resp: any) => {
       this.csfData = resp;
-    })
+    });
 
-    this.cmuSvc.getMil1PerformanceSummaryLegendWidget("2").subscribe((resp: string) => {
+    this.cmuSvc.getMil1PerformanceSummaryLegendWidget('2').subscribe((resp: string) => {
       this.legend = resp;
-    })
+    });
   }
 }

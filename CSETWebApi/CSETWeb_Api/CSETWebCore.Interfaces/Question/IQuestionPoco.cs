@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -29,7 +29,7 @@ namespace CSETWebCore.Interfaces.Question
         Dictionary<string, SETS> DictionaryStandards { get; set; }
         int DocumentCount { get; set; }
         ICollection<DOCUMENT_FILE> DocumentLibrary { get; }
-        int FindingCount { get; set; }
+        int ObservationCount { get; set; }
         bool FrameworkExpanderVisibility { get; }
         string FrameworkName { get; set; }
         bool IsAnswerAlt { get; set; }

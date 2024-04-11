@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    
+
     <div *ngFor="let func of csfData?.funcs" class="mb-3">
         <table class="domain-function" style="height: 90%; border: none;">
             <tbody>
@@ -72,8 +72,7 @@
                         </div>
                         <ng-container *ngIf="cat.heatMaps.length">
                             {{ moduleName }} Practices<br />
-                            <div class="d-flex align-content-center flex-wrap"
-                                style="column-gap: 15px; width: 70%">
+                            <div class="d-flex align-content-center flex-wrap" style="column-gap: 15px; width: 70%">
                                 <div class="flex-00a" *ngFor="let heatMap of cat.heatMaps" [innerHtml]="heatMap | safe">
                                 </div>
                             </div>

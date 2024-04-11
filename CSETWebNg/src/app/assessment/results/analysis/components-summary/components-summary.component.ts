@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,6 @@ import { Router } from '../../../../../../node_modules/@angular/router';
 import { AnalysisService } from '../../../../services/analysis.service';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-components-summary',
@@ -37,6 +36,7 @@ export class ComponentsSummaryComponent implements OnInit {
   dataRows: { title: string; number: number; total: number; percent: number; }[];
   initialized = false;
   canvasComponentSummary: any;
+  componentCount: any; 
 
   constructor(
     private analysisSvc: AnalysisService,
@@ -47,12 +47,14 @@ export class ComponentsSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.analysisSvc.getComponentsSummary().subscribe(x => {
-      if(this.canvasComponentSummary){
+      if (this.canvasComponentSummary) {
         this.canvasComponentSummary.destroy();
       }
       this.canvasComponentSummary = this.analysisSvc.buildComponentsSummary('canvasComponentSummary', x);
       this.dataRows = x.dataRowsPie;
       this.initialized = true;
+      this.componentCount = x.componentCount
     });
+    
   }
 }

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,47 +20,52 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
-  
+<div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100" *transloco="let t">
+
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
       Reference Document
     </h3>
-    <label>File Name</label>
+    <label>{{t('extras.file name')}}</label>
     <div>
       {{ doc.fileName }}
     </div>
 
     <div class="form-group">
       <label class="mb-1" for="title">Title</label>
-      <textarea appAutoSize maxlength="250" class="form-control" id="title" name="title" [(ngModel)]="doc.title" (change)="update($event)"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="mb-1" for="title">Name</label>
-      <textarea appAutoSize class="form-control" maxlength="250" id="name" name="name" [(ngModel)]="doc.name" (change)="update($event)"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="mb-1" for="title">Short Name</label>
-      <input type="text" maxlength="60" class="form-control" id="shortname" name="shortname" [(ngModel)]="doc.shortName" (change)="update($event)">
-    </div>
-
-    <div class="form-group">
-      <label class="mb-1" for="title">Summary</label>
-      <textarea appAutoSize maxlength="2000" class="form-control" id="summary" name="summary" [(ngModel)]="doc.summary" (change)="update($event)"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label class="mb-1" for="title">Description</label>
-      <textarea appAutoSize maxlength="250" class="form-control" id="description" name="description" [(ngModel)]="doc.description"
+      <textarea appAutoSize maxlength="250" class="form-control" id="title" name="title" [(ngModel)]="doc.title"
         (change)="update($event)"></textarea>
     </div>
 
     <div class="form-group">
+      <label class="mb-1" for="title">Name</label>
+      <textarea appAutoSize class="form-control" maxlength="250" id="name" name="name" [(ngModel)]="doc.name"
+        (change)="update($event)"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="mb-1" for="title">Short Name</label>
+      <input type="text" maxlength="60" class="form-control" id="shortname" name="shortname" [(ngModel)]="doc.shortName"
+        (change)="update($event)">
+    </div>
+
+    <div class="form-group">
+      <label class="mb-1" for="title">Summary</label>
+      <textarea appAutoSize maxlength="2000" class="form-control" id="summary" name="summary" [(ngModel)]="doc.summary"
+        (change)="update($event)"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label class="mb-1" for="title">Description</label>
+      <textarea appAutoSize maxlength="250" class="form-control" id="description" name="description"
+        [(ngModel)]="doc.description" (change)="update($event)"></textarea>
+    </div>
+
+    <div class="form-group">
       <label class="mb-1" for="title">Comments</label>
-      <textarea appAutoSize maxlength="500" class="form-control" id="comments" name="comments" [(ngModel)]="doc.comments" (change)="update($event)"></textarea>
+      <textarea appAutoSize maxlength="500" class="form-control" id="comments" name="comments"
+        [(ngModel)]="doc.comments" (change)="update($event)"></textarea>
     </div>
 
     <div class="d-flex flex-row mt-3 mb-3">

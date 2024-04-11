@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,13 +20,14 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+<div *transloco="let t">
 <h1>
-    Analysis of Network Components
+    {{t('reports.core.executive summary.analysis of network components')}}
 </h1>
 
 <div class="d-flex flex-row align-items-center mb-5">
     <div>
-        <h2>Combined Component Summary</h2>
+        <h2>{{t('reports.core.executive summary.combined component summary')}}</h2>
         <div *ngIf="loading1">
             <div class="spinner-container" style="margin: 2em auto">
                 <div style="max-width: 50px; max-height: 50px;"></div>
@@ -38,16 +39,14 @@
     </div>
 
     <div class="pl-3">
-        <p>The number of identified warnings and recommendations in the basic analysis of the user-defined system
-            diagram is <span class="warnInput">{{ warningCount }}</span>.
+        <p>{{t('reports.core.executive summary.identified warnings', {count: warningCount})}}
         </p>
-        <p> See the section "Findings and
-            Recommendations from Basic Network Analysis" for details.
+        <p> {{t('reports.core.executive summary.see network details')}}
         </p>
     </div>
 </div>
 
-<h2>Answer Distribution by Component Type</h2>
+<h2>{{t('reports.core.executive summary.answer distribution')}}</h2>
 <div *ngIf="loading2">
     <div class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
@@ -55,4 +54,5 @@
 </div>
 <div *ngIf="!loading2">
     <canvas id="canvasComponentTypes"></canvas>
+</div>
 </div>

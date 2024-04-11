@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { ConfigService } from '../../../../services/config.service';
 import { MaturityService } from '../../../../services/maturity.service';
+import { NavigationService } from '../../../../services/navigation/navigation.service';
 import { TsaService } from '../../../../services/tsa.service';
 
 
@@ -53,7 +53,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
     public configSvc: ConfigService,
     public dialog: MatDialog,
     public maturitySvc: MaturityService,
-    public tsaSvc:TsaService
+    public tsaSvc: TsaService
   ) {
 
   }
@@ -63,22 +63,21 @@ export class AssessmentConfigTsaComponent implements OnInit {
    */
   ngOnInit() {
     this.navSvc.setCurrentPage('info-tsa');
-    this.tsaSvc.TSAGetModelsName().subscribe((data)=>{
-     this.features=data;
-    this.features.forEach(element => {
-      if(element.set_Name && !element.model_Name){
-        this.assessSvc.assessment.useStandard;
-      }else if(!element.set_Name && element.model_Name)
-      {
-        this.assessSvc.assessment.useMaturity;
-      }
-    });
-    //  this.features.find(x => x.name === 'RRA').selected = this.assessSvc.assessment.useMaturity;
-    //  this.features.find(x => x.name === 'CRR').selected = this.assessSvc.assessment.useMaturity;
-    //  this.features.find(x => x.name === 'VADR').selected = this.assessSvc.assessment.useMaturity;
-    //  this.features.find(x => x.name === 'TSA2018').selected = this.assessSvc.assessment.useStandard;
-    //  this.features.find(x => x.name === 'CSC_V8').selected = this.assessSvc.assessment.useStandard;
-    //  this.features.find(x => x.name === 'APTA_Rail_V1').selected = this.assessSvc.assessment.useStandard;
+    this.tsaSvc.TSAGetModelsName().subscribe((data) => {
+      this.features = data;
+      this.features.forEach(element => {
+        if (element.set_Name && !element.model_Name) {
+          this.assessSvc.assessment.useStandard;
+        } else if (!element.set_Name && element.model_Name) {
+          this.assessSvc.assessment.useMaturity;
+        }
+      });
+      //  this.features.find(x => x.name === 'RRA').selected = this.assessSvc.assessment.useMaturity;
+      //  this.features.find(x => x.name === 'CRR').selected = this.assessSvc.assessment.useMaturity;
+      //  this.features.find(x => x.name === 'VADR').selected = this.assessSvc.assessment.useMaturity;
+      //  this.features.find(x => x.name === 'TSA2018').selected = this.assessSvc.assessment.useStandard;
+      //  this.features.find(x => x.name === 'CSC_V8').selected = this.assessSvc.assessment.useStandard;
+      //  this.features.find(x => x.name === 'APTA_Rail_V1').selected = this.assessSvc.assessment.useStandard;
     })
 
   }
@@ -89,8 +88,7 @@ export class AssessmentConfigTsaComponent implements OnInit {
    * Returns the URL of the page in the user guide.
    */
   helpDocUrl() {
-    switch(this.configSvc.installationMode || '')
-    {
+    switch (this.configSvc.installationMode || '') {
       case "ACET":
         return this.configSvc.docUrl + 'htmlhelp_acet/assessment_configuration.htm';
         break;

@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,13 +23,10 @@
 ////////////////////////////////
 import { Component, HostListener, OnInit } from '@angular/core';
 import { NavigationService } from '../../../../services/navigation/navigation.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MaturityService } from '../../../../../app/services/maturity.service';
 import { ChartService } from '../../../../services/chart.service';
-import { AnyRecord } from 'dns';
 import { LayoutService } from '../../../../services/layout.service';
 import { Chart } from 'chart.js';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-cmmc-level-drilldown',

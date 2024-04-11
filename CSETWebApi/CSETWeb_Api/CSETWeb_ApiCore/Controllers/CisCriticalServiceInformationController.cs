@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -25,7 +25,7 @@ namespace CSETWebCore.Api.Controllers
         private CSETContext _context;
 
         public CisCriticalServiceInformationController(ITokenManager token,
-           INotificationBusiness notification, IAssessmentUtil assessmentUtil, 
+           INotificationBusiness notification, IAssessmentUtil assessmentUtil,
            ICisDemographicBusiness demographic, IUserBusiness user, CSETContext context)
         {
             _token = token;
@@ -38,7 +38,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/cis/organizationDemographics")]
-        public IActionResult GetOrganizationDemographics() 
+        public IActionResult GetOrganizationDemographics()
         {
             int assessmentId = _token.AssessmentForUser();
             return Ok(_cisDemographicBusiness.GetOrgDemographics(assessmentId));
@@ -66,8 +66,8 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult SaveServiceDemographics([FromBody] CisServiceDemographics serviceDemographics)
         {
             serviceDemographics.AssessmentId = _token.AssessmentForUser();
-            int userid = _token.GetUserId()??0;
-            return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics,userid));
+            int userid = _token.GetUserId() ?? 0;
+            return Ok(_cisDemographicBusiness.SaveServiceDemographics(serviceDemographics, userid));
         }
 
         [HttpGet]

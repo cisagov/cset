@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,6 @@
 //
 ////////////////////////////////
 import { Component, Input, OnInit } from '@angular/core';
-import { ConfigService } from '../../../../services/config.service';
-import { CpgService } from '../../../../services/cpg.service';
 
 @Component({
   selector: 'app-cpg-domain-summary',
@@ -34,7 +32,7 @@ export class CpgDomainSummaryComponent implements OnInit {
 
   @Input()
   answerDistribByDomain = [];
-  
+
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#007bff', '#FFC107', '#DC3545', '#c8c8c8'] };
 

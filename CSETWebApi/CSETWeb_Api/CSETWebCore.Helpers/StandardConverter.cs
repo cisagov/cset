@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -114,7 +114,7 @@ namespace CSETWebCore.Helpers
                                 NEW_QUESTION existingQuestion;
                                 if (questionDictionary.TryGetValue(question.Simple_Question, out existingQuestion))
                                 {
-                                    requirementResult.Result.REQUIREMENT_QUESTIONS.Remove(new REQUIREMENT_QUESTIONS() { Question_Id = question.Question_Id, Requirement_Id = requirementResult.Result.Requirement_Id });
+                                    requirementResult.Result.REQUIREMENT_QUESTIONS_SETS.Remove(new REQUIREMENT_QUESTIONS_SETS() { Question_Id = question.Question_Id, Requirement_Id = requirementResult.Result.Requirement_Id });
                                 }
                                 else
                                 {

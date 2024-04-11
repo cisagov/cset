@@ -1,0 +1,1282 @@
+[
+  {
+    "key": "1",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "78",
+    "value": "Основні хімічні речовини",
+    "valueEN": "Basic Chemicals"
+  },
+  {
+    "key": "79",
+    "value": "Спеціальні продукти",
+    "valueEN": "Specialty Products"
+  },
+  {
+    "key": "80",
+    "value": "Фармацевтична продукція",
+    "valueEN": "Pharmaceutical Products"
+  },
+  {
+    "key": "81",
+    "value": "Споживацькі товари",
+    "valueEN": "Consumer Products"
+  },
+  {
+    "key": "82",
+    "value": "Сільськогосподарська продукція",
+    "valueEN": "Agricultural Products"
+  },
+  {
+    "key": "2",
+    "value": "Розваги та ЗМІ",
+    "valueEN": "Entertainment and Media"
+  },
+  {
+    "key": "3",
+    "value": "Ігри",
+    "valueEN": "Gaming"
+  },
+  {
+    "key": "4",
+    "value": "Ночівля",
+    "valueEN": "Lodging"
+  },
+  {
+    "key": "5",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "6",
+    "value": "Заходи на природі",
+    "valueEN": "Outdoor Events"
+  },
+  {
+    "key": "7",
+    "value": "Громадські збори",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "8",
+    "value": "Нерухомість",
+    "valueEN": "Real Estate"
+  },
+  {
+    "key": "9",
+    "value": "Роздрібна торгівля",
+    "valueEN": "Retail"
+  },
+  {
+    "key": "10",
+    "value": "Спортивні ліги",
+    "valueEN": "Sports Leagues"
+  },
+  {
+    "key": "11",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "12",
+    "value": "Телекомунікації",
+    "valueEN": "Telecommunications"
+  },
+  {
+    "key": "13",
+    "value": "Постачальники послуг бездротового зв’язку",
+    "valueEN": "Wireless Communications Service Providers"
+  },
+  {
+    "key": "83",
+    "value": "Мовлення",
+    "valueEN": "Broadcasting"
+  },
+  {
+    "key": "84",
+    "value": "Кабель",
+    "valueEN": "Cable"
+  },
+  {
+    "key": "85",
+    "value": "Супутник",
+    "valueEN": "Satellite"
+  },
+  {
+    "key": "86",
+    "value": "Дротовий",
+    "valueEN": "Wireline"
+  },
+  {
+    "key": "14",
+    "value": "Виробництво електрообладнання, приладів і компонентів",
+    "valueEN": "Electrical Equipment, Appliance and Component Manufacturing"
+  },
+  {
+    "key": "15",
+    "value": "Машинобудування",
+    "valueEN": "Machinery Manufacturing"
+  },
+  {
+    "key": "16",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "17",
+    "value": "Виробництво первинного металу",
+    "valueEN": "Primary Metal Manufacturing"
+  },
+  {
+    "key": "18",
+    "value": "Виробництво транспорту та важкого устаткування",
+    "valueEN": "Transportation and Heavy Equipment Manufacturing"
+  },
+  {
+    "key": "87",
+    "value": "Виробництво",
+    "valueEN": "Manufacturing"
+  },
+  {
+    "key": "88",
+    "value": "Виробництво важкого машинобудування",
+    "valueEN": "Heavy Machinery Manufacturing"
+  },
+  {
+    "key": "19",
+    "value": "Дамби",
+    "valueEN": "Dams"
+  },
+  {
+    "key": "20",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "21",
+    "value": "Приватні гідроелектростанції",
+    "valueEN": "Private Hydropower Facilities in the US"
+  },
+  {
+    "key": "89",
+    "value": "Дамби",
+    "valueEN": "Levees"
+  },
+  {
+    "key": "90",
+    "value": "Блокування навігації",
+    "valueEN": "Navigation Locks"
+  },
+  {
+    "key": "91",
+    "value": "Хвостосховища та сховища відходів",
+    "valueEN": "Tailings and Waste Impoundments"
+  },
+  {
+    "key": "22",
+    "value": "Авіаційна промисловість",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "23",
+    "value": "Боєприпаси",
+    "valueEN": "Ammunition"
+  },
+  {
+    "key": "24",
+    "value": "Бойова машина",
+    "valueEN": "Combat Vehicle"
+  },
+  {
+    "key": "25",
+    "value": "Комунікації",
+    "valueEN": "Communications"
+  },
+  {
+    "key": "26",
+    "value": "Оборонні підрядники",
+    "valueEN": "Defense Contractors"
+  },
+  {
+    "key": "27",
+    "value": "Товари електротехнічної промисловості",
+    "valueEN": "Electrical Industry Commodities"
+  },
+  {
+    "key": "28",
+    "value": "Електроніка",
+    "valueEN": "Electronics"
+  },
+  {
+    "key": "29",
+    "value": "Товари машинобудівної промисловості",
+    "valueEN": "Mechanical Industry Commodities"
+  },
+  {
+    "key": "30",
+    "value": "Ракетна промисловість",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "31",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "32",
+    "value": "Дослідження та розробки",
+    "valueEN": "Research and Development Facilities"
+  },
+  {
+    "key": "33",
+    "value": "Суднобудівна промисловість",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "34",
+    "value": "Космос",
+    "valueEN": "Space"
+  },
+  {
+    "key": "35",
+    "value": "Товари структурної промисловості",
+    "valueEN": "Structural Industry Commodities"
+  },
+  {
+    "key": "36",
+    "value": "Підтримка військ",
+    "valueEN": "Troop Support"
+  },
+  {
+    "key": "37",
+    "value": "Зброя",
+    "valueEN": "Weapons"
+  },
+  {
+    "key": "38",
+    "value": "Управління надзвичайними ситуаціями",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "39",
+    "value": "Екстрена медична допомога",
+    "valueEN": "Emergency Medical Services"
+  },
+  {
+    "key": "40",
+    "value": "Пожежно-рятувальні служби",
+    "valueEN": "Fire and Rescue Services"
+  },
+  {
+    "key": "41",
+    "value": "Правозастосування",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "42",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "43",
+    "value": "Громадські роботи",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "44",
+    "value": "Виробництво, передача та розподіл електроенергії",
+    "valueEN": "Electric Power Generation, Transmission and Distribution"
+  },
+  {
+    "key": "45",
+    "value": "Природний газ",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "46",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "47",
+    "value": "Нафтопереробні заводи",
+    "valueEN": "Petroleum Refineries"
+  },
+  {
+    "key": "92",
+    "value": "Нафта і природний газ",
+    "valueEN": "Oil and Natural Gas"
+  },
+  {
+    "key": "48",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "49",
+    "value": "Банки",
+    "valueEN": "US Banks"
+  },
+  {
+    "key": "50",
+    "value": "Кредитні спілки",
+    "valueEN": "US Credit Unions"
+  },
+  {
+    "key": "93",
+    "value": "Побутове обслуговування",
+    "valueEN": "Consumer Services"
+  },
+  {
+    "key": "94",
+    "value": "Кредитні та ліквідні продукти",
+    "valueEN": "Credit and Liquidity Products"
+  },
+  {
+    "key": "95",
+    "value": "Інвестиційні продукти",
+    "valueEN": "Investment Products"
+  },
+  {
+    "key": "96",
+    "value": "Продукти передачі ризиків",
+    "valueEN": "Risk Transfer Products"
+  },
+  {
+    "key": "51",
+    "value": "Заводи з виробництва напоїв",
+    "valueEN": "Beverage Manufacturing Plants"
+  },
+  {
+    "key": "52",
+    "value": "Заводи з виробництва харчових продуктів",
+    "valueEN": "Food Manufacturing Plants"
+  },
+  {
+    "key": "53",
+    "value": "Послуги харчування",
+    "valueEN": "Food Services"
+  },
+  {
+    "key": "54",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "97",
+    "value": "Постачання",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "98",
+    "value": "Переробка, упаковка та виробництво",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "99",
+    "value": "Зберігання продукту",
+    "valueEN": "Product Storage"
+  },
+  {
+    "key": "100",
+    "value": "Транспортування продукції",
+    "valueEN": "Product Transportation"
+  },
+  {
+    "key": "101",
+    "value": "Розповсюдження продукції",
+    "valueEN": "Product Distribution"
+  },
+  {
+    "key": "102",
+    "value": "Допоміжні засоби",
+    "valueEN": "Supporting Facilities"
+  },
+  {
+    "key": "55",
+    "value": "Органи місцевого самоврядування",
+    "valueEN": "Local Governments"
+  },
+  {
+    "key": "56",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "57",
+    "value": "Обласні уряди",
+    "valueEN": "State Governments"
+  },
+  {
+    "key": "58",
+    "value": "Уряди територіальних громад",
+    "valueEN": "Territorial Governments"
+  },
+  {
+    "key": "59",
+    "value": "Місцеві уряди",
+    "valueEN": "Tribal Governments"
+  },
+  {
+    "key": "103",
+    "value": "Громадські об'єкти",
+    "valueEN": "Public Facilities"
+  },
+  {
+    "key": "104",
+    "value": "Негромадські об'єкти",
+    "valueEN": "Non-Public Facilities"
+  },
+  {
+    "key": "60",
+    "value": "Лікарні",
+    "valueEN": "Hospitals"
+  },
+  {
+    "key": "61",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "62",
+    "value": "Заклади стаціонарного догляду",
+    "valueEN": "Residential Care Facilities"
+  },
+  {
+    "key": "105",
+    "value": "Безпосередній догляд за пацієнтами",
+    "valueEN": "Direct Patient Care"
+  },
+  {
+    "key": "106",
+    "value": "Здоров'я IT",
+    "valueEN": "Health IT"
+  },
+  {
+    "key": "107",
+    "value": "Плани охорони здоров'я та платники",
+    "valueEN": "Health Plans and Payers"
+  },
+  {
+    "key": "108",
+    "value": "Послуги з управління нещасними випадками",
+    "valueEN": "Fatality Management Services"
+  },
+  {
+    "key": "109",
+    "value": "Медичні матеріали",
+    "valueEN": "Medical Materials"
+  },
+  {
+    "key": "110",
+    "value": "Служби підтримки",
+    "valueEN": "Support Services"
+  },
+  {
+    "key": "63",
+    "value": "Інформаційні технології",
+    "valueEN": "Information Technology"
+  },
+  {
+    "key": "64",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "111",
+    "value": "ІТ виробництво",
+    "valueEN": "IT Production"
+  },
+  {
+    "key": "112",
+    "value": "Служби DNS",
+    "valueEN": "DNS Services"
+  },
+  {
+    "key": "113",
+    "value": "Управління підтримкою ідентифікації та довіри",
+    "valueEN": "Identity and Trust Support Management"
+  },
+  {
+    "key": "114",
+    "value": "Інтернет-контент і постачальники послуг",
+    "valueEN": "Internet Content and Service Providers"
+  },
+  {
+    "key": "115",
+    "value": "Інтернет-маршрутизація та підключення",
+    "valueEN": "Internet Routing and Connection"
+  },
+  {
+    "key": "116",
+    "value": "Управління інцидентами",
+    "valueEN": "Incident Management"
+  },
+  {
+    "key": "65",
+    "value": "Експлуатація атомних електростанцій",
+    "valueEN": "Operating Nuclear Power Plants"
+  },
+  {
+    "key": "66",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "117",
+    "value": "Засоби паливного циклу",
+    "valueEN": "Fuel Cycle Facilities"
+  },
+  {
+    "key": "118",
+    "value": "Транспортування ядерних матеріалів",
+    "valueEN": "Nuclear Materials Transport"
+  },
+  {
+    "key": "119",
+    "value": "Радіоактивні відходи",
+    "valueEN": "Radioactive Waste"
+  },
+  {
+    "key": "120",
+    "value": "Радіоактивні матеріали",
+    "valueEN": "Radioactive Materials"
+  },
+  {
+    "key": "67",
+    "value": "Авіація",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "68",
+    "value": "Вантажні залізниці",
+    "valueEN": "Freight Rail"
+  },
+  {
+    "key": "69",
+    "value": "Шосе (автомобільний транспорт)",
+    "valueEN": "Highway (truck transportation)"
+  },
+  {
+    "key": "70",
+    "value": "Морський",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "71",
+    "value": "Громадський транспорт і пасажирський залізничний транспорт",
+    "valueEN": "Mass Transit and Passenger Rail"
+  },
+  {
+    "key": "72",
+    "value": "Муніципалітети з системами контролю дорожнього руху",
+    "valueEN": "Municipalities with Traffic Control Systems"
+  },
+  {
+    "key": "73",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "74",
+    "value": "Трубопроводи (транспортують природний газ, небезпечні рідини та різні хімічні речовини)",
+    "valueEN": "Pipelines (carries natural gas, hazardous liquids, and various chemicals.)"
+  },
+  {
+    "key": "75",
+    "value": "Інше",
+    "valueEN": "Other"
+  },
+  {
+    "key": "76",
+    "value": "Громадські системи водопостачання",
+    "valueEN": "Public Water Systems"
+  },
+  {
+    "key": "77",
+    "value": "Державні очисні споруди",
+    "valueEN": "Publicly Owned Treatment Works"
+  },
+  {
+    "key": "121",
+    "value": "Розповсюдження сільськогосподарської та харчової продукції",
+    "valueEN": "Agricultural and Food Product Distribution"
+  },
+  {
+    "key": "122",
+    "value": "Перевезення сільськогосподарської та харчової продукції",
+    "valueEN": "Agricultural and Food Product Transportation"
+  },
+  {
+    "key": "123",
+    "value": "Склад для зберігання та розподілу сільськогосподарських та харчових продуктів",
+    "valueEN": "Agriculture and Food Product Storage and Distribution Warehouse"
+  },
+  {
+    "key": "124",
+    "value": "Аграрно-продовольчий фонд",
+    "valueEN": "Agriculture and Food Supporting Facility"
+  },
+  {
+    "key": "125",
+    "value": "Інше сільське господарство та продовольство",
+    "valueEN": "Other Agriculture and Food"
+  },
+  {
+    "key": "126",
+    "value": "Переробка, упаковка та виробництво",
+    "valueEN": "Processing, Packaging, and Production"
+  },
+  {
+    "key": "127",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "128",
+    "value": "Постачання",
+    "valueEN": "Supply"
+  },
+  {
+    "key": "129",
+    "value": "Банківська справа та кредитування ",
+    "valueEN": "Banking and Credit"
+  },
+  {
+    "key": "130",
+    "value": "Страхова компанія",
+    "valueEN": "Insurance Company"
+  },
+  {
+    "key": "131",
+    "value": "Цінні папери, товари або фінансові інвестиції",
+    "valueEN": "Securities, Commodities, or Financial Investment"
+  },
+  {
+    "key": "132",
+    "value": "Виробництво або переробка хімічних речовин",
+    "valueEN": "Chemical Manufacturing or Processing Plant"
+  },
+  {
+    "key": "133",
+    "value": "Зберігання/запаси/утилізація/розповсюдження небезпечних хімічних речовин",
+    "valueEN": "Hazardous Chemical Storage/Stockpile/Utilization/Distribution"
+  },
+  {
+    "key": "134",
+    "value": "Перевезення небезпечних хімікатів",
+    "valueEN": "Hazardous Chemical Transport"
+  },
+  {
+    "key": "135",
+    "value": "Інші хімічні та небезпечні матеріали",
+    "valueEN": "Other Chemical and Hazardous Material"
+  },
+  {
+    "key": "136",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "137",
+    "value": "Розваги або ЗМІ",
+    "valueEN": "Entertainment or Media Facility"
+  },
+  {
+    "key": "138",
+    "value": "Ігровий заклад/казино",
+    "valueEN": "Gaming Facility/Casino"
+  },
+  {
+    "key": "139",
+    "value": "Житло",
+    "valueEN": "Lodging Facility"
+  },
+  {
+    "key": "140",
+    "value": "Інший комерційний об'єкт",
+    "valueEN": "Other Commercial Facility"
+  },
+  {
+    "key": "141",
+    "value": "Громадські збори",
+    "valueEN": "Public Assembly"
+  },
+  {
+    "key": "142",
+    "value": "Об'єкт нерухомості",
+    "valueEN": "Real Estate Facility"
+  },
+  {
+    "key": "143",
+    "value": "Роздрібний об'єкт",
+    "valueEN": "Retail Facility"
+  },
+  {
+    "key": "144",
+    "value": "Інформаційні послуги",
+    "valueEN": "Information Services"
+  },
+  {
+    "key": "145",
+    "value": "Інтернет",
+    "valueEN": "Internet"
+  },
+  {
+    "key": "146",
+    "value": "Мережа нового покоління",
+    "valueEN": "Next Generation Network"
+  },
+  {
+    "key": "147",
+    "value": "Інші засоби зв'язку",
+    "valueEN": "Other Communication Facility"
+  },
+  {
+    "key": "148",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "149",
+    "value": "Супутниковий зв'язок",
+    "valueEN": "Satellite Communication"
+  },
+  {
+    "key": "150",
+    "value": "Готельний зв'язок",
+    "valueEN": "Telecomm Hotel"
+  },
+  {
+    "key": "151",
+    "value": "Дротовий зв'язок",
+    "valueEN": "Wired Communication"
+  },
+  {
+    "key": "152",
+    "value": "Бездротовий зв'язок",
+    "valueEN": "Wireless Communication"
+  },
+  {
+    "key": "153",
+    "value": "Проект дамби",
+    "valueEN": "Dam Project"
+  },
+  {
+    "key": "154",
+    "value": "Система зменшення шкоди від повені",
+    "valueEN": "Flood Damage Reduction System"
+  },
+  {
+    "key": "155",
+    "value": "Система захисту від урагану або шторму",
+    "valueEN": "Hurricane or Storm Surge Protection System"
+  },
+  {
+    "key": "156",
+    "value": "Шахтні хвости та сховище промислових відходів",
+    "valueEN": "Mine Tailings and Industrial Waste Impoundment"
+  },
+  {
+    "key": "157",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "158",
+    "value": "Авіаційна промисловість",
+    "valueEN": "Aircraft Industry"
+  },
+  {
+    "key": "159",
+    "value": "Боєприпасна промисловість",
+    "valueEN": "Ammunition Industry"
+  },
+  {
+    "key": "160",
+    "value": "Промисловість бойових машин",
+    "valueEN": "Combat Vehicle Industry"
+  },
+  {
+    "key": "161",
+    "value": "Електротехнічна промисловість Товарне виробництво",
+    "valueEN": "Electrical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "162",
+    "value": "Електронна промисловість. Товарне виробництво",
+    "valueEN": "Electronic Industry Commodity Manufacturing"
+  },
+  {
+    "key": "163",
+    "value": "Електронна промисловість",
+    "valueEN": "Electronics Industry"
+  },
+  {
+    "key": "164",
+    "value": "Індустрія інформаційних технологій",
+    "valueEN": "Information Technology Industry"
+  },
+  {
+    "key": "165",
+    "value": "Механічна промисловість. Товарне виробництво",
+    "valueEN": "Mechanical Industry Commodity Manufacturing"
+  },
+  {
+    "key": "166",
+    "value": "Ракетна промисловість",
+    "valueEN": "Missile Industry"
+  },
+  {
+    "key": "167",
+    "value": "Науково-дослідна установа",
+    "valueEN": "Research & Development Facility"
+  },
+  {
+    "key": "168",
+    "value": "Суднобудівна промисловість",
+    "valueEN": "Shipbuilding Industry"
+  },
+  {
+    "key": "169",
+    "value": "Космічна промисловість",
+    "valueEN": "Space Industry"
+  },
+  {
+    "key": "170",
+    "value": "Структурна галузь. Товарне виробництво",
+    "valueEN": "Structural Industry Commodity Manufacturing"
+  },
+  {
+    "key": "171",
+    "value": "Індустрія підтримки військ",
+    "valueEN": "Troop Support Industry"
+  },
+  {
+    "key": "172",
+    "value": "Збройна промисловість",
+    "valueEN": "Weapons Industry"
+  },
+  {
+    "key": "173",
+    "value": "Управління надзвичайними ситуаціями",
+    "valueEN": "Emergency Management"
+  },
+  {
+    "key": "174",
+    "value": "Екстрена медична допомога (Emergency Medical Services, EMS)",
+    "valueEN": "Emergency Medical Services (EMS)"
+  },
+  {
+    "key": "175",
+    "value": "Пожежна та аварійна служби",
+    "valueEN": "Fire and Emergency Services"
+  },
+  {
+    "key": "176",
+    "value": "Правозастосування",
+    "valueEN": "Law Enforcement"
+  },
+  {
+    "key": "177",
+    "value": "Інші служби екстреної допомоги",
+    "valueEN": "Other Emergency Services Facility"
+  },
+  {
+    "key": "178",
+    "value": "Громадські роботи",
+    "valueEN": "Public Works"
+  },
+  {
+    "key": "179",
+    "value": "Біодизель",
+    "valueEN": "Biodiesel"
+  },
+  {
+    "key": "180",
+    "value": "Вугілля",
+    "valueEN": "Coal"
+  },
+  {
+    "key": "181",
+    "value": "Електрика",
+    "valueEN": "Electricity"
+  },
+  {
+    "key": "182",
+    "value": "Етанол",
+    "valueEN": "Ethanol"
+  },
+  {
+    "key": "183",
+    "value": "Водень",
+    "valueEN": "Hydrogen"
+  },
+  {
+    "key": "184",
+    "value": "Природний газ",
+    "valueEN": "Natural Gas"
+  },
+  {
+    "key": "185",
+    "value": "Інша система перетворення енергії",
+    "valueEN": "Other Energy Conversion System"
+  },
+  {
+    "key": "186",
+    "value": "Нафта",
+    "valueEN": "Petroleum"
+  },
+  {
+    "key": "187",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "188",
+    "value": "Навчальний заклад",
+    "valueEN": "Education Facility"
+  },
+  {
+    "key": "189",
+    "value": "Виборча інфраструктура",
+    "valueEN": "Election Infrastructure"
+  },
+  {
+    "key": "190",
+    "value": "Державна дослідницька установа",
+    "valueEN": "Government Research Facility"
+  },
+  {
+    "key": "191",
+    "value": "Урядовий датчик або система моніторингу",
+    "valueEN": "Government Sensor or Monitoring System"
+  },
+  {
+    "key": "192",
+    "value": "Урядова космічна система",
+    "valueEN": "Government Space System"
+  },
+  {
+    "key": "193",
+    "value": "Державне сховище або консерваційний заклад",
+    "valueEN": "Government Storage or Preservation Facility"
+  },
+  {
+    "key": "194",
+    "value": "Військовий об'єкт",
+    "valueEN": "Military Facility"
+  },
+  {
+    "key": "195",
+    "value": "Інші державні установи",
+    "valueEN": "Other Government Facility"
+  },
+  {
+    "key": "196",
+    "value": "Урядовий заклад, орієнтований на персонал",
+    "valueEN": "Personnel-Oriented Government Facility"
+  },
+  {
+    "key": "197",
+    "value": "Сервісно-орієнтована державна установа",
+    "valueEN": "Service-Oriented Government Facility"
+  },
+  {
+    "key": "198",
+    "value": "Безпосереднє лікування пацієнтів",
+    "valueEN": "Direct Patient Healthcare"
+  },
+  {
+    "key": "199",
+    "value": "Смертельна служба/морг",
+    "valueEN": "Fatality/Mortuary Facility"
+  },
+  {
+    "key": "200",
+    "value": "Заклад підтримки здоров'я",
+    "valueEN": "Health Supporting Facility"
+  },
+  {
+    "key": "201",
+    "value": "Навчальний заклад охорони здоров'я",
+    "valueEN": "Healthcare Educational Facility"
+  },
+  {
+    "key": "202",
+    "value": "Інша організація охорони здоров'я",
+    "valueEN": "Other Healthcare and Public Health Entity"
+  },
+  {
+    "key": "203",
+    "value": "Агентство громадського здоров'я",
+    "valueEN": "Public Health Agency"
+  },
+  {
+    "key": "204",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "205",
+    "value": "Виробництво обладнання",
+    "valueEN": "Hardware Production"
+  },
+  {
+    "key": "206",
+    "value": "Інтернет-контент, інформація та комунікаційні послуги",
+    "valueEN": "Internet-Based Content, Information, and Communications Services"
+  },
+  {
+    "key": "207",
+    "value": "Інше обладнання для виробництва обладнання",
+    "valueEN": "Other Hardware Production Facility"
+  },
+  {
+    "key": "208",
+    "value": "Інші засоби інформаційних технологій",
+    "valueEN": "Other Information Technology Facility"
+  },
+  {
+    "key": "209",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "210",
+    "value": "Виробництво програмного забезпечення",
+    "valueEN": "Software Production"
+  },
+  {
+    "key": "211",
+    "value": "Виробництво напоїв",
+    "valueEN": "Beverage Manufacturing"
+  },
+  {
+    "key": "212",
+    "value": "Хімічне виробництво",
+    "valueEN": "Chemical Manufacturing"
+  },
+  {
+    "key": "213",
+    "value": "Виробництво комп’ютерної та електронної продукції",
+    "valueEN": "Computer and Electronic Product Manufacturing"
+  },
+  {
+    "key": "214",
+    "value": "Критичне виробництво",
+    "valueEN": "Critical Manufacturing"
+  },
+  {
+    "key": "215",
+    "value": "Виробництво готових металевих виробів",
+    "valueEN": "Fabricated Metal Product Manufacturing"
+  },
+  {
+    "key": "216",
+    "value": "Виробництво харчових продуктів",
+    "valueEN": "Food Manufacturing"
+  },
+  {
+    "key": "217",
+    "value": "Виробництво меблів і супутніх товарів",
+    "valueEN": "Furniture And Related Product Manufacturing"
+  },
+  {
+    "key": "218",
+    "value": "Гірнича промисловість, розробка кар’єрів або видобуток нафти та газу",
+    "valueEN": "Mining, Quarrying, or Oil and Gas Extraction"
+  },
+  {
+    "key": "219",
+    "value": "Виробництво неметалевої мінеральної продукції",
+    "valueEN": "Non-Metallic Mineral Products Manufacturing"
+  },
+  {
+    "key": "220",
+    "value": "Інше Виробництво",
+    "valueEN": "Other Manufacturing"
+  },
+  {
+    "key": "221",
+    "value": "Виробництво паперу",
+    "valueEN": "Paper Manufacturing"
+  },
+  {
+    "key": "222",
+    "value": "Виробництво нафтопродуктів і вугільної промисловості",
+    "valueEN": "Petroleum and Coal Products Manufacturing"
+  },
+  {
+    "key": "223",
+    "value": "Виробництво пластмасових та гумових виробів",
+    "valueEN": "Plastics And Rubber Products Manufacturing"
+  },
+  {
+    "key": "224",
+    "value": "Друк та супутня підтримка",
+    "valueEN": "Printing and Related Support"
+  },
+  {
+    "key": "225",
+    "value": "Текстиль, текстильні вироби, одяг, виробництво шкіри",
+    "valueEN": "Textile, Textile Product, Apparel, Leather Manufacturing"
+  },
+  {
+    "key": "226",
+    "value": "Виробництво тютюнових виробів",
+    "valueEN": "Tobacco Product Manufacturing"
+  },
+  {
+    "key": "227",
+    "value": "Виробництво виробів з дерева",
+    "valueEN": "Wood Product Manufacturing"
+  },
+  {
+    "key": "228",
+    "value": "Національний пам'ятник/знак, документ або об'єкт",
+    "valueEN": "National Monument/Icon Document or Object"
+  },
+  {
+    "key": "229",
+    "value": "Національний пам'ятник/знак географічна зона",
+    "valueEN": "National Monument/Icon Geographic Area"
+  },
+  {
+    "key": "230",
+    "value": "Національна пам'ятка/знак структура",
+    "valueEN": "National Monument/Icon Structure"
+  },
+  {
+    "key": "231",
+    "value": "Інші національні пам'ятники та знаки",
+    "valueEN": "Other National Monuments and Icons"
+  },
+  {
+    "key": "232",
+    "value": "Ядерний об'єкт",
+    "valueEN": "Nuclear Facility"
+  },
+  {
+    "key": "233",
+    "value": "Ядерний матеріал",
+    "valueEN": "Nuclear Material"
+  },
+  {
+    "key": "234",
+    "value": "Ядерні відходи",
+    "valueEN": "Nuclear Waste"
+  },
+  {
+    "key": "235",
+    "value": "Інший ядерний об'єкт",
+    "valueEN": "Other Nuclear Facility"
+  },
+  {
+    "key": "236",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "237",
+    "value": "Кур'єр",
+    "valueEN": "Courier"
+  },
+  {
+    "key": "238",
+    "value": "Інші поштові та транспортні засоби",
+    "valueEN": "Other Postal and Shipping Facility"
+  },
+  {
+    "key": "239",
+    "value": "Поштова служба",
+    "valueEN": "United States Postal Service"
+  },
+  {
+    "key": "240",
+    "value": "Авіація",
+    "valueEN": "Aviation"
+  },
+  {
+    "key": "241",
+    "value": "Морський",
+    "valueEN": "Maritime"
+  },
+  {
+    "key": "242",
+    "value": "Громадський транспорт",
+    "valueEN": "Mass Transit"
+  },
+  {
+    "key": "243",
+    "value": "Трубопровід",
+    "valueEN": "Pipeline"
+  },
+  {
+    "key": "244",
+    "value": "Залізниця",
+    "valueEN": "Railroad"
+  },
+  {
+    "key": "245",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "246",
+    "value": "Дорога",
+    "valueEN": "Road"
+  },
+  {
+    "key": "247",
+    "value": "Зберігання сирої води",
+    "valueEN": "Raw Water Storage"
+  },
+  {
+    "key": "248",
+    "value": "Постачання сирої води",
+    "valueEN": "Raw Water Supply"
+  },
+  {
+    "key": "249",
+    "value": "Передача сирої води",
+    "valueEN": "Raw Water Transmission"
+  },
+  {
+    "key": "250",
+    "value": "Регуляторна, наглядова або галузева організація",
+    "valueEN": "Regulatory, Oversight, or Industry Organization"
+  },
+  {
+    "key": "251",
+    "value": "Зберігання очищеної (готової) води",
+    "valueEN": "Treated (Finished) Water Storage"
+  },
+  {
+    "key": "252",
+    "value": "Центр управління розподілом очищеної води",
+    "valueEN": "Treated Water Distribution Control Center"
+  },
+  {
+    "key": "253",
+    "value": "Система розподілу очищеної води",
+    "valueEN": "Treated Water Distribution System"
+  },
+  {
+    "key": "254",
+    "value": "Система моніторингу очищеної води",
+    "valueEN": "Treated Water Monitoring System"
+  },
+  {
+    "key": "255",
+    "value": "Споруда каналізації",
+    "valueEN": "Wastewater Facility"
+  },
+  {
+    "key": "256",
+    "value": "Водоочисна споруда",
+    "valueEN": "Water Treatment Facility"
+  }
+]

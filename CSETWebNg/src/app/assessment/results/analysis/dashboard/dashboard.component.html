@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,8 +20,8 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel d-flex flex-column justify-content-start flex-11a" id="analysisDiv">
-  <h3>Analysis Dashboard</h3>
+<div class="white-panel d-flex flex-column justify-content-start flex-11a" id="analysisDiv" *transloco="let t">
+  <h3>{{t('titles.analysis dashboard')}}</h3>
   <div *ngIf="!initialized">
     <div class="spinner-container" style="margin-left: auto; margin-right: auto;">
       <div style="max-width: 50px; max-height: 50px;"></div>
@@ -29,22 +29,22 @@
   </div>
   <div class="d-flex flex-column flex-11a" [class.d-none]="!initialized">
     <div class="chart d-flex flex-column flex-00a mb-5">
-      <h3>Score</h3>
+      <h3>{{t('reports.core.dashboard.score')}}</h3>
       <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2em;">
 
         <div id="overall-score" class="score-container" style="margin: 0 4px;">
-          <div>Overall Score</div>
+          <div>{{t('reports.core.dashboard.overall score')}}</div>
           <div style="padding: .3rem; font-size: 2rem;">{{overallScoreDisplay}}</div>
         </div>
 
         <div style="flex-direction: column">
           <div id="standard-score" class="score-container" *ngIf="assessSvc.assessment?.useStandard">
-            <div>Standard-based</div>
+            <div>{{t('reports.core.dashboard.standard based')}}</div>
             <div style="padding: .3rem" [class.has-score]="standardBasedScore > 0">{{standardBasedScoreDisplay}}</div>
           </div>
 
           <div id="component-score" class="score-container" *ngIf="assessSvc.assessment?.useDiagram">
-            <div>Component-based</div>
+            <div>{{t('reports.core.dashboard.component based')}}</div>
             <div style="padding: .3rem" [class.has-score]="componentBasedScore > 0">{{componentBasedScoreDisplay}}</div>
           </div>
         </div>
@@ -53,22 +53,27 @@
     </div>
 
     <div class="chart d-flex flex-column flex-00a mb-5">
-      <h3>Assessment Compliance</h3>
-      <p>This graph shows the overall percentage scores. <br> Please note that unanswered questions are counted as a NO answer in these scores. </p>
+      <h3>{{t('titles.assessment compliance')}}</h3>
+      <p [innerHTML]="t('reports.assessment compliance text')"></p>
       <canvas id="canvasAssessmentCompliance">{{assessComplChart}}</canvas>
     </div>
 
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
-      <h3>Top Ranked Categories</h3>
-      <p>This graph shows the top areas of concern ranked.  These are calculated from a weighted risk score based on the difficulty of attack.  The attack weights are most heavily weighted for easy attacks to less for more difficult to attack.</p>
-      <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+      <h3>{{t('titles.ranked categories')}}</h3>
+      <p class="font-italic" [class.d-none]="showTopCategChart">
+        {{t('reports.core.no ranking')}}
+      </p>
+      <div [class.d-none]="!showTopCategChart">
+        <p>{{t('reports.ranked categories text')}}</p>
+        <canvas id="canvasTopCategories">{{topCategChart}}</canvas>
+      </div>
     </div>
 
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useStandard">
-      <h3>Standards Summary</h3>
-      <p>This graph shows the overall answer percentages for each individual answer type.</p>
+      <h3>{{t('titles.standards summary')}}</h3>
+      <p>{{t('reports.standards summary text')}}</p>
       <div *ngIf="stdsSummChart == null">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>
@@ -81,8 +86,8 @@
 
 
     <div class="chart d-flex flex-column flex-00a mb-5" *ngIf="assessSvc.assessment?.useDiagram">
-      <h3>Components Summary</h3>
-      <p>This graph shows the component or network diagram based answer percentages for each individual answer type.</p>
+      <h3>{{t('reports.core.components summary.components summary')}}</h3>
+      <p>{{t('reports.core.components summary.text')}}</p>
       <div *ngIf="!compSummInitialized">
         <div class="spinner-container" style="margin: 2em auto">
           <div style="max-width: 50px; max-height: 50px;"></div>
@@ -90,7 +95,7 @@
       </div>
       <div style="max-width:500px;margin:auto;">
         <canvas id="canvasComponentSummary"
-        [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
+          [class.d-none]="compSummInitialized && componentCount === 0">{{compSummChart}}</canvas>
         <div [class.d-none]="!compSummInitialized || componentCount > 0">
           <hr style="width: 30%"> There are no components on the diagram.
         </div>

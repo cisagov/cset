@@ -32,6 +32,7 @@ namespace CSETWebCore.DataLayer.Manual
         public int Assessment_Id { get; set; }
         public String Answer_Full_Name { get; set; }
         public String Title { get; set; }
+        public int Grouping_Id { get; set; }
         public string Answer_Text { get; set; }
         public int? qc { get; set; }
         public int? Total { get; set; }

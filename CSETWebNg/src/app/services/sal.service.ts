@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,7 @@ import { Injectable } from '@angular/core';
 import { NistSpecialFactor } from '../assessment/prepare/sals/sal-nist/nist-sal.models';
 import { Sal } from '../models/sal.model';
 import { ConfigService } from './config.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 const headers = {
   headers: new HttpHeaders()
@@ -53,7 +54,11 @@ export class SalService {
     { value: 'Very High', imagepath: 'M6.422 36.273C6.478 19.778 19.865 6.419 36.374 6.419 52.883 6.419 66.27 19.778 66.326 36.273L72.748 36.273C72.691 16.232 56.429 0 36.374 0 16.319 0 0.056 16.232 0 36.273zM36.294 41.026C32.884 40.992 30.147 38.2 30.182 34.789 30.216 31.379 33.008 28.64 36.418 28.676 37.641 28.686 38.775 29.06 39.728 29.682L55.472 35.042 39.623 40.085C38.657 40.691 37.518 41.039 36.294 41.026' }
   ];
 
-  constructor(private http: HttpClient, private configSvc: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configSvc: ConfigService,
+    public tSvc: TranslocoService
+  ) {
     this.apiUrl = this.configSvc.apiUrl + 'SAL';
     this.apiUrlGenSal = this.configSvc.apiUrl + 'GeneralSal';
   }
@@ -97,7 +102,7 @@ export class SalService {
     return this.http.get(this.apiUrl + '/NistData');
   }
 
-  updateSal(updateSal: any): any {
+  updateNistSalSelection(updateSal: any): any {
     return this.http.post(this.apiUrl + '/NistData', updateSal, headers);
   }
 
@@ -131,31 +136,21 @@ export class SalService {
 
     // for now, let's just try to fit the text
     return level;
-
-    // switch (level.toLowerCase()) {
-    //   case "low":
-    //     return "L";
-    //   case "moderate":
-    //     return "M";
-    //   case "high":
-    //     return "H";
-    //   case "very high":
-    //     return "VH";
-    // }
-    // return "";
   }
 
   /**
  * Primarily used to shorten the word MODERATE on NIST SAL grid
  * because it is too wide to display well on a phone.
+ * 
+ * Also translates to non-English if needed
  * @param level
  */
   getDisplayLevel(level: string): string {
     if (level === 'MODERATE') {
-      return 'MOD';
+      level = 'MOD';
     }
 
-    return level;
+    return this.tSvc.translate('titles.sal.nist.' + level.toLowerCase());
   }
 }
 

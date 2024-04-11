@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,7 @@
 ////////////////////////////////
 import { Router } from '@angular/router';
 import { AssessmentService } from '../assessment.service';
-import { EventEmitter, Injectable, Output, Directive } from "@angular/core";
-import { of as observableOf, BehaviorSubject } from "rxjs";
+import { EventEmitter, Injectable, Output } from "@angular/core";
 import { ConfigService } from '../config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
@@ -52,9 +51,9 @@ export interface NavTreeNode {
   providedIn: 'root'
 })
 export class NavigationService {
-  
 
-  
+
+
 
   /**
    * The workflow is stored in a DOM so that we can easily navigate around the tree
@@ -74,8 +73,6 @@ export class NavigationService {
 
   @Output()
   disableNext = new EventEmitter<boolean>();
-
-  isNavLoading = false;
 
   activeResultsView: string;
 
@@ -100,8 +97,8 @@ export class NavigationService {
     private navTreeSvc: NavTreeService
   ) {
     this.setWorkflow('omni');
-    this.assessSvc.assessmentStateChanged.subscribe((reloadState)=>{
-      switch(reloadState){
+    this.assessSvc.assessmentStateChanged.subscribe((reloadState) => {
+      switch (reloadState) {
         case 123:
           break;
         case 124:
@@ -113,11 +110,8 @@ export class NavigationService {
           this.navDirect('phase-prepare');
           break;
       }
-      
     });
   }
-
-  private getChildren = (node: NavTreeNode) => { return observableOf(node.children); };
 
 
   /**
@@ -191,13 +185,13 @@ export class NavigationService {
    */
   beginAssessment(assessmentId: number) {
     this.assessSvc.loadAssessment(assessmentId).then(() => {
-      if(this.configSvc.installationMode=="CF"){
+      if (this.configSvc.installationMode == "CF") {
         this.assessSvc.initCyberFlorida(assessmentId);
       }
-      else{
+      else {
         this.navDirect('phase-prepare');
       }
-      
+
     });
   }
 
@@ -238,8 +232,8 @@ export class NavigationService {
 
     let target = originPage;
 
-    try{
-      do {      
+    try {
+      do {
         if (target.children.length > 0) {
           target = <HTMLElement>target.firstElementChild;
         } else {
@@ -249,9 +243,9 @@ export class NavigationService {
           target = <HTMLElement>target.nextElementSibling;
         }
       } while (!this.pageVisibliltySvc.canLandOn(target) || !this.pageVisibliltySvc.showPage(target));
-    }catch(e){
-     //TODO:  Check to see if we are in a CF assessment and if so then disable the next button
-     this.setNextEnabled(false);      
+    } catch (e) {
+      //TODO:  Check to see if we are in a CF assessment and if so then disable the next button
+      this.setNextEnabled(false);
     }
 
     this.routeToTarget(target);
@@ -259,7 +253,7 @@ export class NavigationService {
 
   isNextEnabled(cur: string): boolean {
     const originPage = this.workflow.getElementById(cur);
-    if (originPage == null) {      
+    if (originPage == null) {
       return true;
     }
 
@@ -270,8 +264,8 @@ export class NavigationService {
 
     let target = originPage;
 
-    try{
-      do {              
+    try {
+      do {
         if (target.children.length > 0) {
           target = <HTMLElement>target.firstElementChild;
         } else {
@@ -280,12 +274,12 @@ export class NavigationService {
           }
           target = <HTMLElement>target.nextElementSibling;
         }
-      } while (!(this.pageVisibliltySvc.canLandOn(target) 
-        && this.pageVisibliltySvc.showPage(target) 
+      } while (!(this.pageVisibliltySvc.canLandOn(target)
+        && this.pageVisibliltySvc.showPage(target)
         && this.pageVisibliltySvc.isEnabled(target)));
-    }catch(e){
+    } catch (e) {
       //TODO:  Check to see if we are in a CF assessment and if so then disable the next button
-      return false;  
+      return false;
     }
     return true;
   }
@@ -386,9 +380,9 @@ export class NavigationService {
     if (!this.workflow) {
       return false;
     }
-    
+
     let target = this.workflow.getElementById(id);
-    
+
     if (!target) {
       console.error(`No workflow element found for id ${id}`);
       return false;

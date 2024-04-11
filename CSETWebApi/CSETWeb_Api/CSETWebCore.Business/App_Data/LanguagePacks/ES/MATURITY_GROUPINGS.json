@@ -1,0 +1,251 @@
+[
+  {
+    "groupingId": "88",
+    "title": "Gestión y Supervisión del Riesgo Cibernético",
+    "description": ""
+  },
+  {
+    "groupingId": "89",
+    "title": "Inteligencia de Amenazas y Colaboración",
+    "description": ""
+  },
+  {
+    "groupingId": "90",
+    "title": "Controles de Ciberseguridad",
+    "description": ""
+  },
+  {
+    "groupingId": "91",
+    "title": "Gestión de Dependencia Externa",
+    "description": ""
+  },
+  {
+    "groupingId": "92",
+    "title": "Gestión de Incidentes Cibernéticos y Resiliencia",
+    "description": ""
+  },
+  {
+    "groupingId": "93",
+    "title": "Gobernabilidad",
+    "description": ""
+  },
+  {
+    "groupingId": "94",
+    "title": "Gestión de Riesgo",
+    "description": ""
+  },
+  {
+    "groupingId": "95",
+    "title": "Recursos",
+    "description": ""
+  },
+  {
+    "groupingId": "96",
+    "title": "Capacitación y Cultura",
+    "description": ""
+  },
+  {
+    "groupingId": "97",
+    "title": "Inteligencia de Amenazas",
+    "description": ""
+  },
+  {
+    "groupingId": "98",
+    "title": "Monitoreo y Análisis",
+    "description": ""
+  },
+  {
+    "groupingId": "99",
+    "title": "Intercambio de Información",
+    "description": ""
+  },
+  {
+    "groupingId": "100",
+    "title": "Controles Preventivos",
+    "description": ""
+  },
+  {
+    "groupingId": "101",
+    "title": "Controles de Detección",
+    "description": ""
+  },
+  {
+    "groupingId": "102",
+    "title": "Controles Correctivos",
+    "description": ""
+  },
+  {
+    "groupingId": "103",
+    "title": "Conexiones",
+    "description": ""
+  },
+  {
+    "groupingId": "104",
+    "title": "Gestión de Relaciones",
+    "description": ""
+  },
+  {
+    "groupingId": "105",
+    "title": "Planificación y Estrategias para la Resiliencia ante incidentes",
+    "description": ""
+  },
+  {
+    "groupingId": "106",
+    "title": "Detección, Respuesta y Mitigación",
+    "description": ""
+  },
+  {
+    "groupingId": "107",
+    "title": "Proceso de Escalación y Registro",
+    "description": ""
+  },
+  {
+    "groupingId": "108",
+    "title": "Supervisión",
+    "description": ""
+  },
+  {
+    "groupingId": "109",
+    "title": "Estrategias / Políticas",
+    "description": ""
+  },
+  {
+    "groupingId": "110",
+    "title": "Gestión de Activos de TI",
+    "description": ""
+  },
+  {
+    "groupingId": "111",
+    "title": "Programa de Gestión de Riesgo",
+    "description": ""
+  },
+  {
+    "groupingId": "112",
+    "title": "Evaluación de Riedgo",
+    "description": ""
+  },
+  {
+    "groupingId": "113",
+    "title": "Auditoría",
+    "description": ""
+  },
+  {
+    "groupingId": "114",
+    "title": "Personal",
+    "description": ""
+  },
+  {
+    "groupingId": "115",
+    "title": "Capacitación",
+    "description": ""
+  },
+  {
+    "groupingId": "116",
+    "title": "Cultura",
+    "description": ""
+  },
+  {
+    "groupingId": "117",
+    "title": "Inteligencia de Amenazas y Colaboración",
+    "description": ""
+  },
+  {
+    "groupingId": "118",
+    "title": "Monitoreo y Análisis",
+    "description": ""
+  },
+  {
+    "groupingId": "119",
+    "title": "Intercambio de Información",
+    "description": ""
+  },
+  {
+    "groupingId": "120",
+    "title": "Gestión en Infraestructura",
+    "description": ""
+  },
+  {
+    "groupingId": "121",
+    "title": "Acceso y Gestión de Datos",
+    "description": ""
+  },
+  {
+    "groupingId": "122",
+    "title": "Seguridad del Dispositivo / Terminales",
+    "description": ""
+  },
+  {
+    "groupingId": "123",
+    "title": "Codificación Segura",
+    "description": ""
+  },
+  {
+    "groupingId": "124",
+    "title": "Detección de Amenzas y Vulnerabilidades",
+    "description": ""
+  },
+  {
+    "groupingId": "125",
+    "title": "Detección de Actividad Anómala",
+    "description": ""
+  },
+  {
+    "groupingId": "126",
+    "title": "Detección de Eventos",
+    "description": ""
+  },
+  {
+    "groupingId": "127",
+    "title": "Gestión de Parches",
+    "description": ""
+  },
+  {
+    "groupingId": "128",
+    "title": "Corrección",
+    "description": ""
+  },
+  {
+    "groupingId": "129",
+    "title": "Conexiones",
+    "description": ""
+  },
+  {
+    "groupingId": "130",
+    "title": "Diligence Debida",
+    "description": ""
+  },
+  {
+    "groupingId": "131",
+    "title": "Contratos",
+    "description": ""
+  },
+  {
+    "groupingId": "132",
+    "title": "Monitoreo Permanente",
+    "description": ""
+  },
+  {
+    "groupingId": "133",
+    "title": "Planificación",
+    "description": ""
+  },
+  {
+    "groupingId": "134",
+    "title": "Pruebas",
+    "description": ""
+  },
+  {
+    "groupingId": "135",
+    "title": "Detección",
+    "description": ""
+  },
+  {
+    "groupingId": "136",
+    "title": "Respuesta y Mitigación",
+    "description": ""
+  },
+  {
+    "groupingId": "137",
+    "title": "Proceso de Escalación y Registro"
+  }
+]

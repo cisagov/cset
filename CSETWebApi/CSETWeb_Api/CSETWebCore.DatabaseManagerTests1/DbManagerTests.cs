@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -27,10 +27,10 @@ namespace CSETWebCore.DatabaseManager.Tests
     {
         [TestMethod()]
         public void CopyDBAcrossServersTest()
-        {   
+        {
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.1.1.0"),clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.1.6.0"), clientCode, appCode);
             //TODO finish this.
             //manager.CopyDBAcrossServers();
         }
@@ -42,11 +42,11 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.1.1.0"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.1.6.0"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
             string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
             string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
-            manager.CopyDBFromInstallationSource(mdf,ldf);
+            manager.CopyDBFromInstallationSource(mdf, ldf);
             manager.CopyDBFromInstallationSource(mdf, ldf);
             manager.CopyDBFromInstallationSource(mdf, ldf);
             manager.CopyDBFromInstallationSource(mdf, ldf);
@@ -59,8 +59,8 @@ namespace CSETWebCore.DatabaseManager.Tests
             //detach the csetweb database what evers it 
             string testdb = Path.Combine(DbManager.GetExecutingDirectory().FullName, "data", "TestWeb.mdf");
             string testlog = Path.Combine(DbManager.GetExecutingDirectory().FullName, "data", "TestWeb_log.ldf");
-            File.Copy("data\\CSETWeb90.mdf", Path.Combine("data", testdb),true);
-            File.Copy("data\\CSETWeb90_log.ldf", Path.Combine("data", testlog),true);
+            File.Copy("data\\CSETWeb90.mdf", Path.Combine("data", testdb), true);
+            File.Copy("data\\CSETWeb90_log.ldf", Path.Combine("data", testlog), true);
 
             //C:\src\repos\cset\CSETWebApi\CSETWeb_Api\CSETWebCore.DatabaseManagerTests1\bin\Debug\net7.0\Data\TestWeb.mdf
 
@@ -68,7 +68,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "Test";
             string appCode = "Test";
-            DbManager manager = new DbManager(new Version("12.1.1.0"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.1.6.0"), clientCode, appCode);
 
             //manager.ForceCloseAndDetach(DbManager.localdb2019_ConnectionString, "TestWeb");
             //manager.AttachTest("TestWeb", testdb, testlog);
@@ -81,9 +81,9 @@ namespace CSETWebCore.DatabaseManager.Tests
 
             manager.SetupDb();
 
-            upgrader.UpgradeOnly(new Version("12.1.1.0"), "data source=(localdb)\\inllocaldb2022;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
-            
-            
+            upgrader.UpgradeOnly(new Version("12.1.6.0"), "data source=(localdb)\\inllocaldb2022;initial catalog=TestWeb;persist security info=True;Integrated Security=SSPI;MultipleActiveResultSets=True");
+
+
         }
 
 
@@ -94,7 +94,7 @@ namespace CSETWebCore.DatabaseManager.Tests
             //setup a destination file
             string clientCode = "DHS";
             string appCode = "CSET";
-            DbManager manager = new DbManager(new Version("12.1.1.0"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.1.6.0"), clientCode, appCode);
             manager.SetupDb();
         }
 
@@ -106,18 +106,18 @@ namespace CSETWebCore.DatabaseManager.Tests
             string mdf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest.mdf";
             string ldf = $"{Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}\\CSETWebTest_log.ldf";
 
-            DbManager manager = new DbManager(new Version("12.1.1.0"), clientCode, appCode);
+            DbManager manager = new DbManager(new Version("12.1.6.0"), clientCode, appCode);
             //run the same test twice and make sure that the number increment works
             string conString = "Server=(localdb)\\inllocaldb2022;Integrated Security=true;AttachDbFileName=" + mdf;
             using (SqlConnection conn = new SqlConnection(conString))
             {
-               conn.Open();
-               SqlCommand cmd = conn.CreateCommand();
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "select * from CSET_Version;";
-               SqlDataReader reader = cmd.ExecuteReader();
+                SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.NextResult())
-                { 
-                    Assert.IsNotNull(reader.GetString(2)); 
+                {
+                    Assert.IsNotNull(reader.GetString(2));
                 }
                 manager.CopyDBFromInstallationSource(mdf, ldf);
             }

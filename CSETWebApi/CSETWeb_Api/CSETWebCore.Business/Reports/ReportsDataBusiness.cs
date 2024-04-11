@@ -1,11 +1,10 @@
 ﻿//////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using CSETWebCore.Business.Acet;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Maturity;
 using CSETWebCore.Business.Question;
 using CSETWebCore.Business.Sal;
@@ -21,16 +20,13 @@ using CSETWebCore.Model.Diagram;
 using CSETWebCore.Model.Maturity;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Model.Reports;
-using DocumentFormat.OpenXml.EMMA;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
-using Org.BouncyCastle.Asn1.Pkcs;
 using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
+
 
 namespace CSETWebCore.Business.Reports
 {
@@ -46,6 +42,12 @@ namespace CSETWebCore.Business.Reports
 
         public List<int> OutOfScopeQuestions = new List<int>();
 
+        private TranslationOverlay _overlay;        //private string _lang = "en";
+
+        //public string Lang { get => _lang; set => _lang = value; }
+
+
+
 
         /// <summary>
         /// Constructor.
@@ -60,6 +62,8 @@ namespace CSETWebCore.Business.Reports
             _maturityBusiness = maturityBusiness;
             _questionRequirement = questionRequirement;
             _tokenManager = tokenManager;
+
+            _overlay = new TranslationOverlay();
         }
 
 
@@ -84,6 +88,8 @@ namespace CSETWebCore.Business.Reports
             {
                 return new List<MatRelevantAnswers>();
             }
+
+            var lang = _tokenManager.GetCurrentLanguage();
 
             _context.FillEmptyMaturityQuestionsForAnalysis(_assessmentId);
 
@@ -113,28 +119,17 @@ namespace CSETWebCore.Business.Reports
                 }
             }
 
-            int userId = (int)_tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
-
-            //
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            foreach (var matAns in responseList)
             {
-                responseList.ForEach(
-                   matAns =>
-                   {
-                       Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                       var output = new SpanishQuestionRow();
-                       var temp = new SpanishQuestionRow();
-
-                       if (dictionary.TryGetValue(matAns.Mat.Mat_Question_Id, out output))
-                       {
-                           matAns.Mat.Question_Text = dictionary[matAns.Mat.Mat_Question_Id].Question_Text;
-                       }
-                   });
+                var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
+                if (o != null)
+                {
+                    matAns.Mat.Question_Title = o.QuestionTitle ?? matAns.Mat.Question_Title;
+                    matAns.Mat.Question_Text = o.QuestionText;
+                    matAns.Mat.Supplemental_Info = o.SupplementalInfo;
+                }
             }
-            //
+
 
             // if a maturity level is defined, only report on questions at or below that level
             int? selectedLevel = _context.ASSESSMENT_SELECTED_LEVELS.Where(x => x.Assessment_Id == myModel.Assessment_Id
@@ -144,7 +139,7 @@ namespace CSETWebCore.Business.Reports
 
             // RRA should be always be defaulted to its maximum available level (3)
             // since the user can't configure it
-            if (myModel.model_id == 5) 
+            if (myModel.model_id == 5)
             {
                 selectedLevel = 3;
             }
@@ -278,6 +273,8 @@ namespace CSETWebCore.Business.Reports
         {
             List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
 
+            var lang = _tokenManager.GetCurrentLanguage();
+
 
             var myModel = _context.AVAILABLE_MATURITY_MODELS
                 .Include(x => x.model)
@@ -293,6 +290,20 @@ namespace CSETWebCore.Business.Reports
                 && targetRange.Contains(q.Maturity_Level_Id)).ToList();
 
 
+            // apply overlay
+            foreach (var q in questions)
+            {
+                var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
+                if (o != null)
+                {
+                    q.Question_Title = o.QuestionTitle ?? q.Question_Title;
+                    q.Question_Text = o.QuestionText;
+                    q.Supplemental_Info = o.SupplementalInfo;
+                    q.Examination_Approach = o.ExaminationApproach;
+                }
+            }
+
+
             // Get all MATURITY answers for the assessment
             var answers = from a in _context.ANSWER.Where(x => x.Assessment_Id == _assessmentId && x.Question_Type == "Maturity")
                           from b in _context.VIEW_QUESTIONS_STATUS.Where(x => x.Answer_Id == a.Answer_Id).DefaultIfEmpty()
@@ -304,25 +315,18 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            Dictionary<int, GroupingSpanishRow> dictionaryGrouping = AcetBusiness.buildGroupingDictionary();
-            Dictionary<int, SpanishQuestionRow> dictionaryQuestion = AcetBusiness.buildQuestionDictionary();
-            int userId = (int)_tokenManager.GetUserId();
-            string accessKey = _tokenManager.GetAccessKey();
-            var user = _context.USERS.FirstOrDefault(x => x.UserId == userId);
-            var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == accessKey);
 
-            if (user?.Lang == "es" || ak?.Lang == "es")
+            // apply translation overlay
+            foreach (var g in allGroupings)
             {
-                allGroupings.ForEach(
-                    group => {
-                        var output = new GroupingSpanishRow();
-                        var temp = new GroupingSpanishRow();
-                        if (dictionaryGrouping.TryGetValue(group.Grouping_Id, out output))
-                        {
-                            group.Title = dictionaryGrouping[group.Grouping_Id].Spanish_Title;
-                        }
-                    });
+                var o = _overlay.GetMaturityGrouping(g.Grouping_Id, lang);
+                if (o != null)
+                {
+                    g.Title = o.Title;
+                    g.Description = o.Description;
+                }
             }
+
 
             // Recursively build the grouping/question hierarchy
             var questionGrouping = new MaturityGrouping();
@@ -370,15 +374,15 @@ namespace CSETWebCore.Business.Reports
                                     MarkForReview = question.MarkForReview
                                 };
 
-                                if (user?.Lang == "es" || ak?.Lang == "es")
+
+                                // overlay
+                                var o = _overlay.GetMaturityQuestion(question.QuestionId, lang);
+                                if (o != null)
                                 {
-                                    var output = new SpanishQuestionRow();
-                                    var temp = new SpanishQuestionRow();
-                                    if (dictionaryQuestion.TryGetValue(question.QuestionId, out output))
-                                    {
-                                        newQuestion.QuestionText = dictionaryQuestion[question.QuestionId].Question_Text;
-                                    }
+                                    newQuestion.QuestionText = o.QuestionText;
                                 }
+
+
 
                                 if (question.Answer == "N")
                                 {
@@ -465,7 +469,7 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            //Get All the Findings and issues with the findings. 
+            //Get All the Observations and issues with the Observations. 
 
 
             // Recursively build the grouping/question hierarchy
@@ -588,7 +592,7 @@ namespace CSETWebCore.Business.Reports
                 .Include(x => x.Type)
                 .Where(x => x.Maturity_Model_Id == myModel.model_id).ToList();
 
-            //Get All the Findings and issues with the findings. 
+            //Get All the Observations and issues with the Observations. 
 
 
             // Recursively build the grouping/question hierarchy
@@ -679,6 +683,82 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
+        /// Returns a block of data generally from the INFORMATION table plus a few others.
+        /// </summary>
+        /// <returns></returns>
+        public BasicReportData.INFORMATION GetIseInformation()
+        {
+            INFORMATION infodb = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+
+            TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
+            {
+                config.Ignore(x => x.Additional_Contacts);
+            });
+            var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
+
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+
+            DateTime assessmentEffectiveDate;
+            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToString();
+
+            // Primary Assessor
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
+
+
+            // Other Contacts
+            info.Additional_Contacts = new List<string>();
+            var contacts = _context.ASSESSMENT_CONTACTS
+                .Where(ac => ac.Assessment_Id == _assessmentId
+                        && ac.UserId != assessment.AssessmentCreatorId)
+                .Include(u => u.User)
+                .ToList();
+            foreach (var c in contacts)
+            {
+                info.Additional_Contacts.Add(FormatName(c.FirstName, c.LastName));
+            }
+
+            // Include anything that was in the INFORMATION record's Additional_Contacts column
+            if (infodb.Additional_Contacts != null)
+            {
+                string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string c in acLines)
+                {
+                    info.Additional_Contacts.Add(c);
+                }
+            }
+
+            info.UseStandard = assessment.UseStandard;
+            info.UseMaturity = assessment.UseMaturity;
+            info.UseDiagram = assessment.UseDiagram;
+
+            // ACET properties
+            info.Credit_Union_Name = assessment.CreditUnionName;
+            info.Charter = assessment.Charter;
+
+            info.Assets = 0;
+            bool a = long.TryParse(assessment.Assets, out long assets);
+            if (a)
+            {
+                info.Assets = assets;
+            }
+
+            // Maturity properties
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            if (myModel != null)
+            {
+                info.QuestionsAlias = myModel.model.Questions_Alias;
+            }
+
+            return info;
+        }
+
+
+        /// <summary>
         /// Returns a list of domains for the assessment.
         /// </summary>
         /// <returns></returns>
@@ -764,6 +844,9 @@ namespace CSETWebCore.Business.Reports
                     {
                         TinyMapper.Bind<VIEW_QUESTIONS_STATUS, QuestionAnswer>();
                         TinyMapper.Map(answer.b, qa);
+
+                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
+                        qa.HasObservation = answer.b.HasDiscovery ?? false;
                     }
 
                     newGrouping.Questions.Add(qa);
@@ -789,7 +872,7 @@ namespace CSETWebCore.Business.Reports
             string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
 
             List<ControlRow> controlRows = new List<ControlRow>();
-            
+
             if (applicationMode == CSETWebCore.Business.Assessment.AssessmentMode.QUESTIONS_BASED_APPLICATION_MODE)
             {
                 var qQ = (from rs in _context.REQUIREMENT_SETS
@@ -807,7 +890,8 @@ namespace CSETWebCore.Business.Reports
 
                 foreach (var q in qQ)
                 {
-                    controlRows.Add(new ControlRow() { 
+                    controlRows.Add(new ControlRow()
+                    {
                         Requirement_Id = q.r.Requirement_Id,
                         Requirement_Text = q.r.Requirement_Text,
                         Answer_Text = q.a.Answer_Text,
@@ -909,6 +993,97 @@ namespace CSETWebCore.Business.Reports
             return controls;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode)
+            
+        {
+            
+            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            _questionRequirement.InitializeManager(_assessmentId);
+
+            _context.FillEmptyQuestionsForAnalysis(_assessmentId);
+
+            string level = _questionRequirement.StandardLevel == null ? "L" : _questionRequirement.StandardLevel;
+
+            List<ControlRow> controlRows = new List<ControlRow>();
+
+            var qQ = (from rs in _context.Answer_Components_Default
+                        orderby rs.Question_Group_Heading
+                        where rs.Assessment_Id == _assessmentId
+                        select new { rs } ).ToList();
+
+            foreach (var q in qQ)
+            {
+                controlRows.Add(new ControlRow()
+                {
+                    Requirement_Id = q.rs.heading_pair_id,
+                    Requirement_Text = q.rs.Sub_Heading_Question_Description,
+                    Answer_Text = q.rs.Answer_Text,
+                    Comment = q.rs.Comment,
+                    Question_Id = q.rs.Question_Id,
+                    Requirement_Title = q.rs.Question_Group_Heading,
+                    Short_Name = q.rs.ComponentName,
+                    Simple_Question = q.rs.QuestionText,
+                    Standard_Category = q.rs.Question_Group_Heading,
+                    Standard_Sub_Category = q.rs.Universal_Sub_Category,
+                    Standard_Level = q.rs.SAL
+                });
+            }
+           
+            //get all the questions for this control 
+            //determine the percent implemented.                 
+            int prev_requirement_id = 0;
+            int questionCount = 0;
+            int questionsAnswered = 0;
+            BasicReportData.RequirementControl control = null;
+            List<BasicReportData.Control_Questions> questions = null;
+
+            foreach (var a in controlRows)
+            {
+                if (prev_requirement_id != a.Requirement_Id)
+                {
+                    questionCount = 0;
+                    questionsAnswered = 0;
+                    questions = new List<BasicReportData.Control_Questions>();
+                    control = new BasicReportData.RequirementControl()
+                    {
+                        ControlDescription = a.Requirement_Text,
+                        RequirementTitle = a.Requirement_Title,
+                        Level = a.Standard_Level,
+                        StandardShortName = a.Short_Name,
+                        Standard_Category = a.Standard_Category,
+                        SubCategory = a.Standard_Sub_Category,
+                        Control_Questions = questions
+                    };
+                    controls.Add(control);
+                }
+                questionCount++;
+
+                switch (a.Answer_Text)
+                {
+                    case Constants.Constants.ALTERNATE:
+                    case Constants.Constants.YES:
+                        questionsAnswered++;
+                        break;
+                }
+
+                questions.Add(new BasicReportData.Control_Questions()
+                {
+                    Answer = a.Answer_Text,
+                    Comment = a.Comment,
+                    Simple_Question = a.Simple_Question
+                });
+
+                control.ImplementationStatus = StatUtils.Percentagize(questionsAnswered, questionCount, 2).ToString("##.##");
+                prev_requirement_id = a.Requirement_Id;
+            }
+
+            return controls;
+        }
 
         public List<List<DiagramZones>> GetDiagramZones()
         {
@@ -1033,10 +1208,17 @@ namespace CSETWebCore.Business.Reports
 
         public List<usp_GetOverallRankedCategoriesPage_Result> GetTop5Categories()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
 
-            return _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
+            var categories = _context.usp_GetOverallRankedCategoriesPage(_assessmentId).Take(5).ToList();
 
+            for (var i = 0; i < categories.Count; i++)
+            {
+                var cat = categories[i];
+                cat.Question_Group_Heading = _overlay.GetValue("QUESTION_GROUP_HEADING", cat.QGH_Id.ToString(), lang)?.Value ?? cat.Question_Group_Heading;
+            }
 
+            return categories;
         }
 
 
@@ -1213,13 +1395,27 @@ namespace CSETWebCore.Business.Reports
 
         public List<RankedQuestions> GetRankedQuestions()
         {
+            var lang = _tokenManager.GetCurrentLanguage();
+
             var rm = new Question.RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
 
             List<RankedQuestions> list = new List<RankedQuestions>();
             List<usp_GetRankedQuestions_Result> rankedQuestionList = _context.usp_GetRankedQuestions(_assessmentId).ToList();
             foreach (usp_GetRankedQuestions_Result q in rankedQuestionList)
             {
+                if (q.RequirementId != null)
+                {
+                    var reqOverlay = _overlay.GetRequirement((int)q.RequirementId, lang);
+                    if (reqOverlay != null)
+                    {
+                        q.QuestionText = reqOverlay.RequirementText;
+                    }
+                }
+
+
                 q.QuestionText = rm.ResolveParameters(q.QuestionOrRequirementID, q.AnswerID, q.QuestionText);
+
+                q.Category = _overlay.GetPropertyValue("STANDARD_CATEGORY", q.Category.ToLower(), lang) ?? q.Category;
 
                 list.Add(new RankedQuestions()
                 {
@@ -1243,11 +1439,18 @@ namespace CSETWebCore.Business.Reports
                        select a;
             foreach (var doc in docs)
             {
-                list.Add(new DocumentLibraryTable()
+                var dlt = new DocumentLibraryTable()
                 {
                     DocumentTitle = doc.Title,
                     FileName = doc.Path
-                });
+                };
+
+                if (dlt.DocumentTitle == "click to edit title")
+                {
+                    dlt.DocumentTitle = "(untitled)";
+                }
+
+                list.Add(dlt);
             }
 
             return list;
@@ -1256,7 +1459,7 @@ namespace CSETWebCore.Business.Reports
 
         public BasicReportData.OverallSALTable GetNistSals()
         {
-            var manager = new NistSalBusiness(_context, _assessmentUtil);
+            var manager = new NistSalBusiness(_context, _assessmentUtil, _tokenManager);
             var sals = manager.CalculatedNist(_assessmentId);
             List<BasicReportData.CNSSSALJustificationsTable> list = new List<BasicReportData.CNSSSALJustificationsTable>();
             var infos = _context.CNSS_CIA_JUSTIFICATIONS.Where(x => x.Assessment_Id == _assessmentId).ToList();
@@ -1423,24 +1626,24 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
-        /// Returns a list of individuals assigned to findings/observations.
+        /// Returns a list of individuals assigned to observations.
         /// </summary>
         /// <returns></returns>
-        public List<Individual> GetFindingIndividuals()
+        public List<Individual> GetObservationIndividuals()
         {
-            var findings = (from a in _context.FINDING_CONTACT
-                            join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
-                            join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
-                            join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
-                            from mq in mq1.DefaultIfEmpty()
-                            join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
-                            from r in r1.DefaultIfEmpty()
-                            join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
-                            join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
-                            from i in i1.DefaultIfEmpty()
-                            where c.Assessment_Id == _assessmentId
-                            orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
-                            select new { a, b, c, mq, r, d, i.Value }).ToList();
+            var observations = (from a in _context.FINDING_CONTACT
+                                join b in _context.FINDING on a.Finding_Id equals b.Finding_Id
+                                join c in _context.ANSWER on b.Answer_Id equals c.Answer_Id
+                                join mq in _context.MATURITY_QUESTIONS on c.Question_Or_Requirement_Id equals mq.Mat_Question_Id into mq1
+                                from mq in mq1.DefaultIfEmpty()
+                                join r in _context.NEW_REQUIREMENT on c.Question_Or_Requirement_Id equals r.Requirement_Id into r1
+                                from r in r1.DefaultIfEmpty()
+                                join d in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals d.Assessment_Contact_Id
+                                join i in _context.IMPORTANCE on b.Importance_Id equals i.Importance_Id into i1
+                                from i in i1.DefaultIfEmpty()
+                                where c.Assessment_Id == _assessmentId
+                                orderby a.Assessment_Contact_Id, b.Answer_Id, b.Finding_Id
+                                select new { a, b, c, mq, r, d, i.Value }).ToList();
 
 
             // Get any associated questions to get their display reference
@@ -1453,13 +1656,13 @@ namespace CSETWebCore.Business.Reports
             int contactId = 0;
             Individual individual = null;
 
-            foreach (var f in findings)
+            foreach (var f in observations)
             {
                 if (contactId != f.a.Assessment_Contact_Id)
                 {
                     individual = new Individual()
                     {
-                        Findings = new List<Findings>(),
+                        Observations = new List<Observations>(),
                         INDIVIDUALFULLNAME = FormatName(f.d.FirstName, f.d.LastName)
                     };
 
@@ -1468,27 +1671,28 @@ namespace CSETWebCore.Business.Reports
                 contactId = f.a.Assessment_Contact_Id;
 
 
-                TinyMapper.Bind<FINDING, Findings>();
-                Findings rfind = TinyMapper.Map<Findings>(f.b);
-                rfind.Finding = f.b.Summary;
-                rfind.ResolutionDate = f.b.Resolution_Date.ToString();
-                rfind.Importance = f.Value;
+                TinyMapper.Bind<FINDING, Observations>();
+                Observations obs = TinyMapper.Map<Observations>(f.b);
+                obs.Observation = f.b.Summary;
+                obs.ResolutionDate = f.b.Resolution_Date.ToString();
+                obs.Importance = f.Value;
 
 
                 // get the question identifier and text
-                GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
+               GetQuestionTitleAndText(f, standardQuestions, componentQuestions, f.c.Answer_Id,
                     out string qid, out string qtxt);
-                rfind.QuestionIdentifier = qid;
-                rfind.QuestionText = qtxt;
+                obs.QuestionIdentifier = qid;
+                obs.QuestionText = qtxt;
 
 
                 var othersList = (from a in f.b.FINDING_CONTACT
                                   join b in _context.ASSESSMENT_CONTACTS on a.Assessment_Contact_Id equals b.Assessment_Contact_Id
                                   select FormatName(b.FirstName, b.LastName)).ToList();
-                rfind.OtherContacts = string.Join(",", othersList);
+                obs.OtherContacts = string.Join(",", othersList);
 
-                individual.Findings.Add(rfind);
+                individual.Observations.Add(obs);
             }
+
             return individualList;
         }
 
@@ -1497,6 +1701,9 @@ namespace CSETWebCore.Business.Reports
         /// Formats an identifier for the corresponding question. 
         /// Also returns the question text with parameters applied, in the
         /// case of a requirement.
+        /// 
+        /// If the user's language is non-English, attempts to overlay the
+        /// question text with the translated version.
         /// </summary>
         /// <returns></returns>
         private void GetQuestionTitleAndText(dynamic f,
@@ -1506,6 +1713,7 @@ namespace CSETWebCore.Business.Reports
         {
             identifier = "";
             questionText = "";
+            var lang = _tokenManager.GetCurrentLanguage();
 
             switch (f.c.Question_Type)
             {
@@ -1537,26 +1745,23 @@ namespace CSETWebCore.Business.Reports
                     identifier = f.r.Requirement_Title;
                     var rb = new RequirementBusiness(_assessmentUtil, _questionRequirement, _context, _tokenManager);
                     questionText = rb.ResolveParameters(f.r.Requirement_Id, answerId, f.r.Requirement_Text);
+
+                    // translate
+                    questionText = _overlay.GetRequirement(f.r.Requirement_Id, lang)?.RequirementText ?? questionText;
+
                     return;
 
                 case "Maturity":
                     identifier = f.mq.Question_Title;
                     questionText = f.mq.Question_Text;
-                    //
-                    var user = _context.USERS.FirstOrDefault(x => x.UserId == _tokenManager.GetUserId());
-                    var ak = _context.ACCESS_KEY.FirstOrDefault(x => x.AccessKey == _tokenManager.GetAccessKey());
-                    if (user?.Lang == "es" || ak?.Lang == "es")
+
+                    // overlay
+                    MaturityQuestionOverlay o = _overlay.GetMaturityQuestion(f.mq.Mat_Question_Id, lang);
+                    if (o != null)
                     {
-                        Dictionary<int, SpanishQuestionRow> dictionary = AcetBusiness.buildQuestionDictionary();
-                        var output = new SpanishQuestionRow();
-                        var temp = new SpanishQuestionRow();
-                        // test if not finding a match will safely skip
-                        if (dictionary.TryGetValue(f.mq.Mat_Question_Id, out output))
-                        {
-                            questionText = dictionary[f.mq.Mat_Question_Id].Question_Text;
-                        }
+                        identifier = o.QuestionTitle;
+                        questionText = o.QuestionText;
                     }
-                    //
                     return;
 
                 default:
@@ -1596,7 +1801,7 @@ namespace CSETWebCore.Business.Reports
         {
             var query = (
                 from amm in _context.AVAILABLE_MATURITY_MODELS
-                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id                
+                join mm in _context.MATURITY_MODELS on amm.model_id equals mm.Maturity_Model_Id
                 where amm.Assessment_Id == _assessmentId
                 select new { amm, mm }
                 ).FirstOrDefault();
@@ -1724,7 +1929,7 @@ namespace CSETWebCore.Business.Reports
             return _context.CONFIDENTIAL_TYPE.OrderBy(x => x.ConfidentialTypeOrder);
         }
 
-        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list) 
+        private void NullOutNavigationPropeties(List<MatRelevantAnswers> list)
         {
             // null out a few navigation properties to avoid circular references that blow up the JSON stringifier
             foreach (MatRelevantAnswers a in list)
@@ -1734,14 +1939,14 @@ namespace CSETWebCore.Business.Reports
                 a.Mat.InverseParent_Question = null;
                 a.Mat.Parent_Question = null;
 
-                if (a.Mat.Grouping != null) 
-                { 
+                if (a.Mat.Grouping != null)
+                {
                     a.Mat.Grouping.Maturity_Model = null;
                     a.Mat.Grouping.MATURITY_QUESTIONS = null;
                     a.Mat.Grouping.Type = null;
                 }
 
-                if (a.Mat.Maturity_Level != null) 
+                if (a.Mat.Maturity_Level != null)
                 {
                     a.Mat.Maturity_Level.MATURITY_QUESTIONS = null;
                     a.Mat.Maturity_Level.Maturity_Model = null;
@@ -1753,13 +1958,13 @@ namespace CSETWebCore.Business.Reports
         {
 
             var data = (from g in _context.GEN_FILE
-                       join a in _context.MATURITY_SOURCE_FILES
-                           on g.Gen_File_Id equals a.Gen_File_Id
-                       join q in _context.MATURITY_QUESTIONS 
-                            on a.Mat_Question_Id equals q.Mat_Question_Id
-                      
-                       where q.Maturity_Model_Id == 10
-                       select new { a, q, g }).ToList();
+                        join a in _context.MATURITY_SOURCE_FILES
+                            on g.Gen_File_Id equals a.Gen_File_Id
+                        join q in _context.MATURITY_QUESTIONS
+                             on a.Mat_Question_Id equals q.Mat_Question_Id
+
+                        where q.Maturity_Model_Id == 10
+                        select new { a, q, g }).ToList();
 
             List<SourceFiles> result = new List<SourceFiles>();
             SourceFiles file = new SourceFiles();
@@ -1770,13 +1975,13 @@ namespace CSETWebCore.Business.Reports
                     file.Mat_Question_Id = item.q.Mat_Question_Id;
                     file.Gen_File_Id = item.g.Gen_File_Id;
                     file.Title = item.g.Title;
-                } 
-                catch 
-                { 
-                
+                }
+                catch
+                {
+
                 }
                 result.Add(file);
-               
+
             }
 
             return result;

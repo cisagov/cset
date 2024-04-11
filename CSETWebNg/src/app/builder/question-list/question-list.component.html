@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -21,7 +21,7 @@
   SOFTWARE. 
 -------------------------->
 <div class="white-panel m-0 d-flex flex-column flex-11a oy-auto h-0 w-100">
- 
+
   <div class="max-1200">
     <app-builder-breadcrumbs></app-builder-breadcrumbs>
     <h3>
@@ -79,7 +79,8 @@
         </div>
 
         <div *ngFor="let q of subcat.questions; let i = index" class="question-row d-flex flex-column p-3"
-          [class.no-bottom-border]="i == (subcat.questions.length - 1)" [class.mb-4]="i == (subcat.questions.length - 1)">
+          [class.no-bottom-border]="i == (subcat.questions.length - 1)"
+          [class.mb-4]="i == (subcat.questions.length - 1)">
           <div>
             {{ q.title }}
           </div>
@@ -87,26 +88,29 @@
             <div class="d-flex flex-column mb-3 mr-3 w-100">
               <div *ngIf="questionBeingEdited !== q" class="d-flex flex-row align-items-start">
                 <div class="font-weight-bold mr-2">{{q.displayNumber}}</div>
-                <div [innerHTML]="formatLinebreaks(q.questionText)"></div>
+                <div [innerHTML]="setBuilderSvc.formatLinebreaks(q.questionText)"></div>
               </div>
               <div class="alert alert-danger" *ngIf="duplicateTextQuestion === q">
-                  A question with that text already exists.  The edit was canceled.
-                </div>
+                A question with that text already exists. The edit was canceled.
+              </div>
               <div *ngIf="questionBeingEdited === q" class="w-100">
                 <div class="alert alert-danger" *ngIf="editedQuestionInUse">
                   This question is in use in other standards/question sets or assessments.
-                  Changing the meaning of the question text may have an undesired effect.                  
-                </div>               
-                <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText" (keydown.esc)="abandonQuestionEdit(q)"
-                  (blur)="endQuestionEdit(q)" class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
+                  Changing the meaning of the question text may have an undesired effect.
+                </div>
+                <textarea appAutoSize id="Q_{{q.questionID}}" #editQ [(ngModel)]="q.questionText"
+                  (keydown.esc)="abandonQuestionEdit(q)" (blur)="endQuestionEdit(q)"
+                  class="form-control w-100 text-left" [class.b-validate]="editedQuestionInUse"></textarea>
               </div>
             </div>
             <span class="d-flex align-items-end justify-content-between flex-00a">
-              <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)" class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
+              <button *ngIf="q.isCustom" type="button" (click)="startQuestionEdit(q)"
+                class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a mr-2">
                 <span class="cset-icons-pencil fs-base-2"></span>
                 <span class="d-none d-md-flex fs-smaller">Edit</span>
               </button>
-              <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button" (click)="removeQuestion(q)">
+              <button class="p-0 btn icon-button d-flex flex-column align-items-center flex-00a" type="button"
+                (click)="removeQuestion(q)">
                 <span class="cset-icons-trash-can fs-base-2"></span>
                 <span class="d-none d-md-flex fs-smaller">Remove</span>
               </button>
@@ -115,17 +119,18 @@
           <div class="w-100">
             <div class="btn-group btn-group-toggle">
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'L')">
-                <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}" [checked]="hasSAL(q, 'L')"
-                  (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
+                <input type="checkbox" id="SAL-L-{{q.questionID}}" name="SAL-L-{{q.questionID}}"
+                  [checked]="hasSAL(q, 'L')" (click)="toggleSAL(q, 'L', $event)" data-toggle="toggle" />Low</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'M')">
-                <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}" [checked]="hasSAL(q, 'M')"
-                  (click)="toggleSAL(q, 'M', $event)" data-toggle="toggle" />Moderate</label>
+                <input type="checkbox" id="SAL-M-{{q.questionID}}" name="SAL-M-{{q.questionID}}"
+                  [checked]="hasSAL(q, 'M')" (click)="toggleSAL(q, 'M', $event)" data-toggle="toggle" />Moderate</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'H')">
-                <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}" [checked]="hasSAL(q, 'H')"
-                  (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
+                <input type="checkbox" id="SAL-H-{{q.questionID}}" name="SAL-H-{{q.questionID}}"
+                  [checked]="hasSAL(q, 'H')" (click)="toggleSAL(q, 'H', $event)" data-toggle="toggle" />High</label>
               <label class="btn btn-level btn-rounded" [class.active]="hasSAL(q, 'VH')">
-                <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}" [checked]="hasSAL(q, 'VH')"
-                  (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very High</label>
+                <input type="checkbox" id="SAL-VH-{{q.questionID}}" name="SAL-VH-{{q.questionID}}"
+                  [checked]="hasSAL(q, 'VH')" (click)="toggleSAL(q, 'VH', $event)" data-toggle="toggle" />Very
+                High</label>
             </div>
             <div *ngIf="missingSAL(q)" class="alert alert-danger">At least one SAL level is required</div>
           </div>
@@ -133,7 +138,8 @@
       </div>
     </div>
     <div class="d-flex flex-row mt-3 mb-3">
-      <button id="btnBack" class="btn btn-link" (click)="setBuilderSvc.navSetDetail()">&laquo; Back to Module Detail</button>
+      <button id="btnBack" class="btn btn-link" (click)="setBuilderSvc.navSetDetail()">&laquo; Back to Module
+        Detail</button>
     </div>
   </div>
 </div>

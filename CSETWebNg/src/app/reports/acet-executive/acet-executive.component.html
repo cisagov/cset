@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,28 +20,24 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
+
 <head>
 </head>
 <div *transloco="let t; read: 'reports.acet.executive summary'" class="report-body mb-5">
     <div class="flex-container">
         <div class="column mt-3">
             <p class="report-title">
-                {{ t('executive summary title 1') }}
-            </p>
-            <p class="report-title">
-                {{ t('executive summary title 2') }}
+                {{t('executive summary') | uppercase}}
             </p>
         </div>
         <div class="column">
             <p style="text-align: center">
-                <img height="600px"
-                    src="assets/images/ACET/ACET_shield_logo.png" alt="acet" />
+                <img height="600px" src="assets/images/ACET/ACET_shield_logo.png" alt="acet" />
             </p>
         </div>
         <div class="cover-page-bottom mb-4">
             <div>
-                <img src="assets/images/NCUA/ncua_seal_blue.svg"
-                    style="height: 185px" alt="ncua" />
+                <img src="assets/images/NCUA/ncua_seal_blue.svg" style="height: 185px" alt="ncua" />
             </div>
             <div style="
                 text-align: right;
@@ -53,7 +49,8 @@
             ">
 
                 <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                <div class="title-page-content">{{reportSvc.translatedDate(response?.information?.assessment_Date)}}</div>
+                <div class="title-page-content">{{response?.information?.assessment_Date | localizeDate}}
+                </div>
                 <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                 <div class="title-page-content">{{response?.information?.assets | currency}}</div>
             </div>
@@ -74,7 +71,7 @@
             </tr>
             <tr>
                 <td>{{ 'assessment date' | transloco }}:</td>
-                <td>{{reportSvc.translatedDate(response?.information?.assessment_Date)}}</td>
+                <td>{{response?.information?.assessment_Date | localizeDate}}</td>
             </tr>
             <tr>
                 <td>{{ 'acet.credit union' | transloco }}:</td>
@@ -110,9 +107,9 @@
                 <h1 class="page-title m-0">{{domain.domainName}}</h1>
             </div>
             <div class="col-4 my-auto">
-                    <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.domainMaturity)"
-                        style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
-                        {{ 'level.' + domain.levelDisplay.toLowerCase() | transloco }}</div>
+                <div class="alert" [ngClass]="acetSvc.maturityClasses(domain.domainMaturity)"
+                    style="width:125px; margin-right:23px;float:right;margin-top: 1rem">
+                    {{ 'level.' + domain.levelDisplay.toLowerCase() | transloco }}</div>
             </div>
 
         </div>
@@ -146,8 +143,9 @@
                         <table class="label-value mx-auto">
                             <tbody>
                                 <tr class="item-row">
-                                    <td >
-                                        <app-acet-donut-chart [donutData]="comp.data" [range]="matRange"></app-acet-donut-chart>
+                                    <td>
+                                        <app-acet-donut-chart [donutData]="comp.data"
+                                            [range]="matRange"></app-acet-donut-chart>
                                     </td>
                                 </tr>
                             </tbody>
@@ -188,17 +186,20 @@
         <div class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
                 <p style="text-align: left; padding-bottom: 24px">
-                    <b>{{ 'domain' | transloco }} {{i+1}}:</b> {{domainData.domainName}}</p>
+                    <b>{{ 'domain' | transloco }} {{i+1}}:</b> {{domainData.domainName}}
+                </p>
             </div>
         </div>
         <div class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
-                <p class="chart-maturity-level"><b>{{ 'level.'+domainData.domainMaturity.toLowerCase().replace('-', ' ') | transloco }}</b></p>
+                <p class="chart-maturity-level"><b>{{ 'level.'+domainData.domainMaturity.toLowerCase().replace('-', ' ')
+                        | transloco }}</b></p>
             </div>
         </div>
         <div class="chart-column">
             <div *ngFor="let domainData of domainDataList; index as i">
-                    <p style="text-align: center; padding-bottom: 24px"><b>{{isNaNValuevalue(domainData.targetPercentageAchieved)}}%</b></p>
+                <p style="text-align: center; padding-bottom: 24px">
+                    <b>{{isNaNValuevalue(domainData.targetPercentageAchieved)}}%</b></p>
             </div>
         </div>
 

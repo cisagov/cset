@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ import { Component, OnInit } from '@angular/core';
 import { ReportAnalysisService } from '../../services/report-analysis.service';
 import { ReportService } from '../../services/report.service';
 import { ConfigService } from '../../services/config.service';
-import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { MaturityService } from '../../services/maturity.service';
 import { QuestionsService } from '../../services/questions.service';
 
@@ -41,26 +41,26 @@ export class EdmDeficiencyComponent implements OnInit {
 
   constructor(
     public analysisSvc: ReportAnalysisService,
-      public reportSvc: ReportService,
-      public configSvc: ConfigService,
-      public questionsSvc: QuestionsService,
-      private titleService: Title,
-      public maturitySvc: MaturityService
-    ) { }
+    public reportSvc: ReportService,
+    public configSvc: ConfigService,
+    public questionsSvc: QuestionsService,
+    private titleService: Title,
+    public maturitySvc: MaturityService
+  ) { }
 
-    ngOnInit() {
-      this.loading = true;
-      this.titleService.setTitle("Deficiency Report - EDM");
+  ngOnInit() {
+    this.loading = true;
+    this.titleService.setTitle("Deficiency Report - EDM");
 
-      this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
-        (r: any) => {
-          this.response = r;
-          this.loading = false;
-        },
-        error => console.log('Deficiency Report Error: ' + (<Error>error).message)
-      );
-    }
-    getQuestion(q){
-      return q.split(/(?<=^\S+)\s/)[1];
-    }
+    this.maturitySvc.getMaturityDeficiency("EDM").subscribe(
+      (r: any) => {
+        this.response = r;
+        this.loading = false;
+      },
+      error => console.log('Deficiency Report Error: ' + (<Error>error).message)
+    );
+  }
+  getQuestion(q) {
+    return q.split(/(?<=^\S+)\s/)[1];
+  }
 }

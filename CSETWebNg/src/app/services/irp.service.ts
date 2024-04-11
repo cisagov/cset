@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ import { IRP } from '../models/irp.model';
 
 const headers = {
   headers: new HttpHeaders()
-      .set('Content-Type', 'application/json'),
+    .set('Content-Type', 'application/json'),
   params: new HttpParams()
 };
 
@@ -40,11 +40,8 @@ export class IRPService {
   /**
    * Retrieves the list of frameworks.
    */
-  getIRPList(spanishFlag?: boolean) {
-    if (spanishFlag == null) {
-      spanishFlag = false;
-    }
-    return this.http.get(this.configSvc.apiUrl + 'irps?spanishFlag=' + spanishFlag);
+  getIRPList() {
+    return this.http.get(this.configSvc.apiUrl + 'irps');
   }
 
   /**

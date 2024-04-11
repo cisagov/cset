@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div class="white-panel">
+<div class="white-panel" *transloco="let t">
     <div id="top"></div>
     <div class="d-flex flex-row flex-wrap justify-content-between align-items-start flex-11a mb-4">
 
@@ -36,10 +36,10 @@
         </div>
 
         <div class="d-block mb-2">
-            <h2>{{ statementLevel }}</h2>
+            <!-- <h2>{{ statementLevel }}</h2> -->
         </div>
 
-        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">Showing Only Filtered Questions</div>
+        <div *ngIf="filterSvc.isFilterEngaged()" class="filters-engaged">{{t('filter-menu.showing only filtered')}}</div>
 
         <ng-container *ngIf="this.assessSvc.isISE(); else notIse">
             <div *ngIf="!this.ncuaSvc.issuesFinishedLoading || !groupings" class="w-100">
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </ng-template>
-    
+
 
         <!-- top level (Domains) -->
         <!--<div *ngFor="let g of groupings" class="w-100 mb-5">

@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,21 +20,22 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="white-panel d-flex flex-column flex-11a">
+<div class="white-panel d-flex flex-column flex-11a" *transloco="let t">
     <h3 class="d-flex flex-column flex-00a">{{title}}</h3>
     <p>
-        These charts represent the answer distribution overall and across all tiers.
+        {{t('reports.core.rra.report.performance summary text')}}
     </p>
     <div class="container">
         <div class="row">
-            <div class="col-6"><app-rra-summary [title]="'Overall'" [filter]="'Overall'"></app-rra-summary></div>
-            <div class="col-6"><app-rra-summary [title]="'Basic'" [filter]="'Basic'"></app-rra-summary></div>
+            <div class="col-6"><app-rra-summary [title]="t('level.overall')" [filter]="'Overall'"></app-rra-summary></div>
+            <div class="col-6"><app-rra-summary [title]="t('level.basic')" [filter]="t('level.basic')"></app-rra-summary></div>
         </div>
         <div class="row" style="margin-top:45px;">
-            <div class="col-6"><app-rra-summary [title]="'Intermediate'" [filter]="'Intermediate'"></app-rra-summary></div>
-            <div class="col-6"><app-rra-summary [title]="'Advanced'" [filter]="'Advanced'"></app-rra-summary></div>
+            <div class="col-6"><app-rra-summary [title]="t('level.intermediate')" [filter]="t('level.intermediate')"></app-rra-summary>
+            </div>
+            <div class="col-6"><app-rra-summary [title]="t('level.advanced')" [filter]="t('level.advanced')"></app-rra-summary></div>
         </div>
     </div>
-    
+
     <app-nav-back-next *ngIf="showNav" [page]="'rra-summary-all'"></app-nav-back-next>
-</div>
+</div> 

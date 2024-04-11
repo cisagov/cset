@@ -1,6 +1,6 @@
 <!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC
+   Copyright 2024 Battelle Energy Alliance, LLC
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,7 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
   SOFTWARE.
 -------------------------->
-<div id="tsa-login-page" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
+<div id="tsa-login-page" *transloco="let t" class="oy-auto ox-hidden p-0 d-flex flex-column justify-content-start flex-11a"
   [ngClass]="{'login-background':mode == 'LOGIN'}">
 
   <div class="row">
@@ -84,7 +84,7 @@
               <div class="alert alert-danger">Incorrect Username or Password</div>
             </div>
             <label for="email" style="color: #fff">
-              Enter your email address and password to login.
+              {{t('login.login prompt')}}
             </label>
             <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
               #email="ngModel" required email focusOnInit="true" tabindex="0" />
@@ -162,7 +162,7 @@
                     <div class="alert alert-danger">Incorrect Username or Password</div>
                   </div>
                   <label for="email" style="color: #fff">
-                    Enter your email address and password to login.
+                    {{t('login.login prompt')}}
                   </label>
                   <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="model.email"
                     #email="ngModel" required email focusOnInit="true" tabindex="0" />
@@ -170,7 +170,8 @@
                     required</div>
                   <div class="input-container">
                     <input [type]="showPassword ? 'text' : 'password'" tabindex="0" class="form-control mt-2"
-                      name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel" required />
+                      name="password" placeholder="Password" [(ngModel)]="model.password" #password="ngModel"
+                      required />
                     <div *ngIf="!showPassword" class="input-icon" (click)="togglePasswordVisibility()"
                       matTooltip="Show password" [matTooltipPosition]="'right'">
                       <i class="fas fa-eye"></i>
@@ -180,7 +181,8 @@
                       <i class="fas fa-eye-slash"></i>
                     </div>
                   </div>
-                  <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is required
+                  <div *ngIf="f.submitted && !password.valid" class="alert alert-danger mt-1">A valid password is
+                    required
                   </div>
                   <div class="mt-2 d-flex justify-content-between flex-00a">
                     <div class="d-flex flex-nowrap flex-00a mt-3">
@@ -191,9 +193,10 @@
                     </div>
                   </div>
                   <a class="btn-link-light" [routerLink]="['/home','reset-pass']" tabindex="0">Forgot
-                   Password</a><br>
-                  <a class="btn-link-light" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')" tabindex="0">New
-                   User</a>
+                    Password</a><br>
+                  <a class="btn-link-light" (click)="setMode('SIGNUP')" (keyup.enter)="setMode('SIGNUP')"
+                    tabindex="0">New
+                    User</a>
                 </form>
                 <div [class.bgc-validation]="isRunningInElectron && mode === 'LOGIN'" class="text-center">
                   <div *ngIf="mode === 'LOCAL'">

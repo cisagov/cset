@@ -1,6 +1,6 @@
 <!---------------------- 
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC  
 
   Permission is hereby granted, free of charge, to any person obtaining a copy 
   of this software and associated documentation files (the "Software"), to deal 
@@ -20,21 +20,15 @@
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
   SOFTWARE. 
 -------------------------->
-<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a" *transloco="let t">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <i class="far fa-check-square mr-3 fs-base-6"></i>
     <span>Select Assessments</span>
   </div>
 
   <div class="p-3 pr-0 oy-auto d-flex flex-column flex-11a bgc-primary-200">
-    <div>
-      Selected Assessments Questions Compatibility: <span
-        class="font-weight-bold">{{ aggregation.questionsCompatibility | percent : '0.3' }}</span>
-    </div>
-    <div>
-      Selected Assessments Requirements Compatibilty: <span
-        class="font-weight-bold">{{ aggregation.requirementsCompatibility | percent : '0.3' }}</span>
-    </div>
+
+    <app-trend-compare-compatibility #refreshComponent> </app-trend-compare-compatibility>
   </div>
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
     <form name="form" #userForm="ngForm">
@@ -44,16 +38,17 @@
             <td>
               <input type="checkbox" [id]="'assess-' + a.assessmentId" class="checkbox-custom mr-2"
                 (change)="toggleSelection($event, a)" [checked]="a.selected">
-                <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pr-5">{{ a.assessmentName }}</label>
+              <label [for]="'assess-' + a.assessmentId" class="checkbox-custom-label mb-0 pr-5">{{ a.assessmentName
+                }}</label>
             </td>
             <td>
-              {{ a.assessmentDate | date:'dd-MMM-yyyy' }}
+              {{ a.assessmentDate | localizeDate }}
             </td>
           </tr>
         </table>
 
         <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-          <button class="m-0 btn btn-primary" (click)="close()">OK</button>
+          <button class="m-0 btn btn-primary" (click)="close()">{{t('buttons.ok')}}</button>
         </mat-dialog-actions>
       </div>
     </form>

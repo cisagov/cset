@@ -1,15 +1,13 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
 namespace CSETWebCore.Business.AssessmentIO.Import
@@ -59,17 +57,32 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
             // Determine the version of the data
+            System.Version version = null;
+
             JObject j = JObject.Parse(json);
+            JToken csetVersionToken = j.SelectToken("jCSET_VERSION[0].Cset_Version1");
             JToken versionToken = j.SelectToken("jCSET_VERSION[0].Version_Id");
-            if (versionToken == null)
+
+            if (csetVersionToken == null && versionToken == null)
             {
                 throw new ApplicationException("Version could not be identifed corrupted assessment json");
             }
 
-            System.Version version = ConvertFromStringToVersion(versionToken.Value<string>());
-            version = NormalizeVersion(version);
+            if (csetVersionToken != null)
+            {
+                version = System.Version.Parse(csetVersionToken.Value<string>());
+            }
+            else
+            {
+                // If the export is older, there may not be a Cset_Version1 property in the export.
+                // In that case, fall back to Version_Id which is more error prone.
+                // Suggest deprecating this property as soon as practical.
+                version = ConvertFromStringToVersion(versionToken.Value<string>());
+                version = NormalizeVersion(version);
+            }
 
-            // correct version notation if necessary
+
+            // older versions may need some correction due to ambiguity
             if (version == new System.Version("9.21.0.0"))
             {
                 version = new System.Version("9.2.1.0");
@@ -81,7 +94,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             if (version == new System.Version("101.0.0.0"))
             {
                 version = new System.Version("10.1.0.0");
-            }            
+            }
             if (version == new System.Version("10.11.0.0"))
             {
                 version = new System.Version("10.1.1.0");
@@ -137,20 +150,28 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
 
         /// <summary>
-        /// 
+        /// Attempts to convert an old "decimal" representation of the version
+        /// into a System.Version instance.
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
         private System.Version ConvertFromStringToVersion(String v)
         {
-            // The version string may come in from a float and not be interpreted correctly.  
+            // Convert the string to use decimals as the separator if necessary.
+            // Reason: another culture might have exported the decimal version string with
+            // a decimal separator other than a period (.)
+            Regex regex = new Regex("[^0-9]");
+            var parts = regex.Split(v);
+            v = String.Join(".", parts);
+
+
+            // The version string may come in from a decimal and not be interpreted correctly.  
             // This attempts to turn "9.04" into "9.0.4"
-            string[] parts = v.Split(".".ToCharArray());
             if (parts.Length > 1 && parts[1].StartsWith("0"))
             {
                 parts[1] = "0." + parts[1].Substring(1);
             }
-            v = String.Join(".", parts);
+
             if (v.EndsWith("."))
             {
                 v = v.TrimEnd('.');
@@ -161,6 +182,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
             {
                 return new System.Version(version, 0);
             }
+
             return new System.Version(v);
         }
     }

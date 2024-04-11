@@ -1,6 +1,6 @@
 ////////////////////////////////
 //
-//   Copyright 2023 Battelle Energy Alliance, LLC
+//   Copyright 2024 Battelle Energy Alliance, LLC
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@
 ////////////////////////////////
 import { Component, OnInit } from '@angular/core';
 import { RraDataService } from '../../../../services/rra-data.service';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-rra-answer-distribution',
@@ -34,7 +35,10 @@ export class RraAnswerDistributionComponent implements OnInit {
   xAxisTicks = [0, 25, 50, 75, 100];
   answerDistribColorScheme = { domain: ['#28A745', '#DC3545', '#c3c3c3'] };
 
-  constructor(public rraDataSvc: RraDataService) { }
+  constructor(
+    public rraDataSvc: RraDataService,
+    public tSvc: TranslocoService
+    ) { }
 
   ngOnInit(): void {
     this.rraDataSvc.getRRADetail().subscribe((r: any) => {
@@ -62,6 +66,16 @@ export class RraAnswerDistributionComponent implements OnInit {
     });
 
     this.answerDistribByLevel = levelList;
+
+    for (let i of this.answerDistribByLevel){
+      for (let j of i.series){
+        j.name = this.tSvc.translate('answer-options.button-labels.'+ j.name.toLowerCase())
+      }
+    }
+    for (let i of this.answerDistribByLevel){
+      i.name = this.tSvc.translate('level.'+ i.name.toLowerCase())
+     }
+
   }
 
   formatPercent(x: any) {

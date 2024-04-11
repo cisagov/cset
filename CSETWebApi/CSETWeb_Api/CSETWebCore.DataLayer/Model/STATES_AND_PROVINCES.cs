@@ -27,5 +27,7 @@ public partial class STATES_AND_PROVINCES
     [StringLength(5)]
     public string Country_Code { get; set; }
 
+    [ForeignKey("Country_Code")]
+    [InverseProperty("STATES_AND_PROVINCES")]
     public virtual COUNTRIES Country_CodeNavigation { get; set; }
 }

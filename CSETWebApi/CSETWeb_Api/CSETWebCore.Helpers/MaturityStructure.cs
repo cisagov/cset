@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -46,18 +46,30 @@ namespace CSETWebCore.Helpers
         private bool _includeText = true;
 
 
+        private string _lang = "en";
+        /// <summary>
+        /// 
+        /// </summary>
+        private TranslationOverlay _overlay;
+
+
         /// <summary>
         /// Returns a populated instance of the maturity grouping
         /// and question structure for an assessment.
         /// </summary>
         /// <param name="assessmentId"></param>
-        public MaturityStructure(int assessmentId, CSETContext context, bool includeText)
+        public MaturityStructure(int assessmentId, CSETContext context, bool includeText, string lang)
         {
             this.AssessmentId = assessmentId;
             this._context = context;
             this._includeText = includeText;
 
             this._addlSuppl = new AdditionalSupplemental(context);
+
+            // set up translation resources
+            this._overlay = new TranslationOverlay();
+            this._lang = lang;
+
 
             LoadStructure();
         }
@@ -168,6 +180,12 @@ namespace CSETWebCore.Helpers
 
 
 
+                // i18n
+                grouping.Title = _overlay.GetMaturityGrouping(grouping.GroupingId, _lang)?.Title ?? grouping.Title;
+
+
+
+
                 // are there any questions that belong to this grouping?
                 var myQuestions = questions.Where(x => x.Grouping_Id == sg.Grouping_Id).ToList();
 
@@ -179,8 +197,8 @@ namespace CSETWebCore.Helpers
 
                     var question = new Model.Maturity.CPG.Question();
                     question.QuestionId = myQ.Mat_Question_Id;
-                    question.ParentQuestionId  = myQ.Parent_Question_Id;
-                    question.Sequence  = myQ.Sequence;
+                    question.ParentQuestionId = myQ.Parent_Question_Id;
+                    question.Sequence = myQ.Sequence;
                     question.DisplayNumber = myQ.Question_Title;
                     question.Answer = answer?.a.Answer_Text ?? "";
                     question.Comment = answer?.a.Comment ?? "";
@@ -198,9 +216,12 @@ namespace CSETWebCore.Helpers
                         var cpgPractice = p.Select(".cpg-practice");
                         question.Practice = cpgPractice.FirstOrDefault()?.Html();
 
+                        var cpgOutcome = p.Select(".cpg-outcome");
+                        question.Outcome = cpgOutcome.FirstOrDefault()?.Html();
 
-                        question.Supplemental  = myQ.Supplemental_Info;
-                        
+
+                        question.Supplemental = myQ.Supplemental_Info;
+
                         question.Scope = myQ.Scope;
                         question.RecommendedAction = myQ.Recommend_Action;
                         question.Services = myQ.Services;
@@ -228,6 +249,24 @@ namespace CSETWebCore.Helpers
                     question.Cost = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COST")?.PropertyValue;
                     question.Impact = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "IMPACT")?.PropertyValue;
                     question.Complexity = myQ.MATURITY_QUESTION_PROPS.FirstOrDefault(x => x.PropertyName == "COMPLEXITY")?.PropertyValue;
+
+
+                    // overlay
+                    var o = _overlay.GetMaturityQuestion(question.QuestionId, _lang);
+                    if (o != null)
+                    {
+                        question.QuestionText = o.QuestionText;
+                        question.Scope = o.Scope;
+                        question.RiskAddressed = o.RiskAddressed;
+                        question.RecommendedAction = o.RecommendAction;
+
+                        var p = Parser.Parse(o.QuestionText, ".");
+                        var practice = p.Select(".cpg-practice").FirstOrDefault()?.Html();
+                        question.Practice = practice ?? question.Practice;
+
+                        var outcome = p.Select(".cpg-outcome").FirstOrDefault()?.Html();
+                        question.Outcome = outcome ?? question.Outcome;
+                    }
 
                     grouping.Questions.Add(question);
                 }

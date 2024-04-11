@@ -1,29 +1,29 @@
-<!---------------------- 
+<!----------------------
 
-   Copyright 2023 Battelle Energy Alliance, LLC  
+   Copyright 2024 Battelle Energy Alliance, LLC
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy 
-  of this software and associated documentation files (the "Software"), to deal 
-  in the Software without restriction, including without limitation the rights 
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-  copies of the Software, and to permit persons to whom the Software is 
-  furnished to do so, subject to the following conditions: 
- 
-  The above copyright notice and this permission notice shall be included in all 
-  copies or substantial portions of the Software. 
- 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
-  SOFTWARE. 
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 -------------------------->
-<div class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
+<div *transloco="let t" class="edit-user-dialog d-flex flex-column justify-content-center flex-11a">
   <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
     <span class="cset-icons-profile fs-base-6 mr-3"></span>
-    <span>User Profile</span>
+    <span>{{t('user profile.dialog title')}}</span>
   </div>
 
   <mat-dialog-content class="p-3 pr-0 oy-auto d-flex flex-column flex-11a">
@@ -31,50 +31,49 @@
       <div class="pr-3">
 
         <div class="form-group" [ngClass]="{ 'has-error': !firstName.valid }">
-          <label required for="firstName">First Name</label>
+          <label required for="firstName">{{t('user profile.first name')}}</label>
           <input type="text" maxlength="150" class="form-control" id="firstName" name="firstName"
             [(ngModel)]="model.firstName" #firstName="ngModel" required />
-          <div *ngIf="!firstName.valid" class="alert alert-danger">First Name is required</div>
+          <div *ngIf="!firstName.valid" class="alert alert-danger">{{t('user profile.first name required')}}</div>
         </div>
 
         <div class="form-group" [ngClass]="{ 'has-error': !lastName.valid }">
-          <label required for="lastName">Last Name</label>
+          <label required for="lastName">{{t('user profile.last name')}}</label>
           <input type="text" maxlength="150" class="form-control" id="lastName" name="lastName"
             [(ngModel)]="model.lastName" #lastName="ngModel" required />
-          <div *ngIf="!lastName.valid" class="alert alert-danger">Last Name is required</div>
+          <div *ngIf="!lastName.valid" class="alert alert-danger">{{t('user profile.last name required')}}</div>
         </div>
 
         <div class="form-group" [ngClass]="{ 'has-error': (email?.errors?.notValidEmail || email?.errors?.required) }">
-          <label required for="email">Email</label>
+          <label required for="email">{{t('user profile.email')}}</label>
           <input type="email" maxlength="150" class="form-control" name="email" [(ngModel)]="model.primaryEmail"
             #email="ngModel" required appEmailValidator />
           <div class="alert alert-danger" *ngIf="email?.errors">
-            <div *ngIf="email?.errors?.required">Email is required</div>
-            <div *ngIf="email?.errors?.notValidEmail">Not a valid email</div>
+            <div *ngIf="email?.errors?.required">{{t('user profile.email required')}}</div>
+            <div *ngIf="email?.errors?.notValidEmail">{{t('user profile.not valid email')}}</div>
           </div>
         </div>
 
         <div class="form-group"
           [ngClass]="{ 'has-error': (confirmEmail?.errors?.required || confirmEmail?.errors?.notValidEmail) }">
-          <label required for="confirmEmail">Confirm Email</label>
+          <label required for="confirmEmail">{{t('user profile.confirm email')}}</label>
           <input type="email" class="form-control" name="confirmEmail" [(ngModel)]="model.confirmEmail"
             #confirmEmail="ngModel" required appEmailValidator appConfirmEqualValidator="email" />
           <div class="alert alert-danger" *ngIf="confirmEmail?.errors">
-            <div *ngIf="confirmEmail?.errors?.required">Email is required</div>
-            <div *ngIf="confirmEmail?.errors?.notValidEmail">Not a valid email</div>
-            <div *ngIf="confirmEmail?.errors?.notEqual">Emails do not match</div>
+            <div *ngIf="confirmEmail?.errors?.required">{{t('user profile.email required')}}</div>
+            <div *ngIf="confirmEmail?.errors?.notValidEmail">{{t('user profile.not valid email')}}</div>
+            <div *ngIf="confirmEmail?.errors?.notEqual">{{t('user profile.emails do not match')}}</div>
           </div>
         </div>
 
         <div class="mt-4">
-          <h4>Security Questions</h4>
-          <div class="fs-base mb-3">Providing security questions is optional but allows you to recover your password
-            should you forget it.
+          <h4>{{t('user profile.security questions')}}</h4>
+          <div class="fs-base mb-3">{{t('user profile.security questions text')}}
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="mb-1 fw-600" for="securityQuestion1">Security Question 1</label>
+              <label class="mb-1 fw-600" for="securityQuestion1">{{t('user profile.security question 1')}}</label>
               <select class="form-control" id="securityQuestion1" name="securityQuestion1"
                 [(ngModel)]="model.securityQuestion1">
                 <option *ngFor="let question of securityQuestions"
@@ -83,20 +82,20 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label class="mb-1 fw-600" for="SecurityAnswer1">Security Answer 1</label>
+              <label class="mb-1 fw-600" for="SecurityAnswer1">{{t('user profile.security answer 1')}}</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityAnswer1" name="SecurityAnswer1"
                 [(ngModel)]="model.securityAnswer1" placeholder="Answer">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label class="mb-1 fw-600" for="SecurityQuestion2">Security Question 2</label>
+              <label class="mb-1 fw-600" for="SecurityQuestion2">{{t('user profile.security question 2')}}</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityQuestion2"
                 placeholder="Your own custom security question" name="SecurityQuestion2"
                 [(ngModel)]="model.securityQuestion2">
             </div>
             <div class="form-group col-md-6">
-              <label class="mb-1 fw-600" for="SecurityAnswer2">Security Answer 2</label>
+              <label class="mb-1 fw-600" for="SecurityAnswer2">{{t('user profile.security answer 2')}}</label>
               <input type="text" maxlength="250" class="form-control" id="SecurityAnswer2" placeholder="Answer"
                 name="SecurityAnswer2" [(ngModel)]="model.securityAnswer2">
             </div>
@@ -105,8 +104,8 @@
       </div>
 
       <mat-dialog-actions class="p-3 pt-0 mb-0 d-flex justify-content-between flex-11a">
-        <button class="m-0 btn btn-primary">Save</button>
-        <button class="m-0 btn btn-secondary" (click)="cancel()">Cancel</button>
+        <button class="m-0 btn btn-primary">{{ t('buttons.save') }}</button>
+        <button class="m-0 btn btn-secondary" (click)="cancel()">{{ t('buttons.cancel') }}</button>
       </mat-dialog-actions>
     </form>
   </mat-dialog-content>

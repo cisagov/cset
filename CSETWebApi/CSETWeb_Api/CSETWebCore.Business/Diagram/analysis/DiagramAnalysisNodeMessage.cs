@@ -1,6 +1,6 @@
 //////////////////////////////// 
 // 
-//   Copyright 2023 Battelle Energy Alliance, LLC  
+//   Copyright 2024 Battelle Energy Alliance, LLC  
 // 
 // 
 //////////////////////////////// 
@@ -22,14 +22,15 @@ namespace CSETWebCore.Business.Diagram.Analysis
         public string id { get; set; }
         public string layerId { get; set; }
         public string value { get; set; }
-        
+
         public string edgeId { get; set; }
 
         public string vertex { get; set; }
         public string parent { get; set; }
-        
+
         public HashSet<String> SetMessages { get; set; }
         public int MessageIdentifier { get; set; }
+        public int Rule_Violated { get; set; }
 
         public DiagramAnalysisNodeMessage()
         {
@@ -39,7 +40,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             label = "";
             id = Guid.NewGuid().ToString();
             layerId = "0";
-            value = Number.ToString();        
+            value = Number.ToString();
             vertex = "1";
             parent = "0";
         }
@@ -55,7 +56,7 @@ namespace CSETWebCore.Business.Diagram.Analysis
             {
                 return String.Join("\n\n", SetMessages);
             }
-            set {Message = value; }
+            set { Message = value; }
         }
 
         public string NodeId1 { get; set; }

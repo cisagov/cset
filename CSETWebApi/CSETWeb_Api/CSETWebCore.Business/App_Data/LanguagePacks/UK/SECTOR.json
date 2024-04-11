@@ -1,0 +1,138 @@
+[
+  {
+    "key": "1",
+    "value": "Хімічний сектор (не нафтогазовий)"
+  },
+  {
+    "key": "2",
+    "value": "Комерційний сектор"
+  },
+  {
+    "key": "3",
+    "value": "Сектор зв'язку"
+  },
+  {
+    "key": "4",
+    "value": "Критичний виробничий сектор"
+  },
+  {
+    "key": "5",
+    "value": "Сектор дамб"
+  },
+  {
+    "key": "6",
+    "value": "Оборонно-промисловий сектор"
+  },
+  {
+    "key": "7",
+    "value": "Сектор екстрених служб"
+  },
+  {
+    "key": "8",
+    "value": "Енергетичний сектор"
+  },
+  {
+    "key": "9",
+    "value": "Сектор фінансових послуг"
+  },
+  {
+    "key": "10",
+    "value": "Харчовий та сільськогосподарський сектор"
+  },
+  {
+    "key": "11",
+    "value": "Сектор державних установ"
+  },
+  {
+    "key": "12",
+    "value": "Сектор медицини та громадської охорони здоров'я"
+  },
+  {
+    "key": "13",
+    "value": "Сектор інформаційних технологій"
+  },
+  {
+    "key": "14",
+    "value": "Сектор ядерних реакторів, матеріалів і відходів"
+  },
+  {
+    "key": "15",
+    "value": "Транспортний сектор"
+  },
+  {
+    "key": "16",
+    "value": "Сектор систем водопостачання та водовідведення"
+  },
+  {
+    "key": "17",
+    "value": "Agriculture and Food"
+  },
+  {
+    "key": "18",
+    "value": "Banking and Finance"
+  },
+  {
+    "key": "19",
+    "value": "Chemical and Hazardous Materials Industry"
+  },
+  {
+    "key": "20",
+    "value": "Commercial Facilities"
+  },
+  {
+    "key": "21",
+    "value": "Комунікації"
+  },
+  {
+    "key": "22",
+    "value": "Дамби"
+  },
+  {
+    "key": "23",
+    "value": "Defense Industrial Base"
+  },
+  {
+    "key": "24",
+    "value": "Emergency Services"
+  },
+  {
+    "key": "25",
+    "value": "Energy"
+  },
+  {
+    "key": "26",
+    "value": "Government Facilities"
+  },
+  {
+    "key": "27",
+    "value": "Healthcare and Public Health"
+  },
+  {
+    "key": "28",
+    "value": "Інформаційні технології"
+  },
+  {
+    "key": "29",
+    "value": "Виробництво"
+  },
+  {
+    "key": "30",
+    "value": "National Monuments and Icons"
+  },
+  {
+    "key": "31",
+    "value": "Nuclear Reactors, Materials, and Waste"
+  },
+  {
+    "key": "32",
+    "value": "Postal and Shipping"
+  },
+  {
+    "key": "33",
+    "value": "Transportation"
+  },
+  {
+    "key": "34",
+    "value": "Water"
+  }
+]
