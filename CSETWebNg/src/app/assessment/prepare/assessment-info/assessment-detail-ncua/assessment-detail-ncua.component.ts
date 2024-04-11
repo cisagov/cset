@@ -245,6 +245,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.ncuaSvc.creditUnionName = this.assessment.creditUnion;
     this.ncuaSvc.creditUnionCharterNumber = this.assessment.charter;
 
+    if (+this.assessment.charter < 60000) {
+      this.ncuaSvc.ISE_StateLed = false;
+    }
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 

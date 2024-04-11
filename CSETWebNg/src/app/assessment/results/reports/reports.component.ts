@@ -351,11 +351,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
-    if (this.ncuaSvc.creditUnionName == '' || this.ncuaSvc.creditUnionName == null) {
+    if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
       return true;
     }
 
-    if (this.ncuaSvc.assetsAsNumber == 0) {
+    if (this.ncuaSvc.assetsAsNumber == null || this.ncuaSvc.assetsAsNumber == 0) {
       return true;
     }
 
@@ -370,6 +370,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.disableIseReportLinks) {
       return true;
     }
+    return false;
   }
 
   getSubmitButtonStyle() {
