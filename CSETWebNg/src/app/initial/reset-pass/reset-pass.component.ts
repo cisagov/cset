@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
-import { environment } from '../../../environments/environment.prod';
 import { ConfigService } from '../../services/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -144,7 +143,7 @@ export class ResetPassComponent implements OnInit {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode || environment.appCode
+            appName: this.configSvc.installationMode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)

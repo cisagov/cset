@@ -669,13 +669,13 @@ namespace CSETWebCore.Business.ModuleBuilder
                 _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
 
 
-                REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
-                {
-                    Question_Id = q.Question_Id,
-                    Requirement_Id = request.RequirementID
-                };
+                //REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
+                //{
+                //    Question_Id = q.Question_Id,
+                //    Requirement_Id = request.RequirementID
+                //};
 
-                _context.REQUIREMENT_QUESTIONS.Add(rq);
+                //_context.REQUIREMENT_QUESTIONS.Add(rq);
             }
 
 
@@ -726,13 +726,13 @@ namespace CSETWebCore.Business.ModuleBuilder
                 _context.REQUIREMENT_QUESTIONS_SETS.Add(rqs);
 
 
-                REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
-                {
-                    Question_Id = request.QuestionID,
-                    Requirement_Id = request.RequirementID
-                };
+                //REQUIREMENT_QUESTIONS rq = new REQUIREMENT_QUESTIONS
+                //{
+                //    Question_Id = request.QuestionID,
+                //    Requirement_Id = request.RequirementID
+                //};
 
-                _context.REQUIREMENT_QUESTIONS.Add(rq);
+                //_context.REQUIREMENT_QUESTIONS.Add(rq);
 
 
                 _context.SaveChanges();
@@ -789,13 +789,13 @@ namespace CSETWebCore.Business.ModuleBuilder
                     _context.REQUIREMENT_QUESTIONS_SETS.Remove(rqs);
                 }
 
-                var rq = _context.REQUIREMENT_QUESTIONS
-                    .Where(x => x.Question_Id == request.QuestionID && x.Requirement_Id == request.RequirementID)
-                    .FirstOrDefault();
-                if (rq != null)
-                {
-                    _context.REQUIREMENT_QUESTIONS.Remove(rq);
-                }
+                //var rq = _context.REQUIREMENT_QUESTIONS
+                //    .Where(x => x.Question_Id == request.QuestionID && x.Requirement_Id == request.RequirementID)
+                //    .FirstOrDefault();
+                //if (rq != null)
+                //{
+                //    _context.REQUIREMENT_QUESTIONS.Remove(rq);
+                //}
             }
 
             // Set-level question

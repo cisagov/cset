@@ -32,7 +32,6 @@ import { JwtParser } from '../helpers/jwt-parser';
 import { ChangePassword } from '../models/reset-pass.model';
 import { CreateUser } from './../models/user.model';
 import { ConfigService } from './config.service';
-import { environment } from '../../environments/environment';
 import { TranslocoService } from '@ngneat/transloco';
 
 export interface LoginResponse {
@@ -102,8 +101,8 @@ export class AuthenticationService {
         this.configSvc.apiUrl + 'auth/login/standalone',
         JSON.stringify({
           TzOffset: new Date().getTimezoneOffset().toString(),
-          // If InstallationMode isn't empty, use it.  Otherwise default to environment.appCode
-          Scope: this.configSvc.installationMode ||  environment.appCode
+          // If InstallationMode isn't empty, use it. Otherwise, default to CSET.
+          Scope: this.configSvc.installationMode
         }),
         headers
       )
@@ -130,7 +129,7 @@ export class AuthenticationService {
 
           // If the response contains a userId, we assume we are authenticated at this point and can configure the CISA assessor workflow switch
           // Otherwise, this will be configured after calling auth/login (non-standalone login)
-          if (response.userId) {
+          if (response?.userId) {
             return this.configureCisaAssessorWorkflow(response);
           }
 
@@ -202,7 +201,7 @@ export class AuthenticationService {
         scope = 'IOD';
         break;
       default:
-        scope = environment.appCode;
+        scope = 'CSET';
     }
 
     return this.http
@@ -340,7 +339,7 @@ export class AuthenticationService {
 
   getSecurityQuestionsList(email: string) {
     return this.http.get(
-      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode || environment.appCode
+      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode
     );
   }
 

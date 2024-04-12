@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		barry
 -- Create date: 7/20/2018
@@ -38,7 +39,7 @@ begin
 	IF OBJECT_ID('tempdb..#Temp') IS NOT NULL DROP TABLE #Temp
 	IF OBJECT_ID('tempdb..#TempAnswered') IS NOT NULL DROP TABLE #TempAnswered
 
-	SELECT h.Question_Group_Heading,isnull(count(c.question_id),0) qc,  isnull(SUM(@maxRank-c.Ranking),0) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #temp
+	SELECT h.Question_Group_Heading, Question_Group_Heading_Id, isnull(count(c.question_id),0) qc,  isnull(SUM(@maxRank-c.Ranking),0) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #temp
 		FROM Answer_Questions a 
 		join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
 		join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id
@@ -53,9 +54,9 @@ begin
 		)
 		s on c.Question_Id = s.Question_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text != 'NA'
-		group by Question_Group_Heading
+		group by Question_Group_Heading, Question_Group_Heading_Id
      
-	 SELECT h.Question_Group_Heading, isnull(count(c.question_id),0) nuCount, isnull(SUM(@maxRank-c.Ranking),0) cr into #tempAnswered
+	 SELECT h.Question_Group_Heading, h.Question_Group_Heading_Id, isnull(count(c.question_id),0) nuCount, isnull(SUM(@maxRank-c.Ranking),0) cr into #tempAnswered
 		FROM Answer_Questions a 
 		join NEW_QUESTION c on a.Question_Or_Requirement_Id=c.Question_Id
 		join vQuestion_Headings h on c.Heading_Pair_Id=h.heading_pair_Id
@@ -68,7 +69,7 @@ begin
 				where v.Selected = 1 and v.Assessment_Id = @assessment_id and l.Universal_Sal_Level = ul.Universal_Sal_Level
 		)	s on c.Question_Id = s.Question_Id
 		where a.Assessment_Id = @assessment_id and a.Answer_Text in ('N','U')
-		group by Question_Group_Heading
+		group by Question_Group_Heading, Question_Group_Heading_Id
 
 	select t.*, isnull(a.nuCount,0) nuCount, isnull(a.cr,0) Actualcr, isnull(cast(a.cr as decimal(18,3))/Total,0)*100 [prc],  isnull(a.nuCount,0)/(cast(qc as decimal(18,3))) as [Percent]
 	from #temp t left join #tempAnswered a on t.Question_Group_Heading = a.Question_Group_Heading
@@ -85,14 +86,14 @@ begin
 
 	IF OBJECT_ID('tempdb..#TempR') IS NOT NULL DROP TABLE #TempR
 
-	SELECT h.Question_Group_Heading,count(c.Requirement_Id) qc,  SUM(@maxRank-c.Ranking) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #tempR
+	SELECT h.Question_Group_Heading, h.Question_Group_Heading_Id as [QGH_Id], count(c.Requirement_Id) qc,  SUM(@maxRank-c.Ranking) cr, sum(sum(@maxrank - c.Ranking)) OVER() AS Total into #tempR
 		FROM Answer_Requirements a 
 		join NEW_REQUIREMENT c on a.Question_Or_Requirement_Id=c.Requirement_Id
 		join QUESTION_GROUP_HEADING h on c.Question_Group_Heading_Id = h.Question_Group_Heading_Id
 		join (select distinct requirement_id from REQUIREMENT_SETS s join AVAILABLE_STANDARDS v on s.Set_Name = v.Set_Name where v.Selected = 1)
 		s on c.Requirement_Id = s.Requirement_Id
 		where a.Assessment_Id = @assessment_id 
-		group by Question_Group_Heading
+		group by Question_Group_Heading, h.Question_Group_Heading_Id
 
 	
 	select *, isnull(cast(cr as decimal(18,3))/Total, 0) * 100 [prc] from #tempR

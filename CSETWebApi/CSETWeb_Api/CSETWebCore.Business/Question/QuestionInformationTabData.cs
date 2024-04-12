@@ -46,13 +46,13 @@ namespace CSETWebCore.Business.Question
         /// Documents that appear in the "Source Documents" section of question details.
         /// These are the principal reference documents for the requirement.
         /// </summary>
-        public List<CustomDocument> SourceDocumentsList { get; set; }
+        public List<ReferenceDocLink> SourceDocumentsList { get; set; }
 
         /// <summary>
         /// Documents that appear in the "Help Documents" section of question details.
         /// These are additional documents that may be helpful.
         /// </summary>
-        public List<CustomDocument> AdditionalDocumentsList { get; set; }
+        public List<ReferenceDocLink> AdditionalDocumentsList { get; set; }
 
         public List<string> ReferenceTextList { get; set; }
 
@@ -101,7 +101,7 @@ namespace CSETWebCore.Business.Question
         /// <param name="context"></param>
         public QuestionInformationTabData(CSETWebCore.Interfaces.Common.IHtmlFromXamlConverter converter, CSETContext context, ITokenManager token)
         {
-            SourceDocumentsList = new List<CustomDocument>();
+            SourceDocumentsList = new List<ReferenceDocLink>();
             this.ComponentVisibility = false;
             this.ComponentTypes = new List<ComponentOverrideLinkInfo>();
             this.FrameworkQuestions = new ObservableCollection<FrameworkQuestionItem>();
@@ -222,8 +222,8 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
@@ -254,7 +254,7 @@ namespace CSETWebCore.Business.Question
             this.SetsList = new List<string>(requirementData.Sets.Select(s => s.Value.Short_Name));
 
             // Get related questions
-            var query = from rq in _context.REQUIREMENT_QUESTIONS
+            var query = from rq in _context.REQUIREMENT_QUESTIONS_SETS
                         join q in _context.NEW_QUESTION on rq.Question_Id equals q.Question_Id
                         where rq.Requirement_Id == requirementData.RequirementID
                         select new RelatedQuestion
@@ -390,8 +390,8 @@ namespace CSETWebCore.Business.Question
 
             var refBuilder = new Helpers.ReferencesBuilder(_context);
             refBuilder.BuildReferenceDocuments(requirement.Requirement_Id,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
             SourceDocumentsList = sourceDocList;
             AdditionalDocumentsList = additionalDocList;
 
@@ -457,7 +457,7 @@ namespace CSETWebCore.Business.Question
                     ShowSALLevel = true;
 
                     var refBuilder = new Helpers.ReferencesBuilder(_context);
-                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<CustomDocument> sourceDocList, out List<CustomDocument> additionalDocList);
+                    refBuilder.BuildReferenceDocuments(frameworkData.RequirementID, out List<ReferenceDocLink> sourceDocList, out List<ReferenceDocLink> additionalDocList);
 
                     SetFrameworkQuestions(frameworkData.RequirementID);
                 }
@@ -500,13 +500,13 @@ namespace CSETWebCore.Business.Question
                 }
 
                 ComponentTypes = tmpList.OrderByDescending(x => x.Enabled).ThenBy(x => x.Symbol_Name).ToList();
-                var reqid = _context.REQUIREMENT_QUESTIONS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
+                var reqid = _context.REQUIREMENT_QUESTIONS_SETS.Where(x => x.Question_Id == info.QuestionID).First().Requirement_Id;
 
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildReferenceDocuments(reqid,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
@@ -585,8 +585,8 @@ namespace CSETWebCore.Business.Question
 
                 var refBuilder = new Helpers.ReferencesBuilder(_context);
                 refBuilder.BuildRefDocumentsForMaturityQuestion(info.QuestionID,
-                    out List<CustomDocument> sourceDocList,
-                    out List<CustomDocument> additionalDocList);
+                    out List<ReferenceDocLink> sourceDocList,
+                    out List<ReferenceDocLink> additionalDocList);
                 SourceDocumentsList = sourceDocList;
                 AdditionalDocumentsList = additionalDocList;
 
