@@ -84,7 +84,7 @@ namespace CSETWebCore.Api.Controllers
             _report.SetReportsAssessmentId(assessmentId);
             MaturityBasicReportData data = new MaturityBasicReportData();
             data.MatAnsweredQuestions = _report.GetIseAnsweredQuestionList();
-            data.Information = _report.GetInformation();
+            data.Information = _report.GetIseInformation();
             return Ok(data);
         }
 

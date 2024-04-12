@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		CSET/ACET Team
 -- Create date: 20-Jan-2021
@@ -19,8 +20,11 @@ BEGIN
 
 	select grouporder, 
 	a.Total,
+	DomainId,
 	Domain,
+	AssessmentFactorId,
 	AssessmentFactor,
+	FinComponentId,
 	FinComponent,
 	MaturityLevel,
 	b.Answer_Text, 
@@ -28,10 +32,10 @@ BEGIN
 	isnull((cast(b.acount as float)/cast(total as float)),0) as AnswerPercent , 
 	CAST(c.Complete AS BIT) AS complete 
 	FROM (
-			select distinct min(StmtNumber) as grouporder, fd.financialGroupId,Domain,AssessmentFactor,FinComponent,MaturityLevel,count(stmtnumber) Total 
+			select distinct min(StmtNumber) as grouporder, fd.financialGroupId, DomainId, Domain, AssessmentFactorId, AssessmentFactor,FinComponentId, FinComponent,MaturityLevel,count(stmtnumber) Total 
 			FROM [FINANCIAL_DETAILS] fd 
 			JOIN vFinancialGroups g ON fd.financialGroupId = g.financialGroupId	
-			group by fd.FinancialGroupId,Domain,AssessmentFactor,FinComponent,MaturityLevel				
+			group by fd.FinancialGroupId,DomainId, Domain, AssessmentFactorId, AssessmentFactor, FinComponentId, FinComponent,MaturityLevel				
 			) a 
 		left join (SELECT fd.FinancialGroupId, answer_text, count(a.Answer_Text) acount
 			FROM    [dbo].[FINANCIAL_REQUIREMENTS] f
