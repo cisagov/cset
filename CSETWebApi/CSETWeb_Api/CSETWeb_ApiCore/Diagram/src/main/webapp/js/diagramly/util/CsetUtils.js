@@ -100,9 +100,6 @@ function updateGraph(editor, data, finalize) {
 
 function makeRequest(e) {
 
-    console.log('makeRequest');
-    console.log(e);
-
     const jwt = localStorage.getItem('jwt');
     return new Promise(function (resolve, reject) {
         const xhr = new XMLHttpRequest();
