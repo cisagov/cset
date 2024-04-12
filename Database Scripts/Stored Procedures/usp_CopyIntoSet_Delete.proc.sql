@@ -34,7 +34,7 @@ BEGIN
 
 	-- Insert statements for procedure here
 	delete CUSTOM_STANDARD_BASE_STANDARD where Custom_Questionaire_Name = @DestinationSetName	
-	-- REQUIREMENT_QUESTIONS Should just cascade out
+
 	
 	
 END
