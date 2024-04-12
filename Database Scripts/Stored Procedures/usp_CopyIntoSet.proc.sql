@@ -106,14 +106,6 @@ BEGIN
 		where set_name = @SourceSetName) b on a.Question_Id=b.Question_Id and a.Set_Name=@DestinationSetName
 	where a.Question_Id is null
 
-	insert REQUIREMENT_QUESTIONS (question_id,Requirement_Id)	
-	select a.Question_Id,a.Requirement_Id from (
-	select question_id,r.Requirement_Id
-		from REQUIREMENT_QUESTIONS_SETS s
-		join (select * from NEW_REQUIREMENT where Original_Set_Name= @DestinationSetName) r on s.Requirement_Id=r.Old_Id_For_Copy
-		where set_name = @SourceSetName) a left join
-		REQUIREMENT_QUESTIONS b on a.Question_Id=b.question_id and a.Requirement_Id=b.requirement_id
-		where b.Question_Id is null
 	
 	INSERT INTO [dbo].[NEW_QUESTION_SETS]
            ([Set_Name]

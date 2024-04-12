@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		Mitch Carroll
 -- Create date: 9 Aug 2018
@@ -27,6 +28,8 @@ BEGIN
 			Question_Group_Heading as [Category], 
 			ROW_NUMBER() over (order by c.ranking asc) as [Rank], 
 			Simple_Question as [QuestionText], 
+			c.Question_Id as [QuestionId],
+			null as [RequirementId],
 			a.Answer_ID as [AnswerID],
 			Answer_Text as [AnswerText], 
 			c.Universal_Sal_Level as [Level], 
@@ -53,6 +56,8 @@ BEGIN
 			Standard_Category as [Category], 
 			ROW_NUMBER() over (order by req.ranking asc) as [Rank], 
 			Requirement_Text as [QuestionText], 
+			null as [QuestionId],
+			req.Requirement_Id as [RequirementId],
 			Answer_Id as [AnswerID],
 			Answer_Text as [AnswerText], 
 			u.Universal_Sal_Level as [Level], 

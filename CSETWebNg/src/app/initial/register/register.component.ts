@@ -27,7 +27,6 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
 import { AlertComponent } from '../../dialogs/alert/alert.component';
 import { MatDialog } from '@angular/material/dialog';
-import { environment } from '../../../environments/environment';
 import { TranslocoService } from '@ngneat/transloco';
 import { ConfigService } from '../../services/config.service';
 
@@ -81,7 +80,7 @@ export class RegisterComponent implements OnInit {
     const dialogRef = this.dialog;
 
     // tell the API which app we are, for emailing purposes.
-    this.model.appCode = this.configSvc.installationMode || environment.appCode
+    this.model.appName = this.configSvc.installationMode;
 
     this.emailSvc.sendCreateUserEmail(this.model).subscribe(
       data => {

@@ -81,9 +81,6 @@ public partial class NEW_REQUIREMENT
     public virtual ICollection<REQUIREMENT_LEVELS> REQUIREMENT_LEVELS { get; set; } = new List<REQUIREMENT_LEVELS>();
 
     [InverseProperty("Requirement")]
-    public virtual ICollection<REQUIREMENT_QUESTIONS> REQUIREMENT_QUESTIONS { get; set; } = new List<REQUIREMENT_QUESTIONS>();
-
-    [InverseProperty("Requirement")]
     public virtual ICollection<REQUIREMENT_QUESTIONS_SETS> REQUIREMENT_QUESTIONS_SETS { get; set; } = new List<REQUIREMENT_QUESTIONS_SETS>();
 
     [InverseProperty("Requirement")]

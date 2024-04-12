@@ -57,7 +57,7 @@ export class UploadExportComponent implements OnInit {
   successfulAssessmentIndexes = [];
 
   xCount = 0; // Quick and dirty hack to prevent multiple red "x" appearing on the upload dialog
-  appCode: string = "";
+  appName: string = "";
 
   constructor(private dialog: MatDialogRef<UploadExportComponent>,
     public newDialog: MatDialog,
@@ -74,7 +74,7 @@ export class UploadExportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appCode = this.configSvc.installationMode;
+    this.appName = this.configSvc.installationMode;
 
     if (this.data) {
       const files: { [key: string]: File } = this.data.files;

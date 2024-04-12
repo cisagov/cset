@@ -780,10 +780,6 @@
          "ObjectType": 0
       },
       {
-         "Name": "[dbo].[REQUIREMENT_QUESTIONS]",
-         "ObjectType": 0
-      },
-      {
          "Name": "[dbo].[REQUIREMENT_QUESTIONS_SETS]",
          "ObjectType": 0
       },
@@ -981,6 +977,10 @@
       },
       {
          "Name": "[dbo].[ExcelExport]",
+         "ObjectType": 3
+      },
+      {
+         "Name": "[dbo].[vAllSimpleQuestions]",
          "ObjectType": 3
       },
       {
@@ -1412,7 +1412,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "(LocalDb)\\INLLocaldb2022.CSETWeb",
+   "UiHint": "(localdb)\\inllocaldb2022.CSETWeb",
    "UncountableWords": null,
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": true,
@@ -1430,7 +1430,6 @@
    "UseNoObjectFilter": false,
    "UseNodaTime": false,
    "UseNullableReferences": false,
-   "UsePrefixNavigationNaming": false,
    "UseSchemaFolders": false,
    "UseSchemaNamespaces": false,
    "UseSpatial": false,
