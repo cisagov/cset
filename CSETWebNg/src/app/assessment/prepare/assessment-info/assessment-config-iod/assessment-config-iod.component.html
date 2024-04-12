@@ -55,6 +55,18 @@
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
+        <label for="name" class="mb-1">{{t('cisa region')}}</label>
+        <select class="form-control" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="this.updateDemographics()"
+          [(ngModel)]="demographics.cisaRegion">
+          <option [ngValue]="null">-- Select Region --</option>
+          <option *ngFor="let region of iodDemographics.cisaRegions" [ngValue]="region.optionValue">
+            {{region.optionText}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
         <label for="name" class="mb-1">{{t('pcii requested')}}</label>
         <div class="btn-group btn-group-toggle col-10" style="padding-left: 0px;" data-toggle="buttons">
           <label class="btn btn-level btn-rounded form-check-label" [class.active]="assessment.is_PCII">

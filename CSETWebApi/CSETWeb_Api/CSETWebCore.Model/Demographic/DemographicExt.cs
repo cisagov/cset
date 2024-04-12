@@ -23,6 +23,8 @@ namespace CSETWebCore.Model.Demographic
         public string OrganizationName { get; set; }
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
+        public int? CisaRegion { get; set; }
+
         public int? NumberEmployeesTotal { get; set; }
         public int? NumberEmployeesUnit { get; set; }
         public int? AnnualRevenue { get; set; }
@@ -83,7 +85,13 @@ namespace CSETWebCore.Model.Demographic
         public List<ListItem2> ListSectors { get; set; } = new List<ListItem2>();
 
         public List<ListItem2> ListSubsectors { get; set; } = new List<ListItem2>();
-        
+
+
+        /// <summary>
+        /// CISA Region choices
+        /// </summary>
+        public List<ListItem2> CisaRegions { get; set; } = new List<ListItem2>();
+
 
         public List<ListItem2> ListNumberEmployeeTotal { get; set; } = new List<ListItem2>();
 
@@ -128,6 +136,5 @@ namespace CSETWebCore.Model.Demographic
         /// </summary>
         public List<ListItem2> ListBarriers { get; set; } = new List<ListItem2>();
 
-        
     }
 }
