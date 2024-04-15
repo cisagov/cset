@@ -1,4 +1,12 @@
-﻿using System.Collections.Generic;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using CSETWebCore.Helpers;
@@ -28,7 +36,7 @@ namespace CSETWebCore.Business.Demographic
         /// for the complexity of the validation and allowing for null values
         /// </summary>
         /// <returns></returns>
-        public CisaWorkflowFieldValidationResponse ValidateFields() 
+        public CisaWorkflowFieldValidationResponse ValidateFields()
         {
             List<string> invalidFields = new List<string>();
             bool isValid = true;
@@ -39,7 +47,7 @@ namespace CSETWebCore.Business.Demographic
             PropertyInfo[] demoProperties = typeof(Demographics).GetProperties();
             // We only need to make sure that the critical service is not null in base demographics object
             var criticalService = demoProperties.Where(p => p.Name.Equals("CriticalService")).FirstOrDefault();
-            if (string.IsNullOrWhiteSpace((string)criticalService.GetValue(_demographics))) 
+            if (string.IsNullOrWhiteSpace((string)criticalService.GetValue(_demographics)))
             {
                 invalidFields.Add("Critical Service");
             }
@@ -50,12 +58,14 @@ namespace CSETWebCore.Business.Demographic
             PropertyInfo[] demoExtProperties = typeof(DemographicExt).GetProperties();
             foreach (PropertyInfo property in demoExtProperties)
             {
-                if (property.Name.StartsWith("List")) 
+                var displayName = GetDisplayName(_demographicExt, property.Name);
+
+                if (property.Name.StartsWith("List"))
                 {
                     continue;
                 }
 
-                if (property.Name.StartsWith("Standard") && !_demographicExt.UsesStandard) 
+                if (property.Name.StartsWith("Standard") && !_demographicExt.UsesStandard)
                 {
                     continue;
                 }
@@ -66,26 +76,27 @@ namespace CSETWebCore.Business.Demographic
                 }
 
 
-                if (property.Name.Equals("Reg1Other") || property.Name.Equals("Reg2Other")) 
+                if (property.Name.Equals("Reg1Other") || property.Name.Equals("Reg2Other"))
                 {
                     continue;
                 }
 
-                if (property.Name.StartsWith("Share")) 
+                if (property.Name.StartsWith("Share"))
                 {
                     continue;
                 }
+
+
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_demographicExt)))
                 {
-
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                     continue;
                 }
 
-                if (property.GetValue(_demographicExt) == null) 
+                if (property.GetValue(_demographicExt) == null)
                 {
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                 }
             }
 
@@ -93,8 +104,10 @@ namespace CSETWebCore.Business.Demographic
             // _cisServiceDemographics validation
             //--------------------------------
             PropertyInfo[] cisServiceDemoProperties = typeof(CisServiceDemographics).GetProperties();
-            foreach (PropertyInfo property in cisServiceDemoProperties) 
+            foreach (PropertyInfo property in cisServiceDemoProperties)
             {
+                var displayName = GetDisplayName(_cisServiceDemographics, property.Name);
+
                 if (property.Name.StartsWith("MultiSiteDescription") && !_cisServiceDemographics.MultiSite)
                 {
                     continue;
@@ -102,13 +115,13 @@ namespace CSETWebCore.Business.Demographic
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceDemographics)))
                 {
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                     continue;
                 }
 
                 if (property.GetValue(_cisServiceDemographics) == null)
                 {
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                 }
             }
 
@@ -118,30 +131,55 @@ namespace CSETWebCore.Business.Demographic
             PropertyInfo[] cisServiceCompProperties = typeof(CisServiceComposition).GetProperties();
             foreach (PropertyInfo property in cisServiceCompProperties)
             {
+                var displayName = GetDisplayName(_cisServiceComposition, property.Name);
+
                 if (property.Name.StartsWith("OtherDefiningSystemDescription") && (_cisServiceComposition.PrimaryDefiningSystem != 10
-                    && !_cisServiceComposition.SecondaryDefiningSystems.Contains(10))) 
+                    && !_cisServiceComposition.SecondaryDefiningSystems.Contains(10)))
                 {
                     continue;
                 }
 
                 if (property.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)property.GetValue(_cisServiceComposition)))
                 {
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                     continue;
                 }
 
                 if (property.GetValue(_cisServiceComposition) == null)
                 {
-                    invalidFields.Add(property.Name.InsertSpacesBetweenCapitals());
+                    invalidFields.Add(displayName ?? property.Name.InsertSpacesBetweenCapitals());
                 }
             }
 
-            if (invalidFields.Count > 0) 
+            if (invalidFields.Count > 0)
             {
                 isValid = false;
             }
 
             return new CisaWorkflowFieldValidationResponse(invalidFields, isValid);
+        }
+
+
+        /// <summary>
+        /// Tries to find a DIsplayName custom attribute for the property. 
+        /// </summary>
+        public static string GetDisplayName(object obj, string propertyName)
+        {
+            var type = obj.GetType();
+            var propertyInfo = type.GetProperty(propertyName);
+            if (propertyInfo == null)
+            {
+                return null;
+            }
+
+            var attributes = propertyInfo.GetCustomAttributes(typeof(DisplayNameAttribute));
+            if (attributes.Count() > 0)
+            {
+                var displayNameAttribute = (DisplayNameAttribute)attributes.ToList()[0];
+                return displayNameAttribute.DisplayName;
+            }
+
+            return null;
         }
     }
 }
