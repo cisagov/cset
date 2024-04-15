@@ -78,6 +78,14 @@
             "show ip rights assertion": true,
             "ip dist": "the CSET Program Office"
         },
+        "iod": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Cybersecurity & Infrastructure Security Agency",
+            "org short name": "CISA",
+            "show ip rights assertion": true,
+            "ip dist": "the CSET Program Office"
+        },
         "acet": {
             "app long name": "Automated Cybersecurity Evaluation Toolbox",
             "app short name": "ACET",

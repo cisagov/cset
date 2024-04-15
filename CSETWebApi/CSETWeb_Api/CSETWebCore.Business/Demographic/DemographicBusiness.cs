@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CSETWebCore.Business.Aggregation;
