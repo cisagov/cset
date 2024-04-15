@@ -1,14 +1,17 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace CSETWebCore.Business.Demographic
