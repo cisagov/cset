@@ -18,7 +18,7 @@ public partial class UNIVERSAL_SUB_CATEGORIES
     /// The Universal Sub Category is used to
     /// </summary>
     [Key]
-    [StringLength(100)]
+    [StringLength(150)]
     public string Universal_Sub_Category { get; set; }
 
     /// <summary>
