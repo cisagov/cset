@@ -160,7 +160,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
-        if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
+        if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
           this.disableEntirePage = true;
         }
       });
@@ -312,11 +312,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   onSelectSecurity(val) {
     this.securitySelected = val;
-  }
-
-  // This checks if we should apply cisa assessor workflow field validation to disable reports and export.
-  shouldReportsandExportBeDisabledCisaAssessor() {
-    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation?.isValid
   }
 
   showExcelExportDialog() {

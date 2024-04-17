@@ -4,6 +4,9 @@
 // 
 // 
 //////////////////////////////// 
+
+using System.ComponentModel;
+
 namespace CSETWebCore.Model.Assessment
 {
     public class Demographics
@@ -21,5 +24,8 @@ namespace CSETWebCore.Model.Assessment
         public string CriticalService { get; set; }
         public int? PointOfContact { get; set; }
         public bool IsScoped { get; set; }
+
+        [DisplayName("CISA Region")]
+        public int? CisaRegion { get; set; }
     }
 }

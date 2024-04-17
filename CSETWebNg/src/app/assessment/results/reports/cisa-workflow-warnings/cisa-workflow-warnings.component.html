@@ -1,0 +1,15 @@
+<ng-container *transloco="let t">
+    <div *ngIf="invalidFields?.length > 0">
+        <div class="alert alert-warning">
+            {{t('reports.cisa workflow required msg.1')}}
+            <p class="mt-2">{{t('reports.cisa workflow required msg.2')}}:</p>
+            <ul>
+                <li *ngFor="let field of invalidFields">{{ field }}</li>
+            </ul>
+        </div>
+
+        <div class="alert alert-warning" *ngIf="disableEntirePage">
+            {{t('reports.cisa workflow required msg.3')}}
+        </div>
+    </div>
+</ng-container>
