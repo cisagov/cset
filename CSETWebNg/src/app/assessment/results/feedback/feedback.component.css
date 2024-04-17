@@ -22,8 +22,6 @@ SOFTWARE.
 
 */
 .copytxt {
-  min-height: 400px;
-  min-height: 400px;
   padding: 30px;
-  overflow: scroll;
+  border-top: 1px solid #ccc
 }

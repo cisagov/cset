@@ -4,6 +4,7 @@
 // 
 // 
 //////////////////////////////// 
+
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using CSETWebCore.Business.Aggregation;
@@ -65,8 +66,13 @@ namespace CSETWebCore.Business.Demographic
                 demographics.IsScoped = hit.ddd?.IsScoped != false;
                 demographics.OrganizationName = hit.ddd?.OrganizationName;
                 demographics.OrganizationType = hit.ddd?.OrganizationType;
-
             }
+
+
+            // get any additional values we need from DETAILS_DEMOGRAPHICS
+            var extBiz = new DemographicExtBusiness(_context);
+            demographics.CisaRegion = (int?)extBiz.GetX(assessmentId, "CISA-REGION");
+
 
             return demographics;
         }
@@ -114,6 +120,7 @@ namespace CSETWebCore.Business.Demographic
 
             return demographics;
         }
+
 
         /// <summary>
         /// Persists data to the DEMOGRAPHICS table.
@@ -164,6 +171,14 @@ namespace CSETWebCore.Business.Demographic
             _context.DEMOGRAPHICS.Update(dbDemographics);
             _context.SaveChanges();
             demographics.AssessmentId = dbDemographics.Assessment_Id;
+
+
+
+            // Not all fields are stored in DEMOGRAPHICS table ... store some in DETAILS-DEMOGRAPHICS
+            var extBiz = new DemographicExtBusiness(_context);
+            extBiz.SaveX(demographics.AssessmentId, "CISA-REGION", demographics.CisaRegion);
+
+
 
             _assessmentUtil.TouchAssessment(dbDemographics.Assessment_Id);
 

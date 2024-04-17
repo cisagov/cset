@@ -1,14 +1,17 @@
-﻿using System;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
 using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.Spreadsheet;
 
 
 namespace CSETWebCore.Business.Demographic
@@ -47,6 +50,10 @@ namespace CSETWebCore.Business.Demographic
             d.OrganizationName = info.Facility_Name;
             d.Sector = x.Find(z => z.DataItemName == "SECTOR")?.IntValue;
             d.Subsector = x.Find(z => z.DataItemName == "SUBSECTOR")?.IntValue;
+
+            d.CisaRegion = x.Find(z => z.DataItemName == "CISA-REGION")?.IntValue;
+
+
             d.NumberEmployeesTotal = x.Find(z => z.DataItemName == "NUM-EMP-TOTAL")?.IntValue;
             d.NumberEmployeesUnit = x.Find(z => z.DataItemName == "NUM-EMP-UNIT")?.IntValue;
 
@@ -100,6 +107,12 @@ namespace CSETWebCore.Business.Demographic
             {
                 d.ListSubsectors = GetSubsectors((int)d.Sector);
             }
+
+            d.CisaRegions = opts.Where(opt => opt.DataItemName == "CISA-REGION").Select(opts => new ListItem2()
+            {
+                OptionValue = opts.OptionValue,
+                OptionText = opts.OptionText
+            }).ToList();
 
             d.ListNumberEmployeeTotal = opts.Where(opt => opt.DataItemName == "NUM-EMP-TOTAL").Select(opts => new ListItem2()
             {
@@ -192,6 +205,89 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
+        /// Convenience method for getting a single value.  Returns null if not found.
+        /// </summary>
+        public object GetX(int assessmentId, string recName)
+        {
+            var x = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == recName).FirstOrDefault();
+
+            if (x != null)
+            {
+                if (x.StringValue != null)
+                {
+                    return x.StringValue;
+                }
+                if (x.IntValue != null)
+                {
+                    return x.IntValue;
+                }
+                if (x.FloatValue != null)
+                {
+                    return x.FloatValue;
+                }
+                if (x.BoolValue != null)
+                {
+                    return x.BoolValue;
+                }
+                if (x.DateTimeValue != null)
+                {
+                    return x.DateTimeValue;
+                }
+            }
+            return null;
+        }
+
+
+        /// <summary>
+        /// Inserts or updates a single record in DETAILS_DEMOGRAPHICS.
+        /// Queries for an existing record, so not the most efficient for a bulk update.
+        /// </summary>
+        public void SaveX(int assessmentId, string recName, object value)
+        {
+            var rec = _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == recName).FirstOrDefault();
+
+            if (rec == null)
+            {
+                rec = new DETAILS_DEMOGRAPHICS()
+                {
+                    Assessment_Id = assessmentId,
+                    DataItemName = recName
+                };
+                _context.DETAILS_DEMOGRAPHICS.Add(rec);
+            }
+
+            rec.StringValue = null;
+            rec.FloatValue = null;
+            rec.IntValue = null;
+            rec.DateTimeValue = null;
+            rec.BoolValue = null;
+
+            if (value is string)
+            {
+                rec.StringValue = (string)value;
+            }
+            else if (value is int)
+            {
+                rec.IntValue = (int)value;
+            }
+            else if (value is double)
+            {
+                rec.FloatValue = (double)value;
+            }
+            else if (value is bool)
+            {
+                rec.BoolValue = (bool)value;
+            }
+            else if (value is DateTime)
+            {
+                rec.DateTimeValue = (DateTime)value;
+            }
+
+            _context.SaveChanges();
+        }
+
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="demographic"></param>
@@ -199,7 +295,7 @@ namespace CSETWebCore.Business.Demographic
         {
             var info = _context.INFORMATION.Where(x => x.Id == demographic.AssessmentId).FirstOrDefault();
             info.Facility_Name = demographic.OrganizationName;
-            
+
 
 
             //  Clean out any existing detail records for demographics
@@ -213,41 +309,43 @@ namespace CSETWebCore.Business.Demographic
             _context.SaveChanges();
 
 
-            SaveDemoRecord(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType);
-            SaveDemoRecord(demographic.AssessmentId, "SECTOR", demographic.Sector);
-            SaveDemoRecord(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector);
-            SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal);
-            SaveDemoRecord(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit);
-            SaveDemoRecord(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue);
-            SaveDemoRecord(demographic.AssessmentId, "ANN-REVENUE-PERCENT", demographic.CriticalServiceRevenuePercent);
-            SaveDemoRecord(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc);
-            SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
-            SaveDemoRecord(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
-            SaveDemoRecord(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport);
+            // for a bit of efficiency, these methods always insert a new record without checking first
+
+            SaveInt(demographic.AssessmentId, "ORG-TYPE", demographic.OrganizationType);
+            SaveInt(demographic.AssessmentId, "SECTOR", demographic.Sector);
+            SaveInt(demographic.AssessmentId, "SUBSECTOR", demographic.Subsector);
+            SaveInt(demographic.AssessmentId, "CISA-REGION", demographic.CisaRegion);
+            SaveInt(demographic.AssessmentId, "NUM-EMP-TOTAL", demographic.NumberEmployeesTotal);
+            SaveInt(demographic.AssessmentId, "NUM-EMP-UNIT", demographic.NumberEmployeesUnit);
+            SaveInt(demographic.AssessmentId, "ANN-REVENUE", demographic.AnnualRevenue);
+            SaveInt(demographic.AssessmentId, "ANN-REVENUE-PERCENT", demographic.CriticalServiceRevenuePercent);
+            SaveInt(demographic.AssessmentId, "NUM-PEOPLE-SERVED", demographic.NumberPeopleServedByCritSvc);
+            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR1", demographic.DisruptedSector1);
+            SaveInt(demographic.AssessmentId, "DISRUPTED-SECTOR2", demographic.DisruptedSector2);
+            SaveString(demographic.AssessmentId, "CRIT-DEPEND-INCIDENT-RESPONSE", demographic.CriticalDependencyIncidentResponseSupport);
 
 
-            SaveDemoRecord(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
-            SaveDemoRecord(demographic.AssessmentId, "STANDARD1", demographic.Standard1);
-            SaveDemoRecord(demographic.AssessmentId, "STANDARD2", demographic.Standard2);
-            SaveDemoRecord(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply);
-            SaveDemoRecord(demographic.AssessmentId, "REG-TYPE1", demographic.RegulationType1);
-            SaveDemoRecord(demographic.AssessmentId, "REG-1-OTHER", demographic.Reg1Other);
-            SaveDemoRecord(demographic.AssessmentId, "REG-TYPE2", demographic.RegulationType2);
-            SaveDemoRecord(demographic.AssessmentId, "REG-2-OTHER", demographic.Reg2Other);
+            SaveBool(demographic.AssessmentId, "STANDARD-USED", demographic.UsesStandard);
+            SaveString(demographic.AssessmentId, "STANDARD1", demographic.Standard1);
+            SaveString(demographic.AssessmentId, "STANDARD2", demographic.Standard2);
+            SaveBool(demographic.AssessmentId, "REGULATION-REQD", demographic.RequiredToComply);
+            SaveInt(demographic.AssessmentId, "REG-TYPE1", demographic.RegulationType1);
+            SaveString(demographic.AssessmentId, "REG-1-OTHER", demographic.Reg1Other);
+            SaveInt(demographic.AssessmentId, "REG-TYPE2", demographic.RegulationType2);
+            SaveString(demographic.AssessmentId, "REG-2-OTHER", demographic.Reg2Other);
 
-            SaveDemoRecord(demographic.AssessmentId, "SHARE-ORG", demographic.ShareOrgs);
-            SaveDemoRecord(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther);
-            SaveDemoRecord(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
-            SaveDemoRecord(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
-            SaveDemoRecord(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
+            SaveIntList(demographic.AssessmentId, "SHARE-ORG", demographic.ShareOrgs);
+            SaveString(demographic.AssessmentId, "SHARE-OTHER", demographic.ShareOther);
+            SaveString(demographic.AssessmentId, "BARRIER1", demographic.Barrier1);
+            SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
+            SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
 
             AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
             _context.SaveChanges();
-            
         }
 
 
-        private void SaveDemoRecord(int assessmentId, string recName, string value)
+        private void SaveString(int assessmentId, string recName, string value)
         {
             var rec = new DETAILS_DEMOGRAPHICS()
             {
@@ -259,7 +357,8 @@ namespace CSETWebCore.Business.Demographic
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
         }
 
-        private void SaveDemoRecord(int assessmentId, string recName, int? value)
+
+        private void SaveInt(int assessmentId, string recName, int? value)
         {
             var rec = new DETAILS_DEMOGRAPHICS()
             {
@@ -271,7 +370,8 @@ namespace CSETWebCore.Business.Demographic
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
         }
 
-        private void SaveDemoRecord(int assessmentId, string recName, double value)
+
+        private void SaveDouble(int assessmentId, string recName, double value)
         {
             var rec = new DETAILS_DEMOGRAPHICS()
             {
@@ -283,7 +383,8 @@ namespace CSETWebCore.Business.Demographic
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
         }
 
-        private void SaveDemoRecord(int assessmentId, string recName, bool value)
+
+        private void SaveBool(int assessmentId, string recName, bool value)
         {
             var rec = new DETAILS_DEMOGRAPHICS()
             {
@@ -295,7 +396,8 @@ namespace CSETWebCore.Business.Demographic
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
         }
 
-        private void SaveDemoRecord(int assessmentId, string recName, DateTime value)
+
+        private void SaveDateTime(int assessmentId, string recName, DateTime value)
         {
             var rec = new DETAILS_DEMOGRAPHICS()
             {
@@ -307,10 +409,11 @@ namespace CSETWebCore.Business.Demographic
             _context.DETAILS_DEMOGRAPHICS.Add(rec);
         }
 
-        private void SaveDemoRecord(int assessmentId, string recName, List<int> values)
+
+        private void SaveIntList(int assessmentId, string recName, List<int> values)
         {
-            foreach (int value in values) 
-            { 
+            foreach (int value in values)
+            {
                 var rec = new DETAILS_DEMOGRAPHICS()
                 {
                     Assessment_Id = assessmentId,
