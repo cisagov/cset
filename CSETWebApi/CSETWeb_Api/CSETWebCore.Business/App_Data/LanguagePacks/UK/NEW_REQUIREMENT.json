@@ -699,7 +699,7 @@
     "requirementId": "36495",
     "requirementTitle": "GV.SC-06",
     "requirementText": "Планування та комплексна перевірка здійснюються з метою зниження ризиків до вступу в офіційні відносини з постачальниками або іншими третіми сторонами",
-    "supplementalInfo": "NULL"
+    "supplementalInfo": null
   },
   {
     "requirementId": "36496",
@@ -813,7 +813,7 @@
     "requirementId": "36441",
     "requirementTitle": "ID.RA-08",
     "requirementText": "Запроваджено процеси отримання, аналізу та реагування на розкриття вразливостей",
-    "supplementalInfo": "NULL"
+    "supplementalInfo": null
   },
   {
     "requirementId": "36442",
@@ -825,7 +825,7 @@
     "requirementId": "36419",
     "requirementTitle": "ID.RA-10",
     "requirementText": "Критичні постачальники оцінюються перед придбання",
-    "supplementalInfo": "NULL"
+    "supplementalInfo": null
   },
   {
     "requirementId": "36443",
@@ -975,7 +975,7 @@
     "requirementId": "36463",
     "requirementTitle": "PR.IR-03",
     "requirementText": "Впроваджено механізми для досягнення вимог до стійкості в нормальних та несприятливих ситуаціях",
-    "supplementalInfo": "NULL"
+    "supplementalInfo": null
   },
   {
     "requirementId": "36464",
