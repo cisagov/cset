@@ -197,7 +197,7 @@
                 </div>
 
                 <div *ngIf="!supplementalExists()">
-                    {{msgNoSupplemental}}!
+                    {{msgNoSupplemental}}
                 </div>
             </div>
         </div>
@@ -277,7 +277,7 @@
                 </div>
 
                 <div *ngIf="!supplementalExists()">
-                    {{msgNoSupplemental}}?
+                    {{msgNoSupplemental}}
                 </div>
             </div>
         </ng-template>
@@ -336,7 +336,7 @@
                             </button>
 
                             <button (click)="download(doc)" matTooltip="{{t('tooltip.copy document')}}"
-                                matTooltipPosition="above" class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
+                                matTooltipPosition="above" class="btn btn-link cset-icons-export-up" style="color: #285464; transform: scale(1.3);
                                   cursor: pointer; background-color:transparent;" tabindex="0"></button>
                         </div>
                     </td>
