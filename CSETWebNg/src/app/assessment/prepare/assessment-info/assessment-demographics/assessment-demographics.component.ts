@@ -242,61 +242,12 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.assetValueSelect.nativeElement.value = selectedValue;
     }
 
-    changeAssetValue(event: any) {
-        this.demographicData.assetValue = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeOrgType(event: any) {
-        this.demographicData.organizationType = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeFacilitator(event: any) {
-        this.demographicData.facilitator = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeOrgName(event: any) {
-        this.demographicData.organizationName = event.target.value;
-        this.updateDemographics();
-
-    }
-
-    changeOrgPointOfContact(event: any) {
-        this.demographicData.orgPointOfContact = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeAgency(event: any) {
-        this.demographicData.agency = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeCriticalService(event: any) {
-        this.demographicData.criticalService = event.target.value;
-        this.updateDemographics();
-    }
-
-    changePointOfContact(event: any) {
-        this.demographicData.pointOfContact = event.target.value;
-        this.updateDemographics();
-    }
-
-    changeIsScoped(event: any) {
-        this.updateDemographics();
-    }
-
-    changeSize(event: any) {
-        this.demographicData.size = event.target.value;
-        this.updateDemographics();
-    }
-
     update(event: any) {
         this.updateDemographics();
     }
 
     updateDemographics() {
+        console.log(this.demographicData);
         this.demoSvc.updateDemographic(this.demographicData);
     }
 
