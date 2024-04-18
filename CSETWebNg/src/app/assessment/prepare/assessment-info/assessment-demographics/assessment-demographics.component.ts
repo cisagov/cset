@@ -242,6 +242,11 @@ export class AssessmentDemographicsComponent implements OnInit {
         this.assetValueSelect.nativeElement.value = selectedValue;
     }
 
+    changeAssetValue(event: any) {
+        this.demographicData.assetValue = event.target.value;
+        this.updateDemographics();
+    }
+
     changeOrgType(event: any) {
         this.demographicData.organizationType = event.target.value;
         this.updateDemographics();
