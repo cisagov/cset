@@ -247,7 +247,6 @@ export class AssessmentDemographicsComponent implements OnInit {
     }
 
     updateDemographics() {
-        console.log(this.demographicData);
         this.demoSvc.updateDemographic(this.demographicData);
     }
 
