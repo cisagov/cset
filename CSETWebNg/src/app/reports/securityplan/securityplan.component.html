@@ -94,7 +94,7 @@
             {{t('reports.core.security plan.template bullets')}}
         </p>
 
-        <ul class="intro">
+        <ul class="intro mb-3">
             <li>{{t('reports.core.security plan.template bullet text 1')}}</li>
             <li>
                 {{t('reports.core.security plan.template bullet text 2')}}
@@ -132,7 +132,7 @@
         <p class="intro">
             {{t('reports.core.security plan.system environment summary')}}
         </p>
-        <ul class="intro">
+        <ul class="intro mb-3">
             <li>{{t('reports.core.security plan.environment bullet text 1')}}</li>
             <li>{{t('reports.core.security plan.environment bullet text 2')}}</li>
             <li>{{t('reports.core.security plan.environment bullet text 3')}}</li>
@@ -185,7 +185,8 @@
             <span style='font-family:"Arial",sans-serif'>2.2.
                 <span style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span>
             </span>
-            <span style='font-family:"Arial",sans-serif'>{{t('reports.core.security plan.chief security officer')}}</span>
+            <span style='font-family:"Arial",sans-serif'>{{t('reports.core.security plan.chief security
+                officer')}}</span>
         </h2>
 
         <p>
@@ -302,7 +303,7 @@
         <h4>{{t('reports.core.security plan.consequence')}}</h4>
         <p class="intro">{{t('reports.core.security plan.consequence examination')}}
         </p>
-        <ul class="intro">
+        <ul class="intro mb-3">
             <li>{{t('reports.core.security plan.consequence bullet text 1')}}</li>
             <li>{{t('reports.core.security plan.consequence bullet text 2')}}</li>
             <li>{{t('reports.core.security plan.consequence bullet text 3')}}</li>
@@ -473,7 +474,8 @@
         </table>
 
         <p>
-            <b>{{t('reports.core.security plan.requirement title')}}:</b> {{t('reports.core.security plan.requirement title text')}}
+            <b>{{t('reports.core.security plan.requirement title')}}:</b> {{t('reports.core.security plan.requirement
+            title text')}}
         </p>
 
         <p>
@@ -538,15 +540,15 @@
 
 
         <div *ngFor="let control of response?.controlList" style="margin-bottom: 2em;">
-            <table *ngIf="!response.information.useDiagram; else elseBlock"class="cset-table-2">
+            <table *ngIf="!response.information.useDiagram" class="cset-table-2">
                 <tr>
                     <td colspan="2" style="font-weight: bold;">
                         {{control.requirementTitle}}
                     </td>
                     <td>
-                        {{t('reports.core.security plan.' + control.standard_Category.toLowerCase())}}
+                        {{control.standard_Category}}
                         <span *ngIf="control.subCategory?.length > 0">
-                            / {{t('reports.core.security plan.' + control.subCategory.toLowerCase())}}
+                            / {{control.subCategory}}
                         </span>
                     </td>
                 </tr>
@@ -560,8 +562,7 @@
                     && control.implementationStatus.length > 0">%</span>
                     </td>
                     <td style="width: 60%">
-                        {{t('reports.core.security plan.' + control.standardShortName.toLowerCase())}}
-                        
+                        {{control.standardShortName}} <!-- XXX -->
                     </td>
                 </tr>
                 <tr>
@@ -576,18 +577,20 @@
                     <td colspan="3">{{control.affectedComponents}}
                     </td>
                 </tr>
+                <!-- display all questions for the control/requirement -->
                 <tr *ngIf="response.applicationMode == 'Questions Based'">
                     <td colspan="3">
                         <table class="related-questions">
                             <tr *ngFor="let q of control.control_Questions">
                                 <td>{{q.simple_Question}}</td>
-                                <td style="width: 10%; text-align: center;">{{t('answer-options.labels.' + q.answer.toLowerCase())}}</td>
+                                <td style="width: 10%; text-align: center;">{{t('answer-options.labels.' +
+                                    q.answer.toLowerCase())}}</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
             </table>
-            <table #elseblock class="cset-table-2">
+            <table *ngIf="response.information.useDiagram" class="cset-table-2">
                 <tr>
                     <td colspan="2" style="font-weight: bold;">
                         {{control.requirementTitle}}
@@ -608,7 +611,6 @@
                     && control.implementationStatus.length > 0">%</span>
                     </td>
                     <td style="width: 60%">
-                                               
                     </td>
                 </tr>
                 <tr>
@@ -623,6 +625,7 @@
                     <td colspan="3">{{control.affectedComponents}}
                     </td>
                 </tr>
+                <!-- display all questions for the control/requirement -->
                 <tr *ngIf="response.applicationMode == 'Questions Based'">
                     <td colspan="3">
                         <table class="related-questions">
