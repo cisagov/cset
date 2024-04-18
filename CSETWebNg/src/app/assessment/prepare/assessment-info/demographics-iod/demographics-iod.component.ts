@@ -46,12 +46,10 @@ export class DemographicsIodComponent implements OnInit {
 
 
   ngOnDestroy() {
-    this.eventsSubscription.unsubscribe();
+    this.eventsSubscription?.unsubscribe();
   }
 
-  importProfile(file){
-    console.log(file)
-  }
+  importProfile(file){ }
 
   importExport(importExportObject){
     if (importExportObject.flag == "import"){
