@@ -56,8 +56,8 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="name" class="mb-1">{{t('cisa region')}}</label>
-        <select class="form-control" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="this.updateDemographics()"
-          [(ngModel)]="demographics.cisaRegion">
+        <select class="form-control" id="cisaRegion" tabindex="0" name="cisaRegion" (change)="updateDemographicsIod()"
+          [(ngModel)]="iodDemographics.cisaRegion">
           <option [ngValue]="null">-- Select Region --</option>
           <option *ngFor="let region of iodDemographics.cisaRegions" [ngValue]="region.optionValue">
             {{region.optionText}}
@@ -107,7 +107,7 @@
         <textarea [ngClass]="{ 'alert-danger' : !demographics.criticalService }" appAutoSize class="form-control"
           autocomplete="off" tabindex="0" maxlength="100" name="criticalService" id="criticalService"
           [(ngModel)]="demographics.criticalService" placeholder="{{t('critical service name')}}"
-          (blur)="changeCriticalService($event)"></textarea>
+          (blur)="updateDemographics()"></textarea>
       </div>
 
       <div class="form-group col-md-6">
@@ -116,7 +116,7 @@
         <textarea [ngClass]="{ 'alert-danger' : !iodDemographics.criticalDependencyIncidentResponseSupport }"
           appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100" name="criticalDependency"
           id="criticalDependency" [(ngModel)]="iodDemographics.criticalDependencyIncidentResponseSupport"
-          placeholder="Critical Dependency for Incident Response Support" (blur)="updateIodDemographics()"></textarea>
+          placeholder="Critical Dependency for Incident Response Support" (blur)="updateDemographics()"></textarea>
       </div>
     </div>
 
@@ -124,7 +124,7 @@
       <label class="mb-1" for="critSvcPointOfContact">Critical Service Point of
         Contact</label>
       <select class="form-control" id="critSvcPointOfContact" tabindex="0" name="critSvcPointOfContact"
-        (change)="changePointOfContact($event)" [(ngModel)]="demographics.pointOfContact">
+        (change)="updateDemographics()" [(ngModel)]="demographics.pointOfContact">
         <option [ngValue]="null">-- Select Contact --</option>
         <option *ngFor="let contact of contacts" [ngValue]="contact.assessmentContactId">
           {{ contact.firstName }} {{ contact.lastName }}
@@ -140,7 +140,7 @@
       </label>
       <select [ngClass]="{ 'alert-danger' : !iodDemographics.criticalServiceRevenuePercent }" class="form-control"
         id="percentageRevenue" tabindex="0" name="percentageRevenue"
-        [(ngModel)]="iodDemographics.criticalServiceRevenuePercent" (change)="updateIodDemographics()">
+        [(ngModel)]="iodDemographics.criticalServiceRevenuePercent" (change)="updateDemographicsIod()">
         <option [ngValue]="null">-- Select --</option>
         <option *ngFor="let i of iodDemographics.listRevenuePercentages" [ngValue]="i.optionValue"
           [selected]="i.optionValue === iodDemographics.criticalServiceRevenuePercent">
@@ -158,7 +158,7 @@
       </label>
       <select [ngClass]="{ 'alert-danger' : !iodDemographics.numberPeopleServedByCritSvc }" class="form-control"
         id="numberPeopleServedByCritSvc" tabindex="0" name="numberPeopleServedByCritSvc"
-        [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc" (change)="updateIodDemographics()">
+        [(ngModel)]="iodDemographics.numberPeopleServedByCritSvc" (change)="updateDemographicsIod()">
         <option [ngValue]="null">-- Select --</option>
         <option *ngFor="let i of iodDemographics.listNumberPeopleServed" [ngValue]="i.optionValue"
           [selected]="i.optionValue === iodDemographics.numberPeopleServedByCritSvc">
@@ -181,7 +181,7 @@
           Most important:
           <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector1 }" class="form-control mb-3"
             name="disruptedSector1" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector1"
-            (change)="updateIodDemographics()">
+            (change)="updateDemographicsIod()">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
               [selected]="i.optionValue === iodDemographics.disruptedSector1">
@@ -193,7 +193,7 @@
           Second most important:
           <select [ngClass]="{ 'alert-danger' : !iodDemographics.disruptedSector2 }" class="form-control mb-3"
             name="disruptedSector2" tabindex="0" [(ngModel)]="iodDemographics.disruptedSector2"
-            (change)="updateIodDemographics()">
+            (change)="updateDemographicsIod()">
             <option [ngValue]="null">-- Select --</option>
             <option *ngFor="let i of iodDemographics.listSectors" [ngValue]="i.optionValue"
               [selected]="i.optionValue === iodDemographics.disruptedSector2">

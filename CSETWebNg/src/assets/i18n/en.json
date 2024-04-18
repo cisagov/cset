@@ -36,6 +36,7 @@
     "select facilitator": "Select Facilitator",
     "crit svc poc": "Critical Service Point of Contact",
     "asset gross value": "What is the gross value of the asset you are trying to protect?",
+    "select gross value": "Select Value",
     "not selected": "Not Selected",
     "expected effort": "What is the relative expected effort for this assessment?",
     "select effort": "Select Effort",
