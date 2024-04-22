@@ -222,6 +222,7 @@ import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/
 import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
 import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
 import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
+import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
 
 const appRoutes: Routes = [
 
@@ -323,6 +324,10 @@ const appRoutes: Routes = [
       {
         path: 'examination-merge',
         component: MergeExaminationsComponent
+      },
+      {
+        path: 'merge-cie-analysis',
+        component: MergeCieAnalysisComponent
       },
 
       {

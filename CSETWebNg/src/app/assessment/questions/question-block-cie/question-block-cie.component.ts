@@ -39,6 +39,10 @@ export class QuestionBlockCieComponent implements OnInit {
   textPlaceholderNA = "Explain why this question is Not Applicable here (Optional)";
   freeResponseAnswers: Map<number, string> = new Map<number, string>();
 
+  contactInitials = "";
+  freeResponseSegment = "";
+  convoBuffer = '\n- - End of Response - -\n';
+
   showQuestionIds = false;
 
   maturityModelId: number;
@@ -82,9 +86,8 @@ export class QuestionBlockCieComponent implements OnInit {
 
     }
 
-    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
-      this.refreshReviewIndicator();
-      this.refreshPercentAnswered();
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      this.contactInitials = response.contactList[0].firstName;
     });
 
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
@@ -359,7 +362,8 @@ export class QuestionBlockCieComponent implements OnInit {
 
     let newFreeResponse = e.target.value;
     q.freeResponseAnswer = newFreeResponse;
-    this.freeResponseAnswers.set(q.questionId, newFreeResponse);
+    q = this.applyContactAndEndTag(q);
+    this.freeResponseAnswers.set(q.questionId, q.freeResponseAnswer);
     const answer: Answer = {
       answerId: q.answer_Id,
       questionId: q.questionId,
@@ -388,6 +392,34 @@ export class QuestionBlockCieComponent implements OnInit {
       (result => {
         //this.checkForIssues(q, oldAnswerValue);
       });
+  }
+
+  applyContactAndEndTag(q: Question) {
+    let bracketContact = '[' + this.contactInitials + ']';
+
+    if (q.freeResponseAnswer.indexOf(bracketContact) !== 0) {
+      if (!!q.freeResponseAnswer) {
+        if (q.freeResponseAnswer.indexOf('[') !== 0) {
+          this.freeResponseSegment = bracketContact + ' ' + q.freeResponseAnswer;
+          q.freeResponseAnswer = this.freeResponseSegment + this.convoBuffer;
+        }
+
+        else {
+          let previousContactInitials = q.freeResponseAnswer.substring(q.freeResponseAnswer.lastIndexOf('[') + 1, q.freeResponseAnswer.lastIndexOf(']'));
+          let endOfLastBuffer = q.freeResponseAnswer.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+          if (previousContactInitials !== this.contactInitials) {
+            // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+            let oldComments = q.freeResponseAnswer.substring(0, endOfLastBuffer);
+            let newComment = q.freeResponseAnswer.substring(oldComments.length);
+
+            q.freeResponseAnswer = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+            // }
+          }
+        }
+      }
+    }
+
+    return q;
   }
 
   autoResize(id: number) {
