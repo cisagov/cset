@@ -346,6 +346,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
+    if (this.ncuaSvc.ISE_StateLed) {
+      return false;
+    }
     if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
       return true;
     }
