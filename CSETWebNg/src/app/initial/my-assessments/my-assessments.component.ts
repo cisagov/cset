@@ -50,6 +50,7 @@ import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
 import { HydroService } from "../../services/hydro.service";
+import { CieService } from "../../services/cie.service";
 
 
 interface UserAssessment {
@@ -124,7 +125,8 @@ export class MyAssessmentsComponent implements OnInit {
     public dateAdapter: DateAdapter<any>,
     public datePipe: DatePipe,
     public reportSvc: ReportService,
-    private hydroSvc: HydroService
+    private hydroSvc: HydroService,
+    public cieSvc: CieService
   ) { }
 
   ngOnInit() {
@@ -433,6 +435,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   proceedToMerge() {
     this.router.navigate(['/examination-merge']);
+  }
+
+  proceedToCieMerge() {
+    this.router.navigate(['/merge-cie-analysis']);
   }
 
   clickNewAssessmentButton() {

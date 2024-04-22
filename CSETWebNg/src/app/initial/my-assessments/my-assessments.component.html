@@ -89,6 +89,16 @@
                                         merging')}}</span>
                                 </label>
                             </label>
+                            <label *ngIf="configSvc.installationMode == 'CIE'"
+                                class="m-0 ml-2 btn btn-secondary d-flex align-items-center flex-00a"
+                                (click)="cieSvc.prepExaminationMerge()" tabindex="0">
+                                <span class="fs-base"></span>
+                                <label for="mergeExamination" class="m-0">
+                                    <span>{{cieSvc.prepForMerge === false ? t('buttons.merge examinations') :
+                                        t('buttons.end
+                                        merging')}}</span>
+                                </label>
+                            </label>
                         </div>
 
 
@@ -188,7 +198,7 @@
         </div>
 
         <div *ngIf="sortedAssessments?.length > 0" class="px-4 mb-4 d-flex flex-column flex-11a oy-auto">
-            <ng-container *ngIf="!this.ncuaSvc.prepForMerge">
+            <ng-container *ngIf="!this.ncuaSvc.prepForMerge && !cieSvc.prepForMerge">
 
                 <!-- table for larger layouts -->
                 <table *ngIf="!layoutSvc.hp" role="presentation" aria-label="assessments" matSort
@@ -375,6 +385,64 @@
             </table>
             <button *ngIf="this.ncuaSvc.prepForMerge" (click)="this.proceedToMerge()"
                 [disabled]="this.ncuaSvc.assessmentsToMerge.length < 2 || this.ncuaSvc.assessmentsToMerge.length > 10"
+                class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
+                style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge
+                examinations.start merge') }}</button>
+
+            <!-- merge for CIE -->
+            <table *ngIf="configSvc.installationMode == 'CIE' && cieSvc.prepForMerge" role="presentation"
+                aria-label="assessments" matSort (matSortChange)="sortData($event)" class="assessment-summary"
+                style="overflow-x:auto">
+                <th aria-label="assessment name" mat-sort-header="assessment" style="width: 25%;">{{ t('assessment
+                    name') }}</th>
+                <th aria-label="assessment type" mat-sort-header="type" style="width:15%;">{{ t('assessment type') }}
+                </th>
+                <th aria-label="date" mat-sort-header="date" style="width:15%;">{{ t('last modified') }}</th>
+                <th aria-label="status" mat-sort-header="status" style="width:15%;">{{t('status')}}</th>
+                <th aria-label="merge assessment" style="width:5%;"></th>
+                <tr *ngFor="let assessment of sortedAssessments;  let i = index">
+                    <td>
+                        <button tabindex="0"
+                            class="btn btn-link btn-link-dark d-flex justify-content-start align-items-start flex-00a wrap-text text-left"
+                            (click)="this.navSvc.beginAssessment(assessment.assessmentId)">
+                            {{assessment.assessmentName}}
+                        </button>
+                    </td>
+                    <td>{{assessment.type}}</td>
+                    <td>{{systemTimeTranslator(assessment.lastModifiedDate)}}</td>
+                    <td>
+                        <div *ngIf="assessment.selectedMaturityModel != 'CIS'">
+                            <span *ngIf="assessment.totalAvailableQuestionsCount > 0; else blankAssessment">
+                                {{ t('welcome page.statements completed',
+                                { complete: assessment.completedQuestionsCount
+                                , total: assessment.totalAvailableQuestionsCount }) }}
+                                <!-- {{assessment.completedQuestionsCount}}/{{assessment.totalAvailableQuestionsCount}}
+                                Statement(s) Completed -->
+                            </span>
+                            <ng-template #blankAssessment>
+                                {{ t('welcome page.blank assessment') }}
+                            </ng-template>
+                            <br>
+                        </div>
+                        <span *ngIf="assessment.markedForReview || assessment.altTextMissing" class=""
+                            matTooltip="{{ t('tooltip.assessment requires review') }}">
+                            {{ t('welcome page.needs review') }}
+                        </span>
+                    </td>
+                    <td>
+                        <div *ngIf="assessment.type === 'CIE'">
+                            <input type="checkbox" id="{{assessment.assessmentId}}" name="{{assessment.assessmentId}}"
+                                class="checkbox-custom mt-1" (change)="cieSvc.modifyMergeList(assessment, $event)"
+                                [checked]="">
+                            <label for="{{assessment.assessmentId}}" class="checkbox-custom-label">
+                                {{ t('merge examinations.merge') }}
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <button *ngIf="cieSvc.prepForMerge" (click)="this.proceedToCieMerge()"
+                [disabled]="cieSvc.assessmentsToMerge.length < 2 || cieSvc.assessmentsToMerge.length > 10"
                 class="btn btn-primary" matTooltip="{{ t('tooltip.merged checked exams') }}"
                 style="width: 11%; margin-top: 1.0rem; margin-left: auto; margin-right: 0">{{ t('merge
                 examinations.start merge') }}</button>
