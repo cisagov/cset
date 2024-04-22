@@ -135,7 +135,7 @@ export class ResetPassComponent implements OnInit {
     /**
      * Send the question and answer along with the user's email for validation
      * and if valid, sending of an email.
-     * Send the AppCode also, because the user is not currently logged in, so there is no JWT.
+     * Send the AppName also, because the user is not currently logged in, so there is no JWT.
      */
     resetPassword() {
         this.loading = true;

@@ -221,7 +221,7 @@ namespace CSETWebCore.Business.Contact
         public ContactDetail CreateAndAddContactToAssessment(ContactCreateParameters newContact)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
-            string appCode = _tokenManager.Payload(Constants.Constants.Token_Scope);
+            string appName = _tokenManager.Payload(Constants.Constants.Token_Scope);
 
             ASSESSMENT_CONTACTS existingContact = null;
 
@@ -282,7 +282,7 @@ namespace CSETWebCore.Business.Contact
                         {
                             if (!_localInstallationHelper.IsLocalInstallation())
                             {
-                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appCode);
+                                _notificationBusiness.SendInviteePassword(userDetail.Email, userDetail.FirstName, userDetail.LastName, resp.TemporaryPassword, appName);
                             }
                         }
                     }
