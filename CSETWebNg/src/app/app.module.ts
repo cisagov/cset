@@ -638,6 +638,9 @@ import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-in
 
 import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
  import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
+import { AnalyticsService } from './services/analytics.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1224,7 +1227,9 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     AssessmentConfigCieComponent,
     AssessmentDetailCieComponent,
     CieLayoutMainComponent,
-    AboutCieComponent
+    AboutCieComponent, 
+    AnalyticsComponent, 
+    AnalyticsloginComponent
   ],
   providers: [
     TranslocoService,
@@ -1303,7 +1308,8 @@ import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.c
     Utilities,
     NCUAService,
     GalleryService,
-    FooterService
+    FooterService, 
+    AnalyticsService
   ],
   bootstrap: [AppComponent]
 })

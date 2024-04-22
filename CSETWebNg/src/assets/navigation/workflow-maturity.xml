@@ -163,7 +163,7 @@
 
         <node displaytext="Feedback" id="feedback" path="assessment/{:id}/results/feedback" visible="" />
 
-        <node displaytext="Share Assessment With CISA" id="analytics" path="assessment/{:id}/results/analytics" visible="HIDE" />
+        <node displaytext="Analytics" id="analytics" path="assessment/{:id}/results/analytics" />
 
         <node displaytext="Assessment Complete" id="tsa-assessment-complete" path="assessment/{:id}/results/tsa-assessment-complete" visible="INSTALL-MODE:TSA" />
 
