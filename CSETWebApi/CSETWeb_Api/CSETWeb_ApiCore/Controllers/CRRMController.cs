@@ -8,6 +8,8 @@ using System.IO;
 using CSETWebCore.Business.AssessmentIO.Import;
 using CSETWebCore.Interfaces.Helpers;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -25,19 +27,26 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [ApiKeyAuthorize]
-        [Route("api/crrm/bulkExportAssessments")]
-        public IActionResult BulkExportAssessments(Guid[] guidsToExport)
+        [Route("api/crrm/bulkExportAccessKeyAssessments")]
+        public IActionResult BulkExportAccessKeyAssessments()
         {
+            // This endpoint exports all access key assessments where the "ModifiedSinceLastExport" column is true.
             try
             {
                 // determine extension (.csetw, .acet)
                 string ext = IOHelper.GetExportFileExtension("CSET");
                 AssessmentExportManager exportManager = new AssessmentExportManager(_context);
-                MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessmentsbyGuid(guidsToExport, ext);
+
+                Guid[] guidsToExport = _context.ACCESS_KEY_ASSESSMENT
+                    .Include(aca => aca.Assessment)
+                    .Where(aca => aca.Assessment.ModifiedSinceLastExport == true)
+                    .Select(aca => aca.Assessment.Assessment_GUID).ToArray();
+
+                MemoryStream assessmentsExportArchive = exportManager.BulkExportAssessments(guidsToExport, ext);
 
                 if (assessmentsExportArchive == null) 
                 {
-                    return StatusCode(404, "No Assessments with the provided GUIDs were found for export.");
+                    return StatusCode(204);
                 }
 
                 return File(assessmentsExportArchive, "application/zip", "BulkAssessmentExport.zip");
