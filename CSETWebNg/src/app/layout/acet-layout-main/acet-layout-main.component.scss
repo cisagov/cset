@@ -3875,7 +3875,7 @@ h6.dropdown-header {
 
 @media screen and (max-width:500px) {
 
-  .swiper-slide {
+  .swiper-slide-disabled-for-now{
     transition: 300ms all;
     min-width: 230px;
 
@@ -3906,7 +3906,7 @@ h6.dropdown-header {
 }
 
 @media screen and (min-width:500px) {
-  .swiper-slide {
+  .swiper-slide-disabled-for-now{
     transition: 300ms all;
     min-width: 230px;
 

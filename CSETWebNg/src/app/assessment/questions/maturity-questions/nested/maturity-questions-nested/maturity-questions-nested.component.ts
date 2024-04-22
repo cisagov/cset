@@ -139,7 +139,9 @@ export class MaturityQuestionsNestedComponent implements OnInit, OnDestroy {
 
         this.loaded = true;
 
-        this.initializeChart();
+        if (this.maturitySvc.showChartOnNestedQPage()) {
+          this.initializeChart();
+        }
       },
       error => {
         console.log(

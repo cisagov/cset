@@ -20,6 +20,7 @@
     "city or site name": "City or Site Name",
     "state province region": "State/Province/Region",
     "state, province, or region": "State, Province, or Region",
+    "cisa region": "CISA Region",
     "assessment type": "Assessment Type",
     "type": "Type",
     "demographics": "Demographics",
@@ -35,6 +36,7 @@
     "select facilitator": "Select Facilitator",
     "crit svc poc": "Critical Service Point of Contact",
     "asset gross value": "What is the gross value of the asset you are trying to protect?",
+    "select gross value": "Select Value",
     "not selected": "Not Selected",
     "expected effort": "What is the relative expected effort for this assessment?",
     "select effort": "Select Effort",
@@ -62,10 +64,10 @@
     "control priorities intro1": "Information on ranking can be found in the <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">User Guide</a>.",
     "local installation": "Local Installation",
-    "new version":"A new version of CSET is available.",
-    "your version":"Your version:",
-    "version available":"Available version:",
-    "link version":"Click here to view or download CSET releases.",
+    "new version": "A new version of CSET is available.",
+    "your version": "Your version:",
+    "version available": "Available version:",
+    "link version": "Click here to view or download CSET releases.",
     "legend": "Legend",
     "img suffix": "_en",
     "publisher": {
@@ -77,11 +79,19 @@
             "show ip rights assertion": true,
             "ip dist": "the CSET Program Office"
         },
+        "iod": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Cybersecurity & Infrastructure Security Agency",
+            "org short name": "CISA",
+            "show ip rights assertion": true,
+            "ip dist": "the CSET Program Office"
+        },
         "acet": {
             "app long name": "Automated Cybersecurity Evaluation Toolbox",
             "app short name": "ACET",
             "org long name": "",
-            "org short name": "NCUA",    
+            "org short name": "NCUA",
             "show ip rights assertion": false
         },
         "tsa": {
@@ -477,7 +487,7 @@
         "risk description": "Risk Description",
         "validation approach": "Validation Approach",
         "prevent encryption": "Stops the 'enter password' screen from appearing on export",
-        "import": "Import an assessment from an external {{appCode}} file.",
+        "import": "Import an assessment from an external {{appName}} file.",
         "export to excel": "Export all assessments to Excel",
         "remove assessment": "Permanently remove this assessment.",
         "export assessment": "Export a copy of this assessment to another location",
@@ -1076,7 +1086,10 @@
         "no documents to display": "There are no documents to display",
         "section": "Section",
         "no supplemental available": "no supplemental guidance available",
-        "no reference documents available": "no reference documents available"
+        "no reference documents available": "no reference documents available",
+        "document": "document",
+        "link": "link",
+        "launches external": "launches external site"
     },
     "menu": {
         "tools": {

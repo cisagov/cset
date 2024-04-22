@@ -372,7 +372,7 @@
                                 <br>
                                 <span *ngIf="sourceFilesMap.has(observation?.finding?.finding_Id)">
                                     <div *ngFor="let file of sourceFilesMap.get(observation?.finding?.finding_Id)">
-                                        {{ file.title }} (<strong>Section:</strong> {{ file.section_Ref }})
+                                        {{ file.title }} (<strong>Section:</strong> {{ file.sectionRef }})
                                     </div>
                                 </span>
                                 <span *ngIf="!sourceFilesMap.has(observation?.finding?.finding_Id)">(no Resources

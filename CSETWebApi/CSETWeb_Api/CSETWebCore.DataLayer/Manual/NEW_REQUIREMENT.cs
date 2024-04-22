@@ -8,8 +8,8 @@ namespace CSETWebCore.DataLayer.Model
     {
         public IQueryable<NEW_QUESTION> NEW_QUESTIONs(CSETContext context)
         {
-                context.REQUIREMENT_QUESTIONS.Include("NEW_QUESTION");
-                var NewRs = from a in context.REQUIREMENT_QUESTIONS
+                context.REQUIREMENT_QUESTIONS_SETS.Include("NEW_QUESTION");
+                var NewRs = from a in context.REQUIREMENT_QUESTIONS_SETS
                             join b in context.NEW_QUESTION on a.Question_Id equals b.Question_Id
                             where a.Requirement_Id == this.Requirement_Id
                             select b;

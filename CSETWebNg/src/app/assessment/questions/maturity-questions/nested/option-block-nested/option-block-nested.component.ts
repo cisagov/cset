@@ -78,7 +78,7 @@ export class OptionBlockNestedComponent implements OnInit {
     this.sectionId = +this.route.snapshot.params['sec'];
     // break up the options so that we can group radio buttons in a mixed bag of options
     if (this.hydroSvc.isHydroLevel(this.q.maturityLevelName)) {
-      
+
       // hides 'None' answers for Hydro answers for now
       this.optRadio = this.opts?.filter(x => x.optionType == 'radio' && x.optionText != 'None');
       this.selectedOptions = this.optRadio?.filter(x => x.selected == true);
@@ -123,6 +123,9 @@ export class OptionBlockNestedComponent implements OnInit {
     else {
       o.selected = event.target.checked;
       if (o.selected) {
+        if (!this.selectedOptions) {
+          this.selectedOptions = [];
+        }
         this.selectedOptions.push(o);
       }
       answers.push(this.makeAnswer(o));
@@ -345,8 +348,8 @@ export class OptionBlockNestedComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param o 
+   *
+   * @param o
    */
   toggleRadio(o: Option): void {
 

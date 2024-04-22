@@ -28,6 +28,10 @@ export class Comparer {
   }
 
   compareBool(a, b, isAsc) {
-    return (a === b) ? 0 : a ? -1 * (isAsc ? 1 : -1) : 1 * (isAsc ? 1 : -1);
+    return (a === b) ? 0 : (a ? -1 * (isAsc ? 1 : -1) : (1 * (isAsc ? 1 : -1)));
+  }
+
+  compareIseSubmission(a, b, isAsc) {
+    return (a === b) ? 0 : (a ? (b ? this.compare(a, b, isAsc) : 1 * (isAsc ? 1 : -1)) : -1 * (isAsc ? 1 : -1))
   }
 }

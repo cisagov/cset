@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
@@ -14,7 +15,7 @@ BEGIN
 	SELECT r.Requirement_Id,nq.Weight
 	  FROM 
 	  QUESTION_REQUIREMENT_SUPPLEMENTAL r 
-	  join REQUIREMENT_QUESTIONS rq on r.Requirement_Id=rq.Question_Id
+	  join REQUIREMENT_QUESTIONS_SETS rq on r.Requirement_Id=rq.Question_Id
 	  join NEW_QUESTION nq on rq.Question_Id = nq.Question_Id
 	  ) s
 	  where QUESTION_REQUIREMENT_SUPPLEMENTAL.Requirement_Id = s.requirement_id
@@ -35,7 +36,7 @@ select distinct a.Requirement_Id,r.Question_Id,a.Top_U,b.User_Number,b.Top_Answe
 	  FROM [CSET_Control].[dbo].[REQUIREMENT_USER_NUMBERS] ru join OLD_CONTAINERS o on ru.User_Number = o.User_Number
 	  join QUESTION_REQUIREMENT_SUPPLEMENTAL r on ru.Requirement_Id = r.Requirement_Id  
 	where Is_Alt=1) b on a.Requirement_Id = b.Requirement_Id
-	join REQUIREMENT_QUESTIONS r on a.Requirement_Id = r.Requirement_Id
+	join REQUIREMENT_QUESTIONS_SETS r on a.Requirement_Id = r.Requirement_Id
 	
 	
 ALTER TABLE [dbo].[VIEW_ALTS] ADD CONSTRAINT [PK_VIEW_ALTS] PRIMARY KEY CLUSTERED  ([Requirement_Id], [Question_Id], [Top_U], [User_Number])

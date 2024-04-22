@@ -39,7 +39,6 @@ import { NavigationService } from "../../services/navigation/navigation.service"
 import { QuestionFilterService } from '../../services/filtering/question-filter.service';
 import { ReportService } from '../../services/report.service';
 import { concatMap, map } from "rxjs/operators";
-import { AssessCompareAnalyticsService } from "../../services/assess-compare-analytics.service";
 import { NCUAService } from "../../services/ncua.service";
 import { NavTreeService } from "../../services/navigation/nav-tree.service";
 import { LayoutService } from "../../services/layout.service";
@@ -49,7 +48,6 @@ import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
-import { HydroService } from "../../services/hydro.service";
 
 
 interface UserAssessment {
@@ -61,7 +59,7 @@ interface UserAssessment {
   type: string;
   assessmentCreatedDate: string;
   creatorName: string;
-  lastModifiedDate: string;
+  lastModifiedDate: DateTime;
   markedForReview: boolean;
   altTextMissing: boolean;
   selectedMaturityModel?: string;
@@ -87,7 +85,7 @@ export class MyAssessmentsComponent implements OnInit {
   browserIsIE: boolean = false;
 
   // contains CSET or ACET; used for tooltips, etc
-  appCode: string;
+  appName: string;
   appTitle: string;
   isTSA: boolean = false;
   isCSET: boolean = false;
@@ -118,13 +116,11 @@ export class MyAssessmentsComponent implements OnInit {
     public navTreeSvc: NavTreeService,
     private filterSvc: QuestionFilterService,
     public tSvc: TranslocoService,
-    private analyticsSvc: AssessCompareAnalyticsService,
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
     public datePipe: DatePipe,
-    public reportSvc: ReportService,
-    private hydroSvc: HydroService
+    public reportSvc: ReportService
   ) { }
 
   ngOnInit() {
@@ -135,9 +131,11 @@ export class MyAssessmentsComponent implements OnInit {
     this.importExtensions = localStorage.getItem('importExtensions');
     this.titleSvc.setTitle(this.configSvc.config.behaviors.defaultTitle);
     this.appTitle = this.configSvc.config.behaviors.defaultTitle;
-    this.appCode = this.configSvc.config.appCode;
+    this.appName = 'CSET';
     switch (this.configSvc.installationMode || '') {
       case 'ACET':
+        this.preventEncrypt = true;
+        this.updateEncryptPreference();
         this.ncuaSvc.reset();
         break;
       case 'TSA':
@@ -147,8 +145,7 @@ export class MyAssessmentsComponent implements OnInit {
         this.isCSET = true;
     }
 
-    if (localStorage.getItem("returnPath")) {
-    }
+    if (localStorage.getItem("returnPath")) { }
     else {
       this.navTreeSvc.clearTree(this.navSvc.getMagic());
     }
@@ -192,7 +189,7 @@ export class MyAssessmentsComponent implements OnInit {
     if (column == 'export') {
       return true;
     }
-    
+
     if (column == 'export json') {
       return this.configSvc.cisaAssessorWorkflow;
     }
@@ -323,7 +320,7 @@ export class MyAssessmentsComponent implements OnInit {
         case "status":
           return this.comparer.compareBool(a.markedForReview, b.markedForReview, isAsc);
         case "ise-submitted":
-          return this.comparer.compareBool(a.submittedDate, b.submittedDate, isAsc);
+          return this.comparer.compareIseSubmission(a.submittedDate, b.submittedDate, isAsc);
         default:
           return 0;
       }
@@ -440,9 +437,16 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
-  systemTimeTranslator(lastModifiedDate: any) {
-    let localDate = DateTime.fromISO(lastModifiedDate).setLocale(this.tSvc.getActiveLang())
-      .toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
+  systemTimeTranslator(d: DateTime, format: string) {
+    var dtD = DateTime.fromISO(d, {});
+    let localDate = '';
+    if (format == 'med') {
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+    }
+    else if (format == 'short') {
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+    }
+    
     return localDate;
   }
 
