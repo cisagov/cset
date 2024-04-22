@@ -13,7 +13,7 @@ namespace CSETWebCore.Model.Password
         public string CurrentPassword { get; set; }
         public string NewPassword { get; set; }
         public string PrimaryEmail { get; set; }
-        public string AppCode { get; set; }
+        public string AppName { get; set; }
     }
 
     public class SecurityQuestions
@@ -40,7 +40,7 @@ namespace CSETWebCore.Model.Password
         /// This must be explicitly sent by the front end because
         /// the user is not logged in, so there's no JWT at this point.
         /// </summary>
-        public string AppCode { get; set; }
+        public string AppName { get; set; }
     }
 
     public class UserStatus

@@ -315,7 +315,7 @@ namespace CSETWebCore.Api.Controllers
                 if (IsSecurityAnswerCorrect(answer))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                    bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppCode);
+                    bool rval = resetter.ResetPassword(answer.PrimaryEmail, "Password Reset", answer.AppName);
 
                     if (rval)
                     {
@@ -357,7 +357,7 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpGet]
         [Route("api/ResetPassword/SecurityQuestions")]
-        public IActionResult GetSecurityQuestions([FromQuery] string email, [FromQuery] string appCode)
+        public IActionResult GetSecurityQuestions([FromQuery] string email, [FromQuery] string appName)
         {
             try
             {
@@ -393,7 +393,7 @@ namespace CSETWebCore.Api.Controllers
                     || (questions[0].SecurityQuestion1 == null && questions[0].SecurityQuestion2 == null))
                 {
                     UserAccountSecurityManager resetter = new UserAccountSecurityManager(_context, _userBusiness, _notificationBusiness, _configuration);
-                    bool rval = resetter.ResetPassword(email, "Password Reset", appCode);
+                    bool rval = resetter.ResetPassword(email, "Password Reset", appName);
 
                     return Ok(new List<SecurityQuestions>());
                 }
