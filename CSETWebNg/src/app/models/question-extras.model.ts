@@ -28,15 +28,16 @@ export interface QuestionExtrasResponse {
 }
 
 /**
- * Custom documents can ne paired to a single section_Ref or have
- * all of its applicable section_refs grouped in a bookmarks array.
+ * Custom documents can ne paired to a single sectionRef or have
+ * all of its applicable sectionRefs grouped in a bookmarks array.
  */
-export interface CustomDocument {
-  file_Id: number;
+export interface ReferenceDocLink {
+  fileId: number;
   title: string;
-  file_Name: string;
-  is_Uploaded: boolean;
-  section_Ref?: string;
+  fileName: string;
+  url: string;
+  isUploaded: boolean;
+  sectionRef?: string;
   bookmarks?: string[];
 }
 
@@ -69,8 +70,8 @@ export interface QuestionInformationTabData {
   showRequirementFrameworkTitle: boolean;
   question_or_Requirement_Id: number;
   requirementsData: RequirementTabData;
-  additionalDocumentsList: CustomDocument[];
-  sourceDocumentsList: CustomDocument[];
+  additionalDocumentsList: ReferenceDocLink[];
+  sourceDocumentsList: ReferenceDocLink[];
   referenceTextList: string[];
   references: string;
   componentTypes: ComponentOverrideLinkInfo[];

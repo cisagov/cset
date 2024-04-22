@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 
 @Component({
@@ -12,7 +12,5 @@ export class InfoBlockComponent {
 
   constructor(
     public reportSvc: ReportService
-  ){}
-
-
+  ) { }
 }

@@ -72,15 +72,9 @@ namespace CSETWebCore.Business.Diagram.analysis.helpers
                 }
                 //at this point all connections have been created
                 //and we can safely remove the connectors
-                this.nodes.Remove(nc.ID);
-                foreach (var c in nc.Connections)
-                {
-                    List<NetworkComponent> toRemove = c.Connections.Where(x => x.IsLinkConnector).ToList();
-                    foreach (var cc in toRemove)
-                    {
-                        c.Connections.Remove(cc);
-                    }
-                }
+                this.nodes.Remove(nc.ID);                                
+                nc.Connections.RemoveAll(x => x.IsLinkConnector);                    
+                
             }
         }
     }

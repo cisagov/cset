@@ -19,7 +19,7 @@ export class MalcolmService {
   ) { }
 
   getMalcolmAnswers() {
-    return this.http.get(this.configSvc.apiUrl + 'getMalcolmAnswers');
+    return this.http.get(this.configSvc.apiUrl + 'getMalcolmAnswers');    
   }
 
   findMalcolmAnswerForQuestion (questionId: number, list: any) {
