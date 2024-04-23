@@ -84,9 +84,14 @@
                         <td [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer2)"
                             [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer2)">
                         </td>
-                        <td *ngIf="cieSvc.assessmentsToMerge.length >= 3"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].free_Response_Answer3))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text3, this.mergeConflicts[i].free_Response_Answer3) }}</td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 3" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text3))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text3)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 3" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer3)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer3)">
+                        </td>
                         <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 4"
                             [matTooltip]="(this.getResponseText(this.mergeConflicts[i].free_Response_Answer4))">{{
                             getDisplayText(this.mergeConflicts[i].answer_Text4, this.mergeConflicts[i].free_Response_Answer4) }}</td>

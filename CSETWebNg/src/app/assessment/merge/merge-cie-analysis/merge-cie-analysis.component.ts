@@ -214,6 +214,7 @@ export class MergeCieAnalysisComponent implements OnInit {
               let myString = this.assessmentFreeResponses.get(question.questionId);
               myString += ("\n" + question.freeResponseAnswer);
               this.assessmentFreeResponses.set(question.questionId, myString);
+              console.log(this.assessmentFreeResponses)
             }
             else if (this.assessmentNAReasons.has(question.questionId)) {
               console.log('d')
@@ -221,6 +222,8 @@ export class MergeCieAnalysisComponent implements OnInit {
               let myString = this.assessmentNAReasons.get(question.questionId);
               myString += ("\n" + question.freeResponseAnswer);
               this.assessmentNAReasons.set(question.questionId, myString);
+              console.log(this.assessmentNAReasons)
+
             }
           }
 
@@ -231,7 +234,7 @@ export class MergeCieAnalysisComponent implements OnInit {
             questionNumber: '0',
             answerText: question.answer,
             altAnswerText: question.altAnswerText,
-            freeResponseAnswer: (question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
+            freeResponseAnswer: null,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
             comment: question.comment,
             feedback: null,
             markForReview: question.markForReview,
@@ -263,10 +266,10 @@ export class MergeCieAnalysisComponent implements OnInit {
     } else {
       // Once we have all the comments from all the assessments, combine them.
       for (let i = 0; i < this.existingAssessmentAnswers.length; i++) {
-        if (this.assessmentFreeResponses.has(this.existingAssessmentAnswers[i].questionId && this.existingAssessmentAnswers[i].answerText == 'U')) {
+        if (this.assessmentFreeResponses.has(this.existingAssessmentAnswers[i].questionId) && this.existingAssessmentAnswers[i].answerText == 'U') {
           this.existingAssessmentAnswers[i].freeResponseAnswer = this.assessmentFreeResponses.get(this.existingAssessmentAnswers[i].questionId);
         }
-        else if (this.assessmentNAReasons.has(this.existingAssessmentAnswers[i].questionId && this.existingAssessmentAnswers[i].answerText == 'NA')) {
+        else if (this.assessmentNAReasons.has(this.existingAssessmentAnswers[i].questionId) && this.existingAssessmentAnswers[i].answerText == 'NA') {
           this.existingAssessmentAnswers[i].freeResponseAnswer = this.assessmentNAReasons.get(this.existingAssessmentAnswers[i].questionId);
         }
       }
@@ -348,12 +351,21 @@ export class MergeCieAnalysisComponent implements OnInit {
   updateAnswers(i: number, value: string) {
     if (value === 'u') {
       this.mergeRadioSelections[i] = "U";
+      if (this.assessmentNAReasons.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
+        this.assessmentNAReasons.delete(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        this.assessmentFreeResponses.set(this.mergeConflicts[i].question_Or_Requirement_Id1, this.mergeConflicts[i].free_Response_Answer1);
+
+      }
     } else if (value === 'na') {
       this.mergeRadioSelections[i] = "NA";
+      if (this.assessmentFreeResponses.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
+        this.assessmentFreeResponses.delete(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        this.assessmentNAReasons.set(this.mergeConflicts[i].question_Or_Requirement_Id1, this.mergeConflicts[i].free_Response_Answer1);
+      }
     }
 
-    this.assessmentAnswers.set(this.mergeConflicts[i].question_Or_Requirement_Id, this.mergeRadioSelections[i]);
-    console.log(this.assessmentAnswers.get(this.mergeConflicts[i].question_Or_Requirement_Id))
+    this.assessmentAnswers.set(this.mergeConflicts[i].question_Or_Requirement_Id1, this.mergeRadioSelections[i]);
+    console.log(this.assessmentAnswers.get(this.mergeConflicts[i].question_Or_Requirement_Id1))
   }
 
   // convert "Y" or "N" or "NA" into an ANSWER Object
@@ -363,16 +375,18 @@ export class MergeCieAnalysisComponent implements OnInit {
     for (let i = 0; i < length; i++) {
       if (this.assessmentFreeResponses.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
         console.log('free response')
-        comment += this.assessmentFreeResponses.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        comment = this.assessmentFreeResponses.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
       } 
       else if (this.assessmentNAReasons.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) {
         console.log('NA response')
 
-        comment += this.assessmentNAReasons.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
+        comment = this.assessmentNAReasons.get(this.mergeConflicts[i].question_Or_Requirement_Id1);
       }
       else {
         comment = "";
       }
+      console.log(comment)
+      console.log('---')
 
       this.selectedMergeAnswers[i] = {
         answerId: null,
@@ -381,7 +395,7 @@ export class MergeCieAnalysisComponent implements OnInit {
         questionNumber: '0',
         answerText: answers[i],
         altAnswerText: null,
-        freeResponseAnswer: null,//(answers[i] == 'U' && this.assessmentFreeResponses.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentFreeResponses.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : ((answers[i] == 'NA' && this.assessmentNAReasons.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentNAReasons.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : null),
+        freeResponseAnswer: comment,//(answers[i] == 'U' && this.assessmentFreeResponses.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentFreeResponses.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : ((answers[i] == 'NA' && this.assessmentNAReasons.has(this.mergeConflicts[i].question_Or_Requirement_Id1)) ? this.assessmentNAReasons.get(this.mergeConflicts[i].question_Or_Requirement_Id1) : null),
         comment: null,
         feedback: null,
         markForReview: false,
@@ -463,16 +477,21 @@ export class MergeCieAnalysisComponent implements OnInit {
 
                     if (this.existingAssessmentAnswers[j].answerText == this.selectedMergeAnswers[i].answerText) {
                       console.log('equal')
+                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
+
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
-                        this.existingAssessmentAnswers[j].freeResponseAnswer += "\n" + this.selectedMergeAnswers[i].freeResponseAnswer;
+                        //this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
+                        //this.existingAssessmentAnswers[j].freeResponseAnswer += "\n" + this.selectedMergeAnswers[i].freeResponseAnswer;
                       }
                       console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
                     }
                     else {
                       console.log('not equal')
+                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
                         this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
                       }
+
                       console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
 
                     }
