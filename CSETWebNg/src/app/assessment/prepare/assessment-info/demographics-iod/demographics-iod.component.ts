@@ -137,4 +137,8 @@ export class DemographicsIodComponent implements OnInit {
     this.configSvc.cisaAssessorWorkflow = true;
     this.demoSvc.updateDemographic(this.demographicData);
   }
-}
+
+  newUpdate(name: string, event: any, type: string){
+    this.demoSvc.updateIndividualDemographics(name, event.target.value, type)
+  }
+} 
