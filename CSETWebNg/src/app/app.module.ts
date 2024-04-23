@@ -1232,7 +1232,7 @@ import { AnalyticsService } from './services/analytics.service';
     AboutCieComponent, 
     AnalyticsComponent, 
     ReferencesSectionComponent,
-    CisaWorkflowWarningsComponent
+    CisaWorkflowWarningsComponent,
     AnalyticsloginComponent
   ],
   providers: [
