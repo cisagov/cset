@@ -544,17 +544,23 @@ namespace CSETWebCore.Business.AssessmentIO.Export
 
             // export the assessment
             Stream assessmentFileContents = ArchiveStream(assessmentId, password, passwordHint, jsonOnly);
+
+            // mark the assessment as clean after export
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(a => a.Assessment_Id == assessmentId);
+            assessment.ModifiedSinceLastExport = false;
+            _context.SaveChanges();
+
             return new AssessmentExportFile(fileName, assessmentFileContents);
         }
 
 
         /// <summary>
-        /// Exports access key assessments in the current DB context and returns them in a zip archive.
+        /// Exports assessments in the current DB context based on the provided GUIDS and returns them in a single zip archive.
         /// </summary>
         /// <param name="guids">Array of assessment guids to export</param>
         /// <param name="fileExtension">The extension of the export files</param>
         /// <returns></returns>
-        public MemoryStream BulkExportAssessmentsbyGuid(Guid[] guids, string fileExtension)
+        public MemoryStream BulkExportAssessments(Guid[] guids, string fileExtension)
         {
 
             var archiveStream = new MemoryStream();
