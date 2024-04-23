@@ -81,4 +81,20 @@ export class DemographicIodService {
         }
       });
   }
+
+  /**
+   * POSTs the screen data to the API.
+   * @param demographic
+   */
+  updateIndividualDemographics(name: string, val: number, type: string){
+
+     // Setting up query parameters
+     let queryParams = new HttpParams()
+     .set('name', name)
+     .set('val', val)
+     .set('t', type);
+
+    this.http.post(this.configSvc.apiUrl + 'demographics/ext3', null, { params: queryParams })
+    .subscribe(() => {})
+  }
 }
