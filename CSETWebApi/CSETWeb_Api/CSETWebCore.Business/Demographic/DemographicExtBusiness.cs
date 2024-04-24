@@ -239,6 +239,35 @@ namespace CSETWebCore.Business.Demographic
 
 
         /// <summary>
+        /// Saves the value as the specified type
+        /// </summary>
+        public void SaveX(int assessmentId, string recName, string value, string type)
+        {
+            switch (type)
+            {
+                case "int":
+                    SaveX(assessmentId, recName, int.Parse(value));
+                    break;
+                case "string":
+                    SaveX(assessmentId, recName, value);
+                    break;
+                case "double":
+                    SaveX(assessmentId, recName, double.Parse(value));
+                    break;
+                case "bool":
+                    SaveX(assessmentId, recName, bool.Parse(value));
+                    break;
+                case "date":
+                    SaveX(assessmentId, recName, DateTime.Parse(value));
+                    break;
+                default:
+                    // just save it as a string
+                    SaveX(assessmentId, recName, value);
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Inserts or updates a single record in DETAILS_DEMOGRAPHICS.
         /// Queries for an existing record, so not the most efficient for a bulk update.
         /// </summary>
@@ -305,8 +334,12 @@ namespace CSETWebCore.Business.Demographic
             var oldRecords = _context.DETAILS_DEMOGRAPHICS
                 .Where(x => x.Assessment_Id == demographic.AssessmentId && !nonDemographics.Contains(x.DataItemName))
                 .ToList();
-            _context.DETAILS_DEMOGRAPHICS.RemoveRange(oldRecords);
-            _context.SaveChanges();
+            if (oldRecords != null)
+            {
+                _context.DETAILS_DEMOGRAPHICS.RemoveRange(oldRecords);
+                _context.SaveChanges();
+            }
+           
 
 
             // for a bit of efficiency, these methods always insert a new record without checking first
@@ -340,8 +373,9 @@ namespace CSETWebCore.Business.Demographic
             SaveString(demographic.AssessmentId, "BARRIER2", demographic.Barrier2);
             SaveString(demographic.AssessmentId, "BUSINESS-UNIT", demographic.BusinessUnit);
 
-            AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
             _context.SaveChanges();
+            AssessmentNaming.ProcessName(_context, userid, demographic.AssessmentId);
+            
         }
 
 
