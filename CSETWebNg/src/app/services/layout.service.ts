@@ -42,14 +42,17 @@ export class LayoutService {
     '/home/login-access',
     '/home/reset-pass',
     '/home/login/eject',
-    '/home/privacy-warning'
+    '/home/privacy-warning',
+    '/home/privacy-warning-reject'
   ];
 
   routesWithHiddenFooter = [
     '/home/login',
     '/home/login-access',
     '/home/reset-pass',
-    '/home/login/eject'
+    '/home/login/eject',
+    '/home/privacy-warning',
+    '/home/privacy-warning-reject'
   ];
 
   /**
