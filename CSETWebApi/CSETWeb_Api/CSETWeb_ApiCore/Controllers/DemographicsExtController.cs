@@ -97,6 +97,10 @@ namespace CSETWebCore.Api.Controllers
             int assessmentId = _token.AssessmentForUser();
 
             var mgr = new DemographicExtBusiness(_context);
+            if (val == "0: 0" | val == "0: null")
+            {
+                val = "0"; 
+            }
             mgr.SaveX(assessmentId, name, val, t);
 
             return Ok();
