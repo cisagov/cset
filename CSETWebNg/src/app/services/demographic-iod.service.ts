@@ -86,7 +86,7 @@ export class DemographicIodService {
    * POSTs the screen data to the API.
    * @param demographic
    */
-  updateIndividualDemographics(name: string, val: number, type: string){
+  updateIndividualDemographics(name: string, val: any, type: string){
 
      // Setting up query parameters
      let queryParams = new HttpParams()
