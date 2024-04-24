@@ -52,13 +52,13 @@ namespace CSETWebCore.Api.Controllers
         public IActionResult GetExcelExport(string token)
         {
             int assessmentId = _token.AssessmentForUser(token);
-            string appCode = _token.Payload(Constants.Constants.Token_Scope);
+            string appName = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToCSV(assessmentId);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
+            return File(stream, excelContentType, GetFilename(assessmentId, appName));
         }
 
 
@@ -73,13 +73,13 @@ namespace CSETWebCore.Api.Controllers
         {
             _token.SetToken(token);
             int assessmentId = _token.AssessmentForUser(token);
-            string appCode = _token.Payload(Constants.Constants.Token_Scope);
+            string appName = _token.Payload(Constants.Constants.Token_Scope);
 
             var stream = _exporter.ExportToExcelISE(assessmentId, type);
             stream.Flush();
             stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            return File(stream, excelContentType, GetFilename(assessmentId, appCode));
+            return File(stream, excelContentType, GetFilename(assessmentId, appName));
         }
 
 
@@ -109,14 +109,14 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         /// <param name="assessmentId"></param>
         /// <returns></returns>
-        private string GetFilename(int assessmentId, string appCode)
+        private string GetFilename(int assessmentId, string appName)
         {
             string filename = $"ExcelExport{excelExtension}";
 
             var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
-                filename = $"{appCode} Export - {assessmentName}{excelExtension}";
+                filename = $"{appName} Export - {assessmentName}{excelExtension}";
             }
 
             return filename;

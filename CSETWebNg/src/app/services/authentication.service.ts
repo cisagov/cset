@@ -339,7 +339,7 @@ export class AuthenticationService {
 
   getSecurityQuestionsList(email: string) {
     return this.http.get(
-      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appCode=' + this.configSvc.installationMode
+      this.configSvc.apiUrl + 'ResetPassword/SecurityQuestions?email=' + email + '&appName=' + this.configSvc.installationMode
     );
   }
 
