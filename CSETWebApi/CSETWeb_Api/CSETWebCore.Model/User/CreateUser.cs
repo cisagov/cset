@@ -43,6 +43,6 @@ namespace CSETWebCore.Model.User
         /// This must be explicitly sent by the front end because
         /// the user is not logged in, so there's no JWT at this point.
         /// </summary>
-        public string AppCode { get; set; }
+        public string AppName { get; set; }
     }
 }
