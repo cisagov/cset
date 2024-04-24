@@ -34,6 +34,7 @@ export class ConfigService {
   appUrl: string;
   docUrl: string;
   onlineUrl: string;
+  analyticsUrl: string = "http://localhost:5278/";
 
   helpContactEmail: string;
   helpContactPhone: string;
@@ -152,7 +153,7 @@ export class ConfigService {
     }
 
     this.appUrl = appProtocol + this.config.app.appUrl + appPort;
-    this.onlineUrl = this.config.api.onlineUrl;
+    this.analyticsUrl = "http://localhost:5278/";
     this.helpContactEmail = this.config.helpContactEmail;
     this.helpContactPhone = this.config.helpContactPhone;
 
