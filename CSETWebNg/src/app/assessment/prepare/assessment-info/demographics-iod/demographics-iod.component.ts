@@ -87,32 +87,33 @@ export class DemographicsIodComponent implements OnInit {
    */
   onChangeSector(evt: any) {
     this.demographicData.subsector = null;
-    this.updateDemographics();
+    this.newUpdate('SECTOR', evt, 'int')
     if (this.demographicData.sector) {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
       });
+      
     }
   }
 
   changeUsesStandard(val: boolean) {
     this.demographicData.usesStandard = val;
-    this.updateDemographics();
+    this.demoSvc.updateIndividualDemographics('STANDARD-USED', val, 'bool')
   }
 
   setRequireComply(val: boolean) {
     this.demographicData.requiredToComply = val;
-    this.updateDemographics();
+    this.demoSvc.updateIndividualDemographics('REGULATION-REQD', val, 'bool')
   }
 
   changeRegType1(o: any, evt: any) {
     this.demographicData.regulationType1 = o.optionValue;
-    this.updateDemographics();
+    this.demoSvc.updateIndividualDemographics('REG-TYPE1', o.optionValue, 'int');
   }
 
   changeRegType2(o: any, evt: any) {
     this.demographicData.regulationType2 = o.optionValue;
-    this.updateDemographics();
+    this.demoSvc.updateIndividualDemographics('REG-TYPE2', o.optionValue, 'int');
   }
 
   changeShareOrg(org: any, evt: any) {
@@ -137,4 +138,9 @@ export class DemographicsIodComponent implements OnInit {
     this.configSvc.cisaAssessorWorkflow = true;
     this.demoSvc.updateDemographic(this.demographicData);
   }
-}
+
+  newUpdate(name: string, event: any, type: string){
+    this.configSvc.cisaAssessorWorkflow = true;
+    this.demoSvc.updateIndividualDemographics(name, event.target.value, type)
+  }
+} 
