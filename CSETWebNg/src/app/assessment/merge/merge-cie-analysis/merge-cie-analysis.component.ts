@@ -369,7 +369,6 @@ export class MergeCieAnalysisComponent implements OnInit {
     }
     console.log('---- temp ----')
 
-    this.temp();
     console.log(this.assessmentCombinedText)
     //this.assessmentCombinedText.set(this.mergeConflicts[i].question_Or_Requirement_Id1, this.temp())
     //this.assessmentAnswers.set(this.mergeConflicts[i].question_Or_Requirement_Id1, this.mergeRadioSelections[i]);
@@ -395,63 +394,63 @@ export class MergeCieAnalysisComponent implements OnInit {
           case 2:
             if (this.mergeConflicts[i].answer_Text2 != null && this.mergeConflicts[i].answer_Text2 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer2 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer2;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer2;
               }            
             }
             break;
           case 3:
             if (this.mergeConflicts[i].answer_Text3 != null && this.mergeConflicts[i].answer_Text3 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer3 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer3;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer3;
               }            
             }            
             break;
           case 4:
             if (this.mergeConflicts[i].answer_Text4 != null && this.mergeConflicts[i].answer_Text4 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer4 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer4;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer4;
               }            
             }            
             break;
           case 5:
             if (this.mergeConflicts[i].answer_Text5 != null && this.mergeConflicts[i].answer_Text5 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer5 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer5;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer5;
               }            
             }            
             break;
           case 6:
             if (this.mergeConflicts[i].answer_Text6 != null && this.mergeConflicts[i].answer_Text6 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer6 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer6;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer6;
               }            
             }            
             break;
           case 7:
             if (this.mergeConflicts[i].answer_Text7 != null && this.mergeConflicts[i].answer_Text7 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer7 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer7;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer7;
               }            
             }            
             break;
           case 8:
             if (this.mergeConflicts[i].answer_Text8 != null && this.mergeConflicts[i].answer_Text8 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer8 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer8;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer8;
               }            
             }            
             break;
           case 9:
             if (this.mergeConflicts[i].answer_Text9 != null && this.mergeConflicts[i].answer_Text9 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer9 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer9;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer9;
               }            
             }            
             break;
           case 10:
             if (this.mergeConflicts[i].answer_Text10 != null && this.mergeConflicts[i].answer_Text10 == selectedAnswer) {
               if (this.mergeConflicts[i].free_Response_Answer10 != null) {
-                combinedText += this.mergeConflicts[i].free_Response_Answer10;
+                combinedText += '\n' + this.mergeConflicts[i].free_Response_Answer10;
               }            
             }            
             break;
@@ -534,6 +533,7 @@ export class MergeCieAnalysisComponent implements OnInit {
   createMergedAssessment() {
     // Null out the button to prevent multiple clicks
     this.attemptingToMerge = true;
+    this.temp();
 
     this.convertToAnswerType(this.mergeRadioSelections.length, this.mergeRadioSelections);
     localStorage.setItem('questionSet', 'Maturity');
@@ -571,27 +571,18 @@ export class MergeCieAnalysisComponent implements OnInit {
                 for (let j = 0; j < this.existingAssessmentAnswers.length; j++) {
                   if (this.selectedMergeAnswers[i].questionId === this.existingAssessmentAnswers[j].questionId) {
                     this.existingAssessmentAnswers[j].comment = this.selectedMergeAnswers[i].comment;
-                    console.log('outside')
 
                     if (this.existingAssessmentAnswers[j].answerText == this.selectedMergeAnswers[i].answerText) {
-                      console.log('equal')
-                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
-
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
                         //this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
                         //this.existingAssessmentAnswers[j].freeResponseAnswer += "\n" + this.selectedMergeAnswers[i].freeResponseAnswer;
                       }
-                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
                     }
                     else {
-                      console.log('not equal')
-                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
+                      
                       if (this.selectedMergeAnswers[i].freeResponseAnswer != null && this.selectedMergeAnswers[i].freeResponseAnswer != 'null') {
                         this.existingAssessmentAnswers[j].freeResponseAnswer = this.selectedMergeAnswers[i].freeResponseAnswer;
                       }
-
-                      console.log(this.existingAssessmentAnswers[j].freeResponseAnswer)
-
                     }
 
                     this.existingAssessmentAnswers[j].answerText = this.selectedMergeAnswers[i].answerText;
@@ -630,12 +621,13 @@ export class MergeCieAnalysisComponent implements OnInit {
                     //   }
                     // } else {
                       // If we dont have any issues, we can be done.
+                      this.mergeConflicts = [];
+                      this.assessmentCombinedText.clear();
                       this.navToHome();
                     // }
                   });
               });
 
-              this.
             });
           });
         });
