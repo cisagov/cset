@@ -1,0 +1,77 @@
+<div class="white-panel oy-auto ox-auto d-flex flex-column flex-11a">
+
+    <div class="container">
+       
+        <div class="row" style="padding-bottom: 5px;">
+            <div class="col-12">
+                <h3>Analytics Assessment Data Upload</h3>
+            </div>
+            <!--<div class="col-12">
+                <mat-tab-group style="overflow: auto; max-height:800px; margin-bottom: 2rem;">
+                    <mat-tab label="Pretty Data">
+                        <div class="container" style="margin-top:10px;">
+                            <div class="col-12">
+                                <div class="row">
+                                    <h5>Demographics</h5>
+                                    <div class='col-12'>
+                                        <div class="row">
+                                            <div class="col-3"><b>Sector Name:</b></div>
+                                            <div class="col-9">{{analytics.demographics.sectorName}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Industry Name:</b></div>
+                                            <div class="col-9">{{analytics.demographics.industryName}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Asset Value:</b></div>
+                                            <div class="col-9">{{analytics.demographics.assetValue}}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Size:</b></div>
+                                            <div class="col-9">{{analytics.demographics.size}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h5 style="margin-top:10px;">Questions/Anwers</h5>
+                                    <div class="w-100">
+                                        <div class="table-container">
+                                            <table matSort class="assessment-summary" style='overflow-x:auto'>
+                                                <tr class="sticky">
+                                                    <th width="15%" mat-sort-header="QuestionId">Question Id</th>
+                                                    <th mat-sort-header="QuestionText">Question Text</th>
+                                                    <th width="15%" mat-sort-header="Answer">Answer</th>
+                                                </tr>
+                                                <tr *ngFor="let qa of analytics.questionAnswers; let i = index">
+                                                    <td style="padding-left:15px;" class="align-top">{{qa.questionId}}</td>
+                                                    <td [innerHTML]="qa.questionText" class="align-top"></td>
+                                                    <td class="align-top">{{qa.answerText}}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Raw Data">
+                        <div class="container">
+                            <div class="col-12">
+                                <div class="row"><pre>{{analytics | json}}</pre></div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>-->
+        <div class="row">
+            <div class="col-12">
+                <button class="btn btn-primary" type="button" (click)="showLogin()">Submit Data</button>
+            </div>
+        </div>
+
+    </div>
+
+    <app-nav-back-next [page]="'analytics'" [hide]="navSvc.isLastVisiblePage('analytics') ? 'next' : ''"></app-nav-back-next>
+
+</div>
