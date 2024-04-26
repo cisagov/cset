@@ -159,7 +159,7 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.createAssessmentName();
       });
 
-      this.lastModifiedTimestamp = new DateTime(this.lastModifiedTimestamp).toString();
+      this.lastModifiedTimestamp = DateTime.fromISO(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
