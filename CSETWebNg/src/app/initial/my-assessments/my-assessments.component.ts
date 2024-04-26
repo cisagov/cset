@@ -26,7 +26,6 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { Sort } from "@angular/material/sort";
 import { Router } from "@angular/router";
-import { DatePipe } from '@angular/common';
 import { AssessmentService } from "../../services/assessment.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { ConfigService } from "../../services/config.service";
@@ -119,7 +118,6 @@ export class MyAssessmentsComponent implements OnInit {
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
-    public datePipe: DatePipe,
     public reportSvc: ReportService
   ) { }
 
@@ -438,15 +436,14 @@ export class MyAssessmentsComponent implements OnInit {
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
   systemTimeTranslator(d: DateTime, format: string) {
-    var dtD = DateTime.fromISO(d, {});
     let localDate = '';
     if (format == 'med') {
-      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+      localDate = d.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
     }
     else if (format == 'short') {
-      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+      localDate = d.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
     }
-    
+
     return localDate;
   }
 
