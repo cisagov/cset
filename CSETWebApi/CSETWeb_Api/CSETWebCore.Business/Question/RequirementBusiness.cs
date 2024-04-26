@@ -184,7 +184,7 @@ namespace CSETWebCore.Business.Question
                 {
                     subcat = new QuestionSubCategory()
                     {
-                        SubCategoryId = 0,
+                        SubCategoryId = null,
                         SubCategoryHeadingText = dbR.Standard_Sub_Category
                     };
 
@@ -273,128 +273,6 @@ namespace CSETWebCore.Business.Question
             return new QuestionSubCategory();
         }
 
-
-        /// <summary>
-        /// Construct a response containing the applicable requirement questions with their answers.
-        /// </summary>
-        /// <param name="requirements"></param>
-        /// <param name="answers"></param>
-        /// <returns></returns>
-        public QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
-        List<FullAnswer> answers, List<DomainAssessmentFactor> domains)
-        {
-            List<QuestionGroup> groupList = new List<QuestionGroup>();
-            QuestionGroup g = new QuestionGroup();
-            QuestionSubCategory sg = new QuestionSubCategory();
-            QuestionAnswer qa = new QuestionAnswer();
-
-            string currentGroupHeading = string.Empty;
-            string currentSubcategoryHeading = string.Empty;
-
-            try
-            {
-                foreach (var dbRPlus in requirements)
-                {
-                    var dbR = dbRPlus.Requirement;
-
-                    // Make sure there are no leading or trailing spaces - it will affect the tree structure that is built
-                    dbR.Standard_Category = dbR.Standard_Category == null ? null : dbR.Standard_Category.Trim();
-                    dbR.Standard_Sub_Category = dbR.Standard_Sub_Category == null ? null : dbR.Standard_Sub_Category.Trim();
-
-                    // If the Standard_Sub_Category is null (like CSC_V6), default it to the Standard_Category
-                    if (dbR.Standard_Sub_Category == null)
-                    {
-                        dbR.Standard_Sub_Category = dbR.Standard_Category;
-                    }
-
-
-                    if (dbR.Standard_Category != currentGroupHeading)
-                    {
-                        g = new QuestionGroup()
-                        {
-                            GroupHeadingId = dbR.Question_Group_Heading_Id,
-                            GroupHeadingText = dbR.Standard_Category,
-                            StandardShortName = dbRPlus.SetShortName,
-                        };
-
-                        groupList.Add(g);
-
-                        currentGroupHeading = g.GroupHeadingText;
-                    }
-
-                    // new subcategory
-                    if (dbR.Standard_Sub_Category != currentSubcategoryHeading)
-                    {
-                        sg = new QuestionSubCategory()
-                        {
-                            SubCategoryId = 0,
-                            SubCategoryHeadingText = dbR.Standard_Sub_Category,
-                            GroupHeadingId = g.GroupHeadingId
-                        };
-
-                        g.SubCategories.Add(sg);
-
-                        currentSubcategoryHeading = dbR.Standard_Sub_Category;
-                    }
-
-
-                    FullAnswer answer = answers.Where(x => x.a.Question_Or_Requirement_Id == dbR.Requirement_Id).FirstOrDefault();
-
-                    qa = new QuestionAnswer()
-                    {
-                        DisplayNumber = dbR.Requirement_Title,
-                        QuestionId = dbR.Requirement_Id,
-                        QuestionText = dbR.Requirement_Text.Replace("\r\n", "<br/>").Replace("\n", "<br/>").Replace("\r", "<br/>"),
-                        Answer = answer?.a.Answer_Text,
-                        AltAnswerText = answer?.a.Alternate_Justification,
-                        FreeResponseAnswer = answer?.a.Free_Response_Answer,
-                        Comment = answer?.a.Comment,
-                        Feedback = answer?.a.FeedBack,
-                        MarkForReview = answer?.a.Mark_For_Review ?? false,
-                        Reviewed = answer?.a.Reviewed ?? false,
-                        SetName = dbRPlus.SetName,
-                        ShortName = dbRPlus.SetShortName,
-                        Is_Component = answer?.a.Is_Component ?? false,
-                        Is_Requirement = answer?.a.Is_Requirement ?? true
-                    };
-
-                    if (string.IsNullOrEmpty(qa.QuestionType))
-                    {
-                        qa.QuestionType = _questionRequirement.DetermineQuestionType(qa.Is_Requirement, qa.Is_Component, false, qa.Is_Maturity);
-                    }
-
-                    if (answer != null)
-                    {
-                        TinyMapper.Map<VIEW_QUESTIONS_STATUS, QuestionAnswer>(answer.b, qa);
-
-                        // db view still uses the term "HasDiscovery" - map to "HasObservation"
-                        qa.HasObservation = answer.b.HasDiscovery ?? false;
-                    }
-
-                    qa.ParmSubs = GetTokensForRequirement(qa.QuestionId, (answer != null) ? answer.a.Answer_Id : 0);
-
-                    sg.Questions.Add(qa);
-                }
-
-                QuestionResponse resp = new QuestionResponse
-                {
-                    Categories = groupList,
-                    ApplicationMode = _questionRequirement.ApplicationMode,
-                    QuestionCount = _questionRequirement.NumberOfQuestions(),
-                    RequirementCount = _questionRequirement.NumberOfRequirements()
-                };
-
-                _questionRequirement.BuildComponentsResponse(resp);
-
-                return resp;
-            }
-            catch (Exception exc)
-            {
-                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                throw;
-            }
-        }
 
         /// <summary>
         /// Returns a list of answer IDs that are currently 'active' on the
