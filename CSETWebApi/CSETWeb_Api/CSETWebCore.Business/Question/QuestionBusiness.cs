@@ -502,13 +502,13 @@ namespace CSETWebCore.Business.Question
             var usch = _context.UNIVERSAL_SUB_CATEGORY_HEADINGS.FirstOrDefault(u => u.Question_Group_Heading_Id == subCatAnswerBlock.GroupHeadingId
                                                                            && u.Universal_Sub_Category_Id == subCatAnswerBlock.SubCategoryId);
 
-            var subCatAnswer = _context.SUB_CATEGORY_ANSWERS.FirstOrDefault(sca => sca.Assessement_Id == _questionRequirement.AssessmentId
+            var subCatAnswer = _context.SUB_CATEGORY_ANSWERS.FirstOrDefault(sca => sca.Assessment_Id == _questionRequirement.AssessmentId
                                                                           && sca.Heading_Pair_Id == usch.Heading_Pair_Id);
 
             if (subCatAnswer == null)
             {
                 subCatAnswer = new SUB_CATEGORY_ANSWERS();
-                subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
+                subCatAnswer.Assessment_Id = _questionRequirement.AssessmentId;
                 subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
                 subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
                 subCatAnswer.Component_Guid = new Guid().ToString();
@@ -516,7 +516,7 @@ namespace CSETWebCore.Business.Question
             }
             else
             {
-                subCatAnswer.Assessement_Id = _questionRequirement.AssessmentId;
+                subCatAnswer.Assessment_Id = _questionRequirement.AssessmentId;
                 subCatAnswer.Heading_Pair_Id = usch.Heading_Pair_Id;
                 subCatAnswer.Answer_Text = subCatAnswerBlock.SubCategoryAnswer;
                 _context.SUB_CATEGORY_ANSWERS.Update(subCatAnswer);

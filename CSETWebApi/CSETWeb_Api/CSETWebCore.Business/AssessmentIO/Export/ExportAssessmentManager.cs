@@ -341,7 +341,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
                 model.jGENERAL_SAL.Add(TinyMapper.Map<GENERAL_SAL, jGENERAL_SAL>(item));
             }
 
-            foreach (var item in _context.SUB_CATEGORY_ANSWERS.Where(x => x.Assessement_Id == assessmentId))
+            foreach (var item in _context.SUB_CATEGORY_ANSWERS.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jSUB_CATEGORY_ANSWERS.Add(TinyMapper.Map<SUB_CATEGORY_ANSWERS, jSUB_CATEGORY_ANSWERS>(item));
             }
