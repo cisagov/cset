@@ -1,0 +1,29 @@
+@import '@angular/material/theming';
+  .mat-form-field {
+    width: 100%;
+    min-width: 300px;
+  }
+
+  .error {
+    padding: 16px;
+    width: 300px;
+    color: white;
+    background-color: red;
+  }
+
+  .progress-height {
+    height: 4px;
+  }
+
+  .logo {
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  input[type=password]:focus,input[type=text]:focus {
+      border: none !important;
+  } 
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 1em 0 !important;
+}
