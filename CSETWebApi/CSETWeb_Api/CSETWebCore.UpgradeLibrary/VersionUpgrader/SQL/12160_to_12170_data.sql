@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-(localdb)\INLLocalDB2022.CSETWeb12160    -  This database will be modified
+(localdb)\INLLocalDB2022.NCUAWeb12160    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 4/25/2024 10:10:41 AM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 4/26/2024 4:10:34 PM
 
 */
 		
@@ -73,6 +73,9 @@ ALTER TABLE [dbo].[FINANCIAL_QUESTIONS] NOCHECK CONSTRAINT [FK_FINANCIAL_QUESTIO
 PRINT(N'Drop constraint FK_NERC_RISK_RANKING_NEW_QUESTION from [dbo].[NERC_RISK_RANKING]')
 ALTER TABLE [dbo].[NERC_RISK_RANKING] NOCHECK CONSTRAINT [FK_NERC_RISK_RANKING_NEW_QUESTION]
 
+PRINT(N'Drop constraint FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1 from [dbo].[REQUIREMENT_QUESTIONS]')
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1]
+
 PRINT(N'Drop constraints from [dbo].[MATURITY_SOURCE_FILES]')
 ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] NOCHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_GEN_FILE]
 ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] NOCHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS]
@@ -107,6 +110,9 @@ ALTER TABLE [dbo].[NERC_RISK_RANKING] NOCHECK CONSTRAINT [FK_NERC_RISK_RANKING_N
 
 PRINT(N'Drop constraint FK_REQUIREMENT_REFERENCE_TEXT_NEW_REQUIREMENT from [dbo].[REQUIREMENT_REFERENCE_TEXT]')
 ALTER TABLE [dbo].[REQUIREMENT_REFERENCE_TEXT] NOCHECK CONSTRAINT [FK_REQUIREMENT_REFERENCE_TEXT_NEW_REQUIREMENT]
+
+PRINT(N'Drop constraint FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT from [dbo].[REQUIREMENT_QUESTIONS]')
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS] NOCHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT]
 
 PRINT(N'Drop constraints from [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] NOCHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
@@ -160,8 +166,1377 @@ ALTER TABLE [dbo].[PARAMETER_ASSESSMENT] NOCHECK CONSTRAINT [FK_ASSESSMENT_PARAM
 PRINT(N'Drop constraint FK_PARAMETER_VALUES_PARAMETERS from [dbo].[PARAMETER_VALUES]')
 ALTER TABLE [dbo].[PARAMETER_VALUES] NOCHECK CONSTRAINT [FK_PARAMETER_VALUES_PARAMETERS]
 
+PRINT(N'Drop constraints from [dbo].[IRP]')
+ALTER TABLE [dbo].[IRP] NOCHECK CONSTRAINT [FK_IRP_IRP_HEADER]
+
+PRINT(N'Drop constraint FK__Assessmen__IRP_I__5EDF0F2E from [dbo].[ASSESSMENT_IRP]')
+ALTER TABLE [dbo].[ASSESSMENT_IRP] NOCHECK CONSTRAINT [FK__Assessmen__IRP_I__5EDF0F2E]
+
 PRINT(N'Drop constraint FK_ASSESSMENTS_GALLERY_ITEM from [dbo].[ASSESSMENTS]')
 ALTER TABLE [dbo].[ASSESSMENTS] NOCHECK CONSTRAINT [FK_ASSESSMENTS_GALLERY_ITEM]
+
+PRINT(N'Delete rows from [dbo].[NEW_QUESTION_LEVELS]')
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57862
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57863
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57864
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57865
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57866
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57867
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57868
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57869
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57870
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57871
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57872
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57873
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57874
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57875
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57876
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57877
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57878
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57879
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57880
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57881
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57882
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57883
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57884
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57885
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57886
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57887
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57888
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57889
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57890
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57891
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57892
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57893
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57894
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57895
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57896
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57897
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57898
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57899
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57900
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57901
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57902
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57903
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57904
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57905
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57906
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57907
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57908
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57909
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57910
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57911
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57912
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57913
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57914
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57915
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57916
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57917
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57918
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57919
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57920
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57921
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57922
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57923
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57924
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57925
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57926
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57927
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57928
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57929
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57930
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57931
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57932
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57933
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57934
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57935
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57936
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57937
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57938
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57939
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57940
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57941
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57942
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57943
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57944
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57945
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57946
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57947
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57948
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57949
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57950
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57951
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57952
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57953
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57954
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57955
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57956
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57957
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57958
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57959
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57960
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57961
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57962
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57963
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57964
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57965
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57966
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57967
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57968
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57969
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57970
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57971
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57972
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57973
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57974
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57975
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57976
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57977
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57978
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57979
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57980
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57981
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57982
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57983
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57984
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57985
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57986
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57987
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57988
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57989
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57990
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57991
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57992
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57993
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57994
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57995
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57996
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57997
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57998
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 57999
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58000
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58001
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58002
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58003
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58004
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58005
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58006
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58007
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58008
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58009
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58010
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58011
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58012
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58013
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58014
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58015
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58016
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58017
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58018
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58019
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58020
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58021
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58022
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58023
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58024
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58025
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58026
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58027
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58028
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58029
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58030
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58031
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58032
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58033
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58034
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58035
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58036
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58037
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58038
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58039
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58040
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58041
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58042
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58043
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58044
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58045
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58046
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58047
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58048
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58049
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58050
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58051
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58052
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58053
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58054
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58055
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58056
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58057
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58058
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58059
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58060
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58061
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58062
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58063
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58064
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58065
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58066
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58067
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58068
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58069
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58070
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58071
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58072
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58073
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58074
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58075
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58076
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58077
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58078
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58079
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58080
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58081
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58082
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58083
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58084
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58085
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58086
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58087
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58088
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58089
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58090
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58091
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58092
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58093
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58094
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58095
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58096
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58097
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58098
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58099
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58100
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58101
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58102
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58103
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58104
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58105
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58106
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58107
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58108
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58109
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58110
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58111
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58112
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58113
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58114
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58115
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58116
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58117
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58118
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58119
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58120
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58121
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58122
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58123
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58124
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58125
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58126
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58127
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58128
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58129
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58130
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58131
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58132
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58133
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58134
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58135
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58136
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58137
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58138
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58139
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58140
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58141
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58142
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58143
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58144
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58145
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58146
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58147
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58148
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58149
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58150
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58151
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58152
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58153
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58154
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58155
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58156
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58157
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58158
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58159
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58160
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58161
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58162
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58163
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58164
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58165
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58166
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58167
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58168
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58169
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58170
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58171
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58172
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58173
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58174
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58175
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58176
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58177
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58178
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58179
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58180
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58181
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58182
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58183
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58184
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58185
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58186
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58187
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58188
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58189
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58190
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58191
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58192
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58193
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58194
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58195
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58196
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58197
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58198
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58199
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58200
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'H' AND [New_Question_Set_Id] = 58201
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57862
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57863
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57864
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57865
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57866
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57867
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57868
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57869
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57870
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57871
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57872
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57873
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57874
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57875
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57876
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57877
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57878
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57879
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57880
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57881
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57882
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57883
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57884
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57885
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57886
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57887
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57888
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57889
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57890
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57891
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57892
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57893
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57894
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57895
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57896
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57897
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57898
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57899
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57900
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57901
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57902
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57903
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57904
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57905
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57906
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57907
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57908
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57909
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57910
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57911
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57912
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57913
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57914
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57915
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57916
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57917
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57918
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57919
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57920
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57921
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57922
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57923
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57924
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57925
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57926
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57927
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57928
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57929
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57930
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57931
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57932
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57933
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57934
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57935
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57936
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57937
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57938
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57939
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57940
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57941
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57942
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57943
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57944
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57945
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57946
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57947
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57948
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57949
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57950
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57951
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57952
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57953
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57954
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57955
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57956
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57957
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57958
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57959
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57960
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57961
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57962
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57963
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57964
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57965
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57966
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57967
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57968
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57969
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57970
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57971
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57972
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57973
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57974
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57975
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57976
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57977
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57978
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57979
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57980
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57981
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57982
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57983
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57984
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57985
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57986
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57987
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57988
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57989
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57990
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57991
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57992
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57993
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57994
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57995
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57996
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57997
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57998
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 57999
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58000
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58001
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58002
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58003
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58004
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58005
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58006
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58007
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58008
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58009
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58010
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58011
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58012
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58013
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58014
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58015
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58016
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58017
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58018
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58019
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58020
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58021
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58022
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58023
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58024
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58025
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58026
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58027
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58028
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58029
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58030
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58031
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58032
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58033
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58034
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58035
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58036
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58037
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58038
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58039
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58040
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58041
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58042
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58043
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58044
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58045
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58046
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58047
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58048
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58049
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58050
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58051
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58052
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58053
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58054
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58055
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58056
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58057
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58058
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58059
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58060
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58061
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58062
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58063
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58064
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58065
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58066
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58067
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58068
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58069
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58070
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58071
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58072
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58073
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58074
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58075
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58076
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58077
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58078
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58079
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58080
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58081
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58082
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58083
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58084
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58085
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58086
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58087
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58088
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58089
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58090
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58091
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58092
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58093
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58094
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58095
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58096
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58097
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58098
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58099
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58100
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58101
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58102
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58103
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58104
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58105
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58106
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58107
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58108
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58109
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58110
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58111
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58112
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58113
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58114
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58115
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58116
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58117
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58118
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58119
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58120
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58121
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58122
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58123
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58124
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58125
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58126
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58127
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58128
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58129
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58130
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58131
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58132
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58133
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58134
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58135
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58136
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58137
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58138
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58139
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58140
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58141
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58142
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58143
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58144
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58145
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58146
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58147
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58148
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58149
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58150
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58151
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58152
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58153
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58154
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58155
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58156
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58157
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58158
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58159
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58160
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58161
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58162
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58163
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58164
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58165
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58166
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58167
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58168
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58169
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58170
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58171
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58172
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58173
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58174
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58175
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58176
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58177
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58178
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58179
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58180
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58181
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58182
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58183
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58184
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58185
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58186
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58187
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58188
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58189
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58190
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58191
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58192
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58193
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58194
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58195
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58196
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58197
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58198
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58199
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58200
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'L' AND [New_Question_Set_Id] = 58201
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57862
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57863
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57864
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57865
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57866
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57867
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57868
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57869
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57870
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57871
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57872
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57873
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57874
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57875
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57876
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57877
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57878
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57879
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57880
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57881
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57882
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57883
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57884
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57885
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57886
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57887
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57888
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57889
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57890
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57891
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57892
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57893
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57894
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57895
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57896
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57897
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57898
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57899
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57900
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57901
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57902
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57903
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57904
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57905
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57906
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57907
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57908
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57909
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57910
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57911
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57912
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57913
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57914
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57915
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57916
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57917
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57918
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57919
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57920
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57921
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57922
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57923
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57924
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57925
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57926
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57927
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57928
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57929
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57930
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57931
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57932
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57933
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57934
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57935
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57936
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57937
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57938
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57939
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57940
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57941
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57942
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57943
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57944
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57945
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57946
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57947
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57948
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57949
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57950
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57951
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57952
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57953
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57954
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57955
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57956
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57957
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57958
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57959
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57960
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57961
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57962
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57963
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57964
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57965
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57966
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57967
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57968
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57969
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57970
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57971
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57972
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57973
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57974
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57975
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57976
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57977
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57978
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57979
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57980
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57981
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57982
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57983
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57984
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57985
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57986
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57987
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57988
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57989
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57990
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57991
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57992
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57993
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57994
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57995
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57996
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57997
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57998
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 57999
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58000
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58001
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58002
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58003
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58004
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58005
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58006
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58007
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58008
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58009
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58010
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58011
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58012
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58013
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58014
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58015
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58016
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58017
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58018
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58019
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58020
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58021
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58022
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58023
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58024
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58025
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58026
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58027
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58028
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58029
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58030
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58031
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58032
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58033
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58034
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58035
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58036
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58037
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58038
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58039
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58040
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58041
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58042
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58043
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58044
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58045
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58046
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58047
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58048
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58049
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58050
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58051
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58052
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58053
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58054
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58055
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58056
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58057
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58058
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58059
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58060
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58061
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58062
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58063
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58064
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58065
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58066
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58067
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58068
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58069
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58070
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58071
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58072
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58073
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58074
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58075
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58076
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58077
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58078
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58079
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58080
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58081
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58082
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58083
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58084
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58085
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58086
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58087
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58088
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58089
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58090
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58091
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58092
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58093
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58094
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58095
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58096
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58097
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58098
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58099
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58100
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58101
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58102
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58103
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58104
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58105
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58106
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58107
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58108
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58109
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58110
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58111
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58112
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58113
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58114
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58115
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58116
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58117
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58118
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58119
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58120
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58121
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58122
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58123
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58124
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58125
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58126
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58127
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58128
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58129
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58130
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58131
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58132
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58133
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58134
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58135
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58136
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58137
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58138
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58139
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58140
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58141
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58142
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58143
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58144
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58145
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58146
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58147
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58148
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58149
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58150
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58151
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58152
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58153
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58154
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58155
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58156
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58157
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58158
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58159
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58160
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58161
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58162
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58163
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58164
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58165
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58166
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58167
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58168
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58169
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58170
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58171
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58172
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58173
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58174
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58175
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58176
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58177
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58178
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58179
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58180
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58181
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58182
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58183
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58184
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58185
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58186
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58187
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58188
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58189
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58190
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58191
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58192
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58193
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58194
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58195
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58196
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58197
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58198
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58199
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58200
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'M' AND [New_Question_Set_Id] = 58201
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57862
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57863
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57864
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57865
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57866
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57867
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57868
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57869
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57870
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57871
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57872
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57873
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57874
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57875
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57876
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57877
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57878
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57879
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57880
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57881
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57882
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57883
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57884
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57885
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57886
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57887
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57888
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57889
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57890
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57891
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57892
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57893
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57894
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57895
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57896
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57897
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57898
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57899
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57900
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57901
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57902
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57903
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57904
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57905
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57906
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57907
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57908
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57909
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57910
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57911
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57912
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57913
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57914
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57915
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57916
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57917
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57918
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57919
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57920
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57921
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57922
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57923
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57924
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57925
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57926
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57927
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57928
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57929
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57930
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57931
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57932
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57933
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57934
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57935
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57936
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57937
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57938
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57939
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57940
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57941
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57942
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57943
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57944
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57945
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57946
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57947
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57948
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57949
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57950
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57951
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57952
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57953
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57954
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57955
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57956
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57957
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57958
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57959
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57960
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57961
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57962
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57963
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57964
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57965
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57966
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57967
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57968
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57969
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57970
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57971
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57972
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57973
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57974
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57975
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57976
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57977
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57978
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57979
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57980
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57981
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57982
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57983
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57984
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57985
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57986
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57987
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57988
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57989
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57990
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57991
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57992
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57993
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57994
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57995
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57996
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57997
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57998
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 57999
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58000
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58001
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58002
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58003
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58004
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58005
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58006
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58007
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58008
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58009
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58010
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58011
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58012
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58013
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58014
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58015
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58016
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58017
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58018
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58019
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58020
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58021
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58022
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58023
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58024
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58025
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58026
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58027
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58028
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58029
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58030
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58031
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58032
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58033
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58034
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58035
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58036
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58037
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58038
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58039
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58040
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58041
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58042
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58043
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58044
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58045
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58046
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58047
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58048
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58049
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58050
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58051
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58052
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58053
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58054
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58055
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58056
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58057
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58058
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58059
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58060
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58061
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58062
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58063
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58064
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58065
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58066
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58067
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58068
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58069
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58070
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58071
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58072
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58073
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58074
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58075
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58076
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58077
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58078
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58079
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58080
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58081
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58082
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58083
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58084
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58085
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58086
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58087
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58088
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58089
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58090
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58091
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58092
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58093
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58094
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58095
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58096
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58097
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58098
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58099
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58100
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58101
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58102
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58103
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58104
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58105
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58106
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58107
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58108
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58109
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58110
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58111
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58112
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58113
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58114
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58115
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58116
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58117
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58118
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58119
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58120
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58121
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58122
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58123
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58124
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58125
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58126
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58127
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58128
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58129
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58130
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58131
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58132
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58133
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58134
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58135
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58136
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58137
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58138
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58139
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58140
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58141
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58142
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58143
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58144
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58145
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58146
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58147
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58148
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58149
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58150
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58151
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58152
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58153
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58154
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58155
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58156
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58157
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58158
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58159
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58160
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58161
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58162
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58163
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58164
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58165
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58166
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58167
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58168
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58169
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58170
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58171
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58172
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58173
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58174
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58175
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58176
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58177
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58178
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58179
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58180
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58181
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58182
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58183
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58184
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58185
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58186
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58187
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58188
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58189
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58190
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58191
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58192
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58193
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58194
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58195
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58196
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58197
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58198
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58199
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58200
+DELETE FROM [dbo].[NEW_QUESTION_LEVELS] WHERE [Universal_Sal_Level] = N'VH' AND [New_Question_Set_Id] = 58201
+PRINT(N'Operation applied to 1360 rows out of 1360')
 
 PRINT(N'Delete rows from [dbo].[REQUIREMENT_QUESTIONS_SETS]')
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 2 AND [Set_Name] = N'NCSF_V2'
@@ -506,6 +1881,363 @@ DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 15476 AND [
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 15477 AND [Set_Name] = N'NCSF_V2'
 DELETE FROM [dbo].[REQUIREMENT_QUESTIONS_SETS] WHERE [Question_Id] = 15478 AND [Set_Name] = N'NCSF_V2'
 PRINT(N'Operation applied to 341 rows out of 341')
+
+PRINT(N'Delete rows from [dbo].[NEW_QUESTION_SETS]')
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57862
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57863
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57864
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57865
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57866
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57867
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57868
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57869
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57870
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57871
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57872
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57873
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57874
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57875
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57876
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57877
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57878
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57879
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57880
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57881
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57882
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57883
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57884
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57885
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57886
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57887
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57888
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57889
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57890
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57891
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57892
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57893
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57894
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57895
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57896
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57897
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57898
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57899
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57900
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57901
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57902
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57903
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57904
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57905
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57906
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57907
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57908
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57909
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57910
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57911
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57912
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57913
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57914
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57915
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57916
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57917
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57918
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57919
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57920
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57921
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57922
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57923
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57924
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57925
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57926
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57927
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57928
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57929
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57930
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57931
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57932
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57933
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57934
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57935
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57936
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57937
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57938
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57939
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57940
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57941
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57942
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57943
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57944
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57945
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57946
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57947
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57948
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57949
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57950
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57951
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57952
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57953
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57954
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57955
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57956
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57957
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57958
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57959
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57960
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57961
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57962
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57963
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57964
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57965
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57966
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57967
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57968
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57969
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57970
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57971
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57972
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57973
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57974
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57975
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57976
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57977
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57978
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57979
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57980
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57981
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57982
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57983
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57984
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57985
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57986
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57987
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57988
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57989
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57990
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57991
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57992
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57993
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57994
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57995
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57996
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57997
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57998
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 57999
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58000
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58001
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58002
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58003
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58004
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58005
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58006
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58007
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58008
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58009
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58010
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58011
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58012
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58013
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58014
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58015
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58016
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58017
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58018
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58019
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58020
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58021
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58022
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58023
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58024
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58025
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58026
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58027
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58028
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58029
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58030
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58031
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58032
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58033
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58034
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58035
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58036
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58037
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58038
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58039
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58040
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58041
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58042
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58043
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58044
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58045
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58046
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58047
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58048
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58049
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58050
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58051
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58052
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58053
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58054
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58055
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58056
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58057
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58058
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58059
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58060
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58061
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58062
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58063
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58064
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58065
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58066
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58067
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58068
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58069
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58070
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58071
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58072
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58073
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58074
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58075
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58076
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58077
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58078
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58079
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58080
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58081
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58082
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58083
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58084
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58085
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58086
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58087
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58088
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58089
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58090
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58091
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58092
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58093
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58094
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58095
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58096
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58097
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58098
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58099
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58100
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58101
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58102
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58103
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58104
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58105
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58106
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58107
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58108
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58109
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58110
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58111
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58112
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58113
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58114
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58115
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58116
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58117
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58118
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58119
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58120
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58121
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58122
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58123
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58124
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58125
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58126
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58127
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58128
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58129
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58130
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58131
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58132
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58133
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58134
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58135
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58136
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58137
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58138
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58139
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58140
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58141
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58142
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58143
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58144
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58145
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58146
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58147
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58148
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58149
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58150
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58151
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58152
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58153
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58154
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58155
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58156
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58157
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58158
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58159
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58160
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58161
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58162
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58163
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58164
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58165
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58166
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58167
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58168
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58169
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58170
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58171
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58172
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58173
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58174
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58175
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58176
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58177
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58178
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58179
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58180
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58181
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58182
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58183
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58184
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58185
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58186
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58187
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58188
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58189
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58190
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58191
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58192
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58193
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58194
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58195
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58196
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58197
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58198
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58199
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58200
+DELETE FROM [dbo].[NEW_QUESTION_SETS] WHERE [New_Question_Set_Id] = 58201
+PRINT(N'Operation applied to 340 rows out of 340')
+
+PRINT(N'Delete row from [dbo].[REQUIREMENT_REFERENCES]')
+DELETE FROM [dbo].[REQUIREMENT_REFERENCES] WHERE [Requirement_Id] = 36419 AND [Gen_File_Id] = 691 AND [Section_Ref] = N'PR.DS-09'
+
+PRINT(N'Delete rows from [dbo].[MATURITY_REFERENCES]')
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7715 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7724 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7736 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7788 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7796 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7819 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7820 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+DELETE FROM [dbo].[MATURITY_REFERENCES] WHERE [Mat_Question_Id] = 7851 AND [Gen_File_Id] = 6112 AND [Section_Ref] = N'(b)(2)'
+PRINT(N'Operation applied to 8 rows out of 8')
 
 PRINT(N'Delete rows from [dbo].[STANDARD_CATEGORY_SEQUENCE]')
 DELETE FROM [dbo].[STANDARD_CATEGORY_SEQUENCE] WHERE [Standard_Category] = N'' AND [Set_Name] = N'NERC_CIP_R6'
@@ -65640,6 +67372,13 @@ UPDATE [dbo].[MATURITY_REFERENCES] SET [Destination_String]=N'' WHERE [Mat_Quest
 UPDATE [dbo].[MATURITY_REFERENCES] SET [Destination_String]=N'' WHERE [Mat_Question_Id] = 662 AND [Gen_File_Id] = 3866 AND [Section_Ref] = N'RC.CO-1'
 PRINT(N'Operation applied to 488 rows out of 488')
 
+PRINT(N'Delete and re-insert rows in [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] due to identity row modification')
+UPDATE [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] SET [Sub_Heading_Question_Description]=NULL WHERE [Question_Group_Heading_Id] = 48 AND [Universal_Sub_Category_Id] = 5293 AND [Set_Name] = N'Standards'
+UPDATE [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] SET [Sub_Heading_Question_Description]=NULL WHERE [Question_Group_Heading_Id] = 59 AND [Universal_Sub_Category_Id] = 5293 AND [Set_Name] = N'Standards'
+UPDATE [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] SET [Sub_Heading_Question_Description]=NULL WHERE [Question_Group_Heading_Id] = 60 AND [Universal_Sub_Category_Id] = 5294 AND [Set_Name] = N'Standards'
+UPDATE [dbo].[UNIVERSAL_SUB_CATEGORY_HEADINGS] SET [Sub_Heading_Question_Description]=NULL WHERE [Question_Group_Heading_Id] = 69 AND [Universal_Sub_Category_Id] = 5293 AND [Set_Name] = N'Standards'
+PRINT(N'Operation applied to 4 rows out of 4')
+
 PRINT(N'Update rows in [dbo].[NEW_REQUIREMENT]')
 UPDATE [dbo].[NEW_REQUIREMENT] SET [Requirement_Text]=N'a. Develop, document, and disseminate to [Assignment: organization-defined personnel or roles]:
 
@@ -65657,579 +67396,116 @@ c. Review and update the current access control:
 1. Policy [Assignment: organization-defined frequency] and following [Assignment: organization-defined events]; and
 2. Procedures [Assignment: organization-defined frequency] and following [Assignment: organization-defined events].
 ' WHERE [Requirement_Id] = 30045
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Maintain a list of the designated data types of interest (e.g., personally identifiable information, protected health information, financial account numbers, organization intellectual property, operational technology data)</li>
-<li><b>Ex2:</b> Continuously discover and analyze ad hoc data to identify new instances of designated data types</li>
-<li><b>Ex3:</b> Assign data classifications to designated data types through tags or labels</li>
-<li><b>Ex4:</b> Track the provenance, data owner, and geolocation of each instance of designated data types</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36408
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Conduct supplier risk assessments against business and applicable cybersecurity requirements, including the supply chain</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36419
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Use cybersecurity software to generate alerts and provide them to the security operations center (SOC), incident responders, and incident response tools</li>
-<li><b>Ex2:</b> Incident responders and other authorized personnel can access log analysis findings at all times</li>
-<li><b>Ex3:</b> Automatically create and assign tickets in the organization''s ticketing system when certain types of alerts occur</li>
-<li><b>Ex4:</b> Manually create and assign tickets in the organization''s ticketing system when technical staff discover indicators of compromise</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36423
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div><ul>
-<li><b>Ex1:</b>Monitor remote and onsite administration and maintenance activities that external providers perform on organizational systems.</li>
-<li><b>Ex2:</b> Monitor activity from cloud-based services, internet service providers, and other service providers for deviations from expected behavior.</li>
-</ul></div>' WHERE [Requirement_Id] = 36427
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Select recovery actions based on the criteria defined in the incident response plan and available resources</li>
-<li><b>Ex2:</b> Change planned recovery actions based on a reassessment of organizational needs and resources</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36434
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Check restoration assets for indicators of compromise, file corruption, and other integrity issues before use</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36435
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Use business impact and system categorization records (including service delivery objectives) to validate that essential services are restored in the appropriate order</li>
-<li><b>Ex2:</b> Work with system owners to confirm the successful restoration of systems and the return to normal operations</li>
-<li><b>Ex3:</b> Monitor the performance of restored systems to verify the adequacy of the restoration</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36436
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Check restored assets for indicators of compromise and remediation of root causes of the incident before production use</li>
-<li><b>Ex2:</b> Verify the correctness and adequacy of the restoration actions taken before putting a restored system online</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36437
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Integrate cybersecurity considerations throughout the life cycles of systems, hardware, software, and services</li>
-<li><b>Ex2:</b> Integrate cybersecurity considerations into product life cycles</li>
-<li><b>Ex3:</b> Identify unofficial uses of technology to meet mission objectives (i.e., shadow IT)</li>
-<li><b>Ex4:</b> Periodically identify redundant systems, hardware, software, and services that unnecessarily increase the organization''s attack surface</li>
-<li><b>Ex5:</b> Properly configure and secure systems, hardware, software, and services prior to their deployment in production</li>
-<li><b>Ex6:</b> Update inventories when systems, hardware, software, and services are moved or transferred within the organization</li>
-<li><b>Ex7:</b> Securely destroy stored data based on the organization''s data retention policy using the prescribed destruction method, and keep and manage a record of the destructions</li>
-<li><b>Ex8:</b> Securely sanitize data storage when hardware is being retired, decommissioned, reassigned, or sent for repairs or replacement</li>
-<li><b>Ex9:</b> Offer methods for destroying paper, storage media, and other physical forms of data storage</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36439
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Implement and follow procedures for the formal documentation, review, testing, and approval of proposed changes and requested exceptions</li>
-<li><b>Ex2:</b> Document the possible risks of making or not making each proposed change, and provide guidance on rolling back changes</li>
-<li><b>Ex3:</b> Document the risks related to each requested exception and the plan for responding to those risks</li>
-<li><b>Ex4:</b> Periodically review risks that were accepted based upon planned future actions or milestones</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36440
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Conduct vulnerability information sharing between the organization and its suppliers following the rules and protocols defined in contracts</li>
-<li><b>Ex2:</b> Assign responsibilities and verify the execution of procedures for processing, analyzing the impact of, and responding to cybersecurity threat, vulnerability, or incident disclosures by suppliers, customers, partners, and government cybersecurity organizations</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36441
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Assess the authenticity and cybersecurity of critical technology products and services prior to acquisition and use</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36442
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Perform self-assessments of critical services that take current threats and TTPs into consideration</li>
-<li><b>Ex2:</b> Invest in third-party assessments or independent audits of the effectiveness of the organization''s cybersecurity program to identify areas that need improvement</li>
-<li><b>Ex3:</b> Constantly evaluate compliance with selected cybersecurity requirements through automated means</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36443
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Identify improvements for future incident response activities based on findings from incident response assessments (e.g., tabletop exercises and simulations, tests, internal reviews, independent audits)</li>
-<li><b>Ex2:</b> Identify improvements for future business continuity, disaster recovery, and incident response activities based on exercises performed in coordination with critical service providers and product suppliers</li>
-<li><b>Ex3:</b> Involve internal stakeholders (e.g., senior executives, legal department, HR) in security tests and exercises as appropriate</li>
-<li><b>Ex4:</b> Perform penetration testing to identify opportunities to improve the security posture of selected high-risk systems as approved by leadership</li>
-<li><b>Ex5:</b> Exercise contingency plans for responding to and recovering from the discovery that products or services did not originate with the contracted supplier or partner or were altered before receipt</li>
-<li><b>Ex6:</b> Collect and analyze performance metrics using security tools and services to inform improvements to the cybersecurity program</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36444
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Conduct collaborative lessons learned sessions with suppliers</li>
-<li><b>Ex2:</b> Annually review cybersecurity policies, processes, and procedures to take lessons learned into account</li>
-<li><b>Ex3:</b> Use metrics to assess operational cybersecurity performance over time</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36445
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish contingency plans (e.g., incident response, business continuity, disaster recovery) for responding to and recovering from adverse events that can interfere with operations, expose confidential information, or otherwise endanger the organization''s mission and viability</li>
-<li><b>Ex2:</b> Include contact and communication information, processes for handling common scenarios, and criteria for prioritization, escalation, and elevation in all contingency plans</li>
-<li><b>Ex3:</b> Create a vulnerability management plan to identify and assess all types of vulnerabilities and to prioritize, test, and implement risk responses</li>
-<li><b>Ex4:</b> Communicate cybersecurity plans (including updates) to those responsible for carrying them out and to affected parties</li>
-<li><b>Ex5:</b> Review and update all cybersecurity plans annually or when a need for significant improvements is identified</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36446
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Initiate requests for new access or additional access for employees, contractors, and others, and track, review, and fulfill the requests, with permission from system or data owners when needed</li>
-<li><b>Ex2:</b> Issue, manage, and revoke cryptographic certificates and identity tokens, cryptographic keys (i.e., key management), and other credentials</li>
-<li><b>Ex3:</b> Select a unique identifier for each device from immutable hardware characteristics or an identifier securely provisioned to the device</li>
-<li><b>Ex4:</b> Physically label authorized hardware with an identifier for inventory and servicing purposes</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36447
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Verify a person''s claimed identity at enrollment time using government-issued identity credentials (e.g., passport, visa, driver''s license)</li>
-<li><b>Ex2:</b> Issue a different credential for each person (i.e., no credential sharing)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36448
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Require multifactor authentication</li>
-<li><b>Ex2:</b> Enforce policies for the minimum strength of passwords, PINs, and similar authenticators</li>
-<li><b>Ex3:</b> Periodically reauthenticate users, services, and hardware based on risk (e.g., in zero trust architectures)</li>
-<li><b>Ex4:</b> Ensure that authorized personnel can access accounts essential for protecting safety under emergency conditions</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36449
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Protect identity assertions that are used to convey authentication and user information through single sign-on systems</li>
-<li><b>Ex2:</b> Protect identity assertions that are used to convey authentication and user information between federated systems</li>
-<li><b>Ex3:</b> Implement standards-based approaches for identity assertions in all contexts, and follow all guidance for the generation (e.g., data models, metadata), protection (e.g., digital signing, encryption), and verification (e.g., signature validation) of identity assertions</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36450
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Review logical and physical access privileges periodically and whenever someone changes roles or leaves the organization, and promptly rescind privileges that are no longer needed</li>
-<li><b>Ex2:</b> Take attributes of the requester and the requested resource into account for authorization decisions (e.g., geolocation, day/time, requester endpoint''s cyber health)</li>
-<li><b>Ex3:</b> Restrict access and privileges to the minimum necessary (e.g., zero trust architecture)</li>
-<li><b>Ex4:</b> Periodically review the privileges associated with critical business functions to confirm proper separation of duties</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36451
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Use security guards, security cameras, locked entrances, alarm systems, and other physical controls to monitor facilities and restrict access</li>
-<li><b>Ex2:</b> Employ additional physical security controls for areas that contain high-risk assets</li>
-<li><b>Ex3:</b> Escort guests, vendors, and other third parties within areas that contain business-critical assets</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36452
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Remove data that must remain confidential (e.g., from processors and memory) as soon as it is no longer needed</li>
-<li><b>Ex2:</b> Protect data in use from access by other users and processes of the same platform</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36453
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Continuously back up critical data in near-real-time, and back up other data frequently at agreed-upon schedules</li>
-<li><b>Ex2:</b> Test backups and restores for all types of data sources at least annually</li>
-<li><b>Ex3:</b> Securely store some backups offline and offsite so that an incident or disaster will not damage them</li>
-<li><b>Ex4:</b> Enforce geographic separation and geolocation restrictions for data backup storage</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36454
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish, test, deploy, and maintain hardened baselines that enforce the organization''s cybersecurity policies and provide only essential capabilities (i.e., principle of least functionality)</li>
-<li><b>Ex2:</b> Review all default configuration settings that may potentially impact cybersecurity when installing or upgrading software</li>
-<li><b>Ex3:</b> Monitor implemented software for deviations from approved baselines</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36455
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Perform routine and emergency patching within the timeframes specified in the vulnerability management plan</li>
-<li><b>Ex2:</b> Update container images, and deploy new container instances to replace rather than update existing instances</li>
-<li><b>Ex3:</b> Replace end-of-life software and service versions with supported, maintained versions</li>
-<li><b>Ex4:</b> Uninstall and remove unauthorized software and services that pose undue risks</li>
-<li><b>Ex5:</b> Uninstall and remove any unnecessary software components (e.g., operating system utilities) that attackers might misuse</li>
-<li><b>Ex6:</b> Define and implement plans for software and service end-of-life maintenance support and obsolescence</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36456
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Replace hardware when it lacks needed security capabilities or when it cannot support software with needed security capabilities</li>
-<li><b>Ex2:</b> Define and implement plans for hardware end-of-life maintenance support and obsolescence</li>
-<li><b>Ex3:</b> Perform hardware disposal in a secure, responsible, and auditable manner</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36457
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Configure all operating systems, applications, and services (including cloud-based services) to generate log records</li>
-<li><b>Ex2:</b> Configure log generators to securely share their logs with the organization''s logging infrastructure systems and services</li>
-<li><b>Ex3:</b> Configure log generators to record the data needed by zero-trust architectures</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36458
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> When risk warrants it, restrict software execution to permitted products only or deny the execution of prohibited and unauthorized software</li>
-<li><b>Ex2:</b> Verify the source of new software and the software''s integrity before installing it</li>
-<li><b>Ex3:</b> Configure platforms to use only approved DNS services that block access to known malicious domains</li>
-<li><b>Ex4:</b> Configure platforms to allow the installation of organization-approved software only</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36459
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Protect all components of organization-developed software from tampering and unauthorized access</li>
-<li><b>Ex2:</b> Secure all software produced by the organization, with minimal vulnerabilities in their releases</li>
-<li><b>Ex3:</b> Maintain the software used in production environments, and securely dispose of software once it is no longer needed</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36460
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Logically segment organization networks and cloud-based platforms according to trust boundaries and platform types (e.g., IT, IoT, OT, mobile, guests), and permit required communications only between segments</li>
-<li><b>Ex2:</b> Logically segment organization networks from external networks, and permit only necessary communications to enter the organization''s networks from the external networks</li>
-<li><b>Ex3:</b> Implement zero trust architectures to restrict network access to each resource to the minimum necessary</li>
-<li><b>Ex4:</b> Check the cyber health of endpoints before allowing them to access and use production resources</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36461
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Protect organizational equipment from known environmental threats, such as flooding, fire, wind, and excessive heat and humidity</li>
-<li><b>Ex2:</b> Include protection from environmental threats and provisions for adequate operating infrastructure in requirements for service providers that operate systems on the organization''s behalf</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36462
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Avoid single points of failure in systems and infrastructure</li>
-<li><b>Ex2:</b> Use load balancing to increase capacity and improve reliability</li>
-<li><b>Ex3:</b> Use high-availability components like redundant storage and power supplies to improve system reliability</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36463
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Monitor usage of storage, power, compute, network bandwidth, and other resources</li>
-<li><b>Ex2:</b> Forecast future needs, and scale resources accordingly</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36464
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Securely provide cyber threat intelligence feeds to detection technologies, processes, and personnel</li>
-<li><b>Ex2:</b> Securely provide information from asset inventories to detection technologies, processes, and personnel</li>
-<li><b>Ex3:</b> Rapidly acquire and analyze vulnerability disclosures for the organization''s technologies from suppliers, vendors, and third-party security advisories</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36465
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Apply incident criteria to known and assumed characteristics of activity in order to determine whether an incident should be declared</li>
-<li><b>Ex2:</b> Take known false positives into account when applying incident criteria</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36466
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Monitor email, web, file sharing, collaboration services, and other common attack vectors to detect malware, phishing, data leaks and exfiltration, and other adverse events</li>
-<li><b>Ex2:</b> Monitor authentication attempts to identify attacks against credentials and unauthorized credential reuse</li>
-<li><b>Ex3:</b> Monitor software configurations for deviations from security baselines</li>
-<li><b>Ex4:</b> Monitor hardware and software for signs of tampering</li>
-<li><b>Ex5:</b> Use technologies with a presence on endpoints to detect cyber health issues (e.g., missing patches, malware infections, unauthorized software), and redirect the endpoints to a remediation environment before access is authorized</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36467
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Detection technologies automatically report confirmed incidents</li>
-<li><b>Ex2:</b> Request incident response assistance from the organization''s incident response outsourcer</li>
-<li><b>Ex3:</b> Designate an incident lead for each incident</li>
-<li><b>Ex4:</b> Initiate execution of additional cybersecurity plans as needed to support incident response (for example, business continuity and disaster recovery)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36468
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Preliminarily review incident reports to confirm that they are cybersecurity-related and necessitate incident response activities</li>
-<li><b>Ex2:</b> Apply criteria to estimate the severity of an incident</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36469
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Further review and categorize incidents based on the type of incident (e.g., data breach, ransomware, DDoS, account compromise)</li>
-<li><b>Ex2:</b> Prioritize incidents based on their scope, likely impact, and time-critical nature</li>
-<li><b>Ex3:</b> Select incident response strategies for active incidents by balancing the need to quickly recover from an incident with the need to observe the attacker or conduct a more thorough investigation</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36470
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Track and validate the status of all ongoing incidents</li>
-<li><b>Ex2:</b> Coordinate incident escalation or elevation with designated internal and external stakeholders</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36471
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Apply incident recovery criteria to known and assumed characteristics of the incident to determine whether incident recovery processes should be initiated</li>
-<li><b>Ex2:</b> Take the possible operational disruption of incident recovery activities into account</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36472
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Require each incident responder and others (e.g., system administrators, cybersecurity engineers) who perform incident response tasks to record their actions and make the record immutable</li>
-<li><b>Ex2:</b> Require the incident lead to document the incident in detail and be responsible for preserving the integrity of the documentation and the sources of all information being reported</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36473
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Collect, preserve, and safeguard the integrity of all pertinent incident data and metadata (e.g., data source, date/time of collection) based on evidence preservation and chain-of-custody procedures</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36474
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Review other potential targets of the incident to search for indicators of compromise and evidence of persistence</li>
-<li><b>Ex2:</b> Automatically run tools on targets to look for indicators of compromise and evidence of persistence</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36475
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Prepare an after-action report that documents the incident itself, the response and recovery actions taken, and lessons learned</li>
-<li><b>Ex2:</b> Declare the end of incident recovery once the criteria are met</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36476
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Follow the organization''s breach notification procedures for recovering from a data breach incident</li>
-<li><b>Ex2:</b> Explain the steps being taken to recover from the incident and to prevent a recurrence</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36477
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Share the organization''s mission (e.g., through vision and mission statements, marketing, and service strategies) to provide a basis for identifying risks that may impede that mission</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36478
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Identify relevant internal stakeholders and their cybersecurity-related expectations (e.g., performance and risk expectations of officers, directors, and advisors; cultural expectations of employees)</li>
-<li><b>Ex2:</b> Identify relevant external stakeholders and their cybersecurity-related expectations (e.g., privacy expectations of customers, business expectations of partnerships, compliance expectations of regulators, ethics expectations of society)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36479
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Determine a process to track and manage legal and regulatory requirements regarding protection of individuals'' information (e.g., Health Insurance Portability and Accountability Act, California Consumer Privacy Act, General Data Protection Regulation)</li>
-<li><b>Ex2:</b> Determine a process to track and manage contractual requirements for cybersecurity management of supplier, customer, and partner information</li>
-<li><b>Ex3:</b> Align the organization''s cybersecurity strategy with legal, regulatory, and contractual requirements</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36480
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish criteria for determining the criticality of capabilities and services as viewed by internal and external stakeholders</li>
-<li><b>Ex2:</b> Determine (e.g., from a business impact analysis) assets and business operations that are vital to achieving mission objectives and the potential impact of a loss (or partial loss) of such operations</li>
-<li><b>Ex3:</b> Establish and communicate resilience objectives (e.g., recovery time objectives) for delivering critical capabilities and services in various operating states (e.g., under attack, during recovery, normal operation)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36481
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Create an inventory of the organization''s dependencies on external resources (e.g., facilities, cloud-based hosting providers) and their relationships to organizational assets and business functions</li>
-<li><b>Ex2:</b> Identify and document external dependencies that are potential points of failure for the organization''s critical capabilities and services, and share that information with appropriate personnel</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36482
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Update near-term and long-term cybersecurity risk management objectives as part of annual strategic planning and when major changes occur</li>
-<li><b>Ex2:</b> Establish measurable objectives for cybersecurity risk management (e.g., manage the quality of user training, ensure adequate risk protection for industrial control systems)</li>
-<li><b>Ex3:</b> Senior leaders agree about cybersecurity objectives and use them for measuring and managing risk and performance</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36483
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Determine and communicate risk appetite statements that convey expectations about the appropriate level of risk for the organization</li>
-<li><b>Ex2:</b> Translate risk appetite statements into specific, measurable, and broadly understandable risk tolerance statements</li>
-<li><b>Ex3:</b> Refine organizational objectives and risk appetite periodically based on known risk exposure and residual risk</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36484
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Aggregate and manage cybersecurity risks alongside other enterprise risks (e.g., compliance, financial, operational, regulatory, reputational, safety)</li>
-<li><b>Ex2:</b> Include cybersecurity risk managers in enterprise risk management planning</li>
-<li><b>Ex3:</b> Establish criteria for escalating cybersecurity risks within enterprise risk management</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36485
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Specify criteria for accepting and avoiding cybersecurity risk for various classifications of data</li>
-<li><b>Ex2:</b> Determine whether to purchase cybersecurity insurance</li>
-<li><b>Ex3:</b> Document conditions under which shared responsibility models are acceptable (e.g., outsourcing certain cybersecurity functions, having a third party perform financial transactions on behalf of the organization, using public cloud-based services)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36486
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Determine how to update senior executives, directors, and management on the organization''s cybersecurity posture at agreed-upon intervals</li>
-<li><b>Ex2:</b> Identify how all departments across the organization - such as management, operations, internal auditors, legal, acquisition, physical security, and HR - will communicate with each other about cybersecurity risks</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36487
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish criteria for using a quantitative approach to cybersecurity risk analysis, and specify probability and exposure formulas</li>
-<li><b>Ex2:</b> Create and use templates (e.g., a risk register) to document cybersecurity risk information (e.g., risk description, exposure, treatment, and ownership)</li>
-<li><b>Ex3:</b> Establish criteria for risk prioritization at the appropriate levels within the enterprise</li>
-<li><b>Ex4:</b> Use a consistent list of risk categories to support integrating, aggregating, and comparing cybersecurity risks</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36488
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Define and communicate guidance and methods for identifying opportunities and including them in risk discussions (e.g., strengths, weaknesses, opportunities, and threats [SWOT] analysis)</li>
-<li><b>Ex2:</b> Identify stretch goals and document them</li>
-<li><b>Ex3:</b> Calculate, document, and prioritize positive risks alongside negative risks</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36489
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish a strategy that expresses the objectives of the cybersecurity supply chain risk management program</li>
-<li><b>Ex2:</b> Develop the cybersecurity supply chain risk management program, including a plan (with milestones), policies, and procedures that guide implementation and improvement of the program, and share the policies and procedures with the organizational stakeholders</li>
-<li><b>Ex3:</b> Develop and implement program processes based on the strategy, objectives, policies, and procedures that are agreed upon and performed by the organizational stakeholders</li>
-<li><b>Ex4:</b> Establish a cross-organizational mechanism that ensures alignment between functions that contribute to cybersecurity supply chain risk management, such as cybersecurity, IT, operations, legal, human resources, and engineering</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36490
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Identify one or more specific roles or positions that will be responsible and accountable for planning, resourcing, and executing cybersecurity supply chain risk management activities</li>
-<li><b>Ex2:</b> Document cybersecurity supply chain risk management roles and responsibilities in policy</li>
-<li><b>Ex3:</b> Create responsibility matrixes to document who will be responsible and accountable for cybersecurity supply chain risk management activities and how those teams and individuals will be consulted and informed</li>
-<li><b>Ex4:</b> Include cybersecurity supply chain risk management responsibilities and performance requirements in personnel descriptions to ensure clarity and improve accountability</li>
-<li><b>Ex5:</b> Document performance goals for personnel with cybersecurity risk management-specific responsibilities, and periodically measure them to demonstrate and improve performance</li>
-<li><b>Ex6:</b> Develop roles and responsibilities for suppliers, customers, and business partners to address shared responsibilities for applicable cybersecurity risks, and integrate them into organizational policies and applicable third-party agreements</li>
-<li><b>Ex7:</b> Internally communicate cybersecurity supply chain risk management roles and responsibilities for third parties</li>
-<li><b>Ex8:</b> Establish rules and protocols for information sharing and reporting processes between the organization and its suppliers</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36491
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Identify areas of alignment and overlap with cybersecurity and enterprise risk management</li>
-<li><b>Ex2:</b> Establish integrated control sets for cybersecurity risk management and cybersecurity supply chain risk management</li>
-<li><b>Ex3:</b> Integrate cybersecurity supply chain risk management into improvement processes</li>
-<li><b>Ex4:</b> Escalate material cybersecurity risks in supply chains to senior management, and address them at the enterprise risk management level</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36492
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Develop criteria for supplier criticality based on, for example, the sensitivity of data processed or possessed by suppliers, the degree of access to the organization''s systems, and the importance of the products or services to the organization''s mission</li>
-<li><b>Ex2:</b> Keep a record of all suppliers, and prioritize suppliers based on the criticality criteria</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36493
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish security requirements for suppliers, products, and services commensurate with their criticality level and potential impact if compromised</li>
-<li><b>Ex2:</b> Include all cybersecurity and supply chain requirements that third parties must follow and how compliance with the requirements may be verified in default contractual language</li>
-<li><b>Ex3:</b> Define the rules and protocols for information sharing between the organization and its suppliers and sub-tier suppliers in agreements</li>
-<li><b>Ex4:</b> Manage risk by including security requirements in agreements based on their criticality and potential impact if compromised</li>
-<li><b>Ex5:</b> Define security requirements in service-level agreements (SLAs) for monitoring suppliers for acceptable security performance throughout the supplier relationship lifecycle</li>
-<li><b>Ex6:</b> Contractually require suppliers to disclose cybersecurity features, functions, and vulnerabilities of their products and services for the life of the product or the term of service</li>
-<li><b>Ex7:</b> Contractually require suppliers to provide and maintain a current component inventory (e.g., software or hardware bill of materials) for critical products</li>
-<li><b>Ex8:</b> Contractually require suppliers to vet their employees and guard against insider threats</li>
-<li><b>Ex9:</b> Contractually require suppliers to provide evidence of performing acceptable security practices through, for example, self-attestation, conformance to known standards, certifications, or inspections</li>
-<li><b>Ex10:</b> Specify in contracts and other agreements the rights and responsibilities of the organization, its suppliers, and their supply chains, with respect to potential cybersecurity risks</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36494
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Perform thorough due diligence on prospective suppliers that is consistent with procurement planning and commensurate with the level of risk, criticality, and complexity of each supplier relationship</li>
-<li><b>Ex2:</b> Assess the suitability of the technology and cybersecurity capabilities and the risk management practices of prospective suppliers</li>
-<li><b>Ex3:</b> Conduct supplier risk assessments against business and applicable cybersecurity requirements</li>
-<li><b>Ex4:</b> Assess the authenticity, integrity, and security of critical products prior to acquisition and use</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36495
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Adjust assessment formats and frequencies based on the third party''s reputation and the criticality of the products or services they provide</li>
-<li><b>Ex2:</b> Evaluate third parties'' evidence of compliance with contractual cybersecurity requirements, such as self-attestations, warranties, certifications, and other artifacts</li>
-<li><b>Ex3:</b> Monitor critical suppliers to ensure that they are fulfilling their security obligations throughout the supplier relationship lifecycle using a variety of methods and techniques, such as inspections, audits, tests, or other forms of evaluation</li>
-<li><b>Ex4:</b> Monitor critical suppliers, services, and products for changes to their risk profiles, and reevaluate supplier criticality and risk impact accordingly</li>
-<li><b>Ex5:</b> Plan for unexpected supplier and supply chain-related interruptions to ensure business continuity</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36496
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Define and use rules and protocols for reporting incident response and recovery activities and the status between the organization and its suppliers</li>
-<li><b>Ex2:</b> Identify and document the roles and responsibilities of the organization and its suppliers for incident response</li>
-<li><b>Ex3:</b> Include critical suppliers in incident response exercises and simulations</li>
-<li><b>Ex4:</b> Define and coordinate crisis communication methods and protocols between the organization and its critical suppliers</li>
-<li><b>Ex5:</b> Conduct collaborative lessons learned sessions with critical suppliers</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36497
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Policies and procedures require provenance records for all acquired technology products and services</li>
-<li><b>Ex2:</b> Periodically provide risk reporting to leaders about how acquired components are proven to be untampered and authentic</li>
-<li><b>Ex3:</b> Communicate regularly among cybersecurity risk managers and operations personnel about the need to acquire software patches, updates, and upgrades only from authenticated and trustworthy software providers</li>
-<li><b>Ex4:</b> Review policies to ensure that they require approved supplier personnel to perform maintenance on supplier products</li>
-<li><b>Ex5:</b> Policies and procedure require checking upgrades to critical hardware for unauthorized changes</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36498
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Establish processes for terminating critical relationships under both normal and adverse circumstances</li>
-<li><b>Ex2:</b> Define and implement plans for component end-of-life maintenance support and obsolescence</li>
-<li><b>Ex3:</b> Verify that supplier access to organization resources is deactivated promptly when it is no longer needed</li>
-<li><b>Ex4:</b> Verify that assets containing the organization''s data are returned or properly disposed of in a timely, controlled, and safe manner</li>
-<li><b>Ex5:</b> Develop and execute a plan for terminating or transitioning supplier relationships that takes supply chain security risk and resiliency into account</li>
-<li><b>Ex6:</b> Mitigate risks to data and systems created by supplier termination</li>
-<li><b>Ex7:</b> Manage data leakage risks associated with supplier termination</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36499
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Leaders (e.g., directors) agree on their roles and responsibilities in developing, implementing, and assessing the organization''s cybersecurity strategy</li>
-<li><b>Ex2:</b> Share leaders'' expectations regarding a secure and ethical culture, especially when current events present the opportunity to highlight positive or negative examples of cybersecurity risk management</li>
-<li><b>Ex3:</b> Leaders direct the CISO to maintain a comprehensive cybersecurity risk strategy and review and update it at least annually and after major events</li>
-<li><b>Ex4:</b> Conduct reviews to ensure adequate authority and coordination among those responsible for managing cybersecurity risk</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36500
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Document risk management roles and responsibilities in policy</li>
-<li><b>Ex2:</b> Document who is responsible and accountable for cybersecurity risk management activities and how those teams and individuals are to be consulted and informed</li>
-<li><b>Ex3:</b> Include cybersecurity responsibilities and performance requirements in personnel descriptions</li>
-<li><b>Ex4:</b> Document performance goals for personnel with cybersecurity risk management responsibilities, and periodically measure performance to identify areas for improvement</li>
-<li><b>Ex5:</b> Clearly articulate cybersecurity responsibilities within operations, risk functions, and internal audit functions</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36501
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Conduct periodic management reviews to ensure that those given cybersecurity risk management responsibilities have the necessary authority</li>
-<li><b>Ex2:</b> Identify resource allocation and investment in line with risk tolerance and response</li>
-<li><b>Ex3:</b> Provide adequate and sufficient people, process, and technical resources to support the cybersecurity strategy</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36502
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Integrate cybersecurity risk management considerations into human resources processes (e.g., personnel screening, onboarding, change notification, offboarding)</li>
-<li><b>Ex2:</b> Consider cybersecurity knowledge to be a positive factor in hiring, training, and retention decisions</li>
-<li><b>Ex3:</b> Conduct background checks prior to onboarding new personnel for sensitive roles, and periodically repeat background checks for personnel with such roles</li>
-<li><b>Ex4:</b> Define and enforce obligations for personnel to be aware of, adhere to, and uphold security policies as they relate to their roles</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36503
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Create, disseminate, and maintain an understandable, usable risk management policy with statements of management intent, expectations, and direction</li>
-<li><b>Ex2:</b> Periodically review policy and supporting processes and procedures to ensure that they align with risk management strategy objectives and priorities, as well as the high-level direction of the cybersecurity policy</li>
-<li><b>Ex3:</b> Require approval from senior management on policy</li>
-<li><b>Ex4:</b> Communicate cybersecurity risk management policy and supporting processes and procedures across the organization</li>
-<li><b>Ex5:</b> Require personnel to acknowledge receipt of policy when first hired, annually, and whenever policy is updated</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36504
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Update policy based on periodic reviews of cybersecurity risk management results to ensure that policy and supporting processes and procedures adequately maintain risk at an acceptable level</li>
-<li><b>Ex2:</b> Provide a timeline for reviewing changes to the organization''s risk environment (e.g., changes in risk or in the organization''s mission objectives), and communicate recommended policy updates</li>
-<li><b>Ex3:</b> Update policy to reflect changes in legal and regulatory requirements</li>
-<li><b>Ex4:</b> Update policy to reflect changes in technology (e.g., adoption of artificial intelligence) and changes to the business (e.g., acquisition of a new business, new contract requirements)</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36505
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Measure how well the risk management strategy and risk results have helped leaders make decisions and achieve organizational objectives</li>
-<li><b>Ex2:</b> Examine whether cybersecurity risk strategies that impede operations or innovation should be adjusted</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36506
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Review audit findings to confirm whether the existing cybersecurity strategy has ensured compliance with internal and external requirements</li>
-<li><b>Ex2:</b> Review the performance oversight of those in cybersecurity-related roles to determine whether policy changes are necessary</li>
-<li><b>Ex3:</b> Review strategy in light of cybersecurity incidents</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36507
-UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<div>
-	<ul><li><b>Ex1:</b> Review key performance indicators (KPIs) to ensure that organization-wide policies and procedures achieve objectives</li>
-<li><b>Ex2:</b> Review key risk indicators (KRIs) to identify risks the organization faces, including likelihood and potential impact</li>
-<li><b>Ex3:</b> Collect and communicate metrics on cybersecurity risk management with senior leadership</li>
-
-	</ul>
-</div>' WHERE [Requirement_Id] = 36508
-PRINT(N'Operation applied to 79 rows out of 79')
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Maintain inventories for all types of hardware, including IT, IoT, OT, and mobile devices</li> <li><b>Ex2:</b> Constantly monitor networks to detect new hardware and automatically update inventories</li></ul>' WHERE [Requirement_Id] = 36403
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Maintain inventories for all types of software and services, including commercial-off-the-shelf, open-source, custom applications, API services, and cloud-based applications and services</li> <li><b>Ex2:</b> Constantly monitor all platforms, including containers and virtual machines, for software and service inventory changes</li> <li><b>Ex3:</b> Maintain an inventory of the organization’s systems</li></ul>' WHERE [Requirement_Id] = 36404
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Maintain baselines of communication and data flows within the organization’s wired and wireless networks</li> <li><b>Ex2:</b> Maintain baselines of communication and data flows between the organization and third parties</li> <li><b>Ex3:</b> Maintain baselines of communication and data flows for the organization’s infrastructure-as-a-service (IaaS) usage</li> <li><b>Ex4:</b> Maintain documentation of expected network ports, protocols, and services that are typically used among authorized systems</li></ul>' WHERE [Requirement_Id] = 36405
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Inventory all external services used by the organization, including third-party infrastructure-as-a-service (IaaS), platform-as-a-service (PaaS), and software-as-a-service (SaaS) offerings; APIs; and other externally hosted application services</li> <li><b>Ex2:</b> Update the inventory when a new external service is going to be utilized to ensure adequate cybersecurity risk management monitoring of the organization’s use of that service</li></ul>' WHERE [Requirement_Id] = 36406
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Define criteria for prioritizing each class of assets</li> <li><b>Ex2:</b> Apply the prioritization criteria to assets</li> <li><b>Ex3:</b> Track the asset priorities and update them periodically or when significant changes to the organization occur</li></ul>' WHERE [Requirement_Id] = 36407
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Maintain a list of the designated data types of interest (e.g., personally identifiable information, protected health information, financial account numbers, organization intellectual property, operational technology data)</li> <li><b>Ex2:</b> Continuously discover and analyze ad hoc data to identify new instances of designated data types</li> <li><b>Ex3:</b> Assign data classifications to designated data types through tags or labels</li> <li><b>Ex4:</b> Track the provenance, data owner, and geolocation of each instance of designated data types</li></ul>' WHERE [Requirement_Id] = 36408
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use vulnerability management technologies to identify unpatched and misconfigured software</li> <li><b>Ex2:</b> Assess network and system architectures for design and implementation weaknesses that affect cybersecurity</li> <li><b>Ex3:</b> Review, analyze, or test organization-developed software to identify design, coding, and default configuration vulnerabilities</li> <li><b>Ex4:</b> Assess facilities that house critical computing assets for physical vulnerabilities and resilience issues</li> <li><b>Ex5:</b> Monitor sources of cyber threat intelligence for information on new vulnerabilities in products and services</li> <li><b>Ex6:</b> Review processes and procedures for weaknesses that could be exploited to affect cybersecurity</li></ul>' WHERE [Requirement_Id] = 36409
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Configure cybersecurity tools and technologies with detection or response capabilities to securely ingest cyber threat intelligence feeds</li> <li><b>Ex2:</b> Receive and review advisories from reputable third parties on current threat actors and their tactics, techniques, and procedures (TTPs)</li> <li><b>Ex3:</b> Monitor sources of cyber threat intelligence for information on the types of vulnerabilities that emerging technologies may have</li></ul>' WHERE [Requirement_Id] = 36410
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use cyber threat intelligence to maintain awareness of the types of threat actors likely to target the organization and the TTPs they are likely to use</li> <li><b>Ex2:</b> Perform threat hunting to look for signs of threat actors within the environment</li> <li><b>Ex3:</b> Implement processes for identifying internal threat actors</li></ul>' WHERE [Requirement_Id] = 36411
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Business leaders and cybersecurity risk management practitioners work together to estimate the likelihood and impact of risk scenarios and record them in risk registers</li> <li><b>Ex2:</b> Enumerate the potential business impacts of unauthorized access to the organization’s communications, systems, and data processed in or by those systems</li> <li><b>Ex3:</b> Account for the potential impacts of cascading failures for systems of systems</li></ul>' WHERE [Requirement_Id] = 36412
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Develop threat models to better understand risks to the data and identify appropriate risk responses</li> <li><b>Ex2:</b> Prioritize cybersecurity resource allocations and investments based on estimated likelihoods and impacts</li></ul>' WHERE [Requirement_Id] = 36413
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Apply the vulnerability management plan’s criteria for deciding whether to accept, transfer, mitigate, or avoid risk</li> <li><b>Ex2:</b> Apply the vulnerability management plan’s criteria for selecting compensating controls to mitigate risk</li> <li><b>Ex3:</b> Track the progress of risk response implementation (e.g., plan of action and milestones [POA&M], risk register, risk detail report)</li> <li><b>Ex4:</b> Use risk assessment findings to inform risk response decisions and actions</li> <li><b>Ex5:</b> Communicate planned risk responses to affected stakeholders in priority order</li></ul>' WHERE [Requirement_Id] = 36414
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Provide basic cybersecurity awareness and training to employees, contractors, partners, suppliers, and all other users of the organization’s non-public resources</li> <li><b>Ex2:</b> Train personnel to recognize social engineering attempts and other common attacks, report attacks and suspicious activity, comply with acceptable use policies, and perform basic cyber hygiene tasks (e.g., patching software, choosing passwords, protecting credentials)</li> <li><b>Ex3:</b> Explain the consequences of cybersecurity policy violations, both to individual users and the organization as a whole</li> <li><b>Ex4:</b> Periodically assess or test users on their understanding of basic cybersecurity practices</li> <li><b>Ex5:</b> Require annual refreshers to reinforce existing practices and introduce new practices</li></ul>' WHERE [Requirement_Id] = 36415
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Identify the specialized roles within the organization that require additional cybersecurity training, such as physical and cybersecurity personnel, finance personnel, senior leadership, and anyone with access to business-critical data</li> <li><b>Ex2:</b> Provide role-based cybersecurity awareness and training to all those in specialized roles, including contractors, partners, suppliers, and other third parties</li> <li><b>Ex3:</b> Periodically assess or test users on their understanding of cybersecurity practices for their specialized roles</li> <li><b>Ex4:</b> Require annual refreshers to reinforce existing practices and introduce new practices</li></ul>' WHERE [Requirement_Id] = 36416
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use encryption, digital signatures, and cryptographic hashes to protect the confidentiality and integrity of stored data in files, databases, virtual machine disk images, container images, and other resources</li> <li><b>Ex2:</b> Use full disk encryption to protect data stored on user endpoints</li> <li><b>Ex3:</b> Confirm the integrity of software by validating signatures</li> <li><b>Ex4:</b> Restrict the use of removable media to prevent data exfiltration</li> <li><b>Ex5:</b> Physically secure removable media containing unencrypted sensitive information, such as within locked offices or file cabinets</li></ul>' WHERE [Requirement_Id] = 36417
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use encryption, digital signatures, and cryptographic hashes to protect the confidentiality and integrity of network communications</li> <li><b>Ex2:</b> Automatically encrypt or block outbound emails and other communications that contain sensitive data, depending on the data classification</li> <li><b>Ex3:</b> Block access to personal email, file sharing, file storage services, and other personal communications applications and services from organizational systems and networks</li> <li><b>Ex4:</b> Prevent reuse of sensitive data from production environments (e.g., customer records) in development, testing, and other non-production environments</li></ul>' WHERE [Requirement_Id] = 36418
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Conduct supplier risk assessments against business and applicable cybersecurity requirements, including the supply chain</li></ul>' WHERE [Requirement_Id] = 36419
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use security information and event management (SIEM) or other tools to continuously monitor log events for known malicious and suspicious activity</li> <li><b>Ex2:</b> Utilize up-to-date cyber threat intelligence in log analysis tools to improve detection accuracy and characterize threat actors, their methods, and indicators of compromise</li> <li><b>Ex3:</b> Regularly conduct manual reviews of log events for technologies that cannot be sufficiently monitored through automation</li> <li><b>Ex4:</b> Use log analysis tools to generate reports on their findings</li></ul>' WHERE [Requirement_Id] = 36420
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Constantly transfer log data generated by other sources to a relatively small number of log servers</li> <li><b>Ex2:</b> Use event correlation technology (e.g., SIEM) to collect information captured by multiple sources</li> <li><b>Ex3:</b> Utilize cyber threat intelligence to help correlate events among log sources</li></ul>' WHERE [Requirement_Id] = 36421
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use SIEMs or other tools to estimate impact and scope, and review and refine the estimates</li> <li><b>Ex2:</b> A person creates their own estimates of impact and scope</li></ul>' WHERE [Requirement_Id] = 36422
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use cybersecurity software to generate alerts and provide them to the security operations center (SOC), incident responders, and incident response tools</li> <li><b>Ex2:</b> Incident responders and other authorized personnel can access log analysis findings at all times</li> <li><b>Ex3:</b> Automatically create and assign tickets in the organization’s ticketing system when certain types of alerts occur</li> <li><b>Ex4:</b> Manually create and assign tickets in the organization’s ticketing system when technical staff discover indicators of compromise</li></ul>' WHERE [Requirement_Id] = 36423
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Monitor DNS, BGP, and other network services for adverse events</li> <li><b>Ex2:</b> Monitor wired and wireless networks for connections from unauthorized endpoints</li> <li><b>Ex3:</b> Monitor facilities for unauthorized or rogue wireless networks</li> <li><b>Ex4:</b> Compare actual network flows against baselines to detect deviations</li> <li><b>Ex5:</b> Monitor network communications to identify changes in security postures for zero trust purposes</li></ul>' WHERE [Requirement_Id] = 36424
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Monitor logs from physical access control systems (e.g., badge readers) to find unusual access patterns (e.g., deviations from the norm) and failed access attempts</li> <li><b>Ex2:</b> Review and monitor physical access records (e.g., from visitor registration, sign-in sheets)</li> <li><b>Ex3:</b> Monitor physical access controls (e.g., locks, latches, hinge pins, alarms) for signs of tampering</li> <li><b>Ex4:</b> Monitor the physical environment using alarm systems, cameras, and security guards</li></ul>' WHERE [Requirement_Id] = 36425
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use behavior analytics software to detect anomalous user activity to mitigate insider threats</li> <li><b>Ex2:</b> Monitor logs from logical access control systems to find unusual access patterns and failed access attempts</li> <li><b>Ex3:</b> Continuously monitor deception technology, including user accounts, for any usage</li></ul>' WHERE [Requirement_Id] = 36426
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Monitor remote and onsite administration and maintenance activities that external providers perform on organizational systems</li> <li><b>Ex2:</b> Monitor activity from cloud-based services, internet service providers, and other service providers for deviations from expected behavior</li></ul>' WHERE [Requirement_Id] = 36427
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Follow the organization’s breach notification procedures after discovering a data breach incident, including notifying affected customers</li> <li><b>Ex2:</b> Notify business partners and customers of incidents in accordance with contractual requirements</li> <li><b>Ex3:</b> Notify law enforcement agencies and regulatory bodies of incidents based on criteria in the incident response plan and management approval</li></ul>' WHERE [Requirement_Id] = 36428
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Securely share information consistent with response plans and information sharing agreements</li> <li><b>Ex2:</b> Voluntarily share information about an attacker’s observed TTPs, with all sensitive data removed, with an Information Sharing and Analysis Center (ISAC)</li> <li><b>Ex3:</b> Notify HR when malicious insider activity occurs</li> <li><b>Ex4:</b> Regularly update senior leadership on the status of major incidents</li> <li><b>Ex5:</b> Follow the rules and protocols defined in contracts for incident information sharing between the organization and its suppliers</li> <li><b>Ex6:</b> Coordinate crisis communication methods between the organization and its critical suppliers</li></ul>' WHERE [Requirement_Id] = 36429
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Determine the sequence of events that occurred during the incident and which assets and resources were involved in each event</li> <li><b>Ex2:</b> Attempt to determine what vulnerabilities, threats, and threat actors were directly or indirectly involved in the incident</li> <li><b>Ex3:</b> Analyze the incident to find the underlying, systemic root causes</li> <li><b>Ex4:</b> Check any cyber deception technology for additional information on attacker behavior</li></ul>' WHERE [Requirement_Id] = 36430
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Cybersecurity technologies (e.g., antivirus software) and cybersecurity features of other technologies (e.g., operating systems, network infrastructure devices) automatically perform containment actions</li> <li><b>Ex2:</b> Allow incident responders to manually select and perform containment actions</li> <li><b>Ex3:</b> Allow a third party (e.g., internet service provider, managed security service provider) to perform containment actions on behalf of the organization</li> <li><b>Ex4:</b> Automatically transfer compromised endpoints to a remediation virtual local area network (VLAN)</li></ul>' WHERE [Requirement_Id] = 36431
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Cybersecurity technologies and cybersecurity features of other technologies (e.g., operating systems, network infrastructure devices) automatically perform eradication actions</li> <li><b>Ex2:</b> Allow incident responders to manually select and perform eradication actions</li> <li><b>Ex3:</b> Allow a third party (e.g., managed security service provider) to perform eradication actions on behalf of the organization</li></ul>' WHERE [Requirement_Id] = 36432
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Begin recovery procedures during or after incident response processes</li> <li><b>Ex2:</b> Make all individuals with recovery responsibilities aware of the plans for recovery and the authorizations required to implement each aspect of the plans</li></ul>' WHERE [Requirement_Id] = 36433
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Select recovery actions based on the criteria defined in the incident response plan and available resources</li> <li><b>Ex2:</b> Change planned recovery actions based on a reassessment of organizational needs and resources</li></ul>' WHERE [Requirement_Id] = 36434
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Check restoration assets for indicators of compromise, file corruption, and other integrity issues before use</li></ul>' WHERE [Requirement_Id] = 36435
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use business impact and system categorization records (including service delivery objectives) to validate that essential services are restored in the appropriate order</li> <li><b>Ex2:</b> Work with system owners to confirm the successful restoration of systems and the return to normal operations</li> <li><b>Ex3:</b> Monitor the performance of restored systems to verify the adequacy of the restoration</li></ul>' WHERE [Requirement_Id] = 36436
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Check restored assets for indicators of compromise and remediation of root causes of the incident before production use</li> <li><b>Ex2:</b> Verify the correctness and adequacy of the restoration actions taken before putting a restored system online</li></ul>' WHERE [Requirement_Id] = 36437
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Securely share recovery information, including restoration progress, consistent with response plans and information sharing agreements</li> <li><b>Ex2:</b> Regularly update senior leadership on recovery status and restoration progress for major incidents</li> <li><b>Ex3:</b> Follow the rules and protocols defined in contracts for incident information sharing between the organization and its suppliers</li> <li><b>Ex4:</b> Coordinate crisis communication between the organization and its critical suppliers</li></ul>' WHERE [Requirement_Id] = 36438
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Integrate cybersecurity considerations throughout the life cycles of systems, hardware, software, and services</li> <li><b>Ex2:</b> Integrate cybersecurity considerations into product life cycles</li> <li><b>Ex3:</b> Identify unofficial uses of technology to meet mission objectives (i.e., “shadow IT”)</li> <li><b>Ex4:</b> Periodically identify redundant systems, hardware, software, and services that unnecessarily increase the organization’s attack surface</li> <li><b>Ex5:</b> Properly configure and secure systems, hardware, software, and services prior to their deployment in production</li> <li><b>Ex6:</b> Update inventories when systems, hardware, software, and services are moved or transferred within the organization</li> <li><b>Ex7:</b> Securely destroy stored data based on the organization’s data retention policy using the prescribed destruction method, and keep and manage a record of the destructions</li> <li><b>Ex8:</b> Securely sanitize data storage when hardware is being retired, decommissioned, reassigned, or sent for repairs or replacement</li> <li><b>Ex9:</b> Offer methods for destroying paper, storage media, and other physical forms of data storage</li></ul>' WHERE [Requirement_Id] = 36439
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Implement and follow procedures for the formal documentation, review, testing, and approval of proposed changes and requested exceptions</li> <li><b>Ex2:</b> Document the possible risks of making or not making each proposed change, and provide guidance on rolling back changes</li> <li><b>Ex3:</b> Document the risks related to each requested exception and the plan for responding to those risks</li> <li><b>Ex4:</b> Periodically review risks that were accepted based upon planned future actions or milestones</li></ul>' WHERE [Requirement_Id] = 36440
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Conduct vulnerability information sharing between the organization and its suppliers following the rules and protocols defined in contracts</li> <li><b>Ex2:</b> Assign responsibilities and verify the execution of procedures for processing, analyzing the impact of, and responding to cybersecurity threat, vulnerability, or incident disclosures by suppliers, customers, partners, and government cybersecurity organizations</li></ul>' WHERE [Requirement_Id] = 36441
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Assess the authenticity and cybersecurity of critical technology products and services prior to acquisition and use</li></ul>' WHERE [Requirement_Id] = 36442
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Perform self-assessments of critical services that take current threats and TTPs into consideration</li> <li><b>Ex2:</b> Invest in third-party assessments or independent audits of the effectiveness of the organization’s cybersecurity program to identify areas that need improvement</li> <li><b>Ex3:</b> Constantly evaluate compliance with selected cybersecurity requirements through automated means</li></ul>' WHERE [Requirement_Id] = 36443
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Identify improvements for future incident response activities based on findings from incident response assessments (e.g., tabletop exercises and simulations, tests, internal reviews, independent audits)</li> <li><b>Ex2:</b> Identify improvements for future business continuity, disaster recovery, and incident response activities based on exercises performed in coordination with critical service providers and product suppliers</li> <li><b>Ex3:</b> Involve internal stakeholders (e.g., senior executives, legal department, HR) in security tests and exercises as appropriate</li> <li><b>Ex4:</b> Perform penetration testing to identify opportunities to improve the security posture of selected high-risk systems as approved by leadership</li> <li><b>Ex5:</b> Exercise contingency plans for responding to and recovering from the discovery that products or services did not originate with the contracted supplier or partner or were altered before receipt</li> <li><b>Ex6:</b> Collect and analyze performance metrics using security tools and services to inform improvements to the cybersecurity program</li></ul>' WHERE [Requirement_Id] = 36444
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Conduct collaborative lessons learned sessions with suppliers</li> <li><b>Ex2:</b> Annually review cybersecurity policies, processes, and procedures to take lessons learned into account</li> <li><b>Ex3:</b> Use metrics to assess operational cybersecurity performance over time</li></ul>' WHERE [Requirement_Id] = 36445
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish contingency plans (e.g., incident response, business continuity, disaster recovery) for responding to and recovering from adverse events that can interfere with operations, expose confidential information, or otherwise endanger the organization’s mission and viability</li> <li><b>Ex2:</b> Include contact and communication information, processes for handling common scenarios, and criteria for prioritization, escalation, and elevation in all contingency plans</li> <li><b>Ex3:</b> Create a vulnerability management plan to identify and assess all types of vulnerabilities and to prioritize, test, and implement risk responses</li> <li><b>Ex4:</b> Communicate cybersecurity plans (including updates) to those responsible for carrying them out and to affected parties</li> <li><b>Ex5:</b> Review and update all cybersecurity plans annually or when a need for significant improvements is identified</li></ul>' WHERE [Requirement_Id] = 36446
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Initiate requests for new access or additional access for employees, contractors, and others, and track, review, and fulfill the requests, with permission from system or data owners when needed</li> <li><b>Ex2:</b> Issue, manage, and revoke cryptographic certificates and identity tokens, cryptographic keys (i.e., key management), and other credentials</li> <li><b>Ex3:</b> Select a unique identifier for each device from immutable hardware characteristics or an identifier securely provisioned to the device</li> <li><b>Ex4:</b> Physically label authorized hardware with an identifier for inventory and servicing purposes</li></ul>' WHERE [Requirement_Id] = 36447
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Verify a person’s claimed identity at enrollment time using government-issued identity credentials (e.g., passport, visa, driver’s license)</li> <li><b>Ex2:</b> Issue a different credential for each person (i.e., no credential sharing)</li></ul>' WHERE [Requirement_Id] = 36448
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Require multifactor authentication</li> <li><b>Ex2:</b> Enforce policies for the minimum strength of passwords, PINs, and similar authenticators</li> <li><b>Ex3:</b> Periodically reauthenticate users, services, and hardware based on risk (e.g., in zero trust architectures)</li> <li><b>Ex4:</b> Ensure that authorized personnel can access accounts essential for protecting safety under emergency conditions</li></ul>' WHERE [Requirement_Id] = 36449
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Protect identity assertions that are used to convey authentication and user information through single sign-on systems</li> <li><b>Ex2:</b> Protect identity assertions that are used to convey authentication and user information between federated systems</li> <li><b>Ex3:</b> Implement standards-based approaches for identity assertions in all contexts, and follow all guidance for the generation (e.g., data models, metadata), protection (e.g., digital signing, encryption), and verification (e.g., signature validation) of identity assertions</li></ul>' WHERE [Requirement_Id] = 36450
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review logical and physical access privileges periodically and whenever someone changes roles or leaves the organization, and promptly rescind privileges that are no longer needed</li> <li><b>Ex2:</b> Take attributes of the requester and the requested resource into account for authorization decisions (e.g., geolocation, day/time, requester endpoint’s cyber health)</li> <li><b>Ex3:</b> Restrict access and privileges to the minimum necessary (e.g., zero trust architecture)</li> <li><b>Ex4:</b> Periodically review the privileges associated with critical business functions to confirm proper separation of duties</li></ul>' WHERE [Requirement_Id] = 36451
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Use security guards, security cameras, locked entrances, alarm systems, and other physical controls to monitor facilities and restrict access</li> <li><b>Ex2:</b> Employ additional physical security controls for areas that contain high-risk assets</li> <li><b>Ex3:</b> Escort guests, vendors, and other third parties within areas that contain business-critical assets</li></ul>' WHERE [Requirement_Id] = 36452
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Remove data that must remain confidential (e.g., from processors and memory) as soon as it is no longer needed</li> <li><b>Ex2:</b> Protect data in use from access by other users and processes of the same platform</li></ul>' WHERE [Requirement_Id] = 36453
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Continuously back up critical data in near-real-time, and back up other data frequently at agreed-upon schedules</li> <li><b>Ex2:</b> Test backups and restores for all types of data sources at least annually</li> <li><b>Ex3:</b> Securely store some backups offline and offsite so that an incident or disaster will not damage them</li> <li><b>Ex4:</b> Enforce geographic separation and geolocation restrictions for data backup storage</li></ul>' WHERE [Requirement_Id] = 36454
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish, test, deploy, and maintain hardened baselines that enforce the organization’s cybersecurity policies and provide only essential capabilities (i.e., principle of least functionality)</li> <li><b>Ex2:</b> Review all default configuration settings that may potentially impact cybersecurity when installing or upgrading software</li> <li><b>Ex3:</b> Monitor implemented software for deviations from approved baselines</li></ul>' WHERE [Requirement_Id] = 36455
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Perform routine and emergency patching within the timeframes specified in the vulnerability management plan</li> <li><b>Ex2:</b> Update container images, and deploy new container instances to replace rather than update existing instances</li> <li><b>Ex3:</b> Replace end-of-life software and service versions with supported, maintained versions</li> <li><b>Ex4:</b> Uninstall and remove unauthorized software and services that pose undue risks</li> <li><b>Ex5:</b> Uninstall and remove any unnecessary software components (e.g., operating system utilities) that attackers might misuse</li> <li><b>Ex6:</b> Define and implement plans for software and service end-of-life maintenance support and obsolescence</li></ul>' WHERE [Requirement_Id] = 36456
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Replace hardware when it lacks needed security capabilities or when it cannot support software with needed security capabilities</li> <li><b>Ex2:</b> Define and implement plans for hardware end-of-life maintenance support and obsolescence</li> <li><b>Ex3:</b> Perform hardware disposal in a secure, responsible, and auditable manner</li></ul>' WHERE [Requirement_Id] = 36457
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Configure all operating systems, applications, and services (including cloud-based services) to generate log records</li> <li><b>Ex2:</b> Configure log generators to securely share their logs with the organization’s logging infrastructure systems and services</li> <li><b>Ex3:</b> Configure log generators to record the data needed by zero-trust architectures</li></ul>' WHERE [Requirement_Id] = 36458
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> When risk warrants it, restrict software execution to permitted products only or deny the execution of prohibited and unauthorized software</li> <li><b>Ex2:</b> Verify the source of new software and the software’s integrity before installing it</li> <li><b>Ex3:</b> Configure platforms to use only approved DNS services that block access to known malicious domains</li> <li><b>Ex4:</b> Configure platforms to allow the installation of organization-approved software only</li></ul>' WHERE [Requirement_Id] = 36459
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Protect all components of organization-developed software from tampering and unauthorized access</li> <li><b>Ex2:</b> Secure all software produced by the organization, with minimal vulnerabilities in their releases</li> <li><b>Ex3:</b> Maintain the software used in production environments, and securely dispose of software once it is no longer needed</li></ul>' WHERE [Requirement_Id] = 36460
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Logically segment organization networks and cloud-based platforms according to trust boundaries and platform types (e.g., IT, IoT, OT, mobile, guests), and permit required communications only between segments</li> <li><b>Ex2:</b> Logically segment organization networks from external networks, and permit only necessary communications to enter the organization’s networks from the external networks</li> <li><b>Ex3:</b> Implement zero trust architectures to restrict network access to each resource to the minimum necessary</li> <li><b>Ex4:</b> Check the cyber health of endpoints before allowing them to access and use production resources</li></ul>' WHERE [Requirement_Id] = 36461
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Protect organizational equipment from known environmental threats, such as flooding, fire, wind, and excessive heat and humidity</li> <li><b>Ex2:</b> Include protection from environmental threats and provisions for adequate operating infrastructure in requirements for service providers that operate systems on the organization''s behalf</li></ul>' WHERE [Requirement_Id] = 36462
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Avoid single points of failure in systems and infrastructure</li> <li><b>Ex2:</b> Use load balancing to increase capacity and improve reliability</li> <li><b>Ex3:</b> Use high-availability components like redundant storage and power supplies to improve system reliability</li></ul>' WHERE [Requirement_Id] = 36463
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Monitor usage of storage, power, compute, network bandwidth, and other resources</li> <li><b>Ex2:</b> Forecast future needs, and scale resources accordingly</li></ul>' WHERE [Requirement_Id] = 36464
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Securely provide cyber threat intelligence feeds to detection technologies, processes, and personnel</li> <li><b>Ex2:</b> Securely provide information from asset inventories to detection technologies, processes, and personnel</li> <li><b>Ex3:</b> Rapidly acquire and analyze vulnerability disclosures for the organization’s technologies from suppliers, vendors, and third-party security advisories</li></ul>' WHERE [Requirement_Id] = 36465
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Apply incident criteria to known and assumed characteristics of activity in order to determine whether an incident should be declared</li> <li><b>Ex2:</b> Take known false positives into account when applying incident criteria</li></ul>' WHERE [Requirement_Id] = 36466
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Monitor email, web, file sharing, collaboration services, and other common attack vectors to detect malware, phishing, data leaks and exfiltration, and other adverse events</li> <li><b>Ex2:</b> Monitor authentication attempts to identify attacks against credentials and unauthorized credential reuse</li> <li><b>Ex3:</b> Monitor software configurations for deviations from security baselines</li> <li><b>Ex4:</b> Monitor hardware and software for signs of tampering</li> <li><b>Ex5:</b> Use technologies with a presence on endpoints to detect cyber health issues (e.g., missing patches, malware infections, unauthorized software), and redirect the endpoints to a remediation environment before access is authorized</li></ul>' WHERE [Requirement_Id] = 36467
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Detection technologies automatically report confirmed incidents</li> <li><b>Ex2:</b> Request incident response assistance from the organization’s incident response outsourcer</li> <li><b>Ex3:</b> Designate an incident lead for each incident</li> <li><b>Ex4:</b> Initiate execution of additional cybersecurity plans as needed to support incident response (for example, business continuity and disaster recovery)</li></ul>' WHERE [Requirement_Id] = 36468
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Preliminarily review incident reports to confirm that they are cybersecurity-related and necessitate incident response activities</li> <li><b>Ex2:</b> Apply criteria to estimate the severity of an incident</li></ul>' WHERE [Requirement_Id] = 36469
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Further review and categorize incidents based on the type of incident (e.g., data breach, ransomware, DDoS, account compromise)</li> <li><b>Ex2:</b> Prioritize incidents based on their scope, likely impact, and time-critical nature</li> <li><b>Ex3:</b> Select incident response strategies for active incidents by balancing the need to quickly recover from an incident with the need to observe the attacker or conduct a more thorough investigation</li></ul>' WHERE [Requirement_Id] = 36470
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Track and validate the status of all ongoing incidents</li> <li><b>Ex2:</b> Coordinate incident escalation or elevation with designated internal and external stakeholders</li></ul>' WHERE [Requirement_Id] = 36471
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Apply incident recovery criteria to known and assumed characteristics of the incident to determine whether incident recovery processes should be initiated</li> <li><b>Ex2:</b> Take the possible operational disruption of incident recovery activities into account</li></ul>' WHERE [Requirement_Id] = 36472
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Require each incident responder and others (e.g., system administrators, cybersecurity engineers) who perform incident response tasks to record their actions and make the record immutable</li> <li><b>Ex2:</b> Require the incident lead to document the incident in detail and be responsible for preserving the integrity of the documentation and the sources of all information being reported</li></ul>' WHERE [Requirement_Id] = 36473
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Collect, preserve, and safeguard the integrity of all pertinent incident data and metadata (e.g., data source, date/time of collection) based on evidence preservation and chain-of-custody procedures</li></ul>' WHERE [Requirement_Id] = 36474
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review other potential targets of the incident to search for indicators of compromise and evidence of persistence</li> <li><b>Ex2:</b> Automatically run tools on targets to look for indicators of compromise and evidence of persistence</li></ul>' WHERE [Requirement_Id] = 36475
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Prepare an after-action report that documents the incident itself, the response and recovery actions taken, and lessons learned</li> <li><b>Ex2:</b> Declare the end of incident recovery once the criteria are met</li></ul>' WHERE [Requirement_Id] = 36476
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Follow the organization’s breach notification procedures for recovering from a data breach incident</li> <li><b>Ex2:</b> Explain the steps being taken to recover from the incident and to prevent a recurrence</li></ul>' WHERE [Requirement_Id] = 36477
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Share the organization’s mission (e.g., through vision and mission statements, marketing, and service strategies) to provide a basis for identifying risks that may impede that mission</li></ul>' WHERE [Requirement_Id] = 36478
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Identify relevant internal stakeholders and their cybersecurity-related expectations (e.g., performance and risk expectations of officers, directors, and advisors; cultural expectations of employees)</li> <li><b>Ex2:</b> Identify relevant external stakeholders and their cybersecurity-related expectations (e.g., privacy expectations of customers, business expectations of partnerships, compliance expectations of regulators, ethics expectations of society)</li></ul>' WHERE [Requirement_Id] = 36479
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Determine a process to track and manage legal and regulatory requirements regarding protection of individuals’ information (e.g., Health Insurance Portability and Accountability Act, California Consumer Privacy Act, General Data Protection Regulation)</li> <li><b>Ex2:</b> Determine a process to track and manage contractual requirements for cybersecurity management of supplier, customer, and partner information</li> <li><b>Ex3:</b> Align the organization’s cybersecurity strategy with legal, regulatory, and contractual requirements</li></ul>' WHERE [Requirement_Id] = 36480
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish criteria for determining the criticality of capabilities and services as viewed by internal and external stakeholders</li> <li><b>Ex2:</b> Determine (e.g., from a business impact analysis) assets and business operations that are vital to achieving mission objectives and the potential impact of a loss (or partial loss) of such operations</li> <li><b>Ex3:</b> Establish and communicate resilience objectives (e.g., recovery time objectives) for delivering critical capabilities and services in various operating states (e.g., under attack, during recovery, normal operation)</li></ul>' WHERE [Requirement_Id] = 36481
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Create an inventory of the organization’s dependencies on external resources (e.g., facilities, cloud-based hosting providers) and their relationships to organizational assets and business functions</li> <li><b>Ex2:</b> Identify and document external dependencies that are potential points of failure for the organization’s critical capabilities and services, and share that information with appropriate personnel</li></ul>' WHERE [Requirement_Id] = 36482
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Update near-term and long-term cybersecurity risk management objectives as part of annual strategic planning and when major changes occur</li> <li><b>Ex2:</b> Establish measurable objectives for cybersecurity risk management (e.g., manage the quality of user training, ensure adequate risk protection for industrial control systems)</li> <li><b>Ex3:</b> Senior leaders agree about cybersecurity objectives and use them for measuring and managing risk and performance</li></ul>' WHERE [Requirement_Id] = 36483
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Determine and communicate risk appetite statements that convey expectations about the appropriate level of risk for the organization</li> <li><b>Ex2:</b> Translate risk appetite statements into specific, measurable, and broadly understandable risk tolerance statements</li> <li><b>Ex3:</b> Refine organizational objectives and risk appetite periodically based on known risk exposure and residual risk</li></ul>' WHERE [Requirement_Id] = 36484
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Aggregate and manage cybersecurity risks alongside other enterprise risks (e.g., compliance, financial, operational, regulatory, reputational, safety)</li> <li><b>Ex2:</b> Include cybersecurity risk managers in enterprise risk management planning</li> <li><b>Ex3:</b> Establish criteria for escalating cybersecurity risks within enterprise risk management</li></ul>' WHERE [Requirement_Id] = 36485
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Specify criteria for accepting and avoiding cybersecurity risk for various classifications of data</li> <li><b>Ex2:</b> Determine whether to purchase cybersecurity insurance</li> <li><b>Ex3:</b> Document conditions under which shared responsibility models are acceptable (e.g., outsourcing certain cybersecurity functions, having a third party perform financial transactions on behalf of the organization, using public cloud-based services)</li></ul>' WHERE [Requirement_Id] = 36486
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Determine how to update senior executives, directors, and management on the organization’s cybersecurity posture at agreed-upon intervals</li> <li><b>Ex2:</b> Identify how all departments across the organization — such as management, operations, internal auditors, legal, acquisition, physical security, and HR — will communicate with each other about cybersecurity risks</li></ul>' WHERE [Requirement_Id] = 36487
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish criteria for using a quantitative approach to cybersecurity risk analysis, and specify probability and exposure formulas</li> <li><b>Ex2:</b> Create and use templates (e.g., a risk register) to document cybersecurity risk information (e.g., risk description, exposure, treatment, and ownership)</li> <li><b>Ex3:</b> Establish criteria for risk prioritization at the appropriate levels within the enterprise</li> <li><b>Ex4:</b> Use a consistent list of risk categories to support integrating, aggregating, and comparing cybersecurity risks</li></ul>' WHERE [Requirement_Id] = 36488
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Define and communicate guidance and methods for identifying opportunities and including them in risk discussions (e.g., strengths, weaknesses, opportunities, and threats [SWOT] analysis)</li> <li><b>Ex2:</b> Identify stretch goals and document them</li> <li><b>Ex3:</b> Calculate, document, and prioritize positive risks alongside negative risks</li></ul>' WHERE [Requirement_Id] = 36489
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish a strategy that expresses the objectives of the cybersecurity supply chain risk management program</li> <li><b>Ex2:</b> Develop the cybersecurity supply chain risk management program, including a plan (with milestones), policies, and procedures that guide implementation and improvement of the program, and share the policies and procedures with the organizational stakeholders</li> <li><b>Ex3:</b> Develop and implement program processes based on the strategy, objectives, policies, and procedures that are agreed upon and performed by the organizational stakeholders</li> <li><b>Ex4:</b> Establish a cross-organizational mechanism that ensures alignment between functions that contribute to cybersecurity supply chain risk management, such as cybersecurity, IT, operations, legal, human resources, and engineering</li></ul>' WHERE [Requirement_Id] = 36490
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Identify one or more specific roles or positions that will be responsible and accountable for planning, resourcing, and executing cybersecurity supply chain risk management activities</li> <li><b>Ex2:</b> Document cybersecurity supply chain risk management roles and responsibilities in policy</li> <li><b>Ex3:</b> Create responsibility matrixes to document who will be responsible and accountable for cybersecurity supply chain risk management activities and how those teams and individuals will be consulted and informed</li> <li><b>Ex4:</b> Include cybersecurity supply chain risk management responsibilities and performance requirements in personnel descriptions to ensure clarity and improve accountability</li> <li><b>Ex5:</b> Document performance goals for personnel with cybersecurity risk management-specific responsibilities, and periodically measure them to demonstrate and improve performance</li> <li><b>Ex6:</b> Develop roles and responsibilities for suppliers, customers, and business partners to address shared responsibilities for applicable cybersecurity risks, and integrate them into organizational policies and applicable third-party agreements</li> <li><b>Ex7:</b> Internally communicate cybersecurity supply chain risk management roles and responsibilities for third parties</li> <li><b>Ex8:</b> Establish rules and protocols for information sharing and reporting processes between the organization and its suppliers</li></ul>' WHERE [Requirement_Id] = 36491
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Identify areas of alignment and overlap with cybersecurity and enterprise risk management</li> <li><b>Ex2:</b> Establish integrated control sets for cybersecurity risk management and cybersecurity supply chain risk management</li> <li><b>Ex3:</b> Integrate cybersecurity supply chain risk management into improvement processes</li> <li><b>Ex4:</b> Escalate material cybersecurity risks in supply chains to senior management, and address them at the enterprise risk management level</li></ul>' WHERE [Requirement_Id] = 36492
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Develop criteria for supplier criticality based on, for example, the sensitivity of data processed or possessed by suppliers, the degree of access to the organization’s systems, and the importance of the products or services to the organization’s mission</li> <li><b>Ex2:</b> Keep a record of all suppliers, and prioritize suppliers based on the criticality criteria</li></ul>' WHERE [Requirement_Id] = 36493
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish security requirements for suppliers, products, and services commensurate with their criticality level and potential impact if compromised</li> <li><b>Ex2:</b> Include all cybersecurity and supply chain requirements that third parties must follow and how compliance with the requirements may be verified in default contractual language</li> <li><b>Ex3:</b> Define the rules and protocols for information sharing between the organization and its suppliers and sub-tier suppliers in agreements</li> <li><b>Ex4:</b> Manage risk by including security requirements in agreements based on their criticality and potential impact if compromised</li> <li><b>Ex5:</b> Define security requirements in service-level agreements (SLAs) for monitoring suppliers for acceptable security performance throughout the supplier relationship lifecycle</li> <li><b>Ex6:</b> Contractually require suppliers to disclose cybersecurity features, functions, and vulnerabilities of their products and services for the life of the product or the term of service</li> <li><b>Ex7:</b> Contractually require suppliers to provide and maintain a current component inventory (e.g., software or hardware bill of materials) for critical products</li> <li><b>Ex8:</b> Contractually require suppliers to vet their employees and guard against insider threats</li> <li><b>Ex9:</b> Contractually require suppliers to provide evidence of performing acceptable security practices through, for example, self-attestation, conformance to known standards, certifications, or inspections</li> <li><b>Ex10:</b> Specify in contracts and other agreements the rights and responsibilities of the organization, its suppliers, and their supply chains, with respect to potential cybersecurity risks</li></ul>' WHERE [Requirement_Id] = 36494
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Perform thorough due diligence on prospective suppliers that is consistent with procurement planning and commensurate with the level of risk, criticality, and complexity of each supplier relationship</li> <li><b>Ex2:</b> Assess the suitability of the technology and cybersecurity capabilities and the risk management practices of prospective suppliers</li> <li><b>Ex3:</b> Conduct supplier risk assessments against business and applicable cybersecurity requirements</li> <li><b>Ex4:</b> Assess the authenticity, integrity, and security of critical products prior to acquisition and use</li></ul>' WHERE [Requirement_Id] = 36495
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Adjust assessment formats and frequencies based on the third party’s reputation and the criticality of the products or services they provide</li> <li><b>Ex2:</b> Evaluate third parties’ evidence of compliance with contractual cybersecurity requirements, such as self-attestations, warranties, certifications, and other artifacts</li> <li><b>Ex3:</b> Monitor critical suppliers to ensure that they are fulfilling their security obligations throughout the supplier relationship lifecycle using a variety of methods and techniques, such as inspections, audits, tests, or other forms of evaluation</li> <li><b>Ex4:</b> Monitor critical suppliers, services, and products for changes to their risk profiles, and reevaluate supplier criticality and risk impact accordingly</li> <li><b>Ex5:</b> Plan for unexpected supplier and supply chain-related interruptions to ensure business continuity</li></ul>' WHERE [Requirement_Id] = 36496
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Define and use rules and protocols for reporting incident response and recovery activities and the status between the organization and its suppliers</li> <li><b>Ex2:</b> Identify and document the roles and responsibilities of the organization and its suppliers for incident response</li> <li><b>Ex3:</b> Include critical suppliers in incident response exercises and simulations</li> <li><b>Ex4:</b> Define and coordinate crisis communication methods and protocols between the organization and its critical suppliers</li> <li><b>Ex5:</b> Conduct collaborative lessons learned sessions with critical suppliers</li></ul>' WHERE [Requirement_Id] = 36497
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Policies and procedures require provenance records for all acquired technology products and services</li> <li><b>Ex2:</b> Periodically provide risk reporting to leaders about how acquired components are proven to be untampered and authentic</li> <li><b>Ex3:</b> Communicate regularly among cybersecurity risk managers and operations personnel about the need to acquire software patches, updates, and upgrades only from authenticated and trustworthy software providers</li> <li><b>Ex4:</b> Review policies to ensure that they require approved supplier personnel to perform maintenance on supplier products</li> <li><b>Ex5:</b> Policies and procedure require checking upgrades to critical hardware for unauthorized changes</li></ul>' WHERE [Requirement_Id] = 36498
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Establish processes for terminating critical relationships under both normal and adverse circumstances</li> <li><b>Ex2:</b> Define and implement plans for component end-of-life maintenance support and obsolescence</li> <li><b>Ex3:</b> Verify that supplier access to organization resources is deactivated promptly when it is no longer needed</li> <li><b>Ex4:</b> Verify that assets containing the organization’s data are returned or properly disposed of in a timely, controlled, and safe manner</li> <li><b>Ex5:</b> Develop and execute a plan for terminating or transitioning supplier relationships that takes supply chain security risk and resiliency into account</li> <li><b>Ex6:</b> Mitigate risks to data and systems created by supplier termination</li> <li><b>Ex7:</b> Manage data leakage risks associated with supplier termination</li></ul>' WHERE [Requirement_Id] = 36499
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Leaders (e.g., directors) agree on their roles and responsibilities in developing, implementing, and assessing the organization’s cybersecurity strategy</li> <li><b>Ex2:</b> Share leaders’ expectations regarding a secure and ethical culture, especially when current events present the opportunity to highlight positive or negative examples of cybersecurity risk management</li> <li><b>Ex3:</b> Leaders direct the CISO to maintain a comprehensive cybersecurity risk strategy and review and update it at least annually and after major events</li> <li><b>Ex4:</b> Conduct reviews to ensure adequate authority and coordination among those responsible for managing cybersecurity risk</li></ul>' WHERE [Requirement_Id] = 36500
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Document risk management roles and responsibilities in policy</li> <li><b>Ex2:</b> Document who is responsible and accountable for cybersecurity risk management activities and how those teams and individuals are to be consulted and informed</li> <li><b>Ex3:</b> Include cybersecurity responsibilities and performance requirements in personnel descriptions</li> <li><b>Ex4:</b> Document performance goals for personnel with cybersecurity risk management responsibilities, and periodically measure performance to identify areas for improvement</li> <li><b>Ex5:</b> Clearly articulate cybersecurity responsibilities within operations, risk functions, and internal audit functions</li></ul>' WHERE [Requirement_Id] = 36501
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Conduct periodic management reviews to ensure that those given cybersecurity risk management responsibilities have the necessary authority</li> <li><b>Ex2:</b> Identify resource allocation and investment in line with risk tolerance and response</li> <li><b>Ex3:</b> Provide adequate and sufficient people, process, and technical resources to support the cybersecurity strategy</li></ul>' WHERE [Requirement_Id] = 36502
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Integrate cybersecurity risk management considerations into human resources processes (e.g., personnel screening, onboarding, change notification, offboarding)</li> <li><b>Ex2:</b> Consider cybersecurity knowledge to be a positive factor in hiring, training, and retention decisions</li> <li><b>Ex3:</b> Conduct background checks prior to onboarding new personnel for sensitive roles, and periodically repeat background checks for personnel with such roles</li> <li><b>Ex4:</b> Define and enforce obligations for personnel to be aware of, adhere to, and uphold security policies as they relate to their roles</li></ul>' WHERE [Requirement_Id] = 36503
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Create, disseminate, and maintain an understandable, usable risk management policy with statements of management intent, expectations, and direction</li> <li><b>Ex2:</b> Periodically review policy and supporting processes and procedures to ensure that they align with risk management strategy objectives and priorities, as well as the high-level direction of the cybersecurity policy</li> <li><b>Ex3:</b> Require approval from senior management on policy</li> <li><b>Ex4:</b> Communicate cybersecurity risk management policy and supporting processes and procedures across the organization</li> <li><b>Ex5:</b> Require personnel to acknowledge receipt of policy when first hired, annually, and whenever policy is updated</li></ul>' WHERE [Requirement_Id] = 36504
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Update policy based on periodic reviews of cybersecurity risk management results to ensure that policy and supporting processes and procedures adequately maintain risk at an acceptable level</li> <li><b>Ex2:</b> Provide a timeline for reviewing changes to the organization’s risk environment (e.g., changes in risk or in the organization’s mission objectives), and communicate recommended policy updates</li> <li><b>Ex3:</b> Update policy to reflect changes in legal and regulatory requirements</li> <li><b>Ex4:</b> Update policy to reflect changes in technology (e.g., adoption of artificial intelligence) and changes to the business (e.g., acquisition of a new business, new contract requirements)</li></ul>' WHERE [Requirement_Id] = 36505
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Measure how well the risk management strategy and risk results have helped leaders make decisions and achieve organizational objectives</li> <li><b>Ex2:</b> Examine whether cybersecurity risk strategies that impede operations or innovation should be adjusted</li></ul>' WHERE [Requirement_Id] = 36506
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review audit findings to confirm whether the existing cybersecurity strategy has ensured compliance with internal and external requirements</li> <li><b>Ex2:</b> Review the performance oversight of those in cybersecurity-related roles to determine whether policy changes are necessary</li> <li><b>Ex3:</b> Review strategy in light of cybersecurity incidents</li></ul>' WHERE [Requirement_Id] = 36507
+UPDATE [dbo].[NEW_REQUIREMENT] SET [Supplemental_Info]=N'<h5>Implementation Examples</h5><ul><li><b>Ex1:</b> Review key performance indicators (KPIs) to ensure that organization-wide policies and procedures achieve objectives</li> <li><b>Ex2:</b> Review key risk indicators (KRIs) to identify risks the organization faces, including likelihood and potential impact</li> <li><b>Ex3:</b> Collect and communicate metrics on cybersecurity risk management with senior leadership</li></ul>' WHERE [Requirement_Id] = 36508
+PRINT(N'Operation applied to 107 rows out of 107')
+
+PRINT(N'Update row in [dbo].[GEN_FILE]')
+UPDATE [dbo].[GEN_FILE] SET [File_Name]=N'CSF 2.0 Implementation Examples.pdf', [Summary]=N'Implementation Examples for the NIST Cybersecurity Framework (CSF) 2.0. It complements and is based on the Core from the NIST CSF 2.0.' WHERE [Gen_File_Id] = 691
 
 PRINT(N'Update rows in [dbo].[GALLERY_ROWS]')
 UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=84 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 0
@@ -66243,6 +67519,9 @@ UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=5 WHERE [Group_Detail_Id
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=4 WHERE [Group_Detail_Id] = 36
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=3 WHERE [Group_Detail_Id] = 37
 PRINT(N'Operation applied to 5 rows out of 5')
+
+PRINT(N'Update row in [dbo].[IRP]')
+UPDATE [dbo].[IRP] SET [Risk_2_Description]=N'>0% and <=25% of total membership', [Risk_3_Description]=N'>25% and <=50% of total membership', [Risk_4_Description]=N'>50% and <=75% of total membership', [Risk_5_Description]=N'>75% of total membership' WHERE [IRP_ID] = 54
 
 PRINT(N'Update row in [dbo].[GALLERY_ITEM]')
 UPDATE [dbo].[GALLERY_ITEM] SET [Is_Visible]=1 WHERE [Gallery_Item_Guid] = '4737748d-c762-4459-bc76-393e816c6a2d'
@@ -66791,10 +68070,10 @@ PRINT(N'Operation applied to 28 rows out of 28')
 PRINT(N'Add rows to [dbo].[SETS]')
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'MOPhysical', N'State of Missouri General Physical Security and Resilence Assessment', N'Physical Security and Resilence', 1, 1, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, N'State of Misssouri Physical Security Assessment', 0, NULL, 0, '2022-04-18 00:00:00.000', 0, 0)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'SP800-82 V3', N'NIST Special Publication 800-82 Revision 3', N'SP800-82 R3', 1, 1, N'NIST SP800-82 R2', 5, 4, 22, 30, 0, 1, 28, N'This standard provides guidance for establishing secure industrial control systems (ICS). Many of these controls are based on SP800-53 with minor modifications.', 0, NULL, 0, NULL, 0, 1)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA', N'WMATA Cybersecurity Policy', N'WMATA', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR1', N'WMATA Cybersecurity Policy Year 1', N'WMATA', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 1', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR2', N'WMATA Cybersecurity Policy Year 2', N'WMATA', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 2', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR3', N'WMATA Cybersecurity Policy Year 3', N'WMATA', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 3', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA', N'WMATA Cybersecurity Policy', N'WMATA ALL', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR1', N'WMATA Cybersecurity Policy Year 1', N'WMATA YR1', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 1', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR2', N'WMATA Cybersecurity Policy Year 2', N'WMATA YR2', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 2', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR3', N'WMATA Cybersecurity Policy Year 3', N'WMATA YR3', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 3', 0, NULL, 0, NULL, 0, 0)
 PRINT(N'Operation applied to 6 rows out of 6')
 
 PRINT(N'Add rows to [dbo].[STANDARD_CATEGORY]')
@@ -66935,8 +68214,10 @@ INSERT INTO [dbo].[GALLERY_GROUP_DETAILS] ([Group_Detail_Id], [Group_Id], [Colum
 SET IDENTITY_INSERT [dbo].[GALLERY_GROUP_DETAILS] OFF
 PRINT(N'Operation applied to 7 rows out of 7')
 
-PRINT(N'Add row to [dbo].[GALLERY_ROWS]')
+PRINT(N'Add rows to [dbo].[GALLERY_ROWS]')
 INSERT INTO [dbo].[GALLERY_ROWS] ([Layout_Name], [Row_Index], [Group_Id]) VALUES (N'TSA', 4, 6)
+INSERT INTO [dbo].[GALLERY_ROWS] ([Layout_Name], [Row_Index], [Group_Id]) VALUES (N'TSA', 14, 76)
+PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Add row to [dbo].[GEN_FILE]')
 SET IDENTITY_INSERT [dbo].[GEN_FILE] ON
@@ -73489,6 +74770,9 @@ INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Lev
 INSERT INTO [dbo].[REQUIREMENT_LEVELS] ([Requirement_Id], [Standard_Level], [Level_Type], [Id]) VALUES (38026, N'VH', N'NST', NULL)
 PRINT(N'Operation applied to 3896 rows out of 3896')
 
+PRINT(N'Add row to [dbo].[REQUIREMENT_REFERENCES]')
+INSERT INTO [dbo].[REQUIREMENT_REFERENCES] ([Requirement_Id], [Gen_File_Id], [Section_Ref], [Page_Number], [Destination_String], [Sequence]) VALUES (36419, 691, N'ID.RA-10', NULL, NULL, NULL)
+
 PRINT(N'Add rows to [dbo].[REQUIREMENT_SETS]')
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (37052, N'SP800-82 V3', 0)
 INSERT INTO [dbo].[REQUIREMENT_SETS] ([Requirement_Id], [Set_Name], [Requirement_Sequence]) VALUES (37053, N'SP800-82 V3', 0)
@@ -75437,6 +76721,7 @@ ALTER TABLE [dbo].[NEW_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_NEW_QUESTION_UN
 ALTER TABLE [dbo].[COMPONENT_QUESTIONS] CHECK CONSTRAINT [FK_Component_Questions_NEW_QUESTION]
 ALTER TABLE [dbo].[FINANCIAL_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_FINANCIAL_QUESTIONS_NEW_QUESTION]
 ALTER TABLE [dbo].[NERC_RISK_RANKING] CHECK CONSTRAINT [FK_NERC_RISK_RANKING_NEW_QUESTION]
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS] CHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_NEW_QUESTION1]
 
 PRINT(N'Add constraints to [dbo].[MATURITY_SOURCE_FILES]')
 ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] CHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_GEN_FILE]
@@ -75463,6 +76748,7 @@ ALTER TABLE [dbo].[NEW_REQUIREMENT] CHECK CONSTRAINT [FK_NEW_REQUIREMENT_STANDAR
 ALTER TABLE [dbo].[FINANCIAL_REQUIREMENTS] WITH CHECK CHECK CONSTRAINT [FK_FINANCIAL_REQUIREMENTS_NEW_REQUIREMENT]
 ALTER TABLE [dbo].[NERC_RISK_RANKING] CHECK CONSTRAINT [FK_NERC_RISK_RANKING_NEW_REQUIREMENT]
 ALTER TABLE [dbo].[REQUIREMENT_REFERENCE_TEXT] WITH CHECK CHECK CONSTRAINT [FK_REQUIREMENT_REFERENCE_TEXT_NEW_REQUIREMENT]
+ALTER TABLE [dbo].[REQUIREMENT_QUESTIONS] CHECK CONSTRAINT [FK_REQUIREMENT_QUESTIONS_NEW_REQUIREMENT]
 
 PRINT(N'Add constraints to [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
@@ -75493,6 +76779,10 @@ ALTER TABLE [dbo].[SET_FILES] WITH CHECK CHECK CONSTRAINT [FK_SET_FILES_SETS]
 ALTER TABLE [dbo].[STANDARD_SOURCE_FILE] CHECK CONSTRAINT [FK_Standard_Source_File_SETS]
 ALTER TABLE [dbo].[PARAMETER_ASSESSMENT] WITH CHECK CHECK CONSTRAINT [FK_ASSESSMENT_PARAMETERS_PARAMETERS]
 ALTER TABLE [dbo].[PARAMETER_VALUES] WITH CHECK CHECK CONSTRAINT [FK_PARAMETER_VALUES_PARAMETERS]
+
+PRINT(N'Add constraints to [dbo].[IRP]')
+ALTER TABLE [dbo].[IRP] WITH CHECK CHECK CONSTRAINT [FK_IRP_IRP_HEADER]
+ALTER TABLE [dbo].[ASSESSMENT_IRP] WITH CHECK CHECK CONSTRAINT [FK__Assessmen__IRP_I__5EDF0F2E]
 ALTER TABLE [dbo].[ASSESSMENTS] WITH CHECK CHECK CONSTRAINT [FK_ASSESSMENTS_GALLERY_ITEM]
 COMMIT TRANSACTION
 GO
