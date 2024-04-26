@@ -174,7 +174,7 @@ export class NavigationService {
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
     },
       (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -297,7 +297,6 @@ export class NavigationService {
    * Crawls the workflow document to determine the previous viewable page.
    */
   navBack(cur: string) {
-    console.log('current workflow:', this.workflow)
     const originPage = this.workflow.getElementById(cur);
 
     if (originPage == null) {
