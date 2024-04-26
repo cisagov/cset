@@ -435,13 +435,14 @@ export class MyAssessmentsComponent implements OnInit {
   }
 
   //translates assessment.lastModifiedDate to the system time, without changing lastModifiedDate
-  systemTimeTranslator(d: DateTime, format: string) {
+  systemTimeTranslator(dateString: string, format: string) {
+    var dtD = DateTime.fromISO(dateString);
     let localDate = '';
     if (format == 'med') {
-      localDate = d.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
     }
     else if (format == 'short') {
-      localDate = d.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+      localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
     }
 
     return localDate;
