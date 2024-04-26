@@ -999,7 +999,7 @@
         "text 1": "La retroalimentación es un mecanismo para enviar cambios o sugerencias para una pregunta formulada en CSET. Los comentarios se ingresan haciendo clic en el ícono",
         "text 2": "debajo de la pregunta.",
         "text 3": "Asegúrese de que los comentarios que proporcione no incluyan ninguna información de propiedad exclusiva o relacionada con la evaluación. Estos comentarios deben considerarse parte de una discusión pública de la comunidad con respecto a las preguntas, los requisitos, las solicitudes de funciones de CSET o las notificaciones de errores.",
-        "copy paste": "Copie el texto al portapapeles y péguelo en un correo electrónico.",
+        "copy paste": "Copie el texto al portapapeles y péguelo en un correo electrónico. Enviar el correo a {{address}}.",
         "no feedback exists": "No hay comentarios para ninguna pregunta en esta evaluación."
     },
     "extras": {
