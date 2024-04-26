@@ -115,7 +115,7 @@ namespace CSETWebCore.Business.AssessmentIO.Export
         {
             var assessmentDate = DateTime.MinValue;
             var model = new UploadAssessmentModel();
-            foreach (var item in _context.ANSWER_PROFILE.Where(x => x.Asessment_Id == assessmentId))
+            foreach (var item in _context.ANSWER_PROFILE.Where(x => x.Assessment_Id == assessmentId))
             {
                 model.jANSWER_PROFILE.Add(TinyMapper.Map<ANSWER_PROFILE, jANSWER_PROFILE>(item));
 

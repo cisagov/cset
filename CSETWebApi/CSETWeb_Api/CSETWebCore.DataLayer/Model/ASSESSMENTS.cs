@@ -82,7 +82,7 @@ public partial class ASSESSMENTS
     [InverseProperty("Assessment")]
     public virtual ICollection<ANSWER> ANSWER { get; set; } = new List<ANSWER>();
 
-    [InverseProperty("Asessment")]
+    [InverseProperty("Assessment")]
     public virtual ICollection<ANSWER_PROFILE> ANSWER_PROFILE { get; set; } = new List<ANSWER_PROFILE>();
 
     [InverseProperty("Assessment")]
