@@ -209,7 +209,8 @@ export class ReportService {
   applyJwtOffset(d: DateTime) {
     const jwt = new JwtParser();
     const parsedToken = jwt.decodeToken(this.authSvc.userToken());
-    let t = d.plus({minute:d.offset});
+    let t = DateTime.fromString(d.toString(),'M/d/yyyy h:mm:ss a',{});
+    t = t.plus({minute:t.offset});
 
     return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
   }
