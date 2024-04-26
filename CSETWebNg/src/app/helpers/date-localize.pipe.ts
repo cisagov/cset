@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Pipe, PipeTransform } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 import { JwtParser } from './jwt-parser';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -40,7 +40,7 @@ export class LocalizeDatePipe implements PipeTransform {
     ) { }
 
     /**
-     * 
+     *
      */
     transform(dateString: string, arg1): string {
         if (!dateString) {
@@ -48,7 +48,7 @@ export class LocalizeDatePipe implements PipeTransform {
         }
 
         // localize the datetime
-        let dt = new DateTime(dateString);
+        let dt: DateTime = DateTime.fromISO(dateString);
         dt = dt.setLocale(this.tSvc.getActiveLang());
 
         // return a full string with timezone offset
@@ -66,7 +66,7 @@ export class LocalizeDatePipe implements PipeTransform {
     }
 
     /**
-     * 
+     *
      */
     getOffsetFromJwtToken() {
         const jwt = new JwtParser();
