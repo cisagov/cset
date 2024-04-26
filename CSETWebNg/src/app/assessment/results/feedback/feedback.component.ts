@@ -82,13 +82,12 @@ export class FeedbackComponent implements OnInit {
     }
   }
 
-  defaultClientEmail() {
+  openDefaultMailClient() {
     const createEmail = document.createElement('a');
     createEmail.setAttribute('href', 'mailto:' + this.feedbackEmailTo
       + "?" + "subject=" + this.feedbackEmailSubject
       + "&" + "body=" + this.feedbackEmailBody);
     document.body.appendChild(createEmail);
-    // createEmail.style = "display: none";
     createEmail.click();
   }
 

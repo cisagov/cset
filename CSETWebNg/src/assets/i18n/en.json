@@ -1062,7 +1062,7 @@
         "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
         "text 2": "icon below the question.",
         "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
-        "copy paste": "Copy text to clipboard and paste into an email.",
+        "copy paste": "Copy text to clipboard and paste into an email. Send the email to {{address}}.",
         "no feedback exists": "There is no feedback for any question in this assessment."
     },
     "extras": {
