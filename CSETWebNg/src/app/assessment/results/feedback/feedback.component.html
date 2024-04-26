@@ -65,7 +65,7 @@
     <p>
       {{t('feedback.text 3')}}
     </p>
-    <p>{{t('feedback.copy paste', {address: feedbackEmailTo ?? 'XXX'})}}</p>
+    <p>{{t('feedback.copy paste', {address: feedbackEmailTo})}}</p>
 
     <button (click)="copyText(divtoView)" matTooltip="{{t('tooltip.copy feedback')}}"
       class='textAreaCopyBtn btn btn-primary'>{{t('buttons.copy text')}}</button>
