@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CSETWebCore.DataLayer.Model;
 
-[PrimaryKey("Assessement_Id", "Heading_Pair_Id", "Component_Guid", "Is_Component")]
+[PrimaryKey("Assessment_Id", "Heading_Pair_Id", "Component_Guid", "Is_Component")]
 public partial class SUB_CATEGORY_ANSWERS
 {
     [Key]
-    public int Assessement_Id { get; set; }
+    public int Assessment_Id { get; set; }
 
     [Key]
     public int Heading_Pair_Id { get; set; }
@@ -43,9 +43,9 @@ public partial class SUB_CATEGORY_ANSWERS
     [InverseProperty("SUB_CATEGORY_ANSWERS")]
     public virtual ANSWER_LOOKUP Answer_TextNavigation { get; set; }
 
-    [ForeignKey("Assessement_Id")]
+    [ForeignKey("Assessment_Id")]
     [InverseProperty("SUB_CATEGORY_ANSWERS")]
-    public virtual ASSESSMENTS Assessement { get; set; }
+    public virtual ASSESSMENTS Assessment { get; set; }
 
     [ForeignKey("Heading_Pair_Id")]
     [InverseProperty("SUB_CATEGORY_ANSWERS")]

@@ -2645,7 +2645,7 @@ public partial class CsetwebContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_SUB_CATEGORY_ANSWERS_Answer_Lookup");
 
-            entity.HasOne(d => d.Assessement).WithMany(p => p.SUB_CATEGORY_ANSWERS).HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
+            entity.HasOne(d => d.Assessment).WithMany(p => p.SUB_CATEGORY_ANSWERS).HasConstraintName("FK_SUB_CATEGORY_ANSWERS_ASSESSMENTS");
 
             entity.HasOne(d => d.Heading_Pair).WithMany(p => p.SUB_CATEGORY_ANSWERS)
                 .HasPrincipalKey(p => p.Heading_Pair_Id)

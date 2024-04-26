@@ -189,6 +189,6 @@ public partial class ASSESSMENTS
     [InverseProperty("Assessment")]
     public virtual STANDARD_SELECTION STANDARD_SELECTION { get; set; }
 
-    [InverseProperty("Assessement")]
+    [InverseProperty("Assessment")]
     public virtual ICollection<SUB_CATEGORY_ANSWERS> SUB_CATEGORY_ANSWERS { get; set; } = new List<SUB_CATEGORY_ANSWERS>();
 }
