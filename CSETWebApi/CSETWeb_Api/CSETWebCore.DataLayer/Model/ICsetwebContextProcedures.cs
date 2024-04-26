@@ -63,7 +63,7 @@ namespace CSETWebCore.DataLayer.Model
         Task<List<usp_Assessments_Completion_For_UserResult>> usp_Assessments_Completion_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_Assessments_For_UserResult>> usp_Assessments_For_UserAsync(int? User_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_BuildCatNumbersAsync(int? assessment_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
-        Task<List<usp_CopyIntoSetResult>> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
+        Task<int> usp_CopyIntoSetAsync(string SourceSetName, string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<int> usp_CopyIntoSet_DeleteAsync(string DestinationSetName, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_countsForLevelsByGroupMaturityModelResult>> usp_countsForLevelsByGroupMaturityModelAsync(int? assessment_id, int? mat_model_id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
         Task<List<usp_financial_attributesResult>> usp_financial_attributesAsync(int? Assessment_Id, OutputParameter<int> returnValue = null, CancellationToken cancellationToken = default);
