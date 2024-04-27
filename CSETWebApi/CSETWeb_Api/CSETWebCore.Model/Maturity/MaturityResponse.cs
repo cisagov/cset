@@ -62,6 +62,6 @@ namespace CSETWebCore.Model.Maturity
         /// <summary>
         /// The description for the maturity model
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; }
     }
 }
