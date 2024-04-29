@@ -6,17 +6,22 @@
 //////////////////////////////// 
 using CSETWebCore.Business.Aggregation;
 using CSETWebCore.Business.Assessment;
+using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Model.Demographic;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Demographic.Export;
+using CSETWebCore.Business.Demographic.DemographicIO;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -104,6 +109,42 @@ namespace CSETWebCore.Api.Controllers
             mgr.SaveX(assessmentId, name, val, t);
 
             return Ok();
+        }
+
+        /// <summary>
+        /// Imports demographics value.
+        /// </summary>
+        /// <param name="demographics"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/demographics/import")]
+        public Task<IActionResult> ImportDemographic([FromHeader] string pwd)
+        {
+            return Task.FromResult<IActionResult>(Ok());
+        }
+
+        [HttpGet]
+        [Route("api/demographics/export")]
+        public IActionResult ExportDemographic([FromQuery] string token)
+        {
+            try
+            {
+                _token.SetToken(token);
+
+                int assessmentId = _token.AssessmentForUser(token);
+
+                string ext = ".json";
+
+                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId, ext);
+
+                return File(result.FileContents, "application/octet-stream", result.FileName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return null;
         }
     }
 }

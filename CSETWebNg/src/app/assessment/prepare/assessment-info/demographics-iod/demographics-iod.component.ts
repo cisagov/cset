@@ -8,6 +8,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
 import { Config } from 'protractor';
 import { ConfigService } from '../../../../services/config.service';
+import { DemographicService } from '../../../../services/demographic.service';
+import { Demographic, ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
+import { CsiService } from '../../../../services/cis-csi.service';
 
 
 @Component({
@@ -25,12 +28,20 @@ export class DemographicsIodComponent implements OnInit {
    * The principal model for this page
    */
   demographicData: DemographicsIod = {};
+  assessmentConfig: AssessmentConfig; 
+  serviceDemographics: ServiceDemographic; 
+  serviceComposition: ServiceComposition; 
+  criticalServiceInfo: CriticalServiceInfo; 
+
 
   constructor(public demoSvc: DemographicIodService, 
     private assessSvc: AssessmentService,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private configSvc : ConfigService
+    private configSvc : ConfigService, 
+    private iodDemoSvc: DemographicIodService,
+    private demoSvc2: DemographicService, 
+    private csiSvc: CsiService
     ) {}
 
   /**
@@ -39,47 +50,13 @@ export class DemographicsIodComponent implements OnInit {
   ngOnInit() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
-    });    
-    this.eventsSubscription = this.events.subscribe((importExportFlag) => this.importExport(importExportFlag));
-
+    })
+    
   }
 
 
   ngOnDestroy() {
     this.eventsSubscription?.unsubscribe();
-  }
-
-  importProfile(file){ }
-
-  importExport(importExportObject){
-    if (importExportObject.flag == "import"){
-      this.demographicData = importExportObject.data;
-      this.updateDemographics();
-    } else {
-        this.demographicData.version = 1;
-        
-        if (this.demographicData.organizationName){
-            //File name will be saved with '_' instead of any invalid characters
-            //Could implement functionality that replaces invalid characters manually           
-            var FileSaver = require('file-saver');            
-            var demoString = JSON.stringify(this.demographicData);
-            const blob = new Blob([demoString], { type: 'application/json' });
-            var fileName = this.demographicData.organizationName.replaceAll("[<>:\"\/\\|?*]","_");            
-            try {
-              FileSaver.saveAs(blob, fileName + ".json");
-            } catch (error) {
-              console.error("Error during file download:", error);
-            }
-          
-        } else {
-          const msg2 = 'Name of organization required before export';
-          const titleComplete = 'Organization Name Required'
-          const dlgOkay = this.dialog.open(OkayComponent, { data: { title: titleComplete, messageText: msg2 } });
-          dlgOkay.componentInstance.hasHeader = true;
-        }
-        
-      }
-    
   }
 
   /**
