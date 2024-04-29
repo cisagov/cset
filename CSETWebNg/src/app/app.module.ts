@@ -644,6 +644,10 @@ import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/
 import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
 import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
 import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
+import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-all-questions.component';
+import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
+import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
+import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 
 @NgModule({
   imports: [
@@ -1238,7 +1242,11 @@ import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis
     CieAnalysisComponent,
     PrincipleAnalysisCieComponent,
     CieAnalysisMatrixComponent,
-    MergeCieAnalysisComponent
+    MergeCieAnalysisComponent,
+    CieAllQuestionsComponent,
+    CiePrincipleOnlyComponent,
+    CiePrinciplePhaseComponent,
+    CieNotApplicableComponent
   ],
   providers: [
     TranslocoService,

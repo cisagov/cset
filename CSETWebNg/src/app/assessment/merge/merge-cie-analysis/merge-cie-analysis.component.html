@@ -92,27 +92,62 @@
                             [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer3)"
                             [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer3)">
                         </td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 4"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].free_Response_Answer4))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text4, this.mergeConflicts[i].free_Response_Answer4) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 5"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].free_Response_Answer5))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text5, this.mergeConflicts[i].free_Response_Answer5) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 6"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].alt_Text6))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text6, this.mergeConflicts[i].free_Response_Answer6) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 7"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].alt_Text7))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text7, this.mergeConflicts[i].free_Response_Answer7) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 8"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].alt_Text8))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text8, this.mergeConflicts[i].free_Response_Answer8) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 9"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].alt_Text9))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text9, this.mergeConflicts[i].free_Response_Answer9) }}</td>
-                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 10"
-                            [matTooltip]="(this.getResponseText(this.mergeConflicts[i].alt_Text10))">{{
-                            getDisplayText(this.mergeConflicts[i].answer_Text10, this.mergeConflicts[i].free_Response_Answer10) }}</td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 4" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text4))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text4)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 4" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer4)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer4)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 5" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text5))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text5)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 5" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer5)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer5)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 6" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text6))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text6)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 6" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer6)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer6)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 7" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text7))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text7)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 7" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer7)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer7)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 8" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text8))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text8)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 8" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer8)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer8)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 9" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text9))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text9)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 9" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer9)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer9)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 10" 
+                            [matTooltip]="(this.getDisplayText(this.mergeConflicts[i].answer_Text10))"
+                            [innerHtml]="this.getDisplayText(this.mergeConflicts[i].answer_Text10)">
+                        </td>
+                        <td *ngIf="this.cieSvc.assessmentsToMerge.length >= 10" 
+                            [matTooltip]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer10)"
+                            [innerHtml]="this.getResponseText(this.mergeConflicts[i].free_Response_Answer10)">
+                        </td>
                         <td>
                             <input type="radio" id="u" name="option{{i}}" value="u"
                                 (change)="updateAnswers(i, $event.target.value)">

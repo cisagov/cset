@@ -26,6 +26,7 @@ using Snickler.EFCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Lucene.Net.Util.Fst.Util;
 
 
 namespace CSETWebCore.Business.Reports
@@ -517,7 +518,8 @@ namespace CSETWebCore.Business.Reports
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview,
-                                    MatQuestionId = question.QuestionId
+                                    MatQuestionId = question.QuestionId,
+                                    FreeResponseText = question.FreeResponseAnswer
                                 };
 
                                 if (question.Answer == "N")
@@ -640,7 +642,8 @@ namespace CSETWebCore.Business.Reports
                                     AnswerText = question.Answer,
                                     Comment = question.Comment,
                                     MarkForReview = question.MarkForReview,
-                                    MatQuestionId = question.QuestionId
+                                    MatQuestionId = question.QuestionId,
+                                    FreeResponseText = question.FreeResponseAnswer
                                 };
 
                                 if (question.Answer == "N")
@@ -761,7 +764,8 @@ namespace CSETWebCore.Business.Reports
                         Is_Maturity = true,
                         MaturityLevel = myQ.Maturity_Level_Id,
                         IsParentQuestion = parentQuestionIDs.Contains(myQ.Mat_Question_Id),
-                        SetName = string.Empty
+                        SetName = string.Empty,
+                        FreeResponseAnswer = answer?.a.Free_Response_Answer
                     };
 
                     if (answer != null)
@@ -1920,6 +1924,37 @@ namespace CSETWebCore.Business.Reports
         {
             return _context.ASSESSMENTS.Where(x => x.Assessment_Id == assessmentId).Select(x => x.Assessment_GUID).FirstOrDefault().ToString();
         }
+
+        //public IEnumerable<QuestionAnswer> GetCieAllQuestions(int assessId)
+        //{
+        //    int cieModelId = 17;
+        //    QuestionAnswer qaPair = new QuestionAnswer();
+        //    //temp.
+        //    var data = (from q in _context.MATURITY_QUESTIONS
+        //                join a in _context.ANSWER
+        //                    on q.Mat_Question_Id equals a.Question_Or_Requirement_Id
+                        
+        //                where q.Maturity_Model_Id == cieModelId && a.Assessment_Id == assessId
+        //                select new { q, a }).ToList();
+
+        //    foreach (var item in data)
+        //    {
+        //        try
+        //        {
+        //            qaPair.QuestionId = item.q.Mat_Question_Id;
+        //            qaPair.Gen_File_Id = item.g.Gen_File_Id;
+        //            qaPair.Title = item.g.Title;
+        //        }
+        //        catch
+        //        {
+
+        //        }
+        //        result.Add(file);
+
+        //    }
+        //    get
+        //    return temp;
+        //}
 
     }
 }

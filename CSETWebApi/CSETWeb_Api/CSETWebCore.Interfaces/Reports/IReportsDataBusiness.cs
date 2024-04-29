@@ -60,5 +60,6 @@ namespace CSETWebCore.Interfaces.Reports
 
         IEnumerable<CONFIDENTIAL_TYPE> GetConfidentialTypes();
         List<BasicReportData.RequirementControl> GetControlsDiagram(string applicationMode);
+        //IEnumerable<QuestionAnswer> GetCieAllQuestions(int assessId);
     }
 }
