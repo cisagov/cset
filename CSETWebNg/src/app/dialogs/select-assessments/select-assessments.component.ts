@@ -36,6 +36,9 @@ interface UserAssessment {
   selected: boolean;
   useMaturity: boolean;
   selectedMaturityModel: string;
+
+  // used to filter selectable assessments in the list
+  disabled: boolean;
 }
 
 @Component({
@@ -46,7 +49,10 @@ export class SelectAssessmentsComponent implements OnInit {
 
   assessments: UserAssessment[];
   aggregation: any = {};
-  maturity: boolean = false;
+
+  selectedMaturityModel?: string = null;
+  standardSelected: boolean = false;
+
   @ViewChild('refreshComponent') refreshComponent;
 
   /**
@@ -66,26 +72,23 @@ export class SelectAssessmentsComponent implements OnInit {
     this.getAssessmentsForUser();
   }
 
-
+  /**
+   * Requests a list of the user's assessments 
+   */
   getAssessmentsForUser() {
-
     this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
       this.assessments = resp;
 
-
       this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
         this.aggregation = resp2.aggregation;
-
-
 
         resp2.assessments.forEach(selectedAssess => {
           this.assessments.find(x => x.assessmentId === selectedAssess.assessmentId).selected = true;
         });
 
-        let result = this.assessmentTypeCheck()
-        this.filterAssessments(result)
-
-
+        this.checkSelectedType();
+        this.filterAssessments();
+        this.refreshComponent.refresh();
       });
     },
       error =>
@@ -97,43 +100,48 @@ export class SelectAssessmentsComponent implements OnInit {
         ));
   }
 
-
   /**
-   * Return results of currently selected assessments: [true,true, pre-selected assessment] for maturity models, [true, false] for standard models 
+   * Sets a component-level indicator for a selected maturity model
+   * or any selected standard-based assessment, whichever is found first.
    */
-  assessmentTypeCheck() {
+  checkSelectedType() {
+    this.selectedMaturityModel = null;
+    this.standardSelected = false;
+
     for (let element of this.assessments) {
-      if (element.selected === true) {
-        if (element.useMaturity === true) {
-          this.maturity = true;
-          return [true, true, element];
-        } else {
-          return [true, false];
+      if (element.selected) {
+        if (element.useMaturity) {
+          this.selectedMaturityModel = element.selectedMaturityModel;
+          return;
         }
+
+        this.standardSelected = true;
+        return;
       }
     }
   }
 
-
   /**
-   * Hides assessments of incompatible types when dialog opens and assessments have been pre-selected 
+   * Sets a 'disabled' flag for assessments that are not compatible
+   * with whatever has been selected, e.g., any standard or a specific
+   * maturity model.
    */
-  filterAssessments(result) {
-    if (result) {
-      if (result[0] === true) {
-        let new_assessments = []
-        for (let element of this.assessments) {
-          if (result[1] === true) {
-            if (element.selectedMaturityModel === result[2].selectedMaturityModel) {
-              new_assessments.push(element)
-            }
-          } else if (result[1] === false) {
-            if (element.useMaturity === false) {
-              new_assessments.push(element)
-            }
-          }
+  filterAssessments() {
+    for (let element of this.assessments) {
+      element.disabled = false;
+
+      if (!!this.selectedMaturityModel) {
+        if (!element.useMaturity) {
+          element.disabled = true;
+        } else if (element.selectedMaturityModel != this.selectedMaturityModel) {
+          element.disabled = true;
         }
-        this.assessments = new_assessments
+      }
+      
+      if (!!this.standardSelected) {
+        if (element.useMaturity) {
+          element.disabled = true;
+        }
       }
     }
   }
@@ -146,52 +154,16 @@ export class SelectAssessmentsComponent implements OnInit {
   toggleSelection(event, assessment) {
     this.aggregationSvc.saveAssessmentSelection(event.target.checked, assessment).subscribe((resp: any) => {
       this.aggregation = resp;
+
+      // refresh the assessment list
+      this.getAssessmentsForUser();
     });
-
-    this.hideAssessments(event, assessment)
-  }
-
-
-  /**
-   * Hides assessments of incompatible types when user makes an assessment selection 
-   */
-  hideAssessments(event, assessment) {
-    this.aggregationSvc.getAssessments().subscribe((resp2: any) => {
-      if (resp2.assessments.length === 0) {
-        this.assessmentSvc.getAssessments().subscribe((resp: UserAssessment[]) => {
-          this.assessments = resp;
-          this.refreshComponent.refresh();
-        })
-      }
-    })
-
-    if (event.target.checked === true) {
-      let new_assessments = []
-      if (assessment.useMaturity === true) {
-        this.maturity = true;
-        for (let element of this.assessments) {
-          if (element.selectedMaturityModel === assessment.selectedMaturityModel) {
-            new_assessments.push(element)
-          }
-        }
-
-      } else {
-        for (let element of this.assessments) {
-          if (element.useMaturity === false) {
-            new_assessments.push(element)
-          }
-        }
-      }
-      this.assessments = new_assessments
-      this.refreshComponent.refresh();
-    }
   }
 
   /**
    *
    */
   close() {
-
     return this.dialog.close();
   }
 
