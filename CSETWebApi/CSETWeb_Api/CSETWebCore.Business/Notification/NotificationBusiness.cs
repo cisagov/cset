@@ -81,7 +81,7 @@ namespace CSETWebCore.Business.Notification
         {
             SetScope();
 
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", "assessmentInviteTemplate_{{scope}}.html"), this._scope);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"assessmentInviteTemplate_{{scope}}.html"), this._scope);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // Build the name if supplied.  
             string contactName = String.Empty;
