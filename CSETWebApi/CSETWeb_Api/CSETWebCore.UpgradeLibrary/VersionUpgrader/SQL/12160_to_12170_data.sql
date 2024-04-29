@@ -1,7 +1,7 @@
 /*
 Run this script on:
 
-(localdb)\INLLocalDB2022.NCUAWeb12160    -  This database will be modified
+(localdb)\INLLocalDB2022.CSETWeb12160    -  This database will be modified
 
 to synchronize it with:
 
@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 4/26/2024 4:10:34 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 4/29/2024 9:54:56 AM
 
 */
 		
@@ -2767,6 +2767,9 @@ DELETE FROM [dbo].[STANDARD_CATEGORY_SEQUENCE] WHERE [Standard_Category] = N'Wir
 DELETE FROM [dbo].[STANDARD_CATEGORY_SEQUENCE] WHERE [Standard_Category] = N'Wireless Link Protection' AND [Set_Name] = N'Cnssi_1253_V2'
 DELETE FROM [dbo].[STANDARD_CATEGORY_SEQUENCE] WHERE [Standard_Category] = N'Wireless Link Protection' AND [Set_Name] = N'DODI_8510'
 PRINT(N'Operation applied to 526 rows out of 526')
+
+PRINT(N'Delete row from [dbo].[GALLERY_ROWS]')
+DELETE FROM [dbo].[GALLERY_ROWS] WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 0
 
 PRINT(N'Delete rows from [dbo].[STANDARD_CATEGORY]')
 DELETE FROM [dbo].[STANDARD_CATEGORY] WHERE [Standard_Category] = N''
@@ -67507,10 +67510,8 @@ PRINT(N'Operation applied to 107 rows out of 107')
 PRINT(N'Update row in [dbo].[GEN_FILE]')
 UPDATE [dbo].[GEN_FILE] SET [File_Name]=N'CSF 2.0 Implementation Examples.pdf', [Summary]=N'Implementation Examples for the NIST Cybersecurity Framework (CSF) 2.0. It complements and is based on the Core from the NIST CSF 2.0.' WHERE [Gen_File_Id] = 691
 
-PRINT(N'Update rows in [dbo].[GALLERY_ROWS]')
-UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=84 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 0
+PRINT(N'Update row in [dbo].[GALLERY_ROWS]')
 UPDATE [dbo].[GALLERY_ROWS] SET [Group_Id]=83 WHERE [Layout_Name] = N'TSA' AND [Row_Index] = 3
-PRINT(N'Operation applied to 2 rows out of 2')
 
 PRINT(N'Update rows in [dbo].[GALLERY_GROUP_DETAILS]')
 UPDATE [dbo].[GALLERY_GROUP_DETAILS] SET [Column_Index]=7 WHERE [Group_Detail_Id] = 32
@@ -68070,10 +68071,10 @@ PRINT(N'Operation applied to 28 rows out of 28')
 PRINT(N'Add rows to [dbo].[SETS]')
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'MOPhysical', N'State of Missouri General Physical Security and Resilence Assessment', N'Physical Security and Resilence', 1, 1, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, N'State of Misssouri Physical Security Assessment', 0, NULL, 0, '2022-04-18 00:00:00.000', 0, 0)
 INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'SP800-82 V3', N'NIST Special Publication 800-82 Revision 3', N'SP800-82 R3', 1, 1, N'NIST SP800-82 R2', 5, 4, 22, 30, 0, 1, 28, N'This standard provides guidance for establishing secure industrial control systems (ICS). Many of these controls are based on SP800-53 with minor modifications.', 0, NULL, 0, NULL, 0, 1)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA', N'WMATA Cybersecurity Policy', N'WMATA ALL', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR1', N'WMATA Cybersecurity Policy Year 1', N'WMATA YR1', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 1', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR2', N'WMATA Cybersecurity Policy Year 2', N'WMATA YR2', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 2', 0, NULL, 0, NULL, 0, 0)
-INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR3', N'WMATA Cybersecurity Policy Year 3', N'WMATA YR3', 1, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 3', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA', N'WMATA Cybersecurity Policy', N'WMATA ALL', 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR1', N'WMATA Cybersecurity Policy Year 1', N'WMATA YR1', 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 1', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR2', N'WMATA Cybersecurity Policy Year 2', N'WMATA YR2', 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 2', 0, NULL, 0, NULL, 0, 0)
+INSERT INTO [dbo].[SETS] ([Set_Name], [Full_Name], [Short_Name], [Is_Displayed], [Is_Pass_Fail], [Old_Std_Name], [Set_Category_Id], [Order_In_Category], [Report_Order_Section_Number], [Aggregation_Standard_Number], [Is_Question], [Is_Requirement], [Order_Framework_Standards], [Standard_ToolTip], [Is_Deprecated], [Upgrade_Set_Name], [Is_Custom], [Date], [IsEncryptedModule], [IsEncryptedModuleOpen]) VALUES (N'WMATA YR3', N'WMATA Cybersecurity Policy Year 3', N'WMATA YR3', 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, N'NIST SP800-82 with WMATA Security Policy Year 3', 0, NULL, 0, NULL, 0, 0)
 PRINT(N'Operation applied to 6 rows out of 6')
 
 PRINT(N'Add rows to [dbo].[STANDARD_CATEGORY]')
