@@ -79,7 +79,6 @@ export class CustomSetComponent implements OnInit {
   update(e) {
     console.log(e);
     if (this.setDetail.fullName?.length > 0 && e.target.id == 'fullname') {
-      console.log('testing fullname')
       for (let s of this.setDetailList) {
         if (s.fullName == this.setDetail.fullName) {
           const msg2 = 'Module Name Already In Use';
@@ -91,7 +90,6 @@ export class CustomSetComponent implements OnInit {
       }
     }
     if (this.setDetail.shortName?.length > 0 && e.target.id == 'shortname') {
-      console.log('testing shortname')
       for (let s of this.setDetailList) {
         if (s.shortName == this.setDetail.shortName) {
           const msg2 = 'Short Name Already In Use';
