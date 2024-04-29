@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
+import { DemographicService } from '../../../../services/demographic.service';
+
 
 interface ImportExportData {
   flag: string;
@@ -17,23 +19,22 @@ export class AssessmentDemogIodComponent {
 
   eventImportExport: Subject<ImportExportData> = new Subject<ImportExportData>();
 
+  constructor(
+    public demoSvc: DemographicService
+    
+    ) {}
+
   importClick(evt){
-    const fileReader = new FileReader();
-    fileReader.readAsText(evt.target.files[0], "UTF-8");
-    fileReader.onload = () => {
-    this.eventImportExport.next({ flag: 'import', data: JSON.parse(String(fileReader.result))});
-    }
-    fileReader.onerror = (error) => {
-      console.log(error);
-    }
+    console.log("import")
+    this.demoSvc.importDemographics(evt)
   }
 
 
 
 
   exportClick(){
-    this.eventImportExport.next({flag: 'export', data: null});
-
+    console.log("export")
+    this.demoSvc.exportDemographics()
 }
 
 }

@@ -33,6 +33,10 @@
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
     <None Remove="Dashboard\" />
     <None Remove="Version\" />
+    <None Remove="Demographic\DemographicIO\" />
+    <None Remove="Demographic\DemographicIO\Export\" />
+    <None Remove="Demographic\DemographicIO\Import\" />
+    <None Remove="Demographic\DemographicIO\Models\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -139,6 +143,10 @@
   <ItemGroup>
     <Folder Include="Dashboard\" />
     <Folder Include="Version\" />
+    <Folder Include="Demographic\DemographicIO\" />
+    <Folder Include="Demographic\DemographicIO\Export\" />
+    <Folder Include="Demographic\DemographicIO\Import\" />
+    <Folder Include="Demographic\DemographicIO\Models\" />
   </ItemGroup>
 
   <ItemGroup>
