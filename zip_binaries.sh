@@ -14,9 +14,11 @@ sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Da
 sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Assessment Clean-out.sql"
 sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\Standards Clean-out.sql"
 
-if [ $_installationMode -ne "WMATA" ]
+shopt -s nocasematch
+
+if [[ $_installationMode == "WMATA" ]]
 then
-    sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\WMATA Clean-out.sql"
+    sqlcmd -S "(localdb)\INLLocalDb2022" -d "$CSETWeb${_versionNum}" -i  $RepoDir"Database Scripts\Database Maint Scripts\WMATA Setup.sql"
 fi
 
 sed -i 's/\"EnterpriseInstallation\": \"false\"/\"EnterpriseInstallation\": \"true\"/g' CSETWebApi/CSETWeb_Api/CSETWeb_ApiCore/appsettings.json
