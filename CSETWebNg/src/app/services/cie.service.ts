@@ -63,11 +63,10 @@ export class CieService {
   }
 
   
-  // Adds or removes selected ISE examinations to the list to merge
+  // Adds or removes selected CIE examinations to the list to merge
   modifyMergeList(assessment: any, event: any) {
     let tempFacility = "";
     const optionChecked = event.target.checked;
-    console.log(assessment)
     if (optionChecked) {
       //tempFacility = assessment.facili;
 
@@ -157,5 +156,7 @@ export class CieService {
     return this.http.get(this.configSvc.apiUrl + 'getCieMergeData', headers);
   }
 
-
+  getCieAllQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getCieAllQuestions');
+  }
 }

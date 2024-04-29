@@ -553,7 +553,63 @@ export class MergeCieAnalysisComponent implements OnInit {
             this.assessSvc.getAssessmentDetail().subscribe((details: AssessmentDetail) => {
 
               // Update the assessment with the new data and send it back.
-              details.assessmentName = "Merged " + this.primaryAssessDetails.facilityName + this.mergedContactInitials;
+              for (let i = 0; i < 10; i++) {
+                switch (i + 1) {
+                  case 1:
+                    if (this.mergeConflicts[0].assessment_Name1 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analysis";
+                    }
+                    break;
+                  case 2:
+                    if (this.mergeConflicts[0].assessment_Name2 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }
+                    break;
+                  case 3:
+                    if (this.mergeConflicts[0].assessment_Name3 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }           
+                    break;
+                  case 4:
+                    if (this.mergeConflicts[0].assessment_Name4 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }          
+                    break;
+                  case 5:
+                    if (this.mergeConflicts[0].assessment_Name5 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }           
+                    break;
+                  case 6:
+                    if (this.mergeConflicts[0].assessment_Name6 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }           
+                    break;
+                  case 7:
+                    if (this.mergeConflicts[0].assessment_Name7 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }            
+                    break;
+                  case 8:
+                    if (this.mergeConflicts[0].assessment_Name8 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }          
+                    break;
+                  case 9:
+                    if (this.mergeConflicts[0].assessment_Name9 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }           
+                    break;
+                  case 10:
+                    if (this.mergeConflicts[0].assessment_Name10 != null) {
+                      details.assessmentName = "Merged " + (i + 1) + " Analyses";
+                    }           
+                    break;
+                  default:
+                    break;
+                }
+              }
+
               details.facilityName = this.primaryAssessDetails.facilityName;
               details.cityOrSiteName = this.primaryAssessDetails.cityOrSiteName;
               details.stateProvRegion = this.primaryAssessDetails.stateProvRegion;
@@ -562,8 +618,6 @@ export class MergeCieAnalysisComponent implements OnInit {
               details.useMaturity = true;
               details.maturityModel = this.maturitySvc.getModel("CIE");
               this.assessSvc.updateAssessmentDetails(details);
-              console.log(this.assessmentFreeResponses)
-              console.log(this.assessmentNAReasons)
               // Set all of the questions "details" (answerText, comments, etc).
               // This traverses our question list and overrides anything in there if we've
               // picked a new answer with the merge conflict.

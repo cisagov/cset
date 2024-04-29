@@ -768,5 +768,19 @@ namespace CSETWebCore.Api.Controllers
             CisaAssessorWorkflowFieldValidator validator = new CisaAssessorWorkflowFieldValidator(demographics, iodDemograhics, cisServiceDemographics, cisServiceComposition);
             return Ok(validator.ValidateFields());
         }
+
+
+        
+        [HttpGet]
+        [Route("api/reports/getCieAllQuestions")]
+        public IActionResult GetCieAllQuestions()
+        {
+            var assessmentId = _token.AssessmentForUser();
+            _report.SetReportsAssessmentId(assessmentId);
+            MaturityBasicReportData data = new MaturityBasicReportData();
+            data.MatAnsweredQuestions = _report.GetIseAllQuestionList();
+            data.Information = _report.GetInformation();
+            return Ok(data);
+        }
     }
 }
