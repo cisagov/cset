@@ -212,11 +212,11 @@ export class ReportService {
     let t = DateTime.fromISO(d.toString());
     t = t.plus({minute:t.offset});
 
-    if (format == 'datetime') {
-      return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
-    }
-    else {
+    if (format == 'date') {
       return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+    }
+    else  {
+      return t.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS);
     }
   }
 
