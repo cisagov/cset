@@ -44,7 +44,7 @@ namespace CSETWebCore.Business.Reports
         public class INFORMATION
         {
             public string Assessment_Name { get; set; }
-            public string Assessment_Date { get; set; }
+            public DateTime? Assessment_Date { get; set; }
             public string Assessor_Name { get; set; }
             public string Facility_Name { get; set; }
             public string City_Or_Site_Name { get; set; }
@@ -64,8 +64,8 @@ namespace CSETWebCore.Business.Reports
             public string Credit_Union_Name { get; set; }
             public string Charter { get; set; }
             public long Assets { get; set; }
-            public string Assessment_Effective_Date { get; set; }
-            public string Assessment_Creation_Date { get; set; }
+            public DateTime? Assessment_Effective_Date { get; set; }
+            public DateTime? Assessment_Creation_Date { get; set; }
             public int Region_Code { get; set; }
 
 
