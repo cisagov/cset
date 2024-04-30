@@ -35,16 +35,18 @@ import { CieService } from '../../../services/cie.service';
 @Component({
   selector: 'app-cie-all-questions',
   templateUrl: './cie-all-questions.component.html',
-  styleUrls: ['../../reports.scss', './cie-all-questions.component.scss']
+  styleUrls: ['../../reports.scss', '../../acet-reports.scss', './cie-all-questions.component.scss']
 })
 export class CieAllQuestionsComponent {
 
   response: any = {};
 
   hasComments: any[] = [];
+  showSubcats: Map<String, boolean> = new Map<String, boolean>();
+  expandedOptions: Map<String, boolean> = new Map<String, boolean>();
 
   examLevel: string = '';
-  loadingCounter: number = 0;
+  loading: boolean = true;
 
   @ViewChild('groupingDescription') groupingDescription: GroupingDescriptionComponent;
 
@@ -68,29 +70,29 @@ export class CieAllQuestionsComponent {
         console.log(this.response)
         // this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
-        // for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
-        //   let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
-        //   // goes through subcategories
-        //   for (let j = 0; j < domain.components?.length; j++) {
-        //     let subcat = domain?.components[j];
-        //     // goes through questions
-        //     for (let k = 0; k < subcat?.questions?.length; k++) {
-        //       let question = subcat?.questions[k];
+        // goes through domains
+        for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
+          let domain = this.response?.matAnsweredQuestions[0]?.assessmentFactors[i];
+          // goes through subcategories
+          for (let j = 0; j < domain.components?.length; j++) {
+            let subcat = domain?.components[j];
+            this.expandedOptions.set(domain?.title + '_' + subcat?.title, true);
 
-        //       if (this.examLevel === 'CORE') {
-        //         if (question.maturityLevel === 'CORE+' && question.answerText !== 'U') {
-        //           this.examLevel = 'CORE+';
-        //         }
-        //       }
+            this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+            // goes through questions
+            for (let k = 0; k < subcat?.questions?.length; k++) {
+              let question = subcat?.questions[k];
 
-        //       if (question.comments === 'Yes' && question.comment !== '' && !this.ncuaSvc.isParentQuestion(question.title)) {
-        //         this.hasComments.push(question);
-        //       }
+              //if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
+                this.expandedOptions.set(domain?.title + '_' + subcat?.title, true);
 
-        //     }
-        //   }
-        // }
-        this.loadingCounter++;
+                this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+              //}
+            }
+          }
+        }
+
+        this.loading = false;
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
     );
@@ -104,5 +106,23 @@ export class CieAllQuestionsComponent {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Flips the 'expand' boolean value based off the given 'title' key
+   */
+  toggleExpansion(title: string) {
+    let expand = this.expandedOptions.get(title);
+    this.expandedOptions.set(title, !expand);
+    return expand;
+  }
+  /**
+   * checks if section should expand by checking the boolean value attached to the 'title'
+   */
+  shouldExpand(title: string) {
+    if (this.expandedOptions.get(title)) {
+      return true;
+    }
+    return false;
   }
 }

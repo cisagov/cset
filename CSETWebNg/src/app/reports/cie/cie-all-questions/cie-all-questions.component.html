@@ -31,13 +31,13 @@
         </div>
         <!-- <div class="column">
             <p style="text-align: center">
-                <img height="600" src="assets/images/ACET/TOOLBOXMockup.svg" alt="acet">
+                <img height="100" src="assets/images/CIE/CIE_Logo_Blue.png" alt="acet">
             </p>
         </div> -->
 
         <div class="cover-page-bottom mb-4">
             <div>
-                <img style="height: 185px" src="assets/images/NCUA/ncua_seal_blue.svg" alt="ncua">
+                <img style="height: 185px" src="assets/images/CIE/CIE_Logo_Blue.png" alt="cie">
             </div>
             <div style="
                             text-align: right;
@@ -57,7 +57,7 @@
         </div>
     </div>
 
-    <div *ngIf="loadingCounter < 1; else mainContent" class="spinner-container" style="margin: 2em auto">
+    <div *ngIf="loading; else mainContent" class="spinner-container" style="margin: 2em auto">
         <div style="max-width: 50px; max-height: 50px;"></div>
     </div>
 
@@ -79,10 +79,10 @@
                     <td>Assessment Date:</td>
                     <td>{{response?.information?.assessment_Date | localizeDate}}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Credit Union:</td>
                     <td>{{response?.information?.credit_Union_Name}}</td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>City or Site Name:</td>
                     <td>{{response?.information?.city_Or_Site_Name}}</td>
@@ -91,22 +91,22 @@
                     <td>State, Province or Region:</td>
                     <td>{{response?.information?.state_Province_Or_Region}}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>Region Code:</td>
                     <td>{{ncuaSvc.regionCodeTranslator(response?.information?.region_Code)}}</td>
-                </tr>
-                <tr>
+                </tr> -->
+                <!-- <tr>
                     <td>Charter:</td>
                     <td>{{response?.information?.charter}}</td>
-                </tr>
-                <tr>
+                </tr> -->
+                <!-- <tr>
                     <td>Assets:</td>
                     <td>{{response?.information?.assets | currency}}</td>
-                </tr>
-                <tr>
+                </tr> -->
+                <!-- <tr>
                     <td>Exam Level:</td>
                     <td>{{ this.examLevel }}</td>
-                </tr>
+                </tr> -->
             </table>
         </div>
 
@@ -114,33 +114,50 @@
 
         <div class="d-flex flex-row" style="justify-content: space-between">
             <div style="align-self: flex-end;">
-                <div class="h2 report-text-blue">Notes</div>
+                <div class="h2 report-text-blue">Questions</div>
             </div>
         </div>
-        <div *ngIf="this.hasComments.length > 0; else noComments">
-            <div *ngFor="let q of this.hasComments">
-                <div>
-                    <span class="font-weight-bold">Title: </span>
-                    <span class="pr-3">{{ q.title }}</span>
-                </div>
-                <div>
-                    <span class="font-weight-bold">Statement Text: </span>
-                    <span class="pr-3">{{ q.questionText }}</span>
-                </div>
-                <div>
-                    <span class="font-weight-bold">Response: </span>
-                    <span class="pr-3">{{ !this.ncuaSvc.isParentQuestion(q.title) ?
-                        questionsSvc.answerButtonLabel('ISE', q.answerText) : ' ' }}</span>
-                </div>
-                <div>
-                    <div class="font-weight-bold">Notes: </div>
-                    <span class="pr-3" style="white-space: pre-wrap;" [innerHTML]="q.comment"></span>
-                </div>
-
-                <hr class="page-line">
-
-            </div>
-        </div>
+        <table class="table-responsive td-align-top td-padding-half-rem">
+            <tr class="report-text-blue">
+                <td>Title</td>
+                <td>Question</td>
+                <td>Answer</td>
+                <td>Explanation</td>
+            </tr>
+            <ng-container *ngFor="let d of response?.matAnsweredQuestions">
+                <!-- <tr class="rkw-domain">
+                    <td colspan="5" class="background-1 h4 color-white">{{d.title}}</td>
+                </tr> -->
+                <ng-container *ngFor="let f of d.assessmentFactors">
+                    <tr class="rkw-domain">
+                        <td colspan="5" class="background-1 h4 color-white">{{f.title}} - Principle
+                        </td>
+                    </tr>
+                    <ng-container *ngFor="let c of f.components">
+                        <ng-container *ngIf="this.showSubcats.get(f.title + '_' + c.title)">
+                            <tr>
+                                <td colspan="5" class="background-2 pl-4 font-weight-bold">{{c.title}} - Phase
+                                    <label class="btn form-check-label" style="float: right">{{
+                                        this.expandedOptions.get(f.title + '_' + c.title) ? '-' : '+' }}
+                                        <input class="hide" name="nameExample" type=checkbox
+                                            (click)="toggleExpansion(f.title + '_' + c.title)">
+                                    </label>
+                                </td>
+                            </tr>
+                            <ng-container *ngFor="let q of c.questions">
+                                <tr *ngIf="q.title != 'Question K' && shouldExpand(f.title + '_' + c.title)" [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                    <td class="font-weight-bold text-nowrap">{{q.title}}</td>
+                                    <td class="pr-5" [innerHTML]="q.questionText"></td>
+                                    <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? '' : 'NA')"></td>
+                                    <td class="pr-5" [innerHTML]="q.freeResponseAnswer"></td>
+                                    <!-- <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td> -->
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </table>
         <ng-template #noComments>
             No comments were left.
         </ng-template>
