@@ -1686,7 +1686,7 @@ namespace CSETWebCore.Business.Reports
                 TinyMapper.Bind<FINDING, Observations>();
                 Observations obs = TinyMapper.Map<Observations>(f.b);
                 obs.Observation = f.b.Summary;
-                obs.ResolutionDate = f.b.Resolution_Date.ToString();
+                obs.ResolutionDate = f.b.Resolution_Date;
                 obs.Importance = f.Value;
 
 
