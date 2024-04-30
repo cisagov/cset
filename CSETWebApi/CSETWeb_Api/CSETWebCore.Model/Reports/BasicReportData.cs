@@ -118,7 +118,7 @@ namespace CSETWebCore.Business.Reports
         public string QuestionIdentifier { get; set; }
         public string QuestionText { get; set; }
         public string Importance { get; set; }
-        public string ResolutionDate { get; set; }
+        public DateTime? ResolutionDate { get; set; }
         public string Issue { get; set; }
         public string Impact { get; set; }
         public string Recommendations { get; set; }
