@@ -191,7 +191,7 @@ export class AssessmentService {
    * @returns
    */
   getLastModified() {
-    return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'text' });
+    return this.http.get(this.apiUrl + 'lastmodified', { responseType: 'json' });
   }
 
   moveActionItemsFrom_IseActions_To_HydroData() {
@@ -205,7 +205,7 @@ export class AssessmentService {
     this.assessment = assessment;
 
     // clean out properties that may contain HTML before posting.
-    // The API WAF may reject to prevent XSS.  
+    // The API WAF may reject to prevent XSS.
     // These properties are not user updatable.
     const payload = JSON.parse(JSON.stringify(assessment));
     payload.maturityModel = null;
@@ -245,14 +245,14 @@ export class AssessmentService {
   }
 
   /**
-   * 
+   *
    */
   getOtherRemarks() {
     return this.http.get(this.apiUrl + 'remarks', { responseType: 'text' });
   }
 
   /**
-   * 
+   *
    */
   saveOtherRemarks(remarks: string) {
     return this.http.post(this.apiUrl + 'remarks', JSON.stringify(remarks), headers);
@@ -406,7 +406,7 @@ export class AssessmentService {
   }
 
 
-  //Call this when the assessment name 
+  //Call this when the assessment name
   //was calculated in the backend and needs
   //to be updated here
   updateAssessmentName() {
@@ -613,7 +613,7 @@ export class AssessmentService {
   }
 
   /**
-   * Indicates if the assessment is PCII.  This is set in the 
+   * Indicates if the assessment is PCII.  This is set in the
    * CISA Assessor Workflow's Assessment Configuration page.
    */
   isPcii() {
@@ -625,7 +625,7 @@ export class AssessmentService {
 
   /**
   * Saves the user's "Prevent Encrypt" toggle option to the database.
-  * @param status 
+  * @param status
   */
   persistEncryptPreference(preventEncrypt: boolean) {
     let status = preventEncrypt;
@@ -634,7 +634,7 @@ export class AssessmentService {
   }
 
   /**
-  * Gets the user's "Prevent Encrypt" toggle option from the database. 
+  * Gets the user's "Prevent Encrypt" toggle option from the database.
   */
   getEncryptPreference() {
     return this.http.get(this.apiUrl + 'getPreventEncrypt');

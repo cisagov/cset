@@ -131,9 +131,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       );
     }
 
-    this.assessSvc.getLastModified().subscribe((data: string) => {
-      let myArray = data.split(" ");
-      this.lastModifiedTimestamp = myArray[1];
+    this.assessSvc.getLastModified().subscribe((data: any) => {
+      this.lastModifiedTimestamp = DateTime.fromISO(data.lastModifiedDate).toLocaleString(DateTime.TIME_24_WITH_SECONDS)
       // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
@@ -158,8 +157,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
-
-      this.lastModifiedTimestamp = DateTime.fromISO(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
