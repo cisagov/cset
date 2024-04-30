@@ -38,6 +38,7 @@ import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
+import { DateTime } from 'luxon';
 
 let headers = {
   headers: new HttpHeaders()
@@ -816,6 +817,27 @@ export class NCUAService {
 
     // for
   }
+
+  // expecting format of input 'd' to be like 'Tuesday, April 1, 2024'
+  reportsDateReformat(d: string, format: string) {
+    let localDate = '';
+    try {
+      var dtD = DateTime.fromFormat(d, 'DDDD', {});
+      if (format == 'med') {
+        localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
+      }
+      else if (format == 'short') {
+        localDate = dtD.setLocale(this.tSvc.getActiveLang()).toLocaleString(DateTime.DATE_SHORT);
+      }
+    }
+    catch {
+      console.log('error')
+    }
+    
+    
+    return localDate;
+  }
+
 
 }
 

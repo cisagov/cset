@@ -49,8 +49,7 @@
                                 ">
 
                     <div class="title-page-name">{{this.demographics?.information?.assessment_Name}}</div>
-                    <div class="title-page-content">{{this.demographics?.information?.assessment_Date |
-                        localizeDate}}
+                    <div class="title-page-content">{{ncuaSvc.reportsDateReformat(demographics?.information?.assessment_Date, 'short')}}
                     </div>
                     <div class="title-page-content">{{this.demographics?.information?.assessor_Name}}</div>
                 </div>
@@ -77,7 +76,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{demographics?.information?.assessment_Date | localizeDate}}</td>
+                        <td>{{ncuaSvc.reportsDateReformat(demographics?.information?.assessment_Date, 'short')}}</td>
                     </tr>
                     <tr>
                         <td>Credit Union:</td>
