@@ -697,11 +697,10 @@ namespace CSETWebCore.Business.Reports
             var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
-            info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+            info.Assessment_Date = assessment.Assessment_Date;
 
-            DateTime assessmentEffectiveDate;
-            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
-            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToString();
+            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
 
             // Primary Assessor
             var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
@@ -1578,11 +1577,10 @@ namespace CSETWebCore.Business.Reports
             var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
-            info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+            info.Assessment_Date = assessment.Assessment_Date;
 
-            DateTime assessmentEffectiveDate;
-            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
-            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToShortDateString() + ' ' + assessment.AssessmentCreatedDate.ToLongTimeString();
+            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
 
             // Primary Assessor
             var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
