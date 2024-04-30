@@ -30,6 +30,7 @@
         tabindex="0">
         <div class="sub-head-2">
           <span *ngIf="mySubCategory.subCategoryHeadingText != ''">{{ mySubCategory.subCategoryHeadingText }}</span>
+          <span *ngIf="showQuestionIds" class="debug-highlight">{{mySubCategory.subCategoryId}}</span>
         </div>
         <div class="d-flex justify-content-end align-items-center flex-00a" *ngIf="!layoutSvc.hp">
           <span [class.display-hidden]="!mySubCategory.hasReviewItems"

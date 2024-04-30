@@ -77,15 +77,6 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
-  changeCriticalService(evt: any) {
-    this.demographics.criticalService = evt.target.value;
-    this.updateDemographics();
-  }
-
-  changePointOfContact(evt: any) {
-    this.updateDemographics();
-  }
-
   changeIsPCII(val: boolean) {
     if (this.assessment) {
       this.IsPCII = val;
@@ -105,7 +96,8 @@ export class AssessmentConfigIodComponent implements OnInit {
     this.demoSvc.updateDemographic(this.demographics);
   }
 
-  updateIodDemographics() {
+  updateDemographicsIod() {
+    console.log(this.iodDemographics);
     this.iodDemoSvc.updateDemographic(this.iodDemographics);
   }
 
@@ -124,14 +116,4 @@ export class AssessmentConfigIodComponent implements OnInit {
   showStateName() {
     return this.configSvc.behaviors.showStateName;
   }
-
-  /**
-   * Some fields are only intended to be shown for
-   * certain assessment/modules.
-   */
-  // I don't think this check is needed since we are only showing this page in IOD mode (unless we only want to show for certain models within IOD mode)
-  // isTargetModule(): boolean {
-  //   return (['CRR', 'EDM', 'CIS', 'RRA', 'IMR', 'CPG', 'MVRA'].includes(this.assessmentSvc.assessment.maturityModel.modelName))
-  //   && this.configSvc.installationMode === 'IOD';
-  // }
 }

@@ -97,7 +97,7 @@ namespace CSETWebCore.Helpers
                 // Send the new temp password to the user
                 if (sendEmail)
                 {
-                    _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppCode);
+                    _notificationBusiness.SendPasswordEmail(userCreateResponse.PrimaryEmail, info.FirstName, info.LastName, userCreateResponse.TemporaryPassword, info.AppName);
                 }
 
                 return true;
@@ -174,9 +174,9 @@ namespace CSETWebCore.Helpers
         /// </summary>
         /// <param name="email"></param>
         /// <param name="subject"></param>
-        /// <param name="appCode"></param>
+        /// <param name="appName"></param>
         /// <returns></returns>
-        public bool ResetPassword(string email, string subject, string appCode)
+        public bool ResetPassword(string email, string subject, string appName)
         {
             /**
              * get the user and make sure they exist
@@ -225,7 +225,7 @@ namespace CSETWebCore.Helpers
 
 
                 // send the notification email
-                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appCode);
+                _notificationBusiness.SendPasswordResetEmail(user.PrimaryEmail, user.FirstName, user.LastName, password, subject, appName);
 
                 return true;
             }

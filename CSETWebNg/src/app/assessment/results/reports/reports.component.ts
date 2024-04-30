@@ -160,7 +160,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
-        if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
+        if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
           this.disableEntirePage = true;
         }
       });
@@ -314,11 +314,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.securitySelected = val;
   }
 
-  // This checks if we should apply cisa assessor workflow field validation to disable reports and export.
-  shouldReportsandExportBeDisabledCisaAssessor() {
-    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation?.isValid
-  }
-
   showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
@@ -351,6 +346,9 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
+    if (this.ncuaSvc.ISE_StateLed) {
+      return false;
+    }
     if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
       return true;
     }

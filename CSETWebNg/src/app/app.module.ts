@@ -639,6 +639,10 @@ import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-in
 import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
  import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
+import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa-workflow-warnings/cisa-workflow-warnings.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
+import { AnalyticsService } from './services/analytics.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1225,8 +1229,11 @@ import { ReferencesSectionComponent } from './assessment/questions/references-se
     AssessmentConfigCieComponent,
     AssessmentDetailCieComponent,
     CieLayoutMainComponent,
-    AboutCieComponent,
-    ReferencesSectionComponent
+    AboutCieComponent, 
+    AnalyticsComponent, 
+    ReferencesSectionComponent,
+    CisaWorkflowWarningsComponent,
+    AnalyticsloginComponent
   ],
   providers: [
     TranslocoService,
@@ -1305,7 +1312,8 @@ import { ReferencesSectionComponent } from './assessment/questions/references-se
     Utilities,
     NCUAService,
     GalleryService,
-    FooterService
+    FooterService, 
+    AnalyticsService
   ],
   bootstrap: [AppComponent]
 })

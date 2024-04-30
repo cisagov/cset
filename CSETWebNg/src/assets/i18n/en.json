@@ -20,6 +20,7 @@
     "city or site name": "City or Site Name",
     "state province region": "State/Province/Region",
     "state, province, or region": "State, Province, or Region",
+    "cisa region": "CISA Region",
     "assessment type": "Assessment Type",
     "type": "Type",
     "demographics": "Demographics",
@@ -35,6 +36,7 @@
     "select facilitator": "Select Facilitator",
     "crit svc poc": "Critical Service Point of Contact",
     "asset gross value": "What is the gross value of the asset you are trying to protect?",
+    "select gross value": "Select Value",
     "not selected": "Not Selected",
     "expected effort": "What is the relative expected effort for this assessment?",
     "select effort": "Select Effort",
@@ -70,6 +72,14 @@
     "img suffix": "_en",
     "publisher": {
         "cset": {
+            "app long name": "Cyber Security Evaluation Tool",
+            "app short name": "CSET",
+            "org long name": "Cybersecurity & Infrastructure Security Agency",
+            "org short name": "CISA",
+            "show ip rights assertion": true,
+            "ip dist": "the CSET Program Office"
+        },
+        "iod": {
             "app long name": "Cyber Security Evaluation Tool",
             "app short name": "CSET",
             "org long name": "Cybersecurity & Infrastructure Security Agency",
@@ -257,6 +267,7 @@
         "high level desc exec sec comments": "High-Level Assessment Description Executive Summary & Comments",
         "reports": "Reports",
         "feedback": "Feedback",
+        "analytics":"Analytics",
         "assessment complete": "Assessment Complete",
         "performance summary": "Performance Summary",
         "security practice checklist": "Security Practice Checklist",
@@ -1051,7 +1062,7 @@
         "text 1": "Feedback is a mechanism for submitting changes or suggestions for a question asked in CSET. Feedback is entered by clicking the",
         "text 2": "icon below the question.",
         "text 3": "Please ensure that the feedback you provide does not include any proprietary or assessment related information. These comments should be considered part of a public community discussion with regard to the questions, requirements, CSET feature requests or bug notifications.",
-        "copy paste": "Copy text to clipboard and paste into an email.",
+        "copy paste": "Copy text to clipboard and paste into an email. Send the email to {{address}}.",
         "no feedback exists": "There is no feedback for any question in this assessment."
     },
     "extras": {
