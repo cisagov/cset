@@ -150,7 +150,6 @@ export class NavigationService {
       let d = new DOMParser();
       this.workflow = d.parseFromString(xml, 'text/xml');
 
-
       // populate displaytext for CIS and MVRA using API-sourced grouping titles
       this.maturitySvc.mvraGroupings.forEach(t => {
         const e = this.workflow.getElementById('maturity-questions-nested-' + t.id);
@@ -175,7 +174,7 @@ export class NavigationService {
       this.navTreeSvc.buildTree(this.workflow, this.getMagic());
     },
       (err: HttpErrorResponse) => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -252,7 +251,9 @@ export class NavigationService {
   }
 
   isNextEnabled(cur: string): boolean {
+    if (!this.workflow) return true;
     const originPage = this.workflow.getElementById(cur);
+    
     if (originPage == null) {
       return true;
     }

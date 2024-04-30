@@ -21,6 +21,7 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
+        private static object _myLockObject = new object();
         private readonly ITokenManager _tokenManager;
         private readonly ITrendDataProcessor _trendData;
         private CSETContext _context;
@@ -165,16 +166,19 @@ namespace CSETWebCore.Api.Controllers
                 row["Alias"] = a.Alias;
                 dt.Rows.Add(row);
 
-                var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
-
-                foreach (usp_getStandardsResultsByCategory pct in percentages)
+                lock (_myLockObject)
                 {
-                    if (!dt.Columns.Contains(pct.Question_Group_Heading))
-                    {
-                        dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
-                    }
+                    var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
 
-                    row[pct.Question_Group_Heading] = pct.prc;
+                    foreach (usp_getStandardsResultsByCategory pct in percentages)
+                    {
+                        if (!dt.Columns.Contains(pct.Question_Group_Heading))
+                        {
+                            dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
+                        }
+
+                        row[pct.Question_Group_Heading] = pct.prc;
+                    }
                 }
             }
 
@@ -221,18 +225,21 @@ namespace CSETWebCore.Api.Controllers
         {
             List<usp_getStandardsResultsByCategory> response = null;
 
-            db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                        .WithSqlParam("assessment_Id", assessmentId)
-                        .ExecuteStoredProc((handler) =>
-                        {
-                            var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
-                            var labels = (from usp_getStandardsResultsByCategory an in result
-                                          orderby an.Question_Group_Heading
-                                          select an.Question_Group_Heading).Distinct().ToList();
+            lock (_myLockObject)
+            {
+                db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+                            .WithSqlParam("assessment_Id", assessmentId)
+                            .ExecuteStoredProc((handler) =>
+                            {
+                                var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
+                                var labels = (from usp_getStandardsResultsByCategory an in result
+                                              orderby an.Question_Group_Heading
+                                              select an.Question_Group_Heading).Distinct().ToList();
 
 
-                            response = (List<usp_getStandardsResultsByCategory>)result;
-                        });
+                                response = (List<usp_getStandardsResultsByCategory>)result;
+                            });
+            }
 
             return response;
         }

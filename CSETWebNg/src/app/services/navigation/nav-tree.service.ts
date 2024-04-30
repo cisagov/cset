@@ -98,8 +98,9 @@ export class NavTreeService {
    */
   buildTocData(): NavTreeNode[] {
     const toc: NavTreeNode[] = [];
-
+    if (!this.workflow) return toc;
     this.domToNav(this.workflow.documentElement.children, toc);
+    
     return toc;
   }
 

@@ -131,9 +131,8 @@ export class AssessmentDetailNcuaComponent implements OnInit {
       );
     }
 
-    this.assessSvc.getLastModified().subscribe((data: string) => {
-      let myArray = data.split(" ");
-      this.lastModifiedTimestamp = myArray[1];
+    this.assessSvc.getLastModified().subscribe((data: any) => {
+      this.lastModifiedTimestamp = DateTime.fromISO(data.lastModifiedDate).toLocaleString(DateTime.TIME_24_WITH_SECONDS)
       // NCUA specifically asked for the ISE assessment name to update to the 'ISE format' as soon as the page loads.
       // The time stamp (above) is the final piece of that format that is necessary, so we update the assess name here.
       this.createAssessmentName();
@@ -158,8 +157,6 @@ export class AssessmentDetailNcuaComponent implements OnInit {
         this.contactInitials = "_" + response.contactList[0].firstName;
         this.createAssessmentName();
       });
-
-      this.lastModifiedTimestamp = new DateTime(this.lastModifiedTimestamp).toString();
 
       this.assessSvc.updateAssessmentDetails(this.assessment);
     } else {
@@ -245,6 +242,9 @@ export class AssessmentDetailNcuaComponent implements OnInit {
     this.ncuaSvc.creditUnionName = this.assessment.creditUnion;
     this.ncuaSvc.creditUnionCharterNumber = this.assessment.charter;
 
+    if (+this.assessment.charter < 60000) {
+      this.ncuaSvc.ISE_StateLed = false;
+    }
     this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
@@ -287,16 +287,18 @@ export class AssessmentDetailNcuaComponent implements OnInit {
   * 
   */
   updateAssets() {
-    if (this.assessment.assets != null) {
-      this.ncuaSvc.updateAssetSize(this.assessment.assets);
-      this.acetDashboard.assets = this.assessment.assets;
-
-      if (this.ncuaSvc.assetsAsNumber > 50000000) {
-        this.updateOverride("No Override");
-      }
-
-      this.assessSvc.updateAssessmentDetails(this.assessment);
+    if (this.assessment.assets == null) {
+      this.assessment.assets = "0";
     }
+      
+    this.ncuaSvc.updateAssetSize(this.assessment.assets);
+    this.acetDashboard.assets = this.assessment.assets;
+
+    if (this.ncuaSvc.assetsAsNumber > 50000000) {
+      this.updateOverride("No Override");
+    }
+
+    this.assessSvc.updateAssessmentDetails(this.assessment);
   }
 
   /**

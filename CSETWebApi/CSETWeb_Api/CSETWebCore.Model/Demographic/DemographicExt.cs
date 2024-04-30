@@ -1,12 +1,14 @@
-﻿using CSETWebCore.DataLayer.Model;
-using Newtonsoft.Json;
+﻿//////////////////////////////// 
+// 
+//   Copyright 2024 Battelle Energy Alliance, LLC  
+// 
+// 
+//////////////////////////////// 
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.ComponentModel;
+
 
 namespace CSETWebCore.Model.Demographic
 {
@@ -23,12 +25,19 @@ namespace CSETWebCore.Model.Demographic
         public string OrganizationName { get; set; }
         public int? Sector { get; set; }
         public int? Subsector { get; set; }
+
+        [DisplayName("CISA Region")]
+        public int? CisaRegion { get; set; }
+
         public int? NumberEmployeesTotal { get; set; }
         public int? NumberEmployeesUnit { get; set; }
         public int? AnnualRevenue { get; set; }
         public int? CriticalServiceRevenuePercent { get; set; }
         public string CriticalDependencyIncidentResponseSupport { get; set; }
+
+        [DisplayName("Number of People Served by Critical Service")]
         public int? NumberPeopleServedByCritSvc { get; set; }
+
         public int? DisruptedSector1 { get; set; }
         public int? DisruptedSector2 { get; set; }
 
@@ -83,7 +92,13 @@ namespace CSETWebCore.Model.Demographic
         public List<ListItem2> ListSectors { get; set; } = new List<ListItem2>();
 
         public List<ListItem2> ListSubsectors { get; set; } = new List<ListItem2>();
-        
+
+
+        /// <summary>
+        /// CISA Region choices
+        /// </summary>
+        public List<ListItem2> CisaRegions { get; set; } = new List<ListItem2>();
+
 
         public List<ListItem2> ListNumberEmployeeTotal { get; set; } = new List<ListItem2>();
 
@@ -128,6 +143,5 @@ namespace CSETWebCore.Model.Demographic
         /// </summary>
         public List<ListItem2> ListBarriers { get; set; } = new List<ListItem2>();
 
-        
     }
 }

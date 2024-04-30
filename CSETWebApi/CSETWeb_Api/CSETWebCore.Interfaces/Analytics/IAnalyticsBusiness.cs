@@ -7,6 +7,7 @@
 using CSETWebCore.DataLayer.Manual;
 using CSETWebCore.Model.Dashboard;
 using System.Collections.Generic;
+using CSETWebCore.Model.Assessment;
 
 namespace CSETWebCore.Interfaces.Analytics
 {
@@ -17,5 +18,6 @@ namespace CSETWebCore.Interfaces.Analytics
         List<SetStandard> GetStandardList(int assessmentId);
         List<AnalyticsStandardMinMaxAvg> GetStandardMinMaxAvg(int assessmentId, string setname, int? sectorId, int? industryId);
         List<standardAnalyticsgetMedianOverall> GetStandardSingleAvg(int assessmentId, string setname);
+        public object GetAggregationAssessment(int assessmentId);
     }
 }

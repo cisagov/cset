@@ -32,6 +32,7 @@
     <None Remove="App_Data\passwordResetTemplate_TSA.html" />
     <None Remove="AssessmentIO\Import\ColumnImportRules.xml" />
     <None Remove="Dashboard\" />
+    <None Remove="Version\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -109,15 +110,15 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper.Excel.Core" Version="27.2.1" />
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.1" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
     <PackageReference Include="DotNetZip" Version="1.16.0" />
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Analysis.Common" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.Queries" Version="4.8.0-beta00016" />
     <PackageReference Include="Lucene.Net.QueryParser" Version="4.8.0-beta00016" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NJsonSchema" Version="11.0.0" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.8" />
@@ -137,6 +138,7 @@
 
   <ItemGroup>
     <Folder Include="Dashboard\" />
+    <Folder Include="Version\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -164,7 +166,7 @@
     <None Update="App_Data\LanguagePacks\ES\MATURITY_QUESTIONS.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\ES\SECTORS.json">
+    <None Update="App_Data\LanguagePacks\ES\SECTOR.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\ES\SECTOR_INDUSTRY.json">
@@ -206,7 +208,7 @@
     <None Update="App_Data\LanguagePacks\UK\QUESTION_GROUP_HEADING.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\UK\SECTORS.json">
+    <None Update="App_Data\LanguagePacks\UK\SECTOR.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="App_Data\LanguagePacks\UK\SECTOR_INDUSTRY.json">
@@ -224,7 +226,7 @@
     <None Update="App_Data\LanguagePacks\UK\ANSWER_LOOKUP.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="App_Data\LanguagePacks\UK\MATURITY_GROUPINGS_TITLE.json">
+    <None Update="App_Data\LanguagePacks\UK\MATURITY_MODELS.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

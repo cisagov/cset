@@ -25,7 +25,6 @@ import { Component, OnInit } from '@angular/core';
 import { SecurityQuestionAnswer } from '../../models/reset-pass.model';
 import { AuthenticationService } from '../../services/authentication.service';
 import { EmailService } from '../../services/email.service';
-import { environment } from '../../../environments/environment.prod';
 import { ConfigService } from '../../services/config.service';
 import { TranslocoService } from '@ngneat/transloco';
 
@@ -136,7 +135,7 @@ export class ResetPassComponent implements OnInit {
     /**
      * Send the question and answer along with the user's email for validation
      * and if valid, sending of an email.
-     * Send the AppCode also, because the user is not currently logged in, so there is no JWT.
+     * Send the AppName also, because the user is not currently logged in, so there is no JWT.
      */
     resetPassword() {
         this.loading = true;
@@ -144,7 +143,7 @@ export class ResetPassComponent implements OnInit {
             primaryEmail: this.model.email,
             questionText: this.securityQuestion,
             answerText: this.securityAnswer,
-            appCode: this.configSvc.installationMode || environment.appCode
+            appName: this.configSvc.installationMode
         };
 
         this.emailSvc.sendPasswordResetEmail(ans)

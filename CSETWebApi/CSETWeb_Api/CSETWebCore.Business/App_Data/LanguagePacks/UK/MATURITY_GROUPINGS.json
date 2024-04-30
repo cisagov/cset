@@ -446,12 +446,12 @@
   },
   {
     "groupingId": "93",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "94",
-    "title": "[UK] Risk Management",
+    "title": "Управління ризиками",
     "description": ""
   },
   {
@@ -476,7 +476,7 @@
   },
   {
     "groupingId": "99",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -541,7 +541,7 @@
   },
   {
     "groupingId": "112",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -576,7 +576,7 @@
   },
   {
     "groupingId": "119",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -682,7 +682,7 @@
   {
     "groupingId": "141",
     "title": "[UK] Controls Management (CM)",
-    "description": "[UK] The purpose of Controls Management is to identify, analyze, and manage controls in a critical service's operating environment.  "
+    "description": "[UK] The purpose of Controls Management is to identify, analyze, and manage controls in a critical service's operating environment."
   },
   {
     "groupingId": "142",
@@ -831,53 +831,53 @@
   },
   {
     "groupingId": "173",
-    "title": "[UK] Robust Data Backup (DB)",
-    "description": "[UK] Be prepared to recover gracefully from an incident. Employ a backup solution that automatically and continuously backs up your business-critical data and system configurations. Ensure the backed-up data is stored securely (encrypted) offsite or in the cloud and allows for at least 30 days of rollback. Periodically test your ability to recover data from backup."
+    "title": "Надійне резервне копіювання даних (DB)",
+    "description": "Будьте готові плавно оговтатися після інциденту. Використовуйте рішення для резервного копіювання, яке автоматично й постійно створює резервні копії важливих для бізнесу даних і конфігурацій системи. Переконайтеся, що резервні копії даних безпечно (зашифровано) зберігаються за межами сайту або в хмарі та дозволяють принаймні 30 днів відкоту. Періодично перевіряйте свою здатність відновлювати дані з резервної копії."
   },
   {
     "groupingId": "174",
-    "title": "[UK] Web Browser Management and DNS Filtering (BM)",
-    "description": "[UK] Avoid danger and filter out connections to unauthorized websites, suspicious domains names, and known malicious domains names that will make you vulnerable to malware (such as ransomware) and phishing. Leverage DNS filtering, also known as DNS Blocking or DNS Firewall, with integrated threat intelligence. A number of effective commercial solutions are available ranging from free to low cost that make this an especially recommended action."
+    "title": "Керування веб-браузером і DNS-фільтрація (BM)",
+    "description": "Уникайте небезпеки та відфільтруйте підключення до неавторизованих веб-сайтів, підозрілих доменних імен і відомих шкідливих доменних імен, які роблять вас уразливими до зловмисного програмного забезпечення (наприклад, програм-вимагачів) і фішингу. Використовуйте фільтрацію DNS, також відому як блокування DNS або брандмауер DNS, із інтегрованим аналізом загроз. Доступна низка ефективних комерційних рішень, від безкоштовних до недорогих, що робить цю дію особливо рекомендованою."
   },
   {
     "groupingId": "175",
-    "title": "[UK] Phishing Prevention and Awareness (PP)",
-    "description": "[UK] Take steps to increase and maintain awareness of Phishing threats. Conduct ongoing phishing and social engineering campaigns that randomly and periodically send simulated phishing emails to personnel. Offer phishing awareness training to staff which will assist in recognizing and reporting phishing attacks. Utilize an SMTP (mail server) proxy that employs reputational (IP, URL, and sender) and traditional anti-SPAM and content filtering features."
+    "title": "Запобігання фішингу та поінформованість (PP)",
+    "description": "Вживайте заходів для підвищення та підтримки обізнаності про загрози фішингу. Проводьте постійні фішингові кампанії та кампанії соціальної інженерії, які випадковим чином і періодично надсилають імітовані фішингові електронні листи персоналу. Пропонуйте персоналу тренінги щодо фішингу, які допоможуть розпізнавати фішингові атаки та повідомляти про них. Використовуйте проксі-сервер SMTP (поштовий сервер), який використовує функції репутації (IP, URL-адреса та відправник) і традиційні функції захисту від спаму та фільтрації вмісту."
   },
   {
     "groupingId": "176",
-    "title": "[UK] Network Perimeter Monitoring (NM)",
-    "description": "[UK] Look for suspicious activity and react faster. Monitor internet traffic into and out of your organization. Be sure to use a product or service with integrated threat intelligence and consider subscribing to additional indicator sharing feeds, such as the Automated Indicator Sharing service provided by DHS, to automatically identify attacks and known bad actors."
+    "title": "Моніторинг периметра мережі (NM)",
+    "description": "Шукайте підозрілу активність і реагуйте швидше. Відстежуйте інтернет-трафік до вашої організації та з неї. Обов’язково використовуйте продукт або послугу з інтегрованим аналізом загроз і подумайте про підписку на додаткові канали обміну індикаторами, такі як служба автоматичного обміну індикаторами, яку надає DHS, для автоматичного визначення атак і відомих зловмисників."
   },
   {
     "groupingId": "177",
-    "title": "[UK] Asset Management (AM)",
-    "description": "[UK] <p>Protecting your systems requires knowing which devices are connected to your network, which applications are in     use, who has access to them, and the security measures in place. A cyber-ready business keeps its systems up-to-date     and secure. These actions can support a proactive risk management culture and limit the risk of compromise.</p> <p>Remove unsupported or unauthorized hardware and software. Supported hardware and software generally allow you to     receive updates and patches for vulnerabilities that otherwise are not available for unauthorized and unsupported     assets. Inventory authorized hardware and software throughout your organization. Know the physical location and user     of the hardware to keep patching updates current. This also allows for any unauthorized hardware or software to be     identified and removed.</p>"
+    "title": "Управління активами (AM)",
+    "description": "<p>Щоб захистити ваші системи, потрібно знати, які пристрої під’єднано до вашої мережі, які програми використовуються, хто має до них доступ, а також заходи безпеки. Підприємство, готове до роботи в кіберпространстві, підтримує актуальність і безпеку своїх систем. Ці дії можуть підтримувати проактивну культуру управління ризиками та обмежувати ризик компрометації.</p> <p>Видаліть непідтримуване або неавторизоване обладнання та програмне забезпечення. Підтримуване апаратне та програмне забезпечення зазвичай дозволяє отримувати оновлення та виправлення для вразливостей, які інакше недоступні для несанкціонованих і непідтримуваних активів. Інвентаризуйте авторизоване обладнання та програмне забезпечення у вашій організації. Знайте фізичне місцезнаходження та користувача апаратного забезпечення, щоб підтримувати оновлення. Це також дозволяє виявити та видалити будь-яке неавторизоване апаратне чи програмне забезпечення.</p>"
   },
   {
     "groupingId": "178",
-    "title": "[UK] Patch and Update Management (PM)",
-    "description": "[UK] Make it generally harder for the bad guys by eliminating known vulnerabilities. Obtain, test, and deploy software and firmware patches as quickly as practical. Enable automatic updates whenever possible. Replace end of life (EOL) / unsupported operating systems, applications, and hardware with vendor supported versions/models."
+    "title": "Керування виправленнями та оновленнями (PM)",
+    "description": "Загалом ускладніть роботу зловмисникам, усунувши відомі вразливості. Отримайте, протестуйте та розгорніть програмні та мікропрограмні виправлення якомога швидше. Увімкніть автоматичне оновлення, коли це можливо. Замініть вичерпані (EOL)/непідтримувані операційні системи, програми та апаратне забезпечення на версії/моделі, які підтримуються постачальниками."
   },
   {
     "groupingId": "179",
-    "title": "[UK] User and Access Management (UM)",
-    "description": "[UK] Implement policies, processes, and technologies that ensure only authorized users are granted the minimum privileges needed. Identify and deactivate unused accounts, eliminate shared accounts, remove unnecessary privileges, and enforce strong password policies. Monitor and analyze user activities for anomalous behavior such as access attempts outside of normal operating hours or from unusual locations. Consider mechanisms that are stronger than password authentication such as biometrics, one-time passwords and tokens for sensitive applications and functions. Multi-factor authentication, in particular, is highly recommended starting with privileged users first, then expanding to all users. User and Access Management will be a daunting and complex activity&#8212;and there is no &#34;one size fits all&#34; solution. Adopt a strategy appropriate to your organization and leverage a staged approach.&#160;"
+    "title": "Керування користувачами та доступом (UM)",
+    "description": "Впроваджуйте політики, процеси та технології, які гарантують, що лише авторизованим користувачам надаються мінімальні необхідні привілеї. Визначте та деактивуйте невикористовувані облікові записи, видаліть спільні облікові записи, видаліть непотрібні привілеї та застосуйте політику надійних паролів. Відстежуйте та аналізуйте дії користувачів на наявність аномальної поведінки, як-от спроби доступу в неробочий час або з незвичних місць. Розгляньте механізми, які є сильнішими за автентифікацію за допомогою пароля, наприклад біометричні дані, одноразові паролі та маркери для конфіденційних програм і функцій. Багатофакторну автентифікацію, зокрема, настійно рекомендується починати спочатку з привілейованими користувачами, а потім поширювати на всіх користувачів. Управління користувачами та доступом буде важким і складним заходом&#8212;і не існує «одного підходу для всіх»; рішення. Прийміть стратегію, яка підходить для вашої організації, і використовуйте поетапний підхід."
   },
   {
     "groupingId": "180",
-    "title": "[UK] Application Integrity and Allowlist (AI)",
-    "description": "[UK] Ensure your applications perform in a secure and as-intended manner by instituting an Application Integrity policy that allows only approved, authorized software and their libraries to load and execute. Monitor the integrity of approved applications with periodic checks of file hashes to ensure no unauthorized modifications have been made. As with identity and access management&#8212;due to the complexity and effort required&#8212;consider a staged, gradually phased-in approach starting with high impact endpoints (e.g. domain controllers, application servers, databases), followed by any remaining support systems, and ending with any remaining user workstations or endpoints.&#160;"
+    "title": "Цілісність програми та білий список (AI)",
+    "description": "Переконайтеся, що ваші додатки працюють безпечно та відповідно до призначення, запровадивши політику цілісності додатків, яка дозволяє завантажувати та виконувати лише схвалене авторизоване програмне забезпечення та його бібліотеки. Контролюйте цілісність схвалених програм за допомогою періодичних перевірок хешів файлів, щоб переконатися, що не було зроблено несанкціонованих змін. Як і у випадку з керуванням ідентифікацією та доступом, через складність і необхідні зусилля, розгляньте поетапний підхід із поетапним впровадженням, починаючи з кінцевих точок із високим ступенем впливу (наприклад, контролерів домену, серверів програм, баз даних), а потім будь-яких інших систем підтримки і закінчуючи робочими станціями або кінцевими точками користувача, що залишилися."
   },
   {
     "groupingId": "181",
-    "title": "[UK] Incident Response (IR)",
-    "description": "[UK] <p>Lead development of an incident response and disaster recovery plan outlining roles and responsibilities. Test it     often. Incident response plans and disaster recovery plans are crucial to information security, but they are     separate plans. Incident response mainly focuses on information asset protection, while disaster recovery plans     focus on business continuity. Once you develop a plan, test the plan using realistic simulations (known as     \"war-gaming\"), where roles and responsibilities are assigned to the people who manage cyber incident     responses. This ensures that your plan is effective and that you have the appropriate people involved in the plan.     Disaster recovery plans minimize recovery time by efficiently recovering critical systems.</p> <p>Plan, prepare, and conduct drills for cyber-attacks and incidents as you would a fire or robbery. Make your reaction     to cyber incidents or system outages an extension of your other business contingency plans. This involves having     incident response plans and procedures, trained staff, assigned roles and responsibilities, and incident     communications plans.</p>"
+    "title": "Реагування на інциденти (IR)",
+    "description": "<p>Очоліть розробку плану реагування на інциденти та аварійного відновлення, у якому визначено ролі та обов’язки. Перевіряйте їх часто. Плани реагування на інциденти та плани аварійного відновлення мають вирішальне значення для інформаційної безпеки, але це окремі плани. Реагування на інциденти головним чином зосереджено на захисті інформаційних активів, тоді як плани аварійного відновлення зосереджені на безперервності роботи. Коли ви розробите план, перевірте його за допомогою реалістичного моделювання (відомого як «військова гра»), де ролі та обов’язки розподіляються між людьми, які керують реагуванням на кіберінциденти. Це гарантує ефективність вашого плану та залучення відповідних людей до нього. Плани аварійного відновлення зводять до мінімуму час відновлення завдяки ефективному відновленню критично важливих систем.</p> <p>Плануйте, готуйте та проводьте тренування щодо кібератак та інцидентів, як пожежу чи пограбування. Зробіть свою реакцію на кіберінциденти або збої в системі продовженням інших ваших бізнес-планів на випадок непередбачених обставин. Це передбачає наявність планів і процедур реагування на інциденти, навчений персонал, розподіл ролей і обов’язків, а також плани інформування про інциденти.</p>"
   },
   {
     "groupingId": "182",
-    "title": "[UK] Risk Management (RM)",
-    "description": "[UK] Lead investment in cybersecurity by investing in capabilities for your organization and staff. This includes not only investments in technological capabilities, but also a continuous investment in cybersecurity training and awareness capabilities for your organization&#8217;s personnel. Have conversations with your staff, business partners, vendors, managed service providers, and others within your supply chain. Use risk assessments to identify and prioritize allocation of resources and cyber investment."
+    "title": "Управління ризиками (RM)",
+    "description": "Здійснюйте інвестиції в кібербезпеку, інвестуючи в можливості вашої організації та персоналу. Це включає не лише інвестиції в технологічні можливості, але й постійні інвестиції в навчання з кібербезпеки та підвищення обізнаності персоналу вашої організації. Спілкуйтеся зі своїм персоналом, діловими партнерами, постачальниками, постачальниками керованих послуг та іншими особами у вашому ланцюжку постачання. Використовуйте оцінку ризиків для визначення пріоритетів розподілу ресурсів і кіберінвестицій."
   },
   {
     "groupingId": "200",
@@ -967,7 +967,7 @@
   {
     "groupingId": "218",
     "title": "[UK] Integrate Organizational Capabilities (OC)",
-    "description": "[UK]  The purpose of integrating the incident detection, handling, and response processes with the organization’s cyber resilience activities is to enable the organization to effectively respond to incidents."
+    "description": "[UK] The purpose of integrating the incident detection, handling, and response processes with the organization’s cyber resilience activities is to enable the organization to effectively respond to incidents."
   },
   {
     "groupingId": "219",
@@ -1356,7 +1356,7 @@
   },
   {
     "groupingId": "502",
-    "title": "[UK] Risk Management",
+    "title": "Управління ризиками",
     "description": "[UK] Establish, operate, and maintain an enterprise cyber risk management program to identify, analyze, and respond to cyber risk the organization is subject to, including its business units, subsidiaries, related interconnected infrastructure, and stakeholders."
   },
   {
@@ -1617,67 +1617,67 @@
   {
     "groupingId": "1189",
     "title": "[UK] Audit and Accountability (AU)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1190",
     "title": "[UK] Awareness and Training (AT)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1191",
     "title": "[UK] Configuration Management (CM)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1192",
     "title": "[UK] Identification and Authentication (IA)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1194",
     "title": "[UK] Maintenance (MA)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1195",
     "title": "[UK] Media Protection (MP)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1196",
     "title": "[UK] Personnel Security (PS)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1197",
     "title": "[UK] Physical Protection (PE)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1202",
     "title": "[UK] Systems and Communications Protection (SC)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1247",
     "title": "[UK] Risk Assessment (RA)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1248",
     "title": "[UK] Security Assessment (CA)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1249",
     "title": "[UK] System and Information Integrity (SI)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1250",
     "title": "[UK] Incident Response (IR)",
-    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes.&#160;"
+    "description": "[UK] For a &#34;YES&#34; response, first determine if all of the question objectives are met. If only some, but not all objectives are met, it is advised to mark a &#34;NO&#34; response and utilize the comments, observations, and mark for review functions for tracking purposes."
   },
   {
     "groupingId": "1255",
@@ -1686,7 +1686,7 @@
   },
   {
     "groupingId": "1256",
-    "title": "[UK] Access Control",
+    "title": "Управління доступом",
     "description": ""
   },
   {
@@ -1771,7 +1771,7 @@
   },
   {
     "groupingId": "1285",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -2036,7 +2036,7 @@
   },
   {
     "groupingId": "1338",
-    "title": "[UK] Awareness and Training",
+    "title": "Обізнаність і навчання",
     "description": ""
   },
   {
@@ -2116,7 +2116,7 @@
   },
   {
     "groupingId": "2313",
-    "title": "[UK] Information Sharing",
+    "title": "Розповсюдження інформації",
     "description": ""
   },
   {
@@ -2132,7 +2132,7 @@
   {
     "groupingId": "2316",
     "title": "[UK] Authentication and Authorization Controls",
-    "description": "[UK] The purpose of this question set is to find the basis of authentication and authorization controls used on the Critical Service&#160;within the evaluated organization. Common practices such as administrator privileges, user privileges, and password management are assessed."
+    "description": "[UK] The purpose of this question set is to find the basis of authentication and authorization controls used on the Critical Service within the evaluated organization. Common practices such as administrator privileges, user privileges, and password management are assessed."
   },
   {
     "groupingId": "2317",
@@ -2251,7 +2251,7 @@
   },
   {
     "groupingId": "2340",
-    "title": "[UK] Recover",
+    "title": "Відновити",
     "description": ""
   },
   {
@@ -2266,7 +2266,7 @@
   },
   {
     "groupingId": "2344",
-    "title": "[UK] Business Environment",
+    "title": "Бізнес середовище",
     "description": ""
   },
   {
@@ -2291,17 +2291,17 @@
   },
   {
     "groupingId": "2349",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "2350",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
     "groupingId": "2353",
-    "title": "[UK] Risk Management Strategy",
+    "title": "Стратегія управління ризиками",
     "description": ""
   },
   {
@@ -2311,22 +2311,22 @@
   },
   {
     "groupingId": "2355",
-    "title": "[UK] Anomalies and Events",
+    "title": "Аномалії та події",
     "description": ""
   },
   {
     "groupingId": "2356",
-    "title": "[UK] Asset Management",
+    "title": "Управління активами",
     "description": ""
   },
   {
     "groupingId": "2357",
-    "title": "[UK] Awareness and Training",
+    "title": "Обізнаність і навчання",
     "description": ""
   },
   {
     "groupingId": "2358",
-    "title": "[UK] Data Security",
+    "title": "Безпека даних",
     "description": ""
   },
   {
@@ -2336,7 +2336,7 @@
   },
   {
     "groupingId": "2360",
-    "title": "[UK] Detection Processes",
+    "title": "Процеси виявлення",
     "description": ""
   },
   {
@@ -2351,7 +2351,7 @@
   },
   {
     "groupingId": "2363",
-    "title": "[UK] Maintenance",
+    "title": "Технічне обслуговування",
     "description": ""
   },
   {
@@ -2366,12 +2366,12 @@
   },
   {
     "groupingId": "2373",
-    "title": "[UK] Protective Technology",
+    "title": "Захисна техніка",
     "description": ""
   },
   {
     "groupingId": "2374",
-    "title": "[UK] Security Continuous Monitoring",
+    "title": "Постійний моніторинг безпеки",
     "description": ""
   },
   {
@@ -2391,7 +2391,7 @@
   },
   {
     "groupingId": "2378",
-    "title": "[UK] Analysis",
+    "title": "Аналіз",
     "description": ""
   },
   {
@@ -2401,17 +2401,17 @@
   },
   {
     "groupingId": "2380",
-    "title": "[UK] Communications",
+    "title": "Комунікації",
     "description": ""
   },
   {
     "groupingId": "2381",
-    "title": "[UK] Improvements",
+    "title": "Покращення",
     "description": ""
   },
   {
     "groupingId": "2382",
-    "title": "[UK] Mitigation",
+    "title": "Пом'якшення",
     "description": ""
   },
   {
@@ -2421,17 +2421,17 @@
   },
   {
     "groupingId": "2384",
-    "title": "[UK] Recovery Planning",
+    "title": "Планування відновлення",
     "description": ""
   },
   {
     "groupingId": "2385",
-    "title": "[UK] Improvements",
+    "title": "Покращення",
     "description": ""
   },
   {
     "groupingId": "2386",
-    "title": "[UK] Communications",
+    "title": "Комунікації",
     "description": ""
   },
   {
@@ -3151,12 +3151,12 @@
   },
   {
     "groupingId": "2542",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
     "groupingId": "2543",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -3196,7 +3196,7 @@
   },
   {
     "groupingId": "2551",
-    "title": "[UK] Governance",
+    "title": "Управління",
     "description": ""
   },
   {
@@ -3206,7 +3206,7 @@
   },
   {
     "groupingId": "2553",
-    "title": "[UK] Risk Assessment",
+    "title": "Оцінка ризиків",
     "description": ""
   },
   {
@@ -3346,7 +3346,7 @@
   },
   {
     "groupingId": "2581",
-    "title": "[UK] Asset Management",
+    "title": "Управління активами",
     "description": ""
   },
   {
@@ -3381,7 +3381,7 @@
   },
   {
     "groupingId": "2588",
-    "title": "[UK] Maintenance",
+    "title": "Технічне обслуговування",
     "description": ""
   },
   {
@@ -3502,7 +3502,7 @@
   {
     "groupingId": "2616",
     "title": "[UK] Attachment SD02C",
-    "description": "[UK] <p>Until the Owner/Operator's Cybersecurity Implementation Plan (as required by Section II.B. of the SD02C Security     Directive) is approved by TSA, the Owner/Operator must apply the following cybersecurity measures, as modified by     any TSA-approved alternative measures, and/or action plans, previously issued to the requirements in the Security     Directive Pipeline2021-02 series.</p> <p>The following requirements must be applied to any Information and/or Operational Technology system connected to a     critical pipeline system or facility identified by TSA.</p>"
+    "description": "[UK] <p>Until the Owner/Operator's Cybersecurity Implementation Plan (as required by Section II.B. of the SD02C Security Directive) is approved by TSA, the Owner/Operator must apply the following cybersecurity measures, as modified by any TSA-approved alternative measures, and/or action plans, previously issued to the requirements in the Security Directive Pipeline2021-02 series.</p> <p>The following requirements must be applied to any Information and/or Operational Technology system connected to a critical pipeline system or facility identified by TSA.</p>"
   },
   {
     "groupingId": "2617",

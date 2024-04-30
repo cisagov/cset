@@ -649,6 +649,11 @@ import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 
+import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
+import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa-workflow-warnings/cisa-workflow-warnings.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
+import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
+import { AnalyticsService } from './services/analytics.service';
 @NgModule({
   imports: [
     BrowserModule,
@@ -1246,7 +1251,12 @@ import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-
     CieAllQuestionsComponent,
     CiePrincipleOnlyComponent,
     CiePrinciplePhaseComponent,
-    CieNotApplicableComponent
+    CieNotApplicableComponent,
+    AboutCieComponent, 
+    AnalyticsComponent, 
+    ReferencesSectionComponent,
+    CisaWorkflowWarningsComponent,
+    AnalyticsloginComponent
   ],
   providers: [
     TranslocoService,
@@ -1325,7 +1335,8 @@ import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-
     Utilities,
     NCUAService,
     GalleryService,
-    FooterService
+    FooterService, 
+    AnalyticsService
   ],
   bootstrap: [AppComponent]
 })

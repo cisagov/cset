@@ -14,17 +14,15 @@ namespace CSETWebCore.Helpers
 {
     public class AssessmentUtil : IAssessmentUtil
     {
-        private readonly IUtilities _utilities;
         private CSETContext _context;
 
-        public AssessmentUtil(IUtilities utilities, CSETContext context)
+        public AssessmentUtil(CSETContext context)
         {
-            _utilities = utilities;
             _context = context;
         }
 
         /// <summary>
-        /// Updates the "LastModifiedDate" of the Assessment.
+        /// Updates the "LastModifiedDate" and "ModifiedSinceLastExport" flag of the Assessment.
         /// </summary>
         public void TouchAssessment(int assessmentId)
         {
@@ -34,6 +32,7 @@ namespace CSETWebCore.Helpers
             {
                 var assess = _context.ASSESSMENTS.First(a => a.Assessment_Id == assessmentId);
                 assess.LastModifiedDate = nowUTC;
+                assess.ModifiedSinceLastExport = true;
                 _context.SaveChanges();
             }
             catch (Exception exc)

@@ -1,0 +1,18 @@
+<div *ngFor="let doc of documents; let lastDoc = last" class="mb-1" [class.mb-4]="lastDoc">
+    {{doc.title}}<ng-container *ngIf="doc.fileName || doc.url || true">: </ng-container>
+
+    <ng-container *ngFor="let b of doc.bookmarks; let l = last">
+        <span *ngIf="formatDocumentUrl(doc, b).length === 0">
+            {{b}}
+        </span>
+        <a *ngIf="doc.fileName?.length > 0 && formatDocumentUrl(doc, b).length > 0" href="{{formatDocumentUrl(doc, b)}}"
+            rel="noopener noreferrer" target="_blank">{{formatBookmarkDisplay(doc, b)}}</a>
+
+        <ng-container *ngIf="doc.url?.length > 0">
+            <a href="{{formatDocumentUrl(doc, b)}}" rel="noopener noreferrer" target="_blank"
+                style="border-bottom: 1px dotted; text-decoration: none" [matTooltip]="'extras.launches external' | transloco">{{formatBookmarkDisplay(doc, b)}}</a>
+        </ng-container>
+
+        <ng-container *ngIf="!l">, </ng-container>
+    </ng-container>
+</div>

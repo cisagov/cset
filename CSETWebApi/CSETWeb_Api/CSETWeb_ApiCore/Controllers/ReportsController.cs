@@ -239,11 +239,10 @@ namespace CSETWebCore.Api.Controllers
 
             foreach (DataLayer.Manual.usp_getRRASummaryByGoal q in data.RRASummaryByGoal)
             {
-
-                var translatedTitle = _overlay.GetPropertyValue("MATURITY_GROUPINGS_TITLE", q.Title.ToLower(), lang);
-                if (translatedTitle != null)
+                var o = _overlay.GetMaturityGrouping(q.Grouping_Id, lang);
+                if (o != null)
                 {
-                    q.Title = translatedTitle;
+                    q.Title = o.Title;
                 }
             }
 
@@ -294,7 +293,6 @@ namespace CSETWebCore.Api.Controllers
                 {
                     q.Question_Text = translatedGroup.QuestionText;
                     q.ReferenceText = translatedGroup.ReferenceText;
-
                 }
             }
 

@@ -22,12 +22,15 @@
 -------------------------->
 <!-- State Led -->
 <div *ngIf="assessSvc.assessment.isE_StateLed">
-    <div *ngIf="!isAssessmentPageFilled() || disableIseReportLinks || ncuaSvc.unassignedIssues">
+    <!-- commented out due to client request -->
+    <!-- <div *ngIf="!isAssessmentPageFilled() || disableIseReportLinks || ncuaSvc.unassignedIssues"> -->
+    <div *ngIf="disableIseReportLinks">
         <div class="alert-warning mt-2 mb-2 d-flex flex-row justify-content-center align-items-center flex-11a ng-star-inserted">
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
-
-                <div class="mt-2 mr-4">Some reports are disabled until all issues are resolved</div>
+                <!-- below are commented out in case clients change their minds -->
+<!-- 
+                <div class="mt-2 mr-4">Some reports are disabled until all items are resolved.</div>
                 <br />
 
                 <div class="mt-2 mr-4" *ngIf="!isAssessmentPageFilled()">
@@ -37,13 +40,13 @@
                             <li>{{ field }}</li>
                         </span>
                     </ul>
-                </div>
+                </div> -->
 
                 <div class="mt-2 mr-4" *ngIf="disableIseReportLinks">
                     There are unanswered statements. Some domains will be incomplete.
                     <br /><br />
                 </div>
-
+<!-- 
                 <div class="mt-2 mr-4" *ngIf="ncuaSvc.unassignedIssues">
                     Some reports are disabled until all Issues have
                     an "Issue Type" assigned.<br /><br />
@@ -55,7 +58,7 @@
                             <li>{{ title }}</li>
                         </span>
                     </ul>
-                </div>
+                </div> -->
 
             </span>
         </div>
@@ -69,7 +72,7 @@
             <span class="p-md-3 p-2 fs-medium cset-icons-exclamation-triangle"></span>
             <span class="fs-base-2 p-2 d-flex flex-column justify-content-center flex-11a">
 
-                <div class="mt-2 mr-4">"Submit" button and some reports are disabled until all issues are resolved</div>
+                <div class="mt-2 mr-4">"Submit" button and some reports are disabled until all items are resolved.</div>
                 <br />
 
                 <div class="mt-2 mr-4" *ngIf="!isAssessmentPageFilled()">

@@ -44,7 +44,7 @@ export class TrendCompareCompatibilityComponent implements OnInit {
 
   assessments: UserAssessment[];
   aggregation: any = {};
-  message: string = 'Standard assessment compatibility or maturity model will show once selection is made';
+  message: string = 'Standard assessment compatibility or maturity model will show once a selection is made.';
   maturity: boolean;
 
   /**
@@ -81,7 +81,7 @@ export class TrendCompareCompatibilityComponent implements OnInit {
         this.assessmentTypeCheck()
 
         if (resp2.assessments.length === 0) {
-          this.message = 'Standard assessment compatibility or maturity model will show once selection is made';
+          this.message = 'Standard assessment compatibility or maturity model will show once a selection is made.';
           this.maturity = true;
         }
 

@@ -125,7 +125,7 @@ namespace CSETWebCore.Business.Reports
                 var o = _overlay.GetMaturityQuestion(matAns.Mat.Mat_Question_Id, lang);
                 if (o != null)
                 {
-                    matAns.Mat.Question_Title = o.QuestionTitle;
+                    matAns.Mat.Question_Title = o.QuestionTitle ?? matAns.Mat.Question_Title;
                     matAns.Mat.Question_Text = o.QuestionText;
                     matAns.Mat.Supplemental_Info = o.SupplementalInfo;
                 }
@@ -297,7 +297,7 @@ namespace CSETWebCore.Business.Reports
                 var o = _overlay.GetMaturityQuestion(q.Mat_Question_Id, lang);
                 if (o != null)
                 {
-                    q.Question_Title = o.QuestionTitle;
+                    q.Question_Title = o.QuestionTitle ?? q.Question_Title;
                     q.Question_Text = o.QuestionText;
                     q.Supplemental_Info = o.SupplementalInfo;
                     q.Examination_Approach = o.ExaminationApproach;
@@ -686,6 +686,81 @@ namespace CSETWebCore.Business.Reports
 
 
         /// <summary>
+        /// Returns a block of data generally from the INFORMATION table plus a few others.
+        /// </summary>
+        /// <returns></returns>
+        public BasicReportData.INFORMATION GetIseInformation()
+        {
+            INFORMATION infodb = _context.INFORMATION.Where(x => x.Id == _assessmentId).FirstOrDefault();
+
+            TinyMapper.Bind<INFORMATION, BasicReportData.INFORMATION>(config =>
+            {
+                config.Ignore(x => x.Additional_Contacts);
+            });
+            var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
+
+            var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            info.Assessment_Date = assessment.Assessment_Date;
+
+            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
+
+            // Primary Assessor
+            var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
+            info.Assessor_Name = user != null ? FormatName(user.FirstName, user.LastName) : string.Empty;
+
+
+            // Other Contacts
+            info.Additional_Contacts = new List<string>();
+            var contacts = _context.ASSESSMENT_CONTACTS
+                .Where(ac => ac.Assessment_Id == _assessmentId
+                        && ac.UserId != assessment.AssessmentCreatorId)
+                .Include(u => u.User)
+                .ToList();
+            foreach (var c in contacts)
+            {
+                info.Additional_Contacts.Add(FormatName(c.FirstName, c.LastName));
+            }
+
+            // Include anything that was in the INFORMATION record's Additional_Contacts column
+            if (infodb.Additional_Contacts != null)
+            {
+                string[] acLines = infodb.Additional_Contacts.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string c in acLines)
+                {
+                    info.Additional_Contacts.Add(c);
+                }
+            }
+
+            info.UseStandard = assessment.UseStandard;
+            info.UseMaturity = assessment.UseMaturity;
+            info.UseDiagram = assessment.UseDiagram;
+
+            // ACET properties
+            info.Credit_Union_Name = assessment.CreditUnionName;
+            info.Charter = assessment.Charter;
+
+            info.Assets = 0;
+            bool a = long.TryParse(assessment.Assets, out long assets);
+            if (a)
+            {
+                info.Assets = assets;
+            }
+
+            // Maturity properties
+            var myModel = _context.AVAILABLE_MATURITY_MODELS
+                .Include(x => x.model)
+                .FirstOrDefault(x => x.Assessment_Id == _assessmentId);
+            if (myModel != null)
+            {
+                info.QuestionsAlias = myModel.model.Questions_Alias;
+            }
+
+            return info;
+        }
+
+
+        /// <summary>
         /// Returns a list of domains for the assessment.
         /// </summary>
         /// <returns></returns>
@@ -792,7 +867,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             _questionRequirement.InitializeManager(_assessmentId);
 
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -878,6 +954,9 @@ namespace CSETWebCore.Business.Reports
             BasicReportData.RequirementControl control = null;
             List<BasicReportData.Control_Questions> questions = null;
 
+            // The response
+            List<BasicReportData.RequirementControl> controls = [];
+
             foreach (var a in controlRows)
             {
                 if (prev_requirement_id != a.Requirement_Id)
@@ -885,18 +964,28 @@ namespace CSETWebCore.Business.Reports
                     questionCount = 0;
                     questionsAnswered = 0;
                     questions = new List<BasicReportData.Control_Questions>();
+
+
+                    // look for translations
+                    var r = _overlay.GetRequirement(a.Requirement_Id, lang);
+                    var c = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Category.ToLower(), lang);
+                    var s = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Sub_Category.ToLower(), lang);
+
+
                     control = new BasicReportData.RequirementControl()
                     {
-                        ControlDescription = a.Requirement_Text,
+                        ControlDescription = r?.RequirementText ?? a.Requirement_Text,
                         RequirementTitle = a.Requirement_Title,
                         Level = a.Standard_Level,
                         StandardShortName = a.Short_Name,
-                        Standard_Category = a.Standard_Category,
-                        SubCategory = a.Standard_Sub_Category,
+                        Standard_Category = c ?? a.Standard_Category,
+                        SubCategory = s ?? a.Standard_Sub_Category,
                         Control_Questions = questions
                     };
+
                     controls.Add(control);
                 }
+
                 questionCount++;
 
                 switch (a.Answer_Text)
@@ -1492,11 +1581,10 @@ namespace CSETWebCore.Business.Reports
             var info = TinyMapper.Map<INFORMATION, BasicReportData.INFORMATION>(infodb);
 
             var assessment = _context.ASSESSMENTS.FirstOrDefault(x => x.Assessment_Id == _assessmentId);
-            info.Assessment_Date = assessment.Assessment_Date.ToLongDateString();
+            info.Assessment_Date = assessment.Assessment_Date;
 
-            DateTime assessmentEffectiveDate;
-            info.Assessment_Effective_Date = DateTime.TryParse(assessment.AssessmentEffectiveDate.ToString(), out assessmentEffectiveDate) ? assessmentEffectiveDate.ToShortDateString().ToString() : null;
-            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate.ToShortDateString() + ' ' + assessment.AssessmentCreatedDate.ToLongTimeString();
+            info.Assessment_Effective_Date = assessment.AssessmentEffectiveDate;
+            info.Assessment_Creation_Date = assessment.AssessmentCreatedDate;
 
             // Primary Assessor
             var user = _context.USERS.FirstOrDefault(x => x.UserId == assessment.AssessmentCreatorId);
@@ -1602,7 +1690,7 @@ namespace CSETWebCore.Business.Reports
                 TinyMapper.Bind<FINDING, Observations>();
                 Observations obs = TinyMapper.Map<Observations>(f.b);
                 obs.Observation = f.b.Summary;
-                obs.ResolutionDate = f.b.Resolution_Date.ToString();
+                obs.ResolutionDate = f.b.Resolution_Date;
                 obs.Importance = f.Value;
 
 

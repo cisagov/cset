@@ -45,13 +45,12 @@ export class CrrDeficiencyComponent implements OnInit {
     private titleService: Title,
     private cmuSvc: CmuService,
     public questionsSvc: QuestionsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loading = true;
     this.titleService.setTitle('Deficiency Report - CRR');
     this.keyToCategory = this.cmuSvc.keyToCategory;
-    const appCode = this.configSvc.installationMode;
 
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {
