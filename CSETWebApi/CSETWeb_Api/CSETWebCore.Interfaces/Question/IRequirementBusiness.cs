@@ -22,8 +22,6 @@ namespace CSETWebCore.Interfaces.Question
         CategoryContainer BuildDomainResponse(DomainAssessmentFactor domain);
         QuestionGroup BuildCategoryResponse();
         QuestionSubCategory BuildSubcategoryResponse();
-        QuestionResponse BuildResponseOLD(List<RequirementPlus> requirements,
-            List<FullAnswer> answers, List<DomainAssessmentFactor> domains);
         List<int> GetActiveAnswerIds();
         void LoadParametersList();
         public List<ParameterToken> GetTokensForRequirement(int reqId, int ansId);

@@ -864,7 +864,8 @@ namespace CSETWebCore.Business.Reports
         /// <returns></returns>
         public List<BasicReportData.RequirementControl> GetControls(string applicationMode)
         {
-            List<BasicReportData.RequirementControl> controls = new List<BasicReportData.RequirementControl>();
+            var lang = _tokenManager.GetCurrentLanguage();
+
             _questionRequirement.InitializeManager(_assessmentId);
 
             _context.FillEmptyQuestionsForAnalysis(_assessmentId);
@@ -950,6 +951,9 @@ namespace CSETWebCore.Business.Reports
             BasicReportData.RequirementControl control = null;
             List<BasicReportData.Control_Questions> questions = null;
 
+            // The response
+            List<BasicReportData.RequirementControl> controls = [];
+
             foreach (var a in controlRows)
             {
                 if (prev_requirement_id != a.Requirement_Id)
@@ -957,18 +961,28 @@ namespace CSETWebCore.Business.Reports
                     questionCount = 0;
                     questionsAnswered = 0;
                     questions = new List<BasicReportData.Control_Questions>();
+
+
+                    // look for translations
+                    var r = _overlay.GetRequirement(a.Requirement_Id, lang);
+                    var c = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Category.ToLower(), lang);
+                    var s = _overlay.GetPropertyValue("STANDARD_CATEGORY", a.Standard_Sub_Category.ToLower(), lang);
+
+
                     control = new BasicReportData.RequirementControl()
                     {
-                        ControlDescription = a.Requirement_Text,
+                        ControlDescription = r?.RequirementText ?? a.Requirement_Text,
                         RequirementTitle = a.Requirement_Title,
                         Level = a.Standard_Level,
                         StandardShortName = a.Short_Name,
-                        Standard_Category = a.Standard_Category,
-                        SubCategory = a.Standard_Sub_Category,
+                        Standard_Category = c ?? a.Standard_Category,
+                        SubCategory = s ?? a.Standard_Sub_Category,
                         Control_Questions = questions
                     };
+
                     controls.Add(control);
                 }
+
                 questionCount++;
 
                 switch (a.Answer_Text)

@@ -651,6 +651,7 @@ public partial class CsetwebContext : DbContext
             entity.Property(e => e.Assessment_GUID).HasDefaultValueSql("(newid())");
             entity.Property(e => e.ISE_StateLed).HasDefaultValue(false);
             entity.Property(e => e.MatDetail_targetBandOnly).HasDefaultValue(true);
+            entity.Property(e => e.ModifiedSinceLastExport).HasDefaultValue(true);
 
             entity.HasOne(d => d.AssessmentCreator).WithMany(p => p.ASSESSMENTS)
                 .OnDelete(DeleteBehavior.SetNull)

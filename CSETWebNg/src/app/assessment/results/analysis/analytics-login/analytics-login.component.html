@@ -1,0 +1,47 @@
+<div class="d-flex flex-column justify-content-center flex-11a">
+    <div class="mat-dialog-header p-3 d-flex justify-content-start align-items-center flex-00a">
+      <span class="cset-icons-key-shield fs-base-6 mr-3"></span>
+      <span>Login to Data Submission</span>
+    </div>
+    <mat-dialog-content class="p-3 pb-0 pr-0 oy-auto d-flex flex-column flex-11a">
+  
+      <div class="container">
+        <form [formGroup]="dataloginForm">
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input type="text" trim="blur" matInput placeholder="Username" formControlName="username"
+                [errorStateMatcher]="matcherusername">
+              <mat-icon matPrefix style="margin-right:10px;">face</mat-icon>
+              <mat-error *ngIf="dataloginForm.controls.username.hasError('required')">
+                Username is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </p>
+  
+          <p>
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input type="password" trim="blur" matInput placeholder="Password" formControlName="password"
+                [errorStateMatcher]="matcherpassword">
+              <mat-icon matPrefix style="margin-right:10px;">lock</mat-icon>
+              <mat-error *ngIf="dataloginForm.controls.password.hasError('required')">
+                Password is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </p>
+          <p *ngIf="error" class="alert alert-danger">
+            {{ error }}
+          </p>
+        </form>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions class="p-3 pt-0 mb-0">
+      <div class="d-flex flex-row w-100" style="justify-content: space-between">
+        <div>
+          <button class="btn btn-default" (click)="close()">Cancel</button>&nbsp;
+          <button class="btn btn-primary" (click)="submit()">Login</button>
+        </div>
+      </div>
+    </mat-dialog-actions>
+  </div>

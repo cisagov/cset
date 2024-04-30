@@ -248,11 +248,11 @@ namespace CSETWebCore.Business.Standards
         /// <returns></returns>
         public List<string> GetDefaultStandardsList()
         {
-            var appCode = _tokenManager.Payload("scope");
+            var scope = _tokenManager.Payload("scope");
 
             List<string> basicStandards = new List<string>();
 
-            switch (appCode.ToLower())
+            switch (scope.ToLower())
             {
                 case "cset":
                     basicStandards.Add("Key");

@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using NSoup;
+using System.IO;
 
 
 namespace CSETWebCore.Business.Notification
@@ -45,20 +46,16 @@ namespace CSETWebCore.Business.Notification
             Initialize();
         }
 
-        public void SetAppCode()
+        public void SetScope()
         {
             _scope = _tokenManager.Payload("scope");
         }
 
-        public void SetAppCode(string appCode)
+        public void SetScope(string scope)
         {
-            _scope = appCode;
+            _scope = scope;
         }
 
-        //public string GetConfiguration()
-        //{
-        //    return _configuration.GetSection("SmtpPort").Value;
-        //}
 
         /// <summary>
         /// Performs initialization common to any instantiation.
@@ -82,9 +79,9 @@ namespace CSETWebCore.Business.Notification
         /// </summary>
         public void InviteToAssessment(ContactCreateParameters contact)
         {
-            SetAppCode();
+            SetScope();
 
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\assessmentInviteTemplate_{{scope}}.html", this._scope);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"assessmentInviteTemplate_{{scope}}.html"), this._scope);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             // Build the name if supplied.  
             string contactName = String.Empty;
@@ -131,9 +128,9 @@ namespace CSETWebCore.Business.Notification
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <param name="password"></param>
-        public void SendPasswordEmail(string email, string firstName, string lastName, string password, string appCode)
+        public void SendPasswordEmail(string email, string firstName, string lastName, string password, string appName)
         {
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\passwordCreationTemplate_{{scope}}.html", appCode);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordCreationTemplate_{{scope}}.html"), appName);
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
@@ -147,7 +144,7 @@ namespace CSETWebCore.Business.Notification
 
 
             MailMessage message = new MailMessage();
-            message.Subject = "New " + _appDisplayName[appCode] + " account creation";
+            message.Subject = "New " + _appDisplayName[appName] + " account creation";
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
@@ -168,10 +165,10 @@ namespace CSETWebCore.Business.Notification
         /// <param name="firstName"></param>
         /// <param name="lastName"></param>
         /// <param name="password"></param>
-        public void SendInviteePassword(string email, string firstName, string lastName, string password, string appCode)
+        public void SendInviteePassword(string email, string firstName, string lastName, string password, string appName)
         {
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\invitedPasswordCreationTemplate_{{scope}}.html", appCode);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"invitedPasswordCreationTemplate_{{scope}}.html"), appName);
             bodyHtml = bodyHtml.Replace("{{name}}", firstName + " " + lastName);
             bodyHtml = bodyHtml.Replace("{{password}}", password);
             bodyHtml = bodyHtml.Replace("{{rootUrl}}", _utilities.GetClientHost());
@@ -184,7 +181,7 @@ namespace CSETWebCore.Business.Notification
 
 
             MailMessage message = new MailMessage();
-            message.Subject = "You are invited to " + _appDisplayName[appCode];
+            message.Subject = "You are invited to " + _appDisplayName[appName];
             message.Body = bodyHtml;
             message.To.Add(new MailAddress(email));
             message.From = new MailAddress(
@@ -206,10 +203,10 @@ namespace CSETWebCore.Business.Notification
         /// <param name="lastName"></param>
         /// <param name="password"></param>
         /// <param name="subject"></param>
-        public void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject, string appCode)
+        public void SendPasswordResetEmail(string email, string firstName, string lastName, string password, string subject, string appName)
         {
-            SetAppCode(appCode);
-            string bodyHtml = _resourceHelper.GetEmbeddedResource(@"App_Data\passwordResetTemplate_{{scope}}.html", appCode);
+            SetScope(appName);
+            string bodyHtml = _resourceHelper.GetEmbeddedResource(Path.Combine("App_Data", @"passwordResetTemplate_{{scope}}.html"), appName);
             string name = (firstName + " " + lastName).Trim();
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();
             if (string.IsNullOrEmpty(name)) name = email;
@@ -302,7 +299,7 @@ namespace CSETWebCore.Business.Notification
         /// </summary>
         public void SendTestEmail(string recip)
         {
-            SetAppCode();
+            SetScope();
 
             // only send the email if configured to do so (unpublished app setting)
             var emailConfig = _configuration.GetSection("Email").AsEnumerable();

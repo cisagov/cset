@@ -21,6 +21,7 @@ namespace CSETWebCore.Api.Controllers
     [ApiController]
     public class AggregationAnalysisController : ControllerBase
     {
+        private static object _myLockObject = new object();
         private readonly ITokenManager _tokenManager;
         private readonly ITrendDataProcessor _trendData;
         private CSETContext _context;
@@ -165,16 +166,19 @@ namespace CSETWebCore.Api.Controllers
                 row["Alias"] = a.Alias;
                 dt.Rows.Add(row);
 
-                var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
-
-                foreach (usp_getStandardsResultsByCategory pct in percentages)
+                lock (_myLockObject)
                 {
-                    if (!dt.Columns.Contains(pct.Question_Group_Heading))
-                    {
-                        dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
-                    }
+                    var percentages = GetCategoryPercentages(a.Assessment_Id, _context);
 
-                    row[pct.Question_Group_Heading] = pct.prc;
+                    foreach (usp_getStandardsResultsByCategory pct in percentages)
+                    {
+                        if (!dt.Columns.Contains(pct.Question_Group_Heading))
+                        {
+                            dt.Columns.Add(pct.Question_Group_Heading, typeof(float));
+                        }
+
+                        row[pct.Question_Group_Heading] = pct.prc;
+                    }
                 }
             }
 

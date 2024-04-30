@@ -216,6 +216,7 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
 
@@ -458,6 +459,7 @@ const appRoutes: Routes = [
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics-compare', component: AnalyticsCompareComponent },
+              { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
               { path: 'section-scoring', component: SectionScoringComponent },
