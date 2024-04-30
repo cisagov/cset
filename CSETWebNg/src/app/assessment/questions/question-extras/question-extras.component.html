@@ -191,8 +191,13 @@
                 </table>
             </div>
             <div *ngIf="!!extras && !!tab && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
+
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
+                </div>
+
+                <div *ngIf="!supplementalExists()">
+                    {{msgNoSupplemental}}
                 </div>
             </div>
         </div>
@@ -231,10 +236,13 @@
                 class="supplemental"
                 [innerHTML]="tab?.requirementsData?.examinationApproach | linebreak | safe: 'html'">
             </div>
+
             <div *ngIf=" !!extras && mode == 'SUPP' && displayIcon('SUPP')" class="supplemental">
-                <div
-                    [innerHTML]="tab?.requirementsData?.supplementalInfo ? (tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html') : '(no supplemental guidance available)'">
+
+                <div *ngIf="!!tab?.requirementsData?.supplementalInfo"
+                    [innerHTML]="tab?.requirementsData?.supplementalInfo | linebreak | safe: 'html'">
                 </div>
+
                 <div *ngIf="!seperateGuidanceFromApproach()">
                     <hr
                         *ngIf="!!tab?.requirementsData?.supplementalInfo && !!tab?.requirementsData?.examinationApproach">
@@ -267,8 +275,13 @@
                     <div [innerHTML]="myQuestion.services">
                     </div>
                 </div>
+
+                <div *ngIf="!supplementalExists()">
+                    {{msgNoSupplemental}}
+                </div>
             </div>
         </ng-template>
+
         <div *ngIf=" !!extras && mode === 'CMNT'">
             <div class="form-group">
                 <textarea appAutoSize [(ngModel)]="myQuestion.comment" (change)="saveComment($event)"
@@ -323,7 +336,7 @@
                             </button>
 
                             <button (click)="download(doc)" matTooltip="{{t('tooltip.copy document')}}"
-                                matTooltipPosition="above" class="btn btn-link cset-icons-import" style="color: #285464; transform: scale(1.3);
+                                matTooltipPosition="above" class="btn btn-link cset-icons-export-up" style="color: #285464; transform: scale(1.3);
                                   cursor: pointer; background-color:transparent;" tabindex="0"></button>
                         </div>
                     </td>
@@ -349,10 +362,10 @@
                     <tr *ngFor="let reference of tab?.sourceDocumentsList">
                         <!-- <td class="align-top" [class.pb-4]="tab?.additionalDocumentsList?.length > 0"> -->
                         <td class="align-top">
-                            <a href="{{documentUrl(reference, reference.section_Ref)}}" rel="noopener noreferrer"
+                            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                                 target="_blank">{{reference.title}}</a>
                         </td>
-                        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+                        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
                     </tr>
                     <tr *ngIf="tab?.additionalDocumentsList?.length > 0" class="font-weight-bold">
                         <td>{{ documentLabel('Additional Documents') }}</td>
@@ -360,10 +373,10 @@
                     </tr>
                     <tr *ngFor="let reference of tab?.additionalDocumentsList">
                         <td class="align-top">
-                            <a href="{{documentUrl(reference, reference.section_Ref)}}" rel="noopener noreferrer"
+                            <a href="{{formatDocumentUrl(reference, reference.sectionRef)}}" rel="noopener noreferrer"
                                 target="_blank">{{reference.title}}</a>
                         </td>
-                        <td class="text-nowrap align-top">{{reference.section_Ref}}</td>
+                        <td class="text-nowrap align-top">{{reference.sectionRef}}</td>
                     </tr>
                     <tr *ngIf="areNoReferenceDocumentsAvailable()">
                         <td colspan="2">(no reference documents available)</td>

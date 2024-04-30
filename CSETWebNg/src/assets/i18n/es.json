@@ -23,6 +23,7 @@
     "city or site name": "Nombre de ciudad o sitio",
     "state province region": "Estado/provincia/región",
     "state, province, or region": "Estado, provincia, o región",
+    "cisa region": "Región CISA",
     "assessment type": "Tipo de evaluación",
     "type": "Tipo",
     "demographics": "Demografía",
@@ -38,6 +39,7 @@
     "select facilitator": "Seleccionar facilitador",
     "crit svc poc": "Punto de contacto del servicio crítico",
     "asset gross value": "¿Cuál es el valor bruto del activo que intenta proteger?",
+    "select gross value": "Selecciona valor",
     "not selected": "No seleccionado",
     "expected effort": "¿Cuál es el esfuerzo relativo esperado para esta evaluación?",
     "select effort": "Selecciona esfuerzo",
@@ -65,7 +67,26 @@
     "control priorities intro1": "Información sobre el ranking se puede encontrar en la <a href=\"",
     "control priorities intro2": "htmlhelp/results_ranked_questions_screen.htm\" target=\"blank\">guía del usuario</a>.",
     "local installation": "Instalación Local",
+    "new version": "A new version of CSET is available.",
+    "your version": "Tu versión:",
+    "version available": "Versión disponible:",
+    "link version": "Haga clic aquí para ver o descargar las versiones de CSET.",
     "legend": "Leyenda",
+    "publisher": {},
+    "disclaimer": {
+        "title": "Descargo de responsabilidad",
+        "disclaimer 1": "El análisis, los datos y los informes en <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> se proporcionan \"tal cual\" y solo para fines informativos. El {{orgLongName}} ({{orgShortName}}) no ofrece garantías de ningún tipo con respecto a la información contenida en ellos. En ningún caso, el Gobierno de los Estados Unidos ni sus contratistas o subcontratistas serán responsables por ningún daño, incluidos, entre otros, los daños directos, indirectos, especiales o consecuentes, y daños basados en cualquier negligencia del Gobierno de los Estados Unidos o de sus contratistas o subcontratistas, que surjan de, resulten de o estén relacionados de alguna manera con este informe, ya sea basado en garantía, contrato, agravio o de otro modo, ya sea que se haya sufrido lesiones o se haya derivado de los resultados de, o la confianza en el informe.",
+        "disclaimer 2": "{{orgShortName}} no respalda ningún producto o servicio comercial, incluido el sujeto de la evaluación en este informe. Cualquier referencia a productos, procesos o servicios comerciales específicos por marca registrada, fabricante o de otro modo, no constituye ni implica su respaldo, recomendación o preferencia  por parte de {{orgShortName}}.",
+        "disclaimer 3": "La exhibición del sello oficial de {{orgShortName}} u otras identidades visuales de {{orgShortName}} en este informe no se interpretará como una autorización a la organización receptora para usar el sello oficial, insignia u otras identidades visuales de {{orgShortName}}. El sello, insignia u otras identidades visuales de {{orgShortName}} no se utilizarán de ninguna manera para implicar el respaldo de ningún producto o actividad comercial por parte de {{orgShortName}} o el Gobierno de los Estados Unidos. El uso del sello {{orgShortName}} sin la debida autorización viola la ley federal (por ejemplo, 18 U.S.C. §§ 506, 701, 1017) y va en contra de las políticas de {{orgShortName}} que rigen el uso del sello.",
+        "disclaimer 4": "El informe se prepara y se destina al uso interno de la organización que lo solicitó. El contenido de este informe puede estar sujeto a derechos de propiedad intelectual gubernamentales o privados. Para solicitar la distribución de este informe fuera de la organización para la que fue preparado, comuníquese con {{intellectualPropertyRightsDistributionRequestEntity}}. El contenido de este informe puede reproducirse o incorporarse a otros informes, pero no puede modificarse sin el permiso previo por escrito de la Oficina del Programa {{appShortName}}."
+    },
+    "advisory": {
+        "title": "Asesoramiento",
+        "advisory 1": "El {{appLongName}} (<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>) es solo un componente del panorama general de la ciberseguridad y debe complementarse con un programa sólido de seguridad cibernética dentro de la organización. Una autoevaluación con <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> no puede revelar todos los tipos de debilidades de seguridad, y no debe ser el único medio para determinar la postura de seguridad de una organización.",
+        "advisory 2": "La herramienta no proporcionará un análisis detallado de la arquitectura de la red ni una revisión detallada de la configuración de hardware/software de la red. No es una herramienta de análisis de riesgos, por lo que no generará una evaluación compleja de riesgos. {{appShortName}}<sup>®</sup> no sustituye el análisis profundo de las vulnerabilidades del sistema de control realizado por profesionales capacitados. Todavía se deben realizar revisiones e inspecciones periódicas en el sitio utilizando un enfoque holístico que incluya recorridos de las instalaciones, entrevistas y observación y examen de las prácticas de las instalaciones. También se deben considerar pasos adicionales como escaneo, pruebas de penetración y ejercicios en sistemas sustitutos, de capacitación o que no sean de producción, o en sistemas donde las fallas, errores inesperados u otros resultados inesperados no comprometan la producción o la seguridad.",
+        "advisory 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> evaluaciones no pueden ser completadas de manera efectiva por una sola persona. Es esencial contar con un equipo multifuncional compuesto por representantes de las áreas de operaciones, mantenimiento, tecnología de la información, negocio y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la amplitud de responsabilidad o conocimiento para responder eficazmente a todas las preguntas.",
+        "advisory 4": "<p>Los datos e informes generados por la herramienta deben gestionarse de forma segura y marcarse, almacenarse y distribuirse de manera adecuada a su confidencialidad.</p>"
+    },
     "contact": {
         "contacts": "Contactos",
         "contact": "Contacto",
@@ -238,6 +259,7 @@
         "high level desc exec sec comments": "Descripción de la evaluación de alto nivel Resumen ejecutivo y Comentarios",
         "reports": "Informes",
         "feedback": "Retroalimentación",
+        "analytics": "analítica",
         "assessment complete": "Evaluación completa",
         "performance summary": "Resumen de desempeño",
         "security practice checklist": "Lista de prácticas de seguridad",
@@ -364,6 +386,9 @@
             "description required": "* Descripción requerida"
         }
     },
+    "questions": {
+        "cpg answer key": "Clave de Respuestas CPG"
+    },
     "tooltip": {
         "view detail": "Ver detalle",
         "create assessment": "Crear evaluación",
@@ -396,7 +421,7 @@
         "risk description": "Descripción del riesgo",
         "validation approach": "Enfoque de validación",
         "prevent encryption": "Evita que aparezca la pantalla de \"ingresar contraseña\" al exportar",
-        "import": "Importar una evaluación desde un archivo externo de {{appCode}}.",
+        "import": "Importar una evaluación desde un archivo externo de {{appName}}.",
         "export to excel": "Exportar todas las evaluaciones a Excel",
         "remove assessment": "Eliminar permanentemente esta evaluación.",
         "export assessment": "Exportar una copia de esta evaluación a otra ubicación",
@@ -431,7 +456,7 @@
         "level 2": "Nivel 2",
         "level 3": "Nivel 3",
         "level 4": "Nivel 4",
-        "level 5": "Nivel 5", 
+        "level 5": "Nivel 5",
         "overall": "En general"
     },
     "irp": {
@@ -546,20 +571,6 @@
             "1": "Responda todos los campos demográficos, de configuración de evaluaciones y de servicios críticos de la organización para acceder a los informes y exportar las evaluaciones.",
             "2": "Los siguientes campos están incompletos",
             "3": "Se debe proporcionar toda la información demográfica en la página Información de evaluación para poder ver los informes."
-        },
-        "disclaimer": {
-            "disclaimer": "Descargo de responsabilidad",
-            "disclaimer section 1": "Los análisis, datos e informes de CSET® se proporcionan 'tal cual' solo con fines informativos. La Agencia de Seguridad de Infraestructura y Ciberseguridad (CISA) no ofrece garantías de ningún tipo con respecto a la información contenida en ella. En ningún caso el Gobierno de los Estados Unidos o sus contratistas o subcontratistas serán responsables de ningún daño, incluidos, entre otros, daños directos, indirectos, especiales o consecuentes, e incluidos daños basados en cualquier negligencia del Gobierno de los Estados Unidos o sus contratistas o subcontratistas, que surjan de, resulten de, o de alguna manera estén relacionados con este informe, ya sea basado en garantía, contrato, agravio o de otro modo, ya sea que la lesión se haya sufrido o haya surgido de los resultados o la confianza en el informe.",
-            "disclaimer section 2": "CISA no respalda ningún producto o servicio comercial, incluido el tema de valoración o evaluación en este informe. Cualquier referencia a productos, procesos o servicios comerciales específicos por marca registrada, fabricante o de otro modo no constituye ni implica su respaldo, recomendación o favorecimiento por parte de CISA.",
-            "disclaimer section 3": "La exhibición del sello oficial de CISA u otras identidades visuales de CISA en este informe no se interpretará como que otorga a la organización receptora autorización para usar el sello oficial, la insignia u otras identidades visuales de CISA. El sello, la insignia u otras identidades visuales de CISA no se utilizarán de ninguna manera para implicar el respaldo de ningún producto o actividad comercial por parte de CISA o el Gobierno de los Estados Unidos. El uso del sello CISA sin la autorización adecuada viola la ley federal (por ejemplo, 18 U.S.C. §§ 506, 701, 1017) y va en contra de las políticas de CISA que rigen el uso del sello.",
-            "disclaimer section 4": "El informe está elaborado y destinado al uso interno de la organización que realizó la solicitud. El contenido de este informe puede estar sujeto a derechos de propiedad intelectual privados o gubernamentales. Para solicitar la distribución de este informe fuera de la organización para la que fue preparado, comuníquese con la Oficina del Programa CSET. El contenido de este informe puede reproducirse o incorporarse a otros informes, pero no puede modificarse sin el permiso previo expreso por escrito de la Oficina del Programa CSET."
-        },
-        "advisory": {
-            "advisory": "Asesoramiento",
-            "advisory section 1": "CSET® es solo un componente del panorama general de ciberseguridad y debe complementarse con un programa sólido de ciberseguridad dentro de la organización. Una autoevaluación con CSET® no puede revelar todos los tipos de debilidades de seguridad y no debe ser el único medio para determinar la postura de seguridad de una organización.",
-            "advisory section 2": "La herramienta no proporcionará un análisis arquitectónico detallado de la red ni una revisión detallada de la configuración de hardware/software de la red. No es una herramienta de análisis de riesgos, por lo que no generará una evaluación de riesgos compleja. CSET® no pretende ser un sustituto del análisis en profundidad de las vulnerabilidades del sistema de control realizado por profesionales capacitados. Aún se deben realizar revisiones e inspecciones periódicas en el lugar utilizando un enfoque holístico que incluya recorridos por las instalaciones, entrevistas y observación y examen de las prácticas de la instalación. También se debe considerar la realización de pasos adicionales, como escaneos, pruebas de penetración y ejercicios en sistemas sustitutos, de entrenamiento o no productivos, o en sistemas donde las fallas, las fallas inesperadas u otros resultados inesperados no comprometerán la producción o la seguridad.",
-            "advisory section 3": "Las evaluaciones de CSET® no pueden ser completadas de manera efectiva por un solo individuo. Es esencial contar con un equipo interfuncional compuesto por representantes de áreas operativas, de mantenimiento, tecnología de la información, negocios y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la responsabilidad o el conocimiento suficiente para responder de manera efectiva todas las preguntas.",
-            "advisory section 4": "Los datos e informes generados por la herramienta deben ser gestionados de manera segura y marcados, almacenados y distribuidos de acuerdo a su nivel de sensibilidad."
         },
         "observations tear-out sheets": {
             "report title": "Hojas de Observaciones",
@@ -845,6 +856,7 @@
                 "rra deficiency report": "Informe de deficiencia de RRA",
                 "comments and marked for review": "Comentarios y Marcados para Revisión",
                 "cisa ransomware readiness assessment": "CISA Informe de Evaluación de Preparación para Ransomware (RRA)",
+                "assessment full title": "Preparación para ransomware",
                 "report": {
                     "assessment tiers": "Niveles de evaluación de RRA",
                     "answered tier": "Prácticas respondidas por nivel",
@@ -865,14 +877,14 @@
                     "suggested areas": "Áreas sugeridas para mejorar",
                     "suggested text": "Los objetivos de la evaluación se clasifican en orden de deficiencia y los objetivos que tienen menos prácticas satisfechas se clasifican más arriba en el cuadro. El gráfico de barras refleja el porcentaje de prácticas para cada objetivo a las que se respondió 'No' o se dejaron sin respuesta.",
                     "goal completion summary": "Resumen de consecución de objetivos",
-                    "goal performance": "Rendimiento de objetivos", 
-                    "rra performance by goal": "Desempeño de RRA por objetivo", 
-                    "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.", 
-                    "tiers": "Niveles de evaluación", 
-                    "rra practice list": "[ES] RRA Practice List with Corresponding References", 
-                    "rra practice list text": "[ES] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.", 
-                    "identifier": "Identificador", 
-                    "practice": "Práctica", 
+                    "goal performance": "Rendimiento de objetivos",
+                    "rra performance by goal": "Desempeño de RRA por objetivo",
+                    "performance by goal text": "Este gráfico muestra los resultados positivos de su evaluación. Es deseable obtener puntuaciones altas en este gráfico.",
+                    "tiers": "Niveles de evaluación",
+                    "rra practice list": "[ES] RRA Practice List with Corresponding References",
+                    "rra practice list text": "[ES] Red-shaded rows indicate practices that have been answered as 'No' or left unanswered.",
+                    "identifier": "Identificador",
+                    "practice": "Práctica",
                     "references": "Referencias"
                 },
                 "percentage of practices": "[ES] Percentage of Practices Performed",
@@ -987,7 +999,7 @@
         "text 1": "La retroalimentación es un mecanismo para enviar cambios o sugerencias para una pregunta formulada en CSET. Los comentarios se ingresan haciendo clic en el ícono",
         "text 2": "debajo de la pregunta.",
         "text 3": "Asegúrese de que los comentarios que proporcione no incluyan ninguna información de propiedad exclusiva o relacionada con la evaluación. Estos comentarios deben considerarse parte de una discusión pública de la comunidad con respecto a las preguntas, los requisitos, las solicitudes de funciones de CSET o las notificaciones de errores.",
-        "copy paste": "Copie el texto al portapapeles y péguelo en un correo electrónico.",
+        "copy paste": "Copie el texto al portapapeles y péguelo en un correo electrónico. Enviar el correo a {{address}}.",
         "no feedback exists": "No hay comentarios para ninguna pregunta en esta evaluación."
     },
     "extras": {
@@ -1010,7 +1022,11 @@
         "additional documents": "Documentos Adicionales",
         "no documents to display": "No hay documentos para mostrar",
         "section": "Sección",
-        "no reference documents available": "no hay documentos de referencia disponibles"
+        "no supplemental available": "no hay orientación complementaria disponible",
+        "no reference documents available": "no hay documentos de referencia disponibles",
+        "document": "documento",
+        "link": "enlace",
+        "launches external": "lanza sitio externo"
     },
     "menu": {
         "tools": {
@@ -1083,18 +1099,6 @@
                         "22": "Verificamos que los elementos de la interfaz interactiva con múltiples estados indiquen un estado actual y que el rol del formulario de entrada refleje su función con precisión para que cualquier campo de texto de entrada tenga el valor correcto.",
                         "23": "<li>Reproducción automática/actualización</li> <li>Parpadeo</li> <li>Límites de tiempo ajustables</li> <li>Solo video-audio</li> <li>Multimedia</li> <li>Tiempos de espera</li> <li>Complementos requeridos</li> <li>Versión alternativa</li>"
                     }
-                },
-                "advisory": {
-                    "advisory": "Asesoramiento",
-                    "introduction 1": "El {{appLongName}} (<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span>) es solo un componente del panorama general de la ciberseguridad y debe complementarse con un programa sólido de seguridad cibernética dentro de la organización. Una autoevaluación con <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> no puede revelar todos los tipos de debilidades de seguridad, y no debe ser el único medio para determinar la postura de seguridad de una organización.",
-                    "introduction 2": "La herramienta no proporcionará un análisis detallado de la arquitectura de la red ni una revisión detallada de la configuración de hardware/software de la red. No es una herramienta de análisis de riesgos, por lo que no generará una evaluación compleja de riesgos. {{appShortName}}<sup>®</sup> no sustituye el análisis profundo de las vulnerabilidades del sistema de control realizado por profesionales capacitados. Todavía se deben realizar revisiones e inspecciones periódicas en el sitio utilizando un enfoque holístico que incluya recorridos de las instalaciones, entrevistas y observación y examen de las prácticas de las instalaciones. También se deben considerar pasos adicionales como escaneo, pruebas de penetración y ejercicios en sistemas sustitutos, de capacitación o que no sean de producción, o en sistemas donde las fallas, errores inesperados u otros resultados inesperados no comprometan la producción o la seguridad.",
-                    "introduction 3": "<span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> evaluaciones no pueden ser completadas de manera efectiva por una sola persona. Es esencial contar con un equipo multifuncional compuesto por representantes de las áreas de operaciones, mantenimiento, tecnología de la información, negocio y seguridad. Los representantes deben ser expertos en la materia con un conocimiento significativo en sus respectivas áreas. Ningún individuo tiene la amplitud de responsabilidad o conocimiento para responder eficazmente a todas las preguntas.",
-                    "introduction 4": "<p>Los datos e informes generados por la herramienta deben gestionarse de forma segura y marcarse, almacenarse y distribuirse de manera adecuada a su confidencialidad.</p>",
-                    "disclaimer": "Descargo de responsabilidad",
-                    "disclaimer 1": "El análisis, los datos y los informes en <span class=\"text-nowrap\">{{appShortName}}<sup>®</sup></span> se proporcionan \"tal cual\" y solo para fines informativos. El {{orgLongName}} ({{orgShortName}}) no ofrece garantías de ningún tipo con respecto a la información contenida en ellos. En ningún caso, el Gobierno de los Estados Unidos ni sus contratistas o subcontratistas serán responsables por ningún daño, incluidos, entre otros, los daños directos, indirectos, especiales o consecuentes, y daños basados en cualquier negligencia del Gobierno de los Estados Unidos o de sus contratistas o subcontratistas, que surjan de, resulten de o estén relacionados de alguna manera con este informe, ya sea basado en garantía, contrato, agravio o de otro modo, ya sea que se haya sufrido lesiones o se haya derivado de los resultados de, o la confianza en el informe.",
-                    "disclaimer 2": "{{orgShortName}} no respalda ningún producto o servicio comercial, incluido el sujeto de la evaluación en este informe. Cualquier referencia a productos, procesos o servicios comerciales específicos por marca registrada, fabricante o de otro modo, no constituye ni implica su respaldo, recomendación o preferencia  por parte de {{orgShortName}}.",
-                    "disclaimer 3": "La exhibición del sello oficial de {{orgShortName}} u otras identidades visuales de {{orgShortName}} en este informe no se interpretará como una autorización a la organización receptora para usar el sello oficial, insignia u otras identidades visuales de {{orgShortName}}. El sello, insignia u otras identidades visuales de {{orgShortName}} no se utilizarán de ninguna manera para implicar el respaldo de ningún producto o actividad comercial por parte de {{orgShortName}} o el Gobierno de los Estados Unidos. El uso del sello {{orgShortName}} sin la debida autorización viola la ley federal (por ejemplo, 18 U.S.C. §§ 506, 701, 1017) y va en contra de las políticas de {{orgShortName}} que rigen el uso del sello.",
-                    "disclaimer 4": "El informe se prepara y se destina al uso interno de la organización que lo solicitó. El contenido de este informe puede estar sujeto a derechos de propiedad intelectual gubernamentales o privados. Para solicitar la distribución de este informe fuera de la organización para la que fue preparado, comuníquese con {{intellectualPropertyRightsDistributionRequestEntity}}. El contenido de este informe puede reproducirse o incorporarse a otros informes, pero no puede modificarse sin el permiso previo por escrito de la Oficina del Programa {{appShortName}}."
                 },
                 "terms of use": {
                     "terms of use": "Términos de uso",

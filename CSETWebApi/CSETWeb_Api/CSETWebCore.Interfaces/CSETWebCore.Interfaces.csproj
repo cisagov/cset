@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Npoi.Mapper" Version="6.2.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +17,10 @@
 
   <ItemGroup>
     <None Remove="Dashboard\" />
+    <None Remove="Version\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dashboard\" />
+    <Folder Include="Version\" />
   </ItemGroup>
 </Project>

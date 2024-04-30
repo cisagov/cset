@@ -34,17 +34,7 @@
     </div>
   </div>
 
-  <div class="alert alert-warning" *ngIf="shouldReportsandExportBeDisabledCisaAssessor()">
-    {{t('cisa workflow required msg.1')}}
-    <p class="mt-2">{{t('cisa workflow required msg.2')}}:</p>
-    <ul>
-      <li *ngFor="let field of cisaAssessorWorkflowFieldValidation?.invalidFields">{{ field }}</li>
-    </ul>
-  </div>
-
-  <div class="alert alert-warning" *ngIf="disableEntirePage && !shouldReportsandExportBeDisabledCisaAssessor()">
-    {{t('cisa workflow required msg.3')}}
-  </div>
+  <app-cisa-workflow-warnings [invalidFields]="cisaAssessorWorkflowFieldValidation?.invalidFields"></app-cisa-workflow-warnings>
 
   <!-- Moved this check from inside the component to here to prevent extra whitespace when not CF -->
   <app-assessment-convert-cf *ngIf="isCfEntry" class="mt-4"></app-assessment-convert-cf>
@@ -301,12 +291,12 @@
         [disableIseReportLinks]="disableIseReportLinks"></app-ise-warnings>
 
       <button (click)="clickReportLink('isemerit')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="disableSubmitButton()">
         ISE MERIT SCOPE REPORT (copy paste to Execution Result)
       </button>
 
       <button (click)="clickReportLink('iseexamination')" tabindex="0" class="btn btn-link btn-link-dark text-left"
-        [disabled]="disableIseReportLinks || this.ncuaSvc.unassignedIssues">
+        [disabled]="disableSubmitButton()">
         ISE EXAMINATION REPORT (attach as Document in Scope Task)
       </button>
 
@@ -543,12 +533,13 @@
           </button>
 
           <button class="btn" *ngIf="!ncuaSvc.ISE_StateLed" aria-label="Submit" tabindex="0"
-            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(findings);"
+            [style]="getSubmitButtonStyle()" (click)="ncuaSvc.submitToMerit(observations);"
             [disabled]="disableSubmitButton()">
             Submit
           </button>
 
         </div>
+        
       </div>
     </div>
   </div>

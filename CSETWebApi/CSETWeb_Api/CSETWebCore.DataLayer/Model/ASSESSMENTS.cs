@@ -71,6 +71,8 @@ public partial class ASSESSMENTS
     [StringLength(50)]
     public string PCII_Number { get; set; }
 
+    public bool ModifiedSinceLastExport { get; set; }
+
     [InverseProperty("Assessment")]
     public virtual ICollection<ACCESS_KEY_ASSESSMENT> ACCESS_KEY_ASSESSMENT { get; set; } = new List<ACCESS_KEY_ASSESSMENT>();
 

@@ -16,6 +16,7 @@ using CSETWebCore.Model.Analytics;
 using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Question;
 using CSETWebCore.Business.Question;
+using CSETWebCore.Interfaces.Analytics;
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -29,10 +30,11 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private readonly IQuestionRequirementManager _questionRequirement;
         private readonly IQuestionBusiness _question;
+        private readonly IAnalyticsBusiness _analytics;
 
         public AnalyticsController(IRequirementBusiness requirement, IAssessmentBusiness assessment,
             ITokenManager token, IDemographicBusiness demographic,
-            IQuestionRequirementManager questionRequirement, IQuestionBusiness question)
+            IQuestionRequirementManager questionRequirement, IQuestionBusiness question, IAnalyticsBusiness analytics)
         {
             _requirement = requirement;
             _assessment = assessment;
@@ -40,6 +42,7 @@ namespace CSETWebCore.Api.Controllers
             _demographic = demographic;
             _questionRequirement = questionRequirement;
             _question = question;
+            _analytics = analytics;
         }
 
         /// <summary>
@@ -63,6 +66,16 @@ namespace CSETWebCore.Api.Controllers
                 Demographics = demographics,
                 QuestionAnswers = GetQuestionsAnswers()
             });
+        }
+
+        [HttpGet]
+        [Route("api/analytics/getAggregation")]
+        public IActionResult GetAggregation()
+        {
+            int assessmentId = _token.AssessmentForUser();
+            var agg = _analytics.GetAggregationAssessment(assessmentId);
+
+            return Ok(agg);
         }
 
         private AnalyticsAssessment GetAnalyticsAssessment()

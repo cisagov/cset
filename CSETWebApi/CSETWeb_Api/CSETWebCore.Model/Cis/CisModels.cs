@@ -79,8 +79,8 @@ namespace CSETWebCore.Model.Nested
         public string SupplementalInfo { get; set; }
         public string ReferenceText { get; set; }
 
-        public List<CustomDocument> SourceDocuments { get; set; }
-        public List<CustomDocument> AdditionalDocuments { get; set; }
+        public List<ReferenceDocLink> SourceDocuments { get; set; }
+        public List<ReferenceDocLink> AdditionalDocuments { get; set; }
 
         public List<string> CSF { get; set; } = new List<string>();
         public List<TTPReference> TTP { get; set; } = new List<TTPReference>();

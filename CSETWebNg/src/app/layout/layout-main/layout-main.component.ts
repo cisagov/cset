@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation,OnInit, isDevMode } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -32,6 +32,7 @@ import { ConfigService } from '../../services/config.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { OnlineDisclaimerComponent } from '../../dialogs/online-disclaimer/online-disclaimer.component';
 import { LayoutService } from '../../services/layout.service';
+import { VersionService } from '../../services/version.service';
 
 
 @Component({
@@ -43,12 +44,20 @@ import { LayoutService } from '../../services/layout.service';
   host: { class: 'd-flex flex-column flex-11a w-100 h-100' },
 
 })
-export class LayoutMainComponent {
+export class LayoutMainComponent  implements OnInit {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
   footerClosed: boolean = true;
+  devMode: boolean = isDevMode();
 
+  display = "none";
+  displayNotifications="none";
+  localVersion:string='';
+  actualVersion:string='';
+  githubVersion=[]
+  showVersionNotification = false;
+   
   constructor(
     public auth: AuthenticationService,
     public assessSvc: AssessmentService,
@@ -58,9 +67,30 @@ export class LayoutMainComponent {
     public fileSvc: FileUploadClientService,
     public setBuilderSvc: SetBuilderService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    public versionSvc:VersionService
   ) { }
-
+  ngOnInit() {
+    this.versionSvc.getGithubLatestRelease().subscribe(data=>{
+      this.actualVersion=data.tag_name.substring(1)
+      this.githubVersion=data.tag_name.substring(1).split('.').map(x => parseInt(x, 10))
+      if(data){
+        this.versionSvc.getInstalledVersion().subscribe(version=>{
+          this.localVersion=version.majorVersion.toString()+'.'+version.minorVersion.toString()+'.'+version.patch.toString()+'.'+version.build.toString();
+          if(version.majorVersion < this.githubVersion[0] ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion < this.githubVersion[1]) ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch < this.githubVersion[2]) ||
+            (version.majorVersion === this.githubVersion[0] && version.minorVersion === this.githubVersion[1] && version.patch === this.githubVersion[2] && version.build < this.githubVersion[3]))
+         {
+          this.showVersionNotification=true;
+         }
+        else{
+          this.showVersionNotification=false;
+        }
+        })
+      }
+    })
+  }
   /**
    * Indicates if the user is currently within the Module Builder pages.
    */
@@ -92,4 +122,11 @@ export class LayoutMainComponent {
   showDisclaimer() {
     this.dialog.open(OnlineDisclaimerComponent, { data: { publicDomainName: this.configSvc.publicDomainName } });
   }
+  showNotifications(): void {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
+    this.displayNotifications="none"
+  }  
 }

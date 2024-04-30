@@ -2805,6 +2805,7 @@ table.assessment-documents th {
   top: 0;
   z-index: 999;
   background-color: $gray-50;
+  padding-top: 0.5rem;
 }
 
 .fips-instructions {
@@ -3098,6 +3099,10 @@ hr.ranked-questions {
 
 .br-standard {
   border-radius: 0.4rem;
+}
+
+.o45 {
+  opacity: 0.45;
 }
 
 .o65 {
@@ -3572,7 +3577,6 @@ table.td-text-left td {
 
 .trend-table-width {
   max-width: 100%;
-  width: 100vw;
 }
 
 @media only screen and (max-width: 767px) {
@@ -3857,7 +3861,7 @@ h6.dropdown-header {
 
 @media screen and (max-width:500px) {
 
-  .swiper-slide {
+  .swiper-slide-disabled-for-now{
     transition: 300ms all;
     min-width: 230px;
 
@@ -3888,7 +3892,7 @@ h6.dropdown-header {
 }
 
 @media screen and (min-width:500px) {
-  .swiper-slide {
+  .swiper-slide-disabled-for-now{
     transition: 300ms all;
     min-width: 230px;
 

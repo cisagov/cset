@@ -62,7 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   securitySelected: string = 'None';
   isMobile = false;
 
-  lastModifiedTimestamp = '';
+  lastModifiedTimestamp: string = '';
 
   exportExtension: string;
 
@@ -160,7 +160,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.configSvc.installationMode === 'IOD') {
       this.reportSvc.validateCisaAssessorFields().subscribe((result: CisaWorkflowFieldValidationResponse) => {
         this.cisaAssessorWorkflowFieldValidation = result;
-        if (this.shouldReportsandExportBeDisabledCisaAssessor()) {
+        if (!this.cisaAssessorWorkflowFieldValidation?.isValid) {
           this.disableEntirePage = true;
         }
       });
@@ -180,8 +180,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.securityIdentifier = data;
     });
 
-    this.assessSvc.getLastModified().subscribe((data: string) => {
-      this.lastModifiedTimestamp = data;
+    this.assessSvc.getLastModified().subscribe((data: any) => {
+      this.lastModifiedTimestamp = data.lastModifiedDate;
     });
 
     // If this is an ISE, check if the assessment has been submitted or not
@@ -314,11 +314,6 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     this.securitySelected = val;
   }
 
-  // This checks if we should apply cisa assessor workflow field validation to disable reports and export.
-  shouldReportsandExportBeDisabledCisaAssessor() {
-    return this.configSvc.installationMode === 'IOD' && !this.cisaAssessorWorkflowFieldValidation?.isValid
-  }
-
   showExcelExportDialog() {
     const doNotShowLocal = localStorage.getItem('doNotShowExcelExport');
     const doNotShow = doNotShowLocal && doNotShowLocal == 'true' ? true : false;
@@ -351,15 +346,14 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 
   disableSubmitButton() {
-    if (this.disableIseReportLinks) {
+    if (this.ncuaSvc.ISE_StateLed) {
+      return false;
+    }
+    if (this.ncuaSvc.creditUnionName == null || this.ncuaSvc.creditUnionName == '') {
       return true;
     }
 
-    if (this.ncuaSvc.creditUnionName == '') {
-      return true;
-    }
-
-    if (this.ncuaSvc.assetsAsNumber == 0) {
+    if (this.ncuaSvc.assetsAsNumber == null || this.ncuaSvc.assetsAsNumber == 0) {
       return true;
     }
 
@@ -370,6 +364,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     if (this.ncuaSvc.submitInProgress) {
       return true;
     }
+
+    if (this.disableIseReportLinks) {
+      return true;
+    }
+    return false;
   }
 
   getSubmitButtonStyle() {

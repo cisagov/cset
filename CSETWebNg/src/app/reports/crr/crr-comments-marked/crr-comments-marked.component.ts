@@ -46,14 +46,12 @@ export class CrrCommentsMarkedComponent implements OnInit {
     private titleService: Title,
     private cmuSvc: CmuService,
     public questionsSvc: QuestionsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.titleService.setTitle('Comments Report - CISA CRR');
     this.keyToCategory = this.cmuSvc.keyToCategory;
-
-    const appCode = this.configSvc.installationMode;
 
     this.cmuSvc.getCmuModel().subscribe(
       (r: CmuReportModel) => {

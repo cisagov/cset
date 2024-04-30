@@ -1,32 +1,32 @@
 [
   {
     "key": "3",
-    "value": "[UK]Large (3+ days)",
+    "value": "Великий (3+ днів)",
     "valueEN": "Large (3+ days)"
   },
   {
     "key": "2",
-    "value": "[UK]Medium (1-2 days)",
+    "value": "Середній (1-2 дні)",
     "valueEN": "Medium (1-2 days)"
   },
   {
     "key": "1",
-    "value": "[UK]Small (1-2 hour) assessment",
+    "value": "Невелике (1-2 години) оцінювання",
     "valueEN": "Small (1-2 hour) assessment"
   },
   {
     "key": "4",
-    "value": "[UK]1 week",
+    "value": "1 тиждень",
     "valueEN": "1 week"
   },
   {
     "key": "5",
-    "value": "[UK]2 weeks",
+    "value": "2 тижні",
     "valueEN": "2 weeks"
   },
   {
     "key": "6",
-    "value": "[UK]More than 2 weeks",
+    "value": "Більше 2 тижнів",
     "valueEN": "More than 2 weeks"
   }
 ]

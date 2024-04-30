@@ -27,7 +27,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { OkayComponent } from '../../../dialogs/okay/okay.component';
 import { ConfirmComponent } from '../../../dialogs/confirm/confirm.component';
 // eslint-disable-next-line max-len
-import { CustomDocument, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
+import { ReferenceDocLink, QuestionDetailsContentViewModel, QuestionInformationTabData } from '../../../models/question-extras.model';
 import { Answer, Question } from '../../../models/questions.model';
 import { ConfigService } from '../../../services/config.service';
 import { FileUploadClientService } from '../../../services/file-client.service';
@@ -70,6 +70,8 @@ export class QuestionExtrasComponent implements OnInit {
   mode: string;  // selector for which data is being displayed, 'DETAIL', 'SUPP', 'CMNT', 'DOCS', 'OBSV', 'FDBK'.
   answer: Answer;
   dialogRef: MatDialogRef<OkayComponent>;
+
+  msgNoSupplemental: string = `(${this.tSvc.translate('extras.no supplemental available')})`;
 
   showMfr = false;
 
@@ -620,6 +622,17 @@ export class QuestionExtrasComponent implements OnInit {
   }
 
   /**
+   * Returns a boolean indicating if ANY type of supplemental exists
+   */
+  supplementalExists() {
+    return (
+      !!this.tab?.requirementsData?.supplementalInfo 
+      || !!this.myQuestion.scope 
+      || !!this.myQuestion.recommendedAction
+      || !!this.myQuestion.services);
+  }
+
+  /**
    * Programmatically clicks a question extra button to force the lazy load of its content.
    * Do nothing if the user has already selected a mode or collapsed the extras.
    */
@@ -765,8 +778,8 @@ export class QuestionExtrasComponent implements OnInit {
    * @param document
    * @returns
    */
-  documentUrl(document: CustomDocument, bookmark: string) {
-    return this.resourceLibSvc.documentUrl(document, bookmark);
+formatDocumentUrl(document: ReferenceDocLink, bookmark: any) {
+    return this.resourceLibSvc.formatDocumentUrl(document, bookmark);
   }
 
   /**

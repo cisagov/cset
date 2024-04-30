@@ -227,6 +227,7 @@ import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-al
 import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
 import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
 import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
+import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
 
@@ -490,6 +491,7 @@ const appRoutes: Routes = [
               { path: 'overview', component: OverviewComponent },
               { path: 'reports', component: ReportsComponent },
               { path: 'analytics-compare', component: AnalyticsCompareComponent },
+              { path: 'analytics', component: AnalyticsComponent },
               { path: 'tsa-assessment-complete', component: TsaAssessmentCompleteComponent },
               { path: 'ranked-deficiency', component: RankedDeficiencyComponent },
               { path: 'section-scoring', component: SectionScoringComponent },

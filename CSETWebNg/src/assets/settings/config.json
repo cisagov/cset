@@ -3,7 +3,6 @@
     "currentConfigChain": [
         "CIE"
     ],
-    "appCode": "CSET",
     "defaultLang": "en",
     "isRunningAnonymous": false,
     "app": {

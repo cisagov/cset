@@ -1,3 +1,4 @@
+
 -- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
@@ -16,7 +17,7 @@ BEGIN
 	select * into #MG from MATURITY_GROUPINGS where grouping_id in (select grouping_id from #MQ)
 
 
-	select a.Answer_Full_Name, a.Title, a.Sequence, a.Answer_Text, 
+	select a.Answer_Full_Name, a.Title, a.Grouping_Id, a.Sequence, a.Answer_Text, 
 		isnull(m.qc,0) as [qc],
 		isnull(m.Total,0) as [Total], 
 		IsNull(Cast(IsNull(Round((Cast((qc) as float)/(IsNull(NullIf(Total,0),1)))*100, 2), 0) as float),0) as [Percent] 
@@ -36,4 +37,3 @@ BEGIN
 	order by a.Sequence, o.answer_order
 
 END
-

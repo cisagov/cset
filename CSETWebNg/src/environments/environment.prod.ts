@@ -26,9 +26,9 @@ export const environment = {
   appUrl: '',
   apiUrl: '',
   docUrl: '',
-  appCode: 'CSET',
-  visibleVersion: '12.1.5.0',
-  version: '12.1.5.0',
+  csetGithubApiUrl: '',
+  visibleVersion: '12.1.7.0',
+  version: '12.1.7.0',
   helpContactEmail: '',
   helpContactPhone: ''
 };
