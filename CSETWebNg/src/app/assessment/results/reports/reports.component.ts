@@ -62,7 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   securitySelected: string = 'None';
   isMobile = false;
 
-  lastModifiedTimestamp = '';
+  lastModifiedTimestamp: string = '';
 
   exportExtension: string;
 
@@ -180,8 +180,8 @@ export class ReportsComponent implements OnInit, AfterViewInit {
       this.securityIdentifier = data;
     });
 
-    this.assessSvc.getLastModified().subscribe((data: string) => {
-      this.lastModifiedTimestamp = data;
+    this.assessSvc.getLastModified().subscribe((data: any) => {
+      this.lastModifiedTimestamp = data.lastModifiedDate;
     });
 
     // If this is an ISE, check if the assessment has been submitted or not
