@@ -49,8 +49,7 @@
                             ">
 
                     <div class="title-page-name">{{response?.information?.assessment_Name}}</div>
-                    <div class="title-page-content">{{response?.information?.assessment_Date |
-                        localizeDate}}
+                    <div class="title-page-content">{{ncuaSvc.reportsDateReformat(response?.information?.assessment_Date, 'short')}}
                     </div>
                     <div class="title-page-content">{{response?.information?.assessor_Name}}</div>
                     <button class="btn form-check-label btn-copy" [matTooltip]="'Print to PDF'"
@@ -80,7 +79,7 @@
                     </tr>
                     <tr>
                         <td>Assessment Date:</td>
-                        <td>{{response?.information?.assessment_Date | localizeDate}}</td>
+                        <td>{{ncuaSvc.reportsDateReformat(response?.information?.assessment_Date, 'short')}}</td>
                     </tr>
                     <tr>
                         <td>Credit Union:</td>

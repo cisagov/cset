@@ -28,6 +28,11 @@ import { ACETService } from '../../services/acet.service';
 import { ConfigService } from '../../services/config.service';
 import { NCUAService } from '../../services/ncua.service';
 import { QuestionsService } from '../../services/questions.service';
+import { DateAdapter } from '@angular/material/core';
+import { DateTime } from "luxon";
+import { TranslocoService } from '@ngneat/transloco';
+
+
 
 @Component({
   selector: 'app-ise-answeredquestions',
@@ -47,7 +52,8 @@ export class IseAnsweredQuestionsComponent implements OnInit {
     public acetSvc: ACETService,
     public configSvc: ConfigService,
     public questionsSvc: QuestionsService,
-    public ncuaSvc: NCUAService
+    public ncuaSvc: NCUAService,
+    public tSvc: TranslocoService
   ) { }
 
   ngOnInit(): void {
