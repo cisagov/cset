@@ -225,18 +225,21 @@ namespace CSETWebCore.Api.Controllers
         {
             List<usp_getStandardsResultsByCategory> response = null;
 
-            db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
-                        .WithSqlParam("assessment_Id", assessmentId)
-                        .ExecuteStoredProc((handler) =>
-                        {
-                            var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
-                            var labels = (from usp_getStandardsResultsByCategory an in result
-                                          orderby an.Question_Group_Heading
-                                          select an.Question_Group_Heading).Distinct().ToList();
+            lock (_myLockObject)
+            {
+                db.LoadStoredProc("[usp_getStandardsResultsByCategory]")
+                            .WithSqlParam("assessment_Id", assessmentId)
+                            .ExecuteStoredProc((handler) =>
+                            {
+                                var result = handler.ReadToList<usp_getStandardsResultsByCategory>();
+                                var labels = (from usp_getStandardsResultsByCategory an in result
+                                              orderby an.Question_Group_Heading
+                                              select an.Question_Group_Heading).Distinct().ToList();
 
 
-                            response = (List<usp_getStandardsResultsByCategory>)result;
-                        });
+                                response = (List<usp_getStandardsResultsByCategory>)result;
+                            });
+            }
 
             return response;
         }
