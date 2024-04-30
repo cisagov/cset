@@ -38,6 +38,7 @@ import { AuthenticationService } from './authentication.service';
 import { DateAdapter } from '@angular/material/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { ReportService } from './report.service';
+import { DateTime } from 'luxon';
 
 let headers = {
   headers: new HttpHeaders()
@@ -604,8 +605,8 @@ export class NCUAService {
       "creditUnionName": this.information.credit_Union_Name,
       "charter": this.information.charter,
       "examiner": this.information.assessor_Name.trim(),
-      "effectiveDate": this.information.assessment_Effective_Date,
-      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date),
+      "effectiveDate":  this.reportSvc.applyJwtOffset(this.information.assessment_Effective_Date, 'date'), //DateTime.fromISO(this.information.assessment_Effective_Date),
+      "creationDate": this.reportSvc.applyJwtOffset(this.information.assessment_Creation_Date, 'datetime'),
       "stateLed": this.assessmentSvc.assessment.isE_StateLed,
       "examLevel": this.examLevel,
       "region": this.assessmentSvc.assessment.regionCode,
