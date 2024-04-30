@@ -21,14 +21,14 @@
   SOFTWARE.
 -------------------------->
 <div class="wp-0 d-flex flex-column justify-content-start flex-11a trend-table-width">
-  <div class="bgc-trans mt-4 ml-4 mb-4 pr-4 d-flex flex-column flex-00a trend-table-width">
+  <div class="bgc-trans my-4 mx-4 d-flex flex-column flex-00a trend-table-width">
     <h3>{{ this.aggregationSvc?.modeDisplay(true) }}</h3>
 
     <ng-container *ngIf="this.aggregationSvc?.mode === 'TREND'">
       <p>
         The Trend feature allows you to visualize data collected over multiple assessments. This is particularly helpful
-        for uncovering performance trends of an organization or asset over time. By looking at trends, areas of
-        improvement or concern can be identified.
+        for uncovering performance trends of an organization or asset <strong>over time</strong>. By looking at trends, areas of
+        improvement or concern can be identified. For best results the assessments should be of the same type, to allow proper comparison.
       </p>
       <p>
         To compare differences across different assessments, use the Compare feature.
@@ -43,7 +43,7 @@
         areas.
       </p>
       <p>
-        To view changes to the same organization or asset over time, use the Trend feature.
+        To view changes to the same organization or asset <strong>over time</strong>, use the Trend feature.
       </p>
     </ng-container>
 
