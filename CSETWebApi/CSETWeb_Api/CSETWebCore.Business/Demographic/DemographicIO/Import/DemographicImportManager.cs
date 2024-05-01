@@ -101,9 +101,6 @@ namespace CSETWebCore.Business.Demographic.Import
                         dbServiceDemographics.IT_ICS_Staff_Count = serviceDemographics.IT_ICS_Staff_Count;
                         dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count = serviceDemographics.Cybersecurity_IT_ICS_Staff_Count;
 
-                        context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
-
-
                         context.SaveChanges();
                     }
 
@@ -130,8 +127,6 @@ namespace CSETWebCore.Business.Demographic.Import
                         dbServiceComposition.Other_Defining_System_Description = serviceComposition.Other_Defining_System_Description;
                         dbServiceComposition.Primary_Defining_System = serviceComposition.Primary_Defining_System;
 
-
-                        context.CIS_CSI_SERVICE_COMPOSITION.Update(dbServiceComposition);
 
                         context.SaveChanges();
 
@@ -168,7 +163,6 @@ namespace CSETWebCore.Business.Demographic.Import
                         dDemographics.IsScoped = demographics.IsScoped;
                         dDemographics.CriticalService = demographics.CriticalService;
 
-                        context.DEMOGRAPHICS.Update(dDemographics);
                         context.SaveChanges();
                     }
 
@@ -189,6 +183,11 @@ namespace CSETWebCore.Business.Demographic.Import
                         }
 
                         dd.DateTimeValue = jdd.DateTimeValue;
+                        // handle low dates for SQL Server
+                        if (jdd.DateTimeValue?.Year < 1753)
+                        {
+                            dd.DateTimeValue = null;
+                        }
                         dd.StringValue = jdd.StringValue;
                         dd.IntValue = jdd.IntValue;
                         dd.FloatValue = jdd.FloatValue;
@@ -213,7 +212,6 @@ namespace CSETWebCore.Business.Demographic.Import
                             context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(dserviceCompositionSecondary);
                         }
 
-                        context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Update(dserviceCompositionSecondary);
                         context.SaveChanges();
                     }
 
@@ -240,7 +238,6 @@ namespace CSETWebCore.Business.Demographic.Import
                         dinformation.Workflow = information.Workflow;
                         dinformation.Ise_Submitted = information.Ise_Submitted;
 
-                        context.INFORMATION.Update(dinformation);
                         context.SaveChanges();
                     }
 

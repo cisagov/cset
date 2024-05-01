@@ -22,7 +22,7 @@ interface ImportExportData {
 
 export class AssessmentDemogIodComponent {
   unsupportedImportFile: boolean = false;
-  @ViewChild('refresh') refreshModel;
+  @ViewChild('demoIOD') demoIOD;
   eventImportExport: Subject<ImportExportData> = new Subject<ImportExportData>();
 
   constructor(
@@ -46,7 +46,7 @@ export class AssessmentDemogIodComponent {
 
     if (!this.unsupportedImportFile) {
       dialogRef.afterClosed().subscribe(result => {
-        this.refreshModel.populateDemographicsModel()
+        this.demoIOD.populateDemographicsModel()
         this.assessmSvc.refreshAssessment()
       });
     }
