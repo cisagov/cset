@@ -133,7 +133,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
                 }
             }
             // go through the assessment contacts and: 
-            // - if the contact does exist create it then add the id
+            // - if the contact not does exist create it then add the id
             // - if the contact does exist update the id
             var dictAC = new Dictionary<int, int>();
             foreach (var a in _model.jASSESSMENT_CONTACTS)

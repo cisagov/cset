@@ -200,8 +200,7 @@ namespace CSETWebCore.Business.AssessmentIO.Import
 
                     Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil, _utilities);
                     int newAssessmentId = import.RunImportManualPortion(overwriteAssessment);
-                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);
-
+                    import.RunImportAutomatic(newAssessmentId, jsonObject, context);                    
 
                     // Save the diagram
                     var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
