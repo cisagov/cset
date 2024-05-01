@@ -100,13 +100,9 @@ export class DemographicService {
   }
 
   exportDemographics(){
-    const id = this.assessSvc.id()
     let token = localStorage.getItem('userToken')
-    let queryParams = new HttpParams()
-    .set('token', token)
-    return this.http.get(this.apiUrl + 'export', { params: queryParams })
-    .subscribe(() => {});
+    let url = this.apiUrl + 'export' + "?token=" + token;
+    window.location.href = url;
   }
-
 
 }

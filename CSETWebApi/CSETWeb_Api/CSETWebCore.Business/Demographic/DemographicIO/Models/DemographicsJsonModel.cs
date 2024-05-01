@@ -142,77 +142,70 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         public Int32 Defining_System_Id { get; set; }
     }
 
-    public class jCIS_CSI_ORGANIZATION_DEMOGRAPHICS
-    {
+    public class jINFORMATION
+    { 
         [Required]
-        public Int32 Assessment_Id { get; set; }
+        public Int32 Id { get; set; }
 
-        public Boolean Motivation_CRR { get; set; }
+        [MaxLength(100)]
+        public String Assessment_Name { get; set; }
 
-        [MaxLength(150)]
-        public String Motivation_CRR_Description { get; set; }
+        [MaxLength(100)]
+        public String Facility_Name { get; set; }
 
-        public Boolean Motivation_RRAP { get; set; }
+        [MaxLength(100)]
+        public String City_Or_Site_Name { get; set; }
 
-        [MaxLength(150)]
-        public String Motivation_RRAP_Description { get; set; }
+        [MaxLength(100)]
+        public String State_Province_Or_Region { get; set; }
 
-        public Boolean Motivation_Organization_Request { get; set; }
+        [MaxLength(100)]
+        public String Assessor_Name { get; set; }
 
-        [MaxLength(150)]
-        public String Motivation_Organization_Request_Description { get; set; }
-
-        public Boolean Motivation_Law_Enforcement_Request { get; set; }
-
-        [MaxLength(150)]
-        public String Motivation_Law_Enforcement_Description { get; set; }
-
-        public Boolean Motivation_Direct_Threats { get; set; }
+        [MaxLength(100)]
+        public String Assessor_Email { get; set; }
 
         [MaxLength(150)]
-        public String Motivation_Direct_Threats_Description { get; set; }
+        public String Assessor_Phone { get; set; }
 
-        public Boolean Motivation_Special_Event { get; set; }
+        [MaxLength(4000)]
+        public String Assessment_Description { get; set; }
 
-        [MaxLength(150)]
-        public String Motivation_Special_Event_Description { get; set; }
-
-        public Boolean Motivation_Other { get; set; }
-
-        [MaxLength(150)]
-        public String Motivation_Other_Description { get; set; }
+        [MaxLength(4000)]
+        public String Additional_Notes_And_Comments { get; set; }
 
         [MaxLength(50)]
-        public String Parent_Organization { get; set; }
+        public String Additional_Contacts { get; set; }
 
         [MaxLength(50)]
-        public String Organization_Name { get; set; }
+        public String Executive_Summary { get; set; }
 
         [MaxLength(50)]
-        public String Site_Name { get; set; }
+        public String Enterprise_Evaluation_Summary { get; set; }
 
-        [MaxLength(75)]
-        public String Street_Address { get; set; }
+        [MaxLength(70)]
+        public String Real_Property_Unique_Id { get; set; }
 
-        public DateOnly Visit_Date { get; set; }
+        public Int32 eMass_Document_Id { get; set; }
 
-        public Boolean Completed_For_SLTT { get; set; }
+        public Boolean IsAcetOnly { get; set; }
 
-        public Boolean Completed_For_Federal { get; set; }
+        [MaxLength(30)]
+        public String Workflow { get; set; }
 
-        public Boolean Completed_For_National_Special_Event { get; set; }
+        public Int32 Baseline_Assessment_Id { get; set; }
 
-        [MaxLength(50)]
-        public String CIKR_Sector { get; set; }
+        [MaxLength(20)]
+        public String Origin { get; set; }
 
-        [MaxLength(50)]
-        public String Sub_Sector { get; set; }
+        [MaxLength(20)]
+        public String Postal_Code { get; set; }
 
-        [MaxLength(50)]
-        public String IT_ICS_Staff_Count { get; set; }
+        public Int32 Region_Code { get; set; }
 
-        [MaxLength(50)]
-        public String Cybersecurity_IT_ICS_Staff_Count { get; set; }
+        public Boolean Ise_Submitted { get; set; }
+
+        public DateOnly Submitted_Date { get; set; }
 
     }
 }

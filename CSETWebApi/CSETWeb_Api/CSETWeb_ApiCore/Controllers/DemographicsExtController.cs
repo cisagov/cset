@@ -4,24 +4,23 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.Assessment;
-using CSETWebCore.Business.AssessmentIO.Export;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Assessment;
-using CSETWebCore.Model.AssessmentIO;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using CSETWebCore.Business.Demographic.Export;
 using CSETWebCore.Business.Demographic.DemographicIO;
+using CSETWebCore.Helpers;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using CSETWebCore.Business.Demographic.Import;
+using CSETWebCore.Business.AssessmentIO.Import;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -33,8 +32,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment,
-            IDemographicBusiness demographic, CSETContext context)
+        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment, IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
@@ -111,17 +109,7 @@ namespace CSETWebCore.Api.Controllers
             return Ok();
         }
 
-        /// <summary>
-        /// Imports demographics value.
-        /// </summary>
-        /// <param name="demographics"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("api/demographics/import")]
-        public Task<IActionResult> ImportDemographic([FromHeader] string pwd)
-        {
-            return Task.FromResult<IActionResult>(Ok());
-        }
+      
 
         [HttpGet]
         [Route("api/demographics/export")]
