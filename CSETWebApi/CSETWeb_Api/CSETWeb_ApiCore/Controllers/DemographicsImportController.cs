@@ -46,21 +46,21 @@ namespace CSETWebCore.Api.Controllers
             // For now only allowing 1 uploaded file
             if (Request.Form.Files.Count > 1)
             {
-                return BadRequest("Only a single assessment may be imported at a time.");
+                return BadRequest("Only a single demographic may be imported at a time.");
             }
          
             var assessmentFile = Request.Form.Files[0];
 
             var target = new MemoryStream();
             assessmentFile.CopyTo(target);
-
+            var currentUserId = _tokenManager.GetUserId();
             try
-            {
-                await _demographicImportManager.ProcessCSETDemographicImport(target.ToArray(), _tokenManager.GetUserId(), assessmentId, _tokenManager.GetAccessKey(), _context);
-            }
+                {
+                    await _demographicImportManager.ProcessCSETDemographicImport(target.ToArray(), currentUserId, assessmentId, _tokenManager.GetAccessKey(), _context);
+                }
             catch (Exception)
             {
-                return StatusCode(500, "There was an error processing the uploaded assessment.");
+                return StatusCode(500, "There was an error processing the uploaded demographic.");
             }
 
             return Ok(true);

@@ -27,6 +27,9 @@ using Ionic.Zip;
 using System.Collections.Generic;
 using CSETWebCore.Business.Demographic.DemographicIO.Models;
 using DocumentFormat.OpenXml.Spreadsheet;
+using CSETWebCore.Business.Demographic;
+using CSETWebCore.Model.Demographic;
+using CSETWebCore.Model.Assessment;
 
 
 namespace CSETWebCore.Business.Demographic.Import
@@ -37,7 +40,6 @@ namespace CSETWebCore.Business.Demographic.Import
         private IAssessmentUtil _assessmentUtil;
         private IUtilities _utilities;
         private CSETContext _context;
-
 
         /// <summary>
         /// 
@@ -75,17 +77,18 @@ namespace CSETWebCore.Business.Demographic.Import
 
                     foreach (var serviceDemographics in model.jCIS_CSI_SERVICE_DEMOGRAPHICS)
                     {
-                        var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                        var dbServiceDemographics = context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
                         // Creating new Service Demographics record for this assessment
-                        
+                        if (dbServiceDemographics == null)
+                        {
                             dbServiceDemographics = new CIS_CSI_SERVICE_DEMOGRAPHICS()
                             {
                                 Assessment_Id = assessmentId
                             };
                             context.CIS_CSI_SERVICE_DEMOGRAPHICS.Add(dbServiceDemographics);
                             context.SaveChanges();
-                        
+                        }
 
                         dbServiceDemographics.Critical_Service_Description = serviceDemographics.Critical_Service_Description;
                         dbServiceDemographics.IT_ICS_Name = serviceDemographics.IT_ICS_Name;
@@ -106,7 +109,7 @@ namespace CSETWebCore.Business.Demographic.Import
 
                     foreach (var serviceComposition in model.jCIS_CSI_SERVICE_COMPOSITION)
                     {
-                        var dbServiceComposition = _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                        var dbServiceComposition = context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
                         // Creating new Service Composition record for this assessment
                         if (dbServiceComposition == null)
@@ -136,7 +139,7 @@ namespace CSETWebCore.Business.Demographic.Import
 
                     foreach (var demographics in model.jDEMOGRAPHICS)
                     {
-                        var dDemographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+                        var dDemographics = context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
                         // Creating new Service Composition record for this assessment
                         if (dDemographics == null)
@@ -163,6 +166,34 @@ namespace CSETWebCore.Business.Demographic.Import
                         dDemographics.CriticalService = demographics.CriticalService;
 
                         context.DEMOGRAPHICS.Update(dDemographics);
+                        context.SaveChanges();
+                    }
+
+                    //foreach (var detailsDemographics in model.jDETAILS_DEMOGRAPHICS)
+                    //{
+                    //    //DemographicExt demographicExtModel = (DemographicExt)JsonConvert.DeserializeObject(jsonObject, new DemographicExt().GetType());
+                    //    //_demographicExtBusiness.SaveDemographics(demographicExtModel, currentUserId ?? 1);
+                    //}
+
+                    foreach (var serviceCompositionSecondary in model.jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
+                    {
+                        var dserviceCompositionSecondary = context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                        // Creating new Service Composition record for this assessment
+                        if (dserviceCompositionSecondary == null)
+                        {
+                            dserviceCompositionSecondary = new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS()
+                            {
+                                Assessment_Id = assessmentId
+                                
+                            };
+                            context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(dserviceCompositionSecondary);
+                            
+                        }
+
+                        dserviceCompositionSecondary.Defining_System_Id = serviceCompositionSecondary.Defining_System_Id;
+
+                        context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Update(dserviceCompositionSecondary);
                         context.SaveChanges();
                     }
 
