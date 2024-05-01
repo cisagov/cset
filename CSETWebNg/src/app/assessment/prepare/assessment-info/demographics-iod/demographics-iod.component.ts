@@ -3,13 +3,11 @@ import { DemographicIodService } from '../../../../services/demographic-iod.serv
 import { DemographicsIod } from '../../../../models/demographics-iod.model';
 import { Observable } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { OkayComponent } from '../../../../dialogs/okay/okay.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../../../../services/assessment.service';
-import { Config } from 'protractor';
 import { ConfigService } from '../../../../services/config.service';
 import { DemographicService } from '../../../../services/demographic.service';
-import { Demographic, ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
+import { ServiceDemographic, AssessmentConfig, ServiceComposition, CriticalServiceInfo } from '../../../../models/assessment-info.model';
 import { CsiService } from '../../../../services/cis-csi.service';
 
 
@@ -67,12 +65,14 @@ export class DemographicsIodComponent implements OnInit {
    */
   onChangeSector(evt: any) {
     this.demographicData.subsector = null;
-    this.newUpdate('SECTOR', evt, 'int')
+
+    this.demoSvc.updateIndividualDemographics('SECTOR', this.demographicData.sector, 'int');
+    this.demoSvc.updateIndividualDemographics('SUBSECTOR', this.demographicData.subsector, 'int');
+
     if (this.demographicData.sector) {
       this.demoSvc.getSubsectors(this.demographicData.sector).subscribe((data: any[]) => {
         this.demographicData.listSubsectors = data;
       });
-      
     }
   }
 
@@ -121,6 +121,12 @@ export class DemographicsIodComponent implements OnInit {
 
   newUpdate(name: string, event: any, type: string){
     this.configSvc.cisaAssessorWorkflow = true;
-    this.demoSvc.updateIndividualDemographics(name, event.target.value, type)
+
+    let val = event.target.value;
+    if (val == '0: null') {
+      val = null;
+    }
+
+    this.demoSvc.updateIndividualDemographics(name, val, type)
   }
 } 

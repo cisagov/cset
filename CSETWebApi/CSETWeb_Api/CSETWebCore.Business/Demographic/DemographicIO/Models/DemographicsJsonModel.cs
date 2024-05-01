@@ -57,13 +57,13 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         [MaxLength(150)]
         public String StringValue { get; set; }
 
-        public Int32 IntValue { get; set; }
+        public Int32? IntValue { get; set; }
 
-        public Double FloatValue { get; set; }
+        public Double? FloatValue { get; set; }
 
-        public Boolean BoolValue { get; set; }
+        public Boolean? BoolValue { get; set; }
 
-        public DateTime DateTimeValue { get; set; }
+        public DateTime? DateTimeValue { get; set; }
 
     }
 
