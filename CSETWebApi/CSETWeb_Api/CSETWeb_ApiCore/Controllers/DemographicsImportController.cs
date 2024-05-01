@@ -41,63 +41,29 @@ namespace CSETWebCore.Api.Controllers
 
         [HttpPost]
         [Route("api/demographics/import")]
-        public async Task<IActionResult> ImportDemographic()
+        public async Task<IActionResult> ImportDemographic([FromQuery] int assessmentId)
         {
-            // should be multipart
-            if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
+            // For now only allowing 1 uploaded file
+            if (Request.Form.Files.Count > 1)
             {
-                // unsupported media type
-                return StatusCode(415);
+                return BadRequest("Only a single assessment may be imported at a time.");
             }
+         
+            var assessmentFile = Request.Form.Files[0];
 
-            var currentUserId = _tokenManager.GetCurrentUserId();
-            var accessKey = _tokenManager.GetAccessKey();
+            var target = new MemoryStream();
+            assessmentFile.CopyTo(target);
 
-            ZipEntry hint = null;
             try
             {
-                var formFiles = HttpContext.Request.Form.Files;
-
-                foreach (FormFile file in formFiles)
-                {
-                    if (file.FileName.EndsWith(".cset"))
-                    {
-                        return Ok("Legacy 8.1 or earlier .cset files must be imported from the desktop version");
-                    }
-
-                    var target = new MemoryStream();
-                    file.CopyTo(target);
-                    var bytes = target.ToArray();
-
-                    await _demographicImportManager.ProcessCSETDemographicImport(bytes, currentUserId, accessKey, _context);
-                }
+                await _demographicImportManager.ProcessCSETDemographicImport(target.ToArray(), _tokenManager.GetUserId(), assessmentId, _tokenManager.GetAccessKey(), _context);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                var returnMessage = "";
-
-                if (e.Message == "Exception of type 'Ionic.Zip.BadPasswordException' was thrown.")
-                {
-                    returnMessage = (hint == null) ? "Bad Password Exception" : "Bad Password Exception - " + hint.FileName;
-                    return StatusCode(423, returnMessage);
-                }
-                else if (e.Message == "The password did not match.")
-                {
-                    returnMessage = (hint == null) ? "Invalid Password" : "Invalid Password - " + hint.FileName;
-                    return StatusCode(406, returnMessage);
-                }
-                else
-                {
-                    return BadRequest(e);
-                }
+                return StatusCode(500, "There was an error processing the uploaded assessment.");
             }
 
-            var response = new
-            {
-                Message = "Assessment was successfully imported"
-            };
-
-            return Ok(response);
+            return Ok(true);
         }
 
     }
