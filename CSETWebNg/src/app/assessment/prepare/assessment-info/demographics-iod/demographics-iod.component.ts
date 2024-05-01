@@ -27,7 +27,7 @@ export class DemographicsIodComponent implements OnInit {
   /**
    * The principal model for this page
    */
-  demographicData: DemographicsIod = {};
+  @Input() demographicData: DemographicsIod = {};
   assessmentConfig: AssessmentConfig; 
   serviceDemographics: ServiceDemographic; 
   serviceComposition: ServiceComposition; 
@@ -48,10 +48,13 @@ export class DemographicsIodComponent implements OnInit {
    *
    */
   ngOnInit() {
+    this.populateDemographicsModel()
+  }
+
+  populateDemographicsModel() {
     this.demoSvc.getDemographics().subscribe((data: any) => {
       this.demographicData = data;
     })
-    
   }
 
 

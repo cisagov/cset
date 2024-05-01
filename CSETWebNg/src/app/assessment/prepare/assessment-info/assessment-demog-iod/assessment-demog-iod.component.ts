@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DemographicService } from '../../../../services/demographic.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { AuthenticationService } from '../../../../services/authentication.service';
-import {UploadExportComponent} from "../../../../dialogs/upload-export/upload-export.component";
+import { AssessmentService } from '../../../../services/assessment.service';
 
 
 interface ImportExportData {
@@ -21,13 +21,14 @@ interface ImportExportData {
   
 export class AssessmentDemogIodComponent {
   unsupportedImportFile: boolean = false;
-
+  @ViewChild('refresh') refreshModel;
   eventImportExport: Subject<ImportExportData> = new Subject<ImportExportData>();
 
   constructor(
     public demoSvc: DemographicService,
     public dialog: MatDialog,
-    public authSvc: AuthenticationService
+    public authSvc: AuthenticationService,
+    public assessmSvc: AssessmentService
     ) {}
 
   importClick(event){
@@ -44,9 +45,11 @@ export class AssessmentDemogIodComponent {
   
     if (!this.unsupportedImportFile) {
       dialogRef.afterClosed().subscribe(result => {
+        this.refreshModel.populateDemographicsModel()
+        this.assessmSvc.refreshAssessment()
       });
     }
-    
+   
   }
 
 

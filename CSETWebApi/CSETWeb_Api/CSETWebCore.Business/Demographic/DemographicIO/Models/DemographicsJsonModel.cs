@@ -9,9 +9,9 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         [Required]
         public Int32 Assessment_Id { get; set; }
 
-        public Int32 SectorId { get; set; }
+        public Int32? SectorId { get; set; }
 
-        public Int32 IndustryId { get; set; }
+        public Int32? IndustryId { get; set; }
 
         [MaxLength(50)]
         public String Size { get; set; }
@@ -31,13 +31,13 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         [MaxLength(150)]
         public String Agency { get; set; }
 
-        public Int32 OrganizationType { get; set; }
+        public Int32? OrganizationType { get; set; }
 
-        public Int32 Facilitator { get; set; }
+        public Int32? Facilitator { get; set; }
 
-        public Int32 PointOfContact { get; set; }
+        public Int32? PointOfContact { get; set; }
 
-        public Boolean IsScoped { get; set; }
+        public Boolean? IsScoped { get; set; }
 
         [MaxLength(100)]
         public String CriticalService { get; set; }
@@ -205,7 +205,7 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 
         public Boolean Ise_Submitted { get; set; }
 
-        public DateOnly Submitted_Date { get; set; }
+        public DateTime Submitted_Date { get; set; }
 
     }
 }
