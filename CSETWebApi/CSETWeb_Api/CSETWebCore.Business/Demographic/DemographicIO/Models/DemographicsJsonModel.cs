@@ -205,7 +205,7 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 
         public Boolean Ise_Submitted { get; set; }
 
-        public DateTime Submitted_Date { get; set; }
+        public DateTime? Submitted_Date { get; set; }
 
     }
 }
