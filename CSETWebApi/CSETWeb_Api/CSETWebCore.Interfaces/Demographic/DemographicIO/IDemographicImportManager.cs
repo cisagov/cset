@@ -12,9 +12,7 @@ namespace CSETWebCore.Business.Demographic.Import
 {
     public interface IDemographicImportManager
     {
-        Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false);
-        void LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL);
-        public Task BulkImportAssessments(Stream assessmentsZipArchive, bool overwriteAssessments = false);
+        Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, int assessmentid, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false);
     }
 }
 

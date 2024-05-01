@@ -25,6 +25,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
+import { AssessmentService } from './assessment.service';
 
 const headers = {
   headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -43,7 +44,10 @@ export class ImportDemographicService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService) {
+    private configSvc: ConfigService, 
+    public assessSvc: AssessmentService
+
+    ) {
   }
 
   public upload(files: Set<File>, isNormalLoad: boolean, password): { [key: string]: Observable<number> } {
@@ -62,10 +66,12 @@ export class ImportDemographicService {
       tmpheader.append('Authorization', localStorage.getItem('userToken'));
       tmpheader = tmpheader.append('pwd', password);
 
-      let req = new HttpRequest('POST', this.apiAssessmentImport, formData, {
-        headers: tmpheader,
-        reportProgress: true
-      });
+    const assessmentID = this.assessSvc.id(); // Assuming assessmentID is an integer
+    const urlWithParam = `${this.apiAssessmentImport}?assessmentID=${assessmentID}`;
+    let req = new HttpRequest('POST', urlWithParam, formData, {
+    headers: tmpheader,
+    reportProgress: true
+    });
 
       // create a new progress-subject for every file
       const progress = new Subject<number>();

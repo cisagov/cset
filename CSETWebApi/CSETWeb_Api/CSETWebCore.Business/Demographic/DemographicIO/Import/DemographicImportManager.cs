@@ -25,7 +25,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using Ionic.Zip;
 using System.Collections.Generic;
-using CSETWebCore.Business.AssessmentIO.Import;
+using CSETWebCore.Business.Demographic.DemographicIO.Models;
+using DocumentFormat.OpenXml.Spreadsheet;
+
 
 namespace CSETWebCore.Business.Demographic.Import
 {
@@ -56,301 +58,124 @@ namespace CSETWebCore.Business.Demographic.Import
         /// <param name="zipFileFromDatabase"></param>
         /// <param name="currentUserId"></param>
         /// <returns></returns>
-        public async Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
+        public async Task ProcessCSETDemographicImport(byte[] zipFileFromDatabase, int? currentUserId, int assessmentId, string accessKey, CSETContext context, string password = "", bool overwriteAssessment = false)
         {
             //* read from db and set as memory stream here.
             using (Stream fs = new MemoryStream(zipFileFromDatabase))
             {
-                using (ZipFile zip = ZipFile.Read(fs))
+                MemoryStream ms = new MemoryStream(zipFileFromDatabase);
+                ms.Position = 0;
+                StreamReader sr = new StreamReader(ms);
+                string jsonObject = sr.ReadToEnd();
+
+
+                try
                 {
-                    ZipEntry e = zip["model.json"];
-                    if (e == null)
-                    {
-                        throw new Exception("model.json not found in the ZIP file.");
-                    }
+                    UploadDemographicsModel model = (UploadDemographicsModel)JsonConvert.DeserializeObject(jsonObject, new UploadDemographicsModel().GetType());
 
-                    using (MemoryStream ms = new MemoryStream())
+                    foreach (var serviceDemographics in model.jCIS_CSI_SERVICE_DEMOGRAPHICS)
                     {
-                        if (string.IsNullOrEmpty(password))
-                        {
-                            e.Extract(ms);
-                        }
-                        else
-                        {
-                            e.ExtractWithPassword(ms, password);
-                        }
+                        var dbServiceDemographics = _context.CIS_CSI_SERVICE_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
 
-                        ms.Position = 0;
-                        using (StreamReader sr = new StreamReader(ms))
-                        {
-                            string jsonObject = sr.ReadToEnd();
-                            ImportUpgradeManager upgrader = new ImportUpgradeManager();
-                            jsonObject = upgrader.Upgrade(jsonObject);
-                            // Continue processing jsonObject...
-                            try
+                        // Creating new Service Demographics record for this assessment
+                        
+                            dbServiceDemographics = new CIS_CSI_SERVICE_DEMOGRAPHICS()
                             {
-                                UploadAssessmentModel model = (UploadAssessmentModel)JsonConvert.DeserializeObject(jsonObject, new UploadAssessmentModel().GetType());
+                                Assessment_Id = assessmentId
+                            };
+                            context.CIS_CSI_SERVICE_DEMOGRAPHICS.Add(dbServiceDemographics);
+                            context.SaveChanges();
+                        
 
-                                foreach (var doc in model.CustomStandardDocs)
-                                {
-                                    var genFile = context.GEN_FILE.FirstOrDefault(s => s.File_Name == doc);
-                                    if (genFile == null)
-                                    {
-                                        //StreamReader docReader = new StreamReader(zip.GetEntry(doc + ".json").Open());
-                                        StreamReader docReader = new StreamReader(ms);
-                                        var docModel = JsonConvert.DeserializeObject<ExternalDocument>(docReader.ReadToEnd());
-                                        genFile = ReferenceConverter.ToGenFile(docModel);
-                                        var extension = Path.GetExtension(genFile.File_Name).Substring(1);
-                                        genFile.File_Type = context.FILE_TYPE.Where(s => s.File_Type1 == extension).FirstOrDefault();
+                        dbServiceDemographics.Critical_Service_Description = serviceDemographics.Critical_Service_Description;
+                        dbServiceDemographics.IT_ICS_Name = serviceDemographics.IT_ICS_Name;
+                        dbServiceDemographics.Multi_Site = serviceDemographics.Multi_Site;
+                        dbServiceDemographics.Multi_Site_Description = serviceDemographics.Multi_Site_Description;
+                        dbServiceDemographics.Budget_Basis = serviceDemographics.Budget_Basis;
+                        dbServiceDemographics.Authorized_Organizational_User_Count = serviceDemographics.Authorized_Organizational_User_Count;
+                        dbServiceDemographics.Authorized_Non_Organizational_User_Count = serviceDemographics.Authorized_Non_Organizational_User_Count;
+                        dbServiceDemographics.Customers_Count = serviceDemographics.Customers_Count;
+                        dbServiceDemographics.IT_ICS_Staff_Count = serviceDemographics.IT_ICS_Staff_Count;
+                        dbServiceDemographics.Cybersecurity_IT_ICS_Staff_Count = serviceDemographics.Cybersecurity_IT_ICS_Staff_Count;
 
-                                        try
-                                        {
-                                            context.FILE_REF_KEYS.Add(new FILE_REF_KEYS { Doc_Num = genFile.Doc_Num });
-                                            await context.SaveChangesAsync();
-                                        }
-                                        catch (Exception exc)
-                                        {
-                                            NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                                            throw;
-                                        }
-
-                                        context.GEN_FILE.Add(genFile);
-                                        context.SaveChanges();
-                                    }
-                                }
-
-                                foreach (var standard in model.CustomStandards)
-                                {
-                                    var sets = context.SETS.Where(s => s.Set_Name.Contains(standard)).ToList();
-                                    SETS set = null;
-                                    //StreamReader setReader = new StreamReader(zip.GetEntry(standard + ".json").Open());
-                                    StreamReader setReader = new StreamReader(ms);
-                                    var setJson = setReader.ReadToEnd();
-                                    var setModel = JsonConvert.DeserializeObject<ExternalStandard>(setJson);
-                                    var originalSetName = setModel.shortName;
-                                    foreach (var testSet in sets)
-                                    {
-                                        setModel.shortName = testSet.Short_Name;
-                                        var testSetJson = JsonConvert.SerializeObject(testSet.ToExternalStandard(_context), Newtonsoft.Json.Formatting.Indented);
-                                        if (testSetJson == setJson)
-                                        {
-                                            set = testSet;
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            setModel.shortName = originalSetName;
-                                        }
-                                    }
-
-                                    if (set == null)
-                                    {
-                                        int incr = 1;
-                                        while (sets.Any(s => s.Short_Name == setModel.shortName))
-                                        {
-                                            setModel.shortName = originalSetName + " " + incr;
-                                            incr++;
-                                        }
-                                        var setResult = await setModel.ToSet(_context);
-                                        if (setResult.IsSuccess)
-                                        {
-                                            context.SETS.Add(setResult.Result);
-
-                                            foreach (var question in setResult.Result.NEW_REQUIREMENT.SelectMany(s => s.NEW_QUESTIONs(_context)).Where(s => s.Question_Id != 0).ToList())
-                                            {
-                                                context.Entry(question).State = EntityState.Unchanged;
-                                            }
-                                            try
-                                            {
-                                                await context.SaveChangesAsync();
-                                            }
-                                            catch (Exception exc)
-                                            {
-                                                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                                                throw;
-                                            }
-
-                                            //Set the GUID at time of export so we are sure it's right!!!                                
-                                            model.jANSWER = model.jANSWER.Where(s => s.Is_Requirement).GroupJoin(setResult.Result.NEW_REQUIREMENT, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(originalSetName + "|||" + req.Requirement_Title + "|||" + req.Requirement_Text))).ToString(), (erea, s) =>
-                                            {
-                                                var req = s.FirstOrDefault();
-                                                if (req != null)
-                                                {
-                                                    erea.Question_Or_Requirement_Id = req.Requirement_Id;
-                                                }
-                                                return erea;
-                                            }).Concat(model.jANSWER.Where(s => !s.Is_Requirement).GroupJoin(setResult.Result.NEW_QUESTION, s => s.Custom_Question_Guid, req => new Guid(MD5.Create().ComputeHash(Encoding.Default.GetBytes(req.Simple_Question))).ToString(), (erer, s) =>
-                                            {
-                                                var req = s.FirstOrDefault();
-                                                if (req != null)
-                                                {
-                                                    erer.Question_Or_Requirement_Id = req.Question_Id;
-                                                }
-                                                return erer;
-                                            })).ToList();
-                                        }
-                                    }
-
-                                    foreach (var availableStandard in model.jAVAILABLE_STANDARDS.Where(s => s.Set_Name == Regex.Replace(originalSetName, @"\W", "_") && s.Selected))
-                                    {
-                                        availableStandard.Set_Name = Regex.Replace(setModel.shortName, @"\W", "_");
-                                    }
-                                }
-
-                                string email = context.USERS.Where(x => x.UserId == currentUserId).FirstOrDefault()?.PrimaryEmail ?? "";
+                        context.CIS_CSI_SERVICE_DEMOGRAPHICS.Update(dbServiceDemographics);
 
 
-                                Importer import = new Importer(model, currentUserId, email, accessKey, context, _token, _assessmentUtil, _utilities);
-                                int newAssessmentId = import.RunImportManualPortion(overwriteAssessment);
-                                import.RunImportAutomatic(newAssessmentId, jsonObject, context);
-
-
-                                // Save the diagram
-                                var assessment = context.ASSESSMENTS.Where(x => x.Assessment_Id == newAssessmentId).FirstOrDefault();
-                                if (!string.IsNullOrEmpty(assessment.Diagram_Markup))
-                                {
-                                    var diagramManager = new DiagramManager(context);
-                                    var diagReq = new DiagramRequest()
-                                    {
-                                        DiagramXml = assessment.Diagram_Markup,
-                                        DiagramSvg = assessment.Diagram_Image,
-                                        AnalyzeDiagram = false,
-                                        revision = false
-                                    };
-                                    var xDocDiagram = new XmlDocument();
-                                    xDocDiagram.LoadXml(assessment.Diagram_Markup);
-                                    diagramManager.SaveDiagram(newAssessmentId, xDocDiagram, diagReq, false);
-                                }
-
-                                import.Finalize(newAssessmentId);
-
-
-                                // Clean up any imported standards that are unselected
-                                var unselectedStandards = context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == newAssessmentId && !x.Selected).ToList();
-                                context.AVAILABLE_STANDARDS.RemoveRange(unselectedStandards);
-                                context.SaveChanges();
-
-
-                                //NOTE THAT THIS ENTRY WILL ONLY COME FROM A OLD .cset file 
-                                //IMPORT
-                                //ZipArchiveEntry importLegacyDiagram = zip.GetEntry("Diagram.csetd");
-                                ZipEntry importLegacyDiagram = zip["Diagram.csetd"];
-                                if (importLegacyDiagram != null)
-                                {
-                                    //StreamReader ldr = new StreamReader(importLegacyDiagram.Open());
-                                    StreamReader ldr = new StreamReader(ms);
-                                    string oldXml = ldr.ReadToEnd();
-                                    DiagramManager dm = new DiagramManager(context);
-                                    dm.ImportOldCSETDFile(oldXml, newAssessmentId);
-                                }
-                            }
-                            catch (Exception exc)
-                            {
-                                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
-
-                                throw;
-                            }
-                        }
+                        context.SaveChanges();
                     }
-                }
-            }
 
-        }
-
-        /// <summary>
-        /// Imports all assessments from a zip archive. 
-        /// Each entry in the top level of the archive should be a .csetw file.
-        /// </summary>
-        /// <param name="assessmentsZipArchive"></param>
-        public async Task BulkImportAssessments(Stream assessmentsZipArchive, bool overwriteAssessments = false)
-        {
-            using (assessmentsZipArchive)
-            {
-                ZipFile zip = ZipFile.Read(assessmentsZipArchive);
-                List<Task> importTasks = new List<Task>();
-
-                foreach (ZipEntry entry in zip)
-                {
-                    using (MemoryStream stream = new MemoryStream())
+                    foreach (var serviceComposition in model.jCIS_CSI_SERVICE_COMPOSITION)
                     {
-                        entry.Extract(stream);
-                        importTasks.Add(ProcessCSETDemographicImport(stream.ToArray(), null, null, _context, overwriteAssessment: overwriteAssessments));
+                        var dbServiceComposition = _context.CIS_CSI_SERVICE_COMPOSITION.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                        // Creating new Service Composition record for this assessment
+                        if (dbServiceComposition == null)
+                        {
+                            dbServiceComposition = new CIS_CSI_SERVICE_COMPOSITION()
+                            {
+                                Assessment_Id = assessmentId
+                            };
+                            context.CIS_CSI_SERVICE_COMPOSITION.Add(dbServiceComposition);
+                            context.SaveChanges();
+                        }
+
+                        dbServiceComposition.Networks_Description = serviceComposition.Networks_Description;
+                        dbServiceComposition.Services_Description = serviceComposition.Services_Description;
+                        dbServiceComposition.Applications_Description = serviceComposition.Applications_Description;
+                        dbServiceComposition.Connections_Description = serviceComposition.Connections_Description;
+                        dbServiceComposition.Personnel_Description = serviceComposition.Personnel_Description;
+                        dbServiceComposition.Other_Defining_System_Description = serviceComposition.Other_Defining_System_Description;
+                        dbServiceComposition.Primary_Defining_System = serviceComposition.Primary_Defining_System;
+
+
+                        context.CIS_CSI_SERVICE_COMPOSITION.Update(dbServiceComposition);
+
+                        context.SaveChanges();
+
                     }
+
+                    foreach (var demographics in model.jDEMOGRAPHICS)
+                    {
+                        var dDemographics = _context.DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId).FirstOrDefault();
+
+                        // Creating new Service Composition record for this assessment
+                        if (dDemographics == null)
+                        {
+                            dDemographics = new DEMOGRAPHICS()
+                            {
+                                Assessment_Id = assessmentId
+                            };
+                            context.DEMOGRAPHICS.Add(dDemographics);
+                            context.SaveChanges();
+                        }
+
+                        //dDemographics.SectorId = demographics.SectorId;
+                        //dDemographics.IndustryId = demographics.IndustryId;
+                        //dDemographics.Size = demographics.Size;
+                        //dDemographics.AssetValue = demographics.AssetValue;
+                        dDemographics.NeedsPrivacy = demographics.NeedsPrivacy;
+                        dDemographics.NeedsSupplyChain = demographics.NeedsSupplyChain;
+                        dDemographics.NeedsICS = demographics.NeedsICS;
+                        dDemographics.OrganizationName = demographics.OrganizationName;
+                        dDemographics.Agency = demographics.Agency;
+                        //dDemographics.OrganizationType = demographics.OrganizationType;
+                        dDemographics.IsScoped = demographics.IsScoped;
+                        dDemographics.CriticalService = demographics.CriticalService;
+
+                        context.DEMOGRAPHICS.Update(dDemographics);
+                        context.SaveChanges();
+                    }
+
+
                 }
-
-                await Task.WhenAll(importTasks);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="entry"></param>
-        /// <param name="doc"></param>
-        /*private void SaveFileToDB(ZipArchiveEntry entry, DOCUMENT_FILE doc)
-        {
-            var stream = entry.Open();
-
-            // determine the content type
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if (!provider.TryGetContentType(entry.FullName, out contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-
-
-            string fileHash;
-            byte[] bytes;
-            using (var ms = new MemoryStream())
-            {
-                stream.CopyTo(ms);
-                bytes = ms.ToArray();
-            }
-            // Hash the file so that we can determine if it is already attached to another question
-            using (var md5 = MD5.Create())
-            {
-                var hash = md5.ComputeHash(bytes);
-                fileHash = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
-            }
-            doc.UpdatedTimestamp = DateTime.Now;
-            doc.ContentType = contentType;
-            doc.Name = entry.Name;
-            doc.Data = bytes;
-        }*/
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="csetFilePath"></param>
-        /// <param name="token"></param>
-        /// <param name="processPath"></param>
-        /// <param name="apiURL"></param>
-        /// <returns></returns>
-        public void LaunchLegacyCSETProcess(string csetFilePath, string token, string processPath, string apiURL)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("\"" + csetFilePath + "\" ");
-            sb.Append(token ?? "test");
-            sb.Append(" " + apiURL);
-            string varargs = sb.ToString();
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
+                catch (Exception exc)
                 {
-                    FileName = processPath,
-                    Arguments = varargs,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    CreateNoWindow = true
+                    NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+
+                    throw;
                 }
-            };
-            process.Start();
-            process.WaitForExit();// Waits here for the process to exit.
+            }
         }
+
     }
 }
