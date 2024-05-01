@@ -146,28 +146,18 @@ namespace CSETWebCore.Business.Demographic.Import
                         {
                             dDemographics = new DEMOGRAPHICS()
                             {
-                                Assessment_Id = assessmentId
+                                Assessment_Id = assessmentId,
+                                CriticalService = demographics.CriticalService
+
+
                             };
                             context.DEMOGRAPHICS.Add(dDemographics);
                             context.SaveChanges();
                         }
-
-                        //dDemographics.SectorId = demographics.SectorId;
-                        //dDemographics.IndustryId = demographics.IndustryId;
-                        //dDemographics.Size = demographics.Size;
-                        //dDemographics.AssetValue = demographics.AssetValue;
-                        dDemographics.NeedsPrivacy = demographics.NeedsPrivacy;
-                        dDemographics.NeedsSupplyChain = demographics.NeedsSupplyChain;
-                        dDemographics.NeedsICS = demographics.NeedsICS;
-                        dDemographics.OrganizationName = demographics.OrganizationName;
-                        dDemographics.Agency = demographics.Agency;
-                        //dDemographics.OrganizationType = demographics.OrganizationType;
-                        dDemographics.IsScoped = demographics.IsScoped;
-                        dDemographics.CriticalService = demographics.CriticalService;
-
-                        context.DEMOGRAPHICS.Update(dDemographics);
-                        context.SaveChanges();
                     }
+
+
+                    
 
 
                     foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
@@ -217,6 +207,33 @@ namespace CSETWebCore.Business.Demographic.Import
                         }
 
                         context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Update(dserviceCompositionSecondary);
+                        context.SaveChanges();
+                    }
+
+                    foreach (var information in model.jINFORMATION)
+                    {
+                        var dinformation = context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
+
+                        // Creating new Service Composition record for this assessment
+                        if (dinformation == null)
+                        {
+                            dinformation = new INFORMATION()
+                            {
+                                Id = assessmentId,
+
+                            };
+                            context.INFORMATION.Add(dinformation);
+                            context.SaveChanges();
+                        }
+                        dinformation.Assessment_Name = information.Assessment_Name;
+                        dinformation.Facility_Name = information.Facility_Name;
+                        dinformation.City_Or_Site_Name = information.City_Or_Site_Name;
+                        dinformation.State_Province_Or_Region = information.State_Province_Or_Region;
+                        dinformation.IsAcetOnly = information.IsAcetOnly;
+                        dinformation.Workflow = information.Workflow;
+                        dinformation.Ise_Submitted = information.Ise_Submitted;
+
+                        context.INFORMATION.Update(dinformation);
                         context.SaveChanges();
                     }
 
