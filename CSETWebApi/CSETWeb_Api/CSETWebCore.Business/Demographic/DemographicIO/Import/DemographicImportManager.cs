@@ -169,11 +169,37 @@ namespace CSETWebCore.Business.Demographic.Import
                         context.SaveChanges();
                     }
 
-                    //foreach (var detailsDemographics in model.jDETAILS_DEMOGRAPHICS)
-                    //{
-                    //    //DemographicExt demographicExtModel = (DemographicExt)JsonConvert.DeserializeObject(jsonObject, new DemographicExt().GetType());
-                    //    //_demographicExtBusiness.SaveDemographics(demographicExtModel, currentUserId ?? 1);
-                    //}
+
+                    foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
+                    {
+                        var dd = context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId && x.DataItemName == jdd.DataItemName).FirstOrDefault();
+                        if (dd == null)
+                        {
+                            dd = new DETAILS_DEMOGRAPHICS()
+                            {
+                                Assessment_Id = assessmentId,
+                                DataItemName = jdd.DataItemName
+                            };
+
+                            context.DETAILS_DEMOGRAPHICS.Add(dd);
+                            context.SaveChanges();
+                        }
+
+                        dd.DateTimeValue = jdd.DateTimeValue;
+                        // null dates are serialized as 01-01-0001
+                        if (jdd.DateTimeValue.Year == 1)
+                        {
+                            dd.DateTimeValue = null;
+                        }
+
+                        dd.StringValue = jdd.StringValue;
+                        dd.IntValue = jdd.IntValue;
+                        dd.FloatValue = jdd.FloatValue;
+                        dd.BoolValue = jdd.BoolValue;
+                    }
+
+                    context.SaveChanges();
+
 
                     foreach (var serviceCompositionSecondary in model.jCIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS)
                     {
@@ -184,14 +210,11 @@ namespace CSETWebCore.Business.Demographic.Import
                         {
                             dserviceCompositionSecondary = new CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS()
                             {
-                                Assessment_Id = assessmentId
-                                
+                                Assessment_Id = assessmentId,
+                                Defining_System_Id = serviceCompositionSecondary.Defining_System_Id
                             };
                             context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Add(dserviceCompositionSecondary);
-                            
                         }
-
-                        dserviceCompositionSecondary.Defining_System_Id = serviceCompositionSecondary.Defining_System_Id;
 
                         context.CIS_CSI_SERVICE_COMPOSITION_SECONDARY_DEFINING_SYSTEMS.Update(dserviceCompositionSecondary);
                         context.SaveChanges();
