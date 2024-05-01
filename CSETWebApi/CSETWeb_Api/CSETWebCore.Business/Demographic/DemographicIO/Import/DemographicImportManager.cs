@@ -154,10 +154,23 @@ namespace CSETWebCore.Business.Demographic.Import
                             context.DEMOGRAPHICS.Add(dDemographics);
                             context.SaveChanges();
                         }
+
+                        dDemographics.SectorId = demographics.SectorId;
+                        dDemographics.IndustryId = demographics.IndustryId;
+                        dDemographics.Size = demographics.Size;
+                        dDemographics.AssetValue = demographics.AssetValue;
+                        dDemographics.NeedsPrivacy = demographics.NeedsPrivacy;
+                        dDemographics.NeedsSupplyChain = demographics.NeedsSupplyChain;
+                        dDemographics.NeedsICS = demographics.NeedsICS;
+                        dDemographics.OrganizationName = demographics.OrganizationName;
+                        dDemographics.Agency = demographics.Agency;
+                        dDemographics.OrganizationType = demographics.OrganizationType;
+                        dDemographics.IsScoped = demographics.IsScoped;
+                        dDemographics.CriticalService = demographics.CriticalService;
+
+                        context.DEMOGRAPHICS.Update(dDemographics);
+                        context.SaveChanges();
                     }
-
-
-                    
 
 
                     foreach (var jdd in model.jDETAILS_DEMOGRAPHICS)
@@ -176,12 +189,6 @@ namespace CSETWebCore.Business.Demographic.Import
                         }
 
                         dd.DateTimeValue = jdd.DateTimeValue;
-                        // null dates are serialized as 01-01-0001
-                        if (jdd.DateTimeValue.Year == 1)
-                        {
-                            dd.DateTimeValue = null;
-                        }
-
                         dd.StringValue = jdd.StringValue;
                         dd.IntValue = jdd.IntValue;
                         dd.FloatValue = jdd.FloatValue;

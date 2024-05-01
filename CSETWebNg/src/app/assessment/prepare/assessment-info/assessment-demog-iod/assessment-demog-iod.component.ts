@@ -4,12 +4,13 @@ import { DemographicService } from '../../../../services/demographic.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadDemographicsComponent } from "../../../../dialogs/import demographics/import-demographics.component";
 import { AuthenticationService } from '../../../../services/authentication.service';
+import { UploadExportComponent } from "../../../../dialogs/upload-export/upload-export.component";
 import { AssessmentService } from '../../../../services/assessment.service';
 
 
 interface ImportExportData {
   flag: string;
-  data: any; 
+  data: any;
 }
 
 @Component({
@@ -18,7 +19,7 @@ interface ImportExportData {
   styleUrls: ['./assessment-demog-iod.component.scss']
 })
 
-  
+
 export class AssessmentDemogIodComponent {
   unsupportedImportFile: boolean = false;
   @ViewChild('refresh') refreshModel;
@@ -29,9 +30,9 @@ export class AssessmentDemogIodComponent {
     public dialog: MatDialog,
     public authSvc: AuthenticationService,
     public assessmSvc: AssessmentService
-    ) {}
+  ) { }
 
-  importClick(event){
+  importClick(event) {
     let dialogRef = null;
     this.unsupportedImportFile = false;
     if (event.target.files[0].name.endsWith(".json")) {
@@ -40,24 +41,18 @@ export class AssessmentDemogIodComponent {
         data: { files: event.target.files, IsNormalLoad: true }
       });
     } else {
-        this.unsupportedImportFile = true;
-      }
-  
+      this.unsupportedImportFile = true;
+    }
+
     if (!this.unsupportedImportFile) {
       dialogRef.afterClosed().subscribe(result => {
         this.refreshModel.populateDemographicsModel()
         this.assessmSvc.refreshAssessment()
       });
     }
-   
   }
 
-
-
-
-  exportClick(){
-    console.log("export")
+  exportClick() {
     this.demoSvc.exportDemographics()
-}
-
+  }
 }
