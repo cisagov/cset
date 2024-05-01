@@ -43,7 +43,7 @@
       <div class="form-group">
         <label for="itIcsName">Name of IT/ICS System (supporting the Critical Service)</label>
         <input [ngClass]="{ 'alert-danger': !csiServiceDemographic.itIcsName && showErrors() }" class="form-control"
-          tabindex="0" type="text" maxlength="150" name="itIcsName" id="itIcsName"
+          tabindex="0" type="text" maxlength="50" name="itIcsName" id="itIcsName"
           [(ngModel)]="csiServiceDemographic.itIcsName"
           placeholder="Name of IT/ICS System (supporting the Critical Service)" (change)="update()" />
       </div>
