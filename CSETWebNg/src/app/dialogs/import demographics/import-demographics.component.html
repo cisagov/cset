@@ -1,0 +1,59 @@
+<!----------------------
+
+   Copyright 2024 Battelle Energy Alliance, LLC
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-------------------------->
+<input type="file" #file style="display: none" (change)="onFilesAdded()" />
+<div *transloco="let t" class="upload-export d-flex flex-column flex-11a">
+  <div class="mat-dialog-header p-3 d-flex justify-content-start flex-11a">{{ appName }} File Import</div>
+  <h4 style="position: sticky; top: 0; padding-top: 15px; padding-left: 15px;" class="mb-2 c-primary">Uploading Files
+  </h4>
+  <mat-dialog-content class="oy-auto p-3 pr-0 d-flex flex-column flex-00a">
+    <div class="pr-3">
+      <mat-list class="pt-1">
+        <mat-list-item *ngFor="let file of files; let i = index">
+          <label mat-line class="mt-1 fs-base-5">{{file.name}}</label>
+          <ng-container
+            *ngIf="(configSvc.installationMode !== 'ACET' || !ncuaSvc.switchStatus) && getAssessmentHint(file.name)">
+            <label mat-line class="ml-2 pt=1 pb-2 h6">Hint: <i>{{ getAssessmentHint(file.name) }}</i></label>
+          </ng-container>
+          <mat-progress-bar *ngIf="progress && !progress[file.name].progress.source.hasError" style="width: 65%"
+            mode="determinate" [value]="progress[file.name].progress | async"></mat-progress-bar>
+          <i *ngIf="progress[file.name].progress.source.hasError && xCount == 0" class="fa-solid fa-xmark ml-1"
+            style="color: red"></i>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+  </mat-dialog-content>
+  <div style="position: sticky; bottom: 0; padding-bottom: 15px; padding-left: 15px;">
+    <label style="padding-right: 15px;" class="mt-4">{{statusText}}</label>
+
+    <mat-dialog-actions class="mr-3 p-0 mb-0 d-flex justify-content-between flex-00a">
+      <!-- <button class="btn btn-primary" [disabled]="!canBeClosed" (click)="closeDialog()">{{primaryButtonText}}</button>
+      <button class="btn btn-secondary" *ngIf="showCancelButton" mat-dialog-close>Cancel</button> -->
+      <button class="btn btn-secondary" *ngIf="showCancelButton && data.isCsafUpload" (click)="cancelUpload()"
+        [disabled]="canBeClosed">{{ t('buttons.cancel') }}</button>
+      <button class="btn btn-secondary" *ngIf="canBeClosed" (click)="closeDialog()">{{ t('buttons.cancel') }}</button>
+      <button class="btn btn-primary" *ngIf="passwordRequired" (click)="enterPassword()">{{ t('buttons.enter password')
+        }}</button>
+    </mat-dialog-actions>
+  </div>
+</div>
