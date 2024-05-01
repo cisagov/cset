@@ -129,7 +129,7 @@ namespace CSETWebCore.Business.Demographic.Export
         {
             // determine file name
             var fileName = $"{assessmentId}{fileExtension}";
-            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
+            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Facility_Name;
             if (!string.IsNullOrEmpty(assessmentName))
             {
                 fileName = $"{assessmentName}{fileExtension}";
