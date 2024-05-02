@@ -29,11 +29,11 @@
                 CIE-CSET REPORT
             </p>
         </div>
-        <!-- <div class="column">
+        <div class="column" style="padding-top: 100px; padding-bottom: 100px;">
             <p style="text-align: center">
-                <img height="100" src="assets/images/CIE/CIE_Logo_Blue.png" alt="acet">
+                <img height="250" src="assets/images/CIE/CIE_Logo_Blue_Standard.png" alt="full-cie">
             </p>
-        </div> -->
+        </div>
 
         <div class="cover-page-bottom mb-4">
             <div>
@@ -62,7 +62,7 @@
     </div>
 
     <ng-template #mainContent>
-        <!-- <div class="page-break"> -->
+        <div class="page-break"></div>
         <div class="ml-3 mr-3 form">
             <div class="d-flex flex-row" style="justify-content: space-between">
                 <div style="align-self: flex-end;">
@@ -79,10 +79,6 @@
                     <td>Assessment Date:</td>
                     <td>{{response?.information?.assessment_Date | localizeDate}}</td>
                 </tr>
-                <!-- <tr>
-                    <td>Credit Union:</td>
-                    <td>{{response?.information?.credit_Union_Name}}</td>
-                </tr> -->
                 <tr>
                     <td>City or Site Name:</td>
                     <td>{{response?.information?.city_Or_Site_Name}}</td>
@@ -91,22 +87,6 @@
                     <td>State, Province or Region:</td>
                     <td>{{response?.information?.state_Province_Or_Region}}</td>
                 </tr>
-                <!-- <tr>
-                    <td>Region Code:</td>
-                    <td>{{ncuaSvc.regionCodeTranslator(response?.information?.region_Code)}}</td>
-                </tr> -->
-                <!-- <tr>
-                    <td>Charter:</td>
-                    <td>{{response?.information?.charter}}</td>
-                </tr> -->
-                <!-- <tr>
-                    <td>Assets:</td>
-                    <td>{{response?.information?.assets | currency}}</td>
-                </tr> -->
-                <!-- <tr>
-                    <td>Exam Level:</td>
-                    <td>{{ this.examLevel }}</td>
-                </tr> -->
             </table>
         </div>
 
@@ -119,24 +99,21 @@
         </div>
         <table class="table-responsive td-align-top td-padding-half-rem">
             <tr class="report-text-blue">
-                <td>Title</td>
+                <td></td>
                 <td>Question</td>
+                <td></td>
                 <td>Answer</td>
-                <td>Explanation</td>
             </tr>
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
-                <!-- <tr class="rkw-domain">
-                    <td colspan="5" class="background-1 h4 color-white">{{d.title}}</td>
-                </tr> -->
                 <ng-container *ngFor="let f of d.assessmentFactors">
                     <tr class="rkw-domain">
-                        <td colspan="5" class="background-1 h4 color-white">{{f.title}} - Principle
+                        <td colspan="4" class="background-1 h4 color-white" style="width: 100%">{{f.title}} - Principle
                         </td>
                     </tr>
                     <ng-container *ngFor="let c of f.components">
                         <ng-container *ngIf="this.showSubcats.get(f.title + '_' + c.title)">
                             <tr>
-                                <td colspan="5" class="background-2 pl-4 font-weight-bold">{{c.title}} - Phase
+                                <td colspan="4" class="background-2 pl-4 font-weight-bold">{{c.title}} - Phase
                                     <label class="btn form-check-label" style="float: right">{{
                                         this.expandedOptions.get(f.title + '_' + c.title) ? '-' : '+' }}
                                         <input class="hide" name="nameExample" type=checkbox
@@ -145,13 +122,20 @@
                                 </td>
                             </tr>
                             <ng-container *ngFor="let q of c.questions">
-                                <tr *ngIf="q.title != 'Question K' && shouldExpand(f.title + '_' + c.title)" [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                <!-- the [class] check sees if it is a parent or a child -->
+                                <tr *ngIf="q.title != 'Question K' && shouldExpand(f.title + '_' + c.title)" 
+                                    [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''"
+                                    >
                                     <td class="font-weight-bold text-nowrap">{{q.title}}</td>
-                                    <td class="pr-5" [innerHTML]="q.questionText"></td>
+                                    <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
                                     <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? '' : 'NA')"></td>
-                                    <td class="pr-5" [innerHTML]="q.freeResponseAnswer"></td>
-                                    <!-- <td class="pr-3">{{acetSvc.getAbbrev(q.maturityLevel)}}</td> -->
                                 </tr>
+                                <tr *ngIf="q.title != 'Question K' && shouldExpand(f.title + '_' + c.title) && q.freeResponseText != null"
+                                    [class]="q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0' ? 'background-3' : ''">
+                                    <td></td>
+                                    <td class="pr-5" colspan="3" style="white-space: pre-wrap;" [innerHTML]="'Explanation: \n' + q.freeResponseText"></td>
+                                </tr>
+                                
                             </ng-container>
                         </ng-container>
                     </ng-container>

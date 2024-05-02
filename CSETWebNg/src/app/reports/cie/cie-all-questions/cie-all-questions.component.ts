@@ -76,7 +76,7 @@ export class CieAllQuestionsComponent {
           // goes through subcategories
           for (let j = 0; j < domain.components?.length; j++) {
             let subcat = domain?.components[j];
-            this.expandedOptions.set(domain?.title + '_' + subcat?.title, true);
+            this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
 
             this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
@@ -84,7 +84,7 @@ export class CieAllQuestionsComponent {
               let question = subcat?.questions[k];
 
               //if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
-                this.expandedOptions.set(domain?.title + '_' + subcat?.title, true);
+                this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
 
                 this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
               //}
@@ -124,5 +124,26 @@ export class CieAllQuestionsComponent {
       return true;
     }
     return false;
+  }
+
+  getClasses(q: any, top: boolean) {
+    let combinedClass = '';
+    if (q.title.length == 10 || q.title.charAt(q.title.length - 1) == '0') {
+      combinedClass = 'background-3 ';
+    }
+
+    if (top) {
+      if (q.freeResponseText == null) {
+        combinedClass += 'full-border ';
+      }
+      else {
+        combinedClass += 'top-half-border';
+      }
+    }
+    else{
+      combinedClass += 'bottom-half-border';
+    }
+    console.log(combinedClass)
+    return combinedClass;
   }
 }
