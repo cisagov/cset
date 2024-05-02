@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 {
-	
+
     public class jDEMOGRAPHICS
     {
         [Required]
@@ -20,7 +20,7 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
         public String AssetValue { get; set; }
 
         public Boolean NeedsPrivacy { get; set; }
-  
+
         public Boolean NeedsSupplyChain { get; set; }
 
         public Boolean NeedsICS { get; set; }
@@ -143,7 +143,7 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
     }
 
     public class jINFORMATION
-    { 
+    {
         [Required]
         public Int32 Id { get; set; }
 
@@ -207,6 +207,20 @@ namespace CSETWebCore.Business.Demographic.DemographicIO.Models
 
         public DateTime? Submitted_Date { get; set; }
 
+    }
+
+    //Do not export demographics full information. Instead export chunks
+
+    public class jORG_DETAILS
+    {
+        [MaxLength(100)]
+        public String Facility_Name { get; set; }
+
+        [MaxLength(100)]
+        public String City_Or_Site_Name { get; set; }
+
+        [MaxLength(100)]
+        public String State_Province_Or_Region { get; set; }
     }
 }
 
