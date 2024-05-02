@@ -395,7 +395,7 @@ export class QuestionBlockCieComponent implements OnInit {
   }
 
   applyContactAndEndTag(q: Question) {
-    let bracketContact = '[' + this.contactInitials + ']';
+    let bracketContact = '[' + this.assessSvc.assessment.assessmentName + ']';
 
     if (q.freeResponseAnswer.indexOf(bracketContact) !== 0) {
       if (!!q.freeResponseAnswer) {
@@ -407,7 +407,7 @@ export class QuestionBlockCieComponent implements OnInit {
         else {
           let previousContactInitials = q.freeResponseAnswer.substring(q.freeResponseAnswer.lastIndexOf('[') + 1, q.freeResponseAnswer.lastIndexOf(']'));
           let endOfLastBuffer = q.freeResponseAnswer.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
-          if (previousContactInitials !== this.contactInitials) {
+          if (previousContactInitials !== this.assessSvc.assessment.assessmentName) {
             // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
             let oldComments = q.freeResponseAnswer.substring(0, endOfLastBuffer);
             let newComment = q.freeResponseAnswer.substring(oldComments.length);

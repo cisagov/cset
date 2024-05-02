@@ -326,7 +326,7 @@ export class MergeCieAnalysisComponent implements OnInit {
   getDisplayText(answerText: String, freeResponse: String) {
     
     if (answerText === 'U') {
-      return 'Free Response';
+      return 'Provided Response';
     } else if (answerText === 'NA') {
       return 'Not Applicable';
     } else {

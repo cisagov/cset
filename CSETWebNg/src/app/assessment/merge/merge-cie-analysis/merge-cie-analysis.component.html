@@ -32,14 +32,14 @@
 -->
 
 <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a">
-    <h2 class="mt-0">Merge Examinations</h2>
+    <h2 class="mt-0">Merge Analyses</h2>
 </div>
 
 <div class="bgc-trans mt-4 mx-4 pr-4 d-flex flex-column flex-00a ">
     <div *ngIf="this.pageLoading === true">
         <div class="spinner-container m-0 d-flex justify-content-center align-items-center flex-11a">
             <div class="spinner-size-50"></div>
-            {{ this.assessmentsProcessed }} / {{ this.cieSvc.assessmentsToMerge.length }} Assessments Processed
+            {{ this.assessmentsProcessed }} / {{ this.cieSvc.assessmentsToMerge.length }} Analyses Processed
         </div>
     </div>
 </div>
@@ -58,15 +58,19 @@
                     <tr>
                         <th>Statements</th>
                         <ng-container *ngFor="let assessment of this.cieSvc.assessmentsToMerge; let i = index">
-                            <th [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Analysis'
-                            : 'Analysis ' + (i+1) }}</th>
-                            <th [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Response'
-                            : 'Response ' + (i+1) }}</th>
+                            <th [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">
+                                <!-- {{ i === 0 ? 'Lead Analysis' : 'Analysis ' + (i+1) }} -->
+                                {{ 'Analysis ' + (i+1) }}
+                            </th>
+                            <th [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">
+                                <!-- {{ i === 0 ? 'Lead Response' : 'Response ' + (i+1) }} -->
+                                {{ 'Response ' + (i+1) }}
+                            </th>
                         </ng-container>
                         <!-- <th *ngFor="let assessment of this.cieSvc.assessmentsToMerge; let i = index"
                             [matTooltip]="(this.assessmentNames[i])" matTooltipPosition="above">{{ i === 0 ? 'Lead Exam'
                             : 'Exam ' + (i+1) }}</th> -->
-                        <th>Free Response</th>
+                        <th>Provided Response</th>
                         <th>N/A</th>
                     </tr>
                     <tr *ngFor="let conflict of this.mergeConflicts; let i = index">
@@ -160,10 +164,10 @@
                 </table>
             </div>
 
-            <button class="btn btn-primary" matTooltip="Merge checked examinations"
+            <button class="btn btn-primary" matTooltip="Merge checked analyses"
                 style="width: 15%; margin-top: 1.50rem; margin-left: auto; margin-right: 0"
                 [disabled]="(this.mergeRadioSelections.length !== this.mergeConflicts.length) || (this.attemptingToMerge === true)"
-                (click)="createMergedAssessment()">Merge Examinations</button>
+                (click)="createMergedAssessment()">Merge Analyses</button>
         </ng-container>
 
         <ng-container *ngIf="this.mergeConflicts.length === 0">
@@ -174,10 +178,10 @@
                         <span class="p-md-3 p-2 fs-large cset-icons-exclamation-triangle"
                             aria-label="Caution no questions"></span>
                         <span class="fs-base-3 p-2 justify-content-center flex-11a">
-                            There are no conflicting answers within the chosen examinations.
+                            There are no conflicting answers within the chosen analyses.
                             Either return to the <a class="btn-link cursor-pointer" (click)="navToHome()"
-                                tabindex="0">Assessment List</a>
-                            screen to select different examinations, or <a class="btn-link cursor-pointer"
+                                tabindex="0">Analysis List</a>
+                            screen to select different analyses, or <a class="btn-link cursor-pointer"
                                 (click)="createMergedAssessment()" tabindex="0">Click Here</a>
                             to proceed with the merge.
                         </span>
