@@ -215,7 +215,7 @@ namespace CSETWebCore.Business.Demographic.Import
                         context.SaveChanges();
                     }
 
-                    foreach (var information in model.jINFORMATION)
+                    foreach (var information in model.jORG_DETAILS)
                     {
                         var dinformation = context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault();
 
@@ -230,13 +230,9 @@ namespace CSETWebCore.Business.Demographic.Import
                             context.INFORMATION.Add(dinformation);
                             context.SaveChanges();
                         }
-                        dinformation.Assessment_Name = information.Assessment_Name;
                         dinformation.Facility_Name = information.Facility_Name;
                         dinformation.City_Or_Site_Name = information.City_Or_Site_Name;
                         dinformation.State_Province_Or_Region = information.State_Province_Or_Region;
-                        dinformation.IsAcetOnly = information.IsAcetOnly;
-                        dinformation.Workflow = information.Workflow;
-                        dinformation.Ise_Submitted = information.Ise_Submitted;
 
                         context.SaveChanges();
                     }

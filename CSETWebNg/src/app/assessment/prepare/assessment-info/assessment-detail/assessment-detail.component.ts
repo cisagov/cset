@@ -69,7 +69,7 @@ export class AssessmentDetailComponent implements OnInit {
    */
   getAssessmentDetail() {
     this.assessment = this.assessSvc.assessment;
-
+ 
     // a few things for a brand new assessment
     if (this.assessSvc.isBrandNew) {
       // RRA install presets the maturity model
