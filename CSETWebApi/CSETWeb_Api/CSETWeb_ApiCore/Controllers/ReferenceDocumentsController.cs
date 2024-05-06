@@ -49,20 +49,20 @@ namespace CSETWebCore.Api.Controllers
         /// <param name="file"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/ReferenceDocument/{file}")]
-        public IActionResult GetByName(string file)
+        [Route("api/refdoc/{fileId}")]
+        public IActionResult FindReferenceDocument(string fileId)
         {
-            var hashLocation = file.IndexOf('#');
+            var hashLocation = fileId.IndexOf('#');
             if (hashLocation > -1)
             {
-                file = file.Substring(0, hashLocation);
+                fileId = fileId.Substring(0, hashLocation);
             }
 
 
-            if (!int.TryParse(file, out int id))
+            if (!int.TryParse(fileId, out int id))
             {
                 // if the identifier is not an int, assume it's the filename, and get his gen_file_id
-                var f = _context.GEN_FILE.Where(f => f.File_Name == file).FirstOrDefault();
+                var f = _context.GEN_FILE.Where(f => f.File_Name == fileId).FirstOrDefault();
                 if (f != null)
                 {
                     id = f.Gen_File_Id;
