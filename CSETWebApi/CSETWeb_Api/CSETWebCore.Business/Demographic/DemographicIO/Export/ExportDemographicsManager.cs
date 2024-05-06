@@ -45,8 +45,7 @@ namespace CSETWebCore.Business.Demographic.Export
             TinyMapper.Bind<CIS_CSI_SERVICE_DEMOGRAPHICS, jCIS_CSI_SERVICE_DEMOGRAPHICS>();
             TinyMapper.Bind<DEMOGRAPHICS, jDEMOGRAPHICS>();
             TinyMapper.Bind<DETAILS_DEMOGRAPHICS, jDETAILS_DEMOGRAPHICS>();
-            TinyMapper.Bind<INFORMATION, jINFORMATION>();
-
+            TinyMapper.Bind<INFORMATION, jORG_DETAILS>();
         }
 
 
@@ -84,7 +83,7 @@ namespace CSETWebCore.Business.Demographic.Export
 
             foreach (var item in _context.INFORMATION.Where(x => x.Id == assessmentId))
             {
-                model.jINFORMATION.Add(TinyMapper.Map<INFORMATION, jINFORMATION>(item));
+                model.jORG_DETAILS.Add(TinyMapper.Map<INFORMATION, jORG_DETAILS>(item));
             }
 
             foreach (var item in _context.DETAILS_DEMOGRAPHICS.Where(x => x.Assessment_Id == assessmentId))
@@ -129,10 +128,10 @@ namespace CSETWebCore.Business.Demographic.Export
         {
             // determine file name
             var fileName = $"{assessmentId}{fileExtension}";
-            var assessmentName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Assessment_Name;
-            if (!string.IsNullOrEmpty(assessmentName))
+            var facilityName = _context.INFORMATION.Where(x => x.Id == assessmentId).FirstOrDefault()?.Facility_Name;
+            if (!string.IsNullOrEmpty(facilityName))
             {
-                fileName = $"{assessmentName}{fileExtension}";
+                fileName = $"{facilityName}{fileExtension}";
             }
 
             // export the assessment
