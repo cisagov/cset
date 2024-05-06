@@ -30,7 +30,7 @@
           [(ngModel)]="aggregationSvc.currentAggregation.aggregationName" (change)="updateAggregation()"
           (blur)="checkTrendName()" required />
         <div class="invalid-feedback d-block" *ngIf='!trendNameError'>
-          Trend name is required
+          {{ this.aggregationSvc?.modeDisplay(false) }} name is required
         </div>
       </div>
     </div>

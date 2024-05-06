@@ -24,7 +24,7 @@
     <div class="container-fluid no-gutters d-flex flex-column justify-content-start flex-11a w-100" id="cset-app">
       <div
         class="row no-gutters local-install mt-0 pl-0 d-flex justify-content-center align-items-center flex-00a"
-        *ngIf="auth.isLocal">
+        *ngIf="auth.isLocal && devMode">
         <span class="col-sm-12">Local Installation</span>
       </div>
 

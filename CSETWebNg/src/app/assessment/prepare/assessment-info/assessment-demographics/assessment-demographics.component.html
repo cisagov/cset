@@ -24,9 +24,6 @@
 <ng-container *transloco="let t">
     <h4>{{t('demographics')}}</h4>
     <div class="assess-component d-flex flex-column justify-content-start flex-11a mb-4">
-
-
-
         <div class="button-container">
             <table>
                 <th>
@@ -39,9 +36,8 @@
                         <span class="icon-link-button-text-dark">{{t('buttons.import')}}</span>
                     </button>
                 </th>
-
                 <th>
-                    <button tabindex="0" id="demographic-export" style="margin-bottom: 8px"
+                    <button tabindex="0" id="demographic-export"
                         class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
                         (click)="exportClick()" matTooltip="Export Demographics">
                         <span class="cset-icons-export-up fs-base-2 mr-2"></span>
@@ -50,8 +46,6 @@
                 </th>
             </table>
         </div>
-
-
     </div>
     <form>
         <div class="form-row">
@@ -97,13 +91,13 @@
             <label for="edmOrganizationName">{{t('org name')}}<span *ngIf="showAsterisk"> *</span></label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150"
                 name="edmOrganizationName" id="edmOrganizationName" [(ngModel)]="demographicData.organizationName"
-                #edmOrganizationName="ngModel" placeholder="{{t('org name')}}" (blur)="changeOrgName($event)">
+                #edmOrganizationName="ngModel" placeholder="{{t('org name')}}" (blur)="update($event)">
         </div>
         <div class="form-group" *ngIf="showBusinessAgencyName()">
             <label for="edmAgency">{{t('business unit agency')}}<span *ngIf="showAsterisk"> *</span></label>
             <input class="form-control" autocomplete="off" tabindex="0" type="text" maxlength="150" name="edmAgency"
                 id="edmAgency" [(ngModel)]="demographicData.agency" #edmAgancy="ngModel"
-                placeholder="{{t('business unit agency')}}" (blur)="changeAgency($event)">
+                placeholder="{{t('business unit agency')}}" (blur)="update($event)">
         </div>
         <div class="form-group">
             <label for="edmOrganizationType">{{t('org type')}}<span *ngIf="showAsterisk"> *</span></label>
@@ -144,7 +138,7 @@
                 <label class="mb-1" for="criticalService">{{t('critical service name')}}</label>
                 <textarea appAutoSize class="form-control" autocomplete="off" tabindex="0" maxlength="100"
                     name="criticalService" id="criticalService" [(ngModel)]="demographicData.criticalService"
-                    placeholder="{{t('critical service name')}}" (blur)="changeCriticalService($event)"></textarea>
+                    placeholder="{{t('critical service name')}}" (blur)="update($event)"></textarea>
             </div>
             <div class="form-group col-md-6">
                 <label class="mb-1" for="critSvcPointOfContact">{{t('crit svc poc')}}</label>

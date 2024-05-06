@@ -77,6 +77,7 @@ using CSETWebCore.Business.Malcolm;
 using CSETWebCore.Interfaces.Cmu;
 using CSETWebCore.Business.Version;
 using CSETWebCore.Interfaces.Version;
+using CSETWebCore.Business.Demographic.Import;
 
 namespace CSETWeb_ApiCore
 {
@@ -159,6 +160,7 @@ namespace CSETWeb_ApiCore
             services.AddTransient<ICmuScoringHelper, CmuScoringHelper>();
             services.AddTransient<IApiKeyManager, ApiKeyManager>();
             services.AddTransient<IImportManager, ImportManager>();
+            services.AddTransient<IDemographicImportManager, DemographicImportManager>();
             services.AddTransient<ILocalInstallationHelper, LocalInstallationHelper>();
             services.AddTransient<IUserAuthentication, UserAuthentication>();
             services.AddTransient<IUserBusiness, UserBusiness>();

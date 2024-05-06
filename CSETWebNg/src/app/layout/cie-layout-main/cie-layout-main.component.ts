@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, isDevMode } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AggregationService } from '../../services/aggregation.service';
@@ -24,6 +24,7 @@ export class CieLayoutMainComponent {
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
   footerClosed: boolean = true;
+  devMode: boolean = isDevMode();
 
   constructor(
     public auth: AuthenticationService,
