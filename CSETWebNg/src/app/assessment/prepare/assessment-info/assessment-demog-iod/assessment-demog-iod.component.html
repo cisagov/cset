@@ -29,7 +29,7 @@
 
         <label tabindex="0" id="demographic-import"
           class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-          matTooltip="Import Demographics">
+          matTooltip="Import Organization Demographics, Assessment Configuration, Critical Service Information">
           <span class="mr-2 fs-base cset-icons-import"></span>
           <span class="icon-link-button-text-dark">{{t('buttons.import')}}</span>
           <input type="file" tabindex="0" class="hidden-input" id="importFile" multiple accept=".json"
@@ -38,14 +38,14 @@
 
         <button tabindex="0" id="demographic-export" style="margin-bottom: 8px"
           class="icon-link-button-dark btn bgc-trans d-flex justify-content-center align-items-center flex-00a"
-          (click)="exportClick()" matTooltip="Export Demographics">
+          (click)="exportClick()" matTooltip="Export Organization Demographics, Assessment Configuration, Critical Service Information">
           <span class="cset-icons-export-up fs-base-2 mr-2"></span>
           <span class="icon-link-button-text-dark">{{t('buttons.export')}}</span>
         </button>
 
       </div>
 
-      <app-demographics-iod [events]="eventImportExport.asObservable()"></app-demographics-iod>
+      <app-demographics-iod [events]="eventImportExport.asObservable()" #demoIOD></app-demographics-iod>
 
       <app-nav-back-next [page]="'info-demog-iod'"></app-nav-back-next>
     </div>

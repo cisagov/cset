@@ -1,6 +1,6 @@
 {
   "name": "csetweb-ng",
-  "version": "12.1.6",
+  "version": "12.1.7",
   "license": "MIT",
   "main": "main-electron.js",
   "private": true,
@@ -113,6 +113,7 @@
     "@types/jasminewd2": "^2.0.6",
     "@types/jquery": "^3.5.5",
     "@types/node": "^18.0.0",
+    "@types/luxon": "^3.4.2",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
     "css-loader": "^6.7.3",

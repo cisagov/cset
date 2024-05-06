@@ -85,6 +85,7 @@ namespace CSETWebCore.Api.Controllers
                 // unsupported media type
                 return StatusCode(415);
             }
+            var assessmentFile = Request.Form.Files[0];
 
             var currentUserId = _tokenManager.GetCurrentUserId();
             var accessKey = _tokenManager.GetAccessKey();

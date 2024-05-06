@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild, ViewEncapsulation, isDevMode } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
@@ -45,6 +45,7 @@ export class AcetLayoutMainComponent {
   docUrl: string;
   dialogRef: MatDialogRef<any>;
   isFooterVisible: boolean = false;
+  devMode: boolean = isDevMode();
 
   @ViewChild('acc') accordion: NgbAccordion;
 

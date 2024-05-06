@@ -249,7 +249,7 @@ namespace CSETWebCore.Business.Question
                             AnswerText = question.Answer,
                             CategoryId = questionGroup.GroupHeadingId,
                             CategoryText = questionGroup.GroupHeadingText,
-                            SubCategoryId = subCategory.SubCategoryId,
+                            SubCategoryId = (int)subCategory.SubCategoryId,
                             SubCategoryText = subCategory.SubCategoryHeadingText,
                             SetName = questionGroup.SetName,
                             IsRequirement = question.Is_Requirement,

@@ -13,7 +13,7 @@ namespace CSETWebCore.Model.Question
     {
         public Guid NavigationGUID { get; set; }
         public int GroupHeadingId { get; set; }
-        public int SubCategoryId { get; set; }
+        public int? SubCategoryId { get; set; }
         public string SubCategoryHeadingText { get; set; }
         public string HeaderQuestionText { get; set; }
         public string SubCategoryAnswer { get; set; }
