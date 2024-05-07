@@ -475,17 +475,17 @@
           !isMobile" class="d-flex flex-column justify-content-start align-items-start mb-4">
         <h4>Cyber-Informed Engineering (CIE)</h4>
         <div>
-          <button tabindex="0" class="btn btn-link btn-link-dark text-left">
-            Export Applicable Questions Tear Out Sheets
+          <button (click)="clickReportLink('cieNotApplicable')" tabindex="0" class="btn btn-link btn-link-dark text-left">
+            Export Not Applicable Questions Tear Out Sheets
           </button>
         </div>
         <div>
-          <button tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrincipleOnly')" tabindex="0" class="btn btn-link btn-link-dark text-left">
             Export Principle-Only CIE-CSET Report
           </button>
         </div>
         <div>
-          <button tabindex="0" class="btn btn-link btn-link-dark text-left">
+          <button (click)="clickReportLink('ciePrinciplePhase')" tabindex="0" class="btn btn-link btn-link-dark text-left">
             Export Principle-Phase CIE-CSET Report
           </button>
         </div>
