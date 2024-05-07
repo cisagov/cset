@@ -415,6 +415,12 @@ export class AssessmentService {
     });
   }
 
+  refreshAssessment(){
+    this.getAssessmentDetail().subscribe((detail: AssessmentDetail) => {
+      this.assessment = detail
+    })
+  }
+
   /**
    * Requests the assessment detail from the API
    * and resolves the promise so that navigation

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSETWebCore.Business.Assessment;
-using CSETWebCore.DataLayer;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Demographic;
 
@@ -246,20 +245,40 @@ namespace CSETWebCore.Business.Demographic
             switch (type)
             {
                 case "int":
-                    SaveX(assessmentId, recName, int.Parse(value));
+                    int? i = null;
+                    if (value != "null")
+                    {
+                        i = int.Parse(value);
+                    }
+                    SaveX(assessmentId, recName, i);
                     break;
+
                 case "string":
                     SaveX(assessmentId, recName, value);
                     break;
+
                 case "double":
-                    SaveX(assessmentId, recName, double.Parse(value));
+                    double? d = null;
+                    if (value != "null")
+                    {
+                        d = double.Parse(value);
+                    }
+                    SaveX(assessmentId, recName, d);
                     break;
+
                 case "bool":
-                    SaveX(assessmentId, recName, bool.Parse(value));
+                    bool? b = null;
+                    if (value != "null")
+                    {
+                        b = bool.Parse(value);
+                    }
+                    SaveX(assessmentId, recName, b);
                     break;
+
                 case "date":
                     SaveX(assessmentId, recName, DateTime.Parse(value));
                     break;
+
                 default:
                     // just save it as a string
                     SaveX(assessmentId, recName, value);

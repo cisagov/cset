@@ -4,19 +4,23 @@
 // 
 // 
 //////////////////////////////// 
-using CSETWebCore.Business.Aggregation;
-using CSETWebCore.Business.Assessment;
 using CSETWebCore.Business.Demographic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Interfaces.Assessment;
 using CSETWebCore.Interfaces.Demographic;
 using CSETWebCore.Interfaces.Helpers;
-using CSETWebCore.Model.Assessment;
 using CSETWebCore.Model.Demographic;
-using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using System;
 using System.Threading.Tasks;
+using CSETWebCore.Business.Demographic.Export;
+using CSETWebCore.Business.Demographic.DemographicIO;
+using CSETWebCore.Helpers;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using CSETWebCore.Business.Demographic.Import;
+using CSETWebCore.Business.AssessmentIO.Import;
+
 
 namespace CSETWebCore.Api.Controllers
 {
@@ -28,8 +32,7 @@ namespace CSETWebCore.Api.Controllers
         private readonly IDemographicBusiness _demographic;
         private CSETContext _context;
 
-        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment,
-            IDemographicBusiness demographic, CSETContext context)
+        public DemographicsExtController(ITokenManager token, IAssessmentBusiness assessment, IDemographicBusiness demographic, CSETContext context)
         {
             _token = token;
             _assessment = assessment;
@@ -104,6 +107,32 @@ namespace CSETWebCore.Api.Controllers
             mgr.SaveX(assessmentId, name, val, t);
 
             return Ok();
+        }
+
+      
+
+        [HttpGet]
+        [Route("api/demographics/export")]
+        public IActionResult ExportDemographic([FromQuery] string token)
+        {
+            try
+            {
+                _token.SetToken(token);
+
+                int assessmentId = _token.AssessmentForUser(token);
+
+                string ext = ".json";
+
+                DemographicsExportFile result = new DemographicsExportManager(_context).ExportDemographics(assessmentId, ext);
+
+                return File(result.FileContents, "application/octet-stream", result.FileName);
+            }
+            catch (Exception exc)
+            {
+                NLog.LogManager.GetCurrentClassLogger().Error($"... {exc}");
+            }
+
+            return null;
         }
     }
 }
