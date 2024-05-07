@@ -42,7 +42,7 @@ export class CieAllQuestionsComponent {
   response: any = {};
 
   hasComments: any[] = [];
-  showSubcats: Map<String, boolean> = new Map<String, boolean>();
+  // showSubcats: Map<String, boolean> = new Map<String, boolean>();
   expandedOptions: Map<String, boolean> = new Map<String, boolean>();
 
   examLevel: string = '';
@@ -63,12 +63,9 @@ export class CieAllQuestionsComponent {
   ngOnInit(): void {
     this.titleService.setTitle("Export All CIE-CSET - Report");
 
-    
     this.cieSvc.getCieAllQuestions().subscribe(
       (r: any) => {
         this.response = r;
-        console.log(this.response)
-        // this.examLevel = this.response?.matAnsweredQuestions[0]?.assessmentFactors[0]?.components[0]?.questions[0]?.maturityLevel;
 
         // goes through domains
         for (let i = 0; i < this.response?.matAnsweredQuestions[0]?.assessmentFactors?.length; i++) {
@@ -78,20 +75,16 @@ export class CieAllQuestionsComponent {
             let subcat = domain?.components[j];
             this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
 
-            this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
+            // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             // goes through questions
             for (let k = 0; k < subcat?.questions?.length; k++) {
               let question = subcat?.questions[k];
 
-              //if (question.maturityLevel === 'CORE+' && this.requiredQuestion(question)) {
                 this.expandedOptions.set(domain?.title + '_' + subcat?.title, false);
-
-                this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
-              //}
+                // this.showSubcats.set(domain?.title + '_' + subcat?.title, true);
             }
           }
         }
-
         this.loading = false;
       },
       error => console.log('Assessment Answered Questions Error: ' + (<Error>error).message)
@@ -143,7 +136,6 @@ export class CieAllQuestionsComponent {
     else{
       combinedClass += 'bottom-half-border';
     }
-    console.log(combinedClass)
     return combinedClass;
   }
 }

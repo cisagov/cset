@@ -30,6 +30,7 @@ export class CieService {
   mainAssessFacility: string = "";
   backupCharter: string = "";
   hasShownCharterWarning: boolean = false;
+  apiUrl = this.configSvc.apiUrl;
 
   constructor(
     private http: HttpClient,
@@ -158,5 +159,36 @@ export class CieService {
 
   getCieAllQuestions() {
     return this.http.get(this.configSvc.apiUrl + 'reports/getCieAllQuestions');
+  }
+
+  getCiePrincipleQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getCiePrincipleQuestions');
+  }
+
+  getCiePhaseQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getCiePhaseQuestions');
+  }
+
+  getCieNaQuestions() {
+    return this.http.get(this.configSvc.apiUrl + 'reports/getCieNaQuestions');
+  }
+
+  
+
+  getObservations() {
+    let id1 = this.assessmentsToMerge[0];
+    let id2 = this.assessmentsToMerge[1];
+    let id3 = (this.assessmentsToMerge[2] !== undefined ? this.assessmentsToMerge[2] : 0);
+    let id4 = (this.assessmentsToMerge[3] !== undefined ? this.assessmentsToMerge[3] : 0);
+    let id5 = (this.assessmentsToMerge[4] !== undefined ? this.assessmentsToMerge[4] : 0);
+    let id6 = (this.assessmentsToMerge[5] !== undefined ? this.assessmentsToMerge[5] : 0);
+    let id7 = (this.assessmentsToMerge[6] !== undefined ? this.assessmentsToMerge[6] : 0);
+    let id8 = (this.assessmentsToMerge[7] !== undefined ? this.assessmentsToMerge[7] : 0);
+    let id9 = (this.assessmentsToMerge[8] !== undefined ? this.assessmentsToMerge[8] : 0);
+    let id10 = (this.assessmentsToMerge[9] !== undefined ? this.assessmentsToMerge[9] : 0);
+
+    headers.params = headers.params.set('id1', id1).set('id2', id2).set('id3', id3).set('id4', id4)
+      .set('id5', id5).set('id6', id6).set('id7', id7).set('id8', id8).set('id9', id9).set('id10', id10);
+    return this.http.get(this.apiUrl + 'getAssessmentObservations', headers);
   }
 }
