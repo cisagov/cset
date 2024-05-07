@@ -194,6 +194,60 @@ export class MergeCieAnalysisComponent implements OnInit {
     let l = 0;
     // A 3 tiered loop to check under ever grouping level to grab ALL questions
     for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
+      for (let m = 0; m < response.groupings[0].subGroupings[i].questions.length; m++) {
+        let question = response.groupings[0].subGroupings[i].questions[m];
+
+        // Combine the existing responses
+        if (question.freeResponseAnswer != "" && question.freeResponseAnswer != null) {
+
+          // if the question didn't previously have a mapped response text
+          if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
+            this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
+          } 
+          else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
+            this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
+          } 
+          else if (this.assessmentFreeResponses.has(question.questionId)) {
+            let myString = this.assessmentFreeResponses.get(question.questionId);
+            myString += ("\n" + question.freeResponseAnswer);
+            this.assessmentFreeResponses.set(question.questionId, myString);
+          }
+          else if (this.assessmentNAReasons.has(question.questionId)) {
+            let myString = this.assessmentNAReasons.get(question.questionId);
+            myString += ("\n" + question.freeResponseAnswer);
+            this.assessmentNAReasons.set(question.questionId, myString);
+          }
+        }
+
+        let answerToSave: Answer = {
+          answerId: null,
+          questionId: question.questionId,
+          questionType: null,
+          questionNumber: '0',
+          answerText: question.answer,
+          altAnswerText: question.altAnswerText,
+          freeResponseAnswer: null,//(question.answer == 'U' && this.assessmentFreeResponses.has(question.questionId)) ? this.assessmentFreeResponses.get(question.questionId) : ((question.answer == 'NA' && this.assessmentNAReasons.has(question.questionId)) ? this.assessmentNAReasons.get(question.questionId) : null),
+          comment: question.comment,
+          feedback: null,
+          markForReview: question.markForReview,
+          reviewed: false,
+          is_Component: false,
+          is_Requirement: false,
+          is_Maturity: true,
+          componentGuid: '00000000-0000-0000-0000-000000000000'
+        }
+
+        if (this.assessmentsProcessed === 0) {
+          // If it's our first pass through, set all the questions.
+          this.existingAssessmentAnswers.push(answerToSave);
+        } else if (this.assessmentsProcessed > 0 && (this.existingAssessmentAnswers[l].freeResponseAnswer == null
+          && this.existingAssessmentAnswers[l].answerText == 'U')
+        ) {
+          // If it's not our first pass through, ONLY add questions if it was unanswered previously
+          this.existingAssessmentAnswers[l] = answerToSave;
+        }
+        l++;
+      }
       for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
         for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
           let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
@@ -204,11 +258,9 @@ export class MergeCieAnalysisComponent implements OnInit {
             // if the question didn't previously have a mapped response text
             if (!this.assessmentFreeResponses.has(question.questionId) && question.answer == 'U') {
               this.assessmentFreeResponses.set(question.questionId, question.freeResponseAnswer);
-              //this.assessmentAnswers.set(question.questionId, question.answerText);
             } 
             else if (!this.assessmentNAReasons.has(question.questionId) && question.answer == 'NA') {
               this.assessmentNAReasons.set(question.questionId, question.freeResponseAnswer);
-              //this.assessmentAnswers.set(question.questionId, question.answerText);
             } 
             else if (this.assessmentFreeResponses.has(question.questionId)) {
               let myString = this.assessmentFreeResponses.get(question.questionId);
