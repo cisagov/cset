@@ -116,18 +116,12 @@
                         <span *ngIf="showIdTag" class="debug-highlight">q:{{q.questionId}}</span>
 
                         <div *ngIf="q.questionType == 'Maturity'">
-                            <!-- <input id="{{'freeResponse-q-' + q.questionId}}" [value]="freeResponseAnswers.get(q.questionId)"
-                                class="form-control mb-2" style="width: 100%; min-height: 40px; max-height: summaryBoxMax + 'px'"
-                                [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)" 
-                                (focus)="autoResize(q.questionId)" (keydown)="autoResize(q.questionId)"
-                                (change)="changeText(q, $event)" spellcheck="true"
-                                style="width: 100%; min-height: 40px; max-height: summaryBoxMax + 'px'"> -->
 
-                        <textarea id="{{'freeResponse-q-' + q.questionId}}" class="form-control mb-2"
-                            [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
-                            [value]="freeResponseAnswers.get(q.questionId)" [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)"
-                            (focus)="autoResize(q.questionId)" (keydown)="autoResize(q.questionId)"
-                            (change)="changeText(q, $event)" spellcheck="true"></textarea>
+                            <textarea id="{{'freeResponse-q-' + q.questionId}}" class="form-control mb-2"
+                                [style]="('width: 100%; min-height: 40px; max-height: ' + summaryBoxMax + 'px')"
+                                [value]="freeResponseAnswers.get(q.questionId)" [placeholder]="(q.answer != 'NA' ? textPlaceholderEmpty : textPlaceholderNA)"
+                                (focus)="autoResize(q.questionId)" (keydown)="autoResize(q.questionId)"
+                                (change)="changeText(q, $event)" spellcheck="true"></textarea>
                             
                         </div>
                         <input #rb class="checkbox-custom" type="checkbox" [name]="optionGroupName" [id]="'answer-option-' + q.questionId"

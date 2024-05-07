@@ -40,6 +40,8 @@ namespace CSETWebCore.Business.Reports
         public List<usp_getFinancialQuestions_Result> FinancialQuestionsTable { get; set; }
         public List<ComponentQuestion> ComponentQuestions { get; set; }
         public List<List<DiagramZones>> Zones { get; set; }
+        public List<CieQuestionAnswerPairing> QuestionAnswerPairings { get; set; }
+
 
         public class INFORMATION
         {
@@ -292,6 +294,14 @@ namespace CSETWebCore.Business.Reports
             return (string)props[Name].GetValue(this);
         }
     }
+
+    public class CieQuestionAnswerPairing
+    {
+        public CieQuestionAnswerPairing() { }
+        public MATURITY_QUESTIONS Question { get; set; }
+        public ANSWER Answer { get; set; }
+    }
+
 }
 
 

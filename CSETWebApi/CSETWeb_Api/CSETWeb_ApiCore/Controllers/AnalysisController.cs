@@ -19,6 +19,7 @@ using CSETWebCore.Model.Question;
 using Snickler.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 
 
@@ -178,20 +179,26 @@ namespace CSETWebCore.Api.Controllers
                 bool FaaMail = _context.AVAILABLE_STANDARDS.Where(x => x.Assessment_Id == assessmentId && x.Selected == true
                 && (x.Set_Name == "FAA_MAINT" || x.Set_Name == "FAA" || x.Set_Name == "FAA_PED_V2")).FirstOrDefault() != null;
 
+                bool CieMail = _context.AVAILABLE_MATURITY_MODELS.Where(x => x.Assessment_Id == assessmentId && x.Selected && x.model_id == 17).FirstOrDefault() != null;
 
-                string FeedbackSalutations = "Dear " + (FaaMail ? "FAA" : "CSET") + " Standards Administrator:";
+                string FeedbackSalutations = "Dear " + (FaaMail ? "FAA" : (CieMail ? "CIE" : "CSET")) + " Standards Administrator:";
                 string FeedbackDescription = "The following comments were provided for each of the questions: ";
                 string FeedbackWarning = " *** Required *** Keep This Question ID ***";
 
 
                 FeedbackResult.FeedbackHeader = "Submit Feedback to DHS";
                 if (FaaMail) FeedbackResult.FeedbackHeader += " and FAA";
-
                 var FaaEmail = _configuration.GetValue<string>("Email:FaaEmail");
+
+                if (CieMail) FeedbackResult.FeedbackHeader += " and CIE";
+                var CieEmail = _configuration.GetValue<string>("Email:CieEmail");
+
                 var DHSEmail = _configuration.GetValue<string>("Email:DHSEmail");
 
                 if (FaaMail) FeedbackResult.FeedbackEmailTo = FaaEmail + ";  ";
-                FeedbackResult.FeedbackEmailTo += DHSEmail;
+
+                if (CieMail) FeedbackResult.FeedbackEmailTo += CieEmail;
+                else FeedbackResult.FeedbackEmailTo += DHSEmail;
 
                 FeedbackResult.FeedbackBody = "Please email to: <br/><br/>";
                 FeedbackResult.FeedbackBody += FeedbackResult.FeedbackEmailTo + "<br/><br/><br/>";
@@ -209,7 +216,8 @@ namespace CSETWebCore.Api.Controllers
                     FeedbackResult.FeedbackBody += "Question #" + " " + q.Mode + ":" + q.QuestionID + ". <br/><br/><br/>";
                 }
 
-                FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
+                if (CieMail) FeedbackResult.FeedbackEmailSubject = "CIE-CSET";
+                else FeedbackResult.FeedbackEmailSubject = "CSET Questions Feedback";
                 FeedbackResult.FeedbackEmailBody += FeedbackSalutations + "%0D%0A%0D%0A";
                 FeedbackResult.FeedbackEmailBody += FeedbackDescription + "%0D%0A%0D%0A";
 
