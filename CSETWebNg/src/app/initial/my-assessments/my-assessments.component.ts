@@ -47,6 +47,8 @@ import { DateTime } from "luxon";
 import { NcuaExcelExportComponent } from "../../dialogs/excel-export/ncua-export/ncua-excel-export.component";
 import { TranslocoService } from "@ngneat/transloco";
 import { DateAdapter } from '@angular/material/core';
+import { HydroService } from "../../services/hydro.service";
+import { CieService } from "../../services/cie.service";
 
 
 interface UserAssessment {
@@ -118,7 +120,9 @@ export class MyAssessmentsComponent implements OnInit {
     private ncuaSvc: NCUAService,
     public layoutSvc: LayoutService,
     public dateAdapter: DateAdapter<any>,
-    public reportSvc: ReportService
+    public reportSvc: ReportService,
+    private hydroSvc: HydroService,
+    public cieSvc: CieService
   ) { }
 
   ngOnInit() {
@@ -149,6 +153,7 @@ export class MyAssessmentsComponent implements OnInit {
     }
 
     this.ncuaSvc.assessmentsToMerge = [];
+    this.cieSvc.assessmentsToMerge = [];
 
     this.assessSvc.getEncryptPreference().subscribe((result: boolean) => this.preventEncrypt = result);
 
@@ -428,6 +433,10 @@ export class MyAssessmentsComponent implements OnInit {
 
   proceedToMerge() {
     this.router.navigate(['/examination-merge']);
+  }
+
+  proceedToCieMerge() {
+    this.router.navigate(['/merge-cie-analysis']);
   }
 
   clickNewAssessmentButton() {

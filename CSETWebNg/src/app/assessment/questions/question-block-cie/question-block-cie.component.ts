@@ -33,11 +33,15 @@ export class QuestionBlockCieComponent implements OnInit {
   answerOptions = [];
   percentAnswered = 0;
 
-  summaryBoxMax = 450;
+  summaryBoxMax = 275;
 
   textPlaceholderEmpty = "Type answer here...";
-  textPlaceholderNA = "Explain why this question is Not Applicable here...";
+  textPlaceholderNA = "Explain why this question is Not Applicable here (Optional)";
   freeResponseAnswers: Map<number, string> = new Map<number, string>();
+
+  contactInitials = "";
+  freeResponseSegment = "";
+  convoBuffer = '\n- - End of Response - -\n';
 
   showQuestionIds = false;
 
@@ -74,7 +78,6 @@ export class QuestionBlockCieComponent implements OnInit {
       this.maturityModelId = this.assessSvc.assessment.maturityModel.modelId;
       this.maturityModelName = this.assessSvc.assessment.maturityModel.modelName;
 
-      console.log(this.myGrouping)
       this.myGrouping.questions.forEach(question => {
         this.freeResponseAnswers.set(question.questionId, question.freeResponseAnswer);
       });
@@ -83,9 +86,8 @@ export class QuestionBlockCieComponent implements OnInit {
 
     }
 
-    this.acetFilteringSvc.filterAcet.subscribe((filter) => {
-      this.refreshReviewIndicator();
-      this.refreshPercentAnswered();
+    this.assessSvc.getAssessmentContacts().then((response: any) => {
+      this.contactInitials = response.contactList[0].firstName;
     });
 
     this.showQuestionIds = false; //this.configSvc.showQuestionAndRequirementIDs();
@@ -114,46 +116,6 @@ export class QuestionBlockCieComponent implements OnInit {
       return "normal";
     }
     return "break-all";
-  }
-
-  displayTooltip(maturityModelName: string, option: string) {
-    let toolTip = this.questionsSvc.answerDisplayLabel(maturityModelName, option);
-    if (toolTip === 'Yes' || toolTip === 'No') {
-      toolTip = "";
-    }
-    return toolTip;
-  }
-
-  /**
-  * Repopulates the map variables to correctly track/delete issues
-  */
-  setIssueMap() {
-    let parentId = 0;
-    let count = 0;
-
-    this.myGrouping.questions.forEach(question => {
-      parentId = question.parentQuestionId;
-
-      if (question.answer === 'N') {
-        count++;
-        this.ncuaSvc.questionCheck.set(parentId, count);
-      }
-      this.ncuaSvc.deleteHistory.clear();
-    });
-  }
-
-  deleteIssueMaps(observation: number) {
-    const iterator = this.ncuaSvc.issueObservationId.entries();
-    let parentKey = 0;
-
-    for (let value of iterator) {
-      if (value[1] === observation) {
-        parentKey = value[0];
-        this.ncuaSvc.questionCheck.delete(parentKey);
-        this.ncuaSvc.issueObservationId.delete(parentKey);
-        this.ncuaSvc.deleteHistory.add(parentKey);
-      }
-    }
   }
 
   /**
@@ -400,7 +362,8 @@ export class QuestionBlockCieComponent implements OnInit {
 
     let newFreeResponse = e.target.value;
     q.freeResponseAnswer = newFreeResponse;
-    this.freeResponseAnswers.set(q.questionId, newFreeResponse);
+    q = this.applyContactAndEndTag(q);
+    this.freeResponseAnswers.set(q.questionId, q.freeResponseAnswer);
     const answer: Answer = {
       answerId: q.answer_Id,
       questionId: q.questionId,
@@ -429,6 +392,34 @@ export class QuestionBlockCieComponent implements OnInit {
       (result => {
         //this.checkForIssues(q, oldAnswerValue);
       });
+  }
+
+  applyContactAndEndTag(q: Question) {
+    let bracketContact = '[' + this.assessSvc.assessment.assessmentName + ']';
+
+    if (q.freeResponseAnswer.indexOf(bracketContact) !== 0) {
+      if (!!q.freeResponseAnswer) {
+        if (q.freeResponseAnswer.indexOf('[') !== 0) {
+          this.freeResponseSegment = bracketContact + ' ' + q.freeResponseAnswer;
+          q.freeResponseAnswer = this.freeResponseSegment + this.convoBuffer;
+        }
+
+        else {
+          let previousContactInitials = q.freeResponseAnswer.substring(q.freeResponseAnswer.lastIndexOf('[') + 1, q.freeResponseAnswer.lastIndexOf(']'));
+          let endOfLastBuffer = q.freeResponseAnswer.lastIndexOf(this.convoBuffer) + this.convoBuffer.length;
+          if (previousContactInitials !== this.assessSvc.assessment.assessmentName) {
+            // if ( endOfLastBuffer !== q.altAnswerText.length || endOfLastBuffer !== q.altAnswerText.length - 1) {
+            let oldComments = q.freeResponseAnswer.substring(0, endOfLastBuffer);
+            let newComment = q.freeResponseAnswer.substring(oldComments.length);
+
+            q.freeResponseAnswer = oldComments + bracketContact + ' ' + newComment + this.convoBuffer;
+            // }
+          }
+        }
+      }
+    }
+
+    return q;
   }
 
   autoResize(id: number) {
@@ -535,7 +526,7 @@ export class QuestionBlockCieComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.deleteIssueMaps(observationId);
+          //this.deleteIssueMaps(observationId);
           this.observationSvc.deleteObservation(observationId).subscribe();
           let deleteIndex = null;
 

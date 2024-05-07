@@ -216,6 +216,17 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
+import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
+import { CieBackgroundComponent } from './assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
+import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
+import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
+import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
+import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
+import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
+import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-all-questions.component';
+import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
+import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
+import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 
 const appRoutes: Routes = [
@@ -319,6 +330,10 @@ const appRoutes: Routes = [
         path: 'examination-merge',
         component: MergeExaminationsComponent
       },
+      {
+        path: 'merge-cie-analysis',
+        component: MergeCieAnalysisComponent
+      },
 
       {
         path: 'assessment/:id',
@@ -340,6 +355,9 @@ const appRoutes: Routes = [
               { path: 'info-config-iod', component: AssessmentConfigIodComponent },
               { path: 'demographics', component: AssessmentInfoNcuaComponent },
               { path: 'model-select', component: ModelSelectComponent },
+              { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
+              { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
+              { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
               { path: 'tutorial-cmmc', component: TutorialCmmcComponent },
               { path: 'tutorial-cmmc2', component: TutorialCmmc2Component },
               { path: 'tutorial-edm', component: TutorialEdmComponent },
@@ -354,13 +372,28 @@ const appRoutes: Routes = [
                 { path: 'background-cie', component: BackgroundCieComponent },
                 { path: 'principles-cie', component: PrinciplesCieComponent },
                 { path: 'lifecycle-cie', component: LifecycleCieComponent },
-                { path: 'how-to-use-cie', component: HowToUseCieComponent }
+                ]
+              },
+              { path: 'cie-example', 
+                component: CieExampleComponent, 
+                canActivate: [AssessGuard],
+                canActivateChild: [AssessGuard],
+                children: [
+                  { path: 'cie-background', component: CieBackgroundComponent },
+                  { path: 'cie-analysis', 
+                    component: CieAnalysisComponent,
+                    canActivate: [AssessGuard],
+                    canActivateChild: [AssessGuard],
+                    children: [
+                      { path: 'applying-cie', component: ApplyingCieComponent },
+                      { path: 'principle-analysis-cie/:pri', component: PrincipleAnalysisCieComponent }
+                    ]
+                  },
+                  { path: 'cie-analysis-matrix', component: CieAnalysisMatrixComponent },
                 ]
               },
               { path: 'config-cis', component: ConfigCisComponent },
-              { path: 'assessment-detail-cie', component: AssessmentDetailCieComponent },
-              { path: 'assessment-info-cie', component: AssessmentInfoCieComponent },
-              { path: 'assessment-config-cie', component: AssessmentConfigCieComponent },
+              { path: 'how-to-use-cie', component: HowToUseCieComponent },
               { path: 'cmmc-levels', component: CmmcLevelsComponent },
               { path: 'csi', component: CsiComponent },
               { path: 'sal', component: SalsComponent },
@@ -420,7 +453,6 @@ const appRoutes: Routes = [
               { path: 'mvra-summary-page', component: MvraSummaryPageComponent },
               { path: 'cpg-summary-page', component: CpgSummaryComponent },
               { path: 'cpg-practices-page', component: CpgPracticesComponent },
-
               { path: 'analysis', component: AnalysisComponent },
               { path: 'dashboard', component: DashboardComponent },
               { path: 'ranked-questions', component: RankedQuestionsComponent },
@@ -514,6 +546,10 @@ const appRoutes: Routes = [
       { path: 'isedonutchart', component: IseDonutChartComponent },
       { path: 'isemerit', component: IseMeritComponent },
       { path: 'isedata', component: IseDataComponent },
+      { path: 'cieAllQuestions', component: CieAllQuestionsComponent },
+      { path: 'ciePrincipleOnly', component: CiePrincipleOnlyComponent },
+      { path: 'ciePrinciplePhase', component: CiePrinciplePhaseComponent },
+      { path: 'cieNotApplicable', component: CieNotApplicableComponent },
       { path: 'crrreport', component: CrrReportComponent },
       { path: 'crrDeficiencyReport', component: CrrDeficiencyComponent },
       { path: 'crrCommentsMarked', component: CrrCommentsMarkedComponent },
