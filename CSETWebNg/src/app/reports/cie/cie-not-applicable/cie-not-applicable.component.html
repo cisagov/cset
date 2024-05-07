@@ -99,7 +99,7 @@
                 <td></td>
                 <td>Question</td>
                 <td></td>
-                <td>Answer</td>
+                <td>Response Given</td>
             </tr>
             <ng-container *ngFor="let d of response?.matAnsweredQuestions">
                 <ng-container *ngFor="let f of d.assessmentFactors">
@@ -118,7 +118,7 @@
                         <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5'">
                             <td class="font-weight-bold text-nowrap">{{q.title}}</td>
                             <td class="pr-5" colspan="2" [innerHTML]="q.questionText"></td>
-                            <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? '' : 'NA')"></td>
+                            <td class="pr-5" [innerHTML]="(q.answerText == 'U' ? (q.freeResponseText != null ? 'Yes' : 'No') : 'NA')"></td>
                         </tr>
                         <tr *ngIf="q.title != 'Question K' && shouldExpand('Principle_' + f.title) && q.maturityLevel == '5' && q.freeResponseText != null"
                             >
