@@ -131,10 +131,11 @@ namespace CSETWebCore.Api.Controllers
         /// </summary>
         [HttpGet]
         [Route("api/MaturityQuestions")]
-        public IActionResult GetQuestions([FromQuery] string installationMode, bool fill, int groupingId = 0)
+        public IActionResult GetQuestions(bool fill, int groupingId = 0)
         {
             int assessmentId = _tokenManager.AssessmentForUser();
             string lang = _tokenManager.GetCurrentLanguage();
+            string installationMode = _tokenManager.Payload("scope");
 
             if (installationMode == "ACET")
             {

@@ -39,7 +39,7 @@ export class RelationshipFormationComponent implements OnInit {
   }
 
   getQuestions() {
-    this.maturitySvc.getQuestionsList('', true).subscribe((resp: MaturityQuestionResponse) => {
+    this.maturitySvc.getQuestionsList(true).subscribe((resp: MaturityQuestionResponse) => {
 
       this.maturitySvc.domains = resp.groupings.filter(x => x.groupingType == 'Domain');
 
