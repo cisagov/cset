@@ -9,7 +9,7 @@ to synchronize it with:
 
 You are recommended to back up your database before running this script
 
-Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/7/2024 3:29:25 PM
+Script created by SQL Data Compare version 14.10.9.22680 from Red Gate Software Ltd at 5/8/2024 9:22:54 AM
 
 */
 		
@@ -28,6 +28,39 @@ BEGIN TRANSACTION
 PRINT(N'Drop constraints from [dbo].[MATURITY_REFERENCE_TEXT]')
 ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
 
+PRINT(N'Drop constraints from [dbo].[MATURITY_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_LEVELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK__HYDRO_DAT__Mat_Q__38652BE2 from [dbo].[HYDRO_DATA]')
+ALTER TABLE [dbo].[HYDRO_DATA] NOCHECK CONSTRAINT [FK__HYDRO_DAT__Mat_Q__38652BE2]
+
+PRINT(N'Drop constraint FK_MATURITY_QUESTIONS_MAT_QUESTION_ID from [dbo].[ISE_ACTIONS]')
+ALTER TABLE [dbo].[ISE_ACTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MAT_QUESTION_ID]
+
+PRINT(N'Drop constraint FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1 from [dbo].[MATURITY_ANSWER_OPTIONS]')
+ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] NOCHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
+
+PRINT(N'Drop constraint FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS from [dbo].[MATURITY_QUESTION_PROPS]')
+ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_REFERENCES_MATURITY_QUESTIONS from [dbo].[MATURITY_REFERENCES]')
+ALTER TABLE [dbo].[MATURITY_REFERENCES] NOCHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS from [dbo].[MATURITY_SOURCE_FILES]')
+ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] NOCHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS from [dbo].[MATURITY_SUB_MODEL_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_SUB_MODEL_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS]
+
+PRINT(N'Drop constraint FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS from [dbo].[TTP_MAT_QUESTION]')
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] NOCHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+
 PRINT(N'Drop constraints from [dbo].[GEN_FILE_LIB_PATH_CORL]')
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] NOCHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
@@ -38,9 +71,6 @@ ALTER TABLE [dbo].[MATURITY_GROUPINGS] NOCHECK CONSTRAINT [FK_MATURITY_GROUPINGS
 
 PRINT(N'Drop constraint FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS from [dbo].[MATURITY_DOMAIN_REMARKS]')
 ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] NOCHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
-
-PRINT(N'Drop constraint FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS from [dbo].[MATURITY_QUESTIONS]')
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] NOCHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
 
 PRINT(N'Drop constraints from [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] NOCHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
@@ -136,6 +166,553 @@ UPDATE [dbo].[MATURITY_REFERENCE_TEXT] SET [Reference_Text]=N'<div class="sub-he
 UPDATE [dbo].[MATURITY_REFERENCE_TEXT] SET [Reference_Text]=N'<div class="sub-header-1 mb-3">References</div><div class="mb-4"><span class="sub-header-1">NIST CSF v1.1 (2018):</span> <a href="{{ cset_refdoc_url }}3866#ID.RA-1" target="_blank">ID.RA-1</a>, <a href="{{ cset_refdoc_url }}3866#PR.IP-12" target="_blank">PR.IP-12</a>, <a href="{{ cset_refdoc_url }}3866#DE.AE-2" target="_blank">DE.AE-2</a>, <a href="{{ cset_refdoc_url }}3866#DE.CM-8" target="_blank">DE.CM-8</a>, <a href="{{ cset_refdoc_url }}3866#DE.DP-4" target="_blank">DE.DP-4</a>, <a href="{{ cset_refdoc_url }}3866#DE.DP-5" target="_blank">DE.DP-5</a>, <a href="{{ cset_refdoc_url }}3866#RS.AN-1" target="_blank">RS.AN-1</a>, <a href="{{ cset_refdoc_url }}3866#RS.MI-3" target="_blank">RS.MI-3</a></div><div class="mb-4"><span class="sub-header-1">NIST SP 800-53 Rev. 5 (2020):</span> <a href="{{ cset_refdoc_url }}3886#RA-5" target="_blank">RA-5</a>, <a href="{{ cset_refdoc_url }}3886#SI-2" target="_blank">SI-2</a></div><div class="mb-4"><span class="sub-header-1">NIST SP 800-82 Rev. 2 (2015):</span> <a href="{{ cset_refdoc_url }}2681#6.2.17.3 Patch Magement" target="_blank">6.2.17.3 Patch Magement</a></div><div class="sub-header-1">Threats Addressed</div><div class="mb-4"><ul><li>Tampering</li><li>Privilege Escalation </li><li>Lateral Movement</li></ul></div><div class="mb-4"><span class="sub-header-1">MITRE TTPs:</span> <a href="https://attack.mitre.org/tactics/TA0105/" target="_blank">TA0105</a>, <a href="https://attack.mitre.org/tactics/TA0109/" target="_blank">TA0109</a>, <a href="https://attack.mitre.org/tactics/TA0111/" target="_blank">TA0111</a></div>' WHERE [Mat_Question_Id] = 6899 AND [Sequence] = 1
 PRINT(N'Operation applied to 69 rows out of 69')
 
+PRINT(N'Update rows in [dbo].[MATURITY_QUESTIONS]')
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1a' WHERE [Mat_Question_Id] = 10933
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 10a' WHERE [Mat_Question_Id] = 10960
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 10b' WHERE [Mat_Question_Id] = 10961
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 10c' WHERE [Mat_Question_Id] = 10962
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3d', [Parent_Question_Id]=10974 WHERE [Mat_Question_Id] = 10978
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3e' WHERE [Mat_Question_Id] = 10979
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3f' WHERE [Mat_Question_Id] = 10980
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3b', [Parent_Question_Id]=10990 WHERE [Mat_Question_Id] = 10992
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3c' WHERE [Mat_Question_Id] = 10993
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3d', [Parent_Question_Id]=10990 WHERE [Mat_Question_Id] = 10994
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3e' WHERE [Mat_Question_Id] = 10995
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3b', [Parent_Question_Id]=11002 WHERE [Mat_Question_Id] = 11004
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3c' WHERE [Mat_Question_Id] = 11005
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 11020
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c' WHERE [Mat_Question_Id] = 11021
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5b', [Parent_Question_Id]=11031 WHERE [Mat_Question_Id] = 11033
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5c' WHERE [Mat_Question_Id] = 11034
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11045 WHERE [Mat_Question_Id] = 11048
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2d' WHERE [Mat_Question_Id] = 11049
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5a' WHERE [Mat_Question_Id] = 11078
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6d', [Parent_Question_Id]=11079 WHERE [Mat_Question_Id] = 11083
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1a' WHERE [Mat_Question_Id] = 11101
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 11102
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c' WHERE [Mat_Question_Id] = 11103
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d' WHERE [Mat_Question_Id] = 11104
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1e' WHERE [Mat_Question_Id] = 11105
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1f', [Parent_Question_Id]=11100 WHERE [Mat_Question_Id] = 11106
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1g' WHERE [Mat_Question_Id] = 11107
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1h', [Parent_Question_Id]=11100 WHERE [Mat_Question_Id] = 11108
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1i' WHERE [Mat_Question_Id] = 11109
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6b', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11120
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6c', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11121
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6d' WHERE [Mat_Question_Id] = 11122
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6e', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11123
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6f', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11124
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6g', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11125
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6h', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11126
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 6i', [Parent_Question_Id]=11118 WHERE [Mat_Question_Id] = 11127
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 8c', [Parent_Question_Id]=11146 WHERE [Mat_Question_Id] = 11149
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2b', [Parent_Question_Id]=11151 WHERE [Mat_Question_Id] = 11153
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c' WHERE [Mat_Question_Id] = 11154
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1a' WHERE [Mat_Question_Id] = 11171
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 11172
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3a' WHERE [Mat_Question_Id] = 11192
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3b' WHERE [Mat_Question_Id] = 11193
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4a' WHERE [Mat_Question_Id] = 11195
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4b' WHERE [Mat_Question_Id] = 11196
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11200 WHERE [Mat_Question_Id] = 11203
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3c', [Parent_Question_Id]=11204 WHERE [Mat_Question_Id] = 11207
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5d', [Parent_Question_Id]=11265 WHERE [Mat_Question_Id] = 11269
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11270 WHERE [Mat_Question_Id] = 11274
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3c', [Parent_Question_Id]=11277 WHERE [Mat_Question_Id] = 11280
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3d' WHERE [Mat_Question_Id] = 11281
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3e', [Parent_Question_Id]=11277 WHERE [Mat_Question_Id] = 11282
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4c', [Parent_Question_Id]=11283 WHERE [Mat_Question_Id] = 11286
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4d' WHERE [Mat_Question_Id] = 11287
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5a' WHERE [Mat_Question_Id] = 11301
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11305 WHERE [Mat_Question_Id] = 11308
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2d' WHERE [Mat_Question_Id] = 11309
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11323 WHERE [Mat_Question_Id] = 11327
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c', [Parent_Question_Id]=11357 WHERE [Mat_Question_Id] = 11360
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11365 WHERE [Mat_Question_Id] = 11367
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4c', [Parent_Question_Id]=11377 WHERE [Mat_Question_Id] = 11380
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4d' WHERE [Mat_Question_Id] = 11381
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1a' WHERE [Mat_Question_Id] = 11389
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 11390
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11435 WHERE [Mat_Question_Id] = 11436
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11435 WHERE [Mat_Question_Id] = 11437
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11435 WHERE [Mat_Question_Id] = 11438
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11441 WHERE [Mat_Question_Id] = 11442
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11443 WHERE [Mat_Question_Id] = 11444
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11443 WHERE [Mat_Question_Id] = 11445
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4c', [Parent_Question_Id]=11443 WHERE [Mat_Question_Id] = 11446
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4d', [Parent_Question_Id]=11443 WHERE [Mat_Question_Id] = 11447
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11448 WHERE [Mat_Question_Id] = 11449
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11450 WHERE [Mat_Question_Id] = 11451
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11454 WHERE [Mat_Question_Id] = 11455
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11454 WHERE [Mat_Question_Id] = 11456
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11457 WHERE [Mat_Question_Id] = 11458
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2b' WHERE [Mat_Question_Id] = 11459
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11457 WHERE [Mat_Question_Id] = 11460
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11461 WHERE [Mat_Question_Id] = 11462
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11461 WHERE [Mat_Question_Id] = 11463
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11464 WHERE [Mat_Question_Id] = 11465
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11464 WHERE [Mat_Question_Id] = 11466
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11464 WHERE [Mat_Question_Id] = 11467
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11468 WHERE [Mat_Question_Id] = 11469
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11470 WHERE [Mat_Question_Id] = 11471
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2b' WHERE [Mat_Question_Id] = 11472
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11470 WHERE [Mat_Question_Id] = 11473
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2d', [Parent_Question_Id]=11470 WHERE [Mat_Question_Id] = 11474
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2e', [Parent_Question_Id]=11470 WHERE [Mat_Question_Id] = 11475
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11476 WHERE [Mat_Question_Id] = 11477
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11478 WHERE [Mat_Question_Id] = 11479
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11478 WHERE [Mat_Question_Id] = 11480
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11478 WHERE [Mat_Question_Id] = 11481
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11482 WHERE [Mat_Question_Id] = 11483
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11482 WHERE [Mat_Question_Id] = 11484
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11485 WHERE [Mat_Question_Id] = 11486
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11487 WHERE [Mat_Question_Id] = 11488
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11487 WHERE [Mat_Question_Id] = 11489
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c', [Parent_Question_Id]=11487 WHERE [Mat_Question_Id] = 11490
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11487 WHERE [Mat_Question_Id] = 11491
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11492 WHERE [Mat_Question_Id] = 11493
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11492 WHERE [Mat_Question_Id] = 11494
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11492 WHERE [Mat_Question_Id] = 11495
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11496 WHERE [Mat_Question_Id] = 11497
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11498 WHERE [Mat_Question_Id] = 11499
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11500 WHERE [Mat_Question_Id] = 11501
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11503 WHERE [Mat_Question_Id] = 11504
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11505 WHERE [Mat_Question_Id] = 11506
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11505 WHERE [Mat_Question_Id] = 11507
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11509 WHERE [Mat_Question_Id] = 11510
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11509 WHERE [Mat_Question_Id] = 11511
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11509 WHERE [Mat_Question_Id] = 11512
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11509 WHERE [Mat_Question_Id] = 11513
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11509 WHERE [Mat_Question_Id] = 11514
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11517 WHERE [Mat_Question_Id] = 11518
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11517 WHERE [Mat_Question_Id] = 11519
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11517 WHERE [Mat_Question_Id] = 11520
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11521 WHERE [Mat_Question_Id] = 11522
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11523 WHERE [Mat_Question_Id] = 11524
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11526 WHERE [Mat_Question_Id] = 11527
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11526 WHERE [Mat_Question_Id] = 11528
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11529 WHERE [Mat_Question_Id] = 11530
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11531 WHERE [Mat_Question_Id] = 11532
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11531 WHERE [Mat_Question_Id] = 11533
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11531 WHERE [Mat_Question_Id] = 11534
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11531 WHERE [Mat_Question_Id] = 11535
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11536 WHERE [Mat_Question_Id] = 11537
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11538 WHERE [Mat_Question_Id] = 11539
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11540 WHERE [Mat_Question_Id] = 11541
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11540 WHERE [Mat_Question_Id] = 11542
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11540 WHERE [Mat_Question_Id] = 11543
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11540 WHERE [Mat_Question_Id] = 11544
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11545 WHERE [Mat_Question_Id] = 11546
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11545 WHERE [Mat_Question_Id] = 11547
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11545 WHERE [Mat_Question_Id] = 11548
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11545 WHERE [Mat_Question_Id] = 11549
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11550 WHERE [Mat_Question_Id] = 11551
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11554 WHERE [Mat_Question_Id] = 11555
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11557 WHERE [Mat_Question_Id] = 11558
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11559 WHERE [Mat_Question_Id] = 11560
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11561 WHERE [Mat_Question_Id] = 11562
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11561 WHERE [Mat_Question_Id] = 11563
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11561 WHERE [Mat_Question_Id] = 11564
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11565 WHERE [Mat_Question_Id] = 11566
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11565 WHERE [Mat_Question_Id] = 11567
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11568 WHERE [Mat_Question_Id] = 11569
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11568 WHERE [Mat_Question_Id] = 11570
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11568 WHERE [Mat_Question_Id] = 11571
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11568 WHERE [Mat_Question_Id] = 11572
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11575
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11576
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11577
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2d', [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11578
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2e', [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11579
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2f', [Parent_Question_Id]=11574 WHERE [Mat_Question_Id] = 11580
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11582 WHERE [Mat_Question_Id] = 11583
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11582 WHERE [Mat_Question_Id] = 11584
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11582 WHERE [Mat_Question_Id] = 11585
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4d', [Parent_Question_Id]=11582 WHERE [Mat_Question_Id] = 11586
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11587 WHERE [Mat_Question_Id] = 11588
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11589 WHERE [Mat_Question_Id] = 11590
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11592
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11593
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11596
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9b', [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11597
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9c', [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11598
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9d', [Parent_Question_Id]=11591 WHERE [Mat_Question_Id] = 11599
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 10a', [Parent_Question_Id]=11600 WHERE [Mat_Question_Id] = 11601
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 10b', [Parent_Question_Id]=11600 WHERE [Mat_Question_Id] = 11602
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11603 WHERE [Mat_Question_Id] = 11604
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11603 WHERE [Mat_Question_Id] = 11605
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11603 WHERE [Mat_Question_Id] = 11606
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11603 WHERE [Mat_Question_Id] = 11607
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11608 WHERE [Mat_Question_Id] = 11609
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11608 WHERE [Mat_Question_Id] = 11610
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11608 WHERE [Mat_Question_Id] = 11611
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11612 WHERE [Mat_Question_Id] = 11613
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11612 WHERE [Mat_Question_Id] = 11614
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11612 WHERE [Mat_Question_Id] = 11615
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11612 WHERE [Mat_Question_Id] = 11616
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11617 WHERE [Mat_Question_Id] = 11618
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11617 WHERE [Mat_Question_Id] = 11619
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11620 WHERE [Mat_Question_Id] = 11621
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11620 WHERE [Mat_Question_Id] = 11622
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11623 WHERE [Mat_Question_Id] = 11624
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3b', [Parent_Question_Id]=11623 WHERE [Mat_Question_Id] = 11625
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11626 WHERE [Mat_Question_Id] = 11627
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11626 WHERE [Mat_Question_Id] = 11628
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11626 WHERE [Mat_Question_Id] = 11629
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11630 WHERE [Mat_Question_Id] = 11631
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11630 WHERE [Mat_Question_Id] = 11632
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11633 WHERE [Mat_Question_Id] = 11634
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11633 WHERE [Mat_Question_Id] = 11635
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11636 WHERE [Mat_Question_Id] = 11637
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11636 WHERE [Mat_Question_Id] = 11638
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11636 WHERE [Mat_Question_Id] = 11639
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11640 WHERE [Mat_Question_Id] = 11641
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11640 WHERE [Mat_Question_Id] = 11642
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11643 WHERE [Mat_Question_Id] = 11644
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11643 WHERE [Mat_Question_Id] = 11645
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11643 WHERE [Mat_Question_Id] = 11646
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11647 WHERE [Mat_Question_Id] = 11648
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11647 WHERE [Mat_Question_Id] = 11649
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11653
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11654
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11655
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7d', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11656
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7e', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11657
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7f', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11658
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7g', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11659
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7h', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11660
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 7i', [Parent_Question_Id]=11652 WHERE [Mat_Question_Id] = 11661
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11662 WHERE [Mat_Question_Id] = 11663
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11662 WHERE [Mat_Question_Id] = 11664
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 8c', [Parent_Question_Id]=11662 WHERE [Mat_Question_Id] = 11665
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11667
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11668
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9c', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11669
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9d', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11670
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9e', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11671
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9f', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11672
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9g', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11673
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9h', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11674
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9i', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11675
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9j', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11676
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9k', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11677
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 9l', [Parent_Question_Id]=11666 WHERE [Mat_Question_Id] = 11678
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11679 WHERE [Mat_Question_Id] = 11680
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 11681
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c', [Parent_Question_Id]=11679 WHERE [Mat_Question_Id] = 11682
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11679 WHERE [Mat_Question_Id] = 11683
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1e', [Parent_Question_Id]=11679 WHERE [Mat_Question_Id] = 11684
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11685 WHERE [Mat_Question_Id] = 11686
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11687 WHERE [Mat_Question_Id] = 11688
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11687 WHERE [Mat_Question_Id] = 11689
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11691 WHERE [Mat_Question_Id] = 11692
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11691 WHERE [Mat_Question_Id] = 11693
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11691 WHERE [Mat_Question_Id] = 11694
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11695 WHERE [Mat_Question_Id] = 11696
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11695 WHERE [Mat_Question_Id] = 11697
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11698 WHERE [Mat_Question_Id] = 11699
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11698 WHERE [Mat_Question_Id] = 11700
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11698 WHERE [Mat_Question_Id] = 11701
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11702 WHERE [Mat_Question_Id] = 11703
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11702 WHERE [Mat_Question_Id] = 11704
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11702 WHERE [Mat_Question_Id] = 11705
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11706 WHERE [Mat_Question_Id] = 11707
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11706 WHERE [Mat_Question_Id] = 11708
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11709 WHERE [Mat_Question_Id] = 11710
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11709 WHERE [Mat_Question_Id] = 11711
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11709 WHERE [Mat_Question_Id] = 11712
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11709 WHERE [Mat_Question_Id] = 11713
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11714 WHERE [Mat_Question_Id] = 11715
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11714 WHERE [Mat_Question_Id] = 11716
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11714 WHERE [Mat_Question_Id] = 11717
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11718 WHERE [Mat_Question_Id] = 11719
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11718 WHERE [Mat_Question_Id] = 11720
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11718 WHERE [Mat_Question_Id] = 11721
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11722 WHERE [Mat_Question_Id] = 11723
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11724 WHERE [Mat_Question_Id] = 11725
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11724 WHERE [Mat_Question_Id] = 11726
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11724 WHERE [Mat_Question_Id] = 11727
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11728 WHERE [Mat_Question_Id] = 11729
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11728 WHERE [Mat_Question_Id] = 11730
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11728 WHERE [Mat_Question_Id] = 11731
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11732 WHERE [Mat_Question_Id] = 11733
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11732 WHERE [Mat_Question_Id] = 11734
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11735 WHERE [Mat_Question_Id] = 11736
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11735 WHERE [Mat_Question_Id] = 11737
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11738 WHERE [Mat_Question_Id] = 11739
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11741 WHERE [Mat_Question_Id] = 11742
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11741 WHERE [Mat_Question_Id] = 11743
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11744 WHERE [Mat_Question_Id] = 11745
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11744 WHERE [Mat_Question_Id] = 11746
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11744 WHERE [Mat_Question_Id] = 11747
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11744 WHERE [Mat_Question_Id] = 11748
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11749 WHERE [Mat_Question_Id] = 11750
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11749 WHERE [Mat_Question_Id] = 11751
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11752 WHERE [Mat_Question_Id] = 11753
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11752 WHERE [Mat_Question_Id] = 11754
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11755 WHERE [Mat_Question_Id] = 11756
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11755 WHERE [Mat_Question_Id] = 11757
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11755 WHERE [Mat_Question_Id] = 11758
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11755 WHERE [Mat_Question_Id] = 11759
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11762 WHERE [Mat_Question_Id] = 11763
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11762 WHERE [Mat_Question_Id] = 11764
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11762 WHERE [Mat_Question_Id] = 11765
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11766 WHERE [Mat_Question_Id] = 11767
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11766 WHERE [Mat_Question_Id] = 11768
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11766 WHERE [Mat_Question_Id] = 11769
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11772 WHERE [Mat_Question_Id] = 11773
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11774 WHERE [Mat_Question_Id] = 11775
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11774 WHERE [Mat_Question_Id] = 11776
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11774 WHERE [Mat_Question_Id] = 11777
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11774 WHERE [Mat_Question_Id] = 11778
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11779 WHERE [Mat_Question_Id] = 11780
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11779 WHERE [Mat_Question_Id] = 11781
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11779 WHERE [Mat_Question_Id] = 11782
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11783 WHERE [Mat_Question_Id] = 11784
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11783 WHERE [Mat_Question_Id] = 11785
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11783 WHERE [Mat_Question_Id] = 11786
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11783 WHERE [Mat_Question_Id] = 11787
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11783 WHERE [Mat_Question_Id] = 11788
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11789 WHERE [Mat_Question_Id] = 11790
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11789 WHERE [Mat_Question_Id] = 11791
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11789 WHERE [Mat_Question_Id] = 11792
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11789 WHERE [Mat_Question_Id] = 11793
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11794 WHERE [Mat_Question_Id] = 11795
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11794 WHERE [Mat_Question_Id] = 11796
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11798 WHERE [Mat_Question_Id] = 11799
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11798 WHERE [Mat_Question_Id] = 11800
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11798 WHERE [Mat_Question_Id] = 11801
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11798 WHERE [Mat_Question_Id] = 11802
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11803 WHERE [Mat_Question_Id] = 11804
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11805 WHERE [Mat_Question_Id] = 11806
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11805 WHERE [Mat_Question_Id] = 11807
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11808 WHERE [Mat_Question_Id] = 11809
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11810 WHERE [Mat_Question_Id] = 11811
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11813
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11814
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11815
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11816
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1e', [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11817
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1f', [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11818
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1g', [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11819
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1h', [Parent_Question_Id]=11812 WHERE [Mat_Question_Id] = 11820
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11821 WHERE [Mat_Question_Id] = 11822
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2b' WHERE [Mat_Question_Id] = 11823
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2c', [Parent_Question_Id]=11821 WHERE [Mat_Question_Id] = 11824
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2d', [Parent_Question_Id]=11821 WHERE [Mat_Question_Id] = 11825
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11826 WHERE [Mat_Question_Id] = 11827
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3b' WHERE [Mat_Question_Id] = 11828
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3c', [Parent_Question_Id]=11826 WHERE [Mat_Question_Id] = 11829
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3d', [Parent_Question_Id]=11826 WHERE [Mat_Question_Id] = 11830
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11832 WHERE [Mat_Question_Id] = 11833
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11832 WHERE [Mat_Question_Id] = 11834
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11832 WHERE [Mat_Question_Id] = 11835
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11832 WHERE [Mat_Question_Id] = 11836
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11838 WHERE [Mat_Question_Id] = 11839
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11838 WHERE [Mat_Question_Id] = 11840
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11841 WHERE [Mat_Question_Id] = 11842
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11841 WHERE [Mat_Question_Id] = 11843
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11841 WHERE [Mat_Question_Id] = 11844
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11845 WHERE [Mat_Question_Id] = 11846
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11847 WHERE [Mat_Question_Id] = 11848
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11847 WHERE [Mat_Question_Id] = 11849
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11847 WHERE [Mat_Question_Id] = 11850
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11847 WHERE [Mat_Question_Id] = 11851
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11847 WHERE [Mat_Question_Id] = 11852
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11853 WHERE [Mat_Question_Id] = 11854
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11855 WHERE [Mat_Question_Id] = 11856
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11857 WHERE [Mat_Question_Id] = 11858
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11857 WHERE [Mat_Question_Id] = 11859
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4c', [Parent_Question_Id]=11857 WHERE [Mat_Question_Id] = 11860
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4d', [Parent_Question_Id]=11857 WHERE [Mat_Question_Id] = 11861
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4e' WHERE [Mat_Question_Id] = 11862
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5a', [Parent_Question_Id]=11862 WHERE [Mat_Question_Id] = 11863
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11864 WHERE [Mat_Question_Id] = 11865
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11864 WHERE [Mat_Question_Id] = 11866
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11864 WHERE [Mat_Question_Id] = 11867
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11869 WHERE [Mat_Question_Id] = 11870
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11869 WHERE [Mat_Question_Id] = 11871
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11869 WHERE [Mat_Question_Id] = 11872
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11874 WHERE [Mat_Question_Id] = 11875
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11874 WHERE [Mat_Question_Id] = 11876
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11874 WHERE [Mat_Question_Id] = 11877
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11878 WHERE [Mat_Question_Id] = 11879
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11880 WHERE [Mat_Question_Id] = 11881
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11880 WHERE [Mat_Question_Id] = 11882
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11883 WHERE [Mat_Question_Id] = 11884
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11887 WHERE [Mat_Question_Id] = 11888
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11887 WHERE [Mat_Question_Id] = 11889
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11887 WHERE [Mat_Question_Id] = 11890
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11893 WHERE [Mat_Question_Id] = 11894
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11893 WHERE [Mat_Question_Id] = 11895
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11897 WHERE [Mat_Question_Id] = 11898
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11899 WHERE [Mat_Question_Id] = 11900
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11902 WHERE [Mat_Question_Id] = 11903
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11902 WHERE [Mat_Question_Id] = 11904
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3a', [Parent_Question_Id]=11908 WHERE [Mat_Question_Id] = 11909
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4a', [Parent_Question_Id]=11910 WHERE [Mat_Question_Id] = 11911
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2a', [Parent_Question_Id]=11915 WHERE [Mat_Question_Id] = 11916
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2b' WHERE [Mat_Question_Id] = 11917
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11918 WHERE [Mat_Question_Id] = 11919
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4a', [Parent_Question_Id]=11920 WHERE [Mat_Question_Id] = 11921
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5a', [Parent_Question_Id]=11922 WHERE [Mat_Question_Id] = 11923
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5b', [Parent_Question_Id]=11922 WHERE [Mat_Question_Id] = 11924
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5c', [Parent_Question_Id]=11922 WHERE [Mat_Question_Id] = 11925
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11930 WHERE [Mat_Question_Id] = 11931
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11930 WHERE [Mat_Question_Id] = 11932
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11930 WHERE [Mat_Question_Id] = 11933
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11938 WHERE [Mat_Question_Id] = 11939
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11938 WHERE [Mat_Question_Id] = 11940
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11943
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11944
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1c', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11945
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1d', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11946
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1e', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11947
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1f', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11948
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1g', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11949
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1h', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11950
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1i', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11951
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1j', [Parent_Question_Id]=11942 WHERE [Mat_Question_Id] = 11952
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11953 WHERE [Mat_Question_Id] = 11954
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11953 WHERE [Mat_Question_Id] = 11955
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11953 WHERE [Mat_Question_Id] = 11956
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11958 WHERE [Mat_Question_Id] = 11959
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11958 WHERE [Mat_Question_Id] = 11960
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11961 WHERE [Mat_Question_Id] = 11962
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11961 WHERE [Mat_Question_Id] = 11963
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11964 WHERE [Mat_Question_Id] = 11965
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11967 WHERE [Mat_Question_Id] = 11968
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11972 WHERE [Mat_Question_Id] = 11973
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11974 WHERE [Mat_Question_Id] = 11975
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11974 WHERE [Mat_Question_Id] = 11976
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11977 WHERE [Mat_Question_Id] = 11978
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 3a', [Parent_Question_Id]=11980 WHERE [Mat_Question_Id] = 11981
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11990 WHERE [Mat_Question_Id] = 11991
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11990 WHERE [Mat_Question_Id] = 11992
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11990 WHERE [Mat_Question_Id] = 11993
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11990 WHERE [Mat_Question_Id] = 11994
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11990 WHERE [Mat_Question_Id] = 11995
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=11998 WHERE [Mat_Question_Id] = 11999
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12000 WHERE [Mat_Question_Id] = 12001
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12000 WHERE [Mat_Question_Id] = 12002
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12003 WHERE [Mat_Question_Id] = 12004
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12003 WHERE [Mat_Question_Id] = 12005
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12008 WHERE [Mat_Question_Id] = 12009
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12008 WHERE [Mat_Question_Id] = 12010
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12008 WHERE [Mat_Question_Id] = 12011
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12012 WHERE [Mat_Question_Id] = 12013
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12015 WHERE [Mat_Question_Id] = 12016
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12018 WHERE [Mat_Question_Id] = 12019
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12018 WHERE [Mat_Question_Id] = 12020
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12018 WHERE [Mat_Question_Id] = 12021
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12022 WHERE [Mat_Question_Id] = 12023
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12022 WHERE [Mat_Question_Id] = 12024
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12022 WHERE [Mat_Question_Id] = 12025
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12027 WHERE [Mat_Question_Id] = 12028
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2a', [Parent_Question_Id]=12029 WHERE [Mat_Question_Id] = 12030
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1a', [Parent_Question_Id]=12031 WHERE [Mat_Question_Id] = 12032
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 1b' WHERE [Mat_Question_Id] = 12033
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12035 WHERE [Mat_Question_Id] = 12036
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12035 WHERE [Mat_Question_Id] = 12037
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12038 WHERE [Mat_Question_Id] = 12039
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12038 WHERE [Mat_Question_Id] = 12040
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12042 WHERE [Mat_Question_Id] = 12043
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12045 WHERE [Mat_Question_Id] = 12046
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12047 WHERE [Mat_Question_Id] = 12048
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5b' WHERE [Mat_Question_Id] = 12049
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 5c', [Parent_Question_Id]=12047 WHERE [Mat_Question_Id] = 12050
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12052 WHERE [Mat_Question_Id] = 12053
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12052 WHERE [Mat_Question_Id] = 12054
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12052 WHERE [Mat_Question_Id] = 12055
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 2a', [Parent_Question_Id]=12060 WHERE [Mat_Question_Id] = 12061
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12069 WHERE [Mat_Question_Id] = 12070
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4a', [Parent_Question_Id]=12072 WHERE [Mat_Question_Id] = 12073
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Question_Title]=N'Question 4b' WHERE [Mat_Question_Id] = 12074
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12077 WHERE [Mat_Question_Id] = 12078
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Parent_Question_Id]=12079 WHERE [Mat_Question_Id] = 12080
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12084
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12085
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12086
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12087
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12088
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12089
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2621 WHERE [Mat_Question_Id] = 12090
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12091
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12092
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12093
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12094
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12095
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2622 WHERE [Mat_Question_Id] = 12096
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12097
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12098
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12099
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12100
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12101
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12102
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2623 WHERE [Mat_Question_Id] = 12103
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2624 WHERE [Mat_Question_Id] = 12104
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2624 WHERE [Mat_Question_Id] = 12105
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2624 WHERE [Mat_Question_Id] = 12106
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2624 WHERE [Mat_Question_Id] = 12107
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2624 WHERE [Mat_Question_Id] = 12108
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12109
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12110
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12111
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12112
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12113
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12114
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2625 WHERE [Mat_Question_Id] = 12115
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12116
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12117
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12118
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12119
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12120
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12121
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2626 WHERE [Mat_Question_Id] = 12122
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12123
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12124
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12125
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12126
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12127
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2627 WHERE [Mat_Question_Id] = 12128
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12129
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12130
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12131
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12132
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12133
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12134
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12135
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2628 WHERE [Mat_Question_Id] = 12136
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12137
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12138
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12139
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12140
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12141
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12142
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2629 WHERE [Mat_Question_Id] = 12143
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12144
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12145
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12146
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12147
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12148
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12149
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2630 WHERE [Mat_Question_Id] = 12150
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2631 WHERE [Mat_Question_Id] = 12151
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2631 WHERE [Mat_Question_Id] = 12152
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2631 WHERE [Mat_Question_Id] = 12153
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2631 WHERE [Mat_Question_Id] = 12154
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2631 WHERE [Mat_Question_Id] = 12155
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12156
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12157
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12158
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12159
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12160
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12161
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12162
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2632 WHERE [Mat_Question_Id] = 12163
+UPDATE [dbo].[MATURITY_QUESTIONS] SET [Grouping_Id]=2732 WHERE [Mat_Question_Id] = 12164
+PRINT(N'Operation applied to 544 rows out of 544')
+
 PRINT(N'Update rows in [dbo].[MATURITY_GROUPINGS]')
 UPDATE [dbo].[MATURITY_GROUPINGS] SET [Description_Extended]=N'<h2>Principle 1: Consequence-Focused Design</h2><p><strong>Key Question: How do I understand what critical functions my system must ensure and the undesired consequences it must prevent?</strong></p><p>Explicitly include cyber-enabled failure modes in design practices. While engineering processes previously used by the utility included the long-standing engineering practice of preventing failure scenarios, there was no discussion of cyber-enabled failure scenarios. Engineering processes now explicitly articulate and discuss cyber-enabled failure scenarios. This discussion begins with the utility’s critical functions and the associated consequences to those critical functions being compromised are included in Table below.</p><img src="../../../../../assets/images/CIE/08_CriticalFunctionsAssociatedConsequencesDrinkingWaterSystem_p147.svg"><p>The utility’s systems, assets, and people are focused on achieving the mission and critical functions listed above. Through various assessments, the utility has identified uniquely critical assets including:</p><ul><li>Pumps</li><li>Motors</li><li>Variable frequency drives (VFDs)</li><li>Water transmission and distribution mains</li></ul><p>Cyber-enabled failure scenarios may be associated with each of these types of assets. The subsequent principles and associated examples were identified for implementation to control or mitigate cyber-enabled failure scenarios.</p><p>Supporting assumptions include:</p><ul><li>The adversary has logical and physical access.</li><li>The adversary is knowledgeable of critical equipment, processes, and how to cause impact in the system.</li><li>The adversary is well-resourced and capable.</li></ul><h4>Concept Question: What is the purpose of this system?</h4><ol><li>By considering the purpose of each system it can become easier to identify what the consequence would be for the overall plant.<ol type="a"><li>After mapping out each consequence for an impacted system it will clearly define which processes/assets/systems are critical and which are not.</li><li>Establishing a focus on consequences will make the implementation of a resilient system easier.</li></ol></li></ol><p><strong>Example:</strong> When considering any changes to design and operation, each person should “engineer-out” cyber-enabled failure scenarios and the consequences of losing critical functions.</p>' WHERE [Grouping_Id] = 2621
 UPDATE [dbo].[MATURITY_GROUPINGS] SET [Description_Extended]=N'<h2>Principle 2: Engineered Controls</h2><p><strong>Key Question: How do I select and implement controls to reduce avenues for attack or the damage that could result?</strong></p><ol><li>The use of hard-wired signals in combination with digital technologies will minimize the damage which could result from a cyber-attack by allowing operators to monitor and operate key functions without the use of their SCADA system.<ol type="a"><li>Development of digital technologies implemented at utility facilities over the last decade has seen a significant increase in devices utilizing industrial internet of things (IIoT). One set of devices that uses data communications to monitor and even control motors are advanced motor management devices (AMMD) and variable frequency drives (VFDs). These devices have traditionally been used to provide overload protection for the motor. Now, these components that are routinely connected to the SCADA network have been provided with advanced motor protection monitoring and can even be used to monitor and control the process by adding remote I/O capability.</li><li>Programmable logic controller (PLC) hardware has proven to be extremely robust with few hardware failures. This, combined with the flexibility of being able to make programming changes to logic, has led some designers to rely on the PLC to perform all process logic and protection schemes. This occurs when the AMMD is connected to the SCADA system and all field sensor wires are connected directly to the PLC hardware or AMMD remote I/O, instead of hardwired to the motor starter. For water and wastewater (W/WW) facilities, this can introduce the risk that operators cannot perform critical functions such as losing control of a motor when the starter is in either REMOTE or LOCAL mode.</li><li>Problems can arise when the network becomes unavailable, or a PLC is compromised. When the network becomes unavailable, either due to cyber-attack or failure, the data monitored by the module inputs are not available to the SCADA system. This can impact the process control if the PLC is used to activate an interlock, such as tank low level shutdown or pump discharge high pressure shutdown of a booster pump. Also, any output data points may become unresponsive. This is particularly an issue when PLC/controller logic is used to activate alarm conditions or start the pump. Another example could involve a bad actor disabling interlocks to cause asset damage or unsafe conditions to personnel.</li></ol></li></ol><h4>Concept Question: What key functional controls of my system are dependent on digital technologies?</h4><ol><li>The utility has multiple functional controls that are dependent on digital technologies, such as tank low level alarms and pump control. By identifying each of these signals and determining which are key for plant operation the utility can begin to apply the principles of CIE and seek methods for improving resilience.<ol type="a"><li>The utility is using these digital signals to allow a single operator to quickly operate the plant from a central location, minimizing the need for extra staff and allowing simultaneous monitoring of multiple functions across the plant. This control also allows operators to remotely access monitoring and control of certain plant operations.</li><li>This dependency on key digital signals introduces the risk of losing the ability to control the plant in the event of a network loss due to malfunction or compromise. This could lead to damaged equipment, injured personnel, and risk to the public in the form of undrinkable water or environmental hazards from an overflow of wastewater.</li></ol></li></ol><p><strong>Example:</strong> Wire instrumentation signals directly to applicable motor starters to provide equipment and personnel protection for all modes of operation, even if the network or PLC have been compromised. Plan for all failure modes. Refer to the first figure for an example creating risk. Refer to the second figure below for an example that minimizes avenues for attack. Brief descriptions of the differences between the designs presented in the schematics are included in the figures.</p><img src="../../../../../assets/images/CIE/09_ExampleSchematicIncrease_p150.svg" alt="Example Schematic that Increases Risk"><img src="../../../../../assets/images/CIE/10_ExampleSchematicMinimize_p150.svg" alt="Example Schematic that Minimizes Risk">' WHERE [Grouping_Id] = 2622
@@ -167,6 +744,22 @@ INSERT INTO [dbo].[GEN_FILE_LIB_PATH_CORL] ([Gen_File_Id], [Lib_Path_Id]) VALUES
 PRINT(N'Add constraints to [dbo].[MATURITY_REFERENCE_TEXT]')
 ALTER TABLE [dbo].[MATURITY_REFERENCE_TEXT] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_REFERENCE_TEXT_MATURITY_QUESTIONS]
 
+PRINT(N'Add constraints to [dbo].[MATURITY_QUESTIONS]')
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK__MATURITY___Matur__5B638405]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_LEVELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_MODELS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_OPTIONS]
+ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_QUESTION_TYPES]
+ALTER TABLE [dbo].[HYDRO_DATA] WITH CHECK CHECK CONSTRAINT [FK__HYDRO_DAT__Mat_Q__38652BE2]
+ALTER TABLE [dbo].[ISE_ACTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MAT_QUESTION_ID]
+ALTER TABLE [dbo].[MATURITY_ANSWER_OPTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_ANSWER_OPTIONS_MATURITY_QUESTIONS1]
+ALTER TABLE [dbo].[MATURITY_QUESTION_PROPS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTION_PROPS_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_REFERENCES] CHECK CONSTRAINT [FK_MATURITY_REFERENCES_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_SOURCE_FILES] CHECK CONSTRAINT [FK_MATURITY_SOURCE_FILES_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[MATURITY_SUB_MODEL_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_SUB_MODEL_QUESTIONS_MATURITY_QUESTIONS]
+ALTER TABLE [dbo].[TTP_MAT_QUESTION] WITH CHECK CHECK CONSTRAINT [FK_TTP_MAT_QUESTION_MATURITY_QUESTIONS]
+
 PRINT(N'Add constraints to [dbo].[GEN_FILE_LIB_PATH_CORL]')
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_GEN_FILE]
 ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PATH_CORL_REF_LIBRARY_PATH]
@@ -174,7 +767,6 @@ ALTER TABLE [dbo].[GEN_FILE_LIB_PATH_CORL] CHECK CONSTRAINT [FK_GEN_FILE_LIB_PAT
 PRINT(N'Add constraints to [dbo].[MATURITY_GROUPINGS]')
 ALTER TABLE [dbo].[MATURITY_GROUPINGS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_GROUPINGS_MATURITY_GROUPING_TYPES]
 ALTER TABLE [dbo].[MATURITY_DOMAIN_REMARKS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_DOMAIN_REMARKS_MATURITY_GROUPINGS]
-ALTER TABLE [dbo].[MATURITY_QUESTIONS] WITH CHECK CHECK CONSTRAINT [FK_MATURITY_QUESTIONS_MATURITY_GROUPINGS]
 
 PRINT(N'Add constraints to [dbo].[GEN_FILE]')
 ALTER TABLE [dbo].[GEN_FILE] WITH CHECK CHECK CONSTRAINT [FK_GEN_FILE_FILE_REF_KEYS]
