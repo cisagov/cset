@@ -156,7 +156,7 @@ export class MergeCieAnalysisComponent implements OnInit {
         console.log(myIssues)
 
         if (myIssues.length > 0) {
-          this.maturitySvc.getQuestionsList("CIE", false).subscribe(
+          this.maturitySvc.getQuestionsList(false).subscribe(
             (response: any) => {
               for (let i = 0; i < response.groupings[0].subGroupings.length; i++) {
                 for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
@@ -181,7 +181,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.cieSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
-      this.maturitySvc.getQuestionsList("CIE", false).subscribe(
+      this.maturitySvc.getQuestionsList(false).subscribe(
         (response: any) => {
           this.dataReceivedCount++;
           this.aggregateExistingAnswers(response);
@@ -604,7 +604,7 @@ export class MergeCieAnalysisComponent implements OnInit {
 
               // Send off a list of the assessment's new answers to the API to save.
               this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
-                this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+                this.maturitySvc.getQuestionsList(false).subscribe(
                   (questionListResponse: MaturityQuestionResponse) => {
 
                     // Grab all the new answer_id's to save Issues to the new questions
