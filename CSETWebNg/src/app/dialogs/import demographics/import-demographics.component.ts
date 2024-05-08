@@ -21,7 +21,6 @@
 //  SOFTWARE.
 //
 ////////////////////////////////
-import { ImportAssessmentService } from './../../services/import-assessment.service';
 import { FileUploadClientService } from '../../services/file-client.service';
 import { DiagramService } from './../../services/diagram.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
@@ -64,9 +63,7 @@ export class UploadDemographicsComponent implements OnInit {
     public newDialog: MatDialog,
     private importSvc: ImportDemographicService,
     private fileSvc: FileUploadClientService,
-    private diagramSvc: DiagramService,
     private configSvc: ConfigService,
-    private ncuaSvc: NCUAService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -128,10 +125,8 @@ export class UploadDemographicsComponent implements OnInit {
     this.uploading = true;
 
     // start the upload and save the progress map
-
-   
     this.progress = this.importSvc.upload(this.files, this.data.IsNormalLoad, this.password);
-    
+
 
     // convert the progress map into an array
     const allProgressObservables = [];
@@ -169,7 +164,7 @@ export class UploadDemographicsComponent implements OnInit {
             this.canBeClosed = true;
             this.dialog.disableClose = false;
             this.statusText = fail.message;
-            if (fail.message.includes("File requires a password")) {
+            if (fail.code == 80) {
               this.passwordRequired = true;
             }
           }
