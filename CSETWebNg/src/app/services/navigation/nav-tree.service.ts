@@ -42,7 +42,7 @@ export class NavTreeService {
   workflow: Document
 
   sideNavScrollLocation = 0;
-
+  
   public currentPage: string;
 
   public magic: string;
@@ -82,13 +82,39 @@ export class NavTreeService {
     this.tocControl.dataNodes = this.dataSource.data;
 
     this.setQuestionsTree();
+    
+    // start of new stuff
+    let exampleExpanded = true;
+    let tutorialExpanded = true;
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      console.log('find example')
+      console.log(this.findInTree(this.tocControl.dataNodes, 'cie-example'))
+      exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
+      tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
+    }
+    // end for now
 
     this.tocControl.expandAll();
 
-    // if (this.assessSvc.usesMaturityModel('CIE')) {
-    //   let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-    //   this.tocControl.collapse(temp);
-    // }
+    // start of new stuff
+    if (!tutorialExpanded) {
+      let temp = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
+      this.tocControl.collapse(temp);
+    } else {
+      let temp = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
+      this.tocControl.expand(temp);
+    }
+    console.log('tutorial: ' + tutorialExpanded)
+    
+    if (!exampleExpanded) {
+      let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
+      this.tocControl.collapse(temp);
+    } else {
+      let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
+      this.tocControl.expand(temp);
+    }
+    console.log('example: ' + exampleExpanded)
+    // end of new stuff
 
     this.isNavLoading = false;
   }
@@ -245,6 +271,7 @@ export class NavTreeService {
       if (!!currentNode) {
         currentNode.isCurrent = true;
         this.currentPage = currentNode.value;
+        this.setSideNavScrollLocation(currentNode.value);
       }
     }, delay);
   }

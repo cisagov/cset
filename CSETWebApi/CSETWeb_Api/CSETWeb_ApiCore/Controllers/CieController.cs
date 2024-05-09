@@ -1,10 +1,12 @@
-﻿using CSETWebCore.DataLayer.Model;
+﻿using CSETWebCore.Business.Authorization;
+using CSETWebCore.DataLayer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace CSETWebCore.Api.Controllers
 {
+    [CsetAuthorize]
     [ApiController]
     public class CieController : ControllerBase
     {
