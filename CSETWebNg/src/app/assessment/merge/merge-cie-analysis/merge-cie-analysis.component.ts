@@ -105,7 +105,8 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.pageLoading = true;
     this.getPrimaryAssessDetails();
     this.getConflicts();
-    // this.getIssues();
+    this.getIssues();
+
     this.getExistingAssessmentAnswers();
     
   }
@@ -146,14 +147,12 @@ export class MergeCieAnalysisComponent implements OnInit {
     this.cieSvc.getObservations().subscribe(
       (details: any) => {
         let myIssues = [];
-        console.log(details)
 
         details.forEach(pair => {
           pair.observations.forEach(obs => {
             myIssues.push(obs);
           });
         });
-        console.log(myIssues)
 
         if (myIssues.length > 0) {
           this.maturitySvc.getQuestionsList("CIE", false).subscribe(
@@ -162,14 +161,19 @@ export class MergeCieAnalysisComponent implements OnInit {
                 for (let j = 0; j < response.groupings[0].subGroupings[i].subGroupings.length; j++) {
                   for (let k = 0; k < response.groupings[0].subGroupings[i].subGroupings[j].questions.length; k++) {
                     let question = response.groupings[0].subGroupings[i].subGroupings[j].questions[k];
+                    myIssues.forEach(obs => {
+                      if (question.questionId == obs.answer.question_Or_Requirement_Id) {
+                        if (this.assessmentIssues.get(question.questionId) !== undefined) {
+                          let arr = this.assessmentIssues.get(question.questionId);
+                          let savedIssues = arr.concat(myIssues);
+                          this.assessmentIssues.set(question.questionId, savedIssues);
+                        } else {
+                          this.assessmentIssues.set(question.questionId, myIssues);
+                        }
+                      }
+                      
+                    });
                     
-                    if (this.assessmentIssues.get(question.questionId) !== undefined) {
-                      let arr = this.assessmentIssues.get(question.questionId);
-                      let savedIssues = arr.concat(myIssues);
-                      this.assessmentIssues.set(question.questionId, savedIssues);
-                    } else {
-                      this.assessmentIssues.set(question.questionId, myIssues);
-                    }
                   }
                 }
               }
@@ -177,7 +181,9 @@ export class MergeCieAnalysisComponent implements OnInit {
         }
       }
     );
-  }  
+  }
+
+  
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.cieSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
