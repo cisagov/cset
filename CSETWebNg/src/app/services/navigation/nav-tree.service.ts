@@ -29,6 +29,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@ngneat/transloco';
+import { CieService } from '../cie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,7 @@ export class NavTreeService {
   workflow: Document
 
   sideNavScrollLocation = 0;
-
+  
   public currentPage: string;
 
   public magic: string;
@@ -52,7 +53,8 @@ export class NavTreeService {
   constructor(
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private cieSvc: CieService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -75,6 +77,10 @@ export class NavTreeService {
       console.warn('buildTree - magic compare failed');
       return;
     }
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.cieSvc.exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
+      this.cieSvc.tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
+    }
 
     this.workflow = workflow;
 
@@ -82,13 +88,13 @@ export class NavTreeService {
     this.tocControl.dataNodes = this.dataSource.data;
 
     this.setQuestionsTree();
-
+    
     this.tocControl.expandAll();
 
-    // if (this.assessSvc.usesMaturityModel('CIE')) {
-    //   let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-    //   this.tocControl.collapse(temp);
-    // }
+    // remembers state of ToC dropdown for CIE
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.applyCieToCStates();
+    }
 
     this.isNavLoading = false;
   }
@@ -245,6 +251,7 @@ export class NavTreeService {
       if (!!currentNode) {
         currentNode.isCurrent = true;
         this.currentPage = currentNode.value;
+        this.setSideNavScrollLocation(currentNode.value);
       }
     }, delay);
   }
@@ -305,13 +312,28 @@ export class NavTreeService {
   }
 
   setSideNavScrollLocation(targetId) {
-    console.log(targetId)
     const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
     if (sideNav.length > 0) {
       let target = document.getElementById(targetId);
-      //sideNav[0].scrollTo(0, sideNav[0].scrollHeight);
-      //sideNav[0].scrollTo(0, sideNav[0].scrollIntoView());
-      target.scrollIntoView({ behavior: "smooth"});
+      if (target != null) {
+        target.scrollIntoView({ behavior: "smooth"});
+      }
     }
+  }
+
+  applyCieToCStates() {
+    let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
+
+    if (!this.cieSvc.tutorialExpanded) {
+      if (node != null) this.tocControl.collapse(node);
+    } 
+    else if (node != null) this.tocControl.expand(node);
+    
+    node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
+
+    if (!this.cieSvc.exampleExpanded) {
+      if (node != null) this.tocControl.collapse(node);
+    } 
+    else if (node != null) this.tocControl.expand(node);
   }
 }
