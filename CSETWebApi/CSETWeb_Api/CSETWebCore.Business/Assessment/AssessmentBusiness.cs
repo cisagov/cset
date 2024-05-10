@@ -7,7 +7,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -18,6 +17,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Document;
 using CSETWebCore.Model.Observations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -1006,6 +1006,46 @@ namespace CSETWebCore.Business.Assessment
             }
 
             return observationsPerAssessment;
+        }
+
+        public IEnumerable<MergeDocuments> GetAssessmentDocuments(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            List<MergeDocuments> documentsPerAssessment = new List<MergeDocuments>();
+
+            foreach (int assessId in myList)
+            {
+                var results = (from a in _context.ANSWER
+                               join f in _context.DOC on a.Answer_Id equals f.Answer_Id
+                               where a.Assessment_Id == assessId
+                               select new { a, f }).ToList();
+
+                var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
+
+                List<Model.Document> documentList = new List<Model.Document>();
+                //answerFindingPair.Where(x => x.a.Assessment_Id == assessId).Select(x => x.f);
+                foreach (var pair in answerFindingPair)
+                {
+                    documentList.Add(pair.f);
+                }
+
+                documentsPerAssessment.Add(new MergeDocuments(assessId, documentList));
+            }
+
+            return documentsPerAssessment;
         }
     }
 }
