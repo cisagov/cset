@@ -32,6 +32,9 @@ export class CieService {
   hasShownCharterWarning: boolean = false;
   apiUrl = this.configSvc.apiUrl;
 
+  exampleExpanded = true;
+  tutorialExpanded = true;
+
   constructor(
     private http: HttpClient,
     private configSvc: ConfigService,
