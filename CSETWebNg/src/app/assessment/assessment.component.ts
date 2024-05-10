@@ -98,14 +98,6 @@ export class AssessmentComponent implements OnInit {
     this.tSvc.langChanges$.subscribe((event) => {
       this.navSvc.buildTree();
     });
-
-    // collapses the CIE Example section for CIE
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      let example = this.navTreeSvc.findInTree(this.navTreeSvc.tocControl.dataNodes, 'cie-example');
-      let tutorial = this.navTreeSvc.findInTree(this.navTreeSvc.tocControl.dataNodes, 'tutorial-cie');
-      // this.navTreeSvc.tocControl.collapse(example);
-      // this.navTreeSvc.tocControl.collapse(tutorial);
-    }
   }
  
   setTab(tab) {
