@@ -29,6 +29,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { of as observableOf, BehaviorSubject } from "rxjs";
 import { TranslocoService } from '@ngneat/transloco';
+import { CieService } from '../cie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,8 @@ export class NavTreeService {
   constructor(
     private assessSvc: AssessmentService,
     private pageVisibliltySvc: PageVisibilityService,
-    private tSvc: TranslocoService
+    private tSvc: TranslocoService,
+    private cieSvc: CieService
   ) {
     // set up the mat tree control and its data source
     this.tocControl = new NestedTreeControl<NavTreeNode>(this.getChildren);
@@ -75,6 +77,10 @@ export class NavTreeService {
       console.warn('buildTree - magic compare failed');
       return;
     }
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.cieSvc.exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
+      this.cieSvc.tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
+    }
 
     this.workflow = workflow;
 
@@ -83,38 +89,12 @@ export class NavTreeService {
 
     this.setQuestionsTree();
     
-    // start of new stuff
-    let exampleExpanded = true;
-    let tutorialExpanded = true;
-    if (this.assessSvc.usesMaturityModel('CIE')) {
-      console.log('find example')
-      console.log(this.findInTree(this.tocControl.dataNodes, 'cie-example'))
-      exampleExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'cie-example'));
-      tutorialExpanded = this.tocControl.isExpanded(this.findInTree(this.tocControl.dataNodes, 'tutorial-cie'));
-    }
-    // end for now
-
     this.tocControl.expandAll();
 
-    // start of new stuff
-    if (!tutorialExpanded) {
-      let temp = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
-      this.tocControl.collapse(temp);
-    } else {
-      let temp = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
-      this.tocControl.expand(temp);
+    // remembers state of ToC dropdown for CIE
+    if (this.assessSvc.usesMaturityModel('CIE')) {
+      this.applyCieToCStates();
     }
-    console.log('tutorial: ' + tutorialExpanded)
-    
-    if (!exampleExpanded) {
-      let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-      this.tocControl.collapse(temp);
-    } else {
-      let temp = this.findInTree(this.tocControl.dataNodes, 'cie-example');
-      this.tocControl.expand(temp);
-    }
-    console.log('example: ' + exampleExpanded)
-    // end of new stuff
 
     this.isNavLoading = false;
   }
@@ -332,13 +312,28 @@ export class NavTreeService {
   }
 
   setSideNavScrollLocation(targetId) {
-    console.log(targetId)
     const sideNav = document.getElementsByClassName("mat-drawer-inner-container");
     if (sideNav.length > 0) {
       let target = document.getElementById(targetId);
-      //sideNav[0].scrollTo(0, sideNav[0].scrollHeight);
-      //sideNav[0].scrollTo(0, sideNav[0].scrollIntoView());
-      target.scrollIntoView({ behavior: "smooth"});
+      if (target != null) {
+        target.scrollIntoView({ behavior: "smooth"});
+      }
     }
+  }
+
+  applyCieToCStates() {
+    let node = this.findInTree(this.tocControl.dataNodes, 'tutorial-cie');
+
+    if (!this.cieSvc.tutorialExpanded) {
+      if (node != null) this.tocControl.collapse(node);
+    } 
+    else if (node != null) this.tocControl.expand(node);
+    
+    node = this.findInTree(this.tocControl.dataNodes, 'cie-example');
+
+    if (!this.cieSvc.exampleExpanded) {
+      if (node != null) this.tocControl.collapse(node);
+    } 
+    else if (node != null) this.tocControl.expand(node);
   }
 }
