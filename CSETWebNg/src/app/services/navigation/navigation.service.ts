@@ -23,7 +23,7 @@
 ////////////////////////////////
 import { Router } from '@angular/router';
 import { AssessmentService } from '../assessment.service';
-import { EventEmitter, Injectable, Output } from "@angular/core";
+import { EventEmitter, Injectable, OnDestroy, Output } from "@angular/core";
 import { ConfigService } from '../config.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MaturityService } from '../maturity.service';
@@ -50,7 +50,7 @@ export interface NavTreeNode {
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationService {
+export class NavigationService implements OnDestroy{
 
 
 
@@ -103,7 +103,8 @@ export class NavigationService {
           break;
         case 124:
           this.buildTree();
-          this.navDirect('dashboard');
+          this.setNextEnabled(true);
+          //this.navDirect('dashboard');
           break;
         case 125:
           this.buildTree();
@@ -113,6 +114,9 @@ export class NavigationService {
     });
   }
 
+  ngOnDestroy() {
+    this.assessSvc.assessmentStateChanged.unsubscribe()
+  }
 
   /**
    * Generates a random 'magic number'.
