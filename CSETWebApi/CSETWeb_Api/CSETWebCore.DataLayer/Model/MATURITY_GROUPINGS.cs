@@ -22,6 +22,8 @@ public partial class MATURITY_GROUPINGS
     [StringLength(3000)]
     public string Description { get; set; }
 
+    public string Description_Extended { get; set; }
+
     public int Maturity_Model_Id { get; set; }
 
     public int Sequence { get; set; }

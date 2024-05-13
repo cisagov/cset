@@ -56,6 +56,8 @@ namespace CSETWebCore.Model.Maturity
         public string Title { get; set; }
         public bool IsDeficient { get; set; }
         public List<MaturityAnsweredQuestionsComponent> Components { get; set; }
+        public List<MaturityAnsweredQuestions>? Questions { get; set; }
+
     }
     public class MaturityAnsweredQuestionsComponent
     {
@@ -80,6 +82,7 @@ namespace CSETWebCore.Model.Maturity
         public bool MarkForReview { get; set; }
         public string Comment { get; set; }
         public int MatQuestionId { get; set; }
+        public string FreeResponseText { get; set; }
     }
 
 
