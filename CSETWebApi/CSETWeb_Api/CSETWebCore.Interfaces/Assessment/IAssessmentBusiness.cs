@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Observations;
 
 namespace CSETWebCore.Interfaces.Assessment
 {
@@ -39,5 +40,6 @@ namespace CSETWebCore.Interfaces.Assessment
         void clearFirstTime(int userid, int assessmentId);
 
         void MoveHydroActionsOutOfIseActions();
+        IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10);
     }
 }

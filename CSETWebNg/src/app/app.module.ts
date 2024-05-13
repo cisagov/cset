@@ -635,14 +635,26 @@ import { MaturityQuestionsCieComponent } from './assessment/questions/maturity-q
 import { AssessmentInfoCieComponent } from './assessment/prepare/assessment-info/assessment-info-cie/assessment-info-cie.component';
 import { AssessmentConfigCieComponent } from './assessment/prepare/assessment-info/assessment-config-cie/assessment-config-cie.component';
 import { AssessmentDetailCieComponent } from './assessment/prepare/assessment-info/assessment-detail-cie/assessment-detail-cie.component';
+import { CieLayoutMainComponent } from './layout/cie-layout-main/cie-layout-main.component';
+import { AboutCieComponent } from './dialogs/about-cie/about-cie.component';
+import { ApplyingCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/applying-cie/applying-cie.component';
+import { CieExampleComponent } from './assessment/prepare/maturity/cie-example/cie-example.component';
+import { CieBackgroundComponent } from './assessment/prepare/maturity/cie-example/cie-background/cie-background.component';
+import { CieAnalysisComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/cie-analysis.component';
+import { PrincipleAnalysisCieComponent } from './assessment/prepare/maturity/cie-example/cie-analysis/principle-analysis-cie/principle-analysis-cie.component';
+import { CieAnalysisMatrixComponent } from './assessment/prepare/maturity/cie-example/cie-analysis-matrix/cie-analysis-matrix.component';
+import { MergeCieAnalysisComponent } from './assessment/merge/merge-cie-analysis/merge-cie-analysis.component';
+import { CieAllQuestionsComponent } from './reports/cie/cie-all-questions/cie-all-questions.component';
+import { CiePrincipleOnlyComponent } from './reports/cie/cie-principle-only/cie-principle-only.component';
+import { CiePrinciplePhaseComponent } from './reports/cie/cie-principle-phase/cie-principle-phase.component';
+import { CieNotApplicableComponent } from './reports/cie/cie-not-applicable/cie-not-applicable.component';
 
-import {CieLayoutMainComponent} from './layout/cie-layout-main/cie-layout-main.component';
- import {AboutCieComponent} from './dialogs/about-cie/about-cie.component';
 import { ReferencesSectionComponent } from './assessment/questions/references-section/references-section.component';
 import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa-workflow-warnings/cisa-workflow-warnings.component';
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
+import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -827,6 +839,7 @@ import { AnalyticsService } from './services/analytics.service';
     GlobalParametersComponent,
     ImportComponent,
     UploadExportComponent,
+    UploadDemographicsComponent,
     KeyboardShortcutsComponent,
     LicenseComponent,
     AcetDashboardComponent,
@@ -1229,6 +1242,18 @@ import { AnalyticsService } from './services/analytics.service';
     AssessmentConfigCieComponent,
     AssessmentDetailCieComponent,
     CieLayoutMainComponent,
+    AboutCieComponent,
+    ApplyingCieComponent,
+    CieExampleComponent,
+    CieBackgroundComponent,
+    CieAnalysisComponent,
+    PrincipleAnalysisCieComponent,
+    CieAnalysisMatrixComponent,
+    MergeCieAnalysisComponent,
+    CieAllQuestionsComponent,
+    CiePrincipleOnlyComponent,
+    CiePrinciplePhaseComponent,
+    CieNotApplicableComponent,
     AboutCieComponent, 
     AnalyticsComponent, 
     ReferencesSectionComponent,

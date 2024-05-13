@@ -16,6 +16,7 @@
         "showStateName": true,
         "showContacts": true,
         "showOrganizationName": true,
+        "showFeedback": true,
         "showBusinessAgencyName": true,
         "showCriticalService": true,
         "additionalUserGuides": ["CSET"],

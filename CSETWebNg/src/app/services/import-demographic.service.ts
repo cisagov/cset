@@ -22,7 +22,7 @@
 //
 ////////////////////////////////
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpEventType, HttpRequest, HttpResponseBase, HttpResponse } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { Subject, Observable } from 'rxjs';
 import { AssessmentService } from './assessment.service';
@@ -44,10 +44,10 @@ export class ImportDemographicService {
 
   constructor(
     private http: HttpClient,
-    private configSvc: ConfigService, 
+    private configSvc: ConfigService,
     public assessSvc: AssessmentService
 
-    ) {
+  ) {
   }
 
   public upload(files: Set<File>, isNormalLoad: boolean, password): { [key: string]: Observable<number> } {
@@ -61,17 +61,17 @@ export class ImportDemographicService {
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
-   
+
       let tmpheader = new HttpHeaders({ 'Authorization': localStorage.getItem('userToken') });
       tmpheader.append('Authorization', localStorage.getItem('userToken'));
       tmpheader = tmpheader.append('pwd', password);
 
-    const assessmentID = this.assessSvc.id(); // Assuming assessmentID is an integer
-    const urlWithParam = `${this.apiAssessmentImport}?assessmentID=${assessmentID}`;
-    let req = new HttpRequest('POST', urlWithParam, formData, {
-    headers: tmpheader,
-    reportProgress: true
-    });
+      const assessmentID = this.assessSvc.id(); // Assuming assessmentID is an integer
+      const urlWithParam = `${this.apiAssessmentImport}`;
+      let req = new HttpRequest('POST', urlWithParam, formData, {
+        headers: tmpheader,
+        reportProgress: true
+      });
 
       // create a new progress-subject for every file
       const progress = new Subject<number>();
@@ -93,23 +93,41 @@ export class ImportDemographicService {
 
           // pass the percentage into the progress-stream
           progress.next(percentDone);
-        } else if (event instanceof HttpResponseBase) {
+        } else if (event instanceof HttpResponse) {
+
           if (event.status == 423) {
             let errObj = {
+              code: 80,
               message: "File requires a password",
             };
             progress.error(errObj);
           } else if (event.status == 406) {
             let errObj = {
-              message: "Invalid password.",
+              code: 90,
+              message: "Invalid password",
+            };
+            progress.error(errObj);
+          } else if ((event.body as any)?.code == 100) {
+            let errObj = {
+              code: 100,
+              message: "The file content is not valid JSON"
+            };
+            progress.error(errObj);
+          }  else if ((event.body as any)?.code == 101) {
+            let errObj = {
+              code: 101,
+              message: "The file content is not recognizable as CSET demographics"
             };
             progress.error(errObj);
           } else if (event.status != 200 && event.status != 406 && event.status != 423) {
             let errObj = {
+              code: 70,
               message: "File Import Failed",
             };
             progress.error(errObj);
           }
+
+
           // Close the progress-stream if we get an answer form the API
           // The upload is complete
           else progress.complete();
@@ -117,7 +135,7 @@ export class ImportDemographicService {
 
       },
         (error) => {
-          
+
         }
       );
     })
@@ -125,6 +143,4 @@ export class ImportDemographicService {
     // return the map of progress.observables
     return status;
   }
-
-
 }

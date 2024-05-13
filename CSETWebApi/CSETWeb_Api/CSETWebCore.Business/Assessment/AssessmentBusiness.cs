@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CSETWebCore.Business.Aggregation;
 using CSETWebCore.DataLayer.Model;
 using CSETWebCore.Helpers;
 using CSETWebCore.Interfaces;
@@ -17,6 +18,7 @@ using CSETWebCore.Interfaces.Maturity;
 using CSETWebCore.Interfaces.Sal;
 using CSETWebCore.Interfaces.Standards;
 using CSETWebCore.Model.Assessment;
+using CSETWebCore.Model.Observations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Nelibur.ObjectMapper;
@@ -301,8 +303,8 @@ namespace CSETWebCore.Business.Assessment
                 aggregation.Documents = _context.DOCUMENT_FILE.Where(x => x.Assessment_Id == assessmentId).ToList();
                 aggregation.Findings = (from a in aggregation.Answers
                                         join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
-                                        select f).ToList();       
-                                       
+                                        select f).ToList();
+
             }
             return aggregation;
         }
@@ -964,6 +966,46 @@ namespace CSETWebCore.Business.Assessment
         public void MoveHydroActionsOutOfIseActions()
         {
             _utilities.MoveActionItemsFrom_IseActions_To_HydroData(_context);
+        }
+
+        public IEnumerable<MergeObservation> GetAssessmentObservations(int id1, int id2, int? id3, int? id4, int? id5, int? id6, int? id7, int? id8, int? id9, int? id10)
+        {
+            int?[] myArray = new int?[]
+            {
+                id1,id2,id3,id4,id5,id6,id7,id8,id9,id10
+            };
+
+            List<int?> myList = new List<int?>();
+            foreach (int? item in myArray)
+            {
+                if (item != null && item != 0)
+                {
+                    myList.Add(item);
+                }
+            }
+
+            List<MergeObservation> observationsPerAssessment = new List<MergeObservation>();
+
+            foreach (int assessId in myList)
+            {
+                var results = (from a in _context.ANSWER
+                               join f in _context.FINDING on a.Answer_Id equals f.Answer_Id
+                               where a.Assessment_Id == assessId
+                               select new { a, f }).ToList();
+
+                var answerFindingPair = results.Select(x => new { x.a, x.f }).Distinct();
+
+                List<FINDING> observationList = new List<FINDING>();
+                //answerFindingPair.Where(x => x.a.Assessment_Id == assessId).Select(x => x.f);
+                foreach (var pair in answerFindingPair)
+                {
+                    observationList.Add(pair.f);
+                }
+
+                observationsPerAssessment.Add(new MergeObservation(assessId, observationList));
+            }
+
+            return observationsPerAssessment;
         }
     }
 }

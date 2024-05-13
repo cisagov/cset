@@ -502,6 +502,31 @@ namespace CSETWebCore.Api.Controllers
             return Ok(id);
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obs"></param>
+        [HttpPost]
+        [Route("api/CopyObservationIntoNewObservation")]
+        public IActionResult CopyObservationIntoNewObservation([FromBody] Observation obs, [FromQuery] bool cancel = false)
+        {
+            int assessmentId = _token.AssessmentForUser();
+            var fm = new ObservationsManager(_context, assessmentId);
+
+
+            if (obs.IsObservationEmpty(cancel))
+            {
+                fm.DeleteObservation(obs);
+                return Ok();
+            }
+
+            var id = fm.UpdateObservation(obs);
+
+            return Ok(id);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
