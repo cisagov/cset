@@ -596,7 +596,6 @@ export class MergeCieAnalysisComponent implements OnInit {
     documentArray.forEach((assessPair, index) => {
       console.log(assessPair)
       assessPair.forEach((doc, index2) => {
-        doc.document_Id = 0;
         doc.answer_Id = this.newAnswerIds.get(doc.question_Id);
       });
       console.log(assessPair)
