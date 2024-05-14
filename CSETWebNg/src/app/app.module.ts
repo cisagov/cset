@@ -654,6 +654,7 @@ import { CisaWorkflowWarningsComponent } from './assessment/results/reports/cisa
 import { AnalyticsComponent } from './assessment/results/analytics/analytics.component';
 import { AnalyticsloginComponent } from './assessment/results/analysis/analytics-login/analytics-login.component';
 import { AnalyticsService } from './services/analytics.service';
+import { UploadDemographicsComponent } from './dialogs/import demographics/import-demographics.component';
 @NgModule({
   imports: [
     BrowserModule,
@@ -838,6 +839,7 @@ import { AnalyticsService } from './services/analytics.service';
     GlobalParametersComponent,
     ImportComponent,
     UploadExportComponent,
+    UploadDemographicsComponent,
     KeyboardShortcutsComponent,
     LicenseComponent,
     AcetDashboardComponent,

@@ -163,7 +163,7 @@ export class MergeExaminationsComponent implements OnInit {
 
   getExistingAssessmentAnswers() {
     this.assessSvc.getAssessmentToken(this.ncuaSvc.assessmentsToMerge[this.dataReceivedCount]).then(() => {
-      this.maturitySvc.getQuestionsList("ACET", false).subscribe(
+      this.maturitySvc.getQuestionsList(false).subscribe(
         (response: any) => {
           this.dataReceivedCount++;
           this.aggregateExistingAnswers(response);
@@ -430,7 +430,7 @@ export class MergeExaminationsComponent implements OnInit {
 
               // Send off a list of the assessment's new answers to the API to save.
               this.questionSvc.storeAllAnswers(this.existingAssessmentAnswers).subscribe((response: any) => {
-                this.maturitySvc.getQuestionsList(this.configSvc.installationMode, false).subscribe(
+                this.maturitySvc.getQuestionsList(false).subscribe(
                   (questionListResponse: MaturityQuestionResponse) => {
 
                     // Grab all the new answer_id's to save Issues to the new questions
